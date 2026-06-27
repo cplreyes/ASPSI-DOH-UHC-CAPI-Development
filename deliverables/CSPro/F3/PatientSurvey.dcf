@@ -11517,6 +11517,628 @@
               ]
             },
             {
+              "name": "Q38_1_PIN_WHEN",
+              "labels": [
+                {
+                  "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                  "language": "EN"
+                },
+                {
+                  "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                  "language": "FIL"
+                },
+                {
+                  "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                  "language": "BCL"
+                },
+                {
+                  "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                  "language": "BIS"
+                },
+                {
+                  "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                  "language": "CEB"
+                },
+                {
+                  "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q38_1_PIN_WHEN_VS1",
+                  "labels": [
+                    {
+                      "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                      "language": "WAR"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Within the past year",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Within the past year",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Within the past year",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Within the past year",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Within the past year",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Within the past year",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Within the last 2-3 years",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Within the last 2-3 years",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Within the last 2-3 years",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Within the last 2-3 years",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Within the last 2-3 years",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Within the last 2-3 years",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Within the last 4-5 years",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Within the last 4-5 years",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Within the last 4-5 years",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Within the last 4-5 years",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Within the last 4-5 years",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Within the last 4-5 years",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Over 5 years",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Over 5 years",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Over 5 years",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Over 5 years",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Over 5 years",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Over 5 years",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q38_2_WHY_NOT_REG",
+              "labels": [
+                {
+                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                  "language": "EN"
+                },
+                {
+                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                  "language": "FIL"
+                },
+                {
+                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                  "language": "BCL"
+                },
+                {
+                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                  "language": "BIS"
+                },
+                {
+                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                  "language": "CEB"
+                },
+                {
+                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 18,
+              "valueSets": [
+                {
+                  "name": "Q38_2_WHY_NOT_REG_VS1",
+                  "labels": [
+                    {
+                      "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                      "language": "WAR"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Difficult to register",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Difficult to register",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Difficult to register",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Difficult to register",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Difficult to register",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Difficult to register",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Don't see value in registering",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Don't see value in registering",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Don't see value in registering",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Don't see value in registering",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Don't see value in registering",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Don't see value in registering",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Don't know how to register",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Don't know how to register",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Don't know how to register",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Don't know how to register",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Don't know how to register",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Don't know how to register",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Don't know what PhilHealth is",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Don't know what PhilHealth is",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Don't know what PhilHealth is",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Don't know what PhilHealth is",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Don't know what PhilHealth is",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Don't know what PhilHealth is",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "A family member is currently registered with PhilHealth",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "A family member is currently registered with PhilHealth",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "A family member is currently registered with PhilHealth",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "A family member is currently registered with PhilHealth",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "A family member is currently registered with PhilHealth",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "A family member is currently registered with PhilHealth",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Currently unemployed",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Currently unemployed",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Currently unemployed",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Currently unemployed",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Currently unemployed",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Currently unemployed",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No time to register",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "No time to register",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "No time to register",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "No time to register",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "No time to register",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "No time to register",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No valid ID to register",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "No valid ID to register",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "No valid ID to register",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "No valid ID to register",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "No valid ID to register",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "No valid ID to register",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (specify)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Iba pa (tukuyin)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Uban pa (I-specify)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Uban pa (isulti)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Iba pa (Ispecify)",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q38_2_WHY_NOT_REG_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. \u2014 Other (specify) text",
+                  "language": "EN"
+                },
+                {
+                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. \u2014 Other (specify) text",
+                  "language": "FIL"
+                },
+                {
+                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. \u2014 Other (specify) text",
+                  "language": "BCL"
+                },
+                {
+                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. \u2014 Other (specify) text",
+                  "language": "BIS"
+                },
+                {
+                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. \u2014 Other (specify) text",
+                  "language": "CEB"
+                },
+                {
+                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. \u2014 Other (specify) text",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
               "name": "Q39_HOW_FIND_OUT",
               "labels": [
                 {
@@ -16561,27 +17183,27 @@
               "name": "Q58_WAIT_DAYS",
               "labels": [
                 {
-                  "text": "58. Wait time to set appointment with main primary care provider \u2014 Days",
+                  "text": "58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (this facility)? \u2014 Days",
                   "language": "EN"
                 },
                 {
-                  "text": "Gaano katagal ang karaniwang paghihintay, sa araw at/o minuto, upang makakuha ng appointment sa iyong primary care provider? \u2014 Days",
+                  "text": "58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (ang pasilidad na ito)? \u2014 Days",
                   "language": "FIL"
                 },
                 {
-                  "text": "Aldaw",
+                  "text": "58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (an pasilidad na ini)? \u2014 Days",
                   "language": "BCL"
                 },
                 {
-                  "text": "Adlaw",
+                  "text": "58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (kini nga pasilidad)? \u2014 Days",
                   "language": "BIS"
                 },
                 {
-                  "text": "Adlaw",
+                  "text": "58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (kini nga pasilidad)? \u2014 Days",
                   "language": "CEB"
                 },
                 {
-                  "text": "Adlaw",
+                  "text": "58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (ini nga pasilidad)? \u2014 Days",
                   "language": "WAR"
                 }
               ],
@@ -16593,27 +17215,27 @@
               "name": "Q58_WAIT_MINUTES",
               "labels": [
                 {
-                  "text": "58. Wait time to set appointment with main primary care provider \u2014 Minutes",
+                  "text": "58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (this facility)? \u2014 Minutes",
                   "language": "EN"
                 },
                 {
-                  "text": "Gaano katagal ang karaniwang paghihintay, sa araw at/o minuto, upang makakuha ng appointment sa iyong primary care provider? \u2014 Minutes",
+                  "text": "58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (ang pasilidad na ito)? \u2014 Minutes",
                   "language": "FIL"
                 },
                 {
-                  "text": "Minuto",
+                  "text": "58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (an pasilidad na ini)? \u2014 Minutes",
                   "language": "BCL"
                 },
                 {
-                  "text": "Minutos",
+                  "text": "58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (kini nga pasilidad)? \u2014 Minutes",
                   "language": "BIS"
                 },
                 {
-                  "text": "Minuto",
+                  "text": "58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (kini nga pasilidad)? \u2014 Minutes",
                   "language": "CEB"
                 },
                 {
-                  "text": "Minuto",
+                  "text": "58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (ini nga pasilidad)? \u2014 Minutes",
                   "language": "WAR"
                 }
               ],
@@ -16650,7 +17272,7 @@
                 }
               ],
               "contentType": "alpha",
-              "length": 10,
+              "length": 8,
               "valueSets": [
                 {
                   "name": "Q59_SCHED_COMM_VS1",
@@ -16717,27 +17339,27 @@
                     {
                       "labels": [
                         {
-                          "text": "Teleconsultation",
+                          "text": "Teleconsultation: Cellphone",
                           "language": "EN"
                         },
                         {
-                          "text": "Teleconsultation",
+                          "text": "Teleconsultation: Cellphone",
                           "language": "FIL"
                         },
                         {
-                          "text": "Teleconsultation",
+                          "text": "Teleconsultation: Cellphone",
                           "language": "BCL"
                         },
                         {
-                          "text": "Teleconsultation",
+                          "text": "Teleconsultation: Cellphone",
                           "language": "BIS"
                         },
                         {
-                          "text": "Teleconsultation",
+                          "text": "Teleconsultation: Cellphone",
                           "language": "CEB"
                         },
                         {
-                          "text": "Teleconsultation",
+                          "text": "Teleconsultation: Cellphone",
                           "language": "WAR"
                         }
                       ],
@@ -16750,27 +17372,27 @@
                     {
                       "labels": [
                         {
-                          "text": "Landline",
+                          "text": "Teleconsultation: Landline",
                           "language": "EN"
                         },
                         {
-                          "text": "Landline",
+                          "text": "Teleconsultation: Landline",
                           "language": "FIL"
                         },
                         {
-                          "text": "Landline",
+                          "text": "Teleconsultation: Landline",
                           "language": "BCL"
                         },
                         {
-                          "text": "Landline",
+                          "text": "Teleconsultation: Landline",
                           "language": "BIS"
                         },
                         {
-                          "text": "Landline",
+                          "text": "Teleconsultation: Landline",
                           "language": "CEB"
                         },
                         {
-                          "text": "Landline",
+                          "text": "Teleconsultation: Landline",
                           "language": "WAR"
                         }
                       ],
@@ -16783,66 +17405,33 @@
                     {
                       "labels": [
                         {
-                          "text": "Cellphone",
+                          "text": "Teleconsultation: Video Conference",
                           "language": "EN"
                         },
                         {
-                          "text": "Cellphone",
+                          "text": "Teleconsultation: Video Conference",
                           "language": "FIL"
                         },
                         {
-                          "text": "Cellphone",
+                          "text": "Teleconsultation: Video Conference",
                           "language": "BCL"
                         },
                         {
-                          "text": "Cellphone",
+                          "text": "Teleconsultation: Video Conference",
                           "language": "BIS"
                         },
                         {
-                          "text": "Cellphone",
+                          "text": "Teleconsultation: Video Conference",
                           "language": "CEB"
                         },
                         {
-                          "text": "Cellphone",
+                          "text": "Teleconsultation: Video Conference",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
                           "value": "04"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Video Conference",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Video Conference",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Video Conference",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Video Conference",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Video Conference",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Video Conference",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "05"
                         }
                       ]
                     }
@@ -17010,7 +17599,7 @@
                 }
               ],
               "contentType": "alpha",
-              "length": 10,
+              "length": 8,
               "valueSets": [
                 {
                   "name": "Q61_CONSULT_COMM_VS1",
@@ -17077,27 +17666,27 @@
                     {
                       "labels": [
                         {
-                          "text": "Teleconsultation",
+                          "text": "Teleconsultation: Cellphone",
                           "language": "EN"
                         },
                         {
-                          "text": "Teleconsultation",
+                          "text": "Teleconsultation: Cellphone",
                           "language": "FIL"
                         },
                         {
-                          "text": "Teleconsultation",
+                          "text": "Teleconsultation: Cellphone",
                           "language": "BCL"
                         },
                         {
-                          "text": "Teleconsultation",
+                          "text": "Teleconsultation: Cellphone",
                           "language": "BIS"
                         },
                         {
-                          "text": "Teleconsultation",
+                          "text": "Teleconsultation: Cellphone",
                           "language": "CEB"
                         },
                         {
-                          "text": "Teleconsultation",
+                          "text": "Teleconsultation: Cellphone",
                           "language": "WAR"
                         }
                       ],
@@ -17110,27 +17699,27 @@
                     {
                       "labels": [
                         {
-                          "text": "Landline",
+                          "text": "Teleconsultation: Landline",
                           "language": "EN"
                         },
                         {
-                          "text": "Landline",
+                          "text": "Teleconsultation: Landline",
                           "language": "FIL"
                         },
                         {
-                          "text": "Landline",
+                          "text": "Teleconsultation: Landline",
                           "language": "BCL"
                         },
                         {
-                          "text": "Landline",
+                          "text": "Teleconsultation: Landline",
                           "language": "BIS"
                         },
                         {
-                          "text": "Landline",
+                          "text": "Teleconsultation: Landline",
                           "language": "CEB"
                         },
                         {
-                          "text": "Landline",
+                          "text": "Teleconsultation: Landline",
                           "language": "WAR"
                         }
                       ],
@@ -17143,66 +17732,33 @@
                     {
                       "labels": [
                         {
-                          "text": "Cellphone",
+                          "text": "Teleconsultation: Video Conference",
                           "language": "EN"
                         },
                         {
-                          "text": "Cellphone",
+                          "text": "Teleconsultation: Video Conference",
                           "language": "FIL"
                         },
                         {
-                          "text": "Cellphone",
+                          "text": "Teleconsultation: Video Conference",
                           "language": "BCL"
                         },
                         {
-                          "text": "Cellphone",
+                          "text": "Teleconsultation: Video Conference",
                           "language": "BIS"
                         },
                         {
-                          "text": "Cellphone",
+                          "text": "Teleconsultation: Video Conference",
                           "language": "CEB"
                         },
                         {
-                          "text": "Cellphone",
+                          "text": "Teleconsultation: Video Conference",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
                           "value": "04"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Video Conference",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Video Conference",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Video Conference",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Video Conference",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Video Conference",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Video Conference",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "05"
                         }
                       ]
                     }
@@ -27833,27 +28389,27 @@
               "name": "Q94_LAB_AMT",
               "labels": [
                 {
-                  "text": "94. Amount paid out-of-pocket for this laboratory test (Pesos)",
+                  "text": "94. How much was the cost of this laboratory test? (amount paid out-of-pocket, Pesos)",
                   "language": "EN"
                 },
                 {
-                  "text": "94. Amount paid out-of-pocket for this laboratory test (Pesos)",
+                  "text": "94. How much was the cost of this laboratory test? (amount paid out-of-pocket, Pesos)",
                   "language": "FIL"
                 },
                 {
-                  "text": "94. Amount paid out-of-pocket for this laboratory test (Pesos)",
+                  "text": "94. How much was the cost of this laboratory test? (amount paid out-of-pocket, Pesos)",
                   "language": "BCL"
                 },
                 {
-                  "text": "94. Amount paid out-of-pocket for this laboratory test (Pesos)",
+                  "text": "94. How much was the cost of this laboratory test? (amount paid out-of-pocket, Pesos)",
                   "language": "BIS"
                 },
                 {
-                  "text": "94. Amount paid out-of-pocket for this laboratory test (Pesos)",
+                  "text": "94. How much was the cost of this laboratory test? (amount paid out-of-pocket, Pesos)",
                   "language": "CEB"
                 },
                 {
-                  "text": "94. Amount paid out-of-pocket for this laboratory test (Pesos)",
+                  "text": "94. How much was the cost of this laboratory test? (amount paid out-of-pocket, Pesos)",
                   "language": "WAR"
                 }
               ],

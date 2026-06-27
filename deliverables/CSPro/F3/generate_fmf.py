@@ -337,6 +337,8 @@ _CHECKBOX_FIELDS = {
     "Q128_MAIFIP_OOP_ITEMS",
     # #700 Section I MAIFIP why-not-avail select_all -> Check Box.
     "Q129_WHY_NO_MAIFIP",
+    # #764 Section D why-not-registered (Q38.2), SELECT ALL THAT APPLY -> Check Box.
+    "Q38_2_WHY_NOT_REG",
     # Option B (pilot): the Q92 payment-source tick-list that drives the Q92_PAY_ROSTER.
     "Q92_SOURCES",
     # Option B Shape B (capi-multiselect, 2026-06-19): the Q97.1 other-items tick-list

@@ -329,7 +329,23 @@ _SUBQ = re.compile(r"^Q\d{1,3}_\d+_")
 # ------------------------------------------------------------------
 # (NAME) English + (PANGALAN) Tagalog member-name placeholders, replaced inline with the fill.
 _NAME_TOKEN_RE = re.compile(r"\((?:NAME|PANGALAN)\)", re.IGNORECASE)
-_PIPE_HH = {"Q42_GSIS", "Q43_SSS", "Q44_PAGIBIG"}
+# #610 originally piped the member-name header onto only Q42-Q44. The "Household
+# Characteristic Target Interface" (ASPSI, 2026-06) wants that blue "Household member:
+# <name> (Roster line N)" header on EVERY Section C per-member question (Q31-Q46), so the
+# enumerator/respondent always knows whose row each question is for. Derive the full set
+# from the C_HOUSEHOLD_ROSTER record so it can't drift as fields change — excluding
+# MEMBER_LINE_NO (noinput control, never shown) and Q30_NAME (the name-entry screen itself,
+# which carries the section note, not a self-referential header).
+def _hh_roster_fields():
+    for _lvl in build_f4_dictionary()["levels"]:
+        for _rec in _lvl.get("records", []):
+            if _rec["name"] == "C_HOUSEHOLD_ROSTER":
+                return {it["name"] for it in _rec["items"]
+                        if it["name"] not in ("MEMBER_LINE_NO", "Q30_NAME")}
+    return {"Q42_GSIS", "Q43_SSS", "Q44_PAGIBIG"}   # defensive fallback (prior #610 scope)
+
+
+_PIPE_HH = _hh_roster_fields()
 _PIPE_PRIV = {"Q48_OTHER_INS_REG", "Q49_PRIVATE_INS", "Q50_PRIVATE_INS_OTHER_TXT"}
 _HH_NAME_FILL = "~~strip(Q30_NAME)~~"
 _PRIV_NAME_FILL = "~~strip(Q30_NAME(curocc()))~~"

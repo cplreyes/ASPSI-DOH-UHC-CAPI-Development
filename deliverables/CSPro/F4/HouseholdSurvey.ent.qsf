@@ -1150,182 +1150,182 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>31. HH member present or away</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>31. HH member present or away</p>
           FIL: |
-            <p>31. HH member present or away</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>31. HH member present or away</p>
           BCL: |
-            <p>Presente o wara</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Presente o wara</p>
           BIS: |
-            <p>Miyembro sa panimalay Naa ba o wala sa balay</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Miyembro sa panimalay Naa ba o wala sa balay</p>
           CEB: |
-            <p>Miyembro sa panimalay naa o wala</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Miyembro sa panimalay naa o wala</p>
           WAR: |
-            <p>HH member nga aadi o waray didi</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>HH member nga aadi o waray didi</p>
   - name: HOUSEHOLDSURVEY_DICT.Q32_AGE
     conditions:
       - questionText:
           EN: |
-            <p>32. Age (as of last birthday)</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>32. Age (as of last birthday)</p>
           FIL: |
-            <p>32. Age (as of last birthday)</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>32. Age (as of last birthday)</p>
           BCL: |
-            <p>edad</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>edad</p>
           BIS: |
-            <p>Edad (sa alst nga birthday)</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Edad (sa alst nga birthday)</p>
           CEB: |
-            <p>Edad (sa miaging birthday)</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Edad (sa miaging birthday)</p>
           WAR: |
-            <p>Edad (tikang han naglabay nga kaadlawan)</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Edad (tikang han naglabay nga kaadlawan)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q33_SEX
     conditions:
       - questionText:
           EN: |
-            <p>33. Sex at birth</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>33. Sex at birth</p>
           FIL: |
-            <p>Kasarian sa kapanganakan</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Kasarian sa kapanganakan</p>
           BCL: |
-            <p>kasarian</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>kasarian</p>
           BIS: |
-            <p>Sex sa Pagkatawo</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Sex sa Pagkatawo</p>
           CEB: |
-            <p>Sex pagkaanak</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Sex pagkaanak</p>
           WAR: |
-            <p>Sekso han pagkatawo</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Sekso han pagkatawo</p>
   - name: HOUSEHOLDSURVEY_DICT.Q34_RELATIONSHIP
     conditions:
       - questionText:
           EN: |
-            <p>34. Relationship to Household Head</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>34. Relationship to Household Head</p>
           FIL: |
-            <p>34. Relationship to Household Head</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>34. Relationship to Household Head</p>
           BCL: |
-            <p>Rel sa namamayo kan pamilya</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Rel sa namamayo kan pamilya</p>
           BIS: |
-            <p>Relasyon sa Ulo sa Panimalay</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Relasyon sa Ulo sa Panimalay</p>
           CEB: |
-            <p>Relasyon sa ulo sa panimalay</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Relasyon sa ulo sa panimalay</p>
           WAR: |
-            <p>Relasyon ha Ulo han Panimalay</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Relasyon ha Ulo han Panimalay</p>
   - name: HOUSEHOLDSURVEY_DICT.Q35_HAS_DISABILITY
     conditions:
       - questionText:
           EN: |
-            <p>35. Do you identify as a person with a disability?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>35. Do you identify as a person with a disability?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
           FIL: |
-            <p>Kinikilala ba ninyo ang sarili bilang isang taong may kapansanan?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Kinikilala ba ninyo ang sarili bilang isang taong may kapansanan?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
           BCL: |
-            <p>May mental o pisikal ka bang kapansanan?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>May mental o pisikal ka bang kapansanan?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
           BIS: |
-            <p>Gi-ila ba nimo ang imong kaugalingon isip usa ka tawo nga adunay kapansanan?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Gi-ila ba nimo ang imong kaugalingon isip usa ka tawo nga adunay kapansanan?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
           CEB: |
-            <p>Nagpaila ba ka isip usa ka tawo nga adunay kapansanan/PWD?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Nagpaila ba ka isip usa ka tawo nga adunay kapansanan/PWD?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
           WAR: |
-            <p>Nag-iidentify ka ba nga may kapansanan?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Nag-iidentify ka ba nga may kapansanan?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q36_SPECIFY_DISABILITY
     conditions:
       - questionText:
           EN: |
-            <p>36. Would you like to specify the type of disability?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>36. Would you like to specify the type of disability?</p>
           FIL: |
-            <p>Nais mo bang tukuyin ang uri ng kapansanan?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Nais mo bang tukuyin ang uri ng kapansanan?</p>
           BCL: |
-            <p>Muya mo ba na ispecify an klase kan saimong kapansanan?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Muya mo ba na ispecify an klase kan saimong kapansanan?</p>
           BIS: |
-            <p>Gusto ba nimo isulti kung unsang klase sa kapansanan?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Gusto ba nimo isulti kung unsang klase sa kapansanan?</p>
           CEB: |
-            <p>Gusto ba nimo isulti kung unsa nga klase sa kakulangan?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Gusto ba nimo isulti kung unsa nga klase sa kakulangan?</p>
           WAR: |
-            <p>Karuyag mo ba isumat ano nga klase nga kapansanan?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Karuyag mo ba isumat ano nga klase nga kapansanan?</p>
   - name: HOUSEHOLDSURVEY_DICT.Q37_PWD_CARD
     conditions:
       - questionText:
           EN: |
-            <p>37. May we view the patient's PWD Identification Card?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>37. May we view the patient's PWD Identification Card?</p>
           FIL: |
-            <p>Maaari ba naming makita ang PWD Identification Card ng pasyente?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Maaari ba naming makita ang PWD Identification Card ng pasyente?</p>
           BCL: |
-            <p>Pwede mi ba mahiling an saimong PWD ID Card?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Pwede mi ba mahiling an saimong PWD ID Card?</p>
           BIS: |
-            <p>Mahimo ba namo makita ang PWD Identification Card sa pasyente?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Mahimo ba namo makita ang PWD Identification Card sa pasyente?</p>
           CEB: |
-            <p>Pwede ba mi makakita sa imong PWD Identification Card?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Pwede ba mi makakita sa imong PWD Identification Card?</p>
           WAR: |
-            <p>Pwede ba namon makita an imo PWD identification Card?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Pwede ba namon makita an imo PWD identification Card?</p>
   - name: HOUSEHOLDSURVEY_DICT.Q38_DISABILITY_TYPE
     conditions:
       - questionText:
           EN: |
-            <p>38. Based on the presented PWD Identification Card, what type of disability is indicated?</p><p class="instruction">Enumerator Instruction (DO NOT READ ALOUD): If the PWD Identification Card is presented, record the type of disability as indicated on the card. Do not ask the respondent directly.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>38. Based on the presented PWD Identification Card, what type of disability is indicated?</p><p class="instruction">Enumerator Instruction (DO NOT READ ALOUD): If the PWD Identification Card is presented, record the type of disability as indicated on the card. Do not ask the respondent directly.</p>
           FIL: |
-            <p>Batay sa ipinakitang PWD Identification Card, anong uri ng kapansanan ang nakasaad?</p><p class="instruction">Enumerator Instruction (DO NOT READ ALOUD): If the PWD Identification Card is presented, record the type of disability as indicated on the card. Do not ask the respondent directly.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Batay sa ipinakitang PWD Identification Card, anong uri ng kapansanan ang nakasaad?</p><p class="instruction">Enumerator Instruction (DO NOT READ ALOUD): If the PWD Identification Card is presented, record the type of disability as indicated on the card. Do not ask the respondent directly.</p>
           BCL: |
-            <p>Base sa tigpresenta na PWD ID Card, anong klase kan disability ang nakalaag?</p><p class="instruction">Enumerator Instruction (DO NOT READ ALOUD): If the PWD Identification Card is presented, record the type of disability as indicated on the card. Do not ask the respondent directly.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Base sa tigpresenta na PWD ID Card, anong klase kan disability ang nakalaag?</p><p class="instruction">Enumerator Instruction (DO NOT READ ALOUD): If the PWD Identification Card is presented, record the type of disability as indicated on the card. Do not ask the respondent directly.</p>
           BIS: |
-            <p>Base sa gipakita nga PWD Identification Card, unsang klase sa kapansanan ang nakabutang?</p><p class="instruction">Enumerator Instruction (DO NOT READ ALOUD): If the PWD Identification Card is presented, record the type of disability as indicated on the card. Do not ask the respondent directly.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Base sa gipakita nga PWD Identification Card, unsang klase sa kapansanan ang nakabutang?</p><p class="instruction">Enumerator Instruction (DO NOT READ ALOUD): If the PWD Identification Card is presented, record the type of disability as indicated on the card. Do not ask the respondent directly.</p>
           CEB: |
-            <p>Base sa gipakita nga PWD Identification Card, unsa nga klase sa kakulangan ang nakabutang?</p><p class="instruction">Enumerator Instruction (DO NOT READ ALOUD): If the PWD Identification Card is presented, record the type of disability as indicated on the card. Do not ask the respondent directly.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Base sa gipakita nga PWD Identification Card, unsa nga klase sa kakulangan ang nakabutang?</p><p class="instruction">Enumerator Instruction (DO NOT READ ALOUD): If the PWD Identification Card is presented, record the type of disability as indicated on the card. Do not ask the respondent directly.</p>
           WAR: |
-            <p>Base han iginpresentar nga PWD Identification Card, ano nga klase hin kapansanan an iginpapakita?</p><p class="instruction">Enumerator Instruction (DO NOT READ ALOUD): If the PWD Identification Card is presented, record the type of disability as indicated on the card. Do not ask the respondent directly.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Base han iginpresentar nga PWD Identification Card, ano nga klase hin kapansanan an iginpapakita?</p><p class="instruction">Enumerator Instruction (DO NOT READ ALOUD): If the PWD Identification Card is presented, record the type of disability as indicated on the card. Do not ask the respondent directly.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q38_DISABILITY_OTHER_TXT
     conditions:
       - questionText:
           EN: |
-            <p>38. Disability — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>38. Disability — Other (specify) text</p>
           FIL: |
-            <p>38. Disability — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>38. Disability — Other (specify) text</p>
           BCL: |
-            <p>38. Disability — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>38. Disability — Other (specify) text</p>
           BIS: |
-            <p>38. Disability — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>38. Disability — Other (specify) text</p>
           CEB: |
-            <p>38. Disability — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>38. Disability — Other (specify) text</p>
           WAR: |
-            <p>38. Disability — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>38. Disability — Other (specify) text</p>
   - name: HOUSEHOLDSURVEY_DICT.Q39_CIVIL_STATUS
     conditions:
       - questionText:
           EN: |
-            <p>39. Civil Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>39. Civil Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
           FIL: |
-            <p>39. Civil Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>39. Civil Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
           BCL: |
-            <p>Civil Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Civil Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
           BIS: |
-            <p>Sibil nga Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Sibil nga Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
           CEB: |
-            <p>Civil Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Civil Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
           WAR: |
-            <p>Sibil nga kahimtang</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Sibil nga kahimtang</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q40_EDUCATION
     conditions:
       - questionText:
           EN: |
-            <p>40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
           FIL: |
-            <p>40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
           BCL: |
-            <p>40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
           BIS: |
-            <p>40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
           CEB: |
-            <p>40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
           WAR: |
-            <p>40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q41_EMPLOYMENT
     conditions:
       - questionText:
           EN: |
-            <p>41. Employment Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>41. Employment Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
           FIL: |
-            <p>41. Employment Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>41. Employment Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
           BCL: |
-            <p>Estado kan trabaho</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Estado kan trabaho</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
           BIS: |
-            <p>Status sa Pagpanrabaho</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Status sa Pagpanrabaho</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
           CEB: |
-            <p>Status sa Trabaho</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Status sa Trabaho</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
           WAR: |
-            <p>Kahimtang han Trabaho</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Kahimtang han Trabaho</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q42_GSIS
     conditions:
       - questionText:
@@ -1375,92 +1375,92 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>45. Currently registered with PhilHealth?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45. Currently registered with PhilHealth?</p>
           FIL: |
-            <p>Kasalukuyan bang rehistrado sa PhilHealth?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Kasalukuyan bang rehistrado sa PhilHealth?</p>
           BCL: |
-            <p>Ini ba ay rehistrado sa Phihealth?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Ini ba ay rehistrado sa Phihealth?</p>
           BIS: |
-            <p>Kasalukuyang rehistrado ba sa PhilHealth?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Kasalukuyang rehistrado ba sa PhilHealth?</p>
           CEB: |
-            <p>Rehistrado sa PhilHealth karon?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Rehistrado sa PhilHealth karon?</p>
           WAR: |
-            <p>Ha pagkayana rehistrado ha PhilHealth?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Ha pagkayana rehistrado ha PhilHealth?</p>
   - name: HOUSEHOLDSURVEY_DICT.Q45_1_PIN_REG_WHEN
     conditions:
       - questionText:
           EN: |
-            <p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
           FIL: |
-            <p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
           BCL: |
-            <p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
           BIS: |
-            <p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
           CEB: |
-            <p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
           WAR: |
-            <p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q46_MEMBER_CATEGORY
     conditions:
       - questionText:
           EN: |
-            <p>46. What is his/her membership category?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>46. What is his/her membership category?</p>
           FIL: |
-            <p>46. What is his/her membership category?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>46. What is his/her membership category?</p>
           BCL: |
-            <p>46. What is his/her membership category?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>46. What is his/her membership category?</p>
           BIS: |
-            <p>46. What is his/her membership category?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>46. What is his/her membership category?</p>
           CEB: |
-            <p>46. What is his/her membership category?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>46. What is his/her membership category?</p>
           WAR: |
-            <p>46. What is his/her membership category?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>46. What is his/her membership category?</p>
   - name: HOUSEHOLDSURVEY_DICT.Q46_MEMBER_OTHER_TXT
     conditions:
       - questionText:
           EN: |
-            <p>46. Member category — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>46. Member category — Other (specify) text</p>
           FIL: |
-            <p>46. Member category — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>46. Member category — Other (specify) text</p>
           BCL: |
-            <p>46. Member category — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>46. Member category — Other (specify) text</p>
           BIS: |
-            <p>46. Member category — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>46. Member category — Other (specify) text</p>
           CEB: |
-            <p>46. Member category — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>46. Member category — Other (specify) text</p>
           WAR: |
-            <p>46. Member category — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>46. Member category — Other (specify) text</p>
   - name: HOUSEHOLDSURVEY_DICT.Q45_2_WHY_NOT_REG
     conditions:
       - questionText:
           EN: |
-            <p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
           FIL: |
-            <p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
           BCL: |
-            <p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
           BIS: |
-            <p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
           CEB: |
-            <p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
           WAR: |
-            <p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q45_2_WHY_NOT_REG_OTHER_TXT
     conditions:
       - questionText:
           EN: |
-            <p>45.2 Why not registered — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.2 Why not registered — Other (specify) text</p>
           FIL: |
-            <p>45.2 Why not registered — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.2 Why not registered — Other (specify) text</p>
           BCL: |
-            <p>45.2 Why not registered — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.2 Why not registered — Other (specify) text</p>
           BIS: |
-            <p>45.2 Why not registered — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.2 Why not registered — Other (specify) text</p>
           CEB: |
-            <p>45.2 Why not registered — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.2 Why not registered — Other (specify) text</p>
           WAR: |
-            <p>45.2 Why not registered — Other (specify) text</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>45.2 Why not registered — Other (specify) text</p>
   - name: HOUSEHOLDSURVEY_DICT.Q47_HH_HAS_PRIVATE_INS
     conditions:
       - questionText:

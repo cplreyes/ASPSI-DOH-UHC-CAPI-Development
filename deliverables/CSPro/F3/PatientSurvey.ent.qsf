@@ -1945,32 +1945,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>58. Wait time to set appointment with main primary care provider — Days</p>
+            <p>58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (~~FACILITY_NAME~~)? — Days</p>
           FIL: |
-            <p>Gaano katagal ang karaniwang paghihintay, sa araw at/o minuto, upang makakuha ng appointment sa iyong primary care provider? — Days</p>
+            <p>58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (~~FACILITY_NAME~~)? — Days</p>
           BCL: |
-            <p>Aldaw</p>
+            <p>58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (~~FACILITY_NAME~~)? — Days</p>
           BIS: |
-            <p>Adlaw</p>
+            <p>58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (~~FACILITY_NAME~~)? — Days</p>
           CEB: |
-            <p>Adlaw</p>
+            <p>58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (~~FACILITY_NAME~~)? — Days</p>
           WAR: |
-            <p>Adlaw</p>
+            <p>58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (~~FACILITY_NAME~~)? — Days</p>
   - name: PATIENTSURVEY_DICT.Q58_WAIT_MINUTES
     conditions:
       - questionText:
           EN: |
-            <p>58. Wait time to set appointment with main primary care provider — Minutes</p>
+            <p>58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (~~FACILITY_NAME~~)? — Minutes</p>
           FIL: |
-            <p>Gaano katagal ang karaniwang paghihintay, sa araw at/o minuto, upang makakuha ng appointment sa iyong primary care provider? — Minutes</p>
+            <p>58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (~~FACILITY_NAME~~)? — Minutes</p>
           BCL: |
-            <p>Minuto</p>
+            <p>58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (~~FACILITY_NAME~~)? — Minutes</p>
           BIS: |
-            <p>Minutos</p>
+            <p>58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (~~FACILITY_NAME~~)? — Minutes</p>
           CEB: |
-            <p>Minuto</p>
+            <p>58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (~~FACILITY_NAME~~)? — Minutes</p>
           WAR: |
-            <p>Minuto</p>
+            <p>58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (~~FACILITY_NAME~~)? — Minutes</p>
   - name: PATIENTSURVEY_DICT.Q59_SCHED_COMM
     conditions:
       - questionText:
@@ -2830,62 +2830,62 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>94. Lab payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Lab payment row</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           FIL: |
-            <p>94. Lab payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Lab payment row</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           BCL: |
-            <p>94. Lab payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Lab payment row</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           BIS: |
-            <p>94. Lab payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Lab payment row</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           CEB: |
-            <p>94. Lab payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Lab payment row</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           WAR: |
-            <p>94. Lab payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Lab payment row</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
   - name: PATIENTSURVEY_DICT.Q94_LAB_CODE
     conditions:
       - questionText:
           EN: |
-            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           FIL: |
-            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           BCL: |
-            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           BIS: |
-            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           CEB: |
-            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           WAR: |
-            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
   - name: PATIENTSURVEY_DICT.Q94_LAB_PAY
     conditions:
       - questionText:
           EN: |
-            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           FIL: |
-            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           BCL: |
-            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           BIS: |
-            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           CEB: |
-            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           WAR: |
-            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
   - name: PATIENTSURVEY_DICT.Q94_LAB_AMT
     conditions:
       - questionText:
           EN: |
-            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           FIL: |
-            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           BCL: |
-            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           BIS: |
-            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           CEB: |
-            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           WAR: |
-            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
   - name: PATIENTSURVEY_DICT.Q95_PRESCRIBED
     conditions:
       - questionText:

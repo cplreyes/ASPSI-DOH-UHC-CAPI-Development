@@ -1,0 +1,176 @@
+# Deterministic full drive to the Section C roster (exact widths/codes from dcf).
+rmdata ../F4/HouseholdSurvey.csdb
+launch ../F4/HouseholdSurvey.pff
+casekey 01 02 800 01 001
+type 1
+type 1
+click 1005 211
+type TESTADDRESS
+key {ENTER}
+type 14.5
+key {ENTER}
+type 120.9
+key {ENTER}
+type 10
+key {ENTER}
+type 5
+key {ENTER}
+type 8
+key {ENTER}
+type 20260609
+key {ENTER}
+note --- Section A Q1 head = Yes ---
+type 1
+note --- Section B (Q2..Q29) exact widths ---
+type TESTNAME
+key {ENTER}
+type 06
+type 1990
+type 036
+type 1
+type 2
+type 1
+type 2
+type 01
+type 1
+type 01
+type 2
+type 1
+type 01
+type 5000
+key {ENTER}
+type 1
+type 003
+type 000
+type 000
+type 1
+type 1
+type 1
+type 1
+type 1
+type 1
+type 1
+wait 1
+shot pre_q29
+click 786 883
+wait 1
+click 1258 998
+wait 1
+shot s00_after_sectionB
+note ===================== COLUMN-WISE SECTION C (real build) =====================
+note --- Q30 NAME form: 3 members (occurrence control ends at Q19=3) ---
+type RAMOS_DAISY
+key {ENTER}
+type PARAISO_AIDAN
+key {ENTER}
+type SALAZAR_ALYZZA
+key {ENTER}
+wait 1
+shot c01_q30_names_done
+note --- Q31 PRESENT (all present) ---
+type 1
+type 1
+type 1
+wait 1
+shot c02_q31_present
+note --- Q32 AGE (3-digit) ---
+type 025
+type 040
+type 050
+wait 1
+shot c03_q32_age
+note --- Q33 SEX ---
+type 1
+type 2
+type 2
+shot c04_q33_sex
+note --- Q34 RELATIONSHIP (2-digit; M1=01 Head -> #167 no warning) ---
+type 01
+type 02
+type 03
+wait 1
+shot c05_q34_rel
+note --- Q35 DISABILITY: M1=Yes M2=No M3=Yes ---
+type 1
+type 0
+type 1
+wait 1
+shot c06_q35_disability
+note --- Q36 SPECIFY (gated Q35=Yes): only M1,M3 -> M1=Yes M3=No ---
+type 1
+type 0
+wait 1
+shot c07_q36_specify
+note --- Q37 CARD (gated Q35=Yes&Q36=Yes): only M1 -> Yes ---
+type 1
+wait 1
+shot c08_q37_card
+note --- Q38 TYPE (gated card shown): only M1 -> Other(8) ---
+type 8
+wait 1
+shot c09_q38_type
+note --- Q38_OTHER_TXT (noinput unless type=8): only M1 ---
+type CHRONIC_FATIGUE
+key {ENTER}
+wait 1
+shot c10_q38_other
+note --- Q39 CIVIL ---
+type 1
+type 2
+type 1
+shot c11_q39_civil
+note --- Q40 EDUCATION (2-digit) ---
+type 07
+type 02
+type 10
+shot c12_q40_educ
+note --- Q41 EMPLOYMENT ---
+type 1
+type 4
+type 8
+shot c13_q41_employ
+note --- Q42 GSIS (2-digit YN_DK55) ---
+type 02
+type 02
+type 02
+shot c14_q42_gsis
+note --- Q43 SSS ---
+type 01
+type 02
+type 55
+shot c15_q43_sss
+note --- Q44 PAGIBIG ---
+type 02
+type 02
+type 02
+shot c16_q44_pagibig
+note --- Q45 PHILHEALTH: M1=Yes(01) M2=No(02) M3=IDK(55) ---
+type 01
+type 02
+type 55
+wait 1
+shot c17_q45_philhealth
+note --- Q45.1 WHEN (gated Q45=Yes): only M1 -> 1 ---
+type 1
+wait 1
+shot c18_q451_when
+note --- Q46 CATEGORY (gated Q45=Yes): only M1 -> Other(88) ---
+type 88
+wait 1
+shot c19_q46_category
+note --- Q46_OTHER_TXT (noinput unless 88): only M1 ---
+type SPECIAL_CAT
+key {ENTER}
+wait 1
+shot c20_q46_other
+note --- Q45.2 WHY NOT (gated Q45=No): only M2 -> 01 ---
+type 01
+wait 1
+shot c21_q452_whynot
+note --- Q45.2_OTHER_TXT: nobody (M2 picked 01, not 88) -> fully-empty noinput form, must auto-advance ---
+wait 1
+shot c22_after_sectionC
+note --- expect Q47 HH private insurance gate next ---
+type 2
+wait 1
+shot c23_q47_gate

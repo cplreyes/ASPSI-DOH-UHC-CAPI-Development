@@ -70,7 +70,7 @@ FIELD_CONTROL_CASE_END = {
 }
 
 
-FORM_PLAN = [
+_FORM_PLAN_STATIC = [
     ("Interview status",   # #515: break-off control, first form (case-tree reachable)
      [("FIELD_CONTROL", {"names": FIELD_CONTROL_CASE_START})]),
     ("FC Geographic ID + HH GPS Capture",
@@ -135,6 +135,51 @@ FORM_PLAN = [
 # Binary/computed items deliberately kept OFF every form (so the orphan check below
 # does not flag them). VERIFICATION_PHOTO_IMAGE holds the synced photo bytes.
 _OFF_FORM_ITEMS = {"VERIFICATION_PHOTO_IMAGE", "CASE_DISPOSITION"}  # #561: off-form completeness sentinel
+
+# Marker entry in _FORM_PLAN_STATIC that build_form_plan expands into the column-wise
+# Section C forms (kept as a normal record entry so the rest of the plan reads naturally).
+_SECTION_C_MARKER = [("C_HOUSEHOLD_ROSTER", None)]
+
+
+def _short_item_label(it):
+    lab = (it["labels"][0]["text"] if it.get("labels") else it["name"])
+    return lab.replace("\n", " ").replace("\r", " ").strip()[:60]
+
+
+def _section_c_columnwise(records_by_name):
+    """Section C as the 'Household Characteristic Target Interface' (spike-validated
+    2026-06-26): ONE roster form per question so CSEntry traverses COLUMN-WISE — each
+    question is asked for ALL household members before the next. The first form carries
+    MEMBER_LINE_NO (occurrence control, endgroup at Q19) + the Q30 name list; every other
+    C_HOUSEHOLD_ROSTER item gets its own roster form. Conditional questions (Q36/Q37/Q38,
+    Q45.1/Q46/Q45.2, specify-text) are gated per-occurrence in generate_apc (skip to next),
+    so a non-applicable member is skipped on that question's screen."""
+    items = records_by_name["C_HOUSEHOLD_ROSTER"]["items"]
+    # First roster form ESTABLISHES the member set: MEMBER_LINE_NO (occurrence control) +
+    # Q30_NAME + Q31_PRESENT. Q31 (a coded, auto-advancing field) is the last field so the
+    # occurrences commit and persist across the downstream one-per-form column-wise screens
+    # (a name-only first form loses occurrences 2+ on exit — desktop-CSEntry proven 2026-06-26).
+    _establish = ["MEMBER_LINE_NO", "Q30_NAME", "Q31_PRESENT"]
+    forms = [("C. Q30 Name + Q31 present (REPEATING — establishes members)",
+              [("C_HOUSEHOLD_ROSTER", {"names": _establish})])]
+    for it in items:
+        if it["name"] in _establish:
+            continue
+        forms.append((f"C. {_short_item_label(it)} (REPEATING)",
+                      [("C_HOUSEHOLD_ROSTER", {"names": [it["name"]]})]))
+    return forms
+
+
+def build_form_plan(records_by_name):
+    """The static plan with the single Section C marker expanded into per-question
+    column-wise roster forms (see _section_c_columnwise)."""
+    plan = []
+    for label, parts in _FORM_PLAN_STATIC:
+        if parts == _SECTION_C_MARKER:
+            plan.extend(_section_c_columnwise(records_by_name))
+        else:
+            plan.append((label, parts))
+    return plan
 
 
 def _filter_items(items, spec):
@@ -492,7 +537,8 @@ def build_fmf():
         mx = occ.get("maximum", 1) if isinstance(occ, dict) else 1
         return {"type_name": record_name, "max": mx} if (mx and mx > 1) else None
 
-    referenced = {rec for _, parts in FORM_PLAN for rec, _ in parts}
+    form_plan = build_form_plan(records_by_name)   # Section C expanded column-wise
+    referenced = {rec for _, parts in form_plan for rec, _ in parts}
     missing = referenced - set(records_by_name)
     if missing:
         raise RuntimeError(f"FORM_PLAN references missing records: {sorted(missing)}")
@@ -513,7 +559,7 @@ def build_fmf():
     # removed 2026-06-08 — it was a vestigial item-less record CSEntry never
     # populated and it BLOCKED case-key persistence; see Desk-Test matrix. Forms
     # now run key=0, plan=1+.)
-    for idx, (label, parts) in enumerate(FORM_PLAN, start=1):
+    for idx, (label, parts) in enumerate(form_plan, start=1):
         objs = []
         for rec_name, spec in parts:
             for it in _filter_items(records_by_name[rec_name]["items"], spec):

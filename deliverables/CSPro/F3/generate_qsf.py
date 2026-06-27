@@ -190,7 +190,7 @@ INSTRUCTIONS = {
     83: ("Note to enumerator [do not read]: This section is for the Patient’s "
          "Health-Seeking Behavior. Ask all questions in this section unless a "
          "skip rule applies. " + _READ_ONE),
-    94: "To be asked for each lab test ticked in Q93.",
+    94: "Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~",   # #801: pipe the row's lab name (Q94_LAB_CODE, per-occurrence auto-set) into every per-lab Q94 prompt so the payment/amount question names its test — replaces the generic 'asked for each lab ticked in Q93' note (mirrors the #750 roster source-context fill).
     99: ("Q99 to Q103 are applicable only to respondents in areas with BUCAS "
          "center. Otherwise, skip."),
     141: ("For example, they did not disclose any of your private medical "

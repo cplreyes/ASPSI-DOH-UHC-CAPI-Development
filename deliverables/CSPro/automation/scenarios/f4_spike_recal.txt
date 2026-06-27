@@ -1,0 +1,12 @@
+# Recalibrate F4 path: case key -> BREAKOFF -> geo (classification + barangay picker) -> GPS
+rmdata ../F4/desktest.csdb
+launch ../F4/HouseholdSurvey_desktest.pff
+casekey 01 02 800 01 001
+type 1
+key {ENTER}
+note BREAKOFF=Continue done; now CLASSIFICATION picker
+type 1
+shot d_after_classification
+note expect Barangay picker open
+key {ENTER}
+shot e_step

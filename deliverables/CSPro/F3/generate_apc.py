@@ -105,19 +105,12 @@ SOFT_CROSS = [
      "    errmsg(\"Q29 = socio-economic Class A/B but income is in the lowest bracket — confirm.\");\n  endif;\n"
      "  if Q29_SEC_CLASS = 3 and Q18_INCOME_BRACKET >= 3 and Q18_INCOME_BRACKET <= 11 then\n"
      "    errmsg(\"Q29 = socio-economic Class D/E but income is in a high bracket — confirm.\");\n  endif;"),
-    ("Q115_FINAL_CASH",
-     # Option B fan-out (#691): Q107 out-of-pocket is now a roster row, summed via
-     # q107_oop() (was the flat Q107_PAY_01_AMT).
-     "  if q107_oop() > 0 and (Q115_FINAL_CASH < q107_oop() * 0.9\n"
-     "     or Q115_FINAL_CASH > q107_oop() * 1.1) then\n"
-     "    errmsg(\"Q115 final cash differs by more than 10 percent from the out-of-pocket bill line (Q107) — confirm.\");\n  endif;"),
-    ("Q97_FINAL_AMOUNT",
-     # Option B (pilot + fan-out): Q92/Q94/Q96 out-of-pocket are all roster rows now,
-     # summed via q92_oop()/q94_oop()/q96_oop() (was the flat Q9n_PAY_01_AMT fields).
-     "  if Q97_FINAL_AMOUNT > 0 and (q92_oop() + q94_oop() + q96_oop()) > 0\n"
-     "     and (Q97_FINAL_AMOUNT < (q92_oop() + q94_oop() + q96_oop()) * 0.9\n"
-     "          or Q97_FINAL_AMOUNT > (q92_oop() + q94_oop() + q96_oop()) * 1.1) then\n"
-     "    errmsg(\"Q97 final amount differs by more than 10 percent from the out-of-pocket lines (Q92/Q94/Q96) — confirm.\");\n  endif;"),
+    # #782 (tester request, 2026-06-27): the Q97 and Q115 "final amount vs sum of OOP lines
+    # ±10%" SOFT consistency warnings are REMOVED per the testers ("lift computation logic").
+    # They were non-blocking errmsgs (spec §4 line 536) reading q92_oop()/q94_oop()/q96_oop()
+    # and q107_oop(); the enumerators found them noise. The q*_oop() helpers stay defined (no
+    # longer referenced here, but harmless). ASPSI can restore these checks if the data-quality
+    # reconciliation is wanted back.
 ]
 
 
@@ -945,6 +938,16 @@ EXTRA_PROCS = """\
   (Q113_PAY_08 = Yes -> skip to Q1141_1) is folded into the Q114_NO_PH checkbox PROC
   via CHECKBOX_CONVERT. The old PROC Q114_NO_PH_O01 field no longer exists. }
 
+{ ---- #764: Q38.1 PhilHealth-PIN timing is asked ONLY when Q38 = Yes. Only Yes and No reach
+  this field (IDK is already skipped to Q43 by the SKIP_RULES Q38=3 rule). For No, skip ahead
+  to Q38.2 (why-not-registered). 'skip to next' is illegal outside a repeating group, so target
+  the field explicitly. ---- }
+PROC Q38_1_PIN_WHEN
+preproc
+  if Q38_PHILHEALTH_REG <> 1 then
+    skip to Q38_2_WHY_NOT_REG;
+  endif;
+
 { ---- Multi-branch routing (spec 2) ---- }
 { #418/#419 (R4): Q63 usual-facility block. Spec 3.6 — Q64 (facility name) and Q66-Q70
   are enabled when Q63=Yes; Q65 (why-no-usual) is enabled when Q63=No. The old logic was
@@ -964,7 +967,7 @@ PROC Q66_SAME_AS_USUAL
 preproc
   if Q63_HAS_USUAL_FACILITY <> 1 then  skip to Q71_NEAREST_TYPE; endif;  { No-usual path: skip the Q66-Q70 facility block }
 postproc
-  if Q66_SAME_AS_USUAL = 1 then  skip to Q68_USUAL_FAC_TYPE; endif;       { this IS the usual facility -> skip Q67 why-different }
+  if Q66_SAME_AS_USUAL = 1 then  skip to Q69_USUAL_TRAVEL_HH; endif;      { #769: this IS the usual facility -> skip Q67 (why-different) AND Q68 (usual-type) straight to Q69 }
 
 PROC Q77_KON_REGISTERED
 postproc
@@ -1006,18 +1009,20 @@ postproc
 
 PROC Q60_SCHED_TELECON_OK
 preproc
-  { #415: scheduling-teleconsult-success (Q60) only if 'Teleconsultation' (option 2) was
-    ticked in the Q59 Check Box (spec 3.6: Q60 enabled when Q59 includes Teleconsultation).
-    #669: Q59 is now a Check Box (code "02" = Teleconsultation); the skip target Q61's old
-    first option-field Q61_CONSULT_COMM_O01 is now the bare base Q61_CONSULT_COMM. }
-  if pos("02", Q59_SCHED_COMM) = 0 then  skip to Q61_CONSULT_COMM; endif;
+  { #415: scheduling-teleconsult-success (Q60) only if a teleconsult mode was ticked in the
+    Q59 Check Box (spec 3.6: Q60 enabled when Q59 includes Teleconsultation).
+    #767: 'Teleconsultation' is now the three sub-modes — codes "02" (Cellphone), "03"
+    (Landline), "04" (Video Conference). Skip Q60 only if NONE of the three is ticked
+    (i.e. Face-to-face "01" only, or nothing). }
+  if pos("02", Q59_SCHED_COMM) = 0 and pos("03", Q59_SCHED_COMM) = 0 and pos("04", Q59_SCHED_COMM) = 0 then  skip to Q61_CONSULT_COMM; endif;
 
 PROC Q62_CONSULT_TELECON_OK
 preproc
-  { #417: consultation-teleconsult-success (Q62) only if 'Teleconsultation' (option 2) was
-    ticked in the Q61 Check Box (spec 3.6: Q62 enabled when Q61 includes Teleconsultation).
-    #669: Q61 is now a Check Box (code "02" = Teleconsultation). }
-  if pos("02", Q61_CONSULT_COMM) = 0 then  skip to Q63_HAS_USUAL_FACILITY; endif;
+  { #417: consultation-teleconsult-success (Q62) only if a teleconsult mode was ticked in
+    the Q61 Check Box (spec 3.6: Q62 enabled when Q61 includes Teleconsultation).
+    #767: 'Teleconsultation' is now the three sub-modes — codes "02" (Cellphone), "03"
+    (Landline), "04" (Video Conference). Skip Q62 only if NONE of the three is ticked. }
+  if pos("02", Q61_CONSULT_COMM) = 0 and pos("03", Q61_CONSULT_COMM) = 0 and pos("04", Q61_CONSULT_COMM) = 0 then  skip to Q63_HAS_USUAL_FACILITY; endif;
 
 { ---- Q93 labs: 'None' exclusivity (#448) + skip the Q94 cost matrix (spec G). #673: Q93 is
   now a Check Box base — the exclusivity soft-warn (pos("90") stands alone) and the 'None' ->
@@ -1165,12 +1170,23 @@ CHECKBOX_BASES = {
     "Q160_WHY_GENERIC", "Q161_WHY_BRANDED", "Q163_CARE_TYPE",
     "Q128_MAIFIP_OOP_ITEMS",   # #481 select_all -> Check Box (+ None/Other)
     "Q129_WHY_NO_MAIFIP",   # #700 select_all -> Check Box (tick-all)
+    "Q38_2_WHY_NOT_REG",   # #764 why-not-registered (No-only), SELECT ALL THAT APPLY
 }
 
 CHECKBOX_CONVERT = [
     # base                       has_other  exclusive  preproc_gate
     ("Q36_UHC_SOURCE",           True,  True,  None),   # 'I don't know' (90) exclusive; 'Other (Specify)' (99)
-    ("Q42_DIFFICULTY",           True,  True,  None),   # #635: 'I don't know' (90) exclusive; 'Other (Specify)' (99). Reached when Q41=Yes (Q41=No skips to Q43)
+    # #635: 'I don't know' (90) exclusive; 'Other (Specify)' (99). Reached when Q41=Yes.
+    # #765: Q42 is Yes-only (registered respondent's difficulty detail) -> after it, skip the
+    # seek-assistance pair Q43/Q44 straight to Q45 (a registered member doesn't need them).
+    ("Q42_DIFFICULTY",           True,  True,  None,
+     "  skip to Q45_CATEGORY;   { #765: registered (Q38=Yes) path skips Q43/Q44 after the difficulty detail }"),
+    # #764: Q38.2 why-not-registered — asked ONLY when Q38 = No (2). Gate skips it to Q39 for
+    # Yes/IDK; after the >=1 check, No routes on to Q43 (skips the registered-path Q39-42).
+    ("Q38_2_WHY_NOT_REG",        True,  False,
+     "  if Q38_PHILHEALTH_REG <> 2 then   { #764: only the 'No' branch answers why-not-registered }\n"
+     "    skip to Q39_HOW_FIND_OUT;\n  endif;",
+     "  skip to Q43_KNOWS_ASSIST;   { #764: after why-not-registered, the 'No' branch goes to Q43 (skips Q39-42) }"),
     ("Q50_DIFFICULTY_PAYING",    True,  True,  None),   # #639: 'I don't know' (90) exclusive; 'Other (Specify)' (99). Reached when Q49=Yes (Q49=No skips to Q51)
     ("Q52_PLANS",                True,  True,  None),   # #640: 'I don't know' (90) exclusive; 'Others (specify)' (99). Reached when Q51=Yes (Q51=No skips to Q53)
     ("Q37_UHC_UNDERSTAND",       True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
@@ -1427,8 +1443,15 @@ SKIP_RULES = [
     # Section C — UHC Awareness
     ("Q35_UHC_HEARD",        "Q35_UHC_HEARD = 2",            "Q38_PHILHEALTH_REG"),
     # Section D — PhilHealth / Insurance
-    ("Q38_PHILHEALTH_REG",   "Q38_PHILHEALTH_REG in 2,3",    "Q43_KNOWS_ASSIST"),
-    ("Q41_REG_DIFFICULTY",   "Q41_REG_DIFFICULTY = 2",       "Q43_KNOWS_ASSIST"),
+    # #764: only 'I don't know' (3) skips straight to Q43 now. 'No' (2) falls through to the
+    # Q38.1 gate (skips it) then Q38.2 (why-not-registered) which routes No -> Q43 itself.
+    # 'Yes' (1) falls through to Q38.1 (asked) -> Q39.
+    ("Q38_PHILHEALTH_REG",   "Q38_PHILHEALTH_REG = 3",       "Q43_KNOWS_ASSIST"),
+    # #765: Q41/Q42 are now Yes-only (No -> Q38.2 -> Q43; IDK -> Q43 both skip Q39-42). A
+    # registered respondent (Q38=Yes) must NOT see Q43/Q44 ("where to seek registration
+    # assistance"), so no-difficulty (Q41=No) skips straight to Q45 (the difficulty path Q42
+    # likewise skips to Q45 via its postextra below).
+    ("Q41_REG_DIFFICULTY",   "Q41_REG_DIFFICULTY = 2",       "Q45_CATEGORY"),
     ("Q43_KNOWS_ASSIST",     "Q43_KNOWS_ASSIST = 2",         "Q45_CATEGORY"),
     ("Q48_PREMIUM_PAY",      "Q48_PREMIUM_PAY = 3",          "Q51_OTHER_INSURANCE"),
     ("Q49_PREMIUM_DIFFICULT","Q49_PREMIUM_DIFFICULT = 2",    "Q51_OTHER_INSURANCE"),
@@ -1584,6 +1607,7 @@ def main():
              Q107_ROSTER_PROCS, "", Q109_ROSTER_PROCS, "",        # Section H all-amount
              Q112_ROSTER_PROCS, "", Q113_ROSTER_PROCS, ""]        # Section H all-amount
     covered = {"BREAKOFF", "ENUM_RESULT_FINAL_VISIT", "CASE_DISPOSITION",  # #515/#561 disposition PROCs
+               "Q38_1_PIN_WHEN",   # #764 Yes-only gate (EXTRA_PROCS)
                "Q88_WHY_VISIT", "Q105_REASON",                    # branching PROCs
                "Q63_HAS_USUAL_FACILITY", "Q77_KON_REGISTERED",
                "Q159_BRAND_GEN_BOUGHT", "Q162_REFERRED",  # EXTRA_PROCS (#529: Q46_BENEFITS_O01 gone — Q46 is now a Check Box, gate folded into its checkbox PROC)

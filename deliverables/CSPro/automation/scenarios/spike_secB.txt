@@ -1,0 +1,56 @@
+# Map Section B field-by-field (shot after each) to reach the roster. Branch-skip Q4/Q7/Q14=No.
+rmdata ../F4/HouseholdSurveySpike.csdb
+launch ../F4/HouseholdSurveySpike.pff
+casekey 01 02 800 01 001
+type 1
+type 1
+click 1005 211
+type TESTADDRESS
+key {ENTER}
+type 14.5
+key {ENTER}
+type 120.9
+key {ENTER}
+type 10
+key {ENTER}
+type 5
+key {ENTER}
+type 8
+key {ENTER}
+type 20260609
+key {ENTER}
+note --- Q1 head=Yes ---
+type 1
+shot b00_q1_done
+note --- Section B field-by-field ---
+type TESTNAME
+key {ENTER}
+shot b01_name
+type 06
+shot b02_month
+type 1990
+shot b03_year
+type 036
+shot b04_age
+type 1
+shot b05_sex
+type 2
+shot b06_q4_lgbt_no
+type 1
+shot b07_q6_civil
+type 2
+shot b08_q7_pwd_no
+type 1
+shot b09_after_pwd
+type 1
+shot b10_next
+type 1
+shot b11_next
+type 1
+shot b12_next
+type 2
+shot b13_next
+type 1
+shot b14_next
+type 1
+shot b15_next

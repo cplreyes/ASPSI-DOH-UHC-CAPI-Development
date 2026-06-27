@@ -276,7 +276,13 @@ PROC MEMBER_LINE_NO
 preproc
   { Auto-end the roster once the declared household size (Q19) is reached --
     without this, entry rolls into member N+1 and the enumerator must know to
-    end the group manually. Also auto-fill the line number from the occurrence. }
+    end the group manually. Also auto-fill the line number from the occurrence.
+    Column-wise Section C (2026-06-26): the occurrence-establishing first roster form
+    carries Q30_NAME + Q31_PRESENT (a coded auto-advancing field) so the member set is
+    COMMITTED before the per-question column-wise forms — a name-ONLY first form loses
+    occurrences 2+ on exit (CSEntry discards the dynamically-built tail of a single-
+    enterable-field roster; proven on desktop CSEntry). All other Section C questions are
+    one-per-form (each asked for every member before the next). }
   if curocc() > Q19_HH_SIZE_TOTAL then
     endgroup;
   endif;
@@ -290,46 +296,56 @@ postproc
     errmsg("First roster entry is normally the respondent (Self) or HH head. Confirm.");
   endif;
 
-PROC Q35_HAS_DISABILITY
-postproc
-  if Q35_HAS_DISABILITY = 0 then   { coded No=0/Yes=1 -- `= 2` was a dead condition }
-    skip to Q39_CIVIL_STATUS;
-  endif;
+{ Section C renders COLUMN-WISE (one roster form per question — the "Household
+  Characteristic Target Interface", spike-validated 2026-06-26): CSEntry asks each question
+  for ALL members before the next. Intra-member conditionality can no longer be a
+  `skip to <field>` (the target now lives on a DIFFERENT roster form), so each conditional
+  question carries a PER-OCCURRENCE preproc gate `if <not-applicable> then skip to next` that
+  skips THIS member on THAT question's screen and advances to the next occurrence (the proven
+  Q45.2 gate / Q32 spike pattern). Q35 (disability?) and Q45 (PhilHealth registered?) are
+  asked of every member, so they no longer route — their old forward-skips moved DOWNSTREAM
+  onto Q36/Q37/Q38 (disability detail) and Q45.1/Q46/Q45.2 (PhilHealth detail). The specify
+  free-text (Q38/Q46/Q45.2 _OTHER_TXT) keeps its auto-derived noinput gate, which already
+  skips non-'Other' occurrences correctly on its own single-field roster form. }
 
 PROC Q36_SPECIFY_DISABILITY
-postproc
-  if Q36_SPECIFY_DISABILITY = 0 then   { #604: No = doesn't want to specify -> skip Q37 (card) + Q38 (type) to Q39 (YN_01: No=0) }
-    skip to Q39_CIVIL_STATUS;
-  endif;
+preproc
+  { Asked only for members who identify as having a disability (Q35 = Yes=1). }
+  if Q35_HAS_DISABILITY = 0 then skip to next; endif;
 
 PROC Q37_PWD_CARD
-postproc
-  if Q37_PWD_CARD <> 1 then   { #605: Q38 reads the *presented* card, so skip it unless Yes=1 (card shown). Covers No=0 AND Refused=2; was `= 2` which only caught Refused and let No fall through to Q38. }
-    skip to Q39_CIVIL_STATUS;
+preproc
+  { #604: card view asked only when the member wants to specify the disability
+    (Q35 = Yes AND Q36 = Yes). The Q35 guard catches members whose Q36 was skipped
+    (notappl) upstream. }
+  if Q35_HAS_DISABILITY = 0 or Q36_SPECIFY_DISABILITY = 0 then skip to next; endif;
+
+PROC Q38_DISABILITY_TYPE
+preproc
+  { #605: Q38 reads the *presented* PWD card, so ask only when the card was shown
+    (Q35=Yes AND Q36=Yes AND Q37=Yes/1). Q37 <> 1 also covers No/Refused and the notappl
+    members the upstream gates skipped. }
+  if Q35_HAS_DISABILITY = 0 or Q36_SPECIFY_DISABILITY = 0 or Q37_PWD_CARD <> 1 then
+    skip to next;
   endif;
 
-PROC Q45_PHILHEALTH_REG
-postproc
-  { #563/#565: Q46 (membership category) and Q45.1 (PIN registration date) are Yes-only.
-    Q45=Yes(01) -> fall through to Q45.1 -> Q46. #795 (2026-06-25): No(02) now routes to the
-    new Q45.2 'why not registered' (skipping the Yes-only Q45.1/Q46); I-don't-know(55) still
-    skips ALL PhilHealth detail straight to the next member. }
-  if Q45_PHILHEALTH_REG = 2 then
-    skip to Q45_2_WHY_NOT_REG;       { #795: No -> ask 45.2 (why not registered) }
-  endif;
-  if Q45_PHILHEALTH_REG = 55 then
-    skip to next;                    { I-don't-know -> skip all PhilHealth detail -> next member }
-  endif;
+PROC Q45_1_PIN_REG_WHEN
+preproc
+  { #563/#565: PIN-registration timing is Yes-only (Q45 = registered = 1). No/IDK members
+    are skipped on this screen. }
+  if Q45_PHILHEALTH_REG <> 1 then skip to next; endif;
+
+PROC Q46_MEMBER_CATEGORY
+preproc
+  { #563: membership category is Yes-only (Q45 = registered = 1). }
+  if Q45_PHILHEALTH_REG <> 1 then skip to next; endif;
 
 PROC Q45_2_WHY_NOT_REG
 preproc
-  { #795: only the 'No in Q45' branch answers 45.2. Yes/IDK members reach this field
-    physically (it sits after Q46), so skip them to the next roster member. No members
-    arrive here via the Q45 postproc skip with Q45=2, fall through, and answer. The
-    Other(88) specify text is gated by the auto-derived Q45_2_WHY_NOT_REG_OTHER_TXT PROC. }
-  if Q45_PHILHEALTH_REG <> 2 then
-    skip to next;                    { 'next' = next C_HOUSEHOLD_ROSTER occurrence }
-  endif;
+  { #795: 'why not registered' is No-only (Q45 = No = 2). Yes/IDK members are skipped on this
+    screen. The Other(88) specify text is gated by the auto-derived
+    Q45_2_WHY_NOT_REG_OTHER_TXT PROC (noinput when <> 88). }
+  if Q45_PHILHEALTH_REG <> 2 then skip to next; endif;
 
 PROC Q49_PRIVATE_INS
 postproc
@@ -401,6 +417,23 @@ postproc
   if Q1_IS_HH_HEAD = 2 then
     errmsg("Respondent is not the household head. Confirm they are a household decision-maker per the sampling protocol before continuing.");
   endif;
+
+{ ---- #796/#797: the area-presence screening questions ("Does this area have a BUCAS
+       center?" / "...a GAMOT pharmacy/package?") are REMOVED per tester request — the BUCAS
+       (Q57-61) and GAMOT (Q69-76) blocks are now asked of everyone. The fields are kept only
+       as skip targets (Q54=No -> AREA_HAS_BUCAS, Q62=Never -> AREA_HAS_GAMOT): auto-answer
+       Yes + noinput so they never display and flow falls straight through to Q57 / Q69. The
+       old "= 2 -> skip the block" rules are removed from SKIP_RULES (the block no longer gates
+       on area presence). ---- }
+PROC AREA_HAS_BUCAS
+preproc
+  AREA_HAS_BUCAS = 1;   { #796: area-screening removed -> always ask BUCAS block; never displayed }
+  noinput;
+
+PROC AREA_HAS_GAMOT
+preproc
+  AREA_HAS_GAMOT = 1;   { #797: area-screening removed -> always ask GAMOT block; never displayed }
+  noinput;
 
 { ---- #664: Q135 (ZBB out-of-pocket) is asked ONLY if the most-recent hospitalization was in
        a DOH-retained hospital — the paper labels it "[Ask only if they went to a DOH-retained
@@ -791,8 +824,8 @@ SKIP_RULES = [
     # new Q45.1 PIN date + Q46 category) — the old "skip to Q48_NAME_FIRST" target is gone
     # now that Q48-Q50 moved to the C_PRIVATE_INS_ROSTER second pass.
     # Section G — Access to Medicines
-    ("Q62_PURCHASE_FREQ",    "Q62_PURCHASE_FREQ = 5",       "AREA_HAS_GAMOT"),    # Never -> skip Rx/where/travel (land on GAMOT area-gate, #643)
-    ("AREA_HAS_GAMOT",       "AREA_HAS_GAMOT = 2",          "Q75_BRAND_GEN_KNOWS"), # #643: no GAMOT -> skip Q69-76 (mirrors Q69=No)
+    ("Q62_PURCHASE_FREQ",    "Q62_PURCHASE_FREQ = 5",       "AREA_HAS_GAMOT"),    # Never -> skip Rx/where/travel (lands on the now-auto-answered GAMOT gate -> falls through to Q69, #643/#797)
+    # #797: AREA_HAS_GAMOT = 2 -> skip Q69-76 REMOVED — GAMOT block is asked of everyone now (gate auto-answers Yes + noinput)
     ("Q69_GAMOT_HEARD",      "Q69_GAMOT_HEARD = 2",         "Q75_BRAND_GEN_KNOWS"),
     # #575 (ASPSI, 2026-06-17 — go-with-ASPSI): Q72 "obtained meds via GAMOT?" = No skips
     # only Q73 (the GAMOT meds list) but STILL asks Q74 "where did you get the rest" (you
@@ -812,8 +845,8 @@ SKIP_RULES = [
     # value sets are Yes(1)/No(2) only — no "Don't know" code 3 here (matches F3's
     # UHC/KON/BUCAS heard gates which use "= 2"); the old "in 2,3" carried a dead 3.
     ("Q51_UHC_HEARD",        "Q51_UHC_HEARD = 2",           "Q54_YAKAP_HEARD"),
-    ("Q54_YAKAP_HEARD",      "Q54_YAKAP_HEARD = 2",         "AREA_HAS_BUCAS"),    # -> BUCAS area-gate (#641)
-    ("AREA_HAS_BUCAS",       "AREA_HAS_BUCAS = 2",          "Q62_PURCHASE_FREQ"), # #641: no BUCAS -> skip Q57-61 (mirrors Q57=No)
+    ("Q54_YAKAP_HEARD",      "Q54_YAKAP_HEARD = 2",         "AREA_HAS_BUCAS"),    # -> auto-answered BUCAS gate -> falls through to Q57 (#641/#796)
+    # #796: AREA_HAS_BUCAS = 2 -> skip Q57-61 REMOVED — BUCAS block is asked of everyone now (gate auto-answers Yes + noinput)
     ("Q57_BUCAS_HEARD",      "Q57_BUCAS_HEARD = 2",         "Q62_PURCHASE_FREQ"),
     ("Q60_BUCAS_ACCESSED",   "Q60_BUCAS_ACCESSED = 2",      "Q62_PURCHASE_FREQ"),
     # Section I primary-care routing
@@ -938,6 +971,57 @@ def dcf_items_map():
             for it in rec.get("items", []):
                 items[it["name"]] = it
     return items
+
+
+# --- Column-wise Section C occurrence bound (2026-06-26) ----------------------------------
+# Section C is split into ONE roster form per question (the "Household Characteristic Target
+# Interface"). The member set is ESTABLISHED on the first roster form (MEMBER_LINE_NO +
+# Q30_NAME + Q31_PRESENT), whose MEMBER_LINE_NO preproc endgroups at Q19. Occurrences are
+# shared across all the per-question forms (desktop-CSEntry confirmed: Q32 occ2 auto-carries
+# the Q30 name of member 2). BUT each downstream per-question form has no occurrence control
+# of its own, so advancing past the last member would CREATE A PHANTOM occurrence (occ Q19+1
+# with a NOTAPPL line). Fix: give every per-question roster field the SAME endgroup bound as
+# the first form, so it auto-ends at Q19 members. Injected as the first preproc statement of
+# each field's PROC (creating the preproc / whole PROC where none exists).
+_ROSTER_ESTABLISH = {"MEMBER_LINE_NO", "Q30_NAME", "Q31_PRESENT"}
+_ENDGROUP_BOUND = ("  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;"
+                   "   { column-wise: auto-end this question at the Q19 member count }")
+
+
+def roster_bound_fields():
+    """Section C roster items that need a per-form occurrence bound (everything after the
+    establishing first form)."""
+    dic = json.loads(DCF.read_text(encoding="utf-8"))
+    for level in dic["levels"]:
+        for rec in level.get("records", []):
+            if rec["name"] == "C_HOUSEHOLD_ROSTER":
+                return [it["name"] for it in rec.get("items", [])
+                        if it["name"] not in _ROSTER_ESTABLISH]
+    return []
+
+
+def inject_roster_occurrence_bounds(text, fields):
+    """Insert the endgroup bound as the FIRST preproc statement of every per-question Section C
+    roster field. Three cases: (a) PROC has a preproc -> insert after the 'preproc' line;
+    (b) PROC exists but is postproc-only -> prepend a preproc section; (c) no PROC -> append a
+    preproc-only PROC."""
+    for f in fields:
+        m = re.search(rf"(?m)^PROC {re.escape(f)}[ \t]*$", text)
+        if not m:
+            text += f"\nPROC {f}\npreproc\n{_ENDGROUP_BOUND}\n"
+            continue
+        body_start = m.end()
+        nxt = re.search(r"(?m)^PROC ", text[body_start:])
+        body_end = body_start + nxt.start() if nxt else len(text)
+        body = text[body_start:body_end]
+        pp = re.search(r"(?m)^preproc[ \t]*$", body)
+        if pp:
+            insert_at = body_start + pp.end()
+            text = text[:insert_at] + "\n" + _ENDGROUP_BOUND + text[insert_at:]
+        else:
+            text = (text[:body_start] + "\npreproc\n" + _ENDGROUP_BOUND
+                    + text[body_start:])
+    return text
 
 
 # Section N subtotal panels (spec finding #9 / §4.9, item ranges from §lines 549-552).
@@ -1259,10 +1343,14 @@ def main():
     parts = [HEADER, "", CONTROL_PROCS, "", DISPOSITION_PROCS, "", ROSTER_PROCS, "", PRIV_ROSTER_PROCS, "",
              BILL_VALIDATION, "", EXTRA_PROCS, "", VALIDATION_PROCS, ""]
     covered = {"BREAKOFF", "ENUM_RESULT_FINAL_VISIT", "CASE_DISPOSITION",  # #515/#561 disposition PROCs
+               "AREA_HAS_BUCAS", "AREA_HAS_GAMOT",  # #796/#797 auto-answer + noinput (EXTRA_PROCS)
                "MEMBER_LINE_NO", "Q34_RELATIONSHIP", "Q35_HAS_DISABILITY",
-               "Q36_SPECIFY_DISABILITY", "Q37_PWD_CARD",  # #604: Q36 now has a bespoke skip PROC
-               "Q45_PHILHEALTH_REG",  # #563/#565: bespoke roster skip (ROSTER_PROCS)
-               "Q45_2_WHY_NOT_REG",   # #795: bespoke roster gate (ROSTER_PROCS); _OTHER_TXT stays auto-gen
+               # Column-wise Section C (2026-06-26): per-occurrence preproc gates live in
+               # ROSTER_PROCS for every conditional roster question. Q35/Q45 are always asked
+               # (no PROC now) but stay covered so no auto-gen mis-fires on them.
+               "Q36_SPECIFY_DISABILITY", "Q37_PWD_CARD", "Q38_DISABILITY_TYPE",  # #604/#605 disability chain
+               "Q45_PHILHEALTH_REG", "Q45_1_PIN_REG_WHEN", "Q46_MEMBER_CATEGORY",  # #563/#565 PhilHealth Yes-only
+               "Q45_2_WHY_NOT_REG",   # #795: No-only gate (ROSTER_PROCS); _OTHER_TXT stays auto-gen
                "PRIV_MEMBER_LINE_NO", "Q48_OTHER_INS_REG",  # #525/#612/#613: priv-ins 2nd pass
                "Q49_PRIVATE_INS", "C_HOUSEHOLD_ROSTER_FORM", "Q47_HH_HAS_PRIVATE_INS",
                "Q141_1_NO_RECEIPT_AMT_PHP",
@@ -1386,6 +1474,11 @@ def main():
 
     parts.append(TODO_NOTE)
     text = "\n".join(parts).rstrip() + "\n"
+    # Column-wise Section C: bound every per-question roster form to Q19 members (prevents
+    # phantom occurrences on advance past the last member). Done as a text pass so it covers
+    # bespoke gates, auto-gen other-specify, and fields with no PROC uniformly.
+    rb_fields = roster_bound_fields()
+    text = inject_roster_occurrence_bounds(text, rb_fields)
     OUT.write_text(text, encoding="utf-8")
     procs = [l for l in text.splitlines() if l.startswith("PROC ")]
     assert len(procs) == len(set(procs)), "duplicate PROC names emitted"

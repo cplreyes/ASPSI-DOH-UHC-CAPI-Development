@@ -1,0 +1,88 @@
+# Deterministic full drive to the Section C roster (exact widths/codes from dcf).
+rmdata ../F4/HouseholdSurveySpike.csdb
+launch ../F4/HouseholdSurveySpike.pff
+casekey 01 02 800 01 001
+type 1
+type 1
+click 1005 211
+type TESTADDRESS
+key {ENTER}
+type 14.5
+key {ENTER}
+type 120.9
+key {ENTER}
+type 10
+key {ENTER}
+type 5
+key {ENTER}
+type 8
+key {ENTER}
+type 20260609
+key {ENTER}
+note --- Section A Q1 head = Yes ---
+type 1
+note --- Section B (Q2..Q29) exact widths ---
+type TESTNAME
+key {ENTER}
+type 06
+type 1990
+type 036
+type 1
+type 2
+type 1
+type 2
+type 01
+type 1
+type 01
+type 2
+type 1
+type 01
+type 5000
+key {ENTER}
+type 1
+type 003
+type 000
+type 000
+type 1
+type 1
+type 1
+type 1
+type 1
+type 1
+type 1
+wait 1
+shot pre_q29
+click 786 883
+wait 1
+click 1258 998
+wait 1
+shot s00_after_sectionB
+note ===== ROSTER form1: Q30 name + Q31 present (member2 Away) =====
+type MEMBERONE
+key {ENTER}
+shot s01_name1
+type 1
+wait 1
+shot s02_present1
+type MEMBERTWO
+key {ENTER}
+type 0
+wait 1
+shot s03_member2_away
+type MEMBERTHREE
+key {ENTER}
+type 1
+wait 1
+shot s04_after_form1
+note ===== expect ROSTER form2: AGE (member2 away should be SKIPPED) =====
+type 025
+wait 1
+shot s05_age_a
+type 040
+wait 1
+shot s06_age_b
+type 050
+wait 1
+shot s07_age_c
+key {ENTER}
+shot s08_next

@@ -218,13 +218,13 @@ Item=Q29_SOCIOECONOMIC_CLASS
 
 Name=FORM005
 
-Label=C. Household Roster - REPEATING (one member per row)
+Label=C. Q30 Name + Q31 present (REPEATING — establishes members)
 
 Level=1
 
 Repeat=C_HOUSEHOLD_ROSTER
 
-Size=806,757
+Size=806,300
 
   
 
@@ -234,43 +234,443 @@ Item=Q30_NAME
 
 Item=Q31_PRESENT
 
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM006
+
+Label=C. 32. Age (as of last birthday) (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
+
 Item=Q32_AGE
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM007
+
+Label=C. 33. Sex at birth (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
 
 Item=Q33_SEX
 
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM008
+
+Label=C. 34. Relationship to Household Head (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
+
 Item=Q34_RELATIONSHIP
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM009
+
+Label=C. 35. Do you identify as a person with a disability? (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
 
 Item=Q35_HAS_DISABILITY
 
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM010
+
+Label=C. 36. Would you like to specify the type of disability? (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
+
 Item=Q36_SPECIFY_DISABILITY
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM011
+
+Label=C. 37. May we view the patient's PWD Identification Card? (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
 
 Item=Q37_PWD_CARD
 
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM012
+
+Label=C. 38. Based on the presented PWD Identification Card, what typ (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
+
 Item=Q38_DISABILITY_TYPE
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM013
+
+Label=C. 38. Disability — Other (specify) text (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
 
 Item=Q38_DISABILITY_OTHER_TXT
 
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM014
+
+Label=C. 39. Civil Status (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
+
 Item=Q39_CIVIL_STATUS
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM015
+
+Label=C. 40. Highest level of education attended (the highest level t (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
 
 Item=Q40_EDUCATION
 
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM016
+
+Label=C. 41. Employment Status (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
+
 Item=Q41_EMPLOYMENT
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM017
+
+Label=C. 42. Is (NAME) covered by GSIS either as a member or dependen (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
 
 Item=Q42_GSIS
 
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM018
+
+Label=C. 43. Is (NAME) covered by SSS either as a member or dependent (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
+
 Item=Q43_SSS
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM019
+
+Label=C. 44. Is (NAME) covered by Pag-ibig either as a member or depe (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
 
 Item=Q44_PAGIBIG
 
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM020
+
+Label=C. 45. Currently registered with PhilHealth? (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
+
 Item=Q45_PHILHEALTH_REG
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM021
+
+Label=C. 45.1 When did you register and receive your PhilHealth PIN?  (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
 
 Item=Q45_1_PIN_REG_WHEN
 
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM022
+
+Label=C. 46. What is his/her membership category? (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
+
 Item=Q46_MEMBER_CATEGORY
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM023
+
+Label=C. 46. Member category — Other (specify) text (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
 
 Item=Q46_MEMBER_OTHER_TXT
 
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM024
+
+Label=C. 45.2 Why are you not registered? (Only answer if 'No' in Q45 (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
+
 Item=Q45_2_WHY_NOT_REG
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM025
+
+Label=C. 45.2 Why not registered — Other (specify) text (REPEATING)
+
+Level=1
+
+Repeat=C_HOUSEHOLD_ROSTER
+
+Size=806,300
+
+  
 
 Item=Q45_2_WHY_NOT_REG_OTHER_TXT
 
@@ -282,7 +682,7 @@ Item=Q45_2_WHY_NOT_REG_OTHER_TXT
 
 [Form]
 
-Name=FORM006
+Name=FORM026
 
 Label=C. HH Private Insurance Gate (Q47)
 
@@ -302,7 +702,7 @@ Item=Q47_HH_HAS_PRIVATE_INS
 
 [Form]
 
-Name=FORM007
+Name=FORM027
 
 Label=C. Private Insurance Q48-Q50 - REPEATING (Q47=Yes; piped names)
 
@@ -330,7 +730,7 @@ Item=Q50_PRIVATE_INS_OTHER_TXT
 
 [Form]
 
-Name=FORM008
+Name=FORM028
 
 Label=D. UHC Awareness
 
@@ -358,7 +758,7 @@ Item=Q53_UHC_UNDERSTAND_OTHER_TXT
 
 [Form]
 
-Name=FORM009
+Name=FORM029
 
 Label=E. YAKAP / Konsulta
 
@@ -386,7 +786,7 @@ Item=Q56_YAKAP_UNDERSTAND_OTHER_TXT
 
 [Form]
 
-Name=FORM010
+Name=FORM030
 
 Label=F. BUCAS Awareness
 
@@ -422,7 +822,7 @@ Item=Q61_BUCAS_SERVICES_OTHER_TXT
 
 [Form]
 
-Name=FORM011
+Name=FORM031
 
 Label=G. Access to Medicines
 
@@ -492,7 +892,7 @@ Item=Q78_WHY_BRANDED_OTHER_TXT
 
 [Form]
 
-Name=FORM012
+Name=FORM032
 
 Label=H. PhilHealth Registration
 
@@ -540,7 +940,7 @@ Item=Q88_DIFF_PAYING_OTHER_TXT
 
 [Form]
 
-Name=FORM013
+Name=FORM033
 
 Label=I. Primary Care
 
@@ -592,7 +992,7 @@ Item=Q100_LEAVE_WORK_SCHOOL
 
 [Form]
 
-Name=FORM014
+Name=FORM034
 
 Label=J. Health Seeking
 
@@ -634,7 +1034,7 @@ Item=Q107_OTHER_ACTIONS_OTHER_TXT
 
 [Form]
 
-Name=FORM015
+Name=FORM035
 
 Label=K. Referrals
 
@@ -698,7 +1098,7 @@ Item=Q125_SAT_REFERRAL_EXP
 
 [Form]
 
-Name=FORM016
+Name=FORM036
 
 Label=L. NBB Awareness
 
@@ -732,7 +1132,7 @@ Item=Q131_NBB_OOP
 
 [Form]
 
-Name=FORM017
+Name=FORM037
 
 Label=M. ZBB / MAIFIP / Bill-Recall
 
@@ -788,7 +1188,7 @@ Item=Q143_HOW_PAID_OTHER_TXT
 
 [Form]
 
-Name=FORM018
+Name=FORM038
 
 Label=N. Household Expenditures
 
@@ -1042,7 +1442,7 @@ Item=Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP
 
 [Form]
 
-Name=FORM019
+Name=FORM039
 
 Label=O. Sources of Funds for Health
 
@@ -1086,7 +1486,7 @@ Item=Q196_FOREGONE_OTHER_TXT
 
 [Form]
 
-Name=FORM020
+Name=FORM040
 
 Label=P. Financial Risk
 
@@ -1112,7 +1512,7 @@ Item=Q199_WTP_OTHER_TXT
 
 [Form]
 
-Name=FORM021
+Name=FORM041
 
 Label=Q. Financial Anxiety
 
@@ -1138,7 +1538,7 @@ Item=Q202_WORRY_REASONS_OTHER_TXT
 
 [Form]
 
-Name=FORM022
+Name=FORM042
 
 Label=Closing - case end
 
@@ -1174,7 +1574,7 @@ Item=ENUM_RESULT_FINAL_VISIT
 
 [Form]
 
-Name=FORM023
+Name=FORM043
 
 Label=Case Verification Photo
 
@@ -2870,7 +3270,7 @@ Required=Yes
 
 Name=C_HOUSEHOLD_ROSTER_FORM
 
-Label=C. Household Roster - REPEATING (one member per row)
+Label=C. Q30 Name + Q31 present (REPEATING — establishes members)
 
 Form=6
 
@@ -2956,23 +3356,45 @@ Text=31. HH member present or away
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_2
+
+Label=C. 32. Age (as of last birthday) (REPEATING)
+
+Form=7
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q32_AGE
 
-Position=350,117,760,137
+Position=350,27,760,47
 
 Item=Q32_AGE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=6
+Form=7
 
   
 
 [Text]
 
-Position=50,120,330,136
+Position=50,30,330,46
 
 Text=32. Age (as of last birthday)
 
@@ -2980,23 +3402,45 @@ Text=32. Age (as of last birthday)
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_3
+
+Label=C. 33. Sex at birth (REPEATING)
+
+Form=8
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q33_SEX
 
-Position=350,147,365,167
+Position=350,27,365,47
 
 Item=Q33_SEX,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=6
+Form=8
 
   
 
 [Text]
 
-Position=50,150,330,166
+Position=50,30,330,46
 
 Text=33. Sex at birth
 
@@ -3004,23 +3448,45 @@ Text=33. Sex at birth
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_4
+
+Label=C. 34. Relationship to Household Head (REPEATING)
+
+Form=9
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q34_RELATIONSHIP
 
-Position=350,177,365,197
+Position=350,27,365,47
 
 Item=Q34_RELATIONSHIP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=6
+Form=9
 
   
 
 [Text]
 
-Position=50,180,330,196
+Position=50,30,330,46
 
 Text=34. Relationship to Household Head
 
@@ -3028,23 +3494,45 @@ Text=34. Relationship to Household Head
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_5
+
+Label=C. 35. Do you identify as a person with a disability? (REPEATING)
+
+Form=10
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q35_HAS_DISABILITY
 
-Position=350,207,365,227
+Position=350,27,365,47
 
 Item=Q35_HAS_DISABILITY,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=6
+Form=10
 
   
 
 [Text]
 
-Position=50,210,330,226
+Position=50,30,330,46
 
 Text=35. Do you identify as a person with a disability?
 
@@ -3052,23 +3540,45 @@ Text=35. Do you identify as a person with a disability?
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_6
+
+Label=C. 36. Would you like to specify the type of disability? (REPEATING)
+
+Form=11
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q36_SPECIFY_DISABILITY
 
-Position=350,237,365,257
+Position=350,27,365,47
 
 Item=Q36_SPECIFY_DISABILITY,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=6
+Form=11
 
   
 
 [Text]
 
-Position=50,240,330,256
+Position=50,30,330,46
 
 Text=36. Would you like to specify the type of disability?
 
@@ -3076,23 +3586,45 @@ Text=36. Would you like to specify the type of disability?
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_7
+
+Label=C. 37. May we view the patient's PWD Identification Card? (REPEATING)
+
+Form=12
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q37_PWD_CARD
 
-Position=350,267,365,287
+Position=350,27,365,47
 
 Item=Q37_PWD_CARD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=6
+Form=12
 
   
 
 [Text]
 
-Position=50,270,330,286
+Position=50,30,330,46
 
 Text=37. May we view the patient's PWD Identification Card?
 
@@ -3100,23 +3632,45 @@ Text=37. May we view the patient's PWD Identification Card?
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_8
+
+Label=C. 38. Based on the presented PWD Identification Card, what typ (REPEATING)
+
+Form=13
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q38_DISABILITY_TYPE
 
-Position=350,297,365,317
+Position=350,27,365,47
 
 Item=Q38_DISABILITY_TYPE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=6
+Form=13
 
   
 
 [Text]
 
-Position=50,300,330,316
+Position=50,30,330,46
 
 Text=38. Based on the presented PWD Identification Card, what type of disability is indicated?
 
@@ -3124,11 +3678,33 @@ Text=38. Based on the presented PWD Identification Card, what type of disability
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_9
+
+Label=C. 38. Disability — Other (specify) text (REPEATING)
+
+Form=14
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q38_DISABILITY_OTHER_TXT
 
-Position=350,327,760,347
+Position=350,27,760,47
 
 Item=Q38_DISABILITY_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 
@@ -3136,13 +3712,13 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=6
+Form=14
 
   
 
 [Text]
 
-Position=50,330,330,346
+Position=50,30,330,46
 
 Text=38. Disability — Other (specify) text
 
@@ -3150,23 +3726,45 @@ Text=38. Disability — Other (specify) text
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_10
+
+Label=C. 39. Civil Status (REPEATING)
+
+Form=15
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q39_CIVIL_STATUS
 
-Position=350,357,365,377
+Position=350,27,365,47
 
 Item=Q39_CIVIL_STATUS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=6
+Form=15
 
   
 
 [Text]
 
-Position=50,360,330,376
+Position=50,30,330,46
 
 Text=39. Civil Status
 
@@ -3174,23 +3772,45 @@ Text=39. Civil Status
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_11
+
+Label=C. 40. Highest level of education attended (the highest level t (REPEATING)
+
+Form=16
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q40_EDUCATION
 
-Position=350,387,365,407
+Position=350,27,365,47
 
 Item=Q40_EDUCATION,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=6
+Form=16
 
   
 
 [Text]
 
-Position=50,390,330,406
+Position=50,30,330,46
 
 Text=40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)
 
@@ -3198,23 +3818,45 @@ Text=40. Highest level of education attended (the highest level the person reach
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_12
+
+Label=C. 41. Employment Status (REPEATING)
+
+Form=17
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q41_EMPLOYMENT
 
-Position=350,417,365,437
+Position=350,27,365,47
 
 Item=Q41_EMPLOYMENT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=6
+Form=17
 
   
 
 [Text]
 
-Position=50,420,330,436
+Position=50,30,330,46
 
 Text=41. Employment Status
 
@@ -3222,23 +3864,45 @@ Text=41. Employment Status
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_13
+
+Label=C. 42. Is (NAME) covered by GSIS either as a member or dependen (REPEATING)
+
+Form=18
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q42_GSIS
 
-Position=350,447,365,467
+Position=350,27,365,47
 
 Item=Q42_GSIS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=6
+Form=18
 
   
 
 [Text]
 
-Position=50,450,330,466
+Position=50,30,330,46
 
 Text=42. Is (NAME) covered by GSIS either as a member or dependent?
 
@@ -3246,23 +3910,45 @@ Text=42. Is (NAME) covered by GSIS either as a member or dependent?
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_14
+
+Label=C. 43. Is (NAME) covered by SSS either as a member or dependent (REPEATING)
+
+Form=19
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q43_SSS
 
-Position=350,477,365,497
+Position=350,27,365,47
 
 Item=Q43_SSS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=6
+Form=19
 
   
 
 [Text]
 
-Position=50,480,330,496
+Position=50,30,330,46
 
 Text=43. Is (NAME) covered by SSS either as a member or dependent?
 
@@ -3270,23 +3956,45 @@ Text=43. Is (NAME) covered by SSS either as a member or dependent?
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_15
+
+Label=C. 44. Is (NAME) covered by Pag-ibig either as a member or depe (REPEATING)
+
+Form=20
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q44_PAGIBIG
 
-Position=350,507,365,527
+Position=350,27,365,47
 
 Item=Q44_PAGIBIG,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=6
+Form=20
 
   
 
 [Text]
 
-Position=50,510,330,526
+Position=50,30,330,46
 
 Text=44. Is (NAME) covered by Pag-ibig either as a member or dependent?
 
@@ -3294,23 +4002,45 @@ Text=44. Is (NAME) covered by Pag-ibig either as a member or dependent?
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_16
+
+Label=C. 45. Currently registered with PhilHealth? (REPEATING)
+
+Form=21
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q45_PHILHEALTH_REG
 
-Position=350,537,365,557
+Position=350,27,365,47
 
 Item=Q45_PHILHEALTH_REG,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=6
+Form=21
 
   
 
 [Text]
 
-Position=50,540,330,556
+Position=50,30,330,46
 
 Text=45. Currently registered with PhilHealth?
 
@@ -3318,23 +4048,45 @@ Text=45. Currently registered with PhilHealth?
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_17
+
+Label=C. 45.1 When did you register and receive your PhilHealth PIN?  (REPEATING)
+
+Form=22
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q45_1_PIN_REG_WHEN
 
-Position=350,567,365,587
+Position=350,27,365,47
 
 Item=Q45_1_PIN_REG_WHEN,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=6
+Form=22
 
   
 
 [Text]
 
-Position=50,570,330,586
+Position=50,30,330,46
 
 Text=45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)
 
@@ -3342,23 +4094,45 @@ Text=45.1 When did you register and receive your PhilHealth PIN? (Only answer if
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_18
+
+Label=C. 46. What is his/her membership category? (REPEATING)
+
+Form=23
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q46_MEMBER_CATEGORY
 
-Position=350,597,365,617
+Position=350,27,365,47
 
 Item=Q46_MEMBER_CATEGORY,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=6
+Form=23
 
   
 
 [Text]
 
-Position=50,600,330,616
+Position=50,30,330,46
 
 Text=46. What is his/her membership category?
 
@@ -3366,11 +4140,33 @@ Text=46. What is his/her membership category?
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_19
+
+Label=C. 46. Member category — Other (specify) text (REPEATING)
+
+Form=24
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q46_MEMBER_OTHER_TXT
 
-Position=350,627,760,647
+Position=350,27,760,47
 
 Item=Q46_MEMBER_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 
@@ -3378,13 +4174,13 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=6
+Form=24
 
   
 
 [Text]
 
-Position=50,630,330,646
+Position=50,30,330,46
 
 Text=46. Member category — Other (specify) text
 
@@ -3392,23 +4188,45 @@ Text=46. Member category — Other (specify) text
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_20
+
+Label=C. 45.2 Why are you not registered? (Only answer if 'No' in Q45 (REPEATING)
+
+Form=25
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q45_2_WHY_NOT_REG
 
-Position=350,657,365,677
+Position=350,27,365,47
 
 Item=Q45_2_WHY_NOT_REG,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=6
+Form=25
 
   
 
 [Text]
 
-Position=50,660,330,676
+Position=50,30,330,46
 
 Text=45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)
 
@@ -3416,11 +4234,33 @@ Text=45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answ
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=C_HOUSEHOLD_ROSTER_FORM_21
+
+Label=C. 45.2 Why not registered — Other (specify) text (REPEATING)
+
+Form=26
+
+Type=Record
+
+TypeName=C_HOUSEHOLD_ROSTER
+
+Max=20
+
+  
+
 [Field]
 
 Name=Q45_2_WHY_NOT_REG_OTHER_TXT
 
-Position=350,687,760,707
+Position=350,27,760,47
 
 Item=Q45_2_WHY_NOT_REG_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 
@@ -3428,13 +4268,13 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=6
+Form=26
 
   
 
 [Text]
 
-Position=50,690,330,706
+Position=50,30,330,46
 
 Text=45.2 Why not registered — Other (specify) text
 
@@ -3454,7 +4294,7 @@ Name=C_HH_PRIVATE_INS_GATE_FORM
 
 Label=C. HH Private Insurance Gate (Q47)
 
-Form=7
+Form=27
 
 Max=1
 
@@ -3470,7 +4310,7 @@ Item=Q47_HH_HAS_PRIVATE_INS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=7
+Form=27
 
   
 
@@ -3510,7 +4350,7 @@ Name=C_PRIVATE_INS_ROSTER_FORM
 
 Label=C. Private Insurance Q48-Q50 - REPEATING (Q47=Yes; piped names)
 
-Form=8
+Form=28
 
 Type=Record
 
@@ -3530,7 +4370,7 @@ Item=PRIV_MEMBER_LINE_NO,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=8
+Form=28
 
   
 
@@ -3554,7 +4394,7 @@ Item=Q48_OTHER_INS_REG,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=8
+Form=28
 
   
 
@@ -3578,7 +4418,7 @@ Item=Q49_PRIVATE_INS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=8
+Form=28
 
   
 
@@ -3604,7 +4444,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=8
+Form=28
 
   
 
@@ -3630,7 +4470,7 @@ Name=D_UHC_AWARENESS_FORM
 
 Label=D. UHC Awareness
 
-Form=9
+Form=29
 
 Max=1
 
@@ -3646,7 +4486,7 @@ Item=Q51_UHC_HEARD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=9
+Form=29
 
   
 
@@ -3670,7 +4510,7 @@ Item=Q52_UHC_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=9
+Form=29
 
   
 
@@ -3696,7 +4536,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=9
+Form=29
 
   
 
@@ -3720,7 +4560,7 @@ Item=Q53_UHC_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=9
+Form=29
 
   
 
@@ -3746,7 +4586,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=9
+Form=29
 
   
 
@@ -3842,7 +4682,7 @@ Name=E_YAKAP_KONSULTA_FORM
 
 Label=E. YAKAP / Konsulta
 
-Form=10
+Form=30
 
 Max=1
 
@@ -3858,7 +4698,7 @@ Item=Q54_YAKAP_HEARD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=10
+Form=30
 
   
 
@@ -3882,7 +4722,7 @@ Item=Q55_YAKAP_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=10
+Form=30
 
   
 
@@ -3908,7 +4748,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=10
+Form=30
 
   
 
@@ -3932,7 +4772,7 @@ Item=Q56_YAKAP_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=10
+Form=30
 
   
 
@@ -3958,7 +4798,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=10
+Form=30
 
   
 
@@ -4054,7 +4894,7 @@ Name=F_BUCAS_AWARENESS_FORM
 
 Label=F. BUCAS Awareness
 
-Form=11
+Form=31
 
 Max=1
 
@@ -4070,7 +4910,7 @@ Item=AREA_HAS_BUCAS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=11
+Form=31
 
   
 
@@ -4094,7 +4934,7 @@ Item=Q57_BUCAS_HEARD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=11
+Form=31
 
   
 
@@ -4118,7 +4958,7 @@ Item=Q58_BUCAS_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=11
+Form=31
 
   
 
@@ -4144,7 +4984,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=11
+Form=31
 
   
 
@@ -4168,7 +5008,7 @@ Item=Q59_BUCAS_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=11
+Form=31
 
   
 
@@ -4194,7 +5034,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=11
+Form=31
 
   
 
@@ -4218,7 +5058,7 @@ Item=Q60_BUCAS_ACCESSED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=11
+Form=31
 
   
 
@@ -4242,7 +5082,7 @@ Item=Q61_BUCAS_SERVICES,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=11
+Form=31
 
   
 
@@ -4268,7 +5108,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=11
+Form=31
 
   
 
@@ -4286,7 +5126,7 @@ Text=61. If yes, which of the services did you avail? — Other (specify) text
 
 Name=DG_BLK_32
 
-Label=Questions
+Label=AREA_HAS_BUCAS
 
 DisplayTogether=Yes
 
@@ -4420,7 +5260,7 @@ Name=G_ACCESS_MEDICINES_FORM
 
 Label=G. Access to Medicines
 
-Form=12
+Form=32
 
 Max=1
 
@@ -4436,7 +5276,7 @@ Item=Q62_PURCHASE_FREQ,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=12
+Form=32
 
   
 
@@ -4460,7 +5300,7 @@ Item=Q63_PRESCRIPTION_TYPE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=12
+Form=32
 
   
 
@@ -4486,7 +5326,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=12
+Form=32
 
   
 
@@ -4510,7 +5350,7 @@ Item=Q65_CONDITIONS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=12
+Form=32
 
   
 
@@ -4536,7 +5376,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=12
+Form=32
 
   
 
@@ -4560,7 +5400,7 @@ Item=Q66_WHERE_BUY,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=12
+Form=32
 
   
 
@@ -4586,7 +5426,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=12
+Form=32
 
   
 
@@ -4610,7 +5450,7 @@ Item=Q67_TRAVEL_HH,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=12
+Form=32
 
   
 
@@ -4634,7 +5474,7 @@ Item=Q67_TRAVEL_MM,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=12
+Form=32
 
   
 
@@ -4658,7 +5498,7 @@ Item=Q68_PHARMACY_ACCESS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=12
+Form=32
 
   
 
@@ -4682,7 +5522,7 @@ Item=AREA_HAS_GAMOT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=12
+Form=32
 
   
 
@@ -4706,7 +5546,7 @@ Item=Q69_GAMOT_HEARD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=12
+Form=32
 
   
 
@@ -4730,7 +5570,7 @@ Item=Q70_GAMOT_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=12
+Form=32
 
   
 
@@ -4756,7 +5596,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=12
+Form=32
 
   
 
@@ -4780,7 +5620,7 @@ Item=Q71_GAMOT_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=12
+Form=32
 
   
 
@@ -4806,7 +5646,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=12
+Form=32
 
   
 
@@ -4830,7 +5670,7 @@ Item=Q72_GAMOT_OBTAINED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=12
+Form=32
 
   
 
@@ -4856,7 +5696,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=12
+Form=32
 
   
 
@@ -4880,7 +5720,7 @@ Item=Q74_WHERE_REST,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=12
+Form=32
 
   
 
@@ -4906,7 +5746,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=12
+Form=32
 
   
 
@@ -4930,7 +5770,7 @@ Item=Q75_BRAND_GEN_KNOWS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=12
+Form=32
 
   
 
@@ -4954,7 +5794,7 @@ Item=Q76_BRAND_OR_GEN,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=12
+Form=32
 
   
 
@@ -4978,7 +5818,7 @@ Item=Q77_WHY_GENERIC,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=12
+Form=32
 
   
 
@@ -5004,7 +5844,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=12
+Form=32
 
   
 
@@ -5028,7 +5868,7 @@ Item=Q78_WHY_BRANDED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=12
+Form=32
 
   
 
@@ -5054,7 +5894,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=12
+Form=32
 
   
 
@@ -5170,7 +6010,7 @@ Length=3
 
 Name=DG_BLK_48
 
-Label=Questions
+Label=AREA_HAS_GAMOT
 
 DisplayTogether=Yes
 
@@ -5388,7 +6228,7 @@ Name=H_PHILHEALTH_REG_FORM
 
 Label=H. PhilHealth Registration
 
-Form=13
+Form=33
 
 Max=1
 
@@ -5404,7 +6244,7 @@ Item=Q79_REG_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=13
+Form=33
 
   
 
@@ -5430,7 +6270,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=33
 
   
 
@@ -5454,7 +6294,7 @@ Item=Q80_ASSIST,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=13
+Form=33
 
   
 
@@ -5480,7 +6320,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=33
 
   
 
@@ -5504,7 +6344,7 @@ Item=Q81_REG_DIFFICULTY,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=33
 
   
 
@@ -5528,7 +6368,7 @@ Item=Q82_DIFFICULTY_REASONS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=13
+Form=33
 
   
 
@@ -5554,7 +6394,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=33
 
   
 
@@ -5578,7 +6418,7 @@ Item=Q83_KNOWS_ASSIST,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=33
 
   
 
@@ -5604,7 +6444,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=33
 
   
 
@@ -5628,7 +6468,7 @@ Item=Q85_BENEFITS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=13
+Form=33
 
   
 
@@ -5654,7 +6494,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=33
 
   
 
@@ -5678,7 +6518,7 @@ Item=Q86_PREMIUM_PAY,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=33
 
   
 
@@ -5702,7 +6542,7 @@ Item=Q87_PREMIUM_DIFFICULT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=33
 
   
 
@@ -5726,7 +6566,7 @@ Item=Q88_DIFF_PAYING,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=13
+Form=33
 
   
 
@@ -5752,7 +6592,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=33
 
   
 
@@ -5988,7 +6828,7 @@ Name=I_PRIMARY_CARE_FORM
 
 Label=I. Primary Care
 
-Form=14
+Form=34
 
 Max=1
 
@@ -6004,7 +6844,7 @@ Item=Q89_HAS_USUAL_FACILITY,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=34
 
   
 
@@ -6030,7 +6870,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=14
+Form=34
 
   
 
@@ -6054,7 +6894,7 @@ Item=Q90_IS_USUAL_FOR_GENERAL,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=34
 
   
 
@@ -6078,7 +6918,7 @@ Item=Q91_WHY_WENT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=14
+Form=34
 
   
 
@@ -6104,7 +6944,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=14
+Form=34
 
   
 
@@ -6128,7 +6968,7 @@ Item=Q92_FACILITY_TYPE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=14
+Form=34
 
   
 
@@ -6154,7 +6994,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=14
+Form=34
 
   
 
@@ -6178,7 +7018,7 @@ Item=Q93_WHY_NOT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=14
+Form=34
 
   
 
@@ -6204,7 +7044,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=14
+Form=34
 
   
 
@@ -6228,7 +7068,7 @@ Item=Q94_TRANSPORT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=14
+Form=34
 
   
 
@@ -6254,7 +7094,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=14
+Form=34
 
   
 
@@ -6278,7 +7118,7 @@ Item=Q95_TRAVEL_TIME_MIN,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=14
+Form=34
 
   
 
@@ -6302,7 +7142,7 @@ Item=Q96_TRAVEL_COST_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=14
+Form=34
 
   
 
@@ -6326,7 +7166,7 @@ Item=Q97_KNOWS_BOOKING,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=34
 
   
 
@@ -6350,7 +7190,7 @@ Item=Q98_PHONE_ADVICE_OPEN,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=34
 
   
 
@@ -6374,7 +7214,7 @@ Item=Q99_PHONE_ADVICE_CLOSED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=34
 
   
 
@@ -6398,7 +7238,7 @@ Item=Q100_LEAVE_WORK_SCHOOL,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=34
 
   
 
@@ -6592,7 +7432,7 @@ Name=J_HEALTH_SEEKING_FORM
 
 Label=J. Health Seeking
 
-Form=15
+Form=35
 
 Max=1
 
@@ -6608,7 +7448,7 @@ Item=Q101_CHECKUP_FREQ,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=15
+Form=35
 
   
 
@@ -6634,7 +7474,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=15
+Form=35
 
   
 
@@ -6658,7 +7498,7 @@ Item=Q102_VISIT_REASON,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=15
+Form=35
 
   
 
@@ -6684,7 +7524,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=15
+Form=35
 
   
 
@@ -6708,7 +7548,7 @@ Item=Q103_CARE_TYPE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=15
+Form=35
 
   
 
@@ -6734,7 +7574,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=15
+Form=35
 
   
 
@@ -6758,7 +7598,7 @@ Item=Q104_PREVENTIVE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=35
 
   
 
@@ -6782,7 +7622,7 @@ Item=Q105_FORGONE_CARE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=35
 
   
 
@@ -6806,7 +7646,7 @@ Item=Q106_FORGONE_WHY,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=15
+Form=35
 
   
 
@@ -6832,7 +7672,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=15
+Form=35
 
   
 
@@ -6856,7 +7696,7 @@ Item=Q107_OTHER_ACTIONS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=15
+Form=35
 
   
 
@@ -6882,7 +7722,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=15
+Form=35
 
   
 
@@ -7062,7 +7902,7 @@ Name=K_REFERRALS_FORM
 
 Label=K. Referrals
 
-Form=16
+Form=36
 
 Max=1
 
@@ -7078,7 +7918,7 @@ Item=Q108_REFERRED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=36
 
   
 
@@ -7102,7 +7942,7 @@ Item=Q109_TYPE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=16
+Form=36
 
   
 
@@ -7128,7 +7968,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=36
 
   
 
@@ -7152,7 +7992,7 @@ Item=Q110_SPECIALIST,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=16
+Form=36
 
   
 
@@ -7178,7 +8018,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=36
 
   
 
@@ -7202,7 +8042,7 @@ Item=Q111_METHOD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=36
 
   
 
@@ -7228,7 +8068,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=36
 
   
 
@@ -7252,7 +8092,7 @@ Item=Q112_VISITED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=36
 
   
 
@@ -7276,7 +8116,7 @@ Item=Q113_WHY_NOT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=16
+Form=36
 
   
 
@@ -7302,7 +8142,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=36
 
   
 
@@ -7326,7 +8166,7 @@ Item=Q114_DISCUSSED_PLACES,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=36
 
   
 
@@ -7350,7 +8190,7 @@ Item=Q115_HELPED_APPT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=36
 
   
 
@@ -7374,7 +8214,7 @@ Item=Q116_WROTE_INFO,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=36
 
   
 
@@ -7398,7 +8238,7 @@ Item=Q117_SPECIALIST_FOLLOWUP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=36
 
   
 
@@ -7422,7 +8262,7 @@ Item=Q118_SAT_REFERRAL_PROCESS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=36
 
   
 
@@ -7446,7 +8286,7 @@ Item=Q119_PCF_REFERRAL,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=36
 
   
 
@@ -7470,7 +8310,7 @@ Item=Q120_PCP_KNOWS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=36
 
   
 
@@ -7494,7 +8334,7 @@ Item=Q121_WHY_HOSPITAL,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=16
+Form=36
 
   
 
@@ -7520,7 +8360,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=36
 
   
 
@@ -7544,7 +8384,7 @@ Item=Q122_PCP_DISCUSSED_PLACES,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=36
 
   
 
@@ -7568,7 +8408,7 @@ Item=Q123_PCP_HELPED_APPT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=36
 
   
 
@@ -7592,7 +8432,7 @@ Item=Q124_PCP_WROTE_INFO,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=36
 
   
 
@@ -7616,7 +8456,7 @@ Item=Q125_SAT_REFERRAL_EXP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=36
 
   
 
@@ -7866,7 +8706,7 @@ Name=L_NBB_AWARENESS_FORM
 
 Label=L. NBB Awareness
 
-Form=17
+Form=37
 
 Max=1
 
@@ -7882,7 +8722,7 @@ Item=Q126_NBB_HEARD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=37
 
   
 
@@ -7906,7 +8746,7 @@ Item=Q127_NBB_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=17
+Form=37
 
   
 
@@ -7932,7 +8772,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=17
+Form=37
 
   
 
@@ -7956,7 +8796,7 @@ Item=Q128_NBB_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=17
+Form=37
 
   
 
@@ -7982,7 +8822,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=17
+Form=37
 
   
 
@@ -8006,7 +8846,7 @@ Item=Q129_HH_CONFINED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=37
 
   
 
@@ -8030,7 +8870,7 @@ Item=Q130_HOSPITAL_TYPE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=37
 
   
 
@@ -8054,7 +8894,7 @@ Item=Q131_NBB_OOP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=37
 
   
 
@@ -8192,7 +9032,7 @@ Name=M_ZBB_MAIFIP_BILL_FORM
 
 Label=M. ZBB / MAIFIP / Bill-Recall
 
-Form=18
+Form=38
 
 Max=1
 
@@ -8208,7 +9048,7 @@ Item=Q132_ZBB_HEARD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=38
 
   
 
@@ -8232,7 +9072,7 @@ Item=Q133_ZBB_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=18
+Form=38
 
   
 
@@ -8258,7 +9098,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=18
+Form=38
 
   
 
@@ -8282,7 +9122,7 @@ Item=Q134_ZBB_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=18
+Form=38
 
   
 
@@ -8308,7 +9148,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=18
+Form=38
 
   
 
@@ -8332,7 +9172,7 @@ Item=Q135_ZBB_OOP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=38
 
   
 
@@ -8356,7 +9196,7 @@ Item=Q136_MAIFIP_HEARD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=38
 
   
 
@@ -8380,7 +9220,7 @@ Item=Q137_MAIFIP_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=18
+Form=38
 
   
 
@@ -8406,7 +9246,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=18
+Form=38
 
   
 
@@ -8430,7 +9270,7 @@ Item=Q138_MOST_EXPENSIVE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=38
 
   
 
@@ -8456,7 +9296,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=18
+Form=38
 
   
 
@@ -8480,7 +9320,7 @@ Item=Q139_FINAL_AMOUNT_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=18
+Form=38
 
   
 
@@ -8504,7 +9344,7 @@ Item=Q140_RECALL_BREAKDOWN,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=38
 
   
 
@@ -8528,7 +9368,7 @@ Item=Q141_BILL_ITEMS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=18
+Form=38
 
   
 
@@ -8554,7 +9394,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=18
+Form=38
 
   
 
@@ -8578,7 +9418,7 @@ Item=Q141_1_NO_RECEIPT_AMT_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=18
+Form=38
 
   
 
@@ -8602,7 +9442,7 @@ Item=Q142_RECALL_PAYMENT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=38
 
   
 
@@ -8626,7 +9466,7 @@ Item=Q143_HOW_PAID,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=18
+Form=38
 
   
 
@@ -8652,7 +9492,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=18
+Form=38
 
   
 
@@ -8930,7 +9770,7 @@ Name=N_HOUSEHOLD_EXPENDITURES_FORM
 
 Label=N. Household Expenditures
 
-Form=19
+Form=39
 
 Max=1
 
@@ -8946,7 +9786,7 @@ Item=Q144_CEREALS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -8970,7 +9810,7 @@ Item=Q144_CEREALS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -8994,7 +9834,7 @@ Item=Q144_CEREALS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9018,7 +9858,7 @@ Item=Q145_PULSES_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -9042,7 +9882,7 @@ Item=Q145_PULSES_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9066,7 +9906,7 @@ Item=Q145_PULSES_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9090,7 +9930,7 @@ Item=Q146_VEGETABLES_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -9114,7 +9954,7 @@ Item=Q146_VEGETABLES_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9138,7 +9978,7 @@ Item=Q146_VEGETABLES_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9162,7 +10002,7 @@ Item=Q147_FRUITS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -9186,7 +10026,7 @@ Item=Q147_FRUITS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9210,7 +10050,7 @@ Item=Q147_FRUITS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9234,7 +10074,7 @@ Item=Q148_FISH_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -9258,7 +10098,7 @@ Item=Q148_FISH_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9282,7 +10122,7 @@ Item=Q148_FISH_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9306,7 +10146,7 @@ Item=Q149_MEAT_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -9330,7 +10170,7 @@ Item=Q149_MEAT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9354,7 +10194,7 @@ Item=Q149_MEAT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9378,7 +10218,7 @@ Item=Q150_EGGS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -9402,7 +10242,7 @@ Item=Q150_EGGS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9426,7 +10266,7 @@ Item=Q150_EGGS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9450,7 +10290,7 @@ Item=Q151_MILK_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -9474,7 +10314,7 @@ Item=Q151_MILK_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9498,7 +10338,7 @@ Item=Q151_MILK_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9522,7 +10362,7 @@ Item=Q152_FATS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -9546,7 +10386,7 @@ Item=Q152_FATS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9570,7 +10410,7 @@ Item=Q152_FATS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9594,7 +10434,7 @@ Item=Q153_SUGAR_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -9618,7 +10458,7 @@ Item=Q153_SUGAR_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9642,7 +10482,7 @@ Item=Q153_SUGAR_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9666,7 +10506,7 @@ Item=Q154_CONDIMENTS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -9690,7 +10530,7 @@ Item=Q154_CONDIMENTS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9714,7 +10554,7 @@ Item=Q154_CONDIMENTS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9738,7 +10578,7 @@ Item=Q155_WATER_NA_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -9762,7 +10602,7 @@ Item=Q155_WATER_NA_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9786,7 +10626,7 @@ Item=Q155_WATER_NA_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9810,7 +10650,7 @@ Item=Q156_ALCOHOL_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -9834,7 +10674,7 @@ Item=Q156_ALCOHOL_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9858,7 +10698,7 @@ Item=Q156_ALCOHOL_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9882,7 +10722,7 @@ Item=Q157_FOOD_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9906,7 +10746,7 @@ Item=Q158_RESTAURANT_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -9930,7 +10770,7 @@ Item=Q158_RESTAURANT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9954,7 +10794,7 @@ Item=Q158_RESTAURANT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -9978,7 +10818,7 @@ Item=Q159_SMOKING_TOBACCO_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -10002,7 +10842,7 @@ Item=Q159_SMOKING_TOBACCO_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10026,7 +10866,7 @@ Item=Q159_SMOKING_TOBACCO_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10050,7 +10890,7 @@ Item=Q160_PERSONAL_CARE_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -10074,7 +10914,7 @@ Item=Q160_PERSONAL_CARE_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10098,7 +10938,7 @@ Item=Q160_PERSONAL_CARE_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10122,7 +10962,7 @@ Item=Q161_HOUSEHOLD_CLEAN_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -10146,7 +10986,7 @@ Item=Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10170,7 +11010,7 @@ Item=Q161_HOUSEHOLD_CLEAN_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10194,7 +11034,7 @@ Item=Q162_UTILITIES_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -10218,7 +11058,7 @@ Item=Q162_UTILITIES_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10242,7 +11082,7 @@ Item=Q162_UTILITIES_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10266,7 +11106,7 @@ Item=Q163_TRANSPORT_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -10290,7 +11130,7 @@ Item=Q163_TRANSPORT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10314,7 +11154,7 @@ Item=Q163_TRANSPORT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10338,7 +11178,7 @@ Item=Q164_TELECOM_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -10362,7 +11202,7 @@ Item=Q164_TELECOM_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10386,7 +11226,7 @@ Item=Q164_TELECOM_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10410,7 +11250,7 @@ Item=Q165_RECREATION_1M_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -10434,7 +11274,7 @@ Item=Q165_RECREATION_1M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10458,7 +11298,7 @@ Item=Q165_RECREATION_1M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10482,7 +11322,7 @@ Item=Q166_POSTAL_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -10506,7 +11346,7 @@ Item=Q166_POSTAL_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10530,7 +11370,7 @@ Item=Q166_POSTAL_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10554,7 +11394,7 @@ Item=Q167_HOUSING_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -10578,7 +11418,7 @@ Item=Q167_HOUSING_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10602,7 +11442,7 @@ Item=Q167_HOUSING_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10626,7 +11466,7 @@ Item=Q168_RECREATION_6M_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -10650,7 +11490,7 @@ Item=Q168_RECREATION_6M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10674,7 +11514,7 @@ Item=Q168_RECREATION_6M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10698,7 +11538,7 @@ Item=Q169_CLOTHING_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -10722,7 +11562,7 @@ Item=Q169_CLOTHING_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10746,7 +11586,7 @@ Item=Q169_CLOTHING_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10770,7 +11610,7 @@ Item=Q170_EDUCATION_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -10794,7 +11634,7 @@ Item=Q170_EDUCATION_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10818,7 +11658,7 @@ Item=Q170_EDUCATION_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10842,7 +11682,7 @@ Item=Q171_ACCOMMODATION_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -10866,7 +11706,7 @@ Item=Q171_ACCOMMODATION_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10890,7 +11730,7 @@ Item=Q171_ACCOMMODATION_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10914,7 +11754,7 @@ Item=Q172_GARDEN_PETS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -10938,7 +11778,7 @@ Item=Q172_GARDEN_PETS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10962,7 +11802,7 @@ Item=Q172_GARDEN_PETS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -10986,7 +11826,7 @@ Item=Q173_HEALTH_INS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -11010,7 +11850,7 @@ Item=Q173_HEALTH_INS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11034,7 +11874,7 @@ Item=Q173_HEALTH_INS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11058,7 +11898,7 @@ Item=Q174_OTHER_INS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -11082,7 +11922,7 @@ Item=Q174_OTHER_INS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11106,7 +11946,7 @@ Item=Q174_OTHER_INS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11130,7 +11970,7 @@ Item=Q175_INPATIENT_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -11154,7 +11994,7 @@ Item=Q175_INPATIENT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11178,7 +12018,7 @@ Item=Q175_INPATIENT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11202,7 +12042,7 @@ Item=Q176_EMERGENCY_TRANSPORT_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -11226,7 +12066,7 @@ Item=Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11250,7 +12090,7 @@ Item=Q176_EMERGENCY_TRANSPORT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11274,7 +12114,7 @@ Item=Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11298,7 +12138,7 @@ Item=Q178_PREVENTIVE_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -11322,7 +12162,7 @@ Item=Q178_PREVENTIVE_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11346,7 +12186,7 @@ Item=Q178_PREVENTIVE_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11370,7 +12210,7 @@ Item=Q179_DIAGNOSTIC_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -11394,7 +12234,7 @@ Item=Q179_DIAGNOSTIC_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11418,7 +12258,7 @@ Item=Q179_DIAGNOSTIC_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11442,7 +12282,7 @@ Item=Q180_ASSISTIVE_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -11466,7 +12306,7 @@ Item=Q180_ASSISTIVE_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11490,7 +12330,7 @@ Item=Q180_ASSISTIVE_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11514,7 +12354,7 @@ Item=Q181_MEDICAL_PRODUCTS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -11538,7 +12378,7 @@ Item=Q181_MEDICAL_PRODUCTS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11562,7 +12402,7 @@ Item=Q181_MEDICAL_PRODUCTS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11586,7 +12426,7 @@ Item=Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11610,7 +12450,7 @@ Item=Q183_MEDICINES_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -11634,7 +12474,7 @@ Item=Q183_MEDICINES_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11658,7 +12498,7 @@ Item=Q183_MEDICINES_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11682,7 +12522,7 @@ Item=Q184_OUTPATIENT_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=39
 
   
 
@@ -11706,7 +12546,7 @@ Item=Q184_OUTPATIENT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11730,7 +12570,7 @@ Item=Q184_OUTPATIENT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -11754,7 +12594,7 @@ Item=Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=19
+Form=39
 
   
 
@@ -12312,7 +13152,7 @@ Name=O_SOURCES_OF_FUNDS_FORM
 
 Label=O. Sources of Funds for Health
 
-Form=20
+Form=40
 
 Max=1
 
@@ -12328,7 +13168,7 @@ Item=Q186_CURRENT_INCOME,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=20
+Form=40
 
   
 
@@ -12352,7 +13192,7 @@ Item=Q187_SAVINGS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=20
+Form=40
 
   
 
@@ -12376,7 +13216,7 @@ Item=Q188_SOLD_ASSETS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=20
+Form=40
 
   
 
@@ -12400,7 +13240,7 @@ Item=Q189_BORROW_FAMILY,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=20
+Form=40
 
   
 
@@ -12424,7 +13264,7 @@ Item=Q190_BORROW_INST,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=20
+Form=40
 
   
 
@@ -12448,7 +13288,7 @@ Item=Q191_REMITTANCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=20
+Form=40
 
   
 
@@ -12472,7 +13312,7 @@ Item=Q192_GOVT_ASSIST,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=20
+Form=40
 
   
 
@@ -12496,7 +13336,7 @@ Item=Q193_LGU_DONATION,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=20
+Form=40
 
   
 
@@ -12520,7 +13360,7 @@ Item=Q194_OTHER_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=20
+Form=40
 
   
 
@@ -12546,7 +13386,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=20
+Form=40
 
   
 
@@ -12570,7 +13410,7 @@ Item=Q195_INCOME_PCT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=20
+Form=40
 
   
 
@@ -12594,7 +13434,7 @@ Item=Q196_FOREGONE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=20
+Form=40
 
   
 
@@ -12620,7 +13460,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=20
+Form=40
 
   
 
@@ -12730,7 +13570,7 @@ Name=P_FINANCIAL_RISK_FORM
 
 Label=P. Financial Risk
 
-Form=21
+Form=41
 
 Max=1
 
@@ -12746,7 +13586,7 @@ Item=Q197_DELAYED_CARE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=21
+Form=41
 
   
 
@@ -12770,7 +13610,7 @@ Item=Q198_NOT_FOLLOWED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=21
+Form=41
 
   
 
@@ -12794,7 +13634,7 @@ Item=Q199_WTP_CONSULT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=21
+Form=41
 
   
 
@@ -12820,7 +13660,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=21
+Form=41
 
   
 
@@ -12874,7 +13714,7 @@ Name=Q_FINANCIAL_ANXIETY_FORM
 
 Label=Q. Financial Anxiety
 
-Form=22
+Form=42
 
 Max=1
 
@@ -12890,7 +13730,7 @@ Item=Q200_REDUCED_SPEND,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=22
+Form=42
 
   
 
@@ -12914,7 +13754,7 @@ Item=Q201_WORRIED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=22
+Form=42
 
   
 
@@ -12938,7 +13778,7 @@ Item=Q202_WORRY_REASONS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=22
+Form=42
 
   
 
@@ -12964,7 +13804,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=22
+Form=42
 
   
 
@@ -13046,7 +13886,7 @@ Name=FIELD_CONTROL_FORM_3
 
 Label=Closing - case end
 
-Form=23
+Form=43
 
 Max=1
 
@@ -13064,7 +13904,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=23
+Form=43
 
   
 
@@ -13090,7 +13930,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=23
+Form=43
 
   
 
@@ -13116,7 +13956,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=23
+Form=43
 
   
 
@@ -13142,7 +13982,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=23
+Form=43
 
   
 
@@ -13166,7 +14006,7 @@ Item=DATE_FIRST_VISITED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=Date,YYYYMMDD
 
-Form=23
+Form=43
 
   
 
@@ -13190,7 +14030,7 @@ Item=DATE_FINAL_VISIT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=Date,YYYYMMDD
 
-Form=23
+Form=43
 
   
 
@@ -13214,7 +14054,7 @@ Item=TOTAL_NUMBER_OF_VISITS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=23
+Form=43
 
   
 
@@ -13238,7 +14078,7 @@ Item=ENUM_RESULT_FIRST_VISIT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=23
+Form=43
 
   
 
@@ -13262,7 +14102,7 @@ Item=ENUM_RESULT_FINAL_VISIT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=23
+Form=43
 
   
 
@@ -13316,7 +14156,7 @@ Name=REC_CASE_VERIFICATION_FORM
 
 Label=Case Verification Photo
 
-Form=24
+Form=44
 
 Max=1
 
@@ -13334,7 +14174,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=24
+Form=44
 
   
 
@@ -13358,7 +14198,7 @@ Item=CAPTURE_VERIFICATION_PHOTO,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=24
+Form=44
 
   
 

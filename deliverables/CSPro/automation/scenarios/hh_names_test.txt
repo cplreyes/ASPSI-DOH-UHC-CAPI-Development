@@ -1,0 +1,77 @@
+# Deterministic full drive to the Section C roster (exact widths/codes from dcf).
+rmdata ../F4/HouseholdSurvey.csdb
+launch ../F4/HouseholdSurvey.pff
+casekey 01 02 800 01 001
+type 1
+type 1
+click 1005 211
+type TESTADDRESS
+key {ENTER}
+type 14.5
+key {ENTER}
+type 120.9
+key {ENTER}
+type 10
+key {ENTER}
+type 5
+key {ENTER}
+type 8
+key {ENTER}
+type 20260609
+key {ENTER}
+note --- Section A Q1 head = Yes ---
+type 1
+note --- Section B (Q2..Q29) exact widths ---
+type TESTNAME
+key {ENTER}
+type 06
+type 1990
+type 036
+type 1
+type 2
+type 1
+type 2
+type 01
+type 1
+type 01
+type 2
+type 1
+type 01
+type 5000
+key {ENTER}
+type 1
+type 003
+type 000
+type 000
+type 1
+type 1
+type 1
+type 1
+type 1
+type 1
+type 1
+wait 1
+shot pre_q29
+click 786 883
+note === enter 3 names SLOWLY, confirm each occurrence persists ===
+type RAMOS DAISY
+wait 1
+key {ENTER}
+wait 2
+shot n1_after_name1
+type PARAISO AIDAN
+wait 1
+key {ENTER}
+wait 2
+shot n2_after_name2
+type SALAZAR ALYZZA
+wait 1
+key {ENTER}
+wait 2
+shot n3_after_name3_expect_Q31
+key {PGDN}
+wait 1
+shot n4_q31_pgdn1
+key {PGDN}
+wait 1
+shot n5_q31_pgdn2

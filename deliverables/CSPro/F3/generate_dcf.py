@@ -122,7 +122,7 @@ def _build_lab_payment_roster(record_name, label, record_type, lab_value_set,
                    "94. How was the cost of this laboratory test paid?",
                    payment_type, length=2),
         numeric("Q94_LAB_AMT",
-                "94. Amount paid out-of-pocket for this laboratory test (Pesos)",
+                "94. How much was the cost of this laboratory test? (amount paid out-of-pocket, Pesos)",   # #777: lead with 'How much was the cost' per paper + tester
                 length=amt_length),
     ]
     # required=False: if (defensively) only None is ticked the apc endgroups at occurrence
@@ -561,9 +561,30 @@ def build_section_c():
 
 def build_section_d():
     Q38_REGISTERED = [
-        ("Yes",          "1"),
-        ("No",           "2"),  # proceed to Q43
-        ("I don't know", "3"),  # proceed to Q43
+        ("Yes",          "1"),  # #764: -> Q38.1 (PIN timing) -> Q39
+        ("No",           "2"),  # #764: -> Q38.2 (why not registered) -> Q43
+        ("I don't know", "3"),  # #764: -> Q43 directly
+    ]
+    # #764: Q38.1 PhilHealth-PIN registration timing (Yes-only). Mirrors F4 Q45.1.
+    Q38_1_WHEN = [
+        ("Within the past year",                  "1"),
+        ("Within the last 2-3 years",             "2"),
+        ("Within the last 4-5 years",             "3"),
+        ("Over 5 years",                          "4"),
+        ("I don't know [DO NOT READ OUT LOUD]",   "5"),
+    ]
+    # #764: Q38.2 why-not-registered (No-only), SELECT ALL THAT APPLY -> Check Box. Mirrors
+    # F4 Q45.2 options but multi-select per the F3 tester request.
+    Q38_2_WHY_NOT = [
+        ("Difficult to register",                                    "01"),
+        ("Don't see value in registering",                           "02"),
+        ("Don't know how to register",                               "03"),
+        ("Don't know what PhilHealth is",                            "04"),
+        ("A family member is currently registered with PhilHealth",  "05"),
+        ("Currently unemployed",                                     "06"),
+        ("No time to register",                                      "07"),
+        ("No valid ID to register",                                  "08"),
+        ("Other (specify)",                                          "99"),
     ]
     REG_ACTOR = [
         ("PhilHealth representative",    "01"),
@@ -654,6 +675,18 @@ def build_section_d():
         select_one("Q38_PHILHEALTH_REG",
                    "38. Are you currently registered with PhilHealth?",
                    Q38_REGISTERED, length=1),
+        # #764: Q38.1 asked ONLY when Q38 = Yes (apc preproc gate skips it otherwise);
+        # after it, flow falls through to Q39. SELECT ONE ANSWER ONLY.
+        select_one("Q38_1_PIN_WHEN",
+                   "38.1. When did you register and receive your PhilHealth PIN? "
+                   "(Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                   Q38_1_WHEN, length=1),
+        # #764: Q38.2 asked ONLY when Q38 = No (CHECKBOX_CONVERT gate); after it, skip to Q43.
+        # READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.
+        *checkbox_multiselect("Q38_2_WHY_NOT_REG",
+                    "38.2. Why are you not registered? READ OPTIONS OUT LOUD. "
+                    "SELECT ALL THAT APPLY.",
+                    _cb_codes(Q38_2_WHY_NOT), with_other_txt=True),
         select_one("Q39_HOW_FIND_OUT",
                    "39. How did you find out about how to register for PhilHealth?",
                    REG_ACTOR, length=2),
@@ -723,12 +756,16 @@ def build_section_e():
         # is for a Q53=Yes respondent who has no fitting provider type. No special routing —
         # falls through to Q55 like the other answers.
     ]
+    # #767 (R5): split the generic 'Teleconsultation' option into the three teleconsult
+    # sub-modes, each labeled 'Teleconsultation: <mode>'. _cb_codes renumbers in list order
+    # -> 01=Face-to-face, 02=Cellphone, 03=Landline, 04=Video Conference; the Q60/Q62 gates
+    # fire when ANY teleconsult code (02/03/04) is ticked. (Was 5 options: a bare
+    # 'Teleconsultation' + standalone Landline/Cellphone/Video — ASPSI-requested rewording.)
     COMM_MODES = [
-        ("Face-to-face",      "1"),
-        ("Teleconsultation",  "2"),
-        ("Landline",          "3"),
-        ("Cellphone",         "4"),
-        ("Video Conference",  "5"),
+        ("Face-to-face",                       "1"),
+        ("Teleconsultation: Cellphone",        "2"),
+        ("Teleconsultation: Landline",         "3"),
+        ("Teleconsultation: Video Conference", "4"),
     ]
     Q65_WHY_NOT = [
         ("I don't get sick",                   "1"),
@@ -848,10 +885,13 @@ def build_section_e():
         yes_no("Q57_WAIT_CONVENIENT",
                "57. Is the usual wait for setting an appointment with your main primary care provider "
                "convenient for you?"),
+        # #766 (R5): match PAPI wording (facility-name fill + days/minutes tabs retained).
         numeric("Q58_WAIT_DAYS",
-                "58. Wait time to set appointment with main primary care provider — Days", length=3),
+                "58. What is your waiting time, in days and/or minutes to set an appointment with "
+                "your main primary care provider ([facility_name_input])? — Days", length=3),
         numeric("Q58_WAIT_MINUTES",
-                "58. Wait time to set appointment with main primary care provider — Minutes", length=4),
+                "58. What is your waiting time, in days and/or minutes to set an appointment with "
+                "your main primary care provider ([facility_name_input])? — Minutes", length=4),
         *checkbox_multiselect("Q59_SCHED_COMM",   # #669: select_all -> Check Box (tick-all)
                     "59. What mode/s of communication was/were available to you when scheduling a "
                     "consultation with your main primary care provider?", _cb_codes(COMM_MODES)),

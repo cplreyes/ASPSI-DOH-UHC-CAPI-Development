@@ -87,6 +87,8 @@ CHECKBOX = {"Q148_CONDITIONS",
             "Q128_MAIFIP_OOP_ITEMS",
             # F3 #700 Q129 MAIFIP why-not-avail select_all -> Check Box.
             "Q129_WHY_NO_MAIFIP",
+            # F3 #764 Q38.2 why-not-registered (No-only), SELECT ALL THAT APPLY -> Check Box.
+            "Q38_2_WHY_NOT_REG",
             # F3 Option B (pilot 2026-06-18): Q92 payment-source tick-list driving the
             # Q92_PAY_ROSTER amount grid.
             "Q92_SOURCES",

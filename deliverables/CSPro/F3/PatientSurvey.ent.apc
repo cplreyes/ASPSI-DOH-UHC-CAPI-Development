@@ -618,6 +618,16 @@ preproc
   (Q113_PAY_08 = Yes -> skip to Q1141_1) is folded into the Q114_NO_PH checkbox PROC
   via CHECKBOX_CONVERT. The old PROC Q114_NO_PH_O01 field no longer exists. }
 
+{ ---- #764: Q38.1 PhilHealth-PIN timing is asked ONLY when Q38 = Yes. Only Yes and No reach
+  this field (IDK is already skipped to Q43 by the SKIP_RULES Q38=3 rule). For No, skip ahead
+  to Q38.2 (why-not-registered). 'skip to next' is illegal outside a repeating group, so target
+  the field explicitly. ---- }
+PROC Q38_1_PIN_WHEN
+preproc
+  if Q38_PHILHEALTH_REG <> 1 then
+    skip to Q38_2_WHY_NOT_REG;
+  endif;
+
 { ---- Multi-branch routing (spec 2) ---- }
 { #418/#419 (R4): Q63 usual-facility block. Spec 3.6 — Q64 (facility name) and Q66-Q70
   are enabled when Q63=Yes; Q65 (why-no-usual) is enabled when Q63=No. The old logic was
@@ -637,7 +647,7 @@ PROC Q66_SAME_AS_USUAL
 preproc
   if Q63_HAS_USUAL_FACILITY <> 1 then  skip to Q71_NEAREST_TYPE; endif;  { No-usual path: skip the Q66-Q70 facility block }
 postproc
-  if Q66_SAME_AS_USUAL = 1 then  skip to Q68_USUAL_FAC_TYPE; endif;       { this IS the usual facility -> skip Q67 why-different }
+  if Q66_SAME_AS_USUAL = 1 then  skip to Q69_USUAL_TRAVEL_HH; endif;      { #769: this IS the usual facility -> skip Q67 (why-different) AND Q68 (usual-type) straight to Q69 }
 
 PROC Q77_KON_REGISTERED
 postproc
@@ -679,18 +689,20 @@ postproc
 
 PROC Q60_SCHED_TELECON_OK
 preproc
-  { #415: scheduling-teleconsult-success (Q60) only if 'Teleconsultation' (option 2) was
-    ticked in the Q59 Check Box (spec 3.6: Q60 enabled when Q59 includes Teleconsultation).
-    #669: Q59 is now a Check Box (code "02" = Teleconsultation); the skip target Q61's old
-    first option-field Q61_CONSULT_COMM_O01 is now the bare base Q61_CONSULT_COMM. }
-  if pos("02", Q59_SCHED_COMM) = 0 then  skip to Q61_CONSULT_COMM; endif;
+  { #415: scheduling-teleconsult-success (Q60) only if a teleconsult mode was ticked in the
+    Q59 Check Box (spec 3.6: Q60 enabled when Q59 includes Teleconsultation).
+    #767: 'Teleconsultation' is now the three sub-modes — codes "02" (Cellphone), "03"
+    (Landline), "04" (Video Conference). Skip Q60 only if NONE of the three is ticked
+    (i.e. Face-to-face "01" only, or nothing). }
+  if pos("02", Q59_SCHED_COMM) = 0 and pos("03", Q59_SCHED_COMM) = 0 and pos("04", Q59_SCHED_COMM) = 0 then  skip to Q61_CONSULT_COMM; endif;
 
 PROC Q62_CONSULT_TELECON_OK
 preproc
-  { #417: consultation-teleconsult-success (Q62) only if 'Teleconsultation' (option 2) was
-    ticked in the Q61 Check Box (spec 3.6: Q62 enabled when Q61 includes Teleconsultation).
-    #669: Q61 is now a Check Box (code "02" = Teleconsultation). }
-  if pos("02", Q61_CONSULT_COMM) = 0 then  skip to Q63_HAS_USUAL_FACILITY; endif;
+  { #417: consultation-teleconsult-success (Q62) only if a teleconsult mode was ticked in
+    the Q61 Check Box (spec 3.6: Q62 enabled when Q61 includes Teleconsultation).
+    #767: 'Teleconsultation' is now the three sub-modes — codes "02" (Cellphone), "03"
+    (Landline), "04" (Video Conference). Skip Q62 only if NONE of the three is ticked. }
+  if pos("02", Q61_CONSULT_COMM) = 0 and pos("03", Q61_CONSULT_COMM) = 0 and pos("04", Q61_CONSULT_COMM) = 0 then  skip to Q63_HAS_USUAL_FACILITY; endif;
 
 { ---- Q93 labs: 'None' exclusivity (#448) + skip the Q94 cost matrix (spec G). #673: Q93 is
   now a Check Box base — the exclusivity soft-warn (pos("90") stands alone) and the 'None' ->
@@ -1298,6 +1310,30 @@ postproc
     reenter;
   endif;
 
+PROC Q38_2_WHY_NOT_REG
+preproc
+  if Q38_PHILHEALTH_REG <> 2 then   { #764: only the 'No' branch answers why-not-registered }
+    skip to Q39_HOW_FIND_OUT;
+  endif;
+postproc
+  if length(strip(Q38_2_WHY_NOT_REG)) = 0 then
+    errmsg("Select at least one option for Q38 before continuing.");
+    reenter;
+  endif;
+  skip to Q43_KNOWS_ASSIST;   { #764: after why-not-registered, the 'No' branch goes to Q43 (skips Q39-42) }
+
+PROC Q38_2_WHY_NOT_REG_OTHER_TXT
+preproc
+  if pos("99", Q38_2_WHY_NOT_REG) = 0 then
+    Q38_2_WHY_NOT_REG_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q38_2_WHY_NOT_REG) > 0 and length(strip(Q38_2_WHY_NOT_REG_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q38 - please specify.");
+    reenter;
+  endif;
+
 PROC Q42_DIFFICULTY
 postproc
   if length(strip(Q42_DIFFICULTY)) = 0 then
@@ -1307,6 +1343,7 @@ postproc
   if pos("90", Q42_DIFFICULTY) > 0 and length(strip(Q42_DIFFICULTY)) > 2 then
     errmsg("Q42: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
   endif;
+  skip to Q45_CATEGORY;   { #765: registered (Q38=Yes) path skips Q43/Q44 after the difficulty detail }
 
 PROC Q42_DIFFICULTY_OTHER_TXT
 preproc
@@ -2427,14 +2464,14 @@ postproc
 
 PROC Q38_PHILHEALTH_REG
 postproc
-  if Q38_PHILHEALTH_REG in 2,3 then
+  if Q38_PHILHEALTH_REG = 3 then
     skip to Q43_KNOWS_ASSIST;
   endif;
 
 PROC Q41_REG_DIFFICULTY
 postproc
   if Q41_REG_DIFFICULTY = 2 then
-    skip to Q43_KNOWS_ASSIST;
+    skip to Q45_CATEGORY;
   endif;
 
 PROC Q43_KNOWS_ASSIST
@@ -2570,7 +2607,7 @@ postproc
   endif;
 
 { ---- 'Other (specify)' enforcement — UHC9 dual-other (spec 4) ---- }
-{ ---- 'Other (specify)' enforcement — single-choice + select-all (auto-derived from dcf: 65 items) ---- }
+{ ---- 'Other (specify)' enforcement — single-choice + select-all (auto-derived from dcf: 66 items) ---- }
 PROC Q104_WITHOUT_BUCAS_OTHER_TXT
 preproc
   if Q104_WITHOUT_BUCAS <> 6 then
@@ -3046,11 +3083,6 @@ postproc
     errmsg("Q97_FINAL_AMOUNT must be between 0 and 99999999.");
     reenter;
   endif;
-  if Q97_FINAL_AMOUNT > 0 and (q92_oop() + q94_oop() + q96_oop()) > 0
-     and (Q97_FINAL_AMOUNT < (q92_oop() + q94_oop() + q96_oop()) * 0.9
-          or Q97_FINAL_AMOUNT > (q92_oop() + q94_oop() + q96_oop()) * 1.1) then
-    errmsg("Q97 final amount differs by more than 10 percent from the out-of-pocket lines (Q92/Q94/Q96) — confirm.");
-  endif;
 
 PROC Q106_NIGHTS
 postproc
@@ -3067,10 +3099,6 @@ postproc
   if (Q115_FINAL_CASH < 0 or Q115_FINAL_CASH > 999999999) then
     errmsg("Q115_FINAL_CASH must be between 0 and 999999999.");
     reenter;
-  endif;
-  if q107_oop() > 0 and (Q115_FINAL_CASH < q107_oop() * 0.9
-     or Q115_FINAL_CASH > q107_oop() * 1.1) then
-    errmsg("Q115 final cash differs by more than 10 percent from the out-of-pocket bill line (Q107) — confirm.");
   endif;
 
 PROC Q150_TRAVEL_HH

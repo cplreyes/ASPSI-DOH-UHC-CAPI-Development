@@ -422,7 +422,13 @@ PROC MEMBER_LINE_NO
 preproc
   { Auto-end the roster once the declared household size (Q19) is reached --
     without this, entry rolls into member N+1 and the enumerator must know to
-    end the group manually. Also auto-fill the line number from the occurrence. }
+    end the group manually. Also auto-fill the line number from the occurrence.
+    Column-wise Section C (2026-06-26): the occurrence-establishing first roster form
+    carries Q30_NAME + Q31_PRESENT (a coded auto-advancing field) so the member set is
+    COMMITTED before the per-question column-wise forms — a name-ONLY first form loses
+    occurrences 2+ on exit (CSEntry discards the dynamically-built tail of a single-
+    enterable-field roster; proven on desktop CSEntry). All other Section C questions are
+    one-per-form (each asked for every member before the next). }
   if curocc() > Q19_HH_SIZE_TOTAL then
     endgroup;
   endif;
@@ -430,52 +436,70 @@ preproc
   noinput;
 
 PROC Q34_RELATIONSHIP
+preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
 postproc
   { #167: first roster entry is normally Self/Head (soft confirm) }
   if curocc() = 1 and not (Q34_RELATIONSHIP in 1,2) then   { 1=Self, 2=Head (verify codes) }
     errmsg("First roster entry is normally the respondent (Self) or HH head. Confirm.");
   endif;
 
-PROC Q35_HAS_DISABILITY
-postproc
-  if Q35_HAS_DISABILITY = 0 then   { coded No=0/Yes=1 -- `= 2` was a dead condition }
-    skip to Q39_CIVIL_STATUS;
-  endif;
+{ Section C renders COLUMN-WISE (one roster form per question — the "Household
+  Characteristic Target Interface", spike-validated 2026-06-26): CSEntry asks each question
+  for ALL members before the next. Intra-member conditionality can no longer be a
+  `skip to <field>` (the target now lives on a DIFFERENT roster form), so each conditional
+  question carries a PER-OCCURRENCE preproc gate `if <not-applicable> then skip to next` that
+  skips THIS member on THAT question's screen and advances to the next occurrence (the proven
+  Q45.2 gate / Q32 spike pattern). Q35 (disability?) and Q45 (PhilHealth registered?) are
+  asked of every member, so they no longer route — their old forward-skips moved DOWNSTREAM
+  onto Q36/Q37/Q38 (disability detail) and Q45.1/Q46/Q45.2 (PhilHealth detail). The specify
+  free-text (Q38/Q46/Q45.2 _OTHER_TXT) keeps its auto-derived noinput gate, which already
+  skips non-'Other' occurrences correctly on its own single-field roster form. }
 
 PROC Q36_SPECIFY_DISABILITY
-postproc
-  if Q36_SPECIFY_DISABILITY = 0 then   { #604: No = doesn't want to specify -> skip Q37 (card) + Q38 (type) to Q39 (YN_01: No=0) }
-    skip to Q39_CIVIL_STATUS;
-  endif;
+preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
+  { Asked only for members who identify as having a disability (Q35 = Yes=1). }
+  if Q35_HAS_DISABILITY = 0 then skip to next; endif;
 
 PROC Q37_PWD_CARD
-postproc
-  if Q37_PWD_CARD <> 1 then   { #605: Q38 reads the *presented* card, so skip it unless Yes=1 (card shown). Covers No=0 AND Refused=2; was `= 2` which only caught Refused and let No fall through to Q38. }
-    skip to Q39_CIVIL_STATUS;
+preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
+  { #604: card view asked only when the member wants to specify the disability
+    (Q35 = Yes AND Q36 = Yes). The Q35 guard catches members whose Q36 was skipped
+    (notappl) upstream. }
+  if Q35_HAS_DISABILITY = 0 or Q36_SPECIFY_DISABILITY = 0 then skip to next; endif;
+
+PROC Q38_DISABILITY_TYPE
+preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
+  { #605: Q38 reads the *presented* PWD card, so ask only when the card was shown
+    (Q35=Yes AND Q36=Yes AND Q37=Yes/1). Q37 <> 1 also covers No/Refused and the notappl
+    members the upstream gates skipped. }
+  if Q35_HAS_DISABILITY = 0 or Q36_SPECIFY_DISABILITY = 0 or Q37_PWD_CARD <> 1 then
+    skip to next;
   endif;
 
-PROC Q45_PHILHEALTH_REG
-postproc
-  { #563/#565: Q46 (membership category) and Q45.1 (PIN registration date) are Yes-only.
-    Q45=Yes(01) -> fall through to Q45.1 -> Q46. #795 (2026-06-25): No(02) now routes to the
-    new Q45.2 'why not registered' (skipping the Yes-only Q45.1/Q46); I-don't-know(55) still
-    skips ALL PhilHealth detail straight to the next member. }
-  if Q45_PHILHEALTH_REG = 2 then
-    skip to Q45_2_WHY_NOT_REG;       { #795: No -> ask 45.2 (why not registered) }
-  endif;
-  if Q45_PHILHEALTH_REG = 55 then
-    skip to next;                    { I-don't-know -> skip all PhilHealth detail -> next member }
-  endif;
+PROC Q45_1_PIN_REG_WHEN
+preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
+  { #563/#565: PIN-registration timing is Yes-only (Q45 = registered = 1). No/IDK members
+    are skipped on this screen. }
+  if Q45_PHILHEALTH_REG <> 1 then skip to next; endif;
+
+PROC Q46_MEMBER_CATEGORY
+preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
+  { #563: membership category is Yes-only (Q45 = registered = 1). }
+  if Q45_PHILHEALTH_REG <> 1 then skip to next; endif;
 
 PROC Q45_2_WHY_NOT_REG
 preproc
-  { #795: only the 'No in Q45' branch answers 45.2. Yes/IDK members reach this field
-    physically (it sits after Q46), so skip them to the next roster member. No members
-    arrive here via the Q45 postproc skip with Q45=2, fall through, and answer. The
-    Other(88) specify text is gated by the auto-derived Q45_2_WHY_NOT_REG_OTHER_TXT PROC. }
-  if Q45_PHILHEALTH_REG <> 2 then
-    skip to next;                    { 'next' = next C_HOUSEHOLD_ROSTER occurrence }
-  endif;
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
+  { #795: 'why not registered' is No-only (Q45 = No = 2). Yes/IDK members are skipped on this
+    screen. The Other(88) specify text is gated by the auto-derived
+    Q45_2_WHY_NOT_REG_OTHER_TXT PROC (noinput when <> 88). }
+  if Q45_PHILHEALTH_REG <> 2 then skip to next; endif;
 
 PROC Q49_PRIVATE_INS
 postproc
@@ -551,6 +575,23 @@ postproc
   if Q1_IS_HH_HEAD = 2 then
     errmsg("Respondent is not the household head. Confirm they are a household decision-maker per the sampling protocol before continuing.");
   endif;
+
+{ ---- #796/#797: the area-presence screening questions ("Does this area have a BUCAS
+       center?" / "...a GAMOT pharmacy/package?") are REMOVED per tester request — the BUCAS
+       (Q57-61) and GAMOT (Q69-76) blocks are now asked of everyone. The fields are kept only
+       as skip targets (Q54=No -> AREA_HAS_BUCAS, Q62=Never -> AREA_HAS_GAMOT): auto-answer
+       Yes + noinput so they never display and flow falls straight through to Q57 / Q69. The
+       old "= 2 -> skip the block" rules are removed from SKIP_RULES (the block no longer gates
+       on area presence). ---- }
+PROC AREA_HAS_BUCAS
+preproc
+  AREA_HAS_BUCAS = 1;   { #796: area-screening removed -> always ask BUCAS block; never displayed }
+  noinput;
+
+PROC AREA_HAS_GAMOT
+preproc
+  AREA_HAS_GAMOT = 1;   { #797: area-screening removed -> always ask GAMOT block; never displayed }
+  noinput;
 
 { ---- #664: Q135 (ZBB out-of-pocket) is asked ONLY if the most-recent hospitalization was in
        a DOH-retained hospital — the paper labels it "[Ask only if they went to a DOH-retained
@@ -1471,6 +1512,8 @@ postproc
 
 { ---- Roster per-member validations (spec 3.4) ---- }
 PROC Q32_AGE
+preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
 postproc
   if Q32_AGE < 0 or Q32_AGE > 120 then
     errmsg("Member age must be 0-120.");
@@ -1478,6 +1521,8 @@ postproc
   endif;
 
 PROC Q39_CIVIL_STATUS
+preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
 postproc
   if Q32_AGE < 15 and Q39_CIVIL_STATUS <> 1 then   { 1 = Single (verify code) }
     errmsg("Member is under 15 but civil status is not Single. Confirm.");
@@ -1539,12 +1584,6 @@ postproc
     skip to AREA_HAS_GAMOT;
   endif;
 
-PROC AREA_HAS_GAMOT
-postproc
-  if AREA_HAS_GAMOT = 2 then
-    skip to Q75_BRAND_GEN_KNOWS;
-  endif;
-
 PROC Q69_GAMOT_HEARD
 postproc
   if Q69_GAMOT_HEARD = 2 then
@@ -1591,12 +1630,6 @@ PROC Q54_YAKAP_HEARD
 postproc
   if Q54_YAKAP_HEARD = 2 then
     skip to AREA_HAS_BUCAS;
-  endif;
-
-PROC AREA_HAS_BUCAS
-postproc
-  if AREA_HAS_BUCAS = 2 then
-    skip to Q62_PURCHASE_FREQ;
   endif;
 
 PROC Q57_BUCAS_HEARD
@@ -2670,6 +2703,7 @@ postproc
 
 PROC Q38_DISABILITY_OTHER_TXT
 preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
   if Q38_DISABILITY_TYPE <> 8 then
     Q38_DISABILITY_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
     noinput;
@@ -2682,6 +2716,7 @@ postproc
 
 PROC Q45_2_WHY_NOT_REG_OTHER_TXT
 preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
   if Q45_2_WHY_NOT_REG <> 88 then
     Q45_2_WHY_NOT_REG_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
     noinput;
@@ -2694,6 +2729,7 @@ postproc
 
 PROC Q46_MEMBER_OTHER_TXT
 preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
   if Q46_MEMBER_CATEGORY <> 88 then
     Q46_MEMBER_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
     noinput;
@@ -2818,3 +2854,35 @@ postproc
     - Verify ALL option codes + roster/occurrence flow (curocc/endocc/count) in
       CSEntry against the generated FMF — this is the riskiest part untested.
   ============================================================================ }
+
+PROC Q33_SEX
+preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
+
+PROC Q35_HAS_DISABILITY
+preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
+
+PROC Q40_EDUCATION
+preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
+
+PROC Q41_EMPLOYMENT
+preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
+
+PROC Q42_GSIS
+preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
+
+PROC Q43_SSS
+preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
+
+PROC Q44_PAGIBIG
+preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
+
+PROC Q45_PHILHEALTH_REG
+preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
