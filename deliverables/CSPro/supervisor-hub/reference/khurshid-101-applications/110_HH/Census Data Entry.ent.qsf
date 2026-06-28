@@ -1,6 +1,6 @@
 ﻿---
 fileType: Question Text
-version: CSPro 8.0
+version: CSPro 7.7
 languages:
   - name: EN
     label: English
@@ -26,13 +26,5 @@ styles:
     css: |
       font-family: Arial;font-size: 18px;
 questions:
-  - name: MENUAPP_DICT.MENU_SESSION
-    conditions:
-      - questionText:
-          EN: |
-            <p>Session</p>
-  - name: MENUAPP_DICT.MENU_PICK
-    conditions:
-      - questionText:
-          EN: |
-            <p>Menu</p>
+  []
+...

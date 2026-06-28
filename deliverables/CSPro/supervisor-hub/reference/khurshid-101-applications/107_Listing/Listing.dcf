@@ -1,0 +1,120 @@
+﻿[Dictionary]
+Version=CSPro 7.7
+Label=Listing
+Name=LISTING_DICT
+RecordTypeStart=1
+RecordTypeLen=1
+Positions=Relative
+ZeroFill=No
+DecimalChar=Yes
+SecurityOptions=65DACAA99E11966EE2AEE8690D8E84C1C55EDBDBBEDF7FEAF37DF247857ABC55
+
+[Level]
+Label=Listing Level
+Name=LISTING_LEVEL
+
+[IdItems]
+
+[Item]
+Label=Listing Login ID
+Name=LIS_LOGINID
+Start=2
+Len=4
+DataType=Numeric
+ZeroFill=Yes
+
+[Item]
+Label=Supervisor ID
+Name=LIS_SUP_ID
+Start=6
+Len=4
+DataType=Numeric
+ZeroFill=Yes
+
+[Item]
+Label=Listing Household ID
+Name=LISTING_HH_ID
+Start=10
+Len=3
+DataType=Numeric
+ZeroFill=Yes
+
+[Record]
+Label=Listing Record
+Name=LISTING_REC
+RecordTypeValue='1'
+RecordLen=125
+
+[Item]
+Label=Listing GPS Latitute
+Name=LIS_GPS_LAT
+Start=13
+Len=13
+DataType=Numeric
+Decimal=9
+DecimalChar=Yes
+
+[Item]
+Label=Listing GPS Longitute
+Name=LIS_GPS_LON
+Start=26
+Len=13
+DataType=Numeric
+Decimal=9
+DecimalChar=Yes
+
+[Item]
+Label=Listing Address
+Name=LIS_ADD
+Start=39
+Len=50
+DataType=Alpha
+
+[Item]
+Label=Listing Respondent Name
+Name=LIS_R_NAME
+Start=89
+Len=35
+DataType=Alpha
+
+[Item]
+Label=Listing Respondent Gender
+Name=LIS_R_GENDER
+Start=124
+Len=1
+DataType=Numeric
+
+[ValueSet]
+Label=Listing Respondent Gender
+Name=LIS_R_GENDER_VS1_EN
+Value=1;Male
+Value=2;Female
+
+[ValueSet]
+Label=Listing Respondent Gender
+Name=LIS_R_GENDER_VS1_UR
+Value=1;مرد
+Value=2;عورت
+
+[Item]
+Label=Listing Interview Status
+Name=LIS_INT_STATUS
+Start=125
+Len=1
+DataType=Numeric
+
+[ValueSet]
+Label=Listing Interview Status
+Name=LIS_INT_STATUS_VS1_EN
+Value=1;Completed
+Value=2;Partially Completed
+Value=3;Refused
+Value=4;Locked
+
+[ValueSet]
+Label=Listing Interview Status
+Name=LIS_INT_STATUS_VS1_UR
+Value=1;مکمل
+Value=2;مکمل نہیں
+Value=3;انٹرویو سے انکار
+Value=4;گھرانہ بند ہے

@@ -1,0 +1,80 @@
+﻿[FormFile]
+Version=CSPro 7.7
+Name=MENUAPPLICATION_FF
+Label=MenuApplication
+DefaultTextFont=-013 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 Arial
+FieldEntryFont=0018 0000 0000 0000 0600 0000 0000 0000 0000 0000 0000 0000 0000 Courier New
+Type=OperatorControlled
+  
+[Dictionaries]
+File=.\MenuApplication.dcf
+  
+[Form]
+Name=FORM000
+Label=MenuApplication Level
+Level=1
+Size=398,222
+  
+Item=MENUAPP_LOGINID
+Item=MENUAPP_SUPID
+Item=MENUAPP_ROLE
+  
+  
+[Text]
+Name=TEXT1
+Position=22,20,290,57
+Text=Menu Application
+Form=1
+Font=-032 0000 0000 0000 0700 0000 0000 0000 0000 0003 0002 0001 0034 Arial
+Color=16711680
+ 
+[EndForm]
+  
+[Level]
+Name=MENUAPPLICATION_LEVEL
+Label=MenuApplication Level
+  
+[Group]
+Required=Yes
+Name=MENUAPPLICATION_LEVEL_FORM
+Label=MenuApplication Level
+Form=1
+Max=1
+  
+[Field]
+Name=MENUAPP_LOGINID
+Position=271,113,328,133
+Item=MENUAPP_LOGINID,MENUAPPLICATION_DICT
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=65,116,259,132
+Text=MenuApplication Identification
+ 
+  
+[Field]
+Name=MENUAPP_SUPID
+Position=271,137,328,157
+Item=MENUAPP_SUPID,MENUAPPLICATION_DICT
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=66,140,151,156
+Text=Supervisor ID
+ 
+  
+[Field]
+Name=MENUAPP_ROLE
+Position=271,161,286,181
+Item=MENUAPP_ROLE,MENUAPPLICATION_DICT
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=66,165,95,181
+Text=Role
+ 
+[EndGroup]
+  

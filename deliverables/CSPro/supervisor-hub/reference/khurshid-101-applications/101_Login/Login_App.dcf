@@ -1,0 +1,80 @@
+﻿[Dictionary]
+Version=CSPro 7.7
+Label=Login_App
+Name=LOGIN_APP_DICT
+RecordTypeStart=1
+RecordTypeLen=1
+Positions=Relative
+ZeroFill=No
+DecimalChar=Yes
+SecurityOptions=E65EC51B147F13C3DC20036F69C7D014F3801365EE23F9AE96A8409397BAB4B8
+
+[Level]
+Label=Login_App Level
+Name=LOGIN_APP_LEVEL
+
+[IdItems]
+
+[Item]
+Label=Login Identification
+Name=LOGIN_APP_ID
+Start=2
+Len=4
+DataType=Numeric
+ZeroFill=Yes
+
+[Record]
+Label=Login_App Record
+Name=LOGIN_APP_REC
+RecordTypeValue='1'
+RecordLen=79
+
+[Item]
+Label=Application Version
+Name=APP_VERSION
+Start=6
+Len=4
+DataType=Numeric
+Decimal=2
+DecimalChar=Yes
+
+[Item]
+Label=Login Name
+Name=LOGIN_NAME
+Start=10
+Len=45
+DataType=Alpha
+
+[Item]
+Label=Device ID
+Name=DEVICE_ID
+Start=55
+Len=20
+DataType=Alpha
+
+[Item]
+Label=Password
+Name=PASSWORD
+Start=75
+Len=4
+DataType=Numeric
+ZeroFill=Yes
+
+[Item]
+Label=Designation
+Name=DESIGNATION
+Start=79
+Len=1
+DataType=Numeric
+
+[ValueSet]
+Label=Designation
+Name=DESIGNATION_VS1_EN
+Value=1;Supervisor
+Value=2;Enumerator
+
+[ValueSet]
+Label=Designation
+Name=DESIGNATION_VS1_UR
+Value=1;سُپروائزر
+Value=2;اینومریٹر

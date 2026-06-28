@@ -4,7 +4,10 @@ AppType=Entry
 
 [Files]
 Application=.\MenuApp.ent
-InputData=.\MenuApp.csdb
+InputData=|type=None
 
 [ExternalFiles]
 ASSIGNMENT_DICT=.\MyAssignment.dat
+FACILITYHEADSURVEY_DICT=..\FacilityHeadSurvey\FacilityHeadSurvey.csdb
+PATIENTSURVEY_DICT=..\PatientSurvey\PatientSurvey.csdb
+HOUSEHOLDSURVEY_DICT=..\HouseholdSurvey\HouseholdSurvey.csdb

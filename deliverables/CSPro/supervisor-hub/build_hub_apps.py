@@ -19,6 +19,7 @@ edit THIS generator and rerun.
 Run:  python build_hub_apps.py        # writes all artifacts into this folder
 """
 import json
+import shutil
 import sys
 from pathlib import Path
 
@@ -32,40 +33,80 @@ from cspro_helpers import (             # noqa: E402
 # Seed roster (spike only — placeholder creds, rotate before any real use).
 # ----------------------------------------------------------------------------
 ROSTER_ROWS = [
-    # (username, password, role, operator_id, cluster)
-    ("se-004", "changeme04", "enumerator", "se-004", "01028"),
-    ("se-011", "changeme11", "enumerator", "se-011", "01028"),
-    ("fs-01",  "changeme-fs", "supervisor", "fs-01", "01028"),
+    # (username, password, role, operator_id, cluster, supervisor_id)
+    # C5 — supervisor_id models the enumerator->supervisor hierarchy ("who reports to me");
+    # Khurshid's UsernamePassword.dcf carries this. Enumerators point at their supervisor; the
+    # supervisor's own supervisor_id is blank (top of this chain). Encryption + device-bound
+    # login stay ASPSI-gated (real names/creds) — not built here.
+    ("se-004", "changeme04", "enumerator", "se-004", "01028", "fs-01"),
+    ("se-011", "changeme11", "enumerator", "se-011", "01028", "fs-01"),
+    ("fs-01",  "changeme-fs", "supervisor", "fs-01", "01028", ""),
 ]
 
-# Role-filtered field-ops menus (spec ADDENDUM-2). Two value sets on MENU_CHOICE; the
-# menu app swaps to the logged-in role's set in onfocus (setvalueset). Codes are DISJOINT
-# across roles (supervisor 01-08, enumerator 11-18) so the postproc routes by code alone.
-# LISTING DESCOPED FROM v1 (Carl, 2026-06-25): the listing leg (supervisor "Listing Data"
-# 02 + enumerator "Listing Exercise" 11) is REMOVED because the PatientListing app it would
-# chain-launch was never built (blocked on the unauthored Survey Manual §3a auto-tag rule,
-# ASPSI's call). Hub v1 = assignment distribution (B4) + survey conduct/collect/relay
-# (B6/B7) + on-device report entry points + EA map. Codes 02 and 11 are intentionally left
-# UNUSED (gaps are invisible — displayCodesAlongsideLabels is off) to avoid renumbering the
-# postproc; listing items re-slot here if/when the listing app is unblocked.
-SUPERVISOR_MENU = [
-    ("Assign Enumeration Area",            "01"),
-    ("Survey Interview — view report",     "03"),
-    ("View EA on Map",                     "04"),
-    ("Open F1 — Facility Head (review)",   "05"),
-    ("Open F3 — Patient (review)",         "06"),
-    ("Open F4 — Household (review)",       "07"),
-    ("Log out",                            "08"),
+# C3a — GROUPED field-ops menus, Khurshid 101-apps "accept()" interface (replaced the flat
+# value-set radio field 2026-06-27). Each role = [(SECTION_HEADER, [(item_label, action_key), ...])].
+# The CSPro accept() option list AND the index routing are GENERATED from this by
+# _accept_menu_block() — headers + indented "+" items flatten to 1-based accept positions with no
+# drift: item positions route to MENU_ACTIONS[key]; a header/blank/cancel pick hits the guard.
+# Use plain "-" (not em-dash) in labels: these become CSPro string literals in the .apc logic.
+# LISTING still descoped (Carl 2026-06-25): PatientListing never built (§3a unauthored, ASPSI's call).
+SUPERVISOR_MENU_GROUPED = [
+    ("ASSIGNMENTS", [
+        ("Assign Enumeration Area", "assign"),
+    ]),
+    ("COLLECT & RELAY", [
+        ("Collect Interviews from Enumerators", "collect"),
+        ("Relay Collected Interviews to CSWeb", "relay"),
+    ]),
+    ("REVIEW & REPORTS", [
+        ("Survey Interview - view report", "report_sup"),
+        ("View EA on Map", "map"),
+        ("Open F1 - Facility Head (review)", "open_f1"),
+        ("Open F3 - Patient (review)", "open_f3"),
+        ("Open F4 - Household (review)", "open_f4"),
+    ]),
+    ("SESSION", [
+        ("Log out", "logout"),
+    ]),
 ]
-ENUMERATOR_MENU = [
-    ("Receive Assigned Data (Patient)",        "12"),
-    ("Conduct F1 — Facility Head Interview",   "13"),
-    ("Conduct F3 — Patient Interview",         "14"),
-    ("Conduct F4 — Household Interview",       "15"),
-    ("View EA on Map",                         "16"),
-    ("View my report",                         "17"),
-    ("Log out",                                "18"),
+ENUMERATOR_MENU_GROUPED = [
+    ("ASSIGNMENT", [
+        ("Receive Assigned Data (Patient)", "receive"),
+    ]),
+    ("INTERVIEWS", [
+        ("Conduct F1 - Facility Head Interview", "open_f1"),
+        ("Conduct F3 - Patient Interview", "open_f3"),
+        ("Conduct F4 - Household Interview", "open_f4"),
+        ("Send My Interviews to Supervisor", "send"),
+    ]),
+    ("REPORTS", [
+        ("View EA on Map", "map"),
+        ("View my report", "report_enum"),
+    ]),
+    ("SESSION", [
+        ("Log out", "logout"),
+    ]),
 ]
+# action_key -> the CSPro statement(s) run for that menu item inside MENU_PICK preproc.
+# "stay" actions end with `move to MENU_SESSION` (re-runs the id -> flows back to MENU_PICK ->
+# re-shows the menu; reenter can't be used in a preproc and forces field entry). "leave" actions
+# launch an instrument (Pff OnExit chains back here) or execpff back to LoginApp (control transfers).
+MENU_ACTIONS = {
+    "assign":  "assign_ea();\n      move to MENU_SESSION;",
+    "collect": "collect_interviews();\n      move to MENU_SESSION;",
+    "relay":   "relay_to_csweb();\n      move to MENU_SESSION;",
+    "receive": "receive_assignment();\n      move to MENU_SESSION;",
+    "send":    "send_to_supervisor();\n      move to MENU_SESSION;",
+    "map":     "show_ea_map();\n      move to MENU_SESSION;",
+    "report_sup":  ('show_coverage_report("SURVEY COVERAGE - interviews collected at this hub");'
+                    '\n      move to MENU_SESSION;'),
+    "report_enum": ('show_coverage_report("MY INTERVIEW COVERAGE");'
+                    '\n      move to MENU_SESSION;'),
+    "open_f1": 'launch_instrument("../FacilityHeadSurvey/FacilityHeadSurvey.pff");',
+    "open_f3": 'launch_instrument("../PatientSurvey/PatientSurvey.pff");',
+    "open_f4": 'launch_instrument("../HouseholdSurvey/HouseholdSurvey.pff");',
+    "logout":  'execpff("LoginApp.pff", stop);',
+}
 
 # B3 — EA / cluster assignment lookup (one assignment per EA-facility). Distributed
 # supervisor->enumerator in N1 (B4, C2-gated); here it is the structural dict + seed.
@@ -74,6 +115,22 @@ ASSIGNMENT_ROWS = [
     ("040340002", "se-004", "F3", "30", "Binan RHU - Patient Survey",        "01028"),
     ("040340005", "se-011", "F4", "20", "Binan Brgy 5 - Household Survey",    "01028"),
     ("040340001", "fs-01",  "F1", "1",  "Binan City Health Office",          "01028"),
+]
+
+# B6/B7 — the F1/F3/F4 instrument dicts are declared EXTERNAL in MenuApp so the Bluetooth case
+# exchange (syncdata) can move PRIMARY case data device-to-device (the C2-DEVICE-PROVEN path).
+# syncdata requires the synced dict to be external OR the running app's main dict; MenuApp's main
+# dict is MENUAPP_DICT, so each instrument dict rides as an EXTERNAL whose DATA file is the
+# SEPARATELY-INSTALLED instrument's own .csdb (../<App>/<App>.csdb). The dcf (STRUCTURE) is snapshot
+# into this folder at build time (copy_instrument_dcfs) so it cannot silently drift from THIS build —
+# BUT it is a build-time snapshot: if an instrument is redeployed during UAT, REBUILD + REDEPLOY the
+# hub so the shipped dcf still matches the device's .csdb schema (a syncdata schema mismatch is the
+# main risk of this instrument coupling). Tuple: (instrument_label, dcf_filename, dict_name, app_folder);
+# csdb on device = <app_folder>/<app_folder>.csdb; dcf source = ../<instrument_label>/<dcf_filename>.
+INSTRUMENTS = [
+    ("F1", "FacilityHeadSurvey.dcf", "FACILITYHEADSURVEY_DICT", "FacilityHeadSurvey"),
+    ("F3", "PatientSurvey.dcf",      "PATIENTSURVEY_DICT",      "PatientSurvey"),
+    ("F4", "HouseholdSurvey.dcf",    "HOUSEHOLDSURVEY_DICT",    "HouseholdSurvey"),
 ]
 
 # ----------------------------------------------------------------------------
@@ -239,12 +296,16 @@ def build_ent(app_name, label, dcf, fmf, qsf, apc, mgf, externals=None):
 
 
 def _pff(application, input_data, externals=None):
+    # C2 (|type=None): Login/Menu carry NO case data — opens straight to the form/menu (no "0 Cases"
+    # list, no "+" tap). A "|type=None" value is written verbatim; a real filename gets the ".\" prefix.
+    input_line = input_data if input_data.startswith("|") else f".\\{input_data}"
     lines = ["[Run Information]", "Version=CSPro 8.0", "AppType=Entry", "",
-             "[Files]", f"Application=.\\{application}", f"InputData=.\\{input_data}", ""]
+             "[Files]", f"Application=.\\{application}", f"InputData={input_line}", ""]
     if externals:
         lines.append("[ExternalFiles]")
         for dict_name, dat in externals.items():
-            lines.append(f"{dict_name}=.\\{dat}")
+            # value is the verbatim relative path (so instrument .csdb externals can use ..\\<App>\\…)
+            lines.append(f"{dict_name}={dat}")
         lines.append("")
     return "\r\n".join(lines)
 
@@ -283,6 +344,7 @@ def build_user_roster_dict():
                     {"name": "UR_ROLE", "labels": [{"text": "Role"}], "contentType": "alpha", "length": 20},
                     {"name": "UR_OPERATOR_ID", "labels": [{"text": "Operator ID"}], "contentType": "alpha", "length": 20},
                     {"name": "UR_CLUSTER", "labels": [{"text": "Cluster"}], "contentType": "alpha", "length": 10},
+                    {"name": "UR_SUPERVISOR_ID", "labels": [{"text": "Supervisor ID"}], "contentType": "alpha", "length": 20},
                 ],
             }],
         }],
@@ -290,8 +352,9 @@ def build_user_roster_dict():
 
 
 def write_user_roster_data(path):
-    """Fixed-width: UR_USERNAME(20) UR_PASSWORD(20) UR_ROLE(20) UR_OPERATOR_ID(20) UR_CLUSTER(10)."""
-    widths = [20, 20, 20, 20, 10]
+    """Fixed-width: UR_USERNAME(20) UR_PASSWORD(20) UR_ROLE(20) UR_OPERATOR_ID(20) UR_CLUSTER(10)
+    UR_SUPERVISOR_ID(20)."""
+    widths = [20, 20, 20, 20, 10, 20]
     with Path(path).open("w", encoding="utf-8", newline="\n") as fh:
         for row in ROSTER_ROWS:
             fh.write("".join(v[:w].ljust(w) for v, w in zip(row, widths)) + "\n")
@@ -309,32 +372,25 @@ def build_login_dict():
     return build_dictionary("LOGINAPP_DICT", "LoginApp", records=[rec], id_items=id_items)
 
 
-def _menu_choice_item():
-    """MENU_CHOICE with TWO value sets (supervisor=VS1, enumerator=VS2); the menu .apc
-    swaps to the role's set in onfocus. length 2 (codes 01-08 / 11-18), zero-filled."""
-    def _vs(name, label, options):
-        return {"name": name, "labels": [{"text": label}],
-                "values": [{"labels": [{"text": t}], "pairs": [{"value": c}]} for t, c in options]}
+def _menu_pick_item():
+    """C3a — MENU_PICK is just the host field for the accept() menu (shown in its preproc); it
+    stores nothing (noinput). No value set — the grouped option list is built by accept() in logic."""
     return {
-        "name": "MENU_CHOICE", "labels": [{"text": "Choose an action"}],
-        "contentType": "numeric", "length": 2, "zeroFill": True,
-        "valueSets": [
-            _vs("MENU_CHOICE_VS1", "Supervisor menu", SUPERVISOR_MENU),
-            _vs("MENU_CHOICE_VS2", "Enumerator menu", ENUMERATOR_MENU),
-        ],
+        "name": "MENU_PICK", "labels": [{"text": "Menu"}],
+        "contentType": "numeric", "length": 1, "zeroFill": True,
     }
 
 
 def build_menu_dict():
-    """Input dict: trivial numeric session key, a protected role display, and the
-    role-filtered menu choice (two value sets — see _menu_choice_item)."""
+    """Input dict: trivial numeric session key + the MENU_PICK host field for the accept() menu.
+    (ROLE_SHOWN dropped — the role is shown in the accept() title; no value-set field — the grouped
+    menu is built in logic. C3a.)"""
     id_items = [{
         "name": "MENU_SESSION", "labels": [{"text": "Session"}],
         "contentType": "numeric", "start": 2, "length": 1, "zeroFill": True,
     }]
     rec = record("MENU_REC", "Menu record", "M", [
-        alpha("ROLE_SHOWN", "Logged-in role", length=20),
-        _menu_choice_item(),
+        _menu_pick_item(),
     ])
     return build_dictionary("MENUAPP_DICT", "MenuApp", records=[rec], id_items=id_items)
 
@@ -349,7 +405,13 @@ def build_assignment_dict():
         "software": "CSPro", "version": 8.0, "fileType": "dictionary",
         "name": "ASSIGNMENT_DICT",
         "labels": [{"text": "EA Assignment Lookup"}],
-        "readOptimization": True,
+        # readOptimization MUST be False: B4 overwrites MyAssignment.dat MID-SESSION (the syncfile
+        # GET in receive_assignment), then setfile+forcase to read it. With read-optimization ON,
+        # CSPro caches the dict's index at app start (when MyAssignment.dat is empty), so the
+        # mid-session forcase sees STALE empty data and the "Assignment received…" display never
+        # fires (device-confirmed 2026-06-27: the file transferred but the in-session display was
+        # blank). Off = forcase reads fresh from disk each time. The file is tiny, so no perf cost.
+        "readOptimization": False,
         "recordType": {"start": 0, "length": 0},
         "defaults": {"decimalMark": True, "zeroFill": True},
         "relativePositions": True,
@@ -449,22 +511,31 @@ MENU_APC = """\
   MenuApp — Phase-2 field-ops role menu   (AUTOGENERATED)
   Do NOT hand-edit: edit build_hub_apps.py and rerun.
   Restructured 2026-06-25 (B1) to the spec ADDENDUM-2 Supervisor/Enumerator menus.
+  C3a 2026-06-27: the value-set radio field is REPLACED by Khurshid's grouped accept() menu
+  (section headers + indented + items, generated from *_MENU_GROUPED; routed by accept position).
+  C2 2026-06-27: Login + Menu use InputData=|type=None (no case store, no "tap +").
   BUILT actions: open/conduct an instrument (PFF chain-launch, OnExit back to menu),
   log out (execpff back to LoginApp), the per-role on-device report ENTRY POINT,
-  View EA on Map (C7=PASS, offline MBTiles), and — B4 (N1), 2026-06-25 — Assign EA /
-  Receive Assigned Data over Bluetooth (syncserver/syncconnect+syncfile; C2-mechanism,
-  device-verify pending a dedicated session).
-  DESCOPED FROM v1 (Carl, 2026-06-25): the LISTING leg (supervisor 02 + enumerator 11) —
-  the PatientListing app it chain-launches was never built (§3a unauthored, ASPSI's call).
-  PENDING (gated): survey collect/relay (B6/B7) — build next on the C2 syncdata path.
-  REPORT NOTE (B2/N4): the on-device report uses errmsg text (proven). A rich HTML
-  report via view() is NOT yet feasibility-confirmed — Phase-3 view() displays a photo
-  IMAGE, not generated HTML — so the HTML/live-coverage version is a flagged follow-up
-  (needs a small view()-HTML spike + the C2-collected data).
+  View EA on Map (C7=PASS, offline MBTiles); B4 (N1), 2026-06-25 — Assign EA /
+  Receive Assigned Data over Bluetooth (syncserver/syncconnect+syncfile); and B6/B7,
+  2026-06-27 — the survey CASE EXCHANGE over Bluetooth: enumerator "Send My Interviews"
+  (syncconnect+syncdata PUT of the assigned instrument, declared EXTERNAL), supervisor
+  "Collect Interviews" (syncserver host loop), and "Relay to CSWeb" (syncconnect(CSWeb)+
+  syncdata(PUT) of the collected F1/F3/F4 dicts under supervisor-qa — Khurshid 101-apps
+  pattern, grounded in csprousers.org; relay logic wired 2026-06-27). Bluetooth case data
+  moves on the C2-DEVICE-PROVEN syncdata path (B6/B7 collect/send DEVICE-CONFIRMED 2026-06-27);
+  the CSWeb relay is build-valid, its on-our-server credential prompt device-verify pending.
+  DESCOPED FROM v1 (Carl, 2026-06-25): the LISTING leg — the PatientListing app it would
+  chain-launch was never built (§3a unauthored, ASPSI's call); its codes now carry collect/send.
+  REPORT NOTE (B2/N4/C4): the on-device report (show_coverage_report) now computes REAL
+  per-instrument coverage by iterating the F1/F3/F4 external dicts with forcase + the received
+  AS_TARGET_COUNT, shown in a one-line errmsg (device-safe). A Bootstrap-styled HTML
+  version (view of a generated report.html) remains the C4b follow-up.
   ============================================================================ }
 
 PROC GLOBAL
 string m_role;
+string m_op;
 Pff instr_pff;
 
 function launch_instrument(string pffPath)
@@ -534,86 +605,189 @@ function receive_assignment()
   endif;
 end;
 
+function collect_interviews()
+  { B7 (collect) - become a passive Bluetooth host so each enumerator can PUT their interviews
+    into this hub's matching instrument .csdb (syncdata). The SAME syncserver(Bluetooth) call as
+    'Assign EA': syncserver is passive - it serves files AND receives case data, responding to
+    whatever the connected client requests. Handles ONE enumerator per call; re-select for the
+    next (one-host-from-many = the C2-proven loop). Collected cases accumulate by the 12-digit
+    key into this hub's own ../<App>/<App>.csdb (the F1/F3/F4 dicts declared EXTERNAL here), ready
+    to relay to CSWeb. DEVICE-UNCONFIRMED: receiving syncdata into a sibling app's live .csdb. }
+  errmsg("COLLECT: starting the Bluetooth server to receive interviews. Keep this screen open; "
+           + "each enumerator now runs 'Send My Interviews to Supervisor'. Receives one enumerator "
+           + "per connection - re-select this item for the next enumerator.");
+  syncserver(Bluetooth);
+  errmsg("COLLECT: an enumerator connected and synced their interviews to this hub.");
+end;
+
+function send_to_supervisor()
+  { B6 - push THIS enumerator's captured cases to the supervisor over Bluetooth. Transport = the
+    C2-DEVICE-PROVEN syncconnect(Bluetooth)+syncdata(PUT)+syncdisconnect (the exact SyncSpike shape:
+    syncconnect tested in an if, syncdata as a statement). Routes to the assigned instrument
+    (AS_INSTRUMENT from the received assignment; defaults to F3, the test instrument, when none is
+    loaded yet). The cases live in the instrument's OWN separately-installed .csdb (../<App>/<App>.csdb),
+    declared EXTERNAL here. PUT is non-destructive - the enumerator keeps their copy (proven in C2).
+    DEVICE-UNCONFIRMED (verify on the 2-tablet rig): syncdata against an external mapped to a SIBLING
+    app's live .csdb, and the no-assignment default. }
+  string instr;
+  setfile(ASSIGNMENT_DICT, "MyAssignment.dat");
+  instr = "";
+  forcase ASSIGNMENT_DICT do
+    instr = strip(AS_INSTRUMENT);
+  enddo;
+  if instr = "" then
+    instr = "F3";   { default to the F3 test instrument when no assignment has been received }
+  endif;
+  if syncconnect(Bluetooth) then
+    if instr = "F1" then
+      syncdata(PUT, FACILITYHEADSURVEY_DICT);
+    elseif instr = "F4" then
+      syncdata(PUT, HOUSEHOLDSURVEY_DICT);
+    else
+      syncdata(PUT, PATIENTSURVEY_DICT);
+    endif;
+    syncdisconnect();
+    errmsg("Sent your " + instr + " interviews to the supervisor over Bluetooth. Your own copies "
+             + "are unchanged (non-destructive).");
+  else
+    errmsg("Bluetooth connect failed - no supervisor host found. Ask the supervisor to start "
+             + "'Collect Interviews from Enumerators' first, then retry.");
+  endif;
+end;
+
+function relay_to_csweb()
+  { B7 (relay) - push the hub's COLLECTED F1/F3/F4 cases to CSWeb under the supervisor-qa account.
+    Grounded in the official CSPro API (syncconnect(CSWeb, url [, user, pass]) + syncdata(PUT, dict),
+    csprousers.org) + Khurshid's senddataontheserver pattern. Credentials are OMITTED, so CSEntry
+    prompts the supervisor ONCE for the supervisor-qa login then caches it (subsequent relays one-tap).
+    syncdata(PUT) requires the dict to be uploaded to CSWeb already - F1/F3/F4 are (they are deployed
+    there). The cases sit in this hub's OWN ../<App>/<App>.csdb (the same EXTERNAL dicts the Bluetooth
+    collect writes into); CSWeb upserts by the 12-digit key, so hub-relayed + direct-synced copies never
+    conflict. Dual-path: direct enumerator->CSWeb stays the default; this is the no-signal safety net.
+    Shape = syncconnect tested in an if, syncdata as statements (the C2/Khurshid-proven form).
+    DEVICE-UNCONFIRMED: syncconnect(CSWeb)-from-logic + the supervisor-qa credential prompt on OUR server. }
+  string csweb_url;
+  csweb_url = "https://csweb.asiansocial.org/csweb/api";
+  if syncconnect(CSWeb, csweb_url) then
+    syncdata(PUT, FACILITYHEADSURVEY_DICT);
+    syncdata(PUT, PATIENTSURVEY_DICT);
+    syncdata(PUT, HOUSEHOLDSURVEY_DICT);
+    syncdisconnect();
+    errmsg("Relayed the hub's collected F1/F3/F4 interviews to CSWeb (supervisor-qa). Cases upsert "
+             + "by the 12-digit key, so direct-synced and hub-relayed copies never conflict.");
+  else
+    errmsg("CSWeb connect failed - no internet, or sign-in was cancelled. This hub relay is the "
+             + "no-signal safety net; retry on signal. Sign in as the supervisor-qa account when prompted.");
+  endif;
+end;
+
+function assign_ea()
+  { B4 (N1) - publish EA assignments: become a passive Bluetooth host so each enumerator can pull
+    their AS_<id>.dat (syncfile GET). syncserver handles ONE client per call; re-select for the next
+    enumerator (one-host-from-many). The AS_*.dat files ship in the app folder = the syncserver root. }
+  errmsg("ASSIGN EA: starting the Bluetooth server to publish assignments. Keep this screen open; "
+           + "the enumerator now runs 'Receive Assigned Data'. Serves one enumerator per connection - "
+           + "re-select this item for the next enumerator.");
+  syncserver(Bluetooth);
+  errmsg("ASSIGN EA: an enumerator connected and pulled their assignment.");
+end;
+
+function show_coverage_report(string scope)
+  { C4/N4 - REAL on-device coverage report (replaced the static errmsg stub 2026-06-28). Counts the
+    survey cases actually stored on THIS device per instrument by iterating each F1/F3/F4 dict declared
+    EXTERNAL here (on device = ../<App>/<App>.csdb) with forcase - the SAME proven idiom the Bluetooth
+    functions use (receive_assignment/send_to_supervisor). Meaning depends on the device/role:
+      * Supervisor (Survey Interview - view report): the cases COLLECTED into this hub over Bluetooth.
+      * Enumerator (View my report): the enumerator's OWN captured interviews.
+    For an assigned enumerator, AS_TARGET_COUNT (from the received assignment) gives captured-vs-target.
+    A zero count is safe (no cases yet / instrument not installed). One flowing line (no chr() / no
+    countcases() - neither is a confirmed CSPro 8 idiom; both failed the GLOBAL compile). A Bootstrap-
+    styled HTML version (view of a generated report.html) is the C4b follow-up. }
+  numeric n1; numeric n3; numeric n4;
+  string body; string tgt;
+  n1 = 0; n3 = 0; n4 = 0;
+  forcase FACILITYHEADSURVEY_DICT do n1 = n1 + 1; enddo;
+  forcase PATIENTSURVEY_DICT do n3 = n3 + 1; enddo;
+  forcase HOUSEHOLDSURVEY_DICT do n4 = n4 + 1; enddo;
+  { Captured-vs-target for an assigned enumerator (assignment already pulled into MyAssignment.dat). }
+  tgt = "";
+  setfile(ASSIGNMENT_DICT, "MyAssignment.dat");
+  forcase ASSIGNMENT_DICT do
+    tgt = " Your assignment: instrument " + strip(AS_INSTRUMENT)
+        + ", target " + strip(AS_TARGET_COUNT) + " (EA " + strip(AS_EA_NAME) + ").";
+  enddo;
+  body = scope + ".  F1 Facility Head: " + maketext("%d", n1) + " captured.  "
+       + "F3 Patient: " + maketext("%d", n3) + " captured.  "
+       + "F4 Household: " + maketext("%d", n4) + " captured." + tgt
+       + "  (Counts the survey cases stored on this device.)";
+  errmsg("%s", body);
+end;
+
 PROC MENUAPP_LEVEL
 preproc
-  { Read the role handed over by LoginApp (loadsetting persists across apps). }
+  { Read the role + operator id handed over by LoginApp (loadsetting persists across apps).
+    m_op titles the accept() menu; m_role picks the role's option list. Auto-key + PROTECT the
+    session id HERE (level preproc): the menu's `move to MENU_SESSION` loop must land on a PROTECTED
+    field so it auto-skips forward to MENU_PICK. A noinput field is still ENTERED on move-to
+    (device-confirmed 2026-06-27 — landed on the id in entry mode); protect is the fix. Set it in the
+    level preproc because #617: a protected field's OWN preproc is skipped, so MENU_SESSION has none. }
   m_role = loadsetting("hub_role");
-
-PROC MENU_SESSION
-preproc
-  { Single-case menu: auto-key the session, surface the role read-only, skip entry.
-    ROLE_SHOWN is set + protected here (a visited, non-protected field's preproc),
-    NOT in its own preproc (CSEntry skips a protected field's preproc — #617). }
+  m_op = loadsetting("hub_operator_id");
   MENU_SESSION = 1;
-  ROLE_SHOWN = m_role;
-  protect(ROLE_SHOWN, true);
-  noinput;
+  protect(MENU_SESSION, true);
 
-PROC MENU_CHOICE
-onfocus
-  { Role-filtered menu: show the logged-in role's value set (supervisor=VS1, enumerator=VS2).
-    onfocus (not preproc) so reverse navigation re-applies the filter. }
+PROC MENU_PICK
+preproc
+  { C3a — Khurshid grouped accept() menu in PREPROC (shows before entry), AUTOGENERATED from
+    *_MENU_GROUPED by _accept_menu_block. Section headers are non-actionable; the indented "+" items
+    route by accept() position to the action functions; a header/blank/cancel pick hits the guard. The
+    menu LOOPS via `move to MENU_SESSION` (re-runs the id field -> flows back here -> re-shows the
+    menu). reenter is NOT used: it is postproc-only AND forces field entry (numeric MENU_PICK then
+    fails range validation -> "Out of range" — device-confirmed 2026-06-27). "Leave" actions launch an
+    instrument (Pff OnExit chains back here) or execpff to LoginApp. noinput skips field entry. }
+  numeric sel;
   if strip(m_role) = "supervisor" then
-    setvalueset(MENU_CHOICE, MENU_CHOICE_VS1);
-  else
-    setvalueset(MENU_CHOICE, MENU_CHOICE_VS2);
-  endif;
-
-postproc
-  if strip(m_role) = "supervisor" then
-    { Supervisor menu (codes 01-08) }
-    if MENU_CHOICE = 1 then
-      { B4 (N1) — publish EA assignments: become a passive Bluetooth host so each enumerator
-        can pull their AS_<id>.dat (syncfile GET). syncserver handles ONE client per call;
-        re-select this item for the next enumerator (one-host-from-many = repeat, the same
-        loop pattern C2 proved). The AS_*.dat files ship in the app folder = the syncserver
-        file root. }
-      errmsg("ASSIGN EA: starting the Bluetooth server to publish assignments. Keep this "
-               + "screen open; the enumerator now runs 'Receive Assigned Data'. Serves one "
-               + "enumerator per connection - re-select this item for the next enumerator.");
-      syncserver(Bluetooth);
-      errmsg("ASSIGN EA: an enumerator connected and pulled their assignment.");
-      reenter;
-    { code 02 (Listing Data report) descoped from v1 — see SUPERVISOR_MENU note. }
-    elseif MENU_CHOICE = 3 then
-      errmsg("SURVEY INTERVIEW report - on-device entry point is live. Captured-vs-target coverage populates after Bluetooth collection (Phase-2B). A rich HTML report is a flagged follow-up.");
-      reenter;
-    elseif MENU_CHOICE = 4 then
-      show_ea_map();
-      reenter;
-    elseif MENU_CHOICE = 5 then
-      launch_instrument("../FacilityHeadSurvey/FacilityHeadSurvey.pff");
-    elseif MENU_CHOICE = 6 then
-      launch_instrument("../PatientSurvey/PatientSurvey.pff");
-    elseif MENU_CHOICE = 7 then
-      launch_instrument("../HouseholdSurvey/HouseholdSurvey.pff");
-    elseif MENU_CHOICE = 8 then
-      execpff("LoginApp.pff", stop);
-    endif;
+__SUPERVISOR_MENU_BLOCK__
   elseif strip(m_role) = "enumerator" then
-    { Enumerator menu (codes 12-18; 11 Listing Exercise descoped from v1 — see ENUMERATOR_MENU note) }
-    if MENU_CHOICE = 12 then
-      receive_assignment();   { B4 (N1) — syncconnect(Bluetooth) + syncfile(GET) this enumerator's AS_<id>.dat }
-      reenter;
-    elseif MENU_CHOICE = 13 then
-      launch_instrument("../FacilityHeadSurvey/FacilityHeadSurvey.pff");
-    elseif MENU_CHOICE = 14 then
-      launch_instrument("../PatientSurvey/PatientSurvey.pff");
-    elseif MENU_CHOICE = 15 then
-      launch_instrument("../HouseholdSurvey/HouseholdSurvey.pff");
-    elseif MENU_CHOICE = 16 then
-      show_ea_map();
-      reenter;
-    elseif MENU_CHOICE = 17 then
-      errmsg("MY INTERVIEWS report - on-device entry point is live. Your captured-vs-target coverage populates as you complete interviews (Phase-2B reporting). A rich HTML report is a flagged follow-up.");
-      reenter;
-    elseif MENU_CHOICE = 18 then
-      execpff("LoginApp.pff", stop);
-    endif;
+__ENUMERATOR_MENU_BLOCK__
   else
     errmsg("No role found from login. Close and sign in again via LoginApp.");
+    execpff("LoginApp.pff", stop);
   endif;
+  noinput;
 """
+
+
+def _accept_menu_block(role_label, grouped):
+    """C3a — generate the CSPro `sel = accept(...)` + index routing for one role's grouped menu.
+    Headers + indented items flatten to 1-based accept() positions (no drift): item positions route
+    to MENU_ACTIONS[key]; the trailing `else` guards header/blank/cancel picks. The block is indented
+    to sit inside the role branch of MENU_PICK preproc."""
+    opts = []          # accept() option strings, in display order
+    routes = []        # (1-based position, action_key) for the actionable items
+    for header, items in grouped:
+        opts.append(header)
+        for label, key in items:
+            opts.append("   +  " + label)
+            routes.append((len(opts), key))
+    accept_call = ('    sel = accept(strip(m_op) + " - %s",\n%s);'
+                   % (role_label, ",\n".join('       "%s"' % o for o in opts)))
+    lines = [accept_call]
+    for i, (pos, key) in enumerate(routes):
+        lines.append("    %s sel = %d then" % ("if" if i == 0 else "elseif", pos))
+        lines.append("      " + MENU_ACTIONS[key])
+    lines += ['    else',
+              '      errmsg("Pick an action (the indented + items), not a section heading.");',
+              '      move to MENU_SESSION;',
+              '    endif;']
+    return "\n".join(lines)
+
+
+def build_menu_apc():
+    """Fill the MENU_APC template's role placeholders with the generated grouped accept() menus."""
+    return (MENU_APC
+            .replace("__SUPERVISOR_MENU_BLOCK__", _accept_menu_block("Supervisor", SUPERVISOR_MENU_GROUPED))
+            .replace("__ENUMERATOR_MENU_BLOCK__", _accept_menu_block("Enumerator", ENUMERATOR_MENU_GROUPED)))
 
 
 # ----------------------------------------------------------------------------
@@ -638,8 +812,8 @@ def build_login_app():
                     externals=["UserRoster.dcf"])
     _write(HERE / "LoginApp.ent", json.dumps(ent, indent=2))
     _write(HERE / "LoginApp.pff",
-           _pff("LoginApp.ent", "LoginApp.csdb",
-                externals={"USER_ROSTER_DICT": "UserRoster.dat"}))
+           _pff("LoginApp.ent", "|type=None",   # C2 — no case store; opens straight to the username field
+                externals={"USER_ROSTER_DICT": r".\UserRoster.dat"}))
 
 
 def build_menu_app():
@@ -649,18 +823,24 @@ def build_menu_app():
            build_fmf(d, "MENUAPP_FF", r".\MenuApp.dcf", "MenuApp",
                      [("Menu", "MENU_REC")]))
     _write(HERE / "MenuApp.ent.qsf", build_qsf(d, "MENUAPP_DICT"), bom=True)
-    _write(HERE / "MenuApp.ent.apc", MENU_APC)
+    _write(HERE / "MenuApp.ent.apc", build_menu_apc())   # C3a — grouped accept() menu generated from *_MENU_GROUPED
     _write(HERE / "MenuApp.ent.mgf", _mgf("MenuApp"))
-    # B4 — Assignment is declared EXTERNAL so the enumerator can read the AS_<id>.dat file
-    # pulled over Bluetooth (mapped to MyAssignment.dat in the .pff). The supervisor side
-    # just serves the AS_*.dat files via syncserver — it doesn't read the dict.
+    # Externals: (1) B4 — Assignment.dcf, the enumerator's pulled AS_<id>.dat (mapped to
+    # MyAssignment.dat); (2) B6/B7 — the F1/F3/F4 instrument dicts, so syncdata can move primary
+    # case data over Bluetooth. Each instrument dict's STRUCTURE is the snapshot dcf in this folder
+    # (copy_instrument_dcfs) and its DATA file is the SEPARATELY-INSTALLED instrument's own .csdb
+    # (..\\<App>\\<App>.csdb on device). The supervisor RECEIVES into those same .csdb files
+    # (syncserver passive); the enumerator PUTs FROM them.
+    menu_ext_dcfs = ["Assignment.dcf"] + [dcf for (_lbl, dcf, _dn, _fold) in INSTRUMENTS]
     ent = build_ent("MENUAPP", "MenuApp", "MenuApp.dcf", "MenuApp.fmf",
                     "MenuApp.ent.qsf", "MenuApp.ent.apc", "MenuApp.ent.mgf",
-                    externals=["Assignment.dcf"])
+                    externals=menu_ext_dcfs)
     _write(HERE / "MenuApp.ent", json.dumps(ent, indent=2))
+    menu_pff_ext = {"ASSIGNMENT_DICT": r".\MyAssignment.dat"}
+    for (_lbl, _dcf, dn, fold) in INSTRUMENTS:
+        menu_pff_ext[dn] = rf"..\{fold}\{fold}.csdb"
     _write(HERE / "MenuApp.pff",
-           _pff("MenuApp.ent", "MenuApp.csdb",
-                externals={"ASSIGNMENT_DICT": "MyAssignment.dat"}))
+           _pff("MenuApp.ent", "|type=None", externals=menu_pff_ext))   # C2 — no case store; opens straight to the menu
 
 
 def build_roster():
@@ -680,9 +860,25 @@ def build_assignment():
     print(f"  Assignment rows: {len(ASSIGNMENT_ROWS)}")
 
 
+def copy_instrument_dcfs():
+    """B6/B7 — snapshot each live instrument's main dcf into this folder so MenuApp can declare it
+    EXTERNAL for the Bluetooth syncdata case exchange. Build-time copy = always current as of THIS
+    build; REBUILD + redeploy the hub whenever an instrument is redeployed during UAT, so the shipped
+    dcf still matches the device's .csdb schema (see the INSTRUMENTS note)."""
+    cspro_root = HERE.parent   # deliverables/CSPro
+    for (lbl, dcf, _dn, _fold) in INSTRUMENTS:
+        src = cspro_root / lbl / dcf
+        if not src.exists():
+            print(f"  ! WARNING: {src} missing — MenuApp external {dcf} will NOT ship (syncdata of {lbl} will fail)")
+            continue
+        shutil.copyfile(src, HERE / dcf)
+        print(f"  Snapshot instrument dcf: {lbl}/{dcf}")
+
+
 def main():
     build_roster()
     build_assignment()
+    copy_instrument_dcfs()   # B6/B7 — snapshot instrument dcfs for the external syncdata exchange
     build_login_app()
     build_menu_app()
     print("\nHub apps generated in", HERE)

@@ -4,7 +4,7 @@ AppType=Entry
 
 [Files]
 Application=.\LoginApp.ent
-InputData=.\LoginApp.csdb
+InputData=|type=None
 
 [ExternalFiles]
 USER_ROSTER_DICT=.\UserRoster.dat

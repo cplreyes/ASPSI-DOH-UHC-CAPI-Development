@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Supervisor &amp; Enumerator Hub — Sign-in &amp; Role Menu · UHC Survey Year 2</title>
+    <title>Supervisor &amp; Enumerator Hub — Training Guide · UHC Survey Year 2</title>
     <meta
       name="description"
-      content="How to use the role-based sign-in hub for the UHC Survey Year 2 CAPI apps: one login, a Supervisor or Enumerator menu, and launching the F1/F3/F4 surveys. The direct way of adding each survey still works unchanged."
+      content="Training guide for the role-based hub used in the UHC Survey Year 2 CAPI: one sign-in, a Supervisor or Enumerator menu, launching F1/F3/F4, exchanging assignments and interviews between tablets over Bluetooth, viewing coverage reports and the EA map, and relaying collected interviews to CSWeb."
     />
     <meta name="robots" content="noindex" />
     <meta name="theme-color" content="#006b3f" />
@@ -53,90 +53,123 @@
 
     <main id="main">
       <div class="container">
-        <p class="page-eyebrow">New · role-based access · supervisors &amp; enumerators</p>
-        <h1>The Supervisor &amp; Enumerator Hub — sign in, then pick your task</h1>
+        <p class="page-eyebrow">Training guide · role-based access · supervisors &amp; enumerators</p>
+        <h1>The Supervisor &amp; Enumerator Hub — sign in, then run your day</h1>
         <p class="lede">
-          The hub is one sign-in that opens a menu built for your role, then
-          launches the same Facility Head (F1), Patient (F3), and Household (F4)
-          surveys you already use — and returns you to the menu when you finish.
-          It sits on top of the existing apps; nothing about the surveys changes.
+          The hub is one sign-in that opens a menu built for your role. From that
+          menu a supervisor hands out enumeration areas, collects finished
+          interviews from the team over Bluetooth, and relays them to the server;
+          an enumerator receives an assignment, runs the same Facility Head (F1),
+          Patient (F3), and Household (F4) surveys as always, and sends finished
+          work back to the supervisor. Every task returns you to the menu when you
+          finish.
         </p>
         <p class="banner">
-          Being rolled out. The direct way of adding F1/F3/F4 in CSEntry (see the
+          The hub is the <strong>recommended way</strong> to work in the field.
+          The direct way of adding and opening F1/F3/F4 in CSEntry (see the
           <a href="/docs/enumerator-guide.html">Enumerator guide</a>) still works
-          exactly as before — the hub is an <strong>optional</strong> sign-in
-          layer. A few menu items are marked <strong>“coming soon”</strong> while
-          the supervisor data-exchange features are finished.
+          exactly as before — the hub sits on top of it and never changes your
+          surveys or your data.
         </p>
 
         <article>
           <section>
-            <h2>What it is, in one picture</h2>
+            <h2 class="sec">What it is, in one picture</h2>
             <p>Three steps, then back to the menu for the next task:</p>
             <ol>
-              <li><strong>Sign in</strong> once in the LoginApp with your username and password.</li>
-              <li>A <strong>menu for your role</strong> opens (Supervisor or Enumerator).</li>
-              <li>Pick a survey — it <strong>opens the real F1/F3/F4 app</strong>, and when you finish you land <strong>back on the menu</strong>.</li>
+              <li><strong>Sign in</strong> once in <strong>LoginApp</strong> with your username and password.</li>
+              <li>A <strong>menu for your role</strong> opens — your username and role show at the top (e.g. <em>se-004 — Enumerator</em> or <em>fs-01 — Supervisor</em>).</li>
+              <li>Pick a task. Survey items <strong>open the real F1/F3/F4 app</strong>; when you finish you land <strong>back on the menu</strong> for the next one.</li>
             </ol>
             <div class="callout">
               Your survey data is unchanged and stays on the device exactly as
-              before. The hub only opens the surveys for you — it never moves or
-              edits your cases. Syncing still works the same way (see below).
+              before. The hub opens the surveys and moves <em>copies</em> of
+              finished cases between tablets and to the server — it never deletes
+              or edits your own cases. Sending and relaying are non-destructive:
+              you always keep your copy.
             </div>
           </section>
 
           <section>
-            <h2>1. Installing the hub (one time)</h2>
+            <h2 class="sec">1. Installing &amp; updating the hub</h2>
             <ol>
-              <li>Open <strong>CSEntry</strong> on your tablet (install it first if needed — see the <a href="/docs/enumerator-guide.html">Enumerator guide</a>, Step 1).</li>
-              <li>Tap <strong>⋮ → Add Application → From a server</strong>, point it at <code>https://csweb.asiansocial.org/csweb</code>, and sign in with your own account.</li>
-              <li>Add <strong>LoginApp</strong> (this also installs the menu). Keep your survey apps — FacilityHeadSurvey, PatientSurvey, HouseholdSurvey — installed too; the menu opens them.</li>
+              <li>Open <strong>CSEntry</strong> on the tablet (install CSEntry first if needed — see the <a href="/docs/enumerator-guide.html">Enumerator guide</a>, Step 1).</li>
+              <li>Tap <strong>⋮ → Add Application → CSWeb server</strong>. The address is already filled in: <code>https://csweb.asiansocial.org/csweb/api</code>. Tap <strong>Connect</strong>.</li>
+              <li>Find <strong>LoginApp</strong> in the list and tap <strong>Install</strong> (or <strong>Update</strong> if it shows “New version available”). This installs both the sign-in and the menu.</li>
+              <li>Keep your survey apps — <strong>FacilityHeadSurvey</strong>, <strong>PatientSurvey</strong>, <strong>HouseholdSurvey</strong> — installed too; the menu opens them.</li>
             </ol>
             <div class="callout">
-              <strong>To update later:</strong> remove <strong>LoginApp</strong>,
-              then Add Application → From a server again. The “⋮ → Update Installed
-              Applications” option can miss new versions — remove + re-add is the
-              reliable way.
+              <strong>To update later:</strong> go back to
+              <strong>⋮ → Add Application → CSWeb server → Connect</strong>; when a
+              new build is out, LoginApp shows <strong>“New version available →
+              Update</strong>.” Use that — the separate “⋮ → Update Installed
+              Applications” option can miss new hub versions. If an update ever
+              looks stale, remove <strong>LoginApp</strong> and add it again.
             </div>
           </section>
 
           <section>
-            <h2>2. Signing in</h2>
+            <h2 class="sec">2. Signing in</h2>
             <ol>
-              <li>Open <strong>LoginApp</strong>.</li>
-              <li>Type your <strong>username</strong> and <strong>password</strong> (issued by your coordinator — keep them private; don’t share a login).</li>
-              <li>Advance. Your <strong>role menu</strong> opens, showing your role at the top.</li>
+              <li>Open <strong>LoginApp</strong> and tap the green <strong>+</strong> to start.</li>
+              <li>Type your <strong>username</strong>, advance, then your <strong>password</strong> (issued by your coordinator — keep them private; don’t share a login).</li>
+              <li>Advance. Your <strong>role menu</strong> opens, with your username and role across the top.</li>
             </ol>
             <p>
-              A wrong password or an unknown username tells you and lets you try
-              again. The hub sign-in is a convenience gate — your real, secure
-              login is still your CSWeb account when you sync.
+              A wrong password says <em>“Incorrect password.”</em> and an unknown
+              username says <em>“Unknown username.”</em> — just try again. To open
+              the menu again later, tap the green <strong>+</strong>.
             </p>
           </section>
 
           <section>
-            <h2>3. The Supervisor menu</h2>
-            <p>After signing in as a supervisor, you’ll see:</p>
+            <h2 class="sec">3. The Supervisor menu</h2>
+            <p>Signing in as a supervisor opens a grouped menu. Tap an indented <strong>+</strong> item, then the green check to run it (section headings are labels, not buttons):</p>
             <ul>
-              <li><strong>Assign Enumeration Area</strong> — send an EA assignment to an enumerator. <em>(coming soon)</em></li>
-              <li><strong>Listing Data — view report</strong> — review listing coverage. <em>(report opens now; live collected counts coming soon)</em></li>
-              <li><strong>Survey Interview — view report</strong> — review interview coverage. <em>(report opens now; live collected counts coming soon)</em></li>
-              <li><strong>View EA on Map</strong> — see the EA and cases on a map. <em>(coming soon)</em></li>
-              <li><strong>Open F1 / F3 / F4 (review)</strong> — open a survey to spot-check an interview. <em>(available now)</em></li>
-              <li><strong>Log out</strong> — return to the sign-in screen. <em>(available now)</em></li>
+              <li><strong>ASSIGNMENTS</strong>
+                <ul><li><strong>Assign Enumeration Area</strong> — hand each enumerator their EA over Bluetooth (see §5).</li></ul>
+              </li>
+              <li><strong>COLLECT &amp; RELAY</strong>
+                <ul>
+                  <li><strong>Collect Interviews from Enumerators</strong> — gather finished interviews from the team over Bluetooth (see §5).</li>
+                  <li><strong>Relay Collected Interviews to CSWeb</strong> — upload everything you’ve collected to the server when you have signal (see §6).</li>
+                </ul>
+              </li>
+              <li><strong>REVIEW &amp; REPORTS</strong>
+                <ul>
+                  <li><strong>Survey Interview — view report</strong> — live count of interviews held on this tablet, per survey (see §7).</li>
+                  <li><strong>View EA on Map</strong> — your area on a map; works offline (see §7).</li>
+                  <li><strong>Open F1 / F3 / F4 (review)</strong> — open a survey to spot-check an interview.</li>
+                </ul>
+              </li>
+              <li><strong>SESSION</strong>
+                <ul><li><strong>Log out</strong> — return to the sign-in screen.</li></ul>
+              </li>
             </ul>
           </section>
 
           <section>
-            <h2>4. The Enumerator menu</h2>
-            <p>After signing in as an enumerator, you’ll see:</p>
+            <h2 class="sec">4. The Enumerator menu</h2>
+            <p>Signing in as an enumerator opens your grouped menu:</p>
             <ul>
-              <li><strong>Listing Exercise</strong> — receive your assigned EA, list, and send it to your supervisor. <em>(coming soon)</em></li>
-              <li><strong>Receive Assigned Data (Patient)</strong> — pull the patient list assigned to you. <em>(coming soon)</em></li>
-              <li><strong>Conduct F1 / F3 / F4 Interview</strong> — open the survey and run interviews as usual. <em>(available now)</em></li>
-              <li><strong>View EA on Map</strong> — see your assigned area on a map. <em>(coming soon)</em></li>
-              <li><strong>View my report</strong> — your own coverage so far. <em>(report opens now; live counts coming soon)</em></li>
-              <li><strong>Log out</strong> — return to the sign-in screen. <em>(available now)</em></li>
+              <li><strong>ASSIGNMENT</strong>
+                <ul><li><strong>Receive Assigned Data (Patient)</strong> — pull your EA assignment from the supervisor over Bluetooth (see §5).</li></ul>
+              </li>
+              <li><strong>INTERVIEWS</strong>
+                <ul>
+                  <li><strong>Conduct F1 / F3 / F4 Interview</strong> — open the survey and run interviews exactly as usual.</li>
+                  <li><strong>Send My Interviews to Supervisor</strong> — push your finished interviews to the supervisor over Bluetooth (see §5).</li>
+                </ul>
+              </li>
+              <li><strong>REPORTS</strong>
+                <ul>
+                  <li><strong>View EA on Map</strong> — your assigned area on a map; works offline.</li>
+                  <li><strong>View my report</strong> — your own coverage so far, per survey (see §7).</li>
+                </ul>
+              </li>
+              <li><strong>SESSION</strong>
+                <ul><li><strong>Log out</strong> — return to the sign-in screen.</li></ul>
+              </li>
             </ul>
             <div class="callout">
               If a survey item “does nothing,” that survey app isn’t installed on
@@ -146,30 +179,89 @@
           </section>
 
           <section>
-            <h2>5. Syncing data</h2>
+            <h2 class="sec">5. Passing work between tablets (Bluetooth)</h2>
             <p>
-              Syncing is unchanged from the direct workflow: from each survey’s
-              case list, tap <strong>Synchronize</strong> and sign in with your
-              CSWeb account; only new or changed cases are sent. Do it at least
-              once at the end of each field day. (The supervisor “collect from
-              enumerators / relay to the server” path is part of the
-              <em>coming soon</em> features above.)
+              The hub moves assignments and finished interviews
+              <strong>directly between two tablets over Bluetooth</strong> — no
+              internet needed. It always pairs a <strong>host</strong> (who waits)
+              with a <strong>sender/receiver</strong> (who connects). Turn
+              <strong>Bluetooth on</strong> on both tablets and keep them close.
+              One connection handles one teammate at a time — the host simply
+              re-taps the item for the next person.
+            </p>
+            <div class="callout">
+              <strong>Handing out assignments — supervisor + each enumerator</strong>
+              <ol>
+                <li><strong>Supervisor:</strong> tap <strong>Assign Enumeration Area</strong> and keep the screen open (the tablet is now the Bluetooth host).</li>
+                <li><strong>Enumerator:</strong> tap <strong>Receive Assigned Data (Patient)</strong> and choose the supervisor’s tablet when asked.</li>
+                <li>The enumerator sees their EA, instrument, and target count. Repeat for the next enumerator — the supervisor re-taps <strong>Assign Enumeration Area</strong>.</li>
+              </ol>
+            </div>
+            <div class="callout">
+              <strong>Collecting finished interviews — supervisor + each enumerator</strong>
+              <ol>
+                <li><strong>Supervisor:</strong> tap <strong>Collect Interviews from Enumerators</strong> and keep the screen open (host).</li>
+                <li><strong>Enumerator:</strong> tap <strong>Send My Interviews to Supervisor</strong> and choose the supervisor’s tablet. Your finished interviews copy across; <strong>your own copies stay on your tablet</strong>.</li>
+                <li>Repeat for the next enumerator — the supervisor re-taps <strong>Collect Interviews from Enumerators</strong>.</li>
+              </ol>
+            </div>
+            <p>
+              If a tablet says <em>“no supervisor host found,”</em> the host hasn’t
+              started their item yet (or Bluetooth is off) — start the host side
+              first, then retry the connecting side.
             </p>
           </section>
 
           <section>
-            <h2>Troubleshooting</h2>
+            <h2 class="sec">6. Relaying to the server (supervisor)</h2>
+            <p>
+              Once a supervisor has collected interviews from the team, tap
+              <strong>Relay Collected Interviews to CSWeb</strong> whenever there is
+              internet. It uploads the collected F1/F3/F4 interviews to the server.
+              You may be asked to sign in to CSWeb the first time. Cases merge by
+              their 12-digit key, so a relay <strong>never conflicts</strong> with
+              enumerators who also sync their own work directly — duplicates simply
+              update in place. Think of the relay as the <strong>no-signal safety
+              net</strong>: enumerators still sync directly when they have signal;
+              the supervisor relay makes sure nothing is stranded on a tablet.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="sec">7. Reports &amp; the EA map</h2>
             <ul>
-              <li><strong>“Incorrect password.”</strong> — re-type carefully; if it persists, ask your coordinator to check your account.</li>
-              <li><strong>“Unknown username.”</strong> — you may not be in this build yet, or it’s out of date — <strong>remove + re-add LoginApp</strong>, then ask your coordinator if still missing.</li>
-              <li><strong>“No role found from login…”</strong> — close and sign in again through <strong>LoginApp</strong> (don’t open the menu app on its own).</li>
-              <li><strong>A survey item does nothing</strong> — that survey isn’t installed; add it from the server, then retry.</li>
-              <li><strong>Old screens after an update</strong> — remove + re-add the app and test on a fresh case.</li>
+              <li><strong>Coverage report</strong> — <em>Survey Interview — view report</em> (supervisor) or <em>View my report</em> (enumerator) shows how many F1, F3, and F4 cases are on the tablet right now. For a supervisor that is what has been <em>collected into the hub</em>; for an enumerator it is their <em>own</em> interviews. An enumerator who has received an assignment also sees their <strong>target</strong> for the EA.</li>
+              <li><strong>EA map</strong> — <em>View EA on Map</em> shows the enumeration area with reference points. The base map is bundled with the app, so it <strong>renders even with no signal</strong>.</li>
             </ul>
           </section>
 
           <section>
-            <h2>Support</h2>
+            <h2 class="sec">8. Syncing data</h2>
+            <p>
+              Enumerators still sync directly the same way: from a survey’s case
+              list, tap <strong>Synchronize</strong>, sign in with your CSWeb
+              account, and only new or changed cases are sent. Do it at least once
+              at the end of each field day. The supervisor
+              <strong>Collect → Relay</strong> path (§5–§6) is the offline backup
+              for areas with no signal — both paths land in the same place on the
+              server and merge by case key.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="sec">Troubleshooting</h2>
+            <ul>
+              <li><strong>“Incorrect password.”</strong> — re-type carefully; if it persists, ask your coordinator to check your account.</li>
+              <li><strong>“Unknown username.”</strong> — you may not be in this build yet, or it’s out of date — update LoginApp (§1), then ask your coordinator if still missing.</li>
+              <li><strong>“No role found from login…”</strong> — close and sign in again through <strong>LoginApp</strong> (don’t open the menu app on its own).</li>
+              <li><strong>“No supervisor host found” over Bluetooth</strong> — the host must start their item first (Assign / Collect), with Bluetooth on; then retry the connecting side.</li>
+              <li><strong>A survey item does nothing</strong> — that survey isn’t installed on this tablet; add it from the server, then retry.</li>
+              <li><strong>Old screens after an update</strong> — update or remove + re-add LoginApp (§1) and test again.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 class="sec">Support</h2>
             <p>
               For credentials, access, or anything not covered here, contact your
               <strong>survey coordinator or team supervisor</strong>. A screenshot

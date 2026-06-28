@@ -1,0 +1,65 @@
+﻿---
+fileType: Question Text
+version: CSPro 7.7
+languages:
+  - name: EN
+    label: English
+  - name: UR
+    label: Urdu
+styles:
+  - name: Normal
+    className: normal
+    css: |
+      font-family: Arial;font-size: 16px;
+  - name: Instruction
+    className: instruction
+    css: |
+      font-family: Arial;font-size: 14px;color: #0000FF;
+  - name: Heading 1
+    className: heading1
+    css: |
+      font-family: Arial;font-size: 36px;
+  - name: Heading 2
+    className: heading2
+    css: |
+      font-family: Arial;font-size: 24px;
+  - name: Heading 3
+    className: heading3
+    css: |
+      font-family: Arial;font-size: 18px;
+questions:
+  - name: LOGIN_APP_DICT.LOGIN_APP_ID
+    conditions:
+      - questionText:
+          EN: |
+            <div style="text-align: left;">Please enter your <font color="#0000ff"><b>four digit</b></font> login id</div><p></p>
+          UR: |
+            <div style="text-align: left;">برائے مہربانی اپنا <font color="#0000ff"><b>چار ہندسوں</b></font> پر مشتمل لوگن آئی ڈی کا اندراج کریں</div><p></p>
+        helpText:
+          EN: |
+            Please enter your <font color="#0000ff"><b>four digit</b></font> login id<p></p>
+  - name: LOGIN_APP_DICT.LOGIN_NAME
+    conditions:
+      - questionText:
+          EN: |
+            <div style="text-align: left;">Login Name</div><p></p>
+          UR: |
+            <div style="text-align: left;">لوگن&nbsp;</div><p></p>
+  - name: LOGIN_APP_DICT.PASSWORD
+    conditions:
+      - questionText:
+          EN: |
+            <div style="text-align: left;"><font color="#0000ff"><b>~~Login_Name~~</b></font>, please entery your password</div>
+          UR: |
+            <div style="text-align: left;">برائے مہربانی اپنے پاس ورڈ کا اندراج کریں&nbsp;<font color="#0000ff"><b>~~Login_NAME~~</b></font></div><p></p>
+  - name: LOGIN_APP_DICT.DESIGNATION
+    conditions:
+      - questionText:
+          EN: |
+            You are login as a <font color="#0000ff"><b>Supervisor</b></font><p></p>
+          UR: |
+            <div style="text-align: left;"><span style="font-size: 24px;">آپ بطور <font color="#0000ff"><b>سپروائزر </b></font>لاگن ہیں۔</span><br></div><p></p>
+        helpText:
+          EN: |
+            <div style="text-align: left;">You are login as a <font color="#0000ff"><b>Supervisor</b></font></div><p></p>
+...

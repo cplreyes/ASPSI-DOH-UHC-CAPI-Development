@@ -25,8 +25,7 @@ Label=Menu
 Level=1
 Size=806,300
   
-Item=ROLE_SHOWN
-Item=MENU_CHOICE
+Item=MENU_PICK
   
 [EndForm]
   
@@ -63,28 +62,15 @@ Form=2
 Max=1
   
 [Field]
-Name=ROLE_SHOWN
+Name=MENU_PICK
 Position=350,27,760,47
-Item=ROLE_SHOWN,MENUAPP_DICT
-UseUnicodeTextBox=Yes
+Item=MENU_PICK,MENUAPP_DICT
 DataCaptureType=TextBox
 Form=2
   
 [Text]
 Position=50,30,330,46
-Text=Logged-in role
- 
-  
-[Field]
-Name=MENU_CHOICE
-Position=350,57,365,77
-Item=MENU_CHOICE,MENUAPP_DICT
-DataCaptureType=RadioButton
-Form=2
-  
-[Text]
-Position=50,60,330,76
-Text=Choose an action
+Text=Menu
  
   
 [EndGroup]

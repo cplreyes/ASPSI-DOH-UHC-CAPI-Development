@@ -93,6 +93,16 @@
               ],
               "contentType": "alpha",
               "length": 10
+            },
+            {
+              "name": "UR_SUPERVISOR_ID",
+              "labels": [
+                {
+                  "text": "Supervisor ID"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 20
             }
           ]
         }

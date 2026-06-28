@@ -8,7 +8,7 @@
       "text": "EA Assignment Lookup"
     }
   ],
-  "readOptimization": true,
+  "readOptimization": false,
   "recordType": {
     "start": 0,
     "length": 0

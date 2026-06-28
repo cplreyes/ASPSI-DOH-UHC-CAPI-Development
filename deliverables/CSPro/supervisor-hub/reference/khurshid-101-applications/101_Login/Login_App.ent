@@ -1,0 +1,26 @@
+﻿[CSPro Application]
+Version=CSPro 7.7
+Label=LOGIN_APP
+Name=LOGIN_APP
+AppType=DataEntry
+OperatorID=No
+ShowEndCaseDialog=No
+CAPI=Yes
+CaseTree=Never
+CreateListing=No
+CreateLog=No
+ShowErrorMessageNumbers=No
+ComboBoxShowOnlyDiscreteValues=Yes
+[External Dictionaries]
+File=..\102_Ext_Dic\UsernamePassword.dcf
+[AppCode]
+File=.\Login_App.ent.apc
+[Message]
+File=.\Login_App.ent.mgf
+[Help]
+File=.\Login_App.ent.qsf
+[Forms]
+File=.\Login_App.fmf
+[Dictionary Types]
+Dict-Type=.\Login_App.dcf,Input,.\Login_App.fmf
+Dict-Type=..\102_Ext_Dic\UsernamePassword.dcf,External

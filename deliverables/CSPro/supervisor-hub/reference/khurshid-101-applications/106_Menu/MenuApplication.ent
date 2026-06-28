@@ -1,0 +1,22 @@
+﻿[CSPro Application]
+Version=CSPro 7.7
+Label=MENUAPPLICATION
+Name=MENUAPPLICATION
+AppType=DataEntry
+OperatorID=No
+ShowEndCaseDialog=No
+CAPI=Yes
+CaseTree=Never
+[External Dictionaries]
+File=..\110_HH\Census Dictionary.dcf
+[AppCode]
+File=.\MenuApplication.ent.apc
+[Message]
+File=.\MenuApplication.ent.mgf
+[Help]
+File=.\MenuApplication.ent.qsf
+[Forms]
+File=.\MenuApplication.fmf
+[Dictionary Types]
+Dict-Type=.\MenuApplication.dcf,Input,.\MenuApplication.fmf
+Dict-Type=..\110_HH\Census Dictionary.dcf,External

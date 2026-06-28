@@ -1,0 +1,57 @@
+﻿[Dictionary]
+Version=CSPro 7.7
+Label=MenuApplication
+Name=MENUAPPLICATION_DICT
+RecordTypeStart=1
+RecordTypeLen=1
+Positions=Relative
+ZeroFill=No
+DecimalChar=Yes
+SecurityOptions=029A8F60FBE101822A67708E949D7F6304023972CF387444E80BF43523D7DFC5
+
+[Level]
+Label=MenuApplication Level
+Name=MENUAPPLICATION_LEVEL
+
+[IdItems]
+
+[Item]
+Label=MenuApplication Identification
+Name=MENUAPP_LOGINID
+Start=2
+Len=4
+DataType=Numeric
+ZeroFill=Yes
+
+[Record]
+Label=MenuApplication Record
+Name=MENUAPPLICATION_REC
+RecordTypeValue='1'
+RecordLen=10
+
+[Item]
+Label=Supervisor ID
+Name=MENUAPP_SUPID
+Start=6
+Len=4
+DataType=Numeric
+ZeroFill=Yes
+
+[Item]
+Label=Role
+Name=MENUAPP_ROLE
+Start=10
+Len=1
+DataType=Numeric
+
+[ValueSet]
+Label=Role
+Name=MENUAPP_ROLE_VS1_EN
+Value=1;Supervisor
+Value=2;Enumerator
+
+[ValueSet]
+Label=Role
+Name=MENUAPP_ROLE_VS1_UR
+Value=1;سُپروائزر
+Value=2;اینومریٹر

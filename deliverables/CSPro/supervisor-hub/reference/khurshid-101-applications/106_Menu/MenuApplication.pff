@@ -1,0 +1,10 @@
+﻿[Run Information]
+Version=CSPro 7.7
+AppType=Entry
+
+[Files]
+Application=.\MenuApplication.ent
+InputData=|type=None
+
+[ExternalFiles]
+CEN2000=|type=None

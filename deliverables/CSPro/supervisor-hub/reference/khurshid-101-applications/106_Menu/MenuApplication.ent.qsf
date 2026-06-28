@@ -1,9 +1,11 @@
 ﻿---
 fileType: Question Text
-version: CSPro 8.0
+version: CSPro 7.7
 languages:
   - name: EN
     label: English
+  - name: UR
+    label: Urdu
 styles:
   - name: Normal
     className: normal
@@ -26,13 +28,25 @@ styles:
     css: |
       font-family: Arial;font-size: 18px;
 questions:
-  - name: MENUAPP_DICT.MENU_SESSION
+  - name: MENUAPPLICATION_DICT.MENUAPP_LOGINID
     conditions:
       - questionText:
           EN: |
-            <p>Session</p>
-  - name: MENUAPP_DICT.MENU_PICK
+            login Id<p></p>
+          UR: |
+            لوگن آئی ڈی<p></p>
+  - name: MENUAPPLICATION_DICT.MENUAPP_SUPID
     conditions:
       - questionText:
           EN: |
-            <p>Menu</p>
+            Supervisor ID<p></p>
+          UR: |
+            سُپروائزر آئی ڈی<p></p>
+  - name: MENUAPPLICATION_DICT.MENUAPP_ROLE
+    conditions:
+      - questionText:
+          EN: |
+            Designation<p></p>
+          UR: |
+            عہدہ<p></p>
+...

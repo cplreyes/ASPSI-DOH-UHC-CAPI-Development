@@ -42,6 +42,13 @@ BUNDLE = [
     # overwrites; the AS_<id>.dat per-enumerator files (added by glob below) are what the
     # supervisor serves over Bluetooth.
     "Assignment.dcf", "Assignment.dat", "MyAssignment.dat",
+    # B6/B7 (case exchange): MenuApp.ent declares the F1/F3/F4 dicts EXTERNAL so syncdata can move
+    # primary case data over Bluetooth. Only the PACKAGE's primary .ent (LoginApp) auto-rides its
+    # externals, so MenuApp's snapshot instrument dcfs (build-time copies, ~2MB each) must ship
+    # explicitly. Their DATA stays the separately-installed instrument's own .csdb
+    # (..\\<App>\\<App>.csdb) — NOT shipped. ⚠ +~6MB on top of the 26MB mbtiles → a large upload;
+    # the deploy "success" popup may outrun auto_deploy's watch window (re-check shots if so).
+    "FacilityHeadSurvey.dcf", "PatientSurvey.dcf", "HouseholdSurvey.dcf",
 ]
 OUT = Path(__file__).resolve().parent.parent / "automation" / "shots" / "deploy"
 

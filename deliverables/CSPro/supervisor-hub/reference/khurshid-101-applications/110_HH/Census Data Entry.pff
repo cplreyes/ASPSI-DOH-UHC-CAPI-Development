@@ -1,0 +1,7 @@
+﻿[Run Information]
+Version=CSPro 7.7
+AppType=Entry
+
+[Files]
+Application=.\Census Data Entry.ent
+InputData=..\108_Data\HH_Data\HH_1511.csdb
