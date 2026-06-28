@@ -3,7 +3,7 @@ epic: 3
 title: CAPI Application Development (CSPro + CSEntry / PWA)
 phase: per-instrument
 status: in-progress
-last_updated: 2026-05-18
+last_updated: 2026-06-28
 ---
 
 # Epic 3 — CAPI Application Development (CSPro + CSEntry / PWA)
@@ -12,6 +12,10 @@ Per-instrument application build workstream. Turns the validated data dictionary
 
 **Ties to Product Backlog:** [[../product-backlog#Epic 3 — CAPI Application Development|PB Epic 3]]
 **Methodology:** [[../../../../2_Areas/IT-Standards/templates/CAPI-Development-Workflow|CAPI Development Workflow]] Phase 6
+
+**Current state:** **F2 PWA in production v2.1.0** (7 PSA-target languages; UAT Rounds 1–3 closed). **F1/F3/F4 multi-language CAPI apps built** (generator-driven .dcf/.apc/.fmf/.qsf), **deployed to CSWeb**, in **UAT Round 5 on-device bug-burndown**. The **Supervisor hub** (one login → role menu → Bluetooth assignment/collection between tablets → CSWeb relay → live coverage reports → offline EA map) is **built, deployed, and device-verified on two tablets**, with a live training guide at csweb.asiansocial.org/docs/hub-guide.html.
+
+> **Status update 2026-06-28:** F1/F3/F4 moved from 'pending Designer sign-off' to 'built + deployed + in UAT R5'. F2 is at **v2.1.0** (older text may say v1.1.1). The Supervisor hub Phase-2 is **built** (older text may say 'deferred').
 
 ## Status snapshot (2026-05-18)
 

@@ -3,7 +3,7 @@ epic: 6
 title: Testing and Pilot
 phase: per-track
 status: in-progress
-last_updated: 2026-04-25
+last_updated: 2026-06-28
 ---
 
 # Epic 6 — Testing and Pilot
@@ -12,6 +12,10 @@ Pre-production verification and limited-scale field pilot before full rollout. C
 
 **Ties to Product Backlog:** [[../product-backlog#Epic 6 — Testing and Pilot|PB Epic 6]]
 **Methodology:** [[../../../../2_Areas/IT-Standards/templates/CAPI-Development-Workflow|CAPI Development Workflow]]
+
+**In Progress.** F2 PWA tested (Vitest unit + Playwright E2E; UAT Rounds 1–3 closed, 13 bugs fixed). CAPI: F1/F3/F4 desk-tested and currently in **UAT Round 5 on-device bug-burndown**; pretest-readiness + go/no-go assessed 2026-06-27. The **pretest with real respondents is BLOCKED on SJREB ethics clearance** (E0-020, ASPSI/PI lane).
+
+> **Status update 2026-06-28:** moved from 'Not Started' to **In Progress** — F2 UAT closed and CAPI UAT is active (Round 5). The only blocker to the real respondent pretest is SJREB clearance.
 
 ## Task conventions
 

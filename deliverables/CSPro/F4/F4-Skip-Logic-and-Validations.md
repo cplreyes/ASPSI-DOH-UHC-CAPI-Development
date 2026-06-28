@@ -96,8 +96,16 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 | Q35 HAS_DISABILITY | = No | **Q39** (skip Q36 specify, Q37 card, Q38 type) |
 | Q37 PWD_CARD | = No | **Q39** (skip Q38 disability-type — same as Section B) |
 | Q41 EMPLOYMENT | Per source | No skip; GSIS/SSS/Pag-IBIG follow regardless |
-| Q45 PHILHEALTH_REG | = No | **Q48** (skip Q46 member-category, Q46 other-specify) |
+| Q45 PHILHEALTH_REG | = Yes | **Q45.1** (when registered) → Q46 |
+| Q45 PHILHEALTH_REG | = No | **Q45.2** (why not registered) → **Q48** (skip Q46 member-category, Q46 other-specify) |
 | Q49 PRIVATE_INS | = No / No private insurance | **End of member-iteration** (skip Q50 other-specify) |
+
+> [!note] Q45.1 / Q45.2 reinstated (DOH decision via Kidd 2026-06-09 — [[Source - PhilHealth Reinstatement Email (Kidd 2026-06-09)]])
+> Two conditional sub-questions agreed with DOH (originally omitted after OAAED comments), reinstated after Q45 — wording identical to F3 Q38.1/Q38.2:
+> - **Q45.1** *"When did you register and receive your PhilHealth PIN?"* — when **Q45 = Yes**.
+> - **Q45.2** *"Why are you not registered with PhilHealth?"* — when **Q45 = No**.
+>
+> **Value sets PENDING** (in the email's 3 PNGs; connector can't download — capture before build). **⚠ Scope to confirm:** Q45 lives in the **Section-C per-member household roster**, so a literal "after Q45" makes Q45.1/Q45.2 **per-member**. Confirm with ASPSI whether they should repeat per member or be asked once for the respondent — it materially changes the roster build.
 
 **Then Q47 (gate in `C_HH_PRIVATE_INS_GATE`)**: after roster loop completes, `Q47_HH_HAS_PRIVATE_INS` captured once at household level. If the roster already shows any member with Q49 = Yes, Q47 auto-computes to Yes (SOFT verify).
 
@@ -349,6 +357,8 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | `Q41_EMPLOYMENT` | Required, ∈ value set | HARD |
 | `Q42_GSIS`, `Q43_SSS`, `Q44_PAGIBIG` | Required, ∈ {Yes, No, Don't know} | HARD |
 | `Q45_PHILHEALTH_REG` | Required, ∈ value set | HARD |
+| **Q45.1 enabled** (`Q451_REG_WHEN`) | `Q45_PHILHEALTH_REG = Yes` — reinstated; **value set pending Kidd 2026-06-09 image**; per-member scope to confirm | GATE |
+| **Q45.2 enabled** (`Q452_REG_WHY_NOT`) | `Q45_PHILHEALTH_REG = No` — reinstated; **value set pending image** | GATE |
 | Q46 enabled | `Q45_PHILHEALTH_REG = Yes` | GATE |
 | `Q46_MEMBER_CATEGORY = Other` | `Q46_MEMBER_OTHER_TXT` required | HARD |
 | `Q48_NAME_FIRST` | Required when `Q45 = Yes`, non-blank | HARD |

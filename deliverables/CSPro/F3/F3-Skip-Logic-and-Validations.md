@@ -249,9 +249,21 @@ Bracket-vs-amount table (for Q18 consistency check):
 
 ### Section D — PhilHealth Registration and Health Insurance
 
+> [!note] Q38.1 / Q38.2 reinstated (DOH decision via Kidd 2026-06-09 — [[Source - PhilHealth Reinstatement Email (Kidd 2026-06-09)]])
+> Two conditional sub-questions agreed with DOH (originally omitted after OAAED comments) are reinstated after Q38:
+> - **Q38.1** *"When did you register and receive your PhilHealth PIN?"* — asked when **Q38 = Yes** (registered).
+> - **Q38.2** *"Why are you not registered with PhilHealth?"* — asked when **Q38 = No** (not registered).
+>
+> **Value sets PENDING** — the response-option lists are in the email's 3 PNGs (not yet captured; connector can't download attachments). Build once images land. The wordings above are verbatim; option codes are TBD.
+
 | Q | Condition | Skip to |
 |---|---|---|
-| Q38 PHILHEALTH_REG | = No (2) **or** "I don't know" (3) | **Q43** (skip Q39–Q42; non-members still asked whether they know where to seek help) |
+| Q38 PHILHEALTH_REG | = Yes (1) | **Q38.1** (when registered) then continue to Q39 |
+| Q38 PHILHEALTH_REG | = No (2) | **Q38.2** (why not registered) then **Q43** (skip Q39–Q42/Q38.1) |
+| Q38 PHILHEALTH_REG | = "I don't know" (3) | **Q43** (skip Q38.1/Q38.2/Q39–Q42) |
+| Q38.1 REG_WHEN | (asked only when Q38 = Yes) | **skip Q43/Q44** — registration-assistance items moot for a registered member → Q45 |
+| Q38.2 REG_WHY_NOT | (asked only when Q38 = No) | **Q43** (does the non-member know where to get assistance) |
+| Q41 REG_DIFFICULTY | = No | **Q43** (skip Q42 — no difficulty → no reason-for-difficulty) |
 | Q41 REG_DIFFICULTY | = No | **Q43** (skip Q42 — no difficulty → no reason-for-difficulty) |
 | Q43 KNOWS_ASSIST | = No | **Q45** (skip Q44 — patient doesn't know where to go, no point asking) |
 | — | `Q38_PHILHEALTH_REG ≠ Yes` | **Q51** after Q45 (non-members skip Q46–Q50: benefits/packages/premiums) |
@@ -288,6 +300,8 @@ No explicit skip rules in Section F. Q84 `SERVICE_TYPE` is advisory for Section 
 | Item | Rule | Severity |
 |---|---|---|
 | `Q38_PHILHEALTH_REG` | Required, ∈ {1, 2, 3} | HARD |
+| **Q38.1 enabled** (`Q381_REG_WHEN`) | `Q38_PHILHEALTH_REG = Yes` (1) — reinstated; **value set pending Kidd 2026-06-09 image** | GATE |
+| **Q38.2 enabled** (`Q382_REG_WHY_NOT`) | `Q38_PHILHEALTH_REG = No` (2) — reinstated; **value set pending image** (cf. existing Q114 why-no-PhilHealth list — do not assume identical) | GATE |
 | Q39 enabled | `Q38_PHILHEALTH_REG = Yes` (1) | GATE |
 | Q40 enabled | `Q38_PHILHEALTH_REG = Yes` (1) | GATE |
 | Q41 enabled | `Q38_PHILHEALTH_REG = Yes` (1) | GATE |

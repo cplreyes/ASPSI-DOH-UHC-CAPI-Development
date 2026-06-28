@@ -3,7 +3,7 @@ epic: 5
 title: Field Distribution & Device Management
 phase: per-track
 status: in-progress
-last_updated: 2026-04-29
+last_updated: 2026-06-28
 ---
 
 # Epic 5 — Field Distribution & Device Management
@@ -12,6 +12,10 @@ Getting survey instruments into enumerator hands and keeping them running in the
 
 **Ties to Product Backlog:** [[../product-backlog#Epic 5 — Field Distribution & Device Management|PB Epic 5]]
 **Methodology:** [[../../../../2_Areas/IT-Standards/templates/CAPI-Development-Workflow|CAPI Development Workflow]]
+
+**Current state:** F2 PWA **distribution model proven** via UAT (URL → install banner). CAPI **tablet provisioning spec + PWA-pilot field-ops SOPs drafted**. The CAPI on-device provisioning + imaging SOP is **blocked-external on tablet procurement (ASPSI ops)** — the gate for any on-device field activity.
+
+> **Status update 2026-06-28:** direction unchanged. Tablet procurement (ASPSI) remains the external blocker for CAPI field provisioning and the on-device pretest.
 
 ## Task conventions
 
