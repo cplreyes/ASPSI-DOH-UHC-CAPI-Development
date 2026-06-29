@@ -82,9 +82,9 @@ flowchart LR
 The menu is **grouped by task** and lists only what your role is allowed to do:
 
 - **Enumerator** (`se-004 — Enumerator`) — **ASSIGNMENT** (Receive Assigned Data) · **INTERVIEWS** (Conduct F1 – Facility Head / F3 – Patient / F4 – Household; Send My Interviews to Supervisor) · **REPORTS** (View EA on Map; View my report) · **SESSION** (Log out). The F2 Healthcare Worker survey is a separate web form, not launched here.
-- **Supervisor** (`fs-01 — Supervisor`) — adds **ASSIGNMENTS** (Assign Enumeration Area), **COLLECT & RELAY**, and review/open functions. These are covered in **§XIV, Supervisor-Only Features**.
+- **Supervisor** (`fs-01 — Supervisor`) — adds **ASSIGNMENTS** (Assign Enumeration Area), **COLLECT & RELAY**, and review/open functions. These are covered in **§XIV, Supervisor-only features**.
 
-**To run an item:** tap it (it highlights), then tap the **✓** at the bottom of the menu. An instrument launches its questionnaire; when you finish or exit, you are returned to **this menu** (not signed out) — see **§IX, Starting a Questionnaire**.
+**To run an item:** tap it (it highlights), then tap the **✓** at the bottom of the menu. An instrument launches its questionnaire; when you finish or exit, you are returned to **this menu** (not signed out) — see **§IX, Starting a questionnaire**.
 
 ![Enumerator role menu headed "se-004 - Enumerator", grouped into ASSIGNMENT, INTERVIEWS, REPORTS, SESSION](../img/04-04-enumerator-menu.png)
 > *The **enumerator** role menu (headed `se-004 — Enumerator`). Groups: **ASSIGNMENT** (Receive Assigned Data) · **INTERVIEWS** (Conduct F1 / F3 / F4; Send My Interviews to Supervisor) · **REPORTS** (View EA on Map; View my report) · **SESSION** (Log out). Tap an item, then the **✓** to run it.*
@@ -173,4 +173,4 @@ CAPI shows a plain message for each cause. Match it to the table and act:
 
 ---
 
-**Related sections:** §I·E *Basic rules for device and data security* · §IX *Starting a Questionnaire* · §XIII *Uploading & Syncing* · §XIV *Supervisor-Only Features* · Annex *CAPI Login Quick Guide* · Annex *CAPI Support Contact List*.
+**Related sections:** §I·E *Basic rules for device and data security* · §IX *Starting a questionnaire* · §XIII *Uploading & Syncing* · §XIV *Supervisor-only features* · Annex *CAPI Login Quick Guide* · Annex *CAPI Support Contact List*.

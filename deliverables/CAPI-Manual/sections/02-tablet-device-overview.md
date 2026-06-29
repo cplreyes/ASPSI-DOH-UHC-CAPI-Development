@@ -1,9 +1,9 @@
 <!--
-CAPI Manual — Section II. Tablet / Device Overview
+CAPI Manual — Section II. Tablet / device overview
 Standard device guidance + our specifics (Location ON for GPS, internet for sync, care, prohibited uses). Narrative + tables. Screenshots are placeholders where useful.
 -->
 
-# II. Tablet / Device Overview
+# II. Tablet / device overview
 
 The tablet is **survey equipment**, not a personal device. Look after it, keep it charged and connected when you can, and use it only for the survey.
 

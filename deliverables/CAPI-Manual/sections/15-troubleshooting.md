@@ -66,4 +66,4 @@ If a fix here doesn't clear the problem:
 
 ---
 
-**Related sections:** §IV *Logging in* · §XIII *Uploading & Syncing* · §XIV *Supervisor-Only Features* · §XVI *Data Security* · Annex *Troubleshooting Decision Tree*, *Support Contacts*.
+**Related sections:** §IV *Logging in* · §XIII *Uploading & Syncing* · §XIV *Supervisor-only features* · §XVI *Data Security* · Annex *Troubleshooting Decision Tree*, *Support Contacts*.

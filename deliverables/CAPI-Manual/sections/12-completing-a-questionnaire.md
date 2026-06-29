@@ -1,9 +1,9 @@
 <!--
-CAPI Manual — Section XII. Completing a Questionnaire
+CAPI Manual — Section XII. Completing a questionnaire
 Grounded in: closing Result-of-Visit / disposition, verification photo, "Accept this case?", break-off, partial save / resume, "case could not be found" lifecycle. Screenshots are placeholders.
 -->
 
-# XII. Completing a Questionnaire
+# XII. Completing a questionnaire
 
 Finishing a case is more than answering the last question. You record **how the visit ended** (the result), capture any required **verification**, and then **accept** the case so it is stored and ready to sync. A case is only "done" once it has a result and has been accepted.
 

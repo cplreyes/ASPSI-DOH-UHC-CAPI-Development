@@ -1,9 +1,9 @@
 <!--
-CAPI Manual — Section XI. Entering and Reviewing Data
+CAPI Manual — Section XI. Entering and reviewing data
 Grounded in CSEntry: Other-specify gated text, DK/Refused via the question's own options, hard/soft checks, comments, partial save. Avoids asserting unfinalized missing-value sentinel codes. Screenshots are placeholders.
 -->
 
-# XI. Entering and Reviewing Data
+# XI. Entering and reviewing data
 
 The quality of the survey depends on what you type here. Enter exactly what the respondent says, use the options the question provides for "don't know" or "refused," and respond to the tool's checks rather than working around them. The tool catches many mistakes as you go — treat each message as a chance to fix the answer before it's saved.
 
@@ -149,4 +149,4 @@ A **soft check** flags an answer that's unusual or inconsistent with another ans
 
 ---
 
-**Related sections:** §X *Navigating a Questionnaire* · §XII *Completing a Questionnaire* · §XIII *Uploading & Syncing* · Annex *Common Error Messages and Solutions*.
+**Related sections:** §X *Navigating a Questionnaire* · §XII *Completing a questionnaire* · §XIII *Uploading & Syncing* · Annex *Common Error Messages and Solutions*.

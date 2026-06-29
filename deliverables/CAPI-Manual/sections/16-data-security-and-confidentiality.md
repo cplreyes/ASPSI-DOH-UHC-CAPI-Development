@@ -1,9 +1,9 @@
 <!--
-CAPI Manual — Section XVI. Data Security and Confidentiality in CAPI
+CAPI Manual — Section XVI. Data security and confidentiality in CAPI
 Standard security guidance + our specifics (login tagging, no copy/export, lost/stolen, NDU/Data Privacy Act). Narrative + rules.
 -->
 
-# XVI. Data Security and Confidentiality in CAPI
+# XVI. Data security and confidentiality in CAPI
 
 The tablets hold **personal information about real people**, collected under informed consent and protected by the **Data Privacy Act**. Treating that data carefully is part of the job, not an extra. The rules below are simple and non-negotiable.
 
@@ -46,4 +46,4 @@ The tablets hold **personal information about real people**, collected under inf
 
 ---
 
-**Related sections:** §I·E *Basic rules for device and data security* · §II *Tablet / Device Overview* · §IV·6 *Logging out / switching user* · §XIII *Uploading & Syncing*.
+**Related sections:** §I·E *Basic rules for device and data security* · §II *Tablet / device overview* · §IV·6 *Logging out / switching user* · §XIII *Uploading & Syncing*.

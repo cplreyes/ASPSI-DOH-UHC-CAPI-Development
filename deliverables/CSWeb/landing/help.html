@@ -582,59 +582,49 @@
 
         <section class="doc" id="tablet">
           <h2 class="sec">Collecting on a tablet (enumerators)</h2>
-          <ol class="steps">
+          <p>
+            Enumerators collect the F1/F3/F4 surveys on Android tablets in
+            <strong>CSEntry</strong> (free, from Google Play — publisher
+            <em>U.S. Census Bureau</em>). In short: install CSEntry, add your
+            survey from the server
+            (<code>https://csweb.asiansocial.org/csweb/api</code>) with your own
+            CSWeb account, then run interviews — cases save on the device, so you
+            can work offline and sync later.
+          </p>
+          <p>
+            For the full walkthrough, follow the step-by-step guides:
+          </p>
+          <ul>
             <li>
-              Install <strong>CSEntry</strong> from Google Play (publisher
-              <em>U.S. Census Bureau</em>, free). Allow
-              <strong>Location</strong> and <strong>Camera</strong> when asked —
-              both are needed for GPS and verification photos.
+              <a href="/docs/hub-guide.html">Supervisor &amp; Enumerator Hub</a>
+              — the recommended way: one role-based sign-in (install
+              <strong>LoginApp</strong>), a menu for your role, and Bluetooth
+              assignment/collection.
             </li>
             <li>
-              In CSEntry, add your survey from the server. Server address:
-              <code>https://csweb.asiansocial.org/csweb/api</code>. Sign in with
-              your own CSWeb account and download your instrument
-              (FacilityHeadSurvey, PatientSurvey, or HouseholdSurvey).
+              <a href="/docs/enumerator-guide.html">CSEntry enumerator guide</a>
+              — installing, connecting, downloading the survey, running an
+              interview, and keeping the app current.
             </li>
             <li>
-              Run interviews. Cases save on the device, so you can work without a
-              connection and sync later.
+              <a href="/docs/capi-manual.html">CAPI Manual</a> — the complete
+              reference for everything above and more.
             </li>
-            <li>
-              Keep the app current: when a new build is out, re-open
-              <strong>Add Application → from CSWeb</strong> and tap
-              <strong>Update</strong>. If an update looks stale, <strong>remove
-              the app and add it again</strong> from CSWeb — that reliably pulls
-              the latest. (The “⋮ → Update Installed Applications” shortcut can
-              miss new versions.)
-            </li>
-          </ol>
-          <div class="callout">
-            <strong>Working through the hub?</strong> Most field teams now sign
-            in through the <a href="/docs/hub-guide.html">Supervisor &amp;
-            Enumerator Hub</a> (install <strong>LoginApp</strong> the same way),
-            which opens a menu for your role and launches these same surveys. The
-            direct steps above are exactly what the hub opens.
-          </div>
+          </ul>
         </section>
 
         <section class="doc" id="sync">
           <h2 class="sec">Syncing data</h2>
           <p>
-            Syncing sends your new and changed cases to the server. Do it
-            whenever you have a stable connection — at least once at the end of
-            each field day.
+            Syncing uploads your new and changed cases to the server — do it
+            whenever you have a stable connection, at least once at the end of
+            each field day. From your survey’s case list, tap
+            <strong>Synchronize</strong> (the circular-arrows icon) and wait for
+            the <strong>“Successfully synced”</strong> confirmation. Full steps
+            are in the <a href="/docs/enumerator-guide.html">enumerator guide</a>;
+            the supervisor <strong>Collect → Relay</strong> path (the no-signal
+            safety net) is in the <a href="/docs/hub-guide.html">hub guide</a>.
           </p>
-          <ol class="steps">
-            <li>
-              From your survey’s case list, choose
-              <strong>Synchronize</strong> (the circular-arrows icon).
-            </li>
-            <li>Sign in with your own account if prompted.</li>
-            <li>
-              Wait for the <strong>“Successfully synced”</strong> confirmation.
-              Only new or changed cases are sent, so it’s quick.
-            </li>
-          </ol>
           <p>
             Your supervisor or monitor can then confirm the case appears in
             <strong>CSWeb → Sync Report</strong>, and — if the GPS got a real

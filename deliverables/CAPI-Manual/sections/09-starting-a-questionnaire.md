@@ -1,9 +1,9 @@
 <!--
-CAPI Manual — Section IX. Starting a Questionnaire
+CAPI Manual — Section IX. Starting a questionnaire
 Style: task-based (Task→User→When→Steps→Expected→Common problem→What to do→Related). Grounded in CSEntry + the hub menu + the 12-digit case-key PSGC gate. Screenshots are placeholders.
 -->
 
-# IX. Starting a Questionnaire
+# IX. Starting a questionnaire
 
 After you sign in (**§IV**) your **role menu** lists the survey tools. Starting an interview is always the same shape: **pick the right tool → confirm the respondent is eligible → read and record consent → enter the case key → begin.** Getting the tool and the case key right at the start is what keeps each interview attached to the correct facility and respondent.
 
@@ -125,4 +125,4 @@ The **case key** is a **12-digit number** built from the location and case: **Re
 
 ---
 
-**Related sections:** §IV *Logging into CAPI* · §VIII *Mapping & Navigation (GPS)* · §X *Navigating a Questionnaire* · §XII *Completing a Questionnaire* · Annex *Final Result Codes*.
+**Related sections:** §IV *Logging into CAPI* · §VIII *Mapping & Navigation (GPS)* · §X *Navigating a Questionnaire* · §XII *Completing a questionnaire* · Annex *Final Result Codes*.

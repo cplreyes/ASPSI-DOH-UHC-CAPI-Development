@@ -1,9 +1,9 @@
 <!--
-CAPI Manual — Section XIII. Uploading and Syncing Data
+CAPI Manual — Section XIII. Uploading and syncing data
 Grounded in: CSEntry Synchronize -> CSWeb (csweb.asiansocial.org), CSWeb sign-in, offline collection, manual/on-demand sync, sync-report lag, remove+re-add for stale builds. Screenshots are placeholders.
 -->
 
-# XIII. Uploading and Syncing Data
+# XIII. Uploading and syncing data
 
 Collecting works **offline** — but the data only reaches the team when you **Sync**. Syncing **uploads** your completed and partial cases to the server and **downloads** any updates. Sync whenever you have a connection, and always at the end of the field day.
 
@@ -121,4 +121,4 @@ Report to your **supervisor / CAPI support** (Support Contacts annex) with: the 
 
 ---
 
-**Related sections:** §II·C *Internet Connectivity* · §IV·7 *Working offline* · §XII *Completing a Questionnaire* · §XIV *Supervisor-Only Features* · §XV *Troubleshooting*.
+**Related sections:** §II·C *Internet Connectivity* · §IV·7 *Working offline* · §XII *Completing a questionnaire* · §XIV *Supervisor-only features* · §XV *Troubleshooting*.

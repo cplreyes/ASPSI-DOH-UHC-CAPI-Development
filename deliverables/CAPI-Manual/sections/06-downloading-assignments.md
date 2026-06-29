@@ -4,7 +4,7 @@ Honest to our model: (1) install/update tool from CSWeb, (2) assignments come fr
 Both distribution paths are documented; which one a given round uses is a field-protocol choice the supervisor announces (the system supports either). Screenshot 6.2 captured (Bluetooth receive).
 -->
 
-# VI. Getting Your Assignments
+# VI. Getting your assignments
 
 Before you can collect, two things must be on your tablet: the **survey tools** (installed from the server) and your **assignments** (which facilities/cases you are responsible for). In this system assignments come from your **supervisor** — on an **assignment sheet** of case keys and/or transferred to your tablet via the **hub** — not from a self-service "download" button.
 
@@ -84,4 +84,4 @@ Running a **Sync** (**§XIII**) not only uploads your work — it also **brings 
 
 ---
 
-**Related sections:** §IV·7 *Installing / updating LoginApp* · §VII *Assignment Listing* · §IX *Starting a Questionnaire* · §XIII *Uploading & Syncing* · §XIV *Supervisor-Only Features*.
+**Related sections:** §IV·7 *Installing / updating LoginApp* · §VII *Assignment Listing* · §IX *Starting a questionnaire* · §XIII *Uploading & Syncing* · §XIV *Supervisor-only features*.

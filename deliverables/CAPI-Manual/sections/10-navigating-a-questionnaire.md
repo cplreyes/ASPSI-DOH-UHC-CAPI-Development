@@ -1,9 +1,9 @@
 <!--
-CAPI Manual — Section X. Navigating Through a Questionnaire
+CAPI Manual — Section X. Navigating through a questionnaire
 Grounded in CSEntry field-by-field entry, the section nav tree, CSPro question types + skip logic + validation. Screenshots are placeholders.
 -->
 
-# X. Navigating Through a Questionnaire
+# X. Navigating through a questionnaire
 
 CAPI moves through the questionnaire **one field at a time**, in the order the survey requires. You answer the question on screen, then advance; the tool decides what comes next, applying skips and checks automatically. You do **not** decide which question follows — that keeps every interview consistent.
 
@@ -124,4 +124,4 @@ Completing the case (**§XII**) returns you to the tool's case list and then you
 
 ---
 
-**Related sections:** §IX *Starting a Questionnaire* · §XI *Entering & Reviewing Data* · §VIII *Mapping & Navigation* · §XII *Completing a Questionnaire*.
+**Related sections:** §IX *Starting a questionnaire* · §XI *Entering & Reviewing Data* · §VIII *Mapping & Navigation* · §XII *Completing a questionnaire*.

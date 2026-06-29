@@ -1,9 +1,9 @@
 <!--
-CAPI Manual — Section V. CAPI Dashboard
+CAPI Manual — Section V. CAPI dashboard
 Our "dashboard" = the role menu (from LoginApp) + each tool's case list. Adapted honestly to our system; no separate dashboard screen. Screenshots are placeholders.
 -->
 
-# V. The CAPI Dashboard (your role menu)
+# V. The CAPI dashboard (your role menu)
 
 In this system your **dashboard is the role menu** that opens after you sign in (**§IV**), together with the **case list** inside each survey tool. There isn't a separate dashboard screen — the menu plus the case lists give you everything you need: which tools you can use, what's still to do, and what's done.
 

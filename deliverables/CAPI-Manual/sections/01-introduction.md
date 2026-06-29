@@ -48,4 +48,4 @@ Five rules that protect the survey and the respondents (full detail in **§XVI**
 
 ---
 
-**Related sections:** §III *CAPI System Overview* · §IV *Logging into CAPI* · §XVI *Data Security & Confidentiality* · Annex *CAPI Support Contact List*.
+**Related sections:** §III *CAPI system overview* · §IV *Logging into CAPI* · §XVI *Data Security & Confidentiality* · Annex *CAPI Support Contact List*.

@@ -3,7 +3,7 @@ CAPI Manual — Section VII. Assignment Listing
 Honest to our system: the "listing" = each tool's case list (statuses) + the assignment sheet of case keys; the supervisor's roster is in the hub (§XIV). Generic CAPI grid features (operation-info icon, callouts, radius) are NOT in this build — said plainly. Screenshots are placeholders.
 -->
 
-# VII. Your Assignment Listing
+# VII. Your assignment listing
 
 Your working list of cases lives in **two places**: the **assignment sheet** your supervisor gave you (the cases to do, by case key) and the **case list inside each survey tool** (the cases you've started or finished). Together these tell you what's left and what's done. Supervisors get a fuller team view in the **supervisor features** (**§XIV**).
 
@@ -64,4 +64,4 @@ So you're not looking for features that aren't here:
 
 ---
 
-**Related sections:** §V *The CAPI Dashboard* · §VI *Getting Your Assignments* · §IX *Starting a Questionnaire* · §XIV *Supervisor-Only Features*.
+**Related sections:** §V *The CAPI dashboard* · §VI *Getting your assignments* · §IX *Starting a questionnaire* · §XIV *Supervisor-only features*.

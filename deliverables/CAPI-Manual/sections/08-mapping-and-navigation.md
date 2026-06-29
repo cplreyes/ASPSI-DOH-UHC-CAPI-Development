@@ -3,7 +3,7 @@ CAPI Manual — Section VIII. Mapping and Navigation
 Honest to our system: on-device GPS auto-capture (enumerator) + CSWeb Map Report (supervisor/web). No in-app turn-by-turn navigation / radius / best-route — those generic CAPI features are not in this build; use the tablet's maps app for directions. Screenshots are placeholders.
 -->
 
-# VIII. Mapping and Location Capture
+# VIII. Mapping and location capture
 
 Location matters two ways in this survey: the tablet **captures GPS** at the interview (so each case has a verified location), and the team sees those locations on the **CSWeb Map Report** (a web view, for supervisors and the data manager). This build does **not** include in-app turn-by-turn navigation — for directions to a site, use the tablet's own maps app and your assignment details.
 
@@ -79,4 +79,4 @@ This build has **no in-app directions, radius search, or best-route** feature. T
 
 ---
 
-**Related sections:** §II·D *Date, Time, and Location Settings* · §IX *Starting a Questionnaire* · §XIII *Uploading & Syncing* · §XIV *Supervisor-Only Features (map-all)*.
+**Related sections:** §II·D *Date, Time, and Location Settings* · §IX *Starting a questionnaire* · §XIII *Uploading & Syncing* · §XIV *Supervisor-only features (map-all)*.

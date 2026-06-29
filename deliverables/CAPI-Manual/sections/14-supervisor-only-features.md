@@ -1,9 +1,9 @@
 <!--
-CAPI Manual — Section XIV. Supervisor-Only Features
+CAPI Manual — Section XIV. Supervisor-only features
 Grounded in the deployed Supervisor & Enumerator hub: Assign Enumeration Area / Collect Interviews / Relay to CSWeb / Survey Interview view report / Open F1-F3-F4 review / View EA on Map — Bluetooth host-and-connect choreography, non-destructive, merge-by-key relay. Real menu labels used. Screenshots are placeholders.
 -->
 
-# XIV. Supervisor-Only Features
+# XIV. Supervisor-only features
 
 Signing in as a **supervisor** (e.g. `fs-01 — Supervisor`) opens a fuller menu. From it you **hand out enumeration areas**, **collect** finished interviews from your team over Bluetooth, **relay** them to the server, and **review coverage** — all from the one hub. The Bluetooth steps need **no internet**, which makes the supervisor the team's **offline safety net**.
 
@@ -140,4 +140,4 @@ sequenceDiagram
 
 ---
 
-**Related sections:** §IV *Logging into CAPI* · §VI *Getting Your Assignments* · §VIII *Mapping & Navigation* · §XIII *Uploading & Syncing* · Annex *Supervisor CAPI Checklist*.
+**Related sections:** §IV *Logging into CAPI* · §VI *Getting your assignments* · §VIII *Mapping & Navigation* · §XIII *Uploading & Syncing* · Annex *Supervisor CAPI Checklist*.

@@ -40,7 +40,8 @@ sed -i -E 's#\((\./)?capi-web\.rendered-([0-9]+)\.svg\)#(/docs/img/capi-manual/c
 echo "4/6  pandoc -> green CSWeb-hub HTML ..."
 pandoc "$TMP/capi-web.rendered.md" -f gfm -t html5 --standalone \
   --template build/csweb-help-template.html \
-  --toc --toc-depth=1 \
+  --shift-heading-level-by=1 \
+  --toc --toc-depth=2 \
   -M title="UHC Survey Year 2 — CAPI Manual" \
   -M subtitle="Tablet & Application User Manual — CSEntry · Supervisor Hub · CSWeb" \
   -M author="Department of Health · ASPSI — Universal Health Care Survey (Year 2)" \

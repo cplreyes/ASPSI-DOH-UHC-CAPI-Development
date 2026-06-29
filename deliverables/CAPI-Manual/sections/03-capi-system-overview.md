@@ -1,9 +1,9 @@
 <!--
-CAPI Manual — Section III. CAPI System Overview
+CAPI Manual — Section III. CAPI system overview
 Workflow, roles, environments, sync/transfer logic — grounded in CSEntry + hub + CSWeb (merge-by-key, relay). Environments settled: one production CSWeb (csweb.asiansocial.org); training is done with practice cases on the same apps — no separate training server is provisioned in this build. Narrative + diagrams.
 -->
 
-# III. CAPI System Overview
+# III. CAPI system overview
 
 ## A. The CAPI workflow at a glance
 
@@ -87,4 +87,4 @@ Either way, the goal is the same: **no completed interview is left stranded on a
 
 ---
 
-**Related sections:** §IV *Logging into CAPI* · §XIII *Uploading & Syncing* · §XIV *Supervisor-Only Features*.
+**Related sections:** §IV *Logging into CAPI* · §XIII *Uploading & Syncing* · §XIV *Supervisor-only features*.
