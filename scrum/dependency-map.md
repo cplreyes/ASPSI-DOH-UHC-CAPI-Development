@@ -1,10 +1,26 @@
 ---
 title: Dependency map + phase clustering
 last_updated: 2026-05-09
-status: living
+status: historical
+relabeled: 2026-06-29
+superseded_by: scrum/product-backlog.md §1 (authoritative status) + scrum/sprint-current.md
 ---
 
 # Dependency Map — UHC CAPI Year 2
+
+> [!warning] Historical — do not use for current status (relabeled 2026-06-29)
+> This map was last accurate at the **Sprint 004–006 era (snapshot 2026-05-09)**, when F1/F3/F4 were unbuilt and CSWeb/tablets were ahead on the critical path. **Most of the critical path below is now DONE** and the sequencing no longer reflects reality. It is kept for historical reference only.
+>
+> **For current status, read `scrum/product-backlog.md` §1 (authoritative) + `scrum/sprint-current.md`.** As of 2026-06-29:
+> - **F1 / F3 / F4** — multi-language instruments **built, deployed to CSWeb, in UAT Round 5 burndown**; pretest-readiness + go/no-go assessed (2026-06-27). *(The ~80h/30h/50h "F1/F3/F4 build" poles below are spent.)*
+> - **F2 PWA** — **production v2.1.0, all 7 PSA languages**; UAT R1–R3 closed. *(The "Round 3" parallel track is closed.)*
+> - **CSWeb** — **8.0.1 LIVE on Elestio** (`csweb.asiansocial.org`) + sync/map/case-status dashboards. *(The "CSWeb stand-up ~30h" pole is done.)*
+> - **Supervisor hub** (Epic 8) — **built + device-verified on 2 tablets + live training guide**. *(Did not exist when this map was drawn.)*
+> - **Still genuinely pending external gates** (unchanged): **tablet procurement** and **SJREB clearance + pretest scheduling** — all ASPSI/DOH lane, not Carl's. The project waits on ASPSI's pretest date.
+>
+> A full rebuild of this map isn't planned while the project is in field-readiness/waiting-on-pretest mode; re-author it only if a new build phase opens. Everything below the divider is the original 2026-05-09 content, preserved as-is.
+
+---
 
 Snapshot of critical-path sequencing and phase grouping for the 113 active in-scope tasks. Pairs with `scrum/product-backlog.md` and `scrum/epics/*.md`. Refresh weekly during grooming.
 

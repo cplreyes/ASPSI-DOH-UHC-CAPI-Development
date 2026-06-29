@@ -105,7 +105,10 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 > - **Q45.1** *"When did you register and receive your PhilHealth PIN?"* — when **Q45 = Yes**.
 > - **Q45.2** *"Why are you not registered with PhilHealth?"* — when **Q45 = No**.
 >
-> **Value sets PENDING** (in the email's 3 PNGs; connector can't download — capture before build). **⚠ Scope to confirm:** Q45 lives in the **Section-C per-member household roster**, so a literal "after Q45" makes Q45.1/Q45.2 **per-member**. Confirm with ASPSI whether they should repeat per member or be asked once for the respondent — it materially changes the roster build.
+> **✅ BUILT + DEPLOYED — UAT R5 (GH #794 Q45.1, #795 Q45.2), CSWeb HouseholdSurvey 2026-06-25.** As-built (confirmed in `HouseholdSurvey.dcf` 2026-06-29): Q45 lives in the **Section-C per-member household roster**; Q45.1/Q45.2 are wired **per member but answered by the main respondent only** (the resolved scope — ASPSI confirmed F4 on #795). Value sets:
+> - **Q45.1 `Q45_1_PIN_REG_WHEN`** — select-one (numeric, len 1; restructured from the old YYYYMMDD date field): `1` Within the past year · `2` Within the last 2–3 years · `3` Within the last 4–5 years · `4` Over 5 years · `5` I don't know [DO NOT READ OUT LOUD] · `6` Refuse to answer [DO NOT READ OUT LOUD]. Asked only when Q45 = Yes.
+> - **Q45.2 `Q45_2_WHY_NOT_REG`** — **single-select** (numeric, len 2): `01` Difficult to register · `02` Don't see value · `03` Don't know how · `04` Don't know what PhilHealth is · `05` A family member is registered · `06` Currently unemployed · `07` No time · `08` No valid ID · `88` Other (specify) → `Q45_2_WHY_NOT_REG_OTHER_TXT`. Asked only when Q45 = No.
+> - Note: F4 Q45.2 is **single-select**; F3 Q38.2 (same question) is **tick-all** — optional ASPSI reconcile.
 
 **Then Q47 (gate in `C_HH_PRIVATE_INS_GATE`)**: after roster loop completes, `Q47_HH_HAS_PRIVATE_INS` captured once at household level. If the roster already shows any member with Q49 = Yes, Q47 auto-computes to Yes (SOFT verify).
 
@@ -357,8 +360,8 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | `Q41_EMPLOYMENT` | Required, ∈ value set | HARD |
 | `Q42_GSIS`, `Q43_SSS`, `Q44_PAGIBIG` | Required, ∈ {Yes, No, Don't know} | HARD |
 | `Q45_PHILHEALTH_REG` | Required, ∈ value set | HARD |
-| **Q45.1 enabled** (`Q451_REG_WHEN`) | `Q45_PHILHEALTH_REG = Yes` — reinstated; **value set pending Kidd 2026-06-09 image**; per-member scope to confirm | GATE |
-| **Q45.2 enabled** (`Q452_REG_WHY_NOT`) | `Q45_PHILHEALTH_REG = No` — reinstated; **value set pending image** | GATE |
+| **Q45.1 enabled** (`Q45_1_PIN_REG_WHEN`) | `Q45_PHILHEALTH_REG = Yes` — ✅ built+deployed (#794); select-one 1–4 + 5 IDK[DNR] + 6 Refuse[DNR]; per-member, main-respondent-only | GATE |
+| **Q45.2 enabled** (`Q45_2_WHY_NOT_REG`) | `Q45_PHILHEALTH_REG = No` — ✅ built+deployed (#795); single-select 01–08 + 88 Other→`_OTHER_TXT`; per-member, main-respondent-only | GATE |
 | Q46 enabled | `Q45_PHILHEALTH_REG = Yes` | GATE |
 | `Q46_MEMBER_CATEGORY = Other` | `Q46_MEMBER_OTHER_TXT` required | HARD |
 | `Q48_NAME_FIRST` | Required when `Q45 = Yes`, non-blank | HARD |

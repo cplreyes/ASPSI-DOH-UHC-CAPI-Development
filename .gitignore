@@ -126,3 +126,7 @@ deliverables/CSWeb/*.sql.gz
 /deliverables/CSPro/supervisor-hub/FacilityHeadSurvey.dcf
 /deliverables/CSPro/supervisor-hub/PatientSurvey.dcf
 /deliverables/CSPro/supervisor-hub/HouseholdSurvey.dcf
+
+# supervisor-hub: UAT tester credentials (live CSWeb passwords — never commit)
+/deliverables/CSPro/supervisor-hub/config/UAT-R6-tester-credentials.md
+/deliverables/CSPro/supervisor-hub/config/uat-r6-csweb-users.csv

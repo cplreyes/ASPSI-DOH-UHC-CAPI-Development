@@ -1,7 +1,7 @@
 ---
 type: concept
 tags: [timetable, schedule, deliverables, inception-report, project-management, extension-request]
-source_count: 2
+source_count: 3
 ---
 
 # Timetable of Activities
@@ -42,6 +42,14 @@ See also [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Sig
 > - **September 2026 — Rollout**
 >
 > This pushes the conduct + rollout **past the official project close of Aug 14, 2026** above. Recorded as a **proposed request, not an approved change** — the extension decision sits in the ASPSI/DOH lane (out of Data Programmer scope). Penalty exposure tied to the original dates lives in the signed CSA.
+
+> [!warning] Revised projection (Myra → DOH, 2026-06-19)
+> Dr. Silva-Javier's quantified timeline reply (Source: [[Source - Project Movement and Revised Timeline (Apr-Jun 2026)]]) supersedes the original Table-14 dates for forward planning. As of mid-2026 the project is **mid-review on both tracks** — **SJREB (ethics)** and **PSA-SSRCS (statistical clearance)** — which must stay on the **same tool version**.
+> - **Tranche 1 accepted + paid; SJREB endorsement signed (2026-05-15).** SJREB application classified **Expedited Review (ref SJREB-2026-31)**, under primary reviewer — Notice of Approval pending (exemption track ruled out). PSA requirements **submitted Jun 5**; SSRCS completeness check issued **2026-06-09** (Transaction 26SSRCS06-068) — formal 20-working-day PSA clock starts only once completeness + clarifications clear.
+> - **Baseline pretest plan (pre-cascade):** ≈ **2.5 weeks in July**, priority **Brgy. Mayondon (Los Baños)**, **conducted only upon SJREB approval** — holds as long as the June comments stay parked.
+> - **If the late June-10 comments were adopted now:** SJREB re-submission/amendment (~2 wks) + **CAPI re-work (~4 wks)** + PSA clock restart ⇒ **pretest pushed back 8–10 weeks**, **Deliverable 2 only by end-September**, **data collection best-case November 2026**, and the **December 2026 deadline "will definitely not be met."**
+> - **Mitigation = park the June comments** ([[Source - DOH June Questionnaire Comments (PARKED) 2026-06-19]]) and revise tools + CAPI **once** after the reviews/pretest ⇒ keeps **Deliverable 2 on track for end of July**.
+> - Pretest precondition: **ethics approval + updated CAPI**; pretest itself ~2 weeks; +2 weeks to prepare D2 after pretest. **Carl's lane unaffected** — CAPI is built; he waits on the ASPSI-scheduled pretest date.
 
 ## A. Primary Activities
 

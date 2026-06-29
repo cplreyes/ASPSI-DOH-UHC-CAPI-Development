@@ -91,8 +91,8 @@ function receive_assignment()
                + ") was published for you. Ask the supervisor to run 'Assign Enumeration Area' first.");
     endif;
   else
-    errmsg("Bluetooth connect failed - no supervisor host found. Ask the supervisor to start "
-             + "'Assign Enumeration Area' first, then retry.");
+    errmsg("Couldn't connect over Bluetooth. Check: (1) Bluetooth is ON on BOTH tablets, and "
+             + "(2) the supervisor has started 'Assign Enumeration Area' - then retry.");
   endif;
 end;
 
@@ -104,9 +104,9 @@ function collect_interviews()
     next (one-host-from-many = the C2-proven loop). Collected cases accumulate by the 12-digit
     key into this hub's own ../<App>/<App>.csdb (the F1/F3/F4 dicts declared EXTERNAL here), ready
     to relay to CSWeb. DEVICE-UNCONFIRMED: receiving syncdata into a sibling app's live .csdb. }
-  errmsg("COLLECT: starting the Bluetooth server to receive interviews. Keep this screen open; "
-           + "each enumerator now runs 'Send My Interviews to Supervisor'. Receives one enumerator "
-           + "per connection - re-select this item for the next enumerator.");
+  errmsg("COLLECT: starting the Bluetooth server to receive interviews. Make sure Bluetooth is ON "
+           + "on both tablets. Keep this screen open; each enumerator now runs 'Send My Interviews to "
+           + "Supervisor'. Receives one enumerator per connection - re-select this item for the next enumerator.");
   syncserver(Bluetooth);
   errmsg("COLLECT: an enumerator connected and synced their interviews to this hub.");
 end;
@@ -141,8 +141,8 @@ function send_to_supervisor()
     errmsg("Sent your " + instr + " interviews to the supervisor over Bluetooth. Your own copies "
              + "are unchanged (non-destructive).");
   else
-    errmsg("Bluetooth connect failed - no supervisor host found. Ask the supervisor to start "
-             + "'Collect Interviews from Enumerators' first, then retry.");
+    errmsg("Couldn't connect over Bluetooth. Check: (1) Bluetooth is ON on BOTH tablets, and "
+             + "(2) the supervisor has started 'Collect Interviews from Enumerators' - then retry.");
   endif;
 end;
 
@@ -176,9 +176,9 @@ function assign_ea()
   { B4 (N1) - publish EA assignments: become a passive Bluetooth host so each enumerator can pull
     their AS_<id>.dat (syncfile GET). syncserver handles ONE client per call; re-select for the next
     enumerator (one-host-from-many). The AS_*.dat files ship in the app folder = the syncserver root. }
-  errmsg("ASSIGN EA: starting the Bluetooth server to publish assignments. Keep this screen open; "
-           + "the enumerator now runs 'Receive Assigned Data'. Serves one enumerator per connection - "
-           + "re-select this item for the next enumerator.");
+  errmsg("ASSIGN EA: starting the Bluetooth server to publish assignments. Make sure Bluetooth is "
+           + "ON on both tablets. Keep this screen open; the enumerator now runs 'Receive Assigned "
+           + "Data'. Serves one enumerator per connection - re-select this item for the next enumerator.");
   syncserver(Bluetooth);
   errmsg("ASSIGN EA: an enumerator connected and pulled their assignment.");
 end;
@@ -282,7 +282,7 @@ preproc
   elseif strip(m_role) = "enumerator" then
     sel = accept(strip(m_op) + " - Enumerator",
        "ASSIGNMENT",
-       "   +  Receive Assigned Data (Patient)",
+       "   +  Receive Assigned Data",
        "INTERVIEWS",
        "   +  Conduct F1 - Facility Head Interview",
        "   +  Conduct F3 - Patient Interview",

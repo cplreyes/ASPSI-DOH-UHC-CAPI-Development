@@ -6,7 +6,7 @@ data_programmer: Carl Patrick L. Reyes
 qa_tester: Shan (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
 engagement_window: November 2025 – August 2026
-last_updated: 2026-06-28
+last_updated: 2026-06-29
 ---
 
 # Product Backlog — UHC Survey Year 2 CAPI Development
@@ -21,13 +21,18 @@ last_updated: 2026-06-28
 
 ## 1. Status at a Glance
 
-### Headline — 2026-06-28
+### Headline — 2026-06-29
 
 **The build phase is essentially complete. The project has shifted from building to field-readiness — and that's Carl's last active lane. Everything from the pretest onward is ASPSI/DOH's to run: SJREB ethics clearance, tablet supply, and scheduling the pretest itself. Carl stays ready and waits for the pretest date; he tracks none of those external gates as his own.**
 
 - **F1 / F3 / F4 (CSPro CAPI)** — multi-language instruments built (generator-driven); **on-device build + UAT Round 5 in active bug-burndown**; pretest-readiness + go/no-go assessed (2026-06-27). The **Supervisor hub** (one login → role menu → Bluetooth assignment/collection between tablets → CSWeb relay → live coverage reports → offline EA map) is **built, deployed, and device-verified on two tablets**, with a **live training guide** at `csweb.asiansocial.org/docs/hub-guide.html`. CSWeb 8.0.1 + the sync / map / case-status dashboards are **live**.
 - **F2 (HCW PWA)** — **production v2.1.0**, all 7 PSA-target languages, UAT Rounds 1–3 closed. The one open item is migrating it off Cloudflare/Google to a dedicated Elestio instance (planned; provisioning-gated).
 - **Net for a Product Owner:** almost everything *buildable* is built. Carl's remaining lane = close the F1/F3/F4 UAT and finish the support deliverables (data pipeline, training/manuals, governance). The **pretest is ASPSI-scheduled** (SJREB + tablets + logistics, all ASPSI/DOH) — Carl waits for the date, then the deliverable chain (D4 → D5 → D6) resumes to engagement close.
+
+> **DOH-side movement + revised timeline (UP-inbox ingest, 2026-06-29 — wiki: [[Source - Project Movement and Revised Timeline (Apr-Jun 2026)]]):**
+> - **Tranche 1 accepted + PAID (2026-05-15); SJREB endorsement SIGNED.** The project is now **mid-review on BOTH tracks** — SJREB (ethics) and **PSA-SSRCS** (statistical clearance, Transaction 26SSRCS06-068, completeness check 2026-06-09) — which must stay on the **same tool version**. PSA's formal 20-working-day clock starts only once the completeness/clarification items clear (title consistency, Form 4, CAPI/CAWI screenshots, comparison matrix).
+> - **DOH's late "June-10" comments are PARKED** ([[Source - DOH June Questionnaire Comments (PARKED) 2026-06-19]]) — addressed *once*, together with the SJREB/PSA review + pretest results, per the TOR change-report. **Holding them keeps Deliverable 2 on track for end of July.**
+> - **Revised projection (Myra → DOH, 2026-06-19):** adopting the comments now would push the **pretest back 8–10 weeks**, D2 to **end-September**, **data collection to ~November 2026**, and miss the **December 2026 deadline**. Timeline is **in flux** — no-cost extension pending; **Aug training / Sep rollout** floated (Jun 22 meeting). **None of this is Carl's gate** — the CAPI is built; he waits on the pretest date.
 
 ### Where We're Going — Roadmap to Close (Aug 2026)
 
@@ -40,10 +45,12 @@ End-to-end critical path:
 | Milestone | Due | What it needs | Status |
 |---|---|---|---|
 | **D2 / D3** — survey materials, manuals, training, pre-tested questionnaires | extended | F1/F3/F4 UAT burndown (Carl, active) · pretest (ASPSI-scheduled) · Kidd's manual review | 🟡 In progress |
-| **Pretest** (Epic 6) | ASPSI-scheduled | field-ready instruments (Carl, nearly done) · SJREB clearance + date (ASPSI) | 🟠 Awaiting ASPSI schedule |
-| **D4** — pilot progress + initial data report | 2026-07-13 | Pretest → enumerator debrief → report | ⚪ Not started |
-| **D5** — training documentation | 2026-07-31 | Training decks + manuals (drafted) + delivery + pre/post assessment | 🟡 Drafted, not final |
-| **D6** — final report + dissemination | 2026-08-13 | Fieldwork → data cleaning (Epic 10) → analysis/tabulation (Epic 11) | ⚪ Not started |
+| **Pretest** (Epic 6) | ASPSI-scheduled *(precondition: SJREB clearance + updated CAPI)* | field-ready instruments (Carl, nearly done) · SJREB clearance + date (ASPSI) | 🟠 Awaiting ASPSI schedule — pushed per Jun-19 projection |
+| **D4** — pilot progress + initial data report | ~~2026-07-13~~ *under revision* | Pretest → enumerator debrief → report | ⚪ Not started — date slips with pretest |
+| **D5** — training documentation | ~~2026-07-31~~ *under revision* | Training decks + manuals (CAPI Manual ✅ ~98%) + delivery + pre/post assessment | 🟡 In progress (CAPI Manual done) |
+| **D6** — final report + dissemination | ~~2026-08-13~~ *under revision* | Fieldwork → data cleaning (Epic 10) → analysis/tabulation (Epic 11) | ⚪ Not started — date slips with pretest |
+
+> ⚠️ **Dates flagged "under revision" reflect the Jun-19 timeline projection** ([[Source - Project Movement and Revised Timeline (Apr-Jun 2026)]]): the pretest is gated by SJREB clearance + the updated CAPI; data collection is best-case **~Nov 2026**; a no-cost extension is pending. The original Jul/Aug D4–D6 targets predate that slip. The deliverable *chain* (D4→D5→D6) and ownership are unchanged; only the calendar moves, and it moves in the ASPSI/DOH lane.
 | **Handover & close** (Epic 12) | end Aug | Handover package + NDU disposition + retro writeback | ⚪ Not started |
 
 **The handoff — Carl's lane ends at field-ready; the rest is ASPSI/DOH's:**
@@ -57,7 +64,7 @@ _Neither SJREB nor tablets is a Carl-tracked blocker — both are ASPSI's. The o
 | # | Bucket | What's left | Owner / gate |
 |---|---|---|---|
 | 1 | **F1/F3/F4 field-readiness** (Epic 3/6) | finish CSEntry build + UAT R5 bug-burndown | Carl — active |
-| 2 | **PhilHealth reinstatement** (F3/F4) | Q38.1/Q38.2 + Q45.1/Q45.2 — **wordings+routing captured 2026-06-28**; only the value-set option lists remain | Carl saves the 3 PNGs from Kidd's Jun 9 email, then ~3h build |
+| 2 | **PhilHealth reinstatement** (F3/F4) | ✅ **DONE** — Q38.1/Q38.2 + Q45.1/Q45.2 built + deployed in UAT R5 (#764/#794/#795, CSWeb 2026-06-25/27; in live DCFs). The "blocked on 3 PNGs" note was stale (corrected 2026-06-29). | — (optional: ASPSI confirm F3-tick-all vs F4-single on the "why not registered" item) |
 | 3 | **Data pipeline** (Epic 10/11) | harmonization ETL + codebook + interim tabulation (for D4/D6) | Carl — buildable now |
 | 4 | **Training & manuals** (Epic 7) | finalize decks + Survey Manual + enumerator-guide screenshots | Carl + Kidd review |
 | 5 | **Security & governance** (Epic 9) | privacy policy, backup/retention, audit trail | Carl — staged |

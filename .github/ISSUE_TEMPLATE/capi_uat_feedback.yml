@@ -1,20 +1,21 @@
-name: CAPI UAT Feedback (F1 / F3 / F4)
-description: Report something you saw while testing the CSEntry CAPI surveys (Round 5)
-title: "[UAT R5][__] "
-labels: ["uat-feedback", "from-uat-round-5-2026-06"]
+name: CAPI UAT Feedback (F1 / F3 / F4 / Hub)
+description: Report something you saw while testing the CSEntry CAPI surveys or the Supervisor & Enumerator Hub (Round 6)
+title: "[UAT R6][__] "
+labels: ["uat-feedback", "from-uat-round-6-2026-06"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for testing the CAPI surveys! Fill in what you observed — **no technical knowledge needed**, just describe what you saw. One form per finding. A screenshot or photo of the screen helps a lot.
+        Thanks for testing! Fill in what you observed — **no technical knowledge needed**, just describe what you saw. One form per finding. A screenshot or screen recording of the screen helps a lot.
 
-        💬 For quick discussion, also post in your instrument's Slack channel: **#f1-uat**, **#f3-uat**, or **#f4-uat**.
+        💬 For quick discussion, also post in the round's Slack channel.
 
   - type: dropdown
     id: instrument
     attributes:
-      label: Which survey were you testing?
+      label: What were you testing?
       options:
+        - Hub — Supervisor & Enumerator app (login / menu / Bluetooth / relay / reports / map)
         - F1 — Facility Head Survey
         - F3 — Patient Survey
         - F4 — Household Survey
@@ -42,6 +43,11 @@ body:
     attributes:
       label: Which test were you doing? (from the Tester Guide)
       options:
+        - "Hub: Sign in & role menu (5A)"
+        - "Hub: Conduct F1/F3/F4 from the menu (5B)"
+        - "Hub: Assign / Receive Enumeration Area — Bluetooth pair (5C)"
+        - "Hub: Send / Collect interviews + Relay to CSWeb — Bluetooth pair (5D)"
+        - "Hub: Reports & offline EA map (5E)"
         - TC-1 Completed interview
         - TC-2 Refused / Withdrawn (no photo expected)
         - TC-3 Partial save + resume

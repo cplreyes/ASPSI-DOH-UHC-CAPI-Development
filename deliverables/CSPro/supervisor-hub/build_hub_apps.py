@@ -38,9 +38,22 @@ ROSTER_ROWS = [
     # Khurshid's UsernamePassword.dcf carries this. Enumerators point at their supervisor; the
     # supervisor's own supervisor_id is blank (top of this chain). Encryption + device-bound
     # login stay ASPSI-gated (real names/creds) — not built here.
-    ("se-004", "changeme04", "enumerator", "se-004", "01028", "fs-01"),
-    ("se-011", "changeme11", "enumerator", "se-011", "01028", "fs-01"),
-    ("fs-01",  "changeme-fs", "supervisor", "fs-01", "01028", ""),
+    # UAT Round 6 tester roster (2026-06-29). Hub login is a LOCAL plaintext gate
+    # (UserRoster.dat ships in the app) — typeable test passwords here; the REAL
+    # security is each tester's CSWeb account (strong pw), see
+    # config/UAT-R6-tester-credentials.md + config/uat-r6-csweb-users.csv.
+    # Two teams, each covering F1/F3/F4 so a supervisor+enumerator pair can exercise
+    # the full assign -> collect -> relay Bluetooth choreography.
+    # --- Team A — Supervisor fs-01 (Aidan) ---
+    ("se-001", "uhc26se001", "enumerator", "se-001", "04034", "fs-01"),
+    ("se-002", "uhc26se002", "enumerator", "se-002", "04034", "fs-01"),
+    ("se-003", "uhc26se003", "enumerator", "se-003", "04034", "fs-01"),
+    ("se-004", "uhc26se004", "enumerator", "se-004", "04034", "fs-01"),  # Marriz (also fs-02 sup) — Team A enum so she doesn't supervise herself
+    ("fs-01",  "uhc26fs01",  "supervisor", "fs-01",  "04034", ""),
+    # --- Team B — Supervisor fs-02 (Marriz) ---
+    ("se-005", "uhc26se005", "enumerator", "se-005", "04034", "fs-02"),
+    ("se-006", "uhc26se006", "enumerator", "se-006", "04034", "fs-02"),
+    ("fs-02",  "uhc26fs02",  "supervisor", "fs-02",  "04034", ""),
 ]
 
 # C3a — GROUPED field-ops menus, Khurshid 101-apps "accept()" interface (replaced the flat
@@ -71,7 +84,7 @@ SUPERVISOR_MENU_GROUPED = [
 ]
 ENUMERATOR_MENU_GROUPED = [
     ("ASSIGNMENT", [
-        ("Receive Assigned Data (Patient)", "receive"),
+        ("Receive Assigned Data", "receive"),
     ]),
     ("INTERVIEWS", [
         ("Conduct F1 - Facility Head Interview", "open_f1"),
@@ -112,9 +125,14 @@ MENU_ACTIONS = {
 # supervisor->enumerator in N1 (B4, C2-gated); here it is the structural dict + seed.
 ASSIGNMENT_ROWS = [
     # (ea_facility_code(9), enumerator_id, instrument, target_count, ea_name, cluster)
-    ("040340002", "se-004", "F3", "30", "Binan RHU - Patient Survey",        "01028"),
-    ("040340005", "se-011", "F4", "20", "Binan Brgy 5 - Household Survey",    "01028"),
-    ("040340001", "fs-01",  "F1", "1",  "Binan City Health Office",          "01028"),
+    # Team A (fs-01) — Binan, Laguna
+    ("040340001", "se-001", "F1", "1",  "Binan City Health Office",                  "04034"),
+    ("040340002", "se-002", "F3", "30", "Binan RHU - Patient Survey",                "04034"),
+    ("040340005", "se-003", "F4", "20", "Binan Brgy Malaban - Household Survey",      "04034"),
+    ("040340011", "se-004", "F1", "1",  "Binan District Hospital - Facility Head",   "04034"),
+    # Team B (fs-02) — Los Banos, Laguna (the real pretest area)
+    ("040341002", "se-005", "F3", "30", "Los Banos RHU - Patient Survey",            "04034"),
+    ("040341005", "se-006", "F4", "20", "Los Banos Brgy Mayondon - Household Survey", "04034"),
 ]
 
 # B6/B7 — the F1/F3/F4 instrument dicts are declared EXTERNAL in MenuApp so the Bluetooth case
@@ -600,8 +618,8 @@ function receive_assignment()
                + ") was published for you. Ask the supervisor to run 'Assign Enumeration Area' first.");
     endif;
   else
-    errmsg("Bluetooth connect failed - no supervisor host found. Ask the supervisor to start "
-             + "'Assign Enumeration Area' first, then retry.");
+    errmsg("Couldn't connect over Bluetooth. Check: (1) Bluetooth is ON on BOTH tablets, and "
+             + "(2) the supervisor has started 'Assign Enumeration Area' - then retry.");
   endif;
 end;
 
@@ -613,9 +631,9 @@ function collect_interviews()
     next (one-host-from-many = the C2-proven loop). Collected cases accumulate by the 12-digit
     key into this hub's own ../<App>/<App>.csdb (the F1/F3/F4 dicts declared EXTERNAL here), ready
     to relay to CSWeb. DEVICE-UNCONFIRMED: receiving syncdata into a sibling app's live .csdb. }
-  errmsg("COLLECT: starting the Bluetooth server to receive interviews. Keep this screen open; "
-           + "each enumerator now runs 'Send My Interviews to Supervisor'. Receives one enumerator "
-           + "per connection - re-select this item for the next enumerator.");
+  errmsg("COLLECT: starting the Bluetooth server to receive interviews. Make sure Bluetooth is ON "
+           + "on both tablets. Keep this screen open; each enumerator now runs 'Send My Interviews to "
+           + "Supervisor'. Receives one enumerator per connection - re-select this item for the next enumerator.");
   syncserver(Bluetooth);
   errmsg("COLLECT: an enumerator connected and synced their interviews to this hub.");
 end;
@@ -650,8 +668,8 @@ function send_to_supervisor()
     errmsg("Sent your " + instr + " interviews to the supervisor over Bluetooth. Your own copies "
              + "are unchanged (non-destructive).");
   else
-    errmsg("Bluetooth connect failed - no supervisor host found. Ask the supervisor to start "
-             + "'Collect Interviews from Enumerators' first, then retry.");
+    errmsg("Couldn't connect over Bluetooth. Check: (1) Bluetooth is ON on BOTH tablets, and "
+             + "(2) the supervisor has started 'Collect Interviews from Enumerators' - then retry.");
   endif;
 end;
 
@@ -685,9 +703,9 @@ function assign_ea()
   { B4 (N1) - publish EA assignments: become a passive Bluetooth host so each enumerator can pull
     their AS_<id>.dat (syncfile GET). syncserver handles ONE client per call; re-select for the next
     enumerator (one-host-from-many). The AS_*.dat files ship in the app folder = the syncserver root. }
-  errmsg("ASSIGN EA: starting the Bluetooth server to publish assignments. Keep this screen open; "
-           + "the enumerator now runs 'Receive Assigned Data'. Serves one enumerator per connection - "
-           + "re-select this item for the next enumerator.");
+  errmsg("ASSIGN EA: starting the Bluetooth server to publish assignments. Make sure Bluetooth is "
+           + "ON on both tablets. Keep this screen open; the enumerator now runs 'Receive Assigned "
+           + "Data'. Serves one enumerator per connection - re-select this item for the next enumerator.");
   syncserver(Bluetooth);
   errmsg("ASSIGN EA: an enumerator connected and pulled their assignment.");
 end;
