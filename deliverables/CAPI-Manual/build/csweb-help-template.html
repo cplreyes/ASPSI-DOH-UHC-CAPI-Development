@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>$title$</title>
+    <meta
+      name="description"
+      content="The CAPI Manual for the UHC Survey Year 2: how to use the tablet (CSEntry), the Supervisor & Enumerator Hub, and CSWeb — signing in, getting assignments, GPS, entering and reviewing answers, completing and syncing, supervisor features, troubleshooting, and security. For authorized project personnel."
+    />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#006b3f" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23006b3f'/%3E%3Cpath d='M11 26.5c2.6 2 5.2 3 7.8 3 2.4 0 3.8-1 3.8-2.6 0-1.6-1.3-2.3-4.4-3.1-3.9-1-6.6-2.4-6.6-5.9 0-3.3 2.7-5.6 6.8-5.6 2.4 0 4.6.6 6.6 1.8l-1.5 3.2c-1.8-1-3.5-1.5-5.2-1.5-2.1 0-3.2.9-3.2 2.2 0 1.5 1.4 2.1 4.4 2.9 4 1 6.6 2.5 6.6 6 0 3.5-2.8 6-7.4 6-3 0-5.9-1-8.4-2.9z' fill='%23e5b23b'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="/assets/docs.css" />
+    <style>
+      /* CAPI Manual — supplemental to docs.css (same DOH "Verde Vision" tokens) */
+      .toc ul {
+        margin: 0;
+        padding-left: 20px;
+        columns: 2;
+        column-gap: 28px;
+        font-size: 15px;
+      }
+      .toc li {
+        margin: 0 0 6px;
+        break-inside: avoid;
+      }
+      .toc ul ul {
+        display: none;
+      }
+      .toc a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+      .toc a:hover {
+        text-decoration: underline;
+      }
+      article h1 {
+        font-size: 23px;
+        letter-spacing: -0.01em;
+        margin: 36px 0 14px;
+        padding-top: 26px;
+        border-top: 1px solid var(--hairline);
+        color: var(--primary-dark);
+        scroll-margin-top: 16px;
+      }
+      article h2 {
+        font-size: 18.5px;
+        margin: 26px 0 8px;
+      }
+      article h3 {
+        font-size: 16px;
+        margin: 18px 0 6px;
+      }
+      article blockquote {
+        background: var(--surface);
+        border: 1px solid var(--hairline-strong);
+        border-left: 4px solid var(--gold);
+        border-radius: var(--radius);
+        padding: 12px 16px;
+        margin: 14px 0;
+        color: var(--muted);
+      }
+      article blockquote p {
+        margin: 0 0 6px;
+      }
+      article blockquote p:last-child {
+        margin: 0;
+      }
+      article blockquote strong {
+        color: var(--ink);
+      }
+      article img {
+        max-width: 100%;
+        height: auto;
+        border-radius: var(--radius);
+      }
+      article img[src$$=".png"] {
+        display: block;
+        max-width: 320px;
+        border: 1px solid var(--hairline-strong);
+        box-shadow: var(--shadow-sm);
+        background: #fff;
+      }
+      article img[src$$=".svg"] {
+        display: block;
+        max-width: 100%;
+        margin: 10px 0;
+      }
+      article hr {
+        border: none;
+        border-top: 1px solid var(--hairline);
+        margin: 24px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="accent-bar"></div>
+
+    <div class="topbar">
+      <div class="container">
+        <div class="topbar-brand">
+          <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true">
+            <rect width="40" height="40" rx="8" fill="#006b3f" />
+            <path
+              d="M11 26.5c2.6 2 5.2 3 7.8 3 2.4 0 3.8-1 3.8-2.6 0-1.6-1.3-2.3-4.4-3.1-3.9-1-6.6-2.4-6.6-5.9 0-3.3 2.7-5.6 6.8-5.6 2.4 0 4.6.6 6.6 1.8l-1.5 3.2c-1.8-1-3.5-1.5-5.2-1.5-2.1 0-3.2.9-3.2 2.2 0 1.5 1.4 2.1 4.4 2.9 4 1 6.6 2.5 6.6 6 0 3.5-2.8 6-7.4 6-3 0-5.9-1-8.4-2.9z"
+              fill="#e5b23b"
+            />
+          </svg>
+          <div>
+            <div class="topbar-org">UHC Survey Year 2</div>
+            <div class="topbar-sub">CAPI Manual</div>
+          </div>
+        </div>
+        <a class="home-link" href="/help.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M19 12H6M11 6l-6 6 6 6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          Back to help
+        </a>
+      </div>
+    </div>
+
+    <main id="main">
+      <div class="container">
+        <p class="page-eyebrow">Tablet &amp; Application User Manual</p>
+        <h1>$title$</h1>
+        <p class="lede">$subtitle$</p>
+        <p class="banner">
+          $author$ · $date$. The complete how-to for collecting the survey on a
+          tablet (CSEntry), working through the Supervisor &amp; Enumerator Hub,
+          and syncing to CSWeb. For authorized project personnel.
+        </p>
+
+        $if(toc)$
+        <nav class="toc" aria-label="Contents">
+          <h2>Contents</h2>
+          $table-of-contents$
+        </nav>
+        $endif$
+
+        <article>
+          $body$
+        </article>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p class="foot-org">
+          Asian Social Project Services, Inc. (ASPSI) — for the Department of
+          Health (DOH)
+        </p>
+        <p class="foot-meta">
+          UHC Survey Year 2 · CAPI / CSPro · CSWeb
+          <span class="dot">·</span>
+          <a href="/help.html">Help</a>
+          <span class="dot">·</span>
+          <a href="/">Home</a>
+          <span class="dot">·</span>
+          &copy; 2026
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

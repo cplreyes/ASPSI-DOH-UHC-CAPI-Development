@@ -126,7 +126,26 @@ All five live pages (index, help, hub-guide, enumerator-guide, hcw-guide) pass a
 tag-balance check. hcw-guide.html (F2 self-admin) needed no change. **Deploy:** `scp`
 the changed files to `/opt/app/lamp/www/` (help.html → web root; the guides → `docs/`).
 
+## CAPI Manual published to the docs hub (2026-06-29)
+Published the **CAPI Manual** (the Epic-7/D5 deliverable at `deliverables/CAPI-Manual/`,
+17 sections) to the live help hub as **`docs/capi-manual.html`**, linked as the lead
+item in help.html's "Step-by-step guides" (the comprehensive manual; the focused guides
+follow). **Reproducible build:** `bash build/build-csweb-help.sh` from `CAPI-Manual/` —
+assembles `sections/*.md` → strips the per-section author-note HTML comments → renders the
+7 mermaid diagrams to **SVG** in a DOH-green theme (`build/mermaid-green.json`, via
+mermaid-cli) → pandoc with `build/csweb-help-template.html` (same `/assets/docs.css`
+chrome as the other guides) → strips any residual HTML comments. Output is **self-contained
+(no client-side JS)** — diagrams are static SVG, screenshots are the 24 real app captures.
+Images land under `docs/img/capi-manual/` (24 PNG + 7 SVG). **Public-safe:** the manual was
+written operational-only; a scan found no credentials/IPs/internal paths/repo or Slack links
+— only example role usernames (`se-004`/`fs-01`, no passwords, shown in screenshots) and the
+fill-in support-contact table (§XVII·H), both fine for the audience. Verified live: page +
+all 34 image refs + CSS HTTP 200, 0 broken images, diagrams render green, screenshots cap at
+320px, TOC lists all 17 sections. Deployed via `scp -i ~/.ssh/aspsi-csweb` to
+`/opt/app/lamp/www/docs/` (+ `docs/img/capi-manual/`).
+
 ## To revert
+- CAPI Manual: `rm /opt/app/lamp/www/docs/capi-manual.html` + `rm -rf /opt/app/lamp/www/docs/img/capi-manual` (and remove the manual `<li>` from help.html's guide list)
 - Landing: `cp /root/www-stock-backup/index.html.pre-refresh-2026-06-15 /opt/app/lamp/www/index.html`
 - Help page: `rm /opt/app/lamp/www/help.html` (and remove the two `/help.html` links from index.html)
 - Guides: the prior copies are in git history (`git log -- deliverables/CSWeb/landing/docs/`).
