@@ -107,6 +107,9 @@ deliverables/CSPro/F1/.redesign_backup/
 deliverables/CSPro/automation/shots/
 # scratch publish/packager test artifacts (e.g. pack_test.pff)
 pack_test.*
+# triage-loop scratch — spike generator copies (*.spike) + live-apc backups (*.live-bak); regenerable, not source
+deliverables/CSPro/**/*.spike
+deliverables/CSPro/**/*.live-bak
 
 # Private methodology — NDU/proprietary, kept local only (removed from the public repo 2026-06-12)
 deliverables/UHC-Survey-CAPI-Guide/
