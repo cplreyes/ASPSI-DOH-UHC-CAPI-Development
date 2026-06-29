@@ -153,7 +153,7 @@
             <p>Signing in as an enumerator opens your grouped menu:</p>
             <ul>
               <li><strong>ASSIGNMENT</strong>
-                <ul><li><strong>Receive Assigned Data (Patient)</strong> — pull your EA assignment from the supervisor over Bluetooth (see §5).</li></ul>
+                <ul><li><strong>Receive Assigned Data</strong> — pull your EA assignment from the supervisor over Bluetooth (see §5).</li></ul>
               </li>
               <li><strong>INTERVIEWS</strong>
                 <ul>
@@ -193,7 +193,7 @@
               <strong>Handing out assignments — supervisor + each enumerator</strong>
               <ol>
                 <li><strong>Supervisor:</strong> tap <strong>Assign Enumeration Area</strong> and keep the screen open (the tablet is now the Bluetooth host).</li>
-                <li><strong>Enumerator:</strong> tap <strong>Receive Assigned Data (Patient)</strong> and choose the supervisor’s tablet when asked.</li>
+                <li><strong>Enumerator:</strong> tap <strong>Receive Assigned Data</strong> and choose the supervisor’s tablet when asked.</li>
                 <li>The enumerator sees their EA, instrument, and target count. Repeat for the next enumerator — the supervisor re-taps <strong>Assign Enumeration Area</strong>.</li>
               </ol>
             </div>
@@ -206,9 +206,12 @@
               </ol>
             </div>
             <p>
-              If a tablet says <em>“no supervisor host found,”</em> the host hasn’t
-              started their item yet (or Bluetooth is off) — start the host side
-              first, then retry the connecting side.
+              If a tablet can’t connect it shows <em>“Couldn’t connect over
+              Bluetooth. Check: (1) Bluetooth is ON on BOTH tablets, and (2) the
+              supervisor has started ‘Assign Enumeration Area’ (or ‘Collect
+              Interviews from Enumerators’) — then retry.”</em> Do exactly that:
+              confirm Bluetooth is on on both tablets, make sure the host tapped
+              their item <em>first</em>, then retry the connecting side.
             </p>
           </section>
 
@@ -254,7 +257,7 @@
               <li><strong>“Incorrect password.”</strong> — re-type carefully; if it persists, ask your coordinator to check your account.</li>
               <li><strong>“Unknown username.”</strong> — you may not be in this build yet, or it’s out of date — update LoginApp (§1), then ask your coordinator if still missing.</li>
               <li><strong>“No role found from login…”</strong> — close and sign in again through <strong>LoginApp</strong> (don’t open the menu app on its own).</li>
-              <li><strong>“No supervisor host found” over Bluetooth</strong> — the host must start their item first (Assign / Collect), with Bluetooth on; then retry the connecting side.</li>
+              <li><strong>“Couldn’t connect over Bluetooth…”</strong> — turn Bluetooth on on <em>both</em> tablets, make sure the host started their item first (Assign / Collect), then retry the connecting side.</li>
               <li><strong>A survey item does nothing</strong> — that survey isn’t installed on this tablet; add it from the server, then retry.</li>
               <li><strong>Old screens after an update</strong> — update or remove + re-add LoginApp (§1) and test again.</li>
             </ul>

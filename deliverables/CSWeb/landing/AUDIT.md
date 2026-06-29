@@ -2,7 +2,7 @@
 title: "CSWeb Landing Page — UI/UX Audit & Refresh"
 category: deliverable
 tags: [csweb, landing, ui-ux, design, accessibility, ph-doh]
-last_updated: 2026-06-15
+last_updated: 2026-06-29
 status: live
 ---
 
@@ -91,6 +91,42 @@ Those stay in the vault; if any are needed online they belong behind CSWeb auth.
 pipeline proven; app now deployed) and drop them into the enumerator guide's
 remaining slots.
 
+## Docs-hub expansion + R6 alignment (2026-06-29)
+Since the 2026-06-16 publish, the docs hub grew and was realigned to the
+**deployed Supervisor & Enumerator Hub (UAT Round 6)**.
+
+**Added to the live docs hub** (linked from help.html → "Step-by-step guides"):
+- `docs/hub-guide.html` — Supervisor & Enumerator Hub training guide: role-based
+  sign-in, the Supervisor/Enumerator menus, Bluetooth assign/collect/send/receive,
+  Collect → Relay, coverage report + offline EA map. Public-safe (operational only;
+  no credentials/usernames/internal links).
+- `docs/f1-crosswalk.html` … `docs/f4-crosswalk.html` — paper ↔ CAPI/web crosswalks
+  per instrument (shared `assets/docs.css`).
+
+**Alignment pass (this update)** — brought help.html and the guides in line with the
+deployed R6 build and made them consistent with each other (single source of truth on
+the shared facts: sync endpoint, menu labels, update path, Bluetooth message):
+- **hub-guide.html** — menu label "Receive Assigned Data **(Patient)**" → "Receive
+  Assigned Data"; the Bluetooth connect-failure text now matches the build's actual
+  message ("Couldn't connect over Bluetooth. Check: (1) Bluetooth is ON on BOTH
+  tablets, and (2) the supervisor has started '…' — then retry.") in §5 + troubleshooting.
+- **enumerator-guide.html** — corrected the CSEntry sync endpoint to
+  `https://csweb.asiansocial.org/csweb/api` (was the bare `…/csweb` web-console URL);
+  replaced the generic "☰ Sync → Add server / Get Application / Send data" wording with
+  the real CSEntry UI (**Add Application → from CSWeb → Connect → Install**;
+  **Synchronize** circular-arrows icon); added a reciprocal link to the hub guide;
+  added remove + re-add update guidance and a 12-digit-key / PSGC-gate note; dropped the
+  stale "screenshots being added" banner.
+- **help.html** — led the update guidance with the reliable **remove + re-add** path and
+  demoted "⋮ → Update Installed Applications" (it can miss CSWeb redeploys); aligned the
+  hub guide-list entry to the **"recommended way"** framing; added a hub pointer in the
+  tablet section.
+
+All five live pages (index, help, hub-guide, enumerator-guide, hcw-guide) pass an HTML
+tag-balance check. hcw-guide.html (F2 self-admin) needed no change. **Deploy:** `scp`
+the changed files to `/opt/app/lamp/www/` (help.html → web root; the guides → `docs/`).
+
 ## To revert
 - Landing: `cp /root/www-stock-backup/index.html.pre-refresh-2026-06-15 /opt/app/lamp/www/index.html`
 - Help page: `rm /opt/app/lamp/www/help.html` (and remove the two `/help.html` links from index.html)
+- Guides: the prior copies are in git history (`git log -- deliverables/CSWeb/landing/docs/`).

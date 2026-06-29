@@ -61,8 +61,12 @@
           needed — follow the steps in order.
         </p>
         <p class="banner">
-          Illustrated screenshots for each step are being added. The written
-          steps below are complete and current.
+          Most teams now sign in through the
+          <a href="/docs/hub-guide.html">Supervisor &amp; Enumerator Hub</a>,
+          which opens a menu for your role and launches these same surveys. The
+          direct steps below still work exactly the same — they are what the hub
+          opens — so follow them whether you start from the hub or open a survey
+          on its own.
         </p>
 
         <article>
@@ -73,8 +77,8 @@
               <li>The <strong>CSEntry</strong> app installed (Step 1).</li>
               <li>Your <strong>sync username and password</strong> — given by your supervisor; keep it private.</li>
               <li>
-                The CSWeb server address:
-                <code>csweb.asiansocial.org/csweb</code>.
+                The CSWeb sync server address (for CSEntry):
+                <code>https://csweb.asiansocial.org/csweb/api</code>.
               </li>
             </ul>
           </section>
@@ -119,21 +123,28 @@
             <h2>2. Connecting your tablet to the survey server (one time)</h2>
             <p>This tells CSEntry where to download the survey from.</p>
             <ol>
-              <li>In CSEntry, open the menu (☰) → <strong>Sync</strong> → <strong>Add server</strong> (or <strong>CSWeb settings</strong>).</li>
-              <li>Server URL: type <code>https://csweb.asiansocial.org/csweb</code>.</li>
-              <li>Enter your <strong>username</strong> and <strong>password</strong>.</li>
-              <li>Tap <strong>Save / Connect</strong>. A success message confirms the connection.</li>
+              <li>In CSEntry, tap <strong>⋮ → Add Application → CSWeb server</strong>.</li>
+              <li>Server address: <code>https://csweb.asiansocial.org/csweb/api</code> (it is usually already filled in). Tap <strong>Connect</strong>.</li>
+              <li>Sign in with your <strong>username</strong> and <strong>password</strong> when asked. The list of available surveys appears.</li>
             </ol>
           </section>
 
           <section>
-            <h2>3. Downloading the survey (sync down)</h2>
+            <h2>3. Downloading the survey</h2>
             <ol>
-              <li>Menu (☰) → <strong>Sync</strong>.</li>
-              <li>Choose the survey you’re assigned to: <strong>Facility Head (F1)</strong>, <strong>Patient (F3)</strong>, or <strong>Household (F4)</strong>.</li>
-              <li>Tap <strong>Get Application / Download</strong>. CSEntry downloads the questionnaire.</li>
+              <li>In the list of available surveys, find the one you’re assigned to — <strong>FacilityHeadSurvey (F1)</strong>, <strong>PatientSurvey (F3)</strong>, or <strong>HouseholdSurvey (F4)</strong>.</li>
+              <li>Tap <strong>Install</strong> (or <strong>Update</strong> if it shows “New version available”). CSEntry downloads the questionnaire.</li>
               <li>When it finishes, the survey appears on your CSEntry home screen.</li>
             </ol>
+            <div class="callout">
+              <strong>Keeping the survey current:</strong> when a new build is
+              released, go back to <strong>⋮ → Add Application → CSWeb server →
+              Connect</strong> and tap <strong>Update</strong>. If an update ever
+              looks stale (old screens, see Step&nbsp;6), the reliable fix is to
+              <strong>remove the survey and add it again</strong> from the server —
+              that always pulls the latest. The “⋮ → Update Installed
+              Applications” shortcut can miss new versions.
+            </div>
           </section>
 
           <section>
@@ -162,9 +173,15 @@
                 facility and the interview:
                 <code>Region → Province/HUC → City/Municipality → Facility No. → Case sequence</code>.
                 Each choice narrows the next (pick a region and only its
-                provinces appear — the <strong>PSGC cascade</strong>).
+                provinces appear — the <strong>PSGC cascade</strong>). Together
+                they form the <strong>12-digit case key</strong>.
               </li>
             </ol>
+            <div class="callout">
+              Use the case keys your supervisor assigns. A key whose area code
+              doesn’t match a real place is <strong>rejected at the start of the
+              case</strong> — so don’t invent or guess one.
+            </div>
           </section>
 
           <section>
@@ -218,8 +235,8 @@
             <h2>11. Sending your work to the server (sync up) — do this daily</h2>
             <ol>
               <li>Connect to Wi-Fi or mobile data.</li>
-              <li>Menu (☰) → <strong>Sync</strong> → <strong>Send data / Upload</strong>.</li>
-              <li>Wait for “sync complete.” Your completed cases are now safely on the server.</li>
+              <li>From your survey’s case list, tap <strong>Synchronize</strong> (the circular-arrows icon). Sign in with your own account if prompted.</li>
+              <li>Wait for <strong>“Sync complete / success.”</strong> Only new or changed cases are sent, so it’s quick — your completed cases are now safely on the server.</li>
             </ol>
             <div class="callout">
               <strong>Why daily:</strong> syncing backs up your work and lets
@@ -237,7 +254,11 @@
               <tbody>
                 <tr>
                   <td>Sync fails / “cannot reach server”</td>
-                  <td>Check internet; confirm the server URL <code>csweb.asiansocial.org/csweb</code>; try again. Your data is safe locally meanwhile.</td>
+                  <td>Check internet; confirm the server address <code>https://csweb.asiansocial.org/csweb/api</code> (including <code>https://</code> and <code>/csweb/api</code>); try again. Your data is safe locally meanwhile.</td>
+                </tr>
+                <tr>
+                  <td>Old screens (one question per screen)</td>
+                  <td>You’re on an older build — update the survey, or remove it and add it again from the server (Step&nbsp;3).</td>
                 </tr>
                 <tr>
                   <td>Forgot password</td>
