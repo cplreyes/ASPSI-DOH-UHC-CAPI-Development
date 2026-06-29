@@ -11,8 +11,6 @@ The tablet is **survey equipment**, not a personal device. Look after it, keep i
 
 Know where these are on your tablet: **power button**, **volume buttons**, **charging port**, **front camera** (for verification photos), and the **screen lock**. Familiarise yourself before fieldwork so you're not learning the device in front of a respondent.
 
-> 📷 **Screenshot 2.A** *(optional, add at kit prep)* — a labelled front/back photo of the **issued tablet model**. This is the one image best taken with a camera while preparing the field kit; drop it in here before printing so trainees recognise their exact device.
-
 ## B. Charging and battery management
 
 - **Start each field day fully charged**; carry a power bank where sites have no power.
