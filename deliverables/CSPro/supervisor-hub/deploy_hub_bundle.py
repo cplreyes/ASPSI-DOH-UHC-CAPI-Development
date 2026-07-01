@@ -37,6 +37,7 @@ BUNDLE = [
     "MenuApp.ent.apc", "MenuApp.ent.qsf", "MenuApp.ent.mgf", "MenuApp.pff",
     "UserRoster.dat",
     "survey-basemap.mbtiles",   # N3 offline base map (Map.setBaseMap reads it from the app folder)
+    "report.html",              # C4b coverage report dialog (htmldialog reads it from the app folder; self-contained, no deps)
     # B4 (N1) assignment distribution: MenuApp.ent declares ASSIGNMENT_DICT external, so the
     # dict + data must ship. MyAssignment.dat = the local file the enumerator's syncfile GET
     # overwrites; the AS_<id>.dat per-enumerator files (added by glob below) are what the

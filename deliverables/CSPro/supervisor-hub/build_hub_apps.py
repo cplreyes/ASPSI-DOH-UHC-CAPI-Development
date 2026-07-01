@@ -545,10 +545,11 @@ MENU_APC = """\
   the CSWeb relay is build-valid, its on-our-server credential prompt device-verify pending.
   DESCOPED FROM v1 (Carl, 2026-06-25): the LISTING leg — the PatientListing app it would
   chain-launch was never built (§3a unauthored, ASPSI's call); its codes now carry collect/send.
-  REPORT NOTE (B2/N4/C4): the on-device report (show_coverage_report) now computes REAL
+  REPORT NOTE (B2/N4/C4/C4b): the on-device report (show_coverage_report) computes REAL
   per-instrument coverage by iterating the F1/F3/F4 external dicts with forcase + the received
-  AS_TARGET_COUNT, shown in a one-line errmsg (device-safe). A Bootstrap-styled HTML
-  version (view of a generated report.html) remains the C4b follow-up.
+  AS_TARGET_COUNT, and renders it as an HTML TABLE via the CSPro 8 htmldialog() function against a
+  self-contained report.html (C4b, 2026-06-30). Falls back to the proven one-line errmsg if
+  htmldialog returns != "ok". Compiles clean; the OFFLINE on-CSEntry render is the device-verify gate.
   ============================================================================ }
 
 PROC GLOBAL
@@ -711,34 +712,39 @@ function assign_ea()
 end;
 
 function show_coverage_report(string scope)
-  { C4/N4 - REAL on-device coverage report (replaced the static errmsg stub 2026-06-28). Counts the
-    survey cases actually stored on THIS device per instrument by iterating each F1/F3/F4 dict declared
-    EXTERNAL here (on device = ../<App>/<App>.csdb) with forcase - the SAME proven idiom the Bluetooth
-    functions use (receive_assignment/send_to_supervisor). Meaning depends on the device/role:
-      * Supervisor (Survey Interview - view report): the cases COLLECTED into this hub over Bluetooth.
-      * Enumerator (View my report): the enumerator's OWN captured interviews.
-    For an assigned enumerator, AS_TARGET_COUNT (from the received assignment) gives captured-vs-target.
-    A zero count is safe (no cases yet / instrument not installed). One flowing line (no chr() / no
-    countcases() - neither is a confirmed CSPro 8 idiom; both failed the GLOBAL compile). A Bootstrap-
-    styled HTML version (view of a generated report.html) is the C4b follow-up. }
+  { C4b - on-device coverage report as an HTML TABLE (replaced the one-line errmsg 2026-06-30). Counts
+    the F1/F3/F4 cases stored on THIS device (each dict declared EXTERNAL here -> ../<App>/<App>.csdb)
+    with forcase - the proven idiom the Bluetooth functions use. Reads the received assignment
+    (MyAssignment.dat) for captured-vs-target, then renders it with the CSPro 8 htmldialog() function
+    against a SELF-CONTAINED report.html (inline CSS + vanilla JS, no jQuery/Bootstrap/Mustache -> no
+    dependency to bundle, renders offline). Role meaning: supervisor = cases collected into this hub;
+    enumerator = own captured interviews. FALLS BACK to the proven one-line errmsg if htmldialog returns
+    anything but "ok" (older CSEntry / report.html missing). htmldialog grounded at
+    csprousers.org/help/CSPro/htmldialog_function.html: htmldialog(file, inputData:=, displayOptions:=)
+    returns the string the HTML passes to UI.close(). NOTE: htmldialog compiles clean, but the OFFLINE
+    on-CSEntry render is the device-verify gate (the C8 spike). }
   numeric n1; numeric n3; numeric n4;
-  string body; string tgt;
+  string aInstr; string aTgt; string aEA; string j; string dopt; string res;
   n1 = 0; n3 = 0; n4 = 0;
   forcase FACILITYHEADSURVEY_DICT do n1 = n1 + 1; enddo;
   forcase PATIENTSURVEY_DICT do n3 = n3 + 1; enddo;
   forcase HOUSEHOLDSURVEY_DICT do n4 = n4 + 1; enddo;
-  { Captured-vs-target for an assigned enumerator (assignment already pulled into MyAssignment.dat). }
-  tgt = "";
+  aInstr = ""; aTgt = ""; aEA = "";
   setfile(ASSIGNMENT_DICT, "MyAssignment.dat");
   forcase ASSIGNMENT_DICT do
-    tgt = " Your assignment: instrument " + strip(AS_INSTRUMENT)
-        + ", target " + strip(AS_TARGET_COUNT) + " (EA " + strip(AS_EA_NAME) + ").";
+    aInstr = strip(AS_INSTRUMENT); aTgt = strip(AS_TARGET_COUNT); aEA = strip(AS_EA_NAME);
   enddo;
-  body = scope + ".  F1 Facility Head: " + maketext("%d", n1) + " captured.  "
-       + "F3 Patient: " + maketext("%d", n3) + " captured.  "
-       + "F4 Household: " + maketext("%d", n4) + " captured." + tgt
-       + "  (Counts the survey cases stored on this device.)";
-  errmsg("%s", body);
+  { JSON for report.html - single-quoted format so the inner double-quotes are literal (proven in the
+    htmldialog doc example). EA names in this round have no quotes, so no escaping needed. }
+  j = maketext('{"scope":"%s","f1":%d,"f3":%d,"f4":%d,"instr":"%s","target":"%s","ea":"%s"}',
+               scope, n1, n3, n4, aInstr, aTgt, aEA);
+  dopt = '{"width":380,"height":340,"resizable":false,"keyboard":0}';
+  { htmldialog renders report.html (device-confirmed on CSEntry itel_P10001L 2026-07-01 with
+    the real forcase counts + assignment). NO errmsg fallback: this CSEntry's htmldialog return
+    value is not a stable "ok" sentinel (it uses the deprecated CSPro.returnData path, which does
+    not round-trip a plain "ok"), so an `if res <> "ok"` guard fires a SECOND dialog every time.
+    The dialog is reliable here; keep the single clean dialog. res is captured but unused. }
+  res = htmldialog("report.html", inputData := j, displayOptions := dopt);
 end;
 
 PROC MENUAPP_LEVEL

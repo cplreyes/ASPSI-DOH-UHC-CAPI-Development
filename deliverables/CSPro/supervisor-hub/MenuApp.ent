@@ -1,85 +1,81 @@
 {
-  "software": "CSPro", 
-  "version": 8.0, 
-  "fileType": "application", 
-  "type": "entry", 
-  "name": "MENUAPP", 
-  "label": "MenuApp", 
+  "software": "CSPro",
+  "version": 8.0,
+  "fileType": "application",
+  "type": "entry",
+  "name": "MENUAPP",
+  "label": "MenuApp",
   "dictionaries": [
     {
-      "type": "input", 
-      "path": "MenuApp.dcf", 
+      "type": "input",
+      "path": "MenuApp.dcf",
       "parent": "MenuApp.fmf"
-    }, 
+    },
     {
-      "type": "external", 
+      "type": "external",
       "path": "Assignment.dcf"
-    }, 
+    },
     {
-      "type": "external", 
+      "type": "external",
       "path": "FacilityHeadSurvey.dcf"
-    }, 
+    },
     {
-      "type": "external", 
+      "type": "external",
       "path": "PatientSurvey.dcf"
-    }, 
+    },
     {
-      "type": "external", 
+      "type": "external",
       "path": "HouseholdSurvey.dcf"
     }
-  ], 
+  ],
   "forms": [
     "MenuApp.fmf"
-  ], 
+  ],
   "questionText": [
     "MenuApp.ent.qsf"
-  ], 
+  ],
   "code": [
     {
-      "type": "main", 
+      "type": "main",
       "path": "MenuApp.ent.apc"
     }
-  ], 
+  ],
   "messages": [
     "MenuApp.ent.mgf"
-  ], 
+  ],
   "logicSettings": {
-    "version": 2.0, 
+    "version": 2.0,
     "caseSensitive": {
       "symbols": false
-    }, 
+    },
     "actionInvoker": {
-      "accessFromExternalCaller": "promptIfNoValidAccessToken", 
+      "accessFromExternalCaller": "promptIfNoValidAccessToken",
       "convertResultsForLogic": true
     }
-  }, 
+  },
   "properties": {
-    "askOperatorId": false, 
-    "autoAdvanceOnSelection": true, 
-    "caseTree": "mobileOnly", 
-    "centerForms": false, 
-    "createListing": false, 
-    "createLog": false, 
-    "decimalMark": "dot", 
-    "displayCodesAlongsideLabels": false, 
+    "askOperatorId": false,
+    "autoAdvanceOnSelection": true,
+    "caseTree": "mobileOnly",
+    "centerForms": false,
+    "createListing": false,
+    "createLog": false,
+    "decimalMark": "dot",
+    "displayCodesAlongsideLabels": false,
     "notes": {
-      "delete": "all", 
+      "delete": "all",
       "edit": "all"
-    }, 
+    },
     "partialSave": {
       "operatorEnabled": false
-    }, 
-    "showEndCaseMessage": false, 
-    "showOnlyDiscreteValuesInComboBoxes": true, 
-    "showFieldLabels": true, 
-    "showErrorMessageNumbers": false, 
-    "showQuestionText": true, 
-    "showRefusals": false, 
-    "verify": {
-      "frequency": 1, 
-      "start": 1
-    }, 
-    "htmlDialogs": true, 
+    },
+    "showEndCaseMessage": false,
+    "showOnlyDiscreteValuesInComboBoxes": true,
+    "showFieldLabels": true,
+    "showErrorMessageNumbers": false,
+    "showQuestionText": true,
+    "showRefusals": false,
+    "htmlDialogs": true,
     "useHtmlComponentsInsteadOfNativeVersions": false
   }
 }

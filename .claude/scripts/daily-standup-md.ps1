@@ -70,4 +70,24 @@ if ($latest) {
     } catch { }
 }
 
+# --- E0-SCRUM-SYNC drift canary --------------------------------------------
+# Runs daily regardless of whether today's standup file already exists (the
+# generator is idempotent and skips when it does, so the in-standup callout
+# alone would miss skip days). Fires when log.md has outpaced the sprint board
+# by 2+ days — the stale-board condition behind the S009->S011 late-retro
+# three-peat. Surfaces here in the scheduled log; the generator surfaces the
+# same drift as a callout inside the standup when it (re)writes one.
+$logMd    = Join-Path $repo "log.md"
+$sprintMd = Join-Path $repo "scrum\sprint-current.md"
+if ((Test-Path $logMd) -and (Test-Path $sprintMd)) {
+    try {
+        $logWrite    = (Get-Item $logMd).LastWriteTime
+        $sprintWrite = (Get-Item $sprintMd).LastWriteTime
+        $driftDays   = [math]::Round((New-TimeSpan -Start $sprintWrite -End $logWrite).TotalDays, 1)
+        if ($driftDays -gt 2) {
+            Write-Log "scheduled: PROBE-SPRINT-DRIFT - log.md is $driftDays days newer than sprint-current.md; sync the sprint board (E0-SCRUM-SYNC canary)"
+        }
+    } catch { }
+}
+
 exit 0

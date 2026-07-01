@@ -1,0 +1,18 @@
+CAPI assignment generation — manifest
+========================================
+
+Enumerators: 6 · EA rows: 6 · total case keys: 102
+
+  AS_se-001.dat — 1 EA(s), 1 cases (F1:1)
+  AS_se-002.dat — 1 EA(s), 30 cases (F3:30)
+  AS_se-003.dat — 1 EA(s), 20 cases (F4:20)
+  AS_se-004.dat — 1 EA(s), 1 cases (F1:1)
+  AS_se-005.dat — 1 EA(s), 30 cases (F3:30)
+  AS_se-006.dat — 1 EA(s), 20 cases (F4:20)
+
+Files in this folder:
+  AS_<id>.dat          -> hub 'Assign Enumeration Area' serves these over Bluetooth.
+  assignment-sheets.html -> print; hand each enumerator their page (type the keys).
+  case-keys.csv        -> QA / CSWeb cross-check of every 12-digit key.
+
+No warnings — all rows valid.

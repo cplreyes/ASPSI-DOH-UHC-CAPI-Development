@@ -1,5 +1,11 @@
 # Crosswalk Screenshot-Capture Punch-List
 
+> ## ✅ 2026-06-30 STATUS
+>
+> **F3 and F4 are now fully native** (captured on the itel P10001L, wired into the crosswalks; 0 borrowed-F1 refs, 0 broken images). See `crosswalk-capture-shotlist.md` for the per-shot detail. **F1 check-box (Q34): RESOLVED on accepted borrow (Carl's call 2026-06-30)** — Q34 is hidden by F1's skip logic and ~40 fields deep, so F1 keeps the `f4-capi-checkbox` borrow as a deliberate honest exception (check-boxes render identically across instruments; only title/options differ). The P0 per-instrument check-box for F3/F4 is satisfied by their existing native checkbox shots.
+
+
+
 **Source:** per-instrument visual countercheck of the four paper↔CAPI/web crosswalks (F1, F2, F3, F4), 2026-06-19.
 **Scope:** the right-hand (CAPI/web) column only. Paper pages are all real, correct, and complete — no paper captures needed.
 **Finding that drives this list:** no pairings are *broken* and no image files are *missing*. The gaps are **coverage** — F3 and F4 have **zero** native screenshots (their entire right column is borrowed F1 screens), F1 is partial, and F2 is complete.

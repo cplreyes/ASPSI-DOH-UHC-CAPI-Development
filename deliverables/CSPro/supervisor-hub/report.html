@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coverage report</title>
+<!--
+  Supervisor-hub coverage report — rendered by the CSPro 8 htmldialog() function
+  (MenuApp show_coverage_report). DELIBERATELY SELF-CONTAINED: inline CSS + vanilla
+  JS, NO jQuery / Bootstrap / Mustache / external css — so it has no dependency to
+  bundle and renders offline on CSEntry. Reads its data via the Action Invoker
+  (CS.UI.getInputData) with a fallback to the deprecated CSPro.* interface, builds
+  a per-instrument table (Done vs Target), and closes on OK.
+  Input JSON: {"scope","f1","f3","f4","instr","target","ea"}.
+-->
+<style>
+  :root { --green:#00532f; --greenlt:#e3f0ea; --line:#cfd8d3; --ink:#1a1a1a; --muted:#5b6b63; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; padding:0; font-family:-apple-system,Roboto,Arial,sans-serif; color:var(--ink); }
+  .wrap { padding:14px 16px; }
+  h1 { font-size:16px; margin:0 0 10px; color:var(--green); }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th,td { padding:7px 8px; border-bottom:1px solid var(--line); text-align:left; }
+  thead th { background:var(--greenlt); color:var(--green); font-size:12px; text-transform:uppercase; letter-spacing:.02em; }
+  td.n, th.n { text-align:center; width:64px; }
+  tbody tr:last-child td { border-bottom:1px solid var(--line); }
+  .assign { margin:11px 0 0; padding:8px 10px; background:var(--greenlt); border-radius:6px; font-size:13px; }
+  .assign b { color:var(--green); }
+  .hint { margin:9px 0 0; font-size:11px; color:var(--muted); }
+  .bar { margin-top:14px; text-align:right; }
+  button { font-size:15px; padding:8px 22px; border:0; border-radius:6px; background:var(--green); color:#fff; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 id="scope">Coverage</h1>
+  <table>
+    <thead><tr><th>Instrument</th><th class="n">Done</th><th class="n">Target</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <div id="assign" class="assign" style="display:none;"></div>
+  <p class="hint">Counts the survey cases stored on this device.</p>
+  <div id="dbg" style="display:none;font-size:9px;color:#a00;word-break:break-all;margin-top:6px;"></div>
+  <div class="bar"><button id="ok" type="button">OK</button></div>
+</div>
+<script>
+  // --- CSPro Action Invoker shim — try every known input-retrieval API, keep a
+  //     diagnostic trail so a failed data-pass is visible on-device. Returns
+  //     {value, method, attempts[]}. ---
+  function csGetInputRaw() {
+    var attempts = [];
+    var methods = [
+      ["CS.UI.getInputData", function () { return CS.UI.getInputData(); }],
+      ["getInputData", function () { return getInputData(); }],
+      ["CS.UI.getDialogInput", function () { return CS.UI.getDialogInput(); }],
+      ["getDialogInput", function () { return getDialogInput(); }],
+      ["CSPro.getInputData", function () { return CSPro.getInputData(); }],
+      ["window.dialogInput", function () { return window.dialogInput; }]
+    ];
+    for (var i = 0; i < methods.length; i++) {
+      var name = methods[i][0], v, ok = true, err = "";
+      try { v = methods[i][1](); } catch (e) { ok = false; err = String(e); }
+      var desc = ok ? ((v === null || v === undefined) ? "null" : (typeof v) + " " + String(v).slice(0, 70)) : "ERR " + err;
+      attempts.push(name + "=" + desc);
+      if (ok && v !== null && v !== undefined && v !== "") return { value: v, method: name, attempts: attempts };
+    }
+    return { value: null, method: null, attempts: attempts };
+  }
+  // NOTE (device-confirmed on CSEntry itel_P10001L, 2026-07-01): this CSEntry exposes the
+  // DEPRECATED CSPro.* interface — CS / CS.UI are undefined — and CSPro is a BARE GLOBAL, not
+  // window.CSPro. So guard every call with `typeof CSPro !== "undefined"`, never `window.CSPro`.
+  // Input = CSPro.getInputData() (returns an object); return = CSPro.returnData(value); size =
+  // CSPro.setDisplayOptions(json). The modern CS.UI.* branches are kept first as forward-compat.
+  function csSetDisplay(opts) {
+    var s = JSON.stringify(opts);
+    try { if (typeof CS !== "undefined" && CS.UI && CS.UI.setDisplayOptions) { CS.UI.setDisplayOptions(s); return; } } catch (e) {}
+    try { if (typeof CSPro !== "undefined" && CSPro.setDisplayOptions) CSPro.setDisplayOptions(s); } catch (e) {}
+  }
+  function csClose() {
+    // CSPro.returnData(value) sets what htmldialog() returns to the logic (checked as res == "ok").
+    try { if (typeof CS !== "undefined" && CS.UI && CS.UI.closeDialog) { CS.UI.closeDialog("ok"); return; } } catch (e) {}
+    try { if (typeof CSPro !== "undefined" && CSPro.returnData) { CSPro.returnData("ok"); return; } } catch (e) {}
+    try { window.close(); } catch (e) {}
+  }
+
+  function esc(v) { return String(v == null ? "" : v).replace(/[<>&]/g, function (c) {
+    return c === "<" ? "&lt;" : c === ">" ? "&gt;" : "&amp;"; }); }
+
+  function render() {
+    var got = csGetInputRaw();
+    var raw = got.value, d = {};
+    if (typeof raw === "string") { try { d = JSON.parse(raw); } catch (e) { d = {}; } }
+    else if (raw && typeof raw === "object") { d = raw; }
+    document.getElementById("scope").textContent = d.scope || "Coverage";
+    // Defensive: if the input never arrived, surface the attempt trail (hidden on success).
+    if (!d.scope) {
+      var dbg = document.getElementById("dbg");
+      dbg.style.display = "block";
+      dbg.textContent = "no input received: " + got.attempts.join("  |  ");
+    }
+
+    var instr = (d.instr || "").toUpperCase();
+    var target = (d.target == null ? "" : String(d.target));
+    var rows = [
+      { key: "F1", label: "F1 Facility Head", done: d.f1 },
+      { key: "F3", label: "F3 Patient",       done: d.f3 },
+      { key: "F4", label: "F4 Household",     done: d.f4 }
+    ];
+    var html = "";
+    rows.forEach(function (r) {
+      var tgt = (instr === r.key && target !== "") ? esc(target) : "—";
+      var done = (r.done == null ? 0 : r.done);
+      html += "<tr><td>" + esc(r.label) + "</td><td class='n'>" + esc(done) + "</td><td class='n'>" + tgt + "</td></tr>";
+    });
+    document.getElementById("rows").innerHTML = html;
+
+    if (instr) {
+      var a = document.getElementById("assign");
+      a.innerHTML = "<b>Your assignment:</b> " + esc(instr)
+        + (target !== "" ? " · target " + esc(target) : "")
+        + (d.ea ? " · EA " + esc(d.ea) : "");
+      a.style.display = "block";
+    }
+    // size the dialog AFTER layout so width/height are real (the docs warn an
+    // unsized dialog stalls a few seconds before showing)
+    var w = Math.min(Math.max(document.body.scrollWidth, 300), 460);
+    var h = Math.min(document.body.scrollHeight + 16, 540);
+    csSetDisplay({ width: w, height: h, resizable: false, keyboard: 0 });
+  }
+
+  document.getElementById("ok").addEventListener("click", csClose);
+  if (document.readyState !== "loading") render();
+  else document.addEventListener("DOMContentLoaded", render);
+</script>
+</body>
+</html>
