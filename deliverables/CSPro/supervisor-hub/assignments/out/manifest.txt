@@ -1,13 +1,13 @@
 CAPI assignment generation — manifest
 ========================================
 
-Enumerators: 6 · EA rows: 6 · total case keys: 102
+Enumerators: 6 · EA rows: 10 · total case keys: 84
 
-  AS_se-001.dat — 1 EA(s), 1 cases (F1:1)
-  AS_se-002.dat — 1 EA(s), 30 cases (F3:30)
+  AS_se-001.dat — 2 EA(s), 11 cases (F1:1, F3:10)
+  AS_se-002.dat — 2 EA(s), 11 cases (F1:1, F3:10)
   AS_se-003.dat — 1 EA(s), 20 cases (F4:20)
-  AS_se-004.dat — 1 EA(s), 1 cases (F1:1)
-  AS_se-005.dat — 1 EA(s), 30 cases (F3:30)
+  AS_se-004.dat — 2 EA(s), 11 cases (F1:1, F3:10)
+  AS_se-005.dat — 2 EA(s), 11 cases (F1:1, F3:10)
   AS_se-006.dat — 1 EA(s), 20 cases (F4:20)
 
 Files in this folder:

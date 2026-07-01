@@ -47,7 +47,10 @@ FIELDS = [
 RECORD_LEN = sum(n for _, n in FIELDS)
 INSTRUMENTS = {"F1", "F3", "F4"}
 COLUMNS = ["enumerator_id", "enumerator_name", "facility_code",
-           "instrument", "target_count", "ea_name", "cluster"]
+           "instrument", "target_count", "ea_name", "cluster",
+           "first_case_key", "last_case_key"]
+# Columns that may be absent from the sheet without it being an error.
+OPTIONAL_COLUMNS = {"enumerator_name", "first_case_key", "last_case_key"}
 
 
 def fw(value, width: int) -> str:
@@ -68,7 +71,7 @@ def read_master(path: Path) -> list[dict]:
     ws = wb["Assignments"]
     header = [str(c.value).strip() if c.value is not None else "" for c in ws[1]]
     idx = {name: header.index(name) for name in COLUMNS if name in header}
-    missing = [c for c in COLUMNS if c not in idx and c != "enumerator_name"]
+    missing = [c for c in COLUMNS if c not in idx and c not in OPTIONAL_COLUMNS]
     if missing:
         raise SystemExit(f"'Assignments' is missing column(s): {missing}")
     rows = []
@@ -89,6 +92,8 @@ def clean(rows: list[dict]) -> tuple[list[dict], list[str]]:
         ea = (str(raw.get("ea_name") or "")).strip()
         cluster = (str(raw.get("cluster") or "")).strip()
         ename = (str(raw.get("enumerator_name") or "")).strip()
+        fck = (str(raw.get("first_case_key") or "")).strip()
+        lck = (str(raw.get("last_case_key") or "")).strip()
         tgt_raw = raw.get("target_count")
         # blank row or a footnote/instruction row (no EA, no instrument, no target) → ignore quietly
         if not fac and not inst and not str(tgt_raw or "").strip():
@@ -110,16 +115,35 @@ def clean(rows: list[dict]) -> tuple[list[dict], list[str]]:
         if tgt > 999:
             warns.append(f"{where}: target {tgt} > 999 won't fit a 3-digit sequence — capped at 999.")
             tgt = 999
+        # Explicit case-key range (verbatim keys from the RA QN list). When both
+        # ends are given they are LAW — the keys are emitted exactly, not re-derived
+        # from facility_code+001..N (the RA numbering isn't always 001-based, e.g.
+        # a barangay starting at 601, or a facility-head ...000 key). Validate the
+        # range and reconcile it against target_count.
+        first_key = last_key = ""
+        if fck or lck:
+            if not (fck.isdigit() and len(fck) == 12):
+                warns.append(f"SKIP {where}: first_case_key must be 12 digits, got {fck!r}."); continue
+            if not (lck.isdigit() and len(lck) == 12):
+                warns.append(f"SKIP {where}: last_case_key must be 12 digits, got {lck!r}."); continue
+            if int(lck) < int(fck):
+                warns.append(f"SKIP {where}: last_case_key {lck} < first_case_key {fck}."); continue
+            if not (fck.startswith(fac) and lck.startswith(fac)):
+                warns.append(f"{where}: case keys {fck}/{lck} don't start with facility_code {fac} — using keys as given.")
+            span = int(lck) - int(fck) + 1
+            if span != tgt:
+                warns.append(f"{where}: range {fck}..{lck} spans {span} keys but target_count={tgt} — using the range span ({span}).")
+                tgt = span
+            first_key, last_key = fck, lck
         key = (eid, fac, inst)
         if key in seen:
             warns.append(f"{where}: duplicate (enumerator, EA, instrument) — included anyway.")
         seen.add(key)
-        if ename and len(ename) > 0:
-            pass
         if len(ea) > 50:
             warns.append(f"{where}: ea_name >50 chars — truncated in the .dat file.")
         good.append({"enumerator_id": eid, "enumerator_name": ename, "facility_code": fac,
-                     "instrument": inst, "target_count": tgt, "ea_name": ea, "cluster": cluster})
+                     "instrument": inst, "target_count": tgt, "ea_name": ea, "cluster": cluster,
+                     "first_case_key": first_key, "last_case_key": last_key})
     return good, warns
 
 
@@ -143,6 +167,15 @@ def write_dat_files(rows: list[dict], out: Path) -> dict[str, int]:
 
 
 def case_keys(row: dict) -> list[str]:
+    """The 12-digit case keys for one EA row.
+
+    If an explicit first/last range is given, emit those exact keys verbatim
+    (the RA QN list is authoritative — see clean()). Otherwise derive them the
+    old way: facility_code (9) + a 3-digit sequence 001..target_count.
+    """
+    fck, lck = row.get("first_case_key"), row.get("last_case_key")
+    if fck and lck:
+        return [f"{n:012d}" for n in range(int(fck), int(lck) + 1)]
     fac = row["facility_code"]
     return [f"{fac}{seq:03d}" for seq in range(1, row["target_count"] + 1)]
 

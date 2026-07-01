@@ -1,103 +1,85 @@
 ﻿case_key,enumerator_id,enumerator_name,instrument,facility_code,ea_name,cluster,sequence
-040340001001,se-001,Pat,F1,040340001,Binan City Health Office,04034,001
-040340002001,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,001
-040340002002,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,002
-040340002003,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,003
-040340002004,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,004
-040340002005,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,005
-040340002006,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,006
-040340002007,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,007
-040340002008,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,008
-040340002009,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,009
-040340002010,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,010
-040340002011,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,011
-040340002012,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,012
-040340002013,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,013
-040340002014,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,014
-040340002015,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,015
-040340002016,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,016
-040340002017,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,017
-040340002018,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,018
-040340002019,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,019
-040340002020,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,020
-040340002021,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,021
-040340002022,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,022
-040340002023,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,023
-040340002024,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,024
-040340002025,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,025
-040340002026,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,026
-040340002027,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,027
-040340002028,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,028
-040340002029,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,029
-040340002030,se-002,Shan,F3,040340002,Binan RHU - Patient Survey,04034,030
-040340005001,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,001
-040340005002,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,002
-040340005003,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,003
-040340005004,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,004
-040340005005,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,005
-040340005006,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,006
-040340005007,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,007
-040340005008,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,008
-040340005009,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,009
-040340005010,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,010
-040340005011,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,011
-040340005012,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,012
-040340005013,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,013
-040340005014,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,014
-040340005015,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,015
-040340005016,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,016
-040340005017,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,017
-040340005018,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,018
-040340005019,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,019
-040340005020,se-003,Aly,F4,040340005,Binan Brgy Malaban - Household Survey,04034,020
-040340011001,se-004,Marriz,F1,040340011,Binan District Hospital - Facility Head,04034,001
-040341002001,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,001
-040341002002,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,002
-040341002003,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,003
-040341002004,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,004
-040341002005,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,005
-040341002006,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,006
-040341002007,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,007
-040341002008,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,008
-040341002009,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,009
-040341002010,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,010
-040341002011,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,011
-040341002012,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,012
-040341002013,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,013
-040341002014,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,014
-040341002015,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,015
-040341002016,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,016
-040341002017,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,017
-040341002018,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,018
-040341002019,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,019
-040341002020,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,020
-040341002021,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,021
-040341002022,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,022
-040341002023,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,023
-040341002024,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,024
-040341002025,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,025
-040341002026,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,026
-040341002027,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,027
-040341002028,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,028
-040341002029,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,029
-040341002030,se-005,Aidan,F3,040341002,Los Banos RHU - Patient Survey,04034,030
-040341005001,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,001
-040341005002,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,002
-040341005003,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,003
-040341005004,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,004
-040341005005,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,005
-040341005006,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,006
-040341005007,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,007
-040341005008,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,008
-040341005009,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,009
-040341005010,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,010
-040341005011,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,011
-040341005012,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,012
-040341005013,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,013
-040341005014,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,014
-040341005015,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,015
-040341005016,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,016
-040341005017,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,017
-040341005018,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,018
-040341005019,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,019
-040341005020,se-006,Merlyne,F4,040341005,Los Banos Brgy Mayondon - Household Survey,04034,020
+040341110000,se-001,Pat,F1,040341110,Los Banos Doctors Hospital - Facility Head,040341,001
+040341110001,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,001
+040341110002,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,002
+040341110003,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,003
+040341110004,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,004
+040341110005,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,005
+040341110006,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,006
+040341110007,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,007
+040341110008,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,008
+040341110009,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,009
+040341110010,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,010
+040341120000,se-002,Shan,F1,040341120,Laguna Provincial Hospital Bay - Facility Head,040341,001
+040341120001,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,001
+040341120002,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,002
+040341120003,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,003
+040341120004,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,004
+040341120005,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,005
+040341120006,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,006
+040341120007,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,007
+040341120008,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,008
+040341120009,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,009
+040341120010,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,010
+040341100601,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,001
+040341100602,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,002
+040341100603,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,003
+040341100604,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,004
+040341100605,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,005
+040341100606,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,006
+040341100607,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,007
+040341100608,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,008
+040341100609,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,009
+040341100610,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,010
+040341100611,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,011
+040341100612,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,012
+040341100613,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,013
+040341100614,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,014
+040341100615,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,015
+040341100616,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,016
+040341100617,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,017
+040341100618,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,018
+040341100619,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,019
+040341100620,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,020
+040341130000,se-004,Marriz,F1,040341130,Los Banos RHU I - Facility Head,040341,001
+040341130001,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,001
+040341130002,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,002
+040341130003,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,003
+040341130004,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,004
+040341130005,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,005
+040341130006,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,006
+040341130007,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,007
+040341130008,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,008
+040341130009,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,009
+040341130010,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,010
+040341140000,se-005,Aidan,F1,040341140,St. Jude Hospital - Facility Head,040341,001
+040341140001,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,001
+040341140002,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,002
+040341140003,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,003
+040341140004,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,004
+040341140005,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,005
+040341140006,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,006
+040341140007,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,007
+040341140008,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,008
+040341140009,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,009
+040341140010,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,010
+040341101001,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,001
+040341101002,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,002
+040341101003,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,003
+040341101004,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,004
+040341101005,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,005
+040341101006,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,006
+040341101007,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,007
+040341101008,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,008
+040341101009,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,009
+040341101010,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,010
+040341101011,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,011
+040341101012,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,012
+040341101013,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,013
+040341101014,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,014
+040341101015,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,015
+040341101016,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,016
+040341101017,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,017
+040341101018,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,018
+040341101019,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,019
+040341101020,se-006,Merlyne,F4,040341101,Brgy. Mayondon - Household,040341,020

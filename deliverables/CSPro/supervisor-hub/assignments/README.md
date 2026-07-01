@@ -8,7 +8,9 @@ pre-listing is descoped from hub v1; F4 members are rostered inside the intervie
 
 | File | What it is |
 |---|---|
-| `assignment-master.xlsx` | **Fill this.** One row per (enumerator × EA/facility). README + Assignments + Enumerators sheets; derived `first/last_case_key` columns visualise the key range. |
+| `pretest-qn-list.csv` | **Verbatim RA source.** Every QN transcribed from the RAs' "Unique Question Number for Pre-testing" file (Los Baños, municipality 040341) — one row per 12-digit key, tagged by facility/barangay + instrument. Immutable record; don't derive from it. |
+| `pretest-ea-summary.csv` | EA-level rollup of the above (one row per EA × instrument, with the explicit key range) — the shape that drops into the master. |
+| `assignment-master.xlsx` | **Fill this.** One row per (enumerator × EA/facility). README + Assignments + Enumerators sheets. Pre-loaded with the Los Baños pre-test (RA QN list on the R6 roster). `first/last_case_key` carry the RA's exact keys and are **authoritative**. |
 | `build_assignment_template.py` | Rebuilds a blank `assignment-master.xlsx` (generator-first; don't hand-edit structure). |
 | `generate_assignments.py` | Reads the filled master → writes `out/`. |
 | `out/AS_<id>.dat` | One fixed-width file per enumerator (97-byte records, matches `ASSIGNMENT_DICT`). The hub's **Assign Enumeration Area** serves these over Bluetooth. |
@@ -28,9 +30,11 @@ pre-listing is descoped from hub v1; F4 members are rostered inside the intervie
 
 ## The case key
 
-12 digits = **9-digit EA/facility code (real PSGC)** + **3-digit sequence** `001..target`.
-e.g. EA `040340002`, target 12 → `040340002001 … 040340002012`. A wrong PSGC prefix
-is hard-rejected on the tablet, so use real codes only.
+12 digits = **9-digit EA/facility code (real PSGC)** + **3-digit sequence**.
+When `first/last_case_key` are filled (as in the pre-test), those exact keys are emitted
+**verbatim** — the RA numbering isn't always 001-based (facility-head keys end `000`;
+Brgy. Bayog runs `601..620`). Leave them blank and the generator falls back to
+code + `001..target`. A wrong PSGC prefix is hard-rejected on the tablet, so use real codes only.
 
 ## Status (be honest with the field team)
 

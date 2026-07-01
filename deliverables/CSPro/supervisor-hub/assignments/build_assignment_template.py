@@ -49,7 +49,8 @@ def build():
     lines = [
         ("CAPI Assignment Master — Supervisor prep sheet", "title"),
         ("ASPSI-DOH UHC Survey Year 2 · F1 / F3 / F4 · Supervisor & Enumerator hub", "sub"),
-        ("Pre-loaded with the Round 6 assignments (Laguna pretest). Edit / add rows for later rounds.", "sub"),
+        ("Pre-loaded with the Los Baños pre-test assignments (RA 'Unique Question Number' list,", "sub"),
+        ("municipality 040341). R6 roster names reused. Edit / add rows for later rounds.", "sub"),
         ("", "n"),
         ("What this is", "h"),
         ("One row per (enumerator x EA/facility). It carries exactly what the hub's assignment", "n"),
@@ -66,9 +67,11 @@ def build():
         ("household pre-listing is descoped from hub v1, so nobody is assigned by name.", "n"),
         ("", "n"),
         ("The case key", "h"),
-        ("12 digits = the 9-digit EA/facility code (real PSGC) + a 3-digit sequence (001..target).", "n"),
-        ("e.g. EA 040340002, target 12  ->  040340002001 ... 040340002012.", "n"),
-        ("A wrong PSGC prefix is hard-rejected on the tablet, so use REAL codes only.", "n"),
+        ("12 digits = the 9-digit EA/facility code (real PSGC) + a 3-digit sequence.", "n"),
+        ("When first/last_case_key are filled (as here, from the RA QN list) they are AUTHORITATIVE —", "n"),
+        ("the generator emits those exact keys verbatim (the RA numbering isn't always 001-based:", "n"),
+        ("facility-head keys end 000, and Brgy. Bayog runs 601..620). Leave first/last blank and the", "n"),
+        ("generator falls back to code + 001..target. A wrong PSGC prefix is hard-rejected on the tablet.", "n"),
         ("", "n"),
         ("Columns to fill (Assignments sheet)", "h"),
         ("   supervisor_id    the enumerator's supervisor (fs-01 / fs-02). Review-only — shows the chain.", "n"),
@@ -79,7 +82,7 @@ def build():
         ("   target_count     how many cases to complete at that EA.", "n"),
         ("   ea_name          EA / facility name (label).", "n"),
         ("   cluster          cluster label (free text).", "n"),
-        ("   first/last key   AUTO — shows the case-key range so you can eyeball it. Don't edit.", "n"),
+        ("   first/last key   the exact 12-digit QN range from the RA list. Authoritative — emitted verbatim.", "n"),
         ("   RA confirmed?    REVIEWER fills — 'OK' per verified row, or 'needs fix'.", "n"),
         ("   RA notes         REVIEWER fills — corrections (real facility code, target, name…).", "n"),
         ("", "n"),
@@ -119,25 +122,34 @@ def build():
         ws.cell(row=1, column=c).fill = PatternFill("solid", fgColor="B45309")
     ws.freeze_panes = "A2"
 
-    # Round-6 assignments — mirror of build_hub_apps.py ASSIGNMENT_ROWS + UserRoster (the
-    # deployed hub), tester names from config/UAT-R6-tester-credentials.md. Laguna pretest:
-    # Biñan = Team A (fs-01 Aidan) · Los Baños = Team B (fs-02 Marriz). supervisor_id is the
-    # UR_SUPERVISOR_ID team link, shown for review only — the hub's Assignment record has no
-    # supervisor field, so the generator ignores this column. Keep in sync with build_hub_apps.py.
-    #              supervisor, enum,      name,      facility,    instr,target, ea_name, cluster
+    # Los Baños pre-test assignments — the RA "Unique Question Number for Pre-testing" QN list
+    # mapped onto the R6 roster names (Carl: reuse R6 roster · F1 heads in scope). All in
+    # municipality 040341. Four facilities each get ONE enumerator who does the F1 Facility Head
+    # (key ...000) AND the 10 F3 patients (...001-010); two barangays get an F4 enumerator (the
+    # R6 F4 specialists Aly + Merlyne stay on households). first/last_case_key are the RA's exact
+    # QNs and are AUTHORITATIVE — the generator emits them verbatim (Bayog runs 601..620, heads
+    # end 000, so the old code+001 derivation would be wrong). supervisor_id keeps the R6 teams
+    # (Team A = fs-01 · Team B = fs-02); it's review-only — the hub Assignment record has no
+    # supervisor field, so the generator ignores it.
+    #              supervisor, enum,      name,      facility,    instr,target, ea_name,                              cluster,  first_case_key, last_case_key
     assignments = [
-        ["fs-01", "se-001", "Pat",     "040340001", "F1", 1,  "Binan City Health Office",                  "04034"],
-        ["fs-01", "se-002", "Shan",    "040340002", "F3", 30, "Binan RHU - Patient Survey",                "04034"],
-        ["fs-01", "se-003", "Aly",     "040340005", "F4", 20, "Binan Brgy Malaban - Household Survey",      "04034"],
-        ["fs-01", "se-004", "Marriz",  "040340011", "F1", 1,  "Binan District Hospital - Facility Head",   "04034"],
-        ["fs-02", "se-005", "Aidan",   "040341002", "F3", 30, "Los Banos RHU - Patient Survey",            "04034"],
-        ["fs-02", "se-006", "Merlyne", "040341005", "F4", 20, "Los Banos Brgy Mayondon - Household Survey", "04034"],
+        ["fs-01", "se-001", "Pat",     "040341110", "F1", 1,  "Los Banos Doctors Hospital - Facility Head",     "040341", "040341110000", "040341110000"],
+        ["fs-01", "se-001", "Pat",     "040341110", "F3", 10, "Los Banos Doctors Hospital - Patient",           "040341", "040341110001", "040341110010"],
+        ["fs-01", "se-002", "Shan",    "040341120", "F1", 1,  "Laguna Provincial Hospital Bay - Facility Head", "040341", "040341120000", "040341120000"],
+        ["fs-01", "se-002", "Shan",    "040341120", "F3", 10, "Laguna Provincial Hospital Bay - Patient",       "040341", "040341120001", "040341120010"],
+        ["fs-01", "se-004", "Marriz",  "040341130", "F1", 1,  "Los Banos RHU I - Facility Head",                "040341", "040341130000", "040341130000"],
+        ["fs-01", "se-004", "Marriz",  "040341130", "F3", 10, "Los Banos RHU I - Patient",                      "040341", "040341130001", "040341130010"],
+        ["fs-01", "se-003", "Aly",     "040341100", "F4", 20, "Brgy. Bayog - Household",                        "040341", "040341100601", "040341100620"],
+        ["fs-02", "se-005", "Aidan",   "040341140", "F1", 1,  "St. Jude Hospital - Facility Head",              "040341", "040341140000", "040341140000"],
+        ["fs-02", "se-005", "Aidan",   "040341140", "F3", 10, "St. Jude Hospital - Patient",                    "040341", "040341140001", "040341140010"],
+        ["fs-02", "se-006", "Merlyne", "040341101", "F4", 20, "Brgy. Mayondon - Household",                     "040341", "040341101001", "040341101020"],
     ]
     for i, row in enumerate(assignments, start=2):
         ws.append(row)
-        # derived case-key range (visualisation only): facility_code = col D, target = col F
-        ws.cell(row=i, column=9, value=f'=D{i}&"001"')
-        ws.cell(row=i, column=10, value=f'=D{i}&TEXT(F{i},"000")')
+        # first/last_case_key (cols I/J) are literal 12-digit QNs — keep as text so Excel
+        # doesn't strip the leading zero or coerce to a number.
+        ws.cell(row=i, column=9).number_format = "@"
+        ws.cell(row=i, column=10).number_format = "@"
 
     # column widths (A supervisor_id … L RA notes)
     widths = [14, 14, 16, 14, 11, 12, 42, 10, 15, 15, 14, 36]
@@ -189,8 +201,9 @@ def build():
     # note row
     note_r = last + 2
     nc = ws.cell(row=note_r, column=1,
-                 value="↑ Round-6 assignments (Laguna pretest: Biñan = Team A · Los Baños = Team B). "
-                       "Blue = you fill · grey = auto. Edit / add rows for later rounds.")
+                 value="↑ Los Baños pre-test (RA QN list, municipality 040341; R6 roster names). "
+                       "4 facilities = F1 head + F3 patients · 2 barangays = F4. "
+                       "Blue = you fill · grey = QN range from the RA list (verbatim). Edit / add rows for later rounds.")
     nc.font = Font(name=FONT, italic=True, size=9, color="555555")
     ws.merge_cells(start_row=note_r, start_column=1, end_row=note_r, end_column=12)
 
