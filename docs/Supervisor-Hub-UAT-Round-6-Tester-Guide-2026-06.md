@@ -30,23 +30,27 @@
 | **Relay to CSWeb** (supervisors) | your **CSWeb** account again | when you tap "Relay Collected Interviews to CSWeb" (prompts once, then caches) |
 
 ## §2 Tester roster — 2 teams
+*Real pre-test EAs (Los Baños, municipality `040341`) — updated 2026-07-01 from the RA "Unique Question Number for Pre-testing" list. Each facility enumerator does the **F1 Facility Head + the 10 F3 patients** at their facility; the two barangays are F4 (both operated by Aly).*
+
 | Team | Tester | Username | Role | Instrument / EA |
 |---|---|---|---|---|
 | A | **Aidan** | **fs-01** | Supervisor | Assign · Collect · Relay · reports · map |
-| A | Pat | se-001 | Enumerator | **F1** — Binan City Health Office |
-| A | Shan | se-002 | Enumerator | **F3** — Binan RHU (target 30) |
-| A | Aly | se-003 | Enumerator | **F4** — Binan Brgy Malaban (target 20) |
-| A | Ms. Marriz | se-004 | Enumerator | **F1** — Binan District Hospital |
+| A | Pat | se-001 | Enumerator | **F1 head + F3** — Los Banos Doctors Hospital (F1×1, F3×10) |
+| A | Shan | se-002 | Enumerator | **F1 head + F3** — Laguna Provincial Hospital, Bay (F1×1, F3×10) |
+| A | Marriz | se-004 | Enumerator | **F1 head + F3** — Los Banos RHU I (F1×1, F3×10) |
+| A | Aly | se-003 | Enumerator | **F4** — Brgy. Bayog (target 20) |
 | B | **Ms. Marriz** | **fs-02** | Supervisor | Assign · Collect · Relay · reports · map |
-| B | Aidan | se-005 | Enumerator | **F3** — Los Banos RHU (target 30) |
-| B | Ma'am Merlyne | se-006 | Enumerator | **F4** — Los Banos Brgy Mayondon (target 20) |
+| B | Aidan | se-005 | Enumerator | **F1 head + F3** — St. Jude Hospital (F1×1, F3×10) |
+| B | Aly | se-006 | Enumerator | **F4** — Brgy. Mayondon (target 20) |
 
-> 👥 **Aidan** and **Ms. Marriz** each hold two accounts (testing both roles), on **opposite teams** so neither supervises themselves: Aidan = `fs-01` (Team A sup) + `se-005` (Team B enum); Marriz = `fs-02` (Team B sup) + `se-004` (Team A enum). Bluetooth pairs (can't pair with yourself): Team A = Aidan `fs-01` ↔ Pat / Shan / Aly / Marriz `se-004`; Team B = Marriz `fs-02` ↔ Aidan `se-005` / Merlyne `se-006`.
+> 👥 **Dual accounts** (testing both roles / covering two areas), on **opposite teams** so no one supervises themselves: Aidan = `fs-01` (Team A sup) + `se-005` (Team B enum); Marriz = `fs-02` (Team B sup) + `se-004` (Team A enum); **Aly operates both `se-003` (Bayog) and `se-006` (Mayondon)**. Bluetooth pairs (can't pair with yourself): Team A = Aidan `fs-01` ↔ Pat / Shan / Marriz `se-004` / Aly `se-003`; Team B = Marriz `fs-02` ↔ Aidan `se-005` / Aly `se-006`.
 
-*(Hub login + CSWeb passwords for each row are in `supervisor-hub/config/UAT-R6-tester-credentials.md` — distributed privately, not in this guide.)*
+> 📄 **Exact QNs:** each enumerator's 12-digit case keys are on their **printed assignment sheet** (`supervisor-hub/assignments/out/assignment-sheets.html`); the full list is `assignments/pretest-qn-list.csv`. Type the keys exactly — the tablet rejects a wrong PSGC prefix.
+
+*(Hub login + CSWeb passwords for each account are in the **Credentials** section below.)*
 
 ## §3 Demo data
-Use the EA assignments above; test cases use the **`0403…` Laguna** prefixes. Test data is identifiable and purgeable after the round.
+Use the EA assignments above; all pre-test QNs are **`040341…` (Los Baños, Laguna)** — 4 facility-head (F1) + 40 patient (F3) + 40 household (F4) = **84 cases**. Test data is identifiable and purgeable after the round.
 
 ## §4 Pre-flight (each tester)
 1. CSEntry installed; tablet date/time **automatic**; **Location ON**; **Bluetooth ON** (for the pair flows).
@@ -85,23 +89,23 @@ The hub is how a field team works **with no signal** — assignments and finishe
 
 **CREDENTIALS (channel — full list, per Carl's R6 call: no DMs)** — POSTED to #supervisor-uat (`C0BENS7D4E4`) 2026-06-29.
 
-> ⚠️ **Slack DROPS markdown `|` tables** — the first attempt rendered with empty tables (headers only, no rows). Post credentials as a **monospace code block** (below), never a markdown table. Recommended: make the channel **private** + **rotate all CSWeb passwords after the round** (the CSWeb password is the real security boundary).
+> ⚠️ **Slack DROPS markdown `|` tables** — post credentials as a **monospace code block** (below), never a markdown table. **Rotate all CSWeb passwords after the round** (the CSWeb password is the real security boundary).
 
 🔑 **Round 6 hub credentials** — server `https://csweb.asiansocial.org/csweb/api`
-Each account has **two passwords**: a **CSWeb** password (used once to install via Add Application → from CSWeb; supervisors reuse it to relay) and a **hub login** password (typed every time to open the role menu). Don't share accounts; test data, rotated after the round.
+Each account has **two passwords**: a **CSWeb** password (used once to install via Add Application → from CSWeb; supervisors reuse it to relay) and a **hub login** password (typed every time to open the role menu). Don't share accounts; test data, rotated after the round. *(EA labels below match the Los Baños pre-test roster in §2.)*
 
 ~~~
 TEAM A — supervisor fs-01 (Aidan)
-fs-01   Aidan    Supervisor          hub: uhc26fs01    CSWeb: zxfVR715xEcmNo
-se-001  Pat      F1 Binan City HO    hub: uhc26se001   CSWeb: RMVUyf7pVACkJU
-se-002  Shan     F3 Binan RHU        hub: uhc26se002   CSWeb: TvvRMFTznRHTSX
-se-003  Aly      F4 Binan Malaban    hub: uhc26se003   CSWeb: hgsccdiXFBiDeA
-se-004  Marriz   F1 Binan Dist Hosp  hub: uhc26se004   CSWeb: Fquy3HZrLIR96z
+fs-01   Aidan    Supervisor                hub: uhc26fs01    CSWeb: zxfVR715xEcmNo
+se-001  Pat      F1 head + F3 LB Doctors   hub: uhc26se001   CSWeb: RMVUyf7pVACkJU
+se-002  Shan     F1 head + F3 Laguna Bay   hub: uhc26se002   CSWeb: TvvRMFTznRHTSX
+se-003  Aly      F4 Brgy Bayog             hub: uhc26se003   CSWeb: hgsccdiXFBiDeA
+se-004  Marriz   F1 head + F3 LB RHU I     hub: uhc26se004   CSWeb: Fquy3HZrLIR96z
 
 TEAM B — supervisor fs-02 (Ms. Marriz)
-fs-02   Marriz   Supervisor          hub: uhc26fs02    CSWeb: rqn4fvGKvCZAwU
-se-005  Aidan    F3 Los Banos RHU    hub: uhc26se005   CSWeb: EqMH4UwBzbY6IR
-se-006  Merlyne  F4 Los Banos Mayon  hub: uhc26se006   CSWeb: SKMRbFSHhS8noU
+fs-02   Marriz   Supervisor                hub: uhc26fs02    CSWeb: rqn4fvGKvCZAwU
+se-005  Aidan    F1 head + F3 St. Jude     hub: uhc26se005   CSWeb: EqMH4UwBzbY6IR
+se-006  Aly      F4 Brgy Mayondon          hub: uhc26se006   CSWeb: SKMRbFSHhS8noU
 ~~~
 
-👥 **Aidan** and **Ms. Marriz** each hold two accounts on **opposite teams** so neither supervises themselves. **Bluetooth pairs:** Team A = Aidan `fs-01` ↔ Pat/Shan/Aly/Marriz `se-004`; Team B = Marriz `fs-02` ↔ Aidan `se-005`/Merlyne `se-006`.
+👥 **Aidan** and **Ms. Marriz** each hold two accounts on **opposite teams** so neither supervises themselves; **Aly** operates both `se-003` (Bayog) and `se-006` (Mayondon). **Bluetooth pairs:** Team A = Aidan `fs-01` ↔ Pat/Shan/Marriz `se-004`/Aly `se-003`; Team B = Marriz `fs-02` ↔ Aidan `se-005`/Aly `se-006`.

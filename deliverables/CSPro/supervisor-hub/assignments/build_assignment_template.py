@@ -125,8 +125,9 @@ def build():
     # Los Baños pre-test assignments — the RA "Unique Question Number for Pre-testing" QN list
     # mapped onto the R6 roster names (Carl: reuse R6 roster · F1 heads in scope). All in
     # municipality 040341. Four facilities each get ONE enumerator who does the F1 Facility Head
-    # (key ...000) AND the 10 F3 patients (...001-010); two barangays get an F4 enumerator (the
-    # R6 F4 specialists Aly + Merlyne stay on households). first/last_case_key are the RA's exact
+    # (key ...000) AND the 10 F3 patients (...001-010); Aly operates BOTH F4 barangays on her two
+    # accounts — Bayog = se-003, Mayondon = se-006 (Carl 2026-07-01: Mayondon moved from Merlyne to
+    # Aly but KEPT on the se-006 account, so the two-tablet structure stays). first/last_case_key are the RA's exact
     # QNs and are AUTHORITATIVE — the generator emits them verbatim (Bayog runs 601..620, heads
     # end 000, so the old code+001 derivation would be wrong). supervisor_id keeps the R6 teams
     # (Team A = fs-01 · Team B = fs-02); it's review-only — the hub Assignment record has no
@@ -142,7 +143,7 @@ def build():
         ["fs-01", "se-003", "Aly",     "040341100", "F4", 20, "Brgy. Bayog - Household",                        "040341", "040341100601", "040341100620"],
         ["fs-02", "se-005", "Aidan",   "040341140", "F1", 1,  "St. Jude Hospital - Facility Head",              "040341", "040341140000", "040341140000"],
         ["fs-02", "se-005", "Aidan",   "040341140", "F3", 10, "St. Jude Hospital - Patient",                    "040341", "040341140001", "040341140010"],
-        ["fs-02", "se-006", "Merlyne", "040341101", "F4", 20, "Brgy. Mayondon - Household",                     "040341", "040341101001", "040341101020"],
+        ["fs-02", "se-006", "Aly",     "040341101", "F4", 20, "Brgy. Mayondon - Household",                     "040341", "040341101001", "040341101020"],
     ]
     for i, row in enumerate(assignments, start=2):
         ws.append(row)
