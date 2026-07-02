@@ -38,6 +38,10 @@ interface SectionProps<T extends Record<string, unknown>> {
   // MultiSectionForm uses it to cancel a pending auto-advance so the user is
   // never bounced to the next section mid-answer (#524).
   onInteract?: () => void;
+  // #809: fired when zod validation blocks the submit (schema-required fields
+  // failed). Lets MultiSectionForm surface the aggregate "required questions
+  // unanswered" banner on the inline-errors path too.
+  onInvalid?: () => void;
 }
 
 export function Section<T extends Record<string, unknown>>({
@@ -50,6 +54,7 @@ export function Section<T extends Record<string, unknown>>({
   onAutosave,
   onSubmit,
   onInteract,
+  onInvalid,
 }: SectionProps<T>) {
   const { t } = useTranslation();
   const { locale } = useLocale();
@@ -129,7 +134,10 @@ export function Section<T extends Record<string, unknown>>({
     };
   }, [methods, onAutosave, onInteract]);
 
-  const submit = methods.handleSubmit((values) => onSubmit(values as unknown as T));
+  const submit = methods.handleSubmit(
+    (values) => onSubmit(values as unknown as T),
+    () => onInvalid?.(), // #809
+  );
 
   useEffect(() => {
     if (!submitRef) return;

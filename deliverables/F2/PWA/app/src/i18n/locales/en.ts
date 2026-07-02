@@ -59,6 +59,7 @@ export const en = {
     tokenAccepted: 'Token accepted for facility {{facility}}. Pick yourself from the roster below.',
   },
   navigator: {
+    requiredIncomplete: 'Some required (*) questions are unanswered. Please complete them to continue.',
     previous: 'Previous',
     next: 'Next',
     submit: 'Submit',
@@ -90,6 +91,33 @@ export const en = {
     blockingError: 'Please resolve the highlighted issue above before submitting.',
   },
   consent: {
+    heading: 'Informed Consent — Please Read Carefully',
+    infoHeading: 'Part I — Information about the study',
+    intro:
+      'Before answering the survey, please read the information below. If you understand and agree to participate, you will be asked to confirm your consent at the end of this section. Your consent confirmation is recorded with your survey response.',
+    infoStudy:
+      'The Asian Social Project Services, Inc. (ASPSI) invites you to participate in a study on Universal Health Care (UHC). This study aims to generate evidence on the overall experience of healthcare service providers and the general public to support continuous monitoring, evaluation, and learning of the implementation of the UHC Act, its Implementing Rules and Regulations (IRR), and packages of programs like the Yaman ng Kalusugan Program (YAKAP), No Balance Billing (NBB), Zero Balance Billing (ZBB), Bagong Urgent Care and Ambulatory Services (BUCAS) centers, and Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT). The Department of Health funded this study. Your progress is saved automatically on this device — you can pause and continue at any time before submitting.',
+    infoPrivacy:
+      'We are committed to protecting your privacy. If you choose to participate, we will never share your information outside of the study team. We will never include your name in information shared with the government or in any reports. Your name will be kept separately from your answers in a private, secure location. For this survey, we also ask that you respect the privacy of your colleagues and patients and do not share anything you discuss here. With all research, there is a small chance that someone else might get to see your data. We try our best to prevent that, but if it happens, we will tell you as soon as possible.',
+    infoBenefits:
+      "Aside from this, there are no other risks to you if you take part in this study. As a benefit of the research, the knowledge gained may help the government and DOH better support your healthcare needs. Participating in this survey will also enter you into a raffle, giving you a chance to win PhP 1,000 as a way of thanking you for the time you have shared with us.",
+    infoRights:
+      'You are free to decline participation or to stop at any time before submitting the form. Choosing not to participate will not result in any penalty, and you will not have to pay anything to take part in this study.',
+    contactsHeading:
+      'If you have concerns or questions about your rights as a participant, you can contact:',
+    contactsBody:
+      'Single Joint Research Ethics Board (SJREB) at the Philippines Department of Health\nEmail: sjreb.doh@gmail.com\nNational Tel: (02) 651-7800 local 1328\nTel: +63 936 992 5513\n\nDepartment of Health\nName: Lindsley Jeremiah D. Villarante\nEmail: ldvillarante@doh.gov.ph\nTel: +63 (02) 8651-7800 local 1432\n\nAsian Social Project Services, Inc.\nName: Paulyn Jean A. Claro\nEmail: aspsiglobal@gmail.com\nTel: +63 917 819 6884',
+    confirmHeading: 'Consent confirmation',
+    confirmPrompt:
+      'Please confirm whether you have read and understood the information above and whether you agree to participate in this survey. You must confirm to proceed.',
+    agreeOption:
+      'I have read and understood the information above. I voluntarily agree to participate in this survey.',
+    declineOption: 'I do not wish to participate.',
+    continueButton: 'Continue',
+    declinedHeading: 'Thank you for your time',
+    declinedBody:
+      'You chose not to participate in this survey. No survey questions will be shown and no response has been recorded on this device. If this was a mistake, you can start over below.',
+    startOver: 'Start over',
     gps_disclosure:
       'When you submit, your device location will be recorded so DOH can map responses to facilities. If you decline the location prompt, your answers are still submitted without coordinates.',
   },
