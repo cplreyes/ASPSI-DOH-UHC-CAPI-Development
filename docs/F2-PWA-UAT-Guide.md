@@ -1,7 +1,7 @@
 # F2 PWA — UAT Guide for ASPSI Staff
 
 **Version:** v1.1.0 UAT Round 1
-**Staging URL:** https://5466a539.f2-pwa-staging.pages.dev
+**Staging URL:** https://f2-pwa-staging.pages.dev
 **Bug Report Link:** https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/new?template=uat_feedback.yml
 **UAT Coordinator:** Carl Patrick Reyes (carlpatricklreyes@gmail.com)
 

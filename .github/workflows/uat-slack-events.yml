@@ -22,7 +22,7 @@ jobs:
       LABEL_NAME: ${{ github.event.label.name }}
       MILESTONE_TITLE: ${{ github.event.milestone.title }}
       MILESTONE_URL: ${{ github.event.milestone.html_url }}
-      STAGING_URL: https://5466a539.f2-pwa-staging.pages.dev
+      STAGING_URL: https://f2-pwa-staging.pages.dev
       PROJECT_URL: https://github.com/users/cplreyes/projects/7
 
     steps:
