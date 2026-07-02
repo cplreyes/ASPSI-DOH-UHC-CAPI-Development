@@ -144,6 +144,10 @@ export function MultiSectionForm({
   // #587: inline cross-field error shown when the respondent tries to leave a
   // section that has an error-severity cross-field finding (e.g. tenure ≥ age−20).
   const [crossFieldError, setCrossFieldError] = useState('');
+  // #809: aggregate "required questions unanswered" banner. Set when a Next
+  // attempt is blocked (runtime completeness gate or zod-invalid); cleared on
+  // field interaction and on section navigation.
+  const [requiredError, setRequiredError] = useState('');
   const submitRef = useRef<(() => void) | null>(null);
   const savedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   // Pending auto-advance timer (#524). Held in a ref so a user interaction can
@@ -211,6 +215,7 @@ export function MultiSectionForm({
   useEffect(() => {
     entryStatusRef.current = sectionStatuses[index] ?? 'empty';
     setCrossFieldError(''); // #587: don't carry a section's cross-field error across nav
+    setRequiredError(''); // #809: same for the required-fields banner
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
 
@@ -250,6 +255,7 @@ export function MultiSectionForm({
     // #587: clear a shown cross-field error the moment the user edits a field —
     // it re-evaluates on the next advance attempt.
     setCrossFieldError('');
+    setRequiredError(''); // #809
   }, []);
 
   const showLockMsg = () => {
@@ -278,6 +284,24 @@ export function MultiSectionForm({
     // so the user stays on the section and the SectionTree's X icon
     // surfaces which questions remain.
     if (getSectionStatus(SECTIONS[index]!, next) !== 'complete') {
+      // #809: this block used to be silent (the SectionTree X icon is
+      // invisible on mobile). Surface the aggregate banner and scroll to the
+      // first unanswered required question.
+      setRequiredError(t('navigator.requiredIncomplete'));
+      const missing = visibleItems.find((it) => {
+        if (!it.required) return false;
+        if (it.type === 'multi-field' && it.subFields) {
+          return it.subFields.some((sf) => sf.required !== false && !hasValue(next[sf.id]));
+        }
+        return !hasValue(next[it.id]);
+      });
+      const targetId =
+        missing?.type === 'multi-field' && missing.subFields
+          ? missing.subFields.find((sf) => sf.required !== false && !hasValue(next[sf.id]))?.id
+          : missing?.id;
+      if (targetId) {
+        document.getElementById(targetId)?.scrollIntoView?.({ block: 'center', behavior: 'smooth' });
+      }
       return;
     }
     // #587: fire the existing error-severity cross-field gate inline at section
@@ -295,6 +319,7 @@ export function MultiSectionForm({
       return;
     }
     setCrossFieldError('');
+    setRequiredError('');
     let nextIndex = index + 1;
     while (nextIndex < SECTIONS.length && !shouldShowSection(SECTIONS[nextIndex]!.id, next)) {
       nextIndex++;
@@ -530,6 +555,17 @@ export function MultiSectionForm({
             </div>
           ) : null}
 
+          {/* #809: aggregate required-fields banner — sticky header, so it is
+              visible on mobile (swipe nav) and desktop (arrows) alike */}
+          {requiredError ? (
+            <div
+              role="alert"
+              className="border-t border-destructive/30 bg-destructive/10 px-4 py-1.5 text-xs text-destructive"
+            >
+              {requiredError}
+            </div>
+          ) : null}
+
           <div className="mx-auto max-w-xl px-6 pb-2">
             <h2 className="font-serif text-xl font-medium tracking-tight">
               {t('review.sectionHeading', {
@@ -557,6 +593,7 @@ export function MultiSectionForm({
             submitRef={submitRef}
             onAutosave={handleSectionAutosave}
             onInteract={handleInteract}
+            onInvalid={() => setRequiredError(t('navigator.requiredIncomplete'))}
             onSubmit={handleSectionValid}
           />
         </div>

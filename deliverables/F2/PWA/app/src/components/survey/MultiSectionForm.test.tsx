@@ -335,6 +335,14 @@ describe('<MultiSectionForm>', () => {
     await waitFor(() =>
       expect(screen.getByRole('heading', { name: /Section B/ })).toBeInTheDocument(),
     );
+
+    // #809: the block is no longer silent — the aggregate banner explains why.
+    // (getAllByRole: inline zod field errors also carry role="alert".)
+    expect(
+      screen
+        .getAllByRole('alert')
+        .some((el) => /required \(\*\) questions are unanswered/i.test(el.textContent ?? '')),
+    ).toBe(true);
   });
 
   it('#524: continued interaction cancels a pending auto-advance (no mid-answer bounce)', async () => {

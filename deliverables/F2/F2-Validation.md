@@ -33,6 +33,7 @@ Sourced from the **April 20, 2026 PDF** (124 actual items, numbered Q1–Q125 wi
 - **Regex on short-text** only where a structured value is expected (none in F2 body — no phone, no email beyond Google sign-in auto-capture).
 - **"Other, specify" follow-ups** are standalone short-text fields triggered by the parent single/multi-select. Required when the parent equals **any** of its specify-other options — an item may carry more than one (e.g. Q13–Q24 have both "Yes, specify other reason ___" and "No, specify other reason ___" feeding one shared `_other` field). The generated `.superRefine` gates on all of them, not just the first (R3 #302, 2026-05-19).
 - **Multi-select affordance** — every `multi`-type item renders a "Select all that apply." hint above its options so respondents know multiple answers are permitted (R3 #313, 2026-05-19; applied generically, not a per-question list).
+- **Blocked-advance feedback (R6 #809, 2026-07-02)** — when Next is blocked (required questions unanswered, or field-level validation failed), the PWA shows a persistent sticky-header alert "Some required (*) questions are unanswered. Please complete them to continue." and scrolls to the first unanswered required question. Previously the block was silent outside the desktop section tree.
 - **Consent (Block 5)** is the single hard gate. Declining routes to thank-you; everything else is optional.
 - **Q108 gap** — Apr 20 PDF skips Q108 (editorial artifact). Builder must *not* emit a Q108 field. Flagged to ASPSI for confirmation.
 
@@ -189,7 +190,8 @@ Visibility matrix for the ZBB/NBB triples:
 | Q68 | C | long-text | shown only if Q67 = No |
 | Q69 (ZBB) | C | single | shown only if facility_type = DOH-retained |
 | **Q70 (NBB)** | C | **single** | **NEW in Apr 20** — shown only if facility_type ∈ {DOH-retained, Public non-DOH-retained} |
-| Q71 | C | long-text | shown only if Q69=Yes OR Q70=Yes |
+| Q71a | C | long-text | shown only if Q69=Yes (R6 #817 split — paper 71a, ZBB) |
+| Q71b | C | long-text | shown only if Q70=Yes (R6 #817 split — paper 71b, NBB) |
 | Q72 | N | single | — (drives SEC-G-Q72 gate) |
 | Q73 | C | long-text | shown only if Q72 = No |
 | Q74 | N | long-text | — |

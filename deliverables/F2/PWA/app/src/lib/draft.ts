@@ -7,7 +7,11 @@ export const DRAFT_ID_KEY = 'f2_current_draft_id';
 // short-circuit to status='submitted' on refresh, until the user
 // explicitly starts a new survey.
 export const COMPLETED_CSID_KEY = 'f2_completed_csid';
-export const LOCAL_SPEC_VERSION = '2026-04-17-m1';
+// R6 fix wave 2026-07-02 (#817 Q71a/Q71b split + Section F option additions):
+// lexicographically later than '2026-04-17-m1' so post-split submissions are
+// demarcated by spec_version. Do NOT raise the backend's
+// min_accepted_spec_version until the offline queue drains.
+export const LOCAL_SPEC_VERSION = '2026-07-02-r6';
 
 export interface EnrollmentInfo {
   hcw_id: string;
@@ -29,8 +33,28 @@ export function getOrCreateDraftId(): string {
   return fresh;
 }
 
+// R6 #820/#811: two Q5 role options and Q2 "Project" were RENAMED. Choice
+// values derive from the English label, so in-flight drafts hold values that
+// are no longer in the regenerated enums — the resumed respondent's answer
+// would read as unanswered and role-gated sections would mis-route. Migrate
+// on load; harmless once no pre-R6 drafts remain.
+const RENAMED_VALUES: Record<string, Record<string, string>> = {
+  Q2: { Project: 'Project-based' },
+  Q5: {
+    'Nutrition action officer/ coordinator':
+      'Nutrition-Dietician or Nutrition Action Officer/Coordinator',
+    'Pharmacist/Dispenser': 'Pharmacist/Dispenser or Assistant Pharmacist',
+  },
+};
+
 export async function loadDraft(id: string): Promise<DraftRow | undefined> {
-  return db.drafts.get(id);
+  const row = await db.drafts.get(id);
+  if (!row) return row;
+  for (const [field, map] of Object.entries(RENAMED_VALUES)) {
+    const v = row.values[field];
+    if (typeof v === 'string' && map[v] !== undefined) row.values[field] = map[v];
+  }
+  return row;
 }
 
 export async function saveDraft(

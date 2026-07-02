@@ -35,7 +35,8 @@ function loadConditionalItemKeys(): Set<string> {
       }
       if (/^\s*\}/.test(line)) currentSection = null;
       if (!currentSection) continue;
-      const itemMatch = line.match(/^\s+(Q\d+(?:_\d+)?)\s*:\s*\(/);
+      // [a-z]? — suffixed ids like Q71a/Q71b (R6 #817) must be picked up too.
+      const itemMatch = line.match(/^\s+(Q\d+[a-z]?(?:_\d+)?)\s*:\s*\(/);
       if (itemMatch) keys.add(`${currentSection}.${itemMatch[1]}`);
     }
     return keys;
@@ -458,13 +459,20 @@ const EXCLUSIVE_VALUES = new Set([
   // R3 #312 (Q125 post-facility plans): selecting "Retire" clears the
   // other plan options. Per Myra 2026-05-21.
   'Retire',
+  // R6 #812 (Q32 YAKAP package): mutually exclusive with the individual
+  // options — reverses the R3 #17 select-all behavior.
+  'All of the above',
+  // R6 #815/#823 (Section F referrals): cannot coexist with actual referral
+  // methods on the multis; inert on single-selects.
+  'Not applicable',
 ]);
 
 // Multi-select option values that should auto-select all other non-exclusive
-// non-otherSpecify options when checked.
-const SELECT_ALL_VALUES = new Set([
-  'All of the above',
-]);
+// non-otherSpecify options when checked. Empty since R6 #812 moved "All of
+// the above" into EXCLUSIVE_VALUES; the isSelectAll machinery (types.ts /
+// emit-items.ts / Question.helpers.ts) is retained in case a true select-all
+// option is ever reintroduced.
+const SELECT_ALL_VALUES = new Set<string>([]);
 
 function parseChoiceList(text: string, hasOtherSpecify: boolean): Choice[] | undefined {
   if (!text) return undefined;

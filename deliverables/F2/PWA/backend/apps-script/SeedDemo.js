@@ -219,7 +219,7 @@ function _demoHCWs() {
       facility_id: "DEMO-FAC-RHU-QC-1",
       last: "Garcia",
       first: "Roberto",
-      role: "Pharmacist/Dispenser",
+      role: "Pharmacist/Dispenser or Assistant Pharmacist",
       sex: "Male",
       age: 29,
       status: "enrolled",

@@ -590,3 +590,30 @@ describe('parseSpec (integration)', () => {
     expect(q15?.choices?.map((c) => c.label)).toEqual(q13?.choices?.map((c) => c.label));
   });
 });
+
+// R6 #812/#815 regression guard: a future refactor must not silently restore
+// the #17 select-all behavior on "All of the above" or drop the NA exclusivity.
+describe('R6 exclusivity flags (#812/#815)', () => {
+  const md = [
+    '## Section C — YAKAP',
+    '',
+    '| pdf_q | legacy_q | type | required | label (verbatim) | choices / notes | skip | gf_risk |',
+    '|---|---|---|---|---|---|---|---|',
+    "| Q32 | Q28 | multi | Y | Which are included? | Pap smear · All of the above · I don't know · Not applicable | — | OK |",
+  ].join('\n');
+
+  it('parses "All of the above" as exclusive, NOT select-all (#812)', () => {
+    const result = parseSpec(md);
+    const q32 = result.sections[0].items[0];
+    const all = q32.choices!.find((c) => c.value === 'All of the above')!;
+    expect(all.isExclusive).toBe(true);
+    expect(all.isSelectAll).toBeUndefined();
+  });
+
+  it('parses "Not applicable" as exclusive (#815/#823)', () => {
+    const result = parseSpec(md);
+    const q32 = result.sections[0].items[0];
+    const na = q32.choices!.find((c) => c.value === 'Not applicable')!;
+    expect(na.isExclusive).toBe(true);
+  });
+});

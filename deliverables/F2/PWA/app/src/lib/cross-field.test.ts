@@ -94,7 +94,7 @@ describe('evaluateCrossField', () => {
   });
 
   it('flags GATE-05 when a pharmacist has answered Section C items', () => {
-    const out = evaluateCrossField({ Q5: 'Pharmacist/Dispenser', Q31: 'Yes' });
+    const out = evaluateCrossField({ Q5: 'Pharmacist/Dispenser or Assistant Pharmacist', Q31: 'Yes' });
     expect(out.map((w) => w.id)).toContain('GATE-05');
   });
 
@@ -103,16 +103,17 @@ describe('evaluateCrossField', () => {
     expect(out.map((w) => w.id)).not.toContain('GATE-05');
   });
 
-  // #539: these two roles were removed from the C/D set; the data-quality gate
-  // shares that set, so it must now flag C/D data from either of them.
+  // #539 removed two roles from the C/D set; the data-quality gate shares that
+  // set. R6 #820 restores the (renamed) Nutrition-Dietician role — its Section C
+  // data is legitimate again; Physician assistant stays flagged.
   it('#539: flags GATE-05 for Physician assistant who answered Section C', () => {
     const out = evaluateCrossField({ Q5: 'Physician assistant', Q31: 'Yes' });
     expect(out.map((w) => w.id)).toContain('GATE-05');
   });
 
-  it('#539: flags GATE-05 for Nutrition action officer/coordinator who answered Section C', () => {
-    const out = evaluateCrossField({ Q5: 'Nutrition action officer/ coordinator', Q31: 'Yes' });
-    expect(out.map((w) => w.id)).toContain('GATE-05');
+  it('R6 #820 (supersedes #539): no GATE-05 for Nutrition-Dietician who answered Section C', () => {
+    const out = evaluateCrossField({ Q5: 'Nutrition-Dietician or Nutrition Action Officer/Coordinator', Q31: 'Yes' });
+    expect(out.map((w) => w.id)).not.toContain('GATE-05');
   });
 
   it('warning has a human-readable message and lists involved fields', () => {

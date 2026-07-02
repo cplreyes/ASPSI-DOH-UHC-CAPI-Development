@@ -22,6 +22,11 @@ const SECTION_G_ROLES = new Set(['Physician/Doctor', 'Dentist']);
 // #539: 'Physician assistant' and 'Nutrition action officer/ coordinator' were
 // in the R2-#114 set; the new spec excludes both. They leaked C/D/E to those
 // two personas (Aidan re-test 2026-06-16) until removed here.
+// R6 #820 (2026-07-02) SUPERSEDES #539 for the Nutrition role only: the role
+// is renamed 'Nutrition-Dietician or Nutrition Action Officer/Coordinator'
+// and routes with Administrator/Nurse/Midwife again (C/D/E1/E2; still not G)
+// — the paper's own C/D/E1 gates include nutritionists-dieticians.
+// 'Physician assistant' stays excluded.
 // Exported so cross-field.ts (the C/D data-quality gate, GATE-05) shares one
 // source of truth and can't drift from the section gate — the drift that let
 // #539 slip in.
@@ -31,8 +36,15 @@ export const SECTION_CDE_ROLES = new Set([
   'Nurse',
   'Midwife',
   'Dentist',
+  // R6 #820: routed like Administrator/Nurse/Midwife (supersedes #539 for
+  // this one role).
+  'Nutrition-Dietician or Nutrition Action Officer/Coordinator',
 ]);
-const SECTION_E_ROLES = new Set([...SECTION_CDE_ROLES, 'Pharmacist/Dispenser']);
+const SECTION_E_ROLES = new Set([
+  ...SECTION_CDE_ROLES,
+  // R6 #820: renamed from 'Pharmacist/Dispenser'.
+  'Pharmacist/Dispenser or Assistant Pharmacist',
+]);
 
 const ROLES_WITH_SPECIALTY = new Set([
   'Administrator',
@@ -41,6 +53,9 @@ const ROLES_WITH_SPECIALTY = new Set([
   'Nurse',
   'Midwife',
   'Dentist',
+  // R6 #820: same Section A treatment as Administrator/Nurse/Midwife (the
+  // Q6 choice filter still limits non-MD roles to the role-agnostic options).
+  'Nutrition-Dietician or Nutrition Action Officer/Coordinator',
 ]);
 
 // Q6 specialty list filter — roles whose specialties match the medical-doctor list (Q6's
@@ -140,9 +155,14 @@ const predicates: Record<string, Record<string, Predicate>> = {
     Q67: (v) => isYes(v.Q66),
     Q68: (v) => v.Q67 === 'No',
     Q70: (v) => isYes(v.Q69),
-    Q71: (v) => isYes(v['Q69']) || isYes(v['Q70']),
+    // R6 #817: Q71 split into the paper's 71a/71b — one box per parent policy.
+    Q71a: (v) => isYes(v.Q69),
+    Q71b: (v) => isYes(v.Q70),
     Q73: (v) => v.Q72 === 'No',
-    Q88: (v) => isYes(v.Q87),
+    // R6 #821: the paper's Q87 "No → Q90" skip is deliberately removed (UAT
+    // lead) — Q88 (NBB) is asked regardless of Q87's answer, and Q88's own
+    // answer drives the skip: Q89 keeps the OR gate below, so Q87=No &
+    // Q88=No lands on Q90.
     Q89: (v) => isYes(v['Q87']) || isYes(v['Q88']),
   },
   H: {

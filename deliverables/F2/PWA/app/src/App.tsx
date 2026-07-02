@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 const AdminApp = lazy(() => import('@/admin/App'));
 import { MultiSectionForm } from '@/components/survey/MultiSectionForm';
 import { EnrollmentScreen } from '@/components/enrollment/EnrollmentScreen';
+import { ConsentScreen } from '@/components/survey/ConsentScreen';
 import { PendingCount } from '@/components/sync/PendingCount';
 import { LanguageSwitcher } from '@/components/i18n/LanguageSwitcher';
 import { BroadcastBanner } from '@/components/chrome/BroadcastBanner';
@@ -43,7 +44,7 @@ const SyncPage = lazy(() =>
   import('@/components/sync/SyncPage').then((m) => ({ default: m.SyncPage })),
 );
 
-type Status = 'loading' | 'editing' | 'submitted' | 'submit_failed';
+type Status = 'loading' | 'consent' | 'editing' | 'declined' | 'submitted' | 'submit_failed';
 type View = 'form' | 'sync';
 
 const APP_VERSION = __APP_VERSION__;
@@ -172,8 +173,12 @@ function AppShell() {
     const id = getOrCreateDraftId();
     setDraftId(id);
     void loadDraft(id).then((row) => {
-      setInitialValues((row?.values as FormValues | undefined) ?? {});
-      setStatus('editing');
+      const values = (row?.values as FormValues | undefined) ?? {};
+      setInitialValues(values);
+      // #808: consent is a per-case gate. Resumed drafts that already carry
+      // consent_given skip it (a mid-survey refresh must not re-prompt);
+      // fresh cases land on the ConsentScreen before Section A.
+      setStatus(values['consent_given'] === 1 ? 'editing' : 'consent');
     });
   }, [authStatus]);
 
@@ -242,11 +247,10 @@ function AppShell() {
       // Auto-inject the active locale so the harmonization ETL can stratify
       // by language without needing the user to declare it explicitly. See
       // codebook §13 (survey_language) and §15.E.
-      // §15.B: persist explicit consent. F2 has no separate consent flag —
-      // reaching submit means the respondent saw the consent disclosure and
-      // chose to submit, so consent_given = 1 (Yes), for audit parity with the
-      // F1/F3/F4 CONSENT_GIVEN field.
-      const valuesWithMeta: FormValues = { ...values, survey_language: locale, consent_given: 1 };
+      // §15.B: consent_given (+ consent_timestamp) now arrives in `values`,
+      // written by the ConsentScreen gate before Section A opens (#808) — no
+      // longer assumed at submit time.
+      const valuesWithMeta: FormValues = { ...values, survey_language: locale };
       await saveDraft(draftId, valuesWithMeta, enrollmentInfo);
       // Capture GPS at the click moment (5s timeout, all failures map to null).
       // Per spec §9 the disclosure is shown on the review screen near submit.
@@ -298,6 +302,22 @@ function AppShell() {
     setInitialValues({});
     setSubmitError(null);
     setPendingValuesRef(null);
+    // #808: every new case (a new respondent on the same enrolled device)
+    // re-consents before Section A.
+    setStatus('consent');
+  };
+
+  // #808: record affirmative consent into the case values before Section A
+  // opens. consent_given=1 keeps audit parity with the F1/F3/F4 CONSENT_GIVEN
+  // field; consent_timestamp (epoch ms) documents when the respondent agreed.
+  const handleConsentAgree = () => {
+    const withConsent: FormValues = {
+      ...initialValues,
+      consent_given: 1,
+      consent_timestamp: Date.now(),
+    };
+    setInitialValues(withConsent);
+    if (draftId && enrollmentInfo) void saveDraft(draftId, withConsent, enrollmentInfo);
     setStatus('editing');
   };
 
@@ -343,6 +363,18 @@ function AppShell() {
         </Suspense>
       ) : status === 'loading' ? (
         <p className="p-6 text-sm text-muted-foreground">{t('chrome.loading')}</p>
+      ) : status === 'consent' ? (
+        <ConsentScreen onAgree={handleConsentAgree} onDecline={() => setStatus('declined')} />
+      ) : status === 'declined' ? (
+        <section className="mx-auto flex max-w-xl flex-col gap-4 p-6">
+          <h2 className="font-serif text-2xl font-medium tracking-tight">
+            {t('consent.declinedHeading')}
+          </h2>
+          <p className="text-sm text-muted-foreground">{t('consent.declinedBody')}</p>
+          <div>
+            <Button onClick={handleStartNewSurvey}>{t('consent.startOver')}</Button>
+          </div>
+        </section>
       ) : status === 'submitted' ? (
         <section className="mx-auto flex max-w-xl flex-col gap-4 p-6">
           <h2 className="font-serif text-2xl font-medium tracking-tight">

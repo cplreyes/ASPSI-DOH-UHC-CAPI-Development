@@ -48,14 +48,31 @@ async function seedEnrollment() {
   });
 }
 
+/**
+ * #808: the per-case ConsentScreen now gates Section A. Click through it —
+ * agree + continue — the way a consenting respondent would.
+ */
+async function passConsent(user: ReturnType<typeof userEvent.setup>) {
+  await screen.findByTestId('consent-agree');
+  await user.click(screen.getByTestId('consent-agree'));
+  await user.click(screen.getByTestId('consent-continue'));
+}
+
 describe('<App>', () => {
   beforeEach(async () => {
     if (!db.isOpen()) await db.open();
     await seedEnrollment();
+    // #808: consent state rides in the draft (consent_given) and the draft id
+    // rides in localStorage; clear both so every test starts at the consent
+    // gate deterministically.
+    await db.drafts.clear();
+    localStorage.clear();
   });
 
-  it('renders Section A heading after loading', async () => {
+  it('renders Section A heading after loading (post-consent — #808)', async () => {
+    const user = userEvent.setup();
     render(<App />);
+    await passConsent(user);
     expect(
       await screen.findByRole('heading', {
         name: /Section A — Healthcare Worker Profile/,
@@ -63,8 +80,41 @@ describe('<App>', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders at least one Section A question after loading', async () => {
+  it('#808: consent gate appears before Section A; declining shows the declined screen', async () => {
+    const user = userEvent.setup();
     render(<App />);
+    expect(await screen.findByTestId('consent-agree')).toBeInTheDocument();
+    expect(
+      screen.queryByRole('heading', { name: /Section A — Healthcare Worker Profile/ }),
+    ).not.toBeInTheDocument();
+    await user.click(screen.getByTestId('consent-decline'));
+    await user.click(screen.getByTestId('consent-continue'));
+    expect(
+      await screen.findByRole('heading', { name: /thank you for your time/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole('heading', { name: /Section A — Healthcare Worker Profile/ }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('#808: agreeing records consent_given + consent_timestamp into the draft', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await passConsent(user);
+    await screen.findByLabelText(/What is your sex at birth/);
+    await waitFor(async () => {
+      const draftId = localStorage.getItem('f2_current_draft_id');
+      expect(draftId).toBeTruthy();
+      const row = await db.drafts.get(draftId!);
+      expect(row?.values).toMatchObject({ consent_given: 1 });
+      expect(typeof row?.values['consent_timestamp']).toBe('number');
+    });
+  });
+
+  it('renders at least one Section A question after loading', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await passConsent(user);
     expect(await screen.findByLabelText(/What is your sex at birth/)).toBeInTheDocument();
   });
 
@@ -72,6 +122,7 @@ describe('<App>', () => {
     const user = userEvent.setup();
 
     const first = render(<App />);
+    await passConsent(user);
     await screen.findByLabelText(/What is your sex at birth/);
 
     await user.click(screen.getByLabelText('Female'));
@@ -126,6 +177,9 @@ describe('<App>', () => {
     await screen.findByRole('button', { name: /start new survey/i });
 
     await user.click(screen.getByRole('button', { name: /start new survey/i }));
+
+    // #808: a new case re-consents before Section A.
+    await passConsent(user);
 
     await waitFor(() =>
       expect(
