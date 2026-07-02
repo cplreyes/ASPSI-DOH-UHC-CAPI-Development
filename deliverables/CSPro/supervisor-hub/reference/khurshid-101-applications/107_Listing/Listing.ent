@@ -1,0 +1,18 @@
+﻿[CSPro Application]
+Version=CSPro 7.7
+Label=LISTING
+Name=LISTING
+AppType=DataEntry
+OperatorID=No
+ShowEndCaseDialog=No
+CAPI=Yes
+[AppCode]
+File=.\Listing.ent.apc
+[Message]
+File=.\Listing.ent.mgf
+[Help]
+File=.\Listing.ent.qsf
+[Forms]
+File=.\Listing.fmf
+[Dictionary Types]
+Dict-Type=.\Listing.dcf,Input,.\Listing.fmf

@@ -59,6 +59,9 @@ FORM_W = 806
 # Case-start metadata form removed 2026-06-12 — all its items (interviewer ID,
 # timestamps, AAPOR, consent, HH listing) deleted; LANGUAGE_USED is off-form
 # (set in the QUESTIONNAIRE_NUMBER postproc). The FORM_PLAN no longer emits it.
+FIELD_CONTROL_CASE_START = {
+    "BREAKOFF",   # #515: break-off control on its own case-start screen
+}
 FIELD_CONTROL_CASE_END = {
     "SURVEY_TEAM_LEADER_S_NAME", "ENUMERATOR_S_NAME",
     "FIELD_VALIDATED_BY", "FIELD_EDITED_BY",
@@ -67,7 +70,9 @@ FIELD_CONTROL_CASE_END = {
 }
 
 
-FORM_PLAN = [
+_FORM_PLAN_STATIC = [
+    ("Interview status",   # #515: break-off control, first form (case-tree reachable)
+     [("FIELD_CONTROL", {"names": FIELD_CONTROL_CASE_START})]),
     ("FC Geographic ID + HH GPS Capture",
      # Single-number redesign (2026-06-11): household region/province/city are
      # derived from QUESTIONNAIRE_NUMBER (off-form); show the read-only PSGC
@@ -82,6 +87,11 @@ FORM_PLAN = [
      [("C_HOUSEHOLD_ROSTER", None)]),
     ("C. HH Private Insurance Gate (Q47)",
      [("C_HH_PRIVATE_INS_GATE", None)]),
+    # #525/#612/#613: Q48-Q50 private-insurance block is a SEPARATE per-member pass
+    # asked only when Q47 = Yes (the Q47 postproc skips this whole form to Q51 otherwise).
+    # Member names are piped from the household roster (generate_qsf), not re-entered.
+    ("C. Private Insurance Q48-Q50 - REPEATING (Q47=Yes; piped names)",
+     [("C_PRIVATE_INS_ROSTER", None)]),
     ("D. UHC Awareness",
      [("D_UHC_AWARENESS", None)]),
     ("E. YAKAP / Konsulta",
@@ -116,8 +126,60 @@ FORM_PLAN = [
     # photographs the completed visit, and the survey no longer opens with a
     # camera prompt. HH GPS stays early so it auto-locks while the form is worked.
     ("Case Verification Photo",
-     [("REC_CASE_VERIFICATION", None)]),
+     # VERIFICATION_PHOTO_IMAGE is a binary Image item (off-form by rule — binary
+     # items can't be placed on a form); the on-form trigger CAPTURE_VERIFICATION_PHOTO
+     # drives capture into it. Only the trigger + filename label go on the form.
+     [("REC_CASE_VERIFICATION", {"exclude": ["VERIFICATION_PHOTO_IMAGE"]})]),
 ]
+
+# Binary/computed items deliberately kept OFF every form (so the orphan check below
+# does not flag them). VERIFICATION_PHOTO_IMAGE holds the synced photo bytes.
+_OFF_FORM_ITEMS = {"VERIFICATION_PHOTO_IMAGE", "CASE_DISPOSITION"}  # #561: off-form completeness sentinel
+
+# Marker entry in _FORM_PLAN_STATIC that build_form_plan expands into the column-wise
+# Section C forms (kept as a normal record entry so the rest of the plan reads naturally).
+_SECTION_C_MARKER = [("C_HOUSEHOLD_ROSTER", None)]
+
+
+def _short_item_label(it):
+    lab = (it["labels"][0]["text"] if it.get("labels") else it["name"])
+    return lab.replace("\n", " ").replace("\r", " ").strip()[:60]
+
+
+def _section_c_columnwise(records_by_name):
+    """Section C as the 'Household Characteristic Target Interface' (spike-validated
+    2026-06-26): ONE roster form per question so CSEntry traverses COLUMN-WISE — each
+    question is asked for ALL household members before the next. The first form carries
+    MEMBER_LINE_NO (occurrence control, endgroup at Q19) + the Q30 name list; every other
+    C_HOUSEHOLD_ROSTER item gets its own roster form. Conditional questions (Q36/Q37/Q38,
+    Q45.1/Q46/Q45.2, specify-text) are gated per-occurrence in generate_apc (skip to next),
+    so a non-applicable member is skipped on that question's screen."""
+    items = records_by_name["C_HOUSEHOLD_ROSTER"]["items"]
+    # First roster form ESTABLISHES the member set: MEMBER_LINE_NO (occurrence control) +
+    # Q30_NAME + Q31_PRESENT. Q31 (a coded, auto-advancing field) is the last field so the
+    # occurrences commit and persist across the downstream one-per-form column-wise screens
+    # (a name-only first form loses occurrences 2+ on exit — desktop-CSEntry proven 2026-06-26).
+    _establish = ["MEMBER_LINE_NO", "Q30_NAME", "Q31_PRESENT"]
+    forms = [("C. Q30 Name + Q31 present (REPEATING — establishes members)",
+              [("C_HOUSEHOLD_ROSTER", {"names": _establish})])]
+    for it in items:
+        if it["name"] in _establish:
+            continue
+        forms.append((f"C. {_short_item_label(it)} (REPEATING)",
+                      [("C_HOUSEHOLD_ROSTER", {"names": [it["name"]]})]))
+    return forms
+
+
+def build_form_plan(records_by_name):
+    """The static plan with the single Section C marker expanded into per-question
+    column-wise roster forms (see _section_c_columnwise)."""
+    plan = []
+    for label, parts in _FORM_PLAN_STATIC:
+        if parts == _SECTION_C_MARKER:
+            plan.extend(_section_c_columnwise(records_by_name))
+        else:
+            plan.append((label, parts))
+    return plan
 
 
 def _filter_items(items, spec):
@@ -193,6 +255,9 @@ def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name, r
         is_alpha = it.get("contentType") == "alpha"
         field_x2 = FIELD_RADIO_X2 if coded else FIELD_TEXTBOX_X2
         capture = "RadioButton" if coded else "TextBox"
+        if it["name"] in _CHECKBOX_FIELDS:   # alpha + value set rendered as a tick-list (#529)
+            capture = "CheckBox"
+            field_x2 = FIELD_RADIO_X2
         text = (it["labels"][0]["text"] if it.get("labels") else it["name"]).replace("\n", " ").replace("\r", " ")
         lines.append("[Field]")
         lines.append(f"Name={it['name']}")
@@ -235,8 +300,57 @@ NAMED_BLOCKS = [
 # (emitted as a roster, never blocked) are NOT auto-grouped.
 _NO_AUTOGROUP_RECORDS = {
     "FIELD_CONTROL", "HOUSEHOLD_GEO_ID", "REC_CASE_VERIFICATION", "C_HOUSEHOLD_ROSTER",
+    "C_PRIVATE_INS_ROSTER",   # #525/#612/#613: emit as a roster, never auto-blocked
 }
 _MULTISELECT_RE = re.compile(r"^(.+?)_O\d+$")
+# Single alpha fields rendered as a CSPro Check Box (one-question multi-select tick-list).
+# These get DataCaptureType=CheckBox and their own DisplayTogether screen (with any trailing
+# gated _OTHER_TXT free-text on its own screen). 2026-06-16 (#529): the 17 'Household Survey'
+# select_all -> Check Box conversions (mirrors F3's _CHECKBOX_FIELDS / F1 Q49/Q50/Q53/Q58).
+_CHECKBOX_FIELDS = {
+    "Q52_UHC_SOURCE", "Q53_UHC_UNDERSTAND", "Q55_YAKAP_SOURCE", "Q56_YAKAP_UNDERSTAND",
+    "Q58_BUCAS_SOURCE", "Q59_BUCAS_UNDERSTAND", "Q61_BUCAS_SERVICES",
+    "Q65_CONDITIONS", "Q66_WHERE_BUY", "Q85_BENEFITS", "Q91_WHY_WENT",
+    "Q93_WHY_NOT", "Q94_TRANSPORT", "Q113_WHY_NOT", "Q121_WHY_HOSPITAL",
+    "Q127_NBB_SOURCE", "Q128_NBB_UNDERSTAND", "Q133_ZBB_SOURCE", "Q134_ZBB_UNDERSTAND",
+    "Q137_MAIFIP_SOURCE",
+    "Q70_GAMOT_SOURCE", "Q71_GAMOT_UNDERSTAND",   # #573/#574
+    # #577-585/#588/#590-591: 10 more select_all -> Check Box (tick-all-that-apply)
+    "Q74_WHERE_REST", "Q77_WHY_GENERIC", "Q78_WHY_BRANDED", "Q82_DIFFICULTY_REASONS",
+    "Q88_DIFF_PAYING", "Q102_VISIT_REASON", "Q103_CARE_TYPE", "Q106_FORGONE_WHY",
+    "Q107_OTHER_ACTIONS", "Q109_TYPE",
+    "Q141_BILL_ITEMS", "Q143_HOW_PAID",   # #615/#616 Section M bill
+    "Q196_FOREGONE", "Q202_WORRY_REASONS",   # #638/#668 Section O/Q (without this they render as DropDown/RadioButton = single-select data loss)
+}
+# #708/#709 combined-view: a Section N WHO/SHA expenditure item is the fixed triplet
+# {base}_CONSUMED, {base}_PURCHASED_PHP, {base}_INKIND_PHP (see generate_dcf
+# _expenditure_item). Testers want all three on ONE screen, but the gate that zeroes the
+# amounts when not consumed makes _PURCHASED_PHP a skip SOURCE, so the generic chunk loop
+# splits the triplet across pages (CONSUMED+PURCHASED on one screen, INKIND on the next).
+# _expenditure_triplet recognizes the triplet by name and forces it into ONE DG block,
+# bypassing the gate-split (mirrors how NAMED_BLOCKS force a fixed grouping). The amount
+# gate is DG-safe because it's now driven from the _CONSUMED POSTPROC with protect()+set-0
+# (no `skip to` inside the block) — see generate_apc.expenditure_gate_procs. The
+# *_SUBTOTAL_TOTAL_PHP fields are NOT part of a triplet and stay standalone (#617).
+_EXP_AMT_SUFFIXES = ("_PURCHASED_PHP", "_INKIND_PHP")
+
+
+def _expenditure_triplet(items, i):
+    """If items[i] is a {base}_CONSUMED immediately followed by {base}_PURCHASED_PHP and
+    {base}_INKIND_PHP (same base, contiguous), return the 3 item objs; else None."""
+    nm = items[i]["name"]
+    if not nm.endswith("_CONSUMED"):
+        return None
+    base = nm[: -len("_CONSUMED")]
+    if i + 3 > len(items):
+        return None
+    expected = [base + suf for suf in _EXP_AMT_SUFFIXES]
+    got = [items[i + 1]["name"], items[i + 2]["name"]]
+    if got != expected:
+        return None
+    return [items[i], items[i + 1], items[i + 2]]
+
+
 MAX_CHUNK = 5
 _RUN_BLOCK_CAP = 22     # a real multi-select up to ~22 options is one checklist screen;
                         # an amount matrix (run has _AMT siblings) or a longer run is chunked.
@@ -324,8 +438,34 @@ def derive_block_plan(dictionary, sources=frozenset(), targets=frozenset(), gate
         i = 0
         while i < len(items):
             nm = items[i]["name"]
+            if nm.endswith("_SUBTOTAL_TOTAL_PHP"):
+                # #617 (Critical): a protect()ed computed subtotal (Q157/Q177/Q182/Q185) must
+                # NOT sit in a DisplayTogether block. In a DG block CSEntry only lets you focus
+                # ENTERABLE fields, so a protected member is never visited -> its compute preproc
+                # never runs -> it stays notappl -> CSEntry hard-errors "out of range - value is
+                # NOTAPPL" on block exit, blocking the whole interview at Q157. A 1-field DG block
+                # whose only field is protected has nothing enterable either, so own-screen-as-DG
+                # does not help. Leave it UNBLOCKED -> it renders as a standalone linear [Field];
+                # CSPro's normal field flow DOES pass through protected fields (runs preproc, shows
+                # the value read-only, auto-advances), so the total is computed before its range is
+                # validated. The chunk-break below keeps neighbours off the same screen as it.
+                i += 1
+                continue
+            triplet = _expenditure_triplet(items, i)
+            if triplet:
+                # #708/#709: force the WHO/SHA expenditure triplet onto ONE DG screen,
+                # overriding the chunk loop's gate-split (the _PURCHASED_PHP skip-source
+                # would otherwise end the screen before _INKIND_PHP). The DG block is safe
+                # because the amount gate moved to the _CONSUMED postproc (protect()+set-0,
+                # no `skip to`); the subtotal fields are never part of a triplet and stay
+                # standalone above. Label by the item's Q-number.
+                emit(triplet, (_qnum(triplet[0]) and f"Q{_qnum(triplet[0])}") or None)
+                i += 3
+                continue
             ms = _MULTISELECT_RE.match(nm)
-            if _is_gated_text(nm, gated):                      # gated specify text -> its OWN screen
+            if _is_gated_text(nm, gated) or nm in _CHECKBOX_FIELDS:
+                # gated specify text / Check Box (#529) -> its OWN screen so the noinput gate
+                # hides it when not applicable.
                 emit([items[i]], (_qnum(items[i]) and f"Q{_qnum(items[i])}") or nm)
                 i += 1
             elif ms and not nm.endswith("_TXT"):              # multi-select OPTION run (matrix-aware)
@@ -345,8 +485,9 @@ def derive_block_plan(dictionary, sources=frozenset(), targets=frozenset(), gate
                 while i < len(items) and len(chunk) < MAX_CHUNK:
                     nn = items[i]["name"]
                     mm = _MULTISELECT_RE.match(nn)
-                    if (mm and not nn.endswith("_TXT")) or _is_gated_text(nn, gated):
-                        break                                  # stop before multi-select / gated text
+                    if (mm and not nn.endswith("_TXT")) or nn in _CHECKBOX_FIELDS or _is_gated_text(nn, gated) \
+                            or nn.endswith("_SUBTOTAL_TOTAL_PHP"):
+                        break                                  # stop before multi-select / checkbox (#529) / gated text / #617 subtotal
                     if chunk and nn in targets:
                         break                                  # skip TARGET starts a fresh screen
                     chunk.append(items[i]); i += 1
@@ -396,7 +537,8 @@ def build_fmf():
         mx = occ.get("maximum", 1) if isinstance(occ, dict) else 1
         return {"type_name": record_name, "max": mx} if (mx and mx > 1) else None
 
-    referenced = {rec for _, parts in FORM_PLAN for rec, _ in parts}
+    form_plan = build_form_plan(records_by_name)   # Section C expanded column-wise
+    referenced = {rec for _, parts in form_plan for rec, _ in parts}
     missing = referenced - set(records_by_name)
     if missing:
         raise RuntimeError(f"FORM_PLAN references missing records: {sorted(missing)}")
@@ -417,7 +559,7 @@ def build_fmf():
     # removed 2026-06-08 — it was a vestigial item-less record CSEntry never
     # populated and it BLOCKED case-key persistence; see Desk-Test matrix. Forms
     # now run key=0, plan=1+.)
-    for idx, (label, parts) in enumerate(FORM_PLAN, start=1):
+    for idx, (label, parts) in enumerate(form_plan, start=1):
         objs = []
         for rec_name, spec in parts:
             for it in _filter_items(records_by_name[rec_name]["items"], spec):
@@ -461,7 +603,7 @@ def build_fmf():
             continue
         placed = record_items_consumed[rec_name]
         for it in rec["items"]:
-            if it["name"] not in placed:
+            if it["name"] not in placed and it["name"] not in _OFF_FORM_ITEMS:
                 orphans.append(f"{rec_name}.{it['name']}")
     if orphans:
         sys.stderr.write(f"WARNING: {len(orphans)} items not placed on any form:\n")

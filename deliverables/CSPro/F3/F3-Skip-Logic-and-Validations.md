@@ -12,6 +12,10 @@ tags: [cspro, capi, skip-logic, validations, f3]
 
 # F3 Patient Survey — Skip Logic and Validations Spec
 
+> [!warning] SUPERSEDED — the generator is the source of truth (banner added 2026-06-27)
+> This spec (reviewed 2026-04-21) **trails the UAT-evolved generator.** For current behavior read the inline comments in `deliverables/CSPro/F3/generate_apc.py` / `generate_dcf.py` and the bound `.apc`. Do **not** "re-fix" code to match this doc — several departures are intentional UAT closures.
+> Known drift: **F3-QC-01** income table is stale (6 brackets) vs the shipped 11-band design (#631); **F3-QC-02** retired `CONSENT_GIVEN` terminator + `F3_FACILITY_ID` are correctly removed (→ BREAKOFF disposition / case-key + CSWeb sync); **F3-QC-03** Q169 code 3 now routes to **Q172** (not Q171, per #799).
+
 Source-of-truth for CSPro CAPI logic on `PatientSurvey.dcf`. Covers:
 
 1. **Sanity-check findings** — discrepancies between the Apr 20 questionnaire and the current dcf (18 records / 840 items).
@@ -245,9 +249,24 @@ Bracket-vs-amount table (for Q18 consistency check):
 
 ### Section D — PhilHealth Registration and Health Insurance
 
+> [!note] Q38.1 / Q38.2 reinstated (DOH decision via Kidd 2026-06-09 — [[Source - PhilHealth Reinstatement Email (Kidd 2026-06-09)]])
+> Two conditional sub-questions agreed with DOH (originally omitted after OAAED comments) are reinstated after Q38:
+> - **Q38.1** *"When did you register and receive your PhilHealth PIN?"* — asked when **Q38 = Yes** (registered).
+> - **Q38.2** *"Why are you not registered with PhilHealth?"* — asked when **Q38 = No** (not registered).
+>
+> **✅ BUILT + DEPLOYED — UAT R5 (GH #764), CSWeb PatientSurvey 2026-06-27.** As-built value sets (confirmed in `PatientSurvey.dcf` 2026-06-29):
+> - **Q38.1 `Q38_1_PIN_WHEN`** — select-one (numeric, len 1): `1` Within the past year · `2` Within the last 2–3 years · `3` Within the last 4–5 years · `4` Over 5 years · `5` I don't know [DO NOT READ OUT LOUD].
+> - **Q38.2 `Q38_2_WHY_NOT_REG`** — **tick-all / multi-select** (alpha, len 18; ticket said "SELECT ALL THAT APPLY"; in the optimize `CHECKBOX` set): `01` Difficult to register · `02` Don't see value · `03` Don't know how · `04` Don't know what PhilHealth is · `05` A family member is registered · `06` Currently unemployed · `07` No time · `08` No valid ID · `99` Other (specify) → free-text `Q38_2_WHY_NOT_REG_OTHER_TXT`.
+> - Note: F3 Q38.2 is **multi-select**, whereas F4 Q45.2 is **single-select** (per their respective tickets #764/#795) — same question, two shapes; optional ASPSI reconcile.
+
 | Q | Condition | Skip to |
 |---|---|---|
-| Q38 PHILHEALTH_REG | = No (2) **or** "I don't know" (3) | **Q43** (skip Q39–Q42; non-members still asked whether they know where to seek help) |
+| Q38 PHILHEALTH_REG | = Yes (1) | **Q38.1** (when registered) then continue to Q39 |
+| Q38 PHILHEALTH_REG | = No (2) | **Q38.2** (why not registered) then **Q43** (skip Q39–Q42/Q38.1) |
+| Q38 PHILHEALTH_REG | = "I don't know" (3) | **Q43** (skip Q38.1/Q38.2/Q39–Q42) |
+| Q38.1 REG_WHEN | (asked only when Q38 = Yes) | **skip Q43/Q44** — registration-assistance items moot for a registered member → Q45 |
+| Q38.2 REG_WHY_NOT | (asked only when Q38 = No) | **Q43** (does the non-member know where to get assistance) |
+| Q41 REG_DIFFICULTY | = No | **Q43** (skip Q42 — no difficulty → no reason-for-difficulty) |
 | Q41 REG_DIFFICULTY | = No | **Q43** (skip Q42 — no difficulty → no reason-for-difficulty) |
 | Q43 KNOWS_ASSIST | = No | **Q45** (skip Q44 — patient doesn't know where to go, no point asking) |
 | — | `Q38_PHILHEALTH_REG ≠ Yes` | **Q51** after Q45 (non-members skip Q46–Q50: benefits/packages/premiums) |
@@ -284,6 +303,8 @@ No explicit skip rules in Section F. Q84 `SERVICE_TYPE` is advisory for Section 
 | Item | Rule | Severity |
 |---|---|---|
 | `Q38_PHILHEALTH_REG` | Required, ∈ {1, 2, 3} | HARD |
+| **Q38.1 enabled** (`Q38_1_PIN_WHEN`) | `Q38_PHILHEALTH_REG = Yes` (1) — ✅ built+deployed (#764); select-one 1–4 + 5 IDK[DNR] | GATE |
+| **Q38.2 enabled** (`Q38_2_WHY_NOT_REG`) | `Q38_PHILHEALTH_REG = No` (2) — ✅ built+deployed (#764); **tick-all** 01–08 + 99 Other→`_OTHER_TXT` (in optimize CHECKBOX set; ≥1 required) | GATE |
 | Q39 enabled | `Q38_PHILHEALTH_REG = Yes` (1) | GATE |
 | Q40 enabled | `Q38_PHILHEALTH_REG = Yes` (1) | GATE |
 | Q41 enabled | `Q38_PHILHEALTH_REG = Yes` (1) | GATE |

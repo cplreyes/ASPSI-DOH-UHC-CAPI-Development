@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CAPI Field-Operations Guide — Login, Menu &amp; Survey Apps</title>
+<style>
+  :root{
+    --ink:#1e293b; --ink-soft:#475569; --muted:#64748b; --line:#e2e8f0; --line-strong:#cbd5e1;
+    --bg:#f8fafc; --card:#ffffff; --accent:#0e7490; --accent-dark:#155e63; --accent-soft:#ecfeff;
+    --warn:#b45309; --warn-soft:#fffbeb; --warn-line:#fcd34d;
+    --good:#15803d; --good-soft:#f0fdf4; --good-line:#86efac;
+    --code-bg:#0f172a; --code-ink:#e2e8f0;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6; font-size:16px; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* Header */
+  header.site{
+    background:linear-gradient(135deg,#0f172a 0%,#155e63 100%); color:#fff;
+    padding:34px 28px; border-bottom:4px solid var(--accent);
+  }
+  header.site .wrap{max-width:1180px; margin:0 auto}
+  header.site .eyebrow{font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:#7dd3fc; margin:0 0 6px}
+  header.site h1{margin:0 0 14px; font-size:30px; line-height:1.2; font-weight:700}
+  .pills{display:flex; flex-wrap:wrap; gap:8px}
+  .pill{display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.22); color:#e0f2fe; padding:4px 11px; border-radius:999px;
+    font-size:13px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+
+  /* Layout */
+  .layout{max-width:1180px; margin:0 auto; display:grid; grid-template-columns:248px 1fr; gap:34px; padding:0 28px}
+  nav.toc{position:sticky; top:0; align-self:start; height:100vh; overflow:auto; padding:26px 0 40px}
+  nav.toc h2{font-size:12px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin:0 0 10px}
+  nav.toc ol{list-style:none; margin:0; padding:0; counter-reset:toc}
+  nav.toc li{counter-increment:toc; margin:1px 0}
+  nav.toc a{display:block; padding:6px 10px 6px 34px; border-radius:7px; color:var(--ink-soft); font-size:14px; position:relative}
+  nav.toc a::before{content:counter(toc); position:absolute; left:9px; top:6px; width:18px; height:18px;
+    background:var(--accent-soft); color:var(--accent-dark); border-radius:5px; font-size:11px; font-weight:700;
+    display:flex; align-items:center; justify-content:center}
+  nav.toc a:hover{background:var(--accent-soft); color:var(--accent-dark); text-decoration:none}
+
+  main{padding:26px 0 70px; min-width:0}
+  section{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:26px 30px; margin:0 0 22px;
+    box-shadow:0 1px 2px rgba(15,23,42,.04)}
+  section > h2:first-child{margin-top:0}
+  h2{font-size:22px; margin:6px 0 14px; padding-bottom:8px; border-bottom:2px solid var(--line); display:flex; gap:11px; align-items:baseline}
+  h2 .n{flex:0 0 auto; color:var(--accent); font-variant-numeric:tabular-nums; font-weight:800}
+  h3{font-size:17px; margin:22px 0 8px; color:var(--accent-dark)}
+  p{margin:10px 0}
+  ul,ol{margin:10px 0; padding-left:22px}
+  li{margin:5px 0}
+  strong{color:var(--ink)}
+  code{background:#f1f5f9; border:1px solid var(--line); border-radius:5px; padding:1px 5px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:13.5px; color:#0f766e}
+
+  /* Lead block */
+  .lead{background:var(--accent-soft); border:1px solid #a5f3fc; border-radius:12px; padding:18px 22px; margin:0 0 24px}
+  .lead p{margin:6px 0}
+
+  /* Tables */
+  .tw{overflow-x:auto; margin:14px 0}
+  table{border-collapse:collapse; width:100%; font-size:14.5px}
+  th,td{border:1px solid var(--line); padding:9px 12px; text-align:left; vertical-align:top}
+  thead th{background:#0f172a; color:#fff; font-weight:600; border-color:#0f172a}
+  tbody tr:nth-child(even){background:#f8fafc}
+  td code, th code{font-size:12.5px}
+
+  /* Callouts */
+  .box{border-radius:10px; padding:13px 17px; margin:16px 0; border:1px solid; font-size:14.5px}
+  .box p{margin:4px 0}
+  .box .t{font-weight:700; display:block; margin-bottom:3px}
+  .note{background:var(--accent-soft); border-color:#a5f3fc; color:#134e4a}
+  .note .t{color:var(--accent-dark)}
+  .warn{background:var(--warn-soft); border-color:var(--warn-line); color:#7c4a03}
+  .warn .t{color:var(--warn)}
+  .good{background:var(--good-soft); border-color:var(--good-line); color:#14532d}
+  .good .t{color:var(--good)}
+
+  /* Diagram */
+  pre.diagram{background:var(--code-bg); color:var(--code-ink); padding:20px 22px; border-radius:12px; overflow-x:auto;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:12.5px; line-height:1.5; margin:16px 0}
+
+  footer.site{max-width:1180px; margin:0 auto; padding:24px 28px 60px; color:var(--muted); font-size:13px}
+  footer.site code{font-size:12px}
+
+  @media (max-width:880px){
+    .layout{grid-template-columns:1fr; gap:0}
+    nav.toc{position:static; height:auto; padding:18px 0}
+    nav.toc ol{columns:2; column-gap:18px}
+  }
+  @media print{
+    body{background:#fff; font-size:11.5px}
+    header.site{background:#0f172a !important; -webkit-print-color-adjust:exact; print-color-adjust:exact}
+    nav.toc{display:none}
+    .layout{grid-template-columns:1fr; padding:0}
+    section{box-shadow:none; border-color:#cbd5e1; break-inside:avoid; page-break-inside:avoid}
+    thead th{background:#0f172a !important; -webkit-print-color-adjust:exact; print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <p class="eyebrow">ASPSI &middot; DOH &middot; UHC CAPI — Field Help</p>
+    <h1>CAPI Field-Operations Guide<br>Login, Menu &amp; Survey Apps</h1>
+    <div class="pills">
+      <span class="pill">🌐 csweb.asiansocial.org</span>
+      <span class="pill">📱 CSEntry on Android</span>
+      <span class="pill">Updated 2026-06-25</span>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#s1">What's published on CSWeb</a></li>
+      <li><a href="#s2">How the apps fit together</a></li>
+      <li><a href="#s3">Two kinds of "role"</a></li>
+      <li><a href="#s4">Roles needed</a></li>
+      <li><a href="#s5">In the field — Enumerator</a></li>
+      <li><a href="#s6">In the field — Supervisor</a></li>
+      <li><a href="#s7">Sync</a></li>
+      <li><a href="#s8">Install &amp; update</a></li>
+      <li><a href="#s9">Login reference</a></li>
+      <li><a href="#s10">Troubleshooting</a></li>
+      <li><a href="#s11">Status &amp; roadmap</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="lead">
+      <p><strong>Server:</strong> <code>https://csweb.asiansocial.org</code> &middot;
+         <strong>Sync API:</strong> <code>https://csweb.asiansocial.org/csweb/api</code></p>
+      <p><strong>For:</strong> field enumerators, field/cluster supervisors, and field-ops / data managers.</p>
+      <p>This is a plain-language field guide — how to install, sign in, navigate, capture, and sync.
+         It is not the build/deploy documentation.</p>
+    </div>
+
+    <section id="s1">
+      <h2><span class="n">1.</span> What is now published on CSWeb</h2>
+      <p>All of these appear in CSEntry under <strong>⋮ → Add Application → From a server</strong> once
+         CSEntry is pointed at the project server. They install as separate apps that sit
+         <strong>side by side</strong> on the tablet.</p>
+      <div class="tw"><table>
+        <thead><tr><th>App (in the Add-Application list)</th><th>What it is</th><th>Who uses it</th></tr></thead>
+        <tbody>
+          <tr><td><strong>LoginApp</strong></td><td>The <strong>hub entry point</strong> — sign in once, then it opens the role menu. Installing LoginApp also installs <strong>MenuApp</strong> and the <strong>user roster</strong> (they ride inside the same package).</td><td>Everyone</td></tr>
+          <tr><td><strong>FacilityHeadSurvey</strong></td><td><strong>F1</strong> — Facility Head survey instrument</td><td>Enumerators (+ supervisors for spot-checks)</td></tr>
+          <tr><td><strong>PatientSurvey</strong></td><td><strong>F3</strong> — Patient survey instrument</td><td>Enumerators (+ supervisors)</td></tr>
+          <tr><td><strong>HouseholdSurvey</strong></td><td><strong>F4</strong> — Household survey instrument</td><td>Enumerators (+ supervisors)</td></tr>
+          <tr><td><strong>SupervisorApp</strong></td><td><strong>Facility Visit Log</strong> — logs every facility touchpoint with automatic GPS + timestamp</td><td>Field supervisors</td></tr>
+        </tbody>
+      </table></div>
+      <div class="box note"><span class="t">The hub is a convenience layer, not a wall</span>
+        <p>LoginApp/MenuApp give you one signed-in starting point and a tidy menu. The survey instruments
+           are still their own installed apps and can be opened directly if needed — the menu simply
+           launches them for you and brings you back when you finish.</p></div>
+    </section>
+
+    <section id="s2">
+      <h2><span class="n">2.</span> How the apps fit together</h2>
+      <p>There are <strong>three layers</strong>, and they keep their data separate:</p>
+      <pre class="diagram">        ┌─────────────┐      sign in       ┌────────────┐   pick an action    ┌──────────────────────┐
+  YOU → │  LoginApp   │ ─────────────────▶ │  MenuApp   │ ──────────────────▶ │  F1 / F3 / F4        │
+        │ (identity)  │  role handed over  │ (launcher) │  launches + returns │  survey instruments  │
+        └──────┬──────┘                    └─────┬──────┘                     └──────────┬───────────┘
+               │ checks                          ▲  │                                    │ captures cases
+               ▼ username/password               │  └──── you finish, it returns ────────┘ into its OWN data
+        ┌─────────────┐                          │
+        │ User Roster │  (ships inside LoginApp)  │   Supervisors also use ──▶ ┌──────────────────────┐
+        │ enumerator /│                          └────────────────────────────│  SupervisorApp       │
+        │ supervisor  │                                                        │ (Facility Visit Log) │
+        └─────────────┘                                                        └──────────┬───────────┘
+                                                                                          │
+   All captured cases (F1/F3/F4 + the visit log) sync to  ◀──────────────────────────────┘
+   csweb.asiansocial.org  via  CSEntry → Synchronize.</pre>
+
+      <h3>Control flow — what happens when you use it</h3>
+      <ol>
+        <li>You open <strong>LoginApp</strong> and enter your <strong>username + password</strong>.</li>
+        <li>LoginApp checks them against the <strong>User Roster</strong> bundled inside it, and reads your <strong>role</strong> (enumerator or supervisor).</li>
+        <li>On success it hands your role to <strong>MenuApp</strong> and opens it automatically.</li>
+        <li><strong>MenuApp</strong> shows a menu <strong>filtered by your role</strong> (see §3). You pick a survey.</li>
+        <li>MenuApp launches the <strong>real installed instrument</strong> (F1, F3 or F4). You capture cases as normal.</li>
+        <li>When you <strong>finish/exit the instrument, you land back on the menu</strong> — ready for the next task.</li>
+      </ol>
+
+      <h3>Data flow — where the answers go</h3>
+      <ul>
+        <li>Each instrument keeps its <strong>own case data</strong> on the tablet. The hub only <em>launches</em> the instruments — it never touches or moves their data, so there is <strong>no risk of split or duplicated cases</strong>.</li>
+        <li><strong>LoginApp and MenuApp do not sync</strong> anything — they are sign-in/launcher utilities.</li>
+        <li><strong>Cases reach the server</strong> through <strong>CSEntry → Synchronize</strong> (per instrument), authenticated by your <strong>CSWeb account</strong> (see §7). The <strong>SupervisorApp</strong> visit log syncs the same way.</li>
+      </ul>
+    </section>
+
+    <section id="s3">
+      <h2><span class="n">3.</span> Two kinds of "role" — keep them straight</h2>
+      <p>This is the part people mix up. Every field person has <strong>two</strong> role settings, on two
+         different layers, and <strong>both must match their job</strong>:</p>
+      <div class="tw"><table>
+        <thead><tr><th></th><th>A. CSWeb account role</th><th>B. Hub app role</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Where it lives</strong></td><td>On the server, in the CSWeb <strong>Users / Roles</strong> dashboards</td><td>On the tablet, in the <strong>User Roster</strong> inside LoginApp</td></tr>
+          <tr><td><strong>What it controls</strong></td><td>Whether you can log into the CSWeb website, and <strong>which data you can sync</strong></td><td>What the <strong>MenuApp</strong> shows you after you sign in</td></tr>
+          <tr><td><strong>Is it security?</strong></td><td><strong>Yes</strong> — the real access control (checked at sync time)</td><td><strong>No</strong> — only a menu filter; the <em>data</em> is still gated by the CSWeb account</td></tr>
+          <tr><td><strong>Values</strong></td><td><code>field-sync</code>, <code>supervisor-monitor</code>, <code>supervisor-qa</code>, <code>data-manager</code>, <code>account-admin</code>, <code>Administrator</code></td><td><code>enumerator</code> or <code>supervisor</code></td></tr>
+        </tbody>
+      </table></div>
+      <p><strong>How they pair up.</strong> They use the <strong>same username</strong> so identities line up for audit
+         (e.g. <code>se-014</code>, <code>fs-03</code>):</p>
+      <ul>
+        <li>An <strong>enumerator</strong> has a <code>field-sync</code> CSWeb account <em>and</em> an <code>enumerator</code> roster row → the menu shows only <strong>F1 / F3 / F4</strong>.</li>
+        <li>A <strong>field supervisor</strong> has a <code>supervisor-monitor</code> (or <code>supervisor-qa</code>) CSWeb account <em>and</em> a <code>supervisor</code> roster row → the menu shows <strong>all six</strong> items.</li>
+      </ul>
+      <div class="box note"><span class="t">Plain version</span>
+        <p>The <em>CSWeb account</em> decides what data the server lets you touch; the <em>roster role</em>
+           decides what buttons you see on the tablet. Give a person the matching pair for their job.</p></div>
+    </section>
+
+    <section id="s4">
+      <h2><span class="n">4.</span> Roles needed (who gets what)</h2>
+      <h3>CSWeb account roles — server-side, the real access control</h3>
+      <div class="tw"><table>
+        <thead><tr><th>Job</th><th>CSWeb role</th><th>Web dashboards</th><th>Sync F1/F3/F4?</th><th>Logs into website?</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Enumerator (SE)</strong></td><td><code>field-sync</code></td><td><em>(none)</em></td><td>✅ send</td><td><strong>No</strong> — CSEntry only</td></tr>
+          <tr><td><strong>Field / Cluster Supervisor</strong></td><td><code>supervisor-monitor</code></td><td><code>report</code></td><td>❌ no down-sync</td><td>Yes</td></tr>
+          <tr><td><strong>Designated Field-QA Supervisor</strong></td><td><code>supervisor-qa</code></td><td><code>report</code></td><td>✅ send + pull</td><td>Yes</td></tr>
+          <tr><td><strong>Data Manager</strong></td><td><code>data-manager</code></td><td><code>data · report · apps</code></td><td>✅</td><td>Yes</td></tr>
+          <tr><td><strong>Account Admin</strong></td><td><code>account-admin</code></td><td><code>users · roles</code></td><td>❌</td><td>Yes</td></tr>
+          <tr><td><strong>Server Administrator</strong></td><td>built-in <code>Administrator</code></td><td>all</td><td>all</td><td>Yes (break-glass only)</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li><strong>Enumerators never see the website</strong> — they only sync from CSEntry. That keeps bulk PII off the web UI (CSWeb has no "my cases only" filter, so the protection is <em>withholding the <code>data</code> dashboard</em>).</li>
+        <li><strong>Most supervisors get <code>report</code> only</strong> — coverage counts + map, no full-PII rows, no case down-sync.</li>
+        <li>Only the <strong>designated <code>supervisor-qa</code></strong> holders can pull full case data for on-site QA review — kept to a named few.</li>
+      </ul>
+      <h3>Hub app roles — on the tablet, the menu filter</h3>
+      <div class="tw"><table>
+        <thead><tr><th>Roster role</th><th>Menu shows</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>enumerator</code></td><td><strong>1.</strong> F1 &middot; <strong>2.</strong> F3 &middot; <strong>3.</strong> F4</td><td>The three survey instruments only</td></tr>
+          <tr><td><code>supervisor</code></td><td>1–3 <strong>+ 4.</strong> Collect from enumerators &middot; <strong>5.</strong> Relay to CSWeb &middot; <strong>6.</strong> Run QA report</td><td>Items 4–6 are supervisor tools (see §6)</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section id="s5">
+      <h2><span class="n">5.</span> Using it in the field — Enumerator</h2>
+      <h3>One-time setup (per tablet)</h3>
+      <ol>
+        <li>Install <strong>CSEntry</strong> (from the device's app store / provided APK).</li>
+        <li>In CSEntry, tap <strong>⋮ → Add Application → From a server</strong>, point it at the project server, and sign in with <strong>your own CSWeb username + password</strong> (<code>se-NNN</code>).</li>
+        <li>Install <strong>LoginApp</strong> <em>and</em> the survey instruments you are assigned (<strong>FacilityHeadSurvey</strong>, <strong>PatientSurvey</strong>, <strong>HouseholdSurvey</strong>).</li>
+        <li>Set the <strong>sync server</strong>: CSEntry → <strong>Sync → CSWeb → Add server</strong> → URL <code>https://csweb.asiansocial.org/csweb</code>. Always the <strong>production domain</strong> — never <code>localhost</code>.</li>
+        <li>Do <strong>one mock case</strong> end-to-end (capture → Sync → confirm it shows in CSWeb → delete the mock) before going live.</li>
+      </ol>
+      <h3>Every fieldwork day</h3>
+      <ol>
+        <li>Open <strong>LoginApp</strong> → type your <strong>username</strong> and <strong>password</strong> → advance. <em>Wrong password</em> / <em>unknown username</em> → it tells you and lets you retry.</li>
+        <li>The <strong>menu</strong> opens showing your role at the top (e.g. <em>"Logged-in role: enumerator"</em>) and the <strong>F1 / F3 / F4</strong> choices.</li>
+        <li>Pick the survey for your assignment → capture cases exactly as in training.</li>
+        <li>When you <strong>finish or exit a case, you return to the menu</strong> — pick the next survey if needed.</li>
+        <li><strong>By 22:00 each day:</strong> CSEntry → open each instrument → <strong>Synchronize</strong> → wait for <strong>"Successfully synced."</strong> Read the message — do not assume.</li>
+      </ol>
+    </section>
+
+    <section id="s6">
+      <h2><span class="n">6.</span> Using it in the field — Field Supervisor</h2>
+      <h3>Setup</h3>
+      <p>Same as §5, but also install <strong>SupervisorApp</strong> (the Facility Visit Log), and sign in with your <strong><code>fs-NN</code></strong> account.</p>
+      <h3>The supervisor menu (all six items)</h3>
+      <div class="tw"><table>
+        <thead><tr><th>#</th><th>Item</th><th>What it does today</th></tr></thead>
+        <tbody>
+          <tr><td>1–3</td><td><strong>F1 / F3 / F4</strong></td><td>Open a survey instrument — used for <strong>read-only spot-checks</strong> of your team's interviews</td></tr>
+          <tr><td>4</td><td><strong>Collect from enumerators</strong></td><td><strong>Guidance prompt:</strong> <em>"CSEntry → Sync → Bluetooth from each enumerator."</em></td></tr>
+          <tr><td>5</td><td><strong>Relay to CSWeb</strong></td><td><strong>Guidance prompt:</strong> <em>"CSEntry → Sync → CSWeb (supervisor-qa account)."</em></td></tr>
+          <tr><td>6</td><td><strong>Run QA report</strong></td><td><strong>Guidance prompt:</strong> <em>"Export collected data, run the supervisor QA report."</em></td></tr>
+        </tbody>
+      </table></div>
+      <div class="box warn"><span class="t">Items 4–6 are on-screen reminders, not automated actions yet</span>
+        <p>They point you to the manual steps. The fully-automated Bluetooth "collect → relay → QA" hub is
+           a planned Phase-2 capability and is <strong>not built into this version</strong>. For now,
+           supervision runs through the CSWeb website (coverage on the <code>report</code> dashboard) and
+           the desktop QA report.</p></div>
+      <h3>Facility Visit Log (SupervisorApp) — at each facility</h3>
+      <ol>
+        <li>Open <strong>SupervisorApp</strong> → add (or reopen) the case for this facility → enter the <strong>9-digit facility code</strong> (<code>RRPPMMMFF</code> — the facility part of the survey case key) + facility name + your operator ID.</li>
+        <li><strong>Log each touchpoint as it happens</strong> — add a row and pick the type: <em>Arrival, Courtesy call, Endorsement delivery, Workstation, Focal person, HCW-list, Departure,</em> or <em>Other (+ note)</em>. The <strong>time and GPS stamp themselves automatically</strong> and lock read-only.</li>
+        <li>On the <strong>first visit</strong>, fill the <strong>Courtesy-Call</strong> screen (endorsement obtained, focal person, discharge cutoff, scheduled interview/listing dates, workstation, QR poster, HCW master-list count — tick "captured" and optionally photograph the printed list).</li>
+        <li>It <strong>saves as you go</strong> (partial save on) — stop and resume the same case across visit days.</li>
+        <li><strong>Sync nightly</strong> (and at the facility if you have signal): Synchronize → <em>"Successfully synced."</em> Your visit log reconciles against the planned visit schedule on the server.</li>
+      </ol>
+    </section>
+
+    <section id="s7">
+      <h2><span class="n">7.</span> Sync — endpoint, direction, schedule</h2>
+      <div class="tw"><table>
+        <tbody>
+          <tr><td><strong>Server</strong></td><td><code>https://csweb.asiansocial.org</code> (CSWeb 8.0.1)</td></tr>
+          <tr><td><strong>CSEntry sync URL</strong></td><td><code>https://csweb.asiansocial.org/csweb</code> (CSEntry adds <code>/api</code> itself)</td></tr>
+          <tr><td><strong>Transport</strong></td><td>HTTPS only</td></tr>
+          <tr><td><strong>Auth</strong></td><td>Your <strong>CSWeb username + password</strong>, entered at sync time</td></tr>
+          <tr><td><strong>Mechanism</strong></td><td><strong>CSEntry built-in Synchronize</strong>, manual (you tap it), one dictionary per instrument</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li><strong>Direction:</strong> enumerators <strong>send</strong> (push only). <code>supervisor-qa</code> accounts can <strong>send + pull</strong> (pull a team's cases for review). <code>supervisor-monitor</code> accounts <strong>do not</strong> sync case data — they watch the <code>report</code> dashboard.</li>
+        <li><strong>Smart-sync:</strong> only new/changed cases move — bandwidth-frugal over cellular.</li>
+        <li><strong>Schedule:</strong> at least one <strong>successful sync by 22:00</strong> each fieldwork day. Supervisors check the <strong>Sync Report</strong> afterward and chase gaps.</li>
+        <li><strong>No conflicts by design:</strong> each enumerator owns distinct facilities, so two tablets never mint the same case key (<code>RR-PP-MMM-FF-CCC</code>). A re-synced edit is last-write-wins on that one case.</li>
+      </ul>
+      <div class="box note"><span class="t">"My synced cases aren't showing in the report yet"</span>
+        <p>The <strong>Data tab</strong> is real-time; the <strong>Sync Report / dashboards refresh on a
+           short cron and lag a few minutes</strong>. Trust the Data tab for the live count — the report
+           catches up. This is a display delay, <strong>not</strong> lost data.</p></div>
+    </section>
+
+    <section id="s8">
+      <h2><span class="n">8.</span> Installing &amp; updating the apps</h2>
+      <div class="box warn"><span class="t">Install / update = remove + re-add</span>
+        <p>CSEntry's <strong>⋮ → Update Installed Applications</strong> is unreliable for CSWeb redeploys
+           (it can say "no update" while a newer build is live). To be sure you have the <strong>current</strong>
+           version: <strong>remove the app, then Add Application → From a server again,</strong> and test on a
+           <strong>fresh case</strong>.</p></div>
+      <ul>
+        <li>Because LoginApp bundles MenuApp + the roster, re-adding <strong>LoginApp</strong> refreshes the whole hub at once.</li>
+        <li>The survey instruments (F1/F3/F4) and SupervisorApp are <strong>separate installs</strong> — update each the same way when a new build is announced.</li>
+      </ul>
+    </section>
+
+    <section id="s9">
+      <h2><span class="n">9.</span> Login reference (the User Roster)</h2>
+      <p>The roster bundled inside LoginApp holds one row per person:</p>
+      <div class="tw"><table>
+        <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Username</strong></td><td>The field ID — also the CSWeb account name (<code>se-NNN</code>, <code>fs-NN</code>)</td></tr>
+          <tr><td><strong>Password</strong></td><td>Sign-in password for the hub</td></tr>
+          <tr><td><strong>Role</strong></td><td><code>enumerator</code> or <code>supervisor</code> (drives the menu — see §3)</td></tr>
+          <tr><td><strong>Operator ID</strong></td><td>Stamped through to the work for provenance</td></tr>
+          <tr><td><strong>Cluster</strong></td><td>The person's cluster code</td></tr>
+        </tbody>
+      </table></div>
+      <div class="box warn"><span class="t">⚠️ This published version ships placeholder credentials</span>
+        <p>The current build uses the test seed roster (<code>changeme…</code> passwords). <strong>Before
+           real field rollout,</strong> the roster must be replaced with the confirmed personnel list (real
+           usernames + strong passwords + correct roles), and the matching <strong>CSWeb accounts</strong>
+           provisioned (RBAC pack §3–4). Until then, treat the hub as a working demonstration, not a live
+           credential store.</p></div>
+    </section>
+
+    <section id="s10">
+      <h2><span class="n">10.</span> Troubleshooting</h2>
+      <div class="tw"><table>
+        <thead><tr><th>Symptom</th><th>Most likely cause → what to do</th></tr></thead>
+        <tbody>
+          <tr><td><em>"Incorrect password."</em></td><td>Typo, or your roster row differs → retype; if it persists, ops re-checks your roster entry.</td></tr>
+          <tr><td><em>"Unknown username."</em></td><td>You are not in the bundled roster, or the build is stale → <strong>remove + re-add LoginApp</strong>; if still missing, ops adds you to the roster and redeploys.</td></tr>
+          <tr><td><em>"No role found from login…"</em> on the menu</td><td>The role didn't hand over (rare) → close and sign in again via <strong>LoginApp</strong> (don't open MenuApp directly).</td></tr>
+          <tr><td>Picking a survey does nothing / drops to the app list</td><td>That <strong>instrument isn't installed</strong> on this tablet → Add Application → install <strong>FacilityHeadSurvey / PatientSurvey / HouseholdSurvey</strong>, then retry from the menu.</td></tr>
+          <tr><td>Synced cases "not showing" in a report</td><td><strong>Reporting-layer lag</strong> — check the <strong>Data tab</strong> (real-time); the report catches up in minutes. Not data loss.</td></tr>
+          <tr><td>A retest still shows an old bug</td><td><strong>Stale build</strong> — you tested an old copy → <strong>remove + re-add</strong> the app and retest on a fresh case.</td></tr>
+          <tr><td>Sync fails in the field but "worked in the office"</td><td>A <code>localhost</code> sync URL was left on the tablet → set it to <code>https://csweb.asiansocial.org/csweb</code>.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section id="s11">
+      <h2><span class="n">11.</span> Status &amp; what is not yet automated</h2>
+      <div class="box good"><span class="t">✅ Working now (device-confirmed)</span>
+        <p>The <strong>Login + Menu hub</strong> (sign in → role menu → launch F1/F3/F4 → return to menu),
+           the <strong>role-filtered menu</strong>, and <strong>return-to-menu</strong> behaviours.
+           <strong>SupervisorApp (Facility Visit Log)</strong> is live with auto GPS + timestamp.</p></div>
+      <ul>
+        <li><strong>Not yet automated (planned Phase-2):</strong> the supervisor <strong>Collect / Relay / Run-QA</strong> actions are guidance prompts only — the Bluetooth "one supervisor collects many enumerators, then relays to CSWeb" hub is not built. Supervision today uses the CSWeb <code>report</code> dashboard + the desktop QA report.</li>
+        <li><strong>Pending before live rollout (ASPSI input):</strong> the <strong>real personnel roster</strong> (replacing the placeholder credentials) and the matching <strong>CSWeb account provisioning</strong> + per-role dictionary-sync.</li>
+      </ul>
+    </section>
+  </main>
+</div>
+
+<footer class="site">
+  Prepared by Carl Patrick L. Reyes &middot; ASPSI | DOH UHC CAPI &middot; last updated 2026-06-25.<br>
+  Source of truth — apps: <code>deliverables/CSPro/supervisor-hub/build_hub_apps.py</code> (Login/Menu) &amp;
+  <code>deliverables/CSPro/SV/</code> (SupervisorApp). Roles:
+  <code>CSWeb-User-Management-and-RBAC-Provisioning-Pack.md</code>. Sync:
+  <code>Field-Tablet-Sync-Configuration.md</code>.
+</footer>
+
+</body>
+</html>

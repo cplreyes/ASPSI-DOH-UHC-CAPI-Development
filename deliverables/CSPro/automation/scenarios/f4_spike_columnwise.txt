@@ -1,0 +1,126 @@
+# PHASE-0 SPIKE: F4 Section C column-wise roster.
+# Drive to Q19=3 (3 members), then enter the split roster and screenshot the traversal.
+# EXPECT (if column-wise): form1 (name+present) grid for all 3 members -> THEN form2 (age)
+# grid for all members -> THEN form3 (rest). Member 2 = Away (Q31=0) -> Q32 age form should
+# SKIP member 2 (the cross-form per-occurrence gate). Screenshots are the evidence.
+
+rmdata ../F4/desktest.csdb
+launch ../F4/HouseholdSurvey_desktest.pff
+
+# ---- case key ----
+casekey 01 02 800 01 001
+
+# ---- FIELD_CONTROL ----
+type 04
+type 1001
+type 20260609
+type 103000
+type 110
+type 1
+key {ENTER}
+type 0001
+
+# ---- HOUSEHOLD_GEO_ID + cascade ----
+type 1
+click 1055 291
+click 1010 231
+click 1024 391
+click 1005 211
+type TESTADDRESS
+key {ENTER}
+type 001
+
+# ---- GPS data fields ----
+type 14.5
+key {ENTER}
+type 120.9
+key {ENTER}
+type 10
+key {ENTER}
+type 5
+key {ENTER}
+type 8
+key {ENTER}
+type 20260609
+key {ENTER}
+type 1
+key {ENTER}
+type 1
+
+# ---- Section A: Q1 head=Yes ----
+type 1
+
+# ---- Section B respondent profile ----
+type JUANDELACRUZ
+key {ENTER}
+type 06
+type 1990
+type 036
+type 1
+type 1
+type 1
+key {ENTER}
+type 1
+type 2
+type 01
+key {ENTER}
+type 1
+type 01
+type 2
+type 2
+type 01
+key {ENTER}
+
+# ---- Q18 amount + bracket ----
+type 5000
+key {ENTER}
+type 1
+
+# ---- Q19 HH size = 3 ----
+note Q19 = 3 household members
+type 3
+key {ENTER}
+shot c00_at_roster_start
+
+# ===== Section C ROSTER — form 1: Q30 name + Q31 present =====
+note ROSTER form1 expected: name + present columns for all members
+type MEMBERONE
+key {ENTER}
+shot c01_name1
+type 1
+key {ENTER}
+shot c02_present1
+type MEMBERTWO
+key {ENTER}
+shot c03_name2
+type 0
+key {ENTER}
+shot c04_member2_AWAY
+type MEMBERTHREE
+key {ENTER}
+shot c05_name3
+type 1
+key {ENTER}
+shot c06_after_form1
+
+# ===== expect ROSTER form 2: Q32 age — all members, member 2 (away) SKIPPED =====
+note Now expect AGE form for all members; member2 away should be skipped by the gate
+type 25
+key {ENTER}
+shot c07_age_a
+type 30
+key {ENTER}
+shot c08_age_b
+type 40
+key {ENTER}
+shot c09_age_c
+type 50
+key {ENTER}
+shot c10_age_d
+
+# ===== expect ROSTER form 3: rest (Q33 sex ...) =====
+key {ENTER}
+shot c11_form3_a
+type 1
+key {ENTER}
+shot c12_form3_b

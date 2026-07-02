@@ -1,0 +1,70 @@
+# F4 validation-engine drive (REFRESHED harness 2026-06-27). Canonical error-flow evidence.
+# Valid Laguna/Biñan key; Section B is one scrollable form. Error modals dismissed by CLICKING OK
+# at (1172,565) (CSEntry HTML modals ignore {ENTER}). Exercises fire + recover for:
+#   (1) Q2.1 age<->birth-year   (2) Q18 income bracket mismatch   (3) Q20/Q21 composition.
+rmdata ../F4/desktest.csdb
+launch ../F4/HouseholdSurvey_desktest.pff
+casekey 04 03 403 02 001
+type 1
+type 1
+type 0403403001
+type TESTADDRESS BINAN
+key {ENTER}
+type 14.25
+key {ENTER}
+type 121.08
+key {ENTER}
+type 10
+key {ENTER}
+type 5
+key {ENTER}
+type 8
+key {ENTER}
+type 20260627
+key {ENTER}
+type 1
+type JUANDELACRUZ
+key {ENTER}
+type 06
+type 1985
+note (1) age 010 vs 1985 -> EXPECT inconsistency
+type 010
+shot v1_age_EXPECT
+click 1172 565
+type 041
+shot v1_age_recovered
+note Q3 sex=1, Q4=2 (skip Q5), Q6 civil=2, Q7 PWD=2 (skip Q8-10)
+type 1
+type 2
+type 2
+type 2
+note Q11 educ=01, Q12 emp=1, Q13 source=01, Q14 IP=2, Q16 4Ps=2, Q17 dec=01
+type 01
+type 1
+type 01
+type 2
+type 2
+type 01
+shot before_q18
+note Q18 amount 45000, bracket 4 -> EXPECT mismatch
+type 45000
+key {ENTER}
+type 4
+shot v2_bracket_EXPECT
+click 1204 578
+type 2
+shot v2_bracket_recovered
+note Q19/Q20/Q21 are 3-wide numerics -> sub-width value + {ENTER}
+note Q19 HH size=3, Q20 children=2, Q21 seniors=2 -> EXPECT 2+2>3 composition error
+type 3
+key {ENTER}
+type 2
+key {ENTER}
+type 2
+key {ENTER}
+shot v3_composition_EXPECT
+click 1172 565
+shot v3_after_ok
+type 1
+key {ENTER}
+shot v3_composition_recovered

@@ -1,0 +1,14 @@
+﻿[Run Information]
+Version=CSPro 7.7
+AppType=Entry
+
+[Files]
+Application=.\Login_App.ent
+InputData=|type=None
+HtmlDialogs=..\109_HTMLDialogs
+
+[ExternalFiles]
+USERNAMEPASSWORD_DICT=..\103_Ext_Data\UsernamePassword.csdb
+
+[UserFiles]
+AppVersion=

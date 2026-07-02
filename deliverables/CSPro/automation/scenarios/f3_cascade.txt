@@ -1,0 +1,19 @@
+# F3 patient-home cascade via row clicks (full).
+rmdata ../F3/desktest.csdb
+launch ../F3/PatientSurvey_desktest.pff
+casekey 04 03 403 02 001
+type 1
+type 1
+type 1
+type 0403403001
+type RHU BINAN
+key {ENTER}
+type TEST ST BINAN
+key {ENTER}
+click 1040 374
+click 985 464
+note P_CITY -> click City of Biñan (y=254)
+click 1000 254
+shot after_city
+note P_BARANGAY picker -> read
+shot barangay_picker

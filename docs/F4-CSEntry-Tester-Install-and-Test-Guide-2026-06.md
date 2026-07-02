@@ -17,7 +17,7 @@
 
 ## ⚠️ Coordinator pre-flight (Carl — do BEFORE opening the round)
 
-R4 runs on the **live CSWeb** (`csweb.asiansocial.org`). The `010280001` test prefix segregates these throwaway cases from real data; the monitor filters them out (and they can be purged after — see companion guide teardown).
+R4 runs on the **live CSWeb** (`csweb.asiansocial.org`). The `040340002` test prefix segregates these throwaway cases from real data; the monitor filters them out (and they can be purged after — see companion guide teardown).
 
 1. **Deploy the R4 build ×3 to CSWeb** — F1 + F3 + F4. The F4 package carries: combined-view screens, GPS auto-fetch, photo-at-end + photo-gate, other-specify gating, exclusivity warnings, and the household-roster block. Confirm `HouseholdSurvey` downloads cleanly on a real device once.
 2. **Create the Slack channel** `#f4-uat` on `aspsi-doh-uhc-survey2.slack.com`; add the F4 testers + their STL + the data monitor; pin this guide.
@@ -38,8 +38,8 @@ R4 runs on the **live CSWeb** (`csweb.asiansocial.org`). The `010280001` test pr
 | **App to download from server** | **HouseholdSurvey** |
 | **Server address (in CSEntry)** | `https://csweb.asiansocial.org/csweb/api` |
 | **Server login (your own)** | your own CSWeb user — `shan` / `kidd` / `alytest` (Aly) / `aidan` (see §2 / §3) · password *(coordinator shares privately)*. **Not** the shared `setest`. |
-| **Test facility prefix (always use)** | `010280001` (Region I / Ilocos Norte — passes PSGC validation) |
-| **Your QN block (F4)** | `010280001` + **6xx** — your assigned 3-digit block (see §3) |
+| **Test facility prefix (always use)** | `040340002` (Region IV-A / Laguna · Cabuyao City Hospital — passes PSGC validation) |
+| **Your QN block (F4)** | `040340002` + **6xx** — your assigned 3-digit block (see §3) |
 | **What's new to look for** | combined screens · GPS auto-fetch · photo at the end (only if visit happened) · other-specify gating · exclusive-option warning · **household roster** (repeating members) |
 | **Bug repo** | https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues |
 | **Feedback form (one per finding)** | https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/new?template=capi_uat_feedback.yml |
@@ -71,16 +71,18 @@ Play your role like a real field day — you are both the **enumerator** and the
 
 ## 3. Your Test Questionnaire-Number Assignments
 
-The interview opens with a **12-digit Questionnaire Number**: Region(2)–Province(2)–City/Mun(3)–Facility(2)–Case(3). Everyone uses the test prefix **`010280001`**; your **3-digit block** (F4 = `6xx`) keeps your cases from clashing.
+The interview opens with a **12-digit Questionnaire Number**: Region(2)–Province(2)–City/Mun(3)–Facility(2)–Case(3). Everyone uses the test prefix **`040340002`**; your **3-digit block** (F4 = `6xx`) keeps your cases from clashing.
 
 | Tester | CSWeb username | QN block (F4 = `6xx`) | Example cases |
 |---|---|---|---|
-| **Shan** | `shan` | `010280001` + **`600`–`619`** | `010280001600`, `010280001601`, … |
-| **Kidd** | `kidd` | `010280001` + **`620`–`639`** | `010280001620`, … |
-| **Aly** | `alytest` | `010280001` + **`640`–`659`** | `010280001640`, … |
-| **Aidan** | `aidan` | `010280001` + **`660`–`679`** | `010280001660`, … |
+| **Shan** | `shan` | `040340002` + **`600`–`619`** | `040340002600`, `040340002601`, … |
+| **Kidd** | `kidd` | `040340002` + **`620`–`639`** | `040340002620`, … |
+| **Aly** | `alytest` | `040340002` + **`640`–`659`** | `040340002640`, … |
+| **Aidan** | `aidan` | `040340002` + **`660`–`679`** | `040340002660`, … |
 
 > Use a **different last 3 digits for each case**. Coordinator fills the names + blocks above before sending. **Don't reuse another tester's block.**
+
+> **📍 This round is set in Laguna (Cabuyao City Hospital · `040340002`).** Capture each case's GPS **where you actually are, around Los Baños / Laguna** — the test facility is in your province, so a correctly-run case now shows as **correctly located on the CSWeb Map (no "wrong area" flag)**. Keep the team testing from the **same general area** so the Map's location checks stay clean. An outdoor / near-window fix is best; an indoor desk case may leave GPS blank — that's expected, just say so.
 
 ---
 
@@ -104,7 +106,7 @@ For anything wrong, jot **expected** vs **actual**. Wording issues may be survey
 
 - **5A.1 (install CSEntry):** Play Store → **CSEntry** (*U.S. Census Bureau*, free) → open.
 - **5A.2 (download F4):** CSEntry → **add application** (**+** / **⋮**) → **from a CSWeb server** → server `https://csweb.asiansocial.org/csweb/api` → log in with **your own username** (e.g. `shan`, see §3) + password → **HouseholdSurvey** → **download / add**. **Time it.**
-- **5A.3 (start cold):** Tap **HouseholdSurvey** → **new interview** (**+**) → enter QN (`010280001` + your number). Expect **auto-filled Region / Province / City names** (read-only, intended); pick the **Barangay** from the list. Mistyped → *"…not found in PSGC"* → re-enter.
+- **5A.3 (start cold):** Tap **HouseholdSurvey** → **new interview** (**+**) → enter QN (`040340002` + your number). Expect **auto-filled Region / Province / City names** (read-only, intended); pick the **Barangay** from the list. Mistyped → *"…not found in PSGC"* → re-enter.
 
 ### 5B — Full interview under field conditions · `[TC-1 Completed]` `[TC-3 Partial save + resume]` `[Household roster]`
 
@@ -151,7 +153,7 @@ Check these **as you reach them** during 5B.
 - **5E.2 (long text):** Paste ~500 chars → accepted, preserved on reopen + sync.
 - **5E.3 (roster edge):** Try a **1-member** household and (if the instrument allows) a **larger** one — confirm the count drives the block correctly at both ends.
 - **5E.4 (day-later resume):** Partial-save mid-roster, close everything, come back next session, reopen → resumes mid-roster.
-- **5E.5 (bad QN / language):** Number not starting `010280001` → *"…not found in PSGC"* with a clear re-enter path. Optionally switch **language** → translated text appears (note anything untranslated).
+- **5E.5 (bad QN / language):** Number not starting `040340002` → *"…not found in PSGC"* with a clear re-enter path. Optionally switch **language** → translated text appears (note anything untranslated).
 
 ---
 
@@ -167,7 +169,7 @@ Pick **Instrument = F4**, the matching **scenario** from §5, the **result** (Pa
 **Type:** CAPI bug  OR  survey-design/wording question (your best guess)
 **Tester:** ‹your name / initials›
 **Device:** Android tablet (model + Android version) / phone (model) / etc.
-**Questionnaire Number:** 010280001 6xx
+**Questionnaire Number:** 040340002 6xx
 **Household size entered:** N members
 **Question / screen:** (e.g. "roster member 3" / "members count" / "household GPS" / "Result of Visit")
 **Expected:** [what the step says should happen]
@@ -208,7 +210,7 @@ If F4 carries a clean field day here, it walks into the pretest confident. If it
 
 - **Can't connect / download:** check internet; type the server address exactly (`https://…/csweb/api`).
 - **Login fails:** re-type the username (lowercase, no spaces) + password.
-- **"…not found in PSGC":** re-enter the number as `010280001` + your 3 digits (600s).
+- **"…not found in PSGC":** re-enter the number as `040340002` + your 3 digits (600s).
 - **Roster keeps asking / stops early:** note the number of members you entered vs how many it asked, and tell us — that's exactly the kind of thing we're testing.
 - **Old-looking screens (one question per screen):** older version — **⋮ → Update Installed Applications**, or remove and re-add (5A.2).
 - **GPS won't read / Camera won't open:** allow **Location** / **Camera** (Settings → Apps → CSEntry → Permissions); GPS may time out indoors — note it and move on.

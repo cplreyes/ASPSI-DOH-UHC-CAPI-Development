@@ -3,7 +3,7 @@ epic: 4
 title: Backend & Sync Infrastructure
 phase: per-track
 status: in-progress
-last_updated: 2026-05-18
+last_updated: 2026-06-28
 ---
 
 # Epic 4 — Backend & Sync Infrastructure
@@ -12,6 +12,10 @@ Server-side and synchronization layer for both survey tracks: **Apps Script + Cl
 
 **Ties to Product Backlog:** [[../product-backlog#Epic 4 — Backend & Sync Infrastructure|PB Epic 4]]
 **Methodology:** [[../../../../2_Areas/IT-Standards/templates/CAPI-Development-Workflow|CAPI Development Workflow]]
+
+**Current state (2026-06-28):** **PWA backend live** (prod Cloudflare Worker + Apps Script; F2 Admin Portal v2.0.0 in prod). **CSWeb 8.0.1 LIVE on Elestio** (`csweb.asiansocial.org`) with per-instrument dictionaries uploaded, sync proven, **sync/map/case-status dashboards live**, and the **Supervisor hub deployed**. Open: migrate F2 Survey+Admin off Cloudflare/Google to a dedicated **Elestio** instance (planned, 19-task, provisioning-gated); CSWeb backup strategy; CF Pages auto-deploy regression (#34, manual-wrangler workaround).
+
+> **Status update 2026-06-28:** the CSWeb (CAPI) track moved from 'Not Started' to **LIVE** (8.0.1 on Elestio) with dashboards + the Supervisor hub deployed. The next infra item is the F2 → Elestio migration (provisioning-gated).
 
 ## Task conventions
 

@@ -1,0 +1,77 @@
+[FormFile]
+Version=CSPro 8.0
+Name=SYNCSPIKE_FF
+Label=SyncSpike
+DefaultTextFont=-013 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 Arial
+FieldEntryFont=0018 0000 0000 0000 0600 0000 0000 0000 0000 0000 0000 0000 0000 Courier New
+Type=SystemControlled
+  
+[Dictionaries]
+File=.\SyncSpike.dcf
+  
+[Form]
+Name=FORM000
+Label=Case Key
+Level=1
+Size=806,300
+  
+Item=SS_KEY
+  
+[EndForm]
+  
+[Form]
+Name=FORM001
+Label=Sync
+Level=1
+Size=806,300
+  
+Item=SS_MODE
+  
+[EndForm]
+  
+[Level]
+Name=SYNCSPIKE_LEVEL
+Label=SyncSpike Level
+  
+[Group]
+Required=Yes
+Name=IDS0_FORM
+Label=Case Key
+Form=1
+Max=1
+  
+[Field]
+Name=SS_KEY
+Position=350,27,760,47
+Item=SS_KEY,SYNCSPIKE_DICT
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=50,30,330,46
+Text=Case key
+ 
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=SS_REC_FORM
+Label=Sync
+Form=2
+Max=1
+  
+[Field]
+Name=SS_MODE
+Position=350,27,760,47
+Item=SS_MODE,SYNCSPIKE_DICT
+DataCaptureType=TextBox
+Form=2
+  
+[Text]
+Position=50,30,330,46
+Text=Mode: 1=payload  7=HOST(server)  9=CLIENT(connect+PUT)
+ 
+  
+[EndGroup]
+  

@@ -12,6 +12,7 @@ Run:
     python generate_dcf.py        # writes PatientSurvey.dcf next to this file
 """
 
+import re
 import sys
 from pathlib import Path
 
@@ -27,6 +28,139 @@ from cspro_helpers import (
 )
 
 
+def _cb_codes(options):
+    """#529: re-code a select_all option list for checkbox_multiselect — real
+    options -> 01,02,...; 'Other (specify)' -> 99; a standalone exclusive option
+    ('None…', 'No initiatives', 'I don't know') -> 90. Fixed-width 2-char codes in
+    the 9x range for specials so pos() membership tests can't false-match (matches
+    the Q148 convention). The 01.. order is preserved, so any gate logic that
+    references option N by position stays valid. Ported from F1's generate_dcf.py
+    for the 13-question F3 select_all -> Check Box conversion.
+
+    F3 fix vs the F1 original: the don't-know exclusive is matched as a (near-)whole
+    option phrase, NOT as a substring. F3 carries substantive options that merely
+    CONTAIN 'don't know' — Q65 'I don't know where to go for care', Q171 'Don't know
+    how to get to facility' — which F1's `"don't know" in low` substring test wrongly
+    collapsed to the exclusive code 90 (two options -> same code; a real reason lost).
+    Whole-phrase matching keeps those as ordinary 01.. options."""
+    out, n = [], 0
+    for text, _ in options:
+        low = text.strip().lower()
+        # normalised phrase (strip leading 'i ', trailing punctuation) for the
+        # don't-know exclusive test — must be the WHOLE option, not a prefix of a
+        # longer reason like "I don't know where to go for care".
+        norm = re.sub(r"\s+", " ", low).strip().rstrip(".").strip()
+        norm = re.sub(r"^i\s+", "", norm)
+        is_dont_know = norm in ("don't know", "dont know")
+        # #673: match the 'Other (specify)' box by the 'specif' marker ONLY — NOT by a bare
+        # 'other' prefix. A substantive option that merely STARTS with 'Other' (Q85 'Other
+        # infection (e.g. urine, skin...)') is not the specify box; the old startswith('other')
+        # test collided it onto code 99, duplicating the Other-specify code and mis-firing the
+        # pos("99", base) _OTHER_TXT gate. Every real Other-specify box contains 'specify'.
+        if "specif" in low:
+            out.append((text, "99"))
+        elif low.startswith(("none", "no initiative")) or is_dont_know:
+            out.append((text, "90"))
+        else:
+            n += 1
+            out.append((text, f"{n:02d}"))
+    return out
+
+
+def _build_payment_roster(record_name, label, q_no, payment_src, amt_codes,
+                          record_type, src_label, amt_label, amt_length=8,
+                          display_no=None):
+    """Option B payment-matrix roster (pilot 2026-06-18). One occurrence per ticked
+    source code from the question's CheckBox field; renders as a grid (source | amount).
+    Fields:
+      <q>_PAY_LINE  numeric 1  — auto = curocc(); auto-ends the roster (apc preproc).
+      <q>_PAY_SRC   numeric 2  — auto-set to the curocc()-th ticked source, protected.
+      <q>_PAY_AMT   numeric N  — peso amount; the apc preproc zeroes it for source codes
+                                 NOT in amt_codes (so only money sources prompt an amount;
+                                 free / charged-to-X / DK rows default 0 but stay enterable).
+    `amt_length` matches the matrix it replaces (Section G = 8, Section H bills = 9).
+    max_occurs = number of sources. The driving CheckBox field (<q>_SOURCES) lives in
+    the host section record; this roster record is spliced into the dictionary's record
+    list immediately after it so the grid renders right after the tick-list.
+    `amt_codes` is carried for documentation/symmetry; the apc owns the gate logic."""
+    # #751: field NAMES can't carry a dot, so the decimal questions use q_no 971/972;
+    # the DISPLAYED row number must read "97.1"/"97.2", not "971"/"972". display_no
+    # overrides the shown number (SRC/AMT labels already show it via src_label/amt_label).
+    disp = display_no if display_no is not None else str(q_no)
+    items = [
+        numeric(f"Q{q_no}_PAY_LINE", f"{disp} Payment row", length=1),
+        select_one(f"Q{q_no}_PAY_SRC", src_label, payment_src, length=2),
+        numeric(f"Q{q_no}_PAY_AMT", amt_label, length=amt_length),
+    ]
+    # required=False: if (defensively) no source is ticked the apc endgroups at
+    # occurrence 1, leaving 0 rows — required=True would then hard-block at endlevel.
+    return record(record_name, label, record_type, items,
+                  max_occurs=len(payment_src), required=False)
+
+
+def _build_lab_payment_roster(record_name, label, record_type, lab_value_set,
+                              payment_type, max_labs, amt_length=8):
+    """Q94 per-lab payment roster (#450, 2026-06-20). Paper (Apr-20, p.13): "How much was
+    the cost of [laboratory test: ___]? To be asked for EACH lab test ticked in Q93." So the
+    roster repeats once per LAB ticked in Q93_LABS (not per payment source — the earlier
+    Q94_SOURCES build was the wrong axis). Row identity = the lab (auto-set from the
+    curocc()-th ticked Q93 lab, protected; the select_one label shows the test name in the
+    grid's first column). The PAYMENT TYPE is entered per lab; the amount is enterable only
+    for Out-of-pocket(01).
+    Fields:
+      Q94_LAB_LINE  numeric 1  — auto = curocc(); ends the roster (apc preproc).
+      Q94_LAB_CODE  numeric 2  — auto-set to the curocc()-th ticked Q93 lab code, protected.
+      Q94_LAB_PAY   numeric 2  — payment type for this lab (entered; select_one).
+      Q94_LAB_AMT   numeric N  — peso amount; apc gates entry to Out-of-pocket(01) only.
+    max_occurs = max selectable labs (Q93 codes 01..15 + Other 99; None excluded)."""
+    items = [
+        numeric("Q94_LAB_LINE", "94. Lab payment row", length=1),
+        select_one("Q94_LAB_CODE",
+                   "94. Laboratory test (auto-filled from the tests ticked in Q93)",
+                   lab_value_set, length=2),
+        select_one("Q94_LAB_PAY",
+                   "94. How was the cost of this laboratory test paid?",
+                   payment_type, length=2),
+        numeric("Q94_LAB_AMT",
+                "94. How much was the cost of this laboratory test? (amount paid out-of-pocket, Pesos)",   # #777: lead with 'How much was the cost' per paper + tester
+                length=amt_length),
+    ]
+    # required=False: if (defensively) only None is ticked the apc endgroups at occurrence
+    # 1, leaving 0 rows — required=True would then hard-block at endlevel.
+    return record(record_name, label, record_type, items,
+                  max_occurs=max_labs, required=False)
+
+
+def _split_host_with_rosters(host_base, host_label, host_type, items,
+                             roster_specs, cont_types):
+    """Fan-out helper (2026-06-19): split ONE host section's item list around every
+    `_SOURCES` CheckBox in `roster_specs`, interleaving each roster record right after
+    its driving CheckBox — the generalisation of the hand-written Q92/Q97.1 split.
+
+    `roster_specs` maps a `_SOURCES` field name -> a built roster record dict (from
+    `_build_payment_roster`). The CheckBox itself stays in the host fragment that ends
+    at it; the roster grid renders next; the following items go into the next host
+    continuation fragment. `cont_types` is the list of free record-type letters for the
+    host continuation fragments (one per split AFTER the first). Returns the ordered
+    record list [host, roster, host_2, roster, host_3, ...]."""
+    # canonical positions of each split field, in item order
+    cuts = sorted((next(i for i, it in enumerate(items) if it["name"] == src) + 1, src)
+                  for src in roster_specs)
+    out, start, frag = [], 0, 0
+    for cut_at, src in cuts:
+        if frag == 0:
+            out.append(record(host_base, host_label, host_type, items[start:cut_at]))
+        else:
+            out.append(record(f"{host_base}_{frag + 1}", f"{host_label} (cont.{'' if frag == 1 else ' ' + str(frag)})",
+                              cont_types[frag - 1], items[start:cut_at]))
+        out.append(roster_specs[src])
+        start, frag = cut_at, frag + 1
+    # trailing fragment after the last roster
+    out.append(record(f"{host_base}_{frag + 1}", f"{host_label} (cont.{'' if frag == 1 else ' ' + str(frag)})",
+                      cont_types[frag - 1], items[start:]))
+    return out
+
+
 # ============================================================
 # FIELD CONTROL — paper FC block + PATIENT_TYPE (OP/IP routing gate)
 # ============================================================
@@ -39,6 +173,31 @@ def build_f3_field_control():
     extra = [
         numeric("PATIENT_TYPE", "Type of Patient", length=1,
                 value_set_options=[("Outpatient", "1"), ("Inpatient", "2")]),
+        # #515 break-off control — shares the case-start (PATIENT_TYPE) screen, so
+        # it sits in the case tree from the very first field. Its postproc routes a
+        # non-Continue choice straight to the closing Result-of-Visit, letting the
+        # enumerator end a withdrawn/postponed interview without walking every
+        # required question. Default "Continue" is set in logic (BREAKOFF preproc).
+        numeric("BREAKOFF",
+                "Interview status (leave as Continue unless ending the interview early)",
+                length=1,
+                value_set_options=[
+                    ("Continue interview",        "1"),
+                    ("Respondent withdrew",       "2"),
+                    ("Postponed / reschedule",    "3"),
+                    ("Stop — other (incomplete)", "4"),
+                ]),
+        # #561 completeness sentinel — OFF-FORM, set in logic only: 0 In progress at
+        # case open, 1 Completed when the Result-of-Visit finalises to a completed
+        # code, 2 Partial/broke-off otherwise. Lets the Supervisor App + CSWeb exports
+        # tell complete from partial even for a force-quit case (which never reaches
+        # the closing form, so it stays 0). See docs/.../supervisor-app-design.md.
+        numeric("CASE_DISPOSITION", "Case disposition (auto)", length=1,
+                value_set_options=[
+                    ("In progress",             "0"),
+                    ("Completed",               "1"),
+                    ("Partial / not completed", "2"),
+                ]),
     ]
     return build_field_control(survey_code="F3", extra_items=extra + derived_geo_code_items(),
                                date_label_entity="the Patient",
@@ -180,14 +339,33 @@ def build_section_b():
         ("Unemployed and looking for work",                    "08"),
         ("Unemployed and not looking for work",                "09"),
         ("I don't know",                                       "99"),
+        # #545 (Carl go/no-go 2026-06-20): 'Not Applicable' for patients with no income source
+        # — e.g. a minor / not-yet-working-age patient. Code 98 (special, outside the 1-5
+        # working-category range used by the Q16/Q17 employment-consistency check, so it does
+        # not affect that check). Q18 household-income still applies (household-level, not
+        # personal), so no Q18 skip is added.
+        # #760: display "I don't know" before "Not Applicable" (match Q16 order, per tester);
+        # codes unchanged (NA=98, DK=99) so no data / consistency-check impact.
+        ("Not Applicable",                                     "98"),
     ]
+    # #631 (ASPSI updated questionnaire, 2026-06-17): income categories revised to
+    # 11 contiguous 50k bands (was 6 uneven bands). 2-digit codes (field length 2).
+    # NOTE: the tester's printed "150,000 - 199,000" is a transcription typo —
+    # corrected to 199,999 to keep the bands contiguous and non-overlapping with the
+    # 200,000 band (every other band ends in 9,999). Flagged for ASPSI confirmation.
     Q18_BRACKET = [
-        ("Under 40,000",      "1"),
-        ("40,000 - 59,999",   "2"),
-        ("60,000 - 99,999",   "3"),
-        ("100,000 - 249,999", "4"),
-        ("250,000 - 499,999", "5"),
-        ("500,000 and over",  "6"),
+        ("Under 50,000",      "01"),
+        ("50,000 - 99,999",   "02"),
+        ("100,000 - 149,999", "03"),
+        ("150,000 - 199,999", "04"),
+        ("200,000 - 249,999", "05"),
+        ("250,000 - 299,999", "06"),
+        ("300,000 - 349,999", "07"),
+        ("350,000 - 399,999", "08"),
+        ("400,000 - 449,999", "09"),
+        ("450,000 - 499,999", "10"),
+        ("500,000 and above", "11"),
+        ("Don't know",        "99"),   # #398: respondent doesn't know even the estimate; out-of-range so the bracket<->amount + SEC cross-checks bypass it
     ]
     Q23_WATER = [
         ("Faucet inside the house", "1"),
@@ -207,7 +385,9 @@ def build_section_b():
         ("Class A or B (working professionals or with a business with several assets)",       "1"),
         ("Class C (working professionals with permanent or semi-permanent income and some assets)", "2"),
         ("Class D or E (semi-permanent workers or informal sector workers with little to no assets)", "3"),
-        ("I don't know",                                                                       "4"),
+        # #762 missing-value standard: relabel DK + add Refuse, both [DO NOT READ OUT LOUD].
+        ("I don't know [DO NOT READ OUT LOUD]",                                                "4"),
+        ("Refuse to answer [DO NOT READ OUT LOUD]",                                            "5"),
     ]
     Q30_IP = [
         ("Yes", "1"),
@@ -276,11 +456,12 @@ def build_section_b():
                    Q17_INCOME_SOURCE, length=2),
         numeric("Q18_INCOME_AMOUNT",
                 "18. In the past 6 months, what is the patient's average monthly household income? "
-                "Please specify in Philippine pesos. — Approximate amount",
+                "Please specify in Philippine pesos. — Approximate amount "
+                "(enter -98 if the patient doesn't know, or -99 if they refuse to answer — do not read these codes aloud)",
                 length=8),
         select_one("Q18_INCOME_BRACKET",
                    "18. Income category corresponding to the respondent's approximate household income",
-                   Q18_BRACKET, length=1),
+                   Q18_BRACKET, length=2),   # #631: 11 brackets -> 2-digit codes
         numeric("Q19_HH_SIZE",
                 "19. How many total individuals (including children) live in the patient's house now?",
                 length=2),
@@ -363,10 +544,12 @@ def build_section_c():
         select_one("Q35_UHC_HEARD",
                    "35. Have you heard about Universal Health Care (UHC) prior to this survey?",
                    Q35_OPTIONS, length=1),
-        *select_all("Q36_UHC_SOURCE",
-                    "36. What is your source of information about UHC?", Q36_SOURCE),
-        *select_all("Q37_UHC_UNDERSTAND",
-                    "37. What is your understanding about UHC?", Q37_UNDERSTANDING),
+        *checkbox_multiselect("Q36_UHC_SOURCE",
+                    "36. What is your source of information about UHC?",
+                    _cb_codes(Q36_SOURCE), with_other_txt=True),
+        *checkbox_multiselect("Q37_UHC_UNDERSTAND",
+                    "37. What is your understanding about UHC?",
+                    _cb_codes(Q37_UNDERSTANDING), with_other_txt=True),
     ]
     return record("C_UHC_AWARENESS",
                   "C. Awareness on Universal Health Care (UHC)", "E", items)
@@ -378,9 +561,30 @@ def build_section_c():
 
 def build_section_d():
     Q38_REGISTERED = [
-        ("Yes",          "1"),
-        ("No",           "2"),  # proceed to Q43
-        ("I don't know", "3"),  # proceed to Q43
+        ("Yes",          "1"),  # #764: -> Q38.1 (PIN timing) -> Q39
+        ("No",           "2"),  # #764: -> Q38.2 (why not registered) -> Q43
+        ("I don't know", "3"),  # #764: -> Q43 directly
+    ]
+    # #764: Q38.1 PhilHealth-PIN registration timing (Yes-only). Mirrors F4 Q45.1.
+    Q38_1_WHEN = [
+        ("Within the past year",                  "1"),
+        ("Within the last 2-3 years",             "2"),
+        ("Within the last 4-5 years",             "3"),
+        ("Over 5 years",                          "4"),
+        ("I don't know [DO NOT READ OUT LOUD]",   "5"),
+    ]
+    # #764: Q38.2 why-not-registered (No-only), SELECT ALL THAT APPLY -> Check Box. Mirrors
+    # F4 Q45.2 options but multi-select per the F3 tester request.
+    Q38_2_WHY_NOT = [
+        ("Difficult to register",                                    "01"),
+        ("Don't see value in registering",                           "02"),
+        ("Don't know how to register",                               "03"),
+        ("Don't know what PhilHealth is",                            "04"),
+        ("A family member is currently registered with PhilHealth",  "05"),
+        ("Currently unemployed",                                     "06"),
+        ("No time to register",                                      "07"),
+        ("No valid ID to register",                                  "08"),
+        ("Other (specify)",                                          "99"),
     ]
     REG_ACTOR = [
         ("PhilHealth representative",    "01"),
@@ -471,6 +675,18 @@ def build_section_d():
         select_one("Q38_PHILHEALTH_REG",
                    "38. Are you currently registered with PhilHealth?",
                    Q38_REGISTERED, length=1),
+        # #764: Q38.1 asked ONLY when Q38 = Yes (apc preproc gate skips it otherwise);
+        # after it, flow falls through to Q39. SELECT ONE ANSWER ONLY.
+        select_one("Q38_1_PIN_WHEN",
+                   "38.1. When did you register and receive your PhilHealth PIN? "
+                   "(Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                   Q38_1_WHEN, length=1),
+        # #764: Q38.2 asked ONLY when Q38 = No (CHECKBOX_CONVERT gate); after it, skip to Q43.
+        # READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.
+        *checkbox_multiselect("Q38_2_WHY_NOT_REG",
+                    "38.2. Why are you not registered? READ OPTIONS OUT LOUD. "
+                    "SELECT ALL THAT APPLY.",
+                    _cb_codes(Q38_2_WHY_NOT), with_other_txt=True),
         select_one("Q39_HOW_FIND_OUT",
                    "39. How did you find out about how to register for PhilHealth?",
                    REG_ACTOR, length=2),
@@ -483,8 +699,9 @@ def build_section_d():
               "40. Who assisted — Other (specify) text", length=120),
         yes_no("Q41_REG_DIFFICULTY",
                "41. Did you have any difficulties in the registration process?"),
-        *select_all("Q42_DIFFICULTY",
-                    "42. What did you find difficult about the process?", Q42_DIFFICULTY),
+        *checkbox_multiselect("Q42_DIFFICULTY",   # #635: select_all -> Check Box (tick-all)
+                    "42. What did you find difficult about the process?",
+                    _cb_codes(Q42_DIFFICULTY), with_other_txt=True),
         yes_no("Q43_KNOWS_ASSIST",
                "43. Would you know where to go to seek assistance during registration?"),
         select_one("Q44_WHERE_ASSIST",
@@ -497,9 +714,9 @@ def build_section_d():
                    Q45_CATEGORY, length=2),
         alpha("Q45_CATEGORY_OTHER_TXT",
               "45. Category — Other (specify) text", length=120),
-        *select_all("Q46_BENEFITS",
+        *checkbox_multiselect("Q46_BENEFITS",
                     "46. What are some of the benefits that come with being a PhilHealth member?",
-                    Q46_BENEFITS),
+                    _cb_codes(Q46_BENEFITS), with_other_txt=True),
     ]
     for name, label in Q47_PACKAGES:
         items.append(yes_no(name, label))
@@ -508,12 +725,14 @@ def build_section_d():
                    "48. Do you pay PhilHealth premiums every month?", Q48_PAY, length=1),
         yes_no("Q49_PREMIUM_DIFFICULT",
                "49. Do you find it difficult to pay your PhilHealth premium every month?"),
-        *select_all("Q50_DIFFICULTY_PAYING",
-                    "50. Why did you find it difficult?", Q50_DIFFICULTY_PAYING),
+        *checkbox_multiselect("Q50_DIFFICULTY_PAYING",   # #639: select_all -> Check Box (tick-all)
+                    "50. Why did you find it difficult?",
+                    _cb_codes(Q50_DIFFICULTY_PAYING), with_other_txt=True),
         yes_no("Q51_OTHER_INSURANCE",
                "51. Are you registered with another health insurance plan?"),
-        *select_all("Q52_PLANS",
-                    "52. Which health insurance plan/s are you enrolled in?", Q52_PLANS),
+        *checkbox_multiselect("Q52_PLANS",   # #640: select_all -> Check Box (tick-all)
+                    "52. Which health insurance plan/s are you enrolled in?",
+                    _cb_codes(Q52_PLANS), with_other_txt=True),
     ])
     return record("D_PHILHEALTH_REG",
                   "D. PhilHealth Registration and Health Insurance", "F", items)
@@ -525,18 +744,28 @@ def build_section_d():
 
 def build_section_e():
     Q54_PROVIDER = [
-        ("General practitioner",                    "1"),
-        ("Specialty Care Provider/ Specialist",     "2"),
+        # #787 (R5): inline definitions appended per tester (codes unchanged -> no data impact).
+        ("General practitioner (a doctor who is qualified for medical practice)",                       "1"),
+        ("Specialty Care Provider/ Specialist (a doctor with more expertise in specific areas of health)", "2"),
         ("Both",                                    "3"),
         ("Other (specify)",                         "4"),
         ("None",                                    "5"),
+        # #729 (tester/Carl, reverses #412): 'None' re-added as an explicit no-type escape.
+        # Appended as code 5 so "Other (specify)" stays code 4 (the dcf-driven other-specify
+        # gate on Q54_PCP_TYPE_OTHER_TXT is undisturbed). Q53=No still skips Q54->Q63; None here
+        # is for a Q53=Yes respondent who has no fitting provider type. No special routing —
+        # falls through to Q55 like the other answers.
     ]
+    # #767 (R5): split the generic 'Teleconsultation' option into the three teleconsult
+    # sub-modes, each labeled 'Teleconsultation: <mode>'. _cb_codes renumbers in list order
+    # -> 01=Face-to-face, 02=Cellphone, 03=Landline, 04=Video Conference; the Q60/Q62 gates
+    # fire when ANY teleconsult code (02/03/04) is ticked. (Was 5 options: a bare
+    # 'Teleconsultation' + standalone Landline/Cellphone/Video — ASPSI-requested rewording.)
     COMM_MODES = [
-        ("Face-to-face",      "1"),
-        ("Teleconsultation",  "2"),
-        ("Landline",          "3"),
-        ("Cellphone",         "4"),
-        ("Video Conference",  "5"),
+        ("Face-to-face",                       "1"),
+        ("Teleconsultation: Cellphone",        "2"),
+        ("Teleconsultation: Landline",         "3"),
+        ("Teleconsultation: Video Conference", "4"),
     ]
     Q65_WHY_NOT = [
         ("I don't get sick",                   "1"),
@@ -615,6 +844,10 @@ def build_section_e():
     Q77_KON_REGISTERED = [
         ("Yes",                         "1"),
         ("No",                          "2"),  # proceed to Q82
+        # #770 (R5): 'I've never heard of it' (3) RESTORED to the paper value set + routes to Q83,
+        # reversing #430's removal. ASPSI tester re-requested it (matches spec §4 line 270).
+        # Note for ASPSI: Q77 is only reached when Q74=Yes (has heard of YAKAP/Konsulta), so (3) is
+        # logically redundant here — restored per tester + paper; downstream cleanup is ASPSI's call.
         ("I've never heard of it",      "3"),  # proceed to Q83
         ("I don't know",                "4"),  # proceed to Q83
     ]
@@ -652,31 +885,35 @@ def build_section_e():
         yes_no("Q57_WAIT_CONVENIENT",
                "57. Is the usual wait for setting an appointment with your main primary care provider "
                "convenient for you?"),
+        # #766 (R5): match PAPI wording (facility-name fill + days/minutes tabs retained).
         numeric("Q58_WAIT_DAYS",
-                "58. Wait time to set appointment with main primary care provider — Days", length=3),
+                "58. What is your waiting time, in days and/or minutes to set an appointment with "
+                "your main primary care provider ([facility_name_input])? — Days", length=3),
         numeric("Q58_WAIT_MINUTES",
-                "58. Wait time to set appointment with main primary care provider — Minutes", length=4),
-        *select_all("Q59_SCHED_COMM",
+                "58. What is your waiting time, in days and/or minutes to set an appointment with "
+                "your main primary care provider ([facility_name_input])? — Minutes", length=4),
+        *checkbox_multiselect("Q59_SCHED_COMM",   # #669: select_all -> Check Box (tick-all)
                     "59. What mode/s of communication was/were available to you when scheduling a "
-                    "consultation with your main primary care provider?", COMM_MODES),
+                    "consultation with your main primary care provider?", _cb_codes(COMM_MODES)),
         yes_no("Q60_SCHED_TELECON_OK",
                "60. If teleconsultation was available, did you succeed in using the teleconsult? (scheduling)"),
-        *select_all("Q61_CONSULT_COMM",
+        *checkbox_multiselect("Q61_CONSULT_COMM",   # #669: select_all -> Check Box (tick-all)
                     "61. What mode/s of communication was/were available to you when consulting with "
-                    "your main primary care provider?", COMM_MODES),
+                    "your main primary care provider?", _cb_codes(COMM_MODES)),
         yes_no("Q62_CONSULT_TELECON_OK",
                "62. If teleconsultation was available, did you succeed in using the teleconsult? (consultation)"),
         yes_no("Q63_HAS_USUAL_FACILITY",
                "63. In the past 12 months, do you have a clinic, or health center that you usually go to?"),
         alpha("Q64_FACILITY_NAME",
               "64. What is the name of the facility?", length=120),
-        *select_all("Q65_WHY_NO_USUAL",
+        *checkbox_multiselect("Q65_WHY_NO_USUAL",
                     "65. If none, why do you not have a usual clinic, or health center that you usually go to?",
-                    Q65_WHY_NOT),
+                    _cb_codes(Q65_WHY_NOT), with_other_txt=True),
         yes_no("Q66_SAME_AS_USUAL",
                "66. Is [facility_name_input] the facility you usually go to for general health concerns?"),
-        *select_all("Q67_WHY_THIS_FACILITY",
-                    "67. Why did you go to this facility instead of your usual facility?", Q67_WHY_THIS),
+        *checkbox_multiselect("Q67_WHY_THIS_FACILITY",
+                    "67. Why did you go to this facility instead of your usual facility?",
+                    _cb_codes(Q67_WHY_THIS), with_other_txt=True),
         # select_all() above already emits the canonical Q67_WHY_THIS_FACILITY_OTHER_TXT
         # (gated on the 'Other' option flag). A second standalone Q67_WHY_THIS_OTHER_TXT used to
         # live here — a duplicate with no option flag, i.e. an ungated free-text box on the form.
@@ -692,9 +929,9 @@ def build_section_e():
         numeric("Q69_USUAL_TRAVEL_MM",
                 "69. How long does it take you to travel to the health facility you usually go to — Minutes",
                 length=2),
-        *select_all("Q70_USUAL_TRANSPORT",
+        *checkbox_multiselect("Q70_USUAL_TRANSPORT",   # #670: select_all -> Check Box (tick-all)
                     "70. What mode/s of transportation do you use when travelling to the health facility "
-                    "that you usually go to?", TRANSPORT),
+                    "that you usually go to?", _cb_codes(TRANSPORT), with_other_txt=True),
         select_one("Q71_NEAREST_TYPE",
                    "71. What is the type of the primary care facility nearest to your house?",
                    Q71_NEAREST_TYPE, length=1),
@@ -706,17 +943,17 @@ def build_section_e():
         numeric("Q72_NEAREST_TRAVEL_MM",
                 "72. How long does it take you to travel from your house when going to the nearest "
                 "primary care facility? — Minutes", length=2),
-        *select_all("Q73_NEAREST_TRANSPORT",
+        *checkbox_multiselect("Q73_NEAREST_TRANSPORT",   # #670: select_all -> Check Box (tick-all)
                     "73. What mode/s of transportation do you use when travelling to the nearest "
-                    "primary care facility?", TRANSPORT),
+                    "primary care facility?", _cb_codes(TRANSPORT), with_other_txt=True),
         yes_no("Q74_KON_HEARD",
                "74. Have you heard of the term \"YAKAP/ Konsulta package\"?"),
-        *select_all("Q75_KON_SOURCE",
+        *checkbox_multiselect("Q75_KON_SOURCE",   # #671: select_all -> Check Box (tick-all)
                     "75. What are your sources of information about the YAKAP/Konsulta package?",
-                    Q75_KON_SOURCE),
-        *select_all("Q76_KON_UNDERSTAND",
+                    _cb_codes(Q75_KON_SOURCE), with_other_txt=True),
+        *checkbox_multiselect("Q76_KON_UNDERSTAND",
                     "76. What is your understanding about the YAKAP/Konsulta package?",
-                    Q76_KON_UNDERSTAND),
+                    _cb_codes(Q76_KON_UNDERSTAND), with_other_txt=True),
         select_one("Q77_KON_REGISTERED",
                    "77. Are you registered with a YAKAP/Konsulta package provider?",
                    Q77_KON_REGISTERED, length=1),
@@ -730,9 +967,9 @@ def build_section_e():
                "YAKAP/Konsulta package provider?"),
         yes_no("Q81_KON_APPT_CHECKUP",
                "81. Was that appointment for a general check-up (i.e. not related to an illness or injury)?"),
-        *select_all("Q82_KON_WHY_NOT_REG",
+        *checkbox_multiselect("Q82_KON_WHY_NOT_REG",   # #671: select_all -> Check Box (tick-all)
                     "82. Why are you NOT registered with a YAKAP/Konsulta package provider?",
-                    Q82_WHY_NOT_REG),
+                    _cb_codes(Q82_WHY_NOT_REG), with_other_txt=True),
     ]
     return record("E_PRIMARY_CARE",
                   "E. Primary Care Utilization", "G", items)
@@ -796,6 +1033,7 @@ def build_section_f():
         ("Had any minor procedure/surgery done",                                              "08"),
         ("Picked up medical certificate/other administration",                                "09"),
         ("Was admitted for confinement",                                                      "10"),
+        ("Other (Specify)",                                                                   "99"),   # #438: none-of-the-above escape (e.g. came for a consult but couldn't see the doctor)
     ]
     Q87_OTHER_ACTIONS = [
         ("Visited other healthcare facility",                                                 "1"),
@@ -821,15 +1059,16 @@ def build_section_f():
                    Q84_SERVICE, length=1),
         alpha("Q84_SERVICE_TYPE_OTHER_TXT",
               "84. Service type — Other (specify) text", length=120),
-        *select_all("Q85_CONDITIONS",
+        *checkbox_multiselect("Q85_CONDITIONS",   # #673: select_all -> Check Box (tick-all)
                     "85. What condition/s do/es the patient usually visit the facility for?",
-                    Q85_CONDITIONS),
-        *select_all("Q86_VISIT_EVENTS",
+                    _cb_codes(Q85_CONDITIONS), with_other_txt=True),
+        *checkbox_multiselect("Q86_VISIT_EVENTS",   # #673: select_all -> Check Box (tick-all)
                     "86. Which of the following happened during the patient's most recent visit?",
-                    Q86_VISIT_EVENTS),
-        *select_all("Q87_OTHER_ACTIONS",
+                    _cb_codes(Q86_VISIT_EVENTS), with_other_txt=True),   # #438: + 'Other (Specify)'
+        *checkbox_multiselect("Q87_OTHER_ACTIONS",   # #673: select_all -> Check Box (tick-all)
                     "87. Apart from this visit, has the patient done anything else to improve "
-                    "his/her health condition or address his/her health concern?", Q87_OTHER_ACTIONS),
+                    "his/her health condition or address his/her health concern?",
+                    _cb_codes(Q87_OTHER_ACTIONS), with_other_txt=True),
     ]
     return record("F_HEALTH_SEEKING",
                   "F. Patient's Health-Seeking Behavior", "H", items)
@@ -898,11 +1137,21 @@ def build_section_g():
         ("Donation",                             "07"),
         ("Don't know",                           "08"),
     ]
-    Q971_EXPENSES = [
-        ("Consultation Fee",                          "1"),
-        ("Medical equipment or supplies",             "2"),
-        ("Non-medical expenses (e.g. Hygiene kit)",   "3"),
-        ("Other expenses",                            "4"),
+    # Q97.1 — Option B (2-form flat) pilot (2026-06-19). WAS a per-option Yes/No +
+    # gated _AMT loop (one field per screen, ~8 screens). NOW a single CheckBox
+    # "tick all that apply" (Q971_SOURCES) on one screen, then the four amount boxes
+    # on ONE shared screen (non-ticked options protected+zeroed by the apc, NOT
+    # skipped — so no skip boundary fragments the amounts' DisplayTogether block).
+    # 2-char codes 01..04 so pos("0n", Q971_SOURCES) lines up with Q971_n_AMT; Other
+    # is 04 (kept numeric, NOT recoded to 99) so the n<->amount mapping is 1:1. The
+    # 'Other expenses' specify text (Q971_OTHER_TXT) is gated on pos("04",...) by a
+    # bespoke apc PROC and emitted AFTER the amounts so the four amounts stay a strictly
+    # consecutive run that the Q971_AMOUNTS named block can match.
+    Q971_SOURCES = [
+        ("Consultation Fee",                          "01"),
+        ("Medical equipment or supplies",             "02"),
+        ("Non-medical expenses (e.g. Hygiene kit)",   "03"),
+        ("Other expenses",                            "04"),
     ]
     Q972_EXPENSES = [
         ("a) Consultation Fee",                             "1"),
@@ -947,10 +1196,11 @@ def build_section_g():
         ("Other (specify)",                                                   "5"),
     ]
     Q103_BUCAS_SERVICES = [
-        ("Medical consultation for urgent or minor conditions",               "1"),
+        # #789: inline definitions appended per tester (codes unchanged -> no data impact).
+        ("Medical consultation for urgent or minor conditions (e.g., fevers, flu-like symptoms, Urinary tract infections (UTIs), sprains, small burns, etc.)", "1"),
         ("Outpatient or ambulatory care services",                            "2"),
         ("Basic diagnostic services (e.g., laboratory tests, X-ray)",         "3"),
-        ("Minor procedures or treatments",                                    "4"),
+        ("Minor procedures or treatments (e.g., wound suturing, biopsies, and other conditions requiring minimal anesthesia and a short recovery time)", "4"),
         ("Referral to higher-level health facilities",                        "5"),
         ("I don't know",                                                      "6"),
         ("Other (specify)",                                                   "7"),
@@ -971,69 +1221,114 @@ def build_section_g():
               "88. Why visit — Other (specify) text", length=120),
         yes_no("Q89_ADVISED_ADMIT",
                "89. Were you advised for hospitalization / to be admitted in the hospital?"),
-        *select_all("Q90_NOT_CONFINED",
+        *checkbox_multiselect("Q90_NOT_CONFINED",   # #673: select_all -> Check Box (tick-all)
                     "90. What were the reasons why you were not confined/ admitted in a hospital/clinic?",
-                    Q90_NOT_CONFINED),
+                    _cb_codes(Q90_NOT_CONFINED), with_other_txt=True),
         yes_no("Q91_USUAL_OUTPATIENT",
                "91. Do you usually avail consultation services for outpatient care?"),
     ]
-    # Q92 consultation cost — payment-source matrix
-    for label, code in Q92_PAYMENT_SRC:
-        items.append(yes_no(f"Q92_PAY_{code}", f"92. Cost of consultation — {label}"))
-        items.append(numeric(f"Q92_PAY_{code}_AMT",
-                             f"92. Cost of consultation — {label} (Amount in Pesos)", length=8))
+    # Q92 consultation cost — Option B ROSTER redesign (pilot, 2026-06-18).
+    # WAS a flat 8-source Yes/No matrix + per-source _AMT (#446). NOW a single CheckBox
+    # "which sources paid" (Q92_SOURCES) feeding a repeating roster (Q92_PAY_ROSTER —
+    # one row per ticked source, amount inline). Only Out-of-pocket(01) + Donation(02)
+    # carry an amount; the roster's apc preproc protects+zeroes the amount for every
+    # other source code. The roster record is spliced into the dictionary record list
+    # right after this (split) record — see the return below.
+    # #781 (ASPSI 2026-06-25): In-kind(07) is a peso-amount source for Q92 — added to the
+    # money set (apc Q92_PAY_AMT gate owns the logic; this set is documentation-only).
+    Q92_AMT_CODES = {"01", "02", "07"}
+    items.extend(checkbox_multiselect(
+        "Q92_SOURCES",
+        "92. Which of the following did you use to pay for the cost of consultation? "
+        "(Tick all that apply.)",
+        Q92_PAYMENT_SRC, with_other_txt=False))
     items.extend([
-        *select_all("Q93_LABS",
+        *checkbox_multiselect("Q93_LABS",   # #673: select_all -> Check Box (tick-all)
                     "93. Did you have any of the following laboratory tests done during your outpatient care?",
-                    Q93_LABS),
-        alpha("Q93_LABS_OTHER_TXT",
-              "93. Lab tests — Other, specify text", length=120),
+                    _cb_codes(Q93_LABS), with_other_txt=True),
+        # NOTE: checkbox_multiselect(with_other_txt=True) auto-emits Q93_LABS_OTHER_TXT
+        # (gated on pos("99", base)); the old standalone alpha("Q93_LABS_OTHER_TXT") was
+        # removed to avoid a duplicate dcf item (#673).
     ])
-    # Q94 lab test cost — payment-source matrix (aggregate; spec asks per-test roster)
-    for label, code in Q92_PAYMENT_SRC:
-        items.append(yes_no(f"Q94_PAY_{code}",
-                            f"94. Cost of laboratory test/s — {label}"))
-        items.append(numeric(f"Q94_PAY_{code}_AMT",
-                             f"94. Cost of laboratory test/s — {label} (Amount in Pesos)", length=8))
+    # Q94 lab test cost — PER-LAB roster rebuild (#450, 2026-06-20). The Apr-20 paper (p.13)
+    # asks Q94 ONCE PER LAB ticked in Q93 ("How much was the cost of [laboratory test]? To be
+    # asked for each lab test ticked in Q93."), NOT one aggregate payment. The old Q94_SOURCES
+    # CheckBox (a by-source roster) was the wrong axis and is removed; Q94 is now
+    # Q94_LAB_ROSTER, driven by the Q93_LABS ticks and spliced in right after the Q93 block
+    # (see g_rosters below). Payment options per the paper (7 — no Donation; only OOP carries
+    # an amount).
+    Q94_PAYMENT_TYPE = [
+        ("Out-of-pocket",                     "01"),
+        ("Free/no cost",                      "02"),
+        ("Free, charge to PhilHealth",        "03"),
+        ("Free, charge to Private Insurance", "04"),
+        ("Free, charge to HMO",               "05"),
+        ("In kind",                           "06"),
+        ("Don't know",                        "07"),
+    ]
+    # Q94_LAB_CODE value set = the Q93 lab options recoded the same way as the Q93_LABS
+    # CheckBox (01..15 labs, Other 99; None 90 excluded — None has no Q94 row). The
+    # select_one label shows the test name in the roster's first column.
+    Q94_LAB_VALUE_SET = [(lbl, c) for lbl, c in _cb_codes(Q93_LABS) if c != "90"]
     items.extend([
         yes_no("Q95_PRESCRIBED",
                "95. Were you prescribed medicine/s after your check-up?"),
     ])
-    # Q96 prescribed meds cost — payment-source matrix
-    for label, code in Q96_MEDS_PAY:
-        items.append(yes_no(f"Q96_PAY_{code}",
-                            f"96. Amount spent for prescribed medicines — {label}"))
-        items.append(numeric(f"Q96_PAY_{code}_AMT",
-                             f"96. Amount spent for prescribed medicines — {label} (Amount in Pesos)",
-                             length=8))
+    # Q96 prescribed meds cost — Option B ROSTER fan-out (#675, 2026-06-19). WAS a flat
+    # 8-source Yes/No matrix where only Out-of-pocket(01) + In-kind(06) + Donation(07)
+    # carried an amount (#453). NOW a CheckBox (Q96_SOURCES, the 8 Q96_MEDS_PAY codes)
+    # feeding a roster (Q96_PAY_ROSTER); PARTIAL — only codes 01/07 carry an amount
+    # (Q92 pattern), every other row defaults 0 but stays enterable. #779 (2026-06-25):
+    # In-kind(06) dropped from the amount set per ASPSI's per-question clarification — the
+    # apc (build_roster_procs amt_codes) owns the gate; this set is documentation-only.
+    Q96_AMT_CODES = {"01", "07"}
+    items.extend(checkbox_multiselect(
+        "Q96_SOURCES",
+        "96. Which of the following did you use to pay for the prescribed medicines? "
+        "(Tick all that apply.)",
+        Q96_MEDS_PAY, with_other_txt=False))
     items.append(numeric("Q97_FINAL_AMOUNT",
                          "97. What was the final amount you paid in cash for your outpatient care? "
                          "(Amount in Pesos)", length=8))
-    # Q97.1 other expenses in bill — select all + amounts
-    for label, code in Q971_EXPENSES:
-        items.append(yes_no(f"Q971_{code}",
-                            f"97.1 Other items included in the bill — {label}"))
-        items.append(numeric(f"Q971_{code}_AMT",
-                             f"97.1 Other items included in the bill — {label} (Amount in Pesos)",
-                             length=8))
+    # Q97.1 other expenses in bill — Option B ROSTER (Shape B, 2026-06-19).
+    # Supersedes the undeployed 2-form-flat layout (4 flat Q971_n_AMT fields removed).
+    # SCREEN 1: Q971_SOURCES CheckBox (tick all that apply).
+    # SCREEN 2: Q971_ROSTER grid — one row per ticked category, all rows enterable for
+    # amount (every category carries an amount, so no zeroing/gating per row).
+    # SCREEN 3: Q971_OTHER_TXT gated on pos("04", Q971_SOURCES) (own screen after roster).
+    items.extend(checkbox_multiselect(
+        "Q971_SOURCES",
+        "97.1 Which other items were included in your outpatient bill? "
+        "(Tick all that apply.)",
+        Q971_SOURCES, with_other_txt=False))   # OTHER_TXT emitted after roster split
     items.append(alpha("Q971_OTHER_TXT",
                        "97.1 Other expenses — specify text", length=120))
-    # Q97.2 other expenses not in bill — select all + amounts
-    for label, code in Q972_EXPENSES:
-        items.append(yes_no(f"Q972_{code}",
-                            f"97.2 Other expenses during OPD visit not in bill — {label}"))
-        items.append(numeric(f"Q972_{code}_AMT",
-                             f"97.2 Other expenses during OPD visit not in bill — {label} (Amount in Pesos)",
-                             length=8))
+    # Q97.2 other expenses not in bill — Option B ROSTER fan-out (#689, 2026-06-19). WAS a
+    # flat 6-item Yes/No + per-item _AMT matrix (every item carried an amount). NOW a
+    # CheckBox (Q972_SOURCES) feeding a roster (Q972_PAY_ROSTER); ALL-amount (Q971 pattern,
+    # every ticked row enterable, no per-row gating). Codes widened 1->2 chars (01..06) so
+    # the roster's pos("0n", …) membership idiom lines up (the proven Q92/Q971 convention).
+    # 'f) Other expenses' (06) gates Q972_OTHER_TXT after the grid (own screen), mirroring
+    # Q971_OTHER_TXT on code 04.
+    Q972_SOURCES = [(label, f"{int(code):02d}") for label, code in Q972_EXPENSES]
+    items.extend(checkbox_multiselect(
+        "Q972_SOURCES",
+        "97.2 Which other expenses did you have during the OPD visit that were NOT in the "
+        "bill? (Tick all that apply.)",
+        Q972_SOURCES, with_other_txt=False))
     items.append(alpha("Q972_OTHER_TXT",
                        "97.2 Other expenses — specify text", length=120))
-    # Q98 15-source payment matrix
-    for label, code in Q98_SOURCES:
-        items.append(yes_no(f"Q98_PAY_{code}",
-                            f"98. Used to pay for medical costs — {label}"))
-        items.append(numeric(f"Q98_PAY_{code}_AMT",
-                             f"98. Used to pay for medical costs — {label} (Amount in Pesos)",
-                             length=8))
+    # Q98 sources of money for medical costs — Option B ROSTER fan-out (#689, 2026-06-19).
+    # WAS a flat 15-source Yes/No + per-source _AMT matrix (every source carried an amount).
+    # NOW a CheckBox (Q98_SOURCES) feeding a roster (Q98_PAY_ROSTER); ALL-amount (Q971
+    # pattern). Two gated specify texts follow the grid: Q98_OTHER_DONATION_TXT on code 06
+    # and Q98_OTHER_TXT on code 15 (re-pointed from the old Q98_PAY_06 / Q98_PAY_15 flags
+    # to pos("06"/"15", Q98_SOURCES) in the apc).
+    items.extend(checkbox_multiselect(
+        "Q98_SOURCES",
+        "98. Which of the following did you use to pay for the medical costs? "
+        "(Tick all that apply.)",
+        Q98_SOURCES, with_other_txt=False))
     items.append(alpha("Q98_OTHER_DONATION_TXT",
                        "98. Other Donation/Charity/Assistance from Government Organization — specify text",
                        length=120))
@@ -1041,27 +1336,75 @@ def build_section_g():
                        "98. Other payment source — specify text", length=120))
     # BUCAS block (Q99-104)
     items.extend([
+        # #464: area-type gate — Q99-Q104 apply only to areas WITH a BUCAS center; No -> skip the whole block (mirrors Q99=No -> Q116)
+        yes_no("AREA_HAS_BUCAS",
+               "Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)"),
         yes_no("Q99_BUCAS_HEARD",
                "99. Have you heard about Bagong Urgent Care and Ambulatory Services (BUCAS) center?"),
-        *select_all("Q100_BUCAS_SOURCE",
+        *checkbox_multiselect("Q100_BUCAS_SOURCE",   # #690: select_all -> Check Box (tick-all)
                     "100. If yes, what are your sources of information about this BUCAS center?",
-                    Q100_BUCAS_SOURCE),
-        *select_all("Q101_BUCAS_UNDERSTAND",
+                    _cb_codes(Q100_BUCAS_SOURCE), with_other_txt=True),
+        *checkbox_multiselect("Q101_BUCAS_UNDERSTAND",
                     "101. What is your understanding about a BUCAS center?",
-                    Q101_BUCAS_UNDERSTAND),
+                    _cb_codes(Q101_BUCAS_UNDERSTAND), with_other_txt=True),
         yes_no("Q102_BUCAS_ACCESSED",
                "102. Have you accessed the services in a BUCAS center?"),
-        *select_all("Q103_BUCAS_SERVICES",
+        *checkbox_multiselect("Q103_BUCAS_SERVICES",   # #690: select_all -> Check Box (tick-all)
                     "103. If yes, which service/s did you avail?",
-                    Q103_BUCAS_SERVICES),
+                    _cb_codes(Q103_BUCAS_SERVICES), with_other_txt=True),
         select_one("Q104_WITHOUT_BUCAS",
                    "104. Without BUCAS Center, where would you have gone?",
                    Q104_ALT, length=1),
         alpha("Q104_WITHOUT_BUCAS_OTHER_TXT",
               "104. Without BUCAS — Others specify text", length=120),
     ])
-    return record("G_OUTPATIENT_CARE",
-                  "G. Outpatient Care", "I", items)
+    # Option B fan-out (2026-06-19): SIX cost matrices in Section G are now CheckBox ->
+    # roster (Q92 consultation, Q94 lab, Q96 meds, Q97.1 other-in-bill, Q97.2 other-not-in-
+    # bill, Q98 sources-of-money). Each `_SOURCES` CheckBox splits the host record; its
+    # roster grid renders right after. `_split_host_with_rosters` interleaves them.
+    # Record types: Q92 keeps 'O' (deployed pilot); the rest use free letters. Host
+    # continuation fragments get a separate free-letter pool. (A-R, X-Z, plus O/P/Q/R from
+    # the old pilot were used; we reassign cleanly here.)
+    g_rosters = {
+        "Q92_SOURCES": _build_payment_roster(
+            "Q92_PAY_ROSTER", "G. Cost of consultation — amount by source", 92,
+            Q92_PAYMENT_SRC, Q92_AMT_CODES, "O",
+            "92. Payment source (auto-filled from the ticked sources)",
+            "92. Amount paid for the consultation, by source (Pesos)"),
+        # Q94 PER-LAB roster (#450): keyed on Q93_LABS_OTHER_TXT (the last item of the Q93
+        # block) so the grid renders AFTER Q93's Other-specify and before Q95. One row per
+        # ticked lab; reuses record type "S" (freed from the removed Q94_PAY_ROSTER).
+        "Q93_LABS_OTHER_TXT": _build_lab_payment_roster(
+            "Q94_LAB_ROSTER", "G. Cost of laboratory tests — per test (Q94)", "S",
+            Q94_LAB_VALUE_SET, Q94_PAYMENT_TYPE, max_labs=len(Q94_LAB_VALUE_SET)),
+        "Q96_SOURCES": _build_payment_roster(
+            "Q96_PAY_ROSTER", "G. Cost of prescribed medicines — amount by source", 96,
+            Q96_MEDS_PAY, Q96_AMT_CODES, "T",
+            "96. Payment source (auto-filled from the ticked sources)",
+            "96. Amount spent for the prescribed medicines, by source (Pesos)"),
+        "Q971_SOURCES": _build_payment_roster(
+            "Q971_ROSTER", "G. Other items in outpatient bill — amount by category", 971,
+            Q971_SOURCES, set(),   # amt_codes=empty: every category carries an amount
+            "Q",
+            "97.1 Category (auto-filled from the ticked items)",
+            "97.1 Amount charged for this item (Pesos)", display_no="97.1"),
+        "Q972_SOURCES": _build_payment_roster(
+            "Q972_PAY_ROSTER", "G. Other expenses not in bill — amount by item", 972,
+            Q972_SOURCES, set(),   # all-amount: every ticked item carries an amount
+            "U",
+            "97.2 Expense item (auto-filled from the ticked items)",
+            "97.2 Amount for this expense (Pesos)", display_no="97.2"),
+        "Q98_SOURCES": _build_payment_roster(
+            "Q98_PAY_ROSTER", "G. Sources of money for medical costs — amount by source", 98,
+            Q98_SOURCES, set(),   # all-amount: every ticked source carries an amount
+            "V",
+            "98. Source of money (auto-filled from the ticked sources)",
+            "98. Amount from this source (Pesos)"),
+    }
+    # Host continuation fragments (one per split after the first): G_2..G_7 (6 needed).
+    return _split_host_with_rosters(
+        "G_OUTPATIENT_CARE", "G. Outpatient Care", "I", items, g_rosters,
+        cont_types=["P", "W", "a", "b", "c", "d"])
 
 
 # ============================================================
@@ -1151,25 +1494,29 @@ def build_section_h():
         numeric("Q106_DAYS",
                 "106. How long were you confined? — Days", length=3),
     ]
-    # Q107 total bill — 10-source payment matrix
-    for label, code in Q107_PAYMENT:
-        items.append(yes_no(f"Q107_PAY_{code}",
-                            f"107. Total bill for confinement — {label}"))
-        items.append(numeric(f"Q107_PAY_{code}_AMT",
-                             f"107. Total bill for confinement — {label} (Amount in Pesos)",
-                             length=9))
+    # Q107 total bill — Option B ROSTER fan-out (#691, 2026-06-19). WAS a flat 10-source
+    # Yes/No + per-source _AMT matrix (every source carried an amount). NOW a CheckBox
+    # (Q107_SOURCES) feeding a roster (Q107_PAY_ROSTER); ALL-amount (Q971 pattern, length-9
+    # peso amounts to match the bill scale). 'Other' (10) gates Q107_PAY_OTHER_TXT.
+    items.extend(checkbox_multiselect(
+        "Q107_SOURCES",
+        "107. Which of the following did you use to pay for the total bill for confinement? "
+        "(Tick all that apply.)",
+        Q107_PAYMENT, with_other_txt=False))
     items.append(alpha("Q107_PAY_OTHER_TXT",
                        "107. Total bill — Other, specify text", length=120))
     items.append(yes_no("Q108_MEDS_OUTSIDE",
                         "108. Other than the medicine/s indicated in the hospital bill, did the patient "
                         "buy medicine/s from any pharmacy/facility outside the hospital?"))
-    # Q109 meds outside — 9-source payment matrix
-    for label, code in Q109_PAYMENT:
-        items.append(yes_no(f"Q109_PAY_{code}",
-                            f"109. Amount paid for medicines outside the hospital — {label}"))
-        items.append(numeric(f"Q109_PAY_{code}_AMT",
-                             f"109. Amount paid for medicines outside the hospital — {label} "
-                             "(Amount in Pesos)", length=9))
+    # Q109 meds outside — Option B ROSTER fan-out (#692, 2026-06-19). WAS a flat 9-source
+    # Yes/No + per-source _AMT matrix. NOW a CheckBox (Q109_SOURCES) feeding a roster
+    # (Q109_PAY_ROSTER); ALL-amount (Q971 pattern, length-9). 'Other' (09) gates
+    # Q109_PAY_OTHER_TXT. The >=1-source requirement (#556) is the CheckBox's own >=1 gate.
+    items.extend(checkbox_multiselect(
+        "Q109_SOURCES",
+        "109. Which of the following did you use to pay for the medicines bought outside "
+        "the hospital? (Tick all that apply.)",
+        Q109_PAYMENT, with_other_txt=False))
     items.append(alpha("Q109_PAY_OTHER_TXT",
                        "109. Meds outside — Other, specify text", length=120))
     items.append(yes_no("Q110_LAB_OUTSIDE",
@@ -1177,28 +1524,34 @@ def build_section_h():
                         "the patient pay for other service/s outside the hospital?"))
     items.append(alpha("Q111_SERVICES_OUTSIDE",
                        "111. If yes, what are those services?", length=240))
-    # Q112 services outside — 9-source payment matrix
-    for label, code in Q109_PAYMENT:
-        items.append(yes_no(f"Q112_PAY_{code}",
-                            f"112. Amount paid for services outside the hospital — {label}"))
-        items.append(numeric(f"Q112_PAY_{code}_AMT",
-                             f"112. Amount paid for services outside the hospital — {label} "
-                             "(Amount in Pesos)", length=9))
+    # Q112 services outside — Option B ROSTER fan-out (#693, 2026-06-19). WAS a flat
+    # 9-source Yes/No + per-source _AMT matrix (same Q109_PAYMENT codes). NOW a CheckBox
+    # (Q112_SOURCES) feeding a roster (Q112_PAY_ROSTER); ALL-amount (Q971 pattern, length-9).
+    # 'Other' (09) gates Q112_PAY_OTHER_TXT. >=1 source = the CheckBox's own gate (#557).
+    items.extend(checkbox_multiselect(
+        "Q112_SOURCES",
+        "112. Which of the following did you use to pay for the services done outside the "
+        "hospital? (Tick all that apply.)",
+        Q109_PAYMENT, with_other_txt=False))
     items.append(alpha("Q112_PAY_OTHER_TXT",
                        "112. Services outside — Other, specify text", length=120))
-    # Q113 13-source hospital bill payment matrix
-    for label, code in Q113_SOURCES:
-        items.append(yes_no(f"Q113_PAY_{code}",
-                            f"113. Used to pay for hospital bill — {label}"))
-        items.append(numeric(f"Q113_PAY_{code}_AMT",
-                             f"113. Used to pay for hospital bill — {label} (Amount in Pesos)",
-                             length=9))
+    # Q113 hospital bill — Option B ROSTER fan-out (#693, 2026-06-19). WAS a flat 13-source
+    # Yes/No + per-source _AMT matrix. NOW a CheckBox (Q113_SOURCES) feeding a roster
+    # (Q113_PAY_ROSTER); ALL-amount (Q971 pattern, length-9). 'Other (specify)' (13) gates
+    # Q113_PAY_OTHER_TXT. PhilHealth row (08) still drives the Q114 skip — the apc now reads
+    # pos("08", Q113_SOURCES) instead of the removed Q113_PAY_08 flag; the Q110=No skip now
+    # targets Q113_SOURCES (was Q113_PAY_01). >=1 source = the CheckBox's own gate (#555).
+    items.extend(checkbox_multiselect(
+        "Q113_SOURCES",
+        "113. Which of the following did you use to pay for the hospital bill? "
+        "(Tick all that apply.)",
+        Q113_SOURCES, with_other_txt=False))
     items.append(alpha("Q113_PAY_OTHER_TXT",
                        "113. Hospital bill payment — Other specify text", length=120))
     items.extend([
-        *select_all("Q114_NO_PH",
+        *checkbox_multiselect("Q114_NO_PH",   # #694: select_all -> Check Box (tick-all)
                     "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113)",
-                    Q114_NO_PH),
+                    _cb_codes(Q114_NO_PH), with_other_txt=True),
     ])
     # Q115 final cash first, then the 115.1/115.2 breakdowns sit UNDER it (#517 — mirrors
     # the outpatient side, where Q97 total precedes Q97.1/Q97.2).
@@ -1223,8 +1576,37 @@ def build_section_h():
                              "(Amount in Pesos)", length=9))
     items.append(alpha("Q1142_OTHER_TXT",
                        "115.2 Other expenses — specify text", length=120))
-    return record("H_INPATIENT_CARE",
-                  "H. Inpatient Care", "J", items)
+    # Option B fan-out (#691/#692/#693, 2026-06-19): FOUR Section H cost matrices are now
+    # CheckBox -> roster (Q107 total bill, Q109 meds outside, Q112 services outside, Q113
+    # hospital bill). Each `_SOURCES` CheckBox splits the host H record; its roster grid
+    # (length-9 peso amounts, all-amount) renders right after. The Q115/Q115.1/Q115.2
+    # tail stays a flat amount matrix (out of scope — Q1141/Q1142 not in the candidate
+    # list). Record types: rosters e/f/g/h; host continuation fragments i/j/k/l.
+    h_rosters = {
+        "Q107_SOURCES": _build_payment_roster(
+            "Q107_PAY_ROSTER", "H. Total bill for confinement — amount by source", 107,
+            Q107_PAYMENT, set(), "e",
+            "107. Payment source (auto-filled from the ticked sources)",
+            "107. Amount of the total bill, by source (Pesos)", amt_length=9),
+        "Q109_SOURCES": _build_payment_roster(
+            "Q109_PAY_ROSTER", "H. Medicines bought outside — amount by source", 109,
+            Q109_PAYMENT, set(), "f",
+            "109. Payment source (auto-filled from the ticked sources)",
+            "109. Amount paid for medicines outside, by source (Pesos)", amt_length=9),
+        "Q112_SOURCES": _build_payment_roster(
+            "Q112_PAY_ROSTER", "H. Services done outside — amount by source", 112,
+            Q109_PAYMENT, set(), "g",
+            "112. Payment source (auto-filled from the ticked sources)",
+            "112. Amount paid for services outside, by source (Pesos)", amt_length=9),
+        "Q113_SOURCES": _build_payment_roster(
+            "Q113_PAY_ROSTER", "H. Hospital bill — amount by source", 113,
+            Q113_SOURCES, set(), "h",
+            "113. Payment source (auto-filled from the ticked sources)",
+            "113. Amount paid for the hospital bill, by source (Pesos)", amt_length=9),
+    }
+    return _split_host_with_rosters(
+        "H_INPATIENT_CARE", "H. Inpatient Care", "J", items, h_rosters,
+        cont_types=["i", "j", "k", "l"])
 
 
 # ============================================================
@@ -1291,12 +1673,18 @@ def build_section_i():
         ("Laboratory",         "2"),
         ("Professional Fees",  "3"),
         ("Accommodation",      "4"),
+        # #481: codes below are remapped by _cb_codes for the Check Box conversion
+        # ('None' -> exclusive 90, 'Other (specify)' -> 99); the literal codes here
+        # are placeholders the conversion overwrites.
+        ("None",               "5"),   # nothing paid out-of-pocket -> exclusive (90)
+        ("Other (specify)",    "6"),   # -> 99 with a gated _OTHER_TXT
     ]
     Q129_WHY_NO_MAIFIP = [
         ("Not eligible",                            "1"),
         ("Too complicated",                         "2"),
         ("I don't like to stay in basic ward",      "3"),
         ("There is no available basic ward",        "4"),
+        ("Other (specify)",                         "99"),   # #783: add Other-specify (the 'specif' marker -> _cb_codes maps to 99; with_other_txt below opens the text box)
     ]
     Q130_REDUCED_SPEND = [
         ("Yes",                "1"),
@@ -1308,17 +1696,21 @@ def build_section_i():
         select_one("Q116_NBB_HEARD",
                    "116. Have you heard of the No Balance Billing (NBB)?",
                    Q116_HEARD, length=1),
-        *select_all("Q117_NBB_SOURCE",
-                    "117. If yes, what are your sources of information about NBB?", SOURCE_8),
-        *select_all("Q118_NBB_UNDERSTAND",
-                    "118. What is your understanding about NBB?", Q118_UNDERSTAND_NBB),
+        *checkbox_multiselect("Q117_NBB_SOURCE",
+                    "117. If yes, what are your sources of information about NBB?",
+                    _cb_codes(SOURCE_8), with_other_txt=True),
+        *checkbox_multiselect("Q118_NBB_UNDERSTAND",
+                    "118. What is your understanding about NBB?",
+                    _cb_codes(Q118_UNDERSTAND_NBB), with_other_txt=True),
         select_one("Q119_ZBB_HEARD",
                    "119. Have you heard of the Zero Balance Billing (ZBB)?",
                    Q119_HEARD, length=1),
-        *select_all("Q120_ZBB_SOURCE",
-                    "120. If yes, what are your sources of information about ZBB?", SOURCE_8),
-        *select_all("Q121_ZBB_UNDERSTAND",
-                    "121. What is your understanding about ZBB?", Q121_UNDERSTAND_ZBB),
+        *checkbox_multiselect("Q120_ZBB_SOURCE",
+                    "120. If yes, what are your sources of information about ZBB?",
+                    _cb_codes(SOURCE_8), with_other_txt=True),
+        *checkbox_multiselect("Q121_ZBB_UNDERSTAND",
+                    "121. What is your understanding about ZBB?",
+                    _cb_codes(Q121_UNDERSTAND_ZBB), with_other_txt=True),
         yes_no("Q122_ZBB_INFORMED",
                "122. Were you informed about ZBB upon admission?"),
         select_one("Q123_ZBB_EXTENT",
@@ -1326,20 +1718,20 @@ def build_section_i():
                    Q123_ZBB_EXTENT, length=1),
         select_one("Q124_MAIFIP_HEARD",
                    "124. Have you heard of the Medical Assistance for Indigent and "
-                   "Financially Incapacitated Patients (MAIFIP)? (SKIP IF ANSWERED MAIFIP IN Q113)",
-                   Q124_HEARD, length=1),
-        *select_all("Q125_MAIFIP_SOURCE",
-                    "125. What are your sources of information about MAIFIP?", SOURCE_8),
+                   "Financially Incapacitated Patients (MAIFIP)?",
+                   Q124_HEARD, length=1),  # #477: removed redundant "(SKIP IF ANSWERED MAIFIP IN Q113)" enumerator note — CAPI auto-handles the Q113 gate
+        *checkbox_multiselect("Q125_MAIFIP_SOURCE",
+                    "125. What are your sources of information about MAIFIP?", _cb_codes(SOURCE_8)),
         yes_no("Q126_MAIFIP_AVAILED",
                "126. Did you avail of MAIFIP in this last confinement?"),
         yes_no("Q127_MAIFIP_OOP",
                "127. If you availed MAIFIP, did you have to make any out-of-pocket payment?"),
-        *select_all("Q128_MAIFIP_OOP_ITEMS",
+        *checkbox_multiselect("Q128_MAIFIP_OOP_ITEMS",   # #481: select_all -> Check Box (tick-all)
                     "128. Which items did you have to pay for out-of-pocket?",
-                    Q128_OOP_ITEMS),
-        *select_all("Q129_WHY_NO_MAIFIP",
+                    _cb_codes(Q128_OOP_ITEMS), with_other_txt=True),
+        *checkbox_multiselect("Q129_WHY_NO_MAIFIP",   # #700: select_all -> Check Box (tick-all)
                     "129. Why did you not avail of MAIFIP during this last confinement?",
-                    Q129_WHY_NO_MAIFIP),
+                    _cb_codes(Q129_WHY_NO_MAIFIP), with_other_txt=True),   # #783: Other-specify text box enabled
         select_one("Q130_REDUCED_SPEND",
                    "130. Have you or your household had to reduce spending on things you need "
                    "(such as food, housing, or utilities) because of this health expenditure "
@@ -1385,7 +1777,7 @@ def build_section_j():
         items.append(select_one(name, label, SATISFACTION_5PT, length=1))
     items.append(select_one("Q135_SAT_OVERALL_TIME",
                             "135. Were you satisfied with the overall time spent from registration "
-                            "to exiting the facility? (For inpatients only)",
+                            "to exiting the facility?",   # #487: deleted '(For inpatients only)' — Marriz confirmed Q135 is asked for all patients
                             SATISFACTION_5PT, length=1))
     for name, label in STAFF_FREQ_ITEMS:
         items.append(select_one(name, label, FREQUENCY_5PT, length=1))
@@ -1492,12 +1884,19 @@ def build_section_k():
         ("Received from LGU for free",                 "6"),
         ("Received from public hospital for free",     "7"),
         ("Received from private hospital for free",    "8"),
+        # #500: escape for respondents who obtained ALL their medicines from GAMOT, so there
+        # is no "rest" to source elsewhere. Worded as 'None…' so _cb_codes maps it to the
+        # exclusive code 90 (can't be ticked alongside a real source).
+        ("None — got all medicines from the GAMOT Package", "10"),
         ("Other (Specify)",                            "9"),
     ]
     Q159_BRANDED_GENERIC = [
         ("Branded",                   "1"),
         ("Generic",                   "2"),
         ("Both branded and generic",  "3"),
+        # #732 (R5): 'Don't know the difference' (4) RESTORED to match the paper — the tester's
+        # PAPI screenshot lists it (-> Q162), reversing #618's removal. Carl 'do what the testers
+        # need': follow the paper's literal 5-option set + routing. Order = paper (DKD before NA).
         ("Don't know the difference", "4"),
         ("Not applicable",            "5"),
     ]
@@ -1535,12 +1934,11 @@ def build_section_k():
         *checkbox_multiselect("Q148_CONDITIONS",
                     "148. What are the medical conditions that you take the medicines for?",
                     Q148_CONDITIONS),
-        alpha("Q148_MEDICINES_TXT",
-              "Which medicine(s) do you take for the condition(s) selected above?",
-              length=240),
-        *select_all("Q149_WHERE_BUY",
+        # #491: Q148_MEDICINES_TXT ("Which medicine(s)…for the condition(s) selected above?") removed —
+        # redundant with Q147 ("What are the medications that you usually take?"). ASPSI go/no-go via Carl 2026-06-21.
+        *checkbox_multiselect("Q149_WHERE_BUY",   # #696: select_all -> Check Box (tick-all)
                     "149. Where do you usually buy or receive your medicines? "
-                    "Select all that apply.", Q149_WHERE_BUY),
+                    "Select all that apply.", _cb_codes(Q149_WHERE_BUY), with_other_txt=True),
         numeric("Q150_TRAVEL_HH",
                 "150. Travel time from home to nearest pharmacy — hours (HH)", length=2),
         numeric("Q150_TRAVEL_MM",
@@ -1548,35 +1946,38 @@ def build_section_k():
         select_one("Q151_PHARM_EASE",
                    "151. How easy is it for you to access a pharmacy or drugstore?",
                    Q151_EASE, length=1),
+        # #495: area-type gate — Q152-Q159 apply only to areas WITH GAMOT; No -> skip the block (mirrors Q152=No -> Q158)
+        yes_no("AREA_HAS_GAMOT",
+               "Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)"),
         yes_no("Q152_GAMOT_HEARD",
                "152. Have you heard of the Guaranteed and Accessible Medications for "
                "Outpatient Treatment (GAMOT) Package, which is part of PhilHealth's "
                "YAKAP/Konsulta or primary care benefit package?"),
-        *select_all("Q153_GAMOT_SOURCE",
+        *checkbox_multiselect("Q153_GAMOT_SOURCE",   # #696: select_all -> Check Box (tick-all)
                     "153. If yes, what are your sources of information for GAMOT Package?",
-                    Q153_GAMOT_SRC),
-        *select_all("Q154_GAMOT_UNDERSTAND",
+                    _cb_codes(Q153_GAMOT_SRC), with_other_txt=True),
+        *checkbox_multiselect("Q154_GAMOT_UNDERSTAND",   # #696: select_all -> Check Box (tick-all)
                     "154. What is your understanding of the GAMOT Package?",
-                    Q154_GAMOT_UNDERSTAND),
+                    _cb_codes(Q154_GAMOT_UNDERSTAND), with_other_txt=True),
         yes_no("Q155_GAMOT_GOT_MEDS",
                "155. Did you get the medicines from the GAMOT Package during the past 6 months?"),
         alpha("Q156_GAMOT_MEDS_LIST",
               "156. What are the medications that you obtained from the GAMOT Package? [LIST]",
               length=240),
-        *select_all("Q157_WHERE_REST",
+        *checkbox_multiselect("Q157_WHERE_REST",   # #696: select_all -> Check Box (tick-all)
                     "157. Where did you get the rest of the medicines? Select all that apply.",
-                    Q157_WHERE_REST),
+                    _cb_codes(Q157_WHERE_REST), with_other_txt=True),
         yes_no("Q158_BRAND_GEN_KNOW",
                "158. Do you know the difference between a 'branded' and a 'generic' medicine?"),
         select_one("Q159_BRAND_GEN_BOUGHT",
                    "159. Was/were the medicine/s you bought outside of GAMOT pharmacy "
                    "branded or generic?", Q159_BRANDED_GENERIC, length=1),
-        *select_all("Q160_WHY_GENERIC",
+        *checkbox_multiselect("Q160_WHY_GENERIC",   # #696: select_all -> Check Box (tick-all)
                     "160. If generic, why did you buy generic medicine?",
-                    Q160_WHY_GENERIC),
-        *select_all("Q161_WHY_BRANDED",
+                    _cb_codes(Q160_WHY_GENERIC), with_other_txt=True),
+        *checkbox_multiselect("Q161_WHY_BRANDED",   # #696: select_all -> Check Box (tick-all)
                     "161. If branded, why did you buy branded medicine?",
-                    Q161_WHY_BRANDED),
+                    _cb_codes(Q161_WHY_BRANDED), with_other_txt=True),
     ]
     return record("K_ACCESS_MEDICINES", "K. Access to Medicines", "M", items)
 
@@ -1679,16 +2080,17 @@ def build_section_l():
         ("Neither Satisfied nor Dissatisfied","3"),
         ("Dissatisfied",                      "4"),
         ("Very Dissatisfied",                 "5"),
-        ("Not applicable",                    "6"),
+        # #514: 'Not applicable' (6) removed — Q178 is only reached when there WAS a referral
+        # (Q162=Yes gates Section L), so the referral-satisfaction question always applies.
     ]
     items = [
         yes_no("Q162_REFERRED",
                "162. Based on your most recent visit/confinement at [facility_name_input], "
                "did a healthcare worker refer you to another facility or specialist for "
                "further care or specialized care?"),
-        *select_all("Q163_CARE_TYPE",
+        *checkbox_multiselect("Q163_CARE_TYPE",   # #696: select_all -> Check Box (tick-all)
                     "163. What type of care was the referral for?",
-                    Q163_CARE_TYPE),
+                    _cb_codes(Q163_CARE_TYPE), with_other_txt=True),
         select_one("Q164_SPECIALIST",
                    "164. What kind of specialist did they recommend?",
                    Q164_SPECIALIST, length=2),
@@ -1713,9 +2115,9 @@ def build_section_l():
         yes_no("Q170_FOLLOWUP",
                "170. After your visit to the referral hospital/ specialist, did they follow "
                "up with you about what happened at the visit?"),
-        *select_all("Q171_WHY_NOT",
+        *checkbox_multiselect("Q171_WHY_NOT",
                     "171. Why are you NOT planning to visit?",
-                    Q171_WHY_NOT),
+                    _cb_codes(Q171_WHY_NOT), with_other_txt=True),
         yes_no("Q172_PCP_REFERRAL",
                "172. Was the visit to [facility_name_input] a referral from your primary "
                "care facility?"),
@@ -1731,9 +2133,9 @@ def build_section_l():
         yes_no("Q176_PCP_WROTE_INFO",
                "176. Did your primary care provider write down any information for the "
                "specialist about the reason for that visit?"),
-        *select_all("Q177_WHY_HOSPITAL",
+        *checkbox_multiselect("Q177_WHY_HOSPITAL",
                     "177. As it was not a referral, why did you decide to visit a hospital?",
-                    Q177_WHY_HOSPITAL),
+                    _cb_codes(Q177_WHY_HOSPITAL), with_other_txt=True),
         select_one("Q178_SAT_REFERRAL",
                    "178. Overall, how would you rate your experience with the referral process?",
                    Q178_SAT_REFERRAL, length=1),
@@ -1785,7 +2187,7 @@ def build_f3_dictionary():
     # IS the facility reference; F3<->F1 joins on those shared fields. No separate item.
     records = [
         build_f3_field_control(),
-        build_geo_id("facility_and_patient"),
+        build_geo_id("facility_and_patient", structured_address=True),   # #784/#786 Option A: typed Street + derived Barangay/Municipality + assembled address
         build_f3_facility_capture(),
         build_f3_patient_home_capture(),
         build_f3_case_verification(),
@@ -1795,8 +2197,8 @@ def build_f3_dictionary():
         build_section_d(),
         build_section_e(),
         build_section_f(),
-        build_section_g(),
-        build_section_h(),
+        *build_section_g(),   # Option B fan-out: G splits around 6 cost-matrix rosters (Q92/Q94/Q96/Q97.1/Q97.2/Q98)
+        *build_section_h(),   # Option B fan-out: H splits around 4 cost-matrix rosters (Q107/Q109/Q112/Q113)
         build_section_i(),
         build_section_j(),
         build_section_k(),
@@ -1810,6 +2212,92 @@ def build_f3_dictionary():
     )
 
 
+# --- #714: facility-name placeholder -> neutral header wording (DCF labels) ---
+# The question stems carry a literal placeholder ([facility_name_input] and dialect
+# variants). generate_qsf.py pipes it to ~~FACILITY_NAME~~ in the QSF question text so
+# the captured facility name renders in the plain question-text line. But CSEntry renders
+# the DCF field LABEL as the BOLD header, and CSPro fills do NOT evaluate inside DCF labels
+# — so the raw placeholder was showing verbatim in bold (Q66 + the other facility questions:
+# Q88/Q143/Q144/Q162/Q172). Fix: neutralise the placeholder token in every DCF label
+# (English + each translated label), per-language, AFTER apply_translations so the English
+# source strings are untouched and the translation maps still key-match. The QSF keeps the
+# personalised ~~FACILITY_NAME~~ fill (generate_qsf.py unchanged) — so the bold header reads
+# neutrally and the plain prompt line still shows the real facility name.
+#
+# FLAG (Carl/ASPSI veto): these neutral noun-phrases are chosen substitutions, not source
+# wording. EN = "this facility"; dialect equivalents below. They preserve meaning ("Is THIS
+# facility the one you usually go to...") without naming the facility in the bold header.
+# Brackets are OPTIONAL: a translator dropped them in at least one place (FIL Q162 value
+# reads "...sa facility_name_input, may healthcare worker..." with NO brackets). The bare
+# snake_case tokens (facility_name_input / facility_ngaran_input) are machine identifiers,
+# never natural language, so matching them un-bracketed is safe; the bracketed dialect
+# phrases (e.g. [ngaran han pasilidad]) are only matched WITH brackets so the un-bracketed
+# Bikol/Waray noun phrase "ngaran han pasilidad" used as ordinary text (Q64 answer) is left
+# alone.
+_FACILITY_PLACEHOLDER_RE = re.compile(
+    r"\[?\b(?:facility[_ ]name[_ ]input|facility[_ ]ngaran[_ ]input)\b\]?"
+    r"|\[\s*(?:igbutang[_ ]an[_ ]ngaran[_ ]han[_ ]pasilidad"
+    r"|ngaran[_ ](?:han|kan)[_ ]pasilidad)\s*\]",
+    re.IGNORECASE,
+)
+_FACILITY_NEUTRAL = {
+    "EN":  "this facility",
+    "FIL": "ang pasilidad na ito",
+    "BCL": "an pasilidad na ini",
+    "BIS": "kini nga pasilidad",
+    "CEB": "kini nga pasilidad",
+    "WAR": "ini nga pasilidad",
+}
+
+
+# The token sat between an article/preposition and a following noun in some stems, so the
+# straight substitution leaves a redundant adjacency: EN "Is this facility the facility you
+# usually go to" (Q66) and a doubled article where the translated text already had one before
+# the token (FIL "ang ang pasilidad na ito", BCL "an an pasilidad na ini"). These cleanups
+# fix only the mechanical artifacts the substitution itself created — they do not otherwise
+# reword. (Dialect cleanups limited to the obvious doubled-article case; deeper dialect
+# polish is ASPSI's call — FLAGGED in the report.)
+_PLACEHOLDER_CLEANUPS = [
+    # EN Q66: "this facility the facility" -> "this the facility"  (=> "Is this the facility…")
+    (re.compile(r"\bthis facility the facility\b", re.IGNORECASE), "this the facility"),
+    # doubled articles created by the substitution (FIL "ang ang", BCL/WAR "an an")
+    (re.compile(r"\bang ang\b", re.IGNORECASE), "ang"),
+    (re.compile(r"\ban an\b", re.IGNORECASE), "an"),
+]
+
+
+def _neutralise_facility_placeholder(dictionary):
+    """Replace the facility-name placeholder token in every DCF label with a per-language
+    neutral noun-phrase (#714), then clean the mechanical adjacency artifacts the
+    substitution creates. Walks the assembled multi-language labels in place; leaves text
+    with no placeholder untouched. Returns the count of labels changed."""
+    changed = [0]
+
+    def walk(node):
+        if isinstance(node, dict):
+            labs = node.get("labels")
+            if isinstance(labs, list):
+                for lab in labs:
+                    if isinstance(lab, dict) and "text" in lab:
+                        txt = lab["text"]
+                        if _FACILITY_PLACEHOLDER_RE.search(txt):
+                            repl = _FACILITY_NEUTRAL.get(lab.get("language"), "this facility")
+                            new = _FACILITY_PLACEHOLDER_RE.sub(repl, txt)
+                            for rx, sub in _PLACEHOLDER_CLEANUPS:
+                                new = rx.sub(sub, new)
+                            lab["text"] = new
+                            changed[0] += 1
+            for k, v in node.items():
+                if k != "labels":
+                    walk(v)
+        elif isinstance(node, list):
+            for it in node:
+                walk(it)
+
+    walk(dictionary)
+    return changed[0]
+
+
 def main():
     out_path = Path(__file__).parent / "PatientSurvey.dcf"
     dictionary = build_f3_dictionary()
@@ -1817,6 +2305,10 @@ def main():
     # silently resets the .dcf to English). Auto-discovers locales by file
     # existence in translations/; F3 has bcl/bis/ceb/war (no hil/fil).
     dictionary = apply_translations(dictionary, Path(__file__).parent / "translations")
+    # #714: strip the facility-name placeholder from the bold-header DCF labels (must run
+    # AFTER apply_translations so it also cleans the translated labels).
+    n_fac = _neutralise_facility_placeholder(dictionary)
+    print(f"  #714: neutralised facility-name placeholder in {n_fac} label(s)")
     write_dcf(dictionary, out_path)
 
 

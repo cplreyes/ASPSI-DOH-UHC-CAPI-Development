@@ -1,6 +1,41 @@
+---
+title: ASPSI-DOH CAPI CSPro Development
+project: ASPSI-DOH-CAPI-CSPro-Development
+client: ASPSI / DOH (Department of Health)
+client_contact: ASPSI — Kidd · Myra (DOH interface)
+offering: CAPI-Development
+engagement_id: aspsi-doh
+hat: CAPI / Survey Systems Lead
+due: 2026-08-14
+milestone: UAT Round 5 sign-off, then August training
+acceptance: UAT R5 in progress (Jun 22-27), 6 surfaces — F1/F3/F4 + F2 PWA + Admin + CSWeb
+status: UAT Round 5; contract close Aug 14 — extension (Aug training / Sep rollout) requested
+state: active
+last_contact: 2026-06-26
+primary_sensor: "Slack (capi-scrum) + GitHub issues; email NOW available — UP account clreyes6@up.edu.ph connected 2026-06-28 (ASPSI/DOH threads visible; Gmail connector still can't download attachments)"
+last_updated: 2026-06-28
+---
+
 # ASPSI-DOH CAPI CSPro Development
 
 Computer-Assisted Personal Interviewing (CAPI) system development for ASPSI | DOH using CSPro and CSEntry, covering survey questionnaire design through CSWeb deployment.
+
+## Delivery
+
+> Executive record per the [[2_Areas/IT-Standards/templates/Delivery-Standard|Delivery Standard]]. The full engine room is in `scrum/`; this rolls it up.
+
+### Commitments
+- [x] F1/F3/F4 + F2 instruments built & deployed to CSWeb   state::done
+- [ ] UAT Round 5 sign-off across 6 surfaces                 state::doing
+- [ ] Enumerator training (August)                           state::todo
+- [ ] National rollout (September)                           state::todo
+
+### Impediments
+- PhilHealth Q38/Q45 reinstatement   status::blocked  owner::Carl  next::save the 3 value-set PNGs from Kidd's 2026-06-09 email (wordings+routing now captured 2026-06-28; only option lists remain)  raised::2026-06-21
+- F2 off-Cloudflare → Elestio migration   status::blocked  owner::Carl/ASPSI  next::provision instance + DNS + cost sign-off  raised::2026-06-22
+
+### Accepted
+- 2026-05-04 — F2 PWA v2.0.0 (HCW Survey + Admin Portal) to production
 
 ## Project Structure
 
@@ -52,6 +87,18 @@ Computer-Assisted Personal Interviewing (CAPI) system development for ASPSI | DO
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CAPI Translations PSA Deadline (Myra 2026-05-13)]] — **Email, Myra → Carl, call-firmed.** PSA will not clear the survey without the **CAPI app + 7 translated versions**; hard internal deadline **2026-06-12**. Separate/later PSA stream from the manual+sampling submission; this one is Carl's. Carl confirmed alignment (quality not compromised).
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Survey Tool Translation Delivery Status 2026-05-15]] — **Email thread, Aidan ↔ Myra, Carl cc'd.** Translation pipeline behind the 06-12 gate: Drive folder source-of-truth; per-language status; **7 distinct languages** (Bisaya ≠ Cebuano); QC/back-translation is the binding step; **Bisaya Household incomplete, Ilocano has no QC reviewer** (build-input risk, ASPSI-owned). Supersedes the 05-11 "6/7 done" snapshot.
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - HCW CAPI Comments Matrix (Myra answers 2026-05-21)]] — **Google Doc, Aidan → Myra, Carl+Merlyne+Marriz cc'd.** Marriz's 9 R3 questionnaire-design findings (GH `#303`/`#304`/`#305`/`#306`/`#307`/`#309`/`#310`/`#311`/`#312`) sent to Myra as a decision matrix; Myra answered same day. 3 approved-as-suggested, 2 approved with modification, 1 more restrictive than suggested, 2 different shape, 1 overrode Carl's suggestion (Q36 → multi-select), 1 not answered (Q36 past-tense wording). Top-of-doc decisions tighten the Q9-vs-Q4 rule to in-survey block at `tenure < age − 20`.
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - PhilHealth Reinstatement Email (Kidd 2026-06-09)]] — **Email, Kidd → Carl, 2026-06-09.** DOH-agreed reinstatement of 2 conditional PhilHealth-registration sub-questions omitted after OAAED comments (emphasized by Sir LJ): **F3 Q38.1/Q38.2** + **F4 Q45.1/Q45.2** (*"When did you register and receive your PhilHealth PIN?"* / *"Why are you not registered with PhilHealth?"*). Verbatim stems + routing captured. **STATUS (corrected 2026-06-29): DONE — built + deployed during UAT R5** (GH #764 F3 Q38.1/Q38.2; #794 F4 Q45.1; #795 F4 Q45.2; CSWeb 2026-06-25/27; confirmed in live DCFs). ASPSI supplied the value sets via the tickets, so this never actually waited on the email PNGs; the "Carl saves them, then ~3h build" note was stale. As-built quirks (optional ASPSI confirm): F3 Q38.2 tick-all vs F4 Q45.2 single; "I don't know" = −98 (locked std), not the paper's −55.
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - DOH June Questionnaire Comments (PARKED) 2026-06-19]] — **Build-posture decision.** DOH (Xylee "XJ" Javier / OAAED / HCFinancing / WHO / ADB) sent a large wave of comments on the **April 8** F1/F2/F3 tools (forwarded Jun 10). Myra's ruling: **PARK all of them** — the **April 20 version is the accepted baseline**; the comments are deferred to **SJREB/PSA review + pre-testing** and answered with finality only if they resurface. **No instruction to Carl; keep building to April 20.** Big parked items: F1 two-step "since-2019/UHC-Act" restructure (~18 Qs); F3 new expenditure block + FIES assets; F4 contested DOH April-15 PIDS/DHS HH restructure (team instructed NOT to follow; no F4 matrix yet). CAPI-native asks (numeric codes, exclusive-blocking, GPS, auto-age, listing form) mostly already built.
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Project Movement and Revised Timeline (Apr-Jun 2026)]] — **Project movement + timeline (UP-inbox ingest 2026-06-29).** Weekly "Update on the Conduct" thread (Apr–May) + Myra→DOH Jun-19 cascade. Milestones: Inception/Del-1 + tools submitted Apr 20; **Tranche 1 ACCEPTED + PAID + SJREB endorsement SIGNED 2026-05-15**; no-cost extension pending; project-lead-replacement request declined by DOH; **May 27 SJREB deadline**; now **mid-review on SJREB + PSA-SSRCS** (same tool version). **Jun-19 projection:** adopting the parked June comments now → pretest +8–10 wks, D2 end-Sept, data collection ~Nov 2026, Dec deadline missed; parking them keeps **D2 end-July**. Carl's lane unaffected (waits on pretest date).
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - PSA SSRCS Completeness Check (26SSRCS06-068 2026-06-09)]] — **PSA statistical-clearance track.** SSRCS completeness check (Transaction 26SSRCS06-068, 2026-06-09); formal 20-working-day review starts only after deficiencies clear. Findings: survey-title + questionnaire-title (Nos. 3/4) consistency; Form 1 §I-3.3 + §IV timeline format; **CAPI/CAWI interface screenshots (or viewer access) required**; submit signed Form 4 + previous-survey results + a changes comparison matrix. Read via Drive.
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - UHC Y2 Pre-Testing Plan]] — **Scope + pretest design (REI 2025-001).** Year-2 coverage **107 UHC IS (37 newly designated) + 13 non-UHC IS**; assesses **progressive PhilHealth benefits 2024→2025** on financial-risk-protection / service-delivery / experience. **5 respondent types** = F1 facility head · F2 HCW · F3 inpatient+outpatient · F4 household head. **Pretest sites = Los Baños + Bay, Laguna** (RHU + St. Jude Family Hospital; household in Bgy Bayog & Mayondon, Los Baños). Final tools → PSA + SJREB → tablet/CAPI conversion. Read via Drive.
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - ASPSI Team Meeting Notes Digest (Apr 27 - Jun 9 2026)]] — **Internal weekly-meeting movement** (5 un-ingested dates). **SJREB classified Expedited Review, ref SJREB-2026-31** (exemption ruled out — see no-review analysis); **PSA submitted Jun 5, SSRCS acknowledged Jun 9**; **pretest target ≈ 2.5 weeks in July, Brgy Mayondon priority, upon SJREB approval** (the baseline July plan the June-comment cascade would slip). Survey Manual → split into Supervisor/Enumerator/CAPI; translations Batch 1 done / Batch 2 ongoing; F1 published live to CSWeb (Jun 9). Weekly-update drafts not separately ingested (= the DOH updates already captured).
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - DOH Survey Protocol V2 (2026-04-30)]] — **Formal study protocol (V2, 30 Apr)** — base for SOPs + SJREB/PSA submission. **120 sites (107 UHC IS + 13 non-UHC)**; 5 respondent types/instruments. **Sampling:** Facility **1,521** (914 RHU/HC + 607 hospitals, stratified); HCW one-stage stratified; Patient two-stage cluster (**30 inpatient + 45 outpatient/domain**); Household **32 sites (16+16), 1,336/group**; sampling weights. ≥3 contact attempts before non-response; consent Annex H. Year-1 baseline cited (1,135 FH / 11,582 HCW / 7,824 patient / 31,674 HH).
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Survey Tool Translations Delivery (Aidan 2026-06-02)]] — **Translation delivery (Drive link).** Batch 1 (Bicolano/Bisaya/Cebuano/Waray) **DONE**; Batch 2 (Tagalog/Ilocano/Hiligaynon) **PENDING** (QC). Versions: 3.1 tracked / **3.2 clean (use for build)**. Confirms the standing Batch-2 gap.
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CAPI Manual Materials (Myra 2026-06-17)]] — **CAPI Manual spec inputs** (downloaded 2026-06-28, in `raw/capi-manual-materials/`): the 17-section **topic outline** (intro→device→system→login→dashboard→assignments→listing→mapping→start/navigate/enter/complete→sync→**supervisor-only**→troubleshooting→security→annexes), the **style guide** (Digital-PDF/clickable, task-based "Task→User→When→Steps→Expected→Problem→What-to-do", purple accent, 1 screenshot/step), + 2 reference models (UN/Malawi 2017 CSPro CAPI manual; ODK Collect form-filling guide). Outline maps onto our CSEntry + supervisor-hub + CSWeb. Carl/Epic-7/D5.
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Survey Manual Set Architecture (Myra brainstorm 2026-06-08)]] — Myra's brainstorm: split the documentation into **4 DHS-modeled manuals** (Survey Operations + Field Enumerator + Field Supervisor + **CAPI** + Training) instead of one combined manual; CAPI kept separate (paper teaches question text, CAPI handled separately) — validates Carl's standalone CAPI Manual. + a **NotebookLM** first-draft workflow. (No standalone Pretesting Plan in the drop.) In `raw/survey-manual-brainstorm/`.
+- _Not ingested:_ team-meeting notes (Jun 1 / Jun 9 / Jun 22) are docx email attachments, not pulled.
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - ASPSI Team Meeting 2026-06-22]] — Carl's stand-up + team discussion. **Last week:** F3/F4 stop/withdraw handling (Marriz's flag), Supervisor review tool v1, live CSWeb monitoring dashboard, UAT R5 opened (Jun 22–27). **This week:** continued tester-driven dev, align to the Survey Manual beyond the instruments-only MVP, Supervisor tool go-live, plan F2 Survey+Admin migration off Cloudflare (free-tier limits). 309 instrument issues resolved to date. **Headline outcome:** monitoring dashboard positioned as the **basis for an extension request — Aug Training, Sep Rollout** (pushes past the Aug 14 official close; proposed, not approved).
 
 ### Analyses
 
@@ -75,12 +122,13 @@ Computer-Assisted Personal Interviewing (CAPI) system development for ASPSI | DO
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Merlyne Paunlagui]] — Survey Manager; methodological quality + pretest plan
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Juvy Chavez-Rocamora]] — Project Coordinator; formal DOH-facing submissions gate (Apr 14 matrices; Jan 30 IR)
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Shan Lait|Shan]] — CSPro CAPI app QA Tester; also participating in F2 PWA UAT Round 1
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Marriz]] — ASPSI Data Manager; recurring CAPI UAT tester (R3–R5); raises questionnaire-design / data-quality findings (flagged the F3/F4 stop/withdraw fix)
 
 ### Concepts
 
 **Project domain**
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2]] — Survey overview, modules, changes from Year 1
-- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/Timetable of Activities]] — Table 14 from the Inception Report: 9-month schedule, deliverable dates, A/B/C activity breakdown
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/Timetable of Activities]] — Table 14 from the Inception Report: 9-month schedule, deliverable dates, A/B/C activity breakdown. **+ proposed 2026-06-22 extension** (Aug Training / Sep Rollout) past the Aug 14 close, dashboard-evidenced
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track]] — **RETIRED 2026-04-17.** Historical record of the Google Forms track superseded by the PWA build. Reference only.
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/PSGC Value Sets]] — PSA 1Q 2026 PSGC (43,803 entries) externalized to `shared/psgc_*.dcf` lookups + `PSGC-Cascade.apc`; DCFs shrink 17 MB → ~1 MB
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/GPS and Photo Capture]] — F1/F3/F4 auto-GPS metadata blocks + end-of-interview verification photo; shared `Capture-Helpers.apc`; F3→F1 linkage via `F3_FACILITY_ID`

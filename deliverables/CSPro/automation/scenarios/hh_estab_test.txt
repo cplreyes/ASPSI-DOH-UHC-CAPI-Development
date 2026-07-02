@@ -1,0 +1,81 @@
+# Deterministic full drive to the Section C roster (exact widths/codes from dcf).
+rmdata ../F4/HouseholdSurvey.csdb
+launch ../F4/HouseholdSurvey.pff
+casekey 01 02 800 01 001
+type 1
+type 1
+click 1005 211
+type TESTADDRESS
+key {ENTER}
+type 14.5
+key {ENTER}
+type 120.9
+key {ENTER}
+type 10
+key {ENTER}
+type 5
+key {ENTER}
+type 8
+key {ENTER}
+type 20260609
+key {ENTER}
+note --- Section A Q1 head = Yes ---
+type 1
+note --- Section B (Q2..Q29) exact widths ---
+type TESTNAME
+key {ENTER}
+type 06
+type 1990
+type 036
+type 1
+type 2
+type 1
+type 2
+type 01
+type 1
+type 01
+type 2
+type 1
+type 01
+type 5000
+key {ENTER}
+type 1
+type 003
+type 000
+type 000
+type 1
+type 1
+type 1
+type 1
+type 1
+type 1
+type 1
+wait 1
+shot pre_q29
+click 786 883
+note === form1: name + present for 3 members (present is coded auto-advance) ===
+type RAMOS DAISY
+key {ENTER}
+type 1
+wait 1
+shot e1_m1_done
+type PARAISO AIDAN
+key {ENTER}
+type 1
+wait 1
+shot e2_m2_done
+type SALAZAR ALYZZA
+key {ENTER}
+type 1
+wait 2
+shot e3_expect_Q32_of3
+note === now Q32 age form — should be Occurrence 1 of 3 if members persisted ===
+type 025
+wait 1
+shot e4_age1
+type 040
+wait 1
+shot e5_age2
+type 050
+wait 1
+shot e6_age3_then_next

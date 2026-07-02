@@ -1,0 +1,170 @@
+﻿[FormFile]
+Version=CSPro 7.7
+Name=LISTING_FF
+Label=Listing
+DefaultTextFont=-013 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 Arial
+FieldEntryFont=0018 0000 0000 0000 0600 0000 0000 0000 0000 0000 0000 0000 0000 Courier New
+Type=SystemControlled
+  
+[Dictionaries]
+File=.\Listing.dcf
+  
+[Form]
+Name=FORM000
+Label=Listing Level
+Level=1
+Size=740,532
+  
+Item=LIS_LOGINID
+Item=LIS_SUP_ID
+Item=LISTING_HH_ID
+Item=LIS_GPS_LAT
+Item=LIS_GPS_LON
+Item=LIS_ADD
+Item=LIS_R_NAME
+Item=LIS_R_GENDER
+Item=LIS_INT_STATUS
+  
+  
+[Text]
+Name=TEXT1
+Position=47,50,194,79
+Text=Listing Form
+Form=1
+Font=-024 0000 0000 0000 0700 0000 0000 0000 0000 0003 0002 0001 0034 Arial
+ 
+[EndForm]
+  
+[Level]
+Name=LISTING_LEVEL
+Label=Listing Level
+  
+[Group]
+Required=Yes
+Name=LISTING_LEVEL_FORM
+Label=Listing Level
+Form=1
+Max=1
+  
+[Field]
+Name=LIS_LOGINID
+Position=211,112,268,132
+Item=LIS_LOGINID,LISTING_DICT
+UseEnterKey=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=59,115,158,131
+Text=Listing Login ID
+ 
+  
+[Field]
+Name=LIS_SUP_ID
+Position=211,142,268,162
+Item=LIS_SUP_ID,LISTING_DICT
+UseEnterKey=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=59,145,144,161
+Text=Supervisor ID
+ 
+  
+[Field]
+Name=LISTING_HH_ID
+Position=211,172,254,192
+Item=LISTING_HH_ID,LISTING_DICT
+UseEnterKey=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=59,175,189,191
+Text=Listing Household ID
+ 
+  
+[Field]
+Name=LIS_GPS_LAT
+Position=303,233,486,253
+Item=LIS_GPS_LAT,LISTING_DICT
+UseEnterKey=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=109,236,235,252
+Text=Listing GPS Latitute
+ 
+  
+[Field]
+Name=LIS_GPS_LON
+Position=303,263,486,283
+Item=LIS_GPS_LON,LISTING_DICT
+UseEnterKey=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=109,266,247,282
+Text=Listing GPS Longitute
+ 
+  
+[Field]
+Name=LIS_ADD
+Position=305,295,715,376
+Item=LIS_ADD,LISTING_DICT
+UseEnterKey=Yes
+UseUnicodeTextBox=Yes
+AllowMultiLine=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=110,291,206,307
+Text=Listing Address
+ 
+  
+[Field]
+Name=LIS_R_NAME
+Position=307,385,597,448
+Item=LIS_R_NAME,LISTING_DICT
+UseEnterKey=Yes
+UseUnicodeTextBox=Yes
+AllowMultiLine=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=113,388,275,404
+Text=Listing Respondent Name
+ 
+  
+[Field]
+Name=LIS_R_GENDER
+Position=306,457,321,477
+Item=LIS_R_GENDER,LISTING_DICT
+UseEnterKey=Yes
+DataCaptureType=RadioButton
+Form=1
+  
+[Text]
+Position=112,460,284,476
+Text=Listing Respondent Gender
+ 
+  
+[Field]
+Name=LIS_INT_STATUS
+Position=306,487,321,507
+Item=LIS_INT_STATUS,LISTING_DICT
+UseEnterKey=Yes
+DataCaptureType=RadioButton
+Form=1
+  
+[Text]
+Position=112,490,260,506
+Text=Listing Interview Status
+ 
+[EndGroup]
+  

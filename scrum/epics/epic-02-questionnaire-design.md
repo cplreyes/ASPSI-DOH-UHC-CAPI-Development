@@ -3,7 +3,7 @@ epic: 2
 title: Survey Questionnaire Design & Dictionary
 phase: per-instrument
 status: in-progress
-last_updated: 2026-04-21
+last_updated: 2026-06-28
 ---
 
 # Epic 2 — Survey Questionnaire Design & Dictionary
@@ -12,6 +12,10 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 
 **Ties to Product Backlog:** [[../product-backlog#Epic 2 — Survey Questionnaire Design & Dictionary|PB Epic 2]]
 **Methodology:** [[../../../../2_Areas/IT-Standards/templates/CAPI-Development-Workflow|CAPI Development Workflow]] Phases 1, 3, 4, 5
+
+**Current state:** F1/F3/F4 all **Build-ready** with **multi-language dictionaries built** (generator-driven, EN + Cebuano/Bisaya/Hiligaynon/Waray/Bicolano); the 12-digit RR-PP-MMM-FF-CCC case-key migration is folded in. **E2-F1-010 Designer sign-off closed 2026-05-04.** F2 data model lives in the PWA spec (not a CSPro dictionary). PLF: implementation decision made (CAPI), DCF build pending (E2-PLF-004/005/006).
+
+> **Status update 2026-06-28:** Questionnaire-design phase is effectively complete for F1/F3/F4; the only remaining Epic-2 work is the PLF DCF build when slotted. On-device instrument verification has moved to Epic 3 (UAT Round 5).
 
 ## Task conventions
 

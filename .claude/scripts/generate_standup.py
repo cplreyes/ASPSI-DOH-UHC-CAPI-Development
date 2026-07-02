@@ -46,14 +46,23 @@ SKIP_DIRS = {
 SCAN_EXTS = {".md", ".py", ".csv", ".xlsx", ".dcf", ".fmf", ".apc", ".json", ".ts", ".tsx", ".js", ".jsx"}
 
 FM_BOUNDARY = re.compile(r"^---\s*$")
-# Item IDs start with an uppercase letter/digit but may carry lowercase
-# segments (e.g. E0-009b, E4-CSWeb-001) — the continuation class must allow
-# them or those rows are silently dropped from the board.
+# The "ID" is whatever is bold-wrapped right after the checkbox. Capture the
+# WHOLE bold label (non-greedy, up to the first closing **), not just clean
+# [A-Z0-9-] tokens: committed items legitimately use multi-word / punctuated
+# labels ("Support deliverables", "Goal B #294/#336", "E2-F3/F4-PHILHEALTH",
+# "E0-UAT-REFRAME (finish)"). The old strict class silently dropped those rows,
+# so the board UNDER-reported the sprint — the exact scrum-state drift
+# E0-SCRUM-SYNC exists to kill. A title may carry its own **bold** spans; the
+# non-greedy id stops at the FIRST closing **, leaving the rest to the title.
 TASK_LINE = re.compile(
-    r"^-\s*\[(?P<mark>[ xX~!])\]\s*\*\*(?P<id>[A-Z0-9][A-Za-z0-9-]*)\*\*\s*(?P<title>.*?)$"
+    r"^-\s*\[(?P<mark>[ xX~!])\]\s*\*\*(?P<id>.+?)\*\*\s*(?P<title>.*?)$"
 )
 INLINE_FIELD = re.compile(r"`(?P<key>[a-z_]+)::(?P<val>[^`]+)`")
 RISK_ROW = re.compile(r"^\|\s*(?P<name>[^|]+?)\s*\|\s*(?P<likelihood>[^|]+?)\s*\|\s*(?P<impact>[^|]+?)\s*\|(?P<rest>.*)\|\s*$")
+
+# E0-SCRUM-SYNC: log.md newer than sprint-current.md by more than this many
+# days → the sprint board has gone stale relative to logged work. Fire a canary.
+DRIFT_DAYS = 2.0
 
 
 def today_manila() -> date:
@@ -127,6 +136,38 @@ def find_prior_standup(standups_dir: Path, today: date) -> Path | None:
         return None
     candidates.sort(key=lambda x: x[0], reverse=True)
     return candidates[0][1]
+
+
+def scrum_state_drift(repo: Path, threshold: float = DRIFT_DAYS) -> dict | None:
+    """E0-SCRUM-SYNC drift canary (the S009→S011 three-peat fix, built at last).
+
+    When real work — recorded in ``log.md`` — has outpaced the sprint board
+    (``scrum/sprint-current.md``) by more than ``threshold`` days, the board is
+    stale. That staleness is the exact root of three sprints of late retros and
+    stale Mon/Fri snapshots: the fix kept being *committed as a note* instead of
+    *wired into the cadence*. This is the wiring — a visible canary in the daily
+    standup (and the scheduled log) instead of a silent drift.
+
+    Detection is mtime-based, matching the spec ("log.md newer than
+    sprint-current.md by >2 days"). A deliberate edit of sprint-current.md
+    resets the clock — acceptable, since touching the board to sync it is the
+    very action the canary is asking for.
+    """
+    log_path = repo / "log.md"
+    sprint_path = repo / "scrum" / "sprint-current.md"
+    try:
+        log_mtime = log_path.stat().st_mtime
+        sprint_mtime = sprint_path.stat().st_mtime
+    except OSError:
+        return None
+    delta_days = (log_mtime - sprint_mtime) / 86400.0
+    if delta_days <= threshold:
+        return None
+    return {
+        "delta_days": round(delta_days, 1),
+        "log_date": datetime.fromtimestamp(log_mtime, MANILA).date().isoformat(),
+        "sprint_date": datetime.fromtimestamp(sprint_mtime, MANILA).date().isoformat(),
+    }
 
 
 def scan_file_activity(repo: Path, since: datetime, upper: datetime | None = None) -> dict[str, list[str]]:
@@ -279,6 +320,18 @@ def render_standup(ctx: dict) -> str:
             f"{sprint_num} (Mode D retro + archive) and plan the next one. "
             f"_Silence ≠ idle: an unreset sprint does not mean no work happened._"
         )
+    drift = ctx.get("scrum_drift")
+    if drift:
+        out.append("")
+        out.append(
+            f"> [!warning] Scrum-state drift — `log.md` is {drift['delta_days']} days "
+            f"newer than `sprint-current.md` (log last touched {drift['log_date']}, "
+            f"sprint board {drift['sprint_date']}). Work has been logged that the "
+            f"board hasn't absorbed, so its `status::` fields are behind reality. "
+            f"**Sync `sprint-current.md`** — fold the logged outcomes into the board "
+            f"— before trusting today's Sprint Board / Today columns. "
+            f"_(E0-SCRUM-SYNC canary.)_"
+        )
     out.append("")
     out.append("---")
     out.append("")
@@ -401,8 +454,23 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--date", help="Override target date (YYYY-MM-DD), Asia/Manila. Used for historical backfill.")
+    ap.add_argument("--check-drift", action="store_true",
+                    help="E0-SCRUM-SYNC: print the log.md↔sprint-current.md drift status and exit (no standup written).")
+    ap.add_argument("--drift-days", type=float, default=DRIFT_DAYS,
+                    help=f"Drift threshold in days (default {DRIFT_DAYS}). Used by --check-drift and the daily canary.")
     args = ap.parse_args(argv)
     repo = Path(args.repo).resolve()
+
+    if args.check_drift:
+        d = scrum_state_drift(repo, threshold=args.drift_days)
+        if d:
+            print(f"DRIFT: log.md is {d['delta_days']}d newer than sprint-current.md "
+                  f"(log {d['log_date']} vs board {d['sprint_date']}; threshold {args.drift_days}d) "
+                  f"— sync the sprint board.")
+        else:
+            print(f"OK: no scrum-state drift beyond {args.drift_days}d "
+                  f"(log.md and sprint-current.md are in step).")
+        return 0
 
     try:
         real_today = today_manila()
@@ -449,6 +517,14 @@ def main(argv: list[str] | None = None) -> int:
         committed = parse_committed_items(sprint_body)
         board_counts = sprint_board_counts(committed)
         sprint_day = compute_sprint_day(sprint_fm, today)
+
+        # E0-SCRUM-SYNC drift canary — only meaningful for live runs, not
+        # historical backfill (mtimes reflect today's filesystem, not the
+        # backfilled date).
+        drift = None if is_backfill else scrum_state_drift(repo, threshold=args.drift_days)
+        if drift:
+            log(repo, f"sprint-drift: log.md {drift['delta_days']}d newer than "
+                      f"sprint-current.md (log {drift['log_date']} vs board {drift['sprint_date']})")
 
         day, total, _rem = sprint_day
         at_risk: list[dict] = []
@@ -499,6 +575,7 @@ def main(argv: list[str] | None = None) -> int:
             "file_activity": activity,
             "at_risk": at_risk,
             "is_backfill": is_backfill,
+            "scrum_drift": drift,
         }
 
         content = render_standup(ctx)

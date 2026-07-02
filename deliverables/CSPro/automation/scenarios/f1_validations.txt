@@ -1,0 +1,60 @@
+# F1 validation-engine drive (REFRESHED harness 2026-06-27).
+# Key 04 03 400 02 001 (geo 0403400 Laguna; F_CODE 040340002 CABUYAO CITY HOSPITAL).
+# Q2/Q3/Q5/Q6 numerics are 2-wide (auto-advance on fill). Fires:
+#  (1) Q3 age<18  (2) Q5 exceeds working-age  (3) Q5/Q6 tenure consistency.
+rmdata ../F1/desktest.csdb
+launch ../F1/FacilityHeadSurvey_desktest.pff
+casekey 04 03 400 02 001
+type 1
+type 0403403001
+type 1
+type 14.25
+key {ENTER}
+type 121.08
+key {ENTER}
+type 10
+key {ENTER}
+type 5
+key {ENTER}
+type 8
+key {ENTER}
+type 20260627
+key {ENTER}
+type DR TEST HEAD
+key {ENTER}
+type CHIEF OF HOSPITAL
+key {ENTER}
+type test@test.com
+key {ENTER}
+type 09171234567
+key {ENTER}
+type DR TEST HEAD
+key {ENTER}
+note Q2 designation = 03 (2-wide, auto-advances)
+type 03
+shot before_q3
+note (1) Q3 age = 15 -> EXPECT below-18
+type 15
+shot v1_age18_EXPECT
+click 1172 565
+note recover age = 45
+type 45
+shot v1_age18_recovered
+note Q4 sex = 1
+type 1
+note (2) Q5 years = 30 (age 45 -> max 25) -> EXPECT exceeds working-age
+type 30
+shot v2_workingage_EXPECT
+click 1172 565
+note recover Q5 years = 10
+type 10
+shot v2_workingage_recovered
+note Q5 months = 00
+type 00
+note (3) Q6 years health = 05 (< Q5 10y) -> EXPECT health<facility consistency
+type 05
+shot v3_tenure_EXPECT
+click 1172 565
+note recover Q6 years = 12
+type 12
+shot v3_tenure_recovered

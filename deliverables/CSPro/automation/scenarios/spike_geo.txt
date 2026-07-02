@@ -1,0 +1,30 @@
+rmdata ../F4/HouseholdSurveySpike.csdb
+launch ../F4/HouseholdSurveySpike.pff
+casekey 01 02 800 01 001
+type 1
+type 1
+note barangay picker -> select first row (Adams)
+click 1005 211
+shot h1_after_barangay
+type TESTADDRESS
+key {ENTER}
+shot h2_after_address
+type 14.5
+key {ENTER}
+type 120.9
+key {ENTER}
+type 10
+key {ENTER}
+type 5
+key {ENTER}
+type 8
+key {ENTER}
+type 20260609
+key {ENTER}
+shot h3_after_gps_data
+type 1
+shot h4_probe1
+key {ENTER}
+shot h5_probe2
+type 1
+shot h6_probe3

@@ -1,0 +1,123 @@
+﻿[FormFile]
+Version=CSPro 7.7
+Name=LOGIN_APP_FF
+Label=Login_App
+DefaultTextFont=-013 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 Arial
+FieldEntryFont=0018 0000 0000 0000 0600 0000 0000 0000 0000 0000 0000 0000 0000 Courier New
+Type=SystemControlled
+  
+[Dictionaries]
+File=.\Login_App.dcf
+  
+[Form]
+Name=FORM000
+Label=Login Form
+Level=1
+Size=578,280
+  
+Item=LOGIN_APP_ID
+Item=APP_VERSION
+Item=LOGIN_NAME
+Item=DEVICE_ID
+Item=PASSWORD
+Item=DESIGNATION
+  
+  
+[Text]
+Name=TEXT1
+Position=27,43,243,84
+Text=Login Screen
+Form=1
+Font=-035 0000 0000 0000 0700 0000 0000 0000 0000 0003 0002 0001 0034 Arial
+Color=16711680
+ 
+[EndForm]
+  
+[Level]
+Name=LOGIN_APP_LEVEL
+Label=Login_App Level
+  
+[Group]
+Required=Yes
+Name=F_LOGIN_FORM
+Label=Login Form
+Form=1
+Max=1
+  
+[Field]
+Name=LOGIN_APP_ID
+Position=183,100,240,120
+Item=LOGIN_APP_ID,LOGIN_APP_DICT
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=38,103,161,119
+Text=Login Identification
+ 
+  
+[Field]
+Name=APP_VERSION
+Position=462,100,519,120
+Item=APP_VERSION,LOGIN_APP_DICT
+Protected=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=316,104,440,120
+Text=Application Version
+ 
+  
+[Field]
+Name=LOGIN_NAME
+Position=183,145,553,165
+Item=LOGIN_NAME,LOGIN_APP_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=38,148,115,164
+Text=Login Name
+ 
+  
+[Field]
+Name=DEVICE_ID
+Position=183,175,407,195
+Item=DEVICE_ID,LOGIN_APP_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=38,178,98,194
+Text=Device ID
+ 
+  
+[Field]
+Name=PASSWORD
+Position=183,205,240,225
+Item=PASSWORD,LOGIN_APP_DICT
+UseEnterKey=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=38,208,99,224
+Text=Password
+ 
+  
+[Field]
+Name=DESIGNATION
+Position=183,235,198,255
+Item=DESIGNATION,LOGIN_APP_DICT
+DataCaptureType=DropDown
+Form=1
+  
+[Text]
+Position=38,238,113,254
+Text=Designation
+ 
+[EndGroup]
+  

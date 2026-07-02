@@ -3,7 +3,7 @@ epic: 9
 title: Data Management and Security
 phase: continuous
 status: governance-active
-last_updated: 2026-04-26
+last_updated: 2026-06-28
 ---
 
 # Epic 9 — Data Management and Security
@@ -11,6 +11,10 @@ last_updated: 2026-04-26
 Continuous governance workstream covering data privacy compliance, security architecture, access control, backup strategy, and retention policy. Runs for the full engagement with concrete deliverables staged around Epic 4 (CSWeb) and Epic 8 (Fieldwork Monitoring).
 
 **Ties to Product Backlog:** [[../product-backlog#Epic 9 — Data Management and Security|PB Epic 9]]
+
+**Current state:** **Governance Active.** Legal baseline in force (NDU signed 2025-12-12; RA 10173/8293/10175 obligations acknowledged; CSA confidentiality §10g/§11). **Data-Privacy-and-Security-Plan drafted.** Open: PII inventory + handling protocol, encryption at rest/in transit, CSWeb access control, audit trail, backup/recovery, retention/destruction, incident response — policy-design tasks that sequence with the Epic-4 CSWeb stand-up + Epic-5 tablet provisioning.
+
+> **Status update 2026-06-28:** the Data-Privacy-and-Security-Plan is drafted; the concrete policy/encryption/backup/retention tasks remain open and will land alongside CSWeb config + tablet provisioning.
 
 ## Task conventions
 

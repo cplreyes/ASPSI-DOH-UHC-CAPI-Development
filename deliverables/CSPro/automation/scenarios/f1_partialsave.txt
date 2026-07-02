@@ -1,0 +1,39 @@
+# F1 desktop run -> partial-save -> verify csdb. Same compiled logic as the deployed .pen.
+rmdata ../F1/desktest.csdb
+launch ../F1/FacilityHeadSurvey_desktest.pff
+casekey 04 03 400 02 001
+type 1
+type 0403403001
+type 1
+type 14.25
+key {ENTER}
+type 121.08
+key {ENTER}
+type 10
+key {ENTER}
+type 5
+key {ENTER}
+type 8
+key {ENTER}
+type 20260627
+key {ENTER}
+type DR TEST HEAD
+key {ENTER}
+type CHIEF OF HOSPITAL
+key {ENTER}
+type test@test.com
+key {ENTER}
+type 09171234567
+key {ENTER}
+type DR TEST HEAD
+key {ENTER}
+type 03
+type 52
+type 1
+type 08
+shot before_stop
+note ---- partial-save: click the Stop (square) toolbar button, then Partial Save ----
+click 155 63
+shot stop_dialog
+click 830 534
+shot after_partialsave

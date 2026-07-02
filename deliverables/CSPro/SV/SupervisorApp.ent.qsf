@@ -1,0 +1,148 @@
+﻿---
+fileType: Question Text
+version: CSPro 8.0
+languages:
+  - name: EN
+    label: English
+styles:
+  - name: Normal
+    className: normal
+    css: |
+      font-family: Arial;font-size: 16px;
+  - name: Instruction
+    className: instruction
+    css: |
+      font-family: Arial;font-size: 14px;color: #0000FF;
+  - name: Heading 1
+    className: heading1
+    css: |
+      font-family: Arial;font-size: 36px;
+  - name: Heading 2
+    className: heading2
+    css: |
+      font-family: Arial;font-size: 24px;
+  - name: Heading 3
+    className: heading3
+    css: |
+      font-family: Arial;font-size: 18px;
+questions:
+  - name: SUPERVISORAPP_DICT.FACILITY_CODE
+    conditions:
+      - questionText:
+          EN: |
+            <p>Facility Code (RRPPMMMFF)</p>
+  - name: SUPERVISORAPP_DICT.FACILITY_NAME
+    conditions:
+      - questionText:
+          EN: |
+            <p>Facility name</p>
+  - name: SUPERVISORAPP_DICT.FS_OPERATOR_ID
+    conditions:
+      - questionText:
+          EN: |
+            <p>Field Supervisor operator ID</p>
+  - name: SUPERVISORAPP_DICT.CC_ENDORSEMENT_OBTAINED
+    conditions:
+      - questionText:
+          EN: |
+            <p>Facility approval / endorsement obtained?</p>
+  - name: SUPERVISORAPP_DICT.CC_HEAD_INTERVIEW_DATE
+    conditions:
+      - questionText:
+          EN: |
+            <p>Facility-head interview scheduled (YYYYMMDD)</p>
+  - name: SUPERVISORAPP_DICT.CC_FOCAL_PERSON_NAME
+    conditions:
+      - questionText:
+          EN: |
+            <p>Focal person name</p>
+  - name: SUPERVISORAPP_DICT.CC_DISCHARGE_CUTOFF
+    conditions:
+      - questionText:
+          EN: |
+            <p>Usual discharge / billing cutoff time</p>
+  - name: SUPERVISORAPP_DICT.CC_HCW_LIST_CAPTURED
+    conditions:
+      - questionText:
+          EN: |
+            <p>Master HCW list captured?</p>
+  - name: SUPERVISORAPP_DICT.CC_HCW_LIST_COUNT
+    conditions:
+      - questionText:
+          EN: |
+            <p>HCW master-list count</p>
+  - name: SUPERVISORAPP_DICT.CC_QR_POSTER_POSTED
+    conditions:
+      - questionText:
+          EN: |
+            <p>HCW Survey QR poster posted?</p>
+  - name: SUPERVISORAPP_DICT.CC_PATIENT_LISTING_DATE
+    conditions:
+      - questionText:
+          EN: |
+            <p>Patient-listing day scheduled (YYYYMMDD)</p>
+  - name: SUPERVISORAPP_DICT.CC_WORKSTATION_ARRANGED
+    conditions:
+      - questionText:
+          EN: |
+            <p>Temporary workstation arranged?</p>
+  - name: SUPERVISORAPP_DICT.VERIFICATION_PHOTO_FILENAME
+    conditions:
+      - questionText:
+          EN: |
+            <p>Verification Photo Filename</p>
+  - name: SUPERVISORAPP_DICT.CAPTURE_VERIFICATION_PHOTO
+    conditions:
+      - questionText:
+          EN: |
+            <p>Take Verification Photo</p>
+  - name: SUPERVISORAPP_DICT.TP_LINE
+    conditions:
+      - questionText:
+          EN: |
+            <p>Touchpoint row</p>
+  - name: SUPERVISORAPP_DICT.TP_TYPE
+    conditions:
+      - questionText:
+          EN: |
+            <p>Touchpoint type</p>
+  - name: SUPERVISORAPP_DICT.TP_TIMESTAMP
+    conditions:
+      - questionText:
+          EN: |
+            <p>Touchpoint timestamp (YYYYMMDD HHMM)</p>
+  - name: SUPERVISORAPP_DICT.TP_GPS_LATITUDE
+    conditions:
+      - questionText:
+          EN: |
+            <p>GPS Latitude</p>
+  - name: SUPERVISORAPP_DICT.TP_GPS_LONGITUDE
+    conditions:
+      - questionText:
+          EN: |
+            <p>GPS Longitude</p>
+  - name: SUPERVISORAPP_DICT.TP_GPS_ALTITUDE
+    conditions:
+      - questionText:
+          EN: |
+            <p>GPS Altitude (m)</p>
+  - name: SUPERVISORAPP_DICT.TP_GPS_ACCURACY
+    conditions:
+      - questionText:
+          EN: |
+            <p>GPS Accuracy (m)</p>
+  - name: SUPERVISORAPP_DICT.TP_GPS_SATELLITES
+    conditions:
+      - questionText:
+          EN: |
+            <p>GPS Satellites</p>
+  - name: SUPERVISORAPP_DICT.TP_GPS_READTIME
+    conditions:
+      - questionText:
+          EN: |
+            <p>GPS Read Time (UTC)</p>
+  - name: SUPERVISORAPP_DICT.TP_OUTCOME_NOTE
+    conditions:
+      - questionText:
+          EN: |
+            <p>Outcome / note</p>

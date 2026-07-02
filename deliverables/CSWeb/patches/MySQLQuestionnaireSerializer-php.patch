@@ -1,0 +1,47 @@
+# Patch #6 — MySQLQuestionnaireSerializer.php (ASPSI 2026-06-25)
+#
+# File: src/AppBundle/CSPro/Data/MySQLQuestionnaireSerializer.php
+# Method: fillItemValues()  (single-occurrence `else` branch)
+#
+# WHY: CSPro→CSWeb "case breakout" (csweb:process-cases → BlobBreakOutWorker →
+# serializeRecord → fillItemValues) builds one INSERT per record, binding each item
+# value as a scalar parameter. The `occurs > 1` branch flattens an array of occurrence
+# values into separate params; the `occurs == 1` branch binds the value DIRECTLY with no
+# array check. A binary Image item (the #713 verification photo, off-form, contentType
+# image) arrives as an ARRAY in the synced case JSON, hits the single-occurrence branch,
+# and is passed to PDO bindValue() as an array → ErrorException "Array to string
+# conversion" → the ENTIRE dictionary's breakout job throws and writes 0 cases.
+#
+# SYMPTOM: after an F3/F4 redeploy (which drops + recreates the breakout DB and
+# reprocesses), csweb_f3_breakout / csweb_f4_breakout stay at 0 cases with a job stuck
+# at status=1; the Sync Report, Map Report, and static dashboard.html/map.html all read
+# the breakout, so they show fewer cases than the CSWeb Data tab (synced devices). F1 is
+# unaffected only because its test cases carry no photo (binary_data = 0).
+#
+# FIX: guard the single-occurrence branch — an array value (a binary/blob with no scalar
+# column representation) is logged and nulled. LOSSLESS for reporting: the photo bytes are
+# stored in <DICT>_case_binary_data and sync separately; no report reads them, so a null
+# in the relational record column is correct.
+#
+# ---------------------------------------------------------------------------
+#         } else {
+#             $insertValue = null;
+#             if (isset($curRecord[$itemName])) {
+#                 $insertValue = $curRecord[$itemName];
+# -                if ($isNumeric) {
+# +                if (is_array($insertValue)) {
+# +                    $this->logger->warning("Record [" . $record->getName() . "] Item [$itemName] has array value (binary/blob in scalar column); setting null.");
+# +                    $insertValue = null;
+# +                } else if ($isNumeric) {
+#                     if (is_numeric($curRecord[$itemName]) === FALSE) {
+#                         ... (unchanged)
+#                     }
+#                 }
+#             }
+#             $values[] = $insertValue;
+#         }
+# ---------------------------------------------------------------------------
+#
+# Marker (means-applied): "array value (binary/blob in scalar column)"
+# Backup on box: MySQLQuestionnaireSerializer.php.orig-8.0.1
+# Re-apply after any CSWeb upgrade via apply-csweb-patches.py (idempotent; skips if marker present).

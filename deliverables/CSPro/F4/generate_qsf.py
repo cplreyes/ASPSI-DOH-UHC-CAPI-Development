@@ -18,6 +18,8 @@ import json
 import re
 from pathlib import Path
 
+from generate_dcf import build_f4_dictionary, apply_translations
+
 HERE = Path(__file__).parent
 DCF = HERE / "HouseholdSurvey.dcf"
 OUT = HERE / "HouseholdSurvey.ent.qsf"
@@ -165,16 +167,20 @@ INSTRUCTIONS = {
     12: ("If the respondent is studying - please put “No employment - not "
          "looking for work”. " + _READ_ONE),
     13: _READ_ONE + " IF MORE THAN ONE, ASK FOR THE MAIN SOURCE.",
-    15: (_DNR_ONE + " For enumerator: A list will be provided to ensure "
-         "accurate details."),
+    15: _DNR_ONE,   # #791: removed the custom "A list will be provided…" enumerator note per tester; standard read-instruction kept
     18: ("Enumerator note: Tick the income category that corresponds to the "
          "respondent’s approximate household income."),
     19: ("Please count yourself and all the people who usually live with you. "
          "Please include those who are not living here now but will be back "
          "within six months, BUT do not include OFWs."),
     29: "Please choose one from the options I will mention.",
-    30: ("For the enumerator: please check that the total number is equal to "
-         "the number answered in Q19."),
+    30: ("Note to enumerator [do not read]: This section is for the "
+         "characteristics of the Household. The respondent can answer on behalf "
+         "of the household member. However, if the household member is present "
+         "during the interview, they may provide their answers. Ask all "
+         "questions in this section unless a skip rule applies. For the "
+         "enumerator: please check that the total number is equal to the number "
+         "answered in Q19."),
     51: ("Note to enumerator [do not read]: This section is for awareness of "
          "the Universal Health Care (UHC). Ask all questions in this section "
          "unless a skip rule applies."),
@@ -228,15 +234,19 @@ INSTRUCTIONS = {
           "this section unless a skip rule applies."),
     141: ("IF RESPONDENT PROVIDES A RECEIPT, SELECT ALL THAT APPLY. IF NO "
           "RECEIPT WAS PROVIDED, READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY."),
-    159: ("For the next non-food items, the reference period is the past "
+    # Reference-period scripts attach to the FIRST item of each group (was wrongly on the
+    # LAST item of the PREVIOUS group — #678/#680/#681/#682/#683). Paper (Annex F4 Apr-20,
+    # Section N): Q159 Smoking = WEEK (no MONTH script); MONTH starts Q160; 6-MONTHS starts
+    # Q168; 12-MONTHS starts Q170; health 6-MONTHS starts Q178; health MONTH starts Q183.
+    160: ("For the next non-food items, the reference period is the past "
           "MONTH. This could include online purchases whenever applicable."),
-    167: ("For the next non-food items, the reference period is the past 6 "
+    168: ("For the next non-food items, the reference period is the past 6 "
           "MONTHS. This could include online purchases whenever applicable."),
-    169: ("For the next non-food items, the reference period is the past 12 "
+    170: ("For the next non-food items, the reference period is the past 12 "
           "MONTHS (1 YEAR). This could include online purchases whenever "
           "applicable."),
-    177: "For the next health products and services, the reference period is the past 6 MONTHS.",
-    182: "For the next health products and services, the reference period is the past MONTH.",
+    178: "For the next health products and services, the reference period is the past 6 MONTHS.",
+    183: "For the next health products and services, the reference period is the past MONTH.",
     197: ("For example, you felt you needed to see a medical provider, but "
           "waited until the symptoms were more serious because you were "
           "worried about the cost of the consultation or treatment, the "
@@ -289,11 +299,87 @@ SECTION_INTROS = {
           "non-food and non-health expenses."),
     175: ("We will now move on to your household’s consumption or use of "
           "health products and services in the past 12 months."),
-    183: ("In the next section, we would like to know more about the funds "
-          "that you use for health care."),
+    # #683.3: the "funds for health care" section transition belongs before Q186 (Section O),
+    # NOT before Q183 (which is a health-MONTH expenditure item). Merged here with the #634
+    # financial-sources battery lead-in — both are read once before Q186 per the paper.
+    186: ("In the next section, we would like to know more about the funds "
+          "that you use for health care. In the last 12 months, which of the "
+          "following financial sources did your household use to pay "
+          "out-of-pocket for any medical, dental service with or without "
+          "overnight stay, medicines, and health products?"),
 }
 
 _QNUM = re.compile(r"^Q(\d{1,3})_")
+# Sub-question pattern: Q<n>_<m>_...  e.g. Q141_1_NO_RECEIPT_AMT_PHP, Q2_1_AGE, Q89_1_*.
+# These are decimal sub-items (Q141.1, Q2.1, Q89.1), NOT the parent question Q<n>, so they
+# must NOT inherit the parent's enumerator instruction (#667: Q141_1 wrongly showed the
+# Q141 receipt note). _QNUM still captures the parent int for SECTION_INTRO placement, but
+# the INSTRUCTIONS note is suppressed for sub-questions below.
+_SUBQ = re.compile(r"^Q\d{1,3}_\d+_")
+
+
+# ------------------------------------------------------------------
+# Section C name-piping (#610/#613.3) + roster line-number context (#601/#614).
+# Per-member questions show the member's name piped from the household roster's Q30_NAME
+# so the enumerator never loses track of whose row it is. Q42-Q44 reference Q30_NAME in
+# their own occurrence; the Q48-Q50 private-insurance pass (C_PRIVATE_INS_ROSTER) references
+# the SAME household-roster member by occurrence. The paper "(NAME)" token is replaced inline.
+# Fills (~~expr~~) live ONLY in the question text (.qsf) and evaluate on-device; the dcf
+# label / bold header still shows "(NAME)" literally (pre-existing, not a regression).
+# ------------------------------------------------------------------
+# (NAME) English + (PANGALAN) Tagalog member-name placeholders, replaced inline with the fill.
+_NAME_TOKEN_RE = re.compile(r"\((?:NAME|PANGALAN)\)", re.IGNORECASE)
+# #610 originally piped the member-name header onto only Q42-Q44. The "Household
+# Characteristic Target Interface" (ASPSI, 2026-06) wants that blue "Household member:
+# <name> (Roster line N)" header on EVERY Section C per-member question (Q31-Q46), so the
+# enumerator/respondent always knows whose row each question is for. Derive the full set
+# from the C_HOUSEHOLD_ROSTER record so it can't drift as fields change — excluding
+# MEMBER_LINE_NO (noinput control, never shown) and Q30_NAME (the name-entry screen itself,
+# which carries the section note, not a self-referential header).
+def _hh_roster_fields():
+    for _lvl in build_f4_dictionary()["levels"]:
+        for _rec in _lvl.get("records", []):
+            if _rec["name"] == "C_HOUSEHOLD_ROSTER":
+                return {it["name"] for it in _rec["items"]
+                        if it["name"] not in ("MEMBER_LINE_NO", "Q30_NAME")}
+    return {"Q42_GSIS", "Q43_SSS", "Q44_PAGIBIG"}   # defensive fallback (prior #610 scope)
+
+
+_PIPE_HH = _hh_roster_fields()
+_PIPE_PRIV = {"Q48_OTHER_INS_REG", "Q49_PRIVATE_INS", "Q50_PRIVATE_INS_OTHER_TXT"}
+_HH_NAME_FILL = "~~strip(Q30_NAME)~~"
+_PRIV_NAME_FILL = "~~strip(Q30_NAME(curocc()))~~"
+
+# Roster line-1 (respondent) cross-check notes (#603/#606/#607/#609). For roster line 1
+# (the respondent), these per-member questions should match the respondent's own Section B
+# answers; show the prior answer as a blue note so the enumerator can cross-check without
+# paging back. getvaluelabel() prints the coded answer's label; fills evaluate on-device.
+# (Option (b) from the tester — a reminder note, not a hard cross-field warning.)
+_ROSTER_CROSSCHECK = {
+    "Q35_HAS_DISABILITY": ("If this is line 1 (the respondent): compare with their Section B "
+                           "disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>."),
+    "Q39_CIVIL_STATUS":   ("If this is line 1 (the respondent): should match their Section B "
+                           "civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>."),
+    "Q40_EDUCATION":      ("If this is line 1 (the respondent): should match their Section B "
+                           "education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>."),
+    "Q41_EMPLOYMENT":     ("If this is line 1 (the respondent): should match their Section B "
+                           "employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>."),
+}
+
+
+def _pipe_member_name(nm, html):
+    """Prefix the roster member's name + line number and replace the inline '(NAME)' token
+    for the Section C per-member questions. Runs AFTER _html escaping so the ~~fill~~ is not
+    HTML-escaped (parens in '(NAME)' are not escaped either, so the inline sub still matches)."""
+    if nm in _PIPE_HH:
+        ctx = (f'<p class="instruction">Household member: {_HH_NAME_FILL} '
+               f'(Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p>')
+        return ctx + _NAME_TOKEN_RE.sub(_HH_NAME_FILL, html)
+    if nm in _PIPE_PRIV:
+        ctx = (f'<p class="instruction">Household member: {_PRIV_NAME_FILL} '
+               f'(Roster line ~~PRIV_MEMBER_LINE_NO~~)</p>')
+        return ctx + _NAME_TOKEN_RE.sub(_PRIV_NAME_FILL, html)
+    return html
 
 
 def _esc(t):
@@ -315,13 +401,23 @@ def question_extras(nm, intro_used):
             intro_used.add(tgt)
             break
     instr = INSTRUCTIONS.get(q)
-    if instr and not nm.endswith("_TXT"):
+    # #667: suppress the parent question's instruction note on decimal sub-questions
+    # (Q<n>_<m>_…, e.g. Q141_1_NO_RECEIPT_AMT_PHP) and on free-text *_TXT capture fields.
+    if instr and not nm.endswith("_TXT") and not _SUBQ.match(nm):
         post = f'<p class="instruction">{_esc(instr)}</p>'
     return pre, post
 
 
 def main():
-    d = json.loads(DCF.read_text(encoding="utf-8"))
+    # Build the dictionary IN-MEMORY (full-length labels) instead of reading the on-disk
+    # HouseholdSurvey.dcf, whose labels write_dcf() caps at 255 chars via
+    # _truncate_long_labels. That 255 cap is correct for the dcf/fmf bold header, but the
+    # qsf inherited it and truncated long Section N prompts mid-sentence in the CAPI
+    # question-text bar (#741/#742/#745: Q152/159/162/163/164/168/169/171/178/179/180/181/
+    # 183/184 were cut at "— In the..."). The qsf question text has no length limit, so it
+    # carries the FULL prompt. Mirrors the #748 in-memory-build fix in generate_fmf.
+    d = build_f4_dictionary()
+    d = apply_translations(d, HERE / "translations")
     dict_name = d.get("name", "HOUSEHOLDSURVEY_DICT")
     langs = [(l["name"], l.get("label", l["name"]))
              for l in (d.get("languages") or [{"name": "EN", "label": "English"}])]
@@ -338,6 +434,8 @@ def main():
         for rec in lvl.get("records", []):
             for it in rec.get("items", []):
                 nm = it["name"]
+                if it.get("contentType") in ("image", "audio", "document", "geometry"):
+                    continue   # binary items: off-form, no question prompt (#713)
                 if nm in seen:
                     continue
                 seen.add(nm)
@@ -346,8 +444,12 @@ def main():
                 ov = OVERRIDES.get(nm)
                 pre, post = ("", "") if ov else question_extras(nm, intro_used)
                 lines += [f"  - name: {dict_name}.{nm}", "    conditions:", "      - questionText:"]
+                cc = _ROSTER_CROSSCHECK.get(nm)   # #603/#606/#607/#609 line-1 cross-check note
                 for lnm, _ in langs:
                     body = ov or (pre + _html(labmap.get(lnm) or en) + post)
+                    body = _pipe_member_name(nm, body)   # Section C name/line piping
+                    if cc:
+                        body = body + f'<p class="instruction">{cc}</p>'
                     lines += [f"          {lnm}: |", f"            {body}"]
                 n += 1
     lines.append("...")

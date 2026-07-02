@@ -1,0 +1,22 @@
+{ SyncSpike — C2 Bluetooth peer-to-peer case-sync feasibility probe (throwaway, do not ship).
+  Validates syncserver / syncconnect(Bluetooth) / syncdata(PUT) move PRIMARY case data
+  device-to-device with no internet. The field SS_MODE selects the role at run time. }
+
+PROC GLOBAL
+
+PROC SS_MODE
+postproc
+  if SS_MODE = 7 then
+    errmsg("HOST: starting Bluetooth server. Keep this screen open; now run MODE 9 on the client.");
+    syncserver(Bluetooth);
+    errmsg("HOST: syncserver finished — a client connected and synced.");
+  endif;
+  if SS_MODE = 9 then
+    if syncconnect(Bluetooth) then
+      syncdata(PUT, PATIENTSURVEY_DICT);
+      syncdisconnect();
+      errmsg("CLIENT: connected + syncdata(PUT) done — F3 cases pushed to the host.");
+    else
+      errmsg("CLIENT: Bluetooth connect FAILED (no host / not paired / server not running).");
+    endif;
+  endif;

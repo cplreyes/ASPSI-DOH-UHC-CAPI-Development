@@ -1,0 +1,26 @@
+rmdata ../F4/desktest.csdb
+launch ../F4/HouseholdSurvey_desktest.pff
+casekey 01 02 800 01 001
+shot at_Q144
+note Q144 consumed=Yes, purchased=100, inkind=0 (all VALID, no blanks)
+type 1
+type 100
+key {ENTER}
+type 0
+key {ENTER}
+note Q145..Q156 NOT consumed (type 2 -> gate auto-zeros) x12
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+shot at_Q157_all_valid
+note PASS (2026-06-17): no NOTAPPL error; flow advances past protected Q157 to Q158.
+note #617 fix = init Q157=0 at Q144_CONSUMED preproc + real sum at Q158_CONSUMED preproc.

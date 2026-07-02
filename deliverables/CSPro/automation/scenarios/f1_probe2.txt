@@ -1,0 +1,30 @@
+# PROBE2 F1: barangay -> interview status -> GPS -> Section A/B (tenure fields).
+rmdata ../F1/desktest.csdb
+launch ../F1/FacilityHeadSurvey_desktest.pff
+casekey 04 03 400 02 001
+type 1
+note CLASSIFICATION = UHC IS
+type 0403403001
+shot barangay
+note Interview status = Continue
+type 1
+shot interview_status
+note ---- GPS (enter values like F4) ----
+type 14.25
+key {ENTER}
+type 121.08
+key {ENTER}
+type 10
+key {ENTER}
+type 5
+key {ENTER}
+type 8
+key {ENTER}
+type 20260627
+key {ENTER}
+shot after_gps
+type 1
+shot s1
+type TESTHEAD
+key {ENTER}
+shot s2

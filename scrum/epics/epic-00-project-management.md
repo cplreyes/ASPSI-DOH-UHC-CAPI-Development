@@ -3,12 +3,16 @@ epic: 0
 title: CAPI Project Management & Stakeholder Engagement
 phase: continuous
 status: active-ongoing
-last_updated: 2026-05-01
+last_updated: 2026-06-28
 ---
 
 # Epic 0 — CAPI Project Management & Stakeholder Engagement
 
 Continuous workstream spanning the full engagement. Governs sprint cadence, stakeholder communication, ethics coordination, risk tracking, and change management.
+
+**Current state:** Active / Ongoing — runs continuously. Sprint cadence live (Sprints 005–010 closed + archived; **Sprint 011 in close**, ran 2 days past its end). Daily-standup automation live (launch-independent Windows scheduled task 08:30 MNL + SessionStart hook). Internal weekly status format stable. ASPSI/PI/PMO-lane items (SJREB clearance, tranche/deadline tracking, DOH-PMSMD matrix) remain **informational only — not Data-Programmer scope**.
+
+> **Status update 2026-06-28:** Sprint 011 closing (retro pending). The Supervisor-hub Phase-2 build shipped this period as emergent work — to be named in the backlog via E0-UAT-REFRAME (a committed S011 item).
 
 **Ties to Product Backlog:** [[../product-backlog#Epic 0 — CAPI Project Management & Stakeholder Engagement|PB Epic 0]]
 

@@ -11,6 +11,10 @@ tags: [cspro, capi, skip-logic, validations, f4, household]
 
 # F4 Household Survey — Skip Logic and Validations Spec
 
+> [!warning] SUPERSEDED — the generator is the source of truth (banner added 2026-06-27)
+> This spec **trails the UAT-evolved generator** (F4-DOC-01). For current behavior read the inline comments in `deliverables/CSPro/F4/generate_apc.py` / `generate_dcf.py` and the bound `.apc`. Do **not** "re-fix" code to match this doc — the departures below are intentional UAT closures.
+> Intentional, undocumented departures: `CONSENT_GIVEN` removed (→ BREAKOFF disposition); single 12-digit PSGC case key; **Q138–Q143 bill-recall asked of everyone** (#699/#701); Q195 is a 6-band % (not 0–100); Q105=No→Q107; Q90=No→Q94. One pending ASPSI ruling: **F4-VAL-01** Q141.1 no-receipt gate (recommend drop the gate; cap check stays).
+
 Source-of-truth for CSPro CAPI logic on `HouseholdSurvey.dcf`. Covers:
 
 1. **Sanity-check findings** — schema gaps and discrepancies between the Apr 20 questionnaire (Q1–Q202, 17 sections) and the current dcf (22 records / 623 items).
@@ -92,8 +96,19 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 | Q35 HAS_DISABILITY | = No | **Q39** (skip Q36 specify, Q37 card, Q38 type) |
 | Q37 PWD_CARD | = No | **Q39** (skip Q38 disability-type — same as Section B) |
 | Q41 EMPLOYMENT | Per source | No skip; GSIS/SSS/Pag-IBIG follow regardless |
-| Q45 PHILHEALTH_REG | = No | **Q48** (skip Q46 member-category, Q46 other-specify) |
+| Q45 PHILHEALTH_REG | = Yes | **Q45.1** (when registered) → Q46 |
+| Q45 PHILHEALTH_REG | = No | **Q45.2** (why not registered) → **Q48** (skip Q46 member-category, Q46 other-specify) |
 | Q49 PRIVATE_INS | = No / No private insurance | **End of member-iteration** (skip Q50 other-specify) |
+
+> [!note] Q45.1 / Q45.2 reinstated (DOH decision via Kidd 2026-06-09 — [[Source - PhilHealth Reinstatement Email (Kidd 2026-06-09)]])
+> Two conditional sub-questions agreed with DOH (originally omitted after OAAED comments), reinstated after Q45 — wording identical to F3 Q38.1/Q38.2:
+> - **Q45.1** *"When did you register and receive your PhilHealth PIN?"* — when **Q45 = Yes**.
+> - **Q45.2** *"Why are you not registered with PhilHealth?"* — when **Q45 = No**.
+>
+> **✅ BUILT + DEPLOYED — UAT R5 (GH #794 Q45.1, #795 Q45.2), CSWeb HouseholdSurvey 2026-06-25.** As-built (confirmed in `HouseholdSurvey.dcf` 2026-06-29): Q45 lives in the **Section-C per-member household roster**; Q45.1/Q45.2 are wired **per member but answered by the main respondent only** (the resolved scope — ASPSI confirmed F4 on #795). Value sets:
+> - **Q45.1 `Q45_1_PIN_REG_WHEN`** — select-one (numeric, len 1; restructured from the old YYYYMMDD date field): `1` Within the past year · `2` Within the last 2–3 years · `3` Within the last 4–5 years · `4` Over 5 years · `5` I don't know [DO NOT READ OUT LOUD] · `6` Refuse to answer [DO NOT READ OUT LOUD]. Asked only when Q45 = Yes.
+> - **Q45.2 `Q45_2_WHY_NOT_REG`** — **single-select** (numeric, len 2): `01` Difficult to register · `02` Don't see value · `03` Don't know how · `04` Don't know what PhilHealth is · `05` A family member is registered · `06` Currently unemployed · `07` No time · `08` No valid ID · `88` Other (specify) → `Q45_2_WHY_NOT_REG_OTHER_TXT`. Asked only when Q45 = No.
+> - Note: F4 Q45.2 is **single-select**; F3 Q38.2 (same question) is **tick-all** — optional ASPSI reconcile.
 
 **Then Q47 (gate in `C_HH_PRIVATE_INS_GATE`)**: after roster loop completes, `Q47_HH_HAS_PRIVATE_INS` captured once at household level. If the roster already shows any member with Q49 = Yes, Q47 auto-computes to Yes (SOFT verify).
 
@@ -130,7 +145,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 
 ### Section H — PhilHealth Registration and Health Insurance
 
-> Section H applies when at least one HH member has `Q45_PHILHEALTH_REG = Yes` in the roster. If no members are PhilHealth-registered, skip entire Section H.
+> Section H applies when **THE RESPONDENT** (roster line 1) has `Q45_PHILHEALTH_REG = Yes`. Section H asks about the respondent's own PhilHealth-registration *experience* (paper Annex F4: "Answer Q79–Q88 if the respondent is registered in PhilHealth in Q45"), so if the RESPONDENT is not registered — even if other household members are — skip the entire Section H. (#649, 2026-06-20: corrected from the earlier "any member" reading, which contradicted the paper.)
 
 | Q | Condition | Skip to |
 |---|---|---|
@@ -345,6 +360,8 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | `Q41_EMPLOYMENT` | Required, ∈ value set | HARD |
 | `Q42_GSIS`, `Q43_SSS`, `Q44_PAGIBIG` | Required, ∈ {Yes, No, Don't know} | HARD |
 | `Q45_PHILHEALTH_REG` | Required, ∈ value set | HARD |
+| **Q45.1 enabled** (`Q45_1_PIN_REG_WHEN`) | `Q45_PHILHEALTH_REG = Yes` — ✅ built+deployed (#794); select-one 1–4 + 5 IDK[DNR] + 6 Refuse[DNR]; per-member, main-respondent-only | GATE |
+| **Q45.2 enabled** (`Q45_2_WHY_NOT_REG`) | `Q45_PHILHEALTH_REG = No` — ✅ built+deployed (#795); single-select 01–08 + 88 Other→`_OTHER_TXT`; per-member, main-respondent-only | GATE |
 | Q46 enabled | `Q45_PHILHEALTH_REG = Yes` | GATE |
 | `Q46_MEMBER_CATEGORY = Other` | `Q46_MEMBER_OTHER_TXT` required | HARD |
 | `Q48_NAME_FIRST` | Required when `Q45 = Yes`, non-blank | HARD |
@@ -419,7 +436,7 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 
 | Item | Rule | Severity |
 |---|---|---|
-| Section H enabled | At least one roster member has `Q45_PHILHEALTH_REG = Yes` | GATE |
+| Section H enabled | RESPONDENT (roster line 1) has `Q45_PHILHEALTH_REG = Yes` (#649) | GATE |
 | `Q79_REG_SOURCE` | Required, ∈ value set | HARD |
 | `Q79 = Other` | `Q79_REG_SOURCE_OTHER_TXT` required | HARD |
 | `Q80_ASSIST` | Required, ∈ value set | HARD |

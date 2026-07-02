@@ -191,6 +191,27 @@ def alpha(name, label, length=50):
     }
 
 
+def image(name, label):
+    """Binary Image dictionary item (CSPro 8.0 'Image' data type).
+
+    Captured in logic via ITEM.takePhoto() + ITEM.resample(); the JPG BYTES are
+    stored INSIDE the case, so they travel with the case during synchronization
+    and are downloadable from CSWeb (Data tab -> PFF -> Data Viewer thumbnail).
+    This is the supported path: loose Image.save("file.jpg") files are NOT synced
+    by CSWeb (case sync moves record items, not app-folder files) — the reason
+    R4 #713 saw "no picture retained by the system."
+
+    Binary items carry no fixed-width length/position (they are stored out of the
+    record) and CANNOT be placed on a form — drive capture from an on-form trigger
+    field's logic, and EXCLUDE this item from the .fmf form-field list.
+    """
+    return {
+        "name": name,
+        "labels": [{"text": label}],
+        "contentType": "image",
+    }
+
+
 def yes_no(name, label):
     return numeric(name, label, length=1, value_set_options=YES_NO)
 
@@ -390,28 +411,44 @@ def _gps_fields(prefix=""):
 
 
 def _photo_block(prefix=""):
-    """Verification-photo filename item + capture-trigger button.
+    """Verification-photo capture block: binary Image item + filename label + trigger.
 
-    The .app's onfocus handler calls `TakeVerificationPhoto()` from
-    shared/Capture-Helpers.apc, which launches the camera, resamples,
-    and saves the JPG to tablet storage. The saved filename is assigned
-    to the alpha item; CSWeb syncs the file itself via CSEntry's
-    attachment mechanism (not as a dictionary binary item — that class
-    is flagged experimental in CSPro 8.0 and avoided for MVP).
+    The on-form trigger field (CAPTURE_VERIFICATION_PHOTO) drives capture from its
+    onfocus handler via `TakeVerificationPhoto()` (shared/Capture-Helpers.apc), which
+    launches the camera, resamples, and stores the JPG BYTES into the binary Image
+    item VERIFICATION_PHOTO_IMAGE. Because the bytes live inside the case, they sync
+    to CSWeb and are downloadable there (Data Viewer thumbnail).
+
+    R4 #713 root cause: the previous design saved the photo to a LOOSE FILE on the
+    tablet and stored only the filename string — loose files are not synced by CSWeb,
+    so the image never reached the server. The binary Image item fixes that.
+
+    Item roles:
+    - VERIFICATION_PHOTO_IMAGE   binary Image, OFF-FORM (binary items can't be on a
+                                 form) — holds the actual photo, syncs to CSWeb.
+    - VERIFICATION_PHOTO_FILENAME alpha — human-readable label + the "already captured"
+                                 sentinel the trigger's onfocus guards on.
+    - CAPTURE_VERIFICATION_PHOTO  on-form numeric trigger whose onfocus fires capture.
+
+    NB: the .fmf form-field list MUST exclude VERIFICATION_PHOTO_IMAGE (F3/F4
+    generate_fmf use a {"exclude": [...]} spec; F1's static .fmf never references it),
+    and verify_questions treats it as a KNOWN_OFFFORM item.
 
     Parameters
     ----------
     prefix : str
-        Optional prefix. Default "" emits
+        Optional prefix. Default "" emits VERIFICATION_PHOTO_IMAGE +
         VERIFICATION_PHOTO_FILENAME + CAPTURE_VERIFICATION_PHOTO.
 
     Returns
     -------
     list of dict
-        [FILENAME_ALPHA, CAPTURE_TRIGGER]
+        [IMAGE_BINARY, FILENAME_ALPHA, CAPTURE_TRIGGER]
     """
     capture_vs = [("Take verification photo", "1")]
     return [
+        image(f"{prefix}VERIFICATION_PHOTO_IMAGE",
+              "Verification Photo (binary; syncs to CSWeb)"),
         alpha(f"{prefix}VERIFICATION_PHOTO_FILENAME",
               "Verification Photo Filename", length=120),
         numeric(f"{prefix}CAPTURE_VERIFICATION_PHOTO",
@@ -463,8 +500,37 @@ def _psgc_fields(prefix="", facility_derived=False):
     ]
 
 
-def build_geo_id(mode, extra_items=None, facility_derived=False):
+def _facility_name_address(structured=False):
+    """Facility name + address items.
+
+    structured=False — the legacy single free-text address (one blob).
+    structured=True (#784/#786, Option A) — a typed STREET line + two read-only
+    derived fields: BARANGAY_NAME (from the BARANGAY picker) and the assembled
+    FACILITY_ADDRESS ("Street, Barangay, Municipality"). The derive + assembly +
+    protect() live in shared/PSGC-Cascade.apc PROC BARANGAY; CITY_NAME
+    (municipality) is already populated there, so nothing is re-typed.
+    """
+    name = alpha("FACILITY_NAME", "Facility Name", length=100)
+    if not structured:
+        return [name, alpha("FACILITY_ADDRESS", "Facility Address", length=200)]
+    return [
+        name,
+        alpha("FACILITY_STREET",  "Facility Address — Street Name / No.",            length=120),
+        alpha("BARANGAY_NAME",    "Barangay (from PSGC)",                            length=80),
+        alpha("FACILITY_ADDRESS", "Facility Address (Street, Barangay, Municipality)", length=200),
+    ]
+
+
+def build_geo_id(mode, extra_items=None, facility_derived=False, structured_address=False):
     """Build a geographic identification record.
+
+    structured_address (#784/#786, Option A, 2026-06-25): when True the facility
+    address is captured as a typed STREET line plus a read-only assembled
+    FACILITY_ADDRESS ("Street, Barangay, Municipality"). Barangay + Municipality
+    are NOT re-typed — BARANGAY_NAME is derived from the BARANGAY picker and
+    CITY_NAME (municipality) already comes from the PSGC cascade in FIELD_CONTROL
+    (shared/PSGC-Cascade.apc owns the lookup + the assembly). Only the FACILITY
+    branches honour it; "household" is unaffected.
 
     facility_derived (2026-06-10 single-number redesign): when True the FACILITY
     PSGC region/province/city are derived from QUESTIONNAIRE_NUMBER and only the
@@ -503,10 +569,7 @@ def build_geo_id(mode, extra_items=None, facility_derived=False):
         items = (
             [classification_item]
             + _psgc_fields(facility_derived=facility_derived)
-            + [
-                alpha("FACILITY_NAME",    "Facility Name",    length=100),
-                alpha("FACILITY_ADDRESS", "Facility Address", length=200),
-            ]
+            + _facility_name_address(structured_address)
         )
         if extra_items:
             items.extend(extra_items)
@@ -523,10 +586,7 @@ def build_geo_id(mode, extra_items=None, facility_derived=False):
         items = (
             [classification_item]
             + _psgc_fields(facility_derived=facility_derived)
-            + [
-                alpha("FACILITY_NAME",    "Facility Name",    length=100),
-                alpha("FACILITY_ADDRESS", "Facility Address", length=200),
-            ]
+            + _facility_name_address(structured_address)
             + patient_psgc
         )
         if extra_items:
@@ -1102,12 +1162,19 @@ def select_all_validation_procs(items):
 # Range + amount-required validations (spec §3.x per-item rules)
 # ---------------------------------------------------------------------------
 
-def range_check_proc(field, lo, hi, hard=True, soft_over=None):
+def range_check_proc(field, lo, hi, hard=True, soft_over=None, allow_sentinels=False):
     """Numeric range check. HARD -> reenter; otherwise warn only. `soft_over`
-    adds a second soft warning when field exceeds that value (spec 'warn if >N')."""
+    adds a second soft warning when field exceeds that value (spec 'warn if >N').
+
+    allow_sentinels (#761/#793 missing-value standard): when True, the negative
+    missing-value codes -98 ("I don't know") and -99 ("Refuse to answer") are
+    exempt from the range check — used on money-amount fields so the enumerator
+    can record them without the 0..max range hard-blocking entry (#743 fix)."""
+    guard = "{field} <> -98 and {field} <> -99 and ".format(field=field) if allow_sentinels else ""
     lines = [f"PROC {field}", "postproc",
-             f"  if {field} < {lo} or {field} > {hi} then",
-             f"    errmsg(\"{field} must be between {lo} and {hi}.\");"]
+             f"  if {guard}({field} < {lo} or {field} > {hi}) then",
+             f"    errmsg(\"{field} must be between {lo} and {hi} (or -98 don't-know / -99 refused).\");" if allow_sentinels
+             else f"    errmsg(\"{field} must be between {lo} and {hi}.\");"]
     if hard:
         lines.append("    reenter;")
     lines.append("  endif;")
@@ -1134,17 +1201,21 @@ def amount_required_procs(items):
                  for vs in f.get("valueSets") or [] for v in vs.get("values") or []}
         if "1" not in codes:                       # flag must be a Yes(1)/No option
             continue
-        # blank (notappl) must fail too — a CSPro blank numeric is notappl,
-        # NOT 0, so `= 0` alone let an empty amount slip through
+        # F3 #553 (retest fix): when the row's flag is NOT selected, auto-set the
+        # amount to 0 and skip the field (noinput). Earlier we set it to `notappl`
+        # (blank), but the _AMT fields render on a combined/DisplayTogether screen
+        # where `noinput` is ignored, and a blank numeric trips CSEntry's built-in
+        # range check ("Out of range! enter a valid value for <AMT>" — Marriz's
+        # retest, Q107_PAY_03). 0 is in range, so it passes silently and is pre-filled
+        # — the enumerator never has to type it. A No row is recorded as 0 (clean).
         procs[n] = (
-            f"PROC {n}\npostproc\n"
+            f"PROC {n}\npreproc\n"
+            f"  if {flag} <> 1 then\n"
+            f"    {n} = 0;   {{ #553: No-ticked row -> amount auto-set 0 (in range) + skip }}\n"
+            f"    noinput;\n  endif;\n"
+            f"postproc\n"
             f"  if {flag} = 1 and ({n} = 0 or {n} = notappl) then\n"
             f"    errmsg(\"'{flag}' was selected — enter its amount (must be greater than 0).\");\n"
-            f"    reenter;\n  endif;\n"
-            # reverse check (F3 #457/#460/#463): NOT selected -> amount must be 0/blank.
-            # A No-ticked source/expense item carrying a positive amount is invalid data.
-            f"  if {flag} <> 1 and {n} > 0 then\n"
-            f"    errmsg(\"'{flag}' was not selected — its amount must be 0 or blank. Clear the amount.\");\n"
             f"    reenter;\n  endif;"
         )
     return procs

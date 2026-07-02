@@ -28,7 +28,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from generate_dcf import build_f3_dictionary
+from generate_dcf import build_f3_dictionary, _neutralise_facility_placeholder
 from cspro_helpers import _truncate_long_labels
 
 
@@ -68,7 +68,7 @@ FORM_W = 806
 # Sections G/H). All other case-start metadata removed 2026-06-12; LANGUAGE_USED
 # is off-form (set in the QUESTIONNAIRE_NUMBER postproc).
 FIELD_CONTROL_CASE_START = {
-    "PATIENT_TYPE",
+    "PATIENT_TYPE", "BREAKOFF",   # #515: break-off control on the case-start screen
 }
 FIELD_CONTROL_CASE_END = {
     "SURVEY_TEAM_LEADER_S_NAME", "ENUMERATOR_S_NAME",
@@ -103,10 +103,55 @@ FORM_PLAN = [
      [("E_PRIMARY_CARE", None)]),
     ("F. Health-Seeking",
      [("F_HEALTH_SEEKING", None)]),
+    # Option B fan-out (2026-06-19): Section G is split around SIX cost-matrix rosters.
+    # Each tick-list ends a host fragment; its roster grid renders next; then the next
+    # fragment. Order must match _split_host_with_rosters (Q92/Q94/Q96/Q97.1/Q97.2/Q98).
     ("G. Outpatient Care",
      [("G_OUTPATIENT_CARE", None)]),
+    ("G. Cost of consultation — amount by source",
+     [("Q92_PAY_ROSTER", None)]),
+    ("G. Outpatient Care (cont.)",
+     [("G_OUTPATIENT_CARE_2", None)]),
+    ("G. Cost of laboratory tests — per test (Q94)",
+     [("Q94_LAB_ROSTER", None)]),
+    ("G. Outpatient Care (cont. 2)",
+     [("G_OUTPATIENT_CARE_3", None)]),
+    ("G. Cost of prescribed medicines — amount by source",
+     [("Q96_PAY_ROSTER", None)]),
+    ("G. Outpatient Care (cont. 3)",
+     [("G_OUTPATIENT_CARE_4", None)]),
+    ("G. Other items in outpatient bill — amount by category",
+     [("Q971_ROSTER", None)]),
+    ("G. Outpatient Care (cont. 4)",
+     [("G_OUTPATIENT_CARE_5", None)]),
+    ("G. Other expenses not in bill — amount by item",
+     [("Q972_PAY_ROSTER", None)]),
+    ("G. Outpatient Care (cont. 5)",
+     [("G_OUTPATIENT_CARE_6", None)]),
+    ("G. Sources of money for medical costs — amount by source",
+     [("Q98_PAY_ROSTER", None)]),
+    ("G. Outpatient Care (cont. 6)",
+     [("G_OUTPATIENT_CARE_7", None)]),
+    # Option B fan-out (2026-06-19): Section H is split around FOUR cost-matrix rosters
+    # (Q107/Q109/Q112/Q113). Same interleave order as _split_host_with_rosters.
     ("H. Inpatient Care",
      [("H_INPATIENT_CARE", None)]),
+    ("H. Total bill for confinement — amount by source",
+     [("Q107_PAY_ROSTER", None)]),
+    ("H. Inpatient Care (cont.)",
+     [("H_INPATIENT_CARE_2", None)]),
+    ("H. Medicines bought outside — amount by source",
+     [("Q109_PAY_ROSTER", None)]),
+    ("H. Inpatient Care (cont. 2)",
+     [("H_INPATIENT_CARE_3", None)]),
+    ("H. Services done outside — amount by source",
+     [("Q112_PAY_ROSTER", None)]),
+    ("H. Inpatient Care (cont. 3)",
+     [("H_INPATIENT_CARE_4", None)]),
+    ("H. Hospital bill — amount by source",
+     [("Q113_PAY_ROSTER", None)]),
+    ("H. Inpatient Care (cont. 4)",
+     [("H_INPATIENT_CARE_5", None)]),
     ("I. Financial Risk",
      [("I_FINANCIAL_RISK", None)]),
     ("J. Satisfaction",
@@ -121,8 +166,15 @@ FORM_PLAN = [
     # photographs the completed visit, and the survey no longer opens with a
     # camera prompt. GPS stays early so it auto-locks while the form is worked.
     ("Case Verification Photo",
-     [("REC_CASE_VERIFICATION", None)]),
+     # VERIFICATION_PHOTO_IMAGE is a binary Image item (off-form by rule — binary
+     # items can't be placed on a form); the on-form trigger CAPTURE_VERIFICATION_PHOTO
+     # drives capture into it. Only the trigger + filename label go on the form.
+     [("REC_CASE_VERIFICATION", {"exclude": ["VERIFICATION_PHOTO_IMAGE"]})]),
 ]
+
+# Binary/computed items deliberately kept OFF every form (so the orphan check below
+# does not flag them). VERIFICATION_PHOTO_IMAGE holds the synced photo bytes.
+_OFF_FORM_ITEMS = {"VERIFICATION_PHOTO_IMAGE", "CASE_DISPOSITION"}  # #561: off-form completeness sentinel
 
 
 def _filter_items(items, spec):
@@ -156,11 +208,17 @@ def _form_height(n_items):
     return max(300, TOP_Y + n_items * ROW_H + 40)
 
 
-def _emit_form(lines, form_num, label, item_names, height):
+def _emit_form(lines, form_num, label, item_names, height, roster=None):
     lines.append("[Form]")
     lines.append(f"Name=FORM{form_num:03d}")
     lines.append(f"Label={label}")
     lines.append("Level=1")
+    if roster:
+        # Mark the form as repeating over the roster record (ported from F4 2026-06-18).
+        # Without this Repeat= line CSEntry rejects the forms<->dictionary reconcile
+        # ("open in Designer, make changes, save"); the [Group] Type=Record alone is
+        # not enough. Verified on F4 against the Designer-reconciled FMF.
+        lines.append(f"Repeat={roster['type_name']}")
     lines.append(f"Size={FORM_W},{height}")
     lines.append("  ")
     for name in item_names:
@@ -170,13 +228,20 @@ def _emit_form(lines, form_num, label, item_names, height):
     lines.append("  ")
 
 
-def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name):
+def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name, roster=None):
     lines.append("[Group]")
     lines.append("Required=Yes")
     lines.append(f"Name={group_sym}")
     lines.append(f"Label={label}")
     lines.append(f"Form={form_one_based}")
-    lines.append("Max=1")
+    if roster:
+        # Repeating roster group (ported from F4): Type=Record + TypeName + Max=<occ>
+        # makes Designer/CSEntry render the record's fields as a grid (one row/occurrence).
+        lines.append("Type=Record")
+        lines.append(f"TypeName={roster['type_name']}")
+        lines.append(f"Max={roster['max']}")
+    else:
+        lines.append("Max=1")
     if not item_objs:
         lines.append("[EndGroup]")
         lines.append("  ")
@@ -209,7 +274,8 @@ def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name):
         lines.append(f"Text={text}")
         lines.append(" ")
         lines.append("  ")
-    _emit_blocks(lines, item_objs)
+    if not roster:   # rosters render as a grid; never auto-blocked into DisplayTogether
+        _emit_blocks(lines, item_objs)
     lines.append("[EndGroup]")
     lines.append("  ")
 
@@ -237,12 +303,52 @@ NAMED_BLOCKS = [
 _NO_AUTOGROUP_RECORDS = {
     "FIELD_CONTROL", "PATIENT_GEO_ID",
     "REC_FACILITY_CAPTURE", "REC_PATIENT_HOME_CAPTURE", "REC_CASE_VERIFICATION",
+    "Q92_PAY_ROSTER",   # Option B (pilot): emitted as a roster grid, never auto-blocked
+    "Q971_ROSTER",      # Option B Shape B (2026-06-19): Q97.1 roster grid, never auto-blocked
+    # Option B fan-out (2026-06-19): the rest of the F3 cost-matrix cluster's roster grids.
+    "Q94_LAB_ROSTER", "Q96_PAY_ROSTER", "Q972_PAY_ROSTER", "Q98_PAY_ROSTER",   # Section G (Q94 per-lab #450)
+    "Q107_PAY_ROSTER", "Q109_PAY_ROSTER", "Q112_PAY_ROSTER", "Q113_PAY_ROSTER", # Section H
 }
 _MULTISELECT_RE = re.compile(r"^(.+?)_O\d+$")
 # Single alpha fields rendered as a CSPro Check Box (one-question multi-select tick-list).
 # These get DataCaptureType=CheckBox and their own DisplayTogether screen (with any trailing
-# _OTHER_TXT / _MEDICINES_TXT gated free-text). 2026-06-12 R4 review: Q148.
-_CHECKBOX_FIELDS = {"Q148_CONDITIONS"}
+# _OTHER_TXT / _MEDICINES_TXT gated free-text). 2026-06-12 R4 review: Q148. 2026-06-16 (#529):
+# the 13 'Patient Survey' select_all -> Check Box conversions (mirrors F1 Q49/Q50/Q53/Q58).
+_CHECKBOX_FIELDS = {
+    "Q148_CONDITIONS",
+    "Q36_UHC_SOURCE", "Q37_UHC_UNDERSTAND", "Q46_BENEFITS", "Q65_WHY_NO_USUAL",
+    "Q67_WHY_THIS_FACILITY", "Q76_KON_UNDERSTAND", "Q101_BUCAS_UNDERSTAND",
+    "Q117_NBB_SOURCE", "Q118_NBB_UNDERSTAND", "Q120_ZBB_SOURCE", "Q121_ZBB_UNDERSTAND",
+    "Q171_WHY_NOT", "Q177_WHY_HOSPITAL", "Q125_MAIFIP_SOURCE",   # #560
+    # #635/#639/#640 Section D select_all -> Check Box (Q42/Q50/Q52 were converted in
+    # generate_dcf/apc but never added to a fmf checkbox list, so optimize_capture_types
+    # was demoting them to single-select DropDown — a multi-select data-loss regression).
+    "Q42_DIFFICULTY", "Q50_DIFFICULTY_PAYING", "Q52_PLANS",
+    # #669/#670/#671/#673 Section E/F/G select_all -> Check Box (tick-all).
+    "Q59_SCHED_COMM", "Q61_CONSULT_COMM", "Q70_USUAL_TRANSPORT", "Q73_NEAREST_TRANSPORT",
+    "Q75_KON_SOURCE", "Q82_KON_WHY_NOT_REG", "Q85_CONDITIONS", "Q86_VISIT_EVENTS",
+    "Q87_OTHER_ACTIONS", "Q90_NOT_CONFINED", "Q93_LABS",
+    # #690/#694 Section G/H select_all -> Check Box (tick-all).
+    "Q100_BUCAS_SOURCE", "Q103_BUCAS_SERVICES", "Q114_NO_PH",
+    # #696 Section K/L select_all -> Check Box (tick-all).
+    "Q149_WHERE_BUY", "Q153_GAMOT_SOURCE", "Q154_GAMOT_UNDERSTAND", "Q157_WHERE_REST",
+    "Q160_WHY_GENERIC", "Q161_WHY_BRANDED", "Q163_CARE_TYPE",
+    # #481 Section I select_all -> Check Box (+ None/Other).
+    "Q128_MAIFIP_OOP_ITEMS",
+    # #700 Section I MAIFIP why-not-avail select_all -> Check Box.
+    "Q129_WHY_NO_MAIFIP",
+    # #764 Section D why-not-registered (Q38.2), SELECT ALL THAT APPLY -> Check Box.
+    "Q38_2_WHY_NOT_REG",
+    # Option B (pilot): the Q92 payment-source tick-list that drives the Q92_PAY_ROSTER.
+    "Q92_SOURCES",
+    # Option B Shape B (capi-multiselect, 2026-06-19): the Q97.1 other-items tick-list
+    # driving the Q971_ROSTER amount grid (one row per ticked item).
+    "Q971_SOURCES",
+    # Option B fan-out (2026-06-19): the rest of the F3 cost-matrix cluster's tick-lists,
+    # each driving its own roster amount grid (miss any here -> ships single-select = loss).
+    "Q96_SOURCES", "Q972_SOURCES", "Q98_SOURCES",        # Section G (Q94 now per-lab roster #450)
+    "Q107_SOURCES", "Q109_SOURCES", "Q112_SOURCES", "Q113_SOURCES",     # Section H
+}
 _CHECKBOX_TRAILERS = ("_OTHER_TXT", "_MEDICINES_TXT")  # gated texts that share the checkbox screen
 MAX_CHUNK = 5                       # cap simple-question runs at ~5 per screen
 _ACTIVE_BLOCK_PLAN = []            # set per-build by build_fmf()
@@ -370,6 +476,13 @@ def _emit_blocks(lines, item_objs):
 
 def build_fmf():
     dictionary = build_f3_dictionary()
+    # #748/#730: neutralise the facility-name placeholder in the fmf field labels too. The
+    # bold header (fmf label) can't render fills, so generate_dcf rewrites [facility_name_input]
+    # -> "this facility" in the .dcf; the fmf was built from the RAW dictionary, so 6 labels
+    # (Q66/Q88/Q143/Q144/Q162/Q172) still leaked the literal placeholder on device. Run before
+    # truncation so the neutralised text is what gets capped.
+    n_fac = _neutralise_facility_placeholder(dictionary)
+    print(f"  #748: neutralised facility placeholder in {n_fac} fmf label(s)")
     _truncate_long_labels(dictionary)  # match the .dcf's 255-char label cap (CSPro max)
     global _ACTIVE_BLOCK_PLAN
     sources, targets, gated = parse_apc()
@@ -379,6 +492,12 @@ def build_fmf():
     level_name = level.get("name", "PATIENTSURVEY_LEVEL")
     records_by_name = {r["name"]: r for r in level["records"]}
     id_item_names = [it["name"] for it in level["ids"]["items"]]
+
+    def _roster_info(record_name):
+        """A repeating record (occurrences.maximum > 1) -> roster grid; else None."""
+        occ = records_by_name[record_name].get("occurrences") or {}
+        mx = occ.get("maximum", 1) if isinstance(occ, dict) else 1
+        return {"type_name": record_name, "max": mx} if (mx and mx > 1) else None
 
     referenced = {rec for _, parts in FORM_PLAN for rec, _ in parts}
     missing = referenced - set(records_by_name)
@@ -398,7 +517,8 @@ def build_fmf():
     id_objs = list(level["ids"]["items"])
     _ = id_item_names
     forms.append({"num": 0, "label": "Case Key (Facility + Patient ID)", "group_sym": "IDS0_FORM",
-                  "form_item_names": [it["name"] for it in id_objs], "group_item_objs": id_objs})
+                  "form_item_names": [it["name"] for it in id_objs], "group_item_objs": id_objs,
+                  "roster": None})
     used_group_syms.add("IDS0_FORM")
     # FORM001.. - planned forms. (The empty level-1 "container" record/form was
     # removed 2026-06-08 — it was a vestigial item-less record that CSEntry never
@@ -413,7 +533,8 @@ def build_fmf():
         forms.append({"num": idx, "label": label,
                       "group_sym": _group_symbol(primary, used_group_syms),
                       "form_item_names": [it["name"] for it in objs],
-                      "group_item_objs": objs})
+                      "group_item_objs": objs,
+                      "roster": _roster_info(primary)})
 
     lines = []
     lines.append("[FormFile]")
@@ -431,7 +552,7 @@ def build_fmf():
     # Visual [Form] blocks
     for f in forms:
         _emit_form(lines, f["num"], f["label"], f["form_item_names"],
-                   _form_height(len(f["group_item_objs"])))
+                   _form_height(len(f["group_item_objs"])), roster=f["roster"])
 
     # Logical structure: one [Level], one [Group] per form
     lines.append("[Level]")
@@ -440,7 +561,7 @@ def build_fmf():
     lines.append("  ")
     for f in forms:
         _emit_group(lines, f["group_sym"], f["label"], f["num"] + 1,
-                    f["group_item_objs"], dict_name)
+                    f["group_item_objs"], dict_name, roster=f["roster"])
 
     # Orphan check
     orphans = []
@@ -449,7 +570,7 @@ def build_fmf():
             continue
         placed = record_items_consumed[rec_name]
         for it in rec["items"]:
-            if it["name"] not in placed:
+            if it["name"] not in placed and it["name"] not in _OFF_FORM_ITEMS:
                 orphans.append(f"{rec_name}.{it['name']}")
     if orphans:
         sys.stderr.write(f"WARNING: {len(orphans)} items not placed on any form:\n")

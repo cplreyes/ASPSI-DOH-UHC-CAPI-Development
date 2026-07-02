@@ -20,7 +20,13 @@ rmdata ../F4/desktest.csdb
 launch ../F4/HouseholdSurvey_desktest.pff
 
 # ---- case key (auto-advance at full width) ----
-casekey 01 03 007 02 030
+# 2026-06-16: refreshed from the stale 01 03 007 02 030 — geo prefix 0103007 is no
+# longer in the rebuilt PSGC, so QUESTIONNAIRE_NUMBER now hard-rejects it ("-282 Geo
+# prefix not found"). 01 02 800 01 001 = the testers' valid demo QN (Region I / Ilocos
+# Norte), confirmed 2026-06-16 to pass the geo check. NOTE: the Region/Province/City
+# PICKER click coords below are still the 2026-06-09 values and may have shifted with
+# the PSGC rebuild — re-verify the cascade if a run diverges at HOUSEHOLD_GEO_ID.
+casekey 01 02 800 01 001
 
 # ---- FIELD_CONTROL (each fills its width -> auto-advance) ----
 type 04

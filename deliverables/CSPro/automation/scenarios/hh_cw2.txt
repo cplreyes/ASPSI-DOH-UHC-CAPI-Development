@@ -1,0 +1,167 @@
+# Deterministic full drive to the Section C roster (exact widths/codes from dcf).
+rmdata ../F4/HouseholdSurvey.csdb
+launch ../F4/HouseholdSurvey.pff
+casekey 01 02 800 01 001
+type 1
+type 1
+click 1005 211
+type TESTADDRESS
+key {ENTER}
+type 14.5
+key {ENTER}
+type 120.9
+key {ENTER}
+type 10
+key {ENTER}
+type 5
+key {ENTER}
+type 8
+key {ENTER}
+type 20260609
+key {ENTER}
+note --- Section A Q1 head = Yes ---
+type 1
+note --- Section B (Q2..Q29) exact widths ---
+type TESTNAME
+key {ENTER}
+type 06
+type 1990
+type 036
+type 1
+type 2
+type 1
+type 2
+type 01
+type 1
+type 01
+type 2
+type 1
+type 01
+type 5000
+key {ENTER}
+type 1
+type 003
+type 000
+type 000
+type 1
+type 1
+type 1
+type 1
+type 1
+type 1
+type 1
+wait 1
+shot pre_q29
+click 786 883
+note ===== COLUMN-WISE SECTION C v2 (form1 = name+present) =====
+note --- form1: name + present, 3 members ---
+type RAMOS DAISY
+key {ENTER}
+type 1
+type PARAISO AIDAN
+key {ENTER}
+type 1
+type SALAZAR ALYZZA
+key {ENTER}
+type 1
+wait 1
+shot c01_form1_done
+note --- Q32 AGE (must auto-end after 3, NO phantom) ---
+type 025
+type 040
+type 050
+wait 1
+shot c02_q32_age
+note --- Q33 SEX ---
+type 1
+type 2
+type 2
+shot c03_q33
+note --- Q34 REL ---
+type 01
+type 02
+type 03
+shot c04_q34
+note --- Q35 DISABILITY M1=Y M2=N M3=Y ---
+type 1
+type 0
+type 1
+wait 1
+shot c05_q35
+note --- Q36 SPECIFY (M1,M3) M1=Y M3=N ---
+type 1
+type 0
+wait 1
+shot c06_q36
+note --- Q37 CARD (M1 only) ---
+type 1
+wait 1
+shot c07_q37
+note --- Q38 TYPE (M1 only) Other=8 ---
+type 8
+wait 1
+shot c08_q38
+note --- Q38_OTHER (M1 only) ---
+type CHRONIC FATIGUE
+key {ENTER}
+wait 1
+shot c09_q38other
+note --- Q39 CIVIL ---
+type 1
+type 2
+type 1
+shot c10_q39
+note --- Q40 EDUC ---
+type 07
+type 02
+type 10
+shot c11_q40
+note --- Q41 EMPLOY ---
+type 1
+type 4
+type 8
+shot c12_q41
+note --- Q42 GSIS ---
+type 02
+type 02
+type 02
+shot c13_q42
+note --- Q43 SSS ---
+type 01
+type 02
+type 55
+shot c14_q43
+note --- Q44 PAGIBIG ---
+type 02
+type 02
+type 02
+shot c15_q44
+note --- Q45 PHILHEALTH M1=01 M2=02 M3=55 ---
+type 01
+type 02
+type 55
+wait 1
+shot c16_q45
+note --- Q45.1 WHEN (M1 only) ---
+type 1
+wait 1
+shot c17_q451
+note --- Q46 CATEGORY (M1 only) Other=88 ---
+type 88
+wait 1
+shot c18_q46
+note --- Q46_OTHER (M1 only) ---
+type SPECIAL CAT
+key {ENTER}
+wait 1
+shot c19_q46other
+note --- Q45.2 WHY NOT (M2 only) ---
+type 01
+wait 1
+shot c20_q452
+note --- Q45.2_OTHER nobody -> auto-skip; expect Q47 gate ---
+wait 1
+shot c21_after_sectionC
+type 2
+wait 1
+shot c22_q47_gate

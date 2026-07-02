@@ -1,0 +1,29 @@
+# F3 desktop run (full case-start incl. patient-home cascade) -> partial-save -> verify csdb.
+rmdata ../F3/desktest.csdb
+launch ../F3/PatientSurvey_desktest.pff
+casekey 04 03 403 02 001
+type 1
+type 1
+type 1
+type 0403403001
+type RHU BINAN
+key {ENTER}
+type TEST ST BINAN
+key {ENTER}
+note ---- patient-home cascade (row clicks) ----
+click 1040 374
+click 985 464
+click 1000 254
+click 985 304
+shot after_phome
+note ---- visit dates then Q1 ----
+type 20260627
+type 20260627
+shot after_dates
+type 1
+shot after_q1
+note ---- partial-save ----
+click 155 63
+shot stop_dialog
+click 830 534
+shot after_partialsave

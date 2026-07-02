@@ -7,7 +7,7 @@ Idempotent: each patch is skipped if its marker is already present. If the
 "old" text is missing AND the marker is absent, upstream changed that code —
 the script stops loudly so you can review (the bug may be fixed upstream).
 
-Covers the 5 patched files (see *.patch diffs in this folder for reference)
+Covers the 6 patched files (see *.patch diffs in this folder for reference)
 plus the two MySQL settings, then clears the Twig cache and restarts PHP.
 Record: deliverables/CSWeb/CSWeb-Sync-Report-and-Case-Breakout-Setup.md
 """
@@ -101,6 +101,26 @@ PATCHES = [
         "// ASPSI 2026-06-12: Philippines, not fitWorld()\n"
         "                                                       }",
     ),
+    (
+        # Patch #6 (ASPSI 2026-06-25): the breakout serializer's single-occurrence branch
+        # binds the item value directly, with no array guard — so a binary Image item (the
+        # #713 verification photo) whose synced value is an array hits `bindValue(N, Array)`
+        # -> "Array to string conversion" and the ENTIRE F3/F4 breakout aborts at 0 cases
+        # (F1 is spared only because its test cases carry no photo). Guard it: an array value
+        # (binary/blob, no scalar column representation) is logged + nulled. The photo bytes
+        # live in <DICT>_case_binary_data and sync separately, so the relational record column
+        # being null is lossless for the Sync/Map Reports + dashboard. Root cause of "reports
+        # don't match synced devices" after an F3/F4 redeploy (which drops+reprocesses breakout).
+        "src/AppBundle/CSPro/Data/MySQLQuestionnaireSerializer.php",
+        "array value (binary/blob in scalar column)",
+        "                $insertValue = $curRecord[$itemName];\n"
+        "                if ($isNumeric) {",
+        "                $insertValue = $curRecord[$itemName];\n"
+        "                if (is_array($insertValue)) {\n"
+        "                    $this->logger->warning(\"Record [\" . $record->getName() . \"] Item [$itemName] has array value (binary/blob in scalar column); setting null.\");\n"
+        "                    $insertValue = null;\n"
+        "                } else if ($isNumeric) {",
+    ),
 ]
 
 CSS_APPEND = """
@@ -158,6 +178,7 @@ def main():
     # lint php
     for f in ("src/AppBundle/CSPro/Dictionary/MySQLDictionarySchemaGenerator.php",
               "src/AppBundle/CSPro/DictionarySchemaHelper.php",
+              "src/AppBundle/CSPro/Data/MySQLQuestionnaireSerializer.php",
               "src/AppBundle/Controller/api/ReportController.php"):
         r = run(["docker", "exec", "lamp-php8", "php", "-l",
                  f"/var/www/html/csweb/{f}"])

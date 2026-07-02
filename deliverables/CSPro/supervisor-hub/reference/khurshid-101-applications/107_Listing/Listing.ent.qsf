@@ -1,0 +1,94 @@
+﻿---
+fileType: Question Text
+version: CSPro 7.7
+languages:
+  - name: EN
+    label: English
+  - name: UR
+    label: Urdu
+styles:
+  - name: Normal
+    className: normal
+    css: |
+      font-family: Arial;font-size: 16px;
+  - name: Instruction
+    className: instruction
+    css: |
+      font-family: Arial;font-size: 14px;color: #0000FF;
+  - name: Heading 1
+    className: heading1
+    css: |
+      font-family: Arial;font-size: 36px;
+  - name: Heading 2
+    className: heading2
+    css: |
+      font-family: Arial;font-size: 24px;
+  - name: Heading 3
+    className: heading3
+    css: |
+      font-family: Arial;font-size: 18px;
+questions:
+  - name: LISTING_DICT.LIS_LOGINID
+    conditions:
+      - questionText:
+          EN: |
+            <span style="font-size: 24px;">Login ID</span><p></p>
+          UR: |
+            <span style="font-size: 24px;">لوگن آئی ڈی</span><p></p>
+  - name: LISTING_DICT.LIS_SUP_ID
+    conditions:
+      - questionText:
+          EN: |
+            <span style="font-size: 24px;">Supervisor's ID</span><p></p>
+          UR: |
+            <span style="font-size: 24px;">سُپروائزر کی آئی ڈی</span><p></p>
+  - name: LISTING_DICT.LISTING_HH_ID
+    conditions:
+      - questionText:
+          EN: |
+            <span style="font-size: 24px;">Household ID</span><p></p>
+          UR: |
+            <span style="font-size: 24px;">گھرانے کی آئی ڈی</span><p></p>
+  - name: LISTING_DICT.LIS_GPS_LAT
+    conditions:
+      - questionText:
+          EN: |
+            <span style="font-size: 24px;">Latitute Information</span><p></p>
+          UR: |
+            <span style="font-size: 24px;">عرض البلد</span><p></p>
+  - name: LISTING_DICT.LIS_GPS_LON
+    conditions:
+      - questionText:
+          EN: |
+            <span style="font-size: 24px;">Longitute</span><p></p>
+          UR: |
+            <span style="font-size: 24px;">طول البلد</span><p></p>
+  - name: LISTING_DICT.LIS_ADD
+    conditions:
+      - questionText:
+          EN: |
+            <span style="font-size: 24px;">Household Address</span><p></p>
+          UR: |
+            <span style="font-size: 24px;">گھرانے کا پتہ</span><p></p>
+  - name: LISTING_DICT.LIS_R_NAME
+    conditions:
+      - questionText:
+          EN: |
+            <span style="font-size: 24px;">Respondent's Name</span><p></p>
+          UR: |
+            <span style="font-size: 24px;">جوابدہندہ کا نام</span><p></p>
+  - name: LISTING_DICT.LIS_R_GENDER
+    conditions:
+      - questionText:
+          EN: |
+            <span style="font-size: 24px;">Respondent's Gender</span>
+          UR: |
+            <span style="font-size: 24px;">جوابدہندہ کی جنس</span><p></p>
+  - name: LISTING_DICT.LIS_INT_STATUS
+    conditions:
+      - questionText:
+          EN: |
+            <span style="font-size: 24px;">Interview Status</span><p></p>
+          UR: |
+            <span style="font-size: 24px;">انٹرویو کا نتیجہ</span><p></p>
+...

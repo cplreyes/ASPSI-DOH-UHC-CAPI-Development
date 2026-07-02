@@ -157,12 +157,12 @@ _GAMOT_AREA = "Enumerator: Applicable only to respondents in areas with GAMOT."
 
 INSTRUCTIONS = {
     **dict.fromkeys([8, 9, 10, 16, 34, 45, 48, 84, 123, 164, 165, 178], _READ_ONE),
-    **dict.fromkeys([15, 30, 39, 40, 41, 169], _DNR_ONE),
+    **dict.fromkeys([15, 39, 40, 41, 169], _DNR_ONE),   # #763: Q30 note omitted (per tester)
     **dict.fromkeys([42, 50, 52, 85, 86, 163], _READ_ALL),
     **dict.fromkeys([36, 37, 46, 65, 67, 76, 101, 117, 118, 120, 121, 125,
                      171, 177], _DNR_ALL),
     **dict.fromkeys([153, 154, 155, 156], _GAMOT_AREA),
-    **dict.fromkeys([97, 114], _RECEIPT),
+    971: _RECEIPT,  # #455: the receipt/"select all that apply" note belongs on Q97.1 (the Q971_* bill-items battery), NOT on Q97 (Q97_FINAL_AMOUNT, a single cash figure). Re-keyed 97 -> 971 so _QNUM attaches it to the Q971_* fields. (#559: also not on Q114, a reasons select-all.)
     **dict.fromkeys([14], _PWD_CARD),
     4: ("Note to enumerator [do not read]: This section is for the Patient "
         "Profile. Ask all questions in this section unless a skip rule applies."),
@@ -170,8 +170,7 @@ INSTRUCTIONS = {
     18: ("Enumerator note: Tick the income category that corresponds to the "
          "respondent’s approximate household income."),
     29: "Please choose one from the options I will mention.",
-    31: (_DNR_ONE + " For enumerator: A list will be provided to ensure "
-         "accurate details."),
+    # #763: Q31 enumerator note omitted (per tester).
     35: ("Note to enumerator [do not read]: This section is for the Patient’s "
          "awareness on Universal Health Care. Ask all questions in this "
          "section unless a skip rule applies."),
@@ -184,13 +183,14 @@ INSTRUCTIONS = {
          "first contact healthcare provider (i.e., general practitioner "
          "doctor) for an undiagnosed concern or continuing care of varied "
          "medical conditions."),
+    64: "PROVIDE FULL NAME OF THE FACILITY, DO NOT ABBREVIATE.",   # #776: enumerator note on Q64 facility-name capture (per tester)
     71: ("An institution that primarily delivers primary care services or the "
          "initial-contact facility for coordinated care (e.g., RHU, health "
          "center, general practitioner clinic)."),
     83: ("Note to enumerator [do not read]: This section is for the Patient’s "
          "Health-Seeking Behavior. Ask all questions in this section unless a "
          "skip rule applies. " + _READ_ONE),
-    94: "To be asked for each lab test ticked in Q93.",
+    94: "Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~",   # #801: pipe the row's lab name (Q94_LAB_CODE, per-occurrence auto-set) into every per-lab Q94 prompt so the payment/amount question names its test — replaces the generic 'asked for each lab ticked in Q93' note (mirrors the #750 roster source-context fill).
     99: ("Q99 to Q103 are applicable only to respondents in areas with BUCAS "
          "center. Otherwise, skip."),
     141: ("For example, they did not disclose any of your private medical "
@@ -212,6 +212,8 @@ SECTION_INTROS = {
          "PhilHealth registration experience. We will also confirm their "
          "PhilHealth registration status and membership, and their "
          "registration to other health insurance."),
+    47: "Are you aware that there are PhilHealth packages for the following health services?",  # #404: verbatim Q47 stem from the paper questionnaire (battery had item labels but no question stem)
+    131: "How would you rate the cleanliness and comfort of the following amenities at this facility?",  # #486: verbatim Q131-134 stem from the paper questionnaire
     53: "We will now ask questions about the patient’s access to a primary care provider.",
     74: "We will now ask about the patient’s awareness of the YAKAP/Konsulta package.",
     83: ("We will now be asking about the patient’s actions taken for health "
@@ -281,20 +283,53 @@ _QNUM = re.compile(r"^Q(\d{1,3})_")
 # is the cover-level facility field, in scope for the whole case, so ~~FACILITY_NAME~~
 # renders the captured name in the prompt (every language). Double tilde = plain-text
 # fill (FACILITY_NAME has no HTML to preserve).
-_FACILITY_PLACEHOLDER_RE = re.compile(r"\[?\bfacility_name_input\b\]?", re.IGNORECASE)
+# #550: import the canonical facility-placeholder pattern from generate_dcf so the qsf FILL
+# and #714's bold-header NEUTRALIZATION recognise exactly the same tokens — crucially the
+# regional-dialect variants the translators used ([ngaran han/kan pasilidad], [igbutang an
+# ngaran han pasilidad], [FACILITY_NGARAN_INPUT]). This was an EN-only copy that had DRIFTED
+# from generate_dcf's pattern, so those dialect placeholders leaked literally into the
+# translated prompts instead of becoming the ~~FACILITY_NAME~~ fill. Single source of truth
+# now: add any new dialect variant in generate_dcf only and both paths pick it up.
+from generate_dcf import _FACILITY_PLACEHOLDER_RE
 # Patient-type piping (#485): the Section J script reads "...as an [inpatient] o/or
 # [outpatient]...". Pipe the captured PATIENT_TYPE value label (Outpatient/Inpatient)
-# via getvaluelabel so the enumerator sees the actual type. [date_formatted] is left
-# as-is (ambiguous which date field, and the tester asked only for facility + type).
+# via getvaluelabel so the enumerator sees the actual type.
 _PATIENT_TYPE_PAIR_RE = re.compile(
     r"\[inpatient\]\s*(?:o|or)\s*\[outpatient\]|\[outpatient\]\s*(?:o|or)\s*\[inpatient\]",
     re.IGNORECASE)
+# Date piping (#550 / Carl 2026-06-20): the Section J satisfaction intro reads "...we invited
+# you to participate in our survey on [date_formatted]". Pipe the SYSTEM (interview) date — it
+# is always available when the prompt renders (DATE_FINAL_VISIT is entered later, at case-end,
+# so it would be blank here) and matches the semantics (the invitation is happening today).
+# sysdate(format) returns an INTEGER, so wrap it in edit() to render a formatted string:
+# edit("99/99/9999", sysdate("MMDDYYYY")) -> "06/15/2026". NB: a fill's sysdate re-evaluates
+# whenever the case is viewed, so a reopened case shows the reopen date — acceptable for this
+# informational reminder line.
+_DATE_FORMATTED_RE = re.compile(r"\[?\bdate_formatted\b\]?", re.IGNORECASE)
+_DATE_FILL = '~~edit("99/99/9999", sysdate("MMDDYYYY"))~~'
 
 
 def _pipe_fills(text):
     text = _FACILITY_PLACEHOLDER_RE.sub("~~FACILITY_NAME~~", text)
     text = _PATIENT_TYPE_PAIR_RE.sub("~~getvaluelabel(PATIENT_TYPE)~~", text)
+    text = _DATE_FORMATTED_RE.sub(_DATE_FILL, text)
     return text
+
+
+# #750: in every payment roster the AMOUNT field sits below the auto-filled SOURCE field, so
+# when the enumerator is focused on the amount they can't see WHICH source/item it is for.
+# Prepend a context line piping the current row's source label (Q<n>_PAY_SRC, getvaluelabel)
+# so the amount prompt always names its source. Display-only — the protected _PAY_SRC field
+# stays the grid's identity column. Matches Q<n>_PAY_AMT only (Q94 per-lab shows the lab name).
+_PAY_AMT_RE = re.compile(r"^(Q\w+)_PAY_AMT$")
+
+
+def _pay_amt_source_context(nm):
+    m = _PAY_AMT_RE.match(nm)
+    if not m:
+        return ""
+    return (f'<p class="instruction">Payment source / item: '
+            f'<b>~~getvaluelabel({m.group(1)}_PAY_SRC)~~</b></p>')
 
 
 def _esc(t):
@@ -336,7 +371,13 @@ def build_extras(intro_q, instr, intro_here, lnm):
 
 
 def main():
-    d = json.loads(DCF.read_text(encoding="utf-8"))
+    # Build the dictionary from generate_dcf's builder + translations (placeholders INTACT),
+    # NOT from the written .dcf. #714 neutralizes [facility_name_input] -> "this facility" in the
+    # .dcf labels (for CSEntry's bold header, which can't render fills); but the qsf question text
+    # needs the raw placeholder so _pipe_fills can emit the ~~FACILITY_NAME~~ fill. Reading the
+    # neutralized .dcf dropped the facility fills (37 -> 8) on every regen — this decouples them.
+    from generate_dcf import build_f3_dictionary, apply_translations
+    d = apply_translations(build_f3_dictionary(), HERE / "translations")
     dict_name = d.get("name", "PATIENTSURVEY_DICT")
     langs = [(l["name"], l.get("label", l["name"]))
              for l in (d.get("languages") or [{"name": "EN", "label": "English"}])]
@@ -353,6 +394,8 @@ def main():
         for rec in lvl.get("records", []):
             for it in rec.get("items", []):
                 nm = it["name"]
+                if it.get("contentType") in ("image", "audio", "document", "geometry"):
+                    continue   # binary items: off-form, no question prompt (#713)
                 if nm in seen:
                     continue
                 seen.add(nm)
@@ -368,6 +411,7 @@ def main():
                         pre, post = build_extras(*extras, lnm)
                         body = pre + _html(labmap.get(lnm) or en) + post
                     body = _pipe_fills(body)
+                    body = _pay_amt_source_context(nm) + body   # #750 source/item context
                     lines += [f"          {lnm}: |", f"            {body}"]
                 n += 1
     lines.append("...")

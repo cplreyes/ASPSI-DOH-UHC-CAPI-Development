@@ -1,0 +1,3513 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Department of Health · ASPSI — Universal Health Care Survey (Year 2)" />
+  <title>UHC Survey Year 2 — CAPI Manual</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="build/purple.css" />
+  <script src="build/mermaid.min.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        securityLevel: 'loose',
+        flowchart: { useMaxWidth: true, htmlLabels: true },
+        themeVariables: {
+          primaryColor: '#EDE9FE',
+          primaryBorderColor: '#6D28D9',
+          primaryTextColor: '#1f2430',
+          lineColor: '#7C3AED',
+          secondaryColor: '#F5F3FF',
+          tertiaryColor: '#ffffff',
+          fontFamily: 'Segoe UI, Arial, sans-serif',
+          fontSize: '15px'
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">UHC Survey Year 2 — CAPI Manual</h1>
+<p class="subtitle">Tablet &amp; Application User Manual — CSEntry ·
+Supervisor Hub · CSWeb</p>
+<p class="author">Department of Health · ASPSI — Universal Health Care
+Survey (Year 2)</p>
+<p class="date">June 2026</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<h2 id="toc-title">Contents</h2>
+<ul>
+<li><a href="#i-introduction" id="toc-i-introduction">I.
+Introduction</a>
+<ul>
+<li><a href="#a-purpose-of-the-capi-manual"
+id="toc-a-purpose-of-the-capi-manual">A. Purpose of the CAPI
+Manual</a></li>
+<li><a href="#b-intended-users" id="toc-b-intended-users">B. Intended
+users</a></li>
+<li><a href="#c-relationship-to-the-other-manuals"
+id="toc-c-relationship-to-the-other-manuals">C. Relationship to the
+other manuals</a></li>
+<li><a href="#d-capi-support-contacts"
+id="toc-d-capi-support-contacts">D. CAPI support contacts</a></li>
+<li><a href="#e-basic-rules-for-device-and-data-security"
+id="toc-e-basic-rules-for-device-and-data-security">E. Basic rules for
+device and data security</a></li>
+</ul></li>
+<li><a href="#ii-tablet--device-overview"
+id="toc-ii-tablet--device-overview">II. Tablet / Device Overview</a>
+<ul>
+<li><a href="#a-device-components" id="toc-a-device-components">A.
+Device components</a></li>
+<li><a href="#b-charging-and-battery-management"
+id="toc-b-charging-and-battery-management">B. Charging and battery
+management</a></li>
+<li><a href="#c-internet-connectivity"
+id="toc-c-internet-connectivity">C. Internet connectivity</a></li>
+<li><a href="#d-date-time-and-location-settings"
+id="toc-d-date-time-and-location-settings">D. Date, time, and location
+settings</a></li>
+<li><a href="#e-device-care-and-storage"
+id="toc-e-device-care-and-storage">E. Device care and storage</a></li>
+<li><a href="#f-prohibited-uses-of-survey-devices"
+id="toc-f-prohibited-uses-of-survey-devices">F. Prohibited uses of
+survey devices</a></li>
+</ul></li>
+<li><a href="#iii-capi-system-overview"
+id="toc-iii-capi-system-overview">III. CAPI System Overview</a>
+<ul>
+<li><a href="#a-the-capi-workflow-at-a-glance"
+id="toc-a-the-capi-workflow-at-a-glance">A. The CAPI workflow at a
+glance</a></li>
+<li><a href="#b-user-roles-and-access-levels"
+id="toc-b-user-roles-and-access-levels">B. User roles and access
+levels</a></li>
+<li><a href="#c-environments" id="toc-c-environments">C.
+Environments</a></li>
+<li><a href="#d-sync-and-data-transfer-logic-how-data-moves-safely"
+id="toc-d-sync-and-data-transfer-logic-how-data-moves-safely">D. Sync
+and data-transfer logic (how data moves safely)</a></li>
+</ul></li>
+<li><a href="#iv-logging-into-capi" id="toc-iv-logging-into-capi">IV.
+Logging into CAPI</a>
+<ul>
+<li><a href="#41-opening-the-application"
+id="toc-41-opening-the-application">4.1 Opening the application</a></li>
+<li><a href="#42-entering-your-username-and-password"
+id="toc-42-entering-your-username-and-password">4.2 Entering your
+username and password</a></li>
+<li><a href="#43-your-role-menu-what-opens-after-sign-in"
+id="toc-43-your-role-menu-what-opens-after-sign-in">4.3 Your role menu
+(what opens after sign-in)</a></li>
+<li><a href="#44-login-errors" id="toc-44-login-errors">4.4 Login
+errors</a></li>
+<li><a href="#45-forgotten-or-reset-password"
+id="toc-45-forgotten-or-reset-password">4.5 Forgotten or reset
+password</a></li>
+<li><a href="#46-logging-out--switching-user"
+id="toc-46-logging-out--switching-user">4.6 Logging out / switching
+user</a></li>
+<li><a href="#47-working-offline--installing--updating-loginapp"
+id="toc-47-working-offline--installing--updating-loginapp">4.7 Working
+offline · installing / updating LoginApp</a></li>
+<li><a href="#troubleshooting--sign-in"
+id="toc-troubleshooting--sign-in">Troubleshooting — Sign-in</a></li>
+</ul></li>
+<li><a href="#v-the-capi-dashboard-your-role-menu"
+id="toc-v-the-capi-dashboard-your-role-menu">V. The CAPI Dashboard (your
+role menu)</a>
+<ul>
+<li><a href="#51-reading-the-role-menu"
+id="toc-51-reading-the-role-menu">5.1 Reading the role menu</a></li>
+<li><a href="#52-viewing-your-cases-pending-vs-completed"
+id="toc-52-viewing-your-cases-pending-vs-completed">5.2 Viewing your
+cases (pending vs completed)</a></li>
+<li><a href="#53-checking-sync-status"
+id="toc-53-checking-sync-status">5.3 Checking sync status</a></li>
+<li><a href="#54-updates-and-notifications"
+id="toc-54-updates-and-notifications">5.4 Updates and
+notifications</a></li>
+<li><a href="#troubleshooting--dashboard--menu"
+id="toc-troubleshooting--dashboard--menu">Troubleshooting — Dashboard /
+menu</a></li>
+</ul></li>
+<li><a href="#vi-getting-your-assignments"
+id="toc-vi-getting-your-assignments">VI. Getting Your Assignments</a>
+<ul>
+<li><a href="#61-installing-or-updating-the-survey-tools"
+id="toc-61-installing-or-updating-the-survey-tools">6.1 Installing or
+updating the survey tools</a></li>
+<li><a href="#62-receiving-your-case-assignments"
+id="toc-62-receiving-your-case-assignments">6.2 Receiving your case
+assignments</a></li>
+<li><a href="#63-confirming-what-you-received"
+id="toc-63-confirming-what-you-received">6.3 Confirming what you
+received</a></li>
+<li><a href="#64-pulling-server-data-sync"
+id="toc-64-pulling-server-data-sync">6.4 Pulling server data
+(sync)</a></li>
+<li><a href="#troubleshooting--assignments"
+id="toc-troubleshooting--assignments">Troubleshooting —
+Assignments</a></li>
+</ul></li>
+<li><a href="#vii-your-assignment-listing"
+id="toc-vii-your-assignment-listing">VII. Your Assignment Listing</a>
+<ul>
+<li><a href="#71-the-case-list-inside-a-tool"
+id="toc-71-the-case-list-inside-a-tool">7.1 The case list inside a
+tool</a></li>
+<li><a href="#72-finding-a-case" id="toc-72-finding-a-case">7.2 Finding
+a case</a></li>
+<li><a href="#73-what-this-build-does-and-doesnt-have"
+id="toc-73-what-this-build-does-and-doesnt-have">7.3 What this build
+does and doesn't have</a></li>
+<li><a href="#troubleshooting--listing"
+id="toc-troubleshooting--listing">Troubleshooting — Listing</a></li>
+</ul></li>
+<li><a href="#viii-mapping-and-location-capture"
+id="toc-viii-mapping-and-location-capture">VIII. Mapping and Location
+Capture</a>
+<ul>
+<li><a href="#81-gps-capture-during-the-interview"
+id="toc-81-gps-capture-during-the-interview">8.1 GPS capture during the
+interview</a></li>
+<li><a href="#82-verifying-youre-at-the-right-site"
+id="toc-82-verifying-youre-at-the-right-site">8.2 Verifying you're at
+the right site</a></li>
+<li><a href="#83-the-csweb-map-report-supervisors--data-manager"
+id="toc-83-the-csweb-map-report-supervisors--data-manager">8.3 The CSWeb
+Map Report (supervisors / data manager)</a></li>
+<li><a href="#84-getting-to-a-site-directions"
+id="toc-84-getting-to-a-site-directions">8.4 Getting to a site
+(directions)</a></li>
+<li><a href="#troubleshooting--mapping--gps"
+id="toc-troubleshooting--mapping--gps">Troubleshooting — Mapping /
+GPS</a></li>
+</ul></li>
+<li><a href="#ix-starting-a-questionnaire"
+id="toc-ix-starting-a-questionnaire">IX. Starting a Questionnaire</a>
+<ul>
+<li><a href="#91-selecting-the-correct-survey-tool"
+id="toc-91-selecting-the-correct-survey-tool">9.1 Selecting the correct
+survey tool</a></li>
+<li><a href="#92-confirming-respondent-eligibility"
+id="toc-92-confirming-respondent-eligibility">9.2 Confirming respondent
+eligibility</a></li>
+<li><a href="#93-reading-and-recording-consent"
+id="toc-93-reading-and-recording-consent">9.3 Reading and recording
+consent</a></li>
+<li><a href="#94-entering-the-case-key"
+id="toc-94-entering-the-case-key">9.4 Entering the case key</a></li>
+<li><a href="#95-beginning-the-interview"
+id="toc-95-beginning-the-interview">9.5 Beginning the interview</a></li>
+<li><a href="#troubleshooting--starting-a-case"
+id="toc-troubleshooting--starting-a-case">Troubleshooting — Starting a
+case</a></li>
+</ul></li>
+<li><a href="#x-navigating-through-a-questionnaire"
+id="toc-x-navigating-through-a-questionnaire">X. Navigating Through a
+Questionnaire</a>
+<ul>
+<li><a href="#101-moving-between-screens"
+id="toc-101-moving-between-screens">10.1 Moving between screens</a></li>
+<li><a href="#102-required-questions"
+id="toc-102-required-questions">10.2 Required questions</a></li>
+<li><a href="#103-types-of-questions"
+id="toc-103-types-of-questions">10.3 Types of questions</a></li>
+<li><a href="#104-skip-patterns-and-validation"
+id="toc-104-skip-patterns-and-validation">10.4 Skip patterns and
+validation</a></li>
+<li><a href="#105-help-comments-and-verification"
+id="toc-105-help-comments-and-verification">10.5 Help, comments, and
+verification</a></li>
+<li><a href="#106-returning-to-the-menu"
+id="toc-106-returning-to-the-menu">10.6 Returning to the menu</a></li>
+<li><a href="#troubleshooting--navigation"
+id="toc-troubleshooting--navigation">Troubleshooting —
+Navigation</a></li>
+</ul></li>
+<li><a href="#xi-entering-and-reviewing-data"
+id="toc-xi-entering-and-reviewing-data">XI. Entering and Reviewing
+Data</a>
+<ul>
+<li><a href="#111-entering-responses-correctly"
+id="toc-111-entering-responses-correctly">11.1 Entering responses
+correctly</a></li>
+<li><a href="#112-editing-a-response-during-the-interview"
+id="toc-112-editing-a-response-during-the-interview">11.2 Editing a
+response during the interview</a></li>
+<li><a href="#113-other-specify-responses"
+id="toc-113-other-specify-responses">11.3 "Other, specify"
+responses</a></li>
+<li><a href="#114-dont-know-refused-and-missing-answers"
+id="toc-114-dont-know-refused-and-missing-answers">11.4 "Don't know,"
+"Refused," and missing answers</a></li>
+<li><a href="#115-interviewer-comments"
+id="toc-115-interviewer-comments">11.5 Interviewer comments</a></li>
+<li><a href="#116-responding-to-error-messages-hard-checks"
+id="toc-116-responding-to-error-messages-hard-checks">11.6 Responding to
+error messages (hard checks)</a></li>
+<li><a href="#117-responding-to-consistency-checks-soft-checks"
+id="toc-117-responding-to-consistency-checks-soft-checks">11.7
+Responding to consistency checks (soft checks)</a></li>
+<li><a href="#118-saving-progress" id="toc-118-saving-progress">11.8
+Saving progress</a></li>
+<li><a href="#troubleshooting--data-entry"
+id="toc-troubleshooting--data-entry">Troubleshooting — Data
+entry</a></li>
+</ul></li>
+<li><a href="#xii-completing-a-questionnaire"
+id="toc-xii-completing-a-questionnaire">XII. Completing a
+Questionnaire</a>
+<ul>
+<li><a href="#121-reviewing-before-completion"
+id="toc-121-reviewing-before-completion">12.1 Reviewing before
+completion</a></li>
+<li><a href="#122-recording-the-result-of-the-visit"
+id="toc-122-recording-the-result-of-the-visit">12.2 Recording the result
+of the visit</a></li>
+<li><a href="#123-verification-photo-and-closing-items"
+id="toc-123-verification-photo-and-closing-items">12.3 Verification
+photo and closing items</a></li>
+<li><a href="#124-accepting-and-saving-the-completed-case"
+id="toc-124-accepting-and-saving-the-completed-case">12.4 Accepting and
+saving the completed case</a></li>
+<li><a href="#125-partial-or-interrupted-interviews"
+id="toc-125-partial-or-interrupted-interviews">12.5 Partial or
+interrupted interviews</a></li>
+<li><a href="#126-reopening-a-case" id="toc-126-reopening-a-case">12.6
+Reopening a case</a></li>
+<li><a href="#127-submitting-completed-interviews"
+id="toc-127-submitting-completed-interviews">12.7 Submitting completed
+interviews</a></li>
+<li><a href="#troubleshooting--completing-a-case"
+id="toc-troubleshooting--completing-a-case">Troubleshooting — Completing
+a case</a></li>
+</ul></li>
+<li><a href="#xiii-uploading-and-syncing-data"
+id="toc-xiii-uploading-and-syncing-data">XIII. Uploading and Syncing
+Data</a>
+<ul>
+<li><a href="#131-when-to-sync" id="toc-131-when-to-sync">13.1 When to
+sync</a></li>
+<li><a href="#132-running-a-sync-manual"
+id="toc-132-running-a-sync-manual">13.2 Running a sync (manual)</a></li>
+<li><a href="#133-checking-and-confirming-the-upload"
+id="toc-133-checking-and-confirming-the-upload">13.3 Checking and
+confirming the upload</a></li>
+<li><a href="#134-no-internet-in-the-field"
+id="toc-134-no-internet-in-the-field">13.4 No internet in the
+field</a></li>
+<li><a href="#135-sync-errors" id="toc-135-sync-errors">13.5 Sync
+errors</a></li>
+<li><a href="#136-reporting-sync-problems"
+id="toc-136-reporting-sync-problems">13.6 Reporting sync
+problems</a></li>
+<li><a href="#troubleshooting--sync"
+id="toc-troubleshooting--sync">Troubleshooting — Sync</a></li>
+</ul></li>
+<li><a href="#xiv-supervisor-only-features"
+id="toc-xiv-supervisor-only-features">XIV. Supervisor-Only Features</a>
+<ul>
+<li><a href="#141-assigning-an-enumeration-area-ea"
+id="toc-141-assigning-an-enumeration-area-ea">14.1 Assigning an
+enumeration area (EA)</a></li>
+<li><a href="#142-collecting-finished-interviews-from-the-team"
+id="toc-142-collecting-finished-interviews-from-the-team">14.2
+Collecting finished interviews from the team</a></li>
+<li><a href="#143-relaying-collected-interviews-to-csweb"
+id="toc-143-relaying-collected-interviews-to-csweb">14.3 Relaying
+collected interviews to CSWeb</a></li>
+<li><a href="#144-reviewing-coverage-and-cases"
+id="toc-144-reviewing-coverage-and-cases">14.4 Reviewing coverage and
+cases</a></li>
+<li><a href="#145-maps-for-your-area"
+id="toc-145-maps-for-your-area">14.5 Maps for your area</a></li>
+<li><a href="#146-returning-cases-and-closing-a-site"
+id="toc-146-returning-cases-and-closing-a-site">14.6 Returning cases,
+and closing a site</a></li>
+<li><a href="#troubleshooting--supervisor"
+id="toc-troubleshooting--supervisor">Troubleshooting —
+Supervisor</a></li>
+</ul></li>
+<li><a href="#xv-troubleshooting" id="toc-xv-troubleshooting">XV.
+Troubleshooting</a>
+<ul>
+<li><a href="#ak-common-problems-and-fixes"
+id="toc-ak-common-problems-and-fixes">A–K. Common problems and
+fixes</a></li>
+<li><a href="#hub--supervisor-bluetooth-problems"
+id="toc-hub--supervisor-bluetooth-problems">Hub / supervisor (Bluetooth)
+problems</a></li>
+<li><a href="#l-escalation-to-capi--it-support"
+id="toc-l-escalation-to-capi--it-support">L. Escalation to CAPI / IT
+support</a></li>
+</ul></li>
+<li><a href="#xvi-data-security-and-confidentiality-in-capi"
+id="toc-xvi-data-security-and-confidentiality-in-capi">XVI. Data
+Security and Confidentiality in CAPI</a>
+<ul>
+<li><a href="#a-password-protection" id="toc-a-password-protection">A.
+Password protection</a></li>
+<li><a href="#b-device-locking" id="toc-b-device-locking">B. Device
+locking</a></li>
+<li><a href="#c-secure-storage-of-tablets"
+id="toc-c-secure-storage-of-tablets">C. Secure storage of
+tablets</a></li>
+<li><a href="#d-no-account-sharing" id="toc-d-no-account-sharing">D. No
+account sharing</a></li>
+<li><a href="#e-no-copying-or-exporting-data"
+id="toc-e-no-copying-or-exporting-data">E. No copying or exporting
+data</a></li>
+<li><a href="#f-handling-lost-or-stolen-devices"
+id="toc-f-handling-lost-or-stolen-devices">F. Handling lost or stolen
+devices</a></li>
+<li><a href="#g-confidentiality-of-electronic-records"
+id="toc-g-confidentiality-of-electronic-records">G. Confidentiality of
+electronic records</a></li>
+</ul></li>
+<li><a href="#xvii-annexes" id="toc-xvii-annexes">XVII. Annexes</a>
+<ul>
+<li><a href="#a-capi-login-quick-guide"
+id="toc-a-capi-login-quick-guide">A. CAPI Login Quick Guide</a></li>
+<li><a href="#b-case--assignment-status-codes"
+id="toc-b-case--assignment-status-codes">B. Case / Assignment Status
+Codes</a></li>
+<li><a href="#c-final-result-codes" id="toc-c-final-result-codes">C.
+Final Result Codes</a></li>
+<li><a href="#d-common-error-messages-and-solutions"
+id="toc-d-common-error-messages-and-solutions">D. Common Error Messages
+and Solutions</a></li>
+<li><a href="#e-daily-sync-checklist-enumerator"
+id="toc-e-daily-sync-checklist-enumerator">E. Daily Sync Checklist
+(enumerator)</a></li>
+<li><a href="#f-supervisor-capi-checklist"
+id="toc-f-supervisor-capi-checklist">F. Supervisor CAPI
+Checklist</a></li>
+<li><a href="#g-troubleshooting-decision-tree"
+id="toc-g-troubleshooting-decision-tree">G. Troubleshooting Decision
+Tree</a></li>
+<li><a href="#h-capi-support-contact-list"
+id="toc-h-capi-support-contact-list">H. CAPI Support Contact
+List</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="i-introduction">I. Introduction</h1>
+<h2 id="a-purpose-of-the-capi-manual">A. Purpose of the CAPI Manual</h2>
+<p>This manual explains how to use the <strong>CAPI system</strong> for
+the DOH Universal Health Care (UHC) Survey Year 2 — the tablets and
+applications that replace paper for data collection. It covers signing
+in, getting assignments, conducting and completing interviews, syncing
+data to the server, supervisor tasks, troubleshooting, and keeping
+devices and data secure.</p>
+<p>It is a <strong>how-to-use-the-app</strong> manual. It does
+<strong>not</strong> teach the questionnaire content — the wording,
+probes, and meaning of each question live in the <strong>Enumerator's
+Manual</strong> and the questionnaires themselves.</p>
+<h2 id="b-intended-users">B. Intended users</h2>
+<table>
+<thead>
+<tr>
+<th>User</th>
+<th>Uses this manual to…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Enumerator</strong></td>
+<td>Sign in, collect interviews on F1/F3/F4, save and sync.</td>
+</tr>
+<tr>
+<td><strong>Field supervisor</strong></td>
+<td>Assign areas, collect and relay the team's interviews, review
+coverage.</td>
+</tr>
+<tr>
+<td><strong>Data manager / administrator</strong></td>
+<td>Understand how cases reach CSWeb and how to monitor them.</td>
+</tr>
+<tr>
+<td><strong>CAPI / IT support</strong></td>
+<td>Resolve device, login, and sync problems escalated from the
+field.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="c-relationship-to-the-other-manuals">C. Relationship to the
+other manuals</h2>
+<p>The survey documentation is a <strong>set of manuals</strong>, each
+with a job. This CAPI Manual is one of them:</p>
+<ul>
+<li><strong>Survey Operations Manual</strong> — overall study design,
+governance, schedule.</li>
+<li><strong>Field Enumerator's Manual</strong> — interviewing technique,
+field procedures, question-by-question guidance.</li>
+<li><strong>Field Supervisor's Manual</strong> — team logistics,
+monitoring, quality control.</li>
+<li><strong>CAPI Manual</strong> <em>(this document)</em> — the tablet
+and application.</li>
+<li><strong>Training Manual</strong> — how the team is trained.</li>
+</ul>
+<p>When this manual says <em>"follow the rules in your Enumerator's
+Manual"</em> (e.g. eligibility, result codes), it means that companion
+document.</p>
+<h2 id="d-capi-support-contacts">D. CAPI support contacts</h2>
+<p>For credentials, access, device problems, or anything this manual
+doesn't cover, contact your <strong>survey coordinator / team
+supervisor</strong>, who escalates to <strong>CAPI / IT support</strong>
+as needed. Keep the contact list from the <strong>Support Contacts
+annex</strong> (<strong>§XVII·H</strong>) with you in the field.</p>
+<h2 id="e-basic-rules-for-device-and-data-security">E. Basic rules for
+device and data security</h2>
+<p>Five rules that protect the survey and the respondents (full detail
+in <strong>§XVI</strong>):</p>
+<ol type="1">
+<li><strong>Keep your login private</strong> — never share your
+username/password; every case is tagged to the account that made
+it.</li>
+<li><strong>Lock the tablet</strong> when it's not in use.</li>
+<li><strong>Don't copy, export, or photograph</strong> survey data off
+the device.</li>
+<li><strong>Sync regularly</strong> so data isn't stranded on one
+tablet.</li>
+<li><strong>Report a lost or stolen tablet immediately</strong> to your
+supervisor.</li>
+</ol>
+<hr />
+<p><strong>Related sections:</strong> §III <em>CAPI System Overview</em>
+· §IV <em>Logging into CAPI</em> · §XVI <em>Data Security &amp;
+Confidentiality</em> · Annex <em>CAPI Support Contact List</em>.</p>
+<h1 id="ii-tablet--device-overview">II. Tablet / Device Overview</h1>
+<p>The tablet is <strong>survey equipment</strong>, not a personal
+device. Look after it, keep it charged and connected when you can, and
+use it only for the survey.</p>
+<h2 id="a-device-components">A. Device components</h2>
+<p>Know where these are on your tablet: <strong>power button</strong>,
+<strong>volume buttons</strong>, <strong>charging port</strong>,
+<strong>front camera</strong> (for verification photos), and the
+<strong>screen lock</strong>. Familiarise yourself before fieldwork so
+you're not learning the device in front of a respondent.</p>
+<blockquote>
+<p>📷 <strong>Screenshot 2.A</strong> <em>(optional, add at kit
+prep)</em> — a labelled front/back photo of the <strong>issued tablet
+model</strong>. This is the one image best taken with a camera while
+preparing the field kit; drop it in here before printing so trainees
+recognise their exact device.</p>
+</blockquote>
+<h2 id="b-charging-and-battery-management">B. Charging and battery
+management</h2>
+<ul>
+<li><strong>Start each field day fully charged</strong>; carry a power
+bank where sites have no power.</li>
+<li>Close the survey app cleanly before the battery dies (your work is
+saved, but a clean exit is safer).</li>
+<li>Charge overnight; don't let the tablet sit fully drained for
+long.</li>
+</ul>
+<h2 id="c-internet-connectivity">C. Internet connectivity</h2>
+<ul>
+<li><strong>Collecting works offline</strong> — you do not need internet
+to sign in or run interviews.</li>
+<li><strong>You need internet to sync</strong> (upload/download). Use
+mobile data or Wi-Fi where available, typically back at base.</li>
+<li>If unsure whether you're online, open a web page to check.</li>
+</ul>
+<h2 id="d-date-time-and-location-settings">D. Date, time, and location
+settings</h2>
+<ul>
+<li>Keep the tablet's <strong>date and time correct and
+automatic</strong> — interviews are timestamped.</li>
+<li>Keep <strong>Location (GPS) ON</strong> — the survey
+<strong>captures GPS</strong> during interviews
+(<strong>§VIII</strong>). If Location is off, cases save with no
+location.</li>
+</ul>
+<blockquote>
+<p>⚠️ A wrong clock or a disabled Location setting quietly corrupts your
+data. Check both at the start of the day.</p>
+</blockquote>
+<h2 id="e-device-care-and-storage">E. Device care and storage</h2>
+<ul>
+<li>Keep the tablet <strong>dry, shaded, and cushioned</strong>; use the
+case/screen protector provided.</li>
+<li>Store it <strong>securely</strong> (not on display) when travelling
+and overnight.</li>
+<li>Don't lend it to anyone outside the survey team.</li>
+</ul>
+<h2 id="f-prohibited-uses-of-survey-devices">F. Prohibited uses of
+survey devices</h2>
+<p>The tablet is for the survey only. <strong>Do not</strong>: install
+personal apps, browse or use social media, take personal photos, share
+the device, or remove/replace survey apps except as instructed
+(<strong>§IV·7</strong>). Misuse risks the data and the device.</p>
+<hr />
+<p><strong>Related sections:</strong> §IV <em>Logging into CAPI</em> ·
+§VIII <em>Mapping &amp; Location Capture</em> · §XIII <em>Uploading
+&amp; Syncing</em> · §XVI <em>Data Security &amp;
+Confidentiality</em>.</p>
+<h1 id="iii-capi-system-overview">III. CAPI System Overview</h1>
+<h2 id="a-the-capi-workflow-at-a-glance">A. The CAPI workflow at a
+glance</h2>
+<p>The system has three moving parts — the <strong>tablet apps</strong>
+(CSEntry: LoginApp + F1/F3/F4), the <strong>hub</strong> (the role menu
+that moves assignments and interviews between tablets over Bluetooth),
+and the <strong>server</strong> (<strong>CSWeb</strong>, where data
+lands and the team monitors it).</p>
+<pre class="mermaid">
+flowchart TB
+  subgraph FIELD["📱 In the field (tablets)"]
+    direction LR
+    SUP["Supervisor tablet<br/>LoginApp → MenuApp"]
+    EN1["Enumerator tablet<br/>F1 / F3 / F4"]
+    EN2["Enumerator tablet<br/>F1 / F3 / F4"]
+    SUP -. "Assign EA (Bluetooth)" .-> EN1
+    SUP -. "Assign EA (Bluetooth)" .-> EN2
+    EN1 -. "Send interviews (Bluetooth)" .-> SUP
+    EN2 -. "Send interviews (Bluetooth)" .-> SUP
+  end
+  EN1 == "Direct sync (internet)" ==> CSWEB[("CSWeb server<br/>csweb.asiansocial.org")]
+  SUP == "Relay collected (internet)" ==> CSWEB
+  CSWEB --> MON["Data manager<br/>Sync Report · Map Report"]
+</pre>
+<p>A normal day:</p>
+<pre class="mermaid">
+flowchart LR
+  A([Sign in<br/>LoginApp]) --> B[Get assignment<br/>sheet or hub transfer]
+  B --> C[Collect interviews<br/>offline is fine]
+  C --> D[Save + Accept<br/>each case]
+  D --> E{Internet?}
+  E -- Yes --> F([Sync to CSWeb])
+  E -- No --> G[Supervisor<br/>Collect → Relay]
+  G --> F
+</pre>
+<h2 id="b-user-roles-and-access-levels">B. User roles and access
+levels</h2>
+<p>Your <strong>login decides what you can do</strong> — the role menu
+only shows your allowed tasks.</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Sees / can do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Enumerator</strong></td>
+<td>The survey tools (F1/F3/F4); receive an assignment, collect, send to
+supervisor, sync, view own coverage.</td>
+</tr>
+<tr>
+<td><strong>Supervisor</strong></td>
+<td>All of the above <strong>plus</strong> assign EAs, collect from the
+team, relay to CSWeb, and review team coverage
+(<strong>§XIV</strong>).</td>
+</tr>
+<tr>
+<td><strong>Data manager / administrator</strong></td>
+<td>Works on <strong>CSWeb</strong> (web): monitors synced cases, the
+Sync Report, and the Map Report; manages accounts.</td>
+</tr>
+</tbody>
+</table>
+<p>Each enumerator reports to a supervisor, and supervisors relay to the
+server the data manager monitors:</p>
+<pre class="mermaid">
+flowchart TD
+  DM["🖥️ Data Manager / Admin<br/>(CSWeb, web)"]
+  SUP["👷 Field Supervisor<br/>fs-01"]
+  E1["🧑‍💼 Enumerator<br/>se-004"]
+  E2["🧑‍💼 Enumerator<br/>se-011"]
+  DM --- SUP
+  SUP --> E1
+  SUP --> E2
+</pre>
+<h2 id="c-environments">C. Environments</h2>
+<ul>
+<li><strong>Live / production</strong> — the real survey runs on the
+production <strong>CSWeb</strong> (<code>csweb.asiansocial.org</code>);
+the apps you install come from there. <strong>This is the only
+server.</strong></li>
+<li><strong>Training</strong> — there is <strong>no separate training
+server</strong>. Practice is done with <strong>practice cases</strong>
+(clearly marked, never real respondents) on the same apps, so trainees
+learn without affecting real data. Your trainer gives you practice case
+keys; delete or ignore them once training ends.</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>Never enter a real interview as "practice," or a practice
+case as real.</strong> Use the case keys your supervisor assigns for
+real fieldwork.</p>
+</blockquote>
+<h2 id="d-sync-and-data-transfer-logic-how-data-moves-safely">D. Sync
+and data-transfer logic (how data moves safely)</h2>
+<p>Two facts make the system robust:</p>
+<ul>
+<li><strong>Everything is local first.</strong> Cases are saved on the
+tablet as you go; nothing depends on a live connection.</li>
+<li><strong>Cases merge by their 12-digit case key.</strong> When data
+reaches the server — whether an enumerator <strong>syncs
+directly</strong> or a supervisor <strong>collects over Bluetooth and
+relays</strong> — matching cases <strong>update in place</strong> and
+never conflict. Sending and collecting are
+<strong>non-destructive</strong> (the enumerator keeps their own
+copy).</li>
+</ul>
+<p>This is why there are <strong>two paths to the server</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Who</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Direct sync</strong> (CSEntry → CSWeb)</td>
+<td>Enumerator or supervisor</td>
+<td>When the tablet itself has internet (<strong>§XIII</strong>).</td>
+</tr>
+<tr>
+<td><strong>Collect → Relay</strong> (Bluetooth → CSWeb)</td>
+<td>Supervisor gathers the team, then relays</td>
+<td>When enumerators can't reach the server — the offline safety net
+(<strong>§XIV</strong>).</td>
+</tr>
+</tbody>
+</table>
+<p>Either way, the goal is the same: <strong>no completed interview is
+left stranded on a tablet</strong> at the end of the day.</p>
+<hr />
+<p><strong>Related sections:</strong> §IV <em>Logging into CAPI</em> ·
+§XIII <em>Uploading &amp; Syncing</em> · §XIV <em>Supervisor-Only
+Features</em>.</p>
+<h1 id="iv-logging-into-capi">IV. Logging into CAPI</h1>
+<p>You reach the survey tools through one sign-in. Open
+<strong>LoginApp</strong>, enter your username and password, and a
+<strong>menu for your role</strong> opens — enumerators see the survey
+tools; supervisors see the supervisor features as well. You sign in
+<strong>once</strong> per session; you do not log in separately to each
+questionnaire.</p>
+<blockquote>
+<p>🔑 <strong>Before you start:</strong> your username and password are
+issued by your coordinator. <strong>Keep them private and never share a
+login</strong> — every case you save is tagged to the account that
+created it.</p>
+</blockquote>
+<p><strong>The sign-in flow at a glance:</strong></p>
+<pre class="mermaid">
+flowchart LR
+  A([Open CSEntry]) --> B[LoginApp<br/>tap green ➕]
+  B --> C[Enter Username]
+  C --> D[Enter Password]
+  D --> E{Valid?}
+  E -- No --> F[/Incorrect password<br/>or Unknown username/]
+  F --> C
+  E -- Yes --> G[[Role menu opens<br/>se-004 — Enumerator]]
+  G --> H([Tap an item → ✓])
+</pre>
+<hr />
+<h2 id="41-opening-the-application">4.1 Opening the application</h2>
+<blockquote>
+<p><strong>Task:</strong> Open CAPI and reach the sign-in screen
+<strong>User:</strong> Enumerator · Supervisor <strong>When:</strong> At
+the start of each field day, or any time you need to sign in.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>On the tablet, open <strong>CSEntry</strong>.</li>
+<li>In the application list, tap <strong>LoginApp</strong>.</li>
+<li>Tap the green <strong>➕</strong> to start.</li>
+</ol>
+<p><strong>Expected result:</strong> the <strong>sign-in</strong> screen
+opens and asks for your username.</p>
+<p><img src="img/04-01-loginapp-start.png"
+alt="LoginApp start screen showing &quot;0 Cases&quot; and the green plus button" /></p>
+<blockquote>
+<p><em>CSEntry opens into <strong>LoginApp</strong> ("LoginApp – 0
+Cases"). Tap the green <strong>➕</strong> (bottom-right) to begin
+signing in.</em></p>
+</blockquote>
+<p><strong>Common problem:</strong> LoginApp is not in the list, or it
+looks out of date. <strong>What to do:</strong> install or update it —
+see <strong>§4.7</strong> below and <strong>§I·D / §1, Installing and
+updating CAPI</strong>.</p>
+<hr />
+<h2 id="42-entering-your-username-and-password">4.2 Entering your
+username and password</h2>
+<blockquote>
+<p><strong>Task:</strong> Sign in with your credentials
+<strong>User:</strong> Enumerator · Supervisor <strong>When:</strong>
+Right after opening LoginApp.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li><strong>Enter</strong> your <strong>username</strong> (for example,
+<code>se-004</code>). Advance to the next field.</li>
+<li><strong>Enter</strong> your <strong>password</strong>. Advance.</li>
+<li>Advance once more to submit.</li>
+</ol>
+<p><strong>Expected result:</strong> your <strong>role menu</strong>
+opens, with your <strong>username and role across the top</strong> — for
+example, <code>se-004 — Enumerator</code> or
+<code>fs-01 — Supervisor</code>.</p>
+<p><img src="img/04-02-username.png" alt="LoginApp Username field" />
+<img src="img/04-03-password.png" alt="LoginApp Password field" /></p>
+<blockquote>
+<p><em>Enter your <strong>Username</strong> (e.g. <code>se-004</code>),
+advance with the <strong>›</strong> arrow, then your
+<strong>Password</strong>, and advance again to sign in.</em></p>
+</blockquote>
+<blockquote>
+<p>⚠️ <strong>Check the banner before you work.</strong> Confirm the
+username and role at the top are <strong>yours</strong>. If they are
+not, log out (<strong>§4.6</strong>) and sign in again.</p>
+</blockquote>
+<p><strong>Common problem:</strong> the password won't go through.
+<strong>What to do:</strong> re-type it carefully (passwords are
+case-sensitive). If it still fails, see <strong>Login errors</strong>
+below.</p>
+<hr />
+<h2 id="43-your-role-menu-what-opens-after-sign-in">4.3 Your role menu
+(what opens after sign-in)</h2>
+<blockquote>
+<p><strong>Task:</strong> Get oriented on the menu for your role
+<strong>User:</strong> Enumerator · Supervisor <strong>When:</strong>
+Immediately after a successful sign-in.</p>
+</blockquote>
+<p>The menu is <strong>grouped by task</strong> and lists only what your
+role is allowed to do:</p>
+<ul>
+<li><strong>Enumerator</strong> (<code>se-004 — Enumerator</code>) —
+<strong>ASSIGNMENT</strong> (Receive Assigned Data) ·
+<strong>INTERVIEWS</strong> (Conduct F1 – Facility Head / F3 – Patient /
+F4 – Household; Send My Interviews to Supervisor) ·
+<strong>REPORTS</strong> (View EA on Map; View my report) ·
+<strong>SESSION</strong> (Log out). The F2 Healthcare Worker survey is a
+separate web form, not launched here.</li>
+<li><strong>Supervisor</strong> (<code>fs-01 — Supervisor</code>) — adds
+<strong>ASSIGNMENTS</strong> (Assign Enumeration Area), <strong>COLLECT
+&amp; RELAY</strong>, and review/open functions. These are covered in
+<strong>§XIV, Supervisor-Only Features</strong>.</li>
+</ul>
+<p><strong>To run an item:</strong> tap it (it highlights), then tap the
+<strong>✓</strong> at the bottom of the menu. An instrument launches its
+questionnaire; when you finish or exit, you are returned to <strong>this
+menu</strong> (not signed out) — see <strong>§IX, Starting a
+Questionnaire</strong>.</p>
+<p><img src="img/04-04-enumerator-menu.png"
+alt="Enumerator role menu headed &quot;se-004 - Enumerator&quot;, grouped into ASSIGNMENT, INTERVIEWS, REPORTS, SESSION" /></p>
+<blockquote>
+<p><em>The <strong>enumerator</strong> role menu (headed
+<code>se-004 — Enumerator</code>). Groups: <strong>ASSIGNMENT</strong>
+(Receive Assigned Data) · <strong>INTERVIEWS</strong> (Conduct F1 / F3 /
+F4; Send My Interviews to Supervisor) · <strong>REPORTS</strong> (View
+EA on Map; View my report) · <strong>SESSION</strong> (Log out). Tap an
+item, then the <strong>✓</strong> to run it.</em></p>
+</blockquote>
+<p><strong>Common problem:</strong> the menu shows the wrong tools, or
+far fewer/more than expected. <strong>What to do:</strong> your account
+role may be set differently than your assignment — log out and sign in
+again; if it persists, contact your coordinator.</p>
+<hr />
+<h2 id="44-login-errors">4.4 Login errors</h2>
+<blockquote>
+<p><strong>Task:</strong> Recognise and clear a failed sign-in
+<strong>User:</strong> Enumerator · Supervisor <strong>When:</strong>
+When the app rejects your sign-in.</p>
+</blockquote>
+<p>CAPI shows a plain message for each cause. Match it to the table and
+act:</p>
+<table>
+<thead>
+<tr>
+<th>Message on screen</th>
+<th>What it means</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>"Incorrect password."</strong></td>
+<td>Username is known; password didn't match.</td>
+<td>Re-type carefully (case-sensitive). If it persists, ask your
+coordinator to check your account.</td>
+</tr>
+<tr>
+<td><strong>"Unknown username."</strong></td>
+<td>The app doesn't have your account.</td>
+<td>Your tablet's build may be out of date, or you're not in it yet.
+<strong>Update LoginApp</strong> (<strong>§4.7</strong>), then try
+again; if still missing, contact your coordinator.</td>
+</tr>
+<tr>
+<td><strong>"No role found from login…"</strong></td>
+<td>The menu was opened <strong>without</strong> signing in through
+LoginApp.</td>
+<td>Close it and sign in <strong>through LoginApp</strong> — do not open
+the menu app on its own.</td>
+</tr>
+</tbody>
+</table>
+<p><img src="img/04-login-error.png"
+alt="LoginApp error dialog reading &quot;Unknown username.&quot; with an OK button" />
+<em>A sign-in error — here <strong>"Unknown username."</strong> Tap
+<strong>OK</strong>, re-check the username (case-sensitive), and if it's
+correct, update or re-add LoginApp (<strong>§4.7</strong>) or contact
+your coordinator.</em></p>
+<hr />
+<h2 id="45-forgotten-or-reset-password">4.5 Forgotten or reset
+password</h2>
+<blockquote>
+<p><strong>Task:</strong> Recover access when you can't sign in
+<strong>User:</strong> Enumerator · Supervisor <strong>When:</strong>
+You've forgotten your password or it has stopped working.</p>
+</blockquote>
+<p><strong>There is no self-service password reset on the
+tablet.</strong> Credentials are issued and managed by your
+coordinator.</p>
+<p><strong>What to do:</strong> contact your <strong>coordinator / CAPI
+support</strong> (see the <strong>Support Contacts</strong> annex). They
+will confirm your username and re-issue a password. Do not borrow
+another person's login to keep working — it mis-tags the data.</p>
+<hr />
+<h2 id="46-logging-out--switching-user">4.6 Logging out / switching
+user</h2>
+<blockquote>
+<p><strong>Task:</strong> End your session or hand the tablet to another
+fieldworker <strong>User:</strong> Enumerator · Supervisor
+<strong>When:</strong> At the end of the field day, or before a
+different person uses the tablet.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>From your role menu, <strong>exit</strong> back to the LoginApp
+sign-in screen.</li>
+<li>To switch user, <strong>sign in again</strong> with the other
+person's credentials (<strong>§4.2</strong>).</li>
+</ol>
+<p><strong>Expected result:</strong> you're back at the sign-in screen;
+the next person's session starts clean under <strong>their</strong>
+account.</p>
+<blockquote>
+<p>⚠️ <strong>Always log out before handing over the tablet.</strong>
+Cases created while signed in as you are tagged to you. Sharing a
+session mixes up who collected what.</p>
+</blockquote>
+<p><strong>Common problem:</strong> you're not sure whether anything is
+still unsaved. <strong>What to do:</strong> finish or save the open
+interview first (<strong>§XI·H, Saving progress</strong>) before logging
+out.</p>
+<hr />
+<h2 id="47-working-offline--installing--updating-loginapp">4.7 Working
+offline · installing / updating LoginApp</h2>
+<blockquote>
+<p><strong>Task:</strong> Sign in without internet, and keep LoginApp
+current <strong>User:</strong> Enumerator · Supervisor
+<strong>When:</strong> In the field with no signal; or when a new build
+is released.</p>
+</blockquote>
+<ul>
+<li><strong>Signing in works offline.</strong> Your login is checked
+<strong>on the tablet</strong>, so you can sign in and collect data with
+no internet. Internet is only needed to <strong>Sync</strong>
+(upload/download cases) — see <strong>§XIII, Uploading &amp;
+Syncing</strong>.</li>
+<li><strong>Installing / updating:</strong> in CSEntry, find
+<strong>LoginApp</strong> and tap <strong>Install</strong> — or
+<strong>Update</strong> if it shows <em>"New version available."</em>
+This installs both the sign-in and the menu.</li>
+<li><strong>If the app looks stale after an update</strong> (old
+screens, or your username gives <em>"Unknown username."</em>),
+<strong>remove LoginApp and add it again</strong> from CSWeb, then sign
+in.</li>
+</ul>
+<p><img src="img/04-csentry-app-list.png"
+alt="CSEntry &quot;Entry Applications&quot; list showing LoginApp, MenuApp, SupervisorApp, FacilityHeadSurvey, HouseholdSurvey and PatientSurvey" />
+<em>The CSEntry <strong>Entry Applications</strong> list. To install or
+refresh a tool, use <strong>Add Application → from CSWeb</strong>; if a
+tool looks stale, <strong>remove it and add it again</strong> to pull
+the latest build.</em></p>
+<hr />
+<h2 id="troubleshooting--sign-in">Troubleshooting — Sign-in</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Incorrect password."</td>
+<td>Wrong/case-mismatched password</td>
+<td>Re-type carefully; if it persists, coordinator checks the
+account.</td>
+</tr>
+<tr>
+<td>"Unknown username."</td>
+<td>Build out of date, or account not added</td>
+<td>Update LoginApp (<strong>§4.7</strong>); if still missing, contact
+coordinator.</td>
+</tr>
+<tr>
+<td>"No role found from login…"</td>
+<td>Opened the menu without LoginApp</td>
+<td>Sign in <strong>through LoginApp</strong>, not the menu app
+alone.</td>
+</tr>
+<tr>
+<td>Menu shows the wrong tools</td>
+<td>Role set differently than expected</td>
+<td>Log out, sign in again; persists → coordinator.</td>
+</tr>
+<tr>
+<td>Can't sign in at all / forgot password</td>
+<td>No self-service reset</td>
+<td>Coordinator re-issues credentials (<strong>§4.5</strong>).</td>
+</tr>
+<tr>
+<td>Wrong name/role on the banner</td>
+<td>Someone else's session, or wrong login</td>
+<td>Log out (<strong>§4.6</strong>) and sign in as yourself.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Related sections:</strong> §I·E <em>Basic rules for device
+and data security</em> · §IX <em>Starting a Questionnaire</em> · §XIII
+<em>Uploading &amp; Syncing</em> · §XIV <em>Supervisor-Only
+Features</em> · Annex <em>CAPI Login Quick Guide</em> · Annex <em>CAPI
+Support Contact List</em>.</p>
+<h1 id="v-the-capi-dashboard-your-role-menu">V. The CAPI Dashboard (your
+role menu)</h1>
+<p>In this system your <strong>dashboard is the role menu</strong> that
+opens after you sign in (<strong>§IV</strong>), together with the
+<strong>case list</strong> inside each survey tool. There isn't a
+separate dashboard screen — the menu plus the case lists give you
+everything you need: which tools you can use, what's still to do, and
+what's done.</p>
+<hr />
+<h2 id="51-reading-the-role-menu">5.1 Reading the role menu</h2>
+<blockquote>
+<p><strong>Task:</strong> Get your bearings after signing in
+<strong>User:</strong> Enumerator · Supervisor <strong>When:</strong>
+Every time you sign in.</p>
+</blockquote>
+<p>The menu shows:</p>
+<ul>
+<li>your <strong>username and role</strong> across the top (e.g.
+<code>se-004 — Enumerator</code>);</li>
+<li>the <strong>survey tools</strong> you may use — <strong>F1 / F3 /
+F4</strong> for enumerators, plus the <strong>supervisor
+features</strong> for supervisors (<strong>§XIV</strong>).</li>
+</ul>
+<p><img src="img/04-04-enumerator-menu.png"
+alt="Enumerator role menu — your dashboard" /></p>
+<blockquote>
+<p><em>Your "dashboard" is the role menu — grouped into ASSIGNMENT ·
+INTERVIEWS · REPORTS · SESSION, headed with your username and
+role.</em></p>
+</blockquote>
+<p><strong>Common problem:</strong> the menu lists the wrong tools.
+<strong>What to do:</strong> log out and sign in again; if it persists,
+contact your supervisor (<strong>§IV·3</strong>).</p>
+<hr />
+<h2 id="52-viewing-your-cases-pending-vs-completed">5.2 Viewing your
+cases (pending vs completed)</h2>
+<blockquote>
+<p><strong>Task:</strong> See what's still to do and what's finished
+<strong>User:</strong> Enumerator <strong>When:</strong> Through the
+field day.</p>
+</blockquote>
+<p>Open a tool (e.g. <strong>F3</strong>) to see its <strong>case
+list</strong>. Each case shows a <strong>status</strong>:</p>
+<ul>
+<li><strong>Partial</strong> — started, not yet finished (resume it,
+<strong>§XII·6</strong>);</li>
+<li><strong>Complete</strong> — finished and accepted, waiting to sync
+(<strong>§XIII</strong>);</li>
+<li>new cases you haven't started yet come from your
+<strong>assignment</strong> (<strong>§VI–VII</strong>).</li>
+</ul>
+<blockquote>
+<p>💡 Use the case list to check, at a glance, that yesterday's
+completed cases have <strong>synced</strong> before you start
+today's.</p>
+</blockquote>
+<p><strong>View my report</strong> gives a live coverage count for your
+device:</p>
+<p><img src="img/05-coverage-report.png"
+alt="Coverage report: F3 Patient 1 captured; assignment F3, target 30 (EA Binan RHU)" /></p>
+<blockquote>
+<p><em>"View my report" → <strong>MY INTERVIEW COVERAGE</strong> —
+counts of F1/F3/F4 cases stored on this tablet, plus your assignment
+target.</em></p>
+</blockquote>
+<hr />
+<h2 id="53-checking-sync-status">5.3 Checking sync status</h2>
+<blockquote>
+<p><strong>Task:</strong> Know whether your work is uploaded
+<strong>User:</strong> Enumerator · Supervisor <strong>When:</strong>
+Before and after fieldwork.</p>
+</blockquote>
+<p>Sync is run from inside the survey tool (<strong>§XIII</strong>).
+After a sync, the <strong>success message</strong> confirms upload;
+completed cases remain in your list for reference. Make syncing the
+<strong>last thing you do</strong> each day there's a connection.</p>
+<hr />
+<h2 id="54-updates-and-notifications">5.4 Updates and notifications</h2>
+<blockquote>
+<p><strong>Task:</strong> Stay on the current build
+<strong>User:</strong> Enumerator · Supervisor <strong>When:</strong>
+Periodically, and whenever told a new build is out.</p>
+</blockquote>
+<p>There is no in-app notification feed. Updates reach you two ways:</p>
+<ul>
+<li><strong>LoginApp</strong> shows <strong>"New version
+available"</strong> when a new sign-in/menu build is published — update
+it (<strong>§IV·7</strong>).</li>
+<li>Each survey tool can be <strong>updated from CSWeb</strong> the same
+way; if anything looks stale, <strong>remove and re-add</strong> the
+app.</li>
+</ul>
+<p><strong>Common problem:</strong> you're unsure whether you're on the
+latest build. <strong>What to do:</strong> check
+<strong>LoginApp</strong> for an update prompt; when in doubt, remove +
+re-add and sync (<strong>§XIII·5</strong>).</p>
+<hr />
+<h2 id="troubleshooting--dashboard--menu">Troubleshooting — Dashboard /
+menu</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wrong tools on the menu</td>
+<td>Role/login mismatch</td>
+<td>Log out, sign in again (<strong>§IV·3</strong>).</td>
+</tr>
+<tr>
+<td>A case isn't in the list</td>
+<td>Not yet started, or synced away to another device</td>
+<td>Check your assignment (<strong>§VI–VII</strong>); ask supervisor if
+expected.</td>
+</tr>
+<tr>
+<td>Not sure if work uploaded</td>
+<td>—</td>
+<td>Run <strong>Sync</strong>; trust the success message
+(<strong>§XIII</strong>).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Related sections:</strong> §IV <em>Logging into CAPI</em> ·
+§VI <em>Downloading Assignments</em> · §VII <em>Assignment Listing</em>
+· §XIII <em>Uploading &amp; Syncing</em>.</p>
+<h1 id="vi-getting-your-assignments">VI. Getting Your Assignments</h1>
+<p>Before you can collect, two things must be on your tablet: the
+<strong>survey tools</strong> (installed from the server) and your
+<strong>assignments</strong> (which facilities/cases you are responsible
+for). In this system assignments come from your
+<strong>supervisor</strong> — on an <strong>assignment sheet</strong> of
+case keys and/or transferred to your tablet via the <strong>hub</strong>
+— not from a self-service "download" button.</p>
+<hr />
+<h2 id="61-installing-or-updating-the-survey-tools">6.1 Installing or
+updating the survey tools</h2>
+<blockquote>
+<p><strong>Task:</strong> Get the F1/F3/F4 tools onto the tablet
+<strong>User:</strong> Enumerator · Supervisor <strong>When:</strong>
+Before fieldwork, and whenever a new build is released.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>In <strong>CSEntry</strong>, choose <strong>Add
+Application</strong>.</li>
+<li>Select <strong>from CSWeb</strong>
+(<code>csweb.asiansocial.org</code>).</li>
+<li>Find and <strong>install</strong> <strong>LoginApp</strong> and the
+survey tools you need.</li>
+<li>If a tool is already installed, tap <strong>Update</strong> when it
+shows a new version.</li>
+</ol>
+<p><strong>Expected result:</strong> <strong>LoginApp</strong> and the
+tools appear in your CSEntry list and open.</p>
+<blockquote>
+<p>💡 If a tool looks stale or won't update, <strong>remove it and add
+it again</strong> from CSWeb — that reliably pulls the latest
+(<strong>§XIII·5</strong>).</p>
+</blockquote>
+<hr />
+<h2 id="62-receiving-your-case-assignments">6.2 Receiving your case
+assignments</h2>
+<blockquote>
+<p><strong>Task:</strong> Know which facilities/cases are yours
+<strong>User:</strong> Enumerator <strong>When:</strong> At the start of
+fieldwork, and when reassigned.</p>
+</blockquote>
+<p>Your supervisor gives you your assignments in one (or both) of these
+ways:</p>
+<ul>
+<li><strong>Assignment sheet</strong> — a list of the <strong>12-digit
+case keys</strong> (with real PSGC codes) for your facilities/cases. You
+<strong>enter the case key</strong> when you start each case
+(<strong>§IX·4</strong>).</li>
+<li><strong>Hub transfer (Bluetooth)</strong> — your supervisor can send
+your assignment list straight to your tablet
+<strong>device-to-device</strong> using the <strong>Supervisor &amp;
+Enumerator hub</strong>, with no internet needed.</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>Use only the assignments your supervisor gives
+you.</strong> Don't invent or guess case keys — a wrong PSGC prefix is
+rejected at the start of the case anyway (<strong>§IX·4</strong>).</p>
+</blockquote>
+<p><img src="img/14-assign-ea-bluetooth.png"
+alt="Supervisor &quot;ASSIGN EA&quot; dialog: &quot;starting the Bluetooth server to publish assignments. Keep this screen open; the enumerator now runs &#39;Receive Assigned Data&#39;.&quot;" />
+<em>The hub transfer (supervisor side): the supervisor taps
+<strong>Assign Enumeration Area</strong> to start the Bluetooth host,
+then you run <strong>Receive Assigned Data</strong> from your menu to
+pull your assignment — no internet needed
+(<strong>§XIV·1</strong>).</em></p>
+<hr />
+<h2 id="63-confirming-what-you-received">6.3 Confirming what you
+received</h2>
+<blockquote>
+<p><strong>Task:</strong> Check your assignments are complete before you
+go <strong>User:</strong> Enumerator <strong>When:</strong> Right after
+receiving them.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>Count the assignments against your supervisor's list.</li>
+<li>Confirm each has a <strong>complete 12-digit case key</strong> and a
+clear facility/site.</li>
+<li>Raise anything <strong>missing or unclear</strong> with your
+supervisor <strong>before</strong> leaving for the field.</li>
+</ol>
+<p><strong>Expected result:</strong> every case you're expected to do
+has a key and a known location.</p>
+<hr />
+<h2 id="64-pulling-server-data-sync">6.4 Pulling server data (sync)</h2>
+<blockquote>
+<p><strong>Task:</strong> Bring down anything the server holds for you
+<strong>User:</strong> Enumerator · Supervisor <strong>When:</strong>
+When you have a connection.</p>
+</blockquote>
+<p>Running a <strong>Sync</strong> (<strong>§XIII</strong>) not only
+uploads your work — it also <strong>brings down</strong> any updates the
+server has (e.g. the latest build, or shared reference data). Sync once
+before fieldwork starts if you can.</p>
+<hr />
+<h2 id="troubleshooting--assignments">Troubleshooting — Assignments</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A tool isn't installed</td>
+<td>Not added from CSWeb yet</td>
+<td>Add Application → from CSWeb (<strong>§6.1</strong>).</td>
+</tr>
+<tr>
+<td>Assignments missing</td>
+<td>Not yet distributed, or a transfer didn't complete</td>
+<td>Ask your supervisor to re-send (sheet or hub transfer).</td>
+</tr>
+<tr>
+<td>Unsure a case is yours</td>
+<td>Assignment unclear</td>
+<td>Confirm with your supervisor before collecting
+(<strong>§6.3</strong>).</td>
+</tr>
+<tr>
+<td>Tool won't update</td>
+<td>In-app update missed it</td>
+<td>Remove + re-add from CSWeb (<strong>§6.1</strong>,
+<strong>§XIII·5</strong>).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Related sections:</strong> §IV·7 <em>Installing / updating
+LoginApp</em> · §VII <em>Assignment Listing</em> · §IX <em>Starting a
+Questionnaire</em> · §XIII <em>Uploading &amp; Syncing</em> · §XIV
+<em>Supervisor-Only Features</em>.</p>
+<h1 id="vii-your-assignment-listing">VII. Your Assignment Listing</h1>
+<p>Your working list of cases lives in <strong>two places</strong>: the
+<strong>assignment sheet</strong> your supervisor gave you (the cases to
+do, by case key) and the <strong>case list inside each survey
+tool</strong> (the cases you've started or finished). Together these
+tell you what's left and what's done. Supervisors get a fuller team view
+in the <strong>supervisor features</strong> (<strong>§XIV</strong>).</p>
+<hr />
+<h2 id="71-the-case-list-inside-a-tool">7.1 The case list inside a
+tool</h2>
+<blockquote>
+<p><strong>Task:</strong> See your cases and their status
+<strong>User:</strong> Enumerator <strong>When:</strong> Throughout
+fieldwork.</p>
+</blockquote>
+<p>Open a tool (F1/F3/F4) to see its <strong>case list</strong>. Each
+entry shows the <strong>case key</strong> and a
+<strong>status</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Next step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(on your sheet, not yet in the list)</td>
+<td>Not started</td>
+<td>Start it (<strong>§IX</strong>).</td>
+</tr>
+<tr>
+<td><strong>Partial</strong></td>
+<td>Started, unfinished</td>
+<td>Resume it (<strong>§XII·6</strong>).</td>
+</tr>
+<tr>
+<td><strong>Complete</strong></td>
+<td>Finished + accepted</td>
+<td>Sync it (<strong>§XIII</strong>).</td>
+</tr>
+</tbody>
+</table>
+<p><img src="img/07-f3-case-list.png"
+alt="PatientSurvey case list — &quot;1 Case&quot;, showing case 010280001501 with a red status bar and the sync icon" /></p>
+<blockquote>
+<p><em>A survey tool's case list ("PatientSurvey – 1 Case"). Each row is
+a case by its 12-digit key; the <strong>coloured bar</strong> shows
+status (red = partial). The toolbar <strong>⟳</strong> runs a sync; the
+green <strong>➕</strong> starts a new case.</em></p>
+</blockquote>
+<p><strong>Common problem:</strong> a case you finished isn't showing as
+complete. <strong>What to do:</strong> open it to confirm it was
+<strong>accepted</strong> (<strong>§XII·4</strong>); if it was only
+saved, finish and accept it.</p>
+<hr />
+<h2 id="72-finding-a-case">7.2 Finding a case</h2>
+<blockquote>
+<p><strong>Task:</strong> Locate a specific case in the list
+<strong>User:</strong> Enumerator <strong>When:</strong> When the list
+is long.</p>
+</blockquote>
+<p>Cases are listed by <strong>case key</strong>. Match the key from
+your <strong>assignment sheet</strong> to the list. Keep your sheet
+ordered the same way you plan to visit the sites so they're easy to
+find.</p>
+<hr />
+<h2 id="73-what-this-build-does-and-doesnt-have">7.3 What this build
+does and doesn't have</h2>
+<blockquote>
+<p><strong>Task:</strong> Set the right expectations
+<strong>User:</strong> Enumerator · Supervisor</p>
+</blockquote>
+<p>So you're not looking for features that aren't here:</p>
+<ul>
+<li><strong>There is</strong> a per-tool case list with statuses, and
+(for supervisors) a team roster in the hub (<strong>§XIV</strong>).</li>
+<li><strong>There is not</strong> an in-app "assignment grid" with
+radius search, operation-info pop-ups, or per-case alert callouts. Your
+assignment <strong>sheet</strong> + the case list are the listing.</li>
+<li>Reassigning and team-level views are <strong>supervisor</strong>
+functions (<strong>§XIV</strong>), not on the enumerator menu.</li>
+</ul>
+<hr />
+<h2 id="troubleshooting--listing">Troubleshooting — Listing</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Case not in the list</td>
+<td>Not started yet, or synced to another device</td>
+<td>Start from your sheet (<strong>§IX</strong>); ask supervisor if it
+should be here.</td>
+</tr>
+<tr>
+<td>Finished case shows Partial</td>
+<td>Saved but not accepted</td>
+<td>Reopen, finish, <strong>accept</strong>
+(<strong>§XII·4</strong>).</td>
+</tr>
+<tr>
+<td>Duplicate-looking cases</td>
+<td>Same key started twice</td>
+<td>Don't create a second case for one key; resume the existing one —
+ask supervisor if unsure.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Related sections:</strong> §V <em>The CAPI Dashboard</em> ·
+§VI <em>Getting Your Assignments</em> · §IX <em>Starting a
+Questionnaire</em> · §XIV <em>Supervisor-Only Features</em>.</p>
+<h1 id="viii-mapping-and-location-capture">VIII. Mapping and Location
+Capture</h1>
+<p>Location matters two ways in this survey: the tablet <strong>captures
+GPS</strong> at the interview (so each case has a verified location),
+and the team sees those locations on the <strong>CSWeb Map
+Report</strong> (a web view, for supervisors and the data manager). This
+build does <strong>not</strong> include in-app turn-by-turn navigation —
+for directions to a site, use the tablet's own maps app and your
+assignment details.</p>
+<hr />
+<h2 id="81-gps-capture-during-the-interview">8.1 GPS capture during the
+interview</h2>
+<blockquote>
+<p><strong>Task:</strong> Capture the case location
+<strong>User:</strong> Enumerator <strong>When:</strong> The tool
+prompts for GPS, during the case (and at the verification step).</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>When the tool prompts for <strong>GPS</strong>, make sure
+<strong>Location</strong> is <strong>on</strong>
+(<strong>§II·D</strong>) and you're <strong>outdoors / near a
+window</strong> with a clear sky view.</li>
+<li>Let it <strong>capture</strong> — wait for it to get a fix before
+advancing.</li>
+</ol>
+<p><strong>Expected result:</strong> coordinates are stored with the
+case and sync to the server.</p>
+<blockquote>
+<p>⚠️ <strong>Wait for a real fix.</strong> If you advance too fast or
+Location is off, the case can save <strong>0 satellites / no
+location</strong>, which shows as "unreported" on the map. Give it a few
+seconds with a clear sky view.</p>
+</blockquote>
+<p><img src="img/08-gps-values.png"
+alt="Case tree showing the captured Facility GPS — Latitude 14.305988, Longitude 121.113382, Altitude 55.4 m, Accuracy 19 m, Satellites 0" />
+<em>GPS is captured <strong>automatically</strong> when you reach the
+facility / patient-home location section — there is no button to press.
+The captured coordinates appear in the case tree. If
+<strong>Accuracy</strong> is poor or <strong>Satellites</strong> shows
+0, step outdoors with <strong>Location</strong> on and the section
+re-reads.</em></p>
+<p><strong>Common problem:</strong> GPS won't get a fix indoors.
+<strong>What to do:</strong> step outside or to a window; turn Location
+on; wait. Note it in a comment if a fix is truly impossible.</p>
+<hr />
+<h2 id="82-verifying-youre-at-the-right-site">8.2 Verifying you're at
+the right site</h2>
+<blockquote>
+<p><strong>Task:</strong> Confirm the location matches the assignment
+<strong>User:</strong> Enumerator <strong>When:</strong> On arrival and
+at the cover/verification screens.</p>
+</blockquote>
+<ul>
+<li>The <strong>facility name and address auto-fill</strong> from the
+case key (<strong>§IX·5</strong>) — confirm they match where you
+are.</li>
+<li>If the auto-filled site <strong>doesn't match</strong>,
+<strong>stop</strong> — the case key may be wrong
+(<strong>§IX·4</strong>); don't collect against the wrong key.</li>
+</ul>
+<hr />
+<h2 id="83-the-csweb-map-report-supervisors--data-manager">8.3 The CSWeb
+Map Report (supervisors / data manager)</h2>
+<blockquote>
+<p><strong>Task:</strong> See collected cases on a map
+<strong>User:</strong> Supervisor · Data manager (web)
+<strong>When:</strong> Monitoring fieldwork progress.</p>
+</blockquote>
+<p>The <strong>Map Report</strong> on <strong>CSWeb</strong> plots
+synced cases by their captured GPS — useful for checking
+<strong>coverage</strong> and spotting sites with missing or odd
+locations. It is a <strong>web</strong> view (opened in a browser on
+CSWeb), not a tablet screen.</p>
+<blockquote>
+<p>💡 A case only appears once it has <strong>synced</strong>
+<em>and</em> carries a valid GPS fix; "unreported" usually means
+<strong>0 satellites</strong> were captured (<strong>§8.1</strong>), not
+that the case is lost.</p>
+</blockquote>
+<hr />
+<h2 id="84-getting-to-a-site-directions">8.4 Getting to a site
+(directions)</h2>
+<blockquote>
+<p><strong>Task:</strong> Navigate to an assigned facility/household
+<strong>User:</strong> Enumerator <strong>When:</strong> Travelling to a
+site.</p>
+</blockquote>
+<p>This build has <strong>no in-app directions, radius search, or
+best-route</strong> feature. To find a site:</p>
+<ul>
+<li>use your <strong>assignment details</strong> (facility name/address)
+and local knowledge / your supervisor's guidance;</li>
+<li>if needed, use the <strong>tablet's own maps app</strong> for
+directions, then return to CAPI to collect.</li>
+</ul>
+<hr />
+<h2 id="troubleshooting--mapping--gps">Troubleshooting — Mapping /
+GPS</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPS won't fix</td>
+<td>Indoors / Location off</td>
+<td>Go outside or to a window; turn Location on; wait
+(<strong>§8.1</strong>).</td>
+</tr>
+<tr>
+<td>Case shows "unreported" on the map</td>
+<td>0 satellites captured</td>
+<td>Recapture with a clear sky view next time; note if impossible.</td>
+</tr>
+<tr>
+<td>Auto-filled site is wrong</td>
+<td>Wrong case key</td>
+<td>Stop; verify the key (<strong>§IX·4</strong>) before
+collecting.</td>
+</tr>
+<tr>
+<td>Looking for in-app directions</td>
+<td>Not in this build</td>
+<td>Use the tablet's maps app (<strong>§8.4</strong>).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Related sections:</strong> §II·D <em>Date, Time, and Location
+Settings</em> · §IX <em>Starting a Questionnaire</em> · §XIII
+<em>Uploading &amp; Syncing</em> · §XIV <em>Supervisor-Only Features
+(map-all)</em>.</p>
+<h1 id="ix-starting-a-questionnaire">IX. Starting a Questionnaire</h1>
+<p>After you sign in (<strong>§IV</strong>) your <strong>role
+menu</strong> lists the survey tools. Starting an interview is always
+the same shape: <strong>pick the right tool → confirm the respondent is
+eligible → read and record consent → enter the case key →
+begin.</strong> Getting the tool and the case key right at the start is
+what keeps each interview attached to the correct facility and
+respondent.</p>
+<blockquote>
+<p>⚠️ <strong>One respondent, one tool.</strong> F1 is for the
+<strong>facility head</strong>, F3 for a <strong>patient</strong>, F4
+for a <strong>household</strong> respondent. Confirm who is in front of
+you <em>before</em> you open a tool. If the wrong tool opens, exit and
+start the correct one.</p>
+</blockquote>
+<hr />
+<h2 id="91-selecting-the-correct-survey-tool">9.1 Selecting the correct
+survey tool</h2>
+<blockquote>
+<p><strong>Task:</strong> Open the right questionnaire for this
+respondent <strong>User:</strong> Enumerator · Supervisor
+<strong>When:</strong> At the start of each interview.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>On your <strong>role menu</strong>, identify the tool for this
+respondent:
+<ul>
+<li><strong>F1 — Facility Head</strong></li>
+<li><strong>F3 — Patient</strong></li>
+<li><strong>F4 — Household</strong></li>
+</ul></li>
+<li><strong>Tap</strong> the tool. (The <strong>F2 Healthcare
+Worker</strong> survey is a <strong>separate web form</strong>, not
+launched here — see your supervisor.)</li>
+</ol>
+<p><strong>Expected result:</strong> the tool opens to its case
+list.</p>
+<p><img src="img/04-04-enumerator-menu.png"
+alt="Enumerator menu INTERVIEWS group — Conduct F1 / F3 / F4" /></p>
+<blockquote>
+<p><em>Pick the tool under <strong>INTERVIEWS</strong>: Conduct F1 –
+Facility Head / F3 – Patient / F4 – Household.</em></p>
+</blockquote>
+<p><strong>Common problem:</strong> the tool you need isn't on the menu.
+<strong>What to do:</strong> your role may not include it — confirm with
+your supervisor; do not borrow another login.</p>
+<hr />
+<h2 id="92-confirming-respondent-eligibility">9.2 Confirming respondent
+eligibility</h2>
+<blockquote>
+<p><strong>Task:</strong> Check the person qualifies for this tool
+before interviewing <strong>User:</strong> Enumerator
+<strong>When:</strong> Before recording consent.</p>
+</blockquote>
+<p>Confirm against the rules in your <strong>Enumerator's
+Manual</strong> for the tool — for example, F1 is answered by the
+<strong>facility head or their delegate</strong>, F3 by a
+<strong>sampled patient</strong>, F4 by a <strong>knowledgeable
+household member</strong>. If the person is not eligible, do
+<strong>not</strong> start a case; follow the replacement/substitution
+rules in the field protocol.</p>
+<p><strong>Common problem:</strong> the intended respondent is
+unavailable. <strong>What to do:</strong> record the visit outcome
+(<strong>§XII, result codes</strong>) rather than interviewing an
+ineligible person.</p>
+<hr />
+<h2 id="93-reading-and-recording-consent">9.3 Reading and recording
+consent</h2>
+<blockquote>
+<p><strong>Task:</strong> Obtain and record informed consent
+<strong>User:</strong> Enumerator <strong>When:</strong> Immediately
+before the first question, every interview.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li><strong>Read the consent text on screen aloud, verbatim</strong> —
+it mirrors the approved Informed Consent Form. Do not paraphrase.</li>
+<li>Answer the respondent's questions; mention the
+<strong>token</strong> where applicable (F3/F4).</li>
+<li><strong>Record the response</strong> on the consent screen —
+<strong>consent given</strong> or <strong>not given</strong>.</li>
+</ol>
+<p><strong>Expected result:</strong></p>
+<ul>
+<li><strong>Consent given →</strong> the interview proceeds.</li>
+<li><strong>Consent not given / refused →</strong> the tool routes you
+to the <strong>closing result screen</strong> to record the outcome
+(<strong>§XII</strong>); it does <strong>not</strong> ask the survey
+questions.</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>Never enter survey answers without a recorded
+consent.</strong> Consent is the gate to the questionnaire.</p>
+</blockquote>
+<p><img src="img/09-consent-q1.png"
+alt="Consent / eligibility screen: &quot;1. Before we begin, to confirm, are you the patient?&quot; with Yes / No options" />
+<em>The opening consent / eligibility gate. Record the respondent's
+answer truthfully — <strong>"No"</strong> routes to the relationship and
+same-household questions before the interview proceeds.</em></p>
+<hr />
+<h2 id="94-entering-the-case-key">9.4 Entering the case key</h2>
+<blockquote>
+<p><strong>Task:</strong> Enter the 12-digit case key correctly
+<strong>User:</strong> Enumerator <strong>When:</strong> When the tool
+asks for the case identifier (case key), at the very start.</p>
+</blockquote>
+<p>The <strong>case key</strong> is a <strong>12-digit number</strong>
+built from the location and case: <strong>Region (2) · Province (2) ·
+City/Municipality (3) · Facility (2) · Case (3)</strong>. It must use
+<strong>real PSGC codes</strong> for the site.</p>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li><strong>Enter</strong> the 12-digit case key for this assignment,
+digit by digit.</li>
+<li>Advance.</li>
+</ol>
+<p><strong>Expected result:</strong> the geographic prefix is accepted
+and you move to <strong>Field Control / Geographic ID</strong>.</p>
+<blockquote>
+<p>⚠️ <strong>The case key is validated against the official PSGC at the
+first field.</strong> A made-up or test key (wrong region/province/city
+prefix) is <strong>blocked at the start</strong> with an error — you
+cannot proceed. Use the <strong>real PSGC numbers</strong> for your
+assigned site (your supervisor provides them).</p>
+</blockquote>
+<p><img src="img/09-f3-casekey.png"
+alt="Case-key entry: &quot;Questionnaire Number (12-digit: RR-PP-MMM-FF-CCC)&quot; with a number pad" /></p>
+<blockquote>
+<p><em>The case-key prompt: <strong>Questionnaire Number (12-digit:
+RR-PP-MMM-FF-CCC)</strong> — Region · Province · Municipality · Facility
+· Case. Enter the real PSGC-coded key for your assignment.</em></p>
+</blockquote>
+<p><strong>Common problem:</strong> "your key is rejected at the first
+field." <strong>What to do:</strong> check each segment against your
+assignment sheet; a single wrong digit in the region/province/city
+prefix blocks the key. Re-enter the correct PSGC code.</p>
+<hr />
+<h2 id="95-beginning-the-interview">9.5 Beginning the interview</h2>
+<blockquote>
+<p><strong>Task:</strong> Move from the cover/control block into the
+questions <strong>User:</strong> Enumerator <strong>When:</strong> After
+the case key is accepted.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>Complete the <strong>Field Control / Geographic ID</strong> cover
+fields (date, visit, geographic identifiers). Where the facility is
+known, its <strong>name and address auto-fill</strong> from the case
+key.</li>
+<li>Allow the tool to <strong>capture GPS</strong> where prompted
+(<strong>§VIII</strong>).</li>
+<li>Proceed into <strong>Section A</strong> and the survey body.</li>
+</ol>
+<p><strong>Expected result:</strong> you're on the first survey
+question, with the case cover saved.</p>
+<blockquote>
+<p>💡 <strong>You can stop and resume.</strong> If the interview is
+interrupted, your progress is saved and you can return to this case
+later (<strong>§XI·H</strong> and <strong>§XII·F</strong>).</p>
+</blockquote>
+<hr />
+<h2 id="troubleshooting--starting-a-case">Troubleshooting — Starting a
+case</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Case key rejected at field 1</td>
+<td>Wrong PSGC prefix (region/province/city) or a typo</td>
+<td>Re-enter the correct PSGC codes from your assignment sheet.</td>
+</tr>
+<tr>
+<td>Wrong tool opened</td>
+<td>Tapped the wrong menu item</td>
+<td>Exit and open the correct tool (<strong>§9.1</strong>).</td>
+</tr>
+<tr>
+<td>Survey won't ask questions</td>
+<td>Consent recorded as <strong>not given</strong></td>
+<td>Correct only if consent was actually given; otherwise record the
+visit outcome (<strong>§XII</strong>).</td>
+</tr>
+<tr>
+<td>Facility name doesn't auto-fill</td>
+<td>Case key facility segment wrong, or lookup not loaded</td>
+<td>Verify the facility segment; if still blank, note it and inform your
+supervisor.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Related sections:</strong> §IV <em>Logging into CAPI</em> ·
+§VIII <em>Mapping &amp; Navigation (GPS)</em> · §X <em>Navigating a
+Questionnaire</em> · §XII <em>Completing a Questionnaire</em> · Annex
+<em>Final Result Codes</em>.</p>
+<h1 id="x-navigating-through-a-questionnaire">X. Navigating Through a
+Questionnaire</h1>
+<p>CAPI moves through the questionnaire <strong>one field at a
+time</strong>, in the order the survey requires. You answer the question
+on screen, then advance; the tool decides what comes next, applying
+skips and checks automatically. You do <strong>not</strong> decide which
+question follows — that keeps every interview consistent.</p>
+<hr />
+<h2 id="101-moving-between-screens">10.1 Moving between screens</h2>
+<blockquote>
+<p><strong>Task:</strong> Move forward and back through the questions
+<strong>User:</strong> Enumerator <strong>When:</strong> Throughout the
+interview.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li><strong>Answer</strong> the question on screen.</li>
+<li><strong>Advance</strong> to the next question (tap the forward
+control / <strong>Next</strong>).</li>
+<li>To revisit an earlier answer, use <strong>back</strong> to step to
+the previous field.</li>
+</ol>
+<p>A <strong>section navigation panel</strong> on the left shows where
+you are (e.g. <em>Case Key · Field Control · Geographic ID · Facility
+GPS · A. … · B. …</em>). Use it to see your position; the tool still
+requires you to complete fields in order.</p>
+<p><img src="img/10-question-single-select.png"
+alt="A single-select question (&quot;Type of Patient&quot;: Outpatient / Inpatient) with the back (&lt;) and forward (&gt;) controls" />
+<em>A typical question screen. Tap an answer, then the forward
+<strong>&gt;</strong> control (or the keyboard's <strong>Next</strong>)
+to continue; <strong>&lt;</strong> goes back. The <strong>☰</strong>
+menu opens the section tree.</em></p>
+<p><img src="img/10-nav-tree.png"
+alt="The case navigation tree (☰) listing every section and its answered value" />
+<em>The <strong>section tree</strong> (open the <strong>☰</strong> menu)
+shows where you are and what's been answered, and lets you jump between
+sections.</em></p>
+<blockquote>
+<p>💡 <strong>Text and number fields:</strong> type the value, then use
+the <strong>forward control</strong> to advance — pressing Enter alone
+does not always move you on.</p>
+</blockquote>
+<p><strong>Common problem:</strong> you can't move forward. <strong>What
+to do:</strong> the field is required or failed a check — see
+<strong>§10.2</strong> and <strong>§XI·F</strong>.</p>
+<hr />
+<h2 id="102-required-questions">10.2 Required questions</h2>
+<blockquote>
+<p><strong>Task:</strong> Recognise a question you must answer
+<strong>User:</strong> Enumerator <strong>When:</strong> When the tool
+won't let you advance.</p>
+</blockquote>
+<p>Most questions are <strong>required</strong> — the tool will not move
+on until a valid answer is entered. If you genuinely cannot get an
+answer, use the response the question provides for that case (e.g.
+<strong>Don't know / Refused</strong>, where offered) rather than
+leaving it blank — see <strong>§XI·D</strong>.</p>
+<hr />
+<h2 id="103-types-of-questions">10.3 Types of questions</h2>
+<blockquote>
+<p><strong>Task:</strong> Answer each question type correctly
+<strong>User:</strong> Enumerator <strong>When:</strong> Throughout the
+interview.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Looks like</th>
+<th>How to answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Single response</strong></td>
+<td>radio buttons / a drop-down</td>
+<td><strong>Select one</strong> option. Long lists (e.g. location) use a
+<strong>drop-down</strong>.</td>
+</tr>
+<tr>
+<td><strong>Multiple response</strong></td>
+<td><strong>check boxes</strong></td>
+<td><strong>Tick all that apply.</strong> Some lists have an exclusive
+option (e.g. <em>None</em> / <em>Don't know</em>) that cannot be
+combined with others — the tool will warn you.</td>
+</tr>
+<tr>
+<td><strong>Numeric</strong></td>
+<td>a number pad</td>
+<td><strong>Enter</strong> the number; ranges are checked
+(<strong>§XI·F</strong>).</td>
+</tr>
+<tr>
+<td><strong>Text</strong></td>
+<td>a text box</td>
+<td><strong>Type</strong> the response; advance with the forward
+control.</td>
+</tr>
+<tr>
+<td><strong>Date / time</strong></td>
+<td>a date picker</td>
+<td><strong>Enter</strong> the date in the format shown.</td>
+</tr>
+<tr>
+<td><strong>Roster</strong></td>
+<td>a repeating grid</td>
+<td>One <strong>row per item/person</strong>; complete each row. The
+tool adds/keeps rows based on earlier answers.</td>
+</tr>
+</tbody>
+</table>
+<p><img src="img/10-question-checkbox.png"
+alt="A multi-select checkbox question (Q87, &quot;tick all that apply&quot;) with several boxes ticked green" />
+<em>Multiple response (<strong>tick all that apply</strong>) — tap each
+box that applies. Some lists have an exclusive option (e.g. <em>"Did not
+seek other forms of care"</em>) that should be the only one ticked; the
+tool warns if you combine it with others.</em></p>
+<p><img src="img/10-question-select-list.png"
+alt="A long single-select list (Barangay) shown as a scrollable set of radio options" />
+<em>A <strong>select-from-list</strong> (single response) question —
+scroll and tap the one correct option.</em></p>
+<blockquote>
+<p>⚠️ <strong>Multiple-response = tick all.</strong> Don't stop at the
+first applicable answer — read every option and tick each that
+applies.</p>
+</blockquote>
+<hr />
+<h2 id="104-skip-patterns-and-validation">10.4 Skip patterns and
+validation</h2>
+<blockquote>
+<p><strong>Task:</strong> Understand why questions appear or are blocked
+<strong>User:</strong> Enumerator <strong>When:</strong> When a question
+is skipped, or your entry is challenged.</p>
+</blockquote>
+<ul>
+<li><strong>Skip patterns are automatic.</strong> Based on earlier
+answers, the tool shows only the questions that apply and <strong>skips
+the rest</strong> — this is correct, not an error. Do not try to force a
+skipped question.</li>
+<li><strong>Validation checks</strong> run as you go:
+<ul>
+<li>a <strong>hard check</strong> stops you and asks you to
+<strong>re-enter</strong> (the value is out of range or
+impossible);</li>
+<li>a <strong>soft check</strong> warns you but lets you
+<strong>confirm</strong> and continue if the unusual value is true. See
+<strong>§XI·F–G</strong> for handling each.</li>
+</ul></li>
+</ul>
+<p><strong>Common problem:</strong> a question you expected didn't
+appear. <strong>What to do:</strong> it was correctly skipped by an
+earlier answer. If you believe an earlier answer was wrong, go
+<strong>back</strong> and correct it (<strong>§10.1</strong>); the skips
+will recompute.</p>
+<hr />
+<h2 id="105-help-comments-and-verification">10.5 Help, comments, and
+verification</h2>
+<blockquote>
+<p><strong>Task:</strong> Use the on-screen aids <strong>User:</strong>
+Enumerator <strong>When:</strong> As needed during a question.</p>
+</blockquote>
+<ul>
+<li><strong>Help / question instructions</strong> — where a question has
+an instruction or definition, it is shown with the question; read it to
+the respondent where required.</li>
+<li><strong>Comments / field notes</strong> — record anything that
+explains an answer or the interview conditions; these travel with the
+case.</li>
+<li><strong>Facility / address verification</strong> — the facility name
+and address shown are <strong>auto-filled from the case key</strong>;
+confirm they match where you are. GPS is captured automatically
+(<strong>§VIII</strong>).</li>
+</ul>
+<p><strong>Common problem:</strong> the auto-filled facility doesn't
+match the site. <strong>What to do:</strong> stop — the case key may be
+wrong (<strong>§9.4</strong>); verify before continuing.</p>
+<hr />
+<h2 id="106-returning-to-the-menu">10.6 Returning to the menu</h2>
+<blockquote>
+<p><strong>Task:</strong> Leave the questionnaire <strong>User:</strong>
+Enumerator <strong>When:</strong> When you finish, or need to stop.</p>
+</blockquote>
+<p>Completing the case (<strong>§XII</strong>) returns you to the tool's
+case list and then your <strong>role menu</strong> — you stay
+<strong>signed in</strong>. To stop mid-interview, save first
+(<strong>§XI·H</strong>) before exiting.</p>
+<hr />
+<h2 id="troubleshooting--navigation">Troubleshooting — Navigation</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Can't advance</td>
+<td>Required field, or a hard check failed</td>
+<td>Enter a valid answer / re-enter in range
+(<strong>§XI·F</strong>).</td>
+</tr>
+<tr>
+<td>Expected question missing</td>
+<td>Correctly skipped by an earlier answer</td>
+<td>Go back and check the earlier answer if you think it's wrong.</td>
+</tr>
+<tr>
+<td>Only one option selectable on a tick-all</td>
+<td>Treating a multiple-response as single</td>
+<td>It <strong>is</strong> tick-all — keep tapping each option that
+applies.</td>
+</tr>
+<tr>
+<td>Text field won't advance on Enter</td>
+<td>Enter doesn't always advance</td>
+<td>Use the <strong>forward control</strong>.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Related sections:</strong> §IX <em>Starting a
+Questionnaire</em> · §XI <em>Entering &amp; Reviewing Data</em> · §VIII
+<em>Mapping &amp; Navigation</em> · §XII <em>Completing a
+Questionnaire</em>.</p>
+<h1 id="xi-entering-and-reviewing-data">XI. Entering and Reviewing
+Data</h1>
+<p>The quality of the survey depends on what you type here. Enter
+exactly what the respondent says, use the options the question provides
+for "don't know" or "refused," and respond to the tool's checks rather
+than working around them. The tool catches many mistakes as you go —
+treat each message as a chance to fix the answer before it's saved.</p>
+<hr />
+<h2 id="111-entering-responses-correctly">11.1 Entering responses
+correctly</h2>
+<blockquote>
+<p><strong>Task:</strong> Capture each answer accurately
+<strong>User:</strong> Enumerator <strong>When:</strong> Every
+question.</p>
+</blockquote>
+<ul>
+<li>Record the respondent's <strong>actual</strong> answer — don't
+round, assume, or "tidy."</li>
+<li>For amounts, enter the <strong>figure given</strong> (the tool
+handles the formatting and totals).</li>
+<li>For coded lists, select the option that matches; use <strong>Other,
+specify</strong> only when nothing fits (<strong>§11.3</strong>).</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>Don't guess to get past a question.</strong> A wrong value
+can trigger checks later and corrupt totals. If unsure, ask the
+respondent to clarify.</p>
+</blockquote>
+<hr />
+<h2 id="112-editing-a-response-during-the-interview">11.2 Editing a
+response during the interview</h2>
+<blockquote>
+<p><strong>Task:</strong> Correct an answer you've already entered
+<strong>User:</strong> Enumerator <strong>When:</strong> The respondent
+corrects themselves, or you mis-keyed.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>Use <strong>back</strong> to return to the field
+(<strong>§10.1</strong>).</li>
+<li><strong>Re-enter</strong> the correct answer and advance.</li>
+</ol>
+<p><strong>Expected result:</strong> the answer updates; any skips that
+depend on it recompute automatically.</p>
+<blockquote>
+<p>💡 Changing an earlier answer can <strong>open or close</strong>
+later questions. After a correction, page forward and check that the
+right questions now appear.</p>
+</blockquote>
+<hr />
+<h2 id="113-other-specify-responses">11.3 "Other, specify"
+responses</h2>
+<blockquote>
+<p><strong>Task:</strong> Record an answer not in the option list
+<strong>User:</strong> Enumerator <strong>When:</strong> The
+respondent's answer doesn't match any listed option.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>Select <strong>Other (specify)</strong>.</li>
+<li>A <strong>text box opens</strong> — <strong>type</strong> the answer
+in the respondent's words.</li>
+</ol>
+<p><strong>Expected result:</strong> the specify text is saved with the
+"Other" code.</p>
+<blockquote>
+<p>⚠️ Choose <strong>Other</strong> only when no listed option fits. If
+a listed option matches, use it — "Other" answers are harder to
+analyse.</p>
+</blockquote>
+<p><strong>Common problem:</strong> the specify box doesn't open.
+<strong>What to do:</strong> confirm <strong>Other</strong> is actually
+selected (not a neighbouring option); the box is gated on the Other
+code.</p>
+<hr />
+<h2 id="114-dont-know-refused-and-missing-answers">11.4 "Don't know,"
+"Refused," and missing answers</h2>
+<blockquote>
+<p><strong>Task:</strong> Record a non-answer properly
+<strong>User:</strong> Enumerator <strong>When:</strong> The respondent
+can't or won't answer.</p>
+</blockquote>
+<ul>
+<li>Where a question <strong>offers</strong> <strong>Don't know</strong>
+or <strong>Refused</strong>, <strong>select that option</strong> — don't
+invent a number or leave it blank.</li>
+<li>For amount/numeric questions, <strong>follow the on-screen
+instruction</strong> for unknown values (some accept a specific entry;
+do not type a guess).</li>
+<li>Probe once, politely, before accepting <em>Don't know</em> — but
+never pressure the respondent.</li>
+</ul>
+<blockquote>
+<p>💡 <strong>Don't know / Refused</strong> appear as ordinary
+selectable options on the questions where they apply (for example <em>"I
+don't know"</em> on several scale questions) — select them the same way
+as any other answer, like the question screens shown in
+<strong>§X</strong>. Never leave a question blank to mean "don't know";
+pick the option the question provides.</p>
+</blockquote>
+<hr />
+<h2 id="115-interviewer-comments">11.5 Interviewer comments</h2>
+<blockquote>
+<p><strong>Task:</strong> Note anything that explains an answer
+<strong>User:</strong> Enumerator <strong>When:</strong> When context
+matters (an unusual answer, an interruption, a respondent remark).</p>
+</blockquote>
+<p>Use the <strong>comment / field-note</strong> aid to record the
+context. Comments travel with the case and help the data manager
+interpret the response. Keep them brief and factual.</p>
+<hr />
+<h2 id="116-responding-to-error-messages-hard-checks">11.6 Responding to
+error messages (hard checks)</h2>
+<blockquote>
+<p><strong>Task:</strong> Clear a value the tool rejects
+<strong>User:</strong> Enumerator <strong>When:</strong> A message
+blocks you with <strong>re-enter</strong>.</p>
+</blockquote>
+<p>A <strong>hard check</strong> means the value is out of range or
+impossible (e.g. an age of 200, or a total that can't be right). The
+tool <strong>stops</strong> and asks you to re-enter.</p>
+<p><img src="img/11-consistency-warning.png"
+alt="A consistency-check message: &quot;Q84 = Inpatient care but the case is flagged Outpatient (PATIENT_TYPE) — verify routing.&quot; with an OK button" />
+<em>A check message in the tool. This one is a <strong>soft
+check</strong> (a consistency warning) — read it, tap
+<strong>OK</strong>, and either correct the earlier answer or, if the
+unusual value is genuinely true, confirm and continue
+(<strong>§11.7</strong>). Hard checks instead make you
+<strong>re-enter</strong> before you can move on.</em></p>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li><strong>Read the message</strong> — it states what's wrong.</li>
+<li><strong>Tap OK</strong> to dismiss it.</li>
+<li><strong>Re-enter</strong> a valid value (confirm the real answer
+with the respondent if needed).</li>
+</ol>
+<blockquote>
+<p>💡 On a tablet, <strong>tap the OK button</strong> to clear an error
+box — don't just press Enter.</p>
+</blockquote>
+<hr />
+<h2 id="117-responding-to-consistency-checks-soft-checks">11.7
+Responding to consistency checks (soft checks)</h2>
+<blockquote>
+<p><strong>Task:</strong> Confirm or correct an unusual-but-possible
+answer <strong>User:</strong> Enumerator <strong>When:</strong> A
+message <strong>warns</strong> but allows you to continue.</p>
+</blockquote>
+<p>A <strong>soft check</strong> flags an answer that's unusual or
+inconsistent with another answer, but could be true (e.g. a very high
+amount, or a date that seems early). The tool lets you <strong>confirm
+and continue</strong> <em>or</em> go back and fix it.</p>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>Read the warning — it names the two answers in tension.</li>
+<li>If the value is <strong>correct</strong>, <strong>confirm</strong>
+and continue (optionally add a comment, <strong>§11.5</strong>).</li>
+<li>If it's <strong>wrong</strong>, go <strong>back</strong> and correct
+the relevant answer.</li>
+</ol>
+<hr />
+<h2 id="118-saving-progress">11.8 Saving progress</h2>
+<blockquote>
+<p><strong>Task:</strong> Keep your work safe and resume later
+<strong>User:</strong> Enumerator <strong>When:</strong> An interview is
+interrupted, or you must stop.</p>
+</blockquote>
+<ul>
+<li>The tool <strong>saves your progress</strong> so an interrupted
+interview is <strong>not lost</strong>. You can exit and <strong>resume
+the same case</strong> later (<strong>§XII·F–G</strong>).</li>
+<li>Save before handing over or switching the tablet off.</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>Don't delete a partly-done case to "start clean"</strong>
+unless your supervisor tells you to — resume it instead, so the work
+isn't lost.</p>
+</blockquote>
+<p><strong>Common problem:</strong> on reopening, a case reports it
+"could not be found." <strong>What to do:</strong> that usually means
+the case was already removed or synced away, not a data loss — see
+<strong>§XII·G</strong> and inform your supervisor.</p>
+<hr />
+<h2 id="troubleshooting--data-entry">Troubleshooting — Data entry</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Can't advance after a value</td>
+<td>Hard check (out of range)</td>
+<td>Read message, <strong>OK</strong>, re-enter a valid value
+(<strong>§11.6</strong>).</td>
+</tr>
+<tr>
+<td>Warning but it lets you continue</td>
+<td>Soft/consistency check</td>
+<td>Confirm if true, or go back and fix (<strong>§11.7</strong>).</td>
+</tr>
+<tr>
+<td>Specify box won't open</td>
+<td>"Other" not actually selected</td>
+<td>Select the <strong>Other</strong> code
+(<strong>§11.3</strong>).</td>
+</tr>
+<tr>
+<td>Error box won't clear</td>
+<td>Pressing Enter instead of OK</td>
+<td><strong>Tap OK</strong> on the box.</td>
+</tr>
+<tr>
+<td>Don't-know value won't take</td>
+<td>Typed a guess into an amount</td>
+<td>Use the question's Don't know / Refused option, or the on-screen
+instruction (<strong>§11.4</strong>).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Related sections:</strong> §X <em>Navigating a
+Questionnaire</em> · §XII <em>Completing a Questionnaire</em> · §XIII
+<em>Uploading &amp; Syncing</em> · Annex <em>Common Error Messages and
+Solutions</em>.</p>
+<h1 id="xii-completing-a-questionnaire">XII. Completing a
+Questionnaire</h1>
+<p>Finishing a case is more than answering the last question. You record
+<strong>how the visit ended</strong> (the result), capture any required
+<strong>verification</strong>, and then <strong>accept</strong> the case
+so it is stored and ready to sync. A case is only "done" once it has a
+result and has been accepted.</p>
+<p><strong>The life of a case:</strong></p>
+<pre class="mermaid">
+stateDiagram-v2
+    [*] --> NotStarted: on your assignment sheet
+    NotStarted --> Partial: start (enter key, begin)
+    Partial --> Partial: save / resume
+    Partial --> Completed: finish + Accept
+    Partial --> BrokeOff: no consent / can't proceed
+    BrokeOff --> Completed: record closing result + Accept
+    Completed --> Synced: Sync / Relay to CSWeb
+    Synced --> [*]
+</pre>
+<hr />
+<h2 id="121-reviewing-before-completion">12.1 Reviewing before
+completion</h2>
+<blockquote>
+<p><strong>Task:</strong> Check the interview before you close it
+<strong>User:</strong> Enumerator <strong>When:</strong> After the last
+survey question, before accepting.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>Confirm you reached the <strong>closing block</strong> (the tool
+routes you there once the body is complete).</li>
+<li>Resolve any <strong>outstanding checks</strong> (no unanswered
+required fields, no unconfirmed warnings).</li>
+<li>Add a final <strong>comment</strong> if anything needs explaining
+(<strong>§XI·5</strong>).</li>
+</ol>
+<blockquote>
+<p>💡 If you realise an earlier answer is wrong, go
+<strong>back</strong> and fix it now (<strong>§11.2</strong>) — it's
+easier than reopening the case later.</p>
+</blockquote>
+<hr />
+<h2 id="122-recording-the-result-of-the-visit">12.2 Recording the result
+of the visit</h2>
+<blockquote>
+<p><strong>Task:</strong> Record how the visit ended
+<strong>User:</strong> Enumerator <strong>When:</strong> At the closing
+screen, every case — completed or not.</p>
+</blockquote>
+<p>Every case gets a <strong>Result of Visit / final result
+code</strong>, whether or not the interview happened. Choose the one
+that matches what occurred — for example <strong>Completed</strong>,
+<strong>Refused</strong>, <strong>Respondent not available</strong>,
+<strong>Partially completed / broke off</strong>. Your
+<strong>Enumerator's Manual</strong> and the <strong>Final Result
+Codes</strong> annex define each code.</p>
+<p><strong>Expected result:</strong> the result is stored with the case;
+for a non-interview outcome the tool <strong>skips the survey
+questions</strong> and takes you straight to closing.</p>
+<p><img src="img/12-interview-status-breakoff.png"
+alt="The closing &quot;Interview status&quot; radio: Continue interview / Respondent withdrew / Postponed-reschedule / Stop — other (incomplete)" />
+<em>The closing <strong>Interview status / Result of Visit</strong> uses
+this radio control. Leave it on <strong>Continue interview</strong>
+during a normal interview; choose another option only to end early (this
+routes straight to the closing and skips the remaining questions). The
+full <strong>Result of Visit</strong> codes — which differ by tool — are
+in <strong>Annex C</strong>.</em></p>
+<hr />
+<h2 id="123-verification-photo-and-closing-items">12.3 Verification
+photo and closing items</h2>
+<blockquote>
+<p><strong>Task:</strong> Capture required end-of-interview items
+<strong>User:</strong> Enumerator <strong>When:</strong> At the closing
+block, where the tool prompts.</p>
+</blockquote>
+<p>Where required, the tool prompts for a <strong>verification
+photo</strong> and any final closing fields. Take the photo as
+instructed; it is stored with the case and syncs to the server.</p>
+<blockquote>
+<p>💡 For a <strong>non-interview</strong> outcome (e.g. refused, nobody
+home), the tool will <strong>not</strong> ask for the verification photo
+— closing is shorter.</p>
+</blockquote>
+<hr />
+<h2 id="124-accepting-and-saving-the-completed-case">12.4 Accepting and
+saving the completed case</h2>
+<blockquote>
+<p><strong>Task:</strong> Store the finished case <strong>User:</strong>
+Enumerator <strong>When:</strong> After the result and closing
+items.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>At the end, the tool asks <strong>"Accept this case?"</strong></li>
+<li><strong>Accept</strong> to save it.</li>
+</ol>
+<p><strong>Expected result:</strong> the case is saved to the tablet and
+listed as <strong>complete</strong>; you return to the case list / role
+menu.</p>
+<blockquote>
+<p>⚠️ <strong>Accepting saves; it does not upload.</strong> The case is
+on the tablet until you <strong>Sync</strong>
+(<strong>§XIII</strong>).</p>
+</blockquote>
+<hr />
+<h2 id="125-partial-or-interrupted-interviews">12.5 Partial or
+interrupted interviews</h2>
+<blockquote>
+<p><strong>Task:</strong> Handle an interview that couldn't finish in
+one sitting <strong>User:</strong> Enumerator <strong>When:</strong> The
+interview is interrupted or must be continued later.</p>
+</blockquote>
+<ul>
+<li>Your progress is <strong>saved</strong> (<strong>§XI·8</strong>);
+the case stays in the list as <strong>partial</strong>.</li>
+<li>If the interview is broken off at the <strong>start</strong> (no
+consent / can't proceed), the tool routes you to record a
+<strong>break-off result</strong> and a short closing — you don't have
+to page through the whole questionnaire.</li>
+</ul>
+<p><strong>Common problem:</strong> you need to leave mid-interview.
+<strong>What to do:</strong> make sure progress is saved, note the
+reason (comment), and resume the <strong>same case</strong> later
+(<strong>§12.6</strong>).</p>
+<hr />
+<h2 id="126-reopening-a-case">12.6 Reopening a case</h2>
+<blockquote>
+<p><strong>Task:</strong> Return to a saved case to continue or review
+<strong>User:</strong> Enumerator (Supervisor, where allowed)
+<strong>When:</strong> To finish a partial case, or correct one before
+sync.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>In the tool's <strong>case list</strong>, find the case.</li>
+<li>Open it to continue from where it was saved.</li>
+</ol>
+<p><strong>Common problem:</strong> opening a case reports <strong>"the
+case could not be found."</strong> <strong>What to do:</strong> this is
+a <strong>data-state</strong> message — usually the case was already
+<strong>deleted or synced away</strong> from this device, not lost data.
+Don't repeatedly retry; check the case list, and if it's genuinely
+needed, ask your supervisor (a clean reinstall + a fresh case clears a
+stuck device state).</p>
+<hr />
+<h2 id="127-submitting-completed-interviews">12.7 Submitting completed
+interviews</h2>
+<p>Completing a case <strong>saves it locally</strong>. Getting it to
+the server is a separate step — <strong>Sync</strong>
+(<strong>§XIII</strong>). Make a habit of syncing completed cases each
+day there is a connection.</p>
+<hr />
+<h2 id="troubleshooting--completing-a-case">Troubleshooting — Completing
+a case</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Can't reach the closing screen</td>
+<td>An outstanding required field or check earlier</td>
+<td>Page back, resolve it (<strong>§XI·F–G</strong>).</td>
+</tr>
+<tr>
+<td>No verification-photo prompt</td>
+<td>Non-interview result selected</td>
+<td>Correct only if the interview actually happened; otherwise this is
+expected (<strong>§12.3</strong>).</td>
+</tr>
+<tr>
+<td>"Accept this case?" not appearing</td>
+<td>Interview not complete / still in body</td>
+<td>Finish the remaining questions and closing items.</td>
+</tr>
+<tr>
+<td>"Case could not be found" on reopen</td>
+<td>Case already deleted/synced (lifecycle)</td>
+<td>Not a bug; check the list, ask supervisor if needed
+(<strong>§12.6</strong>).</td>
+</tr>
+<tr>
+<td>Completed case not on the server</td>
+<td>Saved but not synced</td>
+<td>Run <strong>Sync</strong> (<strong>§XIII</strong>).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Related sections:</strong> §XI <em>Entering &amp; Reviewing
+Data</em> · §XIII <em>Uploading &amp; Syncing</em> · Annex <em>Final
+Result Codes</em> · §XV <em>Troubleshooting</em>.</p>
+<h1 id="xiii-uploading-and-syncing-data">XIII. Uploading and Syncing
+Data</h1>
+<p>Collecting works <strong>offline</strong> — but the data only reaches
+the team when you <strong>Sync</strong>. Syncing
+<strong>uploads</strong> your completed and partial cases to the server
+and <strong>downloads</strong> any updates. Sync whenever you have a
+connection, and always at the end of the field day.</p>
+<blockquote>
+<p>🔁 <strong>Sync is on-demand.</strong> Cases stay on your tablet
+until you run a sync — they do not upload by themselves. Build the
+habit: <strong>finish the day → find signal → Sync.</strong></p>
+</blockquote>
+<hr />
+<h2 id="131-when-to-sync">13.1 When to sync</h2>
+<blockquote>
+<p><strong>Task:</strong> Know when to upload <strong>User:</strong>
+Enumerator · Supervisor <strong>When:</strong> Throughout fieldwork.</p>
+</blockquote>
+<p>Sync when you:</p>
+<ul>
+<li><strong>finish the field day</strong> (always);</li>
+<li><strong>complete a batch</strong> of cases and have a
+connection;</li>
+<li>are <strong>asked by your supervisor</strong>;</li>
+<li>need the <strong>latest build or assignments</strong> pulled
+down.</li>
+</ul>
+<blockquote>
+<p>⚠️ Don't let cases pile up unsynced for days. The longer they sit
+only on the tablet, the bigger the loss if the device is damaged.</p>
+</blockquote>
+<hr />
+<h2 id="132-running-a-sync-manual">13.2 Running a sync (manual)</h2>
+<blockquote>
+<p><strong>Task:</strong> Upload your cases to the server
+<strong>User:</strong> Enumerator · Supervisor <strong>When:</strong>
+When you have internet.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>Make sure the tablet has a <strong>working internet
+connection</strong> (<strong>§II·C</strong>).</li>
+<li>In the survey tool, open <strong>Synchronize</strong>.</li>
+<li>Confirm the server is <strong>CSWeb</strong>
+(<code>csweb.asiansocial.org</code>).</li>
+<li>If prompted, <strong>sign in with your CSWeb credentials</strong>
+(issued by your coordinator — these may differ from your LoginApp
+sign-in).</li>
+<li>Start the sync and <strong>wait</strong> for it to finish.</li>
+</ol>
+<p><strong>Expected result:</strong> a <strong>success</strong>
+confirmation; your completed cases are now on the server and any updates
+have come down. Cases <strong>merge</strong> by case key — syncing
+doesn't overwrite other enumerators' work.</p>
+<p><img src="img/07-f3-case-list.png"
+alt="Survey tool toolbar with the sync (⟳) icon, top-right of the case list" />
+<em>Open <strong>Synchronize</strong> from the survey tool's toolbar —
+the <strong>⟳</strong> icon, top-right of the case list.</em></p>
+<p><img src="img/13-sync-login.png"
+alt="CSWeb sync sign-in dialog: &quot;Login to https://csweb.asiansocial.org/csweb/api/&quot; with Username and Password fields and OK" />
+<em>If prompted, sign in with your <strong>CSWeb</strong> credentials
+(these may differ from your LoginApp sign-in), then tap
+<strong>OK</strong>.</em></p>
+<p><img src="img/13-sync-success.png"
+alt="A &quot;Successfully synced&quot; confirmation toast with the CSPro icon" />
+<em>The <strong>"Successfully synced"</strong> confirmation — your cases
+are now on the server (merged by case key). This message is your proof
+of upload; trust it even if the monitoring dashboard lags
+(<strong>§13.3</strong>).</em></p>
+<hr />
+<h2 id="133-checking-and-confirming-the-upload">13.3 Checking and
+confirming the upload</h2>
+<blockquote>
+<p><strong>Task:</strong> Confirm your cases reached the server
+<strong>User:</strong> Enumerator · Supervisor <strong>When:</strong>
+After a sync.</p>
+</blockquote>
+<ul>
+<li>The <strong>success message</strong> at the end of sync is your
+immediate confirmation.</li>
+<li>Your supervisor / data manager can see synced cases in
+<strong>CSWeb</strong>.</li>
+</ul>
+<blockquote>
+<p>💡 <strong>The monitoring dashboards can lag.</strong> A case may
+take a short while to appear in the <strong>Sync Report /
+dashboard</strong> even though it uploaded successfully — that's a
+reporting delay, <strong>not</strong> lost data. Trust the sync success
+message.</p>
+</blockquote>
+<hr />
+<h2 id="134-no-internet-in-the-field">13.4 No internet in the field</h2>
+<blockquote>
+<p><strong>Task:</strong> Keep working without a connection
+<strong>User:</strong> Enumerator <strong>When:</strong> In areas with
+no signal.</p>
+</blockquote>
+<ul>
+<li><strong>Keep collecting</strong> — everything is saved locally and
+works fully offline. Signing in (<strong>§IV</strong>) also works
+offline.</li>
+<li><strong>Sync later</strong>, once you reach a connection (often back
+at the team base).</li>
+</ul>
+<p><strong>Common problem:</strong> you're far from signal for several
+cases. <strong>What to do:</strong> that's fine — complete and accept
+each case, then sync as a batch when you have a connection.</p>
+<hr />
+<h2 id="135-sync-errors">13.5 Sync errors</h2>
+<blockquote>
+<p><strong>Task:</strong> Clear a failed sync <strong>User:</strong>
+Enumerator · Supervisor <strong>When:</strong> Sync stops or reports an
+error.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>Check the <strong>internet connection</strong> (open a web page to
+confirm).</li>
+<li>Re-check the <strong>server address</strong> (CSWeb) and your
+<strong>CSWeb sign-in</strong>.</li>
+<li><strong>Try the sync again</strong> once the connection is
+stable.</li>
+<li>If it keeps failing, <strong>report it</strong> with the exact
+message (<strong>§13.6</strong>).</li>
+</ol>
+<blockquote>
+<p>💡 <strong>A new build not showing / "no update":</strong> the in-app
+update can miss a server change. If sync or the app looks stale,
+<strong>remove the app and add it again from CSWeb</strong>, then sync —
+this reliably pulls the latest.</p>
+</blockquote>
+<hr />
+<h2 id="136-reporting-sync-problems">13.6 Reporting sync problems</h2>
+<blockquote>
+<p><strong>Task:</strong> Escalate a sync issue you can't clear
+<strong>User:</strong> Enumerator · Supervisor <strong>When:</strong>
+After retrying with a good connection.</p>
+</blockquote>
+<p>Report to your <strong>supervisor / CAPI support</strong> (Support
+Contacts annex) with: the <strong>tool</strong> (F1/F3/F4), the
+<strong>exact error message</strong>, what you were doing, and how many
+cases are waiting. Keep the cases on the tablet — do
+<strong>not</strong> delete them — until the upload is confirmed.</p>
+<hr />
+<h2 id="troubleshooting--sync">Troubleshooting — Sync</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sync fails to start</td>
+<td>No/weak internet</td>
+<td>Confirm connection (open a web page), retry
+(<strong>§13.5</strong>).</td>
+</tr>
+<tr>
+<td>Asked to sign in and it's rejected</td>
+<td>Wrong CSWeb credentials</td>
+<td>Use your <strong>CSWeb</strong> sign-in (may differ from LoginApp);
+coordinator can verify.</td>
+</tr>
+<tr>
+<td>Sync "succeeds" but cases not on dashboard</td>
+<td>Reporting/dashboard lag</td>
+<td>Normal delay — trust the success message
+(<strong>§13.3</strong>).</td>
+</tr>
+<tr>
+<td>App/build looks stale, "no update"</td>
+<td>In-app update missed a change</td>
+<td><strong>Remove + re-add</strong> the app from CSWeb, then sync
+(<strong>§13.5</strong>).</td>
+</tr>
+<tr>
+<td>Unsure if cases uploaded</td>
+<td>—</td>
+<td>Re-run sync; merge-by-key means a repeat sync is safe.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Related sections:</strong> §II·C <em>Internet
+Connectivity</em> · §IV·7 <em>Working offline</em> · §XII <em>Completing
+a Questionnaire</em> · §XIV <em>Supervisor-Only Features</em> · §XV
+<em>Troubleshooting</em>.</p>
+<h1 id="xiv-supervisor-only-features">XIV. Supervisor-Only Features</h1>
+<p>Signing in as a <strong>supervisor</strong> (e.g.
+<code>fs-01 — Supervisor</code>) opens a fuller menu. From it you
+<strong>hand out enumeration areas</strong>, <strong>collect</strong>
+finished interviews from your team over Bluetooth,
+<strong>relay</strong> them to the server, and <strong>review
+coverage</strong> — all from the one hub. The Bluetooth steps need
+<strong>no internet</strong>, which makes the supervisor the team's
+<strong>offline safety net</strong>.</p>
+<blockquote>
+<p>🔁 <strong>How work moves:</strong> Supervisor
+<strong>assigns</strong> an EA → enumerator collects → supervisor
+<strong>collects</strong> the finished interviews → supervisor
+<strong>relays</strong> to CSWeb. Sending and collecting are
+<strong>non-destructive</strong> — the enumerator keeps their own
+copies; the server merges by case key, so nothing is overwritten.</p>
+</blockquote>
+<p><img src="img/14-supervisor-menu.png"
+alt="Supervisor role menu headed &quot;fs-01 - Supervisor&quot;: ASSIGNMENTS, COLLECT &amp; RELAY, REVIEW &amp; REPORTS, SESSION" /></p>
+<blockquote>
+<p><em>The <strong>supervisor</strong> role menu
+(<code>fs-01 — Supervisor</code>): <strong>ASSIGNMENTS</strong> (Assign
+Enumeration Area) · <strong>COLLECT &amp; RELAY</strong> (Collect
+Interviews from Enumerators; Relay Collected Interviews to CSWeb) ·
+<strong>REVIEW &amp; REPORTS</strong> (Survey Interview – view report;
+View EA on Map; Open F1/F3/F4 review) · <strong>SESSION</strong> (Log
+out).</em></p>
+</blockquote>
+<p><strong>The supervisor's data path:</strong></p>
+<pre class="mermaid">
+sequenceDiagram
+    participant E as Enumerator tablet
+    participant S as Supervisor tablet
+    participant W as CSWeb server
+    S->>E: 1. Assign Enumeration Area (Bluetooth)
+    Note over E: collects interviews (offline ok)
+    E->>S: 2. Send My Interviews (Bluetooth)<br/>(enumerator keeps own copy)
+    S->>W: 3. Relay Collected Interviews (internet)<br/>(merge by 12-digit key, no conflict)
+    W-->>S: success
+</pre>
+<hr />
+<h2 id="141-assigning-an-enumeration-area-ea">14.1 Assigning an
+enumeration area (EA)</h2>
+<blockquote>
+<p><strong>Task:</strong> Hand an enumerator their assignment over
+Bluetooth <strong>User:</strong> Supervisor <strong>When:</strong> At
+the start of fieldwork, or when reassigning.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>Make sure <strong>Bluetooth is on</strong> for both tablets.</li>
+<li>Supervisor: tap <strong>Assign Enumeration Area</strong> and
+<strong>keep the screen open</strong> (your tablet is now the Bluetooth
+host).</li>
+<li>Enumerator: on their menu, tap <strong>Receive Assigned
+Data</strong> and <strong>choose your tablet</strong> when asked.</li>
+<li>The enumerator sees their <strong>EA, instrument, and target
+count</strong>. Re-tap <strong>Assign Enumeration Area</strong> for the
+next enumerator.</li>
+</ol>
+<p><strong>Expected result:</strong> each enumerator has their EA and
+target on their tablet.</p>
+<p><img src="img/14-assign-ea-bluetooth.png"
+alt="ASSIGN EA dialog: &quot;starting the Bluetooth server to publish assignments. Keep this screen open; the enumerator now runs &#39;Receive Assigned Data&#39;. Serves one enumerator per connection.&quot;" />
+<em>Starting <strong>Assign Enumeration Area</strong> — the supervisor's
+tablet becomes the Bluetooth host. Tap <strong>OK</strong> and allow the
+tablet to be visible.</em></p>
+<p><img src="img/14-assign-waiting.png"
+alt="CSEntry &quot;Waiting for connections…&quot; host dialog with a Cancel button" />
+<em>The host then shows <strong>"Waiting for connections…"</strong> —
+keep it open while each enumerator runs <strong>Receive Assigned
+Data</strong> to pull their assignment. It serves <strong>one enumerator
+per connection</strong>; re-select <strong>Assign Enumeration
+Area</strong> for the next one.</em></p>
+<p><strong>Common problem:</strong> the enumerator's Bluetooth connect
+fails — message <strong>"Couldn't connect over Bluetooth. Check: (1)
+Bluetooth is ON on BOTH tablets, and (2) the supervisor has started
+'Assign Enumeration Area' — then retry."</strong> <strong>What to
+do:</strong> confirm <strong>Bluetooth is on for both tablets</strong>,
+and that you (the host) started <strong>Assign Enumeration Area</strong>
+<em>first</em>; then the enumerator retries.</p>
+<hr />
+<h2 id="142-collecting-finished-interviews-from-the-team">14.2
+Collecting finished interviews from the team</h2>
+<blockquote>
+<p><strong>Task:</strong> Gather completed interviews from each
+enumerator <strong>User:</strong> Supervisor <strong>When:</strong> End
+of day / when the team regroups.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>Supervisor: tap <strong>Collect Interviews from Enumerators</strong>
+and keep the screen open (host).</li>
+<li>Enumerator: tap <strong>Send My Interviews to Supervisor</strong>
+and choose your tablet. Their finished interviews <strong>copy
+across</strong>; <strong>their own copies stay</strong> on their
+tablet.</li>
+<li>Re-tap <strong>Collect Interviews from Enumerators</strong> for the
+next enumerator.</li>
+</ol>
+<p><strong>Expected result:</strong> the team's interviews are gathered
+onto your tablet, ready to relay.</p>
+<blockquote>
+<p>💡 Because collection is <strong>non-destructive</strong>, you can
+collect again later without harm.</p>
+</blockquote>
+<hr />
+<h2 id="143-relaying-collected-interviews-to-csweb">14.3 Relaying
+collected interviews to CSWeb</h2>
+<blockquote>
+<p><strong>Task:</strong> Upload the collected interviews to the server
+<strong>User:</strong> Supervisor <strong>When:</strong> Whenever you
+have internet after collecting.</p>
+</blockquote>
+<p><strong>Steps</strong></p>
+<ol type="1">
+<li>With a connection, tap <strong>Relay Collected Interviews to
+CSWeb</strong>.</li>
+<li>Wait for it to finish.</li>
+</ol>
+<p><strong>Expected result:</strong> the collected F1/F3/F4 interviews
+are on the server. Each case carries its <strong>12-digit key</strong>,
+so the relay <strong>never conflicts</strong> — matching cases update in
+place.</p>
+<blockquote>
+<p>⚠️ <strong>The relay is the no-signal safety net.</strong>
+Enumerators with a connection can sync directly
+(<strong>§XIII</strong>); the <strong>Collect → Relay</strong> path
+makes sure work from tablets that <em>can't</em> reach the server still
+gets in. Nothing should be stranded on a tablet at the end of a field
+day.</p>
+</blockquote>
+<hr />
+<h2 id="144-reviewing-coverage-and-cases">14.4 Reviewing coverage and
+cases</h2>
+<blockquote>
+<p><strong>Task:</strong> Check progress and spot-check quality
+<strong>User:</strong> Supervisor <strong>When:</strong> Daily, and
+before closing a site.</p>
+</blockquote>
+<ul>
+<li><strong>Survey Interview — view report</strong> — a live
+<strong>count of F1/F3/F4 interviews on this tablet</strong>. For a
+supervisor that's what's been <strong>collected into the hub</strong>;
+for an enumerator it's their <strong>own</strong> interviews (and their
+EA target).</li>
+<li><strong>Open F1 / F3 / F4 (review)</strong> — open a survey to
+<strong>spot-check</strong> an interview.</li>
+<li><strong>CSWeb</strong> (web) gives the team-wide picture: the
+<strong>Sync Report</strong> (counts/coverage) and the <strong>Map
+Report</strong> (cases plotted by GPS) once interviews have
+relayed/synced.</li>
+</ul>
+<p><img src="img/05-coverage-report.png"
+alt="Coverage report — MY INTERVIEW COVERAGE with F1/F3/F4 counts and the EA target" /></p>
+<blockquote>
+<p><em>"Survey Interview – view report" → live F1/F3/F4 counts for
+what's on the tablet, against the EA target.</em></p>
+</blockquote>
+<hr />
+<h2 id="145-maps-for-your-area">14.5 Maps for your area</h2>
+<blockquote>
+<p><strong>Task:</strong> See your assigned area <strong>User:</strong>
+Supervisor · Enumerator <strong>When:</strong> Planning/monitoring
+fieldwork.</p>
+</blockquote>
+<ul>
+<li>On the tablet, <strong>View EA on Map</strong> shows the assigned
+area and <strong>works offline</strong>.</li>
+<li>For the <strong>whole team's</strong> collected locations, use the
+<strong>CSWeb Map Report</strong> in a browser
+(<strong>§VIII·3</strong>). In-app turn-by-turn navigation / radius /
+best-route is <strong>not</strong> part of this build.</li>
+</ul>
+<hr />
+<h2 id="146-returning-cases-and-closing-a-site">14.6 Returning cases,
+and closing a site</h2>
+<blockquote>
+<p><strong>Task:</strong> Handle corrections and end-of-site wrap-up
+<strong>User:</strong> Supervisor <strong>When:</strong> When a case
+needs fixing, or a site is finished.</p>
+</blockquote>
+<ul>
+<li><strong>Returning a case for correction:</strong> this build has
+<strong>no automated "send back"</strong> — review the case
+(<strong>§14.4</strong>), then have the <strong>enumerator reopen and
+correct it</strong> on their own tablet (<strong>§XII·6</strong>) and
+re-send/sync.</li>
+<li><strong>Closing a site / batch:</strong> there is no formal "close
+site" button. Finish a site by confirming the <strong>coverage
+report</strong> shows the expected counts, then running <strong>Collect
+→ Relay</strong> (or direct sync) so everything is on the server.</li>
+</ul>
+<blockquote>
+<p>💡 Confirm a site is truly done by checking the count in
+<strong>Survey Interview — view report</strong> (and CSWeb) against the
+<strong>target</strong> before you move the team on.</p>
+</blockquote>
+<hr />
+<h2 id="troubleshooting--supervisor">Troubleshooting — Supervisor</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Couldn't connect over Bluetooth…"</td>
+<td>Bluetooth off on a tablet, or host didn't start Assign/Collect
+first</td>
+<td>Turn <strong>Bluetooth on for both tablets</strong>; host taps the
+item first; enumerator retries (<strong>§14.1</strong>).</td>
+</tr>
+<tr>
+<td>Bluetooth won't connect</td>
+<td>One side not hosting, or Bluetooth off</td>
+<td>Confirm one tablet is the host and Bluetooth is on, on both.</td>
+</tr>
+<tr>
+<td>Collected work not on server</td>
+<td>Relay not run / no signal</td>
+<td>Run <strong>Relay Collected Interviews to CSWeb</strong> with
+internet (<strong>§14.3</strong>).</td>
+</tr>
+<tr>
+<td>Counts look low after relay</td>
+<td>Reporting/dashboard lag</td>
+<td>Normal delay on CSWeb; trust the relay/sync success
+(<strong>§XIII·3</strong>).</td>
+</tr>
+<tr>
+<td>Need to fix an enumerator's case</td>
+<td>No automated return-for-correction</td>
+<td>Have the enumerator reopen + correct + re-send
+(<strong>§14.6</strong>).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Related sections:</strong> §IV <em>Logging into CAPI</em> ·
+§VI <em>Getting Your Assignments</em> · §VIII <em>Mapping &amp;
+Navigation</em> · §XIII <em>Uploading &amp; Syncing</em> · Annex
+<em>Supervisor CAPI Checklist</em>.</p>
+<h1 id="xv-troubleshooting">XV. Troubleshooting</h1>
+<p>Most field problems fall into a handful of patterns. Find your
+symptom below, try the fix, and if it doesn't clear,
+<strong>escalate</strong> (<strong>§15.L</strong>). Each row links to
+the section with the full procedure.</p>
+<p><strong>Start here:</strong></p>
+<pre class="mermaid">
+flowchart TD
+  P{What's wrong?}
+  P --> L[Can't sign in]
+  P --> A[No assignments]
+  P --> I[Stuck mid-interview]
+  P --> G[GPS won't fix]
+  P --> S[Can't sync]
+  P --> B[Bluetooth / hub]
+  P --> D[Lost / stolen / damaged]
+  L --> L1["§IV·4 errors · §IV·5 password<br/>still stuck → escalate §15·L"]
+  A --> A1["supervisor re-send · §VI·2"]
+  I --> I1["required field/check §XI·6–7<br/>frozen → close+reopen §15·E"]
+  G --> G1["outdoors + Location on + wait · §VIII·1"]
+  S --> S1["check internet + CSWeb login §13·5<br/>stale → remove + re-add"]
+  B --> B1["host starts first · §XIV·1"]
+  D --> D1["report to supervisor IMMEDIATELY · §XVI·F"]
+</pre>
+<h2 id="ak-common-problems-and-fixes">A–K. Common problems and
+fixes</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong></td>
+<td><strong>Can't log in</strong> — "Incorrect password."</td>
+<td>Wrong/case-mismatched password</td>
+<td>Re-type carefully; coordinator checks account
+(<strong>§IV·4</strong>).</td>
+</tr>
+<tr>
+<td><strong>B</strong></td>
+<td><strong>Forgotten password</strong></td>
+<td>No self-service reset</td>
+<td>Coordinator re-issues credentials (<strong>§IV·5</strong>).</td>
+</tr>
+<tr>
+<td></td>
+<td>"Unknown username."</td>
+<td>Build out of date / not added</td>
+<td>Update or remove + re-add LoginApp (<strong>§IV·7</strong>); then
+coordinator (<strong>§IV·4</strong>).</td>
+</tr>
+<tr>
+<td></td>
+<td>"No role found from login…"</td>
+<td>Opened menu without LoginApp</td>
+<td>Sign in <strong>through LoginApp</strong>
+(<strong>§IV·4</strong>).</td>
+</tr>
+<tr>
+<td><strong>C</strong></td>
+<td><strong>Missing assignments</strong></td>
+<td>Not distributed / transfer incomplete</td>
+<td>Supervisor re-sends (sheet or hub Bluetooth)
+(<strong>§VI·2</strong>).</td>
+</tr>
+<tr>
+<td><strong>D</strong></td>
+<td><strong>Duplicate-looking cases</strong></td>
+<td>Same key started twice</td>
+<td>Resume the existing case, don't make a second; ask supervisor
+(<strong>§VII·3</strong>).</td>
+</tr>
+<tr>
+<td><strong>E</strong></td>
+<td><strong>Frozen / unresponsive app</strong></td>
+<td>App or device hung</td>
+<td>Wait a moment; if still stuck, close and reopen the app — your saved
+work remains (<strong>§XI·8</strong>). If it persists, restart the
+tablet.</td>
+</tr>
+<tr>
+<td><strong>F</strong></td>
+<td><strong>Wrong date / time</strong></td>
+<td>Clock not automatic</td>
+<td>Set date/time to <strong>automatic</strong>
+(<strong>§II·D</strong>); interviews are timestamped.</td>
+</tr>
+<tr>
+<td><strong>G</strong></td>
+<td><strong>GPS won't fix / "unreported"</strong></td>
+<td>Indoors / Location off / advanced too fast</td>
+<td>Go outside, Location on, wait for a fix
+(<strong>§VIII·1</strong>).</td>
+</tr>
+<tr>
+<td><strong>H</strong></td>
+<td><strong>Sync failure</strong></td>
+<td>No/weak internet, wrong CSWeb sign-in</td>
+<td>Confirm connection, retry; remove + re-add if stale
+(<strong>§XIII·5</strong>).</td>
+</tr>
+<tr>
+<td><strong>I</strong></td>
+<td><strong>Incomplete upload</strong></td>
+<td>Sync interrupted</td>
+<td>Re-run sync (merge-by-key makes a repeat safe); keep cases on the
+tablet until confirmed (<strong>§XIII</strong>).</td>
+</tr>
+<tr>
+<td><strong>J</strong></td>
+<td><strong>Battery / charging</strong></td>
+<td>Drained / no power at site</td>
+<td>Start charged; carry a power bank; charge overnight
+(<strong>§II·B</strong>).</td>
+</tr>
+<tr>
+<td><strong>K</strong></td>
+<td><strong>Damaged or lost device</strong></td>
+<td>—</td>
+<td>Report to your supervisor <strong>immediately</strong>
+(<strong>§15.L</strong>, <strong>§XVI·F</strong>).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hub--supervisor-bluetooth-problems">Hub / supervisor (Bluetooth)
+problems</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"No supervisor host found"</td>
+<td>Host didn't start Assign/Collect first</td>
+<td>Host taps the item first, Bluetooth on; connecting side retries
+(<strong>§XIV·1</strong>).</td>
+</tr>
+<tr>
+<td>Bluetooth won't connect</td>
+<td>One side not hosting / Bluetooth off</td>
+<td>One tablet hosts; Bluetooth on, both sides.</td>
+</tr>
+<tr>
+<td>Collected work not on server</td>
+<td>Relay not run</td>
+<td>Supervisor runs <strong>Relay to CSWeb</strong> with internet
+(<strong>§XIV·3</strong>).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="l-escalation-to-capi--it-support">L. Escalation to CAPI / IT
+support</h2>
+<p>If a fix here doesn't clear the problem:</p>
+<ol type="1">
+<li>Note the <strong>tool</strong> (F1/F3/F4 / LoginApp), the
+<strong>exact message</strong>, what you were doing, and how many cases
+are affected.</li>
+<li><strong>Keep affected cases on the tablet</strong> — never delete
+them to "fix" a problem.</li>
+<li>Contact your <strong>supervisor / CAPI support</strong>
+(<strong>§XVII·H</strong>). A screenshot of the message helps.</li>
+</ol>
+<blockquote>
+<p>⚠️ <strong>Lost or stolen tablet = report immediately</strong>,
+before anything else, so access can be protected
+(<strong>§XVI·F</strong>).</p>
+</blockquote>
+<hr />
+<p><strong>Related sections:</strong> §IV <em>Logging in</em> · §XIII
+<em>Uploading &amp; Syncing</em> · §XIV <em>Supervisor-Only
+Features</em> · §XVI <em>Data Security</em> · Annex <em>Troubleshooting
+Decision Tree</em>, <em>Support Contacts</em>.</p>
+<h1 id="xvi-data-security-and-confidentiality-in-capi">XVI. Data
+Security and Confidentiality in CAPI</h1>
+<p>The tablets hold <strong>personal information about real
+people</strong>, collected under informed consent and protected by the
+<strong>Data Privacy Act</strong>. Treating that data carefully is part
+of the job, not an extra. The rules below are simple and
+non-negotiable.</p>
+<h2 id="a-password-protection">A. Password protection</h2>
+<ul>
+<li>Your <strong>username and password are yours alone</strong> — keep
+them private.</li>
+<li>Every case you create is <strong>tagged to your account</strong>;
+sharing a login makes the data untraceable and breaks
+accountability.</li>
+<li>Don't write your password where others can see it.</li>
+</ul>
+<h2 id="b-device-locking">B. Device locking</h2>
+<ul>
+<li><strong>Lock the tablet</strong> whenever you step away or aren't
+actively interviewing.</li>
+<li>Use the screen lock provided; don't disable it.</li>
+</ul>
+<h2 id="c-secure-storage-of-tablets">C. Secure storage of tablets</h2>
+<ul>
+<li>Store the tablet <strong>out of sight and secured</strong> when
+travelling and overnight.</li>
+<li>Don't leave it unattended in public, in a vehicle, or at a
+site.</li>
+</ul>
+<h2 id="d-no-account-sharing">D. No account sharing</h2>
+<ul>
+<li><strong>Never</strong> hand your signed-in tablet to another
+fieldworker to collect under your login. If someone else must use the
+tablet, <strong>log out</strong> and have them sign in as themselves
+(<strong>§IV·6</strong>).</li>
+</ul>
+<h2 id="e-no-copying-or-exporting-data">E. No copying or exporting
+data</h2>
+<ul>
+<li><strong>Do not</strong> copy, export, screenshot, photograph,
+message, or email survey data off the device.</li>
+<li>The only legitimate way data leaves the tablet is <strong>sync /
+relay to CSWeb</strong> (<strong>§XIII</strong>,
+<strong>§XIV</strong>).</li>
+</ul>
+<h2 id="f-handling-lost-or-stolen-devices">F. Handling lost or stolen
+devices</h2>
+<ul>
+<li><strong>Report a lost or stolen tablet to your supervisor
+immediately</strong> — this is the first thing you do, so access can be
+protected.</li>
+<li>Report <strong>before</strong> trying to recover it yourself.</li>
+</ul>
+<h2 id="g-confidentiality-of-electronic-records">G. Confidentiality of
+electronic records</h2>
+<ul>
+<li>Don't discuss or show a respondent's answers to anyone outside the
+survey team.</li>
+<li>Respondents' identities and answers are
+<strong>confidential</strong>; the CAPI record is no different from a
+confidential paper form — only more easily copied, which is exactly why
+the rules above matter.</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>When in doubt, don't.</strong> If an action would move
+respondent data anywhere other than CSWeb via the app, don't do it — ask
+your supervisor first.</p>
+</blockquote>
+<hr />
+<p><strong>Related sections:</strong> §I·E <em>Basic rules for device
+and data security</em> · §II <em>Tablet / Device Overview</em> · §IV·6
+<em>Logging out / switching user</em> · §XIII <em>Uploading &amp;
+Syncing</em>.</p>
+<h1 id="xvii-annexes">XVII. Annexes</h1>
+<p>Quick-reference cards to print or keep on the tablet. The code lists
+below are taken <strong>directly from the deployed F1/F3/F4
+instruments</strong> (their result-of-visit, interview-status, and
+disposition value sets, and the apps' own error messages).</p>
+<hr />
+<h2 id="a-capi-login-quick-guide">A. CAPI Login Quick Guide</h2>
+<ol type="1">
+<li>Open <strong>CSEntry</strong> → tap <strong>LoginApp</strong> →
+green <strong>➕</strong>.</li>
+<li>Enter <strong>username</strong>, advance; enter
+<strong>password</strong>, advance.</li>
+<li><strong>Check the role banner</strong> is yours (e.g.
+<code>se-004 — Enumerator</code>).</li>
+<li>Tap your tool (<strong>F1 / F3 / F4</strong>) to start.</li>
+<li>To switch user / end the day: <strong>exit back to
+LoginApp</strong>. <em>Errors:</em> "Incorrect password." → re-type ·
+"Unknown username." → update LoginApp · "No role found…" → sign in via
+LoginApp. (<strong>§IV</strong>)</li>
+</ol>
+<hr />
+<h2 id="b-case--assignment-status-codes">B. Case / Assignment Status
+Codes</h2>
+<p>Two things describe a case's status: what you <strong>see in the
+CSEntry case list</strong>, and the app's <strong>automatic disposition
+code</strong> (<code>CASE_DISPOSITION</code>, stored with every case and
+visible on the server).</p>
+<p><strong>What you see in the case list:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Next step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Not started</td>
+<td>On your sheet, key not yet entered</td>
+<td>Start it (<strong>§IX</strong>)</td>
+</tr>
+<tr>
+<td>Partial (in progress)</td>
+<td>Started, not yet accepted — saved</td>
+<td>Resume + finish (<strong>§XII·6</strong>)</td>
+</tr>
+<tr>
+<td>Complete</td>
+<td>Finished and <strong>Accepted</strong></td>
+<td>Sync / hand to supervisor (<strong>§XIII</strong>)</td>
+</tr>
+<tr>
+<td>Synced</td>
+<td>Reached the server (merged by key)</td>
+<td>Keep on tablet until confirmed</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Automatic disposition code (<code>CASE_DISPOSITION</code>,
+set by the app):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Disposition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0</strong></td>
+<td>In progress</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>Completed</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Partial / not completed</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="c-final-result-codes">C. Final Result Codes</h2>
+<p>These are the exact <strong>Result of Visit</strong> codes built into
+each tool (recorded at the closing screen for the first and, where used,
+the final visit). <strong>They differ by instrument</strong> — use the
+row set for the tool you are in.</p>
+<p><strong>F1 — Facility Head</strong></p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Result of visit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Completed</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Postponed</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Refused</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Incomplete</td>
+</tr>
+</tbody>
+</table>
+<p><strong>F3 — Patient</strong></p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Result of visit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Completed</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Completed at the Hospital</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Postponed</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Incomplete</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Completed at Home</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Withdraw Participation / Consent</td>
+</tr>
+</tbody>
+</table>
+<p><strong>F4 — Household</strong></p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Result of visit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Completed</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Postponed</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Incomplete</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Withdraw Participation / Consent</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interview status (<code>BREAKOFF</code>) — same in all three
+tools.</strong> Leave on <strong>Continue</strong> unless you must end
+early; choosing 2–4 routes you straight to the closing result and skips
+the remaining questions.</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Interview status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Continue interview</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Respondent withdrew</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Postponed / reschedule</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Stop — other (incomplete)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="d-common-error-messages-and-solutions">D. Common Error Messages
+and Solutions</h2>
+<p>Grouped by type, with <strong>real examples from the F1/F3/F4
+tools</strong>. Wording varies by question; the <em>kind</em> of message
+tells you what to do.</p>
+<p><strong>Sign-in (LoginApp)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Message</th>
+<th>Means</th>
+<th>Do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Incorrect password."</td>
+<td>Password didn't match</td>
+<td>Re-type (case-sensitive) (<strong>§IV·4</strong>)</td>
+</tr>
+<tr>
+<td>"Unknown username."</td>
+<td>Account not in this build</td>
+<td>Update / re-add LoginApp (<strong>§IV·7</strong>)</td>
+</tr>
+<tr>
+<td>"No role found from login…"</td>
+<td>Opened a tool without LoginApp</td>
+<td>Sign in via LoginApp (<strong>§IV·4</strong>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Out-of-range (a value is outside what's allowed)</strong> —
+re-enter a valid value.</p>
+<table>
+<thead>
+<tr>
+<th>Example message</th>
+<th>Do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Age must be 0–120." / "Age (NN) is below 18 — a facility head must
+be an adult. Please re-enter."</td>
+<td>Correct the entry (<strong>§XI·6</strong>)</td>
+</tr>
+<tr>
+<td>"Household size must be 1–30." / "Birth month must be 1–12." /
+"Birth year must be between 1900 and …"</td>
+<td>Enter a value in range</td>
+</tr>
+<tr>
+<td>"Amount cannot be negative."</td>
+<td>Enter 0 or a positive amount</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consistency / cross-check (two answers disagree)</strong> —
+fix whichever is wrong.</p>
+<table>
+<thead>
+<tr>
+<th>Example message</th>
+<th>Do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Final-visit date cannot be earlier than the first-visit date."</td>
+<td>Correct the date (<strong>§XI·7</strong>)</td>
+</tr>
+<tr>
+<td>"Children (NN) cannot exceed household size (NN)."</td>
+<td>Reconcile the two counts</td>
+</tr>
+<tr>
+<td>"NN day(s) of stay but 0 nights — nights cannot be 0 …"</td>
+<td>Correct days/nights</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Multi-select / "Other"</strong> — answer the prompt before
+moving on.</p>
+<table>
+<thead>
+<tr>
+<th>Example message</th>
+<th>Do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Tick at least one payment source before continuing."</td>
+<td>Select ≥1 option (<strong>§XI·3</strong>)</td>
+</tr>
+<tr>
+<td>"'Other' was ticked — please specify."</td>
+<td>Type the "Other" text</td>
+</tr>
+<tr>
+<td>"Please enter an amount greater than 0 — you selected this as a paid
+source."</td>
+<td>Enter the amount, or untick the source</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Case / sync / hub</strong></p>
+<table>
+<thead>
+<tr>
+<th>Message</th>
+<th>Means</th>
+<th>Do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Case could not be found"</td>
+<td>Case already removed/synced (lifecycle)</td>
+<td>Not data loss; check list, ask supervisor
+(<strong>§XII·6</strong>)</td>
+</tr>
+<tr>
+<td>"No supervisor host found"</td>
+<td>Bluetooth host not started</td>
+<td>Host taps Assign/Collect first (<strong>§XIV·1</strong>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="e-daily-sync-checklist-enumerator">E. Daily Sync Checklist
+(enumerator)</h2>
+<ul class="task-list">
+<li><label><input type="checkbox" />All today's interviews
+<strong>completed and accepted</strong>
+(<strong>§XII·4</strong>).</label></li>
+<li><label><input type="checkbox" />Tablet has a <strong>working
+connection</strong> (or plan to use the supervisor <strong>Collect →
+Relay</strong>).</label></li>
+<li><label><input type="checkbox" />Run <strong>Sync</strong> in each
+tool used (<strong>§XIII·2</strong>).</label></li>
+<li><label><input type="checkbox" />Saw the <strong>success</strong>
+message for each.</label></li>
+<li><label><input type="checkbox" />Nothing left
+<strong>unsynced</strong> on the tablet overnight.</label></li>
+<li><label><input type="checkbox" />Tablet <strong>charging</strong> for
+tomorrow.</label></li>
+</ul>
+<hr />
+<h2 id="f-supervisor-capi-checklist">F. Supervisor CAPI Checklist</h2>
+<ul class="task-list">
+<li><label><input type="checkbox" />Each enumerator has their <strong>EA
++ target</strong> (Assign Enumeration Area)
+(<strong>§XIV·1</strong>).</label></li>
+<li><label><input type="checkbox" />Bluetooth on for assign/collect
+handoffs.</label></li>
+<li><label><input type="checkbox" /><strong>Collect Interviews from
+Enumerators</strong> at day's end
+(<strong>§XIV·2</strong>).</label></li>
+<li><label><input type="checkbox" /><strong>Relay Collected Interviews
+to CSWeb</strong> with internet (<strong>§XIV·3</strong>).</label></li>
+<li><label><input type="checkbox" /><strong>Coverage report</strong>
+(and CSWeb) checked against targets
+(<strong>§XIV·4</strong>).</label></li>
+<li><label><input type="checkbox" />Any case needing correction sent
+back to the enumerator to fix + re-send
+(<strong>§XIV·6</strong>).</label></li>
+<li><label><input type="checkbox" />Nothing stranded on a
+tablet.</label></li>
+</ul>
+<hr />
+<h2 id="g-troubleshooting-decision-tree">G. Troubleshooting Decision
+Tree</h2>
+<pre><code>Problem?
+├─ Can&#39;t sign in? ─────────→ §IV·4 (errors) / §IV·5 (password) → still stuck → escalate §XV·L
+├─ No assignments? ────────→ supervisor re-send §VI·2
+├─ Stuck mid-interview? ───→ required field / check §XI·6–7 ; frozen → close+reopen (work saved) §XV·E
+├─ GPS won&#39;t fix? ─────────→ outdoors + Location on + wait §VIII·1
+├─ Can&#39;t sync? ────────────→ check internet + CSWeb login §XIII·5 ; stale → remove+re-add
+├─ Bluetooth (hub)? ───────→ host starts first §XIV·1
+└─ Lost/stolen/damaged? ──→ report to supervisor IMMEDIATELY §XVI·F</code></pre>
+<hr />
+<h2 id="h-capi-support-contact-list">H. CAPI Support Contact List</h2>
+<blockquote>
+<p>📝 <strong>This is the only field left for ASPSI to fill at
+release</strong> — the names and numbers depend on the round's roster.
+Print this page and complete it during training; everything else in this
+manual is final.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Name</th>
+<th>Contact (call / text / Viber)</th>
+<th>For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Team supervisor</td>
+<td>______________________</td>
+<td>______________________</td>
+<td>Day-to-day field issues, credentials, reassignment</td>
+</tr>
+<tr>
+<td>CAPI / IT support</td>
+<td>______________________</td>
+<td>______________________</td>
+<td>App won't open, sync/Bluetooth failures, device escalations</td>
+</tr>
+<tr>
+<td>Data manager</td>
+<td>______________________</td>
+<td>______________________</td>
+<td>CSWeb / data questions, missing synced cases</td>
+</tr>
+<tr>
+<td>Survey coordinator (ASPSI)</td>
+<td>______________________</td>
+<td>______________________</td>
+<td>Protocol questions, schedule, escalation of last resort</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tip: save these four numbers in the tablet's contacts before
+fieldwork, and keep this card in the field bag.</em></p>
+<hr />
+<p><strong>Related sections:</strong> all — these annexes summarise the
+procedures in §I–XVI.</p>
+</body>
+</html>

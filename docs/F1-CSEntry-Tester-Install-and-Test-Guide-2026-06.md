@@ -17,7 +17,7 @@
 
 ## ⚠️ Coordinator pre-flight (Carl — do BEFORE opening the round)
 
-R4 runs on the **live CSWeb** (`csweb.asiansocial.org`). The `010280001` test prefix segregates these throwaway cases from any real data; the monitor filters them out (and they can be purged after — see companion guide teardown).
+R4 runs on the **live CSWeb** (`csweb.asiansocial.org`). The `040340002` test prefix segregates these throwaway cases from any real data; the monitor filters them out (and they can be purged after — see companion guide teardown).
 
 1. **Deploy the R4 build ×3 to CSWeb** — F1 + F3 + F4 (the standard publish-and-deploy handoff). The F1 package carries: combined-view screens, GPS auto-fetch, photo-at-end + photo-gate, other-specify gating, exclusivity warnings, and F1 validation parity (age 18–80, tenure `age−20`, final-visit ≥ first-visit). Confirm `FacilityHeadSurvey` downloads cleanly on a real device once.
 2. **Create the Slack channel** `#f1-uat` on `aspsi-doh-uhc-survey2.slack.com`; add the F1 testers + their STL + the data monitor; pin this guide.
@@ -38,8 +38,8 @@ R4 runs on the **live CSWeb** (`csweb.asiansocial.org`). The `010280001` test pr
 | **App to download from server** | **FacilityHeadSurvey** |
 | **Server address (in CSEntry)** | `https://csweb.asiansocial.org/csweb/api` |
 | **Server login (your own)** | your own CSWeb user — `shan` / `kidd` / `alytest` (Aly) / `aidan` (see §2 / §3) · password *(coordinator shares privately)*. **Not** the shared `setest`. |
-| **Test facility prefix (always use)** | `010280001` (Region I / Ilocos Norte — passes PSGC validation) |
-| **Your QN block (F1)** | `010280001` + **1xx** — your assigned 3-digit block (see §3) |
+| **Test facility prefix (always use)** | `040340002` (Region IV-A / Laguna · Cabuyao City Hospital — passes PSGC validation) |
+| **Your QN block (F1)** | `040340002` + **1xx** — your assigned 3-digit block (see §3) |
 | **What's new to look for** | combined screens · GPS auto-fetch · photo at the end (only if visit happened) · other-specify gating · exclusive-option warning · age/tenure/date checks |
 | **Bug repo** | https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues |
 | **Feedback form (one per finding)** | https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/new?template=capi_uat_feedback.yml |
@@ -71,16 +71,18 @@ Play your role like a real field day — you are both the **enumerator** and (fo
 
 ## 3. Your Test Questionnaire-Number Assignments
 
-The interview opens with a **12-digit Questionnaire Number**: Region(2)–Province(2)–City/Mun(3)–Facility(2)–Case(3). Everyone uses the test prefix **`010280001`**; your **3-digit block** keeps your cases from clashing with other testers on the server.
+The interview opens with a **12-digit Questionnaire Number**: Region(2)–Province(2)–City/Mun(3)–Facility(2)–Case(3). Everyone uses the test prefix **`040340002`**; your **3-digit block** keeps your cases from clashing with other testers on the server.
 
 | Tester | CSWeb username | QN block (F1 = `1xx`) | Example cases |
 |---|---|---|---|
-| **Shan** | `shan` | `010280001` + **`100`–`119`** | `010280001100`, `010280001101`, … |
-| **Kidd** | `kidd` | `010280001` + **`120`–`139`** | `010280001120`, `010280001121`, … |
-| **Aly** | `alytest` | `010280001` + **`140`–`159`** | `010280001140`, … |
-| **Aidan** | `aidan` | `010280001` + **`160`–`179`** | `010280001160`, … |
+| **Shan** | `shan` | `040340002` + **`100`–`119`** | `040340002100`, `040340002101`, … |
+| **Kidd** | `kidd` | `040340002` + **`120`–`139`** | `040340002120`, `040340002121`, … |
+| **Aly** | `alytest` | `040340002` + **`140`–`159`** | `040340002140`, … |
+| **Aidan** | `aidan` | `040340002` + **`160`–`179`** | `040340002160`, … |
 
 > Use a **different last 3 digits for each case** you start (so a Completed and a Refused case don't overwrite each other). Coordinator fills the names + blocks above before sending. **Don't reuse another tester's block.**
+
+> **📍 This round is set in Laguna (Cabuyao City Hospital · `040340002`).** Capture each case's GPS **where you actually are, around Los Baños / Laguna** — the test facility is in your province, so a correctly-run case now shows as **correctly located on the CSWeb Map (no "wrong area" flag)**. Keep the team testing from the **same general area** so the Map's location checks stay clean. An outdoor / near-window fix is best; an indoor desk case may leave GPS blank — that's expected, just say so.
 
 ---
 
@@ -106,7 +108,7 @@ For anything that looks wrong, jot what you **expected** vs what **happened**. I
 
 - **5A.1 (install CSEntry):** Play Store → search **CSEntry** → install **CSEntry** (*U.S. Census Bureau*, free) → open it.
 - **5A.2 (download F1):** In CSEntry, **add an application** (a **+** / **⋮ menu**, usually near the top) → **from a CSWeb server** ("Add Application" → "From CSWeb"). Enter the server address **exactly** `https://csweb.asiansocial.org/csweb/api` → log in with **your own username** (e.g. `shan`, see §3) + password → choose **FacilityHeadSurvey** → **download / add**. It now shows on the CSEntry home screen. **Time it** — note how long the download took and whether anything was confusing.
-- **5A.3 (start cold):** Tap **FacilityHeadSurvey** → start a **new interview** (**+**). Enter your QN (`010280001` + your number). Expect: the app **checks the number** and **auto-fills Region / Province / City names** — confirm they appear (you can't edit them; that's intended). Mistyped? You'll see *"…not found in PSGC"* — re-enter.
+- **5A.3 (start cold):** Tap **FacilityHeadSurvey** → start a **new interview** (**+**). Enter your QN (`040340002` + your number). Expect: the app **checks the number** and **auto-fills Region / Province / City names** — confirm they appear (you can't edit them; that's intended). Mistyped? You'll see *"…not found in PSGC"* — re-enter.
 
 ### 5B — Full interview under field conditions · `[TC-1 Completed]` `[TC-3 Partial save + resume]`
 
@@ -155,7 +157,7 @@ A short, sharp pass — pick the ones that fit your device.
 - **5E.1 (real respondent text):** In any "Other (specify)" / open-text field, type special characters `< > & " ' /` and an emoji (🏥). Expect: preserved exactly through save + sync; no garbled display.
 - **5E.2 (long text):** Paste a long (~500-char) string into an open-text field → accepted, preserved on reopen + sync.
 - **5E.3 (day-later resume):** Partial-save a case, close everything, come back the next testing session, reopen → resumes at the saved point.
-- **5E.4 (bad QN):** Type a number that doesn't start `010280001` → expect the *"…not found in PSGC"* rejection, with a clear way to re-enter.
+- **5E.4 (bad QN):** Type a number that doesn't start `040340002` → expect the *"…not found in PSGC"* rejection, with a clear way to re-enter.
 - **5E.5 (language, optional):** Switch the **language** and confirm translated text appears (note anything untranslated — some locales aren't delivered yet).
 
 ---
@@ -172,7 +174,7 @@ Pick **Instrument = F1**, the matching **scenario** (the `[TC-…]` / form optio
 **Type:** CAPI bug  OR  survey-design/wording question (your best guess)
 **Tester:** ‹your name / initials›
 **Device:** Android tablet (model + Android version) / phone (model) / etc.
-**Questionnaire Number:** 010280001 1xx
+**Questionnaire Number:** 040340002 1xx
 **Question / screen:** (e.g. "Section C grouped screen" / "GPS step" / "verification photo" / "Result of Visit")
 **Expected:** [what the step says should happen]
 **Actual:** [what happened]
@@ -212,7 +214,7 @@ If F1 carries a clean field day here, it walks into the pretest confident. If it
 
 - **Can't connect / download:** check internet; type the server address exactly, with `https://` and `/csweb/api`.
 - **Login fails:** re-type the username (all lowercase, no spaces) and password.
-- **"Region/Province code not found in PSGC":** re-enter the number as `010280001` + your 3 digits.
+- **"Region/Province code not found in PSGC":** re-enter the number as `040340002` + your 3 digits.
 - **Old-looking screens (one question per screen, separate Region/Province/City questions):** you're on an older version — **⋮ → Update Installed Applications**, or remove and re-add (5A.2).
 - **GPS won't read:** move near a window / step outside; make sure **Location** is allowed and the phone's location is on. On a desk indoors it may time out and stay blank — note it and move on.
 - **Camera won't open:** allow **Camera** (Settings → Apps → CSEntry → Permissions).

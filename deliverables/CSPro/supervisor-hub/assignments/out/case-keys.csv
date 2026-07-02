@@ -1,0 +1,85 @@
+﻿case_key,enumerator_id,enumerator_name,instrument,facility_code,ea_name,cluster,sequence
+040341110000,se-001,Pat,F1,040341110,Los Banos Doctors Hospital - Facility Head,040341,001
+040341110001,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,001
+040341110002,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,002
+040341110003,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,003
+040341110004,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,004
+040341110005,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,005
+040341110006,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,006
+040341110007,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,007
+040341110008,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,008
+040341110009,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,009
+040341110010,se-001,Pat,F3,040341110,Los Banos Doctors Hospital - Patient,040341,010
+040341120000,se-002,Shan,F1,040341120,Laguna Provincial Hospital Bay - Facility Head,040341,001
+040341120001,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,001
+040341120002,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,002
+040341120003,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,003
+040341120004,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,004
+040341120005,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,005
+040341120006,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,006
+040341120007,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,007
+040341120008,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,008
+040341120009,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,009
+040341120010,se-002,Shan,F3,040341120,Laguna Provincial Hospital Bay - Patient,040341,010
+040341100601,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,001
+040341100602,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,002
+040341100603,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,003
+040341100604,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,004
+040341100605,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,005
+040341100606,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,006
+040341100607,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,007
+040341100608,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,008
+040341100609,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,009
+040341100610,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,010
+040341100611,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,011
+040341100612,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,012
+040341100613,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,013
+040341100614,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,014
+040341100615,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,015
+040341100616,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,016
+040341100617,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,017
+040341100618,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,018
+040341100619,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,019
+040341100620,se-003,Aly,F4,040341100,Brgy. Bayog - Household,040341,020
+040341130000,se-004,Marriz,F1,040341130,Los Banos RHU I - Facility Head,040341,001
+040341130001,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,001
+040341130002,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,002
+040341130003,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,003
+040341130004,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,004
+040341130005,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,005
+040341130006,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,006
+040341130007,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,007
+040341130008,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,008
+040341130009,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,009
+040341130010,se-004,Marriz,F3,040341130,Los Banos RHU I - Patient,040341,010
+040341140000,se-005,Aidan,F1,040341140,St. Jude Hospital - Facility Head,040341,001
+040341140001,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,001
+040341140002,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,002
+040341140003,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,003
+040341140004,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,004
+040341140005,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,005
+040341140006,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,006
+040341140007,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,007
+040341140008,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,008
+040341140009,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,009
+040341140010,se-005,Aidan,F3,040341140,St. Jude Hospital - Patient,040341,010
+040341101001,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,001
+040341101002,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,002
+040341101003,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,003
+040341101004,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,004
+040341101005,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,005
+040341101006,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,006
+040341101007,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,007
+040341101008,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,008
+040341101009,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,009
+040341101010,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,010
+040341101011,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,011
+040341101012,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,012
+040341101013,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,013
+040341101014,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,014
+040341101015,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,015
+040341101016,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,016
+040341101017,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,017
+040341101018,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,018
+040341101019,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,019
+040341101020,se-006,Aly,F4,040341101,Brgy. Mayondon - Household,040341,020

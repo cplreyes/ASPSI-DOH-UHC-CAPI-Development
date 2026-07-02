@@ -3,7 +3,7 @@ epic: 7
 title: Training and Documentation
 phase: cross-cutting
 status: in-progress
-last_updated: 2026-04-29
+last_updated: 2026-06-28
 ---
 
 # Epic 7 — Training and Documentation
@@ -12,6 +12,10 @@ Training materials, fieldwork manuals, in-app help, and reference documentation 
 
 **Ties to Product Backlog:** [[../product-backlog#Epic 7 — Training and Documentation|PB Epic 7]]
 **Methodology:** [[../../../../2_Areas/IT-Standards/templates/CAPI-Development-Workflow|CAPI Development Workflow]]
+
+**Current state:** **In Progress.** Survey Manual CSPro section + enumerator/STL/HCW training decks + CSEntry enumerator field guide **drafted**. The **Supervisor-hub training guide is LIVE** at csweb.asiansocial.org/docs/hub-guide.html. Pending: **Kidd's (RA) review** on the Survey Manual; enumerator-guide on-device screenshots; finalization for **D5**.
+
+> **Status update 2026-06-28:** moved from 'Not Started' to **In Progress** — substantial docs drafted and the Supervisor-hub training guide is live. Remaining is finalization for D5 + Kidd's manual review.
 
 ## Task conventions
 

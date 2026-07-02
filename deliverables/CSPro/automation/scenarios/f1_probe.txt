@@ -1,0 +1,16 @@
+# PROBE F1 case-start. Valid key 04 03 400 02 001 (geo 0403400 Laguna; F_CODE 040340002
+# CABUYAO CITY HOSPITAL in facility_lookup). Map fields up to Section A/B (tenure traps).
+rmdata ../F1/desktest.csdb
+launch ../F1/FacilityHeadSurvey_desktest.pff
+casekey 04 03 400 02 001
+shot after_key
+type 1
+shot e1
+key {ENTER}
+shot e2
+key {ENTER}
+shot e3
+type 1
+shot e4
+type 1
+shot e5
