@@ -204,8 +204,8 @@ flowchart TD
     G2 -->|No| G3R{SEC-G3-fac-router<br/>facility_type?}
     G67 -->|Yes| G3R
     G67 -->|No| G68[SEC-G-Q68 Q68 why not] --> G3R
-    G3R -->|DOH-retained| GZN[SEC-G-ZBB+NBB<br/>Q69 + Q70 + Q71]
-    G3R -->|Public non-DOH| GN[SEC-G-NBB-only<br/>Q70 + Q71]
+    G3R -->|DOH-retained| GZN[SEC-G-ZBB+NBB<br/>Q69 + Q70 + Q71a + Q71b]
+    G3R -->|Public non-DOH| GN[SEC-G-NBB-only<br/>Q70 + Q71b]
     G3R -->|else| G72
     GZN --> G72{SEC-G-Q72<br/>Q72 RVU familiar?}
     GN --> G72
@@ -264,6 +264,9 @@ flowchart TD
 
 ```
 SEC-0  Cover + consent + facility confirmation
+       (as built, R6 #808 2026-07-02: consent = in-app per-case ConsentScreen shown after
+       enrollment and after every "Start new survey", before Section A — records
+       consent_given=1 + consent_timestamp; facility confirm = enrollment token claim, per device)
   │
   ▼
 SEC-A1 Profile (Q1–Q4)
@@ -386,8 +389,8 @@ SEC-G2 PhilHealth rules (Q66)
 
 SEC-G3-fac-router  (facility_type?)
   │
-  ├── DOH-retained hospital ─────────────► SEC-G-ZBB+NBB (Q69 + Q70 + Q71)
-  ├── Public hospital (non-DOH-ret.) ────► SEC-G-NBB-only (Q70 + Q71)
+  ├── DOH-retained hospital ─────────────► SEC-G-ZBB+NBB (Q69 + Q70 + Q71a + Q71b)
+  ├── Public hospital (non-DOH-ret.) ────► SEC-G-NBB-only (Q70 + Q71b)
   └── Private / RHU / Other ─────────────► SEC-G-Q72
 
 SEC-G-ZBB+NBB / SEC-G-NBB-only ──► SEC-G-Q72
@@ -464,8 +467,8 @@ Every row below becomes one Apps Script `setGoToSectionBasedOnAnswer()` call in 
 
 | Driver Section | Driver Q | Answer | Target Section |
 |---|---|---|---|
-| SEC-A2 | Q5 | Administrator · Physician/Doctor · Nurse · Midwife · Dentist · Nutrition action officer/coordinator | SEC-A3 |
-| SEC-A2 | Q5 | Pharmacist/Dispenser · Physician assistant · Nursing assistant · Laboratory technician · Medical/radiologic technologist · Health promotion officer · Physical Therapist · Dentist aide · Barangay Health Worker · Other | SEC-A5 |
+| SEC-A2 | Q5 | Administrator · Physician/Doctor · Nurse · Midwife · Dentist · Nutrition-Dietician or Nutrition Action Officer/Coordinator | SEC-A3 |
+| SEC-A2 | Q5 | Pharmacist/Dispenser or Assistant Pharmacist · Physician assistant · Nursing assistant · Laboratory technician · Medical/radiologic technologist · Health promotion officer · Physical Therapist · Dentist aide · Barangay Health Worker · Other | SEC-A5 |
 | SEC-A3 | Q7 | Yes (+ facility_type ∈ {Public, DOH-retained, RHU, Other public}) | SEC-A4 |
 | SEC-A3 | Q7 | Yes (+ facility_type = Private) · No | SEC-A5 |
 | SEC-B1 | Q12 | Yes | SEC-B2 |
@@ -504,7 +507,8 @@ Every row below becomes one Apps Script `setGoToSectionBasedOnAnswer()` call in 
 | SEC-E2b | Q54 | No | SEC-F1 |
 | SEC-E2c | — | — | SEC-F1 |
 | SEC-F2 | Q61 | Dissatisfied · Very Dissatisfied | SEC-F3 |
-| SEC-F2 | Q61 | Very Satisfied · Satisfied · Neither | SEC-G-gate-router |
+| SEC-F2 | Q61 | Very Satisfied · Satisfied · Neither · Not applicable | SEC-G-gate-router |
+| SEC-F2 | *(R6 #823: "Not applicable" added for non-referring roles; follows the satisfied branch — Q62 stays hidden)* | | |
 | SEC-F3 | Q62 | any | SEC-G-gate-router |
 | SEC-G-gate-router | role-dentist-doctor confirm Q | physician · dentist | SEC-G1 |
 | SEC-G-gate-router | role-dentist-doctor confirm Q | else | SEC-H1 |
@@ -562,8 +566,9 @@ Buckets (fewer buckets = shorter routing table):
 
 | Bucket | Q5 roles included | Sections entered |
 |---|---|---|
-| **BUCKET-CD** | Administrator, Physician/Doctor, Nurse, Midwife, Dentist, Nutrition action officer/coordinator | C, D, E1 (if BUCAS), E2 (if GAMOT) |
-| **BUCKET-PHARM** | Pharmacist/Dispenser | E2 only (if GAMOT) |
+| **BUCKET-CD** | Administrator, Physician/Doctor, Nurse, Midwife, Dentist, Nutrition-Dietician or Nutrition Action Officer/Coordinator | C, D, E1 (if BUCAS), E2 (if GAMOT) |
+| | *(R6 #820, 2026-07-02: the PWA's role sets re-aligned to this table — #539 had dropped the Nutrition role from the app; #820 restores it, renamed. "Physician assistant" remains outside BUCKET-CD.)* | |
+| **BUCKET-PHARM** | Pharmacist/Dispenser or Assistant Pharmacist | E2 only (if GAMOT) |
 | **BUCKET-OTHER** | Physician assistant, Nursing assistant, Laboratory technician, Medical/radiologic technologist, Health promotion officer, Physical Therapist, Dentist aide, Barangay Health Worker, Other | F directly |
 
 For SEC-G-gate-router, a separate bucket asks **physician/dentist vs else** (this is a strict subset of BUCKET-CD).

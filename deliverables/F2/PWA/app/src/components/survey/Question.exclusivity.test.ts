@@ -13,7 +13,7 @@ const choicesWithSelectAll = [
   { value: 'Pap smear' },
   { value: 'Mammogram' },
   { value: 'Lipid profile' },
-  { value: 'All of the above', isSelectAll: true },
+  { value: 'Select all', isSelectAll: true },
   { value: "I don't know", isExclusive: true },
 ] as const;
 
@@ -67,18 +67,18 @@ describe('nextMultiValue — select-all ("All of the above") rules', () => {
   it('checking the select-all option auto-selects every non-exclusive non-otherSpecify choice', () => {
     const next = nextMultiValue(
       [],
-      choicesWithSelectAll.find((c) => c.value === 'All of the above')!,
+      choicesWithSelectAll.find((c) => c.value === 'Select all')!,
       true,
       choicesWithSelectAll,
     );
-    expect(next).toEqual(['Pap smear', 'Mammogram', 'Lipid profile', 'All of the above']);
+    expect(next).toEqual(['Pap smear', 'Mammogram', 'Lipid profile', 'Select all']);
     expect(next).not.toContain("I don't know");
   });
 
   it('unchecking the select-all option clears the auto-selected values', () => {
     const next = nextMultiValue(
-      ['Pap smear', 'Mammogram', 'Lipid profile', 'All of the above'],
-      choicesWithSelectAll.find((c) => c.value === 'All of the above')!,
+      ['Pap smear', 'Mammogram', 'Lipid profile', 'Select all'],
+      choicesWithSelectAll.find((c) => c.value === 'Select all')!,
       false,
       choicesWithSelectAll,
     );
@@ -87,18 +87,18 @@ describe('nextMultiValue — select-all ("All of the above") rules', () => {
 
   it('unchecking a regular option while select-all is selected clears the select-all', () => {
     const next = nextMultiValue(
-      ['Pap smear', 'Mammogram', 'Lipid profile', 'All of the above'],
+      ['Pap smear', 'Mammogram', 'Lipid profile', 'Select all'],
       choicesWithSelectAll.find((c) => c.value === 'Mammogram')!,
       false,
       choicesWithSelectAll,
     );
     expect(next).toEqual(['Pap smear', 'Lipid profile']);
-    expect(next).not.toContain('All of the above');
+    expect(next).not.toContain('Select all');
   });
 
   it('checking the exclusive option overrides select-all', () => {
     const next = nextMultiValue(
-      ['Pap smear', 'Mammogram', 'Lipid profile', 'All of the above'],
+      ['Pap smear', 'Mammogram', 'Lipid profile', 'Select all'],
       choicesWithSelectAll.find((c) => c.value === "I don't know")!,
       true,
       choicesWithSelectAll,
@@ -109,11 +109,11 @@ describe('nextMultiValue — select-all ("All of the above") rules', () => {
   it('checking select-all overrides a previously-checked exclusive', () => {
     const next = nextMultiValue(
       ["I don't know"],
-      choicesWithSelectAll.find((c) => c.value === 'All of the above')!,
+      choicesWithSelectAll.find((c) => c.value === 'Select all')!,
       true,
       choicesWithSelectAll,
     );
-    expect(next).toEqual(['Pap smear', 'Mammogram', 'Lipid profile', 'All of the above']);
+    expect(next).toEqual(['Pap smear', 'Mammogram', 'Lipid profile', 'Select all']);
   });
 });
 
@@ -146,5 +146,37 @@ describe('nextMultiValue — regular options', () => {
       choices,
     );
     expect(next).toEqual(['Salary']);
+  });
+});
+
+// R6 #812: Q32's "All of the above" is now an EXCLUSIVE option (reverses the
+// R3 #17 select-all semantics). Q32-shaped fixture mirrors generated items.ts.
+const q32Choices = [
+  { value: 'Pap smear' },
+  { value: 'Mammogram' },
+  { value: 'Lipid profile' },
+  { value: 'All of the above', isExclusive: true },
+  { value: "I don't know", isExclusive: true },
+] as const;
+
+describe('R6 #812 — Q32 "All of the above" exclusivity', () => {
+  it('checking "All of the above" clears the individual selections', () => {
+    const next = nextMultiValue(
+      ['Pap smear', 'Mammogram'],
+      q32Choices.find((c) => c.value === 'All of the above')!,
+      true,
+      q32Choices,
+    );
+    expect(next).toEqual(['All of the above']);
+  });
+
+  it('checking an individual option unchecks "All of the above"', () => {
+    const next = nextMultiValue(
+      ['All of the above'],
+      q32Choices.find((c) => c.value === 'Pap smear')!,
+      true,
+      q32Choices,
+    );
+    expect(next).toEqual(['Pap smear']);
   });
 });

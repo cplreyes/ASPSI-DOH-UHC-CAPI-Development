@@ -8,7 +8,9 @@ describe('shouldShow', () => {
 
   describe('Section A', () => {
     it('hides Q6 when Q5 is not a role with specialty', () => {
-      expect(shouldShow('A', 'Q6', { Q5: 'Pharmacist/Dispenser' })).toBe(false);
+      expect(shouldShow('A', 'Q6', { Q5: 'Pharmacist/Dispenser or Assistant Pharmacist' })).toBe(false);
+      // R6 #820: Nutrition-Dietician gets Q6 like Administrator/Nurse/Midwife.
+      expect(shouldShow('A', 'Q6', { Q5: 'Nutrition-Dietician or Nutrition Action Officer/Coordinator' })).toBe(true);
     });
 
     it('shows Q6 when Q5 is Physician/Doctor', () => {
@@ -114,12 +116,12 @@ describe('shouldShow', () => {
 
     // R2-#117: Q48-Q52 hidden for Pharmacist/Dispenser even with Q48/Q49=Yes
     it('R2-#117: hides Q48 (BUCAS gate) for Pharmacist/Dispenser', () => {
-      expect(shouldShow('E', 'Q48', { Q5: 'Pharmacist/Dispenser' })).toBe(false);
+      expect(shouldShow('E', 'Q48', { Q5: 'Pharmacist/Dispenser or Assistant Pharmacist' })).toBe(false);
     });
 
     it('R2-#117: hides Q52 for Pharmacist/Dispenser even with Q48/Q49=Yes', () => {
       expect(
-        shouldShow('E', 'Q52', { Q5: 'Pharmacist/Dispenser', Q48: 'Yes', Q49: 'Yes' }),
+        shouldShow('E', 'Q52', { Q5: 'Pharmacist/Dispenser or Assistant Pharmacist', Q48: 'Yes', Q49: 'Yes' }),
       ).toBe(false);
     });
 
@@ -130,12 +132,12 @@ describe('shouldShow', () => {
       }
     });
 
-    // #539: Physician assistant and Nutrition action officer/coordinator were in
-    // the R2 CDE set; the updated spec excludes them, so the E1 BUCAS gate must
-    // hide Q48 for both.
-    it('#539: hides Q48 for Physician assistant and Nutrition action officer/coordinator', () => {
+    // #539 excluded Physician assistant and the Nutrition role from the CDE
+    // set; R6 #820 restores the (renamed) Nutrition-Dietician role. Physician
+    // assistant stays excluded.
+    it('#539/#820: hides Q48 for Physician assistant; shows it for Nutrition-Dietician', () => {
       expect(shouldShow('E', 'Q48', { Q5: 'Physician assistant' })).toBe(false);
-      expect(shouldShow('E', 'Q48', { Q5: 'Nutrition action officer/ coordinator' })).toBe(false);
+      expect(shouldShow('E', 'Q48', { Q5: 'Nutrition-Dietician or Nutrition Action Officer/Coordinator' })).toBe(true);
     });
   });
 
@@ -197,10 +199,22 @@ describe('shouldShow', () => {
       expect(shouldShow('G', 'Q68', { Q67: 'Yes' })).toBe(false);
     });
 
-    it('shows Q71 when either Q69 or Q70 is Yes', () => {
-      expect(shouldShow('G', 'Q71', { Q69: 'Yes' })).toBe(true);
-      expect(shouldShow('G', 'Q71', { 'Q70': 'Yes' })).toBe(true);
-      expect(shouldShow('G', 'Q71', { Q69: 'No', 'Q70': 'No' })).toBe(false);
+    it('R6 #817: shows Q71a only when Q69 (ZBB) is Yes', () => {
+      expect(shouldShow('G', 'Q71a', { Q69: 'Yes' })).toBe(true);
+      expect(shouldShow('G', 'Q71a', { Q69: 'No', Q70: 'Yes' })).toBe(false);
+      expect(shouldShow('G', 'Q71a', {})).toBe(false);
+    });
+
+    it('R6 #817: shows Q71b only when Q70 (NBB) is Yes', () => {
+      expect(shouldShow('G', 'Q71b', { Q70: 'Yes' })).toBe(true);
+      expect(shouldShow('G', 'Q71b', { Q70: 'No', Q69: 'Yes' })).toBe(false);
+      expect(shouldShow('G', 'Q71b', {})).toBe(false);
+    });
+
+    it('R6 #821: shows Q88 regardless of Q87 answer (skip removed)', () => {
+      expect(shouldShow('G', 'Q88', { Q87: 'No' })).toBe(true);
+      expect(shouldShow('G', 'Q88', { Q87: 'Yes' })).toBe(true);
+      expect(shouldShow('G', 'Q88', {})).toBe(true);
     });
 
     it('shows Q73 only when Q72 is No', () => {
@@ -281,8 +295,8 @@ describe('shouldShowSection', () => {
       expect(shouldShowSection('G', { Q5: 'Nurse' })).toBe(false);
     });
 
-    it('hides G for Pharmacist/Dispenser', () => {
-      expect(shouldShowSection('G', { Q5: 'Pharmacist/Dispenser' })).toBe(false);
+    it('hides G for Pharmacist/Dispenser or Assistant Pharmacist', () => {
+      expect(shouldShowSection('G', { Q5: 'Pharmacist/Dispenser or Assistant Pharmacist' })).toBe(false);
     });
 
     it('hides G when Q5 is unset', () => {
@@ -297,18 +311,18 @@ describe('shouldShowSection', () => {
       'Nurse',
       'Midwife',
       'Dentist',
+      'Nutrition-Dietician or Nutrition Action Officer/Coordinator', // R6 #820
     ])('shows C for %s', (role) => {
       expect(shouldShowSection('C', { Q5: role })).toBe(true);
     });
 
     it.each([
-      'Pharmacist/Dispenser',
+      'Pharmacist/Dispenser or Assistant Pharmacist',
       'Physician assistant', // #539
       'Nursing assistant',
       'Laboratory technician',
       'Medical/ radiologic technologist',
       'Health promotion officer',
-      'Nutrition action officer/ coordinator', // #539
       'Physical Therapist',
       'Dentist aide',
       'Barangay Health Worker',
@@ -327,8 +341,8 @@ describe('shouldShowSection', () => {
       expect(shouldShowSection('D', { Q5: 'Nurse' })).toBe(true);
     });
 
-    it('hides D for Pharmacist/Dispenser', () => {
-      expect(shouldShowSection('D', { Q5: 'Pharmacist/Dispenser' })).toBe(false);
+    it('hides D for Pharmacist/Dispenser or Assistant Pharmacist', () => {
+      expect(shouldShowSection('D', { Q5: 'Pharmacist/Dispenser or Assistant Pharmacist' })).toBe(false);
     });
 
     it('hides D for Dentist aide', () => {
@@ -343,7 +357,8 @@ describe('shouldShowSection', () => {
       'Nurse',
       'Midwife',
       'Dentist',
-      'Pharmacist/Dispenser', // E2 GAMOT half — sees E (item gates hide E1 Q48–Q52)
+      'Nutrition-Dietician or Nutrition Action Officer/Coordinator', // R6 #820
+      'Pharmacist/Dispenser or Assistant Pharmacist', // E2 GAMOT half — sees E (item gates hide E1 Q48–Q52)
     ])('shows E for %s', (role) => {
       expect(shouldShowSection('E', { Q5: role })).toBe(true);
     });
@@ -354,7 +369,6 @@ describe('shouldShowSection', () => {
       'Laboratory technician',
       'Medical/ radiologic technologist',
       'Health promotion officer',
-      'Nutrition action officer/ coordinator', // #539
       'Physical Therapist',
       'Dentist aide',
       'Barangay Health Worker',
@@ -373,8 +387,8 @@ describe('shouldShowSection', () => {
   });
 
   describe('Persona section-visibility (R2 #114 + #539)', () => {
-    it('Pharmacist/Dispenser sees A,B,E,F,H,I,J — not C,D,G', () => {
-      const v = { Q5: 'Pharmacist/Dispenser' };
+    it('Pharmacist/Dispenser or Assistant Pharmacist sees A,B,E,F,H,I,J — not C,D,G', () => {
+      const v = { Q5: 'Pharmacist/Dispenser or Assistant Pharmacist' };
       expect(shouldShowSection('A', v)).toBe(true);
       expect(shouldShowSection('B', v)).toBe(true);
       expect(shouldShowSection('C', v)).toBe(false); // was the bug
@@ -415,13 +429,10 @@ describe('shouldShowSection', () => {
       }
     });
 
-    it('#539: Nutrition action officer/coordinator sees A,B,F,H,I,J — not C,D,E,G', () => {
-      const v = { Q5: 'Nutrition action officer/ coordinator' };
-      expect(shouldShowSection('C', v)).toBe(false);
-      expect(shouldShowSection('D', v)).toBe(false);
-      expect(shouldShowSection('E', v)).toBe(false);
+    it('R6 #820 (supersedes #539): Nutrition-Dietician sees A,B,C,D,E,F,H,I,J — not G', () => {
+      const v = { Q5: 'Nutrition-Dietician or Nutrition Action Officer/Coordinator' };
       expect(shouldShowSection('G', v)).toBe(false);
-      for (const id of ['A', 'B', 'F', 'H', 'I', 'J']) {
+      for (const id of ['A', 'B', 'C', 'D', 'E', 'F', 'H', 'I', 'J']) {
         expect(shouldShowSection(id, v)).toBe(true);
       }
     });

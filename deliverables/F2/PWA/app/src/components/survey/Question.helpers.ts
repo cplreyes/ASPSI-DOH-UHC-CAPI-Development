@@ -4,9 +4,12 @@
 // Compute the next selected-values array for a multi-select after the user
 // clicks a checkbox. Encodes the exclusivity rules from issues #16 and #17.
 //
-// - Clicking an `isExclusive` option (e.g. "I don't know") clears all others.
-// - Clicking an `isSelectAll` option (e.g. "All of the above") auto-selects
-//   every non-exclusive non-otherSpecify choice.
+// - Clicking an `isExclusive` option (e.g. "I don't know" — and "All of the
+//   above" since R6 #812 reversed its #17 select-all semantics) clears all
+//   others.
+// - Clicking an `isSelectAll` option auto-selects every non-exclusive
+//   non-otherSpecify choice (no spec value currently uses this; machinery
+//   retained).
 // - Clicking a regular option clears any currently-selected exclusive or
 //   selectAll values (mixed selection isn't compatible).
 // - Unchecking `isSelectAll` clears the auto-selected values.
