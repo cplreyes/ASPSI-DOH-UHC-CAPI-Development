@@ -36,6 +36,21 @@ styles:
     css: |
       font-family: Arial;font-size: 18px;
 questions:
+  - name: PATIENTSURVEY_DICT.QUESTIONNAIRE_NUMBER
+    conditions:
+      - questionText:
+          EN: |
+            <p class="instruction">Build: F3 v1.0.1 (2026-07-02)</p>
+          FIL: |
+            <p class="instruction">Build: F3 v1.0.1 (2026-07-02)</p>
+          BCL: |
+            <p class="instruction">Build: F3 v1.0.1 (2026-07-02)</p>
+          BIS: |
+            <p class="instruction">Build: F3 v1.0.1 (2026-07-02)</p>
+          CEB: |
+            <p class="instruction">Build: F3 v1.0.1 (2026-07-02)</p>
+          WAR: |
+            <p class="instruction">Build: F3 v1.0.1 (2026-07-02)</p>
   - name: PATIENTSURVEY_DICT.SURVEY_TEAM_LEADER_S_NAME
     conditions:
       - questionText:
@@ -1476,6 +1491,51 @@ questions:
             <p>The next questions we will be asking are related to the patient’s PhilHealth registration experience. We will also confirm their PhilHealth registration status and membership, and their registration to other health insurance.</p><p class="instruction">Note to enumerator [do not read]: This section is for the Patient’s PhilHealth Registration and Health Insurance. Ask all questions in this section unless a skip rule applies.</p><p>Nakarehistro ba ka karon sa PhilHealth?</p>
           WAR: |
             <p>The next questions we will be asking are related to the patient’s PhilHealth registration experience. We will also confirm their PhilHealth registration status and membership, and their registration to other health insurance.</p><p class="instruction">Note to enumerator [do not read]: This section is for the Patient’s PhilHealth Registration and Health Insurance. Ask all questions in this section unless a skip rule applies.</p><p>Nakarehistro ka ba yana ha PhilHealth?</p>
+  - name: PATIENTSURVEY_DICT.Q38_1_PIN_WHEN
+    conditions:
+      - questionText:
+          EN: |
+            <p>38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.</p><p class="instruction">Note to enumerator [do not read]: This section is for the Patient’s PhilHealth Registration and Health Insurance. Ask all questions in this section unless a skip rule applies.</p>
+          FIL: |
+            <p>38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.</p><p class="instruction">Note to enumerator [do not read]: This section is for the Patient’s PhilHealth Registration and Health Insurance. Ask all questions in this section unless a skip rule applies.</p>
+          BCL: |
+            <p>38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.</p><p class="instruction">Note to enumerator [do not read]: This section is for the Patient’s PhilHealth Registration and Health Insurance. Ask all questions in this section unless a skip rule applies.</p>
+          BIS: |
+            <p>38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.</p><p class="instruction">Note to enumerator [do not read]: This section is for the Patient’s PhilHealth Registration and Health Insurance. Ask all questions in this section unless a skip rule applies.</p>
+          CEB: |
+            <p>38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.</p><p class="instruction">Note to enumerator [do not read]: This section is for the Patient’s PhilHealth Registration and Health Insurance. Ask all questions in this section unless a skip rule applies.</p>
+          WAR: |
+            <p>38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.</p><p class="instruction">Note to enumerator [do not read]: This section is for the Patient’s PhilHealth Registration and Health Insurance. Ask all questions in this section unless a skip rule applies.</p>
+  - name: PATIENTSURVEY_DICT.Q38_2_WHY_NOT_REG
+    conditions:
+      - questionText:
+          EN: |
+            <p>38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p><p class="instruction">Note to enumerator [do not read]: This section is for the Patient’s PhilHealth Registration and Health Insurance. Ask all questions in this section unless a skip rule applies.</p>
+          FIL: |
+            <p>38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p><p class="instruction">Note to enumerator [do not read]: This section is for the Patient’s PhilHealth Registration and Health Insurance. Ask all questions in this section unless a skip rule applies.</p>
+          BCL: |
+            <p>38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p><p class="instruction">Note to enumerator [do not read]: This section is for the Patient’s PhilHealth Registration and Health Insurance. Ask all questions in this section unless a skip rule applies.</p>
+          BIS: |
+            <p>38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p><p class="instruction">Note to enumerator [do not read]: This section is for the Patient’s PhilHealth Registration and Health Insurance. Ask all questions in this section unless a skip rule applies.</p>
+          CEB: |
+            <p>38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p><p class="instruction">Note to enumerator [do not read]: This section is for the Patient’s PhilHealth Registration and Health Insurance. Ask all questions in this section unless a skip rule applies.</p>
+          WAR: |
+            <p>38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p><p class="instruction">Note to enumerator [do not read]: This section is for the Patient’s PhilHealth Registration and Health Insurance. Ask all questions in this section unless a skip rule applies.</p>
+  - name: PATIENTSURVEY_DICT.Q38_2_WHY_NOT_REG_OTHER_TXT
+    conditions:
+      - questionText:
+          EN: |
+            <p>38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. — Other (specify) text</p>
+          FIL: |
+            <p>38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. — Other (specify) text</p>
+          BCL: |
+            <p>38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. — Other (specify) text</p>
+          BIS: |
+            <p>38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. — Other (specify) text</p>
+          CEB: |
+            <p>38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. — Other (specify) text</p>
+          WAR: |
+            <p>38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. — Other (specify) text</p>
   - name: PATIENTSURVEY_DICT.Q39_HOW_FIND_OUT
     conditions:
       - questionText:
@@ -2875,17 +2935,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
+            <p>94. How much was the cost of this laboratory test? (amount paid out-of-pocket, Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           FIL: |
-            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
+            <p>94. How much was the cost of this laboratory test? (amount paid out-of-pocket, Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           BCL: |
-            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
+            <p>94. How much was the cost of this laboratory test? (amount paid out-of-pocket, Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           BIS: |
-            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
+            <p>94. How much was the cost of this laboratory test? (amount paid out-of-pocket, Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           CEB: |
-            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
+            <p>94. How much was the cost of this laboratory test? (amount paid out-of-pocket, Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
           WAR: |
-            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
+            <p>94. How much was the cost of this laboratory test? (amount paid out-of-pocket, Pesos)</p><p class="instruction">Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~</p>
   - name: PATIENTSURVEY_DICT.Q95_PRESCRIBED
     conditions:
       - questionText:
@@ -4585,17 +4645,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>131. Satisfaction with cleanliness and comfort — Waiting areas</p>
+            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>How would you rate the cleanliness and comfort of the following amenities at this facility?</p><p>131. Satisfaction with cleanliness and comfort — Waiting areas</p>
           FIL: |
-            <p>Ang mga sumusunod na tanong ay may kaugnayan sa pinakahuling karanasan ng pasyente sa ~~FACILITY_NAME~~ bilang isang ~~getvaluelabel(PATIENT_TYPE)~~, kung saan inanyayahan kayong lumahok sa aming survey noong ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>131. Satisfaction with cleanliness and comfort — Waiting areas</p>
+            <p>Ang mga sumusunod na tanong ay may kaugnayan sa pinakahuling karanasan ng pasyente sa ~~FACILITY_NAME~~ bilang isang ~~getvaluelabel(PATIENT_TYPE)~~, kung saan inanyayahan kayong lumahok sa aming survey noong ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>How would you rate the cleanliness and comfort of the following amenities at this facility?</p><p>131. Satisfaction with cleanliness and comfort — Waiting areas</p>
           BCL: |
-            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>Mga waiting area</p>
+            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>How would you rate the cleanliness and comfort of the following amenities at this facility?</p><p>Mga waiting area</p>
           BIS: |
-            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>Hulatanan</p>
+            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>How would you rate the cleanliness and comfort of the following amenities at this facility?</p><p>Hulatanan</p>
           CEB: |
-            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>Mga lugar-hulatanan</p>
+            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>How would you rate the cleanliness and comfort of the following amenities at this facility?</p><p>Mga lugar-hulatanan</p>
           WAR: |
-            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>Mga lugar hin paghulat</p>
+            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>How would you rate the cleanliness and comfort of the following amenities at this facility?</p><p>Mga lugar hin paghulat</p>
   - name: PATIENTSURVEY_DICT.Q132_AMEN_BATHROOMS
     conditions:
       - questionText:

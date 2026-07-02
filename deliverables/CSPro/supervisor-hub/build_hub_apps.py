@@ -285,6 +285,16 @@ def build_qsf(d, dict_name):
 # .ent app-shell emitter (model: SV/SupervisorApp.ent, minus sync — these are
 # utility apps that never sync to CSWeb).
 # ----------------------------------------------------------------------------
+# Action-Invoker access token: registered in every hub .ent (logicSettings.actionInvoker.accessTokens,
+# per zAppO/LogicSettings.cpp + csprousers.org/help/CSPro/logic_settings.html) and presented by
+# menu.html/report.html via `new CSProActionInvoker(<token>)`. CSEntry 8.1+ REMOVED the deprecated
+# CSPro.* web-view interface (blank-menu bug, Samsung A23 8.1.1-20260622, 2026-07-02), so on 8.1 the
+# dialogs authenticate to CS.UI with this token instead - a caller with a REGISTERED token gets NO
+# "Allow Access?" prompt while accessFromExternalCaller stays the secure promptIfNoValidAccessToken
+# (consent still gates any caller WITHOUT the token). 8.0.1 devices keep using CSPro.* untouched.
+HUB_ACCESS_TOKEN = "2c9e4f71-a6d3-4b8f-9e02-d5c1b7a83e46"
+
+
 def build_ent(app_name, label, dcf, fmf, qsf, apc, mgf, externals=None):
     dicts = [{"type": "input", "path": dcf, "parent": fmf}]
     for ext in (externals or []):
@@ -299,6 +309,7 @@ def build_ent(app_name, label, dcf, fmf, qsf, apc, mgf, externals=None):
         "logicSettings": {
             "version": 2.0, "caseSensitive": {"symbols": False},
             "actionInvoker": {"accessFromExternalCaller": "promptIfNoValidAccessToken",
+                              "accessTokens": [HUB_ACCESS_TOKEN],
                               "convertResultsForLogic": True},
         },
         "properties": {
@@ -314,12 +325,18 @@ def build_ent(app_name, label, dcf, fmf, qsf, apc, mgf, externals=None):
 
 
 def _pff(application, input_data, externals=None, html_dialogs=None):
-    # C2 (|type=None): Login/Menu carry NO case data — opens straight to the form/menu (no "0 Cases"
+    # C2 (|type=None): Login/Menu carry NO case data — open straight to the form/menu (no "0 Cases"
     # list, no "+" tap). A "|type=None" value is written verbatim; a real filename gets the ".\" prefix.
+    # CSEntry 8.0.1 bypassed the case list implicitly for a type=None input, but 8.1 shows an empty
+    # "0 Cases" list first — [DataEntryInit] StartMode=Add + Lock=CaseListing makes the bypass explicit
+    # ("On mobile CSEntry, the Case Listing screen will be bypassed", run_production_data_entry help),
+    # so both CSEntry generations behave the same.
     input_line = input_data if input_data.startswith("|") else f".\\{input_data}"
-    lines = (["[Run Information]", "Version=CSPro 8.0", "AppType=Entry", "",
-             "[Files]", f"Application=.\\{application}", f"InputData={input_line}"]
-             + ([f"HtmlDialogs={html_dialogs}"] if html_dialogs else []) + [""])
+    lines = ["[Run Information]", "Version=CSPro 8.0", "AppType=Entry", ""]
+    if input_data.startswith("|"):
+        lines += ["[DataEntryInit]", "StartMode=Add", "Lock=CaseListing", ""]
+    lines += (["[Files]", f"Application=.\\{application}", f"InputData={input_line}"]
+              + ([f"HtmlDialogs={html_dialogs}"] if html_dialogs else []) + [""])
     if externals:
         lines.append("[ExternalFiles]")
         for dict_name, dat in externals.items():
@@ -763,10 +780,11 @@ preproc
 
 PROC MENU_PICK
 preproc
-  { HTMLDIALOG role menu - prompt-free + secure. htmldialog() renders menu.html through the deprecated
-    CSPro.* interface, which does NOT trip the Action-Invoker "Allow Access?" consent gate that the
-    accept()/'choice' HtmlDialog does - so no per-show prompt, and accessFromExternalCaller stays the
-    secure promptIfNoValidAccessToken. Menu content = a static JSON per role (from *_MENU_GROUPED via
+  { HTMLDIALOG role menu - prompt-free + secure on BOTH CSEntry generations: 8.0.1 renders menu.html
+    through the deprecated CSPro.* interface (no Action-Invoker consent gate), while 8.1+ (CSPro.*
+    REMOVED - blank-menu bug, Samsung A23 2026-07-02) authenticates to CS.UI with the hub access
+    token registered in this .ent (accessTokens) - still no per-show prompt, and
+    accessFromExternalCaller stays the secure promptIfNoValidAccessToken. Menu content = a static JSON per role (from *_MENU_GROUPED via
     _menu_json_expr); the tapped item returns its action wrapped as "<<action>>", and pos() routing
     survives whatever encoding the htmldialog return comes back in. Loops via `move to MENU_SESSION`;
     "leave" actions launch an instrument (Pff OnExit chains back) or execpff to LoginApp. }
@@ -806,7 +824,7 @@ def _menu_json_expr(role_label, grouped):
 def _routing_block():
     """Shared pos()-routing over ALL MENU_ACTIONS keys. menu.html wraps the return "<<key>>" so pos()
     finds it whatever the htmldialog return encoding; keys are distinct (none a substring of another).
-    The else re-shows the menu (cancel/back) and carries res for on-device debugging during bring-up."""
+    The else re-shows the menu silently (cancel/back or an unexpected return just loops)."""
     lines = []
     for i, (key, body) in enumerate(MENU_ACTIONS.items()):
         kw = "if" if i == 0 else "elseif"
@@ -815,7 +833,6 @@ def _routing_block():
             s = stmt.strip()
             lines.append(("    " + s) if s else "")
     lines += ['  else',
-              '    errmsg("(debug) menu returned: [" + res + "]");',
               '    move to MENU_SESSION;',
               '  endif;']
     return "\n".join(lines)

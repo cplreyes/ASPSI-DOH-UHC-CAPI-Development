@@ -22363,7 +22363,401 @@
                 }
               ],
               "contentType": "alpha",
-              "length": 200
+              "length": 20,
+              "valueSets": [
+                {
+                  "name": "Q84_WHERE_ASSIST_VS1",
+                  "labels": [
+                    {
+                      "text": "84. Where would you go to seek assistance?",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "Saan kayo pupunta upang humingi ng tulong?",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "Sain ka maduman para maghagad nin tabang?",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "Asa ka gaadto para makapangayo og tabang?",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "Asa ka moadto aron mangayo og tabang?",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "Diin ka makadto basi mangaro hin bulig?",
+                      "language": "WAR"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "PhilHealth representative",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Kinatawan ng PhilHealth",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "PhilHealth representative",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Representante sa PhilHealth",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Representante sa PhilHealth",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Representante han PhilHealth",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "LGU",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Lokal na pamahalaan",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "LGU",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "LGU",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "LGU",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "LGU",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Primary care provider",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Primary care provider",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Primary care provider",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Primary care provider",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Tighatag sa nag-unang pag-atiman sa panglawas",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Primary care provider",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other health care provider",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Iba pang health care provider",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Iba pang health care provider",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Uban pang health care provider",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Ubang tighatag sa pag-atiman sa panglawas",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Iba pa nga parag-ataman han panlawas",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Employer",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Employer",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Employer",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Employer",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Amo/trabahoan",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Amo",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No one / self-registered",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Wala / sariling nagparehistro",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Wara nin tabang / self-registered",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Walay mitabang / kaugalingon nga nagparehistro",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Nagparehistro sa kaugalingon",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Waray iba na tawo / nagparehistro ha kalugaringon",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Barangay Health Worker",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Barangay Health Worker",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Barangay Health Worker",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Barangay Health Worker",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Barangay Health Worker",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Barangay Health Worker",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Friends / Family",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Mga kaibigan/kapamilya",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Friends / Pamilya",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Higala/Pamilya",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Mga higala / Pamilya",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Mga sangkay/Pamilya",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Health center/facility",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Health center/pasilidad",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Health center/facility",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Health center/facility",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Health center/pasilidad",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Health center/Pasilidad",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (Specify)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Iba pa (tukuyin)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Other (Specify)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Other (Specify)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Uban pa (Isulti)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q84_WHERE_ASSIST_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "84. Where would you go to seek assistance? \u2014 Other (specify) text",
+                  "language": "EN"
+                },
+                {
+                  "text": "84. Where would you go to seek assistance? \u2014 Other (specify) text",
+                  "language": "FIL"
+                },
+                {
+                  "text": "84. Where would you go to seek assistance? \u2014 Other (specify) text",
+                  "language": "BCL"
+                },
+                {
+                  "text": "84. Where would you go to seek assistance? \u2014 Other (specify) text",
+                  "language": "BIS"
+                },
+                {
+                  "text": "84. Where would you go to seek assistance? \u2014 Other (specify) text",
+                  "language": "CEB"
+                },
+                {
+                  "text": "84. Where would you go to seek assistance? \u2014 Other (specify) text",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
             },
             {
               "name": "Q85_BENEFITS",

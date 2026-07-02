@@ -142,6 +142,7 @@ Format: **Trigger → Destination (skip range)**. Where the source has multiple 
 |  | = No | Q147 (skip Q146) |
 | Q148 LGU_SUPPORT | = No | Q152 (skip Q149, Q150, Q151) |
 | Q150 LGU_SATISFIED | = Yes | Q154 (skip Q151) |
+| Q152 PHO_PROTOCOL_CLARITY | entry gate: printed "only for respondents from public hospitals" — asked only if `Q7 = Public` AND `Q8 ∈ {Level 1/2/3 Hospital}`; every other profile skips Q152+Q153 → **Q154** (#386; surfaced by #822 — a Q148=No skip lands on Q152 whose gate then forwards non-public-hospital profiles to Q154) |
 | Q152 PHO_PROTOCOL_CLARITY | ∈ {Very Clear, Clear} | Q154 (skip Q153) — *implied; confirm with ASPSI* |
 | Q161 REF_SATISFACTION | ∈ {Very Satisfied, Satisfied} | Q163 (skip Q162) |
 
@@ -300,6 +301,7 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | Q147 enabled | Q145 = No | GATE |
 | Q149–Q151 enabled | Q148 = Yes | GATE |
 | Q151 enabled | Q150 = No | GATE |
+| Q152–Q153 enabled | `Q7 = Public` AND `Q8 ∈ {Level 1, 2, 3 Hospital}` | GATE (#386) |
 | Q153 enabled | Q152 ∈ {Unclear, Very Unclear} | GATE |
 | `Q154_NUM_REFERRED_OUT` | `0 ≤ n ≤ 100,000` (over 6 months); warn if `> 10,000` | HARD / SOFT |
 | Q162 enabled | Q161 ∈ {Neither, Dissatisfied, Very Dissatisfied} | GATE |

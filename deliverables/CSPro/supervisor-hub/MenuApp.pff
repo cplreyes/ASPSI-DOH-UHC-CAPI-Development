@@ -2,6 +2,10 @@
 Version=CSPro 8.0
 AppType=Entry
 
+[DataEntryInit]
+StartMode=Add
+Lock=CaseListing
+
 [Files]
 Application=.\MenuApp.ent
 InputData=|type=None

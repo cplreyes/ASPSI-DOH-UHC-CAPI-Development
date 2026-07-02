@@ -1,0 +1,21 @@
+no,source_variables,mapping_status,notes_add
+4.1,"facility_id, Q5",partial,"no headcount item in F2/F1; derive respondent count per facility_id x Q5. F2=census in facilities; wt=facility base wt x NR (SSRCS A-d)"
+4.2,,gap,"no vacancy/plantilla item in F2 or F1 (F1 Q35/Q36 staffing items are qualitative); needs admin/HRH source (e.g. DOH HRH deployment reports)"
+4.3,Q12,mapped,
+4.4,"Q91, Q92, Q93",mapped,"same source as 4.5 (as printed, identical)"
+4.5,"Q91, Q92, Q93",mapped,"same source as 4.4 (as printed, identical)"
+4.6,Q94,mapped,
+4.7,Q95,mapped,
+4.8,"Q96, Q97",mapped,
+4.9,"Q96, Q97",mapped,same source battery as 4.8
+4.10,"Q38, Q34",mapped,Q38 would-consider distribution; universe filter Q34 != Yes (not already accredited)
+4.11,"Q98, Q99, Q100",mapped,"Grid#1 compensation rows, 6-month recall"
+4.12,"Q112, facility_id",partial,facility-level % from HCW-level Q112 ('None'=not provided) aggregated by facility_id; aggregation rule needs DOH sign-off
+4.13,Q107,mapped,Grid#1 prof-dev satisfaction row; provision side = Q112/Q113
+4.14,"Q114, Q122",mapped,Q114 Grid#2 overtime frequency; Q122 overtime amount (asked unless Q114=Never)
+4.15,Q98-Q107,partial,no single overall-satisfaction item; Grid#1 agreement battery — composite/derivation rule needed
+4.16,"Q98-Q107, Q114-Q121",partial,no direct top-factors item; derive factor ranking from Grid#1/Grid#2 batteries — derivation rule needs DOH sign-off
+4.17,Q123,partial,Q123 captures intent strength but no explicit next-year horizon
+4.18,Q124,partial,Q124 reasons; universe Q123=any yes — '<1 year' horizon not captured by Q123
+4.19,Q5,mapped,
+4.20,Q6,mapped,

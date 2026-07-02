@@ -511,6 +511,23 @@ postproc
   endif;
   { code 2 ("No, I'm not planning to") falls through to Q113 why-not }
 
+{ ---- #816: Q117 (specialist follow-up) + Q118 (referral-process satisfaction) presume the
+  referral visit HAPPENED — ask only when Q112 = 1 (Yes). Codes 2 "No, I'm not planning to" /
+  3 "Not yet, but I'm planning to" skip both to Q119. (Q117's question text carries "(Only if
+  Q112=Yes)"; generate_dcf's Section K comment always intended this gate but it was never
+  emitted.) `<> 1` is notappl-safe — special values compare greater than any number, so an
+  upstream-skipped Q112 also skips these. The postproc implements the adjacent spec rule
+  "Q117 = No -> Q119 (skip Q118)", previously also unimplemented. ---- }
+PROC Q117_SPECIALIST_FOLLOWUP
+preproc
+  if Q112_VISITED <> 1 then
+    skip to Q119_PCF_REFERRAL;
+  endif;
+postproc
+  if Q117_SPECIALIST_FOLLOWUP = 2 then
+    skip to Q119_PCF_REFERRAL;
+  endif;
+
 { ---- Section H gate (#649, tester mmgarciano + paper Annex F4, 2026-06-20): Section H is
   the RESPONDENT's own PhilHealth-registration EXPERIENCE ("Answer Q79-Q88 if THE RESPONDENT
   is registered in PhilHealth in Q45"). So gate on the RESPONDENT's Q45, not "any member" —
@@ -559,6 +576,7 @@ CHECKBOX_BASES = {
     "Q88_DIFF_PAYING", "Q102_VISIT_REASON", "Q103_CARE_TYPE", "Q106_FORGONE_WHY",
     "Q107_OTHER_ACTIONS", "Q109_TYPE",
     "Q202_WORRY_REASONS",   # #668 Section Q finance-worry reasons select_all -> Check Box
+    "Q84_WHERE_ASSIST",   # #814: Section H where-to-seek-assistance free-text -> 10-option Check Box
 }
 
 CHECKBOX_CONVERT = [
@@ -600,6 +618,7 @@ CHECKBOX_CONVERT = [
      "  endif;"),                                       # #578: gate migrated from old PROC Q78_WHY_BRANDED_O01 preproc; 'I don't know' (90) exclusive; 'Other (Specify)' (99)
     ("Q82_DIFFICULTY_REASONS",   True,  True,  None),   # #582: 'I don't know' (90) exclusive; 'Other (Specify)' (99). Not a skip-target (Q81=No skips PAST it to Q83); falls through from Q81=Yes
     ("Q88_DIFF_PAYING",          True,  True,  None),   # #582: 'I don't know' (90) exclusive; 'Other (Specify)' (99)
+    ("Q84_WHERE_ASSIST",         True,  False, None),   # #814: 10-option tick-all; 'Other (Specify)' (99); no 90 exclusive; the Q83=2 skip already jumps past it
     ("Q102_VISIT_REASON",        True,  False, None),   # #583: no None/IDK option; 'Other (Specify)' (99)
     ("Q103_CARE_TYPE",           True,  True,  None),   # #800: added exclusive 'No, I haven't accessed any form of medical care' (90) so accessed-nothing respondents can satisfy 'select >=1'; soft-warn if combined. 'Other (Specify)' (99)
     ("Q106_FORGONE_WHY",         True,  True,  None),   # #584: 'I don't know' (90) exclusive; 'Other (Specify)' (99). Skip-target from Q105=2 (skip rule repointed to bare base)
@@ -785,9 +804,15 @@ postproc
   if Q18_INCOME_BRACKET = 4 and a >= 100000 and a <= 249999 then ok = 1; endif;
   if Q18_INCOME_BRACKET = 5 and a >= 250000 and a <= 499999 then ok = 1; endif;
   if Q18_INCOME_BRACKET = 6 and a >= 500000 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 7 then ok = 1; endif;   { 7 = Refuse to answer -> no amount check }
+  { #813: bracket 7 (Refuse) is only valid when the amount itself was refused/unknown
+    (-98/-99, already ok'd above per #793). With a real amount entered the bracket is
+    derivable, so refusing it is a HARD inconsistency. }
   if ok = 0 then
-    errmsg("Income bracket does not match the reported amount (%d PHP). Reconcile.", a);
+    if Q18_INCOME_BRACKET = 7 then
+      errmsg("Q18: an income amount was provided (%d PHP), so the bracket cannot be 'Refuse to answer'. Select the bracket that matches the amount (or re-enter the amount as -99 if the respondent refused).", a);
+    else
+      errmsg("Income bracket does not match the reported amount (%d PHP). Reconcile.", a);
+    endif;
     reenter;
   endif;
 """
@@ -1216,13 +1241,16 @@ def expenditure_gate_procs(names):
         for amt in amts:
             not_consumed.append(f"    {amt} = 0;   {{ item not consumed -> no spend }}")
             not_consumed.append(f"    protect({amt}, true);")
-            # #755 (2026-06-23): pre-fill 0 so the enumerator can press Enter through an amount
-            # they have nothing to record for, instead of being forced to type 0. Clobber-safe:
-            # only set 0 when the field is NOT already a real value (>0) or a -98/-99 sentinel,
-            # so re-entering this item (back-nav) preserves what was entered. (A fresh notappl
-            # field is not > 0, so it falls through to 0 — the desired pre-fill; #617 notappl rule.)
+            # #755/#818 (2026-07-02): pre-fill 0 so the enumerator can press Enter through an
+            # amount they have nothing to record for. Guard = special(): true only while the
+            # field holds notappl/missing — i.e. "no real value yet". The previous
+            # `not ({amt} > 0)` guard was INVERTED: CSPro special values compare GREATER than
+            # any number, so a fresh notappl amount had `> 0` true and the pre-fill never ran,
+            # leaving the DisplayTogether triplet stuck at NOTAPPL (#818, and #805 before it:
+            # "does not accept any value"). special() preserves real values (incl. 0) and the
+            # -98/-99 sentinels on back-nav.
             consumed_branch.append(
-                f"    if {amt} <> {DK_AMOUNT} and {amt} <> {REFUSED_AMOUNT} and not ({amt} > 0) then {amt} = 0; endif;   {{ #755 pre-fill }}")
+                f"    if special({amt}) then {amt} = 0; endif;   {{ #755/#818 pre-fill: no-value-yet -> 0 }}")
             consumed_branch.append(f"    protect({amt}, false);   {{ enterable when consumed }}")
         body = (
             "postproc\n"
@@ -1259,7 +1287,11 @@ def consumed_amount_validation_procs(names):
         if consumed not in have or not amts:
             continue
         last_amt = amts[-1]               # block-exit field when the item is consumed
-        zero_cond = " and ".join(f"{a} = 0" for a in amts)
+        # #818: special-value-safe form — fires when every amount is 0 OR still blank
+        # (notappl is not in the -99/-98/1:99999999 list), so a blank-passed amount can
+        # neither silently satisfy the at-least-one check nor leak NOTAPPL onward.
+        zero_cond = " and ".join(
+            f"not ({a} in {REFUSED_AMOUNT}, {DK_AMOUNT}, 1:99999999)" for a in amts)
         procs[last_amt] = (
             "postproc\n"
             f"  if {consumed} = 1 and {zero_cond} then\n"
@@ -1364,6 +1396,7 @@ def main():
                "Q135_ZBB_OOP",  # EXTRA_PROCS (#664 DOH-retained gate)
                "Q76_BRAND_OR_GEN", "Q79_REG_SOURCE",  # EXTRA_PROCS (Q78_WHY_BRANDED now a Check Box base, covered via CHECKBOX_COVERED)
                "Q112_VISITED",  # EXTRA_PROCS (#590-593 Q112 referral-visit multi-branch)
+               "Q117_SPECIALIST_FOLLOWUP",  # EXTRA_PROCS (#816 Q112=Yes gate + spec §K Q117=No -> Q119)
                "Q194_OTHER_SOURCE",  # EXTRA_PROCS (#684 >=1 funding-source aggregate check)
                "Q2_BIRTH_MONTH", "Q2_BIRTH_YEAR", "Q2_1_AGE", "Q19_HH_SIZE_TOTAL",
                "Q20_HH_CHILDREN", "Q21_HH_SENIORS", "Q32_AGE", "Q39_CIVIL_STATUS",

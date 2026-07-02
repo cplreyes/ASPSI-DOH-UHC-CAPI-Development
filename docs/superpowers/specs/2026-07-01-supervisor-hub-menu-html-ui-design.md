@@ -1,6 +1,6 @@
 # Supervisor-hub role menus -> styled UI (htmldialog("menu.html") from logic — prompt-free AND secure)
 
-**Date:** 2026-07-01  **Status:** DONE — option (c) built, DEPLOYED to CSWeb 2026-07-02, and BOTH role menus DEVICE-VERIFIED on the itel (CSEntry 8.0.1): styled render + NO "Allow Access?" prompt + routing round-trip, for Enumerator (se-001) and Supervisor (fs-01).
+**Date:** 2026-07-01  **Status:** DONE — option (c) built, DEPLOYED to CSWeb 2026-07-02, and BOTH role menus DEVICE-VERIFIED on the itel (CSEntry 8.0.1): styled render + NO "Allow Access?" prompt + routing round-trip, for Enumerator (se-001) and Supervisor (fs-01). **ROUND 2 (same day): CSEntry 8.1 blank-menu regression found + FIXED** (dual bridge + registered access token + pff `[DataEntryInit]`), redeployed, and DEVICE-VERIFIED on the Samsung A23 (8.1.1) off the clean server package — see the 8.1 section below.
 **Component:** deliverables/CSPro/supervisor-hub (menu.html + build_hub_apps.py + deploy_hub_bundle.py)
 
 ## Problem
@@ -29,8 +29,10 @@ consent gate — so the menu is **prompt-free AND keeps the secure default**
      expression (each string literal <=180 chars) injecting the live `strip(m_op)` operator id — guards
      against any CSPro string-literal length limit.
    - `_routing_block()` emits `pos("<<key>>", res) > 0` branches for every `MENU_ACTIONS` key, plus a
-     defensive `else errmsg("(debug) menu returned: [" + res + "]"); move to MENU_SESSION;` fallback
-     (never fires in normal use now that routing is proven; kept as a diagnostic).
+     defensive `else move to MENU_SESSION;` fallback (cancel/back or an unexpected return silently
+     re-shows the menu). The bring-up `errmsg("(debug) menu returned: …")` diagnostic was REMOVED
+     2026-07-02 after routing was device-proven on both 8.0.1 and 8.1; rebuilt + redeployed +
+     Samsung-verified (back-key now silently loops the menu, no popup).
    - `build_ent` keeps `accessFromExternalCaller = "promptIfNoValidAccessToken"` (secure).
    - `MenuApp.pff` carries NO `HtmlDialogs` override (reverted — not needed for htmldialog()).
    - `*_MENU_GROUPED` + `MENU_ACTIONS` (menu content + routing targets) unchanged — single source.
@@ -61,6 +63,38 @@ consent gate — so the menu is **prompt-free AND keeps the secure default**
   variant ("SURVEY COVERAGE - interviews collected at this hub").
 - KEY PROOF: the `htmldialog()` return round-trips — `<<action>>` wrapping + `pos()` survives whatever
   encoding CSEntry applies to the returned string. This was the one unproven risk; it works.
+
+## CSEntry 8.1 regression + fix (round 2, 2026-07-02) — the blank menu Carl hit on the Samsung
+- The Samsung A23 runs CSEntry **8.1.1-20260622** (the itel runs 8.0.1). On 8.1 the deprecated
+  `CSPro.*` bridge still EXISTS inside htmldialog web views but is **SEVERED**:
+  `CSPro.getInputData()` returns `""` (empty string, not null) and `CSPro.returnData()` is a silent
+  no-op. menu.html's round-1 code only fell through to `CS.UI` when the input was `null`, so it
+  parsed `""` → `{}` → zero groups → **blank menu**. The CSWeb package IS the tester-facing build,
+  so every tester on CSEntry 8.1.x had a blank menu until this fix (8.0.1 devices were fine).
+- **Fix 1 — dual bridge with BRIDGE tracking** (menu.html + report.html): treat `""` as no-input and
+  fall through to the Action Invoker (`<script src="/action-invoker.js">` +
+  `new CSProActionInvoker(<hub token>)` + `CS.UI.getInputData()`); record which side delivered the
+  input (`BRIDGE = "cspro" | "ai"`) and RETURN through the SAME side
+  (`A.UI.closeDialog({result: payload})` on 8.1) — returning via the dead `CSPro.returnData` first
+  would leave the dialog stuck open. `csSetDisplay` routes by BRIDGE the same way.
+- **Fix 2 — registered access token** (`build_hub_apps.py` `HUB_ACCESS_TOKEN`, emitted into both
+  .ents' `logicSettings.actionInvoker.accessTokens`): a caller presenting a REGISTERED token gets NO
+  "Allow Access?" prompt while `accessFromExternalCaller` STAYS the secure
+  `promptIfNoValidAccessToken` (confirmed in csprousers/cspro source, zAppO/LogicSettings.cpp). This
+  is the secure alternative to the rejected `grantAccessWithoutPrompting`: the token only helps a
+  caller already running inside the app's own web view.
+- **Fix 3 — pff `[DataEntryInit]`** with `StartMode=Add` + `Lock=CaseListing` (both .pffs, emitted by
+  `_pff()` whenever `input_data` starts with `|`): 8.1 showed an empty "0 Cases" case listing for the
+  `|type=None` input where 8.0.1 auto-started; now both apps open straight at the first field.
+- **Verified on the Samsung A23 (8.1.1) off the CLEAN server package** (hashes device == repo:
+  menu.html `5ee3641b…`, report.html `fefb8f87…`, MenuApp.pff `adf6b5d7…`): login opens straight at
+  Username (no case list), styled se-001 Enumerator menu renders, "View my report" → "MY INTERVIEW
+  COVERAGE" (F3=2), OK → menu loops. The itel path is untouched by design (`CSPro.*` is still tried
+  first; on 8.0.1 it answers, BRIDGE="cspro", and the return uses `CSPro.returnData` exactly as
+  verified in round 1) — a physical itel re-check is a low-risk pending item.
+- **Rollout nuance:** THIS redeploy WAS picked up on the A23 by Add Application → CSWeb → **UPDATE**
+  ("New version available"), hash-verified. Treat remove/wipe + re-add as the reliable fallback, but
+  try UPDATE first and verify by hash or behavior.
 
 ## Deploy / fleet rollout
 Recompile+redeploy pipeline: regenerate (`build_hub_apps.py`) → CSPro Designer File>Publish&Deploy of

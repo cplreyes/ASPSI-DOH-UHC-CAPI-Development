@@ -182,6 +182,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 | Q108 REFERRED | = No | **Q126** (skip Q109–Q125 — jumps straight to Section L NBB) |
 | Q112 VISITED | = Yes | **Q114** (skip Q113 why-not) |
 | Q112 VISITED | = No, not planning **or** Not yet, planning | Q113 asked; after Q113 → **Q114** |
+| Q112 VISITED | ≠ Yes | **Q117 + Q118 skipped** — both asked only when Q112 = Yes; after Q116 → **Q119** (#816) |
 | Q117 SPECIALIST_FOLLOWUP | = No | **Q119** (skip Q118 sat-referral-process) |
 | Q119 PCF_REFERRAL | = Yes | **Q120** PCP-knows, then Q122 discussed-places (skip Q121 why-hospital) |
 | Q119 PCF_REFERRAL | = No | **Q121** (skip Q120 — not PCP referral → why-hospital asked) |
@@ -504,6 +505,7 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | `Q113_WHY_NOT` select-all | ≥ 1 option when enabled; `_OTHER_TXT` on Other | HARD |
 | `Q114_DISCUSSED_PLACES`, `Q115_HELPED_APPT`, `Q116_WROTE_INFO` | Required when enabled, ∈ {Yes, No} | HARD |
 | `Q117_SPECIALIST_FOLLOWUP` | Required when enabled, ∈ {Yes, No} | HARD |
+| Q117 enabled | `Q112 = Yes` | GATE (#816) |
 | Q118 enabled | `Q117 = Yes` | GATE |
 | `Q118_SAT_REFERRAL_PROCESS` | Required when enabled, ∈ satisfaction codes | HARD |
 | `Q119_PCF_REFERRAL` | Required when enabled, ∈ {Yes, No} | HARD |

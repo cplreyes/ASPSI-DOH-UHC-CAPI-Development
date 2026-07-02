@@ -235,10 +235,11 @@ preproc
 
 PROC MENU_PICK
 preproc
-  { HTMLDIALOG role menu - prompt-free + secure. htmldialog() renders menu.html through the deprecated
-    CSPro.* interface, which does NOT trip the Action-Invoker "Allow Access?" consent gate that the
-    accept()/'choice' HtmlDialog does - so no per-show prompt, and accessFromExternalCaller stays the
-    secure promptIfNoValidAccessToken. Menu content = a static JSON per role (from *_MENU_GROUPED via
+  { HTMLDIALOG role menu - prompt-free + secure on BOTH CSEntry generations: 8.0.1 renders menu.html
+    through the deprecated CSPro.* interface (no Action-Invoker consent gate), while 8.1+ (CSPro.*
+    REMOVED - blank-menu bug, Samsung A23 2026-07-02) authenticates to CS.UI with the hub access
+    token registered in this .ent (accessTokens) - still no per-show prompt, and
+    accessFromExternalCaller stays the secure promptIfNoValidAccessToken. Menu content = a static JSON per role (from *_MENU_GROUPED via
     _menu_json_expr); the tapped item returns its action wrapped as "<<action>>", and pos() routing
     survives whatever encoding the htmldialog return comes back in. Loops via `move to MENU_SESSION`;
     "leave" actions launch an instrument (Pff OnExit chains back) or execpff to LoginApp. }
@@ -289,7 +290,6 @@ preproc
   elseif pos("<<logout>>", res) > 0 then
     execpff("LoginApp.pff", stop);
   else
-    errmsg("(debug) menu returned: [" + res + "]");
     move to MENU_SESSION;
   endif;
   noinput;

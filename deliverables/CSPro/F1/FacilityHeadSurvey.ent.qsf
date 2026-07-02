@@ -38,6 +38,23 @@ styles:
     css: |
       font-family: Arial;font-size: 18px;
 questions:
+  - name: FACILITYHEADSURVEY_DICT.QUESTIONNAIRE_NUMBER
+    conditions:
+      - questionText:
+          EN: |
+            <p class="instruction">Build: F1 v1.0.1 (2026-07-02)</p>
+          FIL: |
+            <p class="instruction">Build: F1 v1.0.1 (2026-07-02)</p>
+          BCL: |
+            <p class="instruction">Build: F1 v1.0.1 (2026-07-02)</p>
+          BIS: |
+            <p class="instruction">Build: F1 v1.0.1 (2026-07-02)</p>
+          CEB: |
+            <p class="instruction">Build: F1 v1.0.1 (2026-07-02)</p>
+          WAR: |
+            <p class="instruction">Build: F1 v1.0.1 (2026-07-02)</p>
+          HIL: |
+            <p class="instruction">Build: F1 v1.0.1 (2026-07-02)</p>
   - name: FACILITYHEADSURVEY_DICT.SURVEY_TEAM_LEADER_S_NAME
     conditions:
       - questionText:
@@ -191,6 +208,40 @@ questions:
             <p>Result of Final Visit</p>
           HIL: |
             <p>Result of Final Visit</p>
+  - name: FACILITYHEADSURVEY_DICT.BREAKOFF
+    conditions:
+      - questionText:
+          EN: |
+            <p>Interview status (leave as Continue unless ending the interview early)</p>
+          FIL: |
+            <p>Interview status (leave as Continue unless ending the interview early)</p>
+          BCL: |
+            <p>Interview status (leave as Continue unless ending the interview early)</p>
+          BIS: |
+            <p>Interview status (leave as Continue unless ending the interview early)</p>
+          CEB: |
+            <p>Interview status (leave as Continue unless ending the interview early)</p>
+          WAR: |
+            <p>Interview status (leave as Continue unless ending the interview early)</p>
+          HIL: |
+            <p>Interview status (leave as Continue unless ending the interview early)</p>
+  - name: FACILITYHEADSURVEY_DICT.CASE_DISPOSITION
+    conditions:
+      - questionText:
+          EN: |
+            <p>Case disposition (auto)</p>
+          FIL: |
+            <p>Case disposition (auto)</p>
+          BCL: |
+            <p>Case disposition (auto)</p>
+          BIS: |
+            <p>Case disposition (auto)</p>
+          CEB: |
+            <p>Case disposition (auto)</p>
+          WAR: |
+            <p>Case disposition (auto)</p>
+          HIL: |
+            <p>Case disposition (auto)</p>
   - name: FACILITYHEADSURVEY_DICT.LANGUAGE_USED
     conditions:
       - questionText:

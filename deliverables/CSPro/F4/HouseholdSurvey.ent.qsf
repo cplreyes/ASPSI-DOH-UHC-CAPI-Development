@@ -36,6 +36,21 @@ styles:
     css: |
       font-family: Arial;font-size: 18px;
 questions:
+  - name: HOUSEHOLDSURVEY_DICT.QUESTIONNAIRE_NUMBER
+    conditions:
+      - questionText:
+          EN: |
+            <p class="instruction">Build: F4 v1.0.1 (2026-07-02)</p>
+          FIL: |
+            <p class="instruction">Build: F4 v1.0.1 (2026-07-02)</p>
+          BCL: |
+            <p class="instruction">Build: F4 v1.0.1 (2026-07-02)</p>
+          BIS: |
+            <p class="instruction">Build: F4 v1.0.1 (2026-07-02)</p>
+          CEB: |
+            <p class="instruction">Build: F4 v1.0.1 (2026-07-02)</p>
+          WAR: |
+            <p class="instruction">Build: F4 v1.0.1 (2026-07-02)</p>
   - name: HOUSEHOLDSURVEY_DICT.SURVEY_TEAM_LEADER_S_NAME
     conditions:
       - questionText:
@@ -2346,6 +2361,21 @@ questions:
             <p>Asa ka moadto aron mangayo og tabang?</p>
           WAR: |
             <p>Diin ka makadto basi mangaro hin bulig?</p>
+  - name: HOUSEHOLDSURVEY_DICT.Q84_WHERE_ASSIST_OTHER_TXT
+    conditions:
+      - questionText:
+          EN: |
+            <p>84. Where would you go to seek assistance? — Other (specify) text</p>
+          FIL: |
+            <p>84. Where would you go to seek assistance? — Other (specify) text</p>
+          BCL: |
+            <p>84. Where would you go to seek assistance? — Other (specify) text</p>
+          BIS: |
+            <p>84. Where would you go to seek assistance? — Other (specify) text</p>
+          CEB: |
+            <p>84. Where would you go to seek assistance? — Other (specify) text</p>
+          WAR: |
+            <p>84. Where would you go to seek assistance? — Other (specify) text</p>
   - name: HOUSEHOLDSURVEY_DICT.Q85_BENEFITS
     conditions:
       - questionText:

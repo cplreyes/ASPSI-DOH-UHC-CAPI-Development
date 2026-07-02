@@ -1,0 +1,32 @@
+{
+  "_readme": [
+    "Per-instrument CSEntry build versions - the SINGLE SOURCE OF TRUTH (tester request 2026-07-02).",
+    "Two display surfaces, both stamped FROM this file (never hand-edit them):",
+    "  1. The .pff Description line -> the app's name in CSEntry's application list and case-listing",
+    "     title bar. Written by automation/stamp_version.py.",
+    "  2. A build footer on the first cover question (SURVEY_TEAM_LEADER_S_NAME) -> every bug",
+    "     screenshot identifies its build. Emitted by each instrument's generate_qsf.py.",
+    "Policy: Semantic Versioning (MAJOR.MINOR.PATCH). PATCH = bug-fix deploy (the common mid-round",
+    "patch); MINOR = new/changed functionality (new questions, features); MAJOR = UAT round close",
+    "or a breaking change (e.g. data shape). Testers are up to date when their app list shows the",
+    "version in the latest #f<n>-uat patch note.",
+    "Bump with:  py automation/stamp_version.py bump F3 [--minor|--major]   (default = patch;",
+    "updates this file, re-stamps the .pff, regenerates the .qsf - one atomic step, no drift).",
+    "Check with: stamp_version.py show"
+  ],
+  "F1": {
+    "app": "Facility Head Survey",
+    "version": "1.0.1",
+    "date": "2026-07-02"
+  },
+  "F3": {
+    "app": "Patient Survey",
+    "version": "1.0.1",
+    "date": "2026-07-02"
+  },
+  "F4": {
+    "app": "Household Survey",
+    "version": "1.0.1",
+    "date": "2026-07-02"
+  }
+}

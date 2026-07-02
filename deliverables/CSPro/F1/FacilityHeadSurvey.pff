@@ -1,6 +1,7 @@
 ﻿[Run Information]
 Version=CSPro 8.0
 AppType=Entry
+Description=Facility Head Survey (F1) - v1.0.1 (2026-07-02)
 
 [Files]
 Application=.\FacilityHeadSurvey.ent

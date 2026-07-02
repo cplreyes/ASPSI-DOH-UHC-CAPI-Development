@@ -1,0 +1,37 @@
+﻿no,source_variables,mapping_status,notes_add
+1.1,Q81_KNOW_HOW_START,partial,No 'heard of process' item; Q81=know-how-to-start (non-accred only). Fac type all 1.x: F_TYPE+F_OWNERSHIP join on 9-digit facility_id
+1.2,Q148_LGU_SUPPORT,mapped,
+1.3,Q149_LGU_SUPPORT_FORMS (checkbox multi),mapped,Checkbox: one alpha multi-code field; split to dummies in Stata
+1.4,Q150_LGU_SATISFIED,mapped,
+1.5,Q151_LGU_NOT_SAT_WHY (checkbox multi),mapped,Checkbox multi; universe skip-gated to Q150_LGU_SATISFIED=No
+1.6,,gap,No DOH-licensing process-awareness item in F1; nearest are Q118 (licensed status) and Q121 (difficult requirements)
+1.7,Q51_YK_ACCRED,mapped,
+1.8,Q65_ACCRED_DIFFICULT (checkbox multi),mapped,"Checkbox: one alpha multi-code field, split; accredited/applied path — non-accred reasons live in Q79"
+1.8a,"Q66_WHY_DIFF_PREVENTIVE (checkbox multi),Q67_WHY_DIFF_LAB (checkbox multi),Q68_WHY_DIFF_MEDS (checkbox multi),Q69_WHY_DIFF_INFRA (checkbox multi),Q70_WHY_DIFF_EQUIPMENT (checkbox multi),Q71_WHY_DIFF_HR (checkbox multi),Q72_WHY_DIFF_HIS (checkbox multi),Q73_WHY_DIFF_DOCS (checkbox multi),Q74_WHY_DIFF_DOH_LIC (checkbox multi)",mapped,"9-item why-difficult battery, each one alpha multi-code field (split); filter facility_type=RHU"
+1.8b,"Q66_WHY_DIFF_PREVENTIVE (checkbox multi),Q67_WHY_DIFF_LAB (checkbox multi),Q68_WHY_DIFF_MEDS (checkbox multi),Q69_WHY_DIFF_INFRA (checkbox multi),Q70_WHY_DIFF_EQUIPMENT (checkbox multi),Q71_WHY_DIFF_HR (checkbox multi),Q72_WHY_DIFF_HIS (checkbox multi),Q73_WHY_DIFF_DOCS (checkbox multi),Q74_WHY_DIFF_DOH_LIC (checkbox multi)",mapped,Same Q66-Q74 battery; filter facility_type=hospital & F_OWNERSHIP=public (gov)
+1.8c,"Q66_WHY_DIFF_PREVENTIVE (checkbox multi),Q67_WHY_DIFF_LAB (checkbox multi),Q68_WHY_DIFF_MEDS (checkbox multi),Q69_WHY_DIFF_INFRA (checkbox multi),Q70_WHY_DIFF_EQUIPMENT (checkbox multi),Q71_WHY_DIFF_HR (checkbox multi),Q72_WHY_DIFF_HIS (checkbox multi),Q73_WHY_DIFF_DOCS (checkbox multi),Q74_WHY_DIFF_DOH_LIC (checkbox multi)",mapped,Same Q66-Q74 battery; filter facility_type=hospital & F_OWNERSHIP=private
+1.9,Q63_ACCRED_WAIT,mapped,"Q63 captures wait in MONTHS, not days (table title says days) — report months or convert"
+1.10,Q160_EXTERNAL_SERVICES_GO (checkbox multi),partial,No 'services outsourced' item; Q160=where patients go for unavailable services is nearest proxy; no 6-mo window
+1.11,Q155_SEND_REFERRAL_HOW (checkbox multi),mapped,Checkbox multi; split to dummies
+1.12,Q159_RECEIVE_REFERRAL_HOW (checkbox multi),mapped,Checkbox multi; inbound-referral question; universe=hospitals
+1.13,Q157_SPECIALIST_NETWORK,mapped,Universe=primary care providers (Q8_SERVICE_LEVEL=1)
+1.14,Q161_REF_SATISFACTION,mapped,
+1.15,Q162_NOT_SATISFIED_WHY (checkbox multi),partial,"No direct referral-challenges battery; Q162=why not satisfied, asked only if Q161 dissatisfied — biased universe"
+1.16,Q118_DOH_LICENSED,mapped,
+1.17a,Q121_DOH_LIC_DIFFICULT (checkbox multi),mapped,Checkbox multi; filter facility_type=RHU/CHO
+1.17b,Q121_DOH_LIC_DIFFICULT (checkbox multi),mapped,Checkbox multi; filter facility_type=hospital (L1-L3)
+1.18,Q120_LIC_DAYS,mapped,
+1.19,"Q135_NBB_CURR,Q136_NBB_ALL_PATIENTS",mapped,"Indicator: Q136=Yes among Q135=Yes (implements NBB for all patients, last 6 mo)"
+1.20,"Q112_STOCKOUT,Q113_STOCKOUT_MEDS,Q114_STOCKOUT_DURATION,Q115_STOCKOUT_AVG",mapped,Flag derived: Q112=1 & Q114>7 days (past 3 mo=quarter); Q113 free-text med list; universe primary care (Q8=1)
+1.21,"Q112_STOCKOUT,Q113_STOCKOUT_MEDS,Q114_STOCKOUT_DURATION,Q115_STOCKOUT_AVG",mapped,"Split pair with 1.20 — same Q112-Q115 stock-out battery, continued panel"
+1.22,Q154_NUM_REFERRED_OUT,partial,F1 has only outbound referral count Q154 (past 6 mo); no received-care outcome in F1 — numerator is patient-side (F3)
+1.23,Q32_DATA_SUBMIT,mapped,
+1.24,Q33_DATA_FREQ,mapped,
+1.25,Q34_DATA_REPORTS_USED (checkbox multi),mapped,Checkbox multi; split to dummies
+1.26,Q152_PHO_PROTOCOL_CLARITY,mapped,Q152=clarity rating of PHO-vs-facility decision protocols
+1.27,Q61_TRANCHE_DELAY,mapped,
+1.28,Q62_TRANCHE_INTERVAL,mapped,
+1.29,Q2_FACILITY_ROLE,mapped,
+1.30,Q3_AGE,mapped,Age bands derived from continuous Q3_AGE
+1.31,Q4_SEX,mapped,
+1.32,Q8_SERVICE_LEVEL,mapped,

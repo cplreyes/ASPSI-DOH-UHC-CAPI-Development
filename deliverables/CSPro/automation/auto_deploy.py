@@ -35,8 +35,9 @@ OUT = Path(__file__).resolve().parent / "shots" / "deploy"
 
 
 def deploy_dialogs():
+    # bare title = unsaved spec; "<PackageName> - CSPro Deploy Application" = loaded .csds
     return [w for w in Desktop(backend="win32").windows()
-            if (w.window_text() or "") == "CSPro Deploy Application"]
+            if (w.window_text() or "").endswith("CSPro Deploy Application")]
 
 
 def package_name(dd):

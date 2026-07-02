@@ -1013,6 +1013,18 @@ def build_section_h():
         ("Yes, my employer pays",    "2"),
         ("No, I do not pay premiums","3"),
     ]
+    Q84_WHERE_ASSIST = [
+        ("PhilHealth representative",  "1"),
+        ("LGU",                        "2"),
+        ("Primary care provider",      "3"),
+        ("Other health care provider", "4"),
+        ("Employer",                   "5"),
+        ("No one / self-registered",   "6"),
+        ("Barangay Health Worker",     "7"),
+        ("Friends / Family",           "8"),
+        ("Health center/facility",     "9"),
+        ("Other (Specify)",            "10"),
+    ]
     Q88_DIFF_PAYING = [
         ("Cannot afford the premium",                       "1"),
         ("Payment options are inconvenient",                "2"),
@@ -1044,8 +1056,9 @@ def build_section_h():
         # form. Removed 2026-06-12 (other-specify audit).
         yes_no("Q83_KNOWS_ASSIST",
                "83. Would you know where to go to seek assistance in registration?"),
-        alpha("Q84_WHERE_ASSIST",
-              "84. Where would you go to seek assistance?", length=200),
+        *checkbox_multiselect("Q84_WHERE_ASSIST",
+                    "84. Where would you go to seek assistance?",
+                    _cb_codes(Q84_WHERE_ASSIST), with_other_txt=True),   # #814: paper = tick-all, 10 options
         *checkbox_multiselect("Q85_BENEFITS",
                     "85. What are some of the benefits that come with being a PhilHealth member?",
                     _cb_codes(Q85_BENEFITS), with_other_txt=True),

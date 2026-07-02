@@ -321,6 +321,7 @@ _CHECKBOX_FIELDS = {
     "Q107_OTHER_ACTIONS", "Q109_TYPE",
     "Q141_BILL_ITEMS", "Q143_HOW_PAID",   # #615/#616 Section M bill
     "Q196_FOREGONE", "Q202_WORRY_REASONS",   # #638/#668 Section O/Q (without this they render as DropDown/RadioButton = single-select data loss)
+    "Q84_WHERE_ASSIST",   # #814
 }
 # #708/#709 combined-view: a Section N WHO/SHA expenditure item is the fixed triplet
 # {base}_CONSUMED, {base}_PURCHASED_PHP, {base}_INKIND_PHP (see generate_dcf

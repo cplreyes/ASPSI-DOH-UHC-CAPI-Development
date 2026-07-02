@@ -23,6 +23,15 @@ HERE = Path(__file__).parent
 DCF = HERE / "PatientSurvey.dcf"
 OUT = HERE / "PatientSurvey.ent.qsf"
 
+# Build version (tester request 2026-07-02): ../versions.json is the single source of truth
+# (bumped via automation/stamp_version.py, which also stamps the .pff Description for the
+# CSEntry app list). This footer rides the case-key (QN) screen — the FIRST screen of every
+# case; the cover/FC block that is first in DICT order sits at case-END on the F3 form, so
+# dict-first placement was wrong (v1.0.1). Same string in every language — UI chrome, not
+# questionnaire text.
+_BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F3"]
+BUILD_FOOTER = f'<p class="instruction">Build: F3 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+
 STYLES = """styles:
   - name: Normal
     className: normal
@@ -213,7 +222,6 @@ SECTION_INTROS = {
          "PhilHealth registration status and membership, and their "
          "registration to other health insurance."),
     47: "Are you aware that there are PhilHealth packages for the following health services?",  # #404: verbatim Q47 stem from the paper questionnaire (battery had item labels but no question stem)
-    131: "How would you rate the cleanliness and comfort of the following amenities at this facility?",  # #486: verbatim Q131-134 stem from the paper questionnaire
     53: "We will now ask questions about the patient’s access to a primary care provider.",
     74: "We will now ask about the patient’s awareness of the YAKAP/Konsulta package.",
     83: ("We will now be asking about the patient’s actions taken for health "
@@ -230,10 +238,15 @@ SECTION_INTROS = {
     113: ("I would like to know where you got the money to pay for medical "
           "costs incurred (IN ___, and ____) at the (FACILITY TYPE INPUT)."),
     116: "For this section, we will be asking about your awareness of NBB, ZBB, and MAIFIP.",
-    131: ("The following questions relate to the patient’s most recent "
-          "experience with [facility_name_input] as an [inpatient] or "
-          "[outpatient], where we invited you to participate in our survey "
-          "on [date_formatted]."),
+    # Q131 carries TWO read-aloud paragraphs: the Section J preamble, then the verbatim
+    # Q131-134 battery stem (#486 — the stem was previously a duplicate 131 key, silently
+    # dropped by Python's last-key-wins; a tuple renders one <p> per paragraph).
+    131: (("The following questions relate to the patient’s most recent "
+           "experience with [facility_name_input] as an [inpatient] or "
+           "[outpatient], where we invited you to participate in our survey "
+           "on [date_formatted]."),
+          ("How would you rate the cleanliness and comfort of the following "
+           "amenities at this facility?")),
     145: ("The next questions we will be asking are related to the patient’s "
           "access to medicines. We would like to know how easy or difficult "
           "it is for them to purchase or receive medicines. We will also ask "
@@ -263,9 +276,13 @@ SECTION_INTROS_FIL = {
     99: "Magtatanong kami ngayon tungkol sa kaalaman ng pasyente sa BUCAS at sa mga serbisyong natanggap sa isang BUCAS Center.",
     105: "Para sa mga susunod na tanong, magtatanong kami tungkol sa pinakahuling inpatient visit ng pasyente.",
     116: "Para sa seksyon na ito, magtatanong kami tungkol sa kaalaman ninyo tungkol sa NBB, ZBB at MAIFIP.",
-    131: ("Ang mga sumusunod na tanong ay may kaugnayan sa pinakahuling karanasan ng pasyente sa "
-          "[facility_name_input] bilang isang [inpatient] o [outpatient], kung saan inanyayahan "
-          "kayong lumahok sa aming survey noong [date_formatted]."),
+    # Second paragraph (the #486 Q131-134 battery stem) stays ENGLISH here by design —
+    # its Tagalog rides ASPSI's translation delivery; swap in the translated stem when it lands.
+    131: (("Ang mga sumusunod na tanong ay may kaugnayan sa pinakahuling karanasan ng pasyente sa "
+           "[facility_name_input] bilang isang [inpatient] o [outpatient], kung saan inanyayahan "
+           "kayong lumahok sa aming survey noong [date_formatted]."),
+          ("How would you rate the cleanliness and comfort of the following "
+           "amenities at this facility?")),
     145: ("Ang mga susunod na tanong ay may kaugnayan sa access ng pasyente sa mga gamot. Nais "
           "naming malaman kung gaano kadali o kahirap na bumili o tumanggap ng mga gamot. "
           "Magtatanong din kami ng ilang katanungan tungkol sa kanilang pananaw sa pagbili ng "
@@ -361,7 +378,9 @@ def build_extras(intro_q, instr, intro_here, lnm):
     pre = post = ""
     if intro_q is not None:
         script = (SECTION_INTROS_FIL.get(intro_q) if lnm == "FIL" else None) or SECTION_INTROS[intro_q]
-        pre = f"<p>{_esc(script)}</p>"
+        # a tuple = multiple read-aloud paragraphs (e.g. Q131: section preamble + #486 battery stem)
+        paras = script if isinstance(script, tuple) else (script,)
+        pre = "".join(f"<p>{_esc(p)}</p>" for p in paras)
     if instr:
         if intro_here:
             pre += f'<p class="instruction">{_esc(instr)}</p>'
@@ -387,6 +406,12 @@ def main():
         lines += [f"  - name: {nm}", f"    label: {lb}"]
     lines.append(STYLES)
     lines.append("questions:")
+
+    # the id item never appears in the records loop below, so emit its (footer-only) entry here
+    qn = d["levels"][0]["ids"]["items"][0]["name"]
+    lines += [f"  - name: {dict_name}.{qn}", "    conditions:", "      - questionText:"]
+    for lnm, _ in langs:
+        lines += [f"          {lnm}: |", f"            {BUILD_FOOTER}"]
 
     seen, n = set(), 0
     intro_used = set()
