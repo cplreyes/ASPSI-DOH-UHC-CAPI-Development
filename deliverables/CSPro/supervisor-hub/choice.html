@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menu</title>
+<!--
+  Supervisor-hub styled accept()/select() dialog, wired via MenuApp.pff HtmlDialogs=. .
+  Uses the CSPro 8 Action Invoker (the SAME interface CSEntry's built-in choice.html uses):
+  load /action-invoker.js, create CS, read CS.UI.getInputData() {title, choices:[{index,caption}]},
+  and return the selection as CS.UI.closeDialog({ result: { index } }). The menu LOGIC + index
+  routing are UNCHANGED - only the presentation. First use on a device shows a one-time CSEntry
+  "Allow Access?" consent (MenuApp accessFromExternalCaller=promptIfNoValidAccessToken); tap YES.
+  Green report.html theme; "   +  "-prefixed captions = tappable items, bare captions = section
+  headers (if none start with "+", every row is tappable so a plain select() still works).
+-->
+<script src="/action-invoker.js"></script>
+<style>
+  :root { --green:#00532f; --greenlt:#e3f0ea; --line:#cfd8d3; --ink:#1a1a1a; --muted:#5b6b63; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body { margin:0; padding:0; font-family:-apple-system,Roboto,Arial,sans-serif; color:var(--ink); background:#fff; }
+  .hdr { display:flex; align-items:center; background:var(--green); color:#fff; padding:11px 14px; }
+  .hdr h1 { font-size:15px; margin:0; font-weight:600; flex:1; line-height:1.25; }
+  .hdr .x { margin-left:10px; font-size:22px; line-height:1; color:#cfe4da; padding:0 6px; }
+  .gh { font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--green);
+        background:var(--greenlt); padding:7px 14px; font-weight:700; }
+  .item { display:flex; align-items:center; padding:13px 14px; border-bottom:1px solid var(--line);
+          font-size:15px; line-height:1.3; }
+  .item:active { background:var(--greenlt); }
+  .item .lbl { flex:1; }
+  .item .chev { color:var(--muted); font-size:20px; margin-left:8px; }
+  .spacer { height:6px; }
+</style>
+</head>
+<body>
+<div class="hdr"><h1 id="title">Menu</h1><span class="x" id="x">&times;</span></div>
+<div id="list"></div>
+<script>
+  // CSPro 8 Action Invoker (built-in choice.html uses the same). The access token matches CSEntry's
+  // built-in dialog; custom app-folder dialogs trigger a one-time "Allow Access?" consent.
+  var CS = null;
+  try { CS = new CSProActionInvoker("755fc3cc6a5048c9b6c6cf36a44bd073"); } catch(e){}
+
+  function getInput() {
+    try { if (CS && CS.UI && CS.UI.getInputData) { var d = CS.UI.getInputData(); return (typeof d === "string") ? JSON.parse(d) : (d || {}); } } catch(e){}
+    // fallback: deprecated interface returns a JSON string
+    try { if (typeof CSPro !== "undefined" && CSPro.getInputData) { var v = CSPro.getInputData(); return (typeof v === "string") ? JSON.parse(v) : (v || {}); } } catch(e){}
+    return {};
+  }
+  function ret(idx)  { try { if (CS && CS.UI && CS.UI.closeDialog) return CS.UI.closeDialog({ result: { index: idx } }); } catch(e){} }
+  function cancel()  { try { if (CS && CS.UI && CS.UI.closeDialog) return CS.UI.closeDialog(); } catch(e){} }
+  function setDisp(o){ try { if (CS && CS.UI && CS.UI.setDisplayOptions) CS.UI.setDisplayOptions(o); } catch(e){} }
+  function esc(v){ return String(v==null?"":v).replace(/[<>&]/g,function(c){return c==="<"?"&lt;":c===">"?"&gt;":"&amp;";}); }
+
+  function render() {
+    var input = getInput();
+    var choices = (input && input.choices) || [];
+    document.getElementById("title").textContent = (input && input.title) || "Menu";
+
+    var hasPlus = false, i;
+    for (i=0;i<choices.length;i++){ if (String(choices[i].caption||"").trim().charAt(0)==="+"){ hasPlus=true; break; } }
+
+    var host = document.getElementById("list"), html = "";
+    for (i=0;i<choices.length;i++){
+      var c = choices[i];
+      var cap = String(c.caption==null?"":c.caption).trim();
+      if (cap === "") { html += "<div class='spacer'></div>"; continue; }
+      var isItem = hasPlus ? (cap.charAt(0)==="+") : true;
+      if (isItem) {
+        var lbl = cap.replace(/^\+\s*/, "");
+        html += "<div class='item' data-idx='"+c.index+"'><span class='lbl'>"+esc(lbl)+"</span><span class='chev'>&rsaquo;</span></div>";
+      } else {
+        html += "<div class='gh'>"+esc(cap)+"</div>";
+      }
+    }
+    host.innerHTML = html;
+    var rows = host.querySelectorAll(".item");
+    for (i=0;i<rows.length;i++){
+      rows[i].addEventListener("click", function(){ ret(parseInt(this.getAttribute("data-idx"),10)); });
+    }
+    var w = Math.min(Math.max(document.body.scrollWidth, 300), 460);
+    var h = Math.min(document.body.scrollHeight + 16, 640);
+    setDisp({ width:w, height:h, resizable:false, keyboard:0 });
+  }
+
+  document.getElementById("x").addEventListener("click", cancel);
+  if (document.readyState !== "loading") render();
+  else document.addEventListener("DOMContentLoaded", render);
+</script>
+</body>
+</html>

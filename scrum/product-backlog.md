@@ -6,7 +6,7 @@ data_programmer: Carl Patrick L. Reyes
 qa_tester: Shan (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
 engagement_window: November 2025 – August 2026
-last_updated: 2026-06-29
+last_updated: 2026-07-01
 ---
 
 # Product Backlog — UHC Survey Year 2 CAPI Development
@@ -45,7 +45,7 @@ End-to-end critical path:
 | Milestone | Due | What it needs | Status |
 |---|---|---|---|
 | **D2 / D3** — survey materials, manuals, training, pre-tested questionnaires | extended | F1/F3/F4 UAT burndown (Carl, active) · pretest (ASPSI-scheduled) · Kidd's manual review | 🟡 In progress |
-| **Pretest** (Epic 6) | ASPSI-scheduled *(precondition: SJREB clearance + updated CAPI)* | field-ready instruments (Carl, nearly done) · SJREB clearance + date (ASPSI) | 🟠 Awaiting ASPSI schedule — pushed per Jun-19 projection |
+| **Pretest** (Epic 6) | ASPSI-scheduled *(precondition: SJREB clearance + updated CAPI)* | field-ready instruments (Carl, nearly done) · SJREB clearance + date (ASPSI) | 🟠 **Prep underway (2026-07-01)** — ASPSI RAs delivered the unique-QN list (Los Baños, 84 cases: 4 facilities F1+F3 · 2 barangays F4); Carl built the enumerator assignments + printed hand-out sheets, testers assigned + notified. Still **awaiting the confirmed date** from ASPSI (pushed per Jun-19 projection). |
 | **D4** — pilot progress + initial data report | ~~2026-07-13~~ *under revision* | Pretest → enumerator debrief → report | ⚪ Not started — date slips with pretest |
 | **D5** — training documentation | ~~2026-07-31~~ *under revision* | Training decks + manuals (CAPI Manual ✅ ~98%) + delivery + pre/post assessment | 🟡 In progress (CAPI Manual done) |
 | **D6** — final report + dissemination | ~~2026-08-13~~ *under revision* | Fieldwork → data cleaning (Epic 10) → analysis/tabulation (Epic 11) | ⚪ Not started — date slips with pretest |
