@@ -133,3 +133,7 @@ deliverables/CSWeb/*.sql.gz
 # supervisor-hub: UAT tester credentials (live CSWeb passwords — never commit)
 /deliverables/CSPro/supervisor-hub/config/UAT-R6-tester-credentials.md
 /deliverables/CSPro/supervisor-hub/config/uat-r6-csweb-users.csv
+
+# data/ layer (2026-07-03 restructure): credential + bulky sources stay local
+/deliverables/CSPro/data/roster/roster-source.csv
+/deliverables/CSPro/data/facilities/source/

@@ -503,19 +503,19 @@ Q98_ROSTER_PROCS = build_roster_procs(
 # in CHECKBOX_CONVERT below; the Q110=No skip target is re-pointed to Q113_SOURCES.
 Q107_ROSTER_PROCS = build_roster_procs(
     107, "107", [(None, f"{n:02d}") for n in range(1, 11)],
-    set(),
+    {f"{n:02d}" for n in range(1, 11)} - {"09"},   # 2026-07-02: 09 "Don't know" -> non-money (auto-0) — a DK row must not hard-require a fabricated > 0 amount
     "107. Tick at least one payment source for the total bill before continuing.",
     gated_texts=[("10", "Q107_PAY_OTHER_TXT", "107. 'Other' was ticked — please specify.")],
     require_positive=True)   # #757: every ticked payment source must be > 0
 Q109_ROSTER_PROCS = build_roster_procs(
     109, "109", [(None, f"{n:02d}") for n in range(1, 10)],
-    set(),
+    {f"{n:02d}" for n in range(1, 10)} - {"08"},   # 2026-07-02: 08 "Don't know" -> non-money (auto-0)
     "109. Tick at least one payment source for the medicines bought outside before continuing.",
     gated_texts=[("09", "Q109_PAY_OTHER_TXT", "109. 'Other' was ticked — please specify.")],
     require_positive=True)   # #757: every ticked payment source must be > 0
 Q112_ROSTER_PROCS = build_roster_procs(
     112, "112", [(None, f"{n:02d}") for n in range(1, 10)],
-    set(),
+    {f"{n:02d}" for n in range(1, 10)} - {"08"},   # 2026-07-02: 08 "Don't know" -> non-money (auto-0)
     "112. Tick at least one payment source for the services done outside before continuing.",
     gated_texts=[("09", "Q112_PAY_OTHER_TXT", "112. 'Other' was ticked — please specify.")],
     require_positive=True)   # #757: every ticked payment source must be > 0
@@ -940,220 +940,9 @@ preproc
 """
 
 # Multi-branch routing + end-of-survey + cross-field gate (spec 2 D-F/J-L).
-EXTRA_PROCS = """\
-{ ---- Q98 payment-matrix 'Other (specify)' gates: Option B fan-out (#689, 2026-06-19)
-  re-pointed these from the old flat Q98_PAY_06 / Q98_PAY_15 flags (now removed) to
-  pos("06"/"15", Q98_SOURCES). The gated-text PROCs are emitted by Q98_ROSTER_PROCS
-  (build_roster_procs gated_texts=...), not here. ---- }
-
-{ ---- #558/#694 (R4): Q114 (why no PhilHealth) gate ----
-  Q114 is now a Check Box base (select_all -> tick-all); the PhilHealth-availed gate
-  (Q113_PAY_08 = Yes -> skip to Q1141_1) is folded into the Q114_NO_PH checkbox PROC
-  via CHECKBOX_CONVERT. The old PROC Q114_NO_PH_O01 field no longer exists. }
-
-{ ---- #764: Q38.1 PhilHealth-PIN timing is asked ONLY when Q38 = Yes. Only Yes and No reach
-  this field (IDK is already skipped to Q43 by the SKIP_RULES Q38=3 rule). For No, skip ahead
-  to Q38.2 (why-not-registered). 'skip to next' is illegal outside a repeating group, so target
-  the field explicitly. ---- }
-PROC Q38_1_PIN_WHEN
-preproc
-  if Q38_PHILHEALTH_REG <> 1 then
-    skip to Q38_2_WHY_NOT_REG;
-  endif;
-
-{ ---- Multi-branch routing (spec 2) ---- }
-{ #418/#419 (R4): Q63 usual-facility block. Spec 3.6 — Q64 (facility name) and Q66-Q70
-  are enabled when Q63=Yes; Q65 (why-no-usual) is enabled when Q63=No. The old logic was
-  inverted: it skipped Q64 on Yes (jumped straight to Q66) and never gated Q66-Q70 off on
-  No (so they were asked for everyone). Corrected routing:
-    Q63=Yes(1) -> fall through to Q64 -> (Q64 postproc) skip Q65 -> Q66..Q70 -> Q71
-    Q63=No(2)  -> skip Q64 -> Q65 reasons -> (Q66 preproc) skip Q66-Q70 -> Q71 }
-PROC Q63_HAS_USUAL_FACILITY
-postproc
-  if Q63_HAS_USUAL_FACILITY = 2 then  skip to Q65_WHY_NO_USUAL; endif;  { No -> reasons-why-none (skip Q64). #529: Q65 is now the Check Box base (was _O01) }
-
-PROC Q64_FACILITY_NAME
-postproc
-  skip to Q66_SAME_AS_USUAL;   { reached only when Q63=Yes -> skip Q65 why-no-usual block }
-
-PROC Q66_SAME_AS_USUAL
-preproc
-  if Q63_HAS_USUAL_FACILITY <> 1 then  skip to Q71_NEAREST_TYPE; endif;  { No-usual path: skip the Q66-Q70 facility block }
-postproc
-  if Q66_SAME_AS_USUAL = 1 then  skip to Q69_USUAL_TRAVEL_HH; endif;      { #769: this IS the usual facility -> skip Q67 (why-different) AND Q68 (usual-type) straight to Q69 }
-
-PROC Q77_KON_REGISTERED
-postproc
-  if Q77_KON_REGISTERED = 2    then  skip to Q82_KON_WHY_NOT_REG; endif;  { Not registered -> reasons. #671: Q82 is now the Check Box base (was _O01) }
-  if Q77_KON_REGISTERED = 3    then  skip to Q83_VISIT_REASON;    endif;  { #770: 'I've never heard of it'(3) RESTORED -> Q83 (reverses #430) }
-  if Q77_KON_REGISTERED = 4    then  skip to Q83_VISIT_REASON;    endif;  { IDK(4) exits Section E -> Q83 }
-
-{ #389/#671: the "why NOT registered" gate (registered patient falls through Q78-Q81 into
-  Q82 -> skip to Section F) now lives in the Q82_KON_WHY_NOT_REG checkbox PROC's `gate`
-  param (CHECKBOX_CONVERT below); the old PROC Q82_KON_WHY_NOT_REG_O01 field no longer exists. }
-
-PROC Q159_BRAND_GEN_BOUGHT
-postproc
-  if Q159_BRAND_GEN_BOUGHT = 1 then  skip to Q161_WHY_BRANDED; endif;  { Branded -> why-branded (#696: Q161 now a Check Box base; skip target is the base field, not _O01) }
-  { #732 (R5): 'Don't know the difference' (4) RESTORED to the paper -> Q162 (referral section
-    start), reversing #618. ASPSI tester wants the paper's literal option set + routing. }
-  if Q159_BRAND_GEN_BOUGHT = 4 then  skip to Q162_REFERRED;        endif;  { #732: Don't-know-the-difference -> Q162 (restored) }
-  { #731 (R5): 'Not applicable' (5) -> Q164 per the paper (tester screenshot + F3_clean
-    'Proceed to Q156' = field Q164_SPECIALIST, +8 numbering offset), reversing #501's Q162.
-    #501 had flagged Q164 as a Q162=Yes follow-up ("orphaned" landing); per Carl 'do what the
-    testers need', we follow the paper's literal routing — downstream-flow refinement is ASPSI's call. }
-  if Q159_BRAND_GEN_BOUGHT = 5 then  skip to Q164_SPECIALIST;      endif;  { #731: Not applicable -> Q164 (was Q162 #501) }
-
-{ ---- Section D: non-members skip the benefits/premium block (Q46-Q50). #529: Q46 is now
-  a Check Box field — this gate moved into the Q46_BENEFITS checkbox PROC's `gate` param
-  (CHECKBOX_CONVERT below); the old PROC Q46_BENEFITS_O01 field no longer exists. ---- }
-
-{ ---- R4 sweep enabled-when GATES (#402 / #415 / #417) ---- }
-PROC Q45_CATEGORY
-preproc
-  { #402: member-category (Q45) is PhilHealth-members-only (spec 3.5: Q45 enabled when
-    Q38=Yes). A non-member must skip the whole Q45-Q50 member/benefits/premium block to Q51. }
-  if Q38_PHILHEALTH_REG <> 1 then  skip to Q51_OTHER_INSURANCE; endif;
-postproc
-  { spec 3.5 SOFT: 'Senior citizen' category (6) but patient under 60 — warn-and-continue }
-  if Q38_PHILHEALTH_REG = 1 and Q45_CATEGORY = 6 and Q6_AGE < 60 then
-    errmsg("Q45 = Senior citizen but patient age (%d) is under 60 — confirm.", Q6_AGE);
-  endif;
-
-PROC Q60_SCHED_TELECON_OK
-preproc
-  { #415: scheduling-teleconsult-success (Q60) only if a teleconsult mode was ticked in the
-    Q59 Check Box (spec 3.6: Q60 enabled when Q59 includes Teleconsultation).
-    #767: 'Teleconsultation' is now the three sub-modes — codes "02" (Cellphone), "03"
-    (Landline), "04" (Video Conference). Skip Q60 only if NONE of the three is ticked
-    (i.e. Face-to-face "01" only, or nothing). }
-  if pos("02", Q59_SCHED_COMM) = 0 and pos("03", Q59_SCHED_COMM) = 0 and pos("04", Q59_SCHED_COMM) = 0 then  skip to Q61_CONSULT_COMM; endif;
-
-PROC Q62_CONSULT_TELECON_OK
-preproc
-  { #417: consultation-teleconsult-success (Q62) only if a teleconsult mode was ticked in
-    the Q61 Check Box (spec 3.6: Q62 enabled when Q61 includes Teleconsultation).
-    #767: 'Teleconsultation' is now the three sub-modes — codes "02" (Cellphone), "03"
-    (Landline), "04" (Video Conference). Skip Q62 only if NONE of the three is ticked. }
-  if pos("02", Q61_CONSULT_COMM) = 0 and pos("03", Q61_CONSULT_COMM) = 0 and pos("04", Q61_CONSULT_COMM) = 0 then  skip to Q63_HAS_USUAL_FACILITY; endif;
-
-{ ---- Q93 labs: 'None' exclusivity (#448) + skip the Q94 cost matrix (spec G). #673: Q93 is
-  now a Check Box base — the exclusivity soft-warn (pos("90") stands alone) and the 'None' ->
-  skip Q94 are both folded into the Q93_LABS checkbox PROC (CHECKBOX_CONVERT below, exclusive
-  + postskip params); the old PROC Q93_LABS_O17 field no longer exists. ---- }
-
-{ ---- Section I confinement-context gates (#476/#479): ZBB 'upon admission' (Q122/Q123)
-  and MAIFIP 'this last confinement' (Q126-Q129) are inpatient-only — an outpatient has no
-  confinement to answer about. Q120/Q121 (general ZBB awareness) and Q130 (general spending)
-  stay for both. ---- }
-PROC Q122_ZBB_INFORMED
-preproc
-  if PATIENT_TYPE <> 2 then  skip to Q124_MAIFIP_HEARD; endif;   { #476: skip Q122/Q123 for outpatient }
-
-PROC Q126_MAIFIP_AVAILED
-preproc
-  if PATIENT_TYPE <> 2 then  skip to Q130_REDUCED_SPEND; endif;  { #479: skip Q126-Q129 for outpatient }
-postproc
-  if Q126_MAIFIP_AVAILED = 2 then  skip to Q129_WHY_NO_MAIFIP; endif;  { #482/#700: didn't avail -> ask why-not (skip Q127/Q128); target is the Check Box base }
-
-{ ---- Q129 'why not avail MAIFIP' (#482): only for those who did NOT avail (Q126=No=2).
-  Reached directly when Q126=No; on the Q126=Yes path (after Q127/Q128) skip it to Q130.
-  #700: Q129 is now a Check Box base; this gate is folded into its checkbox PROC via
-  CHECKBOX_CONVERT. The old PROC Q129_WHY_NO_MAIFIP_O01 field no longer exists. ---- }
-
-{ ---- Section L: not referred -> end of survey. Route to the closing Result-of-Visit +
-  Verification Photo. Do NOT endlevel here: the photo form is the LAST form, so ending
-  the level at this point skips the photo (bug found in R4 on-device review 2026-06-12). ---- }
-PROC Q162_REFERRED
-postproc
-  if Q162_REFERRED = 2 then
-    ENUM_RESULT_FINAL_VISIT = 1;   { default Completed; enumerator confirms it on the closing form }
-    skip to ENUM_RESULT_FINAL_VISIT;   { skip the referred-only Q163/Q164, land on Result-of-Visit; the Verification Photo form follows it }
-  endif;
-
-{ ---- Section K/L R4 sweep (Wave 4, 2026-06-14): gating + required fixes ---- }
-
-{ #490: Q147 meds list is required when reached (Q145<>5 already gates the whole Q146-Q151
-  block, so reaching Q147 means the patient purchases meds). Was advanceable while blank. }
-PROC Q147_MEDS_LIST
-postproc
-  if length(strip(Q147_MEDS_LIST)) = 0 then
-    errmsg("Q147: list the medications taken (type 'None' if the patient takes none) — required.");
-    reenter;
-  endif;
-
-{ #498: Q156 'list the GAMOT medicines' + Q157 'where got the rest' are both enabled only when
-  Q155 = Yes (got meds from GAMOT). Was: Q156/Q157 always asked, Q156 advanceable while blank. }
-PROC Q155_GAMOT_GOT_MEDS
-postproc
-  if Q155_GAMOT_GOT_MEDS = 2 then  skip to Q158_BRAND_GEN_KNOW; endif;  { No -> skip Q156/Q157 }
-
-PROC Q156_GAMOT_MEDS_LIST
-preproc
-  if Q155_GAMOT_GOT_MEDS <> 1 then
-    Q156_GAMOT_MEDS_LIST = "";   { gated: only when Q155 = Yes }
-    noinput;
-  endif;
-postproc
-  if Q155_GAMOT_GOT_MEDS = 1 and length(strip(Q156_GAMOT_MEDS_LIST)) = 0 then
-    errmsg("Q156: list the medicines obtained from GAMOT — required when Q155 = Yes.");
-    reenter;
-  endif;
-
-{ #503/#696: Q161 'why branded' is enabled only for Branded/Both (Q159 in 1,3). Generic (2)
-  falls through Q160 into Q161 — gate it out to Section L. Q159 = 4/5 already skip to Q162
-  earlier. Q161 is now a Check Box base; this gate is folded into the Q161_WHY_BRANDED
-  checkbox PROC via CHECKBOX_CONVERT. The old PROC Q161_WHY_BRANDED_O01 field no longer exists. }
-
-{ #799: Q169 routing. 'No, I'm not planning to' (2) -> Q171 (why not visited). 'Not yet, but
-  I'm planning to' (3) -> Q172 (skip Q170 + Q171: they ARE planning to go, so 'why not' is moot).
-  'Yes' (1) falls through to Q170 (the only path that reaches it). Replaces the old single
-  'in 2,3 -> Q171' skip rule. }
-PROC Q169_VISITED
-postproc
-  if Q169_VISITED = 2 then  skip to Q171_WHY_NOT;      endif;
-  if Q169_VISITED = 3 then  skip to Q172_PCP_REFERRAL; endif;
-
-{ #508: Q170 follow-up is reached only on Q169 = Yes (codes 2/3 are routed away above). After the
-  follow-up, the Yes path skips Q171 'why not visited' to Q172 (spec §4.15, explicit). }
-PROC Q170_FOLLOWUP
-postproc
-  skip to Q172_PCP_REFERRAL;
-
-{ #511: Q177 'why hospital' is enabled only when Q172 = No (Q172 = 2 skips Q173-Q176 to Q177).
-  The Q172 = Yes path falls through Q173-Q176 into Q177 — gate it out to Q178. #529: Q177 is
-  now a Check Box field — this gate moved into the Q177_WHY_HOSPITAL checkbox PROC's `gate`
-  param (CHECKBOX_CONVERT below); the old PROC Q177_WHY_HOSPITAL_O01 field no longer exists. }
-
-{ ---- Q148 Check Box multi-select (R4 redesign 2026-06-12) — one alpha field of
-  concatenated 2-digit condition codes (CSEntry Check Box). 'Other'=99 / 'No condition'=19
-  are chosen so pos() can't false-match across code boundaries (no valid code starts with 9).
-  The old 20 Yes/No items are gone, so these are hand-written (the select-all auto-gen no
-  longer sees an _O run for Q148). ---- }
-PROC Q148_CONDITIONS
-postproc
-  if length(strip(Q148_CONDITIONS)) = 0 then
-    errmsg("Tick at least one medical condition (or 'No condition - Regular check-up only').");
-    reenter;
-  endif;
-  { exclusivity (soft warn): 'No condition - Regular check-up only' (19) should stand alone }
-  if pos("19", Q148_CONDITIONS) > 0 and length(strip(Q148_CONDITIONS)) > 2 then
-    errmsg("'No condition - Regular check-up only' is usually the only choice — please review the conditions ticked.");
-  endif;
-
-PROC Q148_CONDITIONS_OTHER_TXT
-preproc
-  if pos("99", Q148_CONDITIONS) = 0 then
-    Q148_CONDITIONS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
-    noinput;
-  endif;
-postproc
-  if pos("99", Q148_CONDITIONS) > 0 and length(strip(Q148_CONDITIONS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q148 — please specify.");
-    reenter;
-  endif;
-
-"""
+# R1a (2026-07-03): the hand-written PROCs (photo flow, Q148, gated texts, ...) lives in procs/extra_procs.apc — a real .apc fragment,
+# editable/diffable as CSPro code. Spliced verbatim at generation time.
+EXTRA_PROCS = (Path(__file__).resolve().parent / "procs" / "extra_procs.apc").read_text(encoding="utf-8")
 
 
 # --- #529 multi-select conversion: the 13 F3 'Patient Survey' select_all bases that
@@ -1236,11 +1025,20 @@ CHECKBOX_CONVERT = [
     # generic exclusivity warn can't express it — pass the Q83=4 confirm + 'stands alone'
     # soft-warns as a postextra block on pos() membership tests (was SOFT_CROSS Q85_..._O19).
     ("Q85_CONDITIONS",           True,  False, None,
-     "  if Q83_VISIT_REASON = 4 and pos(\"19\", Q85_CONDITIONS) = 0 then\n"
+     "  { #435/#673 + 2026-07-02 #450-class fix: '19' membership chunk-scans — pos(\"19\", ...)\n"
+     "    false-matched across code boundaries (01+99 packs \"0199\"), both firing the stand-alone\n"
+     "    warn on innocent combos AND falsely satisfying the Q83 cross-check. }\n"
+     "  q85Hit19 = 0;\n"
+     "  q85N = length(strip(Q85_CONDITIONS)) / 2;\n"
+     "  do q85K = 1 while q85K <= q85N\n"
+     "    q85P = (q85K - 1) * 2 + 1;\n"
+     "    if tonumber(Q85_CONDITIONS[q85P:2]) = 19 then q85Hit19 = 1; endif;\n"
+     "  enddo;\n"
+     "  if Q83_VISIT_REASON = 4 and q85Hit19 = 0 then\n"
      "    errmsg(\"Q83 = general check-up but Q85 is not 'No condition / regular check-up only' — confirm.\");\n  endif;\n"
-     "  { #435/#673: 'No condition - Regular check-up only' (19) should stand alone — warn if combined (mirrors Q148) }\n"
-     "  if pos(\"19\", Q85_CONDITIONS) > 0 and length(strip(Q85_CONDITIONS)) > 2 then\n"
-     "    errmsg(\"'No condition - Regular check-up only' was ticked with other condition(s) — it should usually be the only choice. Please review.\");\n  endif;"),  # 'Other (Specify)' (99)
+     "  if q85Hit19 = 1 and length(strip(Q85_CONDITIONS)) > 2 then\n"
+     "    errmsg(\"'No condition - Regular check-up only' was ticked with other condition(s) — it should usually be the only choice. Please review.\");\n  endif;",
+     "  numeric q85N; numeric q85K; numeric q85P; numeric q85Hit19;"),  # 'Other (Specify)' (99)
     ("Q86_VISIT_EVENTS",         True,  False, None),  # #438: + 'Other (Specify)' (99) escape; no None/IDK
     # Q87 'Did not seek other forms of care' is code 06 (a substantive option, NOT the
     # generic exclusive 90), so the generic 90-exclusivity warn can't express it — pass a
@@ -1290,7 +1088,8 @@ CHECKBOX_CONVERT = [
 ]
 
 
-def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postextra=None):
+def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postextra=None,
+                       postextra_decls=None):
     """Emit the bespoke PROC(s) for one converted Check Box base — select->=1 (hard),
     an optional exclusivity soft-warn (the 90-coded standalone option should stand alone),
     an optional preproc gate, an optional postproc-tail block (postextra: a code block that
@@ -1302,8 +1101,10 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postextra=None):
     body = [f"PROC {base}"]
     if gate:
         body += ["preproc", gate]
-    body += ["postproc",
-             f"  if length(strip({base})) = 0 then",
+    body += ["postproc"]
+    if postextra_decls:
+        body += [postextra_decls]   # CSPro locals must be declared at the top of the block
+    body += [f"  if length(strip({base})) = 0 then",
              f'    errmsg("Select at least one option for Q{qn} before continuing.");',
              "    reenter;", "  endif;"]
     if exclusive:
@@ -1315,12 +1116,30 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postextra=None):
         body += [postextra]
     procs = {base: "\n".join(body)}
     if has_other:
+        # 2026-07-02 #450-class fix: '99' membership via an aligned 2-char chunk scan.
+        # pos("99", <cb>) false-matched when a 9-ending code preceded a 9-starting one
+        # (e.g. 09+90 packs "0990") — the postproc then hard-blocked until the enumerator
+        # typed junk into the specify box. do..while + [p:2] + tonumber are Publish-safe.
         procs[f"{base}_OTHER_TXT"] = (
             f"PROC {base}_OTHER_TXT\npreproc\n"
-            f'  if pos("99", {base}) = 0 then\n'
+            f"  numeric otN; numeric otK; numeric otP; numeric otHit;\n"
+            f"  otHit = 0;\n"
+            f"  otN = length(strip({base})) / 2;\n"
+            f"  do otK = 1 while otK <= otN\n"
+            f"    otP = (otK - 1) * 2 + 1;\n"
+            f"    if tonumber({base}[otP:2]) = 99 then otHit = 1; endif;\n"
+            f"  enddo;\n"
+            f"  if otHit = 0 then\n"
             f'    {base}_OTHER_TXT = "";   {{ gated: \'Other (specify)\' not ticked -> not enterable }}\n'
             f"    noinput;\n  endif;\npostproc\n"
-            f'  if pos("99", {base}) > 0 and length(strip({base}_OTHER_TXT)) = 0 then\n'
+            f"  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;\n"
+            f"  otHit2 = 0;\n"
+            f"  otN2 = length(strip({base})) / 2;\n"
+            f"  do otK2 = 1 while otK2 <= otN2\n"
+            f"    otP2 = (otK2 - 1) * 2 + 1;\n"
+            f"    if tonumber({base}[otP2:2]) = 99 then otHit2 = 1; endif;\n"
+            f"  enddo;\n"
+            f"  if otHit2 = 1 and length(strip({base}_OTHER_TXT)) = 0 then\n"
             f'    errmsg("\'Other (specify)\' was ticked for Q{qn} - please specify.");\n'
             "    reenter;\n  endif;"
         )
@@ -1329,10 +1148,11 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postextra=None):
 
 CHECKBOX_MULTISELECT_PROCS = {}
 for _row in CHECKBOX_CONVERT:
-    # rows are (base, has_other, exclusive, gate) or (..., gate, postextra)
+    # rows are (base, has_other, exclusive, gate[, postextra[, postextra_decls]])
     _b, _o, _x, _g = _row[0], _row[1], _row[2], _row[3]
     _pe = _row[4] if len(_row) > 4 else None
-    CHECKBOX_MULTISELECT_PROCS.update(_gen_checkbox_proc(_b, _o, _x, _g, _pe))
+    _pd = _row[5] if len(_row) > 5 else None
+    CHECKBOX_MULTISELECT_PROCS.update(_gen_checkbox_proc(_b, _o, _x, _g, _pe, _pd))
 
 # Append the generated Check Box PROCs to EXTRA_PROCS so they emit alongside the
 # hand-written Q148 block and are seeded into `covered` (via CHECKBOX_COVERED).

@@ -6,7 +6,7 @@ April 20 2026 Revised Inception Report submission (202 numbered items
 across sections A–Q; supersedes the Apr 08 baseline).
 
 PSGC value sets are sourced from the PSA 1Q 2026 publication, parsed once
-under F1/inputs/ and shared across F-series generators.
+under data/psgc/ (moved 2026-07-03) and shared across F-series generators.
 
 Run:
     python generate_dcf.py        # writes HouseholdSurvey.dcf next to this file

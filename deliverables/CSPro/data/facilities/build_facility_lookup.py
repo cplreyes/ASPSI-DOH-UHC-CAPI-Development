@@ -4,8 +4,9 @@ so entering the 12-digit Questionnaire Number can auto-fill the facility's name 
 region + province/HUC. Keyed by the 9-digit facility code (= REGION_CODE +
 PROVINCE_HUC_CODE + CITY_MUNICIPALITY_CODE + FACILITY_NO concatenated).
 
-Source : Downloads\DOH UHC Yr2 Health Facility Coding.xlsx  (sheet "Facility Codes")
-Outputs: F1\facility_lookup.dcf  +  F1\facility_lookup.dat   (bundled app-relative)
+Source : source\DOH UHC Yr2 Health Facility Coding.xlsx  (sheet "Facility Codes";
+         gitignored — DOH masterlist stays out of the public repo)
+Outputs: ..\..\F1\facility_lookup.dcf + .dat   (bundled app-relative, gitignored)
 
 Usage: py build_facility_lookup.py
 """
@@ -13,8 +14,9 @@ import json
 from pathlib import Path
 import openpyxl
 
-SRC = Path(r"C:\Users\analy\Downloads\DOH UHC Yr2 Health Facility Coding.xlsx")
-OUTDIR = Path(__file__).resolve().parent.parent / "F1"
+HERE = Path(__file__).resolve().parent
+SRC = HERE / "source" / "DOH UHC Yr2 Health Facility Coding.xlsx"
+OUTDIR = HERE.parent.parent / "F1"
 
 # fixed-width record layout (chars). F_CODE is the id.
 W = {"F_CODE": 9, "F_REGION": 40, "F_PROVINCE": 60, "F_NAME": 120, "F_TYPE": 30, "F_OWNERSHIP": 40}

@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Build four CSPro external lookup dictionaries + data files from the
-PSA-authoritative PSGC CSVs in F1/inputs/.
+PSA-authoritative PSGC CSVs in this folder (data/psgc/).
+
+Pipeline: PSGC-<quarter>-Publication-Datafile.xlsx --parse_psgc.py--> 4 CSVs
+          --this script--> ../../shared/psgc_*.dcf + .dat  (consumer paths unchanged).
+Provenance + refresh procedure: PSGC-VERSION.md alongside.
 
 Each dictionary has:
   - one ID item holding the parent code (10 digits, zero-filled)
@@ -13,7 +17,7 @@ repeating occurrences in a single case.
 Regions have no real parent; we use the sentinel parent_code 0000000000.
 
 Invocation:
-    python deliverables/CSPro/shared/build_psgc_lookups.py
+    python deliverables/CSPro/data/psgc/build_psgc_lookups.py
 """
 
 from __future__ import annotations
@@ -23,7 +27,8 @@ import json
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-PSGC_CSV_DIR = HERE.parent / "F1" / "inputs"
+PSGC_CSV_DIR = HERE
+OUT_DIR = HERE.parent.parent / "shared"
 
 CODE_WIDTH = 10
 NAME_WIDTH = 80
@@ -113,12 +118,12 @@ def build_regions() -> None:
         "R_PARENT_CODE", "PSGC_REGION_REC", "Region record",
         "R_CODE", "R_NAME", max_occurrences=20,
     )
-    _write_dict(HERE / "psgc_region.dcf", template)
+    _write_dict(OUT_DIR /"psgc_region.dcf", template)
 
     rows = []
     for r in _load_csv(PSGC_CSV_DIR / "psgc_region.csv"):
         rows.append((ROOT_PARENT, _pad(r["code"]), r["name"]))
-    _write_data(HERE / "psgc_region.dat", rows)
+    _write_data(OUT_DIR /"psgc_region.dat", rows)
     print(f"PSGC regions: {len(rows)} rows")
 
 
@@ -128,12 +133,12 @@ def build_provinces() -> None:
         "P_PARENT_REGION", "PSGC_PROVINCE_REC", "Province / HUC record",
         "P_CODE", "P_NAME", max_occurrences=30,
     )
-    _write_dict(HERE / "psgc_province.dcf", template)
+    _write_dict(OUT_DIR /"psgc_province.dcf", template)
 
     rows = []
     for r in _load_csv(PSGC_CSV_DIR / "psgc_province_huc.csv"):
         rows.append((_pad(r["parent_region"]), _pad(r["code"]), r["name"]))
-    _write_data(HERE / "psgc_province.dat", rows)
+    _write_data(OUT_DIR /"psgc_province.dat", rows)
     print(f"PSGC provinces: {len(rows)} rows")
 
 
@@ -143,12 +148,12 @@ def build_cities() -> None:
         "C_PARENT_PROVINCE", "PSGC_CITY_REC", "City / Municipality record",
         "C_CODE", "C_NAME", max_occurrences=60,
     )
-    _write_dict(HERE / "psgc_city.dcf", template)
+    _write_dict(OUT_DIR /"psgc_city.dcf", template)
 
     rows = []
     for r in _load_csv(PSGC_CSV_DIR / "psgc_city_municipality.csv"):
         rows.append((_pad(r["parent_province_huc"]), _pad(r["code"]), r["name"]))
-    _write_data(HERE / "psgc_city.dat", rows)
+    _write_data(OUT_DIR /"psgc_city.dat", rows)
     print(f"PSGC cities/municipalities: {len(rows)} rows")
 
 
@@ -158,12 +163,12 @@ def build_barangays() -> None:
         "B_PARENT_CITY", "PSGC_BARANGAY_REC", "Barangay record",
         "B_CODE", "B_NAME", max_occurrences=2000,
     )
-    _write_dict(HERE / "psgc_barangay.dcf", template)
+    _write_dict(OUT_DIR /"psgc_barangay.dcf", template)
 
     rows = []
     for r in _load_csv(PSGC_CSV_DIR / "psgc_barangay.csv"):
         rows.append((_pad(r["parent_city_municipality"]), _pad(r["code"]), r["name"]))
-    _write_data(HERE / "psgc_barangay.dat", rows)
+    _write_data(OUT_DIR /"psgc_barangay.dat", rows)
     print(f"PSGC barangays: {len(rows)} rows")
 
 

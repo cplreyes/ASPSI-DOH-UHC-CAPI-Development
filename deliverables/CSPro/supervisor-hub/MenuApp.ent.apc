@@ -115,32 +115,28 @@ end;
 function send_to_supervisor()
   { B6 - push THIS enumerator's captured cases to the supervisor over Bluetooth. Transport = the
     C2-DEVICE-PROVEN syncconnect(Bluetooth)+syncdata(PUT)+syncdisconnect (the exact SyncSpike shape:
-    syncconnect tested in an if, syncdata as a statement). Routes to the assigned instrument
-    (AS_INSTRUMENT from the received assignment; defaults to F3, the test instrument, when none is
-    loaded yet). The cases live in the instrument's OWN separately-installed .csdb (../<App>/<App>.csdb),
-    declared EXTERNAL here. PUT is non-destructive - the enumerator keeps their copy (proven in C2).
-    DEVICE-UNCONFIRMED (verify on the 2-tablet rig): syncdata against an external mapped to a SIBLING
-    app's live .csdb, and the no-assignment default. }
-  string instr;
-  setfile(ASSIGNMENT_DICT, "MyAssignment.dat");
-  instr = "";
-  forcase ASSIGNMENT_DICT do
-    instr = strip(AS_INSTRUMENT);
-  enddo;
-  if instr = "" then
-    instr = "F3";   { default to the F3 test instrument when no assignment has been received }
-  endif;
+    syncconnect tested in an if, syncdata as a statement).
+    #829 (2026-07-03): sends ALL THREE instrument dicts unconditionally. The old send routed by
+    the RECEIVED assignment (MyAssignment.dat) and silently defaulted to F3 when none was loaded -
+    on the R6 rig se-001 conducted an F1 interview, the hub PUT the empty F3 dict, reported
+    "Sent your F3 interviews", and the F1 case never left the tablet. Sending all three closes
+    both gaps (wrong default + interviews conducted off-assignment): PUT of an empty dict syncs
+    nothing, PUT is non-destructive - the enumerator keeps their copies (proven in C2). The cases
+    live in each instrument's OWN separately-installed .csdb (../<App>/<App>.csdb), declared
+    EXTERNAL here. Per-dict forcase counts (the report-proven idiom) make the confirmation state
+    exactly what was sent. }
+  numeric sn1; numeric sn3; numeric sn4;
+  sn1 = 0; sn3 = 0; sn4 = 0;
+  forcase FACILITYHEADSURVEY_DICT do sn1 = sn1 + 1; enddo;
+  forcase PATIENTSURVEY_DICT do sn3 = sn3 + 1; enddo;
+  forcase HOUSEHOLDSURVEY_DICT do sn4 = sn4 + 1; enddo;
   if syncconnect(Bluetooth) then
-    if instr = "F1" then
-      syncdata(PUT, FACILITYHEADSURVEY_DICT);
-    elseif instr = "F4" then
-      syncdata(PUT, HOUSEHOLDSURVEY_DICT);
-    else
-      syncdata(PUT, PATIENTSURVEY_DICT);
-    endif;
+    syncdata(PUT, FACILITYHEADSURVEY_DICT);
+    syncdata(PUT, PATIENTSURVEY_DICT);
+    syncdata(PUT, HOUSEHOLDSURVEY_DICT);
     syncdisconnect();
-    errmsg("Sent your " + instr + " interviews to the supervisor over Bluetooth. Your own copies "
-             + "are unchanged (non-destructive).");
+    errmsg(maketext("Sent your interviews to the supervisor over Bluetooth - F1: %d, F3: %d, "
+             + "F4: %d. Your own copies are unchanged (non-destructive).", sn1, sn3, sn4));
   else
     errmsg("Couldn't connect over Bluetooth. Check: (1) Bluetooth is ON on BOTH tablets, and "
              + "(2) the supervisor has started 'Collect Interviews from Enumerators' - then retry.");
@@ -248,10 +244,10 @@ preproc
   string dopt;
   dopt = '{"width":380,"height":600,"resizable":false,"keyboard":0}';
   if strip(m_role) = "supervisor" then
-    menuJson = concat('{"title":"', strip(m_op), ' - Supervisor","groups":[{"header":"ASSIGNMENTS","items":[{"label":"Assign Enumeration Area","action":"assign"}]},{"header":"COLLECT & RELAY","items":[{"label":"Collect Interviews ', 'from Enumerators","action":"collect"},{"label":"Relay Collected Interviews to CSWeb","action":"relay"}]},{"header":"REVIEW & REPORTS","items":[{"label":"Survey Interview - view rep', 'ort","action":"report_sup"},{"label":"View EA on Map","action":"map"},{"label":"Open F1 - Facility Head (review)","action":"open_f1"},{"label":"Open F3 - Patient (review)","action"', ':"open_f3"},{"label":"Open F4 - Household (review)","action":"open_f4"}]},{"header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
+    menuJson = concat('{"title":"', strip(m_op), ' - Supervisor","ver":"Hub v1.0.1 (2026-07-03)","groups":[{"header":"ASSIGNMENTS","items":[{"label":"Assign Enumeration Area","action":"assign"}]},{"header":"COLLECT & RELAY","items', '":[{"label":"Collect Interviews from Enumerators","action":"collect"},{"label":"Relay Collected Interviews to CSWeb","action":"relay"}]},{"header":"REVIEW & REPORTS","items":[{"lab', 'el":"Survey Interview - view report","action":"report_sup"},{"label":"View EA on Map","action":"map"},{"label":"Open F1 - Facility Head (review)","action":"open_f1"},{"label":"Open', ' F3 - Patient (review)","action":"open_f3"},{"label":"Open F4 - Household (review)","action":"open_f4"}]},{"header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
     res = htmldialog("menu.html", inputData := menuJson, displayOptions := dopt);
   elseif strip(m_role) = "enumerator" then
-    menuJson = concat('{"title":"', strip(m_op), ' - Enumerator","groups":[{"header":"ASSIGNMENT","items":[{"label":"Receive Assigned Data","action":"receive"}]},{"header":"INTERVIEWS","items":[{"label":"Conduct F1 - Facility Head', ' Interview","action":"open_f1"},{"label":"Conduct F3 - Patient Interview","action":"open_f3"},{"label":"Conduct F4 - Household Interview","action":"open_f4"},{"label":"Send My Inte', 'rviews to Supervisor","action":"send"}]},{"header":"REPORTS","items":[{"label":"View EA on Map","action":"map"},{"label":"View my report","action":"report_enum"}]},{"header":"SESSI', 'ON","items":[{"label":"Log out","action":"logout"}]}]}');
+    menuJson = concat('{"title":"', strip(m_op), ' - Enumerator","ver":"Hub v1.0.1 (2026-07-03)","groups":[{"header":"ASSIGNMENT","items":[{"label":"Receive Assigned Data","action":"receive"}]},{"header":"INTERVIEWS","items":[{"la', 'bel":"Conduct F1 - Facility Head Interview","action":"open_f1"},{"label":"Conduct F3 - Patient Interview","action":"open_f3"},{"label":"Conduct F4 - Household Interview","action":"', 'open_f4"},{"label":"Send My Interviews to Supervisor","action":"send"}]},{"header":"REPORTS","items":[{"label":"View EA on Map","action":"map"},{"label":"View my report","action":"', 'report_enum"}]},{"header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
     res = htmldialog("menu.html", inputData := menuJson, displayOptions := dopt);
   else
     errmsg("No role found from login. Close and sign in again via LoginApp.");

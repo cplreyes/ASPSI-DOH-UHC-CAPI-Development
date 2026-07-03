@@ -24,37 +24,58 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+
+# Hub build version (versioning extended to the hub 2026-07-02; SemVer like the instruments).
+# ../versions.json is the single source of truth — bump via `py ../automation/stamp_version.py
+# bump HUB`, which re-runs this build. The version lands on the generated .pff Descriptions
+# (CSEntry app list; these pffs are GENERATOR-owned, unlike the instruments') and in the
+# role-menu JSON, which menu.html renders as a footer line.
+_BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["HUB"]
+HUB_VERSION = f"v{_BUILD['version']} ({_BUILD['date']})"
 sys.path.insert(0, str(HERE.parent))   # deliverables/CSPro  (for cspro_helpers)
 from cspro_helpers import (             # noqa: E402
     alpha, select_one, record, build_dictionary, write_dcf, _truncate_long_labels,
 )
 
 # ----------------------------------------------------------------------------
-# Seed roster (spike only — placeholder creds, rotate before any real use).
+# Data sources (externalized 2026-07-03 — the data/ layer; see ../data/*/README).
+# The hub build stays the SINGLE WRITER of the deployed artifacts; only the row
+# data moved out of this file.
 # ----------------------------------------------------------------------------
-ROSTER_ROWS = [
-    # (username, password, role, operator_id, cluster, supervisor_id)
-    # C5 — supervisor_id models the enumerator->supervisor hierarchy ("who reports to me");
-    # Khurshid's UsernamePassword.dcf carries this. Enumerators point at their supervisor; the
-    # supervisor's own supervisor_id is blank (top of this chain). Encryption + device-bound
-    # login stay ASPSI-gated (real names/creds) — not built here.
-    # UAT Round 6 tester roster (2026-06-29). Hub login is a LOCAL plaintext gate
-    # (UserRoster.dat ships in the app) — typeable test passwords here; the REAL
-    # security is each tester's CSWeb account (strong pw), see
-    # config/UAT-R6-tester-credentials.md + config/uat-r6-csweb-users.csv.
-    # Two teams, each covering F1/F3/F4 so a supervisor+enumerator pair can exercise
-    # the full assign -> collect -> relay Bluetooth choreography.
-    # --- Team A — Supervisor fs-01 (Aidan) ---
-    ("se-001", "uhc26se001", "enumerator", "se-001", "04034", "fs-01"),
-    ("se-002", "uhc26se002", "enumerator", "se-002", "04034", "fs-01"),
-    ("se-003", "uhc26se003", "enumerator", "se-003", "04034", "fs-01"),
-    ("se-004", "uhc26se004", "enumerator", "se-004", "04034", "fs-01"),  # Marriz (also fs-02 sup) — Team A enum so she doesn't supervise herself
-    ("fs-01",  "uhc26fs01",  "supervisor", "fs-01",  "04034", ""),
-    # --- Team B — Supervisor fs-02 (Marriz) ---
-    ("se-005", "uhc26se005", "enumerator", "se-005", "04034", "fs-02"),
-    ("se-006", "uhc26se006", "enumerator", "se-006", "04034", "fs-02"),
-    ("fs-02",  "uhc26fs02",  "supervisor", "fs-02",  "04034", ""),
-]
+DATA_DIR = HERE.parent / "data"
+
+
+def _load_csv_rows(csv_path, n_cols, what):
+    """Load an n-column CSV (header row required) into a list of str tuples,
+    preserving file order. Hard-stop with a helpful message if missing."""
+    import csv as _csv
+    if not csv_path.exists():
+        sys.exit(
+            f"MISSING {what} source: {csv_path}\n"
+            f"  (gitignored data source — copy the *.template.csv alongside it to "
+            f"{csv_path.name} and fill in real rows)")
+    with csv_path.open(encoding="utf-8-sig", newline="") as fh:
+        rows = [tuple((v or "").strip() for v in r) for r in _csv.reader(fh)]
+    header, rows = rows[0], rows[1:]
+    if len(header) != n_cols:
+        sys.exit(f"{csv_path}: expected {n_cols} columns, found {len(header)} ({header})")
+    bad = [r for r in rows if len(r) != n_cols]
+    if bad:
+        sys.exit(f"{csv_path}: rows with wrong column count: {bad[:3]}")
+    return rows
+
+
+# Login roster — (username, password, role, operator_id, cluster, supervisor_id).
+# C5 — supervisor_id models the enumerator->supervisor hierarchy ("who reports to me");
+# Khurshid's UsernamePassword.dcf carries this. Enumerators point at their supervisor; the
+# supervisor's own supervisor_id is blank (top of this chain). Encryption + device-bound
+# login stay ASPSI-gated (real names/creds) — not built here.
+# Hub login is a LOCAL plaintext gate (UserRoster.dat ships in the app) — typeable test
+# passwords in the source CSV; the REAL security is each tester's CSWeb account (strong
+# pw), see config/UAT-R6-tester-credentials.md + config/uat-r6-csweb-users.csv.
+# Source of truth: ../data/roster/roster-source.csv (GITIGNORED — carries credentials;
+# currently the UAT Round 6 tester roster, 2 teams covering F1/F3/F4).
+ROSTER_ROWS = _load_csv_rows(DATA_DIR / "roster" / "roster-source.csv", 6, "roster")
 
 # C3a — GROUPED field-ops menus, Khurshid 101-apps "accept()" interface (replaced the flat
 # value-set radio field 2026-06-27). Each role = [(SECTION_HEADER, [(item_label, action_key), ...])].
@@ -123,17 +144,10 @@ MENU_ACTIONS = {
 
 # B3 — EA / cluster assignment lookup (one assignment per EA-facility). Distributed
 # supervisor->enumerator in N1 (B4, C2-gated); here it is the structural dict + seed.
-ASSIGNMENT_ROWS = [
-    # (ea_facility_code(9), enumerator_id, instrument, target_count, ea_name, cluster)
-    # Team A (fs-01) — Binan, Laguna
-    ("040340001", "se-001", "F1", "1",  "Binan City Health Office",                  "04034"),
-    ("040340002", "se-002", "F3", "30", "Binan RHU - Patient Survey",                "04034"),
-    ("040340005", "se-003", "F4", "20", "Binan Brgy Malaban - Household Survey",      "04034"),
-    ("040340011", "se-004", "F1", "1",  "Binan District Hospital - Facility Head",   "04034"),
-    # Team B (fs-02) — Los Banos, Laguna (the real pretest area)
-    ("040341002", "se-005", "F3", "30", "Los Banos RHU - Patient Survey",            "04034"),
-    ("040341005", "se-006", "F4", "20", "Los Banos Brgy Mayondon - Household Survey", "04034"),
-]
+# Columns: (ea_facility_code(9), enumerator_id, instrument, target_count, ea_name, cluster).
+# Source of truth: ../data/assignments/assignments-source.csv (tracked — R6 fixtures today;
+# ASPSI's real EA plan replaces the rows there, this build stays the writer).
+ASSIGNMENT_ROWS = _load_csv_rows(DATA_DIR / "assignments" / "assignments-source.csv", 6, "assignments")
 
 # B6/B7 — the F1/F3/F4 instrument dicts are declared EXTERNAL in MenuApp so the Bluetooth case
 # exchange (syncdata) can move PRIMARY case data device-to-device (the C2-DEVICE-PROVEN path).
@@ -324,7 +338,7 @@ def build_ent(app_name, label, dcf, fmf, qsf, apc, mgf, externals=None):
     }
 
 
-def _pff(application, input_data, externals=None, html_dialogs=None):
+def _pff(application, input_data, externals=None, html_dialogs=None, description=None):
     # C2 (|type=None): Login/Menu carry NO case data — open straight to the form/menu (no "0 Cases"
     # list, no "+" tap). A "|type=None" value is written verbatim; a real filename gets the ".\" prefix.
     # CSEntry 8.0.1 bypassed the case list implicitly for a type=None input, but 8.1 shows an empty
@@ -332,7 +346,11 @@ def _pff(application, input_data, externals=None, html_dialogs=None):
     # ("On mobile CSEntry, the Case Listing screen will be bypassed", run_production_data_entry help),
     # so both CSEntry generations behave the same.
     input_line = input_data if input_data.startswith("|") else f".\\{input_data}"
-    lines = ["[Run Information]", "Version=CSPro 8.0", "AppType=Entry", ""]
+    lines = ["[Run Information]", "Version=CSPro 8.0", "AppType=Entry"]
+    if description:
+        # CSEntry's app-list display name (PFF.cpp APPDESCRIPTION) — carries the hub build version
+        lines.append(f"Description={description}")
+    lines.append("")
     if input_data.startswith("|"):
         lines += ["[DataEntryInit]", "StartMode=Add", "Lock=CaseListing", ""]
     lines += (["[Files]", f"Application=.\\{application}", f"InputData={input_line}"]
@@ -660,32 +678,28 @@ end;
 function send_to_supervisor()
   { B6 - push THIS enumerator's captured cases to the supervisor over Bluetooth. Transport = the
     C2-DEVICE-PROVEN syncconnect(Bluetooth)+syncdata(PUT)+syncdisconnect (the exact SyncSpike shape:
-    syncconnect tested in an if, syncdata as a statement). Routes to the assigned instrument
-    (AS_INSTRUMENT from the received assignment; defaults to F3, the test instrument, when none is
-    loaded yet). The cases live in the instrument's OWN separately-installed .csdb (../<App>/<App>.csdb),
-    declared EXTERNAL here. PUT is non-destructive - the enumerator keeps their copy (proven in C2).
-    DEVICE-UNCONFIRMED (verify on the 2-tablet rig): syncdata against an external mapped to a SIBLING
-    app's live .csdb, and the no-assignment default. }
-  string instr;
-  setfile(ASSIGNMENT_DICT, "MyAssignment.dat");
-  instr = "";
-  forcase ASSIGNMENT_DICT do
-    instr = strip(AS_INSTRUMENT);
-  enddo;
-  if instr = "" then
-    instr = "F3";   { default to the F3 test instrument when no assignment has been received }
-  endif;
+    syncconnect tested in an if, syncdata as a statement).
+    #829 (2026-07-03): sends ALL THREE instrument dicts unconditionally. The old send routed by
+    the RECEIVED assignment (MyAssignment.dat) and silently defaulted to F3 when none was loaded -
+    on the R6 rig se-001 conducted an F1 interview, the hub PUT the empty F3 dict, reported
+    "Sent your F3 interviews", and the F1 case never left the tablet. Sending all three closes
+    both gaps (wrong default + interviews conducted off-assignment): PUT of an empty dict syncs
+    nothing, PUT is non-destructive - the enumerator keeps their copies (proven in C2). The cases
+    live in each instrument's OWN separately-installed .csdb (../<App>/<App>.csdb), declared
+    EXTERNAL here. Per-dict forcase counts (the report-proven idiom) make the confirmation state
+    exactly what was sent. }
+  numeric sn1; numeric sn3; numeric sn4;
+  sn1 = 0; sn3 = 0; sn4 = 0;
+  forcase FACILITYHEADSURVEY_DICT do sn1 = sn1 + 1; enddo;
+  forcase PATIENTSURVEY_DICT do sn3 = sn3 + 1; enddo;
+  forcase HOUSEHOLDSURVEY_DICT do sn4 = sn4 + 1; enddo;
   if syncconnect(Bluetooth) then
-    if instr = "F1" then
-      syncdata(PUT, FACILITYHEADSURVEY_DICT);
-    elseif instr = "F4" then
-      syncdata(PUT, HOUSEHOLDSURVEY_DICT);
-    else
-      syncdata(PUT, PATIENTSURVEY_DICT);
-    endif;
+    syncdata(PUT, FACILITYHEADSURVEY_DICT);
+    syncdata(PUT, PATIENTSURVEY_DICT);
+    syncdata(PUT, HOUSEHOLDSURVEY_DICT);
     syncdisconnect();
-    errmsg("Sent your " + instr + " interviews to the supervisor over Bluetooth. Your own copies "
-             + "are unchanged (non-destructive).");
+    errmsg(maketext("Sent your interviews to the supervisor over Bluetooth - F1: %d, F3: %d, "
+             + "F4: %d. Your own copies are unchanged (non-destructive).", sn1, sn3, sn4));
   else
     errmsg("Couldn't connect over Bluetooth. Check: (1) Bluetooth is ON on BOTH tablets, and "
              + "(2) the supervisor has started 'Collect Interviews from Enumerators' - then retry.");
@@ -814,7 +828,8 @@ def _menu_json_expr(role_label, grouped):
     groups = [{"header": h, "items": [{"label": l, "action": a} for (l, a) in items]}
               for (h, items) in grouped]
     gjson = json.dumps(groups, separators=(",", ":"))
-    tail = ' - ' + role_label + '","groups":' + gjson + '}'
+    # "ver" -> menu.html's footer line; the hub build version rides every role menu
+    tail = ' - ' + role_label + '","ver":"Hub ' + HUB_VERSION + '","groups":' + gjson + '}'
     chunks = [tail[i:i + 180] for i in range(0, len(tail), 180)]
     q = chr(39)
     parts = [q + '{"title":"' + q, 'strip(m_op)'] + [q + c + q for c in chunks]
@@ -869,7 +884,8 @@ def build_login_app():
     _write(HERE / "LoginApp.ent", json.dumps(ent, indent=2))
     _write(HERE / "LoginApp.pff",
            _pff("LoginApp.ent", "|type=None",   # C2 — no case store; opens straight to the username field
-                externals={"USER_ROSTER_DICT": r".\UserRoster.dat"}))
+                externals={"USER_ROSTER_DICT": r".\UserRoster.dat"},
+                description=f"Supervisor Hub (HUB) - {HUB_VERSION}"))
 
 
 def build_menu_app():
@@ -896,7 +912,8 @@ def build_menu_app():
     for (_lbl, _dcf, dn, fold) in INSTRUMENTS:
         menu_pff_ext[dn] = rf"..\{fold}\{fold}.csdb"
     _write(HERE / "MenuApp.pff",
-           _pff("MenuApp.ent", "|type=None", externals=menu_pff_ext))   # C2: no case store; opens straight to the menu
+           _pff("MenuApp.ent", "|type=None", externals=menu_pff_ext,   # C2: no case store; opens straight to the menu
+                description=f"Supervisor Hub Menu (HUB) - {HUB_VERSION}"))
 
 
 def build_roster():

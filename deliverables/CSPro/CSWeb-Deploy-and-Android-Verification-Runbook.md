@@ -1,5 +1,12 @@
 # CSWeb Deploy + Android Verification Runbook (Stage 2)
 
+> **SUPERSEDED (2026-07-02).** This runbook predates the versioning workflow and routes
+> through `bundle/dist/`, which is a **stale 2026-06-08 pre-versioning build** (no version
+> footer). Do NOT deploy from `bundle/dist/`. The current release path is
+> `automation/stamp_version.py` + the parked Designer deploy dialogs via
+> `automation/auto_deploy.py` — see `VERSIONING.md` ("Release workflow"). Kept for the
+> §D on-device checklist and historical Stage-2 context only.
+
 **Scope:** take the Stage-1 deployable bundles (F1/F3/F4) from `bundle/dist/` onto a real
 Android device via CSEntry, verify them on-device (incl. the hardware-only features), and prove
 the case sync round-trip to CSWeb. Maps to goal Stage 2 (criteria 10–15) and epics

@@ -407,142 +407,9 @@ postproc
   endif;
 """
 
-EXTRA_PROCS = """\
-{ ---- Section A: Q1 household-head soft confirm (#520). If the respondent is NOT the
-       HH head (Q1 = No), warn the enumerator and CONTINUE — no skip, no terminate.
-       Per spec (Section A): some items may still be asked but flagged; the survey-design
-       decision is soft-warn-and-continue, not a hard stop. ---- }
-PROC Q1_IS_HH_HEAD
-postproc
-  if Q1_IS_HH_HEAD = 2 then
-    errmsg("Respondent is not the household head. Confirm they are a household decision-maker per the sampling protocol before continuing.");
-  endif;
-
-{ ---- #796/#797: the area-presence screening questions ("Does this area have a BUCAS
-       center?" / "...a GAMOT pharmacy/package?") are REMOVED per tester request — the BUCAS
-       (Q57-61) and GAMOT (Q69-76) blocks are now asked of everyone. The fields are kept only
-       as skip targets (Q54=No -> AREA_HAS_BUCAS, Q62=Never -> AREA_HAS_GAMOT): auto-answer
-       Yes + noinput so they never display and flow falls straight through to Q57 / Q69. The
-       old "= 2 -> skip the block" rules are removed from SKIP_RULES (the block no longer gates
-       on area presence). ---- }
-PROC AREA_HAS_BUCAS
-preproc
-  AREA_HAS_BUCAS = 1;   { #796: area-screening removed -> always ask BUCAS block; never displayed }
-  noinput;
-
-PROC AREA_HAS_GAMOT
-preproc
-  AREA_HAS_GAMOT = 1;   { #797: area-screening removed -> always ask GAMOT block; never displayed }
-  noinput;
-
-{ ---- #664: Q135 (ZBB out-of-pocket) is asked ONLY if the most-recent hospitalization was in
-       a DOH-retained hospital — the paper labels it "[Ask only if they went to a DOH-retained
-       hospital]". Gate on Q130 = 2; otherwise skip to Q136. Parallels Q131 (NBB OOP), which the
-       #661 rule gates the same way. Q130 = notappl (not confined) also falls through the gate
-       (notappl <> 2 is true) -> Q135 correctly skipped. ---- }
-PROC Q135_ZBB_OOP
-preproc
-  if Q130_HOSPITAL_TYPE <> 2 then
-    skip to Q136_MAIFIP_HEARD;
-  endif;
-
-{ ---- 'Other (specify)' enforcement -- Q50 roster insurance + Q194 funds (audit 2026-06-11) ---- }
-PROC Q50_PRIVATE_INS_OTHER_TXT
-preproc
-  if Q49_PRIVATE_INS <> 1 then
-    Q50_PRIVATE_INS_OTHER_TXT = "";   { skip + clear: this member has no private insurance }
-    noinput;
-  endif;
-postproc
-  if Q49_PRIVATE_INS = 1 and length(strip(Q50_PRIVATE_INS_OTHER_TXT)) = 0 then
-    errmsg("Q49 says this member has private insurance. Please specify it in Q50.");
-    reenter;
-  endif;
-
-PROC Q194_OTHER_SOURCE
-postproc
-  { #684: Q186-Q194 are nine independent Yes/No funding-source flags with no aggregate
-    check, so an all-'No' battery passes silently. A household that incurred health
-    expenses must have funded them somehow -> require at least one 'Yes'. Fires on the
-    last flag (Q194) so the whole battery is entered before the check. }
-  if Q186_CURRENT_INCOME = 2 and Q187_SAVINGS = 2 and Q188_SOLD_ASSETS = 2
-     and Q189_BORROW_FAMILY = 2 and Q190_BORROW_INST = 2 and Q191_REMITTANCE = 2
-     and Q192_GOVT_ASSIST = 2 and Q193_LGU_DONATION = 2 and Q194_OTHER_SOURCE = 2 then
-    errmsg("No funding source selected (Q186-Q194 are all 'No'). At least one source must be 'Yes' - how did the household pay for the health expenses? Please review.");
-    reenter;
-  endif;
-
-PROC Q194_OTHER_TXT
-preproc
-  if Q194_OTHER_SOURCE <> 1 then
-    Q194_OTHER_TXT = "";   { skip + clear: 'Other' source not ticked }
-    noinput;
-  endif;
-postproc
-  if Q194_OTHER_SOURCE = 1 and length(strip(Q194_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected in Q194. Please specify.");
-    reenter;
-  endif;
-
-{ ---- Section G: branded/generic multi-branch (spec 2 Q76) ---- }
-PROC Q76_BRAND_OR_GEN
-postproc
-  { Q76 codes: 1 Branded / 2 Generic / 3 Both / 9 Not applicable.
-    (#646: 'Don't know the difference' code 4 removed — it contradicted Q75=Yes.
-    Its exit path is now carried solely by code 9.)
-    Q77 (why-generic) asked for Generic+Both; Q78 (why-branded) for Branded+Both. (#536/#540) }
-  if Q76_BRAND_OR_GEN = 1 then  skip to Q78_WHY_BRANDED; endif;  { Branded only -> why-branded (skip Q77) }
-  if Q76_BRAND_OR_GEN = 9 then  skip to Q79_REG_SOURCE;  endif;  { Not applicable (9) -> exit Section G }
-  { Generic (2) or Both (3) fall through to Q77 why-generic }
-
-{ Q78_WHY_BRANDED is now a Check Box base (#578) — its branded-only preproc gate
-  (was PROC Q78_WHY_BRANDED_O01) is migrated into CHECKBOX_CONVERT's gate param. }
-
-{ ---- Section K: Q112 referral-visit multi-branch (spec 2 Section K) ----
-  Q112 codes: 1 Yes / 2 "No, I'm not planning to" / 3 "Not yet, but I'm planning to".
-  Q113 (why-not-planning) is asked ONLY for code 2; Yes(1) and Not-yet-planning(3)
-  proceed straight to Q114 (skip Q113). (#590/#591/#592/#593: Q112 was always
-  falling through to Q113.) Q113's own postproc then skips to Q126 (handled in the
-  Check Box conversion's postproc tail). ---- }
-PROC Q112_VISITED
-postproc
-  if Q112_VISITED = 1 or Q112_VISITED = 3 then   { Yes / Not yet but planning -> skip Q113 why-not }
-    skip to Q114_DISCUSSED_PLACES;
-  endif;
-  { code 2 ("No, I'm not planning to") falls through to Q113 why-not }
-
-{ ---- #816: Q117 (specialist follow-up) + Q118 (referral-process satisfaction) presume the
-  referral visit HAPPENED — ask only when Q112 = 1 (Yes). Codes 2 "No, I'm not planning to" /
-  3 "Not yet, but I'm planning to" skip both to Q119. (Q117's question text carries "(Only if
-  Q112=Yes)"; generate_dcf's Section K comment always intended this gate but it was never
-  emitted.) `<> 1` is notappl-safe — special values compare greater than any number, so an
-  upstream-skipped Q112 also skips these. The postproc implements the adjacent spec rule
-  "Q117 = No -> Q119 (skip Q118)", previously also unimplemented. ---- }
-PROC Q117_SPECIALIST_FOLLOWUP
-preproc
-  if Q112_VISITED <> 1 then
-    skip to Q119_PCF_REFERRAL;
-  endif;
-postproc
-  if Q117_SPECIALIST_FOLLOWUP = 2 then
-    skip to Q119_PCF_REFERRAL;
-  endif;
-
-{ ---- Section H gate (#649, tester mmgarciano + paper Annex F4, 2026-06-20): Section H is
-  the RESPONDENT's own PhilHealth-registration EXPERIENCE ("Answer Q79-Q88 if THE RESPONDENT
-  is registered in PhilHealth in Q45"). So gate on the RESPONDENT's Q45, not "any member" —
-  if another household member is registered but the respondent is NOT, the respondent can't
-  speak to a registration experience they never had. The respondent is roster line 1 (the
-  apc's own first-roster-entry soft-check: "First roster entry is normally the respondent
-  (Self) or HH head"), so the gate reads Q45_PHILHEALTH_REG(1). ASSUMPTION flagged to ASPSI:
-  respondent = roster line 1; if respondents are identified some other way, change the index.
-  (Was: loop "any member Q45 = Yes" — wrong per the paper.) ---- }
-PROC Q79_REG_SOURCE
-preproc
-  if Q45_PHILHEALTH_REG(1) <> 1 then
-    skip to Q89_HAS_USUAL_FACILITY;   { respondent (roster line 1) not PhilHealth-registered -> skip Section H to Section I }
-  endif;
-"""
+# R1a (2026-07-03): the hand-written PROCs lives in procs/extra_procs.apc — a real .apc fragment,
+# editable/diffable as CSPro code. Spliced verbatim at generation time.
+EXTRA_PROCS = (Path(__file__).resolve().parent / "procs" / "extra_procs.apc").read_text(encoding="utf-8")
 
 
 # --- #529 (+#573/#574, +#577-585/#588/#590-591) multi-select conversion: the F4
@@ -584,7 +451,7 @@ CHECKBOX_CONVERT = [
     ("Q52_UHC_SOURCE",           True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
     ("Q53_UHC_UNDERSTAND",       True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
     ("Q55_YAKAP_SOURCE",         True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
-    ("Q56_YAKAP_UNDERSTAND",     True,  True,  None),   # 'I don't know' (90) exclusive ('no benefits in the package' stays an 01.. option, mirroring F3 Q46); 'Other (Specify)' (99)
+    ("Q56_YAKAP_UNDERSTAND",     True,  True,  None),   # 'I don't know' (90) exclusive; #824: 'There are no benefits in the package' (05) HARD-standalone via CHECKBOX_EXTRA_STANDALONE (reverses the F3-Q46-mirror decision); 'Other (Specify)' (99)
     ("Q58_BUCAS_SOURCE",         True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
     ("Q59_BUCAS_UNDERSTAND",     True,  False, None),   # no None/IDK option; 'Other (specify)' (99)
     ("Q61_BUCAS_SERVICES",       True,  True,  None),   # #570: 'I don't know' (90) exclusive; 'Other (specify)' (99)
@@ -641,8 +508,11 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postproc_tail=None
     body = [f"PROC {base}"]
     if gate:
         body += ["preproc", gate]
-    body += ["postproc",
-             f"  if length(strip({base})) = 0 then",
+    body += ["postproc"]
+    if postproc_tail and has_other:
+        # locals for the chunk-scan '99' tail guard below (declared at block top)
+        body += ["  numeric tgN; numeric tgK; numeric tgP; numeric tgHit;"]
+    body += [f"  if length(strip({base})) = 0 then",
              f'    errmsg("Select at least one option for Q{qn} before continuing.");',
              "    reenter;", "  endif;"]
     if exclusive:
@@ -664,18 +534,42 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postproc_tail=None
             # 'Other' is ticked, the base field must fall through to the _OTHER_TXT box
             # (which re-runs the same tail after capturing the text); otherwise the
             # unconditional skip fires first and the specify box never appears. Guard
-            # the base tail on 'Other' NOT ticked.
-            body += [f'  if pos("99", {base}) = 0 then', postproc_tail, "  endif;"]
+            # the base tail on 'Other' NOT ticked. 2026-07-02 #450-class fix: the '99'
+            # membership chunk-scans (pos("99") false-matched e.g. 09+90 -> "0990").
+            body += ["  tgHit = 0;",
+                     f"  tgN = length(strip({base})) / 2;",
+                     "  do tgK = 1 while tgK <= tgN",
+                     "    tgP = (tgK - 1) * 2 + 1;",
+                     f"    if tonumber({base}[tgP:2]) = 99 then tgHit = 1; endif;",
+                     "  enddo;",
+                     "  if tgHit = 0 then", postproc_tail, "  endif;"]
         else:
             body += [postproc_tail]
     procs = {base: "\n".join(body)}
     if has_other:
+        # 2026-07-02 #450-class fix: '99' membership via an aligned 2-char chunk scan
+        # (pos("99") false-matched when a 9-ending code preceded a 9-starting one,
+        # e.g. 09+90 packs "0990" — the postproc then hard-blocked until junk was typed).
         other_body = (
             f"PROC {base}_OTHER_TXT\npreproc\n"
-            f'  if pos("99", {base}) = 0 then\n'
+            f"  numeric otN; numeric otK; numeric otP; numeric otHit;\n"
+            f"  otHit = 0;\n"
+            f"  otN = length(strip({base})) / 2;\n"
+            f"  do otK = 1 while otK <= otN\n"
+            f"    otP = (otK - 1) * 2 + 1;\n"
+            f"    if tonumber({base}[otP:2]) = 99 then otHit = 1; endif;\n"
+            f"  enddo;\n"
+            f"  if otHit = 0 then\n"
             f'    {base}_OTHER_TXT = "";   {{ gated: \'Other (specify)\' not ticked -> not enterable }}\n'
             f"    noinput;\n  endif;\npostproc\n"
-            f'  if pos("99", {base}) > 0 and length(strip({base}_OTHER_TXT)) = 0 then\n'
+            f"  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;\n"
+            f"  otHit2 = 0;\n"
+            f"  otN2 = length(strip({base})) / 2;\n"
+            f"  do otK2 = 1 while otK2 <= otN2\n"
+            f"    otP2 = (otK2 - 1) * 2 + 1;\n"
+            f"    if tonumber({base}[otP2:2]) = 99 then otHit2 = 1; endif;\n"
+            f"  enddo;\n"
+            f"  if otHit2 = 1 and length(strip({base}_OTHER_TXT)) = 0 then\n"
             f'    errmsg("\'Other (specify)\' was ticked for Q{qn} - please specify.");\n'
             "    reenter;\n  endif;"
         )
@@ -698,6 +592,12 @@ CHECKBOX_POSTPROC_TAILS = {
 # is contradictory with selecting specific benefits.
 CHECKBOX_EXTRA_STANDALONE = {
     "Q85_BENEFITS": [("04", "There are no benefits to being a member")],
+    # #824: Q56 "There are no benefits in the package" (05) — same contradiction class as
+    # Q85/04: claiming NO benefits while ticking specific benefits. pos() is cross-boundary-
+    # safe for both fields (a false "05"/"04" match needs a 0-ending code followed by a
+    # 5-/4-starting one; the only 0-ending code in either value set is 90 and no code starts
+    # with 5 or 4 — so the #450 chunk-scan is not required here; re-check if codes change).
+    "Q56_YAKAP_UNDERSTAND": [("05", "There are no benefits in the package")],
 }
 
 CHECKBOX_MULTISELECT_PROCS = {}
@@ -881,15 +781,16 @@ SKIP_RULES = [
     # falling through to questions that presume a usual facility. (The Q93 preproc gate below
     # is widened to admit the IDK path too, so Q93 is actually shown.)
     ("Q89_HAS_USUAL_FACILITY","Q89_HAS_USUAL_FACILITY = 2 or Q89_HAS_USUAL_FACILITY = 3", "Q93_WHY_NOT"),  # #529/#650: Q93 is a Check Box base (was _O01)
-    # #652 (Carl go/no-go 2026-06-20 #2 — OVERRIDE the paper to the tester's routing): Q90 "Is
-    # this the facility you usually go to for general health concerns?". The printed paper says
-    # No -> Q96, but that asks only travel COST while skipping transport (Q94) + travel-time
-    # (Q95) — internally inconsistent, since Q94/Q95/Q96 are one block about the nearest primary
-    # care facility. Per tester mmgarciano + Carl's call, Q90 = No now -> Q94 (skip Q91 why-went,
-    # Q92 type, Q93; ask the full Q94-Q96 PCF transport/time/cost block). Q90 = Yes still natural-
-    # flows to Q91 -> Q92 -> (Q93 self-skips) -> Q94. (Was -> Q96 per the paper; ASPSI to be
-    # notified that the build now departs from the printed Q90=No routing on purpose.)
-    ("Q90_IS_USUAL_FOR_GENERAL","Q90_IS_USUAL_FOR_GENERAL = 2","Q94_TRANSPORT"),
+    # #827 (2026-07-03, supersedes #652's DIRECTION): Q90 "Is this the facility you usually
+    # go to for general health concerns?". Yes(1) -> skip to Q94: their usual facility IS the
+    # general-care facility, so Q91 "why did you go [elsewhere]" / Q92 "type of that facility"
+    # don't apply (every Q91 option compares the visited facility against 'my usual one').
+    # No(2) falls through Q91 -> Q92 -> Q93's preproc gate (Q89=1 on this path) self-skips
+    # to Q94 — exactly the tester-requested "Q91, Q92, then skip to Q94". This now MATCHES
+    # F4-Skip-Logic-and-Validations.md §Section-I. History: the paper prints Yes->Q91 /
+    # No->Q96; #652 (2026-06-20) overrode No->Q94 keeping Yes->Q91; #827 flips the direction.
+    # ASPSI to be notified: BOTH directions now depart from the printed Q90 routing on purpose.
+    ("Q90_IS_USUAL_FOR_GENERAL","Q90_IS_USUAL_FOR_GENERAL = 1","Q94_TRANSPORT"),
     # #654: REMOVED the Q97=No -> Q100 skip. Q97 ("do you know how to book/access care")
     # is independent of Q98/Q99 (phone-advice availability when the facility is open/closed);
     # the paper shows no skip, so Q98/Q99 must be asked regardless of Q97. (Tester confirmed

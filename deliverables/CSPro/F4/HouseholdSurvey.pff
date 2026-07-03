@@ -1,7 +1,7 @@
 ﻿[Run Information]
 Version=CSPro 8.0
 AppType=Entry
-Description=Household Survey (F4) - v1.0.1 (2026-07-02)
+Description=Household Survey (F4) - v1.0.3 (2026-07-03)
 
 [Files]
 Application=.\HouseholdSurvey.ent

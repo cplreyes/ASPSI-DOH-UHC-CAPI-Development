@@ -27,11 +27,13 @@
   .item:active { background:var(--greenlt); }
   .item .lbl { flex:1; }
   .item .chev { color:var(--muted); font-size:20px; margin-left:8px; }
+  .ver { text-align:center; color:var(--muted); font-size:11px; padding:8px 0 10px; }
 </style>
 </head>
 <body>
 <div class="hdr"><h1 id="title">Menu</h1></div>
 <div id="list"></div>
+<div id="ver" class="ver"></div>
 <script src="/action-invoker.js"></script>
 <script>
   // Dual bridge (both DEVICE-PROVEN 2026-07-02): CSEntry 8.0.1 (itel) talks the deprecated
@@ -76,6 +78,7 @@
     host.innerHTML=html;
     var rows=host.querySelectorAll(".item");
     for(i=0;i<rows.length;i++){ rows[i].addEventListener("click",function(){ csReturn(this.getAttribute("data-action")); }); }
+    document.getElementById("ver").textContent=(input&&input.ver)||"";
     var w=Math.min(Math.max(document.body.scrollWidth,300),460);
     var h=Math.min(document.body.scrollHeight+16,720);
     csSetDisplay({width:w,height:h,resizable:false,keyboard:0}); }

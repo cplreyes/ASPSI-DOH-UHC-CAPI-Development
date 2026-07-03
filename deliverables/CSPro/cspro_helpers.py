@@ -33,7 +33,7 @@ from pathlib import Path
 
 
 def load_psgc_value_set(csv_path, code_col="code", name_col="name"):
-    """Load a PSGC CSV (produced by F1/inputs/parse_psgc.py) into
+    """Load a PSGC CSV (produced by data/psgc/parse_psgc.py) into
     value_set_options tuples (label, code). Source: PSA 1Q 2026 publication.
     """
     options = []

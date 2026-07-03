@@ -27,6 +27,7 @@ INSTRUMENTS = {
     "F3": "PatientSurvey",
     "F4": "HouseholdSurvey",
     "SV": "SupervisorApp",
+    "HUB": "LoginApp",   # supervisor hub bundle (LoginApp+MenuApp); spec = supervisor-hub/LoginApp.csds
 }
 PSGC = [f"psgc_{lvl}.{ext}" for lvl in ("region", "province", "city", "barangay")
         for ext in ("dcf", "dat")]

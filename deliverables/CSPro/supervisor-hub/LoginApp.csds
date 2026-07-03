@@ -1,0 +1,91 @@
+{
+  "software": "CSPro",
+  "version": 8.0,
+  "fileType": "deployment",
+  "name": "LoginApp",
+  "files": [
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\LoginApp.pff"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\LoginApp.ent"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\UserRoster.dcf"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\UserRoster.dat"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\MenuApp.ent"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\MenuApp.dcf"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\MenuApp.fmf"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\MenuApp.ent.apc"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\MenuApp.ent.qsf"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\MenuApp.ent.mgf"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\MenuApp.pff"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\survey-basemap.mbtiles"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\report.html"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\menu.html"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\Assignment.dcf"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\Assignment.dat"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\MyAssignment.dat"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\FacilityHeadSurvey.dcf"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\PatientSurvey.dcf"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\HouseholdSurvey.dcf"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\AS_se-001.dat"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\AS_se-002.dat"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\AS_se-003.dat"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\AS_se-004.dat"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\AS_se-005.dat"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\supervisor-hub\\AS_se-006.dat"
+    }
+  ],
+  "dictionaries": [],
+  "deployment": {
+    "type": "CSWeb",
+    "cswebUrl": "https://csweb.asiansocial.org/csweb/api"
+  }
+}

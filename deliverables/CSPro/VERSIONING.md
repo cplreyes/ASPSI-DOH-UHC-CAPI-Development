@@ -22,9 +22,8 @@ Versions follow **`MAJOR.MINOR.PATCH`** (e.g. `v1.2.3`), mapped to this project'
 | **MINOR** | functionality is added or changed | new questions/sections (e.g. the PhilHealth-reinstatement fields), new features |
 | **MAJOR** | a UAT round closes, or a breaking change ships | round-close baseline; data-shape changes (e.g. checkbox conversions that alter columns) |
 
-Each instrument versions independently (F1, F3, F4 each have their own number). The
-Supervisor hub apps are **not yet versioned** — they adopt the same scheme on their next
-deploy.
+Each app versions independently: **F1, F3, F4, and HUB** (the Supervisor hub — LoginApp +
+MenuApp share one version, added 2026-07-02).
 
 ## Where the version shows (tester-facing, device-verified 2026-07-02 on the itel P10001L)
 
@@ -38,6 +37,13 @@ deploy.
    the Questionnaire Number question (every language), i.e. the first screen of every case.
    (v1.0.0 had placed this on the dict-first cover question, which the F3 form puts at
    case-END — fixed in v1.0.1 by emitting the footer on the `QUESTIONNAIRE_NUMBER` id item.)
+
+**The Supervisor hub (HUB)** shows its version in the same app-list/title-bar surfaces
+(`Supervisor Hub (HUB) - v1.0.0 (2026-07-02)` + `Supervisor Hub Menu (HUB) - …`) and as a
+footer line on the role menu after login (`Hub v1.0.0 (2026-07-02)`). Unlike the
+instruments, the hub's `.pff`s are **generated** by `supervisor-hub/build_hub_apps.py`,
+which reads `versions.json` itself and also stamps the menu-JSON footer — so
+`stamp_version.py bump HUB` simply re-runs that build (never text-edits hub pffs).
 
 Reference screenshots: `automation/shots/versioning/`.
 
@@ -88,9 +94,11 @@ step, so the surfaces cannot drift. `show` must report no drift before any deplo
 
 ## Version history
 
-| Date | F1 | F3 | F4 | Notes |
-|---|---|---|---|---|
-| 2026-07-02 | v1.0.1 | v1.0.1 | v1.0.1 | Build footer moved to the QN (first) screen — dict-first placement had landed on F3's case-end cover block. Device-verified + announced. |
-| 2026-07-02 | v1.0.0 | v1.0.0 | v1.0.0 | Versioning introduced; deployed + announced. Baseline for the July pre-test. |
+| Date | F1 | F3 | F4 | HUB | Notes |
+|---|---|---|---|---|---|
+| 2026-07-03 | v1.0.2 | v1.0.2 | v1.0.3 | v1.0.0 | Pretest sweep deploys via the `.csds` route: F1/F3 ship the 2026-07-02 #450-class pos() chunk-scan wave (v1.0.2); F4 v1.0.3 adds #824 Q56 no-benefits hard-exclusive + #827 Q90 skip flip (Yes→Q94; No→Q91–Q92→Q94 — reverses #652, matches skip-logic doc §I). Patch notes in all three UAT channels. |
+| 2026-07-02 | v1.0.1 | v1.0.1 | v1.0.1 | v1.0.0 | HUB versioning added (app list + menu footer), deployed via the new `supervisor-hub/LoginApp.csds`, device-verified (login → menu) + announced to #supervisor-uat. |
+| 2026-07-02 | v1.0.1 | v1.0.1 | v1.0.1 | — | Build footer moved to the QN (first) screen — dict-first placement had landed on F3's case-end cover block. Device-verified + announced. |
+| 2026-07-02 | v1.0.0 | v1.0.0 | v1.0.0 | — | Versioning introduced; deployed + announced. Baseline for the July pre-test. |
 
 (Keep this table current — one row per deploy day, note the trigger.)

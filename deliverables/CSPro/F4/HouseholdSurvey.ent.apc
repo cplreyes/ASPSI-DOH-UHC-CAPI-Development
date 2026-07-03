@@ -711,12 +711,26 @@ postproc
 
 PROC Q102_VISIT_REASON_OTHER_TXT
 preproc
-  if pos("99", Q102_VISIT_REASON) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q102_VISIT_REASON)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q102_VISIT_REASON[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q102_VISIT_REASON_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q102_VISIT_REASON) > 0 and length(strip(Q102_VISIT_REASON_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q102_VISIT_REASON)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q102_VISIT_REASON[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q102_VISIT_REASON_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q102 - please specify.");
     reenter;
   endif;
@@ -733,12 +747,26 @@ postproc
 
 PROC Q103_CARE_TYPE_OTHER_TXT
 preproc
-  if pos("99", Q103_CARE_TYPE) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q103_CARE_TYPE)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q103_CARE_TYPE[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q103_CARE_TYPE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q103_CARE_TYPE) > 0 and length(strip(Q103_CARE_TYPE_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q103_CARE_TYPE)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q103_CARE_TYPE[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q103_CARE_TYPE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q103 - please specify.");
     reenter;
   endif;
@@ -755,12 +783,26 @@ postproc
 
 PROC Q106_FORGONE_WHY_OTHER_TXT
 preproc
-  if pos("99", Q106_FORGONE_WHY) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q106_FORGONE_WHY)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q106_FORGONE_WHY[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q106_FORGONE_WHY_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q106_FORGONE_WHY) > 0 and length(strip(Q106_FORGONE_WHY_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q106_FORGONE_WHY)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q106_FORGONE_WHY[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q106_FORGONE_WHY_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q106 - please specify.");
     reenter;
   endif;
@@ -777,12 +819,26 @@ postproc
 
 PROC Q107_OTHER_ACTIONS_OTHER_TXT
 preproc
-  if pos("99", Q107_OTHER_ACTIONS) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q107_OTHER_ACTIONS)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q107_OTHER_ACTIONS[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q107_OTHER_ACTIONS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q107_OTHER_ACTIONS) > 0 and length(strip(Q107_OTHER_ACTIONS_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q107_OTHER_ACTIONS)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q107_OTHER_ACTIONS[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q107_OTHER_ACTIONS_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q107 - please specify.");
     reenter;
   endif;
@@ -799,34 +855,69 @@ postproc
 
 PROC Q109_TYPE_OTHER_TXT
 preproc
-  if pos("99", Q109_TYPE) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q109_TYPE)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q109_TYPE[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q109_TYPE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q109_TYPE) > 0 and length(strip(Q109_TYPE_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q109_TYPE)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q109_TYPE[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q109_TYPE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q109 - please specify.");
     reenter;
   endif;
 
 PROC Q113_WHY_NOT
 postproc
+  numeric tgN; numeric tgK; numeric tgP; numeric tgHit;
   if length(strip(Q113_WHY_NOT)) = 0 then
     errmsg("Select at least one option for Q113 before continuing.");
     reenter;
   endif;
-  if pos("99", Q113_WHY_NOT) = 0 then
+  tgHit = 0;
+  tgN = length(strip(Q113_WHY_NOT)) / 2;
+  do tgK = 1 while tgK <= tgN
+    tgP = (tgK - 1) * 2 + 1;
+    if tonumber(Q113_WHY_NOT[tgP:2]) = 99 then tgHit = 1; endif;
+  enddo;
+  if tgHit = 0 then
   skip to Q126_NBB_HEARD;   { after why-not -> Section L NBB (skip Q114-Q125 referral-experience tail) }
   endif;
 
 PROC Q113_WHY_NOT_OTHER_TXT
 preproc
-  if pos("99", Q113_WHY_NOT) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q113_WHY_NOT)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q113_WHY_NOT[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q113_WHY_NOT_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q113_WHY_NOT) > 0 and length(strip(Q113_WHY_NOT_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q113_WHY_NOT)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q113_WHY_NOT[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q113_WHY_NOT_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q113 - please specify.");
     reenter;
   endif;
@@ -844,12 +935,26 @@ postproc
 
 PROC Q121_WHY_HOSPITAL_OTHER_TXT
 preproc
-  if pos("99", Q121_WHY_HOSPITAL) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q121_WHY_HOSPITAL)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q121_WHY_HOSPITAL[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q121_WHY_HOSPITAL_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q121_WHY_HOSPITAL) > 0 and length(strip(Q121_WHY_HOSPITAL_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q121_WHY_HOSPITAL)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q121_WHY_HOSPITAL[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q121_WHY_HOSPITAL_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q121 - please specify.");
     reenter;
   endif;
@@ -866,12 +971,26 @@ postproc
 
 PROC Q127_NBB_SOURCE_OTHER_TXT
 preproc
-  if pos("99", Q127_NBB_SOURCE) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q127_NBB_SOURCE)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q127_NBB_SOURCE[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q127_NBB_SOURCE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q127_NBB_SOURCE) > 0 and length(strip(Q127_NBB_SOURCE_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q127_NBB_SOURCE)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q127_NBB_SOURCE[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q127_NBB_SOURCE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q127 - please specify.");
     reenter;
   endif;
@@ -888,12 +1007,26 @@ postproc
 
 PROC Q128_NBB_UNDERSTAND_OTHER_TXT
 preproc
-  if pos("99", Q128_NBB_UNDERSTAND) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q128_NBB_UNDERSTAND)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q128_NBB_UNDERSTAND[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q128_NBB_UNDERSTAND_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q128_NBB_UNDERSTAND) > 0 and length(strip(Q128_NBB_UNDERSTAND_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q128_NBB_UNDERSTAND)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q128_NBB_UNDERSTAND[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q128_NBB_UNDERSTAND_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q128 - please specify.");
     reenter;
   endif;
@@ -910,12 +1043,26 @@ postproc
 
 PROC Q133_ZBB_SOURCE_OTHER_TXT
 preproc
-  if pos("99", Q133_ZBB_SOURCE) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q133_ZBB_SOURCE)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q133_ZBB_SOURCE[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q133_ZBB_SOURCE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q133_ZBB_SOURCE) > 0 and length(strip(Q133_ZBB_SOURCE_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q133_ZBB_SOURCE)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q133_ZBB_SOURCE[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q133_ZBB_SOURCE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q133 - please specify.");
     reenter;
   endif;
@@ -932,12 +1079,26 @@ postproc
 
 PROC Q134_ZBB_UNDERSTAND_OTHER_TXT
 preproc
-  if pos("99", Q134_ZBB_UNDERSTAND) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q134_ZBB_UNDERSTAND)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q134_ZBB_UNDERSTAND[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q134_ZBB_UNDERSTAND_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q134_ZBB_UNDERSTAND) > 0 and length(strip(Q134_ZBB_UNDERSTAND_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q134_ZBB_UNDERSTAND)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q134_ZBB_UNDERSTAND[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q134_ZBB_UNDERSTAND_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q134 - please specify.");
     reenter;
   endif;
@@ -954,12 +1115,26 @@ postproc
 
 PROC Q137_MAIFIP_SOURCE_OTHER_TXT
 preproc
-  if pos("99", Q137_MAIFIP_SOURCE) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q137_MAIFIP_SOURCE)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q137_MAIFIP_SOURCE[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q137_MAIFIP_SOURCE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q137_MAIFIP_SOURCE) > 0 and length(strip(Q137_MAIFIP_SOURCE_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q137_MAIFIP_SOURCE)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q137_MAIFIP_SOURCE[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q137_MAIFIP_SOURCE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q137 - please specify.");
     reenter;
   endif;
@@ -980,12 +1155,26 @@ postproc
 
 PROC Q143_HOW_PAID_OTHER_TXT
 preproc
-  if pos("99", Q143_HOW_PAID) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q143_HOW_PAID)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q143_HOW_PAID[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q143_HOW_PAID_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q143_HOW_PAID) > 0 and length(strip(Q143_HOW_PAID_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q143_HOW_PAID)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q143_HOW_PAID[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q143_HOW_PAID_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q143 - please specify.");
     reenter;
   endif;
@@ -999,12 +1188,26 @@ postproc
 
 PROC Q196_FOREGONE_OTHER_TXT
 preproc
-  if pos("99", Q196_FOREGONE) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q196_FOREGONE)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q196_FOREGONE[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q196_FOREGONE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q196_FOREGONE) > 0 and length(strip(Q196_FOREGONE_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q196_FOREGONE)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q196_FOREGONE[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q196_FOREGONE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q196 - please specify.");
     reenter;
   endif;
@@ -1018,12 +1221,26 @@ postproc
 
 PROC Q202_WORRY_REASONS_OTHER_TXT
 preproc
-  if pos("99", Q202_WORRY_REASONS) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q202_WORRY_REASONS)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q202_WORRY_REASONS[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q202_WORRY_REASONS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q202_WORRY_REASONS) > 0 and length(strip(Q202_WORRY_REASONS_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q202_WORRY_REASONS)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q202_WORRY_REASONS[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q202_WORRY_REASONS_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q202 - please specify.");
     reenter;
   endif;
@@ -1040,12 +1257,26 @@ postproc
 
 PROC Q52_UHC_SOURCE_OTHER_TXT
 preproc
-  if pos("99", Q52_UHC_SOURCE) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q52_UHC_SOURCE)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q52_UHC_SOURCE[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q52_UHC_SOURCE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q52_UHC_SOURCE) > 0 and length(strip(Q52_UHC_SOURCE_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q52_UHC_SOURCE)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q52_UHC_SOURCE[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q52_UHC_SOURCE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q52 - please specify.");
     reenter;
   endif;
@@ -1062,12 +1293,26 @@ postproc
 
 PROC Q53_UHC_UNDERSTAND_OTHER_TXT
 preproc
-  if pos("99", Q53_UHC_UNDERSTAND) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q53_UHC_UNDERSTAND)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q53_UHC_UNDERSTAND[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q53_UHC_UNDERSTAND_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q53_UHC_UNDERSTAND) > 0 and length(strip(Q53_UHC_UNDERSTAND_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q53_UHC_UNDERSTAND)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q53_UHC_UNDERSTAND[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q53_UHC_UNDERSTAND_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q53 - please specify.");
     reenter;
   endif;
@@ -1084,12 +1329,26 @@ postproc
 
 PROC Q55_YAKAP_SOURCE_OTHER_TXT
 preproc
-  if pos("99", Q55_YAKAP_SOURCE) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q55_YAKAP_SOURCE)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q55_YAKAP_SOURCE[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q55_YAKAP_SOURCE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q55_YAKAP_SOURCE) > 0 and length(strip(Q55_YAKAP_SOURCE_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q55_YAKAP_SOURCE)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q55_YAKAP_SOURCE[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q55_YAKAP_SOURCE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q55 - please specify.");
     reenter;
   endif;
@@ -1103,15 +1362,33 @@ postproc
   if pos("90", Q56_YAKAP_UNDERSTAND) > 0 and length(strip(Q56_YAKAP_UNDERSTAND)) > 2 then
     errmsg("Q56: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
   endif;
+  if pos("05", Q56_YAKAP_UNDERSTAND) > 0 and length(strip(Q56_YAKAP_UNDERSTAND)) > 2 then
+    errmsg("Q56: 'There are no benefits in the package' cannot be combined with other answers - untick the others or untick this option.");
+    reenter;
+  endif;
 
 PROC Q56_YAKAP_UNDERSTAND_OTHER_TXT
 preproc
-  if pos("99", Q56_YAKAP_UNDERSTAND) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q56_YAKAP_UNDERSTAND)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q56_YAKAP_UNDERSTAND[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q56_YAKAP_UNDERSTAND_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q56_YAKAP_UNDERSTAND) > 0 and length(strip(Q56_YAKAP_UNDERSTAND_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q56_YAKAP_UNDERSTAND)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q56_YAKAP_UNDERSTAND[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q56_YAKAP_UNDERSTAND_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q56 - please specify.");
     reenter;
   endif;
@@ -1128,12 +1405,26 @@ postproc
 
 PROC Q58_BUCAS_SOURCE_OTHER_TXT
 preproc
-  if pos("99", Q58_BUCAS_SOURCE) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q58_BUCAS_SOURCE)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q58_BUCAS_SOURCE[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q58_BUCAS_SOURCE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q58_BUCAS_SOURCE) > 0 and length(strip(Q58_BUCAS_SOURCE_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q58_BUCAS_SOURCE)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q58_BUCAS_SOURCE[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q58_BUCAS_SOURCE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q58 - please specify.");
     reenter;
   endif;
@@ -1147,12 +1438,26 @@ postproc
 
 PROC Q59_BUCAS_UNDERSTAND_OTHER_TXT
 preproc
-  if pos("99", Q59_BUCAS_UNDERSTAND) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q59_BUCAS_UNDERSTAND)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q59_BUCAS_UNDERSTAND[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q59_BUCAS_UNDERSTAND_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q59_BUCAS_UNDERSTAND) > 0 and length(strip(Q59_BUCAS_UNDERSTAND_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q59_BUCAS_UNDERSTAND)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q59_BUCAS_UNDERSTAND[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q59_BUCAS_UNDERSTAND_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q59 - please specify.");
     reenter;
   endif;
@@ -1169,12 +1474,26 @@ postproc
 
 PROC Q61_BUCAS_SERVICES_OTHER_TXT
 preproc
-  if pos("99", Q61_BUCAS_SERVICES) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q61_BUCAS_SERVICES)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q61_BUCAS_SERVICES[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q61_BUCAS_SERVICES_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q61_BUCAS_SERVICES) > 0 and length(strip(Q61_BUCAS_SERVICES_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q61_BUCAS_SERVICES)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q61_BUCAS_SERVICES[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q61_BUCAS_SERVICES_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q61 - please specify.");
     reenter;
   endif;
@@ -1191,12 +1510,26 @@ postproc
 
 PROC Q65_CONDITIONS_OTHER_TXT
 preproc
-  if pos("99", Q65_CONDITIONS) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q65_CONDITIONS)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q65_CONDITIONS[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q65_CONDITIONS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q65_CONDITIONS) > 0 and length(strip(Q65_CONDITIONS_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q65_CONDITIONS)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q65_CONDITIONS[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q65_CONDITIONS_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q65 - please specify.");
     reenter;
   endif;
@@ -1210,12 +1543,26 @@ postproc
 
 PROC Q66_WHERE_BUY_OTHER_TXT
 preproc
-  if pos("99", Q66_WHERE_BUY) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q66_WHERE_BUY)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q66_WHERE_BUY[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q66_WHERE_BUY_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q66_WHERE_BUY) > 0 and length(strip(Q66_WHERE_BUY_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q66_WHERE_BUY)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q66_WHERE_BUY[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q66_WHERE_BUY_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q66 - please specify.");
     reenter;
   endif;
@@ -1232,12 +1579,26 @@ postproc
 
 PROC Q70_GAMOT_SOURCE_OTHER_TXT
 preproc
-  if pos("99", Q70_GAMOT_SOURCE) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q70_GAMOT_SOURCE)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q70_GAMOT_SOURCE[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q70_GAMOT_SOURCE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q70_GAMOT_SOURCE) > 0 and length(strip(Q70_GAMOT_SOURCE_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q70_GAMOT_SOURCE)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q70_GAMOT_SOURCE[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q70_GAMOT_SOURCE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q70 - please specify.");
     reenter;
   endif;
@@ -1254,12 +1615,26 @@ postproc
 
 PROC Q71_GAMOT_UNDERSTAND_OTHER_TXT
 preproc
-  if pos("99", Q71_GAMOT_UNDERSTAND) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q71_GAMOT_UNDERSTAND)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q71_GAMOT_UNDERSTAND[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q71_GAMOT_UNDERSTAND_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q71_GAMOT_UNDERSTAND) > 0 and length(strip(Q71_GAMOT_UNDERSTAND_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q71_GAMOT_UNDERSTAND)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q71_GAMOT_UNDERSTAND[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q71_GAMOT_UNDERSTAND_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q71 - please specify.");
     reenter;
   endif;
@@ -1276,12 +1651,26 @@ postproc
 
 PROC Q74_WHERE_REST_OTHER_TXT
 preproc
-  if pos("99", Q74_WHERE_REST) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q74_WHERE_REST)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q74_WHERE_REST[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q74_WHERE_REST_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q74_WHERE_REST) > 0 and length(strip(Q74_WHERE_REST_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q74_WHERE_REST)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q74_WHERE_REST[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q74_WHERE_REST_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q74 - please specify.");
     reenter;
   endif;
@@ -1298,12 +1687,26 @@ postproc
 
 PROC Q77_WHY_GENERIC_OTHER_TXT
 preproc
-  if pos("99", Q77_WHY_GENERIC) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q77_WHY_GENERIC)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q77_WHY_GENERIC[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q77_WHY_GENERIC_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q77_WHY_GENERIC) > 0 and length(strip(Q77_WHY_GENERIC_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q77_WHY_GENERIC)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q77_WHY_GENERIC[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q77_WHY_GENERIC_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q77 - please specify.");
     reenter;
   endif;
@@ -1324,12 +1727,26 @@ postproc
 
 PROC Q78_WHY_BRANDED_OTHER_TXT
 preproc
-  if pos("99", Q78_WHY_BRANDED) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q78_WHY_BRANDED)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q78_WHY_BRANDED[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q78_WHY_BRANDED_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q78_WHY_BRANDED) > 0 and length(strip(Q78_WHY_BRANDED_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q78_WHY_BRANDED)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q78_WHY_BRANDED[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q78_WHY_BRANDED_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q78 - please specify.");
     reenter;
   endif;
@@ -1346,12 +1763,26 @@ postproc
 
 PROC Q82_DIFFICULTY_REASONS_OTHER_TXT
 preproc
-  if pos("99", Q82_DIFFICULTY_REASONS) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q82_DIFFICULTY_REASONS)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q82_DIFFICULTY_REASONS[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q82_DIFFICULTY_REASONS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q82_DIFFICULTY_REASONS) > 0 and length(strip(Q82_DIFFICULTY_REASONS_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q82_DIFFICULTY_REASONS)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q82_DIFFICULTY_REASONS[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q82_DIFFICULTY_REASONS_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q82 - please specify.");
     reenter;
   endif;
@@ -1365,12 +1796,26 @@ postproc
 
 PROC Q84_WHERE_ASSIST_OTHER_TXT
 preproc
-  if pos("99", Q84_WHERE_ASSIST) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q84_WHERE_ASSIST)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q84_WHERE_ASSIST[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q84_WHERE_ASSIST_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q84_WHERE_ASSIST) > 0 and length(strip(Q84_WHERE_ASSIST_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q84_WHERE_ASSIST)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q84_WHERE_ASSIST[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q84_WHERE_ASSIST_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q84 - please specify.");
     reenter;
   endif;
@@ -1391,12 +1836,26 @@ postproc
 
 PROC Q85_BENEFITS_OTHER_TXT
 preproc
-  if pos("99", Q85_BENEFITS) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q85_BENEFITS)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q85_BENEFITS[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q85_BENEFITS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q85_BENEFITS) > 0 and length(strip(Q85_BENEFITS_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q85_BENEFITS)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q85_BENEFITS[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q85_BENEFITS_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q85 - please specify.");
     reenter;
   endif;
@@ -1413,12 +1872,26 @@ postproc
 
 PROC Q88_DIFF_PAYING_OTHER_TXT
 preproc
-  if pos("99", Q88_DIFF_PAYING) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q88_DIFF_PAYING)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q88_DIFF_PAYING[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q88_DIFF_PAYING_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q88_DIFF_PAYING) > 0 and length(strip(Q88_DIFF_PAYING_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q88_DIFF_PAYING)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q88_DIFF_PAYING[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q88_DIFF_PAYING_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q88 - please specify.");
     reenter;
   endif;
@@ -1432,12 +1905,26 @@ postproc
 
 PROC Q91_WHY_WENT_OTHER_TXT
 preproc
-  if pos("99", Q91_WHY_WENT) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q91_WHY_WENT)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q91_WHY_WENT[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q91_WHY_WENT_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q91_WHY_WENT) > 0 and length(strip(Q91_WHY_WENT_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q91_WHY_WENT)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q91_WHY_WENT[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q91_WHY_WENT_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q91 - please specify.");
     reenter;
   endif;
@@ -1461,12 +1948,26 @@ postproc
 
 PROC Q93_WHY_NOT_OTHER_TXT
 preproc
-  if pos("99", Q93_WHY_NOT) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q93_WHY_NOT)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q93_WHY_NOT[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q93_WHY_NOT_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q93_WHY_NOT) > 0 and length(strip(Q93_WHY_NOT_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q93_WHY_NOT)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q93_WHY_NOT[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q93_WHY_NOT_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q93 - please specify.");
     reenter;
   endif;
@@ -1480,12 +1981,26 @@ postproc
 
 PROC Q94_TRANSPORT_OTHER_TXT
 preproc
-  if pos("99", Q94_TRANSPORT) = 0 then
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q94_TRANSPORT)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q94_TRANSPORT[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
     Q94_TRANSPORT_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q94_TRANSPORT) > 0 and length(strip(Q94_TRANSPORT_OTHER_TXT)) = 0 then
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q94_TRANSPORT)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q94_TRANSPORT[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q94_TRANSPORT_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q94 - please specify.");
     reenter;
   endif;
@@ -1694,7 +2209,7 @@ postproc
 
 PROC Q90_IS_USUAL_FOR_GENERAL
 postproc
-  if Q90_IS_USUAL_FOR_GENERAL = 2 then
+  if Q90_IS_USUAL_FOR_GENERAL = 1 then
     skip to Q94_TRANSPORT;
   endif;
 

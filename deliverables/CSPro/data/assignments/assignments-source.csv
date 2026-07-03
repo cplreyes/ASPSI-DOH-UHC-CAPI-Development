@@ -1,0 +1,7 @@
+ea_facility_code,enumerator_id,instrument,target_count,ea_name,cluster
+040340001,se-001,F1,1,Binan City Health Office,04034
+040340002,se-002,F3,30,Binan RHU - Patient Survey,04034
+040340005,se-003,F4,20,Binan Brgy Malaban - Household Survey,04034
+040340011,se-004,F1,1,Binan District Hospital - Facility Head,04034
+040341002,se-005,F3,30,Los Banos RHU - Patient Survey,04034
+040341005,se-006,F4,20,Los Banos Brgy Mayondon - Household Survey,04034

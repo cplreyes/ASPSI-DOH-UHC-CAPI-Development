@@ -1522,7 +1522,14 @@ postproc
 { ---- Why-difficult display gates (spec 4.10) ---- }
 PROC Q122_WHY_DIFF_PT_RIGHTS
 preproc
-  if pos("01", Q121_DOH_LIC_DIFFICULT) = 0 then   { Q122 shown only if Q121 difficulty option 01 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q121_DOH_LIC_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q121_DOH_LIC_DIFFICULT[wdP:2]) = 1 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q122 shown only if Q121 difficulty option 01 ticked }
     skip to Q123_WHY_DIFF_PT_CARE;
   endif;
 postproc
@@ -1545,7 +1552,14 @@ postproc
 
 PROC Q123_WHY_DIFF_PT_CARE
 preproc
-  if pos("02", Q121_DOH_LIC_DIFFICULT) = 0 then   { Q123 shown only if Q121 difficulty option 02 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q121_DOH_LIC_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q121_DOH_LIC_DIFFICULT[wdP:2]) = 2 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q123 shown only if Q121 difficulty option 02 ticked }
     skip to Q124_WHY_DIFF_LEADERSHIP;
   endif;
 postproc
@@ -1568,7 +1582,14 @@ postproc
 
 PROC Q124_WHY_DIFF_LEADERSHIP
 preproc
-  if pos("03", Q121_DOH_LIC_DIFFICULT) = 0 then   { Q124 shown only if Q121 difficulty option 03 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q121_DOH_LIC_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q121_DOH_LIC_DIFFICULT[wdP:2]) = 3 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q124 shown only if Q121 difficulty option 03 ticked }
     skip to Q125_WHY_DIFF_HRM;
   endif;
 postproc
@@ -1591,7 +1612,14 @@ postproc
 
 PROC Q125_WHY_DIFF_HRM
 preproc
-  if pos("04", Q121_DOH_LIC_DIFFICULT) = 0 then   { Q125 shown only if Q121 difficulty option 04 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q121_DOH_LIC_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q121_DOH_LIC_DIFFICULT[wdP:2]) = 4 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q125 shown only if Q121 difficulty option 04 ticked }
     skip to Q126_WHY_DIFF_INFO_MGMT;
   endif;
 postproc
@@ -1614,7 +1642,14 @@ postproc
 
 PROC Q126_WHY_DIFF_INFO_MGMT
 preproc
-  if pos("05", Q121_DOH_LIC_DIFFICULT) = 0 then   { Q126 shown only if Q121 difficulty option 05 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q121_DOH_LIC_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q121_DOH_LIC_DIFFICULT[wdP:2]) = 5 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q126 shown only if Q121 difficulty option 05 ticked }
     skip to Q127_WHY_DIFF_SAFE;
   endif;
 postproc
@@ -1637,7 +1672,14 @@ postproc
 
 PROC Q127_WHY_DIFF_SAFE
 preproc
-  if pos("06", Q121_DOH_LIC_DIFFICULT) = 0 then   { Q127 shown only if Q121 difficulty option 06 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q121_DOH_LIC_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q121_DOH_LIC_DIFFICULT[wdP:2]) = 6 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q127 shown only if Q121 difficulty option 06 ticked }
     skip to Q128_WHY_DIFF_PERF;
   endif;
 postproc
@@ -1660,7 +1702,14 @@ postproc
 
 PROC Q128_WHY_DIFF_PERF
 preproc
-  if pos("07", Q121_DOH_LIC_DIFFICULT) = 0 then   { Q128 shown only if Q121 difficulty option 07 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q121_DOH_LIC_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q121_DOH_LIC_DIFFICULT[wdP:2]) = 7 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q128 shown only if Q121 difficulty option 07 ticked }
     skip to Q129_WHY_DIFF_PHYS_PLANT;
   endif;
 postproc
@@ -1683,7 +1732,14 @@ postproc
 
 PROC Q129_WHY_DIFF_PHYS_PLANT
 preproc
-  if pos("08", Q121_DOH_LIC_DIFFICULT) = 0 then   { Q129 shown only if Q121 difficulty option 08 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q121_DOH_LIC_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q121_DOH_LIC_DIFFICULT[wdP:2]) = 8 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q129 shown only if Q121 difficulty option 08 ticked }
     skip to Q130_WHY_DIFF_PRICE_INFO;
   endif;
 postproc
@@ -1706,7 +1762,14 @@ postproc
 
 PROC Q130_WHY_DIFF_PRICE_INFO
 preproc
-  if pos("13", Q121_DOH_LIC_DIFFICULT) = 0 then   { Q130 shown only if Q121 difficulty option 13 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q121_DOH_LIC_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q121_DOH_LIC_DIFFICULT[wdP:2]) = 13 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q130 shown only if Q121 difficulty option 13 ticked }
     skip to Q131_WHY_DIFF_EQUIPMENT;
   endif;
 postproc
@@ -1729,7 +1792,14 @@ postproc
 
 PROC Q131_WHY_DIFF_EQUIPMENT
 preproc
-  if pos("09", Q121_DOH_LIC_DIFFICULT) = 0 then   { Q131 shown only if Q121 difficulty option 09 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q121_DOH_LIC_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q121_DOH_LIC_DIFFICULT[wdP:2]) = 9 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q131 shown only if Q121 difficulty option 09 ticked }
     skip to Q132_WHY_DIFF_NAT_LAWS;
   endif;
 postproc
@@ -1752,7 +1822,14 @@ postproc
 
 PROC Q132_WHY_DIFF_NAT_LAWS
 preproc
-  if pos("10", Q121_DOH_LIC_DIFFICULT) = 0 then   { Q132 shown only if Q121 difficulty option 10 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q121_DOH_LIC_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q121_DOH_LIC_DIFFICULT[wdP:2]) = 10 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q132 shown only if Q121 difficulty option 10 ticked }
     skip to Q133_WHY_DIFF_EMERG_CART;
   endif;
 postproc
@@ -1775,7 +1852,14 @@ postproc
 
 PROC Q133_WHY_DIFF_EMERG_CART
 preproc
-  if pos("11", Q121_DOH_LIC_DIFFICULT) = 0 then   { Q133 shown only if Q121 difficulty option 11 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q121_DOH_LIC_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q121_DOH_LIC_DIFFICULT[wdP:2]) = 11 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q133 shown only if Q121 difficulty option 11 ticked }
     skip to Q134_WHY_DIFF_ADDONS;
   endif;
 postproc
@@ -1798,7 +1882,14 @@ postproc
 
 PROC Q134_WHY_DIFF_ADDONS
 preproc
-  if pos("12", Q121_DOH_LIC_DIFFICULT) = 0 then   { Q134 shown only if Q121 difficulty option 12 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q121_DOH_LIC_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q121_DOH_LIC_DIFFICULT[wdP:2]) = 12 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q134 shown only if Q121 difficulty option 12 ticked }
     skip to Q135_NBB_CURR;
   endif;
 postproc
@@ -1821,7 +1912,14 @@ postproc
 
 PROC Q66_WHY_DIFF_PREVENTIVE
 preproc
-  if pos("01", Q65_ACCRED_DIFFICULT) = 0 then   { Q66 shown only if Q65 difficulty option 01 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q65_ACCRED_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q65_ACCRED_DIFFICULT[wdP:2]) = 1 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q66 shown only if Q65 difficulty option 01 ticked }
     skip to Q67_WHY_DIFF_LAB;
   endif;
 postproc
@@ -1844,7 +1942,14 @@ postproc
 
 PROC Q67_WHY_DIFF_LAB
 preproc
-  if pos("02", Q65_ACCRED_DIFFICULT) = 0 then   { Q67 shown only if Q65 difficulty option 02 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q65_ACCRED_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q65_ACCRED_DIFFICULT[wdP:2]) = 2 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q67 shown only if Q65 difficulty option 02 ticked }
     skip to Q68_WHY_DIFF_MEDS;
   endif;
 postproc
@@ -1867,7 +1972,14 @@ postproc
 
 PROC Q68_WHY_DIFF_MEDS
 preproc
-  if pos("03", Q65_ACCRED_DIFFICULT) = 0 then   { Q68 shown only if Q65 difficulty option 03 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q65_ACCRED_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q65_ACCRED_DIFFICULT[wdP:2]) = 3 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q68 shown only if Q65 difficulty option 03 ticked }
     skip to Q69_WHY_DIFF_INFRA;
   endif;
 postproc
@@ -1890,7 +2002,14 @@ postproc
 
 PROC Q69_WHY_DIFF_INFRA
 preproc
-  if pos("04", Q65_ACCRED_DIFFICULT) = 0 then   { Q69 shown only if Q65 difficulty option 04 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q65_ACCRED_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q65_ACCRED_DIFFICULT[wdP:2]) = 4 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q69 shown only if Q65 difficulty option 04 ticked }
     skip to Q70_WHY_DIFF_EQUIPMENT;
   endif;
 postproc
@@ -1913,7 +2032,14 @@ postproc
 
 PROC Q70_WHY_DIFF_EQUIPMENT
 preproc
-  if pos("05", Q65_ACCRED_DIFFICULT) = 0 then   { Q70 shown only if Q65 difficulty option 05 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q65_ACCRED_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q65_ACCRED_DIFFICULT[wdP:2]) = 5 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q70 shown only if Q65 difficulty option 05 ticked }
     skip to Q71_WHY_DIFF_HR;
   endif;
 postproc
@@ -1936,7 +2062,14 @@ postproc
 
 PROC Q71_WHY_DIFF_HR
 preproc
-  if pos("06", Q65_ACCRED_DIFFICULT) = 0 then   { Q71 shown only if Q65 difficulty option 06 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q65_ACCRED_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q65_ACCRED_DIFFICULT[wdP:2]) = 6 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q71 shown only if Q65 difficulty option 06 ticked }
     skip to Q72_WHY_DIFF_HIS;
   endif;
 postproc
@@ -1959,7 +2092,14 @@ postproc
 
 PROC Q72_WHY_DIFF_HIS
 preproc
-  if pos("07", Q65_ACCRED_DIFFICULT) = 0 then   { Q72 shown only if Q65 difficulty option 07 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q65_ACCRED_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q65_ACCRED_DIFFICULT[wdP:2]) = 7 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q72 shown only if Q65 difficulty option 07 ticked }
     skip to Q73_WHY_DIFF_DOCS;
   endif;
 postproc
@@ -1982,7 +2122,14 @@ postproc
 
 PROC Q73_WHY_DIFF_DOCS
 preproc
-  if pos("08", Q65_ACCRED_DIFFICULT) = 0 then   { Q73 shown only if Q65 difficulty option 08 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q65_ACCRED_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q65_ACCRED_DIFFICULT[wdP:2]) = 8 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q73 shown only if Q65 difficulty option 08 ticked }
     skip to Q74_WHY_DIFF_DOH_LIC;
   endif;
 postproc
@@ -2005,7 +2152,14 @@ postproc
 
 PROC Q74_WHY_DIFF_DOH_LIC
 preproc
-  if pos("09", Q65_ACCRED_DIFFICULT) = 0 then   { Q74 shown only if Q65 difficulty option 09 ticked }
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q65_ACCRED_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q65_ACCRED_DIFFICULT[wdP:2]) = 9 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q74 shown only if Q65 difficulty option 09 ticked }
     skip to Q75_ENROLL_RESPONSIBILITY;
   endif;
 postproc
