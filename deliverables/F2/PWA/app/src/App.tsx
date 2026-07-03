@@ -321,6 +321,32 @@ function AppShell() {
     setStatus('editing');
   };
 
+  // #825: a decline is DATA, not a dead end — queue a refusal submission
+  // (consent_given=0) through the normal offline-safe pipeline so the Admin
+  // page can tag the respondent "Refusal". No geolocation: location is never
+  // requested from someone who just declined. Fire-and-forget: the declined
+  // screen shows regardless; the Dexie queue + sync backoff handle offline
+  // and transient failures. submitDraft clears DRAFT_ID_KEY, so Start-over
+  // mints a fresh case (per-case semantics, #808).
+  const handleConsentDecline = async () => {
+    try {
+      if (draftId && enrollmentInfo) {
+        const refusalValues: FormValues = {
+          ...initialValues,
+          consent_given: 0,
+          consent_timestamp: Date.now(),
+          survey_language: locale,
+        };
+        await saveDraft(draftId, refusalValues, enrollmentInfo);
+        await submitDraft(draftId, enrollmentInfo, null);
+        void runSyncRef.current();
+      }
+    } catch (err) {
+      console.error('[F2] refusal queue failed (non-blocking):', err);
+    }
+    setStatus('declined');
+  };
+
   return (
     <main className="mx-auto flex min-h-screen-dvh w-full max-w-screen-xl flex-col">
       <BroadcastBanner message={runtimeConfig.broadcast_message} />
@@ -364,7 +390,7 @@ function AppShell() {
       ) : status === 'loading' ? (
         <p className="p-6 text-sm text-muted-foreground">{t('chrome.loading')}</p>
       ) : status === 'consent' ? (
-        <ConsentScreen onAgree={handleConsentAgree} onDecline={() => setStatus('declined')} />
+        <ConsentScreen onAgree={handleConsentAgree} onDecline={() => void handleConsentDecline()} />
       ) : status === 'declined' ? (
         <section className="mx-auto flex max-w-xl flex-col gap-4 p-6">
           <h2 className="font-serif text-2xl font-medium tracking-tight">

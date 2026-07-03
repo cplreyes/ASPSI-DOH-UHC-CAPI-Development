@@ -124,6 +124,7 @@ export function HCWsTab({ apiBaseUrl, fetchImpl }: HCWsTabProps): JSX.Element {
           <div className="flex items-center gap-2">
             <PillToggle active={filters.status === 'enrolled'} onClick={() => togglePill('enrolled')}>Enrolled</PillToggle>
             <PillToggle active={filters.status === 'submitted'} onClick={() => togglePill('submitted')}>Submitted</PillToggle>
+            <PillToggle active={filters.status === 'refusal'} onClick={() => togglePill('refusal')}>Refusal</PillToggle>
             <PillToggle active={filters.status === 'revoked'} onClick={() => togglePill('revoked')}>Revoked</PillToggle>
           </div>
         </div>
@@ -281,9 +282,11 @@ function StatusPill({ value }: { value: string }): JSX.Element {
   const tone =
     value === 'revoked'
       ? 'border-error text-error'
-      : value === 'submitted'
-        ? 'border-signal text-signal'
-        : 'border-hairline text-muted-foreground';
+      : value === 'refusal'
+        ? 'border-warning text-warning'
+        : value === 'submitted'
+          ? 'border-signal text-signal'
+          : 'border-hairline text-muted-foreground';
   return (
     <span className={`rounded-sm border ${tone} px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider`}>
       {value || '—'}

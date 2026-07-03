@@ -426,7 +426,10 @@ function parseChoicesColumn(
   };
   if (tail) {
     const wrapped = tail.match(/^help:\s*"([\s\S]+)"\s*$/);
-    result.help = wrapped ? wrapped[1] : tail;
+    // #826: spec rows are single markdown-table lines, so multi-line help
+    // carries a literal \n marker — unescape it here (help only); the
+    // renderer breaks lines via whitespace-pre-line.
+    result.help = (wrapped ? wrapped[1] : tail).replace(/\\n/g, '\n');
   }
 
   if (type === 'number') {

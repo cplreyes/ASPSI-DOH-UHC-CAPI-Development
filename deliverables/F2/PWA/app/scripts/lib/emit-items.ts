@@ -100,7 +100,9 @@ function emitItem(item: Item): string {
 }
 
 function quote(s: string): string {
-  return `'${s.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`;
+  // #826: real newlines (multi-line help) must emit as \n escapes — AFTER the
+  // backslash escape so the sequence isn't doubled.
+  return `'${s.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n')}'`;
 }
 
 // Serialize a LocalizedString, emitting only the locale keys that are present

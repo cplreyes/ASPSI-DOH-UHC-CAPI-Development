@@ -65,7 +65,7 @@ export function Question({ item }: QuestionProps) {
           {item.required ? <span className="ml-1 text-destructive">*</span> : null}
         </Heading>
         {item.help ? (
-          <p className="text-xs text-muted-foreground">{localized(item.help, locale)}</p>
+          <p className="whitespace-pre-line text-xs text-muted-foreground">{localized(item.help, locale)}</p>
         ) : null}
         {renderControl(
           item,

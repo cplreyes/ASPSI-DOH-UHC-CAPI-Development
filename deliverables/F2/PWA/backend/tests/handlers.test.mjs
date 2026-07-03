@@ -385,3 +385,84 @@ describe('handleAudit', () => {
     expect(r.error.code).toBe('E_PAYLOAD_INVALID');
   });
 });
+
+describe('#825 consent refusal', () => {
+  const refusalPayload = (over) =>
+    Object.assign(
+      {
+        client_submission_id: 'cli-refusal-1',
+        hcw_id: 'hcw-9',
+        facility_id: 'fac-1',
+        spec_version: '2026-07-02-r6',
+        app_version: '2.1.0',
+        submitted_at_client: 1700000000000,
+        device_fingerprint: 'android-chrome-138',
+        values: { consent_given: 0, consent_timestamp: 1700000000000 },
+      },
+      over || {},
+    );
+
+  function hcwsMock(currentStatus) {
+    const calls = [];
+    return {
+      calls,
+      setStatusIfIn: (hcwId, status, allowed) => {
+        calls.push({ hcwId, status, allowed });
+        return allowed.indexOf(currentStatus) !== -1;
+      },
+    };
+  }
+
+  it('stores a refusal row with status "refusal" and tags the HCW', () => {
+    const hcws = hcwsMock('enrolled');
+    const ctx = makeCtx({ hcws });
+    const r = handleSubmit(refusalPayload(), ctx);
+    expect(r.ok).toBe(true);
+    expect(ctx._appended).toHaveLength(1);
+    expect(ctx._appended[0].status).toBe('refusal');
+    expect(hcws.calls).toHaveLength(1);
+    expect(hcws.calls[0].hcwId).toBe('hcw-9');
+    expect(hcws.calls[0].status).toBe('refusal');
+    expect(hcws.calls[0].allowed).toContain('enrolled');
+    expect(hcws.calls[0].allowed).not.toContain('submitted');
+    expect(hcws.calls[0].allowed).not.toContain('revoked');
+  });
+
+  it('normal submissions keep status "stored" and never touch the HCW sheet', () => {
+    const hcws = hcwsMock('enrolled');
+    const ctx = makeCtx({ hcws });
+    handleSubmit(
+      refusalPayload({
+        client_submission_id: 'cli-normal-1',
+        values: { consent_given: 1, Q2: 'Regular' },
+      }),
+      ctx,
+    );
+    expect(ctx._appended[0].status).toBe('stored');
+    expect(hcws.calls).toHaveLength(0);
+  });
+
+  it('duplicate refusal replays do not re-write the HCW status', () => {
+    const hcws = hcwsMock('enrolled');
+    const ctx = makeCtx({
+      hcws,
+      responses: {
+        findExisting: () => ({ submission_id: 'srv-old' }),
+        appendRow: () => {
+          throw new Error('should not append a duplicate');
+        },
+      },
+    });
+    const r = handleSubmit(refusalPayload(), ctx);
+    expect(r.ok).toBe(true);
+    expect(r.data.status).toBe('duplicate');
+    expect(hcws.calls).toHaveLength(0);
+  });
+
+  it('tolerates a ctx without hcws (pre-migration spreadsheets)', () => {
+    const ctx = makeCtx();
+    const r = handleSubmit(refusalPayload(), ctx);
+    expect(r.ok).toBe(true);
+    expect(ctx._appended[0].status).toBe('refusal');
+  });
+});
