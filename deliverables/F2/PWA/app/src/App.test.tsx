@@ -66,6 +66,8 @@ describe('<App>', () => {
     // rides in localStorage; clear both so every test starts at the consent
     // gate deterministically.
     await db.drafts.clear();
+    // #825: refusal tests assert the submissions queue — start empty.
+    await db.submissions.clear();
     localStorage.clear();
   });
 
@@ -95,6 +97,29 @@ describe('<App>', () => {
     expect(
       screen.queryByRole('heading', { name: /Section A — Healthcare Worker Profile/ }),
     ).not.toBeInTheDocument();
+  });
+
+  it('#825: declining queues a refusal submission (consent_given = 0) for sync', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByTestId('consent-decline');
+    await user.click(screen.getByTestId('consent-decline'));
+    await user.click(screen.getByTestId('consent-continue'));
+    await screen.findByRole('heading', { name: /thank you for your time/i });
+    // The refusal rides the normal offline queue; sync may already be
+    // retrying against the (absent) test proxy, so assert identity fields
+    // only — not the transient sync status.
+    await waitFor(async () => {
+      const rows: SubmissionRow[] = await db.submissions.toArray();
+      expect(rows).toHaveLength(1);
+      expect(rows[0].values.consent_given).toBe(0);
+      expect(typeof rows[0].values.consent_timestamp).toBe('number');
+      expect(rows[0].hcw_id).toBe('HCW-1');
+      expect(rows[0].values.submission_lat).toBeNull();
+    });
+    // The draft is consumed — Start over must mint a fresh case.
+    expect(await db.drafts.count()).toBe(0);
+    expect(localStorage.getItem('f2_current_draft_id')).toBeNull();
   });
 
   it('#808: agreeing records consent_given + consent_timestamp into the draft', async () => {

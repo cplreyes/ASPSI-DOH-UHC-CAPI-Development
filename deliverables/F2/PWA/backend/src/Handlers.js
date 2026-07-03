@@ -23,7 +23,9 @@ function _buildResponseRow(payload, serverSubmissionId, ctx) {
     facility_id: payload.facility_id || '',
     device_fingerprint: payload.device_fingerprint || '',
     sync_attempt_count: payload.sync_attempt_count != null ? String(payload.sync_attempt_count) : '1',
-    status: 'stored',
+    // #825: consent refusals are first-class rows, distinguishable by status
+    // (all status consumers do exact string compares, so the value is additive).
+    status: values.consent_given === 0 ? 'refusal' : 'stored',
     values_json: JSON.stringify(values),
     // Admin Portal columns (Task 2.7). PWA submits insert lat/lng into the
     // values dict (Task 2.6); the encoder write path (Task 4.2) sends them
@@ -75,6 +77,15 @@ function handleSubmit(payload, ctx) {
   var serverId = 'srv-' + ctx.generateUuid();
   var row = _buildResponseRow(payload, serverId, ctx);
   var appendedId = ctx.responses.appendRow(row);
+  // #825: a consent refusal additionally tags the respondent in F2_HCWs so the
+  // Admin HCWs tab can filter refusals. Forward-only: never demotes a
+  // submitted/revoked HCW (e.g. a stray refusal replay). ctx.hcws is optional
+  // (test ctxs / pre-migration spreadsheets skip silently); POSTs run inside
+  // the script lock, so the read-modify-write is race-safe. Duplicates never
+  // reach here (findExisting short-circuits above).
+  if (payload.values.consent_given === 0 && ctx.hcws && typeof ctx.hcws.setStatusIfIn === 'function') {
+    ctx.hcws.setStatusIfIn(payload.hcw_id || '', 'refusal', ['pending', 'enrolled', '']);
+  }
   return {
     ok: true,
     data: {

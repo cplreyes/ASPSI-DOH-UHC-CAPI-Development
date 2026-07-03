@@ -92,6 +92,7 @@ function buildCtx() {
     config: ss.getSheetByName('F2_Config'),
     facilities: ss.getSheetByName('FacilityMasterList'),
     dlq: ss.getSheetByName('F2_DLQ'),
+    hcws: ss.getSheetByName('F2_HCWs'),
   };
 
   return {
@@ -102,6 +103,35 @@ function buildCtx() {
     audit: _buildAuditCtx(tabs.audit),
     config: _buildConfigCtx(tabs.config),
     facilities: _buildFacilitiesCtx(tabs.facilities),
+    hcws: _buildHcwsCtx(tabs.hcws),
+  };
+}
+
+function _buildHcwsCtx(sheet) {
+  // #825: minimal accessor for the consent-refusal status tag. Tolerates a
+  // missing F2_HCWs sheet (pre-migration spreadsheets) — every call no-ops.
+  return {
+    setStatusIfIn: function (hcwId, newStatus, allowedCurrent) {
+      if (!sheet || !hcwId) return false;
+      var last = sheet.getLastRow();
+      if (last < 2) return false;
+      var header = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+      var idIdx = header.indexOf('hcw_id');
+      var stIdx = header.indexOf('status');
+      if (idIdx === -1 || stIdx === -1) return false;
+      var ids = sheet.getRange(2, idIdx + 1, last - 1, 1).getValues();
+      for (var i = 0; i < ids.length; i++) {
+        if (String(ids[i][0]) === String(hcwId)) {
+          var cur = String(sheet.getRange(i + 2, stIdx + 1).getValue() || '');
+          if (allowedCurrent.indexOf(cur) !== -1) {
+            sheet.getRange(i + 2, stIdx + 1).setValue(newStatus);
+            return true;
+          }
+          return false;
+        }
+      }
+      return false;
+    },
   };
 }
 
