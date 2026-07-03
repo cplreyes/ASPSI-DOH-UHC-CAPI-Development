@@ -1,10 +1,16 @@
 #!/usr/bin/env python
 r"""Static [Block] invariant checker for a CSPro .fmf — catches the malformations that make
 CSPro Designer SILENTLY CRASH on open (clean exit, no error). Per [Group], the rule learned
-from Designer-authored saves is: blocks are listed in field order, every block's
-  Position == (sum of Lengths of prior blocks in the group) + (count of prior blocks)
-i.e. Position = start_field_index + prior_block_count, and the blocks must tile the group's
-fields contiguously with no gaps/overlaps when blocks are used.
+from Designer-authored saves is: blocks are listed in field order and every block's
+  Position == start_field_index + prior_block_count
+(Position indexes the group's item list, where each prior block occupies one slot).
+
+Blocks do NOT have to tile the group contiguously: unblocked fields between blocks are
+legal and render as their own screens (F4 Section N does this — 38 food/expense triplet
+blocks with 4 standalone subtotal fields interleaved; Designer opens and publishes it
+fine). Since start_field_index is only recoverable FROM Position (start = Position - k),
+the checkable invariant is: derived starts are in order, non-overlapping, and in bounds:
+  start(k) = Position(k) - k;  start(k) >= start(k-1) + Length(k-1);  start(k)+Length(k) <= n_fields
 
 Usage:  py fmf_block_check.py <path-to.fmf> [<path2.fmf> ...]
 Exit 0 = clean, 1 = problems found.
@@ -25,16 +31,19 @@ def check(fmf_path):
     def validate():
         if not blocks:
             return
-        cum = 0
+        prev_end = 0                            # first field index available to the next block
         for k, (bn, pos, ln) in enumerate(blocks):
-            exp = cum + k                       # start_index (cum) + prior-block count (k)
-            if pos != exp:
-                problems.append(f"[{gname}] {bn}: Position={pos} expected {exp} "
-                                f"(start {cum} + {k} prior blocks)")
-            cum += (ln or 0)
-        if cum != len(fields):
-            problems.append(f"[{gname}] blocks tile {cum} fields but group has "
-                            f"{len(fields)} (gap/overlap)")
+            if pos is None or ln is None:
+                problems.append(f"[{gname}] {bn}: missing Position/Length")
+                continue
+            start = pos - k                     # Position = start_field_index + k prior blocks
+            if start < prev_end:
+                problems.append(f"[{gname}] {bn}: Position={pos} -> start field {start} "
+                                f"overlaps/precedes previous block (fields < {prev_end} taken)")
+            if start + ln > len(fields):
+                problems.append(f"[{gname}] {bn}: Position={pos} Length={ln} -> fields "
+                                f"{start}..{start + ln - 1} exceed group's {len(fields)} fields")
+            prev_end = max(prev_end, start + ln)
 
     for raw in lines:
         s = raw.strip()

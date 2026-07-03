@@ -290,12 +290,22 @@ def uhc9_item(name, label):
     ]
 
 
-def record(name, label, record_type, items, max_occurs=1, required=True):
+def record(name, label, record_type, items, max_occurs=1, required=True, occ_labels=None):
+    """occ_labels: optional list of per-occurrence label strings (1-based order) for a
+    repeating record — emitted as occurrences.labels per the CSPro 8 JSON dictionary shape
+    ([{occurrence, labels: [{text}]}], zDictO/DictRecord.cpp). Names the roster row stub +
+    case-tree occurrences (first use: F4 Section N Option C food grid, 2026-07-03)."""
+    occurrences = {"required": required, "maximum": max_occurs}
+    if occ_labels:
+        occurrences["labels"] = [
+            {"occurrence": k, "labels": [{"text": t}]}
+            for k, t in enumerate(occ_labels, start=1)
+        ]
     return {
         "name": name,
         "labels": [{"text": label}],
         "recordType": record_type,
-        "occurrences": {"required": required, "maximum": max_occurs},
+        "occurrences": occurrences,
         "items": items,
     }
 
@@ -877,6 +887,175 @@ def apply_translations(dictionary, translations_dir, languages=TRANSLATION_LANGU
         pct = (100 * matched // total) if total else 0
         print(f"    {code}: {matched}/{total} labels translated ({pct}%)")
     return dictionary
+
+
+# R2 (2026-07-03): runtime errmsg texts move out of the logic into numbered .mgf
+# messages so they can be translated like question text. Numbers are permanent
+# once assigned — see numberize_errmsgs() below.
+ERRMSG_NUMBER_BASE = 1001
+
+_ERRMSG_OPEN = re.compile(r'errmsg\s*\(\s*(?=")', re.IGNORECASE)
+
+
+def _parse_literal_chain(text, i):
+    """Parse a CSPro string-literal chain starting at text[i] == '"'.
+
+    Handles line-wrapped messages written as `"part one " + "part two"`.
+    Returns (folded_text, end_index, clean) where end_index is just past the
+    last closing quote and clean=True only when the chain is the COMPLETE
+    argument (next non-space char is ',' or ')'). A chain that continues with
+    a non-literal term (`+ strip(X)` etc.) returns clean=False — converting it
+    would corrupt the call, so the caller must leave it inline.
+    """
+    parts = []
+    while True:
+        j = text.find('"', i + 1)
+        if j < 0:
+            return None, i, False               # unterminated — leave untouched
+        parts.append(text[i + 1:j])
+        k = j + 1
+        while k < len(text) and text[k] in " \t\r\n":
+            k += 1
+        if k < len(text) and text[k] == "+":
+            k2 = k + 1
+            while k2 < len(text) and text[k2] in " \t\r\n":
+                k2 += 1
+            if k2 < len(text) and text[k2] == '"':
+                i = k2                          # `+ "more text"` — keep folding
+                continue
+            return "".join(parts), j + 1, False  # `+ <expr>` — runtime concat
+        clean = k < len(text) and text[k] in ",)"
+        return "".join(parts), j + 1, clean
+
+
+def _mgf_safe_text(text):
+    """Make one message text safe for the strict .mgf parser (Publish/CSPack).
+
+    zMessageO/MessageFile.cpp ProcessMessageText(): a text that BEGINS with a
+    quote character is parsed as a string literal, and any trailing text then
+    fails with "No text can follow a string literal" (mid-text quotes in bare
+    text are fine). Remedy: emit the whole text as ONE string literal in the
+    other quote type — the parser strips the enclosing quotes, so the
+    displayed message is unchanged. A leading-quote text that contains both
+    quote types (or a backslash, an escape hazard inside literals) falls back
+    to typographic quotes so no delimiter starts the line.
+    """
+    if not text.startswith(("'", '"')):
+        return text
+    if '"' not in text and "\\" not in text:
+        return f'"{text}"'
+    if "'" not in text and "\\" not in text:
+        return f"'{text}'"
+    return text.replace("'", "’").replace('"', "”")
+
+
+def numberize_errmsgs(apc_text, instrument_dir, mgf_path, app_label,
+                      languages=TRANSLATION_LANGUAGES, generated_by="generate_apc.py"):
+    """Swap inline errmsg("...") literals for numbered messages + emit the .mgf.
+
+    Rewrites every errmsg("<text>", ...) in the assembled .apc to
+    errmsg(<number>, ...) — fill arguments and everything after the literal are
+    untouched, and the displayed text is unchanged (the .ent files set
+    showErrorMessageNumbers=false). Generator/fragment sources keep their
+    readable inline English; only the assembled output is numbered.
+
+    Numbering is STABLE across regenerations via <instrument>/messages-registry.json
+    (machine-managed — do not hand-edit): a text keeps its number forever, new
+    texts append at the next free number, and retired texts stay in the registry
+    so their numbers are never reused. That makes the numbers safe to key
+    translations on.
+
+    The .mgf gets a `Language = EN` section with the exact texts, plus one
+    section per drop-in translations/messages.<locale>.json (same convention as
+    apply_translations: keyed by the English text; a missing key falls back to
+    English so every language section stays complete).
+
+    Line-wrapped messages written as adjacent literals (`"part one " + "part
+    two"`) are folded into ONE message. Calls whose first argument is NOT a
+    complete literal (runtime concat like `"EA " + strip(X)`) are left inline
+    and reported — rewrite those to fill-style (`errmsg("EA %s ...", strip(X))`)
+    at the source to make them numberable. A text containing { or } would be
+    truncated by the .mgf comment syntax, so it is also left inline (none exist).
+    """
+    instrument_dir = Path(instrument_dir)
+    registry_path = instrument_dir / "messages-registry.json"
+    if registry_path.exists():
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    else:
+        registry = {
+            "_note": ("Machine-managed by cspro_helpers.numberize_errmsgs() — do not "
+                      "hand-edit. Maps each errmsg text to its permanent message "
+                      "number; numbers are never reused or renumbered."),
+            "next": ERRMSG_NUMBER_BASE,
+            "messages": {},
+        }
+    messages = registry["messages"]
+
+    live, skipped = [], []      # texts in this build (first-appearance order); inline leftovers
+    out, pos, n_calls = [], 0, 0
+    for m in _ERRMSG_OPEN.finditer(apc_text):
+        if m.start() < pos:
+            continue                            # inside a chain already consumed
+        text, end, clean = _parse_literal_chain(apc_text, m.end())
+        if text is None:
+            continue
+        n_calls += 1
+        if not clean or "{" in text or "}" in text:
+            # runtime concat (`+ <expr>`) would be corrupted by numbering;
+            # braces are .mgf comment syntax and would truncate the message.
+            if text not in skipped:
+                skipped.append(text)
+            continue
+        if text not in messages:
+            messages[text] = registry["next"]
+            registry["next"] += 1
+        if text not in live:
+            live.append(text)
+        out.append(apc_text[pos:m.start()])
+        out.append(f"errmsg({messages[text]}")
+        pos = end
+    out.append(apc_text[pos:])
+    new_text = "".join(out)
+
+    registry_path.write_text(json.dumps(registry, indent=2, ensure_ascii=False) + "\n",
+                             encoding="utf-8")
+
+    # ---- emit the .mgf: EN section always; translated sections are drop-in ----
+    live_numbered = sorted((messages[t], t) for t in live)
+    lines = [
+        f"{{ {app_label} runtime messages — generated by {generated_by}; do NOT hand-edit. }}",
+        "{ Numbering is permanent via messages-registry.json. To add a locale, drop        }",
+        "{ translations/messages.<locale>.json (English text -> translated text) next to  }",
+        "{ the generator and re-run — same convention as the .dcf label translations.     }",
+        "Language = EN",
+    ]
+    lines += [f"{num} {_mgf_safe_text(text)}" for num, text in live_numbered]
+
+    coverage = []
+    for code, _disp, fname in languages:
+        if fname is None:
+            continue
+        map_path = instrument_dir / "translations" / f"messages.{fname}"
+        if not map_path.exists():
+            continue
+        tr_map = json.loads(map_path.read_text(encoding="utf-8"))
+        matched = sum(1 for _n, t in live_numbered if t in tr_map)
+        coverage.append((code, matched, len(live_numbered)))
+        lines += ["", f"Language = {code}"]
+        lines += [f"{num} {_mgf_safe_text(tr_map.get(text, text))}" for num, text in live_numbered]
+
+    mgf_path = Path(mgf_path)
+    mgf_path.write_text("\n".join(lines) + "\n", encoding="utf-8-sig", newline="\r\n")
+
+    print(f"  errmsg -> .mgf: {n_calls - len(skipped)} of {n_calls} calls numbered "
+          f"({len(live_numbered)} distinct texts) -> {mgf_path.name}")
+    for code, matched, total in coverage:
+        pct = (100 * matched // total) if total else 0
+        print(f"    {code}: {matched}/{total} messages translated ({pct}%)")
+    if skipped:
+        print(f"    WARNING: {len(skipped)} text(s) left inline (runtime concat or braces): "
+              + "; ".join(t[:60] for t in skipped[:3]))
+    return new_text
 
 
 # ---------------------------------------------------------------------------

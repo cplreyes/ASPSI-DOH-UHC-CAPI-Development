@@ -112,8 +112,32 @@ _FORM_PLAN_STATIC = [
      [("L_NBB_AWARENESS", None)]),
     ("M. ZBB / MAIFIP / Bill-Recall",
      [("M_ZBB_MAIFIP_BILL", None)]),
-    ("N. Household Expenditures",
+    # Option C fan-out (2026-07-03): every Section N recall block is a repeating grid
+    # form; record P keeps Q157 + the flat weekly singles (Q158/Q159); each health
+    # subtotal record sits on its own form right after its block. Plain hyphens in
+    # titles (CSEntry renders em-dashes in fmf/dcf labels as mojibake on-device).
+    ("N. Food consumed last week (Q144-156) - one row per item",
+     [("N_FOOD_ROSTER", None)]),
+    ("N. Household Expenditures (Q157-159)",
      [("N_HOUSEHOLD_EXPENDITURES", None)]),
+    ("N. Non-food, last month (Q160-167) - one row per item",
+     [("N_NF1M_ROSTER", None)]),
+    ("N. Non-food, last 6 months (Q168-169) - one row per item",
+     [("N_NF6M_ROSTER", None)]),
+    ("N. Non-food, last 12 months (Q170-174) - one row per item",
+     [("N_NF12M_ROSTER", None)]),
+    ("N. Health, last 12 months (Q175-176) - one row per item",
+     [("N_H12M_ROSTER", None)]),
+    ("N. Health 12-month subtotal (Q177)",
+     [("N_H12M_TOTAL", None)]),
+    ("N. Health, last 6 months (Q178-181) - one row per item",
+     [("N_H6M_ROSTER", None)]),
+    ("N. Health 6-month subtotal (Q182)",
+     [("N_H6M_TOTAL", None)]),
+    ("N. Health, last month (Q183-184) - one row per item",
+     [("N_H1M_ROSTER", None)]),
+    ("N. Health 1-month subtotal (Q185)",
+     [("N_H1M_TOTAL", None)]),
     ("O. Sources of Funds for Health",
      [("O_SOURCES_OF_FUNDS", None)]),
     ("P. Financial Risk",
@@ -301,6 +325,9 @@ NAMED_BLOCKS = [
 _NO_AUTOGROUP_RECORDS = {
     "FIELD_CONTROL", "HOUSEHOLD_GEO_ID", "REC_CASE_VERIFICATION", "C_HOUSEHOLD_ROSTER",
     "C_PRIVATE_INS_ROSTER",   # #525/#612/#613: emit as a roster, never auto-blocked
+    "N_FOOD_ROSTER",   # Option C (2026-07-03): food grid — roster, never DG-blocked
+    "N_NF1M_ROSTER", "N_NF6M_ROSTER", "N_NF12M_ROSTER",   # fan-out rosters (2026-07-03):
+    "N_H12M_ROSTER", "N_H6M_ROSTER", "N_H1M_ROSTER",      # never DG-blocked
 }
 _MULTISELECT_RE = re.compile(r"^(.+?)_O\d+$")
 # Single alpha fields rendered as a CSPro Check Box (one-question multi-select tick-list).

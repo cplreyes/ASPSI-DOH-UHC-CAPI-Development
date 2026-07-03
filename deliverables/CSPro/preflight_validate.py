@@ -261,6 +261,30 @@ def validate(instrument, apc_path, dcf_path, shared_paths, fmf_path=None, extra_
     }
 
 
+def check_mgf(apc_path):
+    """R2 (2026-07-03) gate: every errmsg(<number>) in the .apc must be defined in
+    the sibling .ent.mgf's `Language = EN` section (a missing number renders as
+    garbage on device). Inline errmsg("...") literals are legal CSPro but bypass
+    the numbered-message translation layer, so they are reported (soft).
+    Returns (missing_numbers, literal_count, en_message_count)."""
+    src = Path(apc_path).read_text(encoding='utf-8')
+    nums = {int(n) for n in re.findall(r'errmsg\s*\(\s*(\d+)', src, re.I)}
+    lits = len(re.findall(r'errmsg\s*\(\s*"', src, re.I))
+    mgf_path = Path(apc_path).with_suffix('.mgf')
+    defined, cur = set(), None
+    if mgf_path.exists():
+        for line in mgf_path.read_text(encoding='utf-8-sig').splitlines():
+            s = line.strip()
+            m = re.match(r'Language\s*=\s*(\w+)', s)
+            if m:
+                cur = m.group(1)
+                continue
+            m = re.match(r'(\d+)\s', s)
+            if m and cur == 'EN':
+                defined.add(int(m.group(1)))
+    return sorted(nums - defined), lits, len(defined)
+
+
 def main():
     # Lives in deliverables/CSPro/ — resolve the instrument dirs relative to it.
     base = Path(__file__).resolve().parent
@@ -307,6 +331,30 @@ def main():
                 print(f'       {tok}  (x{cnt})')
         else:
             print('  OK — no unresolved dictionary-style references')
+        mgf_missing, mgf_lits, mgf_defined = check_mgf(apc)
+        if mgf_missing:
+            overall_clean = False
+            print(f'  !! errmsg numbers NOT in the .mgf EN section ({len(mgf_missing)}) — '
+                  f'render as garbage on device: {mgf_missing[:10]}')
+        else:
+            print(f'  OK — all errmsg numbers defined in the .mgf ({mgf_defined} EN messages)')
+        if mgf_lits:
+            print(f'  ?? {mgf_lits} inline errmsg("...") literal(s) bypass the numbered '
+                  f'.mgf layer (untranslatable; regenerate via generate_apc.py)')
+    # R2 hub coverage: the hub apps' dcf/fmf come from their own build, but their
+    # errmsg <-> .mgf completeness rides the same gate as the instruments.
+    for name, apc in [('HUB LoginApp', base / 'supervisor-hub' / 'LoginApp.ent.apc'),
+                      ('HUB MenuApp', base / 'supervisor-hub' / 'MenuApp.ent.apc')]:
+        if not apc.exists():
+            continue
+        mgf_missing, mgf_lits, mgf_defined = check_mgf(apc)
+        if mgf_missing:
+            overall_clean = False
+            print(f'\n[{name}] !! errmsg numbers NOT in the .mgf ({len(mgf_missing)}): {mgf_missing[:10]}')
+        else:
+            print(f'\n[{name}] OK — all errmsg numbers defined in the .mgf ({mgf_defined} EN messages)'
+                  + (f'; ?? {mgf_lits} inline literal(s)' if mgf_lits else ''))
+
     print('\n' + ('ALL CLEAN' if overall_clean else 'ISSUES FOUND — see PROC errors above'))
     return 0 if overall_clean else 1
 

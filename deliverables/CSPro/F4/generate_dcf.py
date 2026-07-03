@@ -1599,6 +1599,36 @@ def build_section_m():
 # marked [DO NOT ASK] in source — emitted as TOTAL_PHP fields for logic pass.
 # ============================================================
 
+# ---- #7 DK/RF affordance (per-item amount-status gate; DARK behind this flag) ----
+DK_RF_STATUS = False   # flip True (+ regenerate + redeploy) once ASPSI blesses the -98/-99 gate
+
+AMT_STATUS_OPTIONS = [
+    ("Household gave an amount", "1"),
+    ("Don't know the amount",    "2"),
+    ("Refused to answer",        "3"),
+]
+
+
+def _php_tail():
+    """Amount-field hint tail. Flag OFF: the inline enter-(-98/-99) instruction (current live
+    behaviour). Flag ON: just '(PHP)' — the AMT_STATUS field now carries DK/RF, so the amount
+    field is only for a real peso value."""
+    if DK_RF_STATUS:
+        return " (PHP)"
+    return " (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)"
+
+
+def _amt_status_items(prefix, lead):
+    """The per-item DK/RF gate placed AFTER _CONSUMED, BEFORE the amounts. Only asked when
+    CONSUMED=1 (generate_apc gates it); DK/RF auto-set both amounts to -98/-99 and skip entry.
+    Empty when the flag is off, so the dict/flow are byte-identical to today's live build."""
+    if not DK_RF_STATUS:
+        return []
+    return [select_one(f"{prefix}_AMT_STATUS",
+                       f"{lead} - Did the household give an amount for this item, not know it, or refuse to answer? (Do not read the codes aloud.)",
+                       AMT_STATUS_OPTIONS, length=1)]
+
+
 def _expenditure_item(prefix, label, period="the last week"):
     """Standard SHA triplet: consumed Y/N, purchased PHP, in-kind PHP.
 
@@ -1617,10 +1647,11 @@ def _expenditure_item(prefix, label, period="the last week"):
         # #676/#738+: paper column wording; reference period varies per block (see callers).
         yes_no(f"{prefix}_CONSUMED",
                f"{label} — In {period}, did you or any member of your household consume this item?"),
+        *_amt_status_items(prefix, label),
         numeric(f"{prefix}_PURCHASED_PHP",
-                f"{label} — During {period}, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)", length=8),
+                f"{label} — During {period}, how much did your household spend to purchase this item?" + _php_tail(), length=8),
         numeric(f"{prefix}_INKIND_PHP",
-                f"{label} — During {period}, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)", length=8),
+                f"{label} — During {period}, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine." + _php_tail(), length=8),
     ]
 
 
@@ -1632,11 +1663,10 @@ def _computed_total(prefix, label):
     ]
 
 
-def build_section_n():
-    items = []
-
-    # ----- A. Food Items (Consumed last WEEK) — Q144-Q158 -----
-    food_weekly = [
+# ----- A. Food Items (Consumed last WEEK) — Q144-Q156: Option C roster rows -----
+# (2026-07-03: these 13 items are the fixed occurrences of N_FOOD_ROSTER, in paper order.
+#  Module-level so generate_apc.py imports the same list for the N_FOOD_ITEM ladder.)
+FOOD_WEEKLY_ITEMS = [
         ("Q144_CEREALS",     "144. Cereals (rice, flour, noodles, corn, etc.)"),
         ("Q145_PULSES",      "145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts"),
         ("Q146_VEGETABLES",  "146. Vegetables (fresh, dried, dehydrated, frozen)"),
@@ -1650,103 +1680,157 @@ def build_section_n():
         ("Q154_CONDIMENTS",  "154. Condiments and other spices and other ready-made meals"),
         ("Q155_WATER_NA",    "155. Water and non-alcoholic beverages (e.g., coffee)"),
         ("Q156_ALCOHOL",     "156. Alcoholic beverages (e.g., local and imported)"),
+]
+
+
+# ----- Fan-out (2026-07-03): remaining Section N recall blocks as rosters -----
+# Module-level so generate_apc.py imports the same lists for the *_ITEM ladders
+# (single source with the dcf occurrence labels). Q158/Q159 stay flat on record P:
+# single items gain nothing from a 1-row grid. Codebook crosswalk: occurrence k
+# <-> items_list[k-1] (retired flat names map 1:1 by list position).
+NONFOOD_1M_ITEMS = [
+    ("Q160_PERSONAL_CARE",   "160. Personal care products (e.g., shampoo, haircut)"),
+    ("Q161_HOUSEHOLD_CLEAN", "161. Household cleaning and maintenance products and services including domestic ones"),
+    ("Q162_UTILITIES",       "162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas)"),
+    ("Q163_TRANSPORT",       "163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle"),
+    ("Q164_TELECOM",         "164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations"),
+    ("Q165_RECREATION_1M",   "165. Recreational, cultural, religious, sporting and entertainment devices (monthly)"),
+    ("Q166_POSTAL",          "166. Postal services"),
+    ("Q167_HOUSING",         "167. Housing (actual rentals, estimated value of rent if owned)"),
+]
+NONFOOD_6M_ITEMS = [
+    ("Q168_RECREATION_6M", "168. Recreational, cultural, religious, sporting and entertainment devices (6-month)"),
+    ("Q169_CLOTHING",      "169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs"),
+]
+NONFOOD_12M_ITEMS = [
+    ("Q170_EDUCATION",     "170. Educational services (e.g., tuitions and tutoring)"),
+    ("Q171_ACCOMMODATION", "171. Accommodation services, including for educational establishment (e.g., hotels)"),
+    ("Q172_GARDEN_PETS",   "172. Garden and personal pets' products and services"),
+    ("Q173_HEALTH_INS",    "173. Health insurance"),
+    ("Q174_OTHER_INS",     "174. Other insurance (e.g., for life and accident, and travel)"),
+]
+HEALTH_12M_ITEMS = [   # Q177 sums exactly these two (#633: Q173/Q174 are NOT in the subtotal)
+    ("Q175_INPATIENT",           "175. Inpatient care services"),
+    ("Q176_EMERGENCY_TRANSPORT", "176. Emergency transportation and emergency rescue services"),
+]
+HEALTH_6M_ITEMS = [
+    ("Q178_PREVENTIVE",       "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself."),
+    ("Q179_DIAGNOSTIC",       "179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care"),
+    ("Q180_ASSISTIVE",        "180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases"),
+    ("Q181_MEDICAL_PRODUCTS", "181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases"),
+]
+HEALTH_1M_ITEMS = [
+    ("Q183_MEDICINES",  "183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases"),
+    ("Q184_OUTPATIENT", "184. Outpatient medical and dental services, including online services, without overnight stay"),
+]
+
+
+def _expenditure_roster(rec_name, rec_label, rec_type, prefix, items_list, period, noun):
+    """Fan-out roster builder: one repeating record per WHO/SHA recall block (the
+    build_section_n_food_roster shape, parameterized). Plain hyphens in labels: CSEntry
+    renders em-dashes in dcf labels as mojibake in the label bar + case tree (itel,
+    2026-07-03); qsf question HTML renders either fine."""
+    items = [
+        alpha(f"{prefix}_ITEM",
+              f"{noun} (auto - one grid row per item)", length=250),
+        yes_no(f"{prefix}_CONSUMED",
+               f"{noun} - In {period}, did you or any member of your household consume this item?"),
+        *_amt_status_items(prefix, noun),
+        numeric(f"{prefix}_PURCHASED_PHP",
+                f"{noun} - During {period}, how much did your household spend to purchase this item?" + _php_tail(),
+                length=8),
+        numeric(f"{prefix}_INKIND_PHP",
+                f"{noun} - During {period}, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine." + _php_tail(),
+                length=8),
     ]
-    for prefix, label in food_weekly:
-        items.extend(_expenditure_item(prefix, label))
-    items.extend(_computed_total("Q157_FOOD_SUBTOTAL",
-                                 "157. Sub-total (food, last week)"))
-    items.extend(_expenditure_item(
+    return record(rec_name, rec_label, rec_type, items,
+                  max_occurs=len(items_list),
+                  occ_labels=[label for _, label in items_list])
+
+
+def build_section_n_food_roster():
+    """Option C (Carl go, 2026-07-03): the weekly-food block (Q144-Q156) as ONE repeating
+    record — a fixed 13-row grid, one occurrence per WHO/SHA item, replacing 13 flat
+    DisplayTogether triplets (retires the #617/#805/#818 DG block-exit class for this
+    block). N_FOOD_ITEM is auto-filled + noinput (generate_apc ladder from
+    FOOD_WEEKLY_ITEMS) and piped into every row question (generate_qsf
+    ~~strip(N_FOOD_ITEM)~~ — the Section C name-piping precedent). Occurrence labels name
+    the rows in the roster stub + case tree. Record letter V (free: V/W/X/Y — A-U + Z in
+    use). Codebook crosswalk: occurrence k <-> FOOD_WEEKLY_ITEMS[k-1] (the retired flat
+    names Q144_*..Q156_* map 1:1 by list position)."""
+    items = [
+        alpha("N_FOOD_ITEM",
+              "Food item (auto - one grid row per item, Q144-Q156)", length=120),
+        yes_no("N_FOOD_CONSUMED",
+               "Food item - In the last week, did you or any member of your household consume this item?"),
+        *_amt_status_items("N_FOOD", "Food item"),
+        numeric("N_FOOD_PURCHASED_PHP",
+                "Food item - During the last week, how much did your household spend to purchase this item?" + _php_tail(),
+                length=8),
+        numeric("N_FOOD_INKIND_PHP",
+                "Food item - During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine." + _php_tail(),
+                length=8),
+    ]
+    return record("N_FOOD_ROSTER",
+                  "N. Food consumed last week (Q144-Q156) - one row per item",
+                  "V", items, max_occurs=13,
+                  occ_labels=[label for _, label in FOOD_WEEKLY_ITEMS])
+
+
+def build_section_n():
+    """Section N fan-out (2026-07-03): every recall block is its own fixed-occurrence
+    roster (the device-proven Option C shape); record P keeps only Q157 + the two flat
+    weekly singles (Q158/Q159); each health subtotal is a single-field record placed
+    right after its block (paper adjacency), computed in its own preproc (generate_apc
+    section_n_fanout_procs). Record types: letters exhausted at A-V+Z, so W/X/Y for the
+    non-food rosters and digits 1-6 for the health rosters + subtotal records."""
+    p_items = []
+    p_items.extend(_computed_total("Q157_FOOD_SUBTOTAL",
+                                   "157. Sub-total (food, last week)"))
+    p_items.extend(_expenditure_item(
         "Q158_RESTAURANT",
         "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries)"))
-
-    # ----- B. Non-food and Non-Health Items -----
-    # Last WEEK — Q159
-    items.extend(_expenditure_item(
+    p_items.extend(_expenditure_item(
         "Q159_SMOKING_TOBACCO",
         "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut)"))
-
-    # Last MONTH — Q160-Q167
-    nonfood_monthly = [
-        ("Q160_PERSONAL_CARE",   "160. Personal care products (e.g., shampoo, haircut)"),
-        ("Q161_HOUSEHOLD_CLEAN", "161. Household cleaning and maintenance products and services including domestic ones"),
-        ("Q162_UTILITIES",       "162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas)"),
-        ("Q163_TRANSPORT",       "163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle"),
-        ("Q164_TELECOM",         "164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations"),
-        ("Q165_RECREATION_1M",   "165. Recreational, cultural, religious, sporting and entertainment devices (monthly)"),
-        ("Q166_POSTAL",          "166. Postal services"),
-        ("Q167_HOUSING",         "167. Housing (actual rentals, estimated value of rent if owned)"),
+    return [
+        build_section_n_food_roster(),
+        record("N_HOUSEHOLD_EXPENDITURES",
+               "N. Household Expenditures (WHO/SHA)", "P", p_items),
+        _expenditure_roster("N_NF1M_ROSTER",
+                            "N. Non-food, last month (Q160-Q167) - one row per item",
+                            "W", "N_NF1M", NONFOOD_1M_ITEMS, "the last month",
+                            "Non-food item"),
+        _expenditure_roster("N_NF6M_ROSTER",
+                            "N. Non-food, last 6 months (Q168-Q169) - one row per item",
+                            "X", "N_NF6M", NONFOOD_6M_ITEMS, "the last 6 months",
+                            "Non-food item"),
+        _expenditure_roster("N_NF12M_ROSTER",
+                            "N. Non-food, last 12 months (Q170-Q174) - one row per item",
+                            "Y", "N_NF12M", NONFOOD_12M_ITEMS, "the last 12 months",
+                            "Non-food item"),
+        _expenditure_roster("N_H12M_ROSTER",
+                            "N. Health, last 12 months (Q175-Q176) - one row per item",
+                            "1", "N_H12M", HEALTH_12M_ITEMS, "the last 12 months",
+                            "Health product or service"),
+        record("N_H12M_TOTAL", "N. Health 12-month subtotal (Q177)", "2",
+               _computed_total("Q177_HEALTH_12M_SUBTOTAL",
+                               "177. Total value of 175 and 176 (health, 12-month)")),
+        _expenditure_roster("N_H6M_ROSTER",
+                            "N. Health, last 6 months (Q178-Q181) - one row per item",
+                            "3", "N_H6M", HEALTH_6M_ITEMS, "the last 6 months",
+                            "Health product or service"),
+        record("N_H6M_TOTAL", "N. Health 6-month subtotal (Q182)", "4",
+               _computed_total("Q182_HEALTH_6M_SUBTOTAL",
+                               "182. Total value of 178 to 181 (health, 6-month)")),
+        _expenditure_roster("N_H1M_ROSTER",
+                            "N. Health, last month (Q183-Q184) - one row per item",
+                            "5", "N_H1M", HEALTH_1M_ITEMS, "the last month",
+                            "Health product or service"),
+        record("N_H1M_TOTAL", "N. Health 1-month subtotal (Q185)", "6",
+               _computed_total("Q185_HEALTH_1M_SUBTOTAL",
+                               "185. Total value of 183 and 184 (health, 1-month)")),
     ]
-    for prefix, label in nonfood_monthly:
-        items.extend(_expenditure_item(prefix, label, "the last month"))
-
-    # Last 6 MONTHS — Q168-Q169
-    items.extend(_expenditure_item(
-        "Q168_RECREATION_6M",
-        "168. Recreational, cultural, religious, sporting and entertainment devices (6-month)",
-        "the last 6 months"))
-    items.extend(_expenditure_item(
-        "Q169_CLOTHING",
-        "169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs",
-        "the last 6 months"))
-
-    # Last 12 MONTHS — Q170-Q174
-    nonfood_annual = [
-        ("Q170_EDUCATION",      "170. Educational services (e.g., tuitions and tutoring)"),
-        ("Q171_ACCOMMODATION",  "171. Accommodation services, including for educational establishment (e.g., hotels)"),
-        ("Q172_GARDEN_PETS",    "172. Garden and personal pets' products and services"),
-        ("Q173_HEALTH_INS",     "173. Health insurance"),
-        ("Q174_OTHER_INS",      "174. Other insurance (e.g., for life and accident, and travel)"),
-    ]
-    for prefix, label in nonfood_annual:
-        items.extend(_expenditure_item(prefix, label, "the last 12 months"))
-
-    # ----- E. Health Products and Services (Consumed last 12 MONTHS) — Q175-Q177 -----
-    items.extend(_expenditure_item(
-        "Q175_INPATIENT",
-        "175. Inpatient care services", "the last 12 months"))
-    items.extend(_expenditure_item(
-        "Q176_EMERGENCY_TRANSPORT",
-        "176. Emergency transportation and emergency rescue services", "the last 12 months"))
-    items.extend(_computed_total(
-        "Q177_HEALTH_12M_SUBTOTAL",
-        "177. Total value of 175 and 176 (health, 12-month)"))
-
-    # Health (Consumed last 6 MONTHS) — Q178-Q182
-    items.extend(_expenditure_item(
-        "Q178_PREVENTIVE",
-        "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself.",
-        "the last 6 months"))
-    items.extend(_expenditure_item(
-        "Q179_DIAGNOSTIC",
-        "179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care",
-        "the last 6 months"))
-    items.extend(_expenditure_item(
-        "Q180_ASSISTIVE",
-        "180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases",
-        "the last 6 months"))
-    items.extend(_expenditure_item(
-        "Q181_MEDICAL_PRODUCTS",
-        "181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases",
-        "the last 6 months"))
-    items.extend(_computed_total(
-        "Q182_HEALTH_6M_SUBTOTAL",
-        "182. Total value of 178 to 181 (health, 6-month)"))
-
-    # Health (Consumed last MONTH) — Q183-Q185
-    items.extend(_expenditure_item(
-        "Q183_MEDICINES",
-        "183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases",
-        "the last month"))
-    items.extend(_expenditure_item(
-        "Q184_OUTPATIENT",
-        "184. Outpatient medical and dental services, including online services, without overnight stay",
-        "the last month"))
-    items.extend(_computed_total(
-        "Q185_HEALTH_1M_SUBTOTAL",
-        "185. Total value of 183 and 184 (health, 1-month)"))
-
-    return record("N_HOUSEHOLD_EXPENDITURES",
-                  "N. Household Expenditures (WHO/SHA)", "P", items)
 
 
 # ============================================================
@@ -1899,7 +1983,7 @@ def build_f4_dictionary():
         build_section_k(),
         build_section_l(),
         build_section_m(),
-        build_section_n(),
+        *build_section_n(),   # Option C: [N_FOOD_ROSTER (V, 13 rows), N_HOUSEHOLD_EXPENDITURES]
         build_section_o(),
         build_section_p(),
         build_section_q(),

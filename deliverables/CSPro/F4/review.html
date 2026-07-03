@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Section N recap</title>
+<!--
+  F4 Section N end-of-section expenditure recap — rendered by the CSPro 8 htmldialog()
+  from the Q186 preproc (first Section O field, i.e. right after Section N completes).
+  SELF-CONTAINED (inline CSS + vanilla JS, no external deps) so it renders offline on
+  CSEntry — same discipline as supervisor-hub/report.html. Reads its input via the CS.UI
+  DUAL-BRIDGE: deprecated CSPro.* on CSEntry 8.0.1 (itel), CSProActionInvoker + registered
+  token on 8.1+ (A23) where CSPro.* was severed. Input JSON: {"v":[9 block subtotals php],
+  "grand": php}. INFORMATIONAL only - closes on OK and flow continues to Section O; the
+  htmldialog return value is NOT branched on (8.0.1's return is not a stable sentinel - see
+  the hub's show_coverage_report note). If no CS.UI is present (browser preview), falls back
+  to SAMPLE so the layout is viewable.
+-->
+<style>
+  :root { --green:#00532f; --greenlt:#e3f0ea; --line:#cfd8d3; --ink:#1a1a1a; --muted:#5b6b63; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; padding:0; font-family:-apple-system,Roboto,Arial,sans-serif; color:var(--ink); background:#fff; }
+  .wrap { padding:14px 16px; max-width:640px; margin:0 auto; }
+  h1 { font-size:16px; margin:0 0 3px; color:var(--green); }
+  p.lead { font-size:12.5px; color:var(--muted); margin:0 0 11px; line-height:1.35; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th,td { padding:7px 8px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+  thead th { background:var(--greenlt); color:var(--green); font-size:11px; text-transform:uppercase; letter-spacing:.03em; }
+  td.amt, th.amt { text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; width:120px; }
+  td.per { font-size:11.5px; color:var(--muted); }
+  tr.zero td { color:#9aa8a1; }
+  tr.total td { border-top:2px solid var(--green); border-bottom:none; font-weight:700; font-size:15px; padding-top:10px; }
+  tr.total td.lbl { color:var(--green); }
+  .hint { margin:10px 0 0; font-size:11px; color:var(--muted); line-height:1.4; }
+  .bar { margin-top:16px; text-align:right; }
+  button { font-size:15px; padding:9px 22px; border:0; border-radius:6px; background:var(--green); color:#fff; cursor:pointer; }
+  #dbg { display:none; font-size:9px; color:#a00; word-break:break-all; margin-top:8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Section N &mdash; expenditure recap</h1>
+  <p class="lead">Read these subtotals back to the respondent before continuing. If a figure looks wrong, tap <b>OK</b>, then use the question list to go back to that block and fix it.</p>
+  <table>
+    <thead><tr><th>Expenditure block</th><th class="amt">Subtotal</th></tr></thead>
+    <tbody id="rows"></tbody>
+    <tfoot><tr class="total"><td class="lbl">Total recorded</td><td class="amt" id="grand"></td></tr></tfoot>
+  </table>
+  <p class="hint">Totals exclude any item where the respondent didn&rsquo;t know (&minus;98) or refused (&minus;99) the amount, so actual spending may be higher.</p>
+  <div id="dbg"></div>
+  <div class="bar"><button id="ok" type="button">OK</button></div>
+</div>
+<script src="/action-invoker.js"></script>
+<script>
+  var BLOCKS = [
+    { label: "Food consumed at home",      period: "last week (Q144–156)" },
+    { label: "Restaurant meals & drinks",  period: "last week (Q158)" },
+    { label: "Tobacco & smoking",          period: "last week (Q159)" },
+    { label: "Non-food goods & services",  period: "last month (Q160–167)" },
+    { label: "Non-food goods & services",  period: "last 6 months (Q168–169)" },
+    { label: "Non-food goods & services",  period: "last 12 months (Q170–174)" },
+    { label: "Health products & services", period: "last 12 months (Q175–176)" },
+    { label: "Health products & services", period: "last 6 months (Q178–181)" },
+    { label: "Health products & services", period: "last month (Q183–184)" }
+  ];
+  var SAMPLE = { v: [1850, 300, 0, 4200, 1500, 8000, 2500, 900, 650], grand: 19900 };
+
+  var AI = null, BRIDGE = null;
+  function csAI() {
+    if (!AI && typeof CSProActionInvoker !== "undefined")
+      AI = new CSProActionInvoker("7b1f9c34-2e8a-4d6b-b0c7-9a5e13f8d240");
+    return AI;
+  }
+  function csGetInputRaw() {
+    var attempts = [];
+    var methods = [
+      ["CS.UI.getInputData", function () { return CS.UI.getInputData(); }],
+      ["getInputData", function () { return getInputData(); }],
+      ["CS.UI.getDialogInput", function () { return CS.UI.getDialogInput(); }],
+      ["getDialogInput", function () { return getDialogInput(); }],
+      ["CSPro.getInputData", function () { return CSPro.getInputData(); }],
+      ["AI.UI.getInputData", function () { return csAI().UI.getInputData(); }],
+      ["window.dialogInput", function () { return window.dialogInput; }]
+    ];
+    for (var i = 0; i < methods.length; i++) {
+      var name = methods[i][0], v, ok = true, err = "";
+      try { v = methods[i][1](); } catch (e) { ok = false; err = String(e); }
+      attempts.push(name + "=" + (ok ? ((v == null) ? "null" : (typeof v) + " " + String(v).slice(0, 60)) : "ERR " + err));
+      if (ok && v != null && v !== "") { BRIDGE = (name.indexOf("AI.") === 0) ? "ai" : "cspro"; return { value: v, attempts: attempts }; }
+    }
+    return { value: null, attempts: attempts };
+  }
+  function csSetDisplay(opts) {
+    var s = JSON.stringify(opts);
+    if (BRIDGE === "cspro") { try { if (typeof CSPro !== "undefined" && CSPro.setDisplayOptions) { CSPro.setDisplayOptions(s); return; } } catch (e) {} }
+    try { var A = csAI(); if (A && A.UI && A.UI.setDisplayOptions) { A.UI.setDisplayOptions(opts); return; } } catch (e) {}
+    try { if (typeof CSPro !== "undefined" && CSPro.setDisplayOptions) CSPro.setDisplayOptions(s); } catch (e) {}
+  }
+  function csClose() {
+    if (BRIDGE !== "cspro") { try { var A = csAI(); if (A && A.UI && A.UI.closeDialog) { A.UI.closeDialog({ result: "ok" }); return; } } catch (e) {} }
+    try { if (typeof CSPro !== "undefined" && CSPro.returnData) { CSPro.returnData("ok"); return; } } catch (e) {}
+    try { var A2 = csAI(); if (A2 && A2.UI && A2.UI.closeDialog) { A2.UI.closeDialog({ result: "ok" }); return; } } catch (e) {}
+    try { window.close(); } catch (e) {}
+  }
+  function peso(n) { return "₱" + Number(n || 0).toLocaleString("en-PH"); }
+
+  function render() {
+    var got = csGetInputRaw();
+    var raw = got.value, d = null;
+    if (typeof raw === "string") {
+      var sv = raw.replace(/^\s+|\s+$/g, "");
+      // CSPro passes a plain comma-separated string (9 block subtotals + grand); it cannot
+      // emit literal double-quotes, so JSON keys would arrive unquoted and fail JSON.parse.
+      if (sv.charAt(0) !== "{" && sv.indexOf(",") >= 0) {
+        var parts = sv.split(",");
+        if (parts.length >= 10) d = { v: parts.slice(0, 9).map(Number), grand: Number(parts[9]) };
+      }
+      if (!d) { try { d = JSON.parse(sv); } catch (e) { d = null; } }
+    } else if (raw && typeof raw === "object") { d = raw; }
+    if (!d || !d.v) {
+      d = SAMPLE;
+      var dbg = document.getElementById("dbg");
+      dbg.style.display = "block";
+      dbg.textContent = "sample data (no CS.UI input): " + got.attempts.join("  |  ");
+    }
+    var v = d.v || [], html = "";
+    for (var i = 0; i < BLOCKS.length; i++) {
+      var amt = Number(v[i] || 0), zero = !amt;
+      html += '<tr class="' + (zero ? "zero" : "") + '"><td>' + BLOCKS[i].label
+            + '<div class="per">' + BLOCKS[i].period + '</div></td>'
+            + '<td class="amt">' + (zero ? "—" : peso(amt)) + '</td></tr>';
+    }
+    document.getElementById("rows").innerHTML = html;
+    document.getElementById("grand").textContent = peso(d.grand);
+    var w = Math.min(Math.max(document.body.scrollWidth, 300), 520);
+    var h = Math.min(document.body.scrollHeight + 16, 620);
+    csSetDisplay({ width: w, height: h, resizable: false, keyboard: 0 });
+  }
+  document.getElementById("ok").addEventListener("click", csClose);
+  if (document.readyState !== "loading") render();
+  else document.addEventListener("DOMContentLoaded", render);
+</script>
+</body>
+</html>

@@ -6,7 +6,7 @@ data_programmer: Carl Patrick L. Reyes
 qa_tester: Shan (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
 engagement_window: November 2025 – August 2026
-last_updated: 2026-07-01
+last_updated: 2026-07-03
 ---
 
 # Product Backlog — UHC Survey Year 2 CAPI Development
@@ -21,13 +21,13 @@ last_updated: 2026-07-01
 
 ## 1. Status at a Glance
 
-### Headline — 2026-06-29
+### Headline — 2026-07-03 (Sprint 012 close)
 
-**The build phase is essentially complete. The project has shifted from building to field-readiness — and that's Carl's last active lane. Everything from the pretest onward is ASPSI/DOH's to run: SJREB ethics clearance, tablet supply, and scheduling the pretest itself. Carl stays ready and waits for the pretest date; he tracks none of those external gates as his own.**
+**The instruments are FIELD-READY and frozen for the pretest. UAT Round 5 closed 2026-06-29 (78/79 resolved, 1 cosmetic deferred), and the field-readiness exit criterion is wired into tooling and verified. Everything from the pretest onward is ASPSI/DOH's to run: SJREB ethics clearance, tablet supply, and scheduling the pretest itself. Carl's active lane has shifted to the data pipeline (Epics 10/11) while he waits for the date.**
 
-- **F1 / F3 / F4 (CSPro CAPI)** — multi-language instruments built (generator-driven); **on-device build + UAT Round 5 in active bug-burndown**; pretest-readiness + go/no-go assessed (2026-06-27). The **Supervisor hub** (one login → role menu → Bluetooth assignment/collection between tablets → CSWeb relay → live coverage reports → offline EA map) is **built, deployed, and device-verified on two tablets**, with a **live training guide** at `csweb.asiansocial.org/docs/hub-guide.html`. CSWeb 8.0.1 + the sync / map / case-status dashboards are **live**.
+- **F1 / F3 / F4 (CSPro CAPI)** — multi-language instruments built (generator-driven); **UAT Round 5 CLOSED 2026-06-29**; the whole fleet is **version-stamped and deployed on CSWeb (F1 v1.0.2 · F3 v1.0.2 · F4 v1.0.3 · Hub v1.0.1)** under a **pretest freeze** (nothing deploys until the gate clears, ~Jul 5; the next deploy needs a fresh-Designer compile of the newly message-numbered builds). **The pretest hand-out is ready** — Los Baños assignment (84 unique QNs, 4 facilities + 2 barangays) built with printed sheets, testers notified. Runtime error messages are now numbered + translatable (R2, 2026-07-03). The **Supervisor hub** (one login → role menu → Bluetooth assignment/collection between tablets → CSWeb relay → live coverage reports → offline EA map) is **built, deployed, and device-verified on two tablets**, with a **live training guide** at `csweb.asiansocial.org/docs/hub-guide.html`. CSWeb 8.0.1 + the sync / map / case-status dashboards are **live**.
 - **F2 (HCW PWA)** — **production v2.1.0**, all 7 PSA-target languages, UAT Rounds 1–3 closed. The one open item is migrating it off Cloudflare/Google to a dedicated Elestio instance (planned; provisioning-gated).
-- **Net for a Product Owner:** almost everything *buildable* is built. Carl's remaining lane = close the F1/F3/F4 UAT and finish the support deliverables (data pipeline, training/manuals, governance). The **pretest is ASPSI-scheduled** (SJREB + tablets + logistics, all ASPSI/DOH) — Carl waits for the date, then the deliverable chain (D4 → D5 → D6) resumes to engagement close.
+- **Net for a Product Owner:** everything *buildable for the field* is built, verified, and frozen. Carl's remaining lane = the **data pipeline**: the PSA-committed tabulation plan (197 SSRCS tables) is spec-complete with a proven Stata-12 pipeline, and the one remaining blocker to real table output — the ETL variable extraction (`transform.py`, Epic 10) — is **Sprint 013's headline**; plus governance + training finalize. The **pretest is ASPSI-scheduled** (SJREB + tablets + logistics, all ASPSI/DOH) — Carl waits for the date, then the deliverable chain (D4 → D5 → D6) resumes to engagement close.
 
 > **DOH-side movement + revised timeline (UP-inbox ingest, 2026-06-29 — wiki: [[Source - Project Movement and Revised Timeline (Apr-Jun 2026)]]):**
 > - **Tranche 1 accepted + PAID (2026-05-15); SJREB endorsement SIGNED.** The project is now **mid-review on BOTH tracks** — SJREB (ethics) and **PSA-SSRCS** (statistical clearance, Transaction 26SSRCS06-068, completeness check 2026-06-09) — which must stay on the **same tool version**. PSA's formal 20-working-day clock starts only once the completeness/clarification items clear (title consistency, Form 4, CAPI/CAWI screenshots, comparison matrix).
@@ -38,14 +38,14 @@ last_updated: 2026-07-01
 
 End-to-end critical path:
 
-> **Build ✅ → Field-ready (Carl — nearly done) → ⟦ASPSI: SJREB + schedule pretest⟧ → Pretest → D4 pilot report (Jul 13) → Training / D5 (Jul 31) → Fieldwork → Data cleaning + analysis → D6 final (Aug 13) → Handover & close**
+> **Build ✅ → Field-ready ✅ (2026-06-29) → ⟦ASPSI: SJREB + schedule pretest⟧ → Pretest → D4 pilot report (Jul 13) → Training / D5 (Jul 31) → Fieldwork → Data cleaning + analysis → D6 final (Aug 13) → Handover & close**
 >
 > _Carl's responsibility ends at the first arrow's target (field-ready). The bracketed step is ASPSI's; Carl waits for the pretest date, then re-engages on D4._
 
 | Milestone | Due | What it needs | Status |
 |---|---|---|---|
-| **D2 / D3** — survey materials, manuals, training, pre-tested questionnaires | extended | F1/F3/F4 UAT burndown (Carl, active) · pretest (ASPSI-scheduled) · Kidd's manual review | 🟡 In progress |
-| **Pretest** (Epic 6) | ASPSI-scheduled *(precondition: SJREB clearance + updated CAPI)* | field-ready instruments (Carl, nearly done) · SJREB clearance + date (ASPSI) | 🟠 **Prep underway (2026-07-01)** — ASPSI RAs delivered the unique-QN list (Los Baños, 84 cases: 4 facilities F1+F3 · 2 barangays F4); Carl built the enumerator assignments + printed hand-out sheets, testers assigned + notified. Still **awaiting the confirmed date** from ASPSI (pushed per Jun-19 projection). |
+| **D2 / D3** — survey materials, manuals, training, pre-tested questionnaires | extended | F1/F3/F4 field-ready ✅ (R5 closed 2026-06-29) · pretest (ASPSI-scheduled) · Kidd's manual review | 🟡 In progress |
+| **Pretest** (Epic 6) | ASPSI-scheduled *(precondition: SJREB clearance + updated CAPI)* | field-ready instruments ✅ (Carl — done 2026-06-29, fleet frozen) · SJREB clearance + date (ASPSI) | 🟠 **Prep underway (2026-07-01)** — ASPSI RAs delivered the unique-QN list (Los Baños, 84 cases: 4 facilities F1+F3 · 2 barangays F4); Carl built the enumerator assignments + printed hand-out sheets, testers assigned + notified. Still **awaiting the confirmed date** from ASPSI (pushed per Jun-19 projection). |
 | **D4** — pilot progress + initial data report | ~~2026-07-13~~ *under revision* | Pretest → enumerator debrief → report | ⚪ Not started — date slips with pretest |
 | **D5** — training documentation | ~~2026-07-31~~ *under revision* | Training decks + manuals (CAPI Manual ✅ ~98%) + delivery + pre/post assessment | 🟡 In progress (CAPI Manual done) |
 | **D6** — final report + dissemination | ~~2026-08-13~~ *under revision* | Fieldwork → data cleaning (Epic 10) → analysis/tabulation (Epic 11) | ⚪ Not started — date slips with pretest |
@@ -54,7 +54,7 @@ End-to-end critical path:
 | **Handover & close** (Epic 12) | end Aug | Handover package + NDU disposition + retro writeback | ⚪ Not started |
 
 **The handoff — Carl's lane ends at field-ready; the rest is ASPSI/DOH's:**
-- **Carl:** get F1/F3/F4 field-ready (UAT burndown) + finish the support deliverables (data pipeline, training, governance). No external unblock needed.
+- **Carl:** F1/F3/F4 field-ready ✅ (R5 closed 2026-06-29). Remaining: the support deliverables (data pipeline — the S013 headline, training finalize, governance). No external unblock needed.
 - **ASPSI/DOH:** SJREB ethics clearance · tablet supply · scheduling + running the pretest.
 
 _Neither SJREB nor tablets is a Carl-tracked blocker — both are ASPSI's. The one thing Carl is waiting on is the **pretest schedule**; everything else on his side is in hand._
@@ -63,7 +63,7 @@ _Neither SJREB nor tablets is a Carl-tracked blocker — both are ASPSI's. The o
 
 | # | Bucket | What's left | Owner / gate |
 |---|---|---|---|
-| 1 | **F1/F3/F4 field-readiness** (Epic 3/6) | finish CSEntry build + UAT R5 bug-burndown | Carl — active |
+| 1 | **F1/F3/F4 field-readiness** (Epic 3/6) | ✅ **DONE 2026-06-29** — R5 closed (78/79), fleet version-stamped + frozen; the standing lane stays open only for desk-test reopens | Carl — done (Designer compile of the numbered builds before the next deploy) |
 | 2 | **PhilHealth reinstatement** (F3/F4) | ✅ **DONE** — Q38.1/Q38.2 + Q45.1/Q45.2 built + deployed in UAT R5 (#764/#794/#795, CSWeb 2026-06-25/27; in live DCFs). The "blocked on 3 PNGs" note was stale (corrected 2026-06-29). | — (optional: ASPSI confirm F3-tick-all vs F4-single on the "why not registered" item) |
 | 3 | **Data pipeline** (Epic 10/11) | harmonization ETL + codebook + interim tabulation (for D4/D6) | Carl — buildable now |
 | 4 | **Training & manuals** (Epic 7) | finalize decks + Survey Manual + enumerator-guide screenshots | Carl + Kidd review |
@@ -80,28 +80,28 @@ _Neither SJREB nor tablets is a Carl-tracked blocker — both are ASPSI's. The o
 
 | # | Epic | Current State | Next Milestone |
 |---|---|---|---|
-| **0** | CAPI Project Management & Stakeholder Engagement | **Active / Ongoing** — **Sprint 011 closed 2026-06-28** (retro filled; archived to `sprints/sprint-011.md`); **Sprint 012 skeleton** (Jun 29–Jul 3, locks Mon); daily-standup automation live | Lock S012 Mon; **Day-1 build-or-kill the carries** — E0-SCRUM-SYNC (3× committed / 0× built), PSA confirm (4th carry), Goal B; operationalize the field-readiness exit criterion |
+| **0** | CAPI Project Management & Stakeholder Engagement | **Active / Ongoing** — **Sprint 012 closed ON TIME 2026-07-03** (goal landed; all four perennial carries cleared — E0-SCRUM-SYNC built, PSA out-of-lane, Goal B killed, field-ready criterion wired; archived to `sprints/sprint-012.md`); **Sprint 013 skeleton** (Jul 6–10, locks Mon); daily-standup automation + drift canary live | Lock S013 Mon — **headline: Epic 10 `transform.py` (ETL variable extraction)** + the 47-partial/3-gap tabulation decision memo to ASPSI |
 | **1** | Inception & Engagement Setup | **Done** | — (historical, closed Dec 2025) |
 | **2** | Survey Questionnaire Design & Dictionary | **Done (design)** — F1/F3/F4 Build-ready, multi-language; 12-digit case-key migration in; F2 data model in the PWA spec; PLF Source Captured | PLF DCF build (E2-PLF-004/005/006) when slotted |
-| **3** | CAPI Application Development | **In Progress** — **F2 PWA in production v2.1.0, 7 languages** (UAT R1–R3 closed). **F1/F3/F4 multi-language BUILT + deployed to CSWeb**; **on-device build + UAT Round 5 in active bug-burndown** | **Close the F1/F3/F4 UAT → field-ready** (E3-F1/F3/F4 + E6-CAPI-FIELDREADY) |
+| **3** | CAPI Application Development | **FIELD-READY (build complete)** — **F2 PWA in production v2.1.0, 7 languages** (UAT R1–R3 closed). **F1/F3/F4 multi-language BUILT, version-stamped (v1.0.2 / v1.0.2 / v1.0.3), deployed to CSWeb; UAT R5 CLOSED 2026-06-29**; pretest freeze in effect; runtime messages numbered + translatable (R2) | Pretest (ASPSI-dated); fresh-Designer compile of the numbered builds before the next deploy; desk-test reopens ride the standing FIELDREADY lane |
 | **4** | Backend & Sync Infrastructure (CSWeb for CAPI; Cloudflare/Apps Script for PWA) | **In Progress** — PWA backend live; **CSWeb 8.0.1 LIVE on Elestio** + sync/map/case-status dashboards; **Supervisor hub deployed** to CSWeb | F2 Survey+Admin migration to a dedicated **Elestio** instance (provisioning-gated); CSWeb backup strategy |
 | **5** | Field Distribution & Device Management | **In Progress** — CAPI tablet + PWA field-ops SOPs drafted; F2 distribution proven | Tablet supply is ASPSI/DOH logistics (not Carl's gate); Carl's lane = the provisioning SOP, ready when devices land |
-| **6** | Testing and Pilot | **In Progress** — PWA UAT R1–R3 closed; **CAPI UAT Round 5 active** (F1/F3/F4 on-device burndown); pretest-readiness assessed 2026-06-27 | Close UAT R5; **pretest blocked on SJREB clearance** (ASPSI/PI lane) |
+| **6** | Testing and Pilot | **In Progress** — PWA UAT R1–R3 closed; **CAPI UAT Round 5 CLOSED 2026-06-29 (78/79)**; field-ready exit criterion wired (`check_field_ready.py`) + verified; **pretest prep done** (Los Baños 84-QN assignments + printed sheets, testers notified) | **Hub UAT Round 6** (waiting on ASPSI account import + real names); **pretest awaits ASPSI's date** (SJREB lane) |
 | **7** | Training and Documentation | **In Progress** — Survey Manual + enumerator/STL/HCW decks + CSEntry field guide drafted; **Supervisor-hub training guide LIVE** | Finalize for D5; fill enumerator-guide screenshots; Kidd's review on the Survey Manual |
 | **8** | Fieldwork Monitoring and Quality Control | **In Progress** — **Supervisor hub Phase-1 (QA review) + Phase-2 (login→menu→Bluetooth→relay→reports→map) BUILT + device-verified on 2 tablets + training guide LIVE**; CSWeb dashboards live | Wire the hub into the field SOP at fieldwork start; confirm the QA-supervisor roster (ASPSI) for the `supervisor-qa` role |
 | **9** | Data Management and Security | **Governance Active** — Data-Privacy-and-Security-Plan drafted | Finalize privacy policy + secure-sync + backup/retention for both tracks |
-| **10** | Data Cleaning and Processing | **Not Started** — shared codebook + harmonization ETL spec drafted (skeleton live) | Per-instrument batch-edit specs once data flows |
-| **11** | Analysis Support & Deliverables | **Not Started** | Interim tabulation template ahead of D4; CSV + Stata export pipeline |
+| **10** | Data Cleaning and Processing | **In Progress (spec + skeleton)** — shared codebook v0.4; harmonization ETL skeleton live over the CSWeb breakout DBs (dry-run proven Jun-12) | **`transform.py` variable extraction — Sprint 013 headline** (the last blocker to real table output) |
+| **11** | Analysis Support & Deliverables | **In Progress (spec complete 2026-07-02)** — SSRCS Form 1 §II-9 tabulation plan BUILT: 197 PSA-committed tables (147 mapped / 47 partial / 3 gaps); Stata-12 do-file skeletons smoke-tested end-to-end; tabout installed | 47-partial/3-gap decision memo → ASPSI; real weighted tables once the Epic-10 extraction lands |
 | **12** | Handover, Closeout & Retrospective | **Not Started** | NDU-compliant file disposition plan |
 
 ### By Survey Instrument
 
 | Instrument | Mode | Pages | Current State |
 |---|---|---|---|
-| **F1 — Facility Head** | Interviewer-administered (CSPro CAPI) | 34 | **Multi-language built (EN + Cebuano/Bisaya/Hiligaynon/Waray/Bicolano).** DCF 12 records, 12-digit case key; preflight + parity GREEN (2026-06-07). **deployed to CSWeb; on-device build + UAT Round 5 in burndown** (E3-F1-001). fil/ilo English-fallback (ASPSI gap). |
+| **F1 — Facility Head** | Interviewer-administered (CSPro CAPI) | 34 | **Multi-language built (EN + Cebuano/Bisaya/Hiligaynon/Waray/Bicolano).** DCF 12 records, 12-digit case key; preflight + parity GREEN (2026-06-07). **v1.0.2 on CSWeb — UAT Round 5 closed 2026-06-29; pretest-frozen** (E3-F1-001). fil/ilo English-fallback (ASPSI gap). |
 | **F2 — Healthcare Worker** | **Self-admin — PWA (primary). Google Forms + CSPro-encoder fallbacks retired 2026-04-17. CSPro F2 track: least priority — do not reopen.** | 14 | **Production live at v2.1.0 — all 7 PSA-target languages** (PSA F2-share met 2026-06-02). UAT Rounds 1–3 closed. PWA at `deliverables/F2/PWA/app/`; prod https://f2-pwa.pages.dev. Residual: app-chrome translation for ilo/hil/war/bcl; `clasp`/#294 deploy-gap (S009 Goal B). |
-| **F3 — Patient** | Interviewer-administered (CSPro CAPI) | 23 | **Multi-language built (EN + Cebuano/Bisaya/Waray/Bicolano).** 18 records, 12-digit case key; preflight + parity GREEN. **deployed to CSWeb; on-device build + UAT Round 5 in burndown** (E3-F3-001 / #251). hil/fil/ilo English-fallback (ASPSI gap). |
-| **F4 — Household** | Interviewer-administered (roster-heavy, new for Year 2; CSPro CAPI) | 26 | **Multi-language built (EN + Cebuano/Bisaya/Waray/Bicolano).** 22 records (`C_HOUSEHOLD_ROSTER` repeating), 12-digit case key; preflight + parity GREEN. **deployed to CSWeb; on-device build + UAT Round 5 in burndown** (E3-F4-001 / #253). hil/fil/ilo English-fallback (ASPSI gap). |
+| **F3 — Patient** | Interviewer-administered (CSPro CAPI) | 23 | **Multi-language built (EN + Cebuano/Bisaya/Waray/Bicolano).** 18 records, 12-digit case key; preflight + parity GREEN. **v1.0.2 on CSWeb — UAT Round 5 closed 2026-06-29; pretest-frozen** (E3-F3-001 / #251). hil/fil/ilo English-fallback (ASPSI gap). |
+| **F4 — Household** | Interviewer-administered (roster-heavy, new for Year 2; CSPro CAPI) | 26 | **Multi-language built (EN + Cebuano/Bisaya/Waray/Bicolano).** 22 records (`C_HOUSEHOLD_ROSTER` repeating), 12-digit case key; preflight + parity GREEN. **v1.0.3 on CSWeb — UAT Round 5 closed 2026-06-29; pretest-frozen** (E3-F4-001 / #253). hil/fil/ilo English-fallback (ASPSI gap). |
 | **PLF — Patient Listing Form** | Recruitment form | 1 | Source Captured (Designer-validate + publish deferred — out of the current instrument-dev goal) |
 
 ---

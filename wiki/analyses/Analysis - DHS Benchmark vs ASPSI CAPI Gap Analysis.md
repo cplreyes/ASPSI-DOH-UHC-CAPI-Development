@@ -170,6 +170,34 @@ standing debt before it bites.
 > hash, apc ×3); gates green; `stamp_version show` = no drift → no bump, nothing deployed
 > (pretest freeze holds). Still open: R2, R1b (Aug), R3, K1 (Sep).
 
+> **Status 2026-07-03 (later) — R2 BUILT + R3 substantially closed** (Carl: "can we tackle
+> those inconsistencies"):
+> **R2 done** — `cspro_helpers.numberize_errmsgs()` runs at the end of every
+> `generate_apc.py`: all inline `errmsg("…")` literals (F1 200 · F3 236 · F4 179 calls)
+> become numbered messages in real `.ent.mgf` files (`Language = EN` + drop-in
+> `translations/messages.<locale>.json` sections — same convention as the .dcf labels).
+> Numbering is permanent via tracked `messages-registry.json` per instrument
+> (translation-safe); sources keep readable inline English. **Proofs:** displayed-text
+> sequence byte-identical to baseline per instrument; zero literals left; second regeneration
+> byte-identical (idempotent); new preflight gate = every `errmsg(N)` defined in the .mgf.
+> **R3:** (a) `fmf_block_check` generalized to Designer's real rule
+> (`Position = start_field_index + prior_block_count`, gaps between blocks legal) — F4
+> Section-N 26 false positives → 0, sabotage tests still fail correctly; (b) skip-boundary
+> rule was ALREADY in F3/F4 `derive_block_plan` (the "latent gap" note was stale) — what was
+> missing is now built: `automation/skip_boundary_check.py`, an independent gate validating
+> the SHIPPED .fmf against the SHIPPED .apc (target-starts-screen / source-ends-screen /
+> gated-field-alone), with one documented waiver (break-off's designed landing on the
+> visit-record screen, identical F1/F3/F4). Remaining R3 = the F1 hand-fmf asymmetry only
+> (fold inject_blocks into a real generator — post-pretest, next fmf-touching feature).
+> Nothing deployed, no version bump (freeze holds); Designer compile of the numbered builds
+> = pending gate before the next deploy. **Hub numbered too (same session, Carl's go):**
+> LoginApp 2 + MenuApp 13 calls → shared `supervisor-hub/messages-registry.json`; the helper
+> gained literal-chain folding (`"a " + "b"` line wraps) + a hard guard that leaves runtime
+> concats inline, and the hub's 3 concat-with-values calls were rewritten fill-style
+> (`errmsg("EA %s …", strip(X))`) at the template source — displayed texts verified
+> equivalent, instruments re-verified byte-identical after the helper change, preflight's
+> mgf gate now covers the hub apps. Still open: R1b (Aug), F1 fmf-generator fold, K1 (Sep).
+
 ## 7. Recommendations (timeline-aware)
 
 1. **Nothing changes before the pretest gate** (fleet is frozen pretest-ready; gate ~Jul 5).

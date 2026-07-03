@@ -1192,91 +1192,41 @@ Item=Q143_HOW_PAID_OTHER_TXT
 
 Name=FORM038
 
-Label=N. Household Expenditures
+Label=N. Food consumed last week (Q144-156) - one row per item
 
 Level=1
 
-Size=806,3607
+Repeat=N_FOOD_ROSTER
+
+Size=806,300
 
   
 
-Item=Q144_CEREALS_CONSUMED
+Item=N_FOOD_ITEM
 
-Item=Q144_CEREALS_PURCHASED_PHP
+Item=N_FOOD_CONSUMED
 
-Item=Q144_CEREALS_INKIND_PHP
+Item=N_FOOD_PURCHASED_PHP
 
-Item=Q145_PULSES_CONSUMED
+Item=N_FOOD_INKIND_PHP
 
-Item=Q145_PULSES_PURCHASED_PHP
+  
 
-Item=Q145_PULSES_INKIND_PHP
+[EndForm]
 
-Item=Q146_VEGETABLES_CONSUMED
+  
 
-Item=Q146_VEGETABLES_PURCHASED_PHP
+[Form]
 
-Item=Q146_VEGETABLES_INKIND_PHP
+Name=FORM039
 
-Item=Q147_FRUITS_CONSUMED
+Label=N. Household Expenditures (Q157-159)
 
-Item=Q147_FRUITS_PURCHASED_PHP
+Level=1
 
-Item=Q147_FRUITS_INKIND_PHP
+Size=806,300
 
-Item=Q148_FISH_CONSUMED
-
-Item=Q148_FISH_PURCHASED_PHP
-
-Item=Q148_FISH_INKIND_PHP
-
-Item=Q149_MEAT_CONSUMED
-
-Item=Q149_MEAT_PURCHASED_PHP
-
-Item=Q149_MEAT_INKIND_PHP
-
-Item=Q150_EGGS_CONSUMED
-
-Item=Q150_EGGS_PURCHASED_PHP
-
-Item=Q150_EGGS_INKIND_PHP
-
-Item=Q151_MILK_CONSUMED
-
-Item=Q151_MILK_PURCHASED_PHP
-
-Item=Q151_MILK_INKIND_PHP
-
-Item=Q152_FATS_CONSUMED
-
-Item=Q152_FATS_PURCHASED_PHP
-
-Item=Q152_FATS_INKIND_PHP
-
-Item=Q153_SUGAR_CONSUMED
-
-Item=Q153_SUGAR_PURCHASED_PHP
-
-Item=Q153_SUGAR_INKIND_PHP
-
-Item=Q154_CONDIMENTS_CONSUMED
-
-Item=Q154_CONDIMENTS_PURCHASED_PHP
-
-Item=Q154_CONDIMENTS_INKIND_PHP
-
-Item=Q155_WATER_NA_CONSUMED
-
-Item=Q155_WATER_NA_PURCHASED_PHP
-
-Item=Q155_WATER_NA_INKIND_PHP
-
-Item=Q156_ALCOHOL_CONSUMED
-
-Item=Q156_ALCOHOL_PURCHASED_PHP
-
-Item=Q156_ALCOHOL_INKIND_PHP
+  
 
 Item=Q157_FOOD_SUBTOTAL_TOTAL_PHP
 
@@ -1292,147 +1242,231 @@ Item=Q159_SMOKING_TOBACCO_PURCHASED_PHP
 
 Item=Q159_SMOKING_TOBACCO_INKIND_PHP
 
-Item=Q160_PERSONAL_CARE_CONSUMED
+  
 
-Item=Q160_PERSONAL_CARE_PURCHASED_PHP
+[EndForm]
 
-Item=Q160_PERSONAL_CARE_INKIND_PHP
+  
 
-Item=Q161_HOUSEHOLD_CLEAN_CONSUMED
+[Form]
 
-Item=Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP
+Name=FORM040
 
-Item=Q161_HOUSEHOLD_CLEAN_INKIND_PHP
+Label=N. Non-food, last month (Q160-167) - one row per item
 
-Item=Q162_UTILITIES_CONSUMED
+Level=1
 
-Item=Q162_UTILITIES_PURCHASED_PHP
+Repeat=N_NF1M_ROSTER
 
-Item=Q162_UTILITIES_INKIND_PHP
+Size=806,300
 
-Item=Q163_TRANSPORT_CONSUMED
+  
 
-Item=Q163_TRANSPORT_PURCHASED_PHP
+Item=N_NF1M_ITEM
 
-Item=Q163_TRANSPORT_INKIND_PHP
+Item=N_NF1M_CONSUMED
 
-Item=Q164_TELECOM_CONSUMED
+Item=N_NF1M_PURCHASED_PHP
 
-Item=Q164_TELECOM_PURCHASED_PHP
+Item=N_NF1M_INKIND_PHP
 
-Item=Q164_TELECOM_INKIND_PHP
+  
 
-Item=Q165_RECREATION_1M_CONSUMED
+[EndForm]
 
-Item=Q165_RECREATION_1M_PURCHASED_PHP
+  
 
-Item=Q165_RECREATION_1M_INKIND_PHP
+[Form]
 
-Item=Q166_POSTAL_CONSUMED
+Name=FORM041
 
-Item=Q166_POSTAL_PURCHASED_PHP
+Label=N. Non-food, last 6 months (Q168-169) - one row per item
 
-Item=Q166_POSTAL_INKIND_PHP
+Level=1
 
-Item=Q167_HOUSING_CONSUMED
+Repeat=N_NF6M_ROSTER
 
-Item=Q167_HOUSING_PURCHASED_PHP
+Size=806,300
 
-Item=Q167_HOUSING_INKIND_PHP
+  
 
-Item=Q168_RECREATION_6M_CONSUMED
+Item=N_NF6M_ITEM
 
-Item=Q168_RECREATION_6M_PURCHASED_PHP
+Item=N_NF6M_CONSUMED
 
-Item=Q168_RECREATION_6M_INKIND_PHP
+Item=N_NF6M_PURCHASED_PHP
 
-Item=Q169_CLOTHING_CONSUMED
+Item=N_NF6M_INKIND_PHP
 
-Item=Q169_CLOTHING_PURCHASED_PHP
+  
 
-Item=Q169_CLOTHING_INKIND_PHP
+[EndForm]
 
-Item=Q170_EDUCATION_CONSUMED
+  
 
-Item=Q170_EDUCATION_PURCHASED_PHP
+[Form]
 
-Item=Q170_EDUCATION_INKIND_PHP
+Name=FORM042
 
-Item=Q171_ACCOMMODATION_CONSUMED
+Label=N. Non-food, last 12 months (Q170-174) - one row per item
 
-Item=Q171_ACCOMMODATION_PURCHASED_PHP
+Level=1
 
-Item=Q171_ACCOMMODATION_INKIND_PHP
+Repeat=N_NF12M_ROSTER
 
-Item=Q172_GARDEN_PETS_CONSUMED
+Size=806,300
 
-Item=Q172_GARDEN_PETS_PURCHASED_PHP
+  
 
-Item=Q172_GARDEN_PETS_INKIND_PHP
+Item=N_NF12M_ITEM
 
-Item=Q173_HEALTH_INS_CONSUMED
+Item=N_NF12M_CONSUMED
 
-Item=Q173_HEALTH_INS_PURCHASED_PHP
+Item=N_NF12M_PURCHASED_PHP
 
-Item=Q173_HEALTH_INS_INKIND_PHP
+Item=N_NF12M_INKIND_PHP
 
-Item=Q174_OTHER_INS_CONSUMED
+  
 
-Item=Q174_OTHER_INS_PURCHASED_PHP
+[EndForm]
 
-Item=Q174_OTHER_INS_INKIND_PHP
+  
 
-Item=Q175_INPATIENT_CONSUMED
+[Form]
 
-Item=Q175_INPATIENT_PURCHASED_PHP
+Name=FORM043
 
-Item=Q175_INPATIENT_INKIND_PHP
+Label=N. Health, last 12 months (Q175-176) - one row per item
 
-Item=Q176_EMERGENCY_TRANSPORT_CONSUMED
+Level=1
 
-Item=Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP
+Repeat=N_H12M_ROSTER
 
-Item=Q176_EMERGENCY_TRANSPORT_INKIND_PHP
+Size=806,300
+
+  
+
+Item=N_H12M_ITEM
+
+Item=N_H12M_CONSUMED
+
+Item=N_H12M_PURCHASED_PHP
+
+Item=N_H12M_INKIND_PHP
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM044
+
+Label=N. Health 12-month subtotal (Q177)
+
+Level=1
+
+Size=806,300
+
+  
 
 Item=Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP
 
-Item=Q178_PREVENTIVE_CONSUMED
+  
 
-Item=Q178_PREVENTIVE_PURCHASED_PHP
+[EndForm]
 
-Item=Q178_PREVENTIVE_INKIND_PHP
+  
 
-Item=Q179_DIAGNOSTIC_CONSUMED
+[Form]
 
-Item=Q179_DIAGNOSTIC_PURCHASED_PHP
+Name=FORM045
 
-Item=Q179_DIAGNOSTIC_INKIND_PHP
+Label=N. Health, last 6 months (Q178-181) - one row per item
 
-Item=Q180_ASSISTIVE_CONSUMED
+Level=1
 
-Item=Q180_ASSISTIVE_PURCHASED_PHP
+Repeat=N_H6M_ROSTER
 
-Item=Q180_ASSISTIVE_INKIND_PHP
+Size=806,300
 
-Item=Q181_MEDICAL_PRODUCTS_CONSUMED
+  
 
-Item=Q181_MEDICAL_PRODUCTS_PURCHASED_PHP
+Item=N_H6M_ITEM
 
-Item=Q181_MEDICAL_PRODUCTS_INKIND_PHP
+Item=N_H6M_CONSUMED
+
+Item=N_H6M_PURCHASED_PHP
+
+Item=N_H6M_INKIND_PHP
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM046
+
+Label=N. Health 6-month subtotal (Q182)
+
+Level=1
+
+Size=806,300
+
+  
 
 Item=Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP
 
-Item=Q183_MEDICINES_CONSUMED
+  
 
-Item=Q183_MEDICINES_PURCHASED_PHP
+[EndForm]
 
-Item=Q183_MEDICINES_INKIND_PHP
+  
 
-Item=Q184_OUTPATIENT_CONSUMED
+[Form]
 
-Item=Q184_OUTPATIENT_PURCHASED_PHP
+Name=FORM047
 
-Item=Q184_OUTPATIENT_INKIND_PHP
+Label=N. Health, last month (Q183-184) - one row per item
+
+Level=1
+
+Repeat=N_H1M_ROSTER
+
+Size=806,300
+
+  
+
+Item=N_H1M_ITEM
+
+Item=N_H1M_CONSUMED
+
+Item=N_H1M_PURCHASED_PHP
+
+Item=N_H1M_INKIND_PHP
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM048
+
+Label=N. Health 1-month subtotal (Q185)
+
+Level=1
+
+Size=806,300
+
+  
 
 Item=Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP
 
@@ -1444,7 +1478,7 @@ Item=Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP
 
 [Form]
 
-Name=FORM039
+Name=FORM049
 
 Label=O. Sources of Funds for Health
 
@@ -1488,7 +1522,7 @@ Item=Q196_FOREGONE_OTHER_TXT
 
 [Form]
 
-Name=FORM040
+Name=FORM050
 
 Label=P. Financial Risk
 
@@ -1514,7 +1548,7 @@ Item=Q199_WTP_OTHER_TXT
 
 [Form]
 
-Name=FORM041
+Name=FORM051
 
 Label=Q. Financial Anxiety
 
@@ -1540,7 +1574,7 @@ Item=Q202_WORRY_REASONS_OTHER_TXT
 
 [Form]
 
-Name=FORM042
+Name=FORM052
 
 Label=Closing - case end
 
@@ -1576,7 +1610,7 @@ Item=ENUM_RESULT_FINAL_VISIT
 
 [Form]
 
-Name=FORM043
+Name=FORM053
 
 Label=Case Verification Photo
 
@@ -9820,47 +9854,29 @@ Length=1
 
 Required=Yes
 
-Name=N_HOUSEHOLD_EXPENDITURES_FORM
+Name=N_FOOD_ROSTER_FORM
 
-Label=N. Household Expenditures
+Label=N. Food consumed last week (Q144-156) - one row per item
 
 Form=39
 
-Max=1
+Type=Record
+
+TypeName=N_FOOD_ROSTER
+
+Max=13
 
   
 
 [Field]
 
-Name=Q144_CEREALS_CONSUMED
+Name=N_FOOD_ITEM
 
-Position=350,27,365,47
+Position=350,27,760,47
 
-Item=Q144_CEREALS_CONSUMED,HOUSEHOLDSURVEY_DICT
+Item=N_FOOD_ITEM,HOUSEHOLDSURVEY_DICT
 
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,30,330,46
-
-Text=144. Cereals (rice, flour, noodles, corn, etc.) — In the last week, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q144_CEREALS_PURCHASED_PHP
-
-Position=350,57,760,77
-
-Item=Q144_CEREALS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
+UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
@@ -9870,9 +9886,9 @@ Form=39
 
 [Text]
 
-Position=50,60,330,76
+Position=50,30,330,46
 
-Text=144. Cereals (rice, flour, noodles, corn, etc.) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
+Text=Food item (auto - one grid row per item, Q144-Q156)
 
  
 
@@ -9880,11 +9896,35 @@ Text=144. Cereals (rice, flour, noodles, corn, etc.) — During the last week, h
 
 [Field]
 
-Name=Q144_CEREALS_INKIND_PHP
+Name=N_FOOD_CONSUMED
+
+Position=350,57,365,77
+
+Item=N_FOOD_CONSUMED,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=39
+
+  
+
+[Text]
+
+Position=50,60,330,76
+
+Text=Food item - In the last week, did you or any member of your household consume this item?
+
+ 
+
+  
+
+[Field]
+
+Name=N_FOOD_PURCHASED_PHP
 
 Position=350,87,760,107
 
-Item=Q144_CEREALS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
+Item=N_FOOD_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
@@ -9896,7 +9936,7 @@ Form=39
 
 Position=50,90,330,106
 
-Text=144. Cereals (rice, flour, noodles, corn, etc.) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the...
+Text=Food item - During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)
 
  
 
@@ -9904,13 +9944,13 @@ Text=144. Cereals (rice, flour, noodles, corn, etc.) — During the last week, w
 
 [Field]
 
-Name=Q145_PULSES_CONSUMED
+Name=N_FOOD_INKIND_PHP
 
-Position=350,117,365,137
+Position=350,117,760,137
 
-Item=Q145_PULSES_CONSUMED,HOUSEHOLDSURVEY_DICT
+Item=N_FOOD_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
-DataCaptureType=RadioButton
+DataCaptureType=TextBox
 
 Form=39
 
@@ -9920,849 +9960,27 @@ Form=39
 
 Position=50,120,330,136
 
-Text=145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — In the last week, did you or any member of your household consume this item?
+Text=Food item - During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read...
 
  
 
   
 
-[Field]
+[EndGroup]
 
-Name=Q145_PULSES_PURCHASED_PHP
-
-Position=350,147,760,167
-
-Item=Q145_PULSES_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,150,330,166
-
-Text=145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes...
-
- 
-
-  
-
-[Field]
-
-Name=Q145_PULSES_INKIND_PHP
-
-Position=350,177,760,197
-
-Item=Q145_PULSES_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,180,330,196
-
-Text=145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't...
-
- 
-
-  
-
-[Field]
-
-Name=Q146_VEGETABLES_CONSUMED
-
-Position=350,207,365,227
-
-Item=Q146_VEGETABLES_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,210,330,226
-
-Text=146. Vegetables (fresh, dried, dehydrated, frozen) — In the last week, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q146_VEGETABLES_PURCHASED_PHP
-
-Position=350,237,760,257
-
-Item=Q146_VEGETABLES_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,240,330,256
-
-Text=146. Vegetables (fresh, dried, dehydrated, frozen) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
-
- 
-
-  
-
-[Field]
-
-Name=Q146_VEGETABLES_INKIND_PHP
-
-Position=350,267,760,287
-
-Item=Q146_VEGETABLES_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,270,330,286
-
-Text=146. Vegetables (fresh, dried, dehydrated, frozen) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the...
-
- 
-
-  
-
-[Field]
-
-Name=Q147_FRUITS_CONSUMED
-
-Position=350,297,365,317
-
-Item=Q147_FRUITS_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,300,330,316
-
-Text=147. Fruits in any form (fresh, dried, dehydrated, frozen) — In the last week, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q147_FRUITS_PURCHASED_PHP
-
-Position=350,327,760,347
-
-Item=Q147_FRUITS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,330,330,346
-
-Text=147. Fruits in any form (fresh, dried, dehydrated, frozen) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
-
- 
-
-  
-
-[Field]
-
-Name=Q147_FRUITS_INKIND_PHP
-
-Position=350,357,760,377
-
-Item=Q147_FRUITS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,360,330,376
-
-Text=147. Fruits in any form (fresh, dried, dehydrated, frozen) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99...
-
- 
-
-  
-
-[Field]
-
-Name=Q148_FISH_CONSUMED
-
-Position=350,387,365,407
-
-Item=Q148_FISH_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,390,330,406
-
-Text=148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — In the last week, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q148_FISH_PURCHASED_PHP
-
-Position=350,417,760,437
-
-Item=Q148_FISH_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,420,330,436
-
-Text=148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these...
-
- 
-
-  
-
-[Field]
-
-Name=Q148_FISH_INKIND_PHP
-
-Position=350,447,760,467
-
-Item=Q148_FISH_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,450,330,466
-
-Text=148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if...
-
- 
-
-  
-
-[Field]
-
-Name=Q149_MEAT_CONSUMED
-
-Position=350,477,365,497
-
-Item=Q149_MEAT_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,480,330,496
-
-Text=149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — In the last week, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q149_MEAT_PURCHASED_PHP
-
-Position=350,507,760,527
-
-Item=Q149_MEAT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,510,330,526
-
-Text=149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read...
-
- 
-
-  
-
-[Field]
-
-Name=Q149_MEAT_INKIND_PHP
-
-Position=350,537,760,557
-
-Item=Q149_MEAT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,540,330,556
-
-Text=149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if...
-
- 
-
-  
-
-[Field]
-
-Name=Q150_EGGS_CONSUMED
-
-Position=350,567,365,587
-
-Item=Q150_EGGS_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,570,330,586
-
-Text=150. Any kind of egg (from chicken, duck, quail, etc.) — In the last week, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q150_EGGS_PURCHASED_PHP
-
-Position=350,597,760,617
-
-Item=Q150_EGGS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,600,330,616
-
-Text=150. Any kind of egg (from chicken, duck, quail, etc.) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
-
- 
-
-  
-
-[Field]
-
-Name=Q150_EGGS_INKIND_PHP
-
-Position=350,627,760,647
-
-Item=Q150_EGGS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,630,330,646
-
-Text=150. Any kind of egg (from chicken, duck, quail, etc.) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if...
-
- 
-
-  
-
-[Field]
-
-Name=Q151_MILK_CONSUMED
-
-Position=350,657,365,677
-
-Item=Q151_MILK_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,660,330,676
-
-Text=151. Milk and other milk products, excluding butter — In the last week, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q151_MILK_PURCHASED_PHP
-
-Position=350,687,760,707
-
-Item=Q151_MILK_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,690,330,706
-
-Text=151. Milk and other milk products, excluding butter — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
-
- 
-
-  
-
-[Field]
-
-Name=Q151_MILK_INKIND_PHP
-
-Position=350,717,760,737
-
-Item=Q151_MILK_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,720,330,736
-
-Text=151. Milk and other milk products, excluding butter — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the...
-
- 
-
-  
-
-[Field]
-
-Name=Q152_FATS_CONSUMED
-
-Position=350,747,365,767
-
-Item=Q152_FATS_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,750,330,766
-
-Text=152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — In the last week, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q152_FATS_PURCHASED_PHP
-
-Position=350,777,760,797
-
-Item=Q152_FATS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,780,330,796
-
-Text=152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer...
-
- 
-
-  
-
-[Field]
-
-Name=Q152_FATS_INKIND_PHP
-
-Position=350,807,760,827
-
-Item=Q152_FATS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,810,330,826
-
-Text=152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine....
-
- 
-
-  
-
-[Field]
-
-Name=Q153_SUGAR_CONSUMED
-
-Position=350,837,365,857
-
-Item=Q153_SUGAR_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,840,330,856
-
-Text=153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — In the last week, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q153_SUGAR_PURCHASED_PHP
-
-Position=350,867,760,887
-
-Item=Q153_SUGAR_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,870,330,886
-
-Text=153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not...
-
- 
-
-  
-
-[Field]
-
-Name=Q153_SUGAR_INKIND_PHP
-
-Position=350,897,760,917
-
-Item=Q153_SUGAR_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,900,330,916
-
-Text=153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter...
-
- 
-
-  
-
-[Field]
-
-Name=Q154_CONDIMENTS_CONSUMED
-
-Position=350,927,365,947
-
-Item=Q154_CONDIMENTS_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,930,330,946
-
-Text=154. Condiments and other spices and other ready-made meals — In the last week, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q154_CONDIMENTS_PURCHASED_PHP
-
-Position=350,957,760,977
-
-Item=Q154_CONDIMENTS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,960,330,976
-
-Text=154. Condiments and other spices and other ready-made meals — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
-
- 
-
-  
-
-[Field]
-
-Name=Q154_CONDIMENTS_INKIND_PHP
-
-Position=350,987,760,1007
-
-Item=Q154_CONDIMENTS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,990,330,1006
-
-Text=154. Condiments and other spices and other ready-made meals — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99...
-
- 
-
-  
-
-[Field]
-
-Name=Q155_WATER_NA_CONSUMED
-
-Position=350,1017,365,1037
-
-Item=Q155_WATER_NA_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1020,330,1036
-
-Text=155. Water and non-alcoholic beverages (e.g., coffee) — In the last week, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q155_WATER_NA_PURCHASED_PHP
-
-Position=350,1047,760,1067
-
-Item=Q155_WATER_NA_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1050,330,1066
-
-Text=155. Water and non-alcoholic beverages (e.g., coffee) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
-
- 
-
-  
-
-[Field]
-
-Name=Q155_WATER_NA_INKIND_PHP
-
-Position=350,1077,760,1097
-
-Item=Q155_WATER_NA_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1080,330,1096
-
-Text=155. Water and non-alcoholic beverages (e.g., coffee) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the...
-
- 
-
-  
-
-[Field]
-
-Name=Q156_ALCOHOL_CONSUMED
-
-Position=350,1107,365,1127
-
-Item=Q156_ALCOHOL_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1110,330,1126
-
-Text=156. Alcoholic beverages (e.g., local and imported) — In the last week, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q156_ALCOHOL_PURCHASED_PHP
-
-Position=350,1137,760,1157
-
-Item=Q156_ALCOHOL_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1140,330,1156
-
-Text=156. Alcoholic beverages (e.g., local and imported) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
-
- 
-
   
-
-[Field]
-
-Name=Q156_ALCOHOL_INKIND_PHP
 
-Position=350,1167,760,1187
+[Group]
 
-Item=Q156_ALCOHOL_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
+Required=Yes
 
-[Text]
+Name=N_HOUSEHOLD_EXPENDITURES_FORM
 
-Position=50,1170,330,1186
+Label=N. Household Expenditures (Q157-159)
 
-Text=156. Alcoholic beverages (e.g., local and imported) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the...
+Form=40
 
- 
+Max=1
 
   
 
@@ -10770,19 +9988,19 @@ Text=156. Alcoholic beverages (e.g., local and imported) — During the last wee
 
 Name=Q157_FOOD_SUBTOTAL_TOTAL_PHP
 
-Position=350,1197,760,1217
+Position=350,27,760,47
 
 Item=Q157_FOOD_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=39
+Form=40
 
   
 
 [Text]
 
-Position=50,1200,330,1216
+Position=50,30,330,46
 
 Text=157. Sub-total (food, last week) — Auto-computed total (PHP, [DO NOT ASK])
 
@@ -10794,19 +10012,19 @@ Text=157. Sub-total (food, last week) — Auto-computed total (PHP, [DO NOT ASK]
 
 Name=Q158_RESTAURANT_CONSUMED
 
-Position=350,1227,365,1247
+Position=350,57,365,77
 
 Item=Q158_RESTAURANT_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=39
+Form=40
 
   
 
 [Text]
 
-Position=50,1230,330,1246
+Position=50,60,330,76
 
 Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — In the last week, did you or any member of your household consume this item?
 
@@ -10818,19 +10036,19 @@ Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, an
 
 Name=Q158_RESTAURANT_PURCHASED_PHP
 
-Position=350,1257,760,1277
+Position=350,87,760,107
 
 Item=Q158_RESTAURANT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=39
+Form=40
 
   
 
 [Text]
 
-Position=50,1260,330,1276
+Position=50,90,330,106
 
 Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do...
 
@@ -10842,19 +10060,19 @@ Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, an
 
 Name=Q158_RESTAURANT_INKIND_PHP
 
-Position=350,1287,760,1307
+Position=350,117,760,137
 
 Item=Q158_RESTAURANT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=39
+Form=40
 
   
 
 [Text]
 
-Position=50,1290,330,1306
+Position=50,120,330,136
 
 Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP...
 
@@ -10866,19 +10084,19 @@ Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, an
 
 Name=Q159_SMOKING_TOBACCO_CONSUMED
 
-Position=350,1317,365,1337
+Position=350,147,365,167
 
 Item=Q159_SMOKING_TOBACCO_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=39
+Form=40
 
   
 
 [Text]
 
-Position=50,1320,330,1336
+Position=50,150,330,166
 
 Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — In the last week, did you or any member of your household consume this item?
 
@@ -10890,19 +10108,19 @@ Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco
 
 Name=Q159_SMOKING_TOBACCO_PURCHASED_PHP
 
-Position=350,1347,760,1367
+Position=350,177,760,197
 
 Item=Q159_SMOKING_TOBACCO_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=39
+Form=40
 
   
 
 [Text]
 
-Position=50,1350,330,1366
+Position=50,180,330,196
 
 Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the...
 
@@ -10914,1749 +10132,21 @@ Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco
 
 Name=Q159_SMOKING_TOBACCO_INKIND_PHP
 
-Position=350,1377,760,1397
+Position=350,207,760,227
 
 Item=Q159_SMOKING_TOBACCO_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=39
+Form=40
 
   
 
 [Text]
 
-Position=50,1380,330,1396
+Position=50,210,330,226
 
 Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your...
-
- 
-
-  
-
-[Field]
-
-Name=Q160_PERSONAL_CARE_CONSUMED
-
-Position=350,1407,365,1427
-
-Item=Q160_PERSONAL_CARE_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1410,330,1426
-
-Text=160. Personal care products (e.g., shampoo, haircut) — In the last month, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q160_PERSONAL_CARE_PURCHASED_PHP
-
-Position=350,1437,760,1457
-
-Item=Q160_PERSONAL_CARE_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1440,330,1456
-
-Text=160. Personal care products (e.g., shampoo, haircut) — During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
-
- 
-
-  
-
-[Field]
-
-Name=Q160_PERSONAL_CARE_INKIND_PHP
-
-Position=350,1467,760,1487
-
-Item=Q160_PERSONAL_CARE_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1470,330,1486
-
-Text=160. Personal care products (e.g., shampoo, haircut) — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the...
-
- 
-
-  
-
-[Field]
-
-Name=Q161_HOUSEHOLD_CLEAN_CONSUMED
-
-Position=350,1497,365,1517
-
-Item=Q161_HOUSEHOLD_CLEAN_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1500,330,1516
-
-Text=161. Household cleaning and maintenance products and services including domestic ones — In the last month, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP
-
-Position=350,1527,760,1547
-
-Item=Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1530,330,1546
-
-Text=161. Household cleaning and maintenance products and services including domestic ones — During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not...
-
- 
-
-  
-
-[Field]
-
-Name=Q161_HOUSEHOLD_CLEAN_INKIND_PHP
-
-Position=350,1557,760,1577
-
-Item=Q161_HOUSEHOLD_CLEAN_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1560,330,1576
-
-Text=161. Household cleaning and maintenance products and services including domestic ones — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter...
-
- 
-
-  
-
-[Field]
-
-Name=Q162_UTILITIES_CONSUMED
-
-Position=350,1587,365,1607
-
-Item=Q162_UTILITIES_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1590,330,1606
-
-Text=162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — In the last month, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q162_UTILITIES_PURCHASED_PHP
-
-Position=350,1617,760,1637
-
-Item=Q162_UTILITIES_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1620,330,1636
-
-Text=162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to...
-
- 
-
-  
-
-[Field]
-
-Name=Q162_UTILITIES_INKIND_PHP
-
-Position=350,1647,760,1667
-
-Item=Q162_UTILITIES_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1650,330,1666
-
-Text=162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is...
-
- 
-
-  
-
-[Field]
-
-Name=Q163_TRANSPORT_CONSUMED
-
-Position=350,1677,365,1697
-
-Item=Q163_TRANSPORT_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1680,330,1696
-
-Text=163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — In the last month, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q163_TRANSPORT_PURCHASED_PHP
-
-Position=350,1707,760,1727
-
-Item=Q163_TRANSPORT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1710,330,1726
-
-Text=163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — During the last month, how much did your household spend to purchase this...
-
- 
-
-  
-
-[Field]
-
-Name=Q163_TRANSPORT_INKIND_PHP
-
-Position=350,1737,760,1757
-
-Item=Q163_TRANSPORT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1740,330,1756
-
-Text=163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — During the last month, what was the total estimated value of this item that...
-
- 
-
-  
-
-[Field]
-
-Name=Q164_TELECOM_CONSUMED
-
-Position=350,1767,365,1787
-
-Item=Q164_TELECOM_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1770,330,1786
-
-Text=164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — In the last month, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q164_TELECOM_PURCHASED_PHP
-
-Position=350,1797,760,1817
-
-Item=Q164_TELECOM_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1800,330,1816
-
-Text=164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — During the last month, how much did your household spend to purchase this item? (PHP; enter -98...
-
- 
-
-  
-
-[Field]
-
-Name=Q164_TELECOM_INKIND_PHP
-
-Position=350,1827,760,1847
-
-Item=Q164_TELECOM_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1830,330,1846
-
-Text=164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — During the last month, what was the total estimated value of this item that you produced...
-
- 
-
-  
-
-[Field]
-
-Name=Q165_RECREATION_1M_CONSUMED
-
-Position=350,1857,365,1877
-
-Item=Q165_RECREATION_1M_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1860,330,1876
-
-Text=165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — In the last month, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q165_RECREATION_1M_PURCHASED_PHP
-
-Position=350,1887,760,1907
-
-Item=Q165_RECREATION_1M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1890,330,1906
-
-Text=165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not...
-
- 
-
-  
-
-[Field]
-
-Name=Q165_RECREATION_1M_INKIND_PHP
-
-Position=350,1917,760,1937
-
-Item=Q165_RECREATION_1M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1920,330,1936
-
-Text=165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter...
-
- 
-
-  
-
-[Field]
-
-Name=Q166_POSTAL_CONSUMED
-
-Position=350,1947,365,1967
-
-Item=Q166_POSTAL_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1950,330,1966
-
-Text=166. Postal services — In the last month, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q166_POSTAL_PURCHASED_PHP
-
-Position=350,1977,760,1997
-
-Item=Q166_POSTAL_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,1980,330,1996
-
-Text=166. Postal services — During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
-
- 
-
-  
-
-[Field]
-
-Name=Q166_POSTAL_INKIND_PHP
-
-Position=350,2007,760,2027
-
-Item=Q166_POSTAL_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2010,330,2026
-
-Text=166. Postal services — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer —...
-
- 
-
-  
-
-[Field]
-
-Name=Q167_HOUSING_CONSUMED
-
-Position=350,2037,365,2057
-
-Item=Q167_HOUSING_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2040,330,2056
-
-Text=167. Housing (actual rentals, estimated value of rent if owned) — In the last month, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q167_HOUSING_PURCHASED_PHP
-
-Position=350,2067,760,2087
-
-Item=Q167_HOUSING_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2070,330,2086
-
-Text=167. Housing (actual rentals, estimated value of rent if owned) — During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
-
- 
-
-  
-
-[Field]
-
-Name=Q167_HOUSING_INKIND_PHP
-
-Position=350,2097,760,2117
-
-Item=Q167_HOUSING_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2100,330,2116
-
-Text=167. Housing (actual rentals, estimated value of rent if owned) — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or...
-
- 
-
-  
-
-[Field]
-
-Name=Q168_RECREATION_6M_CONSUMED
-
-Position=350,2127,365,2147
-
-Item=Q168_RECREATION_6M_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2130,330,2146
-
-Text=168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — In the last 6 months, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q168_RECREATION_6M_PURCHASED_PHP
-
-Position=350,2157,760,2177
-
-Item=Q168_RECREATION_6M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2160,330,2176
-
-Text=168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — During the last 6 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do...
-
- 
-
-  
-
-[Field]
-
-Name=Q168_RECREATION_6M_INKIND_PHP
-
-Position=350,2187,760,2207
-
-Item=Q168_RECREATION_6M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2190,330,2206
-
-Text=168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — During the last 6 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP...
-
- 
-
-  
-
-[Field]
-
-Name=Q169_CLOTHING_CONSUMED
-
-Position=350,2217,365,2237
-
-Item=Q169_CLOTHING_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2220,330,2236
-
-Text=169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — In the last 6 months, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q169_CLOTHING_PURCHASED_PHP
-
-Position=350,2247,760,2267
-
-Item=Q169_CLOTHING_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2250,330,2266
-
-Text=169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — During the last 6 months, how much did your household spend to purchase this item?...
-
- 
-
-  
-
-[Field]
-
-Name=Q169_CLOTHING_INKIND_PHP
-
-Position=350,2277,760,2297
-
-Item=Q169_CLOTHING_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2280,330,2296
-
-Text=169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — During the last 6 months, what was the total estimated value of this item that you...
-
- 
-
-  
-
-[Field]
-
-Name=Q170_EDUCATION_CONSUMED
-
-Position=350,2307,365,2327
-
-Item=Q170_EDUCATION_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2310,330,2326
-
-Text=170. Educational services (e.g., tuitions and tutoring) — In the last 12 months, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q170_EDUCATION_PURCHASED_PHP
-
-Position=350,2337,760,2357
-
-Item=Q170_EDUCATION_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2340,330,2356
-
-Text=170. Educational services (e.g., tuitions and tutoring) — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
-
- 
-
-  
-
-[Field]
-
-Name=Q170_EDUCATION_INKIND_PHP
-
-Position=350,2367,760,2387
-
-Item=Q170_EDUCATION_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2370,330,2386
-
-Text=170. Educational services (e.g., tuitions and tutoring) — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99...
-
- 
-
-  
-
-[Field]
-
-Name=Q171_ACCOMMODATION_CONSUMED
-
-Position=350,2397,365,2417
-
-Item=Q171_ACCOMMODATION_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2400,330,2416
-
-Text=171. Accommodation services, including for educational establishment (e.g., hotels) — In the last 12 months, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q171_ACCOMMODATION_PURCHASED_PHP
-
-Position=350,2427,760,2447
-
-Item=Q171_ACCOMMODATION_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2430,330,2446
-
-Text=171. Accommodation services, including for educational establishment (e.g., hotels) — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do...
-
- 
-
-  
-
-[Field]
-
-Name=Q171_ACCOMMODATION_INKIND_PHP
-
-Position=350,2457,760,2477
-
-Item=Q171_ACCOMMODATION_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2460,330,2476
-
-Text=171. Accommodation services, including for educational establishment (e.g., hotels) — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP...
-
- 
-
-  
-
-[Field]
-
-Name=Q172_GARDEN_PETS_CONSUMED
-
-Position=350,2487,365,2507
-
-Item=Q172_GARDEN_PETS_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2490,330,2506
-
-Text=172. Garden and personal pets' products and services — In the last 12 months, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q172_GARDEN_PETS_PURCHASED_PHP
-
-Position=350,2517,760,2537
-
-Item=Q172_GARDEN_PETS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2520,330,2536
-
-Text=172. Garden and personal pets' products and services — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
-
- 
-
-  
-
-[Field]
-
-Name=Q172_GARDEN_PETS_INKIND_PHP
-
-Position=350,2547,760,2567
-
-Item=Q172_GARDEN_PETS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2550,330,2566
-
-Text=172. Garden and personal pets' products and services — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if...
-
- 
-
-  
-
-[Field]
-
-Name=Q173_HEALTH_INS_CONSUMED
-
-Position=350,2577,365,2597
-
-Item=Q173_HEALTH_INS_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2580,330,2596
-
-Text=173. Health insurance — In the last 12 months, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q173_HEALTH_INS_PURCHASED_PHP
-
-Position=350,2607,760,2627
-
-Item=Q173_HEALTH_INS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2610,330,2626
-
-Text=173. Health insurance — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
-
- 
-
-  
-
-[Field]
-
-Name=Q173_HEALTH_INS_INKIND_PHP
-
-Position=350,2637,760,2657
-
-Item=Q173_HEALTH_INS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2640,330,2656
-
-Text=173. Health insurance — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to...
-
- 
-
-  
-
-[Field]
-
-Name=Q174_OTHER_INS_CONSUMED
-
-Position=350,2667,365,2687
-
-Item=Q174_OTHER_INS_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2670,330,2686
-
-Text=174. Other insurance (e.g., for life and accident, and travel) — In the last 12 months, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q174_OTHER_INS_PURCHASED_PHP
-
-Position=350,2697,760,2717
-
-Item=Q174_OTHER_INS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2700,330,2716
-
-Text=174. Other insurance (e.g., for life and accident, and travel) — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
-
- 
-
-  
-
-[Field]
-
-Name=Q174_OTHER_INS_INKIND_PHP
-
-Position=350,2727,760,2747
-
-Item=Q174_OTHER_INS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2730,330,2746
-
-Text=174. Other insurance (e.g., for life and accident, and travel) — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know...
-
- 
-
-  
-
-[Field]
-
-Name=Q175_INPATIENT_CONSUMED
-
-Position=350,2757,365,2777
-
-Item=Q175_INPATIENT_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2760,330,2776
-
-Text=175. Inpatient care services — In the last 12 months, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q175_INPATIENT_PURCHASED_PHP
-
-Position=350,2787,760,2807
-
-Item=Q175_INPATIENT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2790,330,2806
-
-Text=175. Inpatient care services — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
-
- 
-
-  
-
-[Field]
-
-Name=Q175_INPATIENT_INKIND_PHP
-
-Position=350,2817,760,2837
-
-Item=Q175_INPATIENT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2820,330,2836
-
-Text=175. Inpatient care services — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses...
-
- 
-
-  
-
-[Field]
-
-Name=Q176_EMERGENCY_TRANSPORT_CONSUMED
-
-Position=350,2847,365,2867
-
-Item=Q176_EMERGENCY_TRANSPORT_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2850,330,2866
-
-Text=176. Emergency transportation and emergency rescue services — In the last 12 months, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP
-
-Position=350,2877,760,2897
-
-Item=Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2880,330,2896
-
-Text=176. Emergency transportation and emergency rescue services — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
-
- 
-
-  
-
-[Field]
-
-Name=Q176_EMERGENCY_TRANSPORT_INKIND_PHP
-
-Position=350,2907,760,2927
-
-Item=Q176_EMERGENCY_TRANSPORT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2910,330,2926
-
-Text=176. Emergency transportation and emergency rescue services — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or...
-
- 
-
-  
-
-[Field]
-
-Name=Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP
-
-Position=350,2937,760,2957
-
-Item=Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2940,330,2956
-
-Text=177. Total value of 175 and 176 (health, 12-month) — Auto-computed total (PHP, [DO NOT ASK])
-
- 
-
-  
-
-[Field]
-
-Name=Q178_PREVENTIVE_CONSUMED
-
-Position=350,2967,365,2987
-
-Item=Q178_PREVENTIVE_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,2970,330,2986
-
-Text=178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — In the...
-
- 
-
-  
-
-[Field]
-
-Name=Q178_PREVENTIVE_PURCHASED_PHP
-
-Position=350,2997,760,3017
-
-Item=Q178_PREVENTIVE_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3000,330,3016
-
-Text=178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — During...
-
- 
-
-  
-
-[Field]
-
-Name=Q178_PREVENTIVE_INKIND_PHP
-
-Position=350,3027,760,3047
-
-Item=Q178_PREVENTIVE_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3030,330,3046
-
-Text=178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — During...
-
- 
-
-  
-
-[Field]
-
-Name=Q179_DIAGNOSTIC_CONSUMED
-
-Position=350,3057,365,3077
-
-Item=Q179_DIAGNOSTIC_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3060,330,3076
-
-Text=179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — In the last 6 months, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q179_DIAGNOSTIC_PURCHASED_PHP
-
-Position=350,3087,760,3107
-
-Item=Q179_DIAGNOSTIC_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3090,330,3106
-
-Text=179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — During the last 6 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent...
-
- 
-
-  
-
-[Field]
-
-Name=Q179_DIAGNOSTIC_INKIND_PHP
-
-Position=350,3117,760,3137
-
-Item=Q179_DIAGNOSTIC_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3120,330,3136
-
-Text=179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — During the last 6 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best...
-
- 
-
-  
-
-[Field]
-
-Name=Q180_ASSISTIVE_CONSUMED
-
-Position=350,3147,365,3167
-
-Item=Q180_ASSISTIVE_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3150,330,3166
-
-Text=180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — In the last 6 months, did you or any member of your...
-
- 
-
-  
-
-[Field]
-
-Name=Q180_ASSISTIVE_PURCHASED_PHP
-
-Position=350,3177,760,3197
-
-Item=Q180_ASSISTIVE_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3180,330,3196
-
-Text=180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — During the last 6 months, how much did your household spend...
-
- 
-
-  
-
-[Field]
-
-Name=Q180_ASSISTIVE_INKIND_PHP
-
-Position=350,3207,760,3227
-
-Item=Q180_ASSISTIVE_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3210,330,3226
-
-Text=180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — During the last 6 months, what was the total estimated value...
-
- 
-
-  
-
-[Field]
-
-Name=Q181_MEDICAL_PRODUCTS_CONSUMED
-
-Position=350,3237,365,3257
-
-Item=Q181_MEDICAL_PRODUCTS_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3240,330,3256
-
-Text=181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — In the last 6 months, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q181_MEDICAL_PRODUCTS_PURCHASED_PHP
-
-Position=350,3267,760,3287
-
-Item=Q181_MEDICAL_PRODUCTS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3270,330,3286
-
-Text=181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — During the last 6 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to...
-
- 
-
-  
-
-[Field]
-
-Name=Q181_MEDICAL_PRODUCTS_INKIND_PHP
-
-Position=350,3297,760,3317
-
-Item=Q181_MEDICAL_PRODUCTS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3300,330,3316
-
-Text=181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — During the last 6 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine....
-
- 
-
-  
-
-[Field]
-
-Name=Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP
-
-Position=350,3327,760,3347
-
-Item=Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3330,330,3346
-
-Text=182. Total value of 178 to 181 (health, 6-month) — Auto-computed total (PHP, [DO NOT ASK])
-
- 
-
-  
-
-[Field]
-
-Name=Q183_MEDICINES_CONSUMED
-
-Position=350,3357,365,3377
-
-Item=Q183_MEDICINES_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3360,330,3376
-
-Text=183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — In the last month, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q183_MEDICINES_PURCHASED_PHP
-
-Position=350,3387,760,3407
-
-Item=Q183_MEDICINES_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3390,330,3406
-
-Text=183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't...
-
- 
-
-  
-
-[Field]
-
-Name=Q183_MEDICINES_INKIND_PHP
-
-Position=350,3417,760,3437
-
-Item=Q183_MEDICINES_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3420,330,3436
-
-Text=183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — During the last month, what was the total estimated value of this item that you produced, received in-kind...
-
- 
-
-  
-
-[Field]
-
-Name=Q184_OUTPATIENT_CONSUMED
-
-Position=350,3447,365,3467
-
-Item=Q184_OUTPATIENT_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3450,330,3466
-
-Text=184. Outpatient medical and dental services, including online services, without overnight stay — In the last month, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q184_OUTPATIENT_PURCHASED_PHP
-
-Position=350,3477,760,3497
-
-Item=Q184_OUTPATIENT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3480,330,3496
-
-Text=184. Outpatient medical and dental services, including online services, without overnight stay — During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer...
-
- 
-
-  
-
-[Field]
-
-Name=Q184_OUTPATIENT_INKIND_PHP
-
-Position=350,3507,760,3527
-
-Item=Q184_OUTPATIENT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3510,330,3526
-
-Text=184. Outpatient medical and dental services, including online services, without overnight stay — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine....
-
- 
-
-  
-
-[Field]
-
-Name=Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP
-
-Position=350,3537,760,3557
-
-Item=Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=39
-
-  
-
-[Text]
-
-Position=50,3540,330,3556
-
-Text=185. Total value of 183 and 184 (health, 1-month) — Auto-computed total (PHP, [DO NOT ASK])
 
  
 
@@ -12666,11 +10156,11 @@ Text=185. Total value of 183 and 184 (health, 1-month) — Auto-computed total (
 
 Name=DG_BLK_145
 
-Label=Q144
+Label=Q158
 
 DisplayTogether=Yes
 
-Position=0
+Position=1
 
 Length=3
 
@@ -12680,517 +10170,859 @@ Length=3
 
 Name=DG_BLK_146
 
-Label=Q145
-
-DisplayTogether=Yes
-
-Position=4
-
-Length=3
-
-  
-
-[Block]
-
-Name=DG_BLK_147
-
-Label=Q146
-
-DisplayTogether=Yes
-
-Position=8
-
-Length=3
-
-  
-
-[Block]
-
-Name=DG_BLK_148
-
-Label=Q147
-
-DisplayTogether=Yes
-
-Position=12
-
-Length=3
-
-  
-
-[Block]
-
-Name=DG_BLK_149
-
-Label=Q148
-
-DisplayTogether=Yes
-
-Position=16
-
-Length=3
-
-  
-
-[Block]
-
-Name=DG_BLK_150
-
-Label=Q149
-
-DisplayTogether=Yes
-
-Position=20
-
-Length=3
-
-  
-
-[Block]
-
-Name=DG_BLK_151
-
-Label=Q150
-
-DisplayTogether=Yes
-
-Position=24
-
-Length=3
-
-  
-
-[Block]
-
-Name=DG_BLK_152
-
-Label=Q151
-
-DisplayTogether=Yes
-
-Position=28
-
-Length=3
-
-  
-
-[Block]
-
-Name=DG_BLK_153
-
-Label=Q152
-
-DisplayTogether=Yes
-
-Position=32
-
-Length=3
-
-  
-
-[Block]
-
-Name=DG_BLK_154
-
-Label=Q153
-
-DisplayTogether=Yes
-
-Position=36
-
-Length=3
-
-  
-
-[Block]
-
-Name=DG_BLK_155
-
-Label=Q154
-
-DisplayTogether=Yes
-
-Position=40
-
-Length=3
-
-  
-
-[Block]
-
-Name=DG_BLK_156
-
-Label=Q155
-
-DisplayTogether=Yes
-
-Position=44
-
-Length=3
-
-  
-
-[Block]
-
-Name=DG_BLK_157
-
-Label=Q156
-
-DisplayTogether=Yes
-
-Position=48
-
-Length=3
-
-  
-
-[Block]
-
-Name=DG_BLK_158
-
-Label=Q158
-
-DisplayTogether=Yes
-
-Position=53
-
-Length=3
-
-  
-
-[Block]
-
-Name=DG_BLK_159
-
 Label=Q159
 
 DisplayTogether=Yes
 
-Position=57
+Position=5
 
 Length=3
 
   
 
-[Block]
-
-Name=DG_BLK_160
-
-Label=Q160
-
-DisplayTogether=Yes
-
-Position=61
-
-Length=3
+[EndGroup]
 
   
 
-[Block]
+[Group]
 
-Name=DG_BLK_161
+Required=Yes
 
-Label=Q161
+Name=N_NF1M_ROSTER_FORM
 
-DisplayTogether=Yes
+Label=N. Non-food, last month (Q160-167) - one row per item
 
-Position=65
+Form=41
 
-Length=3
+Type=Record
 
-  
+TypeName=N_NF1M_ROSTER
 
-[Block]
-
-Name=DG_BLK_162
-
-Label=Q162
-
-DisplayTogether=Yes
-
-Position=69
-
-Length=3
+Max=8
 
   
 
-[Block]
+[Field]
 
-Name=DG_BLK_163
+Name=N_NF1M_ITEM
 
-Label=Q163
+Position=350,27,760,47
 
-DisplayTogether=Yes
+Item=N_NF1M_ITEM,HOUSEHOLDSURVEY_DICT
 
-Position=73
+UseUnicodeTextBox=Yes
 
-Length=3
+DataCaptureType=TextBox
 
-  
-
-[Block]
-
-Name=DG_BLK_164
-
-Label=Q164
-
-DisplayTogether=Yes
-
-Position=77
-
-Length=3
+Form=41
 
   
 
-[Block]
+[Text]
 
-Name=DG_BLK_165
+Position=50,30,330,46
 
-Label=Q165
+Text=Non-food item (auto - one grid row per item)
 
-DisplayTogether=Yes
-
-Position=81
-
-Length=3
+ 
 
   
 
-[Block]
+[Field]
 
-Name=DG_BLK_166
+Name=N_NF1M_CONSUMED
 
-Label=Q166
+Position=350,57,365,77
 
-DisplayTogether=Yes
+Item=N_NF1M_CONSUMED,HOUSEHOLDSURVEY_DICT
 
-Position=85
+DataCaptureType=RadioButton
 
-Length=3
-
-  
-
-[Block]
-
-Name=DG_BLK_167
-
-Label=Q167
-
-DisplayTogether=Yes
-
-Position=89
-
-Length=3
+Form=41
 
   
 
-[Block]
+[Text]
 
-Name=DG_BLK_168
+Position=50,60,330,76
 
-Label=Q168
+Text=Non-food item - In the last month, did you or any member of your household consume this item?
 
-DisplayTogether=Yes
-
-Position=93
-
-Length=3
+ 
 
   
 
-[Block]
+[Field]
 
-Name=DG_BLK_169
+Name=N_NF1M_PURCHASED_PHP
 
-Label=Q169
+Position=350,87,760,107
 
-DisplayTogether=Yes
+Item=N_NF1M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
-Position=97
+DataCaptureType=TextBox
 
-Length=3
-
-  
-
-[Block]
-
-Name=DG_BLK_170
-
-Label=Q170
-
-DisplayTogether=Yes
-
-Position=101
-
-Length=3
+Form=41
 
   
 
-[Block]
+[Text]
 
-Name=DG_BLK_171
+Position=50,90,330,106
 
-Label=Q171
+Text=Non-food item - During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)
 
-DisplayTogether=Yes
-
-Position=105
-
-Length=3
+ 
 
   
 
-[Block]
+[Field]
 
-Name=DG_BLK_172
+Name=N_NF1M_INKIND_PHP
 
-Label=Q172
+Position=350,117,760,137
 
-DisplayTogether=Yes
+Item=N_NF1M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
-Position=109
+DataCaptureType=TextBox
 
-Length=3
-
-  
-
-[Block]
-
-Name=DG_BLK_173
-
-Label=Q173
-
-DisplayTogether=Yes
-
-Position=113
-
-Length=3
+Form=41
 
   
 
-[Block]
+[Text]
 
-Name=DG_BLK_174
+Position=50,120,330,136
 
-Label=Q174
+Text=Non-food item - During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not...
 
-DisplayTogether=Yes
-
-Position=117
-
-Length=3
+ 
 
   
 
-[Block]
-
-Name=DG_BLK_175
-
-Label=Q175
-
-DisplayTogether=Yes
-
-Position=121
-
-Length=3
+[EndGroup]
 
   
 
-[Block]
+[Group]
 
-Name=DG_BLK_176
+Required=Yes
 
-Label=Q176
+Name=N_NF6M_ROSTER_FORM
 
-DisplayTogether=Yes
+Label=N. Non-food, last 6 months (Q168-169) - one row per item
 
-Position=125
+Form=42
 
-Length=3
+Type=Record
 
-  
+TypeName=N_NF6M_ROSTER
 
-[Block]
-
-Name=DG_BLK_177
-
-Label=Q178
-
-DisplayTogether=Yes
-
-Position=130
-
-Length=3
+Max=2
 
   
 
-[Block]
+[Field]
 
-Name=DG_BLK_178
+Name=N_NF6M_ITEM
 
-Label=Q179
+Position=350,27,760,47
 
-DisplayTogether=Yes
+Item=N_NF6M_ITEM,HOUSEHOLDSURVEY_DICT
 
-Position=134
+UseUnicodeTextBox=Yes
 
-Length=3
+DataCaptureType=TextBox
 
-  
-
-[Block]
-
-Name=DG_BLK_179
-
-Label=Q180
-
-DisplayTogether=Yes
-
-Position=138
-
-Length=3
+Form=42
 
   
 
-[Block]
+[Text]
 
-Name=DG_BLK_180
+Position=50,30,330,46
 
-Label=Q181
+Text=Non-food item (auto - one grid row per item)
 
-DisplayTogether=Yes
-
-Position=142
-
-Length=3
+ 
 
   
 
-[Block]
+[Field]
 
-Name=DG_BLK_181
+Name=N_NF6M_CONSUMED
 
-Label=Q183
+Position=350,57,365,77
 
-DisplayTogether=Yes
+Item=N_NF6M_CONSUMED,HOUSEHOLDSURVEY_DICT
 
-Position=147
+DataCaptureType=RadioButton
 
-Length=3
+Form=42
 
   
 
-[Block]
+[Text]
 
-Name=DG_BLK_182
+Position=50,60,330,76
 
-Label=Q184
+Text=Non-food item - In the last 6 months, did you or any member of your household consume this item?
 
-DisplayTogether=Yes
+ 
 
-Position=151
+  
 
-Length=3
+[Field]
+
+Name=N_NF6M_PURCHASED_PHP
+
+Position=350,87,760,107
+
+Item=N_NF6M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=42
+
+  
+
+[Text]
+
+Position=50,90,330,106
+
+Text=Non-food item - During the last 6 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)
+
+ 
+
+  
+
+[Field]
+
+Name=N_NF6M_INKIND_PHP
+
+Position=350,117,760,137
+
+Item=N_NF6M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=42
+
+  
+
+[Text]
+
+Position=50,120,330,136
+
+Text=Non-food item - During the last 6 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...
+
+ 
+
+  
+
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=N_NF12M_ROSTER_FORM
+
+Label=N. Non-food, last 12 months (Q170-174) - one row per item
+
+Form=43
+
+Type=Record
+
+TypeName=N_NF12M_ROSTER
+
+Max=5
+
+  
+
+[Field]
+
+Name=N_NF12M_ITEM
+
+Position=350,27,760,47
+
+Item=N_NF12M_ITEM,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=43
+
+  
+
+[Text]
+
+Position=50,30,330,46
+
+Text=Non-food item (auto - one grid row per item)
+
+ 
+
+  
+
+[Field]
+
+Name=N_NF12M_CONSUMED
+
+Position=350,57,365,77
+
+Item=N_NF12M_CONSUMED,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=43
+
+  
+
+[Text]
+
+Position=50,60,330,76
+
+Text=Non-food item - In the last 12 months, did you or any member of your household consume this item?
+
+ 
+
+  
+
+[Field]
+
+Name=N_NF12M_PURCHASED_PHP
+
+Position=350,87,760,107
+
+Item=N_NF12M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=43
+
+  
+
+[Text]
+
+Position=50,90,330,106
+
+Text=Non-food item - During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)
+
+ 
+
+  
+
+[Field]
+
+Name=N_NF12M_INKIND_PHP
+
+Position=350,117,760,137
+
+Item=N_NF12M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=43
+
+  
+
+[Text]
+
+Position=50,120,330,136
+
+Text=Non-food item - During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...
+
+ 
+
+  
+
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=N_H12M_ROSTER_FORM
+
+Label=N. Health, last 12 months (Q175-176) - one row per item
+
+Form=44
+
+Type=Record
+
+TypeName=N_H12M_ROSTER
+
+Max=2
+
+  
+
+[Field]
+
+Name=N_H12M_ITEM
+
+Position=350,27,760,47
+
+Item=N_H12M_ITEM,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=44
+
+  
+
+[Text]
+
+Position=50,30,330,46
+
+Text=Health product or service (auto - one grid row per item)
+
+ 
+
+  
+
+[Field]
+
+Name=N_H12M_CONSUMED
+
+Position=350,57,365,77
+
+Item=N_H12M_CONSUMED,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=44
+
+  
+
+[Text]
+
+Position=50,60,330,76
+
+Text=Health product or service - In the last 12 months, did you or any member of your household consume this item?
+
+ 
+
+  
+
+[Field]
+
+Name=N_H12M_PURCHASED_PHP
+
+Position=350,87,760,107
+
+Item=N_H12M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=44
+
+  
+
+[Text]
+
+Position=50,90,330,106
+
+Text=Health product or service - During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)
+
+ 
+
+  
+
+[Field]
+
+Name=N_H12M_INKIND_PHP
+
+Position=350,117,760,137
+
+Item=N_H12M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=44
+
+  
+
+[Text]
+
+Position=50,120,330,136
+
+Text=Health product or service - During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to...
+
+ 
+
+  
+
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=N_H12M_TOTAL_FORM
+
+Label=N. Health 12-month subtotal (Q177)
+
+Form=45
+
+Max=1
+
+  
+
+[Field]
+
+Name=Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP
+
+Position=350,27,760,47
+
+Item=Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=45
+
+  
+
+[Text]
+
+Position=50,30,330,46
+
+Text=177. Total value of 175 and 176 (health, 12-month) — Auto-computed total (PHP, [DO NOT ASK])
+
+ 
+
+  
+
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=N_H6M_ROSTER_FORM
+
+Label=N. Health, last 6 months (Q178-181) - one row per item
+
+Form=46
+
+Type=Record
+
+TypeName=N_H6M_ROSTER
+
+Max=4
+
+  
+
+[Field]
+
+Name=N_H6M_ITEM
+
+Position=350,27,760,47
+
+Item=N_H6M_ITEM,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=46
+
+  
+
+[Text]
+
+Position=50,30,330,46
+
+Text=Health product or service (auto - one grid row per item)
+
+ 
+
+  
+
+[Field]
+
+Name=N_H6M_CONSUMED
+
+Position=350,57,365,77
+
+Item=N_H6M_CONSUMED,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=46
+
+  
+
+[Text]
+
+Position=50,60,330,76
+
+Text=Health product or service - In the last 6 months, did you or any member of your household consume this item?
+
+ 
+
+  
+
+[Field]
+
+Name=N_H6M_PURCHASED_PHP
+
+Position=350,87,760,107
+
+Item=N_H6M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=46
+
+  
+
+[Text]
+
+Position=50,90,330,106
+
+Text=Health product or service - During the last 6 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)
+
+ 
+
+  
+
+[Field]
+
+Name=N_H6M_INKIND_PHP
+
+Position=350,117,760,137
+
+Item=N_H6M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=46
+
+  
+
+[Text]
+
+Position=50,120,330,136
+
+Text=Health product or service - During the last 6 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to...
+
+ 
+
+  
+
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=N_H6M_TOTAL_FORM
+
+Label=N. Health 6-month subtotal (Q182)
+
+Form=47
+
+Max=1
+
+  
+
+[Field]
+
+Name=Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP
+
+Position=350,27,760,47
+
+Item=Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=47
+
+  
+
+[Text]
+
+Position=50,30,330,46
+
+Text=182. Total value of 178 to 181 (health, 6-month) — Auto-computed total (PHP, [DO NOT ASK])
+
+ 
+
+  
+
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=N_H1M_ROSTER_FORM
+
+Label=N. Health, last month (Q183-184) - one row per item
+
+Form=48
+
+Type=Record
+
+TypeName=N_H1M_ROSTER
+
+Max=2
+
+  
+
+[Field]
+
+Name=N_H1M_ITEM
+
+Position=350,27,760,47
+
+Item=N_H1M_ITEM,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=48
+
+  
+
+[Text]
+
+Position=50,30,330,46
+
+Text=Health product or service (auto - one grid row per item)
+
+ 
+
+  
+
+[Field]
+
+Name=N_H1M_CONSUMED
+
+Position=350,57,365,77
+
+Item=N_H1M_CONSUMED,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=48
+
+  
+
+[Text]
+
+Position=50,60,330,76
+
+Text=Health product or service - In the last month, did you or any member of your household consume this item?
+
+ 
+
+  
+
+[Field]
+
+Name=N_H1M_PURCHASED_PHP
+
+Position=350,87,760,107
+
+Item=N_H1M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=48
+
+  
+
+[Text]
+
+Position=50,90,330,106
+
+Text=Health product or service - During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)
+
+ 
+
+  
+
+[Field]
+
+Name=N_H1M_INKIND_PHP
+
+Position=350,117,760,137
+
+Item=N_H1M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=48
+
+  
+
+[Text]
+
+Position=50,120,330,136
+
+Text=Health product or service - During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to...
+
+ 
+
+  
+
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=N_H1M_TOTAL_FORM
+
+Label=N. Health 1-month subtotal (Q185)
+
+Form=49
+
+Max=1
+
+  
+
+[Field]
+
+Name=Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP
+
+Position=350,27,760,47
+
+Item=Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=49
+
+  
+
+[Text]
+
+Position=50,30,330,46
+
+Text=185. Total value of 183 and 184 (health, 1-month) — Auto-computed total (PHP, [DO NOT ASK])
+
+ 
 
   
 
@@ -13206,7 +11038,7 @@ Name=O_SOURCES_OF_FUNDS_FORM
 
 Label=O. Sources of Funds for Health
 
-Form=40
+Form=50
 
 Max=1
 
@@ -13222,7 +11054,7 @@ Item=Q186_CURRENT_INCOME,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=40
+Form=50
 
   
 
@@ -13246,7 +11078,7 @@ Item=Q187_SAVINGS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=40
+Form=50
 
   
 
@@ -13270,7 +11102,7 @@ Item=Q188_SOLD_ASSETS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=40
+Form=50
 
   
 
@@ -13294,7 +11126,7 @@ Item=Q189_BORROW_FAMILY,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=40
+Form=50
 
   
 
@@ -13318,7 +11150,7 @@ Item=Q190_BORROW_INST,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=40
+Form=50
 
   
 
@@ -13342,7 +11174,7 @@ Item=Q191_REMITTANCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=40
+Form=50
 
   
 
@@ -13366,7 +11198,7 @@ Item=Q192_GOVT_ASSIST,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=40
+Form=50
 
   
 
@@ -13390,7 +11222,7 @@ Item=Q193_LGU_DONATION,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=40
+Form=50
 
   
 
@@ -13414,7 +11246,7 @@ Item=Q194_OTHER_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=40
+Form=50
 
   
 
@@ -13440,7 +11272,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=40
+Form=50
 
   
 
@@ -13464,7 +11296,7 @@ Item=Q195_INCOME_PCT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=40
+Form=50
 
   
 
@@ -13488,7 +11320,7 @@ Item=Q196_FOREGONE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=40
+Form=50
 
   
 
@@ -13514,7 +11346,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=40
+Form=50
 
   
 
@@ -13530,7 +11362,7 @@ Text=196. If your household chooses not to spend on health care for financial re
 
 [Block]
 
-Name=DG_BLK_183
+Name=DG_BLK_147
 
 Label=Q186-Q190
 
@@ -13544,7 +11376,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_184
+Name=DG_BLK_148
 
 Label=Q191-Q194
 
@@ -13558,7 +11390,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_185
+Name=DG_BLK_149
 
 Label=Q194
 
@@ -13572,7 +11404,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_186
+Name=DG_BLK_150
 
 Label=Q195
 
@@ -13586,7 +11418,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_187
+Name=DG_BLK_151
 
 Label=Q196
 
@@ -13600,7 +11432,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_188
+Name=DG_BLK_152
 
 Label=Q196
 
@@ -13624,7 +11456,7 @@ Name=P_FINANCIAL_RISK_FORM
 
 Label=P. Financial Risk
 
-Form=41
+Form=51
 
 Max=1
 
@@ -13640,7 +11472,7 @@ Item=Q197_DELAYED_CARE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=41
+Form=51
 
   
 
@@ -13664,7 +11496,7 @@ Item=Q198_NOT_FOLLOWED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=41
+Form=51
 
   
 
@@ -13688,7 +11520,7 @@ Item=Q199_WTP_CONSULT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=41
+Form=51
 
   
 
@@ -13714,7 +11546,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=41
+Form=51
 
   
 
@@ -13730,7 +11562,7 @@ Text=199. Other (Specify) — text
 
 [Block]
 
-Name=DG_BLK_189
+Name=DG_BLK_153
 
 Label=Q197-Q199
 
@@ -13744,7 +11576,7 @@ Length=3
 
 [Block]
 
-Name=DG_BLK_190
+Name=DG_BLK_154
 
 Label=Q199
 
@@ -13768,7 +11600,7 @@ Name=Q_FINANCIAL_ANXIETY_FORM
 
 Label=Q. Financial Anxiety
 
-Form=42
+Form=52
 
 Max=1
 
@@ -13784,7 +11616,7 @@ Item=Q200_REDUCED_SPEND,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=42
+Form=52
 
   
 
@@ -13808,7 +11640,7 @@ Item=Q201_WORRIED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=42
+Form=52
 
   
 
@@ -13832,7 +11664,7 @@ Item=Q202_WORRY_REASONS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=42
+Form=52
 
   
 
@@ -13858,7 +11690,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=42
+Form=52
 
   
 
@@ -13874,7 +11706,7 @@ Text=202. Do any of the following reasons describe why you are worried about you
 
 [Block]
 
-Name=DG_BLK_191
+Name=DG_BLK_155
 
 Label=Q200
 
@@ -13888,7 +11720,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_192
+Name=DG_BLK_156
 
 Label=Q201
 
@@ -13902,7 +11734,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_193
+Name=DG_BLK_157
 
 Label=Q202
 
@@ -13916,7 +11748,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_194
+Name=DG_BLK_158
 
 Label=Q202
 
@@ -13940,7 +11772,7 @@ Name=FIELD_CONTROL_FORM_3
 
 Label=Closing - case end
 
-Form=43
+Form=53
 
 Max=1
 
@@ -13958,7 +11790,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=43
+Form=53
 
   
 
@@ -13984,7 +11816,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=43
+Form=53
 
   
 
@@ -14010,7 +11842,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=43
+Form=53
 
   
 
@@ -14036,7 +11868,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=43
+Form=53
 
   
 
@@ -14060,7 +11892,7 @@ Item=DATE_FIRST_VISITED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=Date,YYYYMMDD
 
-Form=43
+Form=53
 
   
 
@@ -14084,7 +11916,7 @@ Item=DATE_FINAL_VISIT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=Date,YYYYMMDD
 
-Form=43
+Form=53
 
   
 
@@ -14108,7 +11940,7 @@ Item=TOTAL_NUMBER_OF_VISITS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=43
+Form=53
 
   
 
@@ -14132,7 +11964,7 @@ Item=ENUM_RESULT_FIRST_VISIT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=43
+Form=53
 
   
 
@@ -14156,7 +11988,7 @@ Item=ENUM_RESULT_FINAL_VISIT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=43
+Form=53
 
   
 
@@ -14210,7 +12042,7 @@ Name=REC_CASE_VERIFICATION_FORM
 
 Label=Case Verification Photo
 
-Form=44
+Form=54
 
 Max=1
 
@@ -14228,7 +12060,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=44
+Form=54
 
   
 
@@ -14252,7 +12084,7 @@ Item=CAPTURE_VERIFICATION_PHOTO,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=44
+Form=54
 
   
 

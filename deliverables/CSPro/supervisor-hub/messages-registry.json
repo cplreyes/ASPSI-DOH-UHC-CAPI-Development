@@ -1,0 +1,21 @@
+{
+  "_note": "Machine-managed by cspro_helpers.numberize_errmsgs() — do not hand-edit. Maps each errmsg text to its permanent message number; numbers are never reused or renumbered.",
+  "next": 1016,
+  "messages": {
+    "Incorrect password.": 1001,
+    "Unknown username.": 1002,
+    "Offline base map not found on this device. Remove + re-add LoginApp from the server to install it.": 1003,
+    "Assignment received - EA %s (%s): instrument %s, target %s. Open it from the menu.": 1004,
+    "Connected to the supervisor, but no assignment file (%s) was published for you. Ask the supervisor to run 'Assign Enumeration Area' first.": 1005,
+    "Couldn't connect over Bluetooth. Check: (1) Bluetooth is ON on BOTH tablets, and (2) the supervisor has started 'Assign Enumeration Area' - then retry.": 1006,
+    "COLLECT: starting the Bluetooth server to receive interviews. Make sure Bluetooth is ON on both tablets. Keep this screen open; each enumerator now runs 'Send My Interviews to Supervisor'. Receives one enumerator per connection - re-select this item for the next enumerator.": 1007,
+    "COLLECT: an enumerator connected and synced their interviews to this hub.": 1008,
+    "Sent your interviews to the supervisor over Bluetooth - F1: %d, F3: %d, F4: %d. Your own copies are unchanged (non-destructive).": 1009,
+    "Couldn't connect over Bluetooth. Check: (1) Bluetooth is ON on BOTH tablets, and (2) the supervisor has started 'Collect Interviews from Enumerators' - then retry.": 1010,
+    "Relayed the hub's collected F1/F3/F4 interviews to CSWeb (supervisor-qa). Cases upsert by the 12-digit key, so direct-synced and hub-relayed copies never conflict.": 1011,
+    "CSWeb connect failed - no internet, or sign-in was cancelled. This hub relay is the no-signal safety net; retry on signal. Sign in as the supervisor-qa account when prompted.": 1012,
+    "ASSIGN EA: starting the Bluetooth server to publish assignments. Make sure Bluetooth is ON on both tablets. Keep this screen open; the enumerator now runs 'Receive Assigned Data'. Serves one enumerator per connection - re-select this item for the next enumerator.": 1013,
+    "ASSIGN EA: an enumerator connected and pulled their assignment.": 1014,
+    "No role found from login. Close and sign in again via LoginApp.": 1015
+  }
+}

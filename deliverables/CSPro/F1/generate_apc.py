@@ -27,7 +27,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from cspro_helpers import select_all_exclusive_warning_procs
+from cspro_helpers import select_all_exclusive_warning_procs, numberize_errmsgs
 
 HERE = Path(__file__).parent
 OUT = HERE / "FacilityHeadSurvey.ent.apc"
@@ -1257,6 +1257,9 @@ def main():
     parts.append(TODO_NOTE)
 
     text = "\n".join(parts).rstrip() + "\n"
+    # R2 (2026-07-03): inline errmsg literals -> numbered messages + .ent.mgf
+    # (stable numbers via messages-registry.json; displayed text unchanged).
+    text = numberize_errmsgs(text, HERE, OUT.with_suffix(".mgf"), "FacilityHeadSurvey")
     OUT.write_text(text, encoding="utf-8")
     n_procs = text.count("\nPROC ") + text.startswith("PROC ")
     print(f"Wrote {OUT} ({len(text)} chars, ~{n_procs} PROC blocks).")

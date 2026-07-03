@@ -27,6 +27,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from cspro_helpers import (
     other_specify_procs, select_all_validation_procs, range_check_proc,
+    numberize_errmsgs,
+)
+from generate_dcf import (   # roster ladders (same dir) — single source with the dcf occ labels
+    FOOD_WEEKLY_ITEMS, NONFOOD_1M_ITEMS, NONFOOD_6M_ITEMS, NONFOOD_12M_ITEMS,
+    HEALTH_12M_ITEMS, HEALTH_6M_ITEMS, HEALTH_1M_ITEMS, DK_RF_STATUS,
 )
 
 # Per-item numeric range checks (spec §3.2/§3.6/§3.12). (field, lo, hi, soft_over)
@@ -837,7 +842,7 @@ SKIP_RULES = [
     ("Q132_ZBB_HEARD",       "Q132_ZBB_HEARD = 2 or Q132_ZBB_HEARD = 3",     "Q136_MAIFIP_HEARD"),
     ("Q136_MAIFIP_HEARD",    "Q136_MAIFIP_HEARD = 2 or Q136_MAIFIP_HEARD = 3", "Q138_MOST_EXPENSIVE"),
     ("Q140_RECALL_BREAKDOWN","Q140_RECALL_BREAKDOWN = 2",   "Q142_RECALL_PAYMENT"),    # no breakdown -> skip Q141/Q141.1
-    ("Q142_RECALL_PAYMENT",  "Q142_RECALL_PAYMENT = 2",     "Q144_CEREALS_CONSUMED"),  # no payment -> skip Q143 -> Section N
+    ("Q142_RECALL_PAYMENT",  "Q142_RECALL_PAYMENT = 2",     "N_FOOD_ITEM(1)"),  # no payment -> skip Q143 -> Section N food grid row 1 (Option C 2026-07-03; explicit occurrence — the skip source is outside the roster)
     # Section O #637: Q195 = any willing-to-set-aside answer (Less than 1%/1-3%/4-6%/
     # More than 6%/Don't know = codes 2-6) bypasses Q196 (the "what care would you
     # forego" item) -> Q197. Only Q195 = "None" (1) falls through to Q196. (Already
@@ -1193,9 +1198,10 @@ def consumed_amount_validation_procs(names):
         # neither silently satisfy the at-least-one check nor leak NOTAPPL onward.
         zero_cond = " and ".join(
             f"not ({a} in {REFUSED_AMOUNT}, {DK_AMOUNT}, 1:99999999)" for a in amts)
+        status_guard = _dkrf_677_guard(f"{base}_AMT_STATUS")
         procs[last_amt] = (
             "postproc\n"
-            f"  if {consumed} = 1 and {zero_cond} then\n"
+            f"  if {status_guard}{consumed} = 1 and {zero_cond} then\n"
             "    errmsg(\"This item is marked consumed by the household, so enter the amount "
             "spent purchasing it and/or the estimated value if received in-kind, as a gift, "
             "or own-produced — at least one must be greater than 0. If the household genuinely "
@@ -1225,6 +1231,305 @@ def uhc9_other_specify_procs(names):
                     f"    reenter;\n  endif;"
                 )
     return procs
+
+
+def _dkrf_gate_branch(status):
+    """The DK/RF branch spliced into a roster amount preproc gate (empty when the flag is
+    off). When AMT_STATUS is DK(2)/RF(3) the amount is already -98/-99 (set by the status
+    postproc), so skip entry. Post-.format so single braces are fine."""
+    if not DK_RF_STATUS:
+        return ""
+    return (f"  elseif {status} in (2, 3) then\n"
+            f"    noinput;   {{ #7 DK/RF: amount already -98/-99 from the status field }}\n")
+
+
+def _dkrf_677_guard(status):
+    """Prefix for the #677 consumed-needs-an-amount condition — only fires on 'gave'(1)."""
+    return f"{status} = 1 and " if DK_RF_STATUS else ""
+
+
+def _amt_status_proc(prefix):
+    """#7 per-item DK/RF gate proc (empty when the flag is off). Asked only when consumed
+    (not-consumed rows default to 'gave'(1) + noinput). DK(2) -> both amounts -98; RF(3) ->
+    both -99. Amounts then skipped (roster: the gate branch above; flat: shown pre-set)."""
+    if not DK_RF_STATUS:
+        return ""
+    c, st = f"{prefix}_CONSUMED", f"{prefix}_AMT_STATUS"
+    p, k = f"{prefix}_PURCHASED_PHP", f"{prefix}_INKIND_PHP"
+    return f'''PROC {st}
+preproc
+  {{ #7 DK/RF gate - only asked when consumed; not-consumed -> 'gave' + noinput. }}
+  if {c} <> 1 then
+    {st} = 1;
+    noinput;
+  endif;
+postproc
+  {{ Don't know -> both amounts {DK_AMOUNT}; Refused -> both {REFUSED_AMOUNT} (excluded from subtotals). }}
+  if {st} = 2 then
+    {p} = {DK_AMOUNT}; {k} = {DK_AMOUNT};
+  elseif {st} = 3 then
+    {p} = {REFUSED_AMOUNT}; {k} = {REFUSED_AMOUNT};
+  endif;
+'''
+
+
+def section_n_food_roster_procs():
+    """Option C (Carl go, 2026-07-03): bespoke procs for the weekly-food roster
+    (N_FOOD_ROSTER, fixed 13 rows = Q144-Q156). Everything the flat build did per item —
+    #169 consumed-gate, #755/#818 pre-fill, #677 consumed-needs-an-amount, #9/#617 Q157
+    subtotal — reappears here in roster form, one shared PROC per column:
+      * N_FOOD_ITEM preproc: auto-name the row (ladder from generate_dcf.FOOD_WEEKLY_ITEMS,
+        single source with the dcf occurrence labels) + init the protected Q157 at block
+        entry; noinput.
+      * amounts: PER-OCCURRENCE preproc gates (the Section C pattern) — not consumed ->
+        auto 0 + noinput (kept 0, not notappl, so the codebook/subtotal semantics match the
+        flat build); consumed -> special()-guarded 0 pre-fill (#755/#818). A preproc gate
+        stays correct on direct case-tree taps, unlike a shared-field protect() toggle.
+      * #677 validation on the row's last amount (INKIND postproc), same wording as flat.
+      * Q157 subtotal: ONE do-loop in the roster group postproc (N_FOOD_ROSTER_FORM),
+        sentinels excluded (#743) — replaces the flat build's #617 follower-preproc dance.
+    The flat Section N auto-gens are kept away from these fields via the flat_names filter
+    in main()."""
+    dk, rf = DK_AMOUNT, REFUSED_AMOUNT
+    nmax = len(FOOD_WEEKLY_ITEMS)
+    ladder = []
+    for k, (_, label) in enumerate(FOOD_WEEKLY_ITEMS, start=1):
+        kw = "if" if k == 1 else "elseif"
+        ladder.append(f'  {kw} curocc() = {k} then N_FOOD_ITEM = "{label}";')
+    ladder.append("  endif;")
+    ladder_txt = "\n".join(ladder)
+
+    amount_gate = (
+        "preproc\n"
+        "  {{ Not consumed -> auto 0 + noinput (0, not notappl, for codebook/subtotal parity\n"
+        "    with the flat build); consumed -> #755/#818 pre-fill so Enter passes an empty\n"
+        "    amount. Per-occurrence preproc gate (Section C pattern). }}\n"
+        "  if N_FOOD_CONSUMED = 2 then\n"
+        "    {f} = 0;\n"
+        "    noinput;\n"
+        "  else\n"
+        "    if special({f}) then {f} = 0; endif;\n"
+        "  endif;"
+    )
+
+    gate_p = amount_gate.format(f="N_FOOD_PURCHASED_PHP")
+    gate_k = amount_gate.format(f="N_FOOD_INKIND_PHP")
+    if DK_RF_STATUS:
+        _br = _dkrf_gate_branch("N_FOOD_AMT_STATUS")
+        gate_p = gate_p.replace("  else\n", _br + "  else\n", 1)
+        gate_k = gate_k.replace("  else\n", _br + "  else\n", 1)
+    g677 = _dkrf_677_guard("N_FOOD_AMT_STATUS")
+    status_proc = _amt_status_proc("N_FOOD")
+    return f"""{{ ---- Section N Option C: weekly-food roster (N_FOOD_ROSTER, fixed 13 rows = Q144-Q156) ---- }}
+PROC N_FOOD_ITEM
+preproc
+  {{ Auto-name this grid row from the WHO/SHA item list (one occurrence per item). }}
+{ladder_txt}
+  noinput;
+{status_proc}
+PROC N_FOOD_PURCHASED_PHP
+{gate_p}
+
+PROC N_FOOD_INKIND_PHP
+{gate_k}
+postproc
+  {{ #677 consumed-needs-an-amount — roster edition (same rule + wording as the flat build). }}
+  if {g677}N_FOOD_CONSUMED = 1 and not (N_FOOD_PURCHASED_PHP in {rf}, {dk}, 1:99999999)
+      and not (N_FOOD_INKIND_PHP in {rf}, {dk}, 1:99999999) then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
+    reenter;
+  endif;
+
+PROC Q157_FOOD_SUBTOTAL_TOTAL_PHP
+preproc
+  {{ Q157 food subtotal (spec §4.9) — Option C: computed in Q157's OWN preproc +
+    noinput, NOT protect() (#617: protected fields skip their preproc) and NOT a
+    group proc (spike 2026-07-03: BOTH the roster group postproc AND the cont form's
+    group preproc get wiped by record P's buffer init — 'protected field Q157... out
+    of range - value is NOTAPPL' at grid exit). A noinput field's preproc runs AT
+    arrival, inside the record context, before validation — the proven
+    MEMBER_LINE_NO / N_FOOD_ITEM pattern. Re-runs on back-nav + resume. Sentinels
+    -98/-99 excluded (#743). }}
+  {{ Accumulate in a LOCAL, assign once (q92_oop rule) — reading the CURRENT field
+    inside its own preproc returns the stored notappl even after assigning it in the
+    same preproc (spike trace 2026-07-03: total=NOTAPPL with all row reads valid), so
+    self-accumulation `Q157 = Q157 + x` poisons the sum. }}
+  numeric nfr_i; numeric nfr_total;
+  nfr_total = 0;
+  do nfr_i = 1 while nfr_i <= {nmax}
+    if N_FOOD_CONSUMED(nfr_i) = 1 then
+      if N_FOOD_PURCHASED_PHP(nfr_i) <> {dk} and N_FOOD_PURCHASED_PHP(nfr_i) <> {rf} then
+        nfr_total = nfr_total + N_FOOD_PURCHASED_PHP(nfr_i);
+      endif;
+      if N_FOOD_INKIND_PHP(nfr_i) <> {dk} and N_FOOD_INKIND_PHP(nfr_i) <> {rf} then
+        nfr_total = nfr_total + N_FOOD_INKIND_PHP(nfr_i);
+      endif;
+    endif;
+  enddo;
+  Q157_FOOD_SUBTOTAL_TOTAL_PHP = nfr_total;
+  noinput;
+"""
+
+
+# Fan-out roster specs (2026-07-03): (field prefix, dcf item list, subtotal field | None).
+SECTION_N_FANOUT = [
+    ("N_NF1M",  NONFOOD_1M_ITEMS,  None),
+    ("N_NF6M",  NONFOOD_6M_ITEMS,  None),
+    ("N_NF12M", NONFOOD_12M_ITEMS, None),
+    ("N_H12M",  HEALTH_12M_ITEMS,  "Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP"),
+    ("N_H6M",   HEALTH_6M_ITEMS,   "Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP"),
+    ("N_H1M",   HEALTH_1M_ITEMS,   "Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP"),
+]
+
+
+def section_n_fanout_procs():
+    """Section N fan-out (2026-07-03): the six remaining recall blocks as rosters, each an
+    exact replica of the device-proven food-grid procs — see section_n_food_roster_procs
+    for the engine-rule rationale (ITEM ladder + noinput; per-occurrence amount gates;
+    #677 on the row's last amount; each health subtotal in the TOTAL field's OWN preproc
+    + noinput via a LOCAL accumulator — never protect(), never a group proc; sentinels
+    -98/-99 excluded #743). The #677 errmsg wording matches the food grid EXACTLY so
+    numberize_errmsgs dedups them to one message number."""
+    dk, rf = DK_AMOUNT, REFUSED_AMOUNT
+    amount_gate = (
+        "preproc\n"
+        "  {{ Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill\n"
+        "    (#755/#818). Same per-occurrence gate as the food grid. }}\n"
+        "  if {c} = 2 then\n"
+        "    {f} = 0;\n"
+        "    noinput;\n"
+        "  else\n"
+        "    if special({f}) then {f} = 0; endif;\n"
+        "  endif;"
+    )
+    blocks = ["{ ---- Section N fan-out: remaining recall blocks as rosters (2026-07-03) ---- }"]
+    for prefix, items_list, subtotal in SECTION_N_FANOUT:
+        ladder = []
+        for k, (_, label) in enumerate(items_list, start=1):
+            kw = "if" if k == 1 else "elseif"
+            ladder.append(f'  {kw} curocc() = {k} then {prefix}_ITEM = "{label}";')
+        ladder.append("  endif;")
+        ladder_txt = "\n".join(ladder)
+        _fo_gate_p = amount_gate.format(c=prefix + "_CONSUMED", f=prefix + "_PURCHASED_PHP")
+        _fo_gate_k = amount_gate.format(c=prefix + "_CONSUMED", f=prefix + "_INKIND_PHP")
+        if DK_RF_STATUS:
+            _fb = _dkrf_gate_branch(prefix + "_AMT_STATUS")
+            _fo_gate_p = _fo_gate_p.replace("  else\n", _fb + "  else\n", 1)
+            _fo_gate_k = _fo_gate_k.replace("  else\n", _fb + "  else\n", 1)
+        _fo_g677 = _dkrf_677_guard(prefix + "_AMT_STATUS")
+        _fo_status = _amt_status_proc(prefix)
+        blocks.append(f"""PROC {prefix}_ITEM
+preproc
+  {{ Auto-name this grid row from the WHO/SHA item list (one occurrence per item). }}
+{ladder_txt}
+  noinput;
+{_fo_status}
+PROC {prefix}_PURCHASED_PHP
+{_fo_gate_p}
+
+PROC {prefix}_INKIND_PHP
+{_fo_gate_k}
+postproc
+  {{ #677 consumed-needs-an-amount — roster edition (same rule + wording as the food grid). }}
+  if {_fo_g677}{prefix}_CONSUMED = 1 and not ({prefix}_PURCHASED_PHP in {rf}, {dk}, 1:99999999)
+      and not ({prefix}_INKIND_PHP in {rf}, {dk}, 1:99999999) then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced \u2014 at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
+    reenter;
+  endif;
+""")
+        if subtotal:
+            blocks.append(f"""PROC {subtotal}
+preproc
+  {{ Q157-pattern subtotal (device-proven 2026-07-03): computed in the TOTAL field's OWN
+    preproc + noinput with a LOCAL accumulator; sums CONSUMED=1 rows of {prefix}_ROSTER;
+    sentinels -98/-99 excluded (#743). See section_n_food_roster_procs for why not
+    protect() and not a group proc (record buffer-init wipes; self-read poisoning). }}
+  numeric nsr_i; numeric nsr_total;
+  nsr_total = 0;
+  do nsr_i = 1 while nsr_i <= {len(items_list)}
+    if {prefix}_CONSUMED(nsr_i) = 1 then
+      if {prefix}_PURCHASED_PHP(nsr_i) <> {dk} and {prefix}_PURCHASED_PHP(nsr_i) <> {rf} then
+        nsr_total = nsr_total + {prefix}_PURCHASED_PHP(nsr_i);
+      endif;
+      if {prefix}_INKIND_PHP(nsr_i) <> {dk} and {prefix}_INKIND_PHP(nsr_i) <> {rf} then
+        nsr_total = nsr_total + {prefix}_INKIND_PHP(nsr_i);
+      endif;
+    endif;
+  enddo;
+  {subtotal} = nsr_total;
+  noinput;
+""")
+    return "\n".join(blocks)
+
+
+def section_n_review_proc():
+    """Section N end-of-section expenditure recap (Carl go 2026-07-03: one dialog at the end
+    of Section N, per-block subtotal recap). Fires from Q186_CURRENT_INCOME preproc - the
+    first Section O field, so the recap shows the moment Section N completes; Q186 has no
+    other PROC (clean, no merge). Reads back the 9 block subtotals + grand total via the
+    CSPro 8 htmldialog() -> review.html (CS.UI dual-bridge, same infra as the hub report.html).
+    INFORMATIONAL: htmldialog is modal, flow continues to Q186 on OK; the return value is NOT
+    branched on (CSEntry 8.0.1's htmldialog return is not a stable sentinel - the hub
+    show_coverage_report note). Stored subtotals (Q157/Q177/Q182/Q185) read direct; restaurant
+    (Q158) + smoking (Q159) + the 3 non-food rosters summed here (CONSUMED=1, -98/-99 excluded,
+    matching the subtotal procs). JSON: {"v":[9 php],"grand":php}; review.html holds labels."""
+    return (
+"{ ---- Section N end-of-section expenditure recap (htmldialog review.html) ---- }\n"
+"PROC Q186_CURRENT_INCOME\n"
+"preproc\n"
+"  { Read back the 9 Section N block subtotals to the respondent before funding sources.\n"
+"    Stored subtotals (Q157/Q177/Q182/Q185) read direct; restaurant/smoking/non-food summed\n"
+"    here (CONSUMED=1, -98/-99 excluded). Informational modal - OK returns to Q186. }\n"
+"  numeric srv_i;\n"
+"  numeric srv_rest; numeric srv_smoke;\n"
+"  numeric srv_nf1m; numeric srv_nf6m; numeric srv_nf12m;\n"
+"  numeric srv_grand;\n"
+"  string  srv_j; string srv_res;\n"
+"  srv_rest = 0;\n"
+"  if Q158_RESTAURANT_CONSUMED = 1 then\n"
+"    if Q158_RESTAURANT_PURCHASED_PHP <> -98 and Q158_RESTAURANT_PURCHASED_PHP <> -99 then srv_rest = srv_rest + Q158_RESTAURANT_PURCHASED_PHP; endif;\n"
+"    if Q158_RESTAURANT_INKIND_PHP <> -98 and Q158_RESTAURANT_INKIND_PHP <> -99 then srv_rest = srv_rest + Q158_RESTAURANT_INKIND_PHP; endif;\n"
+"  endif;\n"
+"  srv_smoke = 0;\n"
+"  if Q159_SMOKING_TOBACCO_CONSUMED = 1 then\n"
+"    if Q159_SMOKING_TOBACCO_PURCHASED_PHP <> -98 and Q159_SMOKING_TOBACCO_PURCHASED_PHP <> -99 then srv_smoke = srv_smoke + Q159_SMOKING_TOBACCO_PURCHASED_PHP; endif;\n"
+"    if Q159_SMOKING_TOBACCO_INKIND_PHP <> -98 and Q159_SMOKING_TOBACCO_INKIND_PHP <> -99 then srv_smoke = srv_smoke + Q159_SMOKING_TOBACCO_INKIND_PHP; endif;\n"
+"  endif;\n"
+"  srv_nf1m = 0;\n"
+"  do srv_i = 1 while srv_i <= 8\n"
+"    if N_NF1M_CONSUMED(srv_i) = 1 then\n"
+"      if N_NF1M_PURCHASED_PHP(srv_i) <> -98 and N_NF1M_PURCHASED_PHP(srv_i) <> -99 then srv_nf1m = srv_nf1m + N_NF1M_PURCHASED_PHP(srv_i); endif;\n"
+"      if N_NF1M_INKIND_PHP(srv_i) <> -98 and N_NF1M_INKIND_PHP(srv_i) <> -99 then srv_nf1m = srv_nf1m + N_NF1M_INKIND_PHP(srv_i); endif;\n"
+"    endif;\n"
+"  enddo;\n"
+"  srv_nf6m = 0;\n"
+"  do srv_i = 1 while srv_i <= 2\n"
+"    if N_NF6M_CONSUMED(srv_i) = 1 then\n"
+"      if N_NF6M_PURCHASED_PHP(srv_i) <> -98 and N_NF6M_PURCHASED_PHP(srv_i) <> -99 then srv_nf6m = srv_nf6m + N_NF6M_PURCHASED_PHP(srv_i); endif;\n"
+"      if N_NF6M_INKIND_PHP(srv_i) <> -98 and N_NF6M_INKIND_PHP(srv_i) <> -99 then srv_nf6m = srv_nf6m + N_NF6M_INKIND_PHP(srv_i); endif;\n"
+"    endif;\n"
+"  enddo;\n"
+"  srv_nf12m = 0;\n"
+"  do srv_i = 1 while srv_i <= 5\n"
+"    if N_NF12M_CONSUMED(srv_i) = 1 then\n"
+"      if N_NF12M_PURCHASED_PHP(srv_i) <> -98 and N_NF12M_PURCHASED_PHP(srv_i) <> -99 then srv_nf12m = srv_nf12m + N_NF12M_PURCHASED_PHP(srv_i); endif;\n"
+"      if N_NF12M_INKIND_PHP(srv_i) <> -98 and N_NF12M_INKIND_PHP(srv_i) <> -99 then srv_nf12m = srv_nf12m + N_NF12M_INKIND_PHP(srv_i); endif;\n"
+"    endif;\n"
+"  enddo;\n"
+"  srv_grand = Q157_FOOD_SUBTOTAL_TOTAL_PHP + srv_rest + srv_smoke\n"
+"            + srv_nf1m + srv_nf6m + srv_nf12m\n"
+"            + Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP\n"
+"            + Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP;\n"
+'  srv_j = maketext("%d", Q157_FOOD_SUBTOTAL_TOTAL_PHP)\n'
+'        + "," + maketext("%d", srv_rest) + "," + maketext("%d", srv_smoke)\n'
+'        + "," + maketext("%d", srv_nf1m) + "," + maketext("%d", srv_nf6m) + "," + maketext("%d", srv_nf12m)\n'
+'        + "," + maketext("%d", Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP)\n'
+'        + "," + maketext("%d", Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP)\n'
+'        + "," + maketext("%d", Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP)\n'
+'        + "," + maketext("%d", srv_grand);\n'
+'  srv_res = htmldialog("review.html", inputData := srv_j);\n'
+    )
+
 
 
 def skip_proc(field, cond, target):
@@ -1274,6 +1579,10 @@ postproc
 def main():
     names = dcf_item_names()
     parts = [HEADER, "", CONTROL_PROCS, "", DISPOSITION_PROCS, "", ROSTER_PROCS, "", PRIV_ROSTER_PROCS, "",
+             section_n_food_roster_procs(), "",
+             section_n_fanout_procs(), "",
+             section_n_review_proc(), "",
+             *(([_amt_status_proc("Q158_RESTAURANT") + _amt_status_proc("Q159_SMOKING_TOBACCO"), ""]) if DK_RF_STATUS else []),
              BILL_VALIDATION, "", EXTRA_PROCS, "", VALIDATION_PROCS, ""]
     covered = {"BREAKOFF", "ENUM_RESULT_FINAL_VISIT", "CASE_DISPOSITION",  # #515/#561 disposition PROCs
                "AREA_HAS_BUCAS", "AREA_HAS_GAMOT",  # #796/#797 auto-answer + noinput (EXTRA_PROCS)
@@ -1285,6 +1594,22 @@ def main():
                "Q45_PHILHEALTH_REG", "Q45_1_PIN_REG_WHEN", "Q46_MEMBER_CATEGORY",  # #563/#565 PhilHealth Yes-only
                "Q45_2_WHY_NOT_REG",   # #795: No-only gate (ROSTER_PROCS); _OTHER_TXT stays auto-gen
                "PRIV_MEMBER_LINE_NO", "Q48_OTHER_INS_REG",  # #525/#612/#613: priv-ins 2nd pass
+               "N_FOOD_ITEM", "N_FOOD_CONSUMED", "N_FOOD_PURCHASED_PHP",   # Option C food roster:
+               "N_FOOD_INKIND_PHP", "Q157_FOOD_SUBTOTAL_TOTAL_PHP",   # bespoke procs (2026-07-03)
+               # Fan-out rosters + health subtotals (2026-07-03): section_n_fanout_procs
+               "N_NF1M_ITEM", "N_NF1M_CONSUMED", "N_NF1M_PURCHASED_PHP", "N_NF1M_INKIND_PHP",
+               "N_NF6M_ITEM", "N_NF6M_CONSUMED", "N_NF6M_PURCHASED_PHP", "N_NF6M_INKIND_PHP",
+               "N_NF12M_ITEM", "N_NF12M_CONSUMED", "N_NF12M_PURCHASED_PHP", "N_NF12M_INKIND_PHP",
+               "N_H12M_ITEM", "N_H12M_CONSUMED", "N_H12M_PURCHASED_PHP", "N_H12M_INKIND_PHP",
+               "N_H6M_ITEM", "N_H6M_CONSUMED", "N_H6M_PURCHASED_PHP", "N_H6M_INKIND_PHP",
+               "N_H1M_ITEM", "N_H1M_CONSUMED", "N_H1M_PURCHASED_PHP", "N_H1M_INKIND_PHP",
+               "Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP", "Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP",
+               "Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP",
+               # #7 DK/RF amount-status gate fields (exist only when DK_RF_STATUS is on):
+               "N_FOOD_AMT_STATUS", "N_NF1M_AMT_STATUS", "N_NF6M_AMT_STATUS", "N_NF12M_AMT_STATUS",
+               "N_H12M_AMT_STATUS", "N_H6M_AMT_STATUS", "N_H1M_AMT_STATUS",
+               "Q158_RESTAURANT_AMT_STATUS", "Q159_SMOKING_TOBACCO_AMT_STATUS",
+               "Q186_CURRENT_INCOME",   # Section N recap htmldialog fires from its preproc
                "Q49_PRIVATE_INS", "C_HOUSEHOLD_ROSTER_FORM", "Q47_HH_HAS_PRIVATE_INS",
                "Q141_1_NO_RECEIPT_AMT_PHP",
                # #615: Q141_BILL_ITEMS is now a Check Box base whose 'Other expenses' (07)
@@ -1322,8 +1647,13 @@ def main():
     # panel-first-member fields (Q144/Q175/Q178/Q183) carry both sections without a
     # duplicate-PROC collision. (gate_procs[field] = 'postproc\n...'; st_init full PROC
     # strings — split out the preproc body for the merge.)
-    gate_procs = expenditure_gate_procs(names)
-    st_procs = subtotal_init_compute_procs(names, dcf_items_map())
+    # Option C (2026-07-03): the rosterized food block (N_FOOD_*) carries bespoke procs
+    # in section_n_food_roster_procs() — exclude its fields from the flat Section N
+    # suffix-driven auto-gens (gate / subtotal / #677 validation) so nothing double-emits.
+    flat_names = [n for n in names if not n.startswith(
+        ("N_FOOD_", "N_NF1M_", "N_NF6M_", "N_NF12M_", "N_H12M_", "N_H6M_", "N_H1M_"))]
+    gate_procs = expenditure_gate_procs(flat_names)
+    st_procs = subtotal_init_compute_procs(flat_names, dcf_items_map())
 
     def _preproc_body(proc_text):
         # st_procs entries are 'PROC <field>\npreproc\n<body>' — return '<body>'.
@@ -1357,7 +1687,7 @@ def main():
 
     # #677: consumed-but-zero hard validation on each Section N item's last amount field.
     parts.append("{ ---- Section N consumed-amount validation (#677): consumed item needs >=1 amount > 0 ---- }")
-    for field, postproc_body in sorted(consumed_amount_validation_procs(names).items()):
+    for field, postproc_body in sorted(consumed_amount_validation_procs(flat_names).items()):
         if field in covered:
             raise SystemExit(f"#677 consumed-amount validation collides with an existing proc: {field}")
         covered.add(field); parts.append(f"PROC {field}\n{postproc_body}"); parts.append("")
@@ -1413,6 +1743,9 @@ def main():
     # bespoke gates, auto-gen other-specify, and fields with no PROC uniformly.
     rb_fields = roster_bound_fields()
     text = inject_roster_occurrence_bounds(text, rb_fields)
+    # R2 (2026-07-03): inline errmsg literals -> numbered messages + .ent.mgf
+    # (stable numbers via messages-registry.json; displayed text unchanged).
+    text = numberize_errmsgs(text, HERE, OUT.with_suffix(".mgf"), "HouseholdSurvey")
     OUT.write_text(text, encoding="utf-8")
     procs = [l for l in text.splitlines() if l.startswith("PROC ")]
     assert len(procs) == len(set(procs)), "duplicate PROC names emitted"

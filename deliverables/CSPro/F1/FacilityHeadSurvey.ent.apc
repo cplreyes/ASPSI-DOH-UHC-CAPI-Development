@@ -36,7 +36,7 @@ function FillRegionValueSet()
       own field directly. }
     R_PARENT_CODE = ROOT_PSGC_PARENT;
     if loadcase(PSGC_REGION_DICT, R_PARENT_CODE) = 0 then
-        errmsg("PSGC region lookup failed — verify psgc_region.dat is deployed");
+        errmsg(1001);
         exit;
     endif;
 
@@ -157,7 +157,7 @@ function ReadGPSReading(numeric maxTimeSec, numeric desiredAccuracyM)
     endif;
 
     if not gps(open) then
-        errmsg("GPS hardware unavailable — check tablet location permission.");
+        errmsg(1002);
         ReadGPSReading = 0;
         exit;
     endif;
@@ -166,13 +166,13 @@ function ReadGPSReading(numeric maxTimeSec, numeric desiredAccuracyM)
     gps(close);
 
     if result <> 1 then
-        errmsg("GPS read failed or timed out (target accuracy %d m).", desiredAccuracyM);
+        errmsg(1003, desiredAccuracyM);
         ReadGPSReading = 0;
         exit;
     endif;
 
     if gps(accuracy) > desiredAccuracyM then
-        errmsg("GPS accuracy %d m exceeds target %d m — consider a retry outdoors.",
+        errmsg(1004,
                gps(accuracy), desiredAccuracyM);
         { still return success — let the caller/enumerator decide to keep or retry }
     endif;
@@ -290,7 +290,7 @@ postproc
     enddo;
   endif;
   if geoFound = 0 then
-    errmsg("Region code %02d not found in PSGC. Check the Questionnaire Number.", REGION_CODE);
+    errmsg(1005, REGION_CODE);
     reenter;
   endif;
 
@@ -325,7 +325,7 @@ postproc
     enddo;
   endif;
   if geoFound = 0 then
-    errmsg("Geo prefix %07d not found in PSGC (no province or city/municipality matches). Check the Questionnaire Number.", int(QUESTIONNAIRE_NUMBER / 100000));
+    errmsg(1006, int(QUESTIONNAIRE_NUMBER / 100000));
     reenter;
   endif;
 
@@ -390,7 +390,7 @@ onfocus
     if TakeVerificationPhoto(fn) then
       VERIFICATION_PHOTO_FILENAME = fn;
     else
-      errmsg("Verification photo not captured (camera cancelled or unavailable). Re-enter this field to retry, or note the reason in your field report.");
+      errmsg(1007);
     endif;
   endif;
   CAPTURE_VERIFICATION_PHOTO = notappl;
@@ -420,7 +420,7 @@ postproc
 PROC DATE_OF_FINAL_VISIT_TO_THE_FACILITY
 postproc
   if DATE_OF_FINAL_VISIT_TO_THE_FACILITY <> notappl and DATE_FIRST_VISITED_THE_FACILITY <> notappl and DATE_OF_FINAL_VISIT_TO_THE_FACILITY < DATE_FIRST_VISITED_THE_FACILITY then
-    errmsg("Final-visit date cannot be earlier than the first-visit date.");
+    errmsg(1008);
     reenter;
   endif;
 
@@ -449,7 +449,7 @@ preproc
   endif;
 postproc
   if pos("03", Q99_EXPAND_NEXT) > 0 and length(strip(Q100_ADDL_FEATURES)) = 0 then
-    errmsg("'Additional features' was ticked in Q99 - please specify what you would add.");
+    errmsg(1009);
     reenter;
   endif;
 
@@ -465,7 +465,7 @@ postproc
 PROC Q104_BUCAS_SERVICES
 postproc
   if length(strip(Q104_BUCAS_SERVICES)) = 0 then
-    errmsg("Select at least one option for Q104 before continuing.");
+    errmsg(1010);
     reenter;
   endif;
 
@@ -477,14 +477,14 @@ preproc
   endif;
 postproc
   if pos("99", Q104_BUCAS_SERVICES) > 0 and length(strip(Q104_BUCAS_SERVICES_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q104 - please specify.");
+    errmsg(1011);
     reenter;
   endif;
 
 PROC Q105_BUCAS_FACTORS
 postproc
   if length(strip(Q105_BUCAS_FACTORS)) = 0 then
-    errmsg("Select at least one option for Q105 before continuing.");
+    errmsg(1012);
     reenter;
   endif;
 
@@ -496,7 +496,7 @@ preproc
   endif;
 postproc
   if pos("99", Q105_BUCAS_FACTORS) > 0 and length(strip(Q105_BUCAS_FACTORS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q105 - please specify.");
+    errmsg(1013);
     reenter;
   endif;
 
@@ -511,7 +511,7 @@ postproc
 PROC Q111_GAMOT_FACTORS
 postproc
   if length(strip(Q111_GAMOT_FACTORS)) = 0 then
-    errmsg("Select at least one option for Q111 before continuing.");
+    errmsg(1014);
     reenter;
   endif;
 
@@ -523,7 +523,7 @@ preproc
   endif;
 postproc
   if pos("99", Q111_GAMOT_FACTORS) > 0 and length(strip(Q111_GAMOT_FACTORS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q111 - please specify.");
+    errmsg(1015);
     reenter;
   endif;
 
@@ -542,7 +542,7 @@ postproc
 PROC Q117_ADDR_STOCKOUT_HOW
 postproc
   if length(strip(Q117_ADDR_STOCKOUT_HOW)) = 0 then
-    errmsg("Select at least one option for Q117 before continuing.");
+    errmsg(1016);
     reenter;
   endif;
 
@@ -554,7 +554,7 @@ preproc
   endif;
 postproc
   if pos("99", Q117_ADDR_STOCKOUT_HOW) > 0 and length(strip(Q117_ADDR_STOCKOUT_HOW_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q117 - please specify.");
+    errmsg(1017);
     reenter;
   endif;
 
@@ -568,21 +568,21 @@ preproc
   endif;
 postproc
   if length(strip(Q121_DOH_LIC_DIFFICULT)) = 0 then
-    errmsg("Select at least one option for Q121 before continuing.");
+    errmsg(1018);
     reenter;
   endif;
   if pos("90", Q121_DOH_LIC_DIFFICULT) > 0 and length(strip(Q121_DOH_LIC_DIFFICULT)) > 2 then
-    errmsg("Q121: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.");
+    errmsg(1019);
   endif;
 
 PROC Q137_NBB_BARRIERS
 postproc
   if length(strip(Q137_NBB_BARRIERS)) = 0 then
-    errmsg("Select at least one option for Q137 before continuing.");
+    errmsg(1020);
     reenter;
   endif;
   if pos("90", Q137_NBB_BARRIERS) > 0 and length(strip(Q137_NBB_BARRIERS)) > 2 then
-    errmsg("Q137: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.");
+    errmsg(1021);
   endif;
 
 PROC Q137_NBB_BARRIERS_OTHER_TXT
@@ -593,18 +593,18 @@ preproc
   endif;
 postproc
   if pos("99", Q137_NBB_BARRIERS) > 0 and length(strip(Q137_NBB_BARRIERS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q137 - please specify.");
+    errmsg(1022);
     reenter;
   endif;
 
 PROC Q140_ZBB_BARRIERS
 postproc
   if length(strip(Q140_ZBB_BARRIERS)) = 0 then
-    errmsg("Select at least one option for Q140 before continuing.");
+    errmsg(1023);
     reenter;
   endif;
   if pos("90", Q140_ZBB_BARRIERS) > 0 and length(strip(Q140_ZBB_BARRIERS)) > 2 then
-    errmsg("Q140: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.");
+    errmsg(1024);
   endif;
 
 PROC Q140_ZBB_BARRIERS_OTHER_TXT
@@ -615,14 +615,14 @@ preproc
   endif;
 postproc
   if pos("99", Q140_ZBB_BARRIERS) > 0 and length(strip(Q140_ZBB_BARRIERS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q140 - please specify.");
+    errmsg(1025);
     reenter;
   endif;
 
 PROC Q144_DIFFICULT_REASON
 postproc
   if length(strip(Q144_DIFFICULT_REASON)) = 0 then
-    errmsg("Select at least one option for Q144 before continuing.");
+    errmsg(1026);
     reenter;
   endif;
 
@@ -634,7 +634,7 @@ preproc
   endif;
 postproc
   if pos("99", Q144_DIFFICULT_REASON) > 0 and length(strip(Q144_DIFFICULT_REASON_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q144 - please specify.");
+    errmsg(1027);
     reenter;
   endif;
 
@@ -647,7 +647,7 @@ postproc
 PROC Q146_MALASAKIT_WHY
 postproc
   if length(strip(Q146_MALASAKIT_WHY)) = 0 then
-    errmsg("Select at least one option for Q146 before continuing.");
+    errmsg(1028);
     reenter;
   endif;
 
@@ -659,7 +659,7 @@ preproc
   endif;
 postproc
   if pos("99", Q146_MALASAKIT_WHY) > 0 and length(strip(Q146_MALASAKIT_WHY_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q146 - please specify.");
+    errmsg(1029);
     reenter;
   endif;
 
@@ -670,7 +670,7 @@ preproc
   endif;
 postproc
   if length(strip(Q147_NO_MALASAKIT_WHY)) = 0 then
-    errmsg("Select at least one option for Q147 before continuing.");
+    errmsg(1030);
     reenter;
   endif;
 
@@ -682,14 +682,14 @@ preproc
   endif;
 postproc
   if pos("99", Q147_NO_MALASAKIT_WHY) > 0 and length(strip(Q147_NO_MALASAKIT_WHY_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q147 - please specify.");
+    errmsg(1031);
     reenter;
   endif;
 
 PROC Q149_LGU_SUPPORT_FORMS
 postproc
   if length(strip(Q149_LGU_SUPPORT_FORMS)) = 0 then
-    errmsg("Select at least one option for Q149 before continuing.");
+    errmsg(1032);
     reenter;
   endif;
 
@@ -701,18 +701,18 @@ preproc
   endif;
 postproc
   if pos("99", Q149_LGU_SUPPORT_FORMS) > 0 and length(strip(Q149_LGU_SUPPORT_FORMS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q149 - please specify.");
+    errmsg(1033);
     reenter;
   endif;
 
 PROC Q151_LGU_NOT_SAT_WHY
 postproc
   if length(strip(Q151_LGU_NOT_SAT_WHY)) = 0 then
-    errmsg("Select at least one option for Q151 before continuing.");
+    errmsg(1034);
     reenter;
   endif;
   if pos("90", Q151_LGU_NOT_SAT_WHY) > 0 and length(strip(Q151_LGU_NOT_SAT_WHY)) > 2 then
-    errmsg("Q151: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.");
+    errmsg(1035);
   endif;
 
 PROC Q151_LGU_NOT_SAT_WHY_OTHER_TXT
@@ -723,7 +723,7 @@ preproc
   endif;
 postproc
   if pos("99", Q151_LGU_NOT_SAT_WHY) > 0 and length(strip(Q151_LGU_NOT_SAT_WHY_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q151 - please specify.");
+    errmsg(1036);
     reenter;
   endif;
 
@@ -740,7 +740,7 @@ postproc
 PROC Q155_SEND_REFERRAL_HOW
 postproc
   if length(strip(Q155_SEND_REFERRAL_HOW)) = 0 then
-    errmsg("Select at least one option for Q155 before continuing.");
+    errmsg(1037);
     reenter;
   endif;
 
@@ -752,14 +752,14 @@ preproc
   endif;
 postproc
   if pos("99", Q155_SEND_REFERRAL_HOW) > 0 and length(strip(Q155_SEND_REFERRAL_HOW_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q155 - please specify.");
+    errmsg(1038);
     reenter;
   endif;
 
 PROC Q156_REFERRAL_FORM_TYPE
 postproc
   if length(strip(Q156_REFERRAL_FORM_TYPE)) = 0 then
-    errmsg("Select at least one option for Q156 before continuing.");
+    errmsg(1039);
     reenter;
   endif;
 
@@ -771,14 +771,14 @@ preproc
   endif;
 postproc
   if pos("99", Q156_REFERRAL_FORM_TYPE) > 0 and length(strip(Q156_REFERRAL_FORM_TYPE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q156 - please specify.");
+    errmsg(1040);
     reenter;
   endif;
 
 PROC Q159_RECEIVE_REFERRAL_HOW
 postproc
   if length(strip(Q159_RECEIVE_REFERRAL_HOW)) = 0 then
-    errmsg("Select at least one option for Q159 before continuing.");
+    errmsg(1041);
     reenter;
   endif;
 
@@ -790,24 +790,24 @@ preproc
   endif;
 postproc
   if pos("99", Q159_RECEIVE_REFERRAL_HOW) > 0 and length(strip(Q159_RECEIVE_REFERRAL_HOW_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q159 - please specify.");
+    errmsg(1042);
     reenter;
   endif;
 
 PROC Q160_EXTERNAL_SERVICES_GO
 postproc
   if length(strip(Q160_EXTERNAL_SERVICES_GO)) = 0 then
-    errmsg("Select at least one option for Q160 before continuing.");
+    errmsg(1043);
     reenter;
   endif;
   if pos("90", Q160_EXTERNAL_SERVICES_GO) > 0 and length(strip(Q160_EXTERNAL_SERVICES_GO)) > 2 then
-    errmsg("Q160: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.");
+    errmsg(1044);
   endif;
 
 PROC Q162_NOT_SATISFIED_WHY
 postproc
   if length(strip(Q162_NOT_SATISFIED_WHY)) = 0 then
-    errmsg("Select at least one option for Q162 before continuing.");
+    errmsg(1045);
     reenter;
   endif;
 
@@ -819,18 +819,18 @@ preproc
   endif;
 postproc
   if pos("99", Q162_NOT_SATISFIED_WHY) > 0 and length(strip(Q162_NOT_SATISFIED_WHY_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q162 - please specify.");
+    errmsg(1046);
     reenter;
   endif;
 
 PROC Q163_HR_CHALL
 postproc
   if length(strip(Q163_HR_CHALL)) = 0 then
-    errmsg("Select at least one option for Q163 before continuing.");
+    errmsg(1047);
     reenter;
   endif;
   if pos("90", Q163_HR_CHALL) > 0 and length(strip(Q163_HR_CHALL)) > 2 then
-    errmsg("Q163: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.");
+    errmsg(1048);
   endif;
 
 PROC Q163_HR_CHALL_OTHER_TXT
@@ -841,14 +841,14 @@ preproc
   endif;
 postproc
   if pos("99", Q163_HR_CHALL) > 0 and length(strip(Q163_HR_CHALL_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q163 - please specify.");
+    errmsg(1049);
     reenter;
   endif;
 
 PROC Q165_PD_DOCTORS
 postproc
   if length(strip(Q165_PD_DOCTORS)) = 0 then
-    errmsg("Select at least one option for Q165 before continuing.");
+    errmsg(1050);
     reenter;
   endif;
 
@@ -860,14 +860,14 @@ preproc
   endif;
 postproc
   if pos("99", Q165_PD_DOCTORS) > 0 and length(strip(Q165_PD_DOCTORS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q165 - please specify.");
+    errmsg(1051);
     reenter;
   endif;
 
 PROC Q166_PD_NURSES
 postproc
   if length(strip(Q166_PD_NURSES)) = 0 then
-    errmsg("Select at least one option for Q166 before continuing.");
+    errmsg(1052);
     reenter;
   endif;
 
@@ -879,7 +879,7 @@ preproc
   endif;
 postproc
   if pos("99", Q166_PD_NURSES) > 0 and length(strip(Q166_PD_NURSES_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q166 - please specify.");
+    errmsg(1053);
     reenter;
   endif;
 
@@ -892,7 +892,7 @@ postproc
 PROC Q34_DATA_REPORTS_USED
 postproc
   if length(strip(Q34_DATA_REPORTS_USED)) = 0 then
-    errmsg("Select at least one option for Q34 before continuing.");
+    errmsg(1054);
     reenter;
   endif;
 
@@ -904,29 +904,29 @@ preproc
   endif;
 postproc
   if pos("99", Q34_DATA_REPORTS_USED) > 0 and length(strip(Q34_DATA_REPORTS_USED_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q34 - please specify.");
+    errmsg(1055);
     reenter;
   endif;
 
 PROC Q3_AGE
 postproc
   if Q3_AGE <> notappl and Q3_AGE < 18 then
-    errmsg("Age (%d) is below 18 - a facility head must be an adult. Please re-enter.", Q3_AGE);
+    errmsg(1056, Q3_AGE);
     reenter;
   endif;
   if Q3_AGE <> notappl and Q3_AGE > 80 then
-    errmsg("Age (%d) is unusually high for a facility head - please confirm.", Q3_AGE);
+    errmsg(1057, Q3_AGE);
   endif;
 
 PROC Q49_QUALITY_CHALL
 postproc
   if length(strip(Q49_QUALITY_CHALL)) = 0 then
-    errmsg("Select at least one option for Q49 before continuing.");
+    errmsg(1058);
     reenter;
   endif;
   { exclusivity (soft warn): 'I don't know' (09) should stand alone }
   if pos("09", Q49_QUALITY_CHALL) > 0 and length(strip(Q49_QUALITY_CHALL)) > 2 then
-    errmsg("Q49: 'I don't know' is usually the only choice — please review the options ticked.");
+    errmsg(1059);
   endif;
 
 PROC Q49_QUALITY_CHALL_OTHER_TXT
@@ -937,19 +937,19 @@ preproc
   endif;
 postproc
   if pos("99", Q49_QUALITY_CHALL) > 0 and length(strip(Q49_QUALITY_CHALL_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q49 — please specify.");
+    errmsg(1060);
     reenter;
   endif;
 
 PROC Q50_ACCESS_CHALL
 postproc
   if length(strip(Q50_ACCESS_CHALL)) = 0 then
-    errmsg("Select at least one option for Q50 before continuing.");
+    errmsg(1061);
     reenter;
   endif;
   { exclusivity (soft warn): 'I don't know' (09) should stand alone }
   if pos("09", Q50_ACCESS_CHALL) > 0 and length(strip(Q50_ACCESS_CHALL)) > 2 then
-    errmsg("Q50: 'I don't know' is usually the only choice — please review the options ticked.");
+    errmsg(1062);
   endif;
 
 PROC Q50_ACCESS_CHALL_OTHER_TXT
@@ -960,41 +960,41 @@ preproc
   endif;
 postproc
   if pos("99", Q50_ACCESS_CHALL) > 0 and length(strip(Q50_ACCESS_CHALL_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q50 — please specify.");
+    errmsg(1063);
     reenter;
   endif;
 
 PROC Q52_YK_SINCE_MONTH
 postproc
   if Q52_YK_SINCE_MONTH < 1 or Q52_YK_SINCE_MONTH > 12 then
-    errmsg("Month must be 1-12.");
+    errmsg(1064);
     reenter;
   endif;
   if Q52_YK_SINCE_YEAR = currentYear and Q52_YK_SINCE_MONTH > currentMonth then
-    errmsg("Accreditation date is in the future. Reenter.");
+    errmsg(1065);
     reenter;
   endif;
 
 PROC Q52_YK_SINCE_YEAR
 postproc
   if Q52_YK_SINCE_YEAR < 2019 or Q52_YK_SINCE_YEAR > currentYear then
-    errmsg("YAKAP accreditation year must be between 2019 and %d.", currentYear);
+    errmsg(1066, currentYear);
     reenter;
   endif;
 
 PROC Q53_YK_PACKAGE
 postproc
   if length(strip(Q53_YK_PACKAGE)) = 0 then
-    errmsg("Select at least one option for Q53 before continuing.");
+    errmsg(1067);
     reenter;
   endif;
   { exclusivity (soft warn): 'I don't know' (09) should stand alone }
   if pos("09", Q53_YK_PACKAGE) > 0 and length(strip(Q53_YK_PACKAGE)) > 2 then
-    errmsg("Q53: 'I don't know' is usually the only choice — please review the options ticked.");
+    errmsg(1068);
   endif;
   { #526 exclusivity (soft warn): 'All of the above' (08) implies every item — it should stand alone }
   if pos("08", Q53_YK_PACKAGE) > 0 and length(strip(Q53_YK_PACKAGE)) > 2 then
-    errmsg("Q53: 'All of the above' was ticked with other option(s) — it should be the only choice. Please review.");
+    errmsg(1069);
   endif;
 
 PROC Q53_YK_PACKAGE_OTHER_TXT
@@ -1005,14 +1005,14 @@ preproc
   endif;
 postproc
   if pos("99", Q53_YK_PACKAGE) > 0 and length(strip(Q53_YK_PACKAGE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q53 — please specify.");
+    errmsg(1070);
     reenter;
   endif;
 
 PROC Q57_CAPITATION_AMT
 postproc
   if Q57_CAPITATION_AMT > 5000 then
-    errmsg("Capitation %d PHP is implausibly high. Reenter or confirm.", Q57_CAPITATION_AMT);
+    errmsg(1071, Q57_CAPITATION_AMT);
     reenter;
   endif;
   if Q57_CAPITATION_AMT > 1700 then
@@ -1024,12 +1024,12 @@ postproc
 PROC Q58_PERF_INDICATORS
 postproc
   if length(strip(Q58_PERF_INDICATORS)) = 0 then
-    errmsg("Select at least one option for Q58 before continuing.");
+    errmsg(1072);
     reenter;
   endif;
   { exclusivity (soft warn): 'I don't know' (07) should stand alone }
   if pos("07", Q58_PERF_INDICATORS) > 0 and length(strip(Q58_PERF_INDICATORS)) > 2 then
-    errmsg("Q58: 'I don't know' is usually the only choice — please review the options ticked.");
+    errmsg(1073);
   endif;
 
 PROC Q58_PERF_INDICATORS_OTHER_TXT
@@ -1040,19 +1040,19 @@ preproc
   endif;
 postproc
   if pos("99", Q58_PERF_INDICATORS) > 0 and length(strip(Q58_PERF_INDICATORS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q58 — please specify.");
+    errmsg(1074);
     reenter;
   endif;
 
 PROC Q5_MONTHS_AT_FACILITY
 postproc
   if (Q5_YEARS_AT_FACILITY * 12 + Q5_MONTHS_AT_FACILITY) < 6 then
-    errmsg("Respondent must have >= 6 months in current position. End interview and code as Refused/Incomplete.");
+    errmsg(1075);
     ENUM_RESULT_FINAL_VISIT = 4;   { Refused/Incomplete }
     endlevel;
   endif;
   if Q5_YEARS_AT_FACILITY > (Q3_AGE - 20) then
-    errmsg("Years at facility (%d) exceeds working-age years available (%d). Reenter.",
+    errmsg(1076,
            Q5_YEARS_AT_FACILITY, Q3_AGE - 20);
     reenter;
   endif;
@@ -1066,7 +1066,7 @@ postproc
 PROC Q64_APPLY_REASON
 postproc
   if length(strip(Q64_APPLY_REASON)) = 0 then
-    errmsg("Select at least one option for Q64 before continuing.");
+    errmsg(1077);
     reenter;
   endif;
 
@@ -1078,18 +1078,18 @@ preproc
   endif;
 postproc
   if pos("99", Q64_APPLY_REASON) > 0 and length(strip(Q64_APPLY_REASON_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q64 — please specify.");
+    errmsg(1078);
     reenter;
   endif;
 
 PROC Q65_ACCRED_DIFFICULT
 postproc
   if length(strip(Q65_ACCRED_DIFFICULT)) = 0 then
-    errmsg("Select at least one option for Q65 before continuing.");
+    errmsg(1079);
     reenter;
   endif;
   if pos("90", Q65_ACCRED_DIFFICULT) > 0 and length(strip(Q65_ACCRED_DIFFICULT)) > 2 then
-    errmsg("Q65: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.");
+    errmsg(1080);
   endif;
 
 PROC Q6_MONTHS_HEALTH
@@ -1097,12 +1097,12 @@ postproc
   numeric tenureMos = Q5_YEARS_AT_FACILITY * 12 + Q5_MONTHS_AT_FACILITY;
   numeric healthMos = Q6_YEARS_HEALTH * 12 + Q6_MONTHS_HEALTH;
   if healthMos < tenureMos then
-    errmsg("Years in any health-related role (%d mos) cannot be less than years at this facility (%d mos).",
+    errmsg(1081,
            healthMos, tenureMos);
     reenter;
   endif;
   if Q6_YEARS_HEALTH > (Q3_AGE - 20) then
-    errmsg("Years in health (%d) exceeds working-age years available (%d).",
+    errmsg(1082,
            Q6_YEARS_HEALTH, Q3_AGE - 20);
     reenter;
   endif;
@@ -1110,11 +1110,11 @@ postproc
 PROC Q75_ENROLL_RESPONSIBILITY
 postproc
   if length(strip(Q75_ENROLL_RESPONSIBILITY)) = 0 then
-    errmsg("Select at least one option for Q75 before continuing.");
+    errmsg(1083);
     reenter;
   endif;
   if pos("90", Q75_ENROLL_RESPONSIBILITY) > 0 and length(strip(Q75_ENROLL_RESPONSIBILITY)) > 2 then
-    errmsg("Q75: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.");
+    errmsg(1084);
   endif;
 
 PROC Q75_ENROLL_RESPONSIBILITY_OTHER_TXT
@@ -1125,18 +1125,18 @@ preproc
   endif;
 postproc
   if pos("99", Q75_ENROLL_RESPONSIBILITY) > 0 and length(strip(Q75_ENROLL_RESPONSIBILITY_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q75 - please specify.");
+    errmsg(1085);
     reenter;
   endif;
 
 PROC Q76_ENROLL_INITIATIVES
 postproc
   if length(strip(Q76_ENROLL_INITIATIVES)) = 0 then
-    errmsg("Select at least one option for Q76 before continuing.");
+    errmsg(1086);
     reenter;
   endif;
   if pos("90", Q76_ENROLL_INITIATIVES) > 0 and length(strip(Q76_ENROLL_INITIATIVES)) > 2 then
-    errmsg("Q76: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.");
+    errmsg(1087);
   endif;
 
 PROC Q76_ENROLL_INITIATIVES_OTHER_TXT
@@ -1147,14 +1147,14 @@ preproc
   endif;
 postproc
   if pos("99", Q76_ENROLL_INITIATIVES) > 0 and length(strip(Q76_ENROLL_INITIATIVES_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q76 - please specify.");
+    errmsg(1088);
     reenter;
   endif;
 
 PROC Q78_ENROLL_CHALL_LIST
 postproc
   if length(strip(Q78_ENROLL_CHALL_LIST)) = 0 then
-    errmsg("Select at least one option for Q78 before continuing.");
+    errmsg(1089);
     reenter;
   endif;
 
@@ -1166,7 +1166,7 @@ preproc
   endif;
 postproc
   if pos("99", Q78_ENROLL_CHALL_LIST) > 0 and length(strip(Q78_ENROLL_CHALL_LIST_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q78 - please specify.");
+    errmsg(1090);
     reenter;
   endif;
 
@@ -1177,7 +1177,7 @@ preproc
   endif;
 postproc
   if length(strip(Q79_NOT_ACCRED_REASON)) = 0 then
-    errmsg("Select at least one option for Q79 before continuing.");
+    errmsg(1091);
     reenter;
   endif;
 
@@ -1189,7 +1189,7 @@ preproc
   endif;
 postproc
   if pos("99", Q79_NOT_ACCRED_REASON) > 0 and length(strip(Q79_NOT_ACCRED_REASON_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q79 - please specify.");
+    errmsg(1092);
     reenter;
   endif;
 
@@ -1210,13 +1210,13 @@ preproc
 PROC Q86_ELIGIBLE_PATIENTS
 postproc
   if Q86_ELIGIBLE_PATIENTS > 500000 then
-    errmsg("Eligible patients (%d) is unusually high for one provider's catchment — please confirm.", Q86_ELIGIBLE_PATIENTS);
+    errmsg(1093, Q86_ELIGIBLE_PATIENTS);
   endif;
 
 PROC Q87_REGISTERED_PATIENTS
 postproc
   if Q87_REGISTERED_PATIENTS > Q86_ELIGIBLE_PATIENTS then
-    errmsg("Registered patients (%d) cannot exceed eligible patients (%d).",
+    errmsg(1094,
            Q87_REGISTERED_PATIENTS, Q86_ELIGIBLE_PATIENTS);
     reenter;
   endif;
@@ -1250,7 +1250,7 @@ postproc
 PROC Q94_CHARGE_ADDL_CAP_REASONS
 postproc
   if length(strip(Q94_CHARGE_ADDL_CAP_REASONS)) = 0 then
-    errmsg("Select at least one option for Q94 before continuing.");
+    errmsg(1095);
     reenter;
   endif;
 
@@ -1262,7 +1262,7 @@ preproc
   endif;
 postproc
   if pos("99", Q94_CHARGE_ADDL_CAP_REASONS) > 0 and length(strip(Q94_CHARGE_ADDL_CAP_REASONS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q94 - please specify.");
+    errmsg(1096);
     reenter;
   endif;
 
@@ -1275,11 +1275,11 @@ postproc
 PROC Q96_NOT_RECEIVED_REASONS
 postproc
   if length(strip(Q96_NOT_RECEIVED_REASONS)) = 0 then
-    errmsg("Select at least one option for Q96 before continuing.");
+    errmsg(1097);
     reenter;
   endif;
   if pos("90", Q96_NOT_RECEIVED_REASONS) > 0 and length(strip(Q96_NOT_RECEIVED_REASONS)) > 2 then
-    errmsg("Q96: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.");
+    errmsg(1098);
   endif;
 
 PROC Q96_NOT_RECEIVED_REASONS_OTHER_TXT
@@ -1290,18 +1290,18 @@ preproc
   endif;
 postproc
   if pos("99", Q96_NOT_RECEIVED_REASONS) > 0 and length(strip(Q96_NOT_RECEIVED_REASONS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q96 - please specify.");
+    errmsg(1099);
     reenter;
   endif;
 
 PROC Q98_PAYMENT_CHALL_LIST
 postproc
   if length(strip(Q98_PAYMENT_CHALL_LIST)) = 0 then
-    errmsg("Select at least one option for Q98 before continuing.");
+    errmsg(1100);
     reenter;
   endif;
   if pos("90", Q98_PAYMENT_CHALL_LIST) > 0 and length(strip(Q98_PAYMENT_CHALL_LIST)) > 2 then
-    errmsg("Q98: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.");
+    errmsg(1101);
   endif;
 
 PROC Q98_PAYMENT_CHALL_LIST_OTHER_TXT
@@ -1312,18 +1312,18 @@ preproc
   endif;
 postproc
   if pos("99", Q98_PAYMENT_CHALL_LIST) > 0 and length(strip(Q98_PAYMENT_CHALL_LIST_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q98 - please specify.");
+    errmsg(1102);
     reenter;
   endif;
 
 PROC Q99_EXPAND_NEXT
 postproc
   if length(strip(Q99_EXPAND_NEXT)) = 0 then
-    errmsg("Select at least one option for Q99 before continuing.");
+    errmsg(1103);
     reenter;
   endif;
   if pos("90", Q99_EXPAND_NEXT) > 0 and length(strip(Q99_EXPAND_NEXT)) > 2 then
-    errmsg("Q99: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.");
+    errmsg(1104);
   endif;
 
 PROC Q99_EXPAND_NEXT_OTHER_TXT
@@ -1334,7 +1334,7 @@ preproc
   endif;
 postproc
   if pos("99", Q99_EXPAND_NEXT) > 0 and length(strip(Q99_EXPAND_NEXT_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q99 - please specify.");
+    errmsg(1105);
     reenter;
   endif;
 
@@ -1534,7 +1534,7 @@ preproc
   endif;
 postproc
   if length(strip(Q122_WHY_DIFF_PT_RIGHTS)) = 0 then
-    errmsg("Select at least one option for Q122 before continuing.");
+    errmsg(1106);
     reenter;
   endif;
 
@@ -1546,7 +1546,7 @@ preproc
   endif;
 postproc
   if pos("99", Q122_WHY_DIFF_PT_RIGHTS) > 0 and length(strip(Q122_WHY_DIFF_PT_RIGHTS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q122 - please specify.");
+    errmsg(1107);
     reenter;
   endif;
 
@@ -1564,7 +1564,7 @@ preproc
   endif;
 postproc
   if length(strip(Q123_WHY_DIFF_PT_CARE)) = 0 then
-    errmsg("Select at least one option for Q123 before continuing.");
+    errmsg(1108);
     reenter;
   endif;
 
@@ -1576,7 +1576,7 @@ preproc
   endif;
 postproc
   if pos("99", Q123_WHY_DIFF_PT_CARE) > 0 and length(strip(Q123_WHY_DIFF_PT_CARE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q123 - please specify.");
+    errmsg(1109);
     reenter;
   endif;
 
@@ -1594,7 +1594,7 @@ preproc
   endif;
 postproc
   if length(strip(Q124_WHY_DIFF_LEADERSHIP)) = 0 then
-    errmsg("Select at least one option for Q124 before continuing.");
+    errmsg(1110);
     reenter;
   endif;
 
@@ -1606,7 +1606,7 @@ preproc
   endif;
 postproc
   if pos("99", Q124_WHY_DIFF_LEADERSHIP) > 0 and length(strip(Q124_WHY_DIFF_LEADERSHIP_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q124 - please specify.");
+    errmsg(1111);
     reenter;
   endif;
 
@@ -1624,7 +1624,7 @@ preproc
   endif;
 postproc
   if length(strip(Q125_WHY_DIFF_HRM)) = 0 then
-    errmsg("Select at least one option for Q125 before continuing.");
+    errmsg(1112);
     reenter;
   endif;
 
@@ -1636,7 +1636,7 @@ preproc
   endif;
 postproc
   if pos("99", Q125_WHY_DIFF_HRM) > 0 and length(strip(Q125_WHY_DIFF_HRM_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q125 - please specify.");
+    errmsg(1113);
     reenter;
   endif;
 
@@ -1654,7 +1654,7 @@ preproc
   endif;
 postproc
   if length(strip(Q126_WHY_DIFF_INFO_MGMT)) = 0 then
-    errmsg("Select at least one option for Q126 before continuing.");
+    errmsg(1114);
     reenter;
   endif;
 
@@ -1666,7 +1666,7 @@ preproc
   endif;
 postproc
   if pos("99", Q126_WHY_DIFF_INFO_MGMT) > 0 and length(strip(Q126_WHY_DIFF_INFO_MGMT_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q126 - please specify.");
+    errmsg(1115);
     reenter;
   endif;
 
@@ -1684,7 +1684,7 @@ preproc
   endif;
 postproc
   if length(strip(Q127_WHY_DIFF_SAFE)) = 0 then
-    errmsg("Select at least one option for Q127 before continuing.");
+    errmsg(1116);
     reenter;
   endif;
 
@@ -1696,7 +1696,7 @@ preproc
   endif;
 postproc
   if pos("99", Q127_WHY_DIFF_SAFE) > 0 and length(strip(Q127_WHY_DIFF_SAFE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q127 - please specify.");
+    errmsg(1117);
     reenter;
   endif;
 
@@ -1714,7 +1714,7 @@ preproc
   endif;
 postproc
   if length(strip(Q128_WHY_DIFF_PERF)) = 0 then
-    errmsg("Select at least one option for Q128 before continuing.");
+    errmsg(1118);
     reenter;
   endif;
 
@@ -1726,7 +1726,7 @@ preproc
   endif;
 postproc
   if pos("99", Q128_WHY_DIFF_PERF) > 0 and length(strip(Q128_WHY_DIFF_PERF_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q128 - please specify.");
+    errmsg(1119);
     reenter;
   endif;
 
@@ -1744,7 +1744,7 @@ preproc
   endif;
 postproc
   if length(strip(Q129_WHY_DIFF_PHYS_PLANT)) = 0 then
-    errmsg("Select at least one option for Q129 before continuing.");
+    errmsg(1120);
     reenter;
   endif;
 
@@ -1756,7 +1756,7 @@ preproc
   endif;
 postproc
   if pos("99", Q129_WHY_DIFF_PHYS_PLANT) > 0 and length(strip(Q129_WHY_DIFF_PHYS_PLANT_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q129 - please specify.");
+    errmsg(1121);
     reenter;
   endif;
 
@@ -1774,7 +1774,7 @@ preproc
   endif;
 postproc
   if length(strip(Q130_WHY_DIFF_PRICE_INFO)) = 0 then
-    errmsg("Select at least one option for Q130 before continuing.");
+    errmsg(1122);
     reenter;
   endif;
 
@@ -1786,7 +1786,7 @@ preproc
   endif;
 postproc
   if pos("99", Q130_WHY_DIFF_PRICE_INFO) > 0 and length(strip(Q130_WHY_DIFF_PRICE_INFO_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q130 - please specify.");
+    errmsg(1123);
     reenter;
   endif;
 
@@ -1804,7 +1804,7 @@ preproc
   endif;
 postproc
   if length(strip(Q131_WHY_DIFF_EQUIPMENT)) = 0 then
-    errmsg("Select at least one option for Q131 before continuing.");
+    errmsg(1124);
     reenter;
   endif;
 
@@ -1816,7 +1816,7 @@ preproc
   endif;
 postproc
   if pos("99", Q131_WHY_DIFF_EQUIPMENT) > 0 and length(strip(Q131_WHY_DIFF_EQUIPMENT_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q131 - please specify.");
+    errmsg(1125);
     reenter;
   endif;
 
@@ -1834,7 +1834,7 @@ preproc
   endif;
 postproc
   if length(strip(Q132_WHY_DIFF_NAT_LAWS)) = 0 then
-    errmsg("Select at least one option for Q132 before continuing.");
+    errmsg(1126);
     reenter;
   endif;
 
@@ -1846,7 +1846,7 @@ preproc
   endif;
 postproc
   if pos("99", Q132_WHY_DIFF_NAT_LAWS) > 0 and length(strip(Q132_WHY_DIFF_NAT_LAWS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q132 - please specify.");
+    errmsg(1127);
     reenter;
   endif;
 
@@ -1864,7 +1864,7 @@ preproc
   endif;
 postproc
   if length(strip(Q133_WHY_DIFF_EMERG_CART)) = 0 then
-    errmsg("Select at least one option for Q133 before continuing.");
+    errmsg(1128);
     reenter;
   endif;
 
@@ -1876,7 +1876,7 @@ preproc
   endif;
 postproc
   if pos("99", Q133_WHY_DIFF_EMERG_CART) > 0 and length(strip(Q133_WHY_DIFF_EMERG_CART_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q133 - please specify.");
+    errmsg(1129);
     reenter;
   endif;
 
@@ -1894,7 +1894,7 @@ preproc
   endif;
 postproc
   if length(strip(Q134_WHY_DIFF_ADDONS)) = 0 then
-    errmsg("Select at least one option for Q134 before continuing.");
+    errmsg(1130);
     reenter;
   endif;
 
@@ -1906,7 +1906,7 @@ preproc
   endif;
 postproc
   if pos("99", Q134_WHY_DIFF_ADDONS) > 0 and length(strip(Q134_WHY_DIFF_ADDONS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q134 - please specify.");
+    errmsg(1131);
     reenter;
   endif;
 
@@ -1924,7 +1924,7 @@ preproc
   endif;
 postproc
   if length(strip(Q66_WHY_DIFF_PREVENTIVE)) = 0 then
-    errmsg("Select at least one option for Q66 before continuing.");
+    errmsg(1132);
     reenter;
   endif;
 
@@ -1936,7 +1936,7 @@ preproc
   endif;
 postproc
   if pos("99", Q66_WHY_DIFF_PREVENTIVE) > 0 and length(strip(Q66_WHY_DIFF_PREVENTIVE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q66 - please specify.");
+    errmsg(1133);
     reenter;
   endif;
 
@@ -1954,7 +1954,7 @@ preproc
   endif;
 postproc
   if length(strip(Q67_WHY_DIFF_LAB)) = 0 then
-    errmsg("Select at least one option for Q67 before continuing.");
+    errmsg(1134);
     reenter;
   endif;
 
@@ -1966,7 +1966,7 @@ preproc
   endif;
 postproc
   if pos("99", Q67_WHY_DIFF_LAB) > 0 and length(strip(Q67_WHY_DIFF_LAB_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q67 - please specify.");
+    errmsg(1135);
     reenter;
   endif;
 
@@ -1984,7 +1984,7 @@ preproc
   endif;
 postproc
   if length(strip(Q68_WHY_DIFF_MEDS)) = 0 then
-    errmsg("Select at least one option for Q68 before continuing.");
+    errmsg(1136);
     reenter;
   endif;
 
@@ -1996,7 +1996,7 @@ preproc
   endif;
 postproc
   if pos("99", Q68_WHY_DIFF_MEDS) > 0 and length(strip(Q68_WHY_DIFF_MEDS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q68 - please specify.");
+    errmsg(1137);
     reenter;
   endif;
 
@@ -2014,7 +2014,7 @@ preproc
   endif;
 postproc
   if length(strip(Q69_WHY_DIFF_INFRA)) = 0 then
-    errmsg("Select at least one option for Q69 before continuing.");
+    errmsg(1138);
     reenter;
   endif;
 
@@ -2026,7 +2026,7 @@ preproc
   endif;
 postproc
   if pos("99", Q69_WHY_DIFF_INFRA) > 0 and length(strip(Q69_WHY_DIFF_INFRA_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q69 - please specify.");
+    errmsg(1139);
     reenter;
   endif;
 
@@ -2044,7 +2044,7 @@ preproc
   endif;
 postproc
   if length(strip(Q70_WHY_DIFF_EQUIPMENT)) = 0 then
-    errmsg("Select at least one option for Q70 before continuing.");
+    errmsg(1140);
     reenter;
   endif;
 
@@ -2056,7 +2056,7 @@ preproc
   endif;
 postproc
   if pos("99", Q70_WHY_DIFF_EQUIPMENT) > 0 and length(strip(Q70_WHY_DIFF_EQUIPMENT_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q70 - please specify.");
+    errmsg(1141);
     reenter;
   endif;
 
@@ -2074,7 +2074,7 @@ preproc
   endif;
 postproc
   if length(strip(Q71_WHY_DIFF_HR)) = 0 then
-    errmsg("Select at least one option for Q71 before continuing.");
+    errmsg(1142);
     reenter;
   endif;
 
@@ -2086,7 +2086,7 @@ preproc
   endif;
 postproc
   if pos("99", Q71_WHY_DIFF_HR) > 0 and length(strip(Q71_WHY_DIFF_HR_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q71 - please specify.");
+    errmsg(1143);
     reenter;
   endif;
 
@@ -2104,7 +2104,7 @@ preproc
   endif;
 postproc
   if length(strip(Q72_WHY_DIFF_HIS)) = 0 then
-    errmsg("Select at least one option for Q72 before continuing.");
+    errmsg(1144);
     reenter;
   endif;
 
@@ -2116,7 +2116,7 @@ preproc
   endif;
 postproc
   if pos("99", Q72_WHY_DIFF_HIS) > 0 and length(strip(Q72_WHY_DIFF_HIS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q72 - please specify.");
+    errmsg(1145);
     reenter;
   endif;
 
@@ -2134,7 +2134,7 @@ preproc
   endif;
 postproc
   if length(strip(Q73_WHY_DIFF_DOCS)) = 0 then
-    errmsg("Select at least one option for Q73 before continuing.");
+    errmsg(1146);
     reenter;
   endif;
 
@@ -2146,7 +2146,7 @@ preproc
   endif;
 postproc
   if pos("99", Q73_WHY_DIFF_DOCS) > 0 and length(strip(Q73_WHY_DIFF_DOCS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q73 - please specify.");
+    errmsg(1147);
     reenter;
   endif;
 
@@ -2164,7 +2164,7 @@ preproc
   endif;
 postproc
   if length(strip(Q74_WHY_DIFF_DOH_LIC)) = 0 then
-    errmsg("Select at least one option for Q74 before continuing.");
+    errmsg(1148);
     reenter;
   endif;
 
@@ -2176,7 +2176,7 @@ preproc
   endif;
 postproc
   if pos("99", Q74_WHY_DIFF_DOH_LIC) > 0 and length(strip(Q74_WHY_DIFF_DOH_LIC_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q74 - please specify.");
+    errmsg(1149);
     reenter;
   endif;
 
@@ -2189,7 +2189,7 @@ preproc
   endif;
 postproc
   if Q12_PCB_LICENSING = 7 and length(strip(Q12_PCB_LICENSING_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q12_PCB_LICENSING. Please specify.");
+    errmsg(1150);
     reenter;
   endif;
 
@@ -2201,7 +2201,7 @@ preproc
   endif;
 postproc
   if Q12_PCB_LICENSING = 4 and length(strip(Q12_PCB_LICENSING_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q12_PCB_LICENSING. Please specify.");
+    errmsg(1151);
     reenter;
   endif;
 
@@ -2213,7 +2213,7 @@ preproc
   endif;
 postproc
   if Q14_PHU_CREATED = 7 and length(strip(Q14_PHU_CREATED_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q14_PHU_CREATED. Please specify.");
+    errmsg(1152);
     reenter;
   endif;
   { #630/#632: skip the Yes-only follow-up ONLY for the real
@@ -2232,7 +2232,7 @@ preproc
   endif;
 postproc
   if Q14_PHU_CREATED = 4 and length(strip(Q14_PHU_CREATED_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q14_PHU_CREATED. Please specify.");
+    errmsg(1153);
     reenter;
   endif;
 
@@ -2244,7 +2244,7 @@ preproc
   endif;
 postproc
   if Q17_HPU_CREATED = 7 and length(strip(Q17_HPU_CREATED_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q17_HPU_CREATED. Please specify.");
+    errmsg(1154);
     reenter;
   endif;
   { #630/#632: skip the Yes-only follow-up ONLY for the real
@@ -2263,7 +2263,7 @@ preproc
   endif;
 postproc
   if Q17_HPU_CREATED = 4 and length(strip(Q17_HPU_CREATED_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q17_HPU_CREATED. Please specify.");
+    errmsg(1155);
     reenter;
   endif;
 
@@ -2275,7 +2275,7 @@ preproc
   endif;
 postproc
   if Q19_NEW_ROLES = 7 and length(strip(Q19_NEW_ROLES_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q19_NEW_ROLES. Please specify.");
+    errmsg(1156);
     reenter;
   endif;
   { #630/#632: skip the Yes-only follow-up ONLY for the real
@@ -2294,7 +2294,7 @@ preproc
   endif;
 postproc
   if Q19_NEW_ROLES = 4 and length(strip(Q19_NEW_ROLES_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q19_NEW_ROLES. Please specify.");
+    errmsg(1157);
     reenter;
   endif;
 
@@ -2306,7 +2306,7 @@ preproc
   endif;
 postproc
   if Q21_NEW_DEPTS = 7 and length(strip(Q21_NEW_DEPTS_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q21_NEW_DEPTS. Please specify.");
+    errmsg(1158);
     reenter;
   endif;
   { #630/#632: skip the Yes-only follow-up ONLY for the real
@@ -2325,7 +2325,7 @@ preproc
   endif;
 postproc
   if Q21_NEW_DEPTS = 4 and length(strip(Q21_NEW_DEPTS_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q21_NEW_DEPTS. Please specify.");
+    errmsg(1159);
     reenter;
   endif;
 
@@ -2337,7 +2337,7 @@ preproc
   endif;
 postproc
   if Q23_NEW_BUILDINGS = 7 and length(strip(Q23_NEW_BUILDINGS_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q23_NEW_BUILDINGS. Please specify.");
+    errmsg(1160);
     reenter;
   endif;
   { #630/#632: skip the Yes-only follow-up ONLY for the real
@@ -2356,7 +2356,7 @@ preproc
   endif;
 postproc
   if Q23_NEW_BUILDINGS = 4 and length(strip(Q23_NEW_BUILDINGS_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q23_NEW_BUILDINGS. Please specify.");
+    errmsg(1161);
     reenter;
   endif;
 
@@ -2368,7 +2368,7 @@ preproc
   endif;
 postproc
   if Q25_NEW_ROOMS = 7 and length(strip(Q25_NEW_ROOMS_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q25_NEW_ROOMS. Please specify.");
+    errmsg(1162);
     reenter;
   endif;
   { #630/#632: skip the Yes-only follow-up ONLY for the real
@@ -2387,7 +2387,7 @@ preproc
   endif;
 postproc
   if Q25_NEW_ROOMS = 4 and length(strip(Q25_NEW_ROOMS_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q25_NEW_ROOMS. Please specify.");
+    errmsg(1163);
     reenter;
   endif;
 
@@ -2399,7 +2399,7 @@ preproc
   endif;
 postproc
   if Q27_INC_EQUIPMENT = 7 and length(strip(Q27_INC_EQUIPMENT_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q27_INC_EQUIPMENT. Please specify.");
+    errmsg(1164);
     reenter;
   endif;
   { #630/#632: skip the Yes-only follow-up ONLY for the real
@@ -2418,7 +2418,7 @@ preproc
   endif;
 postproc
   if Q27_INC_EQUIPMENT = 4 and length(strip(Q27_INC_EQUIPMENT_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q27_INC_EQUIPMENT. Please specify.");
+    errmsg(1165);
     reenter;
   endif;
 
@@ -2430,7 +2430,7 @@ preproc
   endif;
 postproc
   if Q29_INC_SUPPLIES = 7 and length(strip(Q29_INC_SUPPLIES_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q29_INC_SUPPLIES. Please specify.");
+    errmsg(1166);
     reenter;
   endif;
   { #630/#632: skip the Yes-only follow-up ONLY for the real
@@ -2449,7 +2449,7 @@ preproc
   endif;
 postproc
   if Q29_INC_SUPPLIES = 4 and length(strip(Q29_INC_SUPPLIES_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q29_INC_SUPPLIES. Please specify.");
+    errmsg(1167);
     reenter;
   endif;
 
@@ -2461,7 +2461,7 @@ preproc
   endif;
 postproc
   if Q31_EMR_USE = 7 and length(strip(Q31_EMR_USE_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q31_EMR_USE. Please specify.");
+    errmsg(1168);
     reenter;
   endif;
   { #630/#632: skip the Yes-only follow-up ONLY for the real
@@ -2480,7 +2480,7 @@ preproc
   endif;
 postproc
   if Q31_EMR_USE = 4 and length(strip(Q31_EMR_USE_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q31_EMR_USE. Please specify.");
+    errmsg(1169);
     reenter;
   endif;
 
@@ -2492,7 +2492,7 @@ preproc
   endif;
 postproc
   if Q36_STAFFING_UHC = 7 and length(strip(Q36_STAFFING_UHC_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q36_STAFFING_UHC. Please specify.");
+    errmsg(1170);
     reenter;
   endif;
 
@@ -2504,7 +2504,7 @@ preproc
   endif;
 postproc
   if Q36_STAFFING_UHC = 4 and length(strip(Q36_STAFFING_UHC_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q36_STAFFING_UHC. Please specify.");
+    errmsg(1171);
     reenter;
   endif;
 
@@ -2516,7 +2516,7 @@ preproc
   endif;
 postproc
   if Q38_REFERRAL_UHC = 7 and length(strip(Q38_REFERRAL_UHC_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q38_REFERRAL_UHC. Please specify.");
+    errmsg(1172);
     reenter;
   endif;
 
@@ -2528,7 +2528,7 @@ preproc
   endif;
 postproc
   if Q38_REFERRAL_UHC = 4 and length(strip(Q38_REFERRAL_UHC_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q38_REFERRAL_UHC. Please specify.");
+    errmsg(1173);
     reenter;
   endif;
 
@@ -2540,7 +2540,7 @@ preproc
   endif;
 postproc
   if Q39_MOU_MOA = 7 and length(strip(Q39_MOU_MOA_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q39_MOU_MOA. Please specify.");
+    errmsg(1174);
     reenter;
   endif;
 
@@ -2552,7 +2552,7 @@ preproc
   endif;
 postproc
   if Q39_MOU_MOA = 4 and length(strip(Q39_MOU_MOA_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q39_MOU_MOA. Please specify.");
+    errmsg(1175);
     reenter;
   endif;
 
@@ -2564,7 +2564,7 @@ preproc
   endif;
 postproc
   if Q40_NBB = 7 and length(strip(Q40_NBB_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q40_NBB. Please specify.");
+    errmsg(1176);
     reenter;
   endif;
 
@@ -2576,7 +2576,7 @@ preproc
   endif;
 postproc
   if Q40_NBB = 4 and length(strip(Q40_NBB_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q40_NBB. Please specify.");
+    errmsg(1177);
     reenter;
   endif;
 
@@ -2588,7 +2588,7 @@ preproc
   endif;
 postproc
   if Q41_ZBB = 7 and length(strip(Q41_ZBB_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q41_ZBB. Please specify.");
+    errmsg(1178);
     reenter;
   endif;
 
@@ -2600,7 +2600,7 @@ preproc
   endif;
 postproc
   if Q41_ZBB = 4 and length(strip(Q41_ZBB_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q41_ZBB. Please specify.");
+    errmsg(1179);
     reenter;
   endif;
 
@@ -2612,7 +2612,7 @@ preproc
   endif;
 postproc
   if Q42_NO_COPAY = 7 and length(strip(Q42_NO_COPAY_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q42_NO_COPAY. Please specify.");
+    errmsg(1180);
     reenter;
   endif;
 
@@ -2624,7 +2624,7 @@ preproc
   endif;
 postproc
   if Q42_NO_COPAY = 4 and length(strip(Q42_NO_COPAY_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q42_NO_COPAY. Please specify.");
+    errmsg(1181);
     reenter;
   endif;
 
@@ -2636,7 +2636,7 @@ preproc
   endif;
 postproc
   if Q43_WARD_ALLOC = 7 and length(strip(Q43_WARD_ALLOC_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q43_WARD_ALLOC. Please specify.");
+    errmsg(1182);
     reenter;
   endif;
 
@@ -2648,7 +2648,7 @@ preproc
   endif;
 postproc
   if Q43_WARD_ALLOC = 4 and length(strip(Q43_WARD_ALLOC_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q43_WARD_ALLOC. Please specify.");
+    errmsg(1183);
     reenter;
   endif;
 
@@ -2660,7 +2660,7 @@ preproc
   endif;
 postproc
   if Q44_CPG = 7 and length(strip(Q44_CPG_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q44_CPG. Please specify.");
+    errmsg(1184);
     reenter;
   endif;
 
@@ -2672,7 +2672,7 @@ preproc
   endif;
 postproc
   if Q44_CPG = 4 and length(strip(Q44_CPG_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q44_CPG. Please specify.");
+    errmsg(1185);
     reenter;
   endif;
 
@@ -2684,7 +2684,7 @@ preproc
   endif;
 postproc
   if Q45_DOH_LIC_STD = 7 and length(strip(Q45_DOH_LIC_STD_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q45_DOH_LIC_STD. Please specify.");
+    errmsg(1186);
     reenter;
   endif;
 
@@ -2696,7 +2696,7 @@ preproc
   endif;
 postproc
   if Q45_DOH_LIC_STD = 4 and length(strip(Q45_DOH_LIC_STD_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q45_DOH_LIC_STD. Please specify.");
+    errmsg(1187);
     reenter;
   endif;
 
@@ -2708,7 +2708,7 @@ preproc
   endif;
 postproc
   if Q46_PHIC_ACCRED = 7 and length(strip(Q46_PHIC_ACCRED_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q46_PHIC_ACCRED. Please specify.");
+    errmsg(1188);
     reenter;
   endif;
 
@@ -2720,7 +2720,7 @@ preproc
   endif;
 postproc
   if Q46_PHIC_ACCRED = 4 and length(strip(Q46_PHIC_ACCRED_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q46_PHIC_ACCRED. Please specify.");
+    errmsg(1189);
     reenter;
   endif;
 
@@ -2732,7 +2732,7 @@ preproc
   endif;
 postproc
   if Q47_SVC_DELIVERY_PROT = 7 and length(strip(Q47_SVC_DELIVERY_PROT_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q47_SVC_DELIVERY_PROT. Please specify.");
+    errmsg(1190);
     reenter;
   endif;
 
@@ -2744,7 +2744,7 @@ preproc
   endif;
 postproc
   if Q47_SVC_DELIVERY_PROT = 4 and length(strip(Q47_SVC_DELIVERY_PROT_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q47_SVC_DELIVERY_PROT. Please specify.");
+    errmsg(1191);
     reenter;
   endif;
 
@@ -2756,7 +2756,7 @@ preproc
   endif;
 postproc
   if Q48_PCQM = 7 and length(strip(Q48_PCQM_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected for Q48_PCQM. Please specify.");
+    errmsg(1192);
     reenter;
   endif;
 
@@ -2768,7 +2768,7 @@ preproc
   endif;
 postproc
   if Q48_PCQM = 4 and length(strip(Q48_PCQM_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected for Q48_PCQM. Please specify.");
+    errmsg(1193);
     reenter;
   endif;
 
@@ -2781,7 +2781,7 @@ preproc
   endif;
 postproc
   if (Q103_NO_BUCAS_REASON = 5) and length(strip(Q103_OTHER_TXT)) = 0 then
-    errmsg("An 'other' option was selected for Q103. Please specify.");
+    errmsg(1194);
     reenter;
   endif;
 
@@ -2793,7 +2793,7 @@ preproc
   endif;
 postproc
   if (Q110_NO_GAMOT_REASON = 5) and length(strip(Q110_OTHER_TXT)) = 0 then
-    errmsg("An 'other' option was selected for Q110. Please specify.");
+    errmsg(1195);
     reenter;
   endif;
 
@@ -2805,7 +2805,7 @@ preproc
   endif;
 postproc
   if (Q11_PRIMARY_PKG_STATUS = 5) and length(strip(Q11_OTHER_TXT)) = 0 then
-    errmsg("An 'other' option was selected for Q11. Please specify.");
+    errmsg(1196);
     reenter;
   endif;
 
@@ -2817,7 +2817,7 @@ preproc
   endif;
 postproc
   if (Q143_DIFFICULT_BENEFIT = 4) and length(strip(Q143_OTHER_TXT)) = 0 then
-    errmsg("An 'other' option was selected for Q143. Please specify.");
+    errmsg(1197);
     reenter;
   endif;
 
@@ -2829,7 +2829,7 @@ preproc
   endif;
 postproc
   if (Q15_PHU_ROLE = 5) and length(strip(Q15_OTHER_TXT)) = 0 then
-    errmsg("An 'other' option was selected for Q15. Please specify.");
+    errmsg(1198);
     reenter;
   endif;
 
@@ -2841,7 +2841,7 @@ preproc
   endif;
 postproc
   if (Q18_HPU_ROLE = 5) and length(strip(Q18_OTHER_TXT)) = 0 then
-    errmsg("An 'other' option was selected for Q18. Please specify.");
+    errmsg(1199);
     reenter;
   endif;
 
@@ -2853,7 +2853,7 @@ preproc
   endif;
 postproc
   if (Q33_DATA_FREQ = 6) and length(strip(Q33_OTHER_TXT)) = 0 then
-    errmsg("An 'other' option was selected for Q33. Please specify.");
+    errmsg(1200);
     reenter;
   endif;
 

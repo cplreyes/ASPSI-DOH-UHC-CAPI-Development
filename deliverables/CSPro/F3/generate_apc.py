@@ -27,7 +27,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from cspro_helpers import (
     other_specify_procs, select_all_validation_procs,
-    range_check_proc, amount_required_procs,
+    range_check_proc, amount_required_procs, numberize_errmsgs,
 )
 
 # Per-item numeric range checks (spec §3.6/§3.9/§3.10/§3.13). (field, lo, hi, soft_over)
@@ -1583,6 +1583,9 @@ def main():
 
     parts.append(TODO_NOTE)
     text = "\n".join(parts).rstrip() + "\n"
+    # R2 (2026-07-03): inline errmsg literals -> numbered messages + .ent.mgf
+    # (stable numbers via messages-registry.json; displayed text unchanged).
+    text = numberize_errmsgs(text, HERE, OUT.with_suffix(".mgf"), "PatientSurvey")
     OUT.write_text(text, encoding="utf-8")
     dupes = [l for l in text.splitlines() if l.startswith("PROC ")]
     assert len(dupes) == len(set(dupes)), "duplicate PROC names emitted"

@@ -1,89 +1,55 @@
 ---
-sprint: 012
-start: 2026-06-29
-end: 2026-07-03
-status: active
+sprint: 013
+start: 2026-07-06
+end: 2026-07-10
+status: planning
 sprint_length: 1 week (5 working days)
-deliverable_anchor: CAPI field-readiness to a CHECKABLE exit · Day-1 build-or-kill on the perennial carries (E0-SCRUM-SYNC, PSA, Goal B) · support deliverables (codebook/ETL, training finalize, governance) while waiting on ASPSI's pretest date
-created: 2026-06-28 — Mode D skeleton at the S011→S012 boundary
-locked: 2026-06-29 (Mode A — Monday kickoff)
+deliverable_anchor: Epic 10 ETL variable extraction (`transform.py`) — the last blocker to real table output · 47-partial/3-gap tabulation decision memo to ASPSI · pretest reactivity (freeze gate ~Jul 5; fresh-Designer compile of the R2-numbered builds before ANY deploy)
+created: 2026-07-03 — Mode D skeleton at the S012→S013 boundary
 ---
 
-# Sprint 012 — Field-ready to a checkable exit + clear the carries
+# Sprint 013 — Real tables: ETL variable extraction + pretest reactivity
 
-> [!info] Where S011 left the project
-> Build phase essentially complete; project shifted to **field-readiness + waiting on ASPSI's pretest schedule**. The **Supervisor hub Phase-2** shipped end-to-end (login→menu→Bluetooth→CSWeb relay→live reports→offline map), **device-verified on two tablets**, training guide **live**. UAT Round 5 was **closed 2026-06-29** (78/79 issues resolved, 1 cosmetic deferred — `deliverables/CSPro/CAPI-UAT-Round-5-Closeout-2026-06-29.md`); the burndown ran via the `capi-uat-triage` loop. Scope clarified: **SJREB + tablets + pretest scheduling are ASPSI/DOH's, not Carl's** — Carl's lane ends at field-ready. Full record: `scrum/sprints/sprint-011.md` + `log.md` + git (`f2aa9f3`, push pending).
+> [!info] Where S012 left the project
+> **Goal landed — first sprint where plan and value agreed.** All four perennial carries cleared by Day 2 (E0-SCRUM-SYNC finally BUILT; PSA closed out-of-lane; Goal B killed; field-ready criterion wired into `check_field_ready.py` + verified FIELD-READY). UAT R5 closed 06-29 (78/79). The freeze week became a build week: pretest assignments ready (Los Baños, 84 QNs, printed sheets), tabulation plan spec-complete + Stata-12 proven (197 SSRCS tables), fleet version-stamped v1.0.x on all 4 surfaces, DHS benchmark → data layer + R1a + R2 + R3 shipped byte-identical (freeze intact). Full record: `scrum/sprints/sprint-012.md` + `log.md`.
 
-## Carry-in from Sprint 011
+## Sprint Goal
 
-| ID | Item | State | S012 disposition |
+> **Ship `transform.py` (Epic 10 ETL variable extraction) end-to-end against the CSWeb breakout DBs and put the 47-partial/3-gap tabulation memo in front of ASPSI — while staying pretest-reactive** (freeze gate ~Jul 5; Designer compile of the numbered builds before any deploy). _Draft until lock Mon 2026-07-06._
+
+## Carry-in from Sprint 012
+
+| ID | Item | State | S013 disposition |
 |---|---|---|---|
-| **E0-SCRUM-SYNC** | scrum-state sync + 08:30 drift canary | ✅ **BUILT + PROVEN 2026-06-30** (after 3× committed / 0× built) | **Done.** Drift canary wired into `generate_standup.py` (callout + `--check-drift` CLI + `sprint-drift` log line) and the 08:30 `daily-standup-md.ps1` wrapper (`PROBE-SPRINT-DRIFT`). Fires when `log.md` outpaces `sprint-current.md` by >2 days. No longer a carry. |
-| **E0-UAT-REFRAME (finish)** | field-readiness exit criterion | ✅ **DONE 2026-06-30** — criterion operationalized (R5 close-out, 06-29) AND now **wired into the loop** | **Done.** `deliverables/CSPro/automation/check_field_ready.py` gates the `capi-uat-triage` loop: FIELD-READY (0 open actionable F1/F3/F4 + newest finding ≥ quiet-days old, ASPSI items carved out) → loop stops; persists a `field_ready` block in `triage-state.json`. Skill §7 updated to consult it every cycle. Verified FIELD-READY today. |
-| **E6-CAPI-FIELDREADY** | UAT R5 burndown + `capi-multiselect` fan-out | standing workstream; **R5 closed 2026-06-29** | **R5 closed** (exit criterion met: 0 open R5 issues). FIELDREADY continues as standing for desk-test reopens + multi-select fan-out (device-test each). |
-| **E2-F3-PHILHEALTH / E2-F4-PHILHEALTH** | Q38.1/Q38.2 + Q45.1/Q45.2 reinstatement | ✅ **DONE — built + deployed during UAT R5** (#764 F3 Q38.1/Q38.2; #794 F4 Q45.1; #795 F4 Q45.2; CSWeb 2026-06-25/27). ASPSI supplied the value sets via the tickets; the "blocked on Kidd's PNGs" framing was STALE. | **Closed** — not a carry. Open follow-ups (optional, ASPSI confirm): F3 Q38.2 is tick-all vs F4 Q45.2 single; "I don't know" deployed as −98 (locked std) not the paper's −55. |
-| **E0-PSA-001b** | PSA gate outcome confirm | **CLOSED — out of lane 2026-06-30** | **Closed as overtaken.** PSA-SSRCS clearance is an ASPSI/DOH gate (mid-review per the 2026-06-29 PB; formal 20-day clock not yet started), not a Carl-tracked sprint task — removing it as a recurring carry. If Carl wants a status ping, that's his comm to ASPSI to send. |
-| **Goal B (#294 + #336)** | #294 retests + #336 disposition | **KILLED 2026-06-30** | **Killed per the pre-agreed Monday rule** (not actioned Day-1). Both are F2-PWA-track residuals; F2 is production v2.1.0. Any real remnant of #294 (clasp deploy-gap) / #336 lives in the F2 backlog, not as a recurring carry in the CAPI sprint. |
-| **Supervisor hub go-live** | Phase-2 built + device-verified | needs field-SOP wiring + `supervisor-qa` roster (ASPSI) | Wire into the field SOP; provision `supervisor-qa` when ASPSI sends names. Deferred items (N1/N2/N4, C2 2nd-device, C7 map) stay parked. |
-| **Support deliverables** | codebook/ETL ripple · training finalize · governance | buildable now, no external unblock | **Committed (Goal A)** — advance the D4/D6-feeding items while waiting on the pretest date. |
-| **E4-F2-ELESTIO** | F2 off Cloudflare → Elestio | planned (19-task); blocked on provisioning | Parked — build Tasks 2–17 locally vs Docker MySQL if slack appears. |
-| **Translations Batch 2** | Tagalog-final / Ilocano / Hiligaynon-F3F4 | blocked on ASPSI check | Drop-in when delivered (pipeline proven). |
+| **E10-ETL-EXTRACT** | `transform.py` — per-instrument questionnaire-variable extraction from the CSWeb breakout DBs per codebook (checkbox split-to-dummies; F3 pay-roster + F2 extracts; lowercased-DCF instrument vars + harmonized shared dims) | scoped + **parked by Carl 2026-07-02**; codebook v0.4 + ETL skeleton + Stata-12 do-files all proven | **S013 HEADLINE (Goal A, singular)** — the last blocker to real table output. Protect it from the reactive stream (S012 retro Q4). |
+| **Tabulation decision memo** | 47-partial / 3-gap (tables 1.6, 2.51, 4.2) memo → ASPSI | mapping complete in `deliverables/tabulation-plan/` | Companion to the headline — surfaces the ASPSI go/no-go set. |
+| **Designer compile gate** | fresh-Designer compile of the R2-numbered builds (F1/F3/F4 + hub) | pending; skipped 07-03 (a live Designer held F4 — do NOT save from that stale session) | Run when Designer is free; **mandatory before ANY next deploy**. |
+| **Supervisor hub → UAT R6** | roster built + deployed + device-verified (Carl-side done) | **blocked on ASPSI**: account import + real names + `supervisor-qa` | Open R6 artifacts (tracking issue/form/channel) the day ASPSI lands. |
+| **Support deliverables (rest)** | governance (privacy/backup/retention) · training finalize (decks + Survey Manual screenshots, Kidd review) | did not advance in S012 | Opportunistic (Goal B). |
+| **Pretest reactivity** | freeze gate ~Jul 5; assignments + printed sheets ready | awaiting ASPSI's confirmed date | Reactive — field support jumps the queue when the date lands. |
+| **E4-F2-ELESTIO** | F2 off Cloudflare → Elestio (19-task plan) | blocked on provisioning | Parked. |
+| **Translations Batch 2** | Tagalog-final / Ilocano / Hiligaynon-F3F4 — labels AND (new, via R2) runtime messages | blocked on ASPSI delivery | Drop-in when delivered (both pipelines proven). |
+| **Refactor register (rest)** | R1b `library/` (Aug, with G1/G2) · F1 hand-fmf → generator fold (post-pretest) · K1 encrypted roster (Sep) | queued by design | Not S013 work — noted so it isn't lost. |
 
-## Committed Items (locked 2026-06-29 — Mode A)
+## Committed Items — locks Mon 2026-07-06 (Mode A)
 
-### Goal A — clear the carries + field-ready to a checkable exit
+_TBD at lock. Candidates — Goal A: **E10-ETL-EXTRACT** (headline) + the tabulation decision memo. Goal B (reactive/opportunistic): Designer compile gate · hub R6 opening on ASPSI's land · governance strand · pretest field support if the date drops._
 
-- [x] **E0-SCRUM-SYNC** — ✅ **BUILT + proven 2026-06-30.** Drift canary in `generate_standup.py` (standup callout + `--check-drift`/`--drift-days` CLI + `sprint-drift` log line) and the 08:30 `daily-standup-md.ps1` wrapper (`PROBE-SPRINT-DRIFT`); fires when `log.md` is >2d newer than `sprint-current.md`. Tested: silent at 0.4d today, fires at `--drift-days 0`. The 3× note is now code. `status::done` `priority::high` `estimate::2h`
-- [x] **E0-PSA-001b** — **Closed as overtaken / out of lane 2026-06-30.** PSA-SSRCS is an ASPSI/DOH gate (mid-review), not a Carl sprint carry. No 5th carry. `status::done (closed)` `priority::high` `estimate::1h`
-- [x] **Goal B #294/#336** — **Killed 2026-06-30** per the pre-agreed Monday rule (not actioned Day-1); F2-track residuals belong in the F2 backlog. `status::done (killed)` `priority::medium` `estimate::1h`
-- [x] **E0-UAT-REFRAME (finish)** — ✅ **DONE 2026-06-30.** Criterion operationalized (R5 close-out 06-29) + now **wired**: `automation/check_field_ready.py` is the loop's stop-condition gate (FIELD-READY/CLEAR-PENDING/NOT-READY/UNKNOWN → exit 0/10/20/30; persists `field_ready` to `triage-state.json`); `capi-uat-triage` skill §7 runs it every cycle and stops on FIELD-READY. Verified FIELD-READY today (0 open, last finding 3.8d ago). `status::done` `priority::high` `estimate::0.5h`
-- [x] **E6-CAPI-FIELDREADY** — **UAT R5 closed 2026-06-29** (exit criterion met; see close-out note). Standing FIELDREADY continues for desk-test reopens + multi-select fan-out (device-test each). `status::done (R5) · standing` `priority::critical`
-- [ ] **Support deliverables** — harmonization codebook/ETL ripple, training finalize (decks + Survey Manual screenshots), governance (privacy/backup/retention). **CAPI Manual (D5/Epic 7) banked COMPLETE ~98% at lock (2026-06-29)** — 24 on-device screenshots + filled code-list annexes + purple 93pp PDF; only ASPSI's §H support-contact names remain. `status::in-progress` `priority::high` `estimate::1d`
-- [x] **E2-F3/F4-PHILHEALTH** — ✅ DONE: built + deployed in UAT R5 (#764 F3 Q38.1/Q38.2 tick-all; #794 F4 Q45.1; #795 F4 Q45.2 single; CSWeb 2026-06-25/27). Confirmed in live DCFs. Not pending — the "download the 3 PNGs" item was a stale-record false alarm (2026-06-29). `status::done`
+## Definition of Done — Sprint 013
 
-### Goal B — opportunistic
-
-- [~] **Supervisor hub → UAT Round 6.** ✅ 2026-06-29: 8-account/2-team tester roster (fs-01/fs-02 + se-001..se-006) built in `build_hub_apps.py`, **redeployed to prod CSWeb + device-verified on the itel** (new se-001 enumerator + fs-02 supervisor menus render); credentials in `supervisor-hub/config/` (`uat-r6-csweb-users.csv` + `UAT-R6-tester-credentials.md`, DO-NOT-COMMIT). **Remaining:** ASPSI imports the CSWeb accounts + supplies real tester names + holds `supervisor-qa`; then open the R6 round artifacts (tracking issue/form/channel). `status::in-progress` `priority::medium`
-
-## Definition of Done — Sprint 012
-
-_Finalized at lock 2026-06-29._
-
-- [x] **E0-SCRUM-SYNC built + proven** (2026-06-30) — no longer carried as an open note. The 3× retro action is now wired into the daily generator + scheduled wrapper.
-- [x] PSA gate **closed-as-overtaken**; Goal B **killed**. No further carry of either.
-- [x] Field-readiness exit criterion defined + **wired into the triage loop's stop condition** (2026-06-30 — `check_field_ready.py` gate + skill §7).
-- [x] UAT R5 **closed 2026-06-29** (exit criterion met; see `deliverables/CSPro/CAPI-UAT-Round-5-Closeout-2026-06-29.md`).
-- [x] Support deliverables advanced (codebook/ETL, training, governance) — at least one moved to "ready for D5/D6". ✅ **CAPI Manual moved to ready-for-D5 at lock (2026-06-29)**; codebook/ETL + governance still in flight.
-- [ ] PhilHealth live on F3+F4, or explicitly blocked-on-Carl (PNGs) documented.
-- [ ] **Sprint 012 retrospective filled ON TIME Fri 2026-07-03**; archived; `sprint-current.md` reset for Sprint 013.
+_TBD at lock._
 
 ## Daily Notes
 
 _Auto-standup writes here daily via the `CAPI Scrum Daily Standup MD` scheduled task (08:30 MNL) + the SessionStart hook as intraday top-up._
 
-**Mon 2026-06-29 — Sprint 012 LOCKED (Mode A).** 8 items committed (7 Goal A + 1 Goal B); ~26h estimated; 1 blocked (E2-PHILHEALTH, waiting on Carl's 3 value-set PNGs), 1 critical-path (E6-CAPI-FIELDREADY). **Day-1 order:** (1) E0-SCRUM-SYNC build-or-kill — FIRST task; (2) E0-PSA-001b + Goal B #294/#336 close-or-kill by EOD. **Banked at lock:** CAPI Manual (D5/Epic 7) complete ~98% — DoD "support deliverable ready-for-D5" already met.
-
-**Tue 2026-06-30 — the three carries cleared.** **E0-SCRUM-SYNC BUILT + proven** (4th sprint, finally code not a note): drift canary added to `generate_standup.py` (standup callout + `--check-drift`/`--drift-days` CLI + `sprint-drift` log line) and to the 08:30 `daily-standup-md.ps1` wrapper (`PROBE-SPRINT-DRIFT`) — fires when `log.md` is >2 days newer than `sprint-current.md`; tested silent at today's 0.4d and firing at `--drift-days 0`. **E0-PSA-001b closed as overtaken** (ASPSI/DOH gate, not a Carl carry). **Goal B #294/#336 killed** per the pre-agreed Monday rule (F2-track residuals → F2 backlog). DoD's two hardest clauses now satisfied; Wed–Fri left for support deliverables (codebook/ETL, governance) while waiting on ASPSI's pretest date. _Side effect: syncing this board reset the drift clock, so the canary I just built won't false-fire — it earned its first clean day by being used._
-
-**Tue 2026-06-30 (cont.) — E0-UAT-REFRAME finished + standup parser fixed.** **E0-UAT-REFRAME DONE:** the field-readiness exit criterion is now *wired*, not just operationalized — `deliverables/CSPro/automation/check_field_ready.py` is the `capi-uat-triage` loop's stop-condition gate (FIELD-READY/CLEAR-PENDING/NOT-READY/UNKNOWN ↔ exit 0/10/20/30; checks 0-open-actionable + quiet-window via live `gh`, carves out ASPSI-owned labels, persists a `field_ready` block to `triage-state.json`); skill §7 consults it every cycle and stands the loop down on FIELD-READY. Verified **FIELD-READY** today (0 open, last finding 3.8d ago). **Standup parser fix:** `generate_standup.py`'s `TASK_LINE` now captures the whole bold label, so committed items with spaces/`#`/`/` IDs (`Support deliverables`, `Goal B #294/#336`, `E2-F3/F4-PHILHEALTH`, `E0-UAT-REFRAME (finish)`, the hub item) are no longer silently dropped — the board went from a misleading 3/3 to a true **5 done / 3 in-progress / 8 total**. Both are accuracy fixes in the same spirit as the drift canary: the scrum/UAT state now reports itself honestly.
-
-**Wed 2026-07-01 — the pretest starts moving: real assignment prep + guides aligned.** The RAs sent the real pre-test QN list (`Unique Question Number for Pre-testing.docx`) *instead of* the assignment-master — **Los Baños (municipality 040341), 4 facilities + 2 barangays, 84 unique 12-digit QNs**. Built the pre-test assignment from it end-to-end: captured the verbatim source (`assignments/pretest-qn-list.csv` + `pretest-ea-summary.csv`); **reworked `generate_assignments.py` to emit explicit key ranges verbatim** (the old `code+001..N` derivation would have silently corrupted Brgy. Bayog's `…601–620` and dropped the facility-head `…000` keys); rebuilt the master generator-first on the R6 roster (Carl: F1 heads in scope · reuse R6 names). Mayondon reassigned Merlyne→**Aly** (keep the `se-006` account, Aly operates it) → 6 enumerator `.dat` + printed sheets, 84 keys, 0 warnings. **Announced the assignments to #supervisor-uat** (+ two corrections as the mapping firmed) — testers cleared to **resume via printed sheets**. **Patched + deployed `hub-guide.html`** (§7 "View my report" table screenshot rendered from `report.html`; §5 printed-sheet note) — live-verified on CSWeb. **Aligned the R6 tester guide roster** to the real pretest (this was the source of the RAs' "which guide do we follow?" question — the GitHub guide was still on the old Biñan demo EAs; GitHub test-plan vs CSWeb how-to are complementary, now consistent). **Security surfaced:** the *public* repo exposed all 8 R6 accounts' CSWeb+hub passwords via the tester guide (committed `1c68904`) — flagged; Carl chose to keep the passwords in-guide and **declined rotation** (accepted risk for these round-scoped test credentials). Committed + pushed (`48684e1`, `52cb26b`). **Net:** the sprint anchor ("field-ready while waiting on ASPSI's pretest date") is actually advancing — the pretest QNs are in and the field hand-out is ready; advances the Goal-B **Supervisor hub → R6** item.
-
-**Thu 2026-07-02 — the tabulation list found + the tabulation plan BUILT (Epic 11 unblocked).** Email ingest closed out (attachments recovered from Downloads — incl. the **Pretest Staff Deployment plan** [7 field RAs, 2-week rotation] and the full **XJ June-9 comment matrix** via its Google-Doc ID). Then the week's "no tabulation list exists" conclusion got **corrected**: Carl asked about **SSRCS Form 1** — its **§II-9 IS the PSA-committed table list (~197 tables)**. Built `deliverables/tabulation-plan/` the same day (generator-first, verbatim transcription verified 0-mismatch, 4 parallel mapping agents): **147 mapped / 47 partial / 3 gaps** (1.6, 2.51, 4.2 — real instrument gaps → ASPSI questions). Target locked to **Stata 12 SE** (Carl: new Stata under procurement; portable copy in Downloads) — svy+tabout syntax, ETL must emit .dta ≤115. This moves the **Support deliverables** item's analysis strand from "not started" to "spec complete". **Same day, the do-files went from spec to PROVEN:** generator-built Stata-12 skeletons (197 blocks, 36/105/36/20 per annex) **smoke-tested end-to-end in real Stata 12 batch** against the ETL dry-run (capture-guarded after round 1; clean close), and **tabout 2.0.8 installed** (0 unrecognized commands). Environment fully provisioned. **→ PARKED FOR SPRINT 013 (Carl's call, 2026-07-02): ETL variable extraction (Epic 10, `transform.py`)** — the single remaining blocker to real table output: per-instrument questionnaire-variable extraction from the CSWeb breakout DBs per codebook (checkbox split-to-dummies, F3 pay-roster + F2 extracts, naming convention: lowercased DCF names for instrument vars + harmonized names for shared dims). **S013 headline candidate.** Also queued for S013: the 47-partial/3-gap decision memo for ASPSI.
-
-**Thu 2026-07-02 (later) — lint pass caught a phantom fix: #486 rebuilt + F3 redeployed.** Carl's "lint the project" (ruff, all 90 .py files) surfaced ONE real bug among 211 findings: a duplicate dict key in `F3/generate_qsf.py` had silently discarded the #486 Q131–134 stem — the June-21 "fixed + deployed" never rendered on any device. Fixed at generator level (Q131 intro = Section J preamble + verbatim stem, tuple-rendered), regen also caught up the stale .qsf (missing Q38.1/38.2 PhilHealth-reinstatement text + old Q94 wording). Gates green → deployed to CSWeb via a NEW deterministic route (authored `F3/PatientSurvey.csds` deploy spec; CSDeploy session-restore gotcha documented). GH #486 corrected; #f3-uat patch note posted.
-
-**Thu 2026-07-02 (later still) — build versioning shipped: v1.0.0 on F1/F3/F4, deployed.** Tester request (pre-test readiness + tracking builds across UAT rounds): CSEntry has no native app version, so built one — `versions.json` single source of truth → stamped into the `.pff Description` (CSEntry app list, via new `automation/stamp_version.py`) + a build footer on the first cover question (every screenshot identifies its build, via the three `generate_qsf.py`). Semantic Versioning per Carl: patch bump per bug-fix deploy, minor for new functionality, major at round close / breaking change. Regens caught up stale QSF text (F1 BREAKOFF/CASE_DISPOSITION, F4 Q84 other-specify). Gates green (the F4 fmf_block_check FAIL is pre-existing on HEAD — checker rule gap on the Section N grid, follow-up noted). All three deployed via the `.csds` route (F1/F4 specs + `open_csdeploy_spec.py` authored; CSDeploy compiles the .pen fresh at deploy — no Designer step needed for qsf/pff patches). Patch notes posted to all three UAT channels on Carl's go; **versioning documented in `deliverables/CSPro/VERSIONING.md`** (SemVer policy, surfaces, tooling, version-history table). **Then DEVICE-VERIFIED on the itel (Carl asked for a sample image) → caught a placement flaw → v1.0.1 same day:** the qsf footer had landed on F3's case-END cover block (dict order ≠ form order); moved to the QN id item = guaranteed first screen, first real `bump` run, redeployed ×3, device updated, screenshots archived (`automation/shots/versioning/`), follow-up notes posted. Bonus finds: the pff Description also versions the in-case title bar on every screen, and ⋮ Update DOES detect redeploys once you dismiss the CSES apps' stale-Dropbox-token error. **Then (Carl: "add versioning to the supervisor hub too") HUB v1.0.0 shipped the same evening**: version wired into build_hub_apps.py (generated pffs + menu-footer JSON), `bump HUB` re-runs the build, deployed via new `LoginApp.csds` (26-file bundle), device-verified login→menu with the footer, #supervisor-uat note posted. **Whole fleet (F1/F3/F4/HUB) now version-visible.** After the earlier commit (451a560) the hub-versioning work is uncommitted in the tree.
-
-**Fri 2026-07-03 — DHS benchmark ingested → gap analysis → data-layer restructure SHIPPED (zero drift).** PSA research confirmed PSA runs CSPro CAPI (NDHS 2022 = the DHS suite); mirrored **DHSProgram/DHS-Data-Processing** (238 MB) into gitignored raw/ + ingested as the professional benchmark. Delivered the **comparison & gap analysis** (wiki note + rendered diagram): gaps **G1–G9** (headline: supervisor field-check tables on paradata — feeds the monitoring-dashboard extension basis), CC81NEW refactor techniques **T1–T7**, Khurshid cross-check **K1–K5** (his 3 headline mechanisms = already adopted), per-CSPro-tool review → refactor register **R1–R3** (structure verdict: NO reorganization needed — content-level refactors only). **Then Carl's go (Option B + R1a): built `deliverables/CSPro/data/`** — one pipeline per dataset (psgc w/ PSA-1Q-2026 provenance · roster w/ credentials OUT of build_hub_apps.py into a gitignored source CSV + K4 import tool · assignments fixtures · facilities w/ the DOH xlsx rescued from Downloads), hub build reads the CSVs (single-writer kept), **R1a** hand-proc heredocs → real `F*/procs/*.apc` fragments. **Everything verified byte-identical** (psgc ×8, facility ×2, hub 38-file hash manifest, apc ×3), gates green, `stamp_version show` no drift → **no bump, nothing deployed, pretest freeze intact**. Queued from the register: R2 mgf messages (pre-translation-final), R1b library/ (Aug, with G1/G2), R3 fmf normalization, K1 encrypted roster (Sep).
-
-## Retrospective — Sprint 012
+## Retrospective — Sprint 013
 
 > 5-minute time-box. Four questions, fixed order. Written, not thought-through-only.
 
 ### 1. Did the sprint goal land? (yes / partial / no — one line why)
 
-_TBD 2026-07-03._
+_TBD 2026-07-10._
 
 ### 2. What surprised me? (process, not work — max 3 bullets)
 
@@ -93,6 +59,6 @@ _TBD_
 
 _Informational only (out of Data Programmer scope per CSA D1–D6)._
 
-### 4. One thing to change in Sprint 013
+### 4. One thing to change in Sprint 014
 
 _TBD_

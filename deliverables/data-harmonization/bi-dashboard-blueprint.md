@@ -56,7 +56,7 @@ Build these as **BigQuery views** in `uhc_y2` so the BI tool binds to stable, do
 ### 3.2 Calculated UHC metrics (the headline measures)
 | Metric | Definition (sketch) | Source |
 |---|---|---|
-| **Catastrophic health expenditure (CHE) incidence** | `% households where total_oop_health / capacity_to_pay > 0.40` (WHO method; capacity-to-pay = non-food household expenditure) | `f4_expenditure` (consumed/purchased/in-kind PHP batteries, e.g. `Q161/Q175/Q184_*_PHP`) |
+| **Catastrophic health expenditure (CHE) incidence** | `% households where total_oop_health / capacity_to_pay > 0.40` (WHO method; capacity-to-pay = non-food household expenditure) | F4 Section N **expenditure rosters** (converted 2026-07-03, F4 v1.1.0 — the old flat `Q161/Q175/Q184_*_PHP` columns are GONE): sum `_PURCHASED_PHP`+`_INKIND_PHP` over each roster's `_CONSUMED`=1 rows (exclude `-98`/`-99`); non-food capacity-to-pay = `N_NF1M/NF6M/NF12M_ROSTER` rows, OOP-health = `N_H12M/H6M/H1M_ROSTER` + Q158 restaurant. Crosswalk: codebook CHANGELOG v0.6 |
 | **OOP share of health spending** | `sum(oop_health) / sum(total_health_spend)` | `f4_expenditure` |
 | **PhilHealth coverage rate** | `% with philhealth_status = member` | `f3_patient`, `f4_member` (§8) |
 | **YAKAP/Konsulta accreditation penetration** | `% facilities accredited` (by facility_type, region) | `f1_facility` (Q51/Q80 family) |

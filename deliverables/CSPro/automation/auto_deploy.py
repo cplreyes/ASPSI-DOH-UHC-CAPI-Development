@@ -122,7 +122,9 @@ def add_files(dd, base):
     produced a PSGC-less package on 2026-06-17. Falls back to a coord click only if the
     button can't be resolved."""
     added = []
-    for fn in PSGC:
+    # F4 ships review.html too (Section N recap htmldialog reads it from the app folder)
+    extra = ["review.html"] if base.name == "F4" else []
+    for fn in PSGC + extra:
         src = base / fn
         if not src.exists():
             print(f"   ! missing {src} -- skipped"); continue

@@ -30,7 +30,7 @@ function FillRegionValueSet()
       own field directly. }
     R_PARENT_CODE = ROOT_PSGC_PARENT;
     if loadcase(PSGC_REGION_DICT, R_PARENT_CODE) = 0 then
-        errmsg("PSGC region lookup failed — verify psgc_region.dat is deployed");
+        errmsg(1001);
         exit;
     endif;
 
@@ -151,7 +151,7 @@ function ReadGPSReading(numeric maxTimeSec, numeric desiredAccuracyM)
     endif;
 
     if not gps(open) then
-        errmsg("GPS hardware unavailable — check tablet location permission.");
+        errmsg(1002);
         ReadGPSReading = 0;
         exit;
     endif;
@@ -160,13 +160,13 @@ function ReadGPSReading(numeric maxTimeSec, numeric desiredAccuracyM)
     gps(close);
 
     if result <> 1 then
-        errmsg("GPS read failed or timed out (target accuracy %d m).", desiredAccuracyM);
+        errmsg(1003, desiredAccuracyM);
         ReadGPSReading = 0;
         exit;
     endif;
 
     if gps(accuracy) > desiredAccuracyM then
-        errmsg("GPS accuracy %d m exceeds target %d m — consider a retry outdoors.",
+        errmsg(1004,
                gps(accuracy), desiredAccuracyM);
         { still return success — let the caller/enumerator decide to keep or retry }
     endif;
@@ -278,7 +278,7 @@ postproc
     enddo;
   endif;
   if geoFound = 0 then
-    errmsg("Region code %02d not found in PSGC. Check the Questionnaire Number.", REGION_CODE);
+    errmsg(1005, REGION_CODE);
     reenter;
   endif;
 
@@ -309,7 +309,7 @@ postproc
     enddo;
   endif;
   if geoFound = 0 then
-    errmsg("Geo prefix %07d not found in PSGC (no province or city/municipality matches). Check the Questionnaire Number.", int(QUESTIONNAIRE_NUMBER / 100000));
+    errmsg(1006, int(QUESTIONNAIRE_NUMBER / 100000));
     reenter;
   endif;
 
@@ -373,7 +373,7 @@ onfocus
     if TakeVerificationPhoto(fn) then
       VERIFICATION_PHOTO_FILENAME = fn;
     else
-      errmsg("Verification photo not captured (camera cancelled or unavailable). Re-enter this field to retry, or note the reason in your field report.");
+      errmsg(1007);
     endif;
   endif;
   CAPTURE_VERIFICATION_PHOTO = notappl;
@@ -441,7 +441,7 @@ preproc
 postproc
   { #167: first roster entry is normally Self/Head (soft confirm) }
   if curocc() = 1 and not (Q34_RELATIONSHIP in 1,2) then   { 1=Self, 2=Head (verify codes) }
-    errmsg("First roster entry is normally the respondent (Self) or HH head. Confirm.");
+    errmsg(1008);
   endif;
 
 { Section C renders COLUMN-WISE (one roster form per question — the "Household
@@ -516,7 +516,7 @@ postproc
   if count(C_HOUSEHOLD_ROSTER) <> Q19_HH_SIZE_TOTAL then
     { soft warning: reenter is not available from a group postproc, so flag it and
       let the enumerator navigate back to fix the roster or Q19. }
-    errmsg("Roster has %d members but Q19 says %d. Go back and reconcile.",
+    errmsg(1009,
            count(C_HOUSEHOLD_ROSTER), Q19_HH_SIZE_TOTAL);
   endif;
 
@@ -556,11 +556,449 @@ postproc
   endif;
 
 
+{ ---- Section N Option C: weekly-food roster (N_FOOD_ROSTER, fixed 13 rows = Q144-Q156) ---- }
+PROC N_FOOD_ITEM
+preproc
+  { Auto-name this grid row from the WHO/SHA item list (one occurrence per item). }
+  if curocc() = 1 then N_FOOD_ITEM = "144. Cereals (rice, flour, noodles, corn, etc.)";
+  elseif curocc() = 2 then N_FOOD_ITEM = "145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts";
+  elseif curocc() = 3 then N_FOOD_ITEM = "146. Vegetables (fresh, dried, dehydrated, frozen)";
+  elseif curocc() = 4 then N_FOOD_ITEM = "147. Fruits in any form (fresh, dried, dehydrated, frozen)";
+  elseif curocc() = 5 then N_FOOD_ITEM = "148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen)";
+  elseif curocc() = 6 then N_FOOD_ITEM = "149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen)";
+  elseif curocc() = 7 then N_FOOD_ITEM = "150. Any kind of egg (from chicken, duck, quail, etc.)";
+  elseif curocc() = 8 then N_FOOD_ITEM = "151. Milk and other milk products, excluding butter";
+  elseif curocc() = 9 then N_FOOD_ITEM = "152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame)";
+  elseif curocc() = 10 then N_FOOD_ITEM = "153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes)";
+  elseif curocc() = 11 then N_FOOD_ITEM = "154. Condiments and other spices and other ready-made meals";
+  elseif curocc() = 12 then N_FOOD_ITEM = "155. Water and non-alcoholic beverages (e.g., coffee)";
+  elseif curocc() = 13 then N_FOOD_ITEM = "156. Alcoholic beverages (e.g., local and imported)";
+  endif;
+  noinput;
+
+PROC N_FOOD_PURCHASED_PHP
+preproc
+  { Not consumed -> auto 0 + noinput (0, not notappl, for codebook/subtotal parity
+    with the flat build); consumed -> #755/#818 pre-fill so Enter passes an empty
+    amount. Per-occurrence preproc gate (Section C pattern). }
+  if N_FOOD_CONSUMED = 2 then
+    N_FOOD_PURCHASED_PHP = 0;
+    noinput;
+  else
+    if special(N_FOOD_PURCHASED_PHP) then N_FOOD_PURCHASED_PHP = 0; endif;
+  endif;
+
+PROC N_FOOD_INKIND_PHP
+preproc
+  { Not consumed -> auto 0 + noinput (0, not notappl, for codebook/subtotal parity
+    with the flat build); consumed -> #755/#818 pre-fill so Enter passes an empty
+    amount. Per-occurrence preproc gate (Section C pattern). }
+  if N_FOOD_CONSUMED = 2 then
+    N_FOOD_INKIND_PHP = 0;
+    noinput;
+  else
+    if special(N_FOOD_INKIND_PHP) then N_FOOD_INKIND_PHP = 0; endif;
+  endif;
+postproc
+  { #677 consumed-needs-an-amount — roster edition (same rule + wording as the flat build). }
+  if N_FOOD_CONSUMED = 1 and not (N_FOOD_PURCHASED_PHP in -99, -98, 1:99999999)
+      and not (N_FOOD_INKIND_PHP in -99, -98, 1:99999999) then
+    errmsg(1010);
+    reenter;
+  endif;
+
+PROC Q157_FOOD_SUBTOTAL_TOTAL_PHP
+preproc
+  { Q157 food subtotal (spec §4.9) — Option C: computed in Q157's OWN preproc +
+    noinput, NOT protect() (#617: protected fields skip their preproc) and NOT a
+    group proc (spike 2026-07-03: BOTH the roster group postproc AND the cont form's
+    group preproc get wiped by record P's buffer init — 'protected field Q157... out
+    of range - value is NOTAPPL' at grid exit). A noinput field's preproc runs AT
+    arrival, inside the record context, before validation — the proven
+    MEMBER_LINE_NO / N_FOOD_ITEM pattern. Re-runs on back-nav + resume. Sentinels
+    -98/-99 excluded (#743). }
+  { Accumulate in a LOCAL, assign once (q92_oop rule) — reading the CURRENT field
+    inside its own preproc returns the stored notappl even after assigning it in the
+    same preproc (spike trace 2026-07-03: total=NOTAPPL with all row reads valid), so
+    self-accumulation `Q157 = Q157 + x` poisons the sum. }
+  numeric nfr_i; numeric nfr_total;
+  nfr_total = 0;
+  do nfr_i = 1 while nfr_i <= 13
+    if N_FOOD_CONSUMED(nfr_i) = 1 then
+      if N_FOOD_PURCHASED_PHP(nfr_i) <> -98 and N_FOOD_PURCHASED_PHP(nfr_i) <> -99 then
+        nfr_total = nfr_total + N_FOOD_PURCHASED_PHP(nfr_i);
+      endif;
+      if N_FOOD_INKIND_PHP(nfr_i) <> -98 and N_FOOD_INKIND_PHP(nfr_i) <> -99 then
+        nfr_total = nfr_total + N_FOOD_INKIND_PHP(nfr_i);
+      endif;
+    endif;
+  enddo;
+  Q157_FOOD_SUBTOTAL_TOTAL_PHP = nfr_total;
+  noinput;
+
+
+{ ---- Section N fan-out: remaining recall blocks as rosters (2026-07-03) ---- }
+PROC N_NF1M_ITEM
+preproc
+  { Auto-name this grid row from the WHO/SHA item list (one occurrence per item). }
+  if curocc() = 1 then N_NF1M_ITEM = "160. Personal care products (e.g., shampoo, haircut)";
+  elseif curocc() = 2 then N_NF1M_ITEM = "161. Household cleaning and maintenance products and services including domestic ones";
+  elseif curocc() = 3 then N_NF1M_ITEM = "162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas)";
+  elseif curocc() = 4 then N_NF1M_ITEM = "163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle";
+  elseif curocc() = 5 then N_NF1M_ITEM = "164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations";
+  elseif curocc() = 6 then N_NF1M_ITEM = "165. Recreational, cultural, religious, sporting and entertainment devices (monthly)";
+  elseif curocc() = 7 then N_NF1M_ITEM = "166. Postal services";
+  elseif curocc() = 8 then N_NF1M_ITEM = "167. Housing (actual rentals, estimated value of rent if owned)";
+  endif;
+  noinput;
+
+PROC N_NF1M_PURCHASED_PHP
+preproc
+  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
+    (#755/#818). Same per-occurrence gate as the food grid. }
+  if N_NF1M_CONSUMED = 2 then
+    N_NF1M_PURCHASED_PHP = 0;
+    noinput;
+  else
+    if special(N_NF1M_PURCHASED_PHP) then N_NF1M_PURCHASED_PHP = 0; endif;
+  endif;
+
+PROC N_NF1M_INKIND_PHP
+preproc
+  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
+    (#755/#818). Same per-occurrence gate as the food grid. }
+  if N_NF1M_CONSUMED = 2 then
+    N_NF1M_INKIND_PHP = 0;
+    noinput;
+  else
+    if special(N_NF1M_INKIND_PHP) then N_NF1M_INKIND_PHP = 0; endif;
+  endif;
+postproc
+  { #677 consumed-needs-an-amount — roster edition (same rule + wording as the food grid). }
+  if N_NF1M_CONSUMED = 1 and not (N_NF1M_PURCHASED_PHP in -99, -98, 1:99999999)
+      and not (N_NF1M_INKIND_PHP in -99, -98, 1:99999999) then
+    errmsg(1010);
+    reenter;
+  endif;
+
+PROC N_NF6M_ITEM
+preproc
+  { Auto-name this grid row from the WHO/SHA item list (one occurrence per item). }
+  if curocc() = 1 then N_NF6M_ITEM = "168. Recreational, cultural, religious, sporting and entertainment devices (6-month)";
+  elseif curocc() = 2 then N_NF6M_ITEM = "169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs";
+  endif;
+  noinput;
+
+PROC N_NF6M_PURCHASED_PHP
+preproc
+  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
+    (#755/#818). Same per-occurrence gate as the food grid. }
+  if N_NF6M_CONSUMED = 2 then
+    N_NF6M_PURCHASED_PHP = 0;
+    noinput;
+  else
+    if special(N_NF6M_PURCHASED_PHP) then N_NF6M_PURCHASED_PHP = 0; endif;
+  endif;
+
+PROC N_NF6M_INKIND_PHP
+preproc
+  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
+    (#755/#818). Same per-occurrence gate as the food grid. }
+  if N_NF6M_CONSUMED = 2 then
+    N_NF6M_INKIND_PHP = 0;
+    noinput;
+  else
+    if special(N_NF6M_INKIND_PHP) then N_NF6M_INKIND_PHP = 0; endif;
+  endif;
+postproc
+  { #677 consumed-needs-an-amount — roster edition (same rule + wording as the food grid). }
+  if N_NF6M_CONSUMED = 1 and not (N_NF6M_PURCHASED_PHP in -99, -98, 1:99999999)
+      and not (N_NF6M_INKIND_PHP in -99, -98, 1:99999999) then
+    errmsg(1010);
+    reenter;
+  endif;
+
+PROC N_NF12M_ITEM
+preproc
+  { Auto-name this grid row from the WHO/SHA item list (one occurrence per item). }
+  if curocc() = 1 then N_NF12M_ITEM = "170. Educational services (e.g., tuitions and tutoring)";
+  elseif curocc() = 2 then N_NF12M_ITEM = "171. Accommodation services, including for educational establishment (e.g., hotels)";
+  elseif curocc() = 3 then N_NF12M_ITEM = "172. Garden and personal pets' products and services";
+  elseif curocc() = 4 then N_NF12M_ITEM = "173. Health insurance";
+  elseif curocc() = 5 then N_NF12M_ITEM = "174. Other insurance (e.g., for life and accident, and travel)";
+  endif;
+  noinput;
+
+PROC N_NF12M_PURCHASED_PHP
+preproc
+  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
+    (#755/#818). Same per-occurrence gate as the food grid. }
+  if N_NF12M_CONSUMED = 2 then
+    N_NF12M_PURCHASED_PHP = 0;
+    noinput;
+  else
+    if special(N_NF12M_PURCHASED_PHP) then N_NF12M_PURCHASED_PHP = 0; endif;
+  endif;
+
+PROC N_NF12M_INKIND_PHP
+preproc
+  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
+    (#755/#818). Same per-occurrence gate as the food grid. }
+  if N_NF12M_CONSUMED = 2 then
+    N_NF12M_INKIND_PHP = 0;
+    noinput;
+  else
+    if special(N_NF12M_INKIND_PHP) then N_NF12M_INKIND_PHP = 0; endif;
+  endif;
+postproc
+  { #677 consumed-needs-an-amount — roster edition (same rule + wording as the food grid). }
+  if N_NF12M_CONSUMED = 1 and not (N_NF12M_PURCHASED_PHP in -99, -98, 1:99999999)
+      and not (N_NF12M_INKIND_PHP in -99, -98, 1:99999999) then
+    errmsg(1010);
+    reenter;
+  endif;
+
+PROC N_H12M_ITEM
+preproc
+  { Auto-name this grid row from the WHO/SHA item list (one occurrence per item). }
+  if curocc() = 1 then N_H12M_ITEM = "175. Inpatient care services";
+  elseif curocc() = 2 then N_H12M_ITEM = "176. Emergency transportation and emergency rescue services";
+  endif;
+  noinput;
+
+PROC N_H12M_PURCHASED_PHP
+preproc
+  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
+    (#755/#818). Same per-occurrence gate as the food grid. }
+  if N_H12M_CONSUMED = 2 then
+    N_H12M_PURCHASED_PHP = 0;
+    noinput;
+  else
+    if special(N_H12M_PURCHASED_PHP) then N_H12M_PURCHASED_PHP = 0; endif;
+  endif;
+
+PROC N_H12M_INKIND_PHP
+preproc
+  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
+    (#755/#818). Same per-occurrence gate as the food grid. }
+  if N_H12M_CONSUMED = 2 then
+    N_H12M_INKIND_PHP = 0;
+    noinput;
+  else
+    if special(N_H12M_INKIND_PHP) then N_H12M_INKIND_PHP = 0; endif;
+  endif;
+postproc
+  { #677 consumed-needs-an-amount — roster edition (same rule + wording as the food grid). }
+  if N_H12M_CONSUMED = 1 and not (N_H12M_PURCHASED_PHP in -99, -98, 1:99999999)
+      and not (N_H12M_INKIND_PHP in -99, -98, 1:99999999) then
+    errmsg(1010);
+    reenter;
+  endif;
+
+PROC Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP
+preproc
+  { Q157-pattern subtotal (device-proven 2026-07-03): computed in the TOTAL field's OWN
+    preproc + noinput with a LOCAL accumulator; sums CONSUMED=1 rows of N_H12M_ROSTER;
+    sentinels -98/-99 excluded (#743). See section_n_food_roster_procs for why not
+    protect() and not a group proc (record buffer-init wipes; self-read poisoning). }
+  numeric nsr_i; numeric nsr_total;
+  nsr_total = 0;
+  do nsr_i = 1 while nsr_i <= 2
+    if N_H12M_CONSUMED(nsr_i) = 1 then
+      if N_H12M_PURCHASED_PHP(nsr_i) <> -98 and N_H12M_PURCHASED_PHP(nsr_i) <> -99 then
+        nsr_total = nsr_total + N_H12M_PURCHASED_PHP(nsr_i);
+      endif;
+      if N_H12M_INKIND_PHP(nsr_i) <> -98 and N_H12M_INKIND_PHP(nsr_i) <> -99 then
+        nsr_total = nsr_total + N_H12M_INKIND_PHP(nsr_i);
+      endif;
+    endif;
+  enddo;
+  Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = nsr_total;
+  noinput;
+
+PROC N_H6M_ITEM
+preproc
+  { Auto-name this grid row from the WHO/SHA item list (one occurrence per item). }
+  if curocc() = 1 then N_H6M_ITEM = "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself.";
+  elseif curocc() = 2 then N_H6M_ITEM = "179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care";
+  elseif curocc() = 3 then N_H6M_ITEM = "180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases";
+  elseif curocc() = 4 then N_H6M_ITEM = "181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases";
+  endif;
+  noinput;
+
+PROC N_H6M_PURCHASED_PHP
+preproc
+  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
+    (#755/#818). Same per-occurrence gate as the food grid. }
+  if N_H6M_CONSUMED = 2 then
+    N_H6M_PURCHASED_PHP = 0;
+    noinput;
+  else
+    if special(N_H6M_PURCHASED_PHP) then N_H6M_PURCHASED_PHP = 0; endif;
+  endif;
+
+PROC N_H6M_INKIND_PHP
+preproc
+  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
+    (#755/#818). Same per-occurrence gate as the food grid. }
+  if N_H6M_CONSUMED = 2 then
+    N_H6M_INKIND_PHP = 0;
+    noinput;
+  else
+    if special(N_H6M_INKIND_PHP) then N_H6M_INKIND_PHP = 0; endif;
+  endif;
+postproc
+  { #677 consumed-needs-an-amount — roster edition (same rule + wording as the food grid). }
+  if N_H6M_CONSUMED = 1 and not (N_H6M_PURCHASED_PHP in -99, -98, 1:99999999)
+      and not (N_H6M_INKIND_PHP in -99, -98, 1:99999999) then
+    errmsg(1010);
+    reenter;
+  endif;
+
+PROC Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP
+preproc
+  { Q157-pattern subtotal (device-proven 2026-07-03): computed in the TOTAL field's OWN
+    preproc + noinput with a LOCAL accumulator; sums CONSUMED=1 rows of N_H6M_ROSTER;
+    sentinels -98/-99 excluded (#743). See section_n_food_roster_procs for why not
+    protect() and not a group proc (record buffer-init wipes; self-read poisoning). }
+  numeric nsr_i; numeric nsr_total;
+  nsr_total = 0;
+  do nsr_i = 1 while nsr_i <= 4
+    if N_H6M_CONSUMED(nsr_i) = 1 then
+      if N_H6M_PURCHASED_PHP(nsr_i) <> -98 and N_H6M_PURCHASED_PHP(nsr_i) <> -99 then
+        nsr_total = nsr_total + N_H6M_PURCHASED_PHP(nsr_i);
+      endif;
+      if N_H6M_INKIND_PHP(nsr_i) <> -98 and N_H6M_INKIND_PHP(nsr_i) <> -99 then
+        nsr_total = nsr_total + N_H6M_INKIND_PHP(nsr_i);
+      endif;
+    endif;
+  enddo;
+  Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = nsr_total;
+  noinput;
+
+PROC N_H1M_ITEM
+preproc
+  { Auto-name this grid row from the WHO/SHA item list (one occurrence per item). }
+  if curocc() = 1 then N_H1M_ITEM = "183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases";
+  elseif curocc() = 2 then N_H1M_ITEM = "184. Outpatient medical and dental services, including online services, without overnight stay";
+  endif;
+  noinput;
+
+PROC N_H1M_PURCHASED_PHP
+preproc
+  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
+    (#755/#818). Same per-occurrence gate as the food grid. }
+  if N_H1M_CONSUMED = 2 then
+    N_H1M_PURCHASED_PHP = 0;
+    noinput;
+  else
+    if special(N_H1M_PURCHASED_PHP) then N_H1M_PURCHASED_PHP = 0; endif;
+  endif;
+
+PROC N_H1M_INKIND_PHP
+preproc
+  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
+    (#755/#818). Same per-occurrence gate as the food grid. }
+  if N_H1M_CONSUMED = 2 then
+    N_H1M_INKIND_PHP = 0;
+    noinput;
+  else
+    if special(N_H1M_INKIND_PHP) then N_H1M_INKIND_PHP = 0; endif;
+  endif;
+postproc
+  { #677 consumed-needs-an-amount — roster edition (same rule + wording as the food grid). }
+  if N_H1M_CONSUMED = 1 and not (N_H1M_PURCHASED_PHP in -99, -98, 1:99999999)
+      and not (N_H1M_INKIND_PHP in -99, -98, 1:99999999) then
+    errmsg(1010);
+    reenter;
+  endif;
+
+PROC Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP
+preproc
+  { Q157-pattern subtotal (device-proven 2026-07-03): computed in the TOTAL field's OWN
+    preproc + noinput with a LOCAL accumulator; sums CONSUMED=1 rows of N_H1M_ROSTER;
+    sentinels -98/-99 excluded (#743). See section_n_food_roster_procs for why not
+    protect() and not a group proc (record buffer-init wipes; self-read poisoning). }
+  numeric nsr_i; numeric nsr_total;
+  nsr_total = 0;
+  do nsr_i = 1 while nsr_i <= 2
+    if N_H1M_CONSUMED(nsr_i) = 1 then
+      if N_H1M_PURCHASED_PHP(nsr_i) <> -98 and N_H1M_PURCHASED_PHP(nsr_i) <> -99 then
+        nsr_total = nsr_total + N_H1M_PURCHASED_PHP(nsr_i);
+      endif;
+      if N_H1M_INKIND_PHP(nsr_i) <> -98 and N_H1M_INKIND_PHP(nsr_i) <> -99 then
+        nsr_total = nsr_total + N_H1M_INKIND_PHP(nsr_i);
+      endif;
+    endif;
+  enddo;
+  Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = nsr_total;
+  noinput;
+
+
+{ ---- Section N end-of-section expenditure recap (htmldialog review.html) ---- }
+PROC Q186_CURRENT_INCOME
+preproc
+  { Read back the 9 Section N block subtotals to the respondent before funding sources.
+    Stored subtotals (Q157/Q177/Q182/Q185) read direct; restaurant/smoking/non-food summed
+    here (CONSUMED=1, -98/-99 excluded). Informational modal - OK returns to Q186. }
+  numeric srv_i;
+  numeric srv_rest; numeric srv_smoke;
+  numeric srv_nf1m; numeric srv_nf6m; numeric srv_nf12m;
+  numeric srv_grand;
+  string  srv_j; string srv_res;
+  srv_rest = 0;
+  if Q158_RESTAURANT_CONSUMED = 1 then
+    if Q158_RESTAURANT_PURCHASED_PHP <> -98 and Q158_RESTAURANT_PURCHASED_PHP <> -99 then srv_rest = srv_rest + Q158_RESTAURANT_PURCHASED_PHP; endif;
+    if Q158_RESTAURANT_INKIND_PHP <> -98 and Q158_RESTAURANT_INKIND_PHP <> -99 then srv_rest = srv_rest + Q158_RESTAURANT_INKIND_PHP; endif;
+  endif;
+  srv_smoke = 0;
+  if Q159_SMOKING_TOBACCO_CONSUMED = 1 then
+    if Q159_SMOKING_TOBACCO_PURCHASED_PHP <> -98 and Q159_SMOKING_TOBACCO_PURCHASED_PHP <> -99 then srv_smoke = srv_smoke + Q159_SMOKING_TOBACCO_PURCHASED_PHP; endif;
+    if Q159_SMOKING_TOBACCO_INKIND_PHP <> -98 and Q159_SMOKING_TOBACCO_INKIND_PHP <> -99 then srv_smoke = srv_smoke + Q159_SMOKING_TOBACCO_INKIND_PHP; endif;
+  endif;
+  srv_nf1m = 0;
+  do srv_i = 1 while srv_i <= 8
+    if N_NF1M_CONSUMED(srv_i) = 1 then
+      if N_NF1M_PURCHASED_PHP(srv_i) <> -98 and N_NF1M_PURCHASED_PHP(srv_i) <> -99 then srv_nf1m = srv_nf1m + N_NF1M_PURCHASED_PHP(srv_i); endif;
+      if N_NF1M_INKIND_PHP(srv_i) <> -98 and N_NF1M_INKIND_PHP(srv_i) <> -99 then srv_nf1m = srv_nf1m + N_NF1M_INKIND_PHP(srv_i); endif;
+    endif;
+  enddo;
+  srv_nf6m = 0;
+  do srv_i = 1 while srv_i <= 2
+    if N_NF6M_CONSUMED(srv_i) = 1 then
+      if N_NF6M_PURCHASED_PHP(srv_i) <> -98 and N_NF6M_PURCHASED_PHP(srv_i) <> -99 then srv_nf6m = srv_nf6m + N_NF6M_PURCHASED_PHP(srv_i); endif;
+      if N_NF6M_INKIND_PHP(srv_i) <> -98 and N_NF6M_INKIND_PHP(srv_i) <> -99 then srv_nf6m = srv_nf6m + N_NF6M_INKIND_PHP(srv_i); endif;
+    endif;
+  enddo;
+  srv_nf12m = 0;
+  do srv_i = 1 while srv_i <= 5
+    if N_NF12M_CONSUMED(srv_i) = 1 then
+      if N_NF12M_PURCHASED_PHP(srv_i) <> -98 and N_NF12M_PURCHASED_PHP(srv_i) <> -99 then srv_nf12m = srv_nf12m + N_NF12M_PURCHASED_PHP(srv_i); endif;
+      if N_NF12M_INKIND_PHP(srv_i) <> -98 and N_NF12M_INKIND_PHP(srv_i) <> -99 then srv_nf12m = srv_nf12m + N_NF12M_INKIND_PHP(srv_i); endif;
+    endif;
+  enddo;
+  srv_grand = Q157_FOOD_SUBTOTAL_TOTAL_PHP + srv_rest + srv_smoke
+            + srv_nf1m + srv_nf6m + srv_nf12m
+            + Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP
+            + Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP;
+  srv_j = maketext("%d", Q157_FOOD_SUBTOTAL_TOTAL_PHP)
+        + "," + maketext("%d", srv_rest) + "," + maketext("%d", srv_smoke)
+        + "," + maketext("%d", srv_nf1m) + "," + maketext("%d", srv_nf6m) + "," + maketext("%d", srv_nf12m)
+        + "," + maketext("%d", Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP)
+        + "," + maketext("%d", Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP)
+        + "," + maketext("%d", Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP)
+        + "," + maketext("%d", srv_grand);
+  srv_res = htmldialog("review.html", inputData := srv_j);
+
+
+
+
+
 { ---- Bill-recall cap (spec 4.8): no-receipt amount cannot exceed total bill ---- }
 PROC Q141_1_NO_RECEIPT_AMT_PHP
 postproc
   if Q141_1_NO_RECEIPT_AMT_PHP > Q139_FINAL_AMOUNT_PHP then
-    errmsg("No-receipt amount (%d) exceeds total bill (%d). Verify.",
+    errmsg(1011,
            Q141_1_NO_RECEIPT_AMT_PHP, Q139_FINAL_AMOUNT_PHP);
     reenter;
   endif;
@@ -573,7 +1011,7 @@ postproc
 PROC Q1_IS_HH_HEAD
 postproc
   if Q1_IS_HH_HEAD = 2 then
-    errmsg("Respondent is not the household head. Confirm they are a household decision-maker per the sampling protocol before continuing.");
+    errmsg(1012);
   endif;
 
 { ---- #796/#797: the area-presence screening questions ("Does this area have a BUCAS
@@ -613,7 +1051,7 @@ preproc
   endif;
 postproc
   if Q49_PRIVATE_INS = 1 and length(strip(Q50_PRIVATE_INS_OTHER_TXT)) = 0 then
-    errmsg("Q49 says this member has private insurance. Please specify it in Q50.");
+    errmsg(1013);
     reenter;
   endif;
 
@@ -626,7 +1064,7 @@ postproc
   if Q186_CURRENT_INCOME = 2 and Q187_SAVINGS = 2 and Q188_SOLD_ASSETS = 2
      and Q189_BORROW_FAMILY = 2 and Q190_BORROW_INST = 2 and Q191_REMITTANCE = 2
      and Q192_GOVT_ASSIST = 2 and Q193_LGU_DONATION = 2 and Q194_OTHER_SOURCE = 2 then
-    errmsg("No funding source selected (Q186-Q194 are all 'No'). At least one source must be 'Yes' - how did the household pay for the health expenses? Please review.");
+    errmsg(1014);
     reenter;
   endif;
 
@@ -638,7 +1076,7 @@ preproc
   endif;
 postproc
   if Q194_OTHER_SOURCE = 1 and length(strip(Q194_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected in Q194. Please specify.");
+    errmsg(1015);
     reenter;
   endif;
 
@@ -705,7 +1143,7 @@ preproc
 PROC Q102_VISIT_REASON
 postproc
   if length(strip(Q102_VISIT_REASON)) = 0 then
-    errmsg("Select at least one option for Q102 before continuing.");
+    errmsg(1016);
     reenter;
   endif;
 
@@ -731,18 +1169,18 @@ postproc
     if tonumber(Q102_VISIT_REASON[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q102_VISIT_REASON_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q102 - please specify.");
+    errmsg(1017);
     reenter;
   endif;
 
 PROC Q103_CARE_TYPE
 postproc
   if length(strip(Q103_CARE_TYPE)) = 0 then
-    errmsg("Select at least one option for Q103 before continuing.");
+    errmsg(1018);
     reenter;
   endif;
   if pos("90", Q103_CARE_TYPE) > 0 and length(strip(Q103_CARE_TYPE)) > 2 then
-    errmsg("Q103: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1019);
   endif;
 
 PROC Q103_CARE_TYPE_OTHER_TXT
@@ -767,18 +1205,18 @@ postproc
     if tonumber(Q103_CARE_TYPE[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q103_CARE_TYPE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q103 - please specify.");
+    errmsg(1020);
     reenter;
   endif;
 
 PROC Q106_FORGONE_WHY
 postproc
   if length(strip(Q106_FORGONE_WHY)) = 0 then
-    errmsg("Select at least one option for Q106 before continuing.");
+    errmsg(1021);
     reenter;
   endif;
   if pos("90", Q106_FORGONE_WHY) > 0 and length(strip(Q106_FORGONE_WHY)) > 2 then
-    errmsg("Q106: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1022);
   endif;
 
 PROC Q106_FORGONE_WHY_OTHER_TXT
@@ -803,18 +1241,18 @@ postproc
     if tonumber(Q106_FORGONE_WHY[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q106_FORGONE_WHY_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q106 - please specify.");
+    errmsg(1023);
     reenter;
   endif;
 
 PROC Q107_OTHER_ACTIONS
 postproc
   if length(strip(Q107_OTHER_ACTIONS)) = 0 then
-    errmsg("Select at least one option for Q107 before continuing.");
+    errmsg(1024);
     reenter;
   endif;
   if pos("90", Q107_OTHER_ACTIONS) > 0 and length(strip(Q107_OTHER_ACTIONS)) > 2 then
-    errmsg("Q107: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1025);
   endif;
 
 PROC Q107_OTHER_ACTIONS_OTHER_TXT
@@ -839,18 +1277,18 @@ postproc
     if tonumber(Q107_OTHER_ACTIONS[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q107_OTHER_ACTIONS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q107 - please specify.");
+    errmsg(1026);
     reenter;
   endif;
 
 PROC Q109_TYPE
 postproc
   if length(strip(Q109_TYPE)) = 0 then
-    errmsg("Select at least one option for Q109 before continuing.");
+    errmsg(1027);
     reenter;
   endif;
   if pos("90", Q109_TYPE) > 0 and length(strip(Q109_TYPE)) > 2 then
-    errmsg("Q109: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1028);
   endif;
 
 PROC Q109_TYPE_OTHER_TXT
@@ -875,7 +1313,7 @@ postproc
     if tonumber(Q109_TYPE[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q109_TYPE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q109 - please specify.");
+    errmsg(1029);
     reenter;
   endif;
 
@@ -883,7 +1321,7 @@ PROC Q113_WHY_NOT
 postproc
   numeric tgN; numeric tgK; numeric tgP; numeric tgHit;
   if length(strip(Q113_WHY_NOT)) = 0 then
-    errmsg("Select at least one option for Q113 before continuing.");
+    errmsg(1030);
     reenter;
   endif;
   tgHit = 0;
@@ -918,7 +1356,7 @@ postproc
     if tonumber(Q113_WHY_NOT[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q113_WHY_NOT_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q113 - please specify.");
+    errmsg(1031);
     reenter;
   endif;
   skip to Q126_NBB_HEARD;   { after why-not -> Section L NBB (skip Q114-Q125 referral-experience tail) }
@@ -926,11 +1364,11 @@ postproc
 PROC Q121_WHY_HOSPITAL
 postproc
   if length(strip(Q121_WHY_HOSPITAL)) = 0 then
-    errmsg("Select at least one option for Q121 before continuing.");
+    errmsg(1032);
     reenter;
   endif;
   if pos("90", Q121_WHY_HOSPITAL) > 0 and length(strip(Q121_WHY_HOSPITAL)) > 2 then
-    errmsg("Q121: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1033);
   endif;
 
 PROC Q121_WHY_HOSPITAL_OTHER_TXT
@@ -955,18 +1393,18 @@ postproc
     if tonumber(Q121_WHY_HOSPITAL[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q121_WHY_HOSPITAL_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q121 - please specify.");
+    errmsg(1034);
     reenter;
   endif;
 
 PROC Q127_NBB_SOURCE
 postproc
   if length(strip(Q127_NBB_SOURCE)) = 0 then
-    errmsg("Select at least one option for Q127 before continuing.");
+    errmsg(1035);
     reenter;
   endif;
   if pos("90", Q127_NBB_SOURCE) > 0 and length(strip(Q127_NBB_SOURCE)) > 2 then
-    errmsg("Q127: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1036);
   endif;
 
 PROC Q127_NBB_SOURCE_OTHER_TXT
@@ -991,18 +1429,18 @@ postproc
     if tonumber(Q127_NBB_SOURCE[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q127_NBB_SOURCE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q127 - please specify.");
+    errmsg(1037);
     reenter;
   endif;
 
 PROC Q128_NBB_UNDERSTAND
 postproc
   if length(strip(Q128_NBB_UNDERSTAND)) = 0 then
-    errmsg("Select at least one option for Q128 before continuing.");
+    errmsg(1038);
     reenter;
   endif;
   if pos("90", Q128_NBB_UNDERSTAND) > 0 and length(strip(Q128_NBB_UNDERSTAND)) > 2 then
-    errmsg("Q128: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1039);
   endif;
 
 PROC Q128_NBB_UNDERSTAND_OTHER_TXT
@@ -1027,18 +1465,18 @@ postproc
     if tonumber(Q128_NBB_UNDERSTAND[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q128_NBB_UNDERSTAND_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q128 - please specify.");
+    errmsg(1040);
     reenter;
   endif;
 
 PROC Q133_ZBB_SOURCE
 postproc
   if length(strip(Q133_ZBB_SOURCE)) = 0 then
-    errmsg("Select at least one option for Q133 before continuing.");
+    errmsg(1041);
     reenter;
   endif;
   if pos("90", Q133_ZBB_SOURCE) > 0 and length(strip(Q133_ZBB_SOURCE)) > 2 then
-    errmsg("Q133: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1042);
   endif;
 
 PROC Q133_ZBB_SOURCE_OTHER_TXT
@@ -1063,18 +1501,18 @@ postproc
     if tonumber(Q133_ZBB_SOURCE[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q133_ZBB_SOURCE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q133 - please specify.");
+    errmsg(1043);
     reenter;
   endif;
 
 PROC Q134_ZBB_UNDERSTAND
 postproc
   if length(strip(Q134_ZBB_UNDERSTAND)) = 0 then
-    errmsg("Select at least one option for Q134 before continuing.");
+    errmsg(1044);
     reenter;
   endif;
   if pos("90", Q134_ZBB_UNDERSTAND) > 0 and length(strip(Q134_ZBB_UNDERSTAND)) > 2 then
-    errmsg("Q134: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1045);
   endif;
 
 PROC Q134_ZBB_UNDERSTAND_OTHER_TXT
@@ -1099,18 +1537,18 @@ postproc
     if tonumber(Q134_ZBB_UNDERSTAND[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q134_ZBB_UNDERSTAND_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q134 - please specify.");
+    errmsg(1046);
     reenter;
   endif;
 
 PROC Q137_MAIFIP_SOURCE
 postproc
   if length(strip(Q137_MAIFIP_SOURCE)) = 0 then
-    errmsg("Select at least one option for Q137 before continuing.");
+    errmsg(1047);
     reenter;
   endif;
   if pos("90", Q137_MAIFIP_SOURCE) > 0 and length(strip(Q137_MAIFIP_SOURCE)) > 2 then
-    errmsg("Q137: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1048);
   endif;
 
 PROC Q137_MAIFIP_SOURCE_OTHER_TXT
@@ -1135,21 +1573,21 @@ postproc
     if tonumber(Q137_MAIFIP_SOURCE[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q137_MAIFIP_SOURCE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q137 - please specify.");
+    errmsg(1049);
     reenter;
   endif;
 
 PROC Q141_BILL_ITEMS
 postproc
   if length(strip(Q141_BILL_ITEMS)) = 0 then
-    errmsg("Select at least one option for Q141 before continuing.");
+    errmsg(1050);
     reenter;
   endif;
 
 PROC Q143_HOW_PAID
 postproc
   if length(strip(Q143_HOW_PAID)) = 0 then
-    errmsg("Select at least one option for Q143 before continuing.");
+    errmsg(1051);
     reenter;
   endif;
 
@@ -1175,14 +1613,14 @@ postproc
     if tonumber(Q143_HOW_PAID[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q143_HOW_PAID_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q143 - please specify.");
+    errmsg(1052);
     reenter;
   endif;
 
 PROC Q196_FOREGONE
 postproc
   if length(strip(Q196_FOREGONE)) = 0 then
-    errmsg("Select at least one option for Q196 before continuing.");
+    errmsg(1053);
     reenter;
   endif;
 
@@ -1208,14 +1646,14 @@ postproc
     if tonumber(Q196_FOREGONE[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q196_FOREGONE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q196 - please specify.");
+    errmsg(1054);
     reenter;
   endif;
 
 PROC Q202_WORRY_REASONS
 postproc
   if length(strip(Q202_WORRY_REASONS)) = 0 then
-    errmsg("Select at least one option for Q202 before continuing.");
+    errmsg(1055);
     reenter;
   endif;
 
@@ -1241,18 +1679,18 @@ postproc
     if tonumber(Q202_WORRY_REASONS[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q202_WORRY_REASONS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q202 - please specify.");
+    errmsg(1056);
     reenter;
   endif;
 
 PROC Q52_UHC_SOURCE
 postproc
   if length(strip(Q52_UHC_SOURCE)) = 0 then
-    errmsg("Select at least one option for Q52 before continuing.");
+    errmsg(1057);
     reenter;
   endif;
   if pos("90", Q52_UHC_SOURCE) > 0 and length(strip(Q52_UHC_SOURCE)) > 2 then
-    errmsg("Q52: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1058);
   endif;
 
 PROC Q52_UHC_SOURCE_OTHER_TXT
@@ -1277,18 +1715,18 @@ postproc
     if tonumber(Q52_UHC_SOURCE[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q52_UHC_SOURCE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q52 - please specify.");
+    errmsg(1059);
     reenter;
   endif;
 
 PROC Q53_UHC_UNDERSTAND
 postproc
   if length(strip(Q53_UHC_UNDERSTAND)) = 0 then
-    errmsg("Select at least one option for Q53 before continuing.");
+    errmsg(1060);
     reenter;
   endif;
   if pos("90", Q53_UHC_UNDERSTAND) > 0 and length(strip(Q53_UHC_UNDERSTAND)) > 2 then
-    errmsg("Q53: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1061);
   endif;
 
 PROC Q53_UHC_UNDERSTAND_OTHER_TXT
@@ -1313,18 +1751,18 @@ postproc
     if tonumber(Q53_UHC_UNDERSTAND[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q53_UHC_UNDERSTAND_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q53 - please specify.");
+    errmsg(1062);
     reenter;
   endif;
 
 PROC Q55_YAKAP_SOURCE
 postproc
   if length(strip(Q55_YAKAP_SOURCE)) = 0 then
-    errmsg("Select at least one option for Q55 before continuing.");
+    errmsg(1063);
     reenter;
   endif;
   if pos("90", Q55_YAKAP_SOURCE) > 0 and length(strip(Q55_YAKAP_SOURCE)) > 2 then
-    errmsg("Q55: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1064);
   endif;
 
 PROC Q55_YAKAP_SOURCE_OTHER_TXT
@@ -1349,21 +1787,21 @@ postproc
     if tonumber(Q55_YAKAP_SOURCE[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q55_YAKAP_SOURCE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q55 - please specify.");
+    errmsg(1065);
     reenter;
   endif;
 
 PROC Q56_YAKAP_UNDERSTAND
 postproc
   if length(strip(Q56_YAKAP_UNDERSTAND)) = 0 then
-    errmsg("Select at least one option for Q56 before continuing.");
+    errmsg(1066);
     reenter;
   endif;
   if pos("90", Q56_YAKAP_UNDERSTAND) > 0 and length(strip(Q56_YAKAP_UNDERSTAND)) > 2 then
-    errmsg("Q56: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1067);
   endif;
   if pos("05", Q56_YAKAP_UNDERSTAND) > 0 and length(strip(Q56_YAKAP_UNDERSTAND)) > 2 then
-    errmsg("Q56: 'There are no benefits in the package' cannot be combined with other answers - untick the others or untick this option.");
+    errmsg(1068);
     reenter;
   endif;
 
@@ -1389,18 +1827,18 @@ postproc
     if tonumber(Q56_YAKAP_UNDERSTAND[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q56_YAKAP_UNDERSTAND_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q56 - please specify.");
+    errmsg(1069);
     reenter;
   endif;
 
 PROC Q58_BUCAS_SOURCE
 postproc
   if length(strip(Q58_BUCAS_SOURCE)) = 0 then
-    errmsg("Select at least one option for Q58 before continuing.");
+    errmsg(1070);
     reenter;
   endif;
   if pos("90", Q58_BUCAS_SOURCE) > 0 and length(strip(Q58_BUCAS_SOURCE)) > 2 then
-    errmsg("Q58: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1071);
   endif;
 
 PROC Q58_BUCAS_SOURCE_OTHER_TXT
@@ -1425,14 +1863,14 @@ postproc
     if tonumber(Q58_BUCAS_SOURCE[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q58_BUCAS_SOURCE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q58 - please specify.");
+    errmsg(1072);
     reenter;
   endif;
 
 PROC Q59_BUCAS_UNDERSTAND
 postproc
   if length(strip(Q59_BUCAS_UNDERSTAND)) = 0 then
-    errmsg("Select at least one option for Q59 before continuing.");
+    errmsg(1073);
     reenter;
   endif;
 
@@ -1458,18 +1896,18 @@ postproc
     if tonumber(Q59_BUCAS_UNDERSTAND[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q59_BUCAS_UNDERSTAND_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q59 - please specify.");
+    errmsg(1074);
     reenter;
   endif;
 
 PROC Q61_BUCAS_SERVICES
 postproc
   if length(strip(Q61_BUCAS_SERVICES)) = 0 then
-    errmsg("Select at least one option for Q61 before continuing.");
+    errmsg(1075);
     reenter;
   endif;
   if pos("90", Q61_BUCAS_SERVICES) > 0 and length(strip(Q61_BUCAS_SERVICES)) > 2 then
-    errmsg("Q61: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1076);
   endif;
 
 PROC Q61_BUCAS_SERVICES_OTHER_TXT
@@ -1494,18 +1932,18 @@ postproc
     if tonumber(Q61_BUCAS_SERVICES[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q61_BUCAS_SERVICES_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q61 - please specify.");
+    errmsg(1077);
     reenter;
   endif;
 
 PROC Q65_CONDITIONS
 postproc
   if length(strip(Q65_CONDITIONS)) = 0 then
-    errmsg("Select at least one option for Q65 before continuing.");
+    errmsg(1078);
     reenter;
   endif;
   if pos("90", Q65_CONDITIONS) > 0 and length(strip(Q65_CONDITIONS)) > 2 then
-    errmsg("Q65: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1079);
   endif;
 
 PROC Q65_CONDITIONS_OTHER_TXT
@@ -1530,14 +1968,14 @@ postproc
     if tonumber(Q65_CONDITIONS[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q65_CONDITIONS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q65 - please specify.");
+    errmsg(1080);
     reenter;
   endif;
 
 PROC Q66_WHERE_BUY
 postproc
   if length(strip(Q66_WHERE_BUY)) = 0 then
-    errmsg("Select at least one option for Q66 before continuing.");
+    errmsg(1081);
     reenter;
   endif;
 
@@ -1563,18 +2001,18 @@ postproc
     if tonumber(Q66_WHERE_BUY[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q66_WHERE_BUY_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q66 - please specify.");
+    errmsg(1082);
     reenter;
   endif;
 
 PROC Q70_GAMOT_SOURCE
 postproc
   if length(strip(Q70_GAMOT_SOURCE)) = 0 then
-    errmsg("Select at least one option for Q70 before continuing.");
+    errmsg(1083);
     reenter;
   endif;
   if pos("90", Q70_GAMOT_SOURCE) > 0 and length(strip(Q70_GAMOT_SOURCE)) > 2 then
-    errmsg("Q70: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1084);
   endif;
 
 PROC Q70_GAMOT_SOURCE_OTHER_TXT
@@ -1599,18 +2037,18 @@ postproc
     if tonumber(Q70_GAMOT_SOURCE[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q70_GAMOT_SOURCE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q70 - please specify.");
+    errmsg(1085);
     reenter;
   endif;
 
 PROC Q71_GAMOT_UNDERSTAND
 postproc
   if length(strip(Q71_GAMOT_UNDERSTAND)) = 0 then
-    errmsg("Select at least one option for Q71 before continuing.");
+    errmsg(1086);
     reenter;
   endif;
   if pos("90", Q71_GAMOT_UNDERSTAND) > 0 and length(strip(Q71_GAMOT_UNDERSTAND)) > 2 then
-    errmsg("Q71: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1087);
   endif;
 
 PROC Q71_GAMOT_UNDERSTAND_OTHER_TXT
@@ -1635,18 +2073,18 @@ postproc
     if tonumber(Q71_GAMOT_UNDERSTAND[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q71_GAMOT_UNDERSTAND_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q71 - please specify.");
+    errmsg(1088);
     reenter;
   endif;
 
 PROC Q74_WHERE_REST
 postproc
   if length(strip(Q74_WHERE_REST)) = 0 then
-    errmsg("Select at least one option for Q74 before continuing.");
+    errmsg(1089);
     reenter;
   endif;
   if pos("90", Q74_WHERE_REST) > 0 and length(strip(Q74_WHERE_REST)) > 2 then
-    errmsg("Q74: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1090);
   endif;
 
 PROC Q74_WHERE_REST_OTHER_TXT
@@ -1671,18 +2109,18 @@ postproc
     if tonumber(Q74_WHERE_REST[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q74_WHERE_REST_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q74 - please specify.");
+    errmsg(1091);
     reenter;
   endif;
 
 PROC Q77_WHY_GENERIC
 postproc
   if length(strip(Q77_WHY_GENERIC)) = 0 then
-    errmsg("Select at least one option for Q77 before continuing.");
+    errmsg(1092);
     reenter;
   endif;
   if pos("90", Q77_WHY_GENERIC) > 0 and length(strip(Q77_WHY_GENERIC)) > 2 then
-    errmsg("Q77: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1093);
   endif;
 
 PROC Q77_WHY_GENERIC_OTHER_TXT
@@ -1707,7 +2145,7 @@ postproc
     if tonumber(Q77_WHY_GENERIC[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q77_WHY_GENERIC_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q77 - please specify.");
+    errmsg(1094);
     reenter;
   endif;
 
@@ -1718,11 +2156,11 @@ preproc
   endif;
 postproc
   if length(strip(Q78_WHY_BRANDED)) = 0 then
-    errmsg("Select at least one option for Q78 before continuing.");
+    errmsg(1095);
     reenter;
   endif;
   if pos("90", Q78_WHY_BRANDED) > 0 and length(strip(Q78_WHY_BRANDED)) > 2 then
-    errmsg("Q78: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1096);
   endif;
 
 PROC Q78_WHY_BRANDED_OTHER_TXT
@@ -1747,18 +2185,18 @@ postproc
     if tonumber(Q78_WHY_BRANDED[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q78_WHY_BRANDED_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q78 - please specify.");
+    errmsg(1097);
     reenter;
   endif;
 
 PROC Q82_DIFFICULTY_REASONS
 postproc
   if length(strip(Q82_DIFFICULTY_REASONS)) = 0 then
-    errmsg("Select at least one option for Q82 before continuing.");
+    errmsg(1098);
     reenter;
   endif;
   if pos("90", Q82_DIFFICULTY_REASONS) > 0 and length(strip(Q82_DIFFICULTY_REASONS)) > 2 then
-    errmsg("Q82: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1099);
   endif;
 
 PROC Q82_DIFFICULTY_REASONS_OTHER_TXT
@@ -1783,14 +2221,14 @@ postproc
     if tonumber(Q82_DIFFICULTY_REASONS[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q82_DIFFICULTY_REASONS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q82 - please specify.");
+    errmsg(1100);
     reenter;
   endif;
 
 PROC Q84_WHERE_ASSIST
 postproc
   if length(strip(Q84_WHERE_ASSIST)) = 0 then
-    errmsg("Select at least one option for Q84 before continuing.");
+    errmsg(1101);
     reenter;
   endif;
 
@@ -1816,21 +2254,21 @@ postproc
     if tonumber(Q84_WHERE_ASSIST[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q84_WHERE_ASSIST_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q84 - please specify.");
+    errmsg(1102);
     reenter;
   endif;
 
 PROC Q85_BENEFITS
 postproc
   if length(strip(Q85_BENEFITS)) = 0 then
-    errmsg("Select at least one option for Q85 before continuing.");
+    errmsg(1103);
     reenter;
   endif;
   if pos("90", Q85_BENEFITS) > 0 and length(strip(Q85_BENEFITS)) > 2 then
-    errmsg("Q85: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1104);
   endif;
   if pos("04", Q85_BENEFITS) > 0 and length(strip(Q85_BENEFITS)) > 2 then
-    errmsg("Q85: 'There are no benefits to being a member' cannot be combined with other answers - untick the others or untick this option.");
+    errmsg(1105);
     reenter;
   endif;
 
@@ -1856,18 +2294,18 @@ postproc
     if tonumber(Q85_BENEFITS[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q85_BENEFITS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q85 - please specify.");
+    errmsg(1106);
     reenter;
   endif;
 
 PROC Q88_DIFF_PAYING
 postproc
   if length(strip(Q88_DIFF_PAYING)) = 0 then
-    errmsg("Select at least one option for Q88 before continuing.");
+    errmsg(1107);
     reenter;
   endif;
   if pos("90", Q88_DIFF_PAYING) > 0 and length(strip(Q88_DIFF_PAYING)) > 2 then
-    errmsg("Q88: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1108);
   endif;
 
 PROC Q88_DIFF_PAYING_OTHER_TXT
@@ -1892,14 +2330,14 @@ postproc
     if tonumber(Q88_DIFF_PAYING[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q88_DIFF_PAYING_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q88 - please specify.");
+    errmsg(1109);
     reenter;
   endif;
 
 PROC Q91_WHY_WENT
 postproc
   if length(strip(Q91_WHY_WENT)) = 0 then
-    errmsg("Select at least one option for Q91 before continuing.");
+    errmsg(1110);
     reenter;
   endif;
 
@@ -1925,7 +2363,7 @@ postproc
     if tonumber(Q91_WHY_WENT[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q91_WHY_WENT_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q91 - please specify.");
+    errmsg(1111);
     reenter;
   endif;
 
@@ -1939,11 +2377,11 @@ preproc
   endif;
 postproc
   if length(strip(Q93_WHY_NOT)) = 0 then
-    errmsg("Select at least one option for Q93 before continuing.");
+    errmsg(1112);
     reenter;
   endif;
   if pos("90", Q93_WHY_NOT) > 0 and length(strip(Q93_WHY_NOT)) > 2 then
-    errmsg("Q93: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+    errmsg(1113);
   endif;
 
 PROC Q93_WHY_NOT_OTHER_TXT
@@ -1968,14 +2406,14 @@ postproc
     if tonumber(Q93_WHY_NOT[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q93_WHY_NOT_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q93 - please specify.");
+    errmsg(1114);
     reenter;
   endif;
 
 PROC Q94_TRANSPORT
 postproc
   if length(strip(Q94_TRANSPORT)) = 0 then
-    errmsg("Select at least one option for Q94 before continuing.");
+    errmsg(1115);
     reenter;
   endif;
 
@@ -2001,7 +2439,7 @@ postproc
     if tonumber(Q94_TRANSPORT[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
   if otHit2 = 1 and length(strip(Q94_TRANSPORT_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q94 - please specify.");
+    errmsg(1116);
     reenter;
   endif;
 
@@ -2010,53 +2448,53 @@ postproc
 PROC Q2_BIRTH_MONTH
 postproc
   if Q2_BIRTH_MONTH < 1 or Q2_BIRTH_MONTH > 12 then
-    errmsg("Birth month must be 1-12.");
+    errmsg(1117);
     reenter;
   endif;
 
 PROC Q2_BIRTH_YEAR
 postproc
   if Q2_BIRTH_YEAR < 1900 or Q2_BIRTH_YEAR > currentYear then
-    errmsg("Birth year must be between 1900 and %d.", currentYear);
+    errmsg(1118, currentYear);
     reenter;
   endif;
 
 PROC Q2_1_AGE
 postproc
   if Q2_1_AGE < 0 or Q2_1_AGE > 120 then
-    errmsg("Age must be 0-120.");
+    errmsg(1119);
     reenter;
   endif;
   if abs((currentYear - Q2_BIRTH_YEAR) - Q2_1_AGE) > 1 then
-    errmsg("Age (%d) is inconsistent with birth year %d. Reenter.", Q2_1_AGE, Q2_BIRTH_YEAR);
+    errmsg(1120, Q2_1_AGE, Q2_BIRTH_YEAR);
     reenter;
   endif;
 
 PROC Q19_HH_SIZE_TOTAL
 postproc
   if Q19_HH_SIZE_TOTAL < 1 or Q19_HH_SIZE_TOTAL > 20 then
-    errmsg("Household size must be 1-20.");
+    errmsg(1121);
     reenter;
   endif;
   if Q19_HH_SIZE_TOTAL > 10 then
-    errmsg("Household size %d is unusually large. Confirm.", Q19_HH_SIZE_TOTAL);
+    errmsg(1122, Q19_HH_SIZE_TOTAL);
   endif;
 
 PROC Q20_HH_CHILDREN
 postproc
   if Q20_HH_CHILDREN > Q19_HH_SIZE_TOTAL then
-    errmsg("Children (%d) cannot exceed household size (%d).", Q20_HH_CHILDREN, Q19_HH_SIZE_TOTAL);
+    errmsg(1123, Q20_HH_CHILDREN, Q19_HH_SIZE_TOTAL);
     reenter;
   endif;
 
 PROC Q21_HH_SENIORS
 postproc
   if Q21_HH_SENIORS > Q19_HH_SIZE_TOTAL then
-    errmsg("Seniors (%d) cannot exceed household size (%d).", Q21_HH_SENIORS, Q19_HH_SIZE_TOTAL);
+    errmsg(1124, Q21_HH_SENIORS, Q19_HH_SIZE_TOTAL);
     reenter;
   endif;
   if Q20_HH_CHILDREN + Q21_HH_SENIORS > Q19_HH_SIZE_TOTAL then
-    errmsg("Children + seniors (%d) exceed household size (%d).",
+    errmsg(1125,
            Q20_HH_CHILDREN + Q21_HH_SENIORS, Q19_HH_SIZE_TOTAL);
     reenter;
   endif;
@@ -2067,7 +2505,7 @@ preproc
   if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
 postproc
   if Q32_AGE < 0 or Q32_AGE > 120 then
-    errmsg("Member age must be 0-120.");
+    errmsg(1126);
     reenter;
   endif;
 
@@ -2076,7 +2514,7 @@ preproc
   if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
 postproc
   if Q32_AGE < 15 and Q39_CIVIL_STATUS <> 1 then   { 1 = Single (verify code) }
-    errmsg("Member is under 15 but civil status is not Single. Confirm.");
+    errmsg(1127);
   endif;
 
 { ---- Income amount must fall within reported bracket (spec 3.2, HARD) ---- }
@@ -2096,9 +2534,9 @@ postproc
     derivable, so refusing it is a HARD inconsistency. }
   if ok = 0 then
     if Q18_INCOME_BRACKET = 7 then
-      errmsg("Q18: an income amount was provided (%d PHP), so the bracket cannot be 'Refuse to answer'. Select the bracket that matches the amount (or re-enter the amount as -99 if the respondent refused).", a);
+      errmsg(1128, a);
     else
-      errmsg("Income bracket does not match the reported amount (%d PHP). Reconcile.", a);
+      errmsg(1129, a);
     endif;
     reenter;
   endif;
@@ -2276,7 +2714,7 @@ postproc
 PROC Q142_RECALL_PAYMENT
 postproc
   if Q142_RECALL_PAYMENT = 2 then
-    skip to Q144_CEREALS_CONSUMED;
+    skip to N_FOOD_ITEM(1);
   endif;
 
 PROC Q195_INCOME_PCT
@@ -2298,209 +2736,7 @@ postproc
   endif;
 
 { ---- Section N consumed-gate (#169) + subtotal init/compute (#9/#617) — merged per _CONSUMED field (#708/#709 combined-view) ---- }
-PROC Q144_CEREALS_CONSUMED
-preproc
-  Q157_FOOD_SUBTOTAL_TOTAL_PHP = 0;   { #617 init: protected subtotal must be valid (not notappl) when its block exits }
-  protect(Q157_FOOD_SUBTOTAL_TOTAL_PHP, true);
-postproc
-  if Q144_CEREALS_CONSUMED = 2 then
-    Q144_CEREALS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q144_CEREALS_PURCHASED_PHP, true);
-    Q144_CEREALS_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q144_CEREALS_INKIND_PHP, true);
-  else
-    if special(Q144_CEREALS_PURCHASED_PHP) then Q144_CEREALS_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q144_CEREALS_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q144_CEREALS_INKIND_PHP) then Q144_CEREALS_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q144_CEREALS_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q145_PULSES_CONSUMED
-postproc
-  if Q145_PULSES_CONSUMED = 2 then
-    Q145_PULSES_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q145_PULSES_PURCHASED_PHP, true);
-    Q145_PULSES_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q145_PULSES_INKIND_PHP, true);
-  else
-    if special(Q145_PULSES_PURCHASED_PHP) then Q145_PULSES_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q145_PULSES_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q145_PULSES_INKIND_PHP) then Q145_PULSES_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q145_PULSES_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q146_VEGETABLES_CONSUMED
-postproc
-  if Q146_VEGETABLES_CONSUMED = 2 then
-    Q146_VEGETABLES_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q146_VEGETABLES_PURCHASED_PHP, true);
-    Q146_VEGETABLES_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q146_VEGETABLES_INKIND_PHP, true);
-  else
-    if special(Q146_VEGETABLES_PURCHASED_PHP) then Q146_VEGETABLES_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q146_VEGETABLES_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q146_VEGETABLES_INKIND_PHP) then Q146_VEGETABLES_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q146_VEGETABLES_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q147_FRUITS_CONSUMED
-postproc
-  if Q147_FRUITS_CONSUMED = 2 then
-    Q147_FRUITS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q147_FRUITS_PURCHASED_PHP, true);
-    Q147_FRUITS_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q147_FRUITS_INKIND_PHP, true);
-  else
-    if special(Q147_FRUITS_PURCHASED_PHP) then Q147_FRUITS_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q147_FRUITS_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q147_FRUITS_INKIND_PHP) then Q147_FRUITS_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q147_FRUITS_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q148_FISH_CONSUMED
-postproc
-  if Q148_FISH_CONSUMED = 2 then
-    Q148_FISH_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q148_FISH_PURCHASED_PHP, true);
-    Q148_FISH_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q148_FISH_INKIND_PHP, true);
-  else
-    if special(Q148_FISH_PURCHASED_PHP) then Q148_FISH_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q148_FISH_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q148_FISH_INKIND_PHP) then Q148_FISH_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q148_FISH_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q149_MEAT_CONSUMED
-postproc
-  if Q149_MEAT_CONSUMED = 2 then
-    Q149_MEAT_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q149_MEAT_PURCHASED_PHP, true);
-    Q149_MEAT_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q149_MEAT_INKIND_PHP, true);
-  else
-    if special(Q149_MEAT_PURCHASED_PHP) then Q149_MEAT_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q149_MEAT_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q149_MEAT_INKIND_PHP) then Q149_MEAT_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q149_MEAT_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q150_EGGS_CONSUMED
-postproc
-  if Q150_EGGS_CONSUMED = 2 then
-    Q150_EGGS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q150_EGGS_PURCHASED_PHP, true);
-    Q150_EGGS_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q150_EGGS_INKIND_PHP, true);
-  else
-    if special(Q150_EGGS_PURCHASED_PHP) then Q150_EGGS_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q150_EGGS_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q150_EGGS_INKIND_PHP) then Q150_EGGS_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q150_EGGS_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q151_MILK_CONSUMED
-postproc
-  if Q151_MILK_CONSUMED = 2 then
-    Q151_MILK_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q151_MILK_PURCHASED_PHP, true);
-    Q151_MILK_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q151_MILK_INKIND_PHP, true);
-  else
-    if special(Q151_MILK_PURCHASED_PHP) then Q151_MILK_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q151_MILK_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q151_MILK_INKIND_PHP) then Q151_MILK_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q151_MILK_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q152_FATS_CONSUMED
-postproc
-  if Q152_FATS_CONSUMED = 2 then
-    Q152_FATS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q152_FATS_PURCHASED_PHP, true);
-    Q152_FATS_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q152_FATS_INKIND_PHP, true);
-  else
-    if special(Q152_FATS_PURCHASED_PHP) then Q152_FATS_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q152_FATS_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q152_FATS_INKIND_PHP) then Q152_FATS_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q152_FATS_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q153_SUGAR_CONSUMED
-postproc
-  if Q153_SUGAR_CONSUMED = 2 then
-    Q153_SUGAR_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q153_SUGAR_PURCHASED_PHP, true);
-    Q153_SUGAR_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q153_SUGAR_INKIND_PHP, true);
-  else
-    if special(Q153_SUGAR_PURCHASED_PHP) then Q153_SUGAR_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q153_SUGAR_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q153_SUGAR_INKIND_PHP) then Q153_SUGAR_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q153_SUGAR_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q154_CONDIMENTS_CONSUMED
-postproc
-  if Q154_CONDIMENTS_CONSUMED = 2 then
-    Q154_CONDIMENTS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q154_CONDIMENTS_PURCHASED_PHP, true);
-    Q154_CONDIMENTS_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q154_CONDIMENTS_INKIND_PHP, true);
-  else
-    if special(Q154_CONDIMENTS_PURCHASED_PHP) then Q154_CONDIMENTS_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q154_CONDIMENTS_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q154_CONDIMENTS_INKIND_PHP) then Q154_CONDIMENTS_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q154_CONDIMENTS_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q155_WATER_NA_CONSUMED
-postproc
-  if Q155_WATER_NA_CONSUMED = 2 then
-    Q155_WATER_NA_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q155_WATER_NA_PURCHASED_PHP, true);
-    Q155_WATER_NA_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q155_WATER_NA_INKIND_PHP, true);
-  else
-    if special(Q155_WATER_NA_PURCHASED_PHP) then Q155_WATER_NA_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q155_WATER_NA_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q155_WATER_NA_INKIND_PHP) then Q155_WATER_NA_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q155_WATER_NA_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q156_ALCOHOL_CONSUMED
-postproc
-  if Q156_ALCOHOL_CONSUMED = 2 then
-    Q156_ALCOHOL_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q156_ALCOHOL_PURCHASED_PHP, true);
-    Q156_ALCOHOL_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q156_ALCOHOL_INKIND_PHP, true);
-  else
-    if special(Q156_ALCOHOL_PURCHASED_PHP) then Q156_ALCOHOL_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q156_ALCOHOL_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q156_ALCOHOL_INKIND_PHP) then Q156_ALCOHOL_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q156_ALCOHOL_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
 PROC Q158_RESTAURANT_CONSUMED
-preproc
-  { #617 real Q157_FOOD_SUBTOTAL_TOTAL_PHP sum, now that the panel is complete }
-  Q157_FOOD_SUBTOTAL_TOTAL_PHP = 0;   { #617: accumulate only CONSUMED items -> no notappl propagation }
-  if Q144_CEREALS_CONSUMED = 1 then if Q144_CEREALS_INKIND_PHP <> -98 and Q144_CEREALS_INKIND_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q144_CEREALS_INKIND_PHP; endif; if Q144_CEREALS_PURCHASED_PHP <> -98 and Q144_CEREALS_PURCHASED_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q144_CEREALS_PURCHASED_PHP; endif; endif;
-  if Q145_PULSES_CONSUMED = 1 then if Q145_PULSES_INKIND_PHP <> -98 and Q145_PULSES_INKIND_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q145_PULSES_INKIND_PHP; endif; if Q145_PULSES_PURCHASED_PHP <> -98 and Q145_PULSES_PURCHASED_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q145_PULSES_PURCHASED_PHP; endif; endif;
-  if Q146_VEGETABLES_CONSUMED = 1 then if Q146_VEGETABLES_INKIND_PHP <> -98 and Q146_VEGETABLES_INKIND_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q146_VEGETABLES_INKIND_PHP; endif; if Q146_VEGETABLES_PURCHASED_PHP <> -98 and Q146_VEGETABLES_PURCHASED_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q146_VEGETABLES_PURCHASED_PHP; endif; endif;
-  if Q147_FRUITS_CONSUMED = 1 then if Q147_FRUITS_INKIND_PHP <> -98 and Q147_FRUITS_INKIND_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q147_FRUITS_INKIND_PHP; endif; if Q147_FRUITS_PURCHASED_PHP <> -98 and Q147_FRUITS_PURCHASED_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q147_FRUITS_PURCHASED_PHP; endif; endif;
-  if Q148_FISH_CONSUMED = 1 then if Q148_FISH_INKIND_PHP <> -98 and Q148_FISH_INKIND_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q148_FISH_INKIND_PHP; endif; if Q148_FISH_PURCHASED_PHP <> -98 and Q148_FISH_PURCHASED_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q148_FISH_PURCHASED_PHP; endif; endif;
-  if Q149_MEAT_CONSUMED = 1 then if Q149_MEAT_INKIND_PHP <> -98 and Q149_MEAT_INKIND_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q149_MEAT_INKIND_PHP; endif; if Q149_MEAT_PURCHASED_PHP <> -98 and Q149_MEAT_PURCHASED_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q149_MEAT_PURCHASED_PHP; endif; endif;
-  if Q150_EGGS_CONSUMED = 1 then if Q150_EGGS_INKIND_PHP <> -98 and Q150_EGGS_INKIND_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q150_EGGS_INKIND_PHP; endif; if Q150_EGGS_PURCHASED_PHP <> -98 and Q150_EGGS_PURCHASED_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q150_EGGS_PURCHASED_PHP; endif; endif;
-  if Q151_MILK_CONSUMED = 1 then if Q151_MILK_INKIND_PHP <> -98 and Q151_MILK_INKIND_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q151_MILK_INKIND_PHP; endif; if Q151_MILK_PURCHASED_PHP <> -98 and Q151_MILK_PURCHASED_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q151_MILK_PURCHASED_PHP; endif; endif;
-  if Q152_FATS_CONSUMED = 1 then if Q152_FATS_INKIND_PHP <> -98 and Q152_FATS_INKIND_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q152_FATS_INKIND_PHP; endif; if Q152_FATS_PURCHASED_PHP <> -98 and Q152_FATS_PURCHASED_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q152_FATS_PURCHASED_PHP; endif; endif;
-  if Q153_SUGAR_CONSUMED = 1 then if Q153_SUGAR_INKIND_PHP <> -98 and Q153_SUGAR_INKIND_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q153_SUGAR_INKIND_PHP; endif; if Q153_SUGAR_PURCHASED_PHP <> -98 and Q153_SUGAR_PURCHASED_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q153_SUGAR_PURCHASED_PHP; endif; endif;
-  if Q154_CONDIMENTS_CONSUMED = 1 then if Q154_CONDIMENTS_INKIND_PHP <> -98 and Q154_CONDIMENTS_INKIND_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q154_CONDIMENTS_INKIND_PHP; endif; if Q154_CONDIMENTS_PURCHASED_PHP <> -98 and Q154_CONDIMENTS_PURCHASED_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q154_CONDIMENTS_PURCHASED_PHP; endif; endif;
-  if Q155_WATER_NA_CONSUMED = 1 then if Q155_WATER_NA_INKIND_PHP <> -98 and Q155_WATER_NA_INKIND_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q155_WATER_NA_INKIND_PHP; endif; if Q155_WATER_NA_PURCHASED_PHP <> -98 and Q155_WATER_NA_PURCHASED_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q155_WATER_NA_PURCHASED_PHP; endif; endif;
-  if Q156_ALCOHOL_CONSUMED = 1 then if Q156_ALCOHOL_INKIND_PHP <> -98 and Q156_ALCOHOL_INKIND_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q156_ALCOHOL_INKIND_PHP; endif; if Q156_ALCOHOL_PURCHASED_PHP <> -98 and Q156_ALCOHOL_PURCHASED_PHP <> -99 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q156_ALCOHOL_PURCHASED_PHP; endif; endif;
-  protect(Q157_FOOD_SUBTOTAL_TOTAL_PHP, true);
 postproc
   if Q158_RESTAURANT_CONSUMED = 2 then
     Q158_RESTAURANT_PURCHASED_PHP = 0;   { item not consumed -> no spend }
@@ -2528,623 +2764,19 @@ postproc
     protect(Q159_SMOKING_TOBACCO_INKIND_PHP, false);   { enterable when consumed }
   endif;
 
-PROC Q160_PERSONAL_CARE_CONSUMED
-postproc
-  if Q160_PERSONAL_CARE_CONSUMED = 2 then
-    Q160_PERSONAL_CARE_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q160_PERSONAL_CARE_PURCHASED_PHP, true);
-    Q160_PERSONAL_CARE_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q160_PERSONAL_CARE_INKIND_PHP, true);
-  else
-    if special(Q160_PERSONAL_CARE_PURCHASED_PHP) then Q160_PERSONAL_CARE_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q160_PERSONAL_CARE_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q160_PERSONAL_CARE_INKIND_PHP) then Q160_PERSONAL_CARE_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q160_PERSONAL_CARE_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q161_HOUSEHOLD_CLEAN_CONSUMED
-postproc
-  if Q161_HOUSEHOLD_CLEAN_CONSUMED = 2 then
-    Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP, true);
-    Q161_HOUSEHOLD_CLEAN_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q161_HOUSEHOLD_CLEAN_INKIND_PHP, true);
-  else
-    if special(Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP) then Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q161_HOUSEHOLD_CLEAN_INKIND_PHP) then Q161_HOUSEHOLD_CLEAN_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q161_HOUSEHOLD_CLEAN_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q162_UTILITIES_CONSUMED
-postproc
-  if Q162_UTILITIES_CONSUMED = 2 then
-    Q162_UTILITIES_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q162_UTILITIES_PURCHASED_PHP, true);
-    Q162_UTILITIES_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q162_UTILITIES_INKIND_PHP, true);
-  else
-    if special(Q162_UTILITIES_PURCHASED_PHP) then Q162_UTILITIES_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q162_UTILITIES_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q162_UTILITIES_INKIND_PHP) then Q162_UTILITIES_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q162_UTILITIES_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q163_TRANSPORT_CONSUMED
-postproc
-  if Q163_TRANSPORT_CONSUMED = 2 then
-    Q163_TRANSPORT_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q163_TRANSPORT_PURCHASED_PHP, true);
-    Q163_TRANSPORT_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q163_TRANSPORT_INKIND_PHP, true);
-  else
-    if special(Q163_TRANSPORT_PURCHASED_PHP) then Q163_TRANSPORT_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q163_TRANSPORT_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q163_TRANSPORT_INKIND_PHP) then Q163_TRANSPORT_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q163_TRANSPORT_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q164_TELECOM_CONSUMED
-postproc
-  if Q164_TELECOM_CONSUMED = 2 then
-    Q164_TELECOM_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q164_TELECOM_PURCHASED_PHP, true);
-    Q164_TELECOM_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q164_TELECOM_INKIND_PHP, true);
-  else
-    if special(Q164_TELECOM_PURCHASED_PHP) then Q164_TELECOM_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q164_TELECOM_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q164_TELECOM_INKIND_PHP) then Q164_TELECOM_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q164_TELECOM_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q165_RECREATION_1M_CONSUMED
-postproc
-  if Q165_RECREATION_1M_CONSUMED = 2 then
-    Q165_RECREATION_1M_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q165_RECREATION_1M_PURCHASED_PHP, true);
-    Q165_RECREATION_1M_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q165_RECREATION_1M_INKIND_PHP, true);
-  else
-    if special(Q165_RECREATION_1M_PURCHASED_PHP) then Q165_RECREATION_1M_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q165_RECREATION_1M_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q165_RECREATION_1M_INKIND_PHP) then Q165_RECREATION_1M_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q165_RECREATION_1M_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q166_POSTAL_CONSUMED
-postproc
-  if Q166_POSTAL_CONSUMED = 2 then
-    Q166_POSTAL_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q166_POSTAL_PURCHASED_PHP, true);
-    Q166_POSTAL_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q166_POSTAL_INKIND_PHP, true);
-  else
-    if special(Q166_POSTAL_PURCHASED_PHP) then Q166_POSTAL_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q166_POSTAL_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q166_POSTAL_INKIND_PHP) then Q166_POSTAL_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q166_POSTAL_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q167_HOUSING_CONSUMED
-postproc
-  if Q167_HOUSING_CONSUMED = 2 then
-    errmsg("Housing should almost always have a value — actual rent if rented, or the estimated value of rent if owned. If the household has housing, go back and mark Yes and enter the amount.");
-    Q167_HOUSING_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q167_HOUSING_PURCHASED_PHP, true);
-    Q167_HOUSING_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q167_HOUSING_INKIND_PHP, true);
-  else
-    if special(Q167_HOUSING_PURCHASED_PHP) then Q167_HOUSING_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q167_HOUSING_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q167_HOUSING_INKIND_PHP) then Q167_HOUSING_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q167_HOUSING_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q168_RECREATION_6M_CONSUMED
-postproc
-  if Q168_RECREATION_6M_CONSUMED = 2 then
-    Q168_RECREATION_6M_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q168_RECREATION_6M_PURCHASED_PHP, true);
-    Q168_RECREATION_6M_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q168_RECREATION_6M_INKIND_PHP, true);
-  else
-    if special(Q168_RECREATION_6M_PURCHASED_PHP) then Q168_RECREATION_6M_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q168_RECREATION_6M_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q168_RECREATION_6M_INKIND_PHP) then Q168_RECREATION_6M_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q168_RECREATION_6M_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q169_CLOTHING_CONSUMED
-postproc
-  if Q169_CLOTHING_CONSUMED = 2 then
-    Q169_CLOTHING_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q169_CLOTHING_PURCHASED_PHP, true);
-    Q169_CLOTHING_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q169_CLOTHING_INKIND_PHP, true);
-  else
-    if special(Q169_CLOTHING_PURCHASED_PHP) then Q169_CLOTHING_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q169_CLOTHING_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q169_CLOTHING_INKIND_PHP) then Q169_CLOTHING_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q169_CLOTHING_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q170_EDUCATION_CONSUMED
-postproc
-  if Q170_EDUCATION_CONSUMED = 2 then
-    Q170_EDUCATION_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q170_EDUCATION_PURCHASED_PHP, true);
-    Q170_EDUCATION_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q170_EDUCATION_INKIND_PHP, true);
-  else
-    if special(Q170_EDUCATION_PURCHASED_PHP) then Q170_EDUCATION_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q170_EDUCATION_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q170_EDUCATION_INKIND_PHP) then Q170_EDUCATION_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q170_EDUCATION_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q171_ACCOMMODATION_CONSUMED
-postproc
-  if Q171_ACCOMMODATION_CONSUMED = 2 then
-    Q171_ACCOMMODATION_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q171_ACCOMMODATION_PURCHASED_PHP, true);
-    Q171_ACCOMMODATION_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q171_ACCOMMODATION_INKIND_PHP, true);
-  else
-    if special(Q171_ACCOMMODATION_PURCHASED_PHP) then Q171_ACCOMMODATION_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q171_ACCOMMODATION_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q171_ACCOMMODATION_INKIND_PHP) then Q171_ACCOMMODATION_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q171_ACCOMMODATION_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q172_GARDEN_PETS_CONSUMED
-postproc
-  if Q172_GARDEN_PETS_CONSUMED = 2 then
-    Q172_GARDEN_PETS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q172_GARDEN_PETS_PURCHASED_PHP, true);
-    Q172_GARDEN_PETS_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q172_GARDEN_PETS_INKIND_PHP, true);
-  else
-    if special(Q172_GARDEN_PETS_PURCHASED_PHP) then Q172_GARDEN_PETS_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q172_GARDEN_PETS_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q172_GARDEN_PETS_INKIND_PHP) then Q172_GARDEN_PETS_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q172_GARDEN_PETS_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q173_HEALTH_INS_CONSUMED
-postproc
-  if Q173_HEALTH_INS_CONSUMED = 2 then
-    Q173_HEALTH_INS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q173_HEALTH_INS_PURCHASED_PHP, true);
-    Q173_HEALTH_INS_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q173_HEALTH_INS_INKIND_PHP, true);
-  else
-    if special(Q173_HEALTH_INS_PURCHASED_PHP) then Q173_HEALTH_INS_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q173_HEALTH_INS_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q173_HEALTH_INS_INKIND_PHP) then Q173_HEALTH_INS_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q173_HEALTH_INS_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q174_OTHER_INS_CONSUMED
-postproc
-  if Q174_OTHER_INS_CONSUMED = 2 then
-    Q174_OTHER_INS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q174_OTHER_INS_PURCHASED_PHP, true);
-    Q174_OTHER_INS_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q174_OTHER_INS_INKIND_PHP, true);
-  else
-    if special(Q174_OTHER_INS_PURCHASED_PHP) then Q174_OTHER_INS_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q174_OTHER_INS_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q174_OTHER_INS_INKIND_PHP) then Q174_OTHER_INS_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q174_OTHER_INS_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q175_INPATIENT_CONSUMED
-preproc
-  Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = 0;   { #617 init: protected subtotal must be valid (not notappl) when its block exits }
-  protect(Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP, true);
-postproc
-  if Q175_INPATIENT_CONSUMED = 2 then
-    Q175_INPATIENT_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q175_INPATIENT_PURCHASED_PHP, true);
-    Q175_INPATIENT_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q175_INPATIENT_INKIND_PHP, true);
-  else
-    if special(Q175_INPATIENT_PURCHASED_PHP) then Q175_INPATIENT_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q175_INPATIENT_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q175_INPATIENT_INKIND_PHP) then Q175_INPATIENT_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q175_INPATIENT_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q176_EMERGENCY_TRANSPORT_CONSUMED
-postproc
-  if Q176_EMERGENCY_TRANSPORT_CONSUMED = 2 then
-    Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP, true);
-    Q176_EMERGENCY_TRANSPORT_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q176_EMERGENCY_TRANSPORT_INKIND_PHP, true);
-  else
-    if special(Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP) then Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q176_EMERGENCY_TRANSPORT_INKIND_PHP) then Q176_EMERGENCY_TRANSPORT_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q176_EMERGENCY_TRANSPORT_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q178_PREVENTIVE_CONSUMED
-preproc
-  { #617 real Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP sum, now that the panel is complete }
-  Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = 0;   { #617: accumulate only CONSUMED items -> no notappl propagation }
-  if Q175_INPATIENT_CONSUMED = 1 then if Q175_INPATIENT_INKIND_PHP <> -98 and Q175_INPATIENT_INKIND_PHP <> -99 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q175_INPATIENT_INKIND_PHP; endif; if Q175_INPATIENT_PURCHASED_PHP <> -98 and Q175_INPATIENT_PURCHASED_PHP <> -99 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q175_INPATIENT_PURCHASED_PHP; endif; endif;
-  if Q176_EMERGENCY_TRANSPORT_CONSUMED = 1 then if Q176_EMERGENCY_TRANSPORT_INKIND_PHP <> -98 and Q176_EMERGENCY_TRANSPORT_INKIND_PHP <> -99 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q176_EMERGENCY_TRANSPORT_INKIND_PHP; endif; if Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP <> -98 and Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP <> -99 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP; endif; endif;
-  protect(Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP, true);
-  Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = 0;   { #617 init: protected subtotal must be valid (not notappl) when its block exits }
-  protect(Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP, true);
-postproc
-  if Q178_PREVENTIVE_CONSUMED = 2 then
-    Q178_PREVENTIVE_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q178_PREVENTIVE_PURCHASED_PHP, true);
-    Q178_PREVENTIVE_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q178_PREVENTIVE_INKIND_PHP, true);
-  else
-    if special(Q178_PREVENTIVE_PURCHASED_PHP) then Q178_PREVENTIVE_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q178_PREVENTIVE_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q178_PREVENTIVE_INKIND_PHP) then Q178_PREVENTIVE_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q178_PREVENTIVE_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q179_DIAGNOSTIC_CONSUMED
-postproc
-  if Q179_DIAGNOSTIC_CONSUMED = 2 then
-    Q179_DIAGNOSTIC_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q179_DIAGNOSTIC_PURCHASED_PHP, true);
-    Q179_DIAGNOSTIC_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q179_DIAGNOSTIC_INKIND_PHP, true);
-  else
-    if special(Q179_DIAGNOSTIC_PURCHASED_PHP) then Q179_DIAGNOSTIC_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q179_DIAGNOSTIC_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q179_DIAGNOSTIC_INKIND_PHP) then Q179_DIAGNOSTIC_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q179_DIAGNOSTIC_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q180_ASSISTIVE_CONSUMED
-postproc
-  if Q180_ASSISTIVE_CONSUMED = 2 then
-    Q180_ASSISTIVE_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q180_ASSISTIVE_PURCHASED_PHP, true);
-    Q180_ASSISTIVE_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q180_ASSISTIVE_INKIND_PHP, true);
-  else
-    if special(Q180_ASSISTIVE_PURCHASED_PHP) then Q180_ASSISTIVE_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q180_ASSISTIVE_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q180_ASSISTIVE_INKIND_PHP) then Q180_ASSISTIVE_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q180_ASSISTIVE_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q181_MEDICAL_PRODUCTS_CONSUMED
-postproc
-  if Q181_MEDICAL_PRODUCTS_CONSUMED = 2 then
-    Q181_MEDICAL_PRODUCTS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q181_MEDICAL_PRODUCTS_PURCHASED_PHP, true);
-    Q181_MEDICAL_PRODUCTS_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q181_MEDICAL_PRODUCTS_INKIND_PHP, true);
-  else
-    if special(Q181_MEDICAL_PRODUCTS_PURCHASED_PHP) then Q181_MEDICAL_PRODUCTS_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q181_MEDICAL_PRODUCTS_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q181_MEDICAL_PRODUCTS_INKIND_PHP) then Q181_MEDICAL_PRODUCTS_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q181_MEDICAL_PRODUCTS_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q183_MEDICINES_CONSUMED
-preproc
-  { #617 real Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP sum, now that the panel is complete }
-  Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = 0;   { #617: accumulate only CONSUMED items -> no notappl propagation }
-  if Q178_PREVENTIVE_CONSUMED = 1 then if Q178_PREVENTIVE_INKIND_PHP <> -98 and Q178_PREVENTIVE_INKIND_PHP <> -99 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q178_PREVENTIVE_INKIND_PHP; endif; if Q178_PREVENTIVE_PURCHASED_PHP <> -98 and Q178_PREVENTIVE_PURCHASED_PHP <> -99 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q178_PREVENTIVE_PURCHASED_PHP; endif; endif;
-  if Q179_DIAGNOSTIC_CONSUMED = 1 then if Q179_DIAGNOSTIC_INKIND_PHP <> -98 and Q179_DIAGNOSTIC_INKIND_PHP <> -99 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q179_DIAGNOSTIC_INKIND_PHP; endif; if Q179_DIAGNOSTIC_PURCHASED_PHP <> -98 and Q179_DIAGNOSTIC_PURCHASED_PHP <> -99 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q179_DIAGNOSTIC_PURCHASED_PHP; endif; endif;
-  if Q180_ASSISTIVE_CONSUMED = 1 then if Q180_ASSISTIVE_INKIND_PHP <> -98 and Q180_ASSISTIVE_INKIND_PHP <> -99 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q180_ASSISTIVE_INKIND_PHP; endif; if Q180_ASSISTIVE_PURCHASED_PHP <> -98 and Q180_ASSISTIVE_PURCHASED_PHP <> -99 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q180_ASSISTIVE_PURCHASED_PHP; endif; endif;
-  if Q181_MEDICAL_PRODUCTS_CONSUMED = 1 then if Q181_MEDICAL_PRODUCTS_INKIND_PHP <> -98 and Q181_MEDICAL_PRODUCTS_INKIND_PHP <> -99 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q181_MEDICAL_PRODUCTS_INKIND_PHP; endif; if Q181_MEDICAL_PRODUCTS_PURCHASED_PHP <> -98 and Q181_MEDICAL_PRODUCTS_PURCHASED_PHP <> -99 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q181_MEDICAL_PRODUCTS_PURCHASED_PHP; endif; endif;
-  protect(Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP, true);
-  Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = 0;   { #617 init: protected subtotal must be valid (not notappl) when its block exits }
-  protect(Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP, true);
-postproc
-  if Q183_MEDICINES_CONSUMED = 2 then
-    Q183_MEDICINES_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q183_MEDICINES_PURCHASED_PHP, true);
-    Q183_MEDICINES_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q183_MEDICINES_INKIND_PHP, true);
-  else
-    if special(Q183_MEDICINES_PURCHASED_PHP) then Q183_MEDICINES_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q183_MEDICINES_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q183_MEDICINES_INKIND_PHP) then Q183_MEDICINES_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q183_MEDICINES_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q184_OUTPATIENT_CONSUMED
-postproc
-  if Q184_OUTPATIENT_CONSUMED = 2 then
-    Q184_OUTPATIENT_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q184_OUTPATIENT_PURCHASED_PHP, true);
-    Q184_OUTPATIENT_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q184_OUTPATIENT_INKIND_PHP, true);
-  else
-    if special(Q184_OUTPATIENT_PURCHASED_PHP) then Q184_OUTPATIENT_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q184_OUTPATIENT_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q184_OUTPATIENT_INKIND_PHP) then Q184_OUTPATIENT_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q184_OUTPATIENT_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
 { ---- Section N subtotals — auto-compute + protect at follower (#9/#617, spec §4.9) ---- }
-PROC Q186_CURRENT_INCOME
-preproc
-  { #617 real Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP sum, now that the panel is complete }
-  Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = 0;   { #617: accumulate only CONSUMED items -> no notappl propagation }
-  if Q183_MEDICINES_CONSUMED = 1 then if Q183_MEDICINES_INKIND_PHP <> -98 and Q183_MEDICINES_INKIND_PHP <> -99 then Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP + Q183_MEDICINES_INKIND_PHP; endif; if Q183_MEDICINES_PURCHASED_PHP <> -98 and Q183_MEDICINES_PURCHASED_PHP <> -99 then Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP + Q183_MEDICINES_PURCHASED_PHP; endif; endif;
-  if Q184_OUTPATIENT_CONSUMED = 1 then if Q184_OUTPATIENT_INKIND_PHP <> -98 and Q184_OUTPATIENT_INKIND_PHP <> -99 then Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP + Q184_OUTPATIENT_INKIND_PHP; endif; if Q184_OUTPATIENT_PURCHASED_PHP <> -98 and Q184_OUTPATIENT_PURCHASED_PHP <> -99 then Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP + Q184_OUTPATIENT_PURCHASED_PHP; endif; endif;
-  protect(Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP, true);
-
 { ---- Section N consumed-amount validation (#677): consumed item needs >=1 amount > 0 ---- }
-PROC Q144_CEREALS_INKIND_PHP
-postproc
-  if Q144_CEREALS_CONSUMED = 1 and not (Q144_CEREALS_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q144_CEREALS_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q145_PULSES_INKIND_PHP
-postproc
-  if Q145_PULSES_CONSUMED = 1 and not (Q145_PULSES_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q145_PULSES_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q146_VEGETABLES_INKIND_PHP
-postproc
-  if Q146_VEGETABLES_CONSUMED = 1 and not (Q146_VEGETABLES_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q146_VEGETABLES_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q147_FRUITS_INKIND_PHP
-postproc
-  if Q147_FRUITS_CONSUMED = 1 and not (Q147_FRUITS_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q147_FRUITS_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q148_FISH_INKIND_PHP
-postproc
-  if Q148_FISH_CONSUMED = 1 and not (Q148_FISH_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q148_FISH_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q149_MEAT_INKIND_PHP
-postproc
-  if Q149_MEAT_CONSUMED = 1 and not (Q149_MEAT_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q149_MEAT_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q150_EGGS_INKIND_PHP
-postproc
-  if Q150_EGGS_CONSUMED = 1 and not (Q150_EGGS_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q150_EGGS_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q151_MILK_INKIND_PHP
-postproc
-  if Q151_MILK_CONSUMED = 1 and not (Q151_MILK_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q151_MILK_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q152_FATS_INKIND_PHP
-postproc
-  if Q152_FATS_CONSUMED = 1 and not (Q152_FATS_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q152_FATS_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q153_SUGAR_INKIND_PHP
-postproc
-  if Q153_SUGAR_CONSUMED = 1 and not (Q153_SUGAR_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q153_SUGAR_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q154_CONDIMENTS_INKIND_PHP
-postproc
-  if Q154_CONDIMENTS_CONSUMED = 1 and not (Q154_CONDIMENTS_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q154_CONDIMENTS_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q155_WATER_NA_INKIND_PHP
-postproc
-  if Q155_WATER_NA_CONSUMED = 1 and not (Q155_WATER_NA_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q155_WATER_NA_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q156_ALCOHOL_INKIND_PHP
-postproc
-  if Q156_ALCOHOL_CONSUMED = 1 and not (Q156_ALCOHOL_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q156_ALCOHOL_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
 PROC Q158_RESTAURANT_INKIND_PHP
 postproc
   if Q158_RESTAURANT_CONSUMED = 1 and not (Q158_RESTAURANT_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q158_RESTAURANT_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
+    errmsg(1010);
     reenter;
   endif;
 
 PROC Q159_SMOKING_TOBACCO_INKIND_PHP
 postproc
   if Q159_SMOKING_TOBACCO_CONSUMED = 1 and not (Q159_SMOKING_TOBACCO_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q159_SMOKING_TOBACCO_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q160_PERSONAL_CARE_INKIND_PHP
-postproc
-  if Q160_PERSONAL_CARE_CONSUMED = 1 and not (Q160_PERSONAL_CARE_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q160_PERSONAL_CARE_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q161_HOUSEHOLD_CLEAN_INKIND_PHP
-postproc
-  if Q161_HOUSEHOLD_CLEAN_CONSUMED = 1 and not (Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q161_HOUSEHOLD_CLEAN_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q162_UTILITIES_INKIND_PHP
-postproc
-  if Q162_UTILITIES_CONSUMED = 1 and not (Q162_UTILITIES_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q162_UTILITIES_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q163_TRANSPORT_INKIND_PHP
-postproc
-  if Q163_TRANSPORT_CONSUMED = 1 and not (Q163_TRANSPORT_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q163_TRANSPORT_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q164_TELECOM_INKIND_PHP
-postproc
-  if Q164_TELECOM_CONSUMED = 1 and not (Q164_TELECOM_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q164_TELECOM_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q165_RECREATION_1M_INKIND_PHP
-postproc
-  if Q165_RECREATION_1M_CONSUMED = 1 and not (Q165_RECREATION_1M_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q165_RECREATION_1M_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q166_POSTAL_INKIND_PHP
-postproc
-  if Q166_POSTAL_CONSUMED = 1 and not (Q166_POSTAL_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q166_POSTAL_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q167_HOUSING_INKIND_PHP
-postproc
-  if Q167_HOUSING_CONSUMED = 1 and not (Q167_HOUSING_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q167_HOUSING_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q168_RECREATION_6M_INKIND_PHP
-postproc
-  if Q168_RECREATION_6M_CONSUMED = 1 and not (Q168_RECREATION_6M_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q168_RECREATION_6M_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q169_CLOTHING_INKIND_PHP
-postproc
-  if Q169_CLOTHING_CONSUMED = 1 and not (Q169_CLOTHING_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q169_CLOTHING_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q170_EDUCATION_INKIND_PHP
-postproc
-  if Q170_EDUCATION_CONSUMED = 1 and not (Q170_EDUCATION_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q170_EDUCATION_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q171_ACCOMMODATION_INKIND_PHP
-postproc
-  if Q171_ACCOMMODATION_CONSUMED = 1 and not (Q171_ACCOMMODATION_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q171_ACCOMMODATION_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q172_GARDEN_PETS_INKIND_PHP
-postproc
-  if Q172_GARDEN_PETS_CONSUMED = 1 and not (Q172_GARDEN_PETS_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q172_GARDEN_PETS_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q173_HEALTH_INS_INKIND_PHP
-postproc
-  if Q173_HEALTH_INS_CONSUMED = 1 and not (Q173_HEALTH_INS_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q173_HEALTH_INS_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q174_OTHER_INS_INKIND_PHP
-postproc
-  if Q174_OTHER_INS_CONSUMED = 1 and not (Q174_OTHER_INS_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q174_OTHER_INS_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q175_INPATIENT_INKIND_PHP
-postproc
-  if Q175_INPATIENT_CONSUMED = 1 and not (Q175_INPATIENT_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q175_INPATIENT_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q176_EMERGENCY_TRANSPORT_INKIND_PHP
-postproc
-  if Q176_EMERGENCY_TRANSPORT_CONSUMED = 1 and not (Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q176_EMERGENCY_TRANSPORT_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q178_PREVENTIVE_INKIND_PHP
-postproc
-  if Q178_PREVENTIVE_CONSUMED = 1 and not (Q178_PREVENTIVE_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q178_PREVENTIVE_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q179_DIAGNOSTIC_INKIND_PHP
-postproc
-  if Q179_DIAGNOSTIC_CONSUMED = 1 and not (Q179_DIAGNOSTIC_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q179_DIAGNOSTIC_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q180_ASSISTIVE_INKIND_PHP
-postproc
-  if Q180_ASSISTIVE_CONSUMED = 1 and not (Q180_ASSISTIVE_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q180_ASSISTIVE_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q181_MEDICAL_PRODUCTS_INKIND_PHP
-postproc
-  if Q181_MEDICAL_PRODUCTS_CONSUMED = 1 and not (Q181_MEDICAL_PRODUCTS_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q181_MEDICAL_PRODUCTS_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q183_MEDICINES_INKIND_PHP
-postproc
-  if Q183_MEDICINES_CONSUMED = 1 and not (Q183_MEDICINES_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q183_MEDICINES_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
-    reenter;
-  endif;
-
-PROC Q184_OUTPATIENT_INKIND_PHP
-postproc
-  if Q184_OUTPATIENT_CONSUMED = 1 and not (Q184_OUTPATIENT_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q184_OUTPATIENT_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter -98; if they refuse to answer, enter -99 (do not read those codes aloud).");
+    errmsg(1010);
     reenter;
   endif;
 
@@ -3158,7 +2790,7 @@ preproc
   endif;
 postproc
   if Q101_CHECKUP_FREQ = 7 and length(strip(Q101_CHECKUP_FREQ_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected for Q101_CHECKUP_FREQ but no text was entered. Please specify.");
+    errmsg(1131);
     reenter;
   endif;
 
@@ -3170,7 +2802,7 @@ preproc
   endif;
 postproc
   if Q10_DISABILITY_TYPE = 8 and length(strip(Q10_DISABILITY_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected for Q10_DISABILITY_TYPE but no text was entered. Please specify.");
+    errmsg(1132);
     reenter;
   endif;
 
@@ -3182,7 +2814,7 @@ preproc
   endif;
 postproc
   if Q110_SPECIALIST = 23 and length(strip(Q110_SPECIALIST_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected for Q110_SPECIALIST but no text was entered. Please specify.");
+    errmsg(1133);
     reenter;
   endif;
 
@@ -3194,7 +2826,7 @@ preproc
   endif;
 postproc
   if Q111_METHOD = 5 and length(strip(Q111_METHOD_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected for Q111_METHOD but no text was entered. Please specify.");
+    errmsg(1134);
     reenter;
   endif;
 
@@ -3206,7 +2838,7 @@ preproc
   endif;
 postproc
   if Q11_EDUCATION = 11 and length(strip(Q11_EDUCATION_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected for Q11_EDUCATION but no text was entered. Please specify.");
+    errmsg(1135);
     reenter;
   endif;
 
@@ -3218,7 +2850,7 @@ preproc
   endif;
 postproc
   if Q138_MOST_EXPENSIVE = 9 and length(strip(Q138_MOST_EXPENSIVE_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected for Q138_MOST_EXPENSIVE but no text was entered. Please specify.");
+    errmsg(1136);
     reenter;
   endif;
 
@@ -3230,7 +2862,7 @@ preproc
   endif;
 postproc
   if Q17_DECISION_MAKER = 12 and length(strip(Q17_DECISION_MAKER_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected for Q17_DECISION_MAKER but no text was entered. Please specify.");
+    errmsg(1137);
     reenter;
   endif;
 
@@ -3242,7 +2874,7 @@ preproc
   endif;
 postproc
   if Q199_WTP_CONSULT = 9 and length(strip(Q199_WTP_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected for Q199_WTP_CONSULT but no text was entered. Please specify.");
+    errmsg(1138);
     reenter;
   endif;
 
@@ -3254,7 +2886,7 @@ preproc
   endif;
 postproc
   if Q23_WATER_SOURCE = 4 and length(strip(Q23_WATER_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected for Q23_WATER_SOURCE but no text was entered. Please specify.");
+    errmsg(1139);
     reenter;
   endif;
 
@@ -3267,7 +2899,7 @@ preproc
   endif;
 postproc
   if Q38_DISABILITY_TYPE = 8 and length(strip(Q38_DISABILITY_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected for Q38_DISABILITY_TYPE but no text was entered. Please specify.");
+    errmsg(1140);
     reenter;
   endif;
 
@@ -3280,7 +2912,7 @@ preproc
   endif;
 postproc
   if Q45_2_WHY_NOT_REG = 88 and length(strip(Q45_2_WHY_NOT_REG_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected for Q45_2_WHY_NOT_REG but no text was entered. Please specify.");
+    errmsg(1141);
     reenter;
   endif;
 
@@ -3293,7 +2925,7 @@ preproc
   endif;
 postproc
   if Q46_MEMBER_CATEGORY = 88 and length(strip(Q46_MEMBER_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected for Q46_MEMBER_CATEGORY but no text was entered. Please specify.");
+    errmsg(1142);
     reenter;
   endif;
 
@@ -3305,7 +2937,7 @@ preproc
   endif;
 postproc
   if Q5_GROUP = 8 and length(strip(Q5_GROUP_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected for Q5_GROUP but no text was entered. Please specify.");
+    errmsg(1143);
     reenter;
   endif;
 
@@ -3317,7 +2949,7 @@ preproc
   endif;
 postproc
   if Q79_REG_SOURCE = 10 and length(strip(Q79_REG_SOURCE_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected for Q79_REG_SOURCE but no text was entered. Please specify.");
+    errmsg(1144);
     reenter;
   endif;
 
@@ -3329,7 +2961,7 @@ preproc
   endif;
 postproc
   if Q80_ASSIST = 10 and length(strip(Q80_ASSIST_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected for Q80_ASSIST but no text was entered. Please specify.");
+    errmsg(1145);
     reenter;
   endif;
 
@@ -3341,7 +2973,7 @@ preproc
   endif;
 postproc
   if Q92_FACILITY_TYPE = 9 and length(strip(Q92_FACILITY_TYPE_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected for Q92_FACILITY_TYPE but no text was entered. Please specify.");
+    errmsg(1146);
     reenter;
   endif;
 
@@ -3350,52 +2982,52 @@ postproc
 PROC Q18_INCOME_AMOUNT
 postproc
   if Q18_INCOME_AMOUNT <> -98 and Q18_INCOME_AMOUNT <> -99 and (Q18_INCOME_AMOUNT < 0 or Q18_INCOME_AMOUNT > 99999999) then
-    errmsg("Q18_INCOME_AMOUNT must be between 0 and 99999999 (or -98 don't-know / -99 refused).");
+    errmsg(1147);
     reenter;
   endif;
 
 PROC Q67_TRAVEL_HH
 postproc
   if (Q67_TRAVEL_HH < 0 or Q67_TRAVEL_HH > 24) then
-    errmsg("Q67_TRAVEL_HH must be between 0 and 24.");
+    errmsg(1148);
     reenter;
   endif;
 
 PROC Q67_TRAVEL_MM
 postproc
   if (Q67_TRAVEL_MM < 0 or Q67_TRAVEL_MM > 59) then
-    errmsg("Q67_TRAVEL_MM must be between 0 and 59.");
+    errmsg(1149);
     reenter;
   endif;
 
 PROC TOTAL_NUMBER_OF_VISITS
 postproc
   if (TOTAL_NUMBER_OF_VISITS < 1 or TOTAL_NUMBER_OF_VISITS > 10) then
-    errmsg("TOTAL_NUMBER_OF_VISITS must be between 1 and 10.");
+    errmsg(1150);
     reenter;
   endif;
   if TOTAL_NUMBER_OF_VISITS > 3 then
-    errmsg("TOTAL_NUMBER_OF_VISITS = %d is unusually high — confirm.", TOTAL_NUMBER_OF_VISITS);
+    errmsg(1151, TOTAL_NUMBER_OF_VISITS);
   endif;
 
 PROC Q199_WTP_CONSULT
 postproc
   if (Q199_WTP_CONSULT < 0 or Q199_WTP_CONSULT > 99999999) then
-    errmsg("Q199_WTP_CONSULT must be between 0 and 99999999.");
+    errmsg(1152);
     reenter;
   endif;
 
 PROC DATE_FINAL_VISIT
 postproc
   if DATE_FINAL_VISIT < DATE_FIRST_VISITED then
-    errmsg("Final-visit date cannot be earlier than the first-visit date.");
+    errmsg(1153);
     reenter;
   endif;
 
 PROC Q73_GAMOT_MEDS_LIST
 postproc
   if length(strip(Q73_GAMOT_MEDS_LIST)) = 0 then
-    errmsg("Q72 says medicines were obtained from the GAMOT Package. Please list at least one medicine in Q73 before continuing.");
+    errmsg(1154);
     reenter;
   endif;
 
