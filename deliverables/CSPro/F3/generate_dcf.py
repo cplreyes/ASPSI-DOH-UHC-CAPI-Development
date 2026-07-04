@@ -1124,8 +1124,8 @@ def build_section_g():
         ("HbA1c",                     "13"),
         ("Abdominal ultrasound",      "14"),
         ("Dental Services",           "15"),
-        ("Other, specify:",           "16"),
         ("None",                      "17"),  # proceed to Q95
+        ("Other, specify:",           "16"),
     ]
     Q96_MEDS_PAY = [
         ("Out-of-pocket",                        "01"),

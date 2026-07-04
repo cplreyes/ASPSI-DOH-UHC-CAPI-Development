@@ -27330,39 +27330,6 @@
                     {
                       "labels": [
                         {
-                          "text": "Other, specify:",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Other, specify:",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Other, specify:",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Other, specify:",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Other, specify:",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Other, specify:",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "99"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
                           "text": "None",
                           "language": "EN"
                         },
@@ -27390,6 +27357,39 @@
                       "pairs": [
                         {
                           "value": "90"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other, specify:",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Other, specify:",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Other, specify:",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Other, specify:",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Other, specify:",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Other, specify:",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
                         }
                       ]
                     }

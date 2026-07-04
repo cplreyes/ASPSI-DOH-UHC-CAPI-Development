@@ -37802,27 +37802,27 @@
               "name": "Q158_RESTAURANT_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...",
+                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer \u2014 do...",
                   "language": "EN"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...",
+                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer \u2014 do...",
                   "language": "FIL"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...",
+                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer \u2014 do...",
                   "language": "BCL"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...",
+                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer \u2014 do...",
                   "language": "BIS"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...",
+                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer \u2014 do...",
                   "language": "CEB"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...",
+                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer \u2014 do...",
                   "language": "WAR"
                 }
               ],
@@ -41799,39 +41799,6 @@
                     {
                       "labels": [
                         {
-                          "text": "Other (please specify)",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Other (please specify)",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Other (please specify)",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Other (please specify)",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Other (please specify)",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Other (please specify)",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "99"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
                           "text": "We do not forego care",
                           "language": "EN"
                         },
@@ -41859,6 +41826,39 @@
                       "pairs": [
                         {
                           "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (please specify)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Other (please specify)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Other (please specify)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Other (please specify)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Other (please specify)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Other (please specify)",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
                         }
                       ]
                     }

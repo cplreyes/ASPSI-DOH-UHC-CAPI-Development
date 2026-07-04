@@ -47559,43 +47559,6 @@
                     {
                       "labels": [
                         {
-                          "text": "Other (specify)",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iba pa (tukuyin)",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iba pa (ispecify)",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Uban pa (I-specify)",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Uban pa (Isulti)",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Iba pa (ispecify)",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Iban pa (ispecify)",
-                          "language": "HIL"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "99"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
                           "text": "I don't know",
                           "language": "EN"
                         },
@@ -47627,6 +47590,43 @@
                       "pairs": [
                         {
                           "value": "90"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (specify)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Iba pa (tukuyin)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Uban pa (I-specify)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Uban pa (Isulti)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Iban pa (ispecify)",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
                         }
                       ]
                     }

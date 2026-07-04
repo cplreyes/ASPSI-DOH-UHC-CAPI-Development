@@ -40,17 +40,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p class="instruction">Build: F4 v1.2.0 (2026-07-04)</p>
+            <p class="instruction">Build: F4 v1.2.2 (2026-07-04)</p>
           FIL: |
-            <p class="instruction">Build: F4 v1.2.0 (2026-07-04)</p>
+            <p class="instruction">Build: F4 v1.2.2 (2026-07-04)</p>
           BCL: |
-            <p class="instruction">Build: F4 v1.2.0 (2026-07-04)</p>
+            <p class="instruction">Build: F4 v1.2.2 (2026-07-04)</p>
           BIS: |
-            <p class="instruction">Build: F4 v1.2.0 (2026-07-04)</p>
+            <p class="instruction">Build: F4 v1.2.2 (2026-07-04)</p>
           CEB: |
-            <p class="instruction">Build: F4 v1.2.0 (2026-07-04)</p>
+            <p class="instruction">Build: F4 v1.2.2 (2026-07-04)</p>
           WAR: |
-            <p class="instruction">Build: F4 v1.2.0 (2026-07-04)</p>
+            <p class="instruction">Build: F4 v1.2.2 (2026-07-04)</p>
   - name: HOUSEHOLDSURVEY_DICT.SURVEY_TEAM_LEADER_S_NAME
     conditions:
       - questionText:
@@ -3759,32 +3759,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           FIL: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           BCL: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           BIS: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           CEB: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           WAR: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q158_RESTAURANT_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           FIL: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           BCL: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           BIS: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           CEB: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           WAR: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q159_SMOKING_TOBACCO_CONSUMED
     conditions:
       - questionText:
@@ -3804,32 +3804,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           FIL: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           BCL: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           BIS: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           CEB: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           WAR: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q159_SMOKING_TOBACCO_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           FIL: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           BCL: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           BIS: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           CEB: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
           WAR: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)</p>
   - name: HOUSEHOLDSURVEY_DICT.N_NF1M_ITEM
     conditions:
       - questionText:

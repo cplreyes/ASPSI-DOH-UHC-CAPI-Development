@@ -979,13 +979,18 @@ def build_section_g():
     # hold on the same basis #586 used to convert Q144. Hand-coded, NOT _cb_codes: "Other
     # private facility"/"Other public facility" legitimately start with "Other" and _cb_codes
     # would mis-recode both to 99 (3-way collision). 'Other, (specify)' -> 99 (with_other_txt);
-    # 'I don't know' -> 90 (exclusive). Paper order: specify before I-don't-know.
+    # 'I don't know' -> 90 (exclusive), 'Other (specify)' -> 99. #830: the value set MUST
+    # ascend by code (..., 90, 99). A descending tail (99 then 90) was the ONLY thing that
+    # set Q160 apart from every other F1 checkbox, and it broke CSEntry's checkbox
+    # re-validation on partial-save resume (WARNING: Out of range -> forced re-entry ->
+    # apparent data loss). Ascending order (90=DK before 99=Other) matches all other
+    # multi-selects, which survive the same resume.
     Q160_EXTERNAL = [
         ("External laboratory",     "01"),
         ("Other private facility",  "02"),
         ("Other public facility",   "03"),
-        ("Other (specify)",         "99"),
         ("I don't know",            "90"),
+        ("Other (specify)",         "99"),
     ]
     Q161_SATISFACTION = [
         ("Very Satisfied",  "1"),

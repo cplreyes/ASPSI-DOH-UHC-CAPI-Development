@@ -42,19 +42,19 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p class="instruction">Build: F1 v1.0.2 (2026-07-02)</p>
+            <p class="instruction">Build: F1 v1.0.3 (2026-07-04)</p>
           FIL: |
-            <p class="instruction">Build: F1 v1.0.2 (2026-07-02)</p>
+            <p class="instruction">Build: F1 v1.0.3 (2026-07-04)</p>
           BCL: |
-            <p class="instruction">Build: F1 v1.0.2 (2026-07-02)</p>
+            <p class="instruction">Build: F1 v1.0.3 (2026-07-04)</p>
           BIS: |
-            <p class="instruction">Build: F1 v1.0.2 (2026-07-02)</p>
+            <p class="instruction">Build: F1 v1.0.3 (2026-07-04)</p>
           CEB: |
-            <p class="instruction">Build: F1 v1.0.2 (2026-07-02)</p>
+            <p class="instruction">Build: F1 v1.0.3 (2026-07-04)</p>
           WAR: |
-            <p class="instruction">Build: F1 v1.0.2 (2026-07-02)</p>
+            <p class="instruction">Build: F1 v1.0.3 (2026-07-04)</p>
           HIL: |
-            <p class="instruction">Build: F1 v1.0.2 (2026-07-02)</p>
+            <p class="instruction">Build: F1 v1.0.3 (2026-07-04)</p>
   - name: FACILITYHEADSURVEY_DICT.SURVEY_TEAM_LEADER_S_NAME
     conditions:
       - questionText:

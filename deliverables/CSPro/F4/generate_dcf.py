@@ -1609,13 +1609,14 @@ AMT_STATUS_OPTIONS = [
 ]
 
 
-def _php_tail():
+def _php_tail(dash="-"):
     """Amount-field hint tail. Flag OFF: the inline enter-(-98/-99) instruction (current live
-    behaviour). Flag ON: just '(PHP)' — the AMT_STATUS field now carries DK/RF, so the amount
-    field is only for a real peso value."""
+    behaviour) with the caller's original dash (flat items used an em-dash, rosters a hyphen) so
+    flag-off output is byte-identical to the live build. Flag ON: just '(PHP)' — the AMT_STATUS
+    field now carries DK/RF, so the amount field is only for a real peso value."""
     if DK_RF_STATUS:
         return " (PHP)"
-    return " (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)"
+    return f" (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer {dash} do not read these codes aloud)"
 
 
 def _amt_status_items(prefix, lead):
@@ -1649,9 +1650,9 @@ def _expenditure_item(prefix, label, period="the last week"):
                f"{label} — In {period}, did you or any member of your household consume this item?"),
         *_amt_status_items(prefix, label),
         numeric(f"{prefix}_PURCHASED_PHP",
-                f"{label} — During {period}, how much did your household spend to purchase this item?" + _php_tail(), length=8),
+                f"{label} — During {period}, how much did your household spend to purchase this item?" + _php_tail("—"), length=8),
         numeric(f"{prefix}_INKIND_PHP",
-                f"{label} — During {period}, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine." + _php_tail(), length=8),
+                f"{label} — During {period}, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine." + _php_tail("—"), length=8),
     ]
 
 
@@ -1856,8 +1857,8 @@ def build_section_o():
         ("Hospital admission / inpatient care",          "4"),
         ("Preventive care (e.g., vaccinations, check-ups)", "5"),
         ("Dental care",                                  "6"),
-        ("Other (please specify)",                       "7"),
         ("We do not forego care",                        "8"),
+        ("Other (please specify)",                       "7"),
     ]
     items = [
         yes_no("Q186_CURRENT_INCOME", "186. Current income of any household members"),

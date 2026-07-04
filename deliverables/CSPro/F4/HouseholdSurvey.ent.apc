@@ -991,9 +991,6 @@ preproc
   srv_res = htmldialog("review.html", inputData := srv_j);
 
 
-
-
-
 { ---- Bill-recall cap (spec 4.8): no-receipt amount cannot exceed total bill ---- }
 PROC Q141_1_NO_RECEIPT_AMT_PHP
 postproc
@@ -2736,48 +2733,64 @@ postproc
   endif;
 
 { ---- Section N consumed-gate (#169) + subtotal init/compute (#9/#617) — merged per _CONSUMED field (#708/#709 combined-view) ---- }
-PROC Q158_RESTAURANT_CONSUMED
-postproc
-  if Q158_RESTAURANT_CONSUMED = 2 then
-    Q158_RESTAURANT_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q158_RESTAURANT_PURCHASED_PHP, true);
-    Q158_RESTAURANT_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q158_RESTAURANT_INKIND_PHP, true);
-  else
-    if special(Q158_RESTAURANT_PURCHASED_PHP) then Q158_RESTAURANT_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q158_RESTAURANT_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q158_RESTAURANT_INKIND_PHP) then Q158_RESTAURANT_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q158_RESTAURANT_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
-PROC Q159_SMOKING_TOBACCO_CONSUMED
-postproc
-  if Q159_SMOKING_TOBACCO_CONSUMED = 2 then
-    Q159_SMOKING_TOBACCO_PURCHASED_PHP = 0;   { item not consumed -> no spend }
-    protect(Q159_SMOKING_TOBACCO_PURCHASED_PHP, true);
-    Q159_SMOKING_TOBACCO_INKIND_PHP = 0;   { item not consumed -> no spend }
-    protect(Q159_SMOKING_TOBACCO_INKIND_PHP, true);
-  else
-    if special(Q159_SMOKING_TOBACCO_PURCHASED_PHP) then Q159_SMOKING_TOBACCO_PURCHASED_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q159_SMOKING_TOBACCO_PURCHASED_PHP, false);   { enterable when consumed }
-    if special(Q159_SMOKING_TOBACCO_INKIND_PHP) then Q159_SMOKING_TOBACCO_INKIND_PHP = 0; endif;   { #755/#818 pre-fill: no-value-yet -> 0 }
-    protect(Q159_SMOKING_TOBACCO_INKIND_PHP, false);   { enterable when consumed }
-  endif;
-
 { ---- Section N subtotals — auto-compute + protect at follower (#9/#617, spec §4.9) ---- }
-{ ---- Section N consumed-amount validation (#677): consumed item needs >=1 amount > 0 ---- }
+{ ---- Section N flat items (Q158/Q159): roster-parity amount gate + #677 (#832/#833) ---- }
 PROC Q158_RESTAURANT_INKIND_PHP
+preproc
+  { #832/#833 roster-parity gate (Q144-Q156): not consumed -> 0 + noinput
+    (DG-safe, no skip-to, no protect); consumed -> #755/#818 special() pre-fill
+    so Enter passes an empty amount. Always enterable when consumed. }
+  if Q158_RESTAURANT_CONSUMED = 2 then
+    Q158_RESTAURANT_INKIND_PHP = 0;
+    noinput;
+  else
+    if special(Q158_RESTAURANT_INKIND_PHP) then Q158_RESTAURANT_INKIND_PHP = 0; endif;
+  endif;
 postproc
   if Q158_RESTAURANT_CONSUMED = 1 and not (Q158_RESTAURANT_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q158_RESTAURANT_INKIND_PHP in -99, -98, 1:99999999) then
     errmsg(1010);
     reenter;
   endif;
 
+PROC Q158_RESTAURANT_PURCHASED_PHP
+preproc
+  { #832/#833 roster-parity gate (Q144-Q156): not consumed -> 0 + noinput
+    (DG-safe, no skip-to, no protect); consumed -> #755/#818 special() pre-fill
+    so Enter passes an empty amount. Always enterable when consumed. }
+  if Q158_RESTAURANT_CONSUMED = 2 then
+    Q158_RESTAURANT_PURCHASED_PHP = 0;
+    noinput;
+  else
+    if special(Q158_RESTAURANT_PURCHASED_PHP) then Q158_RESTAURANT_PURCHASED_PHP = 0; endif;
+  endif;
+
 PROC Q159_SMOKING_TOBACCO_INKIND_PHP
+preproc
+  { #832/#833 roster-parity gate (Q144-Q156): not consumed -> 0 + noinput
+    (DG-safe, no skip-to, no protect); consumed -> #755/#818 special() pre-fill
+    so Enter passes an empty amount. Always enterable when consumed. }
+  if Q159_SMOKING_TOBACCO_CONSUMED = 2 then
+    Q159_SMOKING_TOBACCO_INKIND_PHP = 0;
+    noinput;
+  else
+    if special(Q159_SMOKING_TOBACCO_INKIND_PHP) then Q159_SMOKING_TOBACCO_INKIND_PHP = 0; endif;
+  endif;
 postproc
   if Q159_SMOKING_TOBACCO_CONSUMED = 1 and not (Q159_SMOKING_TOBACCO_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q159_SMOKING_TOBACCO_INKIND_PHP in -99, -98, 1:99999999) then
     errmsg(1010);
     reenter;
+  endif;
+
+PROC Q159_SMOKING_TOBACCO_PURCHASED_PHP
+preproc
+  { #832/#833 roster-parity gate (Q144-Q156): not consumed -> 0 + noinput
+    (DG-safe, no skip-to, no protect); consumed -> #755/#818 special() pre-fill
+    so Enter passes an empty amount. Always enterable when consumed. }
+  if Q159_SMOKING_TOBACCO_CONSUMED = 2 then
+    Q159_SMOKING_TOBACCO_PURCHASED_PHP = 0;
+    noinput;
+  else
+    if special(Q159_SMOKING_TOBACCO_PURCHASED_PHP) then Q159_SMOKING_TOBACCO_PURCHASED_PHP = 0; endif;
   endif;
 
 { ---- 'Other (specify)' enforcement — UHC9 dual-other ---- }

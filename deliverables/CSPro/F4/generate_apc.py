@@ -1213,6 +1213,45 @@ def consumed_amount_validation_procs(names):
     return procs
 
 
+def flat_expenditure_amount_procs(names):
+    """#832/#833 (2026-07-04): the flat Section N weekly singles (Q158 restaurant, Q159
+    tobacco) are the only expenditure items not rosterized. They previously used the
+    CONSUMED-postproc + protect() gate (expenditure_gate_procs); on their DisplayTogether
+    screen the runtime protect(amt, false) did not reliably re-render the sibling amounts
+    enterable, so 'YES not accepting any value'. Switch them to the EXACT roster gate
+    (Q144-Q156): the gate lives in each amount's OWN preproc with noinput (DG-safe, no
+    skip-to) + a special() pre-fill, and NO protect(), so amounts are always enterable when
+    consumed. #677 (consumed-needs->=1-amount) rides on the last amount's postproc, reusing
+    the identical wording via consumed_amount_validation_procs. Returns {amount_field: proc}."""
+    procs = {}
+    have = set(names)
+    v677 = consumed_amount_validation_procs(names)   # {last_amt: 'postproc\n...'} — identical wording
+    bases = [b[: -len("_CONSUMED")] for b in names if b.endswith("_CONSUMED")]
+    for base in bases:
+        consumed = f"{base}_CONSUMED"
+        amts = [a for a in (f"{base}_PURCHASED_PHP", f"{base}_INKIND_PHP") if a in have]
+        if consumed not in have or not amts:
+            continue
+        for a in amts:
+            gate = (
+                "preproc\n"
+                "  { #832/#833 roster-parity gate (Q144-Q156): not consumed -> 0 + noinput\n"
+                "    (DG-safe, no skip-to, no protect); consumed -> #755/#818 special() pre-fill\n"
+                "    so Enter passes an empty amount. Always enterable when consumed. }\n"
+                f"  if {consumed} = 2 then\n"
+                f"    {a} = 0;\n"
+                "    noinput;\n"
+                "  else\n"
+                f"    if special({a}) then {a} = 0; endif;\n"
+                "  endif;"
+            )
+            proc = f"PROC {a}\n{gate}"
+            if a in v677:                # last amount also carries the #677 postproc
+                proc = f"{proc}\n{v677[a]}"
+            procs[a] = proc
+    return procs
+
+
 def uhc9_other_specify_procs(names):
     procs = {}
     for n in names:
@@ -1239,7 +1278,7 @@ def _dkrf_gate_branch(status):
     postproc), so skip entry. Post-.format so single braces are fine."""
     if not DK_RF_STATUS:
         return ""
-    return (f"  elseif {status} in (2, 3) then\n"
+    return (f"  elseif {status} in 2, 3 then\n"
             f"    noinput;   {{ #7 DK/RF: amount already -98/-99 from the status field }}\n")
 
 
@@ -1652,7 +1691,10 @@ def main():
     # suffix-driven auto-gens (gate / subtotal / #677 validation) so nothing double-emits.
     flat_names = [n for n in names if not n.startswith(
         ("N_FOOD_", "N_NF1M_", "N_NF6M_", "N_NF12M_", "N_H12M_", "N_H6M_", "N_H1M_"))]
-    gate_procs = expenditure_gate_procs(flat_names)
+    # #832/#833: flat expenditure amounts (Q158/Q159) are now gated in their OWN preproc
+    # (flat_expenditure_amount_procs, roster parity). The protect-based CONSUMED-postproc gate
+    # (expenditure_gate_procs) is retired for the DG combined view — it left amounts locked.
+    gate_procs = {}
     st_procs = subtotal_init_compute_procs(flat_names, dcf_items_map())
 
     def _preproc_body(proc_text):
@@ -1685,12 +1727,13 @@ def main():
             raise SystemExit(f"#617 subtotal proc collides with an existing proc: {field}")
         covered.add(field); parts.append(proc); parts.append("")
 
-    # #677: consumed-but-zero hard validation on each Section N item's last amount field.
-    parts.append("{ ---- Section N consumed-amount validation (#677): consumed item needs >=1 amount > 0 ---- }")
-    for field, postproc_body in sorted(consumed_amount_validation_procs(flat_names).items()):
+    # #832/#833: flat Section N items (Q158/Q159) — roster-parity amount gate (noinput +
+    # special() pre-fill, no protect) with #677 folded onto the last amount's postproc.
+    parts.append("{ ---- Section N flat items (Q158/Q159): roster-parity amount gate + #677 (#832/#833) ---- }")
+    for field, proc in sorted(flat_expenditure_amount_procs(flat_names).items()):
         if field in covered:
-            raise SystemExit(f"#677 consumed-amount validation collides with an existing proc: {field}")
-        covered.add(field); parts.append(f"PROC {field}\n{postproc_body}"); parts.append("")
+            raise SystemExit(f"flat expenditure amount proc collides with an existing proc: {field}")
+        covered.add(field); parts.append(proc); parts.append("")
 
     parts.append("{ ---- 'Other (specify)' enforcement — UHC9 dual-other ---- }")
     for field, proc in sorted(uhc9_other_specify_procs(names).items()):
