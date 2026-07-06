@@ -65,7 +65,7 @@ These are combined scores or totals where **the exact method changes the answer.
 - Patient-experience scores: 2.47 (responsiveness) · 2.48 / 2.49 (dignity, autonomy, confidentiality) · 2.50 (overall experience).
 - Health-worker tables: 4.1 (staff count per facility) · 4.12 (facilities offering enough training) · 4.15 / 4.16 (job satisfaction, top satisfaction factors).
 - **What I need:** DOH/ASPSI to confirm the exact method — which answers count as "free," the catastrophic-spending cut-offs, which questions make up each score, and how we roll health-worker answers up to the facility.
-- ⭐ **My recommendation (standard methods — approve as a set):** catastrophic spending = out-of-pocket ÷ total household income, reported at **both 25% and 40%** (the usual thresholds) · **"free/subsidized"** = the free / donation / "got it free" answer codes · each **experience score** = simple average of its Section-J questions (1–5) · **staff-per-facility** = average number of workers we interviewed per facility. Flag any where DOH wants a specific formula.
+- ⭐ **My recommendation (standard methods — approve as a set):** **catastrophic spending (2.29)** = compute it on **F4 (household), Capacity-to-Pay**: health out-of-pocket ÷ (total household spending − food), at **25% & 40%** — F4 already collects this via its Section N expenditure module (see the separate **CTP alignment note**); *this replaces my earlier "÷ income" note* · **"free/subsidized"** = the free / donation / "got it free" answer codes · each **experience score** = simple average of its Section-J questions (1–5) · **staff-per-facility** = average number of workers we interviewed per facility. Flag any where DOH wants a specific formula.
 
 ### Group C — "We need to agree who to count" (~5 tables)
 The table names a group the form doesn't tag.
@@ -113,7 +113,7 @@ What the finished tables will look like. All are **weighted to represent the pop
 | Richest fifth | 3.2 | 4.6 | 1.0 | 1.7 |
 | **All** | **11.3** | **16.1** | **5.4** | **8.4** |
 
-<sub>⚠ Need to agree the method: what out-of-pocket counts, and the 25% / 40% cut-offs. Made-up figures.</sub>
+<sub>⚠ Compute on **F4 (household), Capacity-to-Pay**: health OOP ÷ (total household spending − food), at 25% / 40%. See the CTP alignment note. Made-up figures.</sub>
 
 ### Sample 3 — Patient (F3) · a "closest question" table (Group A)
 **% who would go to YAKAP/Konsulta first, by province** *(example)*
