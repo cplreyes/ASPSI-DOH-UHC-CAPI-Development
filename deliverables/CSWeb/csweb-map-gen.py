@@ -36,13 +36,25 @@ Refresh cron (tightened 2026-06-26, was */15): */2 * * * * flock -n /tmp/csweb-m
 Vendored libs (no CDN JS): /docs/assets/{leaflet.css,leaflet.js,MarkerCluster*.css,leaflet.markercluster.js}.
 First built 2026-06-21 (v1); v2 + v3 same day.
 """
-import subprocess, json, datetime, html, math, re
+import subprocess, json, datetime, html, math, re, argparse
 from collections import defaultdict
+
+# Phase 2 (2026-07-06): province coverage choropleth (completed ÷ target). Adds a
+# --sample mode (off-box: q() returns nothing, coverage comes from the fixture) so
+# the choropleth can be built/verified without MySQL. On-box Leaflet render = Carl's gate.
+_ap = argparse.ArgumentParser(description="Generate the CSWeb Map Report.")
+_ap.add_argument("--sample", help="off-box dev: JSON fixture (points/completed_prov) instead of MySQL")
+_ap.add_argument("--targets", default="/opt/targets.json", help="targets.json for the coverage choropleth")
+_ap.add_argument("--areas", default="/opt/app/lamp/www/docs/assets/ph-areas.json")
+_ap.add_argument("--out", default="/opt/app/lamp/www/docs/map.html")
+ARGS = _ap.parse_args()
+SAMPLE = json.load(open(ARGS.sample, encoding="utf-8")) if ARGS.sample else None
 
 ENV = "/opt/app/.env"
 COMPOSE_DIR = "/opt/app"
-OUT = "/opt/app/lamp/www/docs/map.html"
-AREAS_PATH = "/opt/app/lamp/www/docs/assets/ph-areas.json"
+OUT = ARGS.out
+AREAS_PATH = ARGS.areas
+TARGETS_PATH = ARGS.targets
 
 # PH coordinate sanity bounds (drops garbage pins; counted as "bad")
 LAT_MIN, LAT_MAX = 4.5, 21.5
@@ -116,11 +128,20 @@ def rootpw():
 
 
 def q(sql):
+    if SAMPLE is not None:          # off-box: no MySQL; data comes from the fixture
+        return []
     r = subprocess.run(
         ["docker", "compose", "exec", "-T", "database", "mysql", "-uroot",
          "-p" + rootpw(), "--batch", "-N", "-e", sql],
         cwd=COMPOSE_DIR, capture_output=True, text=True)
     return [ln.split("\t") for ln in r.stdout.splitlines() if ln.strip()]
+
+
+def load_targets(path):
+    try:
+        return json.load(open(path, encoding="utf-8")).get("targets", {})
+    except Exception:
+        return {}
 
 
 def fnum(s):
@@ -278,6 +299,46 @@ for p in points:
         p["qaOutArea"] = True
         p["inArea"] = cont["name"]
 
+# ---- Phase 2: province coverage (completed ÷ target) for the choropleth ----
+targets = load_targets(TARGETS_PATH)
+_COMP_SQL = {
+    inst: ("SELECT COALESCE(NULLIF(fc.province_name,''),'(unknown)'), COUNT(*)"
+           " FROM csweb_%s_breakout.`level-1` l"
+           " JOIN csweb_%s_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
+           " LEFT JOIN csweb_%s_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
+           " WHERE (c.partial_save_mode IS NULL OR c.partial_save_mode='') GROUP BY 1"
+           % (inst, inst, inst))
+    for inst in ("f1", "f3", "f4")
+}
+completed_prov = {"f1": {}, "f3": {}, "f4": {}}
+if SAMPLE is not None:
+    for inst, d in (SAMPLE.get("completed_prov") or {}).items():
+        completed_prov[inst] = {k: int(v) for k, v in d.items()}
+else:
+    for inst, sql in _COMP_SQL.items():
+        try:
+            for prov, cnt in q(sql):
+                completed_prov[inst][prov] = int(cnt)
+        except Exception:
+            pass
+coverage = {"f1": {}, "f3": {}, "f4": {}}
+for inst in ("f1", "f3", "f4"):
+    for code, t in (targets.get(inst) or {}).items():      # targets by province
+        prov = (t.get("province") or "").strip()
+        if not prov:
+            continue
+        rec = coverage[inst].setdefault(norm(prov), {"name": prov, "target": 0, "completed": 0})
+        rec["target"] += int(t.get("target") or 0)
+    for prov, cnt in completed_prov[inst].items():          # completed by province
+        if not prov or prov == "(unknown)":
+            continue
+        rec = coverage[inst].setdefault(norm(prov), {"name": prov, "target": 0, "completed": 0})
+        rec["completed"] += cnt
+# ship polygons only for the provinces we actually shade (present in ph-areas.json)
+_shade = set(k for inst in coverage.values() for k in inst)
+prov_polys = {k: {"name": PROV[k]["name"], "polys": PROV[k]["polys"]} for k in _shade if k in PROV}
+has_coverage = bool(targets)
+
 # ---- visit-date bounds ----
 _valid = [p["date"] for p in points
           if p["date"].isdigit() and len(p["date"]) == 8 and p["date"] != "00000000"]
@@ -290,6 +351,7 @@ payload_obj = {
     "nofix": nofix, "bad": bad, "totals": totals,
     "thresh": {"acc": ACC_MAX, "sat": SAT_MIN, "home": A_HOME_KM, "cluster": CLUSTER_KM},
     "dateMin": date_min, "dateMax": date_max,
+    "coverage": coverage, "provPolys": prov_polys, "hasCoverage": has_coverage,
     "generated": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
 }
 payload = html.escape(json.dumps(payload_obj), quote=False)
@@ -358,8 +420,10 @@ TEMPLATE = r"""<!doctype html>
   <label><input type="checkbox" id="lPrimary" checked /> Facility / Household</label>
   <label><input type="checkbox" id="lHome" checked /> F3 patient home</label>
   <label><input type="checkbox" id="lConn" /> Connect F3 pairs</label>
+  <label><input type="checkbox" id="lCoverage" /> Coverage % (choropleth)</label>
 </div>
 <div class="bar">
+  <span class="chip">Data as of <b id="fresh"></b></span>
   <span class="chip">Plotted: <b id="cPlotted">0</b></span>
   <span class="badge" id="cNofix"></span>
   <span class="badge" id="cBad" style="display:none"></span>
@@ -367,6 +431,7 @@ TEMPLATE = r"""<!doctype html>
   <span class="badge warn" id="cDup" style="display:none"></span>
   <span class="badge warn" id="cDisp" style="display:none"></span>
   <span class="badge warn" id="cArea" style="display:none"></span>
+  <span class="badge" id="covLegend" style="display:none">Coverage: <i class="sw" style="background:#d32f2f"></i>&lt;40% <i class="sw" style="background:#e5b23b"></i>40–79% <i class="sw" style="background:#006b3f"></i>&ge;80%</span>
   <span class="legend">
     <span><i class="sw dot" style="background:#006b3f"></i>Completed</span>
     <span><i class="sw dot" style="background:#e5b23b"></i>Partial</span>
@@ -381,6 +446,7 @@ TEMPLATE = r"""<!doctype html>
 <script>
 const P = JSON.parse(document.getElementById('map-data').textContent);
 document.getElementById('gen').textContent = P.generated;
+document.getElementById('fresh').textContent = P.generated;
 document.getElementById('tAcc').textContent = P.thresh.acc;
 document.getElementById('tSat').textContent = P.thresh.sat;
 document.getElementById('tHome').textContent = P.thresh.home;
@@ -395,7 +461,7 @@ const instSel=document.getElementById('fInst'), regSel=document.getElementById('
       statSel=document.getElementById('fStatus'), qaSel=document.getElementById('fQa'),
       fromInp=document.getElementById('fFrom'), toInp=document.getElementById('fTo'),
       lPrimary=document.getElementById('lPrimary'), lHome=document.getElementById('lHome'),
-      lConn=document.getElementById('lConn');
+      lConn=document.getElementById('lConn'), lCoverage=document.getElementById('lCoverage');
 [['ALL','All instruments'],['f1','F1 · Facility Head'],['f3','F3 · Patient'],['f4','F4 · Household']]
   .forEach(([v,t])=>instSel.add(new Option(t,v)));
 regSel.add(new Option('All regions','ALL')); P.regions.forEach(r=>regSel.add(new Option(r,r)));
@@ -410,8 +476,32 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   {maxZoom:19, attribution:'© OpenStreetMap'}).addTo(map);
 const cluster = L.markerClusterGroup({chunkedLoading:true, maxClusterRadius:45});
 const lines = L.layerGroup();
-map.addLayer(cluster); map.addLayer(lines);
+const covLayer = L.layerGroup();
+map.addLayer(covLayer); map.addLayer(cluster); map.addLayer(lines);
 const PH = [12.5, 122.0];
+// --- Phase 2: province coverage choropleth ---
+function covColorMap(pct){ return pct==null?'#9aa7a0':(pct>=80?'#006b3f':(pct>=40?'#e5b23b':'#d32f2f')); }
+function covForProv(key){
+  const inst=instSel.value, insts = inst==='ALL'?['f1','f3','f4']:[inst];
+  let t=0,c=0,any=false;
+  insts.forEach(k=>{ const r=(P.coverage[k]||{})[key]; if(r){any=true; t+=r.target||0; c+=r.completed||0;} });
+  return any?{t,c,pct:(t>0?Math.round(100*c/t):null)}:null;
+}
+function renderChoropleth(){
+  covLayer.clearLayers();
+  const on = lCoverage && lCoverage.checked && P.hasCoverage;
+  document.getElementById('covLegend').style.display = on?'':'none';
+  if(!on) return;
+  Object.keys(P.provPolys||{}).forEach(key=>{
+    const cov=covForProv(key); if(!cov) return;
+    const color=covColorMap(cov.pct), nm=P.provPolys[key].name||key;
+    (P.provPolys[key].polys||[]).forEach(poly=>{
+      const pg=L.polygon(poly,{color:'#374151',weight:1,fillColor:color,fillOpacity:.45});
+      pg.bindPopup('<div class="lp"><b>'+esc(nm)+'</b><br>'+cov.c+' / '+cov.t+' completed'+(cov.pct==null?' (no target)':' ('+cov.pct+'%)')+'</div>');
+      covLayer.addLayer(pg);
+    });
+  });
+}
 
 function icon(p){
   const c = COLOR[p.status] || '#5b6b63';
@@ -475,11 +565,12 @@ function render(){
   chip('cDup', shown.filter(p=>p.qaDup).length, 'duplicate location');
   chip('cDisp', shown.filter(isDisp).length, 'displacement');
   chip('cArea', shown.filter(isArea).length, 'wrong area');
+  renderChoropleth();
   if(shown.length){map.fitBounds(cluster.getBounds().pad(0.2));}else{map.setView(PH,6);}
 }
 [instSel,regSel,statSel,qaSel,fromInp,toInp].forEach(el=>el.onchange=render);
-[lPrimary,lHome,lConn].forEach(el=>el.onchange=render);
-document.getElementById('fReset').onclick=()=>{instSel.value='ALL';regSel.value='ALL';statSel.value='ALL';qaSel.value='ALL';fromInp.value='';toInp.value='';lPrimary.checked=true;lHome.checked=true;lConn.checked=false;render();};
+[lPrimary,lHome,lConn,lCoverage].forEach(el=>el.onchange=render);
+document.getElementById('fReset').onclick=()=>{instSel.value='ALL';regSel.value='ALL';statSel.value='ALL';qaSel.value='ALL';fromInp.value='';toInp.value='';lPrimary.checked=true;lHome.checked=true;lConn.checked=false;lCoverage.checked=false;render();};
 render();
 </script>
 </body>
