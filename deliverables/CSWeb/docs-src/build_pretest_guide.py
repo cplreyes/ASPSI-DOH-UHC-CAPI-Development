@@ -208,7 +208,79 @@ BODY = """
           </section>
 
           <section>
-            <h2 class="sec">5. Consent <em>(enumerators)</em></h2>
+            <h2 class="sec">5. The pretest code list <em>(everyone)</em></h2>
+            <p>
+              These are the numbers in use this round. <strong>Your own block is on your handout</strong> &mdash; the
+              per-person assignments are not published here. Use this page to <em>check</em> a number, not to pick one.
+            </p>
+
+            <h3>Facilities</h3>
+            <table>
+              <thead>
+                <tr><th>Facility</th><th>City / Municipality</th><th>Facility Head (F1)</th><th>Patients (F3)</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Los Ba&ntilde;os Doctors Hospital</td><td>Los Ba&ntilde;os</td>
+                  <td><code>040341110000</code></td><td><code>040341110001</code>&ndash;<code>040341110010</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Laguna Provincial Hospital &ndash; Bay</strong></td><td><strong>Bay</strong></td>
+                  <td><code>040340210000</code></td>
+                  <td><strong><code>040340210001</code>&ndash;<code>040340210010</code></strong></td>
+                </tr>
+                <tr>
+                  <td>Los Ba&ntilde;os Rural Health Unit</td><td>Los Ba&ntilde;os</td>
+                  <td><code>040341130000</code></td><td><code>040341130001</code>&ndash;<code>040341130010</code></td>
+                </tr>
+                <tr>
+                  <td>St. Jude Hospital</td><td>Los Ba&ntilde;os</td>
+                  <td><code>040341140000</code></td><td><code>040341140001</code>&ndash;<code>040341140010</code></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="callout callout-warn">
+              <strong>The patient codes for Laguna Provincial Hospital &ndash; Bay were printed wrongly in the
+              original code list.</strong> An early version of <em>Unique Question Number for Pre-testing</em> listed
+              them as <code>040341110001</code>&ndash;<code>040341110010</code> &mdash; which are <strong>Los Ba&ntilde;os
+              Doctors Hospital&rsquo;s</strong> codes. Using those at Bay would create <strong>the same case number twice</strong>
+              in the Patient Survey, and the two hospitals&rsquo; interviews would overwrite each other on sync, with no
+              error shown on the tablet. <strong>The correct range for Bay is
+              <code>040340210001</code>&ndash;<code>040340210010</code></strong>, as in the table above. If your sheet
+              says otherwise, stop and tell your STL.
+            </div>
+
+            <h3>Households (F4)</h3>
+            <table>
+              <thead>
+                <tr><th>Barangay</th><th>Target households</th><th>Replacement reserve</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Mayondon, Los Ba&ntilde;os</td>
+                  <td><code>040341101001</code>&ndash;<code>040341101020</code></td>
+                  <td><code>040341101021</code>&ndash;<code>040341101030</code></td>
+                </tr>
+                <tr>
+                  <td>Bayog, Los Ba&ntilde;os</td>
+                  <td><code>040341100601</code>&ndash;<code>040341100620</code></td>
+                  <td><code>040341100621</code>&ndash;<code>040341100630</code></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="callout">
+              <strong>A replacement household needs a NEW number.</strong> When you mark a household
+              <em>Not interviewed &mdash; refused / not found / ineligible</em>, that case closes as <strong>Replaced</strong>
+              and is finished. The substitute household is a <strong>separate interview</strong> and needs its own code &mdash;
+              from the <strong>replacement reserve</strong> above, issued by your STL.
+              <strong>Never re-use a number that has already been opened on a tablet.</strong>
+            </div>
+          </section>
+
+          <section>
+            <h2 class="sec">6. Consent <em>(enumerators)</em></h2>
             <p>
               Consent is <strong>read aloud from the printed SJREB sheet</strong> (Annex&nbsp;H), in the language the
               respondent understands. <strong>There is no consent screen in the app</strong> &mdash; do not go looking for
@@ -218,7 +290,7 @@ BODY = """
           </section>
 
           <section>
-            <h2 class="sec">6. Supervisors / STLs</h2>
+            <h2 class="sec">7. Supervisors / STLs</h2>
             <ul>
               <li><strong>Before 08:00:</strong> confirm <em>every</em> tablet in your team has removed and re-added the
                 app, and that the version matches step&nbsp;1. This is the single most likely thing to go wrong today.</li>
@@ -237,7 +309,7 @@ BODY = """
           </section>
 
           <section>
-            <h2 class="sec">7. Data Manager &mdash; CSWeb</h2>
+            <h2 class="sec">8. Data Manager &mdash; CSWeb</h2>
             <ul>
               <li><strong>Sync Dashboard:</strong>
                 <a href="https://csweb.asiansocial.org/docs/dashboard.html">csweb.asiansocial.org/docs/dashboard.html</a>
@@ -256,7 +328,7 @@ BODY = """
           </section>
 
           <section>
-            <h2 class="sec">8. F2 Admin &mdash; Healthcare-Worker PWA</h2>
+            <h2 class="sec">9. F2 Admin &mdash; Healthcare-Worker PWA</h2>
             <ul>
               <li>Portal: <a href="https://uhc-hcw.asiansocial.org/admin">uhc-hcw.asiansocial.org/admin</a></li>
               <li>The F2 database was <strong>reset to a clean state</strong> on 14 July: one bootstrap administrator, no
@@ -268,7 +340,7 @@ BODY = """
           </section>
 
           <section>
-            <h2 class="sec">9. How to report a finding <em>(everyone)</em></h2>
+            <h2 class="sec">10. How to report a finding <em>(everyone)</em></h2>
             <p>
               Everything goes on the pretest tracker:
               <a href="https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/839"><strong>issue #839</strong></a>.
