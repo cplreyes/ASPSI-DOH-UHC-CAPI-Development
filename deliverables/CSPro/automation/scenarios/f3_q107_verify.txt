@@ -1,0 +1,23 @@
+# #835 VERIFY the fix: enter 500 -> partial-save -> resume -> must NOT block; 500 preserved.
+rmdata ../F3/desktest.csdb
+launch ../F3/PatientSurvey_desktest.pff
+casekey 04 03 403 02 001
+type 2
+type 1
+note --- Q107_SOURCES: tick Out-of-pocket (01) + commit ---
+click 1048 211
+key {ENTER}
+note --- Q107_PAY_AMT: enter 500 + commit -> Q108 ---
+type 500
+key {ENTER}
+shot at_q108
+note --- partial-save at Q108 ---
+click 155 63
+click 831 534
+click 1043 574
+shot saved
+note --- reopen + go to last position ---
+click 88 108
+key {ENTER}
+click 1027 574
+shot resumed_FIXED

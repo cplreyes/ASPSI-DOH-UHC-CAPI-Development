@@ -47,7 +47,7 @@ closed: 2026-06-28 — retrospective filled from session/git/log evidence (2 day
 
 ## Parked / planned (blocked — future sprint)
 
-- [ ] **E4-F2-ELESTIO** Migrate F2 Survey + Admin Portal off Cloudflare/Google to a dedicated Elestio instance (`hcw.asiansocial.org`). Planning DONE 2026-06-22 (spec v0.2 + 19-task plan). **BLOCKED on provisioning** (Carl/ASPSI: instance + DNS + cost). Build Tasks 2–17 runnable locally vs Docker MySQL before the instance exists. `status::blocked` (provisioning) `priority::medium`
+- [ ] **E4-F2-ELESTIO** Migrate F2 Survey + Admin Portal off Cloudflare/Google to a dedicated Elestio instance (`uhc-hcw.asiansocial.org`). Planning DONE 2026-06-22 (spec v0.2 + 19-task plan). **BLOCKED on provisioning** (Carl/ASPSI: instance + DNS + cost). Build Tasks 2–17 runnable locally vs Docker MySQL before the instance exists. `status::blocked` (provisioning) `priority::medium`
 
 ## Definition of Done — Sprint 011 — outcomes
 

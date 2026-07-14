@@ -57,6 +57,16 @@ SECTIONS = [
         ("province", "Cases by Province", "bar"),
         ("result", "Result of Visit", "doughnut"),
     ]),
+    # F2 = Healthcare-Worker PWA, mirrored into csweb_f2 (read-mirror, 2026-07-07).
+    # Different shape from the CSEntry breakouts: no server-side Completed/Partial
+    # (every stored submission is complete) and no GPS (self-administered) — its
+    # disposition is Submitted vs Refusal. Coverage-vs-target stays DEFERRED (no F2
+    # sample frame yet), so F2 has no targets entry and the coverage section skips it.
+    ("F2 — Healthcare Worker Survey (PWA)", "f2", [
+        ("result", "Disposition — Submitted / Refusal", "doughnut"),
+        ("region", "Cases by Region", "bar"),
+        ("source", "Capture Mode", "doughnut"),
+    ]),
 ]
 
 # --- per-case labeled-row queries (one row per non-deleted case) ---
@@ -88,6 +98,26 @@ def _gps(lat, lon):
 F1_GPS = _gps("facility_gps_latitude", "facility_gps_longitude")
 F3_GPS = _gps("facility_gps_latitude", "facility_gps_longitude")
 F4_GPS = _gps("latitude", "longitude")
+
+# --- F2 (Healthcare-Worker PWA) — read from the csweb_f2 mirror (NOT a breakout) ---
+# Same q() docker-exec path, different DB + shape. Plain string (NOT %-formatted), so
+# the DATE_FORMAT %Y%m%d tokens survive verbatim. status='Completed'/gps='1' are fixed
+# by design: F2 has no partial-save and no geolocation (self-administered), so it must
+# never inflate the Partial or "No GPS fix" KPIs. submitted_at_server is UTC → shifted
+# to Manila (+08:00) so F2's trend/"today" line up with the CSEntry visit dates.
+F2_RES  = "CASE r.status WHEN 'refusal' THEN 'Refusal' ELSE 'Submitted' END"
+F2_SRC  = "CASE r.source_path WHEN 'paper_encoded' THEN 'Paper-encoded' ELSE 'Self-administered' END"
+F2_DATE = "COALESCE(DATE_FORMAT(CONVERT_TZ(r.submitted_at_server,'+00:00','+08:00'),'%Y%m%d'),'')"
+F2_SQL = (
+    "SELECT COALESCE(NULLIF(fm.region,''),'(unknown)'),"
+    " COALESCE(NULLIF(fm.province,''),'(unknown)'), "
+    + F2_RES + ", " + F2_SRC + ", " + F2_DATE + ", 'Completed', '1',"
+    # code9 = first 9 of the 12-digit QN (2026-07-08 rollout) — the same
+    # facility code F1 uses, so F2 joins targets.json/geo like the others;
+    # falls back to facility_id for pre-qn rows (demo slugs → no join, as before).
+    " LEFT(COALESCE(NULLIF(r.qn,''),r.facility_id,''),9)"
+    " FROM csweb_f2.f2_responses r"
+    " LEFT JOIN csweb_f2.f2_facility_master fm ON fm.facility_id=r.facility_id")
 
 QUERIES = {
     "f1": (["region", "province", "city", "facility", "ownership", "service_level", "result", "date", "status", "gps", "code9"],
@@ -123,6 +153,7 @@ QUERIES = {
            " LEFT JOIN csweb_f4_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f4_breakout.household_geo_id g ON g.`level-1-id`=l.`level-1-id`"
            % (F4_RES, STATUS, F4_GPS)),
+    "f2": (["region", "province", "result", "source", "date", "status", "gps", "code9"], F2_SQL),
 }
 
 
@@ -139,27 +170,46 @@ def q(sql):
         ["docker", "compose", "exec", "-T", "database", "mysql", "-uroot",
          "-p" + rootpw(), "--batch", "-N", "-e", sql],
         cwd=COMPOSE_DIR, capture_output=True, text=True)
+    # Raise on a real MySQL error rather than silently returning [] — otherwise a
+    # broken query (e.g. csweb_f2 not created yet) is indistinguishable from "no rows"
+    # and would be mis-reported as an empty mirror. fetch_live catches this per-instrument.
+    if r.returncode != 0:
+        raise RuntimeError((r.stderr or "mysql query failed").strip())
     return [ln.split("\t") for ln in r.stdout.splitlines() if ln.strip()]
 
 
 def fetch_live():
-    """One labeled-row dict list per instrument, from the box's breakout DBs."""
-    data = {}
+    """One labeled-row dict list per instrument, from the box's breakout DBs. Returns
+    (data, errored): errored = the set of instruments whose query FAILED (vs simply
+    returned zero rows), so a broken query is reported as a degraded state, not "no data"."""
+    data, errored = {}, set()
     for pfx, (cols, sql) in QUERIES.items():
-        rows = []
         try:
-            for r in q(sql):
-                rows.append(dict(zip(cols, r)))
-        except Exception:
-            rows = []
-        data[pfx] = rows
-    return data
+            data[pfx] = [dict(zip(cols, r)) for r in q(sql)]
+        except Exception as e:
+            errored.add(pfx)
+            data[pfx] = []
+            print("WARN: %s query failed: %s" % (pfx, str(e)[:200]))
+    return data, errored
+
+
+def f2_api_health():
+    """f2-api service probe (P6 hardening): True/False from the box's loopback-published
+    port. The retired 2-min poller was F2's de-facto liveness signal; this replaces it.
+    Data freshness is covered separately by f2meta.last."""
+    try:
+        import urllib.request
+        with urllib.request.urlopen("http://127.0.0.1:8787/api/health", timeout=5) as r:
+            return r.status == 200 and b'"ok":true' in r.read(200)
+    except Exception:
+        return False
 
 
 def load_sample(path):
-    """Off-box dev: read the same row shape from a JSON fixture instead of MySQL."""
+    """Off-box dev: read the same row shape from a JSON fixture instead of MySQL.
+    Returns (data, errored) to match fetch_live; a fixture never errors."""
     obj = json.load(open(path, encoding="utf-8"))
-    return {k: list(obj.get(k, [])) for k in QUERIES}
+    return {k: list(obj.get(k, [])) for k in QUERIES}, set()
 
 
 # Phase 2 coverage-vs-target: per-EA-facility sample targets, built by gen-targets.py
@@ -210,7 +260,7 @@ TEMPLATE = r"""<!doctype html>
   .kpi.bad{border-top-color:var(--red)}.kpi.bad .num{color:var(--red)}
   .freshness{color:var(--muted);font-size:12.5px;margin:2px 2px 16px}
   .freshness b{color:var(--ink)}
-  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:8px}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:8px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
   .card .num{font-size:34px;font-weight:800;color:var(--g);line-height:1}
   .card .lbl{font-weight:600;margin-top:6px}.card .sub{color:var(--muted);font-size:12.5px}
@@ -242,7 +292,7 @@ TEMPLATE = r"""<!doctype html>
 </style>
 </head>
 <body>
-<header><h1>UHC Survey Year 2 — Sync Dashboard</h1><div class="s">Synced CAPI cases from CSWeb · F1 / F3 / F4</div></header>
+<header><h1>UHC Survey Year 2 — Sync Dashboard</h1><div class="s">Unified monitoring · F1 / F3 / F4 (CSEntry) · F2 (Healthcare-Worker PWA)</div></header>
 <main>
   <div class="filters">
     <div class="f"><label for="fInst">Instrument</label><select id="fInst"></select></div>
@@ -266,20 +316,23 @@ TEMPLATE = r"""<!doctype html>
   <div class="note">Counts exclude deleted cases. Filters recompute every tile in your browser. Empty/blank categories reflect minimal test cases in the current data — they populate as real fieldwork syncs. For the per-case list with facility labels, see the CSWeb <b>Sync Report</b>.</div>
   <div id="sections"></div>
 </main>
-<footer>Generated <span id="gen"></span> · auto-refreshes ~every 2 min · source: breakout DBs via <code>csweb_reports</code> · see also the <a href="/docs/map.html" style="color:#006b3f">Map Report</a>.</footer>
+<footer>Generated <span id="gen"></span> · auto-refreshes ~every 2 min · source: F1/F3/F4 breakout DBs via <code>csweb_reports</code> + F2 <code>csweb_f2</code> mirror · see also the <a href="/docs/map.html" style="color:#006b3f">Map Report</a>.</footer>
 <script type="application/json" id="dash-data">__PAYLOAD__</script>
 <script>
 const P = JSON.parse(document.getElementById('dash-data').textContent);
 document.getElementById('gen').textContent = P.generated;
 document.getElementById('fresh').textContent = P.generated;
 document.getElementById('todayLbl').textContent = P.today ? (P.today.slice(0,4)+'-'+P.today.slice(4,6)+'-'+P.today.slice(6,8)) : '—';
-const NAMES = {f1:'Facility Head', f3:'Patient', f4:'Household'};
+const NAMES = {f1:'Facility Head', f3:'Patient', f4:'Household', f2:'Healthcare Worker'};
 const PAL=['#006b3f','#e5b23b','#1e88e5','#8e44ad','#e64a19','#00897b','#c2185b','#5d4037','#546e7a','#7cb342','#3949ab','#f4511e'];
+// instrument prefixes, in section order (F1, F3, F4, F2) — derived once so every
+// per-instrument loop below (cards, KPIs, coverage) stays in sync with the sections.
+const INSTS = P.spec.map(s=>s.prefix);
 
 // --- filter controls ---
 const instSel=document.getElementById('fInst'), regSel=document.getElementById('fRegion');
-[['ALL','All instruments'],['f1','F1 · Facility Head'],['f3','F3 · Patient'],['f4','F4 · Household']]
-  .forEach(([v,t])=>instSel.add(new Option(t,v)));
+instSel.add(new Option('All instruments','ALL'));
+INSTS.forEach(k=>instSel.add(new Option(k.toUpperCase()+' · '+NAMES[k], k)));
 regSel.add(new Option('All regions','ALL'));
 P.regions.forEach(r=>regSel.add(new Option(r,r)));
 const fromInp=document.getElementById('fFrom'), toInp=document.getElementById('fTo');
@@ -296,7 +349,7 @@ const kTotal=document.getElementById('kTotal'), kCompleted=document.getElementBy
 // --- build skeleton once ---
 const tc=document.getElementById('totals');
 const cardNum={};
-['f1','f3','f4'].forEach(k=>{
+INSTS.forEach(k=>{
   const d=document.createElement('div'); d.className='card';
   const num=document.createElement('div'); num.className='num'; num.textContent='0';
   d.appendChild(num);
@@ -309,6 +362,26 @@ const charts={}; // id -> Chart
 P.spec.forEach(s=>{
   const wrapSec=document.createElement('div'); wrapSec.dataset.prefix=s.prefix;
   const h=document.createElement('h2'); h.textContent=s.title; wrapSec.appendChild(h);
+  // F2 reads the live store (csweb_f2 became authoritative at the P4 cutover,
+  // 2026-07 serving migration) — surface freshness so an empty/failed read is
+  // visible (not a silent flatline). n=0 → an explicit "no data yet" note.
+  if(s.prefix==='f2' && P.f2meta){
+    const fn=document.createElement('div'); fn.className='cov-note';
+    fn.textContent = P.f2meta.err
+      ? 'F2 query failed — csweb_f2 may not exist yet, or the schema/columns changed. Check the generator log; F1/F3/F4 are unaffected.'
+      : P.f2meta.n
+      ? (P.f2meta.n+' submission'+(P.f2meta.n===1?'':'s')+' from the Healthcare-Worker PWA'
+         + (P.f2meta.last ? ' · last submission '+P.f2meta.last.slice(0,4)+'-'+P.f2meta.last.slice(4,6)+'-'+P.f2meta.last.slice(6,8) : '')
+         + ' · csweb_f2 is F2’s store of record (uhc-hcw.asiansocial.org)')
+      : 'No F2 submissions yet (csweb_f2 empty). csweb_f2 is F2’s store of record — submissions arrive via uhc-hcw.asiansocial.org.';
+    if(P.f2meta.api===true||P.f2meta.api===false){
+      const svc=document.createElement('span');
+      svc.textContent=P.f2meta.api?' \u00b7 f2-api: OK':' \u00b7 f2-api: UNREACHABLE \u2014 uhc-hcw submissions are failing; check the f2-api container';
+      if(!P.f2meta.api){svc.style.color='var(--red)';svc.style.fontWeight='600';}
+      fn.appendChild(svc);
+    }
+    wrapSec.appendChild(fn);
+  }
   const grid=document.createElement('div'); grid.className='grid'; wrapSec.appendChild(grid);
   s.charts.forEach(c=>{
     const w=document.createElement('div'); w.className='chart';
@@ -327,7 +400,7 @@ function agg(rows,field){
   return {labels:e.map(x=>x[0]),data:e.map(x=>x[1])};
 }
 // visible instruments for the current Instrument filter
-function visInsts(inst){ return inst==='ALL' ? ['f1','f3','f4'] : [inst]; }
+function visInsts(inst){ return inst==='ALL' ? INSTS : [inst]; }
 // KPI strip — recomputes over every filtered, visible row
 function renderKpis(passOf){
   let tot=0,comp=0,part=0,today=0,nogps=0;
@@ -368,7 +441,7 @@ function renderTrend(passOf){
 }
 // --- Phase 2: coverage vs. target ---
 const provByCode={};   // code9 -> province from cases (fallback area when targets aren't masterlist-enriched)
-['f1','f3','f4'].forEach(k=>(P.data[k]||[]).forEach(r=>{ if(r.code9 && r.province && r.province!=='(unknown)' && !provByCode[r.code9]) provByCode[r.code9]=r.province; }));
+INSTS.forEach(k=>(P.data[k]||[]).forEach(r=>{ if(r.code9 && r.province && r.province!=='(unknown)' && !provByCode[r.code9]) provByCode[r.code9]=r.province; }));
 const covSort={};      // inst -> {col,dir}
 function esc(s){const d=document.createElement('div'); d.textContent=(s==null?'':s); return d.innerHTML;}
 function covColor(pct){ return pct>=80?'#006b3f':(pct>=40?'#e5b23b':'#d32f2f'); }
@@ -431,7 +504,7 @@ function render(){
   renderKpis(pass);
   renderTrend(pass);
   renderCoverage(pass);
-  ['f1','f3','f4'].forEach(k=>{
+  INSTS.forEach(k=>{
     const rows=(P.data[k]||[]).filter(pass);
     cardNum[k].textContent=rows.length;
     cardNum[k].closest('.card').style.display=(inst==='ALL'||inst===k)?'':'none';
@@ -462,8 +535,10 @@ render();
 """
 
 
-def build(data, targets=None):
-    """Assemble the payload + HTML from a {inst: [row-dict,...]} data map."""
+def build(data, targets=None, errored=None, f2_api_ok=None):
+    """Assemble the payload + HTML from a {inst: [row-dict,...]} data map. `errored` =
+    the set of instruments whose live query failed (surfaced on the F2 freshness note)."""
+    errored = errored or set()
     regions = set()
     for rows in data.values():
         for rec in rows:
@@ -480,6 +555,12 @@ def build(data, targets=None):
     now_utc = datetime.datetime.now(datetime.timezone.utc)
     # "today" for the KPI compares against device-local (Manila, UTC+8) visit dates
     today = (now_utc + datetime.timedelta(hours=8)).strftime("%Y%m%d")
+    # F2 mirror freshness: count + last submission date (Manila YYYYMMDD from the query)
+    _f2 = data.get("f2", [])
+    _f2dates = [r["date"] for r in _f2
+                if r.get("date", "").isdigit() and len(r["date"]) == 8 and r["date"] != "00000000"]
+    f2meta = {"n": len(_f2), "last": max(_f2dates) if _f2dates else "", "err": "f2" in errored,
+              "api": f2_api_ok}
     payload_obj = {
         "data": data,
         "spec": spec,
@@ -488,6 +569,7 @@ def build(data, targets=None):
         "dateMax": date_max,
         "today": today,
         "targets": targets or {},
+        "f2meta": f2meta,
         "generated": now_utc.strftime("%Y-%m-%d %H:%M UTC"),
     }
     # XSS-safe: JSON in a non-executable <script type="application/json">, HTML-escaped,
@@ -503,14 +585,15 @@ def main():
     ap.add_argument("--out", default=OUT, help="output HTML path (default: %(default)s)")
     ap.add_argument("--targets", default=TARGETS, help="targets.json path (default: %(default)s)")
     a = ap.parse_args()
-    data = load_sample(a.sample) if a.sample else fetch_live()
+    data, errored = load_sample(a.sample) if a.sample else fetch_live()
+    api_ok = None if a.sample else f2_api_health()
     targets = load_targets(a.targets)
-    out_html = build(data, targets)
+    out_html = build(data, targets, errored, api_ok)
     with open(a.out, "w", encoding="utf-8") as f:
         f.write(out_html)
-    print("wrote %s (%d bytes); rows: f1=%d f3=%d f4=%d%s"
+    print("wrote %s (%d bytes); rows: f1=%d f3=%d f4=%d f2=%d%s"
           % (a.out, len(out_html), len(data.get("f1", [])), len(data.get("f3", [])),
-             len(data.get("f4", [])), " [SAMPLE]" if a.sample else ""))
+             len(data.get("f4", [])), len(data.get("f2", [])), " [SAMPLE]" if a.sample else ""))
 
 
 if __name__ == "__main__":

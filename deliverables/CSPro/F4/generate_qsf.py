@@ -360,7 +360,7 @@ _PIPE_PRIV = {"Q48_OTHER_INS_REG", "Q49_PRIVATE_INS", "Q50_PRIVATE_INS_OTHER_TXT
 # is for — the auto-filled N_FOOD_ITEM piped as a bold header (Section C piping pattern).
 # Fan-out (2026-07-03): every Section N roster pipes its row's auto-filled *_ITEM into
 # each grid question as a bold header (Section C piping pattern). Maps member -> ITEM field.
-_EXP_ROSTER_PREFIXES = ("N_FOOD", "N_NF1M", "N_NF6M", "N_NF12M", "N_H12M", "N_H6M", "N_H1M")
+_EXP_ROSTER_PREFIXES = ("N_FOOD", "N_WKOTH", "N_NF1M", "N_NF6M", "N_NF12M", "N_H12M", "N_H6M", "N_H1M")
 _PIPE_EXP = {f"{p}_{s}": f"{p}_ITEM"
              for p in _EXP_ROSTER_PREFIXES
              for s in ("CONSUMED", "AMT_STATUS", "PURCHASED_PHP", "INKIND_PHP")}

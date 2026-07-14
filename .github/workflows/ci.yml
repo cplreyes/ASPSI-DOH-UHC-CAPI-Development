@@ -54,7 +54,7 @@ jobs:
         # for CI build verification. Real deploys (cf-pages-deploy.yml)
         # read from the repo secret.
         env:
-          VITE_F2_PROXY_URL: https://f2-pwa-worker.hcw.workers.dev
+          VITE_F2_PROXY_URL: https://uhc-hcw.asiansocial.org
         run: npm run build
 
   worker:
@@ -89,7 +89,7 @@ jobs:
     # the whole job — the lhci-spawned preview server needs it too, not just the
     # build step. The staging Worker origin is public; real deploys read the secret.
     env:
-      VITE_F2_PROXY_URL: https://f2-pwa-worker.hcw.workers.dev
+      VITE_F2_PROXY_URL: https://uhc-hcw.asiansocial.org
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 

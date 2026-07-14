@@ -37666,32 +37666,117 @@
               "contentType": "numeric",
               "length": 10,
               "zeroFill": false
+            }
+          ]
+        },
+        {
+          "name": "N_WKOTH_ROSTER",
+          "labels": [
+            {
+              "text": "N. Restaurant + tobacco, last week (Q158-Q159) - one row per item",
+              "language": "EN"
             },
             {
-              "name": "Q158_RESTAURANT_CONSUMED",
+              "text": "N. Restaurant + tobacco, last week (Q158-Q159) - one row per item",
+              "language": "FIL"
+            },
+            {
+              "text": "N. Restaurant + tobacco, last week (Q158-Q159) - one row per item",
+              "language": "BCL"
+            },
+            {
+              "text": "N. Restaurant + tobacco, last week (Q158-Q159) - one row per item",
+              "language": "BIS"
+            },
+            {
+              "text": "N. Restaurant + tobacco, last week (Q158-Q159) - one row per item",
+              "language": "CEB"
+            },
+            {
+              "text": "N. Restaurant + tobacco, last week (Q158-Q159) - one row per item",
+              "language": "WAR"
+            }
+          ],
+          "recordType": "7",
+          "occurrences": {
+            "required": true,
+            "maximum": 2,
+            "labels": [
+              {
+                "occurrence": 1,
+                "labels": [
+                  {
+                    "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries)"
+                  }
+                ]
+              },
+              {
+                "occurrence": 2,
+                "labels": [
+                  {
+                    "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut)"
+                  }
+                ]
+              }
+            ]
+          },
+          "items": [
+            {
+              "name": "N_WKOTH_ITEM",
               "labels": [
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 In the last week, did you or any member of your household consume this item?",
+                  "text": "Expenditure item (auto - one grid row per item)",
                   "language": "EN"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 In the last week, did you or any member of your household consume this item?",
+                  "text": "Expenditure item (auto - one grid row per item)",
                   "language": "FIL"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 In the last week, did you or any member of your household consume this item?",
+                  "text": "Expenditure item (auto - one grid row per item)",
                   "language": "BCL"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 In the last week, did you or any member of your household consume this item?",
+                  "text": "Expenditure item (auto - one grid row per item)",
                   "language": "BIS"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 In the last week, did you or any member of your household consume this item?",
+                  "text": "Expenditure item (auto - one grid row per item)",
                   "language": "CEB"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 In the last week, did you or any member of your household consume this item?",
+                  "text": "Expenditure item (auto - one grid row per item)",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 250
+            },
+            {
+              "name": "N_WKOTH_CONSUMED",
+              "labels": [
+                {
+                  "text": "Expenditure item - In the last week, did you or any member of your household consume this item?",
+                  "language": "EN"
+                },
+                {
+                  "text": "Expenditure item - In the last week, did you or any member of your household consume this item?",
+                  "language": "FIL"
+                },
+                {
+                  "text": "Expenditure item - In the last week, did you or any member of your household consume this item?",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Expenditure item - In the last week, did you or any member of your household consume this item?",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Expenditure item - In the last week, did you or any member of your household consume this item?",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Expenditure item - In the last week, did you or any member of your household consume this item?",
                   "language": "WAR"
                 }
               ],
@@ -37700,30 +37785,30 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q158_RESTAURANT_CONSUMED_VS1",
+                  "name": "N_WKOTH_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 In the last week, did you or any member of your household consume this item?",
+                      "text": "Expenditure item - In the last week, did you or any member of your household consume this item?",
                       "language": "EN"
                     },
                     {
-                      "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 In the last week, did you or any member of your household consume this item?",
+                      "text": "Expenditure item - In the last week, did you or any member of your household consume this item?",
                       "language": "FIL"
                     },
                     {
-                      "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 In the last week, did you or any member of your household consume this item?",
+                      "text": "Expenditure item - In the last week, did you or any member of your household consume this item?",
                       "language": "BCL"
                     },
                     {
-                      "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 In the last week, did you or any member of your household consume this item?",
+                      "text": "Expenditure item - In the last week, did you or any member of your household consume this item?",
                       "language": "BIS"
                     },
                     {
-                      "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 In the last week, did you or any member of your household consume this item?",
+                      "text": "Expenditure item - In the last week, did you or any member of your household consume this item?",
                       "language": "CEB"
                     },
                     {
-                      "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 In the last week, did you or any member of your household consume this item?",
+                      "text": "Expenditure item - In the last week, did you or any member of your household consume this item?",
                       "language": "WAR"
                     }
                   ],
@@ -37799,30 +37884,30 @@
               ]
             },
             {
-              "name": "Q158_RESTAURANT_PURCHASED_PHP",
+              "name": "N_WKOTH_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer \u2014 do...",
+                  "text": "Expenditure item - During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)",
                   "language": "EN"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer \u2014 do...",
+                  "text": "Expenditure item - During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)",
                   "language": "FIL"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer \u2014 do...",
+                  "text": "Expenditure item - During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)",
                   "language": "BCL"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer \u2014 do...",
+                  "text": "Expenditure item - During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)",
                   "language": "BIS"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer \u2014 do...",
+                  "text": "Expenditure item - During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)",
                   "language": "CEB"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer \u2014 do...",
+                  "text": "Expenditure item - During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)",
                   "language": "WAR"
                 }
               ],
@@ -37831,225 +37916,30 @@
               "zeroFill": false
             },
             {
-              "name": "Q158_RESTAURANT_INKIND_PHP",
+              "name": "N_WKOTH_INKIND_PHP",
               "labels": [
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP...",
+                  "text": "Expenditure item - During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...",
                   "language": "EN"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP...",
+                  "text": "Expenditure item - During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...",
                   "language": "FIL"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP...",
+                  "text": "Expenditure item - During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...",
                   "language": "BCL"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP...",
+                  "text": "Expenditure item - During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...",
                   "language": "BIS"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP...",
+                  "text": "Expenditure item - During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...",
                   "language": "CEB"
                 },
                 {
-                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP...",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 8,
-              "zeroFill": false
-            },
-            {
-              "name": "Q159_SMOKING_TOBACCO_CONSUMED",
-              "labels": [
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 In the last week, did you or any member of your household consume this item?",
-                  "language": "EN"
-                },
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 In the last week, did you or any member of your household consume this item?",
-                  "language": "FIL"
-                },
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 In the last week, did you or any member of your household consume this item?",
-                  "language": "BCL"
-                },
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 In the last week, did you or any member of your household consume this item?",
-                  "language": "BIS"
-                },
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 In the last week, did you or any member of your household consume this item?",
-                  "language": "CEB"
-                },
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 In the last week, did you or any member of your household consume this item?",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q159_SMOKING_TOBACCO_CONSUMED_VS1",
-                  "labels": [
-                    {
-                      "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 In the last week, did you or any member of your household consume this item?",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 In the last week, did you or any member of your household consume this item?",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 In the last week, did you or any member of your household consume this item?",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 In the last week, did you or any member of your household consume this item?",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 In the last week, did you or any member of your household consume this item?",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 In the last week, did you or any member of your household consume this item?",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dae",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q159_SMOKING_TOBACCO_PURCHASED_PHP",
-              "labels": [
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the...",
-                  "language": "EN"
-                },
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the...",
-                  "language": "FIL"
-                },
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the...",
-                  "language": "BCL"
-                },
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the...",
-                  "language": "BIS"
-                },
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the...",
-                  "language": "CEB"
-                },
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the...",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 8,
-              "zeroFill": false
-            },
-            {
-              "name": "Q159_SMOKING_TOBACCO_INKIND_PHP",
-              "labels": [
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your...",
-                  "language": "EN"
-                },
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your...",
-                  "language": "FIL"
-                },
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your...",
-                  "language": "BCL"
-                },
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your...",
-                  "language": "BIS"
-                },
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your...",
-                  "language": "CEB"
-                },
-                {
-                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your...",
+                  "text": "Expenditure item - During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...",
                   "language": "WAR"
                 }
               ],

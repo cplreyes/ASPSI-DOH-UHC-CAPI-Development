@@ -177,14 +177,69 @@ def shot(dd, name):
         print(f"   shot err: {e}")
 
 
+# How long to wait for a deploy to reach a terminal state. The HUB bundle is ~35 MB;
+# the old 6x4s window expired mid-upload and reported "no success popup seen".
+DEPLOY_WAIT_S = int(os.environ.get("CSPRO_DEPLOY_WAIT", "900"))
+
+
+def _is_login_prompt(w):
+    """CSWeb credential prompt: a #32770 titled 'Login' with Username + Password edits.
+    CSPro shows it when CSDeploy has no cached CSWeb credential — e.g. after the CSWeb
+    user table is rebuilt. It MUST NOT be treated as a result popup (dismissing it
+    aborts the deploy, which then hangs forever on 'Connecting to ...')."""
+    if w.class_name() != "#32770":
+        return False
+    kids = " ".join((c.window_text() or "") for c in w.children()).lower()
+    return "username" in kids and "password" in kids
+
+
+def answer_login_prompt():
+    """Fill the CSWeb Login prompt from the environment and click OK.
+
+    Credentials come from CSPRO_ADMIN_USER + one of:
+      CSPRO_ADMIN_PASS       — the password directly, or
+      CSPRO_ADMIN_PASS_FILE  — a file containing it (preferred: keeps it off the
+                               command line and out of any transcript).
+    Returns True if a prompt was present AND answered."""
+    for w in Desktop(backend="win32").windows():
+        if not w.is_visible() or not _is_login_prompt(w):
+            continue
+        user = os.environ.get("CSPRO_ADMIN_USER")
+        pw = os.environ.get("CSPRO_ADMIN_PASS")
+        pw_file = os.environ.get("CSPRO_ADMIN_PASS_FILE")
+        if not pw and pw_file and Path(pw_file).exists():
+            pw = Path(pw_file).read_text(encoding="utf-8").strip()
+        if not (user and pw):
+            print("   ! CSWeb Login prompt is open, but CSPRO_ADMIN_USER / "
+                  "CSPRO_ADMIN_PASS(_FILE) are not set -- type it by hand, then re-poll.")
+            return False
+        edits = [c for c in w.descendants() if c.friendly_class_name() == "Edit"]
+        if len(edits) < 2:
+            print("   ! Login prompt has no Username/Password edits -- typing by hand needed")
+            return False
+        edits[0].set_edit_text(user)
+        edits[1].set_edit_text(pw)
+        for c in w.descendants():
+            if c.friendly_class_name() == "Button" and (c.window_text() or "").strip().strip("&") == "OK":
+                c.click_input()
+                print(f"   answered CSWeb Login prompt as '{user}'")
+                time.sleep(1.0)
+                return True
+    return False
+
+
 def dismiss_result_popups():
     """Click OK/Close on any 'Application Deployed Successfully' (or error) confirmation
     that CSPro pops after Deploy. These are #32770 dialogs; the result text lives in a
-    child Static and the button is 'OK'. Returns count dismissed."""
+    child Static and the button is 'OK'. Returns count dismissed.
+
+    NEVER touches the Login prompt -- see _is_login_prompt()."""
     n = 0
     for w in Desktop(backend="win32").windows():
         if not w.is_visible() or w.class_name() != "#32770":
             continue
+        if _is_login_prompt(w):
+            continue                      # the credential prompt is NOT a result popup
         kids = " ".join((c.window_text() or "") for c in w.children())
         # the deploy dialog itself is 'CSPro Deploy Application' (not #32770), so this only
         # matches the small confirmation popups it spawns
@@ -244,22 +299,43 @@ def deploy_one(inst, do_deploy, skip_add=False):
     except Exception:
         db.click_input()      # last-resort physical
     print("   clicked Deploy; capturing result ...")
-    for i in range(6):
+    # The HUB bundle is ~35 MB — the upload far outruns a 24 s watch window, and a
+    # deploy that needs credentials sits on the Login prompt indefinitely. So: poll
+    # long, answer the Login prompt, and only give up on a real terminal state.
+    handled_login = False
+    deadline = time.time() + DEPLOY_WAIT_S
+    i = 0
+    while time.time() < deadline:
         time.sleep(4)
-        shot(dd, f"auto_{inst}_deploy_{i}.png")
-        # surface any credential / result dialog (popup text or its child Static)
+        if i < 6:
+            shot(dd, f"auto_{inst}_deploy_{i}.png")
+        i += 1
+
+        # CSWeb Login prompt -> answer it (never let cleanup eat it).
+        if not handled_login and answer_login_prompt():
+            handled_login = True
+            deadline = time.time() + DEPLOY_WAIT_S   # upload starts now; restart the clock
+            continue
+
         for w in Desktop(backend="win32").windows():
             if not w.is_visible():
                 continue
             t = (w.window_text() or "")
             kids = " ".join((c.window_text() or "") for c in w.children()) if w.class_name() == "#32770" else ""
-            if "successfully" in (t + " " + kids).lower():
-                print(f"   result: deploy succeeded")
+            blob = (t + " " + kids).lower()
+            if "successfully" in blob:
+                print("   result: deploy succeeded")
                 cleanup_after_deploy(dd)          # dismiss popup + re-minimize dialog
                 return True
-    print(f"[{inst}] deploy clicked but no success popup seen; see shots/deploy/auto_{inst}_deploy_*.png")
-    cleanup_after_deploy(dd)                       # tidy anyway (dismiss stray popup, re-park)
-    return True
+            if any(k in blob for k in ("error", "failed", "unable", "denied")):
+                shot(dd, f"auto_{inst}_deploy_ERR.png")
+                print(f"   result: deploy FAILED -- {kids.strip()[:90] or t.strip()[:90]}")
+                cleanup_after_deploy(dd)
+                return False
+
+    print(f"[{inst}] deploy still running after {DEPLOY_WAIT_S}s -- NOT confirmed. "
+          f"Do NOT re-click Deploy; poll for the popup. shots/deploy/auto_{inst}_deploy_*.png")
+    return False                                   # never report success on the click alone
 
 
 def check_one(inst):

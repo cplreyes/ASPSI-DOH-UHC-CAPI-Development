@@ -148,34 +148,27 @@ Language = EN
 1143 96. Tick at least one payment source for the prescribed medicines before continuing.
 1144 96. Amount cannot be negative.
 1145 96. This source has no out-of-pocket cost — amount reset to 0.
-1146 96. Please enter an amount greater than 0 — you selected this as a paid source/item.
 1147 97.2 Tick at least one expense item before continuing (or correct Q97 if none).
 1148 972. Amount cannot be negative.
-1149 972. Please enter an amount greater than 0 — you selected this as a paid source/item.
 1150 97.2 'Other expenses' was ticked — please specify.
 1151 98. Tick at least one source of money used to pay for the medical costs before continuing.
 1152 98. Amount cannot be negative.
-1153 98. Please enter an amount greater than 0 — you selected this as a paid source/item.
 1154 "'Other Donation/Charity/Assistance' was selected in Q98. Please specify."
 1155 "'Other (specify)' was selected in Q98. Please specify."
 1156 107. Tick at least one payment source for the total bill before continuing.
 1157 107. Amount cannot be negative.
 1158 107. This source has no out-of-pocket cost — amount reset to 0.
-1159 107. Please enter an amount greater than 0 — you selected this as a paid source/item.
 1160 107. 'Other' was ticked — please specify.
 1161 109. Tick at least one payment source for the medicines bought outside before continuing.
 1162 109. Amount cannot be negative.
 1163 109. This source has no out-of-pocket cost — amount reset to 0.
-1164 109. Please enter an amount greater than 0 — you selected this as a paid source/item.
 1165 109. 'Other' was ticked — please specify.
 1166 112. Tick at least one payment source for the services done outside before continuing.
 1167 112. Amount cannot be negative.
 1168 112. This source has no out-of-pocket cost — amount reset to 0.
-1169 112. Please enter an amount greater than 0 — you selected this as a paid source/item.
 1170 112. 'Other' was ticked — please specify.
 1171 113. Tick at least one payment source for the hospital bill before continuing.
 1172 113. Amount cannot be negative.
-1173 113. Please enter an amount greater than 0 — you selected this as a paid source/item.
 1174 113. 'Other (specify)' was ticked — please specify.
 1175 "'Other' was selected for Q104_WITHOUT_BUCAS but no text was entered. Please specify."
 1176 "'Other' was selected for Q105_REASON but no text was entered. Please specify."
@@ -239,3 +232,4 @@ Language = EN
 1234 Q16 = unemployed but Q17 reports a paid-work income source — confirm.
 1235 Q29 = socio-economic Class A/B but income is in the lowest bracket — confirm.
 1236 Q29 = socio-economic Class D/E but income is in a high bracket — confirm.
+1244 Q18_INCOME_AMOUNT must be between 0 and 99999999 (or -98 don't-know / -99 refused).

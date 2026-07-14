@@ -1726,6 +1726,12 @@ HEALTH_1M_ITEMS = [
 ]
 
 
+WEEKLY_OTHER_ITEMS = [   # #832/#833: the two weekly singles, rosterized (DG form did not commit)
+    ("Q158_RESTAURANT",      "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries)"),
+    ("Q159_SMOKING_TOBACCO", "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut)"),
+]
+
+
 def _expenditure_roster(rec_name, rec_label, rec_type, prefix, items_list, period, noun):
     """Fan-out roster builder: one repeating record per WHO/SHA recall block (the
     build_section_n_food_roster shape, parameterized). Plain hyphens in labels: CSEntry
@@ -1788,16 +1794,16 @@ def build_section_n():
     p_items = []
     p_items.extend(_computed_total("Q157_FOOD_SUBTOTAL",
                                    "157. Sub-total (food, last week)"))
-    p_items.extend(_expenditure_item(
-        "Q158_RESTAURANT",
-        "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries)"))
-    p_items.extend(_expenditure_item(
-        "Q159_SMOKING_TOBACCO",
-        "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut)"))
+    # #832/#833: Q158/Q159 moved OUT of record P into N_WKOTH_ROSTER (below) - the flat
+    # DisplayTogether amounts would not commit on-device; a roster (like Q160-185) does.
     return [
         build_section_n_food_roster(),
         record("N_HOUSEHOLD_EXPENDITURES",
                "N. Household Expenditures (WHO/SHA)", "P", p_items),
+        _expenditure_roster("N_WKOTH_ROSTER",
+                            "N. Restaurant + tobacco, last week (Q158-Q159) - one row per item",
+                            "7", "N_WKOTH", WEEKLY_OTHER_ITEMS, "the last week",
+                            "Expenditure item"),
         _expenditure_roster("N_NF1M_ROSTER",
                             "N. Non-food, last month (Q160-Q167) - one row per item",
                             "W", "N_NF1M", NONFOOD_1M_ITEMS, "the last month",

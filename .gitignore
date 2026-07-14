@@ -137,3 +137,10 @@ deliverables/CSWeb/*.sql.gz
 # data/ layer (2026-07-03 restructure): credential + bulky sources stay local
 /deliverables/CSPro/data/roster/roster-source.csv
 /deliverables/CSPro/data/facilities/source/
+
+# Pretest credential-bearing artifacts (2026-07-14) — same policy as uat-r6-csweb-users.csv
+# above: enumerator/supervisor logins + hub codes stay local, never in history.
+/deliverables/CSPro/supervisor-hub/assignments/pretest-credentials.md
+/deliverables/CSPro/supervisor-hub/assignments/pretest-users.csv
+/deliverables/CSPro/supervisor-hub/assignments/pretest-assignments.csv
+/deliverables/CSPro/supervisor-hub/assignments/out-pretest/

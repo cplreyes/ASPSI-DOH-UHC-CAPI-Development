@@ -1,7 +1,17 @@
 ea_facility_code,enumerator_id,instrument,target_count,ea_name,cluster
-040340001,se-001,F1,1,Binan City Health Office,04034
-040340002,se-002,F3,30,Binan RHU - Patient Survey,04034
-040340005,se-003,F4,20,Binan Brgy Malaban - Household Survey,04034
-040340011,se-004,F1,1,Binan District Hospital - Facility Head,04034
-040341002,se-005,F3,30,Los Banos RHU - Patient Survey,04034
-040341005,se-006,F4,20,Los Banos Brgy Mayondon - Household Survey,04034
+040341101,se-004,F4,4,Brgy. Mayondon - Household,040341
+040341101,se-006,F4,4,Brgy. Mayondon - Household,040341
+040341101,se-003,F4,3,Brgy. Mayondon - Household,040341
+040341101,se-007,F4,3,Brgy. Mayondon - Household,040341
+040341101,se-002,F4,3,Brgy. Mayondon - Household,040341
+040341101,se-005,F4,3,Brgy. Mayondon - Household,040341
+040340220,se-005,F1,1,LPH-Bay District Hospital,040340
+040340220,se-003,F3,2,LPH-Bay District Hospital,040340
+040340220,se-007,F3,1,LPH-Bay District Hospital,040340
+040340220,se-004,F3,1,LPH-Bay District Hospital,040340
+040340220,se-006,F3,1,LPH-Bay District Hospital,040340
+040341130,se-002,F1,1,Los Banos RHU,040341
+040341130,se-006,F3,2,Los Banos RHU,040341
+040341130,se-003,F3,1,Los Banos RHU,040341
+040341130,se-007,F3,1,Los Banos RHU,040341
+040341130,se-001,F3,1,Los Banos RHU,040341

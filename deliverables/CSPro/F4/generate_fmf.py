@@ -19,6 +19,7 @@ Run:
     python generate_fmf.py        # writes HouseholdSurvey.generated.fmf next to this file
 """
 
+import os
 import re
 import sys
 from pathlib import Path
@@ -118,8 +119,10 @@ _FORM_PLAN_STATIC = [
     # titles (CSEntry renders em-dashes in fmf/dcf labels as mojibake on-device).
     ("N. Food consumed last week (Q144-156) - one row per item",
      [("N_FOOD_ROSTER", None)]),
-    ("N. Household Expenditures (Q157-159)",
+    ("N. Household Expenditures (Q157)",
      [("N_HOUSEHOLD_EXPENDITURES", None)]),
+    ("N. Restaurant + tobacco, last week (Q158-159) - one row per item",
+     [("N_WKOTH_ROSTER", None)]),
     ("N. Non-food, last month (Q160-167) - one row per item",
      [("N_NF1M_ROSTER", None)]),
     ("N. Non-food, last 6 months (Q168-169) - one row per item",
@@ -203,6 +206,16 @@ def build_form_plan(records_by_name):
             plan.extend(_section_c_columnwise(records_by_name))
         else:
             plan.append((label, parts))
+    # Dormant Section-N device-test affordance (#834, 2026-07-06): F4_PILOT_SECTION_N=1
+    # fronts Section N by keeping only the header/geo/closing (FIELD_CONTROL,
+    # HOUSEHOLD_GEO_ID) + every Section N roster form (N_*), dropping A-M and O-Q so a
+    # partial-save/resume in the food roster is reachable in a handful of fields. OFF by
+    # default (full plan); builds a THROWAWAY pilot .pen for on-device resume testing only.
+    if os.environ.get('F4_PILOT_SECTION_N'):
+        def _keep(parts):
+            rec = parts[0][0]
+            return rec in ('FIELD_CONTROL', 'HOUSEHOLD_GEO_ID') or rec.startswith('N_')
+        plan = [(lbl, prts) for lbl, prts in plan if _keep(prts)]
     return plan
 
 
@@ -326,6 +339,7 @@ _NO_AUTOGROUP_RECORDS = {
     "FIELD_CONTROL", "HOUSEHOLD_GEO_ID", "REC_CASE_VERIFICATION", "C_HOUSEHOLD_ROSTER",
     "C_PRIVATE_INS_ROSTER",   # #525/#612/#613: emit as a roster, never auto-blocked
     "N_FOOD_ROSTER",   # Option C (2026-07-03): food grid — roster, never DG-blocked
+    "N_WKOTH_ROSTER",  # #832/#833 (2026-07-06): restaurant+tobacco rosterized (DG form would not commit)
     "N_NF1M_ROSTER", "N_NF6M_ROSTER", "N_NF12M_ROSTER",   # fan-out rosters (2026-07-03):
     "N_H12M_ROSTER", "N_H6M_ROSTER", "N_H1M_ROSTER",      # never DG-blocked
 }

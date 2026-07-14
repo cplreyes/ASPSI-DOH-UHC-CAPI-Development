@@ -96,9 +96,9 @@ SUPERVISOR_MENU_GROUPED = [
     ("REVIEW & REPORTS", [
         ("Survey Interview - view report", "report_sup"),
         ("View EA on Map", "map"),
-        ("Open F1 - Facility Head (review)", "open_f1"),
-        ("Open F3 - Patient (review)", "open_f3"),
-        ("Open F4 - Household (review)", "open_f4"),
+        ("Conduct/Open F1 - Facility Head", "open_f1"),
+        ("Conduct/Open F3 - Patient", "open_f3"),
+        ("Conduct/Open F4 - Household", "open_f4"),
     ]),
     ("SESSION", [
         ("Log out", "logout"),

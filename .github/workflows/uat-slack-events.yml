@@ -22,7 +22,7 @@ jobs:
       LABEL_NAME: ${{ github.event.label.name }}
       MILESTONE_TITLE: ${{ github.event.milestone.title }}
       MILESTONE_URL: ${{ github.event.milestone.html_url }}
-      STAGING_URL: https://f2-pwa-staging.pages.dev
+      STAGING_URL: https://uhc-hcw.asiansocial.org
       PROJECT_URL: https://github.com/users/cplreyes/projects/7
 
     steps:
@@ -55,7 +55,7 @@ jobs:
         run: |
           payload=$(jq -nc \
             --arg n "$ISSUE_NUMBER" --arg t "$ISSUE_TITLE" --arg u "$ISSUE_URL" --arg s "$STAGING_URL" \
-            '{text: ":white_check_mark: *Fix shipped to staging — please verify:* <\($u)|#\($n) \($t)>\nStaging URL: \($s)"}')
+            '{text: ":white_check_mark: *Fix shipped — please verify:* <\($u)|#\($n) \($t)>\nApp: \($s)"}')
           curl -sS -X POST -H 'Content-Type: application/json' --data "$payload" "$SLACK_WEBHOOK_URL"
 
       - name: Issue closed

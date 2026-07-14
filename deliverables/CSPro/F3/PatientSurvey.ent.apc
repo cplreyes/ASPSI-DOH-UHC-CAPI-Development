@@ -2404,7 +2404,9 @@ preproc
   if pos("07", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 7; endif; endif;
   if pos("08", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 8; endif; endif;
   protect(Q92_PAY_SRC, true);
-  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 and Q92_PAY_SRC <> 7 then
+  { #835-class polarity (2026-07-09): match non-money codes POSITIVELY - the <> chain
+    also matched the resume-replay/buffered notappl and zeroed money rows on-screen. }
+  if Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8 then
     Q92_PAY_AMT = 0;   { #781: non-money source -> default 0. In-kind(7) is a money source for Q92 per ASPSI (2026-06-25). Still enterable so the row stops. }
   endif;
   Q92_PAY_LINE = curocc();
@@ -2416,7 +2418,7 @@ postproc
     errmsg(1135);
     reenter;
   endif;
-  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 and Q92_PAY_SRC <> 7 and Q92_PAY_AMT <> 0 then
+  if (Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8) and Q92_PAY_AMT <> 0 then
     errmsg(1136);
     Q92_PAY_AMT = 0;
   endif;
@@ -2508,8 +2510,10 @@ preproc
 
 PROC Q94_LAB_AMT
 preproc
-  { Only Out-of-pocket(1) carries an amount; every other payment type has no OOP cost. }
-  if Q94_LAB_PAY <> 1 then
+  { Only Out-of-pocket(1) carries an amount; every other payment type has no OOP cost.
+    #835-class polarity: match the non-OOP codes POSITIVELY (2..7) -- 'PAY <> 1' also
+    matched the resume-replay transient notappl and zeroed+skipped stored OOP amounts. }
+  if Q94_LAB_PAY in 2:7 then
     Q94_LAB_AMT = 0;
     noinput;
   endif;
@@ -2560,7 +2564,7 @@ preproc
   if pos("07", Q96_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q96_PAY_SRC = 7; endif; endif;
   if pos("08", Q96_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q96_PAY_SRC = 8; endif; endif;
   protect(Q96_PAY_SRC, true);
-  if Q96_PAY_SRC <> 1 and Q96_PAY_SRC <> 7 then
+  if Q96_PAY_SRC = 2 or Q96_PAY_SRC = 3 or Q96_PAY_SRC = 4 or Q96_PAY_SRC = 5 or Q96_PAY_SRC = 6 or Q96_PAY_SRC = 8 then
     Q96_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
   endif;
   Q96_PAY_LINE = curocc();
@@ -2572,13 +2576,9 @@ postproc
     errmsg(1144);
     reenter;
   endif;
-  if Q96_PAY_SRC <> 1 and Q96_PAY_SRC <> 7 and Q96_PAY_AMT <> 0 then
+  if (Q96_PAY_SRC = 2 or Q96_PAY_SRC = 3 or Q96_PAY_SRC = 4 or Q96_PAY_SRC = 5 or Q96_PAY_SRC = 6 or Q96_PAY_SRC = 8) and Q96_PAY_AMT <> 0 then
     errmsg(1145);
     Q96_PAY_AMT = 0;
-  endif;
-  if (Q96_PAY_SRC = 1 or Q96_PAY_SRC = 7) and Q96_PAY_AMT = 0 then
-    errmsg(1146);
-    reenter;
   endif;
 
 
@@ -2623,10 +2623,6 @@ postproc
     errmsg(1148);
     reenter;
   endif;
-  if Q972_PAY_AMT = 0 then
-    errmsg(1149);
-    reenter;
-  endif;
 
 PROC Q972_OTHER_TXT
 preproc
@@ -2669,10 +2665,6 @@ PROC Q98_PAY_AMT
 postproc
   if Q98_PAY_AMT < 0 then
     errmsg(1152);
-    reenter;
-  endif;
-  if Q98_PAY_AMT = 0 then
-    errmsg(1153);
     reenter;
   endif;
 
@@ -2746,7 +2738,7 @@ preproc
   pp = (curocc() - 1) * 2 + 1;
   Q107_PAY_SRC = tonumber(Q107_SOURCES[pp:2]);
   protect(Q107_PAY_SRC, true);
-  if Q107_PAY_SRC <> 1 and Q107_PAY_SRC <> 2 and Q107_PAY_SRC <> 3 and Q107_PAY_SRC <> 4 and Q107_PAY_SRC <> 5 and Q107_PAY_SRC <> 6 and Q107_PAY_SRC <> 7 and Q107_PAY_SRC <> 8 and Q107_PAY_SRC <> 10 then
+  if Q107_PAY_SRC = 9 then
     Q107_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
   endif;
   Q107_PAY_LINE = curocc();
@@ -2758,13 +2750,9 @@ postproc
     errmsg(1157);
     reenter;
   endif;
-  if Q107_PAY_SRC <> 1 and Q107_PAY_SRC <> 2 and Q107_PAY_SRC <> 3 and Q107_PAY_SRC <> 4 and Q107_PAY_SRC <> 5 and Q107_PAY_SRC <> 6 and Q107_PAY_SRC <> 7 and Q107_PAY_SRC <> 8 and Q107_PAY_SRC <> 10 and Q107_PAY_AMT <> 0 then
+  if (Q107_PAY_SRC = 9) and Q107_PAY_AMT <> 0 then
     errmsg(1158);
     Q107_PAY_AMT = 0;
-  endif;
-  if (Q107_PAY_SRC = 1 or Q107_PAY_SRC = 2 or Q107_PAY_SRC = 3 or Q107_PAY_SRC = 4 or Q107_PAY_SRC = 5 or Q107_PAY_SRC = 6 or Q107_PAY_SRC = 7 or Q107_PAY_SRC = 8 or Q107_PAY_SRC = 10) and Q107_PAY_AMT = 0 then
-    errmsg(1159);
-    reenter;
   endif;
 
 PROC Q107_PAY_OTHER_TXT
@@ -2830,7 +2818,7 @@ preproc
   if pos("08", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 8; endif; endif;
   if pos("09", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 9; endif; endif;
   protect(Q109_PAY_SRC, true);
-  if Q109_PAY_SRC <> 1 and Q109_PAY_SRC <> 2 and Q109_PAY_SRC <> 3 and Q109_PAY_SRC <> 4 and Q109_PAY_SRC <> 5 and Q109_PAY_SRC <> 6 and Q109_PAY_SRC <> 7 and Q109_PAY_SRC <> 9 then
+  if Q109_PAY_SRC = 8 then
     Q109_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
   endif;
   Q109_PAY_LINE = curocc();
@@ -2842,13 +2830,9 @@ postproc
     errmsg(1162);
     reenter;
   endif;
-  if Q109_PAY_SRC <> 1 and Q109_PAY_SRC <> 2 and Q109_PAY_SRC <> 3 and Q109_PAY_SRC <> 4 and Q109_PAY_SRC <> 5 and Q109_PAY_SRC <> 6 and Q109_PAY_SRC <> 7 and Q109_PAY_SRC <> 9 and Q109_PAY_AMT <> 0 then
+  if (Q109_PAY_SRC = 8) and Q109_PAY_AMT <> 0 then
     errmsg(1163);
     Q109_PAY_AMT = 0;
-  endif;
-  if (Q109_PAY_SRC = 1 or Q109_PAY_SRC = 2 or Q109_PAY_SRC = 3 or Q109_PAY_SRC = 4 or Q109_PAY_SRC = 5 or Q109_PAY_SRC = 6 or Q109_PAY_SRC = 7 or Q109_PAY_SRC = 9) and Q109_PAY_AMT = 0 then
-    errmsg(1164);
-    reenter;
   endif;
 
 PROC Q109_PAY_OTHER_TXT
@@ -2902,7 +2886,7 @@ preproc
   if pos("08", Q112_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q112_PAY_SRC = 8; endif; endif;
   if pos("09", Q112_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q112_PAY_SRC = 9; endif; endif;
   protect(Q112_PAY_SRC, true);
-  if Q112_PAY_SRC <> 1 and Q112_PAY_SRC <> 2 and Q112_PAY_SRC <> 3 and Q112_PAY_SRC <> 4 and Q112_PAY_SRC <> 5 and Q112_PAY_SRC <> 6 and Q112_PAY_SRC <> 7 and Q112_PAY_SRC <> 9 then
+  if Q112_PAY_SRC = 8 then
     Q112_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
   endif;
   Q112_PAY_LINE = curocc();
@@ -2914,13 +2898,9 @@ postproc
     errmsg(1167);
     reenter;
   endif;
-  if Q112_PAY_SRC <> 1 and Q112_PAY_SRC <> 2 and Q112_PAY_SRC <> 3 and Q112_PAY_SRC <> 4 and Q112_PAY_SRC <> 5 and Q112_PAY_SRC <> 6 and Q112_PAY_SRC <> 7 and Q112_PAY_SRC <> 9 and Q112_PAY_AMT <> 0 then
+  if (Q112_PAY_SRC = 8) and Q112_PAY_AMT <> 0 then
     errmsg(1168);
     Q112_PAY_AMT = 0;
-  endif;
-  if (Q112_PAY_SRC = 1 or Q112_PAY_SRC = 2 or Q112_PAY_SRC = 3 or Q112_PAY_SRC = 4 or Q112_PAY_SRC = 5 or Q112_PAY_SRC = 6 or Q112_PAY_SRC = 7 or Q112_PAY_SRC = 9) and Q112_PAY_AMT = 0 then
-    errmsg(1169);
-    reenter;
   endif;
 
 PROC Q112_PAY_OTHER_TXT
@@ -2964,10 +2944,6 @@ PROC Q113_PAY_AMT
 postproc
   if Q113_PAY_AMT < 0 then
     errmsg(1172);
-    reenter;
-  endif;
-  if Q113_PAY_AMT = 0 then
-    errmsg(1173);
     reenter;
   endif;
 
@@ -3609,6 +3585,13 @@ postproc
 
 { ---- Payment-matrix '>=1 ticked' (#555/#556/#557) ---- }
 { ---- Range + cross-field validations (spec §3.6-§3.13) ---- }
+PROC Q18_INCOME_AMOUNT
+postproc
+  if Q18_INCOME_AMOUNT <> -98 and Q18_INCOME_AMOUNT <> -99 and (Q18_INCOME_AMOUNT < 0 or Q18_INCOME_AMOUNT > 99999999) then
+    errmsg(1244);
+    reenter;
+  endif;
+
 PROC Q58_WAIT_DAYS
 postproc
   if (Q58_WAIT_DAYS < 0 or Q58_WAIT_DAYS > 365) then
