@@ -753,12 +753,22 @@ function show_coverage_report(string scope)
     on-CSEntry render is the device-verify gate (the C8 spike). }
   numeric n1; numeric n3; numeric n4;
   string aInstr; string aTgt; string aEA; string j; string dopt; string res;
+  string aopid;
   n1 = 0; n3 = 0; n4 = 0;
   forcase FACILITYHEADSURVEY_DICT do n1 = n1 + 1; enddo;
   forcase PATIENTSURVEY_DICT do n3 = n3 + 1; enddo;
   forcase HOUSEHOLDSURVEY_DICT do n4 = n4 + 1; enddo;
   aInstr = ""; aTgt = ""; aEA = "";
-  setfile(ASSIGNMENT_DICT, "MyAssignment.dat");
+  { Read THIS operator's shipped assignment (AS_<opid>.dat), same file the level
+    preproc binds. This used to hardcode MyAssignment.dat - which ships EMPTY - so it
+    silently re-bound over the autoload and the report showed no assignment at all.
+    Falls back to MyAssignment.dat, which is where a Bluetooth receive still lands. }
+  aopid = loadsetting("hub_operator_id");
+  if strip(aopid) <> "" then
+    setfile(ASSIGNMENT_DICT, "AS_" + strip(aopid) + ".dat");
+  else
+    setfile(ASSIGNMENT_DICT, "MyAssignment.dat");
+  endif;
   forcase ASSIGNMENT_DICT do
     aInstr = strip(AS_INSTRUMENT); aTgt = strip(AS_TARGET_COUNT); aEA = strip(AS_EA_NAME);
   enddo;
