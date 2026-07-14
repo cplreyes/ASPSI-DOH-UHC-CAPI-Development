@@ -1,0 +1,14 @@
+# PRETEST KEY GATE — F1 facility head, Los Banos RHU = 040341130000.
+# THE RISK: case sequence is 000. Every other code in the pretest list ends 001+.
+# If any range check rejects a zero sequence, EVERY facility-head interview dies
+# at field 1 on Day 2. This is the single highest-risk code in the whole list.
+rmdata ../F1/desktest.csdb
+launch ../F1/FacilityHeadSurvey_desktest.pff
+
+casekey 040341130000
+wait 1
+note EXPECT: accepted - seq 000 must not trip a range/blank check
+shot 01_seq000_accepted
+
+wait 1
+shot 02_next_field
