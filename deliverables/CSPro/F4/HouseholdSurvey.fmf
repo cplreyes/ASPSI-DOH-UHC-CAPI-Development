@@ -1718,7 +1718,7 @@ Position=350,27,365,47
 
 Item=BREAKOFF,HOUSEHOLDSURVEY_DICT
 
-DataCaptureType=RadioButton
+DataCaptureType=DropDown
 
 Form=2
 

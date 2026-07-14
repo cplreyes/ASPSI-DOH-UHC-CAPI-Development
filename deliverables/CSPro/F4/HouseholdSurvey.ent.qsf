@@ -40,17 +40,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p class="instruction">Build: F4 v1.3.2 (2026-07-08)</p>
+            <p class="instruction">Build: F4 v1.4.0 (2026-07-14)</p>
           FIL: |
-            <p class="instruction">Build: F4 v1.3.2 (2026-07-08)</p>
+            <p class="instruction">Build: F4 v1.4.0 (2026-07-14)</p>
           BCL: |
-            <p class="instruction">Build: F4 v1.3.2 (2026-07-08)</p>
+            <p class="instruction">Build: F4 v1.4.0 (2026-07-14)</p>
           BIS: |
-            <p class="instruction">Build: F4 v1.3.2 (2026-07-08)</p>
+            <p class="instruction">Build: F4 v1.4.0 (2026-07-14)</p>
           CEB: |
-            <p class="instruction">Build: F4 v1.3.2 (2026-07-08)</p>
+            <p class="instruction">Build: F4 v1.4.0 (2026-07-14)</p>
           WAR: |
-            <p class="instruction">Build: F4 v1.3.2 (2026-07-08)</p>
+            <p class="instruction">Build: F4 v1.4.0 (2026-07-14)</p>
   - name: HOUSEHOLDSURVEY_DICT.SURVEY_TEAM_LEADER_S_NAME
     conditions:
       - questionText:

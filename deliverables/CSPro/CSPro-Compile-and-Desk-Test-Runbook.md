@@ -77,7 +77,7 @@ Designer error  →  edit F{1,3,4}/generate_apc.py (or generate_dcf.py)
 ### F3 — Patient  *(feeds #194, #251)*
 1. Create **`PatientSurvey.ent`**; Input dict = `PatientSurvey.dcf`; Forms = import **`PatientSurvey.generated.fmf`** (then Designer splits oversized sections per `F3-Form-Layout-Plan.md` — the skeleton carries item membership + tab order). **Insert the 4 PSGC dicts (Step 0b).**
 2. Set **`PatientSurvey.ent.apc`** as main logic; **Compile.**
-3. Risky spots: **outpatient/inpatient branching** at the eligibility screen (#164), the **case-control block in FIELD_CONTROL** (#251 verifies this), Q1 consent gate, **Q162 terminator**, **Q169 routing**.
+3. Risky spots: **outpatient/inpatient branching** at the eligibility screen (#164), the **FIELD_CONTROL block** — names, visit dates, Result of Visit, `PATIENT_TYPE`, break-off, `CASE_DISPOSITION` (#251 verifies this), Q1 consent gate, **Q162 terminator**, **Q169 routing**.
 
 ### F4 — Household  *(feeds #195, #253)*
 1. Create **`HouseholdSurvey.ent`**; Input dict = `HouseholdSurvey.dcf`; Forms = import **`HouseholdSurvey.generated.fmf`**. **Insert the 4 PSGC dicts (Step 0b).**
@@ -101,13 +101,13 @@ Run on a Windows CSEntry build. For each instrument, walk the happy path **and**
 - [ ] Age **< 18** → hard block + reenter.
 - [ ] **Q121** option behavior: hospital-only options gated; O14 "None" → skips Q135.
 - [ ] **PSGC cascade**: region→province→city→barangay narrows correctly.
-- [ ] **GPS** captured at start; **verification photo** taken; **AAPOR** disposition set.
+- [ ] **GPS** captured at start; **verification photo** taken; **Result of Visit** (`ENUM_RESULT_FINAL_VISIT`) selected and `CASE_DISPOSITION` written by logic (1 = Completed on a clean finish, 2 = Partial / not completed on a break-off).
 - [ ] **Language switch** mid-form → `LANGUAGE_USED` records the active language.
 
 ### F3 — #194 (full A–L) + #251 (Designer validation)
 - [ ] Full **A–L** walkthrough, sane data, reaches end.
 - [ ] **OP vs IP branching** (#164) routes to the correct block at eligibility.
-- [ ] **Case-control block in FIELD_CONTROL** correct (#251 sign-off).
+- [ ] **FIELD_CONTROL block** correct (#251 sign-off): staff-name items, visit dates, total visits, Result of First/Final Visit value set (1 Completed / 2 Completed at the Hospital / 3 Postponed / 4 Incomplete / 5 Completed at Home / 6 Withdraw Participation/Consent), `PATIENT_TYPE`, `BREAKOFF`, `CASE_DISPOSITION`.
 - [ ] Q1 consent gate; **Q162 terminator** ends where intended; **Q169 routing** lands correctly.
 
 ### F4 — #195 (full A–Q) + #253 (Designer validation)
@@ -128,7 +128,7 @@ Run on a Windows CSEntry build. For each instrument, walk the happy path **and**
 | **#193** F1 desk test | §3 F1 scenarios pass | per-scenario pass/fail + shots |
 | **#194** F3 desk test | §3 F3 scenarios pass | A–L walkthrough notes |
 | **#195** F4 desk test | §3 F4 scenarios pass | roster + Section N shots |
-| **#251** F3 Designer validation | FIELD_CONTROL case-control block verified; full item walkthrough | sign-off note |
+| **#251** F3 Designer validation | FIELD_CONTROL block verified (Result of Visit, `PATIENT_TYPE`, `BREAKOFF`, `CASE_DISPOSITION`); full item walkthrough | sign-off note |
 | **#253** F4 Designer validation | same scope as F3 | sign-off note |
 | **#140** PLF Designer validation | listing apps validated + published | sign-off note |
 

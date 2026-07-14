@@ -1556,7 +1556,7 @@ Position=350,57,365,77
 
 Item=BREAKOFF,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
+DataCaptureType=DropDown
 
 Form=2
 
@@ -14238,7 +14238,7 @@ Position=350,237,365,257
 
 Item=ENUM_RESULT_FIRST_VISIT,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
+DataCaptureType=DropDown
 
 Form=38
 
@@ -14262,7 +14262,7 @@ Position=350,267,365,287
 
 Item=ENUM_RESULT_FINAL_VISIT,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
+DataCaptureType=DropDown
 
 Form=38
 

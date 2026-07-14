@@ -112,11 +112,24 @@ SATISFACTION_5PT = [
 # paper FIELD CONTROL block (2026-06-12). The consent/refusal outcome is now
 # captured HERE (no separate "Informed consent given" field): F1 = "Refused";
 # F3/F4 = "Withdraw Participation/Consent".
+#
+# "Replaced" (2026-07-14) — the sampled unit was never interviewed, so a substitute is
+# drawn to hold the sample size. Set by PROC BREAKOFF from the never-started codes
+# (BREAKOFF 5/6/7 = refused at the door / not found / ineligible); the REASON stays on
+# BREAKOFF, this only records the OUTCOME. Appended at the end of each list so existing
+# codes keep their values — never renumber, it would orphan already-synced cases.
+# The per-instrument code differs (F1=5, F3=7, F4=5) because each list has a different
+# length, so cross-instrument queries must count BREAKOFF in 5,6,7 — that IS uniform.
+REPLACED_CODE_F1 = "5"
+REPLACED_CODE_F3 = "7"
+REPLACED_CODE_F4 = "5"
+
 ENUM_RESULT_OPTIONS_F1 = [          # F1 Facility Head
     ("Completed",  "1"),
     ("Postponed",  "2"),
     ("Refused",    "3"),
     ("Incomplete", "4"),
+    ("Replaced",   REPLACED_CODE_F1),
 ]
 ENUM_RESULT_OPTIONS_F3 = [          # F3 Patient
     ("Completed",                       "1"),
@@ -125,33 +138,60 @@ ENUM_RESULT_OPTIONS_F3 = [          # F3 Patient
     ("Incomplete",                      "4"),
     ("Completed at Home",               "5"),
     ("Withdraw Participation/Consent",  "6"),
+    ("Replaced",                        REPLACED_CODE_F3),
 ]
 ENUM_RESULT_OPTIONS_F4 = [          # F4 Household
     ("Completed",                       "1"),
     ("Postponed",                       "2"),
     ("Incomplete",                      "3"),
     ("Withdraw Participation/Consent",  "4"),
+    ("Replaced",                        REPLACED_CODE_F4),
 ]
 ENUM_RESULT_OPTIONS = ENUM_RESULT_OPTIONS_F1   # default / back-compat
 
-# AAPOR Standard Definitions 10th ed. (2023) — Final Disposition Codes
-# adapted for in-person CAPI health surveys. 3-digit numeric (zero-filled)
-# maps AAPOR decimals to integers (×100). The "In Progress" (000) sentinel
-# is ASPSI-internal — set at case start by FIELD_CONTROL.preproc, rewritten
-# to the final code on the CLOSING form.
-AAPOR_DISPOSITION_OPTIONS = [
-    ("000 — In Progress (initial)",                       "000"),
-    ("110 — Complete interview",                          "110"),
-    ("120 — Partial interview / break-off",               "120"),
-    ("210 — Refusal — respondent",                        "210"),
-    ("211 — Refusal — gatekeeper / household",            "211"),
-    ("220 — Non-contact — respondent unavailable",        "220"),
-    ("230 — Other eligible non-interview",                "230"),
-    ("310 — Unknown eligibility — facility/household",    "310"),
-    ("320 — Unknown eligibility — respondent",            "320"),
-    ("410 — Not eligible — out of sample / ineligible",   "410"),
-    ("450 — Not eligible — other",                        "450"),
+# Break-off / interview-status codes. IDENTICAL across F1/F3/F4 on purpose: this is the
+# one field a cross-instrument query can rely on. Codes 1-4 are the original #515/#744
+# break-off set (the interview STARTED and then stopped). Codes 5-7 were added 2026-07-14
+# for the never-started outcomes — the case that ASPSI/SAAD calls a replacement.
+#
+# Per ASPSI (Marriz, 2026-07-14): every unit that cannot be interviewed is replaced by a
+# substitute, so refused-at-the-door + not-found + ineligible are ALL replacements; the
+# code distinguishes only WHY. "Postponed" (3) is deliberately NOT a replacement — that
+# unit is revisited, not substituted, and counting it would overstate the rate and blunt
+# the curbstoning signal (a high replacement rate per enumerator is the standard check).
+BREAKOFF_OPTIONS = [
+    ("Continue interview",           "1"),
+    ("Respondent withdrew",          "2"),
+    ("Postponed / reschedule",       "3"),
+    ("Stop — other (incomplete)",    "4"),
+    ("Not interviewed — refused",    "5"),
+    ("Not interviewed — not found",  "6"),
+    ("Not interviewed — ineligible", "7"),
 ]
+BREAKOFF_REPLACED_CODES = ("5", "6", "7")
+
+# NOTE (2026-07-14) — an AAPOR_DISPOSITION_OPTIONS constant lived here from 2026-04-22 until
+# today. AAPOR (the survey-research disposition taxonomy) was never requested by ASPSI or DOH,
+# is not their vocabulary, and was not on the April-20 paper Field Control form. The whole
+# case-start block it belonged to (SURVEY_CODE, DATE_STARTED, TIME_STARTED, INTERVIEWER_ID,
+# AAPOR_DISPOSITION, CONSENT_GIVEN) was removed from F1/F3/F4 on 2026-06-12; the constant was
+# left behind as dead code and is now deleted with it. Do not reintroduce it.
+#
+# The real dispositions are the paper ones, defined above:
+#   CASE_DISPOSITION            0 In progress · 1 Completed · 2 Partial/not completed
+#   BREAKOFF                    BREAKOFF_OPTIONS  ("Interview status", 1-7, same in F1/F3/F4)
+#   ENUM_RESULT_FIRST/FINAL_VISIT   ENUM_RESULT_OPTIONS_F1 / _F3 / _F4  ("Result of Visit")
+#
+# RESOLVED 2026-07-14 — this block previously recorded a known gap: no instrument had a
+# doorstep-refusal or non-contact code, so a replaced/never-started unit left no trace and
+# replacement counts could not be derived (which also removed the standard curbstoning check).
+# ASPSI (Marriz) confirmed the SAAD convention: any unit that cannot be interviewed is marked
+# as such up front and then replaced. BREAKOFF codes 5/6/7 now capture exactly that, the case
+# is still created and still syncs, and:
+#
+#     replacements = count(BREAKOFF in 5, 6, 7)     — per facility / enumerator / supervisor
+#
+# Postponed (BREAKOFF 3) is excluded by design: revisited, not substituted.
 
 
 # ============================================================

@@ -70,7 +70,7 @@ Enforcement is **operational** (STL nightly roll-call), not technical — CSWeb 
 - The case key is `RR-PP-MMM-FF-CCC` (`REGION_CODE`·`PROVINCE_HUC_CODE`·`CITY_MUNICIPALITY_CODE`·`FACILITY_NO`·`CASE_SEQ`) — see [[../../wiki/concepts/Questionnaire Numbering Convention]]. The first 9 digits pin the **facility**; `CASE_SEQ` (001–699 active / 700–899 replacement / 900–999 refused) is unique **within facility, within instrument**.
 - Enumerators are assigned **distinct facilities**, so two devices never mint the **same** case key. There is no concurrent-write race on a single case → **no merge conflict to resolve.**
 - **Re-sync of an edited case** (e.g., a callback correction the next day): smart-sync sends the changed case; CSWeb stores the **latest version** (case-level last-write-wins — CSPro does not field-merge). Because one case = one device, "latest" is unambiguous.
-- **Partial / break-off cases** sync as partial (AAPOR `120`); they update in place when completed and re-synced.
+- **Partial / break-off cases** sync with `CASE_DISPOSITION = 2` (Partial / not completed) and the corresponding Result of Visit; they update in place — `CASE_DISPOSITION` flips to `1` (Completed) — when completed and re-synced.
 
 **F3 two-stream integrity** (the "errors" concern raised by Dr. Myra — see [[../../wiki/...|csweb deployment notes]]): a single F3 instrument with a **required, no-default patient-type field** means there is no "wrong form," and **CSWeb auto-computes per-type running counts** — so the admitted/outpatient tallies can't be mis-reconciled by hand. Count mismatch / duplicate / missing-required conditions surface same-day in the Sync Report for callback while the team is still in-area.
 

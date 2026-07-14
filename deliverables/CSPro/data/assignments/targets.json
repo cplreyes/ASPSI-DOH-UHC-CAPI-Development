@@ -1,0 +1,58 @@
+{
+  "generated": "2026-07-14 04:18 UTC",
+  "plan": {
+    "label": "R6 fixture (placeholder)",
+    "provisional": true,
+    "source": "assignments-source.csv",
+    "assignments": 6,
+    "facilities": {
+      "f1": 2,
+      "f3": 2,
+      "f4": 2
+    }
+  },
+  "targets": {
+    "f1": {
+      "040340001": {
+        "name": "Binan City Health Office",
+        "region": "",
+        "province": "",
+        "target": 1
+      },
+      "040340011": {
+        "name": "Binan District Hospital - Facility Head",
+        "region": "",
+        "province": "",
+        "target": 1
+      }
+    },
+    "f3": {
+      "040340002": {
+        "name": "Binan RHU - Patient Survey",
+        "region": "",
+        "province": "",
+        "target": 30
+      },
+      "040341002": {
+        "name": "Los Banos RHU - Patient Survey",
+        "region": "",
+        "province": "",
+        "target": 30
+      }
+    },
+    "f4": {
+      "040340005": {
+        "name": "Binan Brgy Malaban - Household Survey",
+        "region": "",
+        "province": "",
+        "target": 20
+      },
+      "040341005": {
+        "name": "Los Banos Brgy Mayondon - Household Survey",
+        "region": "",
+        "province": "",
+        "target": 20
+      }
+    }
+  }
+}

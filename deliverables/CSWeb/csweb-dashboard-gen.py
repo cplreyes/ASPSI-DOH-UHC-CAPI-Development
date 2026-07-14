@@ -73,16 +73,24 @@ SECTIONS = [
 F1_OWN = "CASE bp.q7_ownership WHEN '1' THEN 'Public' WHEN '2' THEN 'Private' ELSE COALESCE(NULLIF(bp.q7_ownership,''),'(blank)') END"
 F1_SVC = ("CASE bp.q8_service_level WHEN '1' THEN 'Primary Care Facility' WHEN '2' THEN 'Level 1 Hospital'"
           " WHEN '3' THEN 'Level 2 Hospital' WHEN '4' THEN 'Level 3 Hospital' ELSE COALESCE(NULLIF(bp.q8_service_level,''),'(blank)') END")
-# F1 Result-of-Visit = enum_result_first_visit (verbatim value set, ENUM_RESULT_OPTIONS_F1)
-F1_RES = ("CASE fc.enum_result_first_visit WHEN '1' THEN 'Completed' WHEN '2' THEN 'Postponed'"
-          " WHEN '3' THEN 'Refused' WHEN '4' THEN 'Incomplete' ELSE COALESCE(NULLIF(fc.enum_result_first_visit,''),'(blank)') END")
+# F1 Result-of-Visit (verbatim value set, ENUM_RESULT_OPTIONS_F1).
+# Prefer the FINAL visit, fall back to the FIRST. This read used to be first-visit-only, which
+# was wrong for any early-ended case: PROC BREAKOFF writes ENUM_RESULT_FINAL_VISIT (never the
+# first), so a broken-off — and now a Replaced(5) — F1 case would never have surfaced here.
+# F3/F4 already read final_visit; this makes all three agree.
+F1_RESRAW = "COALESCE(NULLIF(fc.enum_result_final_visit,''),NULLIF(fc.enum_result_first_visit,''),'')"
+F1_RES = ("CASE %s WHEN '1' THEN 'Completed' WHEN '2' THEN 'Postponed'"
+          " WHEN '3' THEN 'Refused' WHEN '4' THEN 'Incomplete' WHEN '5' THEN 'Replaced'"
+          " ELSE COALESCE(NULLIF(%s,''),'(blank)') END" % (F1_RESRAW, F1_RESRAW))
 # F3/F4 disposition = enum_result_final_visit (set by the closing / BREAKOFF handler);
 # verbatim value sets ENUM_RESULT_OPTIONS_F3 / _F4 from cspro_helpers.py
 F3_RES = ("CASE fc.enum_result_final_visit WHEN '1' THEN 'Completed' WHEN '2' THEN 'Completed at the Hospital'"
           " WHEN '3' THEN 'Postponed' WHEN '4' THEN 'Incomplete' WHEN '5' THEN 'Completed at Home'"
-          " WHEN '6' THEN 'Withdraw Participation/Consent' ELSE COALESCE(NULLIF(fc.enum_result_final_visit,''),'(blank)') END")
+          " WHEN '6' THEN 'Withdraw Participation/Consent' WHEN '7' THEN 'Replaced'"
+          " ELSE COALESCE(NULLIF(fc.enum_result_final_visit,''),'(blank)') END")
 F4_RES = ("CASE fc.enum_result_final_visit WHEN '1' THEN 'Completed' WHEN '2' THEN 'Postponed'"
           " WHEN '3' THEN 'Incomplete' WHEN '4' THEN 'Withdraw Participation/Consent'"
+          " WHEN '5' THEN 'Replaced'"
           " ELSE COALESCE(NULLIF(fc.enum_result_final_visit,''),'(blank)') END")
 F1_CODE9 = ("CONCAT(LPAD(fc.region_code,2,'0'),LPAD(fc.province_huc_code,2,'0'),"
             "LPAD(fc.city_municipality_code,3,'0'),LPAD(fc.facility_no,2,'0'))")
@@ -119,40 +127,63 @@ F2_SQL = (
     " FROM csweb_f2.f2_responses r"
     " LEFT JOIN csweb_f2.f2_facility_master fm ON fm.facility_id=r.facility_id")
 
+# `enumerator` = FIELD_CONTROL.ENUMERATOR_S_NAME (CHAR 50, all three dicts) — the field-control
+# record is already joined as `fc` for every instrument, so productivity costs one column.
+# F2 has no counterpart by design: it is self-administered, so it never appears in this panel.
+ENUM = "COALESCE(NULLIF(fc.enumerator_s_name,''),'(unassigned)')"
+# `supervisor` = FIELD_CONTROL.SURVEY_TEAM_LEADER_S_NAME (CHAR 50, all three dicts). The SAAD
+# benchmark navigates by Field Supervisor ("whose team is behind?"); this is that dimension.
+SUP = "COALESCE(NULLIF(fc.survey_team_leader_s_name,''),'(unassigned)')"
+
+# `repl` = 1 if this case is a REPLACEMENT — the sampled unit was never interviewed and a
+# substitute was drawn. Read off FIELD_CONTROL.BREAKOFF, whose 5/6/7 codes (refused at the
+# door / not found / ineligible) are IDENTICAL across F1/F3/F4 by design — that uniformity is
+# the whole reason we count on BREAKOFF rather than the per-instrument Result-of-Visit code
+# (Replaced is 5 in F1/F4 but 7 in F3, because the lists have different lengths).
+#
+# Postponed (BREAKOFF 3) is deliberately EXCLUDED: that unit gets revisited, not substituted.
+# Counting it would overstate the rate and blunt the signal this exists to give — a high
+# replacement rate for one enumerator is the standard curbstoning check (ASPSI, 2026-07-14).
+REPL = "CASE WHEN fc.breakoff IN ('5','6','7') THEN '1' ELSE '0' END"
+
 QUERIES = {
-    "f1": (["region", "province", "city", "facility", "ownership", "service_level", "result", "date", "status", "gps", "code9"],
+    "f1": (["region", "province", "city", "facility", "ownership", "service_level", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl"],
            "SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
            " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
            " COALESCE(NULLIF(fc.city_name,''),'(unknown)'),"
            " COALESCE(fn.name,'(unlabeled)'), %s, %s, %s,"
-           " COALESCE(CAST(fc.date_first_visited_the_facility AS CHAR),''), %s, %s, %s"
+           " COALESCE(CAST(fc.date_first_visited_the_facility AS CHAR),''), %s, %s, %s, %s, %s, %s"
            " FROM csweb_f1_breakout.`level-1` l"
            " JOIN csweb_f1_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
            " LEFT JOIN csweb_f1_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f1_breakout.b_facility_profile bp ON bp.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f1_breakout.rec_facility_capture g ON g.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_reports.facility_names fn ON fn.code9=%s"
-           % (F1_OWN, F1_SVC, F1_RES, STATUS, F1_GPS, F1_CODE9, F1_CODE9)),
-    "f3": (["region", "patient_type", "sex", "result", "date", "status", "gps", "code9"],
+           % (F1_OWN, F1_SVC, F1_RES, STATUS, F1_GPS, F1_CODE9, ENUM, SUP, REPL, F1_CODE9)),
+    "f3": (["region", "patient_type", "sex", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl"],
            "SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
            " CASE fc.patient_type WHEN '1' THEN 'Outpatient' WHEN '2' THEN 'Inpatient' ELSE COALESCE(NULLIF(fc.patient_type,''),'(blank)') END,"
            " CASE bp.q7_sex WHEN '1' THEN 'Male' WHEN '2' THEN 'Female' ELSE COALESCE(NULLIF(bp.q7_sex,''),'(blank)') END,"
-           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9)"
+           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s, %s, %s"
            " FROM csweb_f3_breakout.`level-1` l"
            " JOIN csweb_f3_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
            " LEFT JOIN csweb_f3_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f3_breakout.b_patient_profile bp ON bp.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f3_breakout.rec_facility_capture g ON g.`level-1-id`=l.`level-1-id`"
-           % (F3_RES, STATUS, F3_GPS)),
-    "f4": (["region", "province", "result", "date", "status", "gps", "code9"],
+           % (F3_RES, STATUS, F3_GPS, ENUM, SUP, REPL)),
+    "f4": (["region", "province", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl"],
            "SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
            " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
-           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9)"
+           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s, %s, %s"
            " FROM csweb_f4_breakout.`level-1` l"
            " JOIN csweb_f4_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
            " LEFT JOIN csweb_f4_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f4_breakout.household_geo_id g ON g.`level-1-id`=l.`level-1-id`"
-           % (F4_RES, STATUS, F4_GPS)),
+           % (F4_RES, STATUS, F4_GPS, ENUM, SUP, REPL)),
+    # F2 carries no enumerator/supervisor/repl by design: it is self-administered, so it has
+    # no field-control record. Its rows simply lack those keys — the productivity panel skips
+    # F2 entirely, and `r.repl==='1'` is false for a missing key, so the Replacements KPI is
+    # unaffected. Do NOT synthesise placeholder columns for it.
     "f2": (["region", "province", "result", "source", "date", "status", "gps", "code9"], F2_SQL),
 }
 
@@ -218,11 +249,20 @@ TARGETS = "/opt/targets.json"
 
 
 def load_targets(path):
-    """{inst: {code9: {name, region, province, target}}} or {} if the file is absent."""
+    """({inst: {code9: {name, region, province, target}}}, plan) — ({}, {}) if absent.
+
+    `plan` is the assignment-plan provenance written by gen-targets.py. A targets.json
+    predating that stamp has no `plan` block: treat it as PROVISIONAL, never as final.
+    An unlabelled plan is far more likely to be a leftover fixture than ASPSI's real EA
+    plan, and a fake coverage % is indistinguishable from a real one on screen.
+    """
     try:
-        return json.load(open(path, encoding="utf-8")).get("targets", {})
+        obj = json.load(open(path, encoding="utf-8"))
     except Exception:
-        return {}
+        return {}, {}
+    plan = obj.get("plan") or {"label": "unlabelled targets.json", "provisional": True}
+    plan.setdefault("provisional", True)
+    return obj.get("targets", {}), plan
 
 
 FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E"
@@ -251,7 +291,7 @@ TEMPLATE = r"""<!doctype html>
   .filters select{font:14px system-ui;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;min-width:200px}
   .filters .reset{margin-left:auto;align-self:end;font:13px system-ui;padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer}
   .filters .reset:hover{background:var(--bg)}
-  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:6px}
+  .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:6px}
   .kpi{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--g);border-radius:12px;padding:14px 16px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
   .kpi .num{font-size:30px;font-weight:800;color:var(--ink);line-height:1}
   .kpi .lbl{color:var(--muted);font-size:12px;font-weight:600;margin-top:5px;text-transform:uppercase;letter-spacing:.03em}
@@ -288,6 +328,22 @@ TEMPLATE = r"""<!doctype html>
   .covbar{position:relative;height:10px;width:150px;background:#e5e7eb;border-radius:6px;overflow:hidden;display:inline-block;vertical-align:middle}
   .covbar>span{position:absolute;left:0;top:0;bottom:0;border-radius:6px}
   .covtbl .pct{font-weight:700}
+  .planwarn{background:#fdf3d7;border:1px solid #e5b23b;border-left:5px solid #b7860b;
+            border-radius:8px;padding:10px 13px;margin:8px 0 10px;color:#6b5200;
+            font-size:13px;line-height:1.5}
+  .planwarn code{background:#fff;border:1px solid #e2d6a8;border-radius:4px;padding:0 4px}
+  .mix{color:var(--muted);font-size:12px;white-space:nowrap}
+  .rate{font-weight:700}
+  /* a rate over a single active day is arithmetic, not a trend — de-emphasise it so it
+     cannot be misread as strong performance (one busy day then silence outranks everyone) */
+  .rate.lowconf{font-weight:400;color:var(--muted)}
+  /* replacement share: only flagged red once the denominator is big enough to mean something
+     (>=5 cases and >=30% replaced). The count alone is not comparable across enumerators —
+     a hard catchment legitimately produces more replacements than an easy one. */
+  .covtbl td.hot{color:var(--red);font-weight:700}
+  .covtbl .pct{font-weight:400;color:var(--muted);font-size:11px}
+  .covtbl td.hot .pct{color:var(--red)}
+  .stale{color:#b7860b}
   @media(max-width:820px){.kpis{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.covbar{width:90px}}
 </style>
 </head>
@@ -297,6 +353,7 @@ TEMPLATE = r"""<!doctype html>
   <div class="filters">
     <div class="f"><label for="fInst">Instrument</label><select id="fInst"></select></div>
     <div class="f"><label for="fRegion">Region</label><select id="fRegion"></select></div>
+    <div class="f"><label for="fSup">Field supervisor</label><select id="fSup"></select></div>
     <div class="f"><label for="fStatus">Status</label><select id="fStatus"></select></div>
     <div class="f"><label for="fFrom">Visit from</label><input type="date" id="fFrom" /></div>
     <div class="f"><label for="fTo">Visit to</label><input type="date" id="fTo" /></div>
@@ -307,11 +364,13 @@ TEMPLATE = r"""<!doctype html>
     <div class="kpi ok"><div class="num" id="kCompleted">0</div><div class="lbl">Completed</div></div>
     <div class="kpi warn"><div class="num" id="kPartial">0</div><div class="lbl">Partial</div></div>
     <div class="kpi"><div class="num" id="kToday">0</div><div class="lbl">Visited today</div></div>
+    <div class="kpi warn"><div class="num" id="kRepl">0</div><div class="lbl">Replacements</div></div>
     <div class="kpi bad"><div class="num" id="kNogps">0</div><div class="lbl">No GPS fix</div></div>
   </div>
   <div class="freshness">Data as of <b id="fresh"></b> · auto-refreshes ~every 2 min · "today" = <span id="todayLbl"></span> (Manila)</div>
   <div class="chart wide"><h3>Submissions over time — new per day &amp; cumulative</h3><div class="canvas-wrap"><canvas id="trend"></canvas></div></div>
   <div id="coverage"></div>
+  <div id="productivity"></div>
   <div class="cards" id="totals"></div>
   <div class="note">Counts exclude deleted cases. Filters recompute every tile in your browser. Empty/blank categories reflect minimal test cases in the current data — they populate as real fieldwork syncs. For the per-case list with facility labels, see the CSWeb <b>Sync Report</b>.</div>
   <div id="sections"></div>
@@ -338,6 +397,9 @@ P.regions.forEach(r=>regSel.add(new Option(r,r)));
 const fromInp=document.getElementById('fFrom'), toInp=document.getElementById('fTo');
 if(P.dateMin){fromInp.min=P.dateMin; toInp.min=P.dateMin;}
 if(P.dateMax){fromInp.max=P.dateMax; toInp.max=P.dateMax;}
+const supSel=document.getElementById('fSup');
+supSel.add(new Option('All supervisors','ALL'));
+(P.supervisors||[]).forEach(x=>supSel.add(new Option(x,x)));
 const statSel=document.getElementById('fStatus');
 [['ALL','All statuses'],['Completed','Completed'],['Partial','Partial']].forEach(([v,t])=>statSel.add(new Option(t,v)));
 
@@ -403,16 +465,17 @@ function agg(rows,field){
 function visInsts(inst){ return inst==='ALL' ? INSTS : [inst]; }
 // KPI strip — recomputes over every filtered, visible row
 function renderKpis(passOf){
-  let tot=0,comp=0,part=0,today=0,nogps=0;
+  let tot=0,comp=0,part=0,today=0,nogps=0,repl=0;
   visInsts(instSel.value).forEach(k=>{
     (P.data[k]||[]).forEach(r=>{ if(!passOf(r))return;
       tot++; if(r.status==='Completed')comp++; else if(r.status==='Partial')part++;
       if(P.today && r.date===P.today)today++;
       if(r.gps==='0'||r.gps===0)nogps++;
+      if(r.repl==='1')repl++;   // BREAKOFF 5/6/7 — sampled unit never interviewed, substitute drawn
     });
   });
   kTotal.textContent=tot; kCompleted.textContent=comp; kPartial.textContent=part;
-  kToday.textContent=today; kNogps.textContent=nogps;
+  kToday.textContent=today; kNogps.textContent=nogps; kRepl.textContent=repl;
 }
 // submissions-over-time — daily + cumulative across filtered, visible rows
 function renderTrend(passOf){
@@ -451,6 +514,21 @@ function renderCoverage(pass){
   const visible=visInsts(instSel.value).filter(k=>T[k]&&Object.keys(T[k]).length);
   if(!visible.length) return;                         // no targets → section hides (graceful)
   const h=document.createElement('h2'); h.textContent='Coverage vs. target'; cov.appendChild(h);
+  // Provenance FIRST. A coverage % divided by a placeholder plan renders identically to a
+  // real one; this banner is the only thing standing between a fixture and a DOH briefing.
+  const pl=P.plan||{};
+  if(pl.provisional!==false){
+    const w=document.createElement('div'); w.className='planwarn';
+    const f=pl.facilities||{}, nf=(f.f1||0)+(f.f3||0)+(f.f4||0);
+    w.innerHTML='<b>PROVISIONAL ASSIGNMENT PLAN — these percentages are not real coverage.</b> '
+      +'Targets come from <b>'+esc(pl.label||'an unlabelled targets.json')+'</b>'
+      +(pl.assignments?' ('+pl.assignments+' assignment row'+(pl.assignments===1?'':'s')
+         +' across '+nf+' facility slot'+(nf===1?'':'s')+')':'')
+      +'. Every % and shortfall below is measured against that placeholder. Replace '
+      +'<code>assignments-source.csv</code> with ASPSI’s real EA plan and re-run '
+      +'<code>gen-targets.py --final</code> before quoting any of this.';
+    cov.appendChild(w);
+  }
   const note=document.createElement('div'); note.className='cov-note';
   note.textContent='Landed = Completed cases in the current view (instrument · region · visit-date). Expected = the assignment plan’s target. The Status filter does not apply here.';
   cov.appendChild(note);
@@ -491,12 +569,121 @@ function renderCoverage(pass){
     cov.appendChild(tbl);
   });
 }
+// --- Phase 3: enumerator productivity (F1/F3/F4) ---
+// F2 never appears here: it is self-administered, so it has no enumerator. visInsts()
+// only ever returns f1/f3/f4, so that exclusion is structural rather than a special case.
+let prodSort={col:'cases',dir:-1};
+function daysBetween(a,b){                      // YYYYMMDD strings -> whole days
+  const d=s=>Date.UTC(+s.slice(0,4),+s.slice(4,6)-1,+s.slice(6,8));
+  return Math.round((d(b)-d(a))/86400000);
+}
+function renderProductivity(pass){
+  const el=document.getElementById('productivity'); el.innerHTML='';
+  const m=new Map(); let unnamed=0;
+  visInsts(instSel.value).forEach(k=>{
+    (P.data[k]||[]).forEach(r=>{ if(!pass(r)) return;
+      const n=r.enumerator;
+      if(!n||n==='(unassigned)'){unnamed++; return;}
+      let o=m.get(n);
+      if(!o){o={name:n,cases:0,completed:0,partial:0,repl:0,days:new Set(),last:'',mix:{},sups:{}}; m.set(n,o);}
+      o.cases++;
+      if(r.status==='Completed')o.completed++; else if(r.status==='Partial')o.partial++;
+      if(r.repl==='1')o.repl++;
+      const d=r.date;
+      if(d&&/^\d{8}$/.test(d)&&d!=='00000000'){o.days.add(d); if(d>o.last)o.last=d;}
+      o.mix[k]=(o.mix[k]||0)+1;
+      const sv=r.supervisor||'(unassigned)'; o.sups[sv]=(o.sups[sv]||0)+1;
+    });
+  });
+  if(!m.size) return;                           // no named enumerators in view -> hide, like coverage
+  const h=document.createElement('h2'); h.textContent='Enumerator productivity'; el.appendChild(h);
+  const note=document.createElement('div'); note.className='cov-note';
+  note.textContent='Cases/day = cases in the current view ÷ the distinct days that enumerator was active — '
+    +'so it measures pace on the days they actually worked, not calendar days. A rate over a single '
+    +'active day is greyed out: it is arithmetic, not a trend. Check Last active before reading a high '
+    +'rate as good news. Replaced = the sampled unit was never interviewed (refused at the door, not '
+    +'found, or ineligible) and a substitute was drawn; postponed visits are NOT replacements. The share '
+    +'is flagged red only at 30% or more over at least 5 cases — a hard catchment legitimately produces '
+    +'replacements, so the raw count is not comparable between enumerators. Honours every filter above. '
+    +'F2 is absent by design: it is self-administered and has no enumerator.'
+    +(unnamed?' '+unnamed+' case(s) in view carry no enumerator name.':'');
+  el.appendChild(note);
+  let rows=[...m.values()].map(o=>{
+    const days=o.days.size;
+    // an enumerator normally sits under one team leader; if the data says otherwise, say so
+    // rather than silently picking one — a person straddling two teams is a finding, not a tie
+    const sv=Object.keys(o.sups);
+    const sup = sv.length===0 ? '(unassigned)'
+              : sv.length===1 ? sv[0]
+              : 'multiple ('+sv.length+')';
+    // replacement SHARE is the curbstoning signal, not the raw count: an enumerator working a
+    // hard area legitimately racks up replacements, so only the proportion is comparable. Same
+    // small-denominator discipline as cases/day — a share over <5 cases is noise, so it is not
+    // flagged (2 of 3 replaced = 67% would otherwise outrank every real outlier).
+    const replPct = o.cases>0 ? Math.round(100*o.repl/o.cases) : null;
+    return {name:o.name, sup, cases:o.cases, completed:o.completed, partial:o.partial,
+            repl:o.repl, replPct, replHot: (o.cases>=5 && replPct>=30), days,
+            rate: days>0 ? Math.round(10*o.cases/days)/10 : null, last:o.last, mix:o.mix};
+  });
+  const st=prodSort;
+  const val=(o,c)=> (c==='name'||c==='sup')?((o[c]||'').toLowerCase())
+                  : (c==='last')?(o.last||'')
+                  : (o[c]==null?-1:o[c]);
+  rows.sort((a,b)=>{const x=val(a,st.col),y=val(b,st.col); return (x<y?-1:x>y?1:0)*st.dir;});
+  const maxCases=rows.reduce((s,r)=>Math.max(s,r.cases),0);
+  const totCases=rows.reduce((s,r)=>s+r.cases,0);
+  const sum=document.createElement('div'); sum.className='cov-sum';
+  sum.innerHTML='<b>'+rows.length+'</b> enumerator'+(rows.length===1?'':'s')
+    +' · <b>'+totCases+'</b> case'+(totCases===1?'':'s')+' in view';
+  el.appendChild(sum);
+  const showMix=(instSel.value==='ALL');
+  const showSup=(supSel.value==='ALL');   // redundant once you have drilled into one team
+  const cols=(showSup?[['sup','Field supervisor','']]:[])
+    .concat([['name','Enumerator','']])
+    .concat(showMix?[['mix','Mix','']]:[])
+    .concat([['cases','Cases','n'],['completed','Completed','n'],['partial','Partial','n'],
+             ['repl','Replaced','n'],
+             ['days','Active days','n'],['rate','Cases/day','n'],['last','Last active',''],
+             ['bar','Volume','s']]);
+  const tbl=document.createElement('table'); tbl.className='covtbl';
+  const thead=document.createElement('tr');
+  cols.forEach(([c,lbl,cl])=>{ const th=document.createElement('th'); if(cl)th.className=cl;
+    th.textContent=lbl+(st.col===c?(st.dir>0?' ▲':' ▼'):'');
+    if(c!=='bar'&&c!=='mix'){th.onclick=()=>{prodSort={col:c,dir:(st.col===c?-st.dir:(c==='name'?1:-1))}; render();};}
+    thead.appendChild(th); });
+  tbl.appendChild(thead);
+  const fmtDate=d=>d?d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8):'—';
+  const fmtMix=mx=>['f1','f3','f4'].filter(k=>mx[k]).map(k=>k.toUpperCase()+' '+mx[k]).join(' · ')||'—';
+  rows.forEach(r=>{ const tr=document.createElement('tr');
+    const w=maxCases>0?Math.round(100*r.cases/maxCases):0;
+    // "gone quiet" = no case for >2 days against the dashboard's own Manila today
+    const idle=(P.today&&r.last)?daysBetween(r.last,P.today):null;
+    const lastCls=(idle!==null&&idle>2)?' class="stale"':'';
+    const lastTxt=fmtDate(r.last)+((idle!==null&&idle>2)?' ('+idle+'d ago)':'');
+    tr.innerHTML=(showSup?'<td>'+esc(r.sup)+'</td>':'')
+      +'<td>'+esc(r.name)+'</td>'
+      +(showMix?'<td class="mix">'+esc(fmtMix(r.mix))+'</td>':'')
+      +'<td class="n">'+r.cases+'</td>'
+      +'<td class="n">'+r.completed+'</td>'
+      +'<td class="n short'+(r.partial?'':' zero')+'">'+r.partial+'</td>'
+      +'<td class="n'+(r.repl?'':' zero')+(r.replHot?' hot" title="'+r.replPct+'% of the cases for this enumerator were replaced — worth a look"'
+                                        :'"')+'>'
+        +r.repl+(r.repl?' <span class="pct">('+r.replPct+'%)</span>':'')+'</td>'
+      +'<td class="n">'+r.days+'</td>'
+      +'<td class="n rate'+(r.days<2?' lowconf" title="only one active day — a rate over a single day is not a trend':'')+'">'
+        +(r.rate==null?'—':r.rate.toFixed(1))+'</td>'
+      +'<td'+lastCls+'>'+esc(lastTxt)+'</td>'
+      +'<td class="s"><div class="covbar"><span style="width:'+w+'%;background:#006b3f"></span></div></td>';
+    tbl.appendChild(tr); });
+  el.appendChild(tbl);
+}
 function render(){
-  const inst=instSel.value, region=regSel.value, status=statSel.value;
+  const inst=instSel.value, region=regSel.value, status=statSel.value, sup=supSel.value;
   const fromY=fromInp.value?fromInp.value.replace(/-/g,''):'';
   const toY=toInp.value?toInp.value.replace(/-/g,''):'';
   const pass=(r,ignoreStatus)=>{
     if(region!=='ALL' && r.region!==region) return false;
+    if(sup!=='ALL' && r.supervisor!==sup) return false;
     if(!ignoreStatus && status!=='ALL' && r.status!==status) return false;
     if(fromY||toY){ const d=r.date; if(!(d&&d.length===8)) return false; if(fromY&&d<fromY) return false; if(toY&&d>toY) return false; }
     return true;
@@ -504,6 +691,9 @@ function render(){
   renderKpis(pass);
   renderTrend(pass);
   renderCoverage(pass);
+  renderProductivity(pass);
+  // INSTS (not a hardcoded f1/f3/f4 list) so F2 keeps its own card — the productivity
+  // panel above still skips F2 internally, since it has no enumerator.
   INSTS.forEach(k=>{
     const rows=(P.data[k]||[]).filter(pass);
     cardNum[k].textContent=rows.length;
@@ -526,8 +716,8 @@ function render(){
     });
   });
 }
-instSel.onchange=render; regSel.onchange=render; statSel.onchange=render; fromInp.onchange=render; toInp.onchange=render;
-document.getElementById('fReset').onclick=()=>{instSel.value='ALL';regSel.value='ALL';statSel.value='ALL';fromInp.value='';toInp.value='';render();};
+instSel.onchange=render; regSel.onchange=render; supSel.onchange=render; statSel.onchange=render; fromInp.onchange=render; toInp.onchange=render;
+document.getElementById('fReset').onclick=()=>{instSel.value='ALL';regSel.value='ALL';supSel.value='ALL';statSel.value='ALL';fromInp.value='';toInp.value='';render();};
 render();
 </script>
 </body>
@@ -535,15 +725,22 @@ render();
 """
 
 
-def build(data, targets=None, errored=None, f2_api_ok=None):
-    """Assemble the payload + HTML from a {inst: [row-dict,...]} data map. `errored` =
-    the set of instruments whose live query failed (surfaced on the F2 freshness note)."""
+def build(data, targets=None, plan=None, errored=None, f2_api_ok=None):
+    """Assemble the payload + HTML from a {inst: [row-dict,...]} data map.
+
+    `plan`    = assignment-plan provenance (provisional vs final) for the coverage banner.
+    `errored` = the set of instruments whose live query failed (surfaced on the F2
+                freshness note).
+    """
     errored = errored or set()
-    regions = set()
+    regions, supervisors = set(), set()
     for rows in data.values():
         for rec in rows:
             if rec.get("region"):
                 regions.add(rec["region"])
+            sup = rec.get("supervisor")
+            if sup and sup != "(unassigned)":
+                supervisors.add(sup)
     spec = [{"title": t, "prefix": p, "charts": [{"field": f, "title": ct, "type": ty} for f, ct, ty in c]}
             for t, p, c in SECTIONS]
     # visit-date range bounds (for the date inputs), from valid YYYYMMDD values
@@ -565,11 +762,13 @@ def build(data, targets=None, errored=None, f2_api_ok=None):
         "data": data,
         "spec": spec,
         "regions": sorted(regions),
+        "supervisors": sorted(supervisors),
         "dateMin": date_min,
         "dateMax": date_max,
         "today": today,
         "targets": targets or {},
         "f2meta": f2meta,
+        "plan": plan or {},
         "generated": now_utc.strftime("%Y-%m-%d %H:%M UTC"),
     }
     # XSS-safe: JSON in a non-executable <script type="application/json">, HTML-escaped,
@@ -587,8 +786,8 @@ def main():
     a = ap.parse_args()
     data, errored = load_sample(a.sample) if a.sample else fetch_live()
     api_ok = None if a.sample else f2_api_health()
-    targets = load_targets(a.targets)
-    out_html = build(data, targets, errored, api_ok)
+    targets, plan = load_targets(a.targets)
+    out_html = build(data, targets, plan, errored, api_ok)
     with open(a.out, "w", encoding="utf-8") as f:
         f.write(out_html)
     print("wrote %s (%d bytes); rows: f1=%d f3=%d f4=%d f2=%d%s"

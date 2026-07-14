@@ -34,7 +34,7 @@ tags: [cspro, capi, fmf, form-layout, f4, household]
 | # | Record (DCF) | Type / Occ | Form(s) | Notes |
 |---|---|---|---|---|
 | 1 | `HOUSEHOLDSURVEY_REC` | 1 | (container) | — |
-| 2 | `FIELD_CONTROL` | A (1) | 1 form | Metadata, AAPOR, consent |
+| 2 | `FIELD_CONTROL` | A (1) | 1 form | Field-control header: staff names, visit dates, Result of Visit, break-off, case disposition |
 | 3 | `HOUSEHOLD_GEO_ID` | B (1) | 1 form | PSGC cascade |
 | 4 | `REC_CASE_VERIFICATION` | Z (off-form) | Trigger on 1 form | GPS + photo |
 | 5 | `A_INFORMED_CONSENT` | C (1) | 1 form | — |
@@ -186,7 +186,7 @@ Q199 WTP amount, Q202 worry-reasons select-all (3 options + `_OTHER_TXT`).
 
 ### Form 37 — `CLOSING`
 
-AAPOR disposition, notes, submit.
+`ENUM_RESULT_FINAL_VISIT` (Result of Visit — 1 Completed / 2 Postponed / 3 Incomplete / 4 Withdraw Participation/Consent), then submit. `CASE_DISPOSITION` (0 In progress / 1 Completed / 2 Partial / not completed) is written off-form by logic.
 
 ---
 

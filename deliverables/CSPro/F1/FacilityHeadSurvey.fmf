@@ -526,7 +526,7 @@ Text=Barangay
 Name=BREAKOFF
 Position=177,177,360,197
 Item=BREAKOFF,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
+DataCaptureType=DropDown
 Form=2
   
 [Text]

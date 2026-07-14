@@ -1423,13 +1423,22 @@ DISPOSITION_PROCS = """\
   2 Partial. }
 PROC BREAKOFF
 preproc
-  if not (BREAKOFF in 1, 2, 3, 4) then BREAKOFF = 1; endif;   { default "Continue" }
+  { The guard MUST list every valid code — anything outside it is silently reset to
+    Continue. Widened to 1..7 on 2026-07-14; leaving it at 1..4 would have erased every
+    replacement the moment the field was revisited. }
+  if not (BREAKOFF in 1, 2, 3, 4, 5, 6, 7) then BREAKOFF = 1; endif;   { default "Continue" }
 postproc
   if BREAKOFF <> 1 then
+    { 2–4: the interview STARTED and then stopped. }
     if BREAKOFF = 2 then ENUM_RESULT_FINAL_VISIT = 6; endif;   { Withdraw Participation/Consent }
     if BREAKOFF = 3 then ENUM_RESULT_FINAL_VISIT = 3; endif;   { Postponed }
     if BREAKOFF = 4 then ENUM_RESULT_FINAL_VISIT = 4; endif;   { Incomplete }
-    CASE_DISPOSITION = 2;   { partial / broke off }
+    { 5–7: the interview NEVER STARTED (refused at the door / not found / ineligible).
+      Per ASPSI, every such unit is replaced by a substitute, so all three land on
+      Replaced(7) — BREAKOFF keeps the reason. Replacements = count(BREAKOFF in 5,6,7).
+      Postponed(3) is NOT a replacement: that unit is revisited, not substituted. }
+    if BREAKOFF in 5, 6, 7 then ENUM_RESULT_FINAL_VISIT = 7; endif;   { Replaced }
+    CASE_DISPOSITION = 2;   { partial / not completed }
     skip to ENUM_RESULT_FINAL_VISIT;
   endif;
 

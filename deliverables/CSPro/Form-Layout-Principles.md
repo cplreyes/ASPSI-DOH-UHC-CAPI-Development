@@ -86,9 +86,10 @@ Split at the nearest block boundary in the source questionnaire (Q-number contig
 ### 6.1 `FIELD_CONTROL` block
 
 - Always the first form in every instrument.
-- Contents: survey metadata (survey code, region / province / city-mun / barangay), interviewer ID, date started, AAPOR disposition code, consent flag.
-- **Consent gate:** if consent = No (or AAPOR refusal), the case skips all data-entry forms and jumps directly to the closing disposition form.
-- Partial-save is enabled from this form onward; prefilling applies to date and interviewer ID if a resume.
+- Contents (per the April-20 paper Field Control form): survey team leader's name, enumerator's name, field validated by, field edited by, date first visited, date of final visit, total number of visits, Result of First Visit, Result of Final Visit, break-off, case disposition (auto), language used, plus the PSGC case-key items (region / province-HUC / city-municipality / facility no / case seq).
+- **Break-off gate:** if `BREAKOFF` ≠ Continue at case start, the case skips all data-entry forms and jumps directly to the closing Result-of-Visit form. There is **no consent field** — consent refusal / withdrawal is recorded through Result of Visit ("Refused" in F1; "Withdraw Participation/Consent" in F3/F4).
+- `CASE_DISPOSITION` is written by logic, not typed: 0 = In progress, 1 = Completed, 2 = Partial / not completed.
+- Partial-save is enabled from this form onward.
 
 ### 6.2 Capture triggers (GPS, photo)
 

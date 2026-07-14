@@ -22,7 +22,7 @@ from cspro_helpers import (
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, checkbox_multiselect, uhc9_item, record,
     build_field_control, build_geo_id, build_dictionary, build_id_block, write_dcf,
-    derived_geo_code_items, ENUM_RESULT_OPTIONS_F3,
+    derived_geo_code_items, ENUM_RESULT_OPTIONS_F3, BREAKOFF_OPTIONS,
     apply_translations,
     _gps_fields, _photo_block,
 )
@@ -181,12 +181,7 @@ def build_f3_field_control():
         numeric("BREAKOFF",
                 "Interview status (leave as Continue unless ending the interview early)",
                 length=1,
-                value_set_options=[
-                    ("Continue interview",        "1"),
-                    ("Respondent withdrew",       "2"),
-                    ("Postponed / reschedule",    "3"),
-                    ("Stop — other (incomplete)", "4"),
-                ]),
+                value_set_options=BREAKOFF_OPTIONS),
         # #561 completeness sentinel — OFF-FORM, set in logic only: 0 In progress at
         # case open, 1 Completed when the Result-of-Visit finalises to a completed
         # code, 2 Partial/broke-off otherwise. Lets the Supervisor App + CSWeb exports

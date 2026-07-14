@@ -24,7 +24,7 @@
 |---|---|---|
 | **XI-01** | exclusive "IDK/None" checkbox code: F1 = **09** (07 on Q58), F3/F4 = **90** | ETL: derived harmonized flag + documented per-instrument map. **No instrument change.** |
 | **XI-04** | Yes/No/Don't-know: F3 DK = **3**, F4 insurance-roster DK = **55** | ETL: derived DK flag. **No instrument change.** |
-| **XI-05** | Result-of-Visit raw codes (Postponed 2 vs 3, Incomplete 4 vs 3) | ETL: single derived AAPOR disposition var. **No instrument change.** |
+| **XI-05** | Result-of-Visit raw codes (Postponed 2 vs 3, Incomplete 4 vs 3) | ETL: one derived, harmonized disposition variable + documented per-instrument map. **No instrument change.** *(Reworded 2026-07-14: this originally read "single derived AAPOR disposition var". AAPOR is a survey-research code taxonomy that was never an ASPSI/DOH requirement and is not used on the paper forms — it entered the build unrequested in April and was removed from the instruments in June. The recommendation itself is unchanged; only the label was wrong. The derived variable is **not yet built** — see `codebook.md` §12.)* |
 | **XI-06** | categorical DK/Refuse not uniform (amount-level -98/-99 already is) | ETL: one codebook DK/Refuse table + derived flags. **No instrument change.** |
 
 **Your call:** ☐ Accept (handle all four in ETL) ☐ Standardize one or more now (name which)

@@ -31,7 +31,7 @@ tags: [cspro, capi, fmf, form-layout, f3]
 | # | Record (DCF) | Type | Form(s) | Notes |
 |---|---|---|---|---|
 | 1 | `PATIENTSURVEY_REC` | 1 | (container; no form) | — |
-| 2 | `FIELD_CONTROL` | A (1 occ) | 1 form | Metadata, AAPOR, consent |
+| 2 | `FIELD_CONTROL` | A (1 occ) | 1 form | Field-control header: staff names, visit dates, Result of Visit, patient type, break-off, case disposition |
 | 3 | Geo ID fields (incl. `F3_FACILITY_ID`) | — | 1 form | PSGC cascade + F1 linkage |
 | 4 | `REC_FACILITY_CAPTURE` | Z (off-form) | Triggers on 1 form | Facility GPS |
 | 5 | `REC_PATIENT_HOME_CAPTURE` | Y (off-form) | Triggers on same or new form | Patient home GPS |
@@ -58,7 +58,25 @@ tags: [cspro, capi, fmf, form-layout, f3]
 
 ### Form 1 — `FC_METADATA` (FIELD_CONTROL)
 
-Case ID, survey code, interviewer ID, date/time, AAPOR disposition, consent gate. Same shape as F1 Form 1. Consent = No → jump to closing.
+Same shape as F1 Form 1 (see `F1-Form-Layout-Plan.md` §Form 1), plus `PATIENT_TYPE`:
+
+| Row | Field | Control | Notes |
+|---|---|---|---|
+| 1 | `SURVEY_TEAM_LEADER_S_NAME` | Single-line text | alpha(50) |
+| 2 | `ENUMERATOR_S_NAME` | Single-line text | alpha(50) |
+| 3 | `FIELD_VALIDATED_BY` | Single-line text | alpha(50) |
+| 4 | `FIELD_EDITED_BY` | Single-line text | alpha(50) |
+| 5 | `DATE_FIRST_VISITED` | DatePicker | numeric(8), YYYYMMDD |
+| 6 | `DATE_FINAL_VISIT` | DatePicker | numeric(8), YYYYMMDD |
+| 7 | `TOTAL_NUMBER_OF_VISITS` | Numpad | numeric(3) |
+| 8 | `ENUM_RESULT_FIRST_VISIT` | Dropdown | Result of Visit — 1 Completed / 2 Completed at the Hospital / 3 Postponed / 4 Incomplete / 5 Completed at Home / 6 Withdraw Participation/Consent |
+| 9 | `ENUM_RESULT_FINAL_VISIT` | Dropdown | Same value set as row 8 |
+| 10 | `PATIENT_TYPE` | Radio | 1 Outpatient / 2 Inpatient |
+| 11 | `LANGUAGE_USED` | Single-line text | alpha(20) |
+
+Plus, off this form: `BREAKOFF` (case start — Continue / Withdrew / Postponed / Stop – other) and the auto-written `CASE_DISPOSITION` (0 In progress / 1 Completed / 2 Partial / not completed).
+
+There is **no consent item** in `FIELD_CONTROL`. Consent withdrawal is recorded as Result of Visit `6 — Withdraw Participation/Consent`.
 
 ### Form 2 — `FC_GEO` (Geographic ID + F1 linkage)
 
@@ -169,7 +187,7 @@ Single form. Satisfaction items are short-form Likert — high row budget utiliz
 
 ### Form 32 — `CLOSING`
 
-AAPOR final disposition, interviewer notes, time ended, submit. Same as F1.
+`ENUM_RESULT_FINAL_VISIT` (Result of Visit), then submit. `CASE_DISPOSITION` is written off-form by logic. Same as F1.
 
 ---
 
