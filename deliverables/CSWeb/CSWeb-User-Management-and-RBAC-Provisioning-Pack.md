@@ -71,9 +71,32 @@ Notes:
 > typed name is unreliable at scale.
 >
 > The `se-001` / `fs-01` usernames below remain the right convention — they are just **assigned by
-> CSWeb**, not read out of the questionnaire. Closing the provenance gap means keying on the CSWeb
-> **sync username** (server-side, already recorded per case) — NOT re-adding a field to the
-> instruments, which would reopen a closed decision. Open item; see the enumerator-identity note.
+> CSWeb**, not read out of the questionnaire.
+>
+> **RESOLVED 2026-07-14 — provenance now works, with no instrument change.** CSWeb already records
+> the uploading account per case: `cspro_sync_history` is append-only (`revision` = AUTO_INCREMENT
+> PK) and every sync inserts a row with `username` + `device` + `dictionary_id` + `direction`. A
+> case's `last_modified_revision` **is** that revision, so:
+>
+> ```sql
+> SELECT sh.username
+>   FROM csweb_f3_breakout.cases c
+>   LEFT JOIN csweb_uhc_y2.cspro_sync_history sh
+>          ON sh.revision = c.last_modified_revision AND sh.direction = 'put'
+> ```
+>
+> names the account that uploaded the case. Verified against the pre-cleanup backup: F1 cases at
+> revision 111 → `aidan` (dict 4); F3 at 114 → `aidan` (dict 5); F3 at 118 → `alytest` (dict 5).
+> `dictionary_id`: **4 = F1, 5 = F3, 6 = F4**.
+>
+> The Sync Dashboard's productivity panel now **keys on this login**, not the typed name — so two
+> people sharing a name no longer merge, and one person typing theirs three ways no longer splits.
+>
+> **Limit, stated plainly:** this is who **uploaded**, not provably who interviewed. Under
+> one-account-and-one-tablet-per-person they are the same; they diverge if a case is
+> Bluetooth-transferred between devices or a supervisor uploads for someone. The panel therefore
+> keeps the typed name visible and **flags** any login that typed more than one name, rather than
+> hiding the disagreement.
 
   Convention:
   - Enumerators: `se-001` … `se-NNN`

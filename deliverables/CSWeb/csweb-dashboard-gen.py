@@ -146,40 +146,72 @@ SUP = "COALESCE(NULLIF(fc.survey_team_leader_s_name,''),'(unassigned)')"
 # replacement rate for one enumerator is the standard curbstoning check (ASPSI, 2026-07-14).
 REPL = "CASE WHEN fc.breakoff IN ('5','6','7') THEN '1' ELSE '0' END"
 
+# `syncuser` = the CSWeb account that UPLOADED the case — the only STABLE enumerator key we have.
+#
+# Why not just use ENUMERATOR_S_NAME: it is free text, 50 chars, retyped into every case. Two people
+# called "Maria Santos" collapse into one row; one person typing "M. Santos" on Tuesday splits into
+# two. At UAT scale that is invisible; at 100+ enumerators it silently corrupts every per-person
+# number — including the replacement share, which is the curbstoning check. A name is not an ID, and
+# the instruments carry no ID (INTERVIEWER_ID was removed 2026-06-12; the paper Field Control form
+# has a name, not an ID, and the instruments follow the paper form — do NOT re-add a field).
+#
+# CSWeb already records this server-side, per case, and no instrument change is needed:
+#   cspro_sync_history is APPEND-ONLY (revision = AUTO_INCREMENT primary key); every sync inserts a
+#   row carrying username + device + dictionary_id + direction. A case's `last_modified_revision` IS
+#   that revision. So joining cases.last_modified_revision = cspro_sync_history.revision (direction
+#   'put' = upload) names the account that pushed the case.
+#   Verified 2026-07-14 against the pre-cleanup backup: F1 cases at revision 111 -> 'aidan' (dict 4),
+#   F3 at 114 -> 'aidan' (dict 5), F3 at 118 -> 'alytest' (dict 5). Exact match.
+#
+# HONEST LIMIT: this is who UPLOADED, not provably who interviewed. Under the RBAC model (one named
+# account + one tablet per person) they are the same. They can diverge if a case is Bluetooth-synced
+# between devices, or a supervisor uploads for someone. So the panel keeps the typed name visible
+# and FLAGS disagreement rather than hiding it behind the login.
+SYNCUSER = "COALESCE(NULLIF(sh.username,''),'(unknown)')"
+# join once per instrument; `c` is already the cases alias in every query
+SYNC_JOIN = (" LEFT JOIN csweb_uhc_y2.cspro_sync_history sh"
+             " ON sh.revision = c.last_modified_revision AND sh.direction = 'put'")
+
 QUERIES = {
-    "f1": (["region", "province", "city", "facility", "ownership", "service_level", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl"],
-           "SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
-           " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
-           " COALESCE(NULLIF(fc.city_name,''),'(unknown)'),"
-           " COALESCE(fn.name,'(unlabeled)'), %s, %s, %s,"
-           " COALESCE(CAST(fc.date_first_visited_the_facility AS CHAR),''), %s, %s, %s, %s, %s, %s"
-           " FROM csweb_f1_breakout.`level-1` l"
-           " JOIN csweb_f1_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
-           " LEFT JOIN csweb_f1_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
-           " LEFT JOIN csweb_f1_breakout.b_facility_profile bp ON bp.`level-1-id`=l.`level-1-id`"
-           " LEFT JOIN csweb_f1_breakout.rec_facility_capture g ON g.`level-1-id`=l.`level-1-id`"
-           " LEFT JOIN csweb_reports.facility_names fn ON fn.code9=%s"
-           % (F1_OWN, F1_SVC, F1_RES, STATUS, F1_GPS, F1_CODE9, ENUM, SUP, REPL, F1_CODE9)),
-    "f3": (["region", "patient_type", "sex", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl"],
-           "SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
-           " CASE fc.patient_type WHEN '1' THEN 'Outpatient' WHEN '2' THEN 'Inpatient' ELSE COALESCE(NULLIF(fc.patient_type,''),'(blank)') END,"
-           " CASE bp.q7_sex WHEN '1' THEN 'Male' WHEN '2' THEN 'Female' ELSE COALESCE(NULLIF(bp.q7_sex,''),'(blank)') END,"
-           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s, %s, %s"
-           " FROM csweb_f3_breakout.`level-1` l"
-           " JOIN csweb_f3_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
-           " LEFT JOIN csweb_f3_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
-           " LEFT JOIN csweb_f3_breakout.b_patient_profile bp ON bp.`level-1-id`=l.`level-1-id`"
-           " LEFT JOIN csweb_f3_breakout.rec_facility_capture g ON g.`level-1-id`=l.`level-1-id`"
-           % (F3_RES, STATUS, F3_GPS, ENUM, SUP, REPL)),
-    "f4": (["region", "province", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl"],
-           "SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
-           " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
-           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s, %s, %s"
-           " FROM csweb_f4_breakout.`level-1` l"
-           " JOIN csweb_f4_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
-           " LEFT JOIN csweb_f4_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
-           " LEFT JOIN csweb_f4_breakout.household_geo_id g ON g.`level-1-id`=l.`level-1-id`"
-           % (F4_RES, STATUS, F4_GPS, ENUM, SUP, REPL)),
+    "f1": (["region", "province", "city", "facility", "ownership", "service_level", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl", "syncuser"],
+           # NB: SYNC_JOIN is concatenated INSIDE the parens, before the % — `%` binds tighter
+           # than `+`, so `"..." + SYNC_JOIN % (...)` would try to format SYNC_JOIN (which has no
+           # placeholders) and raise. Keep the whole SQL in one parenthesised expression.
+           ("SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
+            " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
+            " COALESCE(NULLIF(fc.city_name,''),'(unknown)'),"
+            " COALESCE(fn.name,'(unlabeled)'), %s, %s, %s,"
+            " COALESCE(CAST(fc.date_first_visited_the_facility AS CHAR),''), %s, %s, %s, %s, %s, %s, %s"
+            " FROM csweb_f1_breakout.`level-1` l"
+            " JOIN csweb_f1_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
+            " LEFT JOIN csweb_f1_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
+            " LEFT JOIN csweb_f1_breakout.b_facility_profile bp ON bp.`level-1-id`=l.`level-1-id`"
+            " LEFT JOIN csweb_f1_breakout.rec_facility_capture g ON g.`level-1-id`=l.`level-1-id`"
+            " LEFT JOIN csweb_reports.facility_names fn ON fn.code9=%s"
+            + SYNC_JOIN)
+           % (F1_OWN, F1_SVC, F1_RES, STATUS, F1_GPS, F1_CODE9, ENUM, SUP, REPL, SYNCUSER, F1_CODE9)),
+    "f3": (["region", "patient_type", "sex", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl", "syncuser"],
+           ("SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
+            " CASE fc.patient_type WHEN '1' THEN 'Outpatient' WHEN '2' THEN 'Inpatient' ELSE COALESCE(NULLIF(fc.patient_type,''),'(blank)') END,"
+            " CASE bp.q7_sex WHEN '1' THEN 'Male' WHEN '2' THEN 'Female' ELSE COALESCE(NULLIF(bp.q7_sex,''),'(blank)') END,"
+            " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s, %s, %s, %s"
+            " FROM csweb_f3_breakout.`level-1` l"
+            " JOIN csweb_f3_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
+            " LEFT JOIN csweb_f3_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
+            " LEFT JOIN csweb_f3_breakout.b_patient_profile bp ON bp.`level-1-id`=l.`level-1-id`"
+            " LEFT JOIN csweb_f3_breakout.rec_facility_capture g ON g.`level-1-id`=l.`level-1-id`"
+            + SYNC_JOIN)
+           % (F3_RES, STATUS, F3_GPS, ENUM, SUP, REPL, SYNCUSER)),
+    "f4": (["region", "province", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl", "syncuser"],
+           ("SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
+            " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
+            " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s, %s, %s, %s"
+            " FROM csweb_f4_breakout.`level-1` l"
+            " JOIN csweb_f4_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
+            " LEFT JOIN csweb_f4_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
+            " LEFT JOIN csweb_f4_breakout.household_geo_id g ON g.`level-1-id`=l.`level-1-id`"
+            + SYNC_JOIN)
+           % (F4_RES, STATUS, F4_GPS, ENUM, SUP, REPL, SYNCUSER)),
     # F2 carries no enumerator/supervisor/repl by design: it is self-administered, so it has
     # no field-control record. Its rows simply lack those keys — the productivity panel skips
     # F2 entirely, and `r.repl==='1'` is false for a missing key, so the Replacements KPI is
@@ -343,6 +375,8 @@ TEMPLATE = r"""<!doctype html>
   .covtbl td.hot{color:var(--red);font-weight:700}
   .covtbl .pct{font-weight:400;color:var(--muted);font-size:11px}
   .covtbl td.hot .pct{color:var(--red)}
+  /* a row with no CSWeb login is keyed on the typed name — the unreliable path. Say so. */
+  .covtbl td.nolog{color:var(--muted);font-style:italic}
   .stale{color:#b7860b}
   @media(max-width:820px){.kpis{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.covbar{width:90px}}
 </style>
@@ -582,10 +616,20 @@ function renderProductivity(pass){
   const m=new Map(); let unnamed=0;
   visInsts(instSel.value).forEach(k=>{
     (P.data[k]||[]).forEach(r=>{ if(!pass(r)) return;
-      const n=r.enumerator;
-      if(!n||n==='(unassigned)'){unnamed++; return;}
-      let o=m.get(n);
-      if(!o){o={name:n,cases:0,completed:0,partial:0,repl:0,days:new Set(),last:'',mix:{},sups:{}}; m.set(n,o);}
+      // KEY on the CSWeb sync login, not the typed name. The name is free text retyped into every
+      // case — two "Maria Santos" collapse into one row, one person typing it three ways splits
+      // into three, and every per-person number (incl. the replacement share) silently rots at
+      // scale. The login is assigned, stable, and recorded server-side per case.
+      // Fall back to the typed name only when no sync row exists (e.g. a case that predates this).
+      const login=r.syncuser;
+      const nm=r.enumerator;
+      const key=(login&&login!=='(unknown)') ? 'u:'+login : (nm&&nm!=='(unassigned)' ? 'n:'+nm : null);
+      if(!key){unnamed++; return;}
+      let o=m.get(key);
+      if(!o){o={key,login:(login&&login!=='(unknown)')?login:null,
+                cases:0,completed:0,partial:0,repl:0,days:new Set(),last:'',mix:{},sups:{},names:{}}; m.set(key,o);}
+      // keep every typed name seen under this login — disagreement is a finding, not noise
+      if(nm&&nm!=='(unassigned)') o.names[nm]=(o.names[nm]||0)+1;
       o.cases++;
       if(r.status==='Completed')o.completed++; else if(r.status==='Partial')o.partial++;
       if(r.repl==='1')o.repl++;
@@ -598,7 +642,13 @@ function renderProductivity(pass){
   if(!m.size) return;                           // no named enumerators in view -> hide, like coverage
   const h=document.createElement('h2'); h.textContent='Enumerator productivity'; el.appendChild(h);
   const note=document.createElement('div'); note.className='cov-note';
-  note.textContent='Cases/day = cases in the current view ÷ the distinct days that enumerator was active — '
+  note.textContent='Rows are keyed on the CSWeb login that uploaded the case (stable), not the typed '
+    +'Enumerator name (free text — two people can share one, and one person can type theirs three ways). '
+    +'The login is who SYNCED, which under one-account-per-person is the enumerator; it can differ if a '
+    +'case was Bluetooth-transferred or a supervisor uploaded it. A login that typed more than one name '
+    +'is flagged — shared tablet, borrowed account, or sloppy typing, all of which corrupt name-keyed '
+    +'reporting. A row with no login (—) falls back to the typed name and is not reliable. '
+    +'Cases/day = cases in the current view ÷ the distinct days that enumerator was active — '
     +'so it measures pace on the days they actually worked, not calendar days. A rate over a single '
     +'active day is greyed out: it is arithmetic, not a trend. Check Last active before reading a high '
     +'rate as good news. Replaced = the sampled unit was never interviewed (refused at the door, not '
@@ -610,6 +660,12 @@ function renderProductivity(pass){
   el.appendChild(note);
   let rows=[...m.values()].map(o=>{
     const days=o.days.size;
+    // display name = the one this login types most often; keep the alternates for the tooltip
+    const nameList=Object.keys(o.names).sort((a,b)=>o.names[b]-o.names[a]);
+    const name=nameList[0] || (o.login?'(no name typed)':'(unknown)');
+    // one login typing several different names is worth a look: a shared tablet, a borrowed
+    // account, or just sloppy typing — all of which corrupt name-keyed reporting
+    const nameSplit=nameList.length>1;
     // an enumerator normally sits under one team leader; if the data says otherwise, say so
     // rather than silently picking one — a person straddling two teams is a finding, not a tie
     const sv=Object.keys(o.sups);
@@ -621,7 +677,8 @@ function renderProductivity(pass){
     // small-denominator discipline as cases/day — a share over <5 cases is noise, so it is not
     // flagged (2 of 3 replaced = 67% would otherwise outrank every real outlier).
     const replPct = o.cases>0 ? Math.round(100*o.repl/o.cases) : null;
-    return {name:o.name, sup, cases:o.cases, completed:o.completed, partial:o.partial,
+    return {name, login:o.login, nameSplit, nameList, sup,
+            cases:o.cases, completed:o.completed, partial:o.partial,
             repl:o.repl, replPct, replHot: (o.cases>=5 && replPct>=30), days,
             rate: days>0 ? Math.round(10*o.cases/days)/10 : null, last:o.last, mix:o.mix};
   });
@@ -639,7 +696,7 @@ function renderProductivity(pass){
   const showMix=(instSel.value==='ALL');
   const showSup=(supSel.value==='ALL');   // redundant once you have drilled into one team
   const cols=(showSup?[['sup','Field supervisor','']]:[])
-    .concat([['name','Enumerator','']])
+    .concat([['login','CSWeb login',''],['name','Enumerator','']])
     .concat(showMix?[['mix','Mix','']]:[])
     .concat([['cases','Cases','n'],['completed','Completed','n'],['partial','Partial','n'],
              ['repl','Replaced','n'],
@@ -661,7 +718,10 @@ function renderProductivity(pass){
     const lastCls=(idle!==null&&idle>2)?' class="stale"':'';
     const lastTxt=fmtDate(r.last)+((idle!==null&&idle>2)?' ('+idle+'d ago)':'');
     tr.innerHTML=(showSup?'<td>'+esc(r.sup)+'</td>':'')
-      +'<td>'+esc(r.name)+'</td>'
+      +'<td'+(r.login?'':' class="nolog" title="no sync record — this row is keyed on the typed name and may merge or split people"')+'>'
+        +esc(r.login||'—')+'</td>'
+      +'<td'+(r.nameSplit?' class="hot" title="this one login typed '+r.nameList.length+' different names: '+esc(r.nameList.join(', '))+'"':'')+'>'
+        +esc(r.name)+(r.nameSplit?' <span class="pct">(+'+(r.nameList.length-1)+')</span>':'')+'</td>'
       +(showMix?'<td class="mix">'+esc(fmtMix(r.mix))+'</td>':'')
       +'<td class="n">'+r.cases+'</td>'
       +'<td class="n">'+r.completed+'</td>'
