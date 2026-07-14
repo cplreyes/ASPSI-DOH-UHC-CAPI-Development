@@ -26,14 +26,16 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 
 # --- enumerators (Aidan's doc order) -----------------------------------------
+# First/last name are LETTERS ONLY - CSWeb rejects anything else, including the
+# "A." initial-with-a-dot form this used to emit ("Invalid First Name", every row).
 ENUMS = [
-    ("se-001", "AAlmendral", "A.",  "Almendral"),
-    ("se-002", "AParaiso",   "A.",  "Paraiso"),
-    ("se-003", "ASalazar",   "A.",  "Salazar"),
-    ("se-004", "DRamos",     "D.",  "Ramos"),
-    ("se-005", "KPura",      "K.",  "Pura"),
-    ("se-006", "SLait",      "S.",  "Lait"),
-    ("se-007", "PCrudo",     "P.",  "Crudo"),
+    ("se-001", "AAlmendral", "A",  "Almendral"),
+    ("se-002", "AParaiso",   "A",  "Paraiso"),
+    ("se-003", "ASalazar",   "A",  "Salazar"),
+    ("se-004", "DRamos",     "D",  "Ramos"),
+    ("se-005", "KPura",      "K",  "Pura"),
+    ("se-006", "SLait",      "S",  "Lait"),
+    ("se-007", "PCrudo",     "P",  "Crudo"),
 ]
 BY_SHORT = {short: uid for uid, short, _, _ in ENUMS}
 
@@ -202,9 +204,11 @@ for uid, short, first, last in ENUMS:
         "first": first, "last": last,
     })
 
+# NO HEADER ROW. CSWeb parsed our header as a user record
+# ("Invalid Role Type: user role", line 1). Emitting headerless removes the
+# ambiguity entirely -- import with the header-row checkbox UNTICKED.
 with (HERE / "pretest-users.csv").open("w", newline="", encoding="utf-8") as f:
     w = csv.writer(f)
-    w.writerow(["username", "first name", "last name", "user role", "password", "email", "phone"])
     for c in creds:
         w.writerow([c["username"], c["first"], c["last"], "Field Sync", c["csweb_pw"], "", ""])
 
