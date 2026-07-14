@@ -57,7 +57,25 @@ Notes:
 ## 3. Account roster — username convention + headcount
 
 - **No shared logins** — one named account per person (Privacy Plan §6.3).
-- **Username = the field ID** captured in the instruments (`INTERVIEWER_ID` / supervisor ID), so CSWeb identity ↔ case provenance line up for audit. Convention:
+- **Username = the field ID.** The convention below is unchanged, but its stated basis was wrong.
+
+> [!warning] Corrected 2026-07-14 — the instruments contain NO field ID
+> This line used to read "the field ID **captured in the instruments** (`INTERVIEWER_ID` /
+> supervisor ID)". `INTERVIEWER_ID` was **deleted from F1/F3/F4 on 2026-06-12** — the paper Field
+> Control form has an *Enumerator's Name*, not an ID, and the instruments follow the paper form.
+>
+> What the instruments actually capture is `ENUMERATOR_S_NAME` / `SURVEY_TEAM_LEADER_S_NAME` —
+> **free text, 50 chars**. A name is not an identifier: two people can share one, and one person
+> can type theirs three ways. So CSWeb identity does **not** currently line up with case
+> provenance via any in-instrument key, and any audit or per-enumerator metric that joins on the
+> typed name is unreliable at scale.
+>
+> The `se-001` / `fs-01` usernames below remain the right convention — they are just **assigned by
+> CSWeb**, not read out of the questionnaire. Closing the provenance gap means keying on the CSWeb
+> **sync username** (server-side, already recorded per case) — NOT re-adding a field to the
+> instruments, which would reopen a closed decision. Open item; see the enumerator-identity note.
+
+  Convention:
   - Enumerators: `se-001` … `se-NNN`
   - Field Supervisors: `fs-01` … `fs-NN`  · Cluster RAs: `ra-01` … `ra-NN`
   - Office: `dm-<surname>` (Data Manager), `adm-<surname>` (Account Admin), `root-<surname>` (Server Admin)
