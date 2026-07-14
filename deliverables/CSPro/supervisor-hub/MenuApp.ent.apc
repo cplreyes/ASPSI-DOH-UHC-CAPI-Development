@@ -37,7 +37,14 @@ function launch_instrument(string pffPath)
     .../csentry/<App>/; the running menu lives in .../csentry/LoginApp/, so the instrument
     is "../<App>/<App>.pff" and OnExit back is "../LoginApp/MenuApp.pff". (C1-proven; the
     instruments are launched UNMODIFIED — D6.) }
-  instr_pff.load(pffPath);
+  { If the instrument app is NOT installed, .load() fails and CSEntry shows a bare
+    "The Pff does not exist" - which tells a field enumerator nothing and looks like
+    the hub is broken. The hub is only a LAUNCHER: it can open an instrument only if
+    that instrument was installed as its own app from CSWeb. Say so. }
+  if not instr_pff.load(pffPath) then
+    errmsg(1016, pffPath);
+    exit;
+  endif;
   instr_pff.setProperty("OnExit", "../LoginApp/MenuApp.pff");
   instr_pff.exec();
 end;
@@ -262,10 +269,10 @@ preproc
   string dopt;
   dopt = '{"width":380,"height":600,"resizable":false,"keyboard":0}';
   if strip(m_role) = "supervisor" then
-    menuJson = concat('{"title":"', strip(m_op), ' - Supervisor","ver":"Hub v1.1.3 (2026-07-15)","groups":[{"header":"ASSIGNMENTS","items":[{"label":"Assign Enumeration Area","action":"assign"}]},{"header":"COLLECT & RELAY","items', '":[{"label":"Collect Interviews from Enumerators","action":"collect"},{"label":"Relay Collected Interviews to CSWeb","action":"relay"}]},{"header":"REVIEW & REPORTS","items":[{"lab', 'el":"Survey Interview - view report","action":"report_sup"},{"label":"View EA on Map","action":"map"},{"label":"Conduct/Open F1 - Facility Head","action":"open_f1"},{"label":"Condu', 'ct/Open F3 - Patient","action":"open_f3"},{"label":"Conduct/Open F4 - Household","action":"open_f4"}]},{"header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
+    menuJson = concat('{"title":"', strip(m_op), ' - Supervisor","ver":"Hub v1.1.4 (2026-07-15)","groups":[{"header":"ASSIGNMENTS","items":[{"label":"Assign Enumeration Area","action":"assign"}]},{"header":"COLLECT & RELAY","items', '":[{"label":"Collect Interviews from Enumerators","action":"collect"},{"label":"Relay Collected Interviews to CSWeb","action":"relay"}]},{"header":"REVIEW & REPORTS","items":[{"lab', 'el":"Survey Interview - view report","action":"report_sup"},{"label":"View EA on Map","action":"map"},{"label":"Conduct/Open F1 - Facility Head","action":"open_f1"},{"label":"Condu', 'ct/Open F3 - Patient","action":"open_f3"},{"label":"Conduct/Open F4 - Household","action":"open_f4"}]},{"header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
     res = htmldialog("menu.html", inputData := menuJson, displayOptions := dopt);
   elseif strip(m_role) = "enumerator" then
-    menuJson = concat('{"title":"', strip(m_op), ' - Enumerator","ver":"Hub v1.1.3 (2026-07-15)","groups":[{"header":"ASSIGNMENT","items":[{"label":"Receive Assigned Data","action":"receive"}]},{"header":"INTERVIEWS","items":[{"la', 'bel":"Conduct F1 - Facility Head Interview","action":"open_f1"},{"label":"Conduct F3 - Patient Interview","action":"open_f3"},{"label":"Conduct F4 - Household Interview","action":"', 'open_f4"},{"label":"Send My Interviews to Supervisor","action":"send"}]},{"header":"REPORTS","items":[{"label":"View EA on Map","action":"map"},{"label":"View my report","action":"', 'report_enum"}]},{"header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
+    menuJson = concat('{"title":"', strip(m_op), ' - Enumerator","ver":"Hub v1.1.4 (2026-07-15)","groups":[{"header":"ASSIGNMENT","items":[{"label":"Receive Assigned Data","action":"receive"}]},{"header":"INTERVIEWS","items":[{"la', 'bel":"Conduct F1 - Facility Head Interview","action":"open_f1"},{"label":"Conduct F3 - Patient Interview","action":"open_f3"},{"label":"Conduct F4 - Household Interview","action":"', 'open_f4"},{"label":"Send My Interviews to Supervisor","action":"send"}]},{"header":"REPORTS","items":[{"label":"View EA on Map","action":"map"},{"label":"View my report","action":"', 'report_enum"}]},{"header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
     res = htmldialog("menu.html", inputData := menuJson, displayOptions := dopt);
   else
     errmsg(1015);

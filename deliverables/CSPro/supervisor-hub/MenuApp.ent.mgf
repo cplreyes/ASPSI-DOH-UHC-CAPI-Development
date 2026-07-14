@@ -16,3 +16,4 @@ Language = EN
 1013 ASSIGN EA: starting the Bluetooth server to publish assignments. Make sure Bluetooth is ON on both tablets. Keep this screen open; the enumerator now runs 'Receive Assigned Data'. Serves one enumerator per connection - re-select this item for the next enumerator.
 1014 ASSIGN EA: an enumerator connected and pulled their assignment.
 1015 No role found from login. Close and sign in again via LoginApp.
+1016 That survey app is not installed on this tablet (%s). The hub only OPENS a questionnaire - it does not contain one. In CSEntry: Add Application, CSWeb server, and download FacilityHeadSurvey, PatientSurvey and HouseholdSurvey too. Then sign in again.

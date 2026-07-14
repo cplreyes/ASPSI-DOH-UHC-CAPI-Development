@@ -597,7 +597,14 @@ function launch_instrument(string pffPath)
     .../csentry/<App>/; the running menu lives in .../csentry/LoginApp/, so the instrument
     is "../<App>/<App>.pff" and OnExit back is "../LoginApp/MenuApp.pff". (C1-proven; the
     instruments are launched UNMODIFIED — D6.) }
-  instr_pff.load(pffPath);
+  { If the instrument app is NOT installed, .load() fails and CSEntry shows a bare
+    "The Pff does not exist" - which tells a field enumerator nothing and looks like
+    the hub is broken. The hub is only a LAUNCHER: it can open an instrument only if
+    that instrument was installed as its own app from CSWeb. Say so. }
+  if not instr_pff.load(pffPath) then
+    errmsg("That survey app is not installed on this tablet (%s). The hub only OPENS a questionnaire - it does not contain one. In CSEntry: Add Application, CSWeb server, and download FacilityHeadSurvey, PatientSurvey and HouseholdSurvey too. Then sign in again.", pffPath);
+    exit;
+  endif;
   instr_pff.setProperty("OnExit", "../LoginApp/MenuApp.pff");
   instr_pff.exec();
 end;
