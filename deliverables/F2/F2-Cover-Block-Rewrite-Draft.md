@@ -206,7 +206,7 @@ The following will be captured automatically by the Google Form and stored in th
 **Rationale:**
 
 - The FIELD CONTROL block is a field-operations log for enumerator-administered work. None of it applies to self-admin. The facility is visited once at distribution; there's no "first visit / final visit" duality for an online form.
-- The AAPOR-style disposition codes (1-Completed, 2-Postponed, 3-Refused, 4-Incomplete) are still relevant for response-rate reporting, but they're **derived after the window closes** from the response Sheet, not entered by a respondent or enumerator. Apps Script computes them from the combination of form-open timestamp, consent choice, and submit timestamp.
+- The Result-of-Visit disposition codes (1-Completed, 2-Postponed, 3-Refused, 4-Incomplete — the printed F1 Field Control codes) are still relevant for response-rate reporting, but they're **derived after the window closes** from the response store, not entered by a respondent or enumerator. The backend computes them from the combination of form-open timestamp, consent choice, and submit timestamp.
 - `Survey Team Leader's Name` / `Field Validated by` / `Field Edited by` / `Total number of visits` have no analogue in a self-admin Google Form and should be deleted outright.
 
 ```mermaid

@@ -134,24 +134,21 @@ ENUM_RESULT_OPTIONS_F4 = [          # F4 Household
 ]
 ENUM_RESULT_OPTIONS = ENUM_RESULT_OPTIONS_F1   # default / back-compat
 
-# AAPOR Standard Definitions 10th ed. (2023) — Final Disposition Codes
-# adapted for in-person CAPI health surveys. 3-digit numeric (zero-filled)
-# maps AAPOR decimals to integers (×100). The "In Progress" (000) sentinel
-# is ASPSI-internal — set at case start by FIELD_CONTROL.preproc, rewritten
-# to the final code on the CLOSING form.
-AAPOR_DISPOSITION_OPTIONS = [
-    ("000 — In Progress (initial)",                       "000"),
-    ("110 — Complete interview",                          "110"),
-    ("120 — Partial interview / break-off",               "120"),
-    ("210 — Refusal — respondent",                        "210"),
-    ("211 — Refusal — gatekeeper / household",            "211"),
-    ("220 — Non-contact — respondent unavailable",        "220"),
-    ("230 — Other eligible non-interview",                "230"),
-    ("310 — Unknown eligibility — facility/household",    "310"),
-    ("320 — Unknown eligibility — respondent",            "320"),
-    ("410 — Not eligible — out of sample / ineligible",   "410"),
-    ("450 — Not eligible — other",                        "450"),
-]
+# NOTE (2026-07-14) — an AAPOR_DISPOSITION_OPTIONS constant lived here from 2026-04-22 until
+# today. AAPOR (the survey-research disposition taxonomy) was never requested by ASPSI or DOH,
+# is not their vocabulary, and was not on the April-20 paper Field Control form. The whole
+# case-start block it belonged to (SURVEY_CODE, DATE_STARTED, TIME_STARTED, INTERVIEWER_ID,
+# AAPOR_DISPOSITION, CONSENT_GIVEN) was removed from F1/F3/F4 on 2026-06-12; the constant was
+# left behind as dead code and is now deleted with it. Do not reintroduce it.
+#
+# The real dispositions are the paper ones, defined above:
+#   CASE_DISPOSITION            0 In progress · 1 Completed · 2 Partial/not completed
+#   ENUM_RESULT_FIRST/FINAL_VISIT   ENUM_RESULT_OPTIONS_F1 / _F3 / _F4  ("Result of Visit")
+#
+# Known consequence, deliberately NOT papered over: F3 and F4 have no doorstep-refusal or
+# non-contact code (only "Withdraw Participation/Consent", a mid-interview event), so a
+# replaced/never-started unit leaves no trace in CAPI and replacement counts cannot be derived.
+# Closing that is an ASPSI/DOH decision about the paper form, not a code change.
 
 
 # ============================================================

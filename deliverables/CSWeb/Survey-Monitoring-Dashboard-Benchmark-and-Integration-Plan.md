@@ -8,6 +8,24 @@ benchmark_target: "Google Data Studio 'Survey Monitoring Dashboard' (link shared
 integrates_into: [csweb-dashboard-gen.py (dashboard.html), csweb-map-gen.py (map.html)]
 ---
 
+> ## ⚠ SUPERSEDED — 2026-07-14. Do not plan from this document.
+>
+> Its §0 access caveat was honest: the live Data Studio could not be opened, so the benchmark
+> below was written against a *generic* survey-monitoring capability set, not the real report.
+> The Data Studio (**SAAD Evaluation Project**) has since been opened and read directly. This
+> document has been verified **wrong three times**:
+>
+> 1. **Productivity** — listed `⛔ (needs interviewer_id)`. False. `FIELD_CONTROL.ENUMERATOR_S_NAME`
+>    was already captured in all three instruments. Panel built 2026-07-14, cost one SQL column.
+> 2. **Choropleth** — listed as missing. It was already **built and live** (Phase 2, 2026-07-07).
+> 3. **AAPOR-style disposition rates** — proposed as a target. AAPOR was never an ASPSI/DOH
+>    requirement, and the underlying field was removed from the instruments on 2026-06-12.
+>
+> **What the real benchmark actually needs** (from reading it): Field Supervisor navigation
+> (built 2026-07-14) and a per-enumerator **replacement count** — which is genuinely NOT
+> capturable today; see `codebook.md` §12. Everything else, our dashboard already exceeds.
+
+
 # Survey Monitoring Dashboard — Benchmark & Integration Plan
 
 ## 0. Access caveat (read first)
@@ -47,7 +65,7 @@ Rating: ✅ have it · 🟡 partial · ⛔ missing.
 | B | **Coverage vs. target** — completed ÷ sample target, per area/facility | ⛔ counts only, **no target** | ⛔ points only, no coverage shading |
 | C | **Completion table** — expected vs landed by area/facility (STL reconciliation) | 🟡 counts by area (views), **no expected column** | — |
 | D | **Submissions over time** — daily/cumulative trend by instrument | ⛔ current snapshot only | — |
-| E | **Response / disposition rates** — AAPOR-style completed/partial/refused/non-contact | 🟡 Completed/Partial doughnut; no full disposition | — |
+| E | **Response / disposition rates** — completed/partial/refused/non-contact | 🟡 Completed/Partial doughnut; no full disposition | — |
 | F | **Productivity** — cases per enumerator / team / day | ⛔ (needs `interviewer_id`) | ⛔ (no interviewer track) |
 | G | **Geographic coverage** — map of cases + area shading (choropleth) | — | 🟡 **points yes**, choropleth **no** |
 | H | **Data-quality / anomaly flags** — bad GPS, duplicates, outliers, stuck cases | 🟡 thin (status only) | ✅ strong (spatial QA v2/v3) |
@@ -96,7 +114,7 @@ Buildable today from the breakout DBs alone:
 - **Submissions-over-time line** (D): daily + cumulative by instrument (Chart.js line), from
   `date_first_visited*`.
 - **Disposition/result bars** (E): full Result-of-Visit breakdown (already a `csweb_reports`
-  view for F1; add F3/F4) — moves us from Completed/Partial toward AAPOR-style rates.
+  view for F1; add F3/F4) — moves us from Completed/Partial toward fuller disposition rates.
 - **Freshness stamp** (J) on both surfaces.
 - *Effort: ~1 focused build; all data present.*
 

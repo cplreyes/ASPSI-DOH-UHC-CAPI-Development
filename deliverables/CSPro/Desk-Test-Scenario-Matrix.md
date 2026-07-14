@@ -141,7 +141,7 @@ filling it then setting `CONSENT_GIVEN=2` fires the exact logic: errmsg "Respond
 ## F1.B Consent & terminators
 | ID | Setup → Input | Expected | Result | Shot |
 |---|---|---|---|---|
-| F1-DT-02 | `CONSENT_GIVEN = No(2)` | `T` — `ENUM_RESULT_FINAL_VISIT=4` (Refused), msg, `endlevel` (interview ends) | | |
+| F1-DT-02 | `BREAKOFF = Respondent withdrew (2)` at case start | `T` — `ENUM_RESULT_FINAL_VISIT=3` (Refused), `CASE_DISPOSITION=2` (Partial / not completed), msg, `endlevel` (interview ends) | | |
 | F1-DT-03 | Tenure: `Q5_YEARS_AT_FACILITY=0`, `Q5_MONTHS_AT_FACILITY=3` (<6 mo) | `T` — "≥6 months required", coded Refused/Incomplete, `endlevel` | | |
 
 ## F1.C Range & cross-field validations
@@ -197,7 +197,7 @@ filling it then setting `CONSENT_GIVEN=2` fires the exact logic: errmsg "Respond
 | ID | Setup → Input | Expected | Result | Shot |
 |---|---|---|---|---|
 | F3-DT-01 | Valid case start → consent Yes → minimal valid path to end | Case completes + saved | | |
-| F3-DT-02 | `CONSENT_GIVEN = No(2)` | `T` — `ENUM_RESULT_FIRST_VISIT=4`, `endgroup` | | |
+| F3-DT-02 | `BREAKOFF = Respondent withdrew (2)` at case start | `T` — `ENUM_RESULT_FINAL_VISIT=6` (Withdraw Participation/Consent), `CASE_DISPOSITION=2`, `endlevel` | | |
 
 ## F3.B Signature branch — OP/IP routing
 | ID | Setup → Input | Expected | Result | Shot |
@@ -236,7 +236,7 @@ filling it then setting `CONSENT_GIVEN=2` fires the exact logic: errmsg "Respond
 | ID | Setup → Input | Expected | Result | Shot |
 |---|---|---|---|---|
 | F4-DT-01 | Valid start → consent Yes → 1-member roster → minimal path to end | Case completes + saved | | |
-| F4-DT-02 | `CONSENT_GIVEN = No(2)` | `T` — `endgroup` | | |
+| F4-DT-02 | `BREAKOFF = Respondent withdrew (2)` at case start | `T` — `ENUM_RESULT_FINAL_VISIT=4` (Withdraw Participation/Consent), `CASE_DISPOSITION=2`, `endlevel` | | |
 
 ## F4.B Signature engine — household roster (C_HOUSEHOLD_ROSTER, max 20)
 | ID | Setup → Input | Expected | Result | Shot |
@@ -372,11 +372,13 @@ pipeline). `LANGUAGE_USED=getlanguage()` records the active language at case sta
 >   date-typed arithmetic — risk of a wrong YYYYMMDD calc); Q98-total↔Q97 ("warn if wildly different" — threshold
 >   undefined in spec); Q113-total↔Q107-OOP (needs the spec's explicit OOP-row set across the 13-row matrix).
 >   The HARD "∈ value set" / "required" rules are already enforced by CSEntry at entry (dcf value sets).
-> 2. **Refusal disposition code does not persist on F3/F4.** The consent proc sets `ENUM_RESULT_FIRST_VISIT=4`
->    (Refused), but that item is **off-form** in F3/F4, so the logic assignment did not write (saved `None`). The
->    refusal IS still captured via `consent_given=2` (+ `AAPOR_DISPOSITION`), so analysis can identify refusals, but
->    the redundant disposition code is blank. (F1 persists it because the result-of-visit fields are *on* its form.)
->    Fix options: place the result item on the field-control form, or set the AAPOR code instead.
+> 2. ~~**Refusal disposition code does not persist on F3/F4.**~~ **SUPERSEDED 2026-06-12.** The finding assumed the
+>    `CONSENT_GIVEN` / `AAPOR_DISPOSITION` case-control block; that whole block was **removed on 2026-06-12** (not on
+>    the April-20 paper Field Control form). Refusal / withdrawal is now recorded **only** through Result of Visit
+>    (`ENUM_RESULT_FIRST_VISIT` / `ENUM_RESULT_FINAL_VISIT` — F1 `3 = Refused`; F3 `6` / F4 `4 = Withdraw
+>    Participation/Consent`), backed by `BREAKOFF` and the auto-written `CASE_DISPOSITION` (0 In progress /
+>    1 Completed / 2 Partial / not completed). The underlying persistence bug is fixed: the Result-of-Visit items are
+>    now **on-form** in F1, F3 and F4, so the logic assignment writes and survives save.
 > 3. **F3-DT-06 threshold mismatch:** logic warns at HH size `>15`; the matrix row says ">10". Reconcile to spec.
 > 4. **Needs a field/tablet pass (not efficiently desktop-automatable):** full happy-path content walks (DT-01 each),
 >    **F4 roster occurrence flow DT-03…DT-10 at runtime** (the apc flags this as "the riskiest part untested"),

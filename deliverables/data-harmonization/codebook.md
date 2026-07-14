@@ -1,7 +1,7 @@
 ---
 project: UHC Survey Year 2 — CAPI Development
 artifact: Shared Codebook (cross-instrument harmonization spec)
-version: 0.6 (draft, 2026-07-03)
+version: 0.7 (draft, 2026-07-14)
 status: draft
 owners: Carl Patrick L. Reyes (data programmer)
 covers: F1 Facility Head, F2 Healthcare Worker (PWA), F3 Patient, F4 Household
@@ -319,44 +319,73 @@ F3 and F4 already use identical codes — passthrough. F1 / F2 do not collect em
 
 ## 12. Disposition / response status
 
-**Canonical encoding** — AAPOR 3-digit codes:
+> **Corrected 2026-07-14.** Earlier versions of this section (v0.2–v0.4) defined the canonical
+> encoding as **AAPOR 3-digit codes** and stated that F1/F3/F4 carried an `AAPOR_DISPOSITION`
+> item in `FIELD_CONTROL` — "✓ verified 2026-04-25". That was true when written and became
+> false on **2026-06-12**, when the whole case-start block (`SURVEY_CODE`, `DATE_STARTED`,
+> `TIME_STARTED`, `INTERVIEWER_ID`, `AAPOR_DISPOSITION`, `CONSENT_GIVEN`) was removed from all
+> three instruments as **not on the April-20 paper Field Control form**. AAPOR was never
+> requested by ASPSI or DOH and is not their vocabulary; it is not being reinstated here, and
+> it has deliberately **not** been replaced with a different invented taxonomy.
+>
+> The canonical encoding below is now simply **what the instruments actually capture**.
+
+**Canonical encoding** — the paper Field Control fields, verbatim.
+
+`case_disposition` (from `FIELD_CONTROL.CASE_DISPOSITION`, numeric, length 1) — the only code
+that is common to all three CAPI instruments and therefore the only safe cross-instrument key:
 
 | Code | Label |
 |---|---|
-| `000` | In progress |
-| `110` | Complete |
-| `120` | Partial / break-off |
-| `210` | Refusal — respondent |
-| `211` | Refusal — gatekeeper / household |
-| `220` | Non-contact |
-| `230` | Other eligible non-interview |
-| `310` | Unknown eligibility — facility / household |
-| `320` | Unknown eligibility — respondent |
-| `410` | Not eligible |
-| `450` | Other not eligible |
+| `0` | In progress |
+| `1` | Completed |
+| `2` | Partial / not completed |
+
+`result_of_visit` (from `FIELD_CONTROL.ENUM_RESULT_FIRST_VISIT` / `ENUM_RESULT_FINAL_VISIT`) —
+**instrument-specific and NOT harmonised**, because the paper forms genuinely differ. Do not
+recode across instruments without ASPSI sign-off:
+
+| Instrument | Value set (verbatim) |
+|---|---|
+| F1 | `1` Completed · `2` Postponed · `3` Refused · `4` Incomplete |
+| F3 | `1` Completed · `2` Completed at the Hospital · `3` Postponed · `4` Incomplete · `5` Completed at Home · `6` Withdraw Participation/Consent |
+| F4 | `1` Completed · `2` Postponed · `3` Incomplete · `4` Withdraw Participation/Consent |
 
 **Per-instrument source mapping**
 
 | Instrument | Source | Recode |
 |---|---|---|
-| F1 | `AAPOR_DISPOSITION` (FIELD_CONTROL) | passthrough |
-| F2 | not currently captured as a survey item — derive from joined distribution-list × IndexedDB-state × submission-row data (see derivation rule below) | apply derivation rule at ETL time |
-| F3 | `AAPOR_DISPOSITION` (FIELD_CONTROL) ✓ verified 2026-04-25 | passthrough |
-| F4 | `AAPOR_DISPOSITION` (FIELD_CONTROL) ✓ verified 2026-04-25 | passthrough |
+| F1 | `CASE_DISPOSITION` + `ENUM_RESULT_FIRST_VISIT` / `ENUM_RESULT_FINAL_VISIT` (FIELD_CONTROL) | passthrough |
+| F2 | not captured as a survey item — derive at ETL from the joined distribution-list × submission-row state (rule below) | derive |
+| F3 | `CASE_DISPOSITION` + `ENUM_RESULT_*` (FIELD_CONTROL) | passthrough |
+| F4 | `CASE_DISPOSITION` + `ENUM_RESULT_*` (FIELD_CONTROL) | passthrough |
 
-**Open item §15.D — RESOLVED 2026-04-25 (Carl-owned)**: ETL derivation rule for F2, applied at harmonization time over the joined `(distribution_list × submission_row)`:
+**F2 derivation rule** (F2 is self-administered; there is no enumerator and no visit):
 
-| Observed state | AAPOR code | Label |
+| Observed state | `case_disposition` | Note |
 |---|---|---|
-| Submission row exists, `status='synced'` | `110` | Complete |
-| Submission row exists, never reached `synced` (stuck >48h in `pending_sync` or `retry_scheduled`) | `120` | Partial / break-off — sync issue, not respondent issue, but treated as partial for analytical conservatism |
-| HCW in distribution list, draft exists in IndexedDB but never submitted, last update <24h | `000` | In progress |
-| HCW in distribution list, draft exists, last update 24h–7d | `230` | Other eligible non-interview (likely abandoned but within return-window) |
-| HCW in distribution list, draft exists, last update ≥7d | `220` | Non-contact / abandoned |
-| HCW in distribution list, no draft, no submission | `220` | Non-contact (never opened the form) |
-| Explicit refusal flag | `210` | Refusal — respondent (only available if §15.B is implemented; until then, refusals are indistinguishable from non-contact) |
+| Submission row exists, `status='stored'` | `1` Completed | |
+| Submission row exists, `status='refusal'` (consent declined, #825) | `2` Partial / not completed | F2 is the **only** instrument that records an explicit refusal |
+| Draft exists, never submitted, last update <24h | `0` In progress | |
+| Draft exists, last update ≥24h, or HCW enrolled with no draft | `2` Partial / not completed | cannot distinguish abandonment from non-contact — see the gap below |
 
-The "draft last update" timestamp is observable from the F2 admin dashboard's IndexedDB-replicated state, which we'll need to expose in the response sheet (small Apps Script change to record `draft_last_updated_at` on each interim submission attempt — call it §15.D.1 if scoped as a follow-up).
+### ⚠ Known gap — response rates and replacements are NOT derivable
+
+This is a limitation of the **instruments**, not of the ETL, and it should be stated plainly in
+any report rather than worked around:
+
+- **No non-contact code exists in any CAPI instrument.** There is no way to record "sampled unit
+  not found / not at home / vacant / ineligible".
+- **F3 and F4 have no doorstep-refusal code.** "Withdraw Participation/Consent" is a *mid-interview*
+  withdrawal, a different event. Only F1 has `Refused`.
+- The field protocol instructs enumerators **not to start a case** for an ineligible or replaced
+  unit (CAPI Manual §IX), so a replaced unit produces **no record at all**.
+
+Consequently: a true response rate (completed ÷ eligible contacted) cannot be computed, and the
+**number of replacements per enumerator cannot be counted or even estimated** — which removes the
+standard curbstoning check. Closing this requires a decision by ASPSI/DOH about the **paper Field
+Control form** (whether the enumerator can record a refusal / not-found outcome), not a code change.
+Do not manufacture a substitute figure.
 
 ---
 
@@ -429,7 +458,7 @@ The actual implementation lives in `deliverables/data-harmonization/etl/` (to be
 | # | Item | Resolution |
 |---|---|---|
 | **15.C** | Confirm F3/F4 explicit start/submit datetime fields | ✓ Verified — F3 and F4 dcfs both have `DATE_STARTED`, `TIME_STARTED`, `DATE_FIRST_VISITED`, `DATE_FINAL_VISIT`. Multi-visit semantics already supported. No new fields needed. |
-| **15.D** | F2 AAPOR derivation strategy | ✓ Defined ETL derivation rule over joined `(distribution_list × IndexedDB draft state × submission row)`. See §12 above for the full code-mapping table. Refusal capture deferred until §15.B is decided. |
+| **15.D** | F2 disposition derivation strategy (was: "F2 AAPOR derivation strategy" — AAPOR dropped 2026-07-14, never an ASPSI requirement) | ✓ Defined ETL derivation rule over joined `(distribution_list × IndexedDB draft state × submission row)`. See §12 above for the full code-mapping table. Refusal capture deferred until §15.B is decided. |
 | **15.E (F2 portion)** | F2 `survey_language` capture | ✓ Will ship as part of F2 v1.2.0 — `App.handleSubmit` auto-injects `useLocale()` value into submission payload; backend response sheet adds column. No ASPSI sign-off needed for F2's own field. |
 
 ### 15.1 Resolved 2026-06-03 (Carl build-decisions; ASPSI to confirm/ratify where noted)
@@ -468,6 +497,7 @@ Bump the `version` field at the top with every substantive change, and record th
 
 | Version | Date | Change |
 |---|---|---|
+| 0.7 | 2026-07-14 | **§12 Disposition corrected — AAPOR removed.** v0.2–v0.6 defined the canonical disposition encoding as **AAPOR 3-digit codes** and recorded `AAPOR_DISPOSITION` (FIELD_CONTROL) as a live passthrough field in F1/F3/F4, "✓ verified 2026-04-25". That verification was correct on the day; the field was **removed from all three instruments on 2026-06-12** (together with the rest of the unrequested case-start block: `SURVEY_CODE`, `DATE_STARTED`, `TIME_STARTED`, `INTERVIEWER_ID`, `CONSENT_GIVEN`) as **not on the April-20 paper Field Control form**, and the codebook was never updated — so §12 documented a variable that does not exist. AAPOR was never an ASPSI or DOH requirement and is not their vocabulary; it has been dropped rather than reinstated, and deliberately **not** swapped for another invented taxonomy. §12 now documents only what the instruments actually capture: `CASE_DISPOSITION` (0/1/2) as the sole cross-instrument key, plus the **unharmonised, instrument-specific** Result-of-Visit value sets. **New, explicit gap recorded in §12:** no CAPI instrument has a non-contact code, F3/F4 have no doorstep-refusal code, and the field protocol tells enumerators not to start a case for a replaced unit — so true response rates and replacement counts are **not derivable**, which removes the standard curbstoning check. Closing that is an ASPSI/DOH decision on the paper form, not a code change. |
 | 0.6 | 2026-07-03 | **F4 Section N expenditure matrices → Option-C rosters (LIVE, F4 v1.1.0 on CSWeb).** Every WHO/SHA recall block flattened from per-question flat triplets (`Q<n>_CONSUMED`/`_PURCHASED_PHP`/`_INKIND_PHP`) to fixed-occurrence **repeating-record rosters**; the flat `Q144_*`..`Q156_*` and `Q160_*`..`Q184_*` field names **no longer exist in the DCF**. Each roster row carries generic `N_<blk>_ITEM` (auto-filled with the paper item label, e.g. `"164. Telephone…"` — so the Q-number is preserved *in the stored label*), `N_<blk>_CONSUMED`, `N_<blk>_PURCHASED_PHP`, `N_<blk>_INKIND_PHP`. **Flat→roster occurrence crosswalk** (occurrence *k* ↔ retired `Q<n>`, position-based, `occ k = items_list[k-1]` in `generate_dcf.py`): `N_FOOD_ROSTER` (rec V) occ 1–13 ↔ Q144–Q156; `N_NF1M_ROSTER` (W, "last month") occ 1–8 ↔ Q160–Q167; `N_NF6M_ROSTER` (X, "6 months") occ 1–2 ↔ Q168–Q169; `N_NF12M_ROSTER` (Y, "12 months") occ 1–5 ↔ Q170–Q174; `N_H12M_ROSTER` (1) occ 1–2 ↔ Q175–Q176; `N_H6M_ROSTER` (3) occ 1–4 ↔ Q178–Q181; `N_H1M_ROSTER` (5) occ 1–2 ↔ Q183–Q184. **Still flat** (single columns, record P `N_HOUSEHOLD_EXPENDITURES`): `Q157_FOOD_SUBTOTAL_TOTAL_PHP`, `Q158_RESTAURANT_*`, `Q159_SMOKING_TOBACCO_*`; the health subtotals `Q177`/`Q182`/`Q185_*_TOTAL_PHP` are their own single-field records (letters 2/4/6), CAPI-computed over the adjacent roster (sum `_CONSUMED`=1 rows, exclude `-98`/`-99`). **Downstream impact** (same shape as the F3 v0.5 note): (a) column-discovery ETL (`etl/transform.py`, `extract_csweb.py`) is **UNAFFECTED** — the new roster child tables are dumped automatically; (b) **15.J OOP/CHE** now sums the F4 roster rows (see 15.J), not flat `Q<n>_*_PHP` columns (gone); (c) any analyst join to printed item numbers uses the crosswalk above (or reads the Q-number out of the stored `N_<blk>_ITEM` label). Source of truth = `deliverables/CSPro/F4/generate_dcf.py` / `generate_apc.py`. |
 | 0.1 | 2026-04-25 | Initial draft. Covers F1 / F2 / F3 / F4. Identifies 8 open items. Aligned to current spec/dcf state. |
 | 0.2 | 2026-04-25 | Corrections after deeper dcf grep: F3 + F4 dcfs DO have `CONSENT_GIVEN`, `AAPOR_DISPOSITION`, `DATE_STARTED`/`TIME_STARTED`, and `DATE_FIRST_VISITED`/`DATE_FINAL_VISIT` (initial v0.1 audit was overly pessimistic on these). 15.C closed. 15.D resolved with ETL derivation rule for F2 disposition. 15.E split into Carl-owned F2 portion (resolved — ships in v1.2.0) and ASPSI-owned F1/F3/F4 portion (pending). 15.B narrowed to F2 only (F3/F4 already capture consent). Open items shrunk from 8 to 6 (5 ASPSI-owned + 1 mixed Carl/ASPSI). Stakeholder-facing open-items doc created at `open-items-for-aspsi.md`. |

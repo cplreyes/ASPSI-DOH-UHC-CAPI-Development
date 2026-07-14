@@ -190,7 +190,7 @@ ASPSI CAPI Team · DOH UHC Survey Year 2
 - Respondent is the **facility head / OIC**.
 - Captures facility identity + the facility's UHC implementation answers.
 - PSGC cascade + facility GPS + one verification photo.
-- Disposition + AAPOR codes recorded (completed / partial / refused / ineligible / contact attempt).
+- **Result of Visit** recorded on the Field Control form — F1: Completed / Postponed / Refused / Incomplete (first visit and final visit are recorded separately), plus the case disposition (In progress / Completed / Partial).
 
 *Facilitator notes:* F1 is usually the first interview at a site and anchors the facility code that F3 links to.
 

@@ -31,7 +31,7 @@ The UHC Act monitoring lens, mapped to the four instruments:
 | **Awareness / KAP** | NBB/ZBB awareness (facility) + experience (patient); UHC knowledge | F1, F2, F3 |
 | **Quality / experience** | Patient satisfaction; referral-system function; HCW job satisfaction + retention | F1, F2, F3 |
 | **System readiness** | Accreditation status, capitation viability, HR challenges | F1 |
-| **Fieldwork integrity** | Coverage vs target, AAPOR response rates, data-quality flags, GPS spread | all four |
+| **Fieldwork integrity** | Coverage vs target, completion rate, data-quality flags, GPS spread | all four |
 
 ---
 
@@ -63,9 +63,10 @@ Build these as **BigQuery views** in `uhc_y2` so the BI tool binds to stable, do
 | **NBB awareness vs experience gap** | facility NBB-knowledge correct-rate (F1) − patient NBB-experienced-rate (F3) | F1 Q43 family, F3 |
 | **Patient satisfaction index** | mean/Top-2-box on F3 satisfaction items | `f3_patient` |
 | **HCW retention risk** | `% HCWs whose Q125 plan ≠ "stay/transfer-same-role"` (uses the R3-corrected Q125) | `f2_hcw` |
-| **AAPOR response rate** | `completed / (completed + partial + refused + non-contact + ...)` per the §12 disposition map | all instruments |
+| **Completion rate** | `completed / cases started` from `case_disposition` (§12) | all instruments |
+| ~~Response rate~~ | **NOT COMPUTABLE — do not ship.** A true response rate needs `completed / eligible contacted`, and no CAPI instrument records a non-contact; F3/F4 record no doorstep refusal; replaced units are never started and leave no row (§12 gap). Any "response rate" built from the data we hold would silently be a completion rate wearing the wrong label. Blocked on an ASPSI/DOH decision about the paper Field Control form. | — |
 
-> Each metric is a **view column or a Looker Studio calculated field**; CHE and AAPOR are the two that warrant materialized views (heavier logic, reused across pages).
+> Each metric is a **view column or a Looker Studio calculated field**; CHE is the one that warrants a materialized view (heavier logic, reused across pages).
 
 ---
 
@@ -78,7 +79,7 @@ Date range (`survey_date`) · Region → Province → City (drill, PSGC cascade)
 ## 5. Pages
 
 ### 5.1 Fieldwork Coverage & Quality *(operations — the live-monitoring view)*
-- **Scorecards:** total completed (by instrument), % of target, AAPOR response rate, On-Hold count, DLQ count (F2).
+- **Scorecards:** total completed (by instrument), % of target, completion rate, On-Hold count, DLQ count (F2). (No response-rate scorecard — see §12: not computable from the instruments as built.)
 - **Coverage map:** GPS points of completed cases by region/cluster (de-identified facility/household centroids only).
 - **Timeline:** submissions/day by instrument (sync-health proxy).
 - **Table:** completion by facility (expected vs landed) — mirrors the STL reconciliation routine.
@@ -124,7 +125,7 @@ Date range (`survey_date`) · Region → Province → City (drill, PSGC cascade)
 > **✅ Prototype delivered (2026-06-04, #177):** `uhc-y2-dashboard-prototype.html` — a **self-contained single-file** clickable dashboard (no server, no account, no external dependencies) implementing all six §5 pages with the §3.2 metrics over a deterministic synthetic `uhc_y2` sample. Looker Studio was **not** used (per decision) — the semantic layer is tool-agnostic, so the same §3 views drive Looker/Metabase/Tableau when the live store is ready. To go live, swap the in-file synthetic generator for the real BigQuery `uhc_y2` views (step 2).
 
 1. **Now (buildable):** create the §3 BigQuery views against a **dry-run `uhc_y2`** (the ETL spec's synthetic-fixtures output) → wire the BI tool → lay out §5 pages with the §3 metrics. This produces a clickable prototype on synthetic data. *(Delivered as the HTML prototype above.)*
-2. **On first synced data:** point the views at the real `uhc_y2`; validate the CHE + AAPOR logic against hand calcs.
+2. **On first synced data:** point the views at the real `uhc_y2`; validate the CHE logic against hand calcs.
 3. **Before sharing externally:** confirm §15.H/§15.G (enables §5.6 linkage) + apply cell-suppression.
 
 **Closes #177 once** the prototype is built on a (dry-run or real) store. The blueprint is the spec; it needs the ETL `etl/` package run at least once (etl-spec.md build-plan step) to populate `uhc_y2`.

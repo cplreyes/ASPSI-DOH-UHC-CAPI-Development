@@ -93,7 +93,7 @@ Everything here is buildable **today** from the breakout DBs alone. Ship this fi
    `date_first_visited*`. Respects the Visit-date and Instrument filters.
 3. **Disposition / Result-of-Visit bars**: full breakdown (not just Completed/Partial). F1
    already has a Result-of-Visit view; **add the equivalent for F3/F4** (via `gen-report-views.py`
-   if a view is cleaner). Moves us toward AAPOR-style rates.
+   if a view is cleaner). Moves us toward full disposition rates (bounded by the §12 codebook gap: no non-contact code, no F3/F4 refusal code).
 4. **Freshness stamp** ("Data as of <cron time>") on **both** dashboard and map.
 
 **Acceptance:** on a filtered view, the KPI strip, the time-trend line, and the disposition bars

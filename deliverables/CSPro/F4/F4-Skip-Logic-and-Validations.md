@@ -64,7 +64,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 
 ### Routing preamble (whole-instrument)
 
-- **Consent terminator.** `FIELD_CONTROL.CONSENT_GIVEN = No` at the top of the interview → terminate with `ENUM_RESULT_FIRST_VISIT = Withdraw Participation/Consent`. Entire questionnaire (A–Q) is suppressed.
+- **Break-off terminator.** `FIELD_CONTROL.BREAKOFF ≠ Continue` at the top of the interview → terminate; `ENUM_RESULT_FINAL_VISIT` is set from the break-off reason (2 Withdrew → `4 Withdraw Participation/Consent`; 3 Postponed → `2 Postponed`; 4 Stop-other → `3 Incomplete`) and `CASE_DISPOSITION = 2` (Partial / not completed). Entire questionnaire (A–Q) is suppressed. There is no `CONSENT_GIVEN` field — it was removed 2026-06-12.
 - **Respondent-is-HH-head gate (Q1).** Q1 captures whether the respondent is the household head. Per source, if the respondent is not the HH head, some items may still be asked but flagged; no hard skip — handle as SOFT validation in §3.1.
 - **HH-confinement gate (Q129, Section L).** Q129 = Yes → Section M (ZBB/MAIFIP/Bill) fully asked. Q129 = No → Section M items Q132–Q143 are skipped (ZBB/MAIFIP awareness still asked per printed form; bill-recall chain Q138–Q143 is the confinement-dependent part). See Section M table below for the precise split.
 - **Roster expansion (Section C).** After B is complete, enumerator enters the roster loop for `count = Q19_HH_SIZE_TOTAL` members. Section J (Health-Seeking) also loops over the same roster per source — see sanity finding #2.
@@ -73,7 +73,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 
 | Q | Condition | Skip to |
 |---|---|---|
-| — | `FIELD_CONTROL.CONSENT_GIVEN = No` | **Terminate interview** with `ENUM_RESULT_FIRST_VISIT = Withdraw Participation/Consent` |
+| — | `FIELD_CONTROL.BREAKOFF = Respondent withdrew (2)` | **Terminate interview** with `ENUM_RESULT_FINAL_VISIT = 4 (Withdraw Participation/Consent)` + `CASE_DISPOSITION = 2` |
 | Q1 IS_HH_HEAD | = No | **Continue to Q2** (SOFT warn to enumerator: "Respondent is not the HH head — confirm they are a household decision-maker per sampling protocol") |
 
 ### Section B — Respondent Profile
@@ -265,7 +265,8 @@ HARD = block save; SOFT = warn-and-confirm; GATE = display-only (items rendered 
 | `DATE_FIRST_VISITED ≤ DATE_FINAL_VISIT` | Temporal ordering | HARD |
 | `TOTAL_NUMBER_OF_VISITS` | `1 ≤ n ≤ 10` (warn if > 3) | HARD + SOFT |
 | `ENUM_RESULT_FIRST_VISIT`, `ENUM_RESULT_FINAL_VISIT` | Required, ∈ value set | HARD |
-| `CONSENT_GIVEN` | Required, ∈ {Yes, No}; if No → terminate | HARD |
+| `BREAKOFF` | Required; defaults to `1 — Continue interview`. If ≠ Continue → terminate; sets `ENUM_RESULT_FINAL_VISIT` (2 Withdrew → 4; 3 Postponed → 2; 4 Stop-other → 3 Incomplete) and `CASE_DISPOSITION = 2` | HARD |
+| `CASE_DISPOSITION` | Auto-written by logic, never typed: 0 In progress / 1 Completed / 2 Partial / not completed | — |
 | `HH_LISTING_NO` | Required, matches F3b listing form entry | HARD |
 | `REGION` → `PROVINCE_HUC` → `CITY_MUNICIPALITY` → `BARANGAY` | PSGC cascade enforced at pick-time by `PSGC-Cascade.apc` — each child's `onfocus` filters its value set to children of the chosen parent, so an inconsistent pair is unrepresentable | HARD — cascade enforces |
 | `HH_ADDRESS` | Required, non-blank | HARD |
@@ -633,14 +634,21 @@ preproc
   currentDay   = mod(currentYYYYMMDD, 100);
 ```
 
-### 4.2 Field Control + consent terminator
+### 4.2 Field Control — break-off terminator
+
+The `CONSENT_GIVEN` item was removed 2026-06-12 (not on the April-20 paper Field Control form). Early termination — including consent withdrawal — runs through `BREAKOFF` at case start.
 
 ```cspro
-PROC FIELD_CONTROL
+PROC BREAKOFF
 postproc
-  if CONSENT_GIVEN = 2 then           { 2 = No }
-    ENUM_RESULT_FIRST_VISIT = 5;      { Withdraw Participation/Consent — confirm code }
-    endgroup;                         { close interview; no data past here }
+  if not (BREAKOFF in 1, 2, 3, 4) then BREAKOFF = 1; endif;   { default "Continue" }
+
+  if BREAKOFF <> 1 then
+    if BREAKOFF = 2 then ENUM_RESULT_FINAL_VISIT = 4; endif;   { Withdraw Participation/Consent }
+    if BREAKOFF = 3 then ENUM_RESULT_FINAL_VISIT = 2; endif;   { Postponed }
+    if BREAKOFF = 4 then ENUM_RESULT_FINAL_VISIT = 3; endif;   { Incomplete }
+    CASE_DISPOSITION = 2;                                      { Partial / not completed }
+    endlevel;                                                  { close interview; no data past here }
   endif;
 ```
 
@@ -980,29 +988,9 @@ postproc
 
 ---
 
-### 4.12 Case-control preproc (SURVEY_CODE, DATE_STARTED, TIME_STARTED, AAPOR_DISPOSITION)
+### 4.12 Case-control preproc — REMOVED
 
-Added 2026-04-21 — same shape as F1 §4.17 and F3 §4.16. Five case-control items at the top of `FIELD_CONTROL`: `SURVEY_CODE` (literal "F4"), `INTERVIEWER_ID`, `DATE_STARTED`, `TIME_STARTED`, `AAPOR_DISPOSITION` (AAPOR 2023 value set).
-
-```
-PROC FIELD_CONTROL
-preproc
-  if visualvalue(SURVEY_CODE) = "" then
-    SURVEY_CODE       = "F4";
-    DATE_STARTED      = tonumber(sysdate("YYYYMMDD"));
-    TIME_STARTED      = tonumber(systime("HHMMSS"));
-    AAPOR_DISPOSITION = 0;                            { 000 = In Progress }
-  endif;
-
-PROC CONSENT_GIVEN
-postproc
-  if CONSENT_GIVEN = 2 then
-    AAPOR_DISPOSITION = 210;              { Refusal — respondent }
-    skip to AAPOR_DISPOSITION_FINAL;
-  endif;
-```
-
-See F1 §4.17 for full notes on AAPOR codes and transition rules.
+The case-control block (`SURVEY_CODE`, `DATE_STARTED`, `TIME_STARTED`, `INTERVIEWER_ID`, `AAPOR_DISPOSITION`, `AAPOR_DISPOSITION_FINAL`, `CONSENT_GIVEN`) and its preproc were **removed on 2026-06-12** — they were not on the April-20 paper Field Control form. Case outcome is carried by the real `FIELD_CONTROL` items instead: `ENUM_RESULT_FIRST_VISIT` / `ENUM_RESULT_FINAL_VISIT` (Result of Visit — 1 Completed / 2 Postponed / 3 Incomplete / 4 Withdraw Participation/Consent), `BREAKOFF`, and the auto-written `CASE_DISPOSITION` (0 In progress / 1 Completed / 2 Partial / not completed). There is no consent field — withdrawal is recorded as Result of Visit `4 — Withdraw Participation/Consent`.
 
 ---
 
