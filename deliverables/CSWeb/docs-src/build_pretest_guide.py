@@ -2,7 +2,13 @@
 so the page is native to the docs site and cannot drift from the template."""
 import pathlib, re
 
-src = pathlib.Path("hub-guide.html").read_text(encoding="utf-8")
+HERE = pathlib.Path(__file__).parent
+# The shell lives with the published site, not here; resolve it so this builds
+# from any working directory (it used to only work if run beside hub-guide.html).
+SHELL = HERE / ".." / "landing" / "docs" / "hub-guide.html"
+OUT = HERE / "pretest-guide.html"
+
+src = SHELL.resolve().read_text(encoding="utf-8")
 
 head = src[: src.index('<main id="main">')]
 foot = src[src.index("    </main>") :]
@@ -127,10 +133,17 @@ BODY = """
               who holds which login or which households.
             </p>
             <p>
-              For the household survey (F4) the pretest works <strong>Brgy. Mayondon, facility
-              <code>040341101</code></strong> &mdash; 20 households across six enumerators. Each enumerator gets a
-              contiguous block; use only your own.
+              What the app actually checks is the <strong>first 7 digits</strong>, which are the
+              city/municipality &mdash; <code>0403411</code> is Los Ba&ntilde;os, <code>0403402</code> is Bay. The rest
+              of the number identifies the facility or household. Each enumerator gets a
+              <strong>contiguous block</strong>; use only your own, so that two people can never open the same case.
             </p>
+            <div class="callout callout-warn">
+              <strong>Household survey (F4): the number does not set the barangay.</strong> It only carries the
+              municipality. After the case opens you must still <strong>pick the barangay yourself</strong> from the
+              dropdown &mdash; for Day 1 that is <strong>Mayondon</strong>. The case key will look perfectly valid if you
+              pick the wrong one, so check it.
+            </div>
             <div class="callout">
               If a Questionnaire Number is rejected at the first field, do <strong>not</strong> improvise another one.
               Check it against your sheet, and if it still fails, tell your STL &mdash; a rejected number usually means
@@ -139,7 +152,63 @@ BODY = """
           </section>
 
           <section>
-            <h2 class="sec">4. Consent <em>(enumerators)</em></h2>
+            <h2 class="sec">4. Where and when &mdash; and which app <em>(everyone)</em></h2>
+            <p>
+              Four different instruments are in the field this round. <strong>Which app you open depends on who you are
+              interviewing</strong>, not on where you are:
+            </p>
+            <table>
+              <thead>
+                <tr><th>Respondent</th><th>App to open</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Facility Head</td><td><strong>F1</strong> &mdash; Facility Head Survey (CSEntry)</td></tr>
+                <tr><td>Healthcare Worker (HCW)</td><td><strong>F2</strong> &mdash; the <em>web app</em>, not CSEntry. No Questionnaire Number.</td></tr>
+                <tr><td>Inpatient / Outpatient</td><td><strong>F3</strong> &mdash; Patient Survey (CSEntry)</td></tr>
+                <tr><td>Household</td><td><strong>F4</strong> &mdash; Household Survey (CSEntry)</td></tr>
+              </tbody>
+            </table>
+            <table>
+              <thead>
+                <tr><th>Day</th><th>Site</th><th>Instruments</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Wed 15 Jul</strong></td>
+                  <td>Brgy. Mayondon, Los Ba&ntilde;os</td>
+                  <td>F4 &mdash; 20 households <em>(continues 17 Jul if the quota is not met)</em></td>
+                </tr>
+                <tr>
+                  <td><strong>Thu 16&ndash;17 Jul</strong></td>
+                  <td>Laguna Provincial Hospital &ndash; Bay <em>(Bay, Laguna)</em></td>
+                  <td>F1 facility head · F2 HCW · F3 &mdash; 3 inpatient, 2 outpatient</td>
+                </tr>
+                <tr>
+                  <td><strong>Fri 17 Jul</strong></td>
+                  <td>Los Ba&ntilde;os Rural Health Unit</td>
+                  <td>F1 facility head · F2 HCW · F3 &mdash; 5 outpatient</td>
+                </tr>
+                <tr>
+                  <td><strong>Mon 20 Jul</strong></td>
+                  <td>Brgy. Mayondon, Los Ba&ntilde;os</td>
+                  <td>F4 &mdash; target set on the day</td>
+                </tr>
+                <tr>
+                  <td><em>TBD</em></td>
+                  <td>Los Ba&ntilde;os Doctors Hospital · St. Jude Hospital</td>
+                  <td>F1 facility head · F2 HCW · F3 patients</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="callout">
+              <strong>Bay is a different municipality from Los Ba&ntilde;os.</strong> Its Questionnaire Numbers start
+              <code>0403402</code>, not <code>0403411</code>. If you are at Laguna Provincial Hospital and your number
+              starts <code>0403411</code>, it is the wrong number &mdash; stop and tell your STL before you enter it.
+            </div>
+          </section>
+
+          <section>
+            <h2 class="sec">5. Consent <em>(enumerators)</em></h2>
             <p>
               Consent is <strong>read aloud from the printed SJREB sheet</strong> (Annex&nbsp;H), in the language the
               respondent understands. <strong>There is no consent screen in the app</strong> &mdash; do not go looking for
@@ -149,7 +218,7 @@ BODY = """
           </section>
 
           <section>
-            <h2 class="sec">5. Supervisors / STLs</h2>
+            <h2 class="sec">6. Supervisors / STLs</h2>
             <ul>
               <li><strong>Before 08:00:</strong> confirm <em>every</em> tablet in your team has removed and re-added the
                 app, and that the version matches step&nbsp;1. This is the single most likely thing to go wrong today.</li>
@@ -168,7 +237,7 @@ BODY = """
           </section>
 
           <section>
-            <h2 class="sec">6. Data Manager &mdash; CSWeb</h2>
+            <h2 class="sec">7. Data Manager &mdash; CSWeb</h2>
             <ul>
               <li><strong>Sync Dashboard:</strong>
                 <a href="https://csweb.asiansocial.org/docs/dashboard.html">csweb.asiansocial.org/docs/dashboard.html</a>
@@ -187,7 +256,7 @@ BODY = """
           </section>
 
           <section>
-            <h2 class="sec">7. F2 Admin &mdash; Healthcare-Worker PWA</h2>
+            <h2 class="sec">8. F2 Admin &mdash; Healthcare-Worker PWA</h2>
             <ul>
               <li>Portal: <a href="https://uhc-hcw.asiansocial.org/admin">uhc-hcw.asiansocial.org/admin</a></li>
               <li>The F2 database was <strong>reset to a clean state</strong> on 14 July: one bootstrap administrator, no
@@ -199,7 +268,7 @@ BODY = """
           </section>
 
           <section>
-            <h2 class="sec">8. How to report a finding <em>(everyone)</em></h2>
+            <h2 class="sec">9. How to report a finding <em>(everyone)</em></h2>
             <p>
               Everything goes on the pretest tracker:
               <a href="https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/839"><strong>issue #839</strong></a>.
@@ -245,4 +314,4 @@ BODY = """
 """
 
 pathlib.Path("pretest-guide.html").write_text(head + '<main id="main">\n' + BODY + foot, encoding="utf-8")
-print("wrote pretest-guide.html (%d bytes)" % pathlib.Path("pretest-guide.html").stat().st_size)
+print("wrote %s (%d bytes)" % (OUT, OUT.stat().st_size))
