@@ -63,16 +63,24 @@ SECTIONS = [
 F1_OWN = "CASE bp.q7_ownership WHEN '1' THEN 'Public' WHEN '2' THEN 'Private' ELSE COALESCE(NULLIF(bp.q7_ownership,''),'(blank)') END"
 F1_SVC = ("CASE bp.q8_service_level WHEN '1' THEN 'Primary Care Facility' WHEN '2' THEN 'Level 1 Hospital'"
           " WHEN '3' THEN 'Level 2 Hospital' WHEN '4' THEN 'Level 3 Hospital' ELSE COALESCE(NULLIF(bp.q8_service_level,''),'(blank)') END")
-# F1 Result-of-Visit = enum_result_first_visit (verbatim value set, ENUM_RESULT_OPTIONS_F1)
-F1_RES = ("CASE fc.enum_result_first_visit WHEN '1' THEN 'Completed' WHEN '2' THEN 'Postponed'"
-          " WHEN '3' THEN 'Refused' WHEN '4' THEN 'Incomplete' ELSE COALESCE(NULLIF(fc.enum_result_first_visit,''),'(blank)') END")
+# F1 Result-of-Visit (verbatim value set, ENUM_RESULT_OPTIONS_F1).
+# Prefer the FINAL visit, fall back to the FIRST. This read used to be first-visit-only, which
+# was wrong for any early-ended case: PROC BREAKOFF writes ENUM_RESULT_FINAL_VISIT (never the
+# first), so a broken-off — and now a Replaced(5) — F1 case would never have surfaced here.
+# F3/F4 already read final_visit; this makes all three agree.
+F1_RESRAW = "COALESCE(NULLIF(fc.enum_result_final_visit,''),NULLIF(fc.enum_result_first_visit,''),'')"
+F1_RES = ("CASE %s WHEN '1' THEN 'Completed' WHEN '2' THEN 'Postponed'"
+          " WHEN '3' THEN 'Refused' WHEN '4' THEN 'Incomplete' WHEN '5' THEN 'Replaced'"
+          " ELSE COALESCE(NULLIF(%s,''),'(blank)') END" % (F1_RESRAW, F1_RESRAW))
 # F3/F4 disposition = enum_result_final_visit (set by the closing / BREAKOFF handler);
 # verbatim value sets ENUM_RESULT_OPTIONS_F3 / _F4 from cspro_helpers.py
 F3_RES = ("CASE fc.enum_result_final_visit WHEN '1' THEN 'Completed' WHEN '2' THEN 'Completed at the Hospital'"
           " WHEN '3' THEN 'Postponed' WHEN '4' THEN 'Incomplete' WHEN '5' THEN 'Completed at Home'"
-          " WHEN '6' THEN 'Withdraw Participation/Consent' ELSE COALESCE(NULLIF(fc.enum_result_final_visit,''),'(blank)') END")
+          " WHEN '6' THEN 'Withdraw Participation/Consent' WHEN '7' THEN 'Replaced'"
+          " ELSE COALESCE(NULLIF(fc.enum_result_final_visit,''),'(blank)') END")
 F4_RES = ("CASE fc.enum_result_final_visit WHEN '1' THEN 'Completed' WHEN '2' THEN 'Postponed'"
           " WHEN '3' THEN 'Incomplete' WHEN '4' THEN 'Withdraw Participation/Consent'"
+          " WHEN '5' THEN 'Replaced'"
           " ELSE COALESCE(NULLIF(fc.enum_result_final_visit,''),'(blank)') END")
 F1_CODE9 = ("CONCAT(LPAD(fc.region_code,2,'0'),LPAD(fc.province_huc_code,2,'0'),"
             "LPAD(fc.city_municipality_code,3,'0'),LPAD(fc.facility_no,2,'0'))")
@@ -97,40 +105,51 @@ ENUM = "COALESCE(NULLIF(fc.enumerator_s_name,''),'(unassigned)')"
 # benchmark navigates by Field Supervisor ("whose team is behind?"); this is that dimension.
 SUP = "COALESCE(NULLIF(fc.survey_team_leader_s_name,''),'(unassigned)')"
 
+# `repl` = 1 if this case is a REPLACEMENT — the sampled unit was never interviewed and a
+# substitute was drawn. Read off FIELD_CONTROL.BREAKOFF, whose 5/6/7 codes (refused at the
+# door / not found / ineligible) are IDENTICAL across F1/F3/F4 by design — that uniformity is
+# the whole reason we count on BREAKOFF rather than the per-instrument Result-of-Visit code
+# (Replaced is 5 in F1/F4 but 7 in F3, because the lists have different lengths).
+#
+# Postponed (BREAKOFF 3) is deliberately EXCLUDED: that unit gets revisited, not substituted.
+# Counting it would overstate the rate and blunt the signal this exists to give — a high
+# replacement rate for one enumerator is the standard curbstoning check (ASPSI, 2026-07-14).
+REPL = "CASE WHEN fc.breakoff IN ('5','6','7') THEN '1' ELSE '0' END"
+
 QUERIES = {
-    "f1": (["region", "province", "city", "facility", "ownership", "service_level", "result", "date", "status", "gps", "code9", "enumerator", "supervisor"],
+    "f1": (["region", "province", "city", "facility", "ownership", "service_level", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl"],
            "SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
            " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
            " COALESCE(NULLIF(fc.city_name,''),'(unknown)'),"
            " COALESCE(fn.name,'(unlabeled)'), %s, %s, %s,"
-           " COALESCE(CAST(fc.date_first_visited_the_facility AS CHAR),''), %s, %s, %s, %s, %s"
+           " COALESCE(CAST(fc.date_first_visited_the_facility AS CHAR),''), %s, %s, %s, %s, %s, %s"
            " FROM csweb_f1_breakout.`level-1` l"
            " JOIN csweb_f1_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
            " LEFT JOIN csweb_f1_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f1_breakout.b_facility_profile bp ON bp.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f1_breakout.rec_facility_capture g ON g.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_reports.facility_names fn ON fn.code9=%s"
-           % (F1_OWN, F1_SVC, F1_RES, STATUS, F1_GPS, F1_CODE9, ENUM, SUP, F1_CODE9)),
-    "f3": (["region", "patient_type", "sex", "result", "date", "status", "gps", "code9", "enumerator", "supervisor"],
+           % (F1_OWN, F1_SVC, F1_RES, STATUS, F1_GPS, F1_CODE9, ENUM, SUP, REPL, F1_CODE9)),
+    "f3": (["region", "patient_type", "sex", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl"],
            "SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
            " CASE fc.patient_type WHEN '1' THEN 'Outpatient' WHEN '2' THEN 'Inpatient' ELSE COALESCE(NULLIF(fc.patient_type,''),'(blank)') END,"
            " CASE bp.q7_sex WHEN '1' THEN 'Male' WHEN '2' THEN 'Female' ELSE COALESCE(NULLIF(bp.q7_sex,''),'(blank)') END,"
-           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s, %s"
+           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s, %s, %s"
            " FROM csweb_f3_breakout.`level-1` l"
            " JOIN csweb_f3_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
            " LEFT JOIN csweb_f3_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f3_breakout.b_patient_profile bp ON bp.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f3_breakout.rec_facility_capture g ON g.`level-1-id`=l.`level-1-id`"
-           % (F3_RES, STATUS, F3_GPS, ENUM, SUP)),
-    "f4": (["region", "province", "result", "date", "status", "gps", "code9", "enumerator", "supervisor"],
+           % (F3_RES, STATUS, F3_GPS, ENUM, SUP, REPL)),
+    "f4": (["region", "province", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl"],
            "SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
            " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
-           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s, %s"
+           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s, %s, %s"
            " FROM csweb_f4_breakout.`level-1` l"
            " JOIN csweb_f4_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
            " LEFT JOIN csweb_f4_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f4_breakout.household_geo_id g ON g.`level-1-id`=l.`level-1-id`"
-           % (F4_RES, STATUS, F4_GPS, ENUM, SUP)),
+           % (F4_RES, STATUS, F4_GPS, ENUM, SUP, REPL)),
 }
 
 
@@ -218,7 +237,7 @@ TEMPLATE = r"""<!doctype html>
   .filters select{font:14px system-ui;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;min-width:200px}
   .filters .reset{margin-left:auto;align-self:end;font:13px system-ui;padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer}
   .filters .reset:hover{background:var(--bg)}
-  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:6px}
+  .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:6px}
   .kpi{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--g);border-radius:12px;padding:14px 16px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
   .kpi .num{font-size:30px;font-weight:800;color:var(--ink);line-height:1}
   .kpi .lbl{color:var(--muted);font-size:12px;font-weight:600;margin-top:5px;text-transform:uppercase;letter-spacing:.03em}
@@ -264,6 +283,12 @@ TEMPLATE = r"""<!doctype html>
   /* a rate over a single active day is arithmetic, not a trend — de-emphasise it so it
      cannot be misread as strong performance (one busy day then silence outranks everyone) */
   .rate.lowconf{font-weight:400;color:var(--muted)}
+  /* replacement share: only flagged red once the denominator is big enough to mean something
+     (>=5 cases and >=30% replaced). The count alone is not comparable across enumerators —
+     a hard catchment legitimately produces more replacements than an easy one. */
+  .covtbl td.hot{color:var(--red);font-weight:700}
+  .covtbl .pct{font-weight:400;color:var(--muted);font-size:11px}
+  .covtbl td.hot .pct{color:var(--red)}
   .stale{color:#b7860b}
   @media(max-width:820px){.kpis{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.covbar{width:90px}}
 </style>
@@ -285,6 +310,7 @@ TEMPLATE = r"""<!doctype html>
     <div class="kpi ok"><div class="num" id="kCompleted">0</div><div class="lbl">Completed</div></div>
     <div class="kpi warn"><div class="num" id="kPartial">0</div><div class="lbl">Partial</div></div>
     <div class="kpi"><div class="num" id="kToday">0</div><div class="lbl">Visited today</div></div>
+    <div class="kpi warn"><div class="num" id="kRepl">0</div><div class="lbl">Replacements</div></div>
     <div class="kpi bad"><div class="num" id="kNogps">0</div><div class="lbl">No GPS fix</div></div>
   </div>
   <div class="freshness">Data as of <b id="fresh"></b> · auto-refreshes ~every 2 min · "today" = <span id="todayLbl"></span> (Manila)</div>
@@ -362,16 +388,17 @@ function agg(rows,field){
 function visInsts(inst){ return inst==='ALL' ? ['f1','f3','f4'] : [inst]; }
 // KPI strip — recomputes over every filtered, visible row
 function renderKpis(passOf){
-  let tot=0,comp=0,part=0,today=0,nogps=0;
+  let tot=0,comp=0,part=0,today=0,nogps=0,repl=0;
   visInsts(instSel.value).forEach(k=>{
     (P.data[k]||[]).forEach(r=>{ if(!passOf(r))return;
       tot++; if(r.status==='Completed')comp++; else if(r.status==='Partial')part++;
       if(P.today && r.date===P.today)today++;
       if(r.gps==='0'||r.gps===0)nogps++;
+      if(r.repl==='1')repl++;   // BREAKOFF 5/6/7 — sampled unit never interviewed, substitute drawn
     });
   });
   kTotal.textContent=tot; kCompleted.textContent=comp; kPartial.textContent=part;
-  kToday.textContent=today; kNogps.textContent=nogps;
+  kToday.textContent=today; kNogps.textContent=nogps; kRepl.textContent=repl;
 }
 // submissions-over-time — daily + cumulative across filtered, visible rows
 function renderTrend(passOf){
@@ -481,9 +508,10 @@ function renderProductivity(pass){
       const n=r.enumerator;
       if(!n||n==='(unassigned)'){unnamed++; return;}
       let o=m.get(n);
-      if(!o){o={name:n,cases:0,completed:0,partial:0,days:new Set(),last:'',mix:{},sups:{}}; m.set(n,o);}
+      if(!o){o={name:n,cases:0,completed:0,partial:0,repl:0,days:new Set(),last:'',mix:{},sups:{}}; m.set(n,o);}
       o.cases++;
       if(r.status==='Completed')o.completed++; else if(r.status==='Partial')o.partial++;
+      if(r.repl==='1')o.repl++;
       const d=r.date;
       if(d&&/^\d{8}$/.test(d)&&d!=='00000000'){o.days.add(d); if(d>o.last)o.last=d;}
       o.mix[k]=(o.mix[k]||0)+1;
@@ -496,8 +524,11 @@ function renderProductivity(pass){
   note.textContent='Cases/day = cases in the current view ÷ the distinct days that enumerator was active — '
     +'so it measures pace on the days they actually worked, not calendar days. A rate over a single '
     +'active day is greyed out: it is arithmetic, not a trend. Check Last active before reading a high '
-    +'rate as good news. Honours every filter above. F2 is absent by design: it is self-administered '
-    +'and has no enumerator.'
+    +'rate as good news. Replaced = the sampled unit was never interviewed (refused at the door, not '
+    +'found, or ineligible) and a substitute was drawn; postponed visits are NOT replacements. The share '
+    +'is flagged red only at 30% or more over at least 5 cases — a hard catchment legitimately produces '
+    +'replacements, so the raw count is not comparable between enumerators. Honours every filter above. '
+    +'F2 is absent by design: it is self-administered and has no enumerator.'
     +(unnamed?' '+unnamed+' case(s) in view carry no enumerator name.':'');
   el.appendChild(note);
   let rows=[...m.values()].map(o=>{
@@ -508,7 +539,13 @@ function renderProductivity(pass){
     const sup = sv.length===0 ? '(unassigned)'
               : sv.length===1 ? sv[0]
               : 'multiple ('+sv.length+')';
-    return {name:o.name, sup, cases:o.cases, completed:o.completed, partial:o.partial, days,
+    // replacement SHARE is the curbstoning signal, not the raw count: an enumerator working a
+    // hard area legitimately racks up replacements, so only the proportion is comparable. Same
+    // small-denominator discipline as cases/day — a share over <5 cases is noise, so it is not
+    // flagged (2 of 3 replaced = 67% would otherwise outrank every real outlier).
+    const replPct = o.cases>0 ? Math.round(100*o.repl/o.cases) : null;
+    return {name:o.name, sup, cases:o.cases, completed:o.completed, partial:o.partial,
+            repl:o.repl, replPct, replHot: (o.cases>=5 && replPct>=30), days,
             rate: days>0 ? Math.round(10*o.cases/days)/10 : null, last:o.last, mix:o.mix};
   });
   const st=prodSort;
@@ -528,6 +565,7 @@ function renderProductivity(pass){
     .concat([['name','Enumerator','']])
     .concat(showMix?[['mix','Mix','']]:[])
     .concat([['cases','Cases','n'],['completed','Completed','n'],['partial','Partial','n'],
+             ['repl','Replaced','n'],
              ['days','Active days','n'],['rate','Cases/day','n'],['last','Last active',''],
              ['bar','Volume','s']]);
   const tbl=document.createElement('table'); tbl.className='covtbl';
@@ -551,6 +589,9 @@ function renderProductivity(pass){
       +'<td class="n">'+r.cases+'</td>'
       +'<td class="n">'+r.completed+'</td>'
       +'<td class="n short'+(r.partial?'':' zero')+'">'+r.partial+'</td>'
+      +'<td class="n'+(r.repl?'':' zero')+(r.replHot?' hot" title="'+r.replPct+'% of the cases for this enumerator were replaced — worth a look"'
+                                        :'"')+'>'
+        +r.repl+(r.repl?' <span class="pct">('+r.replPct+'%)</span>':'')+'</td>'
       +'<td class="n">'+r.days+'</td>'
       +'<td class="n rate'+(r.days<2?' lowconf" title="only one active day — a rate over a single day is not a trend':'')+'">'
         +(r.rate==null?'—':r.rate.toFixed(1))+'</td>'

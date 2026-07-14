@@ -347,9 +347,13 @@ recode across instruments without ASPSI sign-off:
 
 | Instrument | Value set (verbatim) |
 |---|---|
-| F1 | `1` Completed · `2` Postponed · `3` Refused · `4` Incomplete |
-| F3 | `1` Completed · `2` Completed at the Hospital · `3` Postponed · `4` Incomplete · `5` Completed at Home · `6` Withdraw Participation/Consent |
-| F4 | `1` Completed · `2` Postponed · `3` Incomplete · `4` Withdraw Participation/Consent |
+| F1 | `1` Completed · `2` Postponed · `3` Refused · `4` Incomplete · `5` **Replaced** |
+| F3 | `1` Completed · `2` Completed at the Hospital · `3` Postponed · `4` Incomplete · `5` Completed at Home · `6` Withdraw Participation/Consent · `7` **Replaced** |
+| F4 | `1` Completed · `2` Postponed · `3` Incomplete · `4` Withdraw Participation/Consent · `5` **Replaced** |
+
+> `Replaced` (added 2026-07-14) is set by logic from `BREAKOFF` 5/6/7, never typed directly. Its code
+> differs per instrument because the three lists have different lengths — so **count replacements on
+> `BREAKOFF`, which is uniform across F1/F3/F4**, not on this column. See the Replacements block below.
 
 **Per-instrument source mapping**
 
@@ -369,23 +373,60 @@ recode across instruments without ASPSI sign-off:
 | Draft exists, never submitted, last update <24h | `0` In progress | |
 | Draft exists, last update ≥24h, or HCW enrolled with no draft | `2` Partial / not completed | cannot distinguish abandonment from non-contact — see the gap below |
 
-### ⚠ Known gap — response rates and replacements are NOT derivable
+### ✅ Replacements — RESOLVED 2026-07-14 (was a known gap)
 
-This is a limitation of the **instruments**, not of the ETL, and it should be stated plainly in
-any report rather than worked around:
+This section previously recorded that response rates and replacement counts were **not derivable**:
+no instrument had a non-contact code, F3/F4 had no doorstep-refusal code, and the field protocol was
+understood to say *don't start a case* for a replaced unit — so a replaced unit left no trace.
 
-- **No non-contact code exists in any CAPI instrument.** There is no way to record "sampled unit
-  not found / not at home / vacant / ineligible".
-- **F3 and F4 have no doorstep-refusal code.** "Withdraw Participation/Consent" is a *mid-interview*
-  withdrawal, a different event. Only F1 has `Refused`.
-- The field protocol instructs enumerators **not to start a case** for an ineligible or replaced
-  unit (CAPI Manual §IX), so a replaced unit produces **no record at all**.
+**ASPSI (Marriz) corrected the protocol premise on 2026-07-14.** The SAAD convention is the opposite:
+the enumerator **does** open a case for a unit that cannot be interviewed, marks it as such up front,
+and a substitute is then drawn. Any unit that cannot be interviewed is replaced — the reason (refused
+/ not found / ineligible) is recorded, but all of them are replacements.
 
-Consequently: a true response rate (completed ÷ eligible contacted) cannot be computed, and the
-**number of replacements per enumerator cannot be counted or even estimated** — which removes the
-standard curbstoning check. Closing this requires a decision by ASPSI/DOH about the **paper Field
-Control form** (whether the enumerator can record a refusal / not-found outcome), not a code change.
-Do not manufacture a substitute figure.
+`BREAKOFF` now carries that. It is the **same code list in F1, F3 and F4** — which is what makes a
+cross-instrument query possible at all:
+
+| `BREAKOFF` | Meaning | Interview started? | Replacement? |
+|---|---|---|---|
+| `1` | Continue interview | — | no |
+| `2` | Respondent withdrew | yes | no |
+| `3` | Postponed / reschedule | yes | **no** — revisited, not substituted |
+| `4` | Stop — other (incomplete) | yes | no |
+| `5` | Not interviewed — refused | **no** | **yes** |
+| `6` | Not interviewed — not found | **no** | **yes** |
+| `7` | Not interviewed — ineligible | **no** | **yes** |
+
+```
+replacements = count(BREAKOFF in 5, 6, 7)      -- per facility / enumerator / supervisor
+```
+
+Codes 5/6/7 route to the closing Result-of-Visit, set it to **Replaced**, set `CASE_DISPOSITION = 2`,
+and end the case — so the case is created and **syncs**, which is the whole point. Count on `BREAKOFF`,
+**not** on the Result-of-Visit code: `Replaced` is `5` in F1/F4 but `7` in F3, because the three Result
+lists have different lengths. `BREAKOFF` is uniform.
+
+**Curbstoning check (the reason this matters).** Replacement *share* per enumerator is now computable
+and is surfaced in the Sync Dashboard's productivity panel. Use the share, never the raw count — a hard
+catchment legitimately produces more replacements than an easy one. The dashboard flags ≥30% over ≥5
+cases; below that denominator the rate is noise.
+
+> [!warning] Applies to data collected AFTER the redeploy
+> Codes 5/6/7 do not exist in any case collected before 2026-07-14. Historic R5/R6 cases will show
+> zero replacements — that is *absence of the code*, not absence of replacements. Do not read a
+> pre-redeploy zero as a real figure, and do not back-fill one.
+
+**Response rate.** With refusal (5), non-contact (6) and ineligible (7) now distinguishable, a true
+response rate becomes computable in principle (`completed ÷ eligible contacted`, excluding code 7 from
+the denominator). It is **still not shippable today** — it needs post-redeploy field data first. Do not
+manufacture a figure from pre-redeploy cases.
+
+> [!note] Unused convention — a possible cross-check, not a source of truth
+> `Field-Tablet-Sync-Configuration.md` documents a `CASE_SEQ` range convention (001–699 active /
+> 700–899 replacement / 900–999 refused). It is **enforced nowhere** — no generator, no logic, no
+> validation, no query references it, so nothing guarantees an enumerator follows it. `BREAKOFF` is the
+> source of truth. If the range convention is ever enforced, the two counts should agree, and the
+> disagreement would itself be a useful audit signal.
 
 ---
 

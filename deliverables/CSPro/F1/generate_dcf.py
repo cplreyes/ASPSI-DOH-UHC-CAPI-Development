@@ -37,7 +37,7 @@ from cspro_helpers import (
     _value_set, numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, checkbox_multiselect, uhc9_item, record, build_geo_id,
     _gps_fields, _photo_block, _case_control_items, derived_geo_code_items,
-    apply_translations,
+    apply_translations, ENUM_RESULT_OPTIONS_F1, BREAKOFF_OPTIONS,
 )
 
 
@@ -118,20 +118,12 @@ def build_field_control():
         numeric("DATE_OF_FINAL_VISIT_TO_THE_FACILITY",
                 "Date of Final Visit to the Facility (YYYYMMDD)", length=8),
         numeric("TOTAL_NUMBER_OF_VISITS",       "Total Number of Visits",                       length=3),
+        # Result-of-Visit codes come from cspro_helpers (ENUM_RESULT_OPTIONS_F1) so F1 cannot
+        # drift from F3/F4 — "Replaced" (5) was added there 2026-07-14 and lands here for free.
         numeric("ENUM_RESULT_FIRST_VISIT",      "Result of First Visit",                        length=1,
-                value_set_options=[
-                    ("Completed",  "1"),
-                    ("Postponed",  "2"),
-                    ("Refused",    "3"),
-                    ("Incomplete", "4"),
-                ]),
+                value_set_options=ENUM_RESULT_OPTIONS_F1),
         numeric("ENUM_RESULT_FINAL_VISIT",      "Result of Final Visit",                        length=1,
-                value_set_options=[
-                    ("Completed",  "1"),
-                    ("Postponed",  "2"),
-                    ("Refused",    "3"),
-                    ("Incomplete", "4"),
-                ]),
+                value_set_options=ENUM_RESULT_OPTIONS_F1),
         # #744 break-off control — ported from the F3/F4 Cluster-5 pattern. Lives on the
         # FIRST interactive form (case-start, via inject_breakoff.py) so it sits in the
         # case tree from the start and the enumerator can tap back to it mid-interview.
@@ -143,12 +135,7 @@ def build_field_control():
         numeric("BREAKOFF",
                 "Interview status (leave as Continue unless ending the interview early)",
                 length=1,
-                value_set_options=[
-                    ("Continue interview",        "1"),
-                    ("Respondent withdrew",       "2"),
-                    ("Postponed / reschedule",    "3"),
-                    ("Stop — other (incomplete)", "4"),
-                ]),
+                value_set_options=BREAKOFF_OPTIONS),
         # #744/#561 completeness sentinel — OFF-FORM (not in the .fmf), set in logic only:
         # 0 In progress at case open (PROC QUESTIONNAIRE_NUMBER), 1 Completed when the
         # Result-of-Visit finalises to Completed, 2 Partial/broke-off otherwise. Lets the

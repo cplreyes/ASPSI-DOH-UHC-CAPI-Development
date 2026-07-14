@@ -111,24 +111,49 @@ ASPSI CAPI Team · DOH UHC Survey Year 2
 
 ### Slide 8 — Step 3: Informed consent
 
-- Every interview opens with the **informed-consent screen** (SJREB-approved wording, Annex H).
-- Read it to the respondent in the language they understand.
-- Record their choice:
-  - **Accept** → the questionnaire unlocks and you proceed.
-  - **Refuse** → the app records the refusal, sets the disposition, and **ends the interview** — do not continue.
+- Read the **informed-consent script aloud** from the **printed consent sheet** (SJREB-approved wording, Annex H), in the language the respondent understands.
+- Consent is **read from paper, not from the tablet.** There is no "I accept / I refuse" button in the app — do not go looking for one.
+- The **outcome** of consent is what you record in the app, on the **Interview status** screen (next slide).
 - Consent is voluntary and can be withdrawn at any point without affecting the respondent's care.
 
-*Facilitator notes:* This is non-negotiable and audited. No consent screen completed = no interview. Practice reading the consent aloud.
+*Facilitator notes:* Corrected 2026-07-14. Earlier versions of this deck described an in-app consent screen with Accept/Refuse buttons. **That screen does not exist** and never did in the built instruments — the consent script lives on the printed sheet, and the outcome is captured through Interview status. Practice reading the consent aloud from the sheet.
+
+---
+
+### Slide 8b — Step 3b: Interview status — **and what to do when there is no interview**  ⭐ NEW
+
+**This is the most commonly missed step. Read it twice.**
+
+Every case opens on an **Interview status** screen, on the very first form, right after you enter the Questionnaire Number.
+
+- If the interview is going ahead → leave it on **Continue interview**. That is the default; you do nothing.
+- If the interview **cannot happen at all**, you still **open the case** and pick the reason:
+
+| Choose | When |
+|---|---|
+| **Not interviewed — refused** | They declined at the door / declined consent. |
+| **Not interviewed — not found** | Nobody there, vacant, could not be located after your call-backs. |
+| **Not interviewed — ineligible** | They do not qualify for this survey. |
+
+The app then jumps straight to the closing screen, records the visit as **Replaced**, and ends the case. You do **not** walk through the questionnaire.
+
+> ### ⛔ Do NOT just skip the unit and move on.
+> If you never open a case, that unit is **invisible** — head office cannot see that you went, cannot see why it failed, and cannot account for the replacement. **A unit you could not interview is still work you did.** Open the case, mark the reason, move on to the substitute.
+
+**Postponed is different.** If you are coming back later, choose **Postponed / reschedule** — not one of the "Not interviewed" options. Postponed means *revisit*; the three "Not interviewed" options mean *this unit is being replaced by a substitute*.
+
+*Facilitator notes:* Drill this with a role-play — a locked gate and a flat refusal. The instinct is to walk away and start the next household; that instinct loses the record. Expect the "why bother, there is no interview?" question and answer it head-on: the replacement count is how ASPSI proves the sample was worked properly, and a missing record looks the same as an unworked one. Explain plainly that replacements are monitored per enumerator — not as a threat, but because it is exactly why an honest record protects them: a hard area with many replacements is fine and expected, an area that *silently* produces no records is not.
 
 ---
 
 ### Slide 9 — Step 4: Eligibility (and F3's branch)
 
-- After consent, an **eligibility screen** must pass before the main questionnaire loads.
-- If the respondent fails eligibility, the app routes to the correct disposition — you do not force entry.
-- **F3 (Patient) specifically:** at eligibility you select **outpatient vs inpatient** — this sets which path through the questionnaire the app follows. Pick carefully; it changes the questions asked.
+- Section A confirms **who you are talking to** — F3: *are you the patient?* (if not, their relationship to the patient, i.e. a proxy); F4: *are you the household head?*
+- Answering "No" does **not** end the case — it routes you down the proxy-respondent path. It is an identification question, not a gate.
+- If the respondent is genuinely **ineligible for the survey**, that is not handled here — go back to **Interview status** and choose *Not interviewed — ineligible* (Slide 8b).
+- **F3 (Patient) specifically:** **outpatient vs inpatient** is selected on the case-start screen — this sets which path through the questionnaire the app follows. Pick carefully; it changes the questions asked.
 
-*Facilitator notes:* For F3, drill the outpatient/inpatient choice — it's the single most consequential branch. For F1/F4, eligibility is the gate to the main form.
+*Facilitator notes:* Corrected 2026-07-14 — an earlier version claimed an eligibility screen "routes to the correct disposition". It does not: Section A is respondent identification and falls through to the proxy path. Ineligibility is recorded on Interview status. For F3, drill the outpatient/inpatient choice — it is the single most consequential branch.
 
 ---
 
@@ -190,7 +215,7 @@ ASPSI CAPI Team · DOH UHC Survey Year 2
 - Respondent is the **facility head / OIC**.
 - Captures facility identity + the facility's UHC implementation answers.
 - PSGC cascade + facility GPS + one verification photo.
-- **Result of Visit** recorded on the Field Control form — F1: Completed / Postponed / Refused / Incomplete (first visit and final visit are recorded separately), plus the case disposition (In progress / Completed / Partial).
+- **Result of Visit** recorded on the Field Control form — F1: Completed / Postponed / Refused / Incomplete / **Replaced** (first visit and final visit are recorded separately), plus the case disposition (In progress / Completed / Partial). **Replaced** is set for you by the app when you choose one of the *Not interviewed* options on Interview status (Slide 8b) — you never pick it by hand.
 
 *Facilitator notes:* F1 is usually the first interview at a site and anchors the facility code that F3 links to.
 

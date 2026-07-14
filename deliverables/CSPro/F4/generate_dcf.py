@@ -22,7 +22,7 @@ from cspro_helpers import (
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, checkbox_multiselect, record,
     build_field_control, build_geo_id, build_dictionary, build_id_block, write_dcf,
-    derived_geo_code_items, ENUM_RESULT_OPTIONS_F4,
+    derived_geo_code_items, ENUM_RESULT_OPTIONS_F4, BREAKOFF_OPTIONS,
     apply_translations,
     _photo_block,
 )
@@ -96,12 +96,7 @@ def build_f4_field_control():
         numeric("BREAKOFF",
                 "Interview status (leave as Continue unless ending the interview early)",
                 length=1,
-                value_set_options=[
-                    ("Continue interview",        "1"),
-                    ("Respondent withdrew",       "2"),
-                    ("Postponed / reschedule",    "3"),
-                    ("Stop — other (incomplete)", "4"),
-                ]),
+                value_set_options=BREAKOFF_OPTIONS),
         # #561 completeness sentinel — off-form: 0 In progress at case open, 1 Completed
         # when the Result-of-Visit finalises to Completed (F4 code 1), 2 Partial otherwise.
         numeric("CASE_DISPOSITION", "Case disposition (auto)", length=1,

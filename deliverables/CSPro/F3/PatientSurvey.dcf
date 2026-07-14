@@ -618,6 +618,39 @@
                           "value": "6"
                         }
                       ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Replaced",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Replaced",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Replaced",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Replaced",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Replaced",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Replaced",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "7"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -879,6 +912,39 @@
                       "pairs": [
                         {
                           "value": "6"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Replaced",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Replaced",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Replaced",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Replaced",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Replaced",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Replaced",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "7"
                         }
                       ]
                     }
@@ -1238,6 +1304,105 @@
                       "pairs": [
                         {
                           "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not interviewed \u2014 refused",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Not interviewed \u2014 refused",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Not interviewed \u2014 refused",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Not interviewed \u2014 refused",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Not interviewed \u2014 refused",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Not interviewed \u2014 refused",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not interviewed \u2014 not found",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Not interviewed \u2014 not found",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Not interviewed \u2014 not found",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Not interviewed \u2014 not found",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Not interviewed \u2014 not found",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Not interviewed \u2014 not found",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "6"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not interviewed \u2014 ineligible",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Not interviewed \u2014 ineligible",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Not interviewed \u2014 ineligible",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Not interviewed \u2014 ineligible",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Not interviewed \u2014 ineligible",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Not interviewed \u2014 ineligible",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "7"
                         }
                       ]
                     }

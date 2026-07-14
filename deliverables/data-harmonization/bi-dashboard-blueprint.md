@@ -64,7 +64,9 @@ Build these as **BigQuery views** in `uhc_y2` so the BI tool binds to stable, do
 | **Patient satisfaction index** | mean/Top-2-box on F3 satisfaction items | `f3_patient` |
 | **HCW retention risk** | `% HCWs whose Q125 plan ≠ "stay/transfer-same-role"` (uses the R3-corrected Q125) | `f2_hcw` |
 | **Completion rate** | `completed / cases started` from `case_disposition` (§12) | all instruments |
-| ~~Response rate~~ | **NOT COMPUTABLE — do not ship.** A true response rate needs `completed / eligible contacted`, and no CAPI instrument records a non-contact; F3/F4 record no doorstep refusal; replaced units are never started and leave no row (§12 gap). Any "response rate" built from the data we hold would silently be a completion rate wearing the wrong label. Blocked on an ASPSI/DOH decision about the paper Field Control form. | — |
+| **Replacements** | `count(BREAKOFF in 5,6,7)` — sampled unit never interviewed (refused / not found / ineligible), substitute drawn. Postponed (3) is **not** a replacement. Uniform across F1/F3/F4. | all CAPI instruments |
+| **Replacement share per enumerator** | `replacements / cases` — the standard **curbstoning** check. Use the share, never the raw count (a hard catchment legitimately produces more). Meaningful only over ≥5 cases. | all CAPI instruments |
+| **Response rate** | **Computable in principle from 2026-07-14, but DO NOT SHIP YET — no data.** `BREAKOFF` 5/6/7 now distinguishes refusal / non-contact / ineligible, which is what a true `completed ÷ eligible contacted` needs (exclude ineligible from the denominator). It is unshippable until post-redeploy field data exists: every pre-2026-07-14 case lacks these codes entirely, so a rate computed today would be a completion rate wearing the wrong label — the exact failure this row used to warn about. Revisit after the first post-redeploy round. | all CAPI instruments |
 
 > Each metric is a **view column or a Looker Studio calculated field**; CHE is the one that warrants a materialized view (heavier logic, reused across pages).
 
@@ -79,7 +81,8 @@ Date range (`survey_date`) · Region → Province → City (drill, PSGC cascade)
 ## 5. Pages
 
 ### 5.1 Fieldwork Coverage & Quality *(operations — the live-monitoring view)*
-- **Scorecards:** total completed (by instrument), % of target, completion rate, On-Hold count, DLQ count (F2). (No response-rate scorecard — see §12: not computable from the instruments as built.)
+- **Scorecards:** total completed (by instrument), % of target, completion rate, **replacements**, On-Hold count, DLQ count (F2). (Still no response-rate scorecard — now computable in principle, but it needs post-redeploy data; see §12.)
+- **Enumerator productivity + replacement share:** the curbstoning view. Already live in the Sync Dashboard; mirror it here.
 - **Coverage map:** GPS points of completed cases by region/cluster (de-identified facility/household centroids only).
 - **Timeline:** submissions/day by instrument (sync-health proxy).
 - **Table:** completion by facility (expected vs landed) — mirrors the STL reconciliation routine.
