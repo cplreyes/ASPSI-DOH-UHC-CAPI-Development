@@ -72,20 +72,33 @@ ASSIGN = [
     ("LBRHU", "AAlmendral","F3", 5, 5),
 ]
 
-ALPHABET = string.ascii_letters + string.digits
-# Typable on a tablet keyboard, no visually-ambiguous glyphs (0/O, 1/l/I).
+# Field-typable alphabet: lowercase + digits only, with every visually ambiguous
+# glyph removed (no 0/o, no 1/l/i). An enumerator types these on a tablet, often
+# outdoors, often in a hurry.
+#
+# WHY NOT 14 RANDOM MIXED-CASE CHARS (what this used to emit):
+#   A password that is miserable to type does not stay secret - it gets written on
+#   the tablet case, or texted to a colleague, or shared because "mine won't work".
+#   Typability is not a concession here; it is what keeps one password on one person.
+#   These accounts hold `field-sync` only: no dashboard, no web UI, no bulk export.
+#   The realistic threat is online guessing, not offline cracking.
+#     10 chars from a 31-symbol alphabet = 31^10 ~= 8.2e14 combinations.
+#   That is far beyond any online attack, and it is all lowercase - no shift key.
 TYPABLE = "abcdefghjkmnpqrstuvwxyz23456789"
 
 
-def strong_pw(n: int = 14) -> str:
-    return "".join(secrets.choice(ALPHABET) for _ in range(n))
+def strong_pw(n: int = 10) -> str:
+    """CSWeb sync password. CSWeb requires >= 8 characters; 10 gives headroom."""
+    return "".join(secrets.choice(TYPABLE) for _ in range(n))
 
 
-def hub_pw(n: int = 8) -> str:
-    """Hub role-menu password — typed at every app open, so keep it short and
-    unambiguous, but still CSPRNG-random. NEVER derive it from the username:
-    the roster ships inside the app package, and a username-derived password is
-    guessable by anyone who can read the app list."""
+def hub_pw(n: int = 6) -> str:
+    """Hub role-menu password - typed at EVERY app open, so shorter still. This
+    one only gates a local menu inside the app package (it is not a network
+    credential), so 6 typable chars is the right trade.
+
+    NEVER derive it from the username: the roster ships inside the app package,
+    so a username-derived password is guessable by anyone who can read the app list."""
     return "".join(secrets.choice(TYPABLE) for _ in range(n))
 
 
@@ -117,9 +130,41 @@ def existing_passwords():
     return out, hub
 
 
-_pw, _hub = existing_passwords()
-if _pw:
-    print("  reusing %d already-issued CSWeb password(s) - NOT rotating" % len(_pw))
+import sys
+ROTATE = "--rotate" in sys.argv
+
+if ROTATE:
+    _pw, _hub = {}, {}
+    print("  --rotate: minting NEW passwords for everyone.")
+    print("    Safe ONLY if the accounts are not yet created in CSWeb and nothing")
+    print("    has been handed out. Anyone already holding a sheet is locked out.")
+else:
+    _pw, _hub = existing_passwords()
+    if _pw:
+        print("  reusing %d already-issued CSWeb password(s) - NOT rotating" % len(_pw))
+        print("    (pass --rotate to deliberately mint new ones)")
+
+# Preflight: the three outputs are written in sequence. If one is held open (Excel
+# loves to lock a .csv), we would fail PART-WAY THROUGH and leave the pack
+# inconsistent - users.csv rotated but credentials.md still showing the old
+# secrets, which is the worst possible state for a credential file. Check first.
+_locked = []
+for _f in ("pretest-users.csv", "pretest-assignments.csv", "pretest-credentials.md"):
+    _p = HERE / _f
+    if _p.exists():
+        try:
+            with _p.open("a", encoding="utf-8"):
+                pass
+        except PermissionError:
+            _locked.append(_f)
+if _locked:
+    msg = ["REFUSING TO RUN - these outputs are open in another program:"]
+    msg += ["    " + f for f in _locked]
+    msg += ["",
+            "Close them (Excel holds a lock on an open .csv) and re-run.",
+            "Nothing was written, so the pack is still consistent."]
+    raise SystemExit(chr(10).join(msg))
+
 
 creds = []
 for uid, short, first, last in ENUMS:
