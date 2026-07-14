@@ -215,6 +215,25 @@ preproc
     level preproc because #617: a protected field's OWN preproc is skipped, so MENU_SESSION has none. }
   m_role = loadsetting("hub_role");
   m_op = loadsetting("hub_operator_id");
+
+  { ---- AUTO-LOAD THIS ENUMERATOR'S ASSIGNMENT (pretest, 2026-07-15) ----
+    AS_<operator_id>.dat is SHIPPED INSIDE the app package (LoginApp.csds lists all
+    seven), so the assignment is already on the tablet the moment the app is
+    downloaded from CSWeb. Bind the dictionary straight to it.
+
+    This makes the Bluetooth "Receive Assignment" step OPTIONAL rather than required.
+    That matters for Day 1: syncfile-over-Bluetooth is the one transport in this hub
+    that has never been device-confirmed (see receive_assignment) - so making the
+    pretest depend on it would be betting the morning on an unproven path, when the
+    data is already sitting in the app folder.
+
+    Safe because ASSIGNMENT_DICT has readOptimization=False: forcase re-reads from
+    disk, so the rebind takes effect immediately. Bluetooth receive still works and
+    still overwrites MyAssignment.dat - it just is not needed to get started. }
+  if strip(m_op) <> "" then
+    setfile(ASSIGNMENT_DICT, "AS_" + strip(m_op) + ".dat");
+  endif;
+
   MENU_SESSION = 1;
   protect(MENU_SESSION, true);
 
@@ -233,10 +252,10 @@ preproc
   string dopt;
   dopt = '{"width":380,"height":600,"resizable":false,"keyboard":0}';
   if strip(m_role) = "supervisor" then
-    menuJson = concat('{"title":"', strip(m_op), ' - Supervisor","ver":"Hub v1.1.1 (2026-07-15)","groups":[{"header":"ASSIGNMENTS","items":[{"label":"Assign Enumeration Area","action":"assign"}]},{"header":"COLLECT & RELAY","items', '":[{"label":"Collect Interviews from Enumerators","action":"collect"},{"label":"Relay Collected Interviews to CSWeb","action":"relay"}]},{"header":"REVIEW & REPORTS","items":[{"lab', 'el":"Survey Interview - view report","action":"report_sup"},{"label":"View EA on Map","action":"map"},{"label":"Conduct/Open F1 - Facility Head","action":"open_f1"},{"label":"Condu', 'ct/Open F3 - Patient","action":"open_f3"},{"label":"Conduct/Open F4 - Household","action":"open_f4"}]},{"header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
+    menuJson = concat('{"title":"', strip(m_op), ' - Supervisor","ver":"Hub v1.1.2 (2026-07-15)","groups":[{"header":"ASSIGNMENTS","items":[{"label":"Assign Enumeration Area","action":"assign"}]},{"header":"COLLECT & RELAY","items', '":[{"label":"Collect Interviews from Enumerators","action":"collect"},{"label":"Relay Collected Interviews to CSWeb","action":"relay"}]},{"header":"REVIEW & REPORTS","items":[{"lab', 'el":"Survey Interview - view report","action":"report_sup"},{"label":"View EA on Map","action":"map"},{"label":"Conduct/Open F1 - Facility Head","action":"open_f1"},{"label":"Condu', 'ct/Open F3 - Patient","action":"open_f3"},{"label":"Conduct/Open F4 - Household","action":"open_f4"}]},{"header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
     res = htmldialog("menu.html", inputData := menuJson, displayOptions := dopt);
   elseif strip(m_role) = "enumerator" then
-    menuJson = concat('{"title":"', strip(m_op), ' - Enumerator","ver":"Hub v1.1.1 (2026-07-15)","groups":[{"header":"ASSIGNMENT","items":[{"label":"Receive Assigned Data","action":"receive"}]},{"header":"INTERVIEWS","items":[{"la', 'bel":"Conduct F1 - Facility Head Interview","action":"open_f1"},{"label":"Conduct F3 - Patient Interview","action":"open_f3"},{"label":"Conduct F4 - Household Interview","action":"', 'open_f4"},{"label":"Send My Interviews to Supervisor","action":"send"}]},{"header":"REPORTS","items":[{"label":"View EA on Map","action":"map"},{"label":"View my report","action":"', 'report_enum"}]},{"header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
+    menuJson = concat('{"title":"', strip(m_op), ' - Enumerator","ver":"Hub v1.1.2 (2026-07-15)","groups":[{"header":"ASSIGNMENT","items":[{"label":"Receive Assigned Data","action":"receive"}]},{"header":"INTERVIEWS","items":[{"la', 'bel":"Conduct F1 - Facility Head Interview","action":"open_f1"},{"label":"Conduct F3 - Patient Interview","action":"open_f3"},{"label":"Conduct F4 - Household Interview","action":"', 'open_f4"},{"label":"Send My Interviews to Supervisor","action":"send"}]},{"header":"REPORTS","items":[{"label":"View EA on Map","action":"map"},{"label":"View my report","action":"', 'report_enum"}]},{"header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
     res = htmldialog("menu.html", inputData := menuJson, displayOptions := dopt);
   else
     errmsg(1015);

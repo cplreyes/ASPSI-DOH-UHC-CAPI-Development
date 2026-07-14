@@ -81,8 +81,13 @@
             <ol>
               <li>In <strong>CSEntry</strong>, <strong>remove</strong> the survey application.</li>
               <li><strong>&#8942; &rarr; Add Application &rarr; CSWeb server</strong> &mdash;
-                <code>https://csweb.asiansocial.org/csweb/api</code> &rarr; <strong>Connect</strong>.</li>
-              <li>Download it again, then <strong>check the version in the app list</strong>:</li>
+                <code>https://csweb.asiansocial.org/csweb/api</code> &rarr; sign in with
+                <strong>your own username and password</strong> &rarr; <strong>Connect</strong>.</li>
+              <li>You will see <strong>five</strong> applications. <strong>Enumerators install these four:</strong>
+                <strong>LoginApp</strong>, <strong>FacilityHeadSurvey</strong>, <strong>PatientSurvey</strong> and
+                <strong>HouseholdSurvey</strong>. <em>Do not install SupervisorApp</em> &mdash; that one is for
+                your STL only.</li>
+              <li>Then <strong>check the version of each</strong>:</li>
             </ol>
             <table>
               <thead><tr><th>Instrument</th><th>Must show</th></tr></thead>
@@ -90,9 +95,21 @@
                 <tr><td>Facility Head Survey (F1)</td><td><strong>v1.1.0</strong></td></tr>
                 <tr><td>Patient Survey (F3)</td><td><strong>v1.1.0</strong></td></tr>
                 <tr><td>Household Survey (F4)</td><td><strong>v1.4.0</strong></td></tr>
-                <tr><td>Supervisor &amp; Enumerator Hub (LoginApp)</td><td>v1.0.2</td></tr>
+                <tr><td>Supervisor &amp; Enumerator Hub (LoginApp)</td><td><strong>v1.1.2</strong></td></tr>
               </tbody>
             </table>
+            <div class="callout">
+              <strong>Open <em>LoginApp</em> to start work</strong> &mdash; it is the launcher. It signs you in, shows
+              your assigned households/patients, and opens the right questionnaire for you. The other three are the
+              questionnaires themselves; they must be installed, but you do not open them directly.
+            </div>
+            <div class="callout">
+              <strong>Your assignment is already there &mdash; you do NOT need Bluetooth to get it.</strong>
+              As of <strong>v1.1.2</strong>, signing in to LoginApp loads <em>your own</em> assigned households or
+              patients straight from the app you just downloaded. There is nothing to receive from your STL before
+              you can start. <em>(&ldquo;Receive Assignment&rdquo; over Bluetooth still works, and is still there if
+              your assignment ever changes mid-round &mdash; but you do not need it to begin.)</em>
+            </div>
             <div class="callout">
               <strong>If the version does not match, stop.</strong> Do not start interviewing on an old build &mdash;
               the data will be missing today&rsquo;s fields and we will not be able to tell it apart from a real

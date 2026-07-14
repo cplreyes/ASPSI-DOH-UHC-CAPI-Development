@@ -785,6 +785,25 @@ preproc
     level preproc because #617: a protected field's OWN preproc is skipped, so MENU_SESSION has none. }
   m_role = loadsetting("hub_role");
   m_op = loadsetting("hub_operator_id");
+
+  { ---- AUTO-LOAD THIS ENUMERATOR'S ASSIGNMENT (pretest, 2026-07-15) ----
+    AS_<operator_id>.dat is SHIPPED INSIDE the app package (LoginApp.csds lists all
+    seven), so the assignment is already on the tablet the moment the app is
+    downloaded from CSWeb. Bind the dictionary straight to it.
+
+    This makes the Bluetooth "Receive Assignment" step OPTIONAL rather than required.
+    That matters for Day 1: syncfile-over-Bluetooth is the one transport in this hub
+    that has never been device-confirmed (see receive_assignment) - so making the
+    pretest depend on it would be betting the morning on an unproven path, when the
+    data is already sitting in the app folder.
+
+    Safe because ASSIGNMENT_DICT has readOptimization=False: forcase re-reads from
+    disk, so the rebind takes effect immediately. Bluetooth receive still works and
+    still overwrites MyAssignment.dat - it just is not needed to get started. }
+  if strip(m_op) <> "" then
+    setfile(ASSIGNMENT_DICT, "AS_" + strip(m_op) + ".dat");
+  endif;
+
   MENU_SESSION = 1;
   protect(MENU_SESSION, true);
 
