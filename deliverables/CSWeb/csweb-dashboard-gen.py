@@ -93,41 +93,44 @@ F4_GPS = _gps("latitude", "longitude")
 # record is already joined as `fc` for every instrument, so productivity costs one column.
 # F2 has no counterpart by design: it is self-administered, so it never appears in this panel.
 ENUM = "COALESCE(NULLIF(fc.enumerator_s_name,''),'(unassigned)')"
+# `supervisor` = FIELD_CONTROL.SURVEY_TEAM_LEADER_S_NAME (CHAR 50, all three dicts). The SAAD
+# benchmark navigates by Field Supervisor ("whose team is behind?"); this is that dimension.
+SUP = "COALESCE(NULLIF(fc.survey_team_leader_s_name,''),'(unassigned)')"
 
 QUERIES = {
-    "f1": (["region", "province", "city", "facility", "ownership", "service_level", "result", "date", "status", "gps", "code9", "enumerator"],
+    "f1": (["region", "province", "city", "facility", "ownership", "service_level", "result", "date", "status", "gps", "code9", "enumerator", "supervisor"],
            "SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
            " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
            " COALESCE(NULLIF(fc.city_name,''),'(unknown)'),"
            " COALESCE(fn.name,'(unlabeled)'), %s, %s, %s,"
-           " COALESCE(CAST(fc.date_first_visited_the_facility AS CHAR),''), %s, %s, %s, %s"
+           " COALESCE(CAST(fc.date_first_visited_the_facility AS CHAR),''), %s, %s, %s, %s, %s"
            " FROM csweb_f1_breakout.`level-1` l"
            " JOIN csweb_f1_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
            " LEFT JOIN csweb_f1_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f1_breakout.b_facility_profile bp ON bp.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f1_breakout.rec_facility_capture g ON g.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_reports.facility_names fn ON fn.code9=%s"
-           % (F1_OWN, F1_SVC, F1_RES, STATUS, F1_GPS, F1_CODE9, ENUM, F1_CODE9)),
-    "f3": (["region", "patient_type", "sex", "result", "date", "status", "gps", "code9", "enumerator"],
+           % (F1_OWN, F1_SVC, F1_RES, STATUS, F1_GPS, F1_CODE9, ENUM, SUP, F1_CODE9)),
+    "f3": (["region", "patient_type", "sex", "result", "date", "status", "gps", "code9", "enumerator", "supervisor"],
            "SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
            " CASE fc.patient_type WHEN '1' THEN 'Outpatient' WHEN '2' THEN 'Inpatient' ELSE COALESCE(NULLIF(fc.patient_type,''),'(blank)') END,"
            " CASE bp.q7_sex WHEN '1' THEN 'Male' WHEN '2' THEN 'Female' ELSE COALESCE(NULLIF(bp.q7_sex,''),'(blank)') END,"
-           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s"
+           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s, %s"
            " FROM csweb_f3_breakout.`level-1` l"
            " JOIN csweb_f3_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
            " LEFT JOIN csweb_f3_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f3_breakout.b_patient_profile bp ON bp.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f3_breakout.rec_facility_capture g ON g.`level-1-id`=l.`level-1-id`"
-           % (F3_RES, STATUS, F3_GPS, ENUM)),
-    "f4": (["region", "province", "result", "date", "status", "gps", "code9", "enumerator"],
+           % (F3_RES, STATUS, F3_GPS, ENUM, SUP)),
+    "f4": (["region", "province", "result", "date", "status", "gps", "code9", "enumerator", "supervisor"],
            "SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
            " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
-           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s"
+           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s, %s"
            " FROM csweb_f4_breakout.`level-1` l"
            " JOIN csweb_f4_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
            " LEFT JOIN csweb_f4_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f4_breakout.household_geo_id g ON g.`level-1-id`=l.`level-1-id`"
-           % (F4_RES, STATUS, F4_GPS, ENUM)),
+           % (F4_RES, STATUS, F4_GPS, ENUM, SUP)),
 }
 
 
@@ -271,6 +274,7 @@ TEMPLATE = r"""<!doctype html>
   <div class="filters">
     <div class="f"><label for="fInst">Instrument</label><select id="fInst"></select></div>
     <div class="f"><label for="fRegion">Region</label><select id="fRegion"></select></div>
+    <div class="f"><label for="fSup">Field supervisor</label><select id="fSup"></select></div>
     <div class="f"><label for="fStatus">Status</label><select id="fStatus"></select></div>
     <div class="f"><label for="fFrom">Visit from</label><input type="date" id="fFrom" /></div>
     <div class="f"><label for="fTo">Visit to</label><input type="date" id="fTo" /></div>
@@ -310,6 +314,9 @@ P.regions.forEach(r=>regSel.add(new Option(r,r)));
 const fromInp=document.getElementById('fFrom'), toInp=document.getElementById('fTo');
 if(P.dateMin){fromInp.min=P.dateMin; toInp.min=P.dateMin;}
 if(P.dateMax){fromInp.max=P.dateMax; toInp.max=P.dateMax;}
+const supSel=document.getElementById('fSup');
+supSel.add(new Option('All supervisors','ALL'));
+(P.supervisors||[]).forEach(x=>supSel.add(new Option(x,x)));
 const statSel=document.getElementById('fStatus');
 [['ALL','All statuses'],['Completed','Completed'],['Partial','Partial']].forEach(([v,t])=>statSel.add(new Option(t,v)));
 
@@ -474,12 +481,13 @@ function renderProductivity(pass){
       const n=r.enumerator;
       if(!n||n==='(unassigned)'){unnamed++; return;}
       let o=m.get(n);
-      if(!o){o={name:n,cases:0,completed:0,partial:0,days:new Set(),last:'',mix:{}}; m.set(n,o);}
+      if(!o){o={name:n,cases:0,completed:0,partial:0,days:new Set(),last:'',mix:{},sups:{}}; m.set(n,o);}
       o.cases++;
       if(r.status==='Completed')o.completed++; else if(r.status==='Partial')o.partial++;
       const d=r.date;
       if(d&&/^\d{8}$/.test(d)&&d!=='00000000'){o.days.add(d); if(d>o.last)o.last=d;}
       o.mix[k]=(o.mix[k]||0)+1;
+      const sv=r.supervisor||'(unassigned)'; o.sups[sv]=(o.sups[sv]||0)+1;
     });
   });
   if(!m.size) return;                           // no named enumerators in view -> hide, like coverage
@@ -494,11 +502,17 @@ function renderProductivity(pass){
   el.appendChild(note);
   let rows=[...m.values()].map(o=>{
     const days=o.days.size;
-    return {name:o.name, cases:o.cases, completed:o.completed, partial:o.partial, days,
+    // an enumerator normally sits under one team leader; if the data says otherwise, say so
+    // rather than silently picking one — a person straddling two teams is a finding, not a tie
+    const sv=Object.keys(o.sups);
+    const sup = sv.length===0 ? '(unassigned)'
+              : sv.length===1 ? sv[0]
+              : 'multiple ('+sv.length+')';
+    return {name:o.name, sup, cases:o.cases, completed:o.completed, partial:o.partial, days,
             rate: days>0 ? Math.round(10*o.cases/days)/10 : null, last:o.last, mix:o.mix};
   });
   const st=prodSort;
-  const val=(o,c)=> (c==='name')?(o.name||'').toLowerCase()
+  const val=(o,c)=> (c==='name'||c==='sup')?((o[c]||'').toLowerCase())
                   : (c==='last')?(o.last||'')
                   : (o[c]==null?-1:o[c]);
   rows.sort((a,b)=>{const x=val(a,st.col),y=val(b,st.col); return (x<y?-1:x>y?1:0)*st.dir;});
@@ -509,7 +523,9 @@ function renderProductivity(pass){
     +' · <b>'+totCases+'</b> case'+(totCases===1?'':'s')+' in view';
   el.appendChild(sum);
   const showMix=(instSel.value==='ALL');
-  const cols=[['name','Enumerator','']]
+  const showSup=(supSel.value==='ALL');   // redundant once you have drilled into one team
+  const cols=(showSup?[['sup','Field supervisor','']]:[])
+    .concat([['name','Enumerator','']])
     .concat(showMix?[['mix','Mix','']]:[])
     .concat([['cases','Cases','n'],['completed','Completed','n'],['partial','Partial','n'],
              ['days','Active days','n'],['rate','Cases/day','n'],['last','Last active',''],
@@ -529,7 +545,8 @@ function renderProductivity(pass){
     const idle=(P.today&&r.last)?daysBetween(r.last,P.today):null;
     const lastCls=(idle!==null&&idle>2)?' class="stale"':'';
     const lastTxt=fmtDate(r.last)+((idle!==null&&idle>2)?' ('+idle+'d ago)':'');
-    tr.innerHTML='<td>'+esc(r.name)+'</td>'
+    tr.innerHTML=(showSup?'<td>'+esc(r.sup)+'</td>':'')
+      +'<td>'+esc(r.name)+'</td>'
       +(showMix?'<td class="mix">'+esc(fmtMix(r.mix))+'</td>':'')
       +'<td class="n">'+r.cases+'</td>'
       +'<td class="n">'+r.completed+'</td>'
@@ -543,11 +560,12 @@ function renderProductivity(pass){
   el.appendChild(tbl);
 }
 function render(){
-  const inst=instSel.value, region=regSel.value, status=statSel.value;
+  const inst=instSel.value, region=regSel.value, status=statSel.value, sup=supSel.value;
   const fromY=fromInp.value?fromInp.value.replace(/-/g,''):'';
   const toY=toInp.value?toInp.value.replace(/-/g,''):'';
   const pass=(r,ignoreStatus)=>{
     if(region!=='ALL' && r.region!==region) return false;
+    if(sup!=='ALL' && r.supervisor!==sup) return false;
     if(!ignoreStatus && status!=='ALL' && r.status!==status) return false;
     if(fromY||toY){ const d=r.date; if(!(d&&d.length===8)) return false; if(fromY&&d<fromY) return false; if(toY&&d>toY) return false; }
     return true;
@@ -578,8 +596,8 @@ function render(){
     });
   });
 }
-instSel.onchange=render; regSel.onchange=render; statSel.onchange=render; fromInp.onchange=render; toInp.onchange=render;
-document.getElementById('fReset').onclick=()=>{instSel.value='ALL';regSel.value='ALL';statSel.value='ALL';fromInp.value='';toInp.value='';render();};
+instSel.onchange=render; regSel.onchange=render; supSel.onchange=render; statSel.onchange=render; fromInp.onchange=render; toInp.onchange=render;
+document.getElementById('fReset').onclick=()=>{instSel.value='ALL';regSel.value='ALL';supSel.value='ALL';statSel.value='ALL';fromInp.value='';toInp.value='';render();};
 render();
 </script>
 </body>
@@ -589,11 +607,14 @@ render();
 
 def build(data, targets=None, plan=None):
     """Assemble the payload + HTML from a {inst: [row-dict,...]} data map."""
-    regions = set()
+    regions, supervisors = set(), set()
     for rows in data.values():
         for rec in rows:
             if rec.get("region"):
                 regions.add(rec["region"])
+            sup = rec.get("supervisor")
+            if sup and sup != "(unassigned)":
+                supervisors.add(sup)
     spec = [{"title": t, "prefix": p, "charts": [{"field": f, "title": ct, "type": ty} for f, ct, ty in c]}
             for t, p, c in SECTIONS]
     # visit-date range bounds (for the date inputs), from valid YYYYMMDD values
@@ -609,6 +630,7 @@ def build(data, targets=None, plan=None):
         "data": data,
         "spec": spec,
         "regions": sorted(regions),
+        "supervisors": sorted(supervisors),
         "dateMin": date_min,
         "dateMax": date_max,
         "today": today,
