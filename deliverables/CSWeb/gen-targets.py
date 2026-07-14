@@ -85,17 +85,34 @@ def main():
     ap.add_argument("--assignments", default=str(ASSIGN))
     ap.add_argument("--lookup", default=str(LOOKUP), help="facility_lookup.dat (optional enrichment)")
     ap.add_argument("--out", default=str(OUT))
+    ap.add_argument("--plan-label", default="R6 fixture (placeholder)",
+                    help="human name for this assignment plan, shown on the monitoring surfaces")
+    # Provisional is the DEFAULT and --final must be typed deliberately. Coverage % divided by
+    # a placeholder plan looks exactly like real coverage; the monitoring surfaces are the
+    # evidentiary basis for the DOH timeline case, so a plan is a placeholder until a human
+    # says otherwise — never the reverse.
+    ap.add_argument("--final", action="store_true",
+                    help="declare this ASPSI's real EA plan (removes the PROVISIONAL warning)")
     a = ap.parse_args()
     targets, n = build(a.assignments, a.lookup)
+    facilities = {k: len(v) for k, v in targets.items()}
     payload = {
         "generated": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
+        "plan": {
+            "label": a.plan_label,
+            "provisional": not a.final,
+            "source": Path(a.assignments).name,
+            "assignments": n,
+            "facilities": facilities,
+        },
         "targets": targets,
     }
     Path(a.out).write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
     enriched = any(r["province"] for inst in targets.values() for r in inst.values())
-    print("wrote %s | rows=%d facilities: f1=%d f3=%d f4=%d | province-enriched=%s"
-          % (a.out, n, len(targets["f1"]), len(targets["f3"]), len(targets["f4"]),
-             "yes (facility_lookup.dat)" if enriched else "no (runtime case-derived)"))
+    print("wrote %s | rows=%d facilities: f1=%d f3=%d f4=%d | province-enriched=%s | plan=%s"
+          % (a.out, n, facilities["f1"], facilities["f3"], facilities["f4"],
+             "yes (facility_lookup.dat)" if enriched else "no (runtime case-derived)",
+             "FINAL" if a.final else "PROVISIONAL — " + a.plan_label))
 
 
 if __name__ == "__main__":

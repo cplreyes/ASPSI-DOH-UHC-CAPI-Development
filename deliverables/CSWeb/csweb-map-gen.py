@@ -138,10 +138,16 @@ def q(sql):
 
 
 def load_targets(path):
+    """(targets, plan). No `plan` block (pre-provenance targets.json) => PROVISIONAL.
+    Same fail-safe as the dashboard: a shaded province looks equally authoritative
+    whether the denominator is ASPSI's EA plan or a leftover fixture."""
     try:
-        return json.load(open(path, encoding="utf-8")).get("targets", {})
+        obj = json.load(open(path, encoding="utf-8"))
     except Exception:
-        return {}
+        return {}, {}
+    plan = obj.get("plan") or {"label": "unlabelled targets.json", "provisional": True}
+    plan.setdefault("provisional", True)
+    return obj.get("targets", {}), plan
 
 
 def fnum(s):
@@ -300,7 +306,7 @@ for p in points:
         p["inArea"] = cont["name"]
 
 # ---- Phase 2: province coverage (completed ÷ target) for the choropleth ----
-targets = load_targets(TARGETS_PATH)
+targets, plan = load_targets(TARGETS_PATH)
 _COMP_SQL = {
     inst: ("SELECT COALESCE(NULLIF(fc.province_name,''),'(unknown)'), COUNT(*)"
            " FROM csweb_%s_breakout.`level-1` l"
@@ -351,7 +357,7 @@ payload_obj = {
     "nofix": nofix, "bad": bad, "totals": totals,
     "thresh": {"acc": ACC_MAX, "sat": SAT_MIN, "home": A_HOME_KM, "cluster": CLUSTER_KM},
     "dateMin": date_min, "dateMax": date_max,
-    "coverage": coverage, "provPolys": prov_polys, "hasCoverage": has_coverage,
+    "coverage": coverage, "provPolys": prov_polys, "hasCoverage": has_coverage, "plan": plan,
     "generated": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
 }
 payload = html.escape(json.dumps(payload_obj), quote=False)
@@ -432,6 +438,7 @@ TEMPLATE = r"""<!doctype html>
   <span class="badge warn" id="cDisp" style="display:none"></span>
   <span class="badge warn" id="cArea" style="display:none"></span>
   <span class="badge" id="covLegend" style="display:none">Coverage: <i class="sw" style="background:#d32f2f"></i>&lt;40% <i class="sw" style="background:#e5b23b"></i>40–79% <i class="sw" style="background:#006b3f"></i>&ge;80%</span>
+  <span class="badge" id="covPlan" style="display:none;background:#fdf3d7;border-color:#e5b23b;color:#6b5200;font-weight:700"></span>
   <span class="legend">
     <span><i class="sw dot" style="background:#006b3f"></i>Completed</span>
     <span><i class="sw dot" style="background:#e5b23b"></i>Partial</span>
@@ -491,6 +498,12 @@ function renderChoropleth(){
   covLayer.clearLayers();
   const on = lCoverage && lCoverage.checked && P.hasCoverage;
   document.getElementById('covLegend').style.display = on?'':'none';
+  // A shaded province reads as fact. Say so when the denominator is a placeholder.
+  const _pl=P.plan||{}, _cp=document.getElementById('covPlan');
+  if(on && _pl.provisional!==false){
+    _cp.textContent='PROVISIONAL PLAN ('+(_pl.label||'unlabelled')+') — shading is not real coverage';
+    _cp.style.display='';
+  } else { _cp.style.display='none'; }
   if(!on) return;
   Object.keys(P.provPolys||{}).forEach(key=>{
     const cov=covForProv(key); if(!cov) return;

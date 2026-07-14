@@ -173,11 +173,20 @@ TARGETS = "/opt/targets.json"
 
 
 def load_targets(path):
-    """{inst: {code9: {name, region, province, target}}} or {} if the file is absent."""
+    """({inst: {code9: {name, region, province, target}}}, plan) — ({}, {}) if absent.
+
+    `plan` is the assignment-plan provenance written by gen-targets.py. A targets.json
+    predating that stamp has no `plan` block: treat it as PROVISIONAL, never as final.
+    An unlabelled plan is far more likely to be a leftover fixture than ASPSI's real EA
+    plan, and a fake coverage % is indistinguishable from a real one on screen.
+    """
     try:
-        return json.load(open(path, encoding="utf-8")).get("targets", {})
+        obj = json.load(open(path, encoding="utf-8"))
     except Exception:
-        return {}
+        return {}, {}
+    plan = obj.get("plan") or {"label": "unlabelled targets.json", "provisional": True}
+    plan.setdefault("provisional", True)
+    return obj.get("targets", {}), plan
 
 
 FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E"
@@ -243,6 +252,10 @@ TEMPLATE = r"""<!doctype html>
   .covbar{position:relative;height:10px;width:150px;background:#e5e7eb;border-radius:6px;overflow:hidden;display:inline-block;vertical-align:middle}
   .covbar>span{position:absolute;left:0;top:0;bottom:0;border-radius:6px}
   .covtbl .pct{font-weight:700}
+  .planwarn{background:#fdf3d7;border:1px solid #e5b23b;border-left:5px solid #b7860b;
+            border-radius:8px;padding:10px 13px;margin:8px 0 10px;color:#6b5200;
+            font-size:13px;line-height:1.5}
+  .planwarn code{background:#fff;border:1px solid #e2d6a8;border-radius:4px;padding:0 4px}
   .mix{color:var(--muted);font-size:12px;white-space:nowrap}
   .rate{font-weight:700}
   /* a rate over a single active day is arithmetic, not a trend — de-emphasise it so it
@@ -390,6 +403,21 @@ function renderCoverage(pass){
   const visible=visInsts(instSel.value).filter(k=>T[k]&&Object.keys(T[k]).length);
   if(!visible.length) return;                         // no targets → section hides (graceful)
   const h=document.createElement('h2'); h.textContent='Coverage vs. target'; cov.appendChild(h);
+  // Provenance FIRST. A coverage % divided by a placeholder plan renders identically to a
+  // real one; this banner is the only thing standing between a fixture and a DOH briefing.
+  const pl=P.plan||{};
+  if(pl.provisional!==false){
+    const w=document.createElement('div'); w.className='planwarn';
+    const f=pl.facilities||{}, nf=(f.f1||0)+(f.f3||0)+(f.f4||0);
+    w.innerHTML='<b>PROVISIONAL ASSIGNMENT PLAN — these percentages are not real coverage.</b> '
+      +'Targets come from <b>'+esc(pl.label||'an unlabelled targets.json')+'</b>'
+      +(pl.assignments?' ('+pl.assignments+' assignment row'+(pl.assignments===1?'':'s')
+         +' across '+nf+' facility slot'+(nf===1?'':'s')+')':'')
+      +'. Every % and shortfall below is measured against that placeholder. Replace '
+      +'<code>assignments-source.csv</code> with ASPSI’s real EA plan and re-run '
+      +'<code>gen-targets.py --final</code> before quoting any of this.';
+    cov.appendChild(w);
+  }
   const note=document.createElement('div'); note.className='cov-note';
   note.textContent='Landed = Completed cases in the current view (instrument · region · visit-date). Expected = the assignment plan’s target. The Status filter does not apply here.';
   cov.appendChild(note);
@@ -559,7 +587,7 @@ render();
 """
 
 
-def build(data, targets=None):
+def build(data, targets=None, plan=None):
     """Assemble the payload + HTML from a {inst: [row-dict,...]} data map."""
     regions = set()
     for rows in data.values():
@@ -585,6 +613,7 @@ def build(data, targets=None):
         "dateMax": date_max,
         "today": today,
         "targets": targets or {},
+        "plan": plan or {},
         "generated": now_utc.strftime("%Y-%m-%d %H:%M UTC"),
     }
     # XSS-safe: JSON in a non-executable <script type="application/json">, HTML-escaped,
@@ -601,8 +630,8 @@ def main():
     ap.add_argument("--targets", default=TARGETS, help="targets.json path (default: %(default)s)")
     a = ap.parse_args()
     data = load_sample(a.sample) if a.sample else fetch_live()
-    targets = load_targets(a.targets)
-    out_html = build(data, targets)
+    targets, plan = load_targets(a.targets)
+    out_html = build(data, targets, plan)
     with open(a.out, "w", encoding="utf-8") as f:
         f.write(out_html)
     print("wrote %s (%d bytes); rows: f1=%d f3=%d f4=%d%s"
