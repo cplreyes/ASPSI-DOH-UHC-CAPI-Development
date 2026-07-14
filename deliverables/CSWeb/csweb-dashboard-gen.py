@@ -89,40 +89,45 @@ F1_GPS = _gps("facility_gps_latitude", "facility_gps_longitude")
 F3_GPS = _gps("facility_gps_latitude", "facility_gps_longitude")
 F4_GPS = _gps("latitude", "longitude")
 
+# `enumerator` = FIELD_CONTROL.ENUMERATOR_S_NAME (CHAR 50, all three dicts) — the field-control
+# record is already joined as `fc` for every instrument, so productivity costs one column.
+# F2 has no counterpart by design: it is self-administered, so it never appears in this panel.
+ENUM = "COALESCE(NULLIF(fc.enumerator_s_name,''),'(unassigned)')"
+
 QUERIES = {
-    "f1": (["region", "province", "city", "facility", "ownership", "service_level", "result", "date", "status", "gps", "code9"],
+    "f1": (["region", "province", "city", "facility", "ownership", "service_level", "result", "date", "status", "gps", "code9", "enumerator"],
            "SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
            " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
            " COALESCE(NULLIF(fc.city_name,''),'(unknown)'),"
            " COALESCE(fn.name,'(unlabeled)'), %s, %s, %s,"
-           " COALESCE(CAST(fc.date_first_visited_the_facility AS CHAR),''), %s, %s, %s"
+           " COALESCE(CAST(fc.date_first_visited_the_facility AS CHAR),''), %s, %s, %s, %s"
            " FROM csweb_f1_breakout.`level-1` l"
            " JOIN csweb_f1_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
            " LEFT JOIN csweb_f1_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f1_breakout.b_facility_profile bp ON bp.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f1_breakout.rec_facility_capture g ON g.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_reports.facility_names fn ON fn.code9=%s"
-           % (F1_OWN, F1_SVC, F1_RES, STATUS, F1_GPS, F1_CODE9, F1_CODE9)),
-    "f3": (["region", "patient_type", "sex", "result", "date", "status", "gps", "code9"],
+           % (F1_OWN, F1_SVC, F1_RES, STATUS, F1_GPS, F1_CODE9, ENUM, F1_CODE9)),
+    "f3": (["region", "patient_type", "sex", "result", "date", "status", "gps", "code9", "enumerator"],
            "SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
            " CASE fc.patient_type WHEN '1' THEN 'Outpatient' WHEN '2' THEN 'Inpatient' ELSE COALESCE(NULLIF(fc.patient_type,''),'(blank)') END,"
            " CASE bp.q7_sex WHEN '1' THEN 'Male' WHEN '2' THEN 'Female' ELSE COALESCE(NULLIF(bp.q7_sex,''),'(blank)') END,"
-           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9)"
+           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s"
            " FROM csweb_f3_breakout.`level-1` l"
            " JOIN csweb_f3_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
            " LEFT JOIN csweb_f3_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f3_breakout.b_patient_profile bp ON bp.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f3_breakout.rec_facility_capture g ON g.`level-1-id`=l.`level-1-id`"
-           % (F3_RES, STATUS, F3_GPS)),
-    "f4": (["region", "province", "result", "date", "status", "gps", "code9"],
+           % (F3_RES, STATUS, F3_GPS, ENUM)),
+    "f4": (["region", "province", "result", "date", "status", "gps", "code9", "enumerator"],
            "SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
            " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
-           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9)"
+           " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s"
            " FROM csweb_f4_breakout.`level-1` l"
            " JOIN csweb_f4_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
            " LEFT JOIN csweb_f4_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
            " LEFT JOIN csweb_f4_breakout.household_geo_id g ON g.`level-1-id`=l.`level-1-id`"
-           % (F4_RES, STATUS, F4_GPS)),
+           % (F4_RES, STATUS, F4_GPS, ENUM)),
 }
 
 
@@ -238,6 +243,12 @@ TEMPLATE = r"""<!doctype html>
   .covbar{position:relative;height:10px;width:150px;background:#e5e7eb;border-radius:6px;overflow:hidden;display:inline-block;vertical-align:middle}
   .covbar>span{position:absolute;left:0;top:0;bottom:0;border-radius:6px}
   .covtbl .pct{font-weight:700}
+  .mix{color:var(--muted);font-size:12px;white-space:nowrap}
+  .rate{font-weight:700}
+  /* a rate over a single active day is arithmetic, not a trend — de-emphasise it so it
+     cannot be misread as strong performance (one busy day then silence outranks everyone) */
+  .rate.lowconf{font-weight:400;color:var(--muted)}
+  .stale{color:#b7860b}
   @media(max-width:820px){.kpis{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.covbar{width:90px}}
 </style>
 </head>
@@ -262,6 +273,7 @@ TEMPLATE = r"""<!doctype html>
   <div class="freshness">Data as of <b id="fresh"></b> · auto-refreshes ~every 2 min · "today" = <span id="todayLbl"></span> (Manila)</div>
   <div class="chart wide"><h3>Submissions over time — new per day &amp; cumulative</h3><div class="canvas-wrap"><canvas id="trend"></canvas></div></div>
   <div id="coverage"></div>
+  <div id="productivity"></div>
   <div class="cards" id="totals"></div>
   <div class="note">Counts exclude deleted cases. Filters recompute every tile in your browser. Empty/blank categories reflect minimal test cases in the current data — they populate as real fieldwork syncs. For the per-case list with facility labels, see the CSWeb <b>Sync Report</b>.</div>
   <div id="sections"></div>
@@ -418,6 +430,90 @@ function renderCoverage(pass){
     cov.appendChild(tbl);
   });
 }
+// --- Phase 3: enumerator productivity (F1/F3/F4) ---
+// F2 never appears here: it is self-administered, so it has no enumerator. visInsts()
+// only ever returns f1/f3/f4, so that exclusion is structural rather than a special case.
+let prodSort={col:'cases',dir:-1};
+function daysBetween(a,b){                      // YYYYMMDD strings -> whole days
+  const d=s=>Date.UTC(+s.slice(0,4),+s.slice(4,6)-1,+s.slice(6,8));
+  return Math.round((d(b)-d(a))/86400000);
+}
+function renderProductivity(pass){
+  const el=document.getElementById('productivity'); el.innerHTML='';
+  const m=new Map(); let unnamed=0;
+  visInsts(instSel.value).forEach(k=>{
+    (P.data[k]||[]).forEach(r=>{ if(!pass(r)) return;
+      const n=r.enumerator;
+      if(!n||n==='(unassigned)'){unnamed++; return;}
+      let o=m.get(n);
+      if(!o){o={name:n,cases:0,completed:0,partial:0,days:new Set(),last:'',mix:{}}; m.set(n,o);}
+      o.cases++;
+      if(r.status==='Completed')o.completed++; else if(r.status==='Partial')o.partial++;
+      const d=r.date;
+      if(d&&/^\d{8}$/.test(d)&&d!=='00000000'){o.days.add(d); if(d>o.last)o.last=d;}
+      o.mix[k]=(o.mix[k]||0)+1;
+    });
+  });
+  if(!m.size) return;                           // no named enumerators in view -> hide, like coverage
+  const h=document.createElement('h2'); h.textContent='Enumerator productivity'; el.appendChild(h);
+  const note=document.createElement('div'); note.className='cov-note';
+  note.textContent='Cases/day = cases in the current view ÷ the distinct days that enumerator was active — '
+    +'so it measures pace on the days they actually worked, not calendar days. A rate over a single '
+    +'active day is greyed out: it is arithmetic, not a trend. Check Last active before reading a high '
+    +'rate as good news. Honours every filter above. F2 is absent by design: it is self-administered '
+    +'and has no enumerator.'
+    +(unnamed?' '+unnamed+' case(s) in view carry no enumerator name.':'');
+  el.appendChild(note);
+  let rows=[...m.values()].map(o=>{
+    const days=o.days.size;
+    return {name:o.name, cases:o.cases, completed:o.completed, partial:o.partial, days,
+            rate: days>0 ? Math.round(10*o.cases/days)/10 : null, last:o.last, mix:o.mix};
+  });
+  const st=prodSort;
+  const val=(o,c)=> (c==='name')?(o.name||'').toLowerCase()
+                  : (c==='last')?(o.last||'')
+                  : (o[c]==null?-1:o[c]);
+  rows.sort((a,b)=>{const x=val(a,st.col),y=val(b,st.col); return (x<y?-1:x>y?1:0)*st.dir;});
+  const maxCases=rows.reduce((s,r)=>Math.max(s,r.cases),0);
+  const totCases=rows.reduce((s,r)=>s+r.cases,0);
+  const sum=document.createElement('div'); sum.className='cov-sum';
+  sum.innerHTML='<b>'+rows.length+'</b> enumerator'+(rows.length===1?'':'s')
+    +' · <b>'+totCases+'</b> case'+(totCases===1?'':'s')+' in view';
+  el.appendChild(sum);
+  const showMix=(instSel.value==='ALL');
+  const cols=[['name','Enumerator','']]
+    .concat(showMix?[['mix','Mix','']]:[])
+    .concat([['cases','Cases','n'],['completed','Completed','n'],['partial','Partial','n'],
+             ['days','Active days','n'],['rate','Cases/day','n'],['last','Last active',''],
+             ['bar','Volume','s']]);
+  const tbl=document.createElement('table'); tbl.className='covtbl';
+  const thead=document.createElement('tr');
+  cols.forEach(([c,lbl,cl])=>{ const th=document.createElement('th'); if(cl)th.className=cl;
+    th.textContent=lbl+(st.col===c?(st.dir>0?' ▲':' ▼'):'');
+    if(c!=='bar'&&c!=='mix'){th.onclick=()=>{prodSort={col:c,dir:(st.col===c?-st.dir:(c==='name'?1:-1))}; render();};}
+    thead.appendChild(th); });
+  tbl.appendChild(thead);
+  const fmtDate=d=>d?d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8):'—';
+  const fmtMix=mx=>['f1','f3','f4'].filter(k=>mx[k]).map(k=>k.toUpperCase()+' '+mx[k]).join(' · ')||'—';
+  rows.forEach(r=>{ const tr=document.createElement('tr');
+    const w=maxCases>0?Math.round(100*r.cases/maxCases):0;
+    // "gone quiet" = no case for >2 days against the dashboard's own Manila today
+    const idle=(P.today&&r.last)?daysBetween(r.last,P.today):null;
+    const lastCls=(idle!==null&&idle>2)?' class="stale"':'';
+    const lastTxt=fmtDate(r.last)+((idle!==null&&idle>2)?' ('+idle+'d ago)':'');
+    tr.innerHTML='<td>'+esc(r.name)+'</td>'
+      +(showMix?'<td class="mix">'+esc(fmtMix(r.mix))+'</td>':'')
+      +'<td class="n">'+r.cases+'</td>'
+      +'<td class="n">'+r.completed+'</td>'
+      +'<td class="n short'+(r.partial?'':' zero')+'">'+r.partial+'</td>'
+      +'<td class="n">'+r.days+'</td>'
+      +'<td class="n rate'+(r.days<2?' lowconf" title="only one active day — a rate over a single day is not a trend':'')+'">'
+        +(r.rate==null?'—':r.rate.toFixed(1))+'</td>'
+      +'<td'+lastCls+'>'+esc(lastTxt)+'</td>'
+      +'<td class="s"><div class="covbar"><span style="width:'+w+'%;background:#006b3f"></span></div></td>';
+    tbl.appendChild(tr); });
+  el.appendChild(tbl);
+}
 function render(){
   const inst=instSel.value, region=regSel.value, status=statSel.value;
   const fromY=fromInp.value?fromInp.value.replace(/-/g,''):'';
@@ -431,6 +527,7 @@ function render(){
   renderKpis(pass);
   renderTrend(pass);
   renderCoverage(pass);
+  renderProductivity(pass);
   ['f1','f3','f4'].forEach(k=>{
     const rows=(P.data[k]||[]).filter(pass);
     cardNum[k].textContent=rows.length;
