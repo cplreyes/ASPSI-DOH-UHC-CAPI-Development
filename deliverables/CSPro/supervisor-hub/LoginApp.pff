@@ -1,7 +1,7 @@
 [Run Information]
 Version=CSPro 8.0
 AppType=Entry
-Description=Supervisor Hub (HUB) - v1.0.2 (2026-07-14)
+Description=Supervisor Hub (HUB) - v1.1.0 (2026-07-15)
 
 [DataEntryInit]
 StartMode=Add
