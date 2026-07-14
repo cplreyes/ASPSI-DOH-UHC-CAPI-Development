@@ -166,13 +166,39 @@ if _locked:
     raise SystemExit(chr(10).join(msg))
 
 
+# ONE PASSWORD PER PERSON.
+# data/roster/roster-source.csv is the single source of truth: build_hub_apps.py
+# bakes it into UserRoster.dat inside the app package, so it is the only secret the
+# device will accept. We now use that SAME value as the CSWeb sync password, so an
+# enumerator has one password to remember instead of two.
+#
+# 8 chars is the FLOOR, not a preference - CSWeb rejects anything shorter.
+#
+# The value MUST be freshly minted whenever it changes: UserRoster.dat is tracked in
+# this repo's public history, so any password that has ever been committed is burned.
+_ROSTER = (HERE / ".." / ".." / "data" / "roster" / "roster-source.csv").resolve()
+_roster_pw = {}
+if _ROSTER.exists():
+    with _ROSTER.open(newline="", encoding="utf-8-sig") as fh:
+        for r in csv.DictReader(fh):
+            if r.get("username"):
+                _roster_pw[r["username"]] = (r.get("password") or "").strip()
+else:
+    raise SystemExit("MISSING %s - the roster is the source of every password." % _ROSTER)
+
+_short = [ (uid, short) for uid, short, _, _ in ENUMS ]
+_missing = [uid for uid, _ in _short if not _roster_pw.get(uid)]
+if _missing:
+    raise SystemExit("roster has no password for: %s" % ", ".join(_missing))
+
 creds = []
 for uid, short, first, last in ENUMS:
+    one = _roster_pw[uid]
     creds.append({
         "enumerator": short,
         "username": uid,
-        "csweb_pw": _pw.get(uid) or strong_pw(),
-        "hub_pw": _hub.get(short) or hub_pw(),   # random; typed at every hub login
+        "csweb_pw": one,   # same value...
+        "hub_pw": one,     # ...as the hub. One password to remember.
         "first": first, "last": last,
     })
 
