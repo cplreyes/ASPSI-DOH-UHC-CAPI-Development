@@ -41,7 +41,7 @@ BY_SHORT = {short: uid for uid, short, _, _ in ENUMS}
 # 9-digit EA code = 7-digit municipality PSGC + 2-digit facility/EA serial.
 EAS = {
     "MAYONDON": ("040341101", "Brgy. Mayondon - Household",        "040341"),
-    "LPH":      ("040340220", "LPH-Bay District Hospital",         "040340"),  # <-- BAY
+    "LPH":      ("040340210", "LPH-Bay District Hospital",         "040340"),  # <-- BAY; serial 10 per ASPSI's issued QN docx (was 20, self-derived)
     "LBRHU":    ("040341130", "Los Banos RHU",                     "040341"),
 }
 
@@ -49,12 +49,13 @@ EAS = {
 # Facility-head keys are the ...000 key (CSPro convention). Patients start at 001.
 ASSIGN = [
     # DAY 1 - Mayondon households, Jul 15 - 20 HH split across 6 enumerators
-    ("MAYONDON", "DRamos",   "F4", 1,  4),
-    ("MAYONDON", "SLait",    "F4", 5,  8),
-    ("MAYONDON", "ASalazar", "F4", 9,  11),
-    ("MAYONDON", "PCrudo",   "F4", 12, 14),
-    ("MAYONDON", "AParaiso", "F4", 15, 17),
-    ("MAYONDON", "KPura",    "F4", 18, 20),
+    ("MAYONDON", "DRamos",    "F4", 1,  3),
+    ("MAYONDON", "SLait",     "F4", 4,  6),
+    ("MAYONDON", "ASalazar",  "F4", 7,  9),
+    ("MAYONDON", "PCrudo",    "F4", 10, 12),
+    ("MAYONDON", "AParaiso",  "F4", 13, 15),
+    ("MAYONDON", "KPura",     "F4", 16, 18),
+    ("MAYONDON", "AAlmendral","F4", 19, 20),
 
     # DAY 2 - LPH-Bay, Jul 16-17 - 1 facility head + 5 patients (3 IP + 2 OP)
     ("LPH", "KPura",    "F1", 0, 0),    # Facility Head
@@ -89,13 +90,44 @@ def hub_pw(n: int = 8) -> str:
 
 
 # ---------------------------------------------------------------- credentials
+def existing_passwords():
+    """Passwords already issued -> REUSE them.
+
+    Every run used to mint fresh secrets. Once credentials have been handed to a
+    field team, re-running to fix an unrelated code would silently rotate every
+    password and lock all seven enumerators out, with nothing in the output to
+    say so. Read back what was issued and keep it; only mint for new people.
+    """
+    out = {}
+    f = HERE / "pretest-users.csv"
+    if f.exists():
+        with f.open(newline="", encoding="utf-8") as fh:
+            for r in csv.DictReader(fh):
+                if r.get("username") and r.get("password"):
+                    out[r["username"]] = r["password"]
+    hub = {}
+    m = HERE / "pretest-credentials.md"
+    if m.exists():
+        rows = [l for l in m.read_text(encoding="utf-8").splitlines()
+                if l.startswith("|") and "`" in l]
+        for line in rows:
+            cells = [c.strip() for c in line.strip("|").split("|")]
+            if len(cells) == 2 and cells[1].startswith("`"):   # hub table: | name | `pw` |
+                hub[cells[0]] = cells[1].strip("`")
+    return out, hub
+
+
+_pw, _hub = existing_passwords()
+if _pw:
+    print("  reusing %d already-issued CSWeb password(s) - NOT rotating" % len(_pw))
+
 creds = []
 for uid, short, first, last in ENUMS:
     creds.append({
         "enumerator": short,
         "username": uid,
-        "csweb_pw": strong_pw(),
-        "hub_pw": hub_pw(),   # random, typed at every hub login (see hub_pw docstring)
+        "csweb_pw": _pw.get(uid) or strong_pw(),
+        "hub_pw": _hub.get(short) or hub_pw(),   # random; typed at every hub login
         "first": first, "last": last,
     })
 
