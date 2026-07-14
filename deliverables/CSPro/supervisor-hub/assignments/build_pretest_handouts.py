@@ -28,9 +28,14 @@ way to do this, and it means the passwords never touch a computer at all.
 import csv
 import html
 import pathlib
+import sys
 
 HERE = pathlib.Path(__file__).parent
-CREDS = HERE / "pretest-credentials.csv"          # gitignored; may be absent
+# The pack (build_pretest_pack.py) is the single source of truth for logins and
+# passwords. Pass its directory as argv[1] when it lives in another checkout.
+PACK = pathlib.Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else HERE
+USERS = PACK / "pretest-users.csv"                # gitignored - real CSWeb logins
+HUBMD = PACK / "pretest-credentials.md"           # gitignored - hub passwords
 OUTDIR = HERE / "out-pretest"                     # gitignored
 OUT = OUTDIR / "handouts.html"
 
@@ -48,7 +53,11 @@ TRACKER = "#839"
 # ---------------------------------------------------------------------------
 ENUMERATORS = ["DRamos", "SLait", "ASalazar", "PCrudo", "AParaiso", "KPura", "AAlmendral"]
 
-USERNAMES = {n: n.lower() for n in ENUMERATORS}
+USERNAMES = {
+    "AAlmendral": "se-001", "AParaiso": "se-002", "ASalazar": "se-003",
+    "DRamos":     "se-004", "KPura":    "se-005", "SLait":    "se-006",
+    "PCrudo":     "se-007",
+}
 
 # day -> (title, when, where, list of (enumerator, role, app, codes))
 DAYS = [
@@ -117,20 +126,32 @@ APP_NAME = {
 
 
 def load_passwords():
-    """Return {name: password}. Absent file -> blank, printed as a write-on rule."""
-    if not CREDS.exists():
-        print("  ! %s not found - printing blank password rules for hand-writing." % CREDS.name)
-        return {}
-    out = {}
-    with CREDS.open(encoding="utf-8-sig", newline="") as fh:
-        for row in csv.DictReader(fh):
-            name = (row.get("enumerator_name") or "").strip()
-            if name:
-                out[name] = (row.get("password") or "").strip()
-    missing = [n for n in ENUMERATORS if not out.get(n)]
-    if missing:
-        print("  ! no password for: %s (blank rule printed)" % ", ".join(missing))
-    return out
+    """(csweb, hub) password maps, keyed by enumerator short name.
+
+    Read from the pack's gitignored outputs. Absent -> blank rules to hand-write.
+    """
+    csweb, hub = {}, {}
+    short_of = {v: k for k, v in USERNAMES.items()}   # se-004 -> DRamos
+
+    if USERS.exists():
+        with USERS.open(newline="", encoding="utf-8-sig") as fh:
+            for r in csv.DictReader(fh):
+                short = short_of.get((r.get("username") or "").strip())
+                if short:
+                    csweb[short] = (r.get("password") or "").strip()
+    else:
+        print("  ! %s not found - blank CSWeb password rules." % USERS.name)
+
+    if HUBMD.exists():
+        for line in HUBMD.read_text(encoding="utf-8").splitlines():
+            if line.startswith("|") and "`" in line:
+                cells = [c.strip() for c in line.strip("|").split("|")]
+                if len(cells) == 2 and cells[1].startswith("`") and cells[0] in USERNAMES:
+                    hub[cells[0]] = cells[1].strip("`")
+    else:
+        print("  ! %s not found - blank hub password rules." % HUBMD.name)
+
+    return csweb, hub
 
 
 def rows_for(name):
@@ -174,10 +195,15 @@ td.code { font-family:Consolas,monospace; font-weight:700; white-space:nowrap; }
 """
 
 
-def sheet(name, pw_map):
+def sheet(name, creds):
+    csweb, hub = creds
     rows = rows_for(name)
-    pw = pw_map.get(name, "")
-    pw_html = ('<span class="v">%s</span>' % esc(pw)) if pw else '<span class="rule"></span>'
+
+    def cell(v):
+        return ('<span class="v">%s</span>' % esc(v)) if v else '<span class="rule"></span>'
+
+    pw_html = cell(csweb.get(name, ""))
+    hub_html = cell(hub.get(name, ""))
 
     trs = []
     for title, when, where, role, app, codes in rows:
@@ -195,10 +221,12 @@ def sheet(name, pw_map):
       <p class="sub">UHC Survey Year 2 &middot; CAPI Pretest &middot; Los Ba&ntilde;os / Bay, Laguna &middot; 15&ndash;20 July 2026</p>
 
       <div class="cred">
-        <div class="row"><div class="k">Username</div><div class="v">%(user)s</div></div>
-        <div class="row"><div class="k">Password</div>%(pw)s</div>
-        <p class="pw-note">This sheet is yours alone. Do not share your login &mdash; every case you sync is
-        recorded against it, and that is how your work is credited.</p>
+        <div class="row"><div class="k">CSWeb user</div><div class="v">%(user)s</div></div>
+        <div class="row"><div class="k">CSWeb pass</div>%(pw)s</div>
+        <div class="row"><div class="k">Hub pass</div>%(hub)s</div>
+        <p class="pw-note">Two different passwords. <b>CSWeb</b> = installing the app and syncing.
+        <b>Hub</b> = typed each time the app opens. This sheet is yours alone &mdash; do not share your
+        login: every case you sync is recorded against it, and that is how your work is credited.</p>
       </div>
 
       <table>
@@ -243,6 +271,7 @@ def sheet(name, pw_map):
         "name": esc(name),
         "user": esc(USERNAMES[name]),
         "pw": pw_html,
+        "hub": hub_html,
         "rows": "".join(trs),
         "guide": GUIDE,
         "tracker": TRACKER,
@@ -250,9 +279,9 @@ def sheet(name, pw_map):
 
 
 def main():
-    pw_map = load_passwords()
+    creds = load_passwords()
     OUTDIR.mkdir(exist_ok=True)
-    body = "".join(sheet(n, pw_map) for n in ENUMERATORS)
+    body = "".join(sheet(n, creds) for n in ENUMERATORS)
     doc = (
         "<!doctype html><html lang='en'><head><meta charset='utf-8'>"
         "<title>CAPI Pretest — enumerator handouts</title>"
