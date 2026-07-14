@@ -1,0 +1,28 @@
+# F3 — BREAKOFF 5 (Not interviewed - refused) must route to Result of Visit = Replaced (7),
+# set CASE_DISPOSITION = 2, and END the case without walking the questionnaire.
+# Codes 5/6/7 shipped 2026-07-14; this is their FIRST runtime exercise. Pretest is tomorrow.
+#
+# NOTE on stepping: length-1 coded fields AUTO-ADVANCE on fill. So `type 2` on PATIENT_TYPE
+# already lands focus on BREAKOFF - do NOT send an extra {ENTER} or it accepts the default.
+rmdata ../F3/desktest.csdb
+launch ../F3/PatientSurvey_desktest.pff
+
+casekey 040341140009
+shot 01_casekey_accepted
+
+type 2
+note EXPECT: focus is now on BREAKOFF (Interview status) with SEVEN options, not four
+shot 02_breakoff_focused_seven_options
+
+type 5
+note EXPECT: BREAKOFF=5 postproc fires -> skip to closing Result of Visit; questionnaire NOT walked
+wait 1
+shot 03_after_breakoff_5
+
+shot 04_result_of_visit_should_be_replaced
+key {ENTER}
+wait 1
+shot 05_after_result
+key {ENTER}
+wait 1
+shot 06_case_should_end

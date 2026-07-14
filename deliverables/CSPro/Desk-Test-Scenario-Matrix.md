@@ -142,6 +142,7 @@ filling it then setting `CONSENT_GIVEN=2` fires the exact logic: errmsg "Respond
 | ID | Setup → Input | Expected | Result | Shot |
 |---|---|---|---|---|
 | F1-DT-02 | `BREAKOFF = Respondent withdrew (2)` at case start | `T` — `ENUM_RESULT_FINAL_VISIT=3` (Refused), `CASE_DISPOSITION=2` (Partial / not completed), msg, `endlevel` (interview ends) | | |
+| F1-DT-05 | `BREAKOFF = Not interviewed — ineligible (7)` at case start | `T` — skips the questionnaire; `ENUM_RESULT_FINAL_VISIT=5` (**Replaced**), `CASE_DISPOSITION=2`, case ends ("Accept this case?") | **PASS 2026-07-14** (runtime, `scenarios/f1_breakoff_replaced.txt`) | Codes 5/6/7 = replacement. F1's .fmf is hand-maintained — BREAKOFF is spliced in by `inject_breakoff.py`, so its placement is verified here, not assumed. |
 | F1-DT-03 | Tenure: `Q5_YEARS_AT_FACILITY=0`, `Q5_MONTHS_AT_FACILITY=3` (<6 mo) | `T` — "≥6 months required", coded Refused/Incomplete, `endlevel` | | |
 
 ## F1.C Range & cross-field validations
@@ -198,6 +199,7 @@ filling it then setting `CONSENT_GIVEN=2` fires the exact logic: errmsg "Respond
 |---|---|---|---|---|
 | F3-DT-01 | Valid case start → consent Yes → minimal valid path to end | Case completes + saved | | |
 | F3-DT-02 | `BREAKOFF = Respondent withdrew (2)` at case start | `T` — `ENUM_RESULT_FINAL_VISIT=6` (Withdraw Participation/Consent), `CASE_DISPOSITION=2`, `endlevel` | | |
+| F3-DT-05 | `BREAKOFF = Not interviewed — refused (5)` at case start | `T` — skips the questionnaire; `ENUM_RESULT_FINAL_VISIT=7` (**Replaced**), `CASE_DISPOSITION=2`, case ends | **PASS 2026-07-14** (runtime, `scenarios/f3_breakoff_replaced.txt`) | NB F3's Replaced is **7**, not 5 — its Result list is longer. Count replacements on BREAKOFF (uniform), never on this code. |
 
 ## F3.B Signature branch — OP/IP routing
 | ID | Setup → Input | Expected | Result | Shot |
@@ -237,6 +239,8 @@ filling it then setting `CONSENT_GIVEN=2` fires the exact logic: errmsg "Respond
 |---|---|---|---|---|
 | F4-DT-01 | Valid start → consent Yes → 1-member roster → minimal path to end | Case completes + saved | | |
 | F4-DT-02 | `BREAKOFF = Respondent withdrew (2)` at case start | `T` — `ENUM_RESULT_FINAL_VISIT=4` (Withdraw Participation/Consent), `CASE_DISPOSITION=2`, `endlevel` | | |
+| F4-DT-05 | `BREAKOFF = Not interviewed — not found (6)` at case start | `T` — skips the questionnaire; `ENUM_RESULT_FINAL_VISIT=5` (**Replaced**), `CASE_DISPOSITION=2`, case ends | **PASS 2026-07-14** (runtime, `scenarios/f4_breakoff_replaced.txt`) | |
+| F4-DT-06 | `BREAKOFF = Continue (1)` — the 99%-of-cases path | `T` — proceeds INTO the questionnaire, does NOT jump to the closing form | **PASS 2026-07-14** (runtime, `scenarios/f4_breakoff_continue_regression.txt`) | REGRESSION guard: the value set went 4→7 options and the capture type flipped RadioButton→DropDown on 2026-07-14. If this breaks, every interview dies at the first form. |
 
 ## F4.B Signature engine — household roster (C_HOUSEHOLD_ROSTER, max 20)
 | ID | Setup → Input | Expected | Result | Shot |
