@@ -1,7 +1,9 @@
 ea_facility_code,enumerator_id,instrument,target_count,ea_name,cluster
-040340001,se-001,F1,1,Binan City Health Office,04034
-040340002,se-002,F3,30,Binan RHU - Patient Survey,04034
-040340005,se-003,F4,20,Binan Brgy Malaban - Household Survey,04034
-040340011,se-004,F1,1,Binan District Hospital - Facility Head,04034
-040341002,se-005,F3,30,Los Banos RHU - Patient Survey,04034
-040341005,se-006,F4,20,Los Banos Brgy Mayondon - Household Survey,04034
+040341101,,F4,20,Mayondon (Los Baños) — Household,04034
+040341100,,F4,20,Bayog (Los Baños) — Household,04034
+040341130,,F1,1,Los Baños RHU — Facility Head,04034
+040341130,,F3,5,Los Baños RHU — Patient,04034
+040340210,,F1,1,Laguna Provincial Hospital – Bay — Facility Head,04034
+040340210,,F3,5,Laguna Provincial Hospital – Bay — Patient,04034
+040341110,,F1,1,Los Baños Doctors Hospital — Facility Head,04034
+040341140,,F1,1,St. Jude Hospital — Facility Head,04034

@@ -35,7 +35,12 @@ HERE = pathlib.Path(__file__).parent
 # passwords. Pass its directory as argv[1] when it lives in another checkout.
 PACK = pathlib.Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else HERE
 USERS = PACK / "pretest-users.csv"                # gitignored - real CSWeb logins
-HUBMD = PACK / "pretest-credentials.md"           # gitignored - hub passwords
+# The HUB password must come from roster-source.csv, NOT from the pack. That CSV is
+# what build_hub_apps.py bakes into UserRoster.dat inside the deployed app package,
+# so it is the only hub password the device will actually accept. The pack also
+# mints a hub_pw, but nothing consumes it - printing that one would hand every
+# enumerator a password that cannot open the app.
+ROSTER = (PACK / ".." / ".." / "data" / "roster" / "roster-source.csv").resolve()
 OUTDIR = HERE / "out-pretest"                     # gitignored
 OUT = OUTDIR / "handouts.html"
 
@@ -142,14 +147,14 @@ def load_passwords():
     else:
         print("  ! %s not found - blank CSWeb password rules." % USERS.name)
 
-    if HUBMD.exists():
-        for line in HUBMD.read_text(encoding="utf-8").splitlines():
-            if line.startswith("|") and "`" in line:
-                cells = [c.strip() for c in line.strip("|").split("|")]
-                if len(cells) == 2 and cells[1].startswith("`") and cells[0] in USERNAMES:
-                    hub[cells[0]] = cells[1].strip("`")
+    if ROSTER.exists():
+        with ROSTER.open(newline="", encoding="utf-8-sig") as fh:
+            for r in csv.DictReader(fh):
+                short = short_of.get((r.get("username") or "").strip())
+                if short:
+                    hub[short] = (r.get("password") or "").strip()
     else:
-        print("  ! %s not found - blank hub password rules." % HUBMD.name)
+        print("  ! %s not found - blank hub password rules." % ROSTER.name)
 
     return csweb, hub
 
@@ -221,12 +226,11 @@ def sheet(name, creds):
       <p class="sub">UHC Survey Year 2 &middot; CAPI Pretest &middot; Los Ba&ntilde;os / Bay, Laguna &middot; 15&ndash;20 July 2026</p>
 
       <div class="cred">
-        <div class="row"><div class="k">CSWeb user</div><div class="v">%(user)s</div></div>
-        <div class="row"><div class="k">CSWeb pass</div>%(pw)s</div>
-        <div class="row"><div class="k">Hub pass</div>%(hub)s</div>
-        <p class="pw-note">Two different passwords. <b>CSWeb</b> = installing the app and syncing.
-        <b>Hub</b> = typed each time the app opens. This sheet is yours alone &mdash; do not share your
-        login: every case you sync is recorded against it, and that is how your work is credited.</p>
+        <div class="row"><div class="k">Username</div><div class="v">%(user)s</div></div>
+        <div class="row"><div class="k">Password</div>%(pw)s</div>
+        <p class="pw-note"><b>One password for everything</b> &mdash; the same one opens the app and syncs to
+        CSWeb. This sheet is yours alone: do not share your login. Every case you sync is recorded against
+        it, and that is how your work is credited.</p>
       </div>
 
       <table>
