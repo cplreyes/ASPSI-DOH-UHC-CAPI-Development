@@ -704,6 +704,11 @@ CONTROL_PROCS = """\
   the PSGC dicts, fill the read-only *_NAME items, and set the full PSGC codes
   on the off-form geo items so the BARANGAY cascade filters correctly. ---- }
 PROC QUESTIONNAIRE_NUMBER
+preproc
+  { GPS warm-start (2026-07-19): open the radio while the enumerator types the
+    case key so the fix has converged by the GPS forms — the capture reads are
+    then near-instant instead of a cold acquisition. Desktop no-op. }
+  WarmUpGPS();
 postproc
   LANGUAGE_USED = getlanguage();   { record interview language at case start (§15.E) }
   if not (CASE_DISPOSITION in 1, 2) then
@@ -865,7 +870,9 @@ onfocus
 PROC FACILITY_GPS_LATITUDE
 onfocus
   if length(strip(FACILITY_GPS_READTIME)) = 0 then   { capture once; not on back-nav }
-    if ReadGPSReading(120, 20) then
+    { 15 s budget: radio warm since the case key (WarmUpGPS) — normally ~1-2 s.
+      No ReleaseGPS() here: the P_HOME block may still need the warm radio. }
+    if ReadGPSReading(15, 20) then
       FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
       FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
       FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
@@ -889,7 +896,8 @@ PROC P_HOME_GPS_LATITUDE
 onfocus
   { Home-visit GPS (outpatient / home interview); fields are P_HOME_GPS_*. }
   if length(strip(P_HOME_GPS_READTIME)) = 0 then   { capture once; not on back-nav }
-    if ReadGPSReading(120, 20) then
+    { 15 s budget — radio still warm from the facility block / case start. }
+    if ReadGPSReading(15, 20) then
       P_HOME_GPS_LATITUDE   = maketext("%f", gps(latitude));
       P_HOME_GPS_LONGITUDE  = maketext("%f", gps(longitude));
       P_HOME_GPS_ALTITUDE   = maketext("%f", gps(altitude));
@@ -906,6 +914,7 @@ onfocus
     protect(P_HOME_GPS_ACCURACY, true);
     protect(P_HOME_GPS_SATELLITES, true);
     protect(P_HOME_GPS_READTIME, true);
+    ReleaseGPS();   { F3's LAST GPS block — close the radio once captured }
   endif;
 
 { ---- #231 Verification photo (moved to the END of the form 2026-06-12). CONDITIONAL on

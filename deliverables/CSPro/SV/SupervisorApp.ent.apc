@@ -11,12 +11,55 @@ PROC GLOBAL
   before the first PROC; inlining into PROC GLOBAL is the only arrangement the
   Designer compiler and the CSEntry loader both accept — verified 2026-06-08). }
 
+{ ---- Warm-radio GPS state (pretest fix 2026-07-19) ----
+  The old flow opened the radio COLD at the capture field, blocked in
+  gps(read, 120, 20) while the receiver acquired satellites from scratch
+  (30-120 s on the Itel tablets, often the full 120 s indoors), then
+  gps(close) threw the fix away — so every retry cold-started again.
+  Testers reported the GPS as "so slow".
+
+  New flow: WarmUpGPS() opens the radio at case start (non-blocking, no UI),
+  so the receiver tracks satellites while the enumerator types the case key
+  and geo IDs. By the GPS form the fix has converged and the short bounded
+  read returns in ~1-2 s. The radio stays open between reads (instant
+  retries, and F3's second GPS block reads warm); ReleaseGPS() closes it
+  after the case's LAST capture. Every capture is still a FRESH gps(read) —
+  never a cached gps(readlast) — so a fix can never leak across facilities. }
+
+numeric gpsRadioOpen = 0;   { 1 while this session holds the radio open }
+
+
+function WarmUpGPS()
+    { Open the GPS radio early so acquisition runs in the background.
+      Non-blocking (no progress dialog) and flag-guarded, so it is safe to
+      call from a field preproc that re-fires on partial-save resume. }
+
+    { Windows desktop (getos 10..19) has no GPS radio — desk-test no-op. }
+    if getos() in 10:19 then
+        WarmUpGPS = 0;
+        exit;
+    endif;
+
+    if gpsRadioOpen = 0 then
+        if gps(open) then
+            gpsRadioOpen = 1;
+        endif;
+        { no errmsg on failure here — this is a background warm-up; the
+          capture-time read reports hardware problems to the enumerator }
+    endif;
+
+    WarmUpGPS = gpsRadioOpen;
+end;
+
 
 function ReadGPSReading(numeric maxTimeSec, numeric desiredAccuracyM)
-    { Opens GPS, attempts a read within maxTimeSec, closes the radio,
-      and returns 1 on success / 0 on failure. Caller reads gps(latitude),
+    { Takes a FRESH reading within maxTimeSec, reusing the already-warm radio
+      when WarmUpGPS() ran at case start (the normal path — returns in ~1-2 s).
+      Returns 1 on success / 0 on failure. Caller reads gps(latitude),
       gps(longitude), gps(altitude), gps(accuracy), gps(satellites), and
-      gps(readtime) after a successful call. }
+      gps(readtime) after a successful call. The radio is left OPEN so a
+      failed read can be retried instantly — call ReleaseGPS() after the
+      case's last capture. }
 
     { Windows desktop (getos 10..19) has no GPS radio. Skip silently so desk-test
       data entry flows past the capture field with no modal. Android (20..29)
@@ -26,17 +69,21 @@ function ReadGPSReading(numeric maxTimeSec, numeric desiredAccuracyM)
         exit;
     endif;
 
-    if not gps(open) then
-        errmsg("GPS hardware unavailable — check tablet location permission.");
-        ReadGPSReading = 0;
-        exit;
+    if gpsRadioOpen = 0 then
+        if not gps(open) then
+            errmsg("GPS hardware unavailable — check tablet location permission.");
+            ReadGPSReading = 0;
+            exit;
+        endif;
+        gpsRadioOpen = 1;
     endif;
 
     numeric result = gps(read, maxTimeSec, desiredAccuracyM);
-    gps(close);
+    { radio deliberately NOT closed — kept warm for retries / later GPS blocks }
 
     if result <> 1 then
-        errmsg("GPS read failed or timed out (target accuracy %d m).", desiredAccuracyM);
+        errmsg("No GPS fix after %d s — move near a window or doorway and re-enter this field to retry.",
+               maxTimeSec);
         ReadGPSReading = 0;
         exit;
     endif;
@@ -48,6 +95,18 @@ function ReadGPSReading(numeric maxTimeSec, numeric desiredAccuracyM)
     endif;
 
     ReadGPSReading = 1;
+end;
+
+
+function ReleaseGPS()
+    { Close the radio after the case's LAST GPS capture (battery). Flag-guarded
+      no-op when already closed, so callers may invoke it from protect blocks
+      that re-run on back-navigation. }
+    if gpsRadioOpen = 1 then
+        gps(close);
+        gpsRadioOpen = 0;
+    endif;
+    ReleaseGPS = 1;
 end;
 
 
@@ -120,7 +179,9 @@ postproc
     no signal, so the row still carries a time). Desktop has no GPS radio:
     ReadGPSReading returns 0 (getos 10:19 guard) and flows past with no modal. }
   if length(strip(TP_TIMESTAMP)) = 0 then
-    if ReadGPSReading(120, 20) then
+    { 20 s budget (was 120): touchpoint rows are sporadic, so the radio may be
+      cold here — 20 s covers a warm/assisted start without the old 2-min hang. }
+    if ReadGPSReading(20, 20) then
       TP_GPS_LATITUDE   = maketext("%f", gps(latitude));
       TP_GPS_LONGITUDE  = maketext("%f", gps(longitude));
       TP_GPS_ALTITUDE   = maketext("%f", gps(altitude));
@@ -136,6 +197,7 @@ postproc
     protect(TP_GPS_SATELLITES, true);
     protect(TP_GPS_READTIME, true);
     protect(TP_TIMESTAMP, true);
+    ReleaseGPS();   { rows are sporadic — release the radio between touchpoints }
   endif;
 
 PROC TP_OUTCOME_NOTE

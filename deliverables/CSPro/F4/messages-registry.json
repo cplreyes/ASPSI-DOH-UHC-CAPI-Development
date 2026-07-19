@@ -1,6 +1,6 @@
 {
   "_note": "Machine-managed by cspro_helpers.numberize_errmsgs() — do not hand-edit. Maps each errmsg text to its permanent message number; numbers are never reused or renumbered.",
-  "next": 1159,
+  "next": 1160,
   "messages": {
     "PSGC region lookup failed — verify psgc_region.dat is deployed": 1001,
     "GPS hardware unavailable — check tablet location permission.": 1002,
@@ -156,9 +156,10 @@
     "Q199_WTP_CONSULT must be between 0 and 99999999.": 1152,
     "Final-visit date cannot be earlier than the first-visit date.": 1153,
     "Q72 says medicines were obtained from the GAMOT Package. Please list at least one medicine in Q73 before continuing.": 1154,
-    "Reminder: %d Section N item(s) marked consumed by the household still have no amount. Go back to Section N and enter the amount spent and/or the in-kind value for each (or -98 if the household does not know, -99 if they refuse). You may continue, but please check.": 1155,
+    "No GPS fix after %d s — move near a window or doorway and re-enter this field to retry.": 1155,
     "Amount must be 0-99999999, or -98 if the household does not know / -99 if they refuse to answer.": 1156,
-    "Q95_TRAVEL_TIME_MIN must be between 0 and 999.": 1157,
-    "Q96_TRAVEL_COST_PHP must be between 0 and 99999.": 1158
+    "Reminder: %d Section N item(s) marked consumed by the household still have no amount. Go back to Section N and enter the amount spent and/or the in-kind value for each (or -98 if the household does not know, -99 if they refuse). You may continue, but please check.": 1157,
+    "Q95_TRAVEL_TIME_MIN must be between 0 and 999.": 1158,
+    "Q96_TRAVEL_COST_PHP must be between 0 and 99999.": 1159
   }
 }

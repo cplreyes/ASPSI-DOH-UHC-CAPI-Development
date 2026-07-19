@@ -946,7 +946,7 @@ Include `Capture-Helpers.apc` in the form's .app:
 { Facility GPS — fired on the capture-trigger item. }
 PROC FACILITY_CAPTURE_GPS
 onfocus
-  if ReadGPSReading(120, 20) then
+  if ReadGPSReading(15, 20)   { radio warm since case start — WarmUpGPS() (2026-07-19) } then
     FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
     FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
     FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
@@ -959,7 +959,7 @@ onfocus
 { Patient-home GPS — same pattern on the P_HOME_ block. }
 PROC P_HOME_CAPTURE_GPS
 onfocus
-  if ReadGPSReading(120, 20) then
+  if ReadGPSReading(15, 20)   { radio warm since case start — WarmUpGPS() (2026-07-19) } then
     P_HOME_GPS_LATITUDE   = maketext("%f", gps(latitude));
     P_HOME_GPS_LONGITUDE  = maketext("%f", gps(longitude));
     P_HOME_GPS_ALTITUDE   = maketext("%f", gps(altitude));

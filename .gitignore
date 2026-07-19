@@ -144,6 +144,7 @@ deliverables/CSWeb/*.sql.gz
 /deliverables/CSPro/supervisor-hub/assignments/pretest-users.csv
 /deliverables/CSPro/supervisor-hub/assignments/pretest-assignments.csv
 /deliverables/CSPro/supervisor-hub/assignments/out-pretest/
+/deliverables/CSPro/supervisor-hub/assignments/pretest-credentials.csv
 
 # Hub roster BAKED INTO THE APP PACKAGE — contains every hub/CSWeb password in
 # plaintext. It was tracked until 2026-07-15; those secrets are burned and were

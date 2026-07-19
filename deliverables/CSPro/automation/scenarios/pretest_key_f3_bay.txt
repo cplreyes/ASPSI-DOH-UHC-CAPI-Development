@@ -1,0 +1,16 @@
+# PRETEST KEY GATE — F3 patient at Laguna Provincial Hospital - Bay.
+# ASPSI's docx lists Facility 2 = 040340210000 (geo 0403402 = Bay, correct) but
+# then lists its PATIENTS as 040341110001..10 - which are Los Banos Doctors
+# Hospital's patient codes verbatim (geo 0403411). That is a copy-paste slip:
+# it would put Bay patients under Los Banos AND collide with LBDH's cases.
+# CORRECTED patient 1 = 040340210001. Prove the Bay geo prefix passes the gate.
+rmdata ../F3/desktest.csdb
+launch ../F3/PatientSurvey_desktest.pff
+
+casekey 040340210001
+wait 1
+note EXPECT: accepted - geo resolves to Bay, Laguna (NOT Los Banos)
+shot 01_bay_key_accepted
+
+wait 1
+shot 02_city_name_should_read_bay

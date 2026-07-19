@@ -1,6 +1,6 @@
 {
   "_note": "Machine-managed by cspro_helpers.numberize_errmsgs() — do not hand-edit. Maps each errmsg text to its permanent message number; numbers are never reused or renumbered.",
-  "next": 1201,
+  "next": 1202,
   "messages": {
     "PSGC region lookup failed — verify psgc_region.dat is deployed": 1001,
     "GPS hardware unavailable — check tablet location permission.": 1002,
@@ -201,6 +201,7 @@
     "An 'other' option was selected for Q143. Please specify.": 1197,
     "An 'other' option was selected for Q15. Please specify.": 1198,
     "An 'other' option was selected for Q18. Please specify.": 1199,
-    "An 'other' option was selected for Q33. Please specify.": 1200
+    "An 'other' option was selected for Q33. Please specify.": 1200,
+    "No GPS fix after %d s — move near a window or doorway and re-enter this field to retry.": 1201
   }
 }

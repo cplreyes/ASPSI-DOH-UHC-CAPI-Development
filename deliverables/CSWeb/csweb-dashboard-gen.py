@@ -323,6 +323,13 @@ TEMPLATE = r"""<!doctype html>
   .filters select{font:14px system-ui;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;min-width:200px}
   .filters .reset{margin-left:auto;align-self:end;font:13px system-ui;padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer}
   .filters .reset:hover{background:var(--bg)}
+  .enumchip{display:flex;align-items:center;gap:8px;background:#e7f3ec;border:1px solid #b7d9c4;color:#004d2c;border-radius:10px;padding:7px 12px;font-size:13px;margin:0 2px 14px;width:fit-content;max-width:100%}
+  .enumchip b{font-weight:700}
+  .enumchip button{border:none;background:transparent;color:#006b3f;font-size:18px;line-height:1;cursor:pointer;padding:0 2px}
+  .enumchip button:hover{color:#d32f2f}
+  .covtbl tr.clickable{cursor:pointer}
+  .covtbl tr.clickable:hover{background:#f0f7f3}
+  .covtbl tr.selrow{background:#e7f3ec}
   .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:6px}
   .kpi{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--g);border-radius:12px;padding:14px 16px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
   .kpi .num{font-size:30px;font-weight:800;color:var(--ink);line-height:1}
@@ -388,6 +395,7 @@ TEMPLATE = r"""<!doctype html>
     <div class="f"><label for="fInst">Instrument</label><select id="fInst"></select></div>
     <div class="f"><label for="fRegion">Region</label><select id="fRegion"></select></div>
     <div class="f"><label for="fSup">Field supervisor</label><select id="fSup"></select></div>
+    <div class="f"><label for="fEnum">Enumerator</label><select id="fEnum"></select></div>
     <div class="f"><label for="fStatus">Status</label><select id="fStatus"></select></div>
     <div class="f"><label for="fFrom">Visit from</label><input type="date" id="fFrom" /></div>
     <div class="f"><label for="fTo">Visit to</label><input type="date" id="fTo" /></div>
@@ -402,6 +410,7 @@ TEMPLATE = r"""<!doctype html>
     <div class="kpi bad"><div class="num" id="kNogps">0</div><div class="lbl">No GPS fix</div></div>
   </div>
   <div class="freshness">Data as of <b id="fresh"></b> · auto-refreshes ~every 2 min · "today" = <span id="todayLbl"></span> (Manila)</div>
+  <div id="enumChip" class="enumchip" hidden></div>
   <div class="chart wide"><h3>Submissions over time — new per day &amp; cumulative</h3><div class="canvas-wrap"><canvas id="trend"></canvas></div></div>
   <div id="coverage"></div>
   <div id="productivity"></div>
@@ -436,6 +445,23 @@ supSel.add(new Option('All supervisors','ALL'));
 (P.supervisors||[]).forEach(x=>supSel.add(new Option(x,x)));
 const statSel=document.getElementById('fStatus');
 [['ALL','All statuses'],['Completed','Completed'],['Partial','Partial']].forEach(([v,t])=>statSel.add(new Option(t,v)));
+// Enumerator filter — keyed on the CSWeb upload login (syncuser) with typed-name fallback,
+// exactly like the productivity panel below, so a person reads the same on both. Built from
+// f1/f3/f4 rows only (F2 is self-administered — no enumerator).
+const enumSel=document.getElementById('fEnum');
+function enumKeyOf(r){ return (r.syncuser&&r.syncuser!=='(unknown)') ? 'u:'+r.syncuser
+                     : (r.enumerator&&r.enumerator!=='(unassigned)') ? 'n:'+r.enumerator : ''; }
+enumSel.add(new Option('All enumerators','ALL'));
+(function(){
+  const em=new Map();
+  ['f1','f3','f4'].forEach(k=>(P.data[k]||[]).forEach(r=>{
+    const key=enumKeyOf(r); if(!key) return;
+    let o=em.get(key); if(!o){o={key,login:(r.syncuser&&r.syncuser!=='(unknown)')?r.syncuser:null,names:{}}; em.set(key,o);}
+    if(r.enumerator&&r.enumerator!=='(unassigned)') o.names[r.enumerator]=(o.names[r.enumerator]||0)+1;
+  }));
+  const lbl=o=>{const nm=Object.keys(o.names).sort((a,b)=>o.names[b]-o.names[a])[0]||(o.login?'(no name)':'(unknown)'); return o.login?(nm+' · '+o.login):nm;};
+  [...em.values()].map(o=>[o.key,lbl(o)]).sort((a,b)=>a[1].toLowerCase()<b[1].toLowerCase()?-1:1).forEach(([v,t])=>enumSel.add(new Option(t,v)));
+})();
 
 // --- KPI + trend refs ---
 const kTotal=document.getElementById('kTotal'), kCompleted=document.getElementById('kCompleted'),
@@ -542,6 +568,14 @@ INSTS.forEach(k=>(P.data[k]||[]).forEach(r=>{ if(r.code9 && r.province && r.prov
 const covSort={};      // inst -> {col,dir}
 function esc(s){const d=document.createElement('div'); d.textContent=(s==null?'':s); return d.innerHTML;}
 function covColor(pct){ return pct>=80?'#006b3f':(pct>=40?'#e5b23b':'#d32f2f'); }
+// plan.provisional is a bool (whole plan) OR an object keyed by instrument — F1 can be real
+// (facility-derived denominator) while F3/F4 stay provisional. Resolve PER instrument so a
+// real F1 is never tarred with a placeholder warning, and a placeholder is never let through.
+function planProvisionalFor(pl, k){
+  const pv=(pl||{}).provisional;
+  if(pv && typeof pv==='object') return pv[k]!==false;
+  return pv!==false;
+}
 function renderCoverage(pass){
   const cov=document.getElementById('coverage'); cov.innerHTML='';
   const T=P.targets||{};
@@ -551,24 +585,36 @@ function renderCoverage(pass){
   // Provenance FIRST. A coverage % divided by a placeholder plan renders identically to a
   // real one; this banner is the only thing standing between a fixture and a DOH briefing.
   const pl=P.plan||{};
-  if(pl.provisional!==false){
+  const provInsts=visible.filter(k=>planProvisionalFor(pl,k));
+  const realInsts=visible.filter(k=>!planProvisionalFor(pl,k));
+  if(provInsts.length){
     const w=document.createElement('div'); w.className='planwarn';
-    const f=pl.facilities||{}, nf=(f.f1||0)+(f.f3||0)+(f.f4||0);
-    w.innerHTML='<b>PROVISIONAL ASSIGNMENT PLAN — these percentages are not real coverage.</b> '
-      +'Targets come from <b>'+esc(pl.label||'an unlabelled targets.json')+'</b>'
+    const f=pl.facilities||{}, nf=provInsts.reduce((s,k)=>s+(f[k]||0),0);
+    const who=provInsts.map(k=>k.toUpperCase()+' · '+(NAMES[k]||k)).join(', ');
+    w.innerHTML='<b>PROVISIONAL ASSIGNMENT PLAN — '+esc(who)+' percentages are not real coverage.</b> '
+      +'Their targets come from <b>'+esc(pl.label||'an unlabelled targets.json')+'</b>'
       +(pl.assignments?' ('+pl.assignments+' assignment row'+(pl.assignments===1?'':'s')
          +' across '+nf+' facility slot'+(nf===1?'':'s')+')':'')
-      +'. Every % and shortfall below is measured against that placeholder. Replace '
+      +'. Every % and shortfall for those instruments is measured against that placeholder. Replace '
       +'<code>assignments-source.csv</code> with ASPSI’s real EA plan and re-run '
-      +'<code>gen-targets.py --final</code> before quoting any of this.';
+      +'<code>gen-targets.py --final</code> before quoting them.';
     cov.appendChild(w);
+  }
+  // Provenance cuts both ways: staying silent on a REAL denominator loses it just as surely
+  // as mislabelling a placeholder. Name the source for the instruments that are real.
+  if(realInsts.length){
+    const r=document.createElement('div'); r.className='cov-note';
+    const who=realInsts.map(k=>k.toUpperCase()+' · '+(NAMES[k]||k)).join(', ');
+    const src=(realInsts.indexOf('f1')>=0 && pl.f1_source) ? pl.f1_source : (pl.label||'the declared final plan');
+    r.innerHTML='<b>'+esc(who)+'</b> — targets are REAL, from <b>'+esc(src)+'</b>.';
+    cov.appendChild(r);
   }
   const note=document.createElement('div'); note.className='cov-note';
   note.textContent='Landed = Completed cases in the current view (instrument · region · visit-date). Expected = the assignment plan’s target. The Status filter does not apply here.';
   cov.appendChild(note);
   visible.forEach(k=>{
     const tgt=T[k], comp={}; let untarget=0;
-    (P.data[k]||[]).forEach(r=>{ if(r.status!=='Completed'||!pass(r,true)) return; if(tgt[r.code9]) comp[r.code9]=(comp[r.code9]||0)+1; else untarget++; });
+    (P.data[k]||[]).forEach(r=>{ if(r.status!=='Completed'||!pass(r,true,true)) return; if(tgt[r.code9]) comp[r.code9]=(comp[r.code9]||0)+1; else untarget++; });
     let rows=Object.keys(tgt).map(code=>{
       const t=tgt[code], exp=+t.target||0, landed=comp[code]||0;
       return {name:t.name||('(code '+code+')'), area:t.province||provByCode[code]||'(area TBD)', exp, landed,
@@ -655,7 +701,8 @@ function renderProductivity(pass){
     +'found, or ineligible) and a substitute was drawn; postponed visits are NOT replacements. The share '
     +'is flagged red only at 30% or more over at least 5 cases — a hard catchment legitimately produces '
     +'replacements, so the raw count is not comparable between enumerators. Honours every filter above. '
-    +'F2 is absent by design: it is self-administered and has no enumerator.'
+    +'F2 is absent by design: it is self-administered and has no enumerator. '
+    +'Click any row to filter the whole dashboard to that enumerator (click again to clear).'
     +(unnamed?' '+unnamed+' case(s) in view carry no enumerator name.':'');
   el.appendChild(note);
   let rows=[...m.values()].map(o=>{
@@ -677,7 +724,7 @@ function renderProductivity(pass){
     // small-denominator discipline as cases/day — a share over <5 cases is noise, so it is not
     // flagged (2 of 3 replaced = 67% would otherwise outrank every real outlier).
     const replPct = o.cases>0 ? Math.round(100*o.repl/o.cases) : null;
-    return {name, login:o.login, nameSplit, nameList, sup,
+    return {key:o.key, name, login:o.login, nameSplit, nameList, sup,
             cases:o.cases, completed:o.completed, partial:o.partial,
             repl:o.repl, replPct, replHot: (o.cases>=5 && replPct>=30), days,
             rate: days>0 ? Math.round(10*o.cases/days)/10 : null, last:o.last, mix:o.mix};
@@ -712,6 +759,9 @@ function renderProductivity(pass){
   const fmtDate=d=>d?d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8):'—';
   const fmtMix=mx=>['f1','f3','f4'].filter(k=>mx[k]).map(k=>k.toUpperCase()+' '+mx[k]).join(' · ')||'—';
   rows.forEach(r=>{ const tr=document.createElement('tr');
+    tr.className='clickable'+(enumSel.value===r.key?' selrow':'');
+    tr.title='Click to filter the whole dashboard to this enumerator (click again to clear)';
+    tr.onclick=()=>{ enumSel.value=(enumSel.value===r.key?'ALL':r.key); render(); };
     const w=maxCases>0?Math.round(100*r.cases/maxCases):0;
     // "gone quiet" = no case for >2 days against the dashboard's own Manila today
     const idle=(P.today&&r.last)?daysBetween(r.last,P.today):null;
@@ -738,16 +788,27 @@ function renderProductivity(pass){
   el.appendChild(tbl);
 }
 function render(){
-  const inst=instSel.value, region=regSel.value, status=statSel.value, sup=supSel.value;
+  const inst=instSel.value, region=regSel.value, status=statSel.value, sup=supSel.value, enumK=enumSel.value;
   const fromY=fromInp.value?fromInp.value.replace(/-/g,''):'';
   const toY=toInp.value?toInp.value.replace(/-/g,''):'';
-  const pass=(r,ignoreStatus)=>{
+  // ignoreEnum: Coverage vs. target stays FACILITY-level. Enumerators aren't assigned to
+  // facilities in the plan (assignments-source.csv has a blank enumerator_id), so an
+  // enumerator filter can't slice a facility target — coverage passes ignoreEnum=true.
+  const pass=(r,ignoreStatus,ignoreEnum)=>{
     if(region!=='ALL' && r.region!==region) return false;
     if(sup!=='ALL' && r.supervisor!==sup) return false;
+    if(!ignoreEnum && enumK!=='ALL' && enumKeyOf(r)!==enumK) return false;
     if(!ignoreStatus && status!=='ALL' && r.status!==status) return false;
     if(fromY||toY){ const d=r.date; if(!(d&&d.length===8)) return false; if(fromY&&d<fromY) return false; if(toY&&d>toY) return false; }
     return true;
   };
+  // enumerator filter chip (click a leaderboard row or use the dropdown to set it)
+  const chip=document.getElementById('enumChip');
+  if(enumK!=='ALL'){ const opt=enumSel.options[enumSel.selectedIndex];
+    chip.hidden=false;
+    chip.innerHTML='Filtered to enumerator: <b>'+esc(opt?opt.text:enumK)+'</b> <button type="button" id="enumClear" aria-label="Clear filter" title="Clear">&times;</button>';
+    chip.querySelector('#enumClear').onclick=()=>{ enumSel.value='ALL'; render(); };
+  } else { chip.hidden=true; chip.innerHTML=''; }
   renderKpis(pass);
   renderTrend(pass);
   renderCoverage(pass);
@@ -776,9 +837,169 @@ function render(){
     });
   });
 }
-instSel.onchange=render; regSel.onchange=render; supSel.onchange=render; statSel.onchange=render; fromInp.onchange=render; toInp.onchange=render;
-document.getElementById('fReset').onclick=()=>{instSel.value='ALL';regSel.value='ALL';supSel.value='ALL';statSel.value='ALL';fromInp.value='';toInp.value='';render();};
+instSel.onchange=render; regSel.onchange=render; supSel.onchange=render; enumSel.onchange=render; statSel.onchange=render; fromInp.onchange=render; toInp.onchange=render;
+document.getElementById('fReset').onclick=()=>{instSel.value='ALL';regSel.value='ALL';supSel.value='ALL';enumSel.value='ALL';statSel.value='ALL';fromInp.value='';toInp.value='';render();};
 render();
+</script>
+<!-- ===== sync-activity notification bell (2026-07-15) — polls /docs/sync-feed.json ===== -->
+<style>
+#bellWrap{position:fixed;top:14px;right:20px;z-index:9999;font:14px system-ui,Segoe UI,Roboto,sans-serif}
+#bellBtn{position:relative;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.4);border-radius:10px;padding:7px 9px;cursor:pointer;line-height:0}
+#bellBtn:hover{background:rgba(255,255,255,.3)}
+#bellBadge{position:absolute;top:-7px;right:-7px;min-width:19px;height:19px;padding:0 4px;background:#d32f2f;color:#fff;border-radius:10px;font-size:11px;font-weight:700;line-height:19px;text-align:center;box-shadow:0 0 0 2px #006b3f}
+#bellPanel{position:absolute;top:46px;right:0;width:330px;max-height:62vh;background:#fff;color:#1c2b25;border:1px solid #dfe7e2;border-radius:12px;box-shadow:0 10px 34px rgba(0,0,0,.2);overflow:hidden;display:flex;flex-direction:column}
+#bellPanel[hidden]{display:none}
+#bellHead{padding:11px 14px;font-weight:700;color:#004d2c;border-bottom:1px solid #eef3f0;display:flex;justify-content:space-between;align-items:center;gap:8px}
+#bellEnable{font:12px system-ui;padding:4px 9px;border:1px solid #dfe7e2;border-radius:7px;background:#f4f7f5;cursor:pointer;color:#006b3f;font-weight:600;white-space:nowrap}
+#bellEnable.on{background:#006b3f;color:#fff;border-color:#006b3f}
+.bh-right{display:flex;align-items:center;gap:4px}
+#bellClose{font:20px/1 system-ui;width:26px;height:26px;border:none;background:transparent;color:#5b6b63;cursor:pointer;border-radius:6px}
+#bellClose:hover{background:#eef3f0;color:#1c2b25}
+#bellList{overflow-y:auto;padding:2px 0}
+#bellList .brow{padding:9px 14px;border-bottom:1px solid #f1f5f3}
+#bellList .brow:last-child{border-bottom:none}
+#bellList .brow.fresh{background:#eef8f1}
+#bellList .brow.dim{opacity:.6}
+#bellList .bmuted{color:#8a9791;font-style:italic}
+#bellAlerts:empty{display:none}
+.balert{padding:10px 14px;border-bottom:1px solid #fbe3e3;background:#fdf0f0;color:#8a1c1c;font-size:12.8px;line-height:1.45}
+.balert b{color:#b71c1c}
+.btoast.alert{background:#b71c1c}.btoast.alert b{color:#ffe08a}
+#bellList .who{font-weight:700}
+#bellList .sub{color:#5b6b63;font-size:12.5px}
+#bellList .inst{display:inline-block;font-size:11px;font-weight:700;color:#006b3f;background:#e7f3ec;border-radius:5px;padding:0 6px;margin-right:6px}
+.bellEmpty{padding:24px 14px;color:#5b6b63;font-style:italic;text-align:center}
+#bellFoot{padding:8px 14px;border-top:1px solid #eef3f0;color:#5b6b63;font-size:11.5px}
+#toastWrap{position:fixed;bottom:18px;right:18px;z-index:10000;display:flex;flex-direction:column;gap:10px}
+.btoast{background:#004d2c;color:#fff;border-radius:10px;padding:11px 15px;box-shadow:0 6px 24px rgba(0,0,0,.25);max-width:320px;transition:opacity .4s;animation:btin .25s ease}
+.btoast b{color:#ffe08a}
+@keyframes btin{from{transform:translateX(20px);opacity:0}to{transform:none;opacity:1}}
+@media(max-width:820px){#bellPanel{width:290px}#bellWrap{top:12px;right:12px}}
+</style>
+<div id="bellWrap">
+  <button id="bellBtn" title="Sync activity" aria-label="Sync activity">
+    <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+    <span id="bellBadge" hidden>0</span>
+  </button>
+  <div id="bellPanel" hidden>
+    <div id="bellHead"><span>Activity</span><span class="bh-right"><button id="bellEnable" type="button">Enable alerts</button><button id="bellClose" type="button" aria-label="Close" title="Close">&times;</button></span></div>
+    <div id="bellAlerts"></div>
+    <div id="bellList"><div class="bellEmpty">Waiting for the next device sync&hellip;</div></div>
+    <div id="bellFoot">Live &middot; every device sync (upload) appears here</div>
+  </div>
+</div>
+<div id="toastWrap"></div>
+<script>
+(function(){
+  var FEED='/docs/sync-feed.json', LS='uhc_bell_seen_rev';
+  var badge=document.getElementById('bellBadge'), panel=document.getElementById('bellPanel'),
+      btn=document.getElementById('bellBtn'), list=document.getElementById('bellList'),
+      enableBtn=document.getElementById('bellEnable'), toastWrap=document.getElementById('toastWrap'),
+      wrap=document.getElementById('bellWrap'), alertBox=document.getElementById('bellAlerts');
+  var LS2='uhc_bell_alert_notified';
+  var s0=localStorage.getItem(LS);
+  var seenRev = s0===null ? null : parseInt(s0,10);
+  var notifiedRev=null, latest=[], alerts=[];
+  function esc(x){return String(x==null?'':x).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function fmt(iso){try{return new Date(iso).toLocaleString('en-PH',{hour:'numeric',minute:'2-digit',hour12:true,month:'short',day:'numeric'});}catch(e){return iso||'';}}
+  function render(){
+    if(!latest.length){list.innerHTML='<div class="bellEmpty">Waiting for the next device sync&hellip;</div>';return;}
+    var base=(seenRev==null)?Infinity:seenRev;
+    list.innerHTML=latest.map(function(e){
+      var tn=e.total_new||0, te=e.total_edited||0, active=(tn>0||te>0);
+      var fresh=(e.rev>base&&tn>0)?' fresh':'';
+      var det;
+      if(active){
+        det=(e.items||[]).filter(function(it){return (it.new||0)>0||(it.edited||0)>0;}).map(function(it){
+          var p=[]; if(it.new>0)p.push('<b>'+it.new+'</b> new'); if(it.edited>0)p.push('<b>'+it.edited+'</b> edited');
+          return '<span class="inst">'+esc(it.inst)+'</span> '+p.join(' + ');
+        }).join(' &middot; ')+' &middot; '+fmt(e.time);
+      }else{
+        det='<span class="bmuted">no new cases</span> &middot; '+fmt(e.time);
+      }
+      return '<div class="brow'+fresh+(active?'':' dim')+'"><div class="who">'+esc(e.name||e.user)+(e.name?' <span class="sub">'+esc(e.user)+'</span>':'')+' synced</div>'+
+             '<div class="sub">'+det+'</div></div>';
+    }).join('');
+  }
+  function badgeUpd(){
+    var base=(seenRev==null)?Infinity:seenRev;
+    var n=latest.filter(function(e){return e.rev>base&&(e.total_new||0)>0;}).length + alerts.length;
+    if(n>0){badge.textContent=n>99?'99+':n;badge.hidden=false;}else{badge.hidden=true;}
+  }
+  function toast(e){
+    var d=(e.items||[]).filter(function(it){return (it.new||0)>0;}).map(function(it){return it.inst+': '+it.new+' new case'+(it.new==1?'':'s');}).join(', ');
+    var t=document.createElement('div');t.className='btoast';
+    t.innerHTML='&#128276; <b>'+esc(e.name||e.user)+'</b> synced &middot; <b>'+esc(d)+'</b>';
+    toastWrap.appendChild(t);
+    setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},400);},6000);
+  }
+  function osNotify(e){
+    if(!('Notification' in window)||Notification.permission!=='granted')return;
+    var d=(e.items||[]).filter(function(it){return (it.new||0)>0;}).map(function(it){return it.inst+': '+it.new+' new case'+(it.new==1?'':'s');}).join(', ');
+    try{new Notification((e.name||e.user)+' synced',{body:d+' · '+fmt(e.time),tag:'sync-'+e.rev});}catch(err){}
+  }
+  function renderAlerts(){
+    if(!alerts.length){alertBox.innerHTML='';return;}
+    alertBox.innerHTML=alerts.map(function(a){
+      var txt;
+      if(a.type==='dup'){
+        txt='<b>Duplicate case key</b> '+esc(a.key)+' &middot; '+esc(a.inst)+' &middot; '+a.n+' cases'+((a.users&&a.users.length)?(' &middot; '+esc(a.users.join(', '))):'');
+      }else{
+        txt='<b>Off-plan '+(a.n>1?'cases':'case')+'</b> facility '+esc(a.code9)+' &middot; '+esc(a.inst)+' &middot; '+a.n+' not in plan'+((a.users&&a.users.length)?(' &middot; '+esc(a.users.join(', '))):'');
+      }
+      return '<div class="balert">&#9888;&#65039; '+txt+'</div>';
+    }).join('');
+  }
+  function alertToast(a){
+    var msg=(a.type==='dup')?('Duplicate key '+a.key+' ('+a.inst+')'):('Off-plan case '+(a.code9||a.example||'')+' ('+a.inst+')');
+    var t=document.createElement('div');t.className='btoast alert';
+    t.innerHTML='&#9888;&#65039; <b>'+esc(msg)+'</b>'+((a.users&&a.users.length)?(' &middot; '+esc(a.users.join(', '))):'');
+    toastWrap.appendChild(t);
+    setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},400);},9000);
+  }
+  function alertNotify(a){
+    if(!('Notification' in window)||Notification.permission!=='granted')return;
+    var title=(a.type==='dup')?'⚠️ Duplicate case key':'⚠️ Case outside the plan';
+    var body=(a.type==='dup')?(a.key+' · '+a.inst+' · '+a.n+' cases'):('facility '+a.code9+' · '+a.inst+' · '+a.n+' case(s)');
+    if(a.users&&a.users.length)body+=' · '+a.users.join(', ');
+    try{new Notification(title,{body:body,tag:a.id,requireInteraction:true});}catch(err){}
+  }
+  function poll(){
+    fetch(FEED+'?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+      latest=(d&&d.events)||[]; alerts=(d&&d.alerts)||[];
+      if(latest.length){
+        var maxRev=latest[0].rev;
+        if(seenRev==null){seenRev=maxRev;localStorage.setItem(LS,String(seenRev));}
+        if(notifiedRev==null){notifiedRev=maxRev;}
+        else if(maxRev>notifiedRev){
+          latest.filter(function(e){return e.rev>notifiedRev&&(e.total_new||0)>0;}).sort(function(a,b){return a.rev-b.rev;}).forEach(function(e){toast(e);osNotify(e);});
+          notifiedRev=maxRev;
+        }
+      }
+      var firstA=(localStorage.getItem(LS2)===null), seen=[];
+      try{seen=JSON.parse(localStorage.getItem(LS2)||'[]');}catch(e){seen=[];}
+      var sset={}; seen.forEach(function(k){sset[k]=1;});
+      alerts.forEach(function(a){ if(!sset[a.id]){ if(!firstA){alertToast(a);alertNotify(a);} seen.push(a.id); sset[a.id]=1; } });
+      localStorage.setItem(LS2, JSON.stringify(seen.slice(-300)));
+      render(); renderAlerts(); badgeUpd();
+    }).catch(function(){});
+  }
+  btn.addEventListener('click',function(){
+    if(panel.hasAttribute('hidden')){
+      panel.removeAttribute('hidden');
+      if(latest.length){seenRev=latest[0].rev;localStorage.setItem(LS,String(seenRev));}
+      badgeUpd();render();
+    }else{panel.setAttribute('hidden','');}
+  });
+  document.getElementById('bellClose').addEventListener('click',function(ev){ev.stopPropagation();panel.setAttribute('hidden','');});
+  document.addEventListener('click',function(ev){if(!wrap.contains(ev.target)){panel.setAttribute('hidden','');}});
+  function reflect(){if(('Notification' in window)&&Notification.permission==='granted'){enableBtn.textContent='Alerts on';enableBtn.classList.add('on');}}
+  enableBtn.addEventListener('click',function(ev){ev.stopPropagation();
+    if(!('Notification' in window)){enableBtn.textContent='Not supported';return;}
+    Notification.requestPermission().then(reflect);
+  });
+  reflect(); poll(); setInterval(poll,20000);
+})();
 </script>
 </body>
 </html>

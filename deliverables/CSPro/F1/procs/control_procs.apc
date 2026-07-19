@@ -6,6 +6,11 @@
   PSGC codes are also written to the off-form REGION/PROVINCE_HUC/CITY_MUNICIPALITY
   items so the BARANGAY cascade filters correctly. ---- }
 PROC QUESTIONNAIRE_NUMBER
+preproc
+  { GPS warm-start (2026-07-19): open the radio while the enumerator types the
+    case key so the fix has converged by the Facility GPS form — the capture
+    read is then near-instant instead of a cold acquisition. Desktop no-op. }
+  WarmUpGPS();
 postproc
   { 0. record the interview language at the true case start (§15.E) }
   LANGUAGE_USED = getlanguage();
@@ -96,7 +101,9 @@ postproc
 PROC FACILITY_GPS_LATITUDE
 onfocus
   if length(strip(FACILITY_GPS_READTIME)) = 0 then   { capture once; not on back-nav }
-    if ReadGPSReading(120, 20) then
+    { 15 s budget: the radio has been warm since the case key (WarmUpGPS), so a
+      fresh fix normally arrives in ~1-2 s; 15 s only caps the no-signal case. }
+    if ReadGPSReading(15, 20) then
       FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
       FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
       FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
@@ -114,6 +121,7 @@ onfocus
     protect(FACILITY_GPS_ACCURACY, true);
     protect(FACILITY_GPS_SATELLITES, true);
     protect(FACILITY_GPS_READTIME, true);
+    ReleaseGPS();   { F1's only GPS block — close the radio once captured }
   endif;
 
 { ---- #231 Verification photo (moved to the END of the form 2026-06-12). Filename

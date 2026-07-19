@@ -6,7 +6,7 @@ data_programmer: Carl Patrick L. Reyes
 qa_tester: Shan (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
 engagement_window: November 2025 – August 2026
-last_updated: 2026-07-06
+last_updated: 2026-07-15
 ---
 
 # Product Backlog — UHC Survey Year 2 CAPI Development
@@ -20,6 +20,17 @@ last_updated: 2026-07-06
 ---
 
 ## 1. Status at a Glance
+
+### Update — 2026-07-15 (pretest live)
+
+**The pretest is UNDERWAY.** Day 1 ran at **Brgy. Mayondon, Los Baños on 2026-07-15** (7 enumerators, F4 household). CSWeb sync worked across the fleet; one enumerator-access issue — a CSWeb login (`se-001`) dropped during the bulk user import (the "CSV has a header row" checkbox ate the first row) — was diagnosed and fixed live via a one-row re-import. Carl's lane during the pretest is reactive field support; nothing on the build side changed (freeze holds).
+
+**Two post-pretest items queued** (designed 2026-07-15, execution PARKED until after the pretest, subagent-driven):
+
+- **E3-RELEASE-001 — CAPI release lane (`/capi-release`).** A version-control skill that preserves, reproduces, and rolls back every *deployed* CAPI app build — a committed `manifest.json` (commit SHA + git tag + hashed inputs) + `.pff` snapshots as the audit trail, big binaries rebuilt from the tag and hash-verified, and a local gitignored cache of the last few bundles for instant rollback. Closes the gap where version *numbers* are stamped but the built artifact is never preserved. Spec + 10-task TDD plan written; deploy stays gated (freeze). Artifacts: `deliverables/CSPro/docs/specs/2026-07-15-capi-release-lane.md` + `…/plans/2026-07-15-capi-release-lane.md`. (Ties to Epic 3.)
+- **E8-SUPERVISOR-003 — Hub app rename + de-duplicate.** Rename the supervisor hub's CSEntry entry from "Supervisor Hub" to **"UHC Survey Y2 — Field App"** (aligned to the F2 app name) and suppress the duplicate "Supervisor Hub Menu" entry. Confirmed the hub is **one role-gated app** (login → supervisor *or* enumerator menu by account role), not two — a two-app split was considered and dropped. Ships as the *first* release through E3-RELEASE-001, gated by an on-device spike (confirm MenuApp disappears and the login→menu chain still resolves); deploy deferred. Also added a **sync-before-update** gate to the deploy SOP (remove+re-add wipes an instrument's local `.csdb`, so only-on-tablet cases must be synced first — the hub itself holds no data). (Ties to Epic 8.)
+
+---
 
 ### Headline — 2026-07-03 (Sprint 012 close)
 
@@ -83,12 +94,12 @@ _Neither SJREB nor tablets is a Carl-tracked blocker — both are ASPSI's. The o
 | **0** | CAPI Project Management & Stakeholder Engagement | **Active / Ongoing** — **Sprint 012 closed ON TIME 2026-07-03** (goal landed; all four perennial carries cleared — E0-SCRUM-SYNC built, PSA out-of-lane, Goal B killed, field-ready criterion wired; archived to `sprints/sprint-012.md`); **Sprint 013 skeleton** (Jul 6–10, locks Mon); daily-standup automation + drift canary live | Lock S013 Mon — **headline: Epic 10 `transform.py` (ETL variable extraction)** + the 47-partial/3-gap tabulation decision memo to ASPSI |
 | **1** | Inception & Engagement Setup | **Done** | — (historical, closed Dec 2025) |
 | **2** | Survey Questionnaire Design & Dictionary | **Done (design)** — F1/F3/F4 Build-ready, multi-language; 12-digit case-key migration in; F2 data model in the PWA spec; PLF Source Captured | PLF DCF build (E2-PLF-004/005/006) when slotted |
-| **3** | CAPI Application Development | **FIELD-READY (build complete)** — **F2 PWA in production v2.1.0, 7 languages** (UAT R1–R3 closed). **F1/F3/F4 multi-language BUILT, version-stamped (v1.0.3 / v1.0.3 / v1.2.2), deployed to CSWeb; UAT R5 CLOSED 2026-06-29**; pretest freeze stands w/ data-integrity exceptions (weekend #830/#832/#833 deploys); runtime messages numbered + translatable (R2); F4 Option C food-roster pilot in flight (parallel session) | Pretest (ASPSI-dated); hub Designer compile before its next deploy (F1/F3/F4 cleared via `.csds`); desk-test reopens ride the standing FIELDREADY lane |
+| **3** | CAPI Application Development | **FIELD-READY (build complete)** — **F2 PWA in production v2.1.0, 7 languages** (UAT R1–R3 closed). **F1/F3/F4 multi-language BUILT, version-stamped (v1.0.3 / v1.0.3 / v1.2.2), deployed to CSWeb; UAT R5 CLOSED 2026-06-29**; pretest freeze stands w/ data-integrity exceptions (weekend #830/#832/#833 deploys); runtime messages numbered + translatable (R2); F4 Option C food-roster pilot in flight (parallel session) | Pretest (ASPSI-dated); hub Designer compile before its next deploy (F1/F3/F4 cleared via `.csds`); desk-test reopens ride the standing FIELDREADY lane · **E3-RELEASE-001** CAPI release lane queued post-pretest (spec+plan 2026-07-15) |
 | **4** | Backend & Sync Infrastructure (CSWeb for CAPI; Cloudflare/Apps Script for PWA) | **In Progress** — PWA backend live; **CSWeb 8.0.1 LIVE on Elestio** + sync/map/case-status dashboards; **Supervisor hub deployed** to CSWeb | F2 Survey+Admin migration to a dedicated **Elestio** instance (provisioning-gated); CSWeb backup strategy |
 | **5** | Field Distribution & Device Management | **In Progress** — CAPI tablet + PWA field-ops SOPs drafted; F2 distribution proven | Tablet supply is ASPSI/DOH logistics (not Carl's gate); Carl's lane = the provisioning SOP, ready when devices land |
 | **6** | Testing and Pilot | **In Progress** — PWA UAT R1–R3 closed; **CAPI UAT Round 5 CLOSED 2026-06-29 (78/79)**; field-ready exit criterion wired (`check_field_ready.py`) + verified; **pretest prep done** (Los Baños 84-QN assignments + printed sheets, testers notified) | **Hub UAT Round 6** (waiting on ASPSI account import + real names); **pretest awaits ASPSI's date** (SJREB lane) |
 | **7** | Training and Documentation | **In Progress** — Survey Manual + enumerator/STL/HCW decks + CSEntry field guide drafted; **Supervisor-hub training guide LIVE** | Finalize for D5; fill enumerator-guide screenshots; Kidd's review on the Survey Manual |
-| **8** | Fieldwork Monitoring and Quality Control | **In Progress** — **Supervisor hub Phase-1 (QA review) + Phase-2 (login→menu→Bluetooth→relay→reports→map) BUILT + device-verified on 2 tablets + training guide LIVE**; CSWeb dashboards live | Wire the hub into the field SOP at fieldwork start; confirm the QA-supervisor roster (ASPSI) for the `supervisor-qa` role |
+| **8** | Fieldwork Monitoring and Quality Control | **In Progress** — **Supervisor hub Phase-1 (QA review) + Phase-2 (login→menu→Bluetooth→relay→reports→map) BUILT + device-verified on 2 tablets + training guide LIVE**; CSWeb dashboards live | Wire the hub into the field SOP at fieldwork start; confirm the QA-supervisor roster (ASPSI) for the `supervisor-qa` role · **E8-SUPERVISOR-003** hub rename → "UHC Survey Y2 — Field App" + de-dupe entry (post-pretest) |
 | **9** | Data Management and Security | **Governance Active** — Data-Privacy-and-Security-Plan drafted | Finalize privacy policy + secure-sync + backup/retention for both tracks |
 | **10** | Data Cleaning and Processing | **In Progress (spec + skeleton)** — shared codebook v0.4; harmonization ETL skeleton live over the CSWeb breakout DBs (dry-run proven Jun-12) | **`transform.py` variable extraction — Sprint 013 headline** (the last blocker to real table output) |
 | **11** | Analysis Support & Deliverables | **In Progress (spec complete 2026-07-02)** — SSRCS Form 1 §II-9 tabulation plan BUILT: 197 PSA-committed tables (147 mapped / 47 partial / 3 gaps); Stata-12 do-file skeletons smoke-tested end-to-end; tabout installed | 47-partial/3-gap decision memo → ASPSI; real weighted tables once the Epic-10 extraction lands |

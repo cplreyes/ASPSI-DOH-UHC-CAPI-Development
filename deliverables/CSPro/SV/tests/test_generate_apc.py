@@ -14,13 +14,17 @@ def test_apc_inlines_helper_into_single_proc_global():
     assert not [ln for ln in apc.splitlines() if ln.strip().startswith("#include")]
     # The inlined GPS + photo helper functions are present
     assert "function ReadGPSReading" in apc
+    assert "function WarmUpGPS" in apc
+    assert "function ReleaseGPS" in apc
     assert "function TakeVerificationPhoto" in apc
 
 
 def test_apc_auto_stamps_and_protects_on_tp_type():
     apc = build_apc()
     assert "PROC TP_TYPE" in apc
-    assert "ReadGPSReading(120, 20)" in apc
+    # 20 s bounded read (was a 2-min cold hang) + radio released between rows
+    assert "ReadGPSReading(20, 20)" in apc
+    assert "ReleaseGPS();" in apc
     assert 'sysdate("YYYYMMDD")' in apc and 'systime("HHMM")' in apc
     # captured-once guard + protect of the stamped fields
     assert "if length(strip(TP_TIMESTAMP)) = 0 then" in apc

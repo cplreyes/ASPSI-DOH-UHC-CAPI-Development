@@ -5,7 +5,6 @@
 Language = EN
 1001 PSGC region lookup failed — verify psgc_region.dat is deployed
 1002 GPS hardware unavailable — check tablet location permission.
-1003 GPS read failed or timed out (target accuracy %d m).
 1004 GPS accuracy %d m exceeds target %d m — consider a retry outdoors.
 1005 Region code %02d not found in PSGC. Check the Questionnaire Number.
 1006 Geo prefix %07d not found in PSGC (no province or city/municipality matches). Check the Questionnaire Number.
@@ -155,7 +154,8 @@ Language = EN
 1152 Q199_WTP_CONSULT must be between 0 and 99999999.
 1153 Final-visit date cannot be earlier than the first-visit date.
 1154 Q72 says medicines were obtained from the GAMOT Package. Please list at least one medicine in Q73 before continuing.
-1155 Reminder: %d Section N item(s) marked consumed by the household still have no amount. Go back to Section N and enter the amount spent and/or the in-kind value for each (or -98 if the household does not know, -99 if they refuse). You may continue, but please check.
+1155 No GPS fix after %d s — move near a window or doorway and re-enter this field to retry.
 1156 Amount must be 0-99999999, or -98 if the household does not know / -99 if they refuse to answer.
-1157 Q95_TRAVEL_TIME_MIN must be between 0 and 999.
-1158 Q96_TRAVEL_COST_PHP must be between 0 and 99999.
+1157 Reminder: %d Section N item(s) marked consumed by the household still have no amount. Go back to Section N and enter the amount spent and/or the in-kind value for each (or -98 if the household does not know, -99 if they refuse). You may continue, but please check.
+1158 Q95_TRAVEL_TIME_MIN must be between 0 and 999.
+1159 Q96_TRAVEL_COST_PHP must be between 0 and 99999.

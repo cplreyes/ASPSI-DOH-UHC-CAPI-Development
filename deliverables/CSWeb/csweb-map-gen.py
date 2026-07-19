@@ -72,24 +72,36 @@ STATUS = ("CASE WHEN c.partial_save_mode IS NULL OR c.partial_save_mode=''"
           " THEN 'Completed' ELSE 'Partial' END")
 QN = "LPAD(l.`questionnaire_number`,12,'0')"
 CODE9 = "LEFT(LPAD(l.`questionnaire_number`,12,'0'),9)"
+# enumerator attribution (mirrors csweb-dashboard-gen.py): the typed FIELD_CONTROL name plus
+# the STABLE key — the CSWeb login that UPLOADED the case, via cases.last_modified_revision =
+# cspro_sync_history.revision (direction 'put'). revision is that table's PK, so the join is
+# 1:1 (no row fan-out). Lets the Map Report filter to one enumerator, same as the dashboard.
+ENUM = "COALESCE(NULLIF(fc.enumerator_s_name,''),'(unassigned)')"
+SYNCUSER = "COALESCE(NULLIF(sh.username,''),'(unknown)')"
+SYNC_JOIN = (" LEFT JOIN csweb_uhc_y2.cspro_sync_history sh"
+             " ON sh.revision = c.last_modified_revision AND sh.direction = 'put'")
 
-# cols: qnum, lat, lon, region, prov, status, facility, date, accuracy, satellites
-COLS = ["qnum", "lat", "lon", "region", "prov", "status", "facility", "date", "acc", "sat"]
+# cols: qnum, lat, lon, region, prov, status, facility, date, accuracy, satellites, enumerator, syncuser
+COLS = ["qnum", "lat", "lon", "region", "prov", "status", "facility", "date", "acc", "sat", "enumerator", "syncuser"]
 
 
 def src_q(db, gps_tbl, lat_c, lon_c, acc_c, sat_c, date_c):
+    # SYNC_JOIN is concatenated INSIDE the parens BEFORE the % so the whole string formats as one
+    # unit — `%` binds tighter than `+`, so "..."+SYNC_JOIN % (...) would try (and fail) to format
+    # SYNC_JOIN, which has no placeholders. ENUM/SYNCUSER carry no %s either; passed as args.
     return (
-        "SELECT %s, g.%s, g.%s,"
-        " COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
-        " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
-        " %s, COALESCE(fn.name,'(unlabeled)'),"
-        " COALESCE(CAST(fc.%s AS CHAR),''), g.%s, g.%s"
-        " FROM `%s`.`level-1` l"
-        " JOIN `%s`.cases c ON c.id=l.`case-id` AND c.deleted=0"
-        " LEFT JOIN `%s`.%s g ON g.`level-1-id`=l.`level-1-id`"
-        " LEFT JOIN `%s`.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
-        " LEFT JOIN csweb_reports.facility_names fn ON fn.code9=%s"
-        % (QN, lat_c, lon_c, STATUS, date_c, acc_c, sat_c,
+        ("SELECT %s, g.%s, g.%s,"
+         " COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
+         " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
+         " %s, COALESCE(fn.name,'(unlabeled)'),"
+         " COALESCE(CAST(fc.%s AS CHAR),''), g.%s, g.%s, %s, %s"
+         " FROM `%s`.`level-1` l"
+         " JOIN `%s`.cases c ON c.id=l.`case-id` AND c.deleted=0"
+         " LEFT JOIN `%s`.%s g ON g.`level-1-id`=l.`level-1-id`"
+         " LEFT JOIN `%s`.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
+         " LEFT JOIN csweb_reports.facility_names fn ON fn.code9=%s"
+         + SYNC_JOIN)
+        % (QN, lat_c, lon_c, STATUS, date_c, acc_c, sat_c, ENUM, SYNCUSER,
            db, db, db, gps_tbl, db, CODE9)
     )
 
@@ -226,6 +238,7 @@ for inst, layer, primary, sql in SOURCES:
             "lat": round(lat, 6), "lon": round(lon, 6),
             "region": rec["region"], "prov": rec["prov"], "status": rec["status"],
             "facility": rec["facility"], "qnum": rec["qnum"],
+            "enumerator": rec.get("enumerator", ""), "syncuser": rec.get("syncuser", ""),
             "date": rec["date"] if rec["date"] and rec["date"] != "\\N" else "",
             "acc": None if acc is None else round(acc, 1),
             "sat": None if sat is None else int(sat),
@@ -415,6 +428,7 @@ TEMPLATE = r"""<!doctype html>
 <div class="filters">
   <div class="f"><label for="fInst">Instrument</label><select id="fInst"></select></div>
   <div class="f"><label for="fRegion">Region</label><select id="fRegion"></select></div>
+  <div class="f"><label for="fEnum">Enumerator</label><select id="fEnum"></select></div>
   <div class="f"><label for="fStatus">Status</label><select id="fStatus"></select></div>
   <div class="f"><label for="fQa">Data quality</label><select id="fQa"></select></div>
   <div class="f"><label for="fFrom">Visit from</label><input type="date" id="fFrom" /></div>
@@ -465,6 +479,7 @@ const isDisp = p => p.qaFarHome||p.qaClusterOut;
 const isArea = p => p.qaFarCentroid||p.qaOutArea;
 
 const instSel=document.getElementById('fInst'), regSel=document.getElementById('fRegion'),
+      enumSel=document.getElementById('fEnum'),
       statSel=document.getElementById('fStatus'), qaSel=document.getElementById('fQa'),
       fromInp=document.getElementById('fFrom'), toInp=document.getElementById('fTo'),
       lPrimary=document.getElementById('lPrimary'), lHome=document.getElementById('lHome'),
@@ -475,6 +490,20 @@ regSel.add(new Option('All regions','ALL')); P.regions.forEach(r=>regSel.add(new
 [['ALL','All statuses'],['Completed','Completed'],['Partial','Partial']].forEach(([v,t])=>statSel.add(new Option(t,v)));
 [['ALL','All points'],['flag','Flagged (any)'],['low','Low accuracy'],['dup','Duplicate location'],
  ['disp','Displacement'],['area','Wrong area']].forEach(([v,t])=>qaSel.add(new Option(t,v)));
+// Enumerator filter — keyed on the CSWeb upload login (syncuser), typed-name fallback; same
+// key scheme as the dashboard so a person reads identically on both surfaces.
+function enumKeyOf(p){ return (p.syncuser&&p.syncuser!=='(unknown)') ? 'u:'+p.syncuser
+                     : (p.enumerator&&p.enumerator!=='(unassigned)') ? 'n:'+p.enumerator : ''; }
+enumSel.add(new Option('All enumerators','ALL'));
+(function(){
+  const em=new Map();
+  P.points.forEach(p=>{ const key=enumKeyOf(p); if(!key) return;
+    let o=em.get(key); if(!o){o={key,login:(p.syncuser&&p.syncuser!=='(unknown)')?p.syncuser:null,names:{}}; em.set(key,o);}
+    if(p.enumerator&&p.enumerator!=='(unassigned)') o.names[p.enumerator]=(o.names[p.enumerator]||0)+1;
+  });
+  const lbl=o=>{const nm=Object.keys(o.names).sort((a,b)=>o.names[b]-o.names[a])[0]||(o.login?'(no name)':'(unknown)'); return o.login?(nm+' · '+o.login):nm;};
+  [...em.values()].map(o=>[o.key,lbl(o)]).sort((a,b)=>a[1].toLowerCase()<b[1].toLowerCase()?-1:1).forEach(([v,t])=>enumSel.add(new Option(t,v)));
+})();
 if(P.dateMin){fromInp.min=P.dateMin;toInp.min=P.dateMin;}
 if(P.dateMax){fromInp.max=P.dateMax;toInp.max=P.dateMax;}
 
@@ -533,21 +562,26 @@ function popup(p){
   if(p.qaClusterOut) qa+='<div class="qa">⚠ Facility point '+esc(p.clusterKm)+' km off its cluster</div>';
   if(p.qaOutArea) qa+='<div class="qa">⚠ Coordinates in '+esc(p.inArea)+', declared '+esc(p.prov)+'</div>';
   else if(p.qaFarCentroid) qa+='<div class="qa">⚠ '+esc(p.provKm)+' km from declared '+esc(p.prov)+'</div>';
+  const who = (p.syncuser&&p.syncuser!=='(unknown)')
+      ? ((p.enumerator&&p.enumerator!=='(unassigned)')?esc(p.enumerator)+' · ':'')+esc(p.syncuser)
+      : (p.enumerator&&p.enumerator!=='(unassigned)'?esc(p.enumerator):'—');
   return '<div class="lp"><b>'+esc(p.facility)+'</b><br>'
     +'<span class="k">'+esc(NAMES[p.inst])+' · '+esc(LAYER[p.layer])+'</span><br>'
     +'Q#: '+esc(p.qnum)+'<br>Status: '+esc(p.status)+'<br>'
+    +'Enumerator: '+who+'<br>'
     +'Declared: '+esc(p.prov)+'<br>Visited: '+d+'<br>'
     +'GPS: '+(p.acc==null?'—':esc(p.acc)+' m')+(p.sat==null?'':', '+esc(p.sat)+' sat')+qa+'</div>';
 }
 function chip(id,n,label){const e=document.getElementById(id); if(n>0){e.style.display='';e.textContent='⚠ '+n+' '+label;}else{e.style.display='none';}}
 function render(){
-  const inst=instSel.value, region=regSel.value, status=statSel.value, qa=qaSel.value;
+  const inst=instSel.value, region=regSel.value, status=statSel.value, qa=qaSel.value, enumK=enumSel.value;
   const fromY=fromInp.value?fromInp.value.replace(/-/g,''):'';
   const toY=toInp.value?toInp.value.replace(/-/g,''):'';
   const pass=p=>{
     if(inst!=='ALL' && p.inst!==inst) return false;
     if(p.layer==='home' ? !lHome.checked : !lPrimary.checked) return false;
     if(region!=='ALL' && p.region!==region) return false;
+    if(enumK!=='ALL' && enumKeyOf(p)!==enumK) return false;
     if(status!=='ALL' && p.status!==status) return false;
     if(qa==='low' && !p.qaLow) return false;
     if(qa==='dup' && !p.qaDup) return false;
@@ -581,9 +615,9 @@ function render(){
   renderChoropleth();
   if(shown.length){map.fitBounds(cluster.getBounds().pad(0.2));}else{map.setView(PH,6);}
 }
-[instSel,regSel,statSel,qaSel,fromInp,toInp].forEach(el=>el.onchange=render);
+[instSel,regSel,enumSel,statSel,qaSel,fromInp,toInp].forEach(el=>el.onchange=render);
 [lPrimary,lHome,lConn,lCoverage].forEach(el=>el.onchange=render);
-document.getElementById('fReset').onclick=()=>{instSel.value='ALL';regSel.value='ALL';statSel.value='ALL';qaSel.value='ALL';fromInp.value='';toInp.value='';lPrimary.checked=true;lHome.checked=true;lConn.checked=false;lCoverage.checked=false;render();};
+document.getElementById('fReset').onclick=()=>{instSel.value='ALL';regSel.value='ALL';enumSel.value='ALL';statSel.value='ALL';qaSel.value='ALL';fromInp.value='';toInp.value='';lPrimary.checked=true;lHome.checked=true;lConn.checked=false;lCoverage.checked=false;render();};
 render();
 </script>
 </body>

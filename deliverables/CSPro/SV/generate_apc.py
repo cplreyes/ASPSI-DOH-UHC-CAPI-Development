@@ -61,7 +61,9 @@ postproc
     no signal, so the row still carries a time). Desktop has no GPS radio:
     ReadGPSReading returns 0 (getos 10:19 guard) and flows past with no modal. }
   if length(strip(TP_TIMESTAMP)) = 0 then
-    if ReadGPSReading(120, 20) then
+    { 20 s budget (was 120): touchpoint rows are sporadic, so the radio may be
+      cold here — 20 s covers a warm/assisted start without the old 2-min hang. }
+    if ReadGPSReading(20, 20) then
       TP_GPS_LATITUDE   = maketext("%f", gps(latitude));
       TP_GPS_LONGITUDE  = maketext("%f", gps(longitude));
       TP_GPS_ALTITUDE   = maketext("%f", gps(altitude));
@@ -77,6 +79,7 @@ postproc
     protect(TP_GPS_SATELLITES, true);
     protect(TP_GPS_READTIME, true);
     protect(TP_TIMESTAMP, true);
+    ReleaseGPS();   { rows are sporadic — release the radio between touchpoints }
   endif;
 
 PROC TP_OUTCOME_NOTE

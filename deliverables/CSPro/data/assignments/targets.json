@@ -1,54 +1,66 @@
 {
-  "generated": "2026-07-14 04:18 UTC",
+  "generated": "2026-07-15 05:36 UTC",
   "plan": {
-    "label": "R6 fixture (placeholder)",
+    "label": "Pretest 2026-07-15 (Los Baños & Bay, Laguna)",
     "provisional": true,
     "source": "assignments-source.csv",
-    "assignments": 6,
+    "assignments": 8,
     "facilities": {
-      "f1": 2,
+      "f1": 4,
       "f3": 2,
       "f4": 2
     }
   },
   "targets": {
     "f1": {
-      "040340001": {
-        "name": "Binan City Health Office",
+      "040341130": {
+        "name": "Los Baños RHU — Facility Head",
         "region": "",
         "province": "",
         "target": 1
       },
-      "040340011": {
-        "name": "Binan District Hospital - Facility Head",
+      "040340210": {
+        "name": "Laguna Provincial Hospital – Bay — Facility Head",
+        "region": "",
+        "province": "",
+        "target": 1
+      },
+      "040341110": {
+        "name": "Los Baños Doctors Hospital — Facility Head",
+        "region": "",
+        "province": "",
+        "target": 1
+      },
+      "040341140": {
+        "name": "St. Jude Hospital — Facility Head",
         "region": "",
         "province": "",
         "target": 1
       }
     },
     "f3": {
-      "040340002": {
-        "name": "Binan RHU - Patient Survey",
+      "040341130": {
+        "name": "Los Baños RHU — Patient",
         "region": "",
         "province": "",
-        "target": 30
+        "target": 5
       },
-      "040341002": {
-        "name": "Los Banos RHU - Patient Survey",
+      "040340210": {
+        "name": "Laguna Provincial Hospital – Bay — Patient",
         "region": "",
         "province": "",
-        "target": 30
+        "target": 5
       }
     },
     "f4": {
-      "040340005": {
-        "name": "Binan Brgy Malaban - Household Survey",
+      "040341101": {
+        "name": "Mayondon (Los Baños) — Household",
         "region": "",
         "province": "",
         "target": 20
       },
-      "040341005": {
-        "name": "Los Banos Brgy Mayondon - Household Survey",
+      "040341100": {
+        "name": "Bayog (Los Baños) — Household",
         "region": "",
         "province": "",
         "target": 20
