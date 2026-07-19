@@ -118,14 +118,21 @@ postproc
   #700: Q129 is now a Check Box base; this gate is folded into its checkbox PROC via
   CHECKBOX_CONVERT. The old PROC Q129_WHY_NO_MAIFIP_O01 field no longer exists. ---- }
 
-{ ---- Section L: not referred -> end of survey. Route to the closing Result-of-Visit +
-  Verification Photo. Do NOT endlevel here: the photo form is the LAST form, so ending
-  the level at this point skips the photo (bug found in R4 on-device review 2026-06-12). ---- }
+{ ---- Section L: not referred -> end of survey. Route to the START of the closing
+  Field Control block, NOT the Result-of-Visit. Do NOT endlevel here: the photo form
+  follows the closing block, so ending the level here skips the photo (R4 2026-06-12).
+  2026-07-19 FIELD-DATA FIX: the old target was ENUM_RESULT_FINAL_VISIT, which
+  overshoots — `skip to` jumps EVERYTHING in between, so every "not referred"
+  completed interview saved with a BLANK survey-team block (no team-leader /
+  enumerator names, no visit dates, no total visits, no first-visit result).
+  6 of the 8 live pretest F3 cases hit this (testers reported it as "Field
+  Control section missing"). Target the block's FIRST field instead; the
+  Completed default on Result-of-Visit stays (enumerator confirms it there). ---- }
 PROC Q162_REFERRED
 postproc
   if Q162_REFERRED = 2 then
     ENUM_RESULT_FINAL_VISIT = 1;   { default Completed; enumerator confirms it on the closing form }
-    skip to ENUM_RESULT_FINAL_VISIT;   { skip the referred-only Q163/Q164, land on Result-of-Visit; the Verification Photo form follows it }
+    skip to SURVEY_TEAM_LEADER_S_NAME;   { skip the referred-only Q163-Q168; land at the closing block's first field }
   endif;
 
 { ---- Section K/L R4 sweep (Wave 4, 2026-06-14): gating + required fixes ---- }
