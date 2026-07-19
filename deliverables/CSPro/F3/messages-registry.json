@@ -1,6 +1,6 @@
 {
   "_note": "Machine-managed by cspro_helpers.numberize_errmsgs() — do not hand-edit. Maps each errmsg text to its permanent message number; numbers are never reused or renumbered.",
-  "next": 1237,
+  "next": 1238,
   "messages": {
     "PSGC region lookup failed — verify psgc_region.dat is deployed": 1001,
     "GPS hardware unavailable — check tablet location permission.": 1002,
@@ -237,6 +237,7 @@
     "Patient would NOT recommend (Q143=No) yet rated overall quality satisfied (Q144) — confirm.": 1233,
     "Q16 = unemployed but Q17 reports a paid-work income source — confirm.": 1234,
     "Q29 = socio-economic Class A/B but income is in the lowest bracket — confirm.": 1235,
-    "Q29 = socio-economic Class D/E but income is in a high bracket — confirm.": 1236
+    "Q29 = socio-economic Class D/E but income is in a high bracket — confirm.": 1236,
+    "No GPS fix after %d s — move near a window or doorway and re-enter this field to retry.": 1237
   }
 }

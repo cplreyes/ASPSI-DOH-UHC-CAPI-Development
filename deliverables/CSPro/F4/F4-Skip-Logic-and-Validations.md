@@ -693,7 +693,7 @@ Include `Capture-Helpers.apc` in the form's .app:
   LATITUDE/LONGITUDE items plus the new HH_GPS_* metadata. }
 PROC CAPTURE_HH_GPS
 onfocus
-  if ReadGPSReading(120, 20) then
+  if ReadGPSReading(15, 20)   { radio warm since case start — WarmUpGPS() (2026-07-19) } then
     LATITUDE          = maketext("%f", gps(latitude));
     LONGITUDE         = maketext("%f", gps(longitude));
     HH_GPS_ALTITUDE   = maketext("%f", gps(altitude));

@@ -5,7 +5,6 @@
 Language = EN
 1001 PSGC region lookup failed — verify psgc_region.dat is deployed
 1002 GPS hardware unavailable — check tablet location permission.
-1003 GPS read failed or timed out (target accuracy %d m).
 1004 GPS accuracy %d m exceeds target %d m — consider a retry outdoors.
 1005 Region code %02d not found in PSGC. Check the Questionnaire Number.
 1006 Geo prefix %07d not found in PSGC (no province or city/municipality matches). Check the Questionnaire Number.
@@ -239,3 +238,4 @@ Language = EN
 1234 Q16 = unemployed but Q17 reports a paid-work income source — confirm.
 1235 Q29 = socio-economic Class A/B but income is in the lowest bracket — confirm.
 1236 Q29 = socio-economic Class D/E but income is in a high bracket — confirm.
+1237 No GPS fix after %d s — move near a window or doorway and re-enter this field to retry.

@@ -146,6 +146,11 @@ CONTROL_PROCS = """\
   the PSGC dicts, fill the read-only *_NAME items, and set the full PSGC codes
   on the off-form geo items so the BARANGAY cascade filters correctly. ---- }
 PROC QUESTIONNAIRE_NUMBER
+preproc
+  { GPS warm-start (2026-07-19): open the radio while the enumerator types the
+    case key so the fix has converged by the HH GPS capture on the geo form —
+    the read is then near-instant instead of a cold acquisition. Desktop no-op. }
+  WarmUpGPS();
 postproc
   LANGUAGE_USED = getlanguage();   { record interview language at case start (§15.E) }
   if not (CASE_DISPOSITION in 1, 2) then
@@ -225,7 +230,9 @@ onfocus
 PROC LATITUDE
 onfocus
   if length(strip(HH_GPS_READTIME)) = 0 then   { capture once; not on back-nav }
-    if ReadGPSReading(120, 20) then
+    { 15 s budget: the radio has been warm since the case key (WarmUpGPS), so a
+      fresh fix normally arrives in ~1-2 s; 15 s only caps the no-signal case. }
+    if ReadGPSReading(15, 20) then
       LATITUDE          = maketext("%f", gps(latitude));
       LONGITUDE         = maketext("%f", gps(longitude));
       HH_GPS_ALTITUDE   = maketext("%f", gps(altitude));
@@ -243,6 +250,7 @@ onfocus
     protect(HH_GPS_ACCURACY, true);
     protect(HH_GPS_SATELLITES, true);
     protect(HH_GPS_READTIME, true);
+    ReleaseGPS();   { F4's only GPS block — close the radio once captured }
   endif;
 
 { ---- #231 Verification photo (moved to the END of the form 2026-06-12). CONDITIONAL on
