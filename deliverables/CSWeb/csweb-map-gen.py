@@ -488,6 +488,15 @@ map.addLayer(covLayer); map.addLayer(cluster); map.addLayer(lines);
 const PH = [12.5, 122.0];
 // --- Phase 2: province coverage choropleth ---
 function covColorMap(pct){ return pct==null?'#9aa7a0':(pct>=80?'#006b3f':(pct>=40?'#e5b23b':'#d32f2f')); }
+// provisional resolves per the SELECTED instrument(s): F1 can read real (facility-derived
+// denominator) while F3/F4 stay provisional. plan.provisional is a bool (whole plan) or an
+// object keyed by instrument; a mixed/ALL view is provisional if ANY selected instrument is.
+function planProvisional(pl){
+  const pv=(pl||{}).provisional;
+  const insts = instSel.value==='ALL'?['f1','f3','f4']:[instSel.value];
+  if(pv && typeof pv==='object') return insts.some(k=>pv[k]!==false);
+  return pv!==false;
+}
 function covForProv(key){
   const inst=instSel.value, insts = inst==='ALL'?['f1','f3','f4']:[inst];
   let t=0,c=0,any=false;
@@ -500,7 +509,7 @@ function renderChoropleth(){
   document.getElementById('covLegend').style.display = on?'':'none';
   // A shaded province reads as fact. Say so when the denominator is a placeholder.
   const _pl=P.plan||{}, _cp=document.getElementById('covPlan');
-  if(on && _pl.provisional!==false){
+  if(on && planProvisional(_pl)){
     _cp.textContent='PROVISIONAL PLAN ('+(_pl.label||'unlabelled')+') — shading is not real coverage';
     _cp.style.display='';
   } else { _cp.style.display='none'; }

@@ -145,6 +145,12 @@ deliverables/CSWeb/*.sql.gz
 /deliverables/CSPro/supervisor-hub/assignments/pretest-assignments.csv
 /deliverables/CSPro/supervisor-hub/assignments/out-pretest/
 
+# F2 Admin Portal pretest logins (live admin passwords — never commit; same policy).
+/deliverables/F2/pretest-2026-07-16/f2-admin-credentials.md
+# F2 HCW self-register links (the ?k= secret IS the credential — never commit).
+# Glob covers .csv, .html, and the print-ready .pdf (all carry the same secrets).
+/deliverables/F2/pretest-2026-07-16/lph-bay-hcw-links.*
+
 # Hub roster BAKED INTO THE APP PACKAGE — contains every hub/CSWeb password in
 # plaintext. It was tracked until 2026-07-15; those secrets are burned and were
 # rotated. Never commit it again. Regenerate with build_hub_apps.py.
