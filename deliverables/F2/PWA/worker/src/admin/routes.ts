@@ -25,6 +25,7 @@ import {
 import {
   handleListResponses,
   handleGetResponseById,
+  handleVoidResponse,
   handleListAudit,
   handleListDlq,
   handleDlqMutation,
@@ -119,6 +120,8 @@ const roleCache = new RoleVersionCache();
 const ENCODE_RE = /^\/admin\/api\/encode\/([A-Za-z0-9_\-]+)\/?$/;
 const RESPONSES_LIST_RE = /^\/admin\/api\/dashboards\/data\/responses\/?$/;
 const RESPONSES_BY_ID_RE = /^\/admin\/api\/dashboards\/data\/responses\/([A-Za-z0-9_\-]+)\/?$/;
+// #831: POST …/responses/:id/void — status flip + audit, never hard-delete.
+const RESPONSES_VOID_RE = /^\/admin\/api\/dashboards\/data\/responses\/([A-Za-z0-9_\-]+)\/void\/?$/;
 const AUDIT_LIST_RE = /^\/admin\/api\/dashboards\/data\/audit\/?$/;
 const DLQ_LIST_RE = /^\/admin\/api\/dashboards\/data\/dlq\/?$/;
 // R2-#84: DLQ replay + delete (per-row by dlq_id).
@@ -416,6 +419,28 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         env.F2_AUTH,
       );
     const r = await handleListResponses(url, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  const responseVoidMatch = RESPONSES_VOID_RE.exec(url.pathname);
+  if (req.method === 'POST' && responseVoidMatch) {
+    const auth = await requirePerm(req, 'dash_data', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const submissionId = decodeURIComponent(responseVoidMatch[1]!);
+    const body = (await req.json().catch(() => ({}))) as { reason?: unknown };
+    const asCall = (payload: { submission_id: string; reason: string }) =>
+      callAppsScript<{ submission_id: string; status: string; prev_status?: string }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_void_response',
+        payload as unknown as Record<string, unknown>,
+        requestId,
+        env.F2_AUTH,
+      );
+    const r = await handleVoidResponse(submissionId, body?.reason, asCall);
+    auditMutation(auditFn, r, auth, ipHash, 'admin_void_response', submissionId);
     return withRequestId(r, requestId);
   }
 

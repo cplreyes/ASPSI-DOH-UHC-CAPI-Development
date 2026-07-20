@@ -20,6 +20,7 @@ import { LocaleProvider, useLocale } from '@/i18n/locale-context';
 import { localized } from '@/i18n/localized';
 import type { Section as SectionModel, Item } from '@/types/survey';
 import { sections as ALL_SECTIONS } from '@/generated/items';
+import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { Link, useRouter } from '../lib/pages-router';
@@ -70,6 +71,9 @@ function ResponseDetailInner({ apiBaseUrl, submissionId, fetchImpl }: ResponseDe
     | { kind: 'loaded'; row: ResponseRow }
     | { kind: 'failed'; error: ApiError }
   >({ kind: 'loading' });
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [voidBusy, setVoidBusy] = useState(false);
+  const [voidMsg, setVoidMsg] = useState<{ kind: 'ok' | 'err'; text: string } | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -95,7 +99,51 @@ function ResponseDetailInner({ apiBaseUrl, submissionId, fetchImpl }: ResponseDe
     return () => {
       cancelled = true;
     };
-  }, [apiBaseUrl, submissionId, token, clearAuth, navigate, fetchImpl]);
+  }, [apiBaseUrl, submissionId, token, clearAuth, navigate, fetchImpl, refreshKey]);
+
+  // #831: void = status flip + audit trail on the AS side. The row stays in
+  // the sheet (append-only) but drops out of counts, reports, and exports.
+  const handleVoid = async () => {
+    const reason = typeof window !== 'undefined'
+      ? window.prompt('Void this response? Enter the reason (recorded in the audit trail):')
+      : null;
+    if (reason === null) return;
+    if (!reason.trim()) {
+      setVoidMsg({ kind: 'err', text: 'Void cancelled — a reason is required.' });
+      return;
+    }
+    setVoidBusy(true);
+    setVoidMsg(null);
+    const r = await adminFetch<{ submission_id: string; status: string; prev_status?: string }>(
+      `${apiBaseUrl}/admin/api/dashboards/data/responses/${encodeURIComponent(submissionId)}/void`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reason: reason.trim() }),
+      },
+      {
+        ...(token ? { token } : {}),
+        onUnauthorized: () => {
+          clearAuth();
+          navigate('/admin/login');
+        },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
+        ...(fetchImpl ? { fetchImpl } : {}),
+      },
+    );
+    setVoidBusy(false);
+    if (r.ok) {
+      setVoidMsg({ kind: 'ok', text: 'Response voided — excluded from counts, reports, and exports.' });
+      setRefreshKey((k) => k + 1);
+    } else {
+      setVoidMsg({
+        kind: 'err',
+        text: r.error.code === 'E_ALREADY_VOIDED'
+          ? 'This response is already voided.'
+          : `Void failed: ${r.error.message ?? r.error.code}`,
+      });
+    }
+  };
 
   return (
     <section className="flex flex-col gap-6 py-2">
@@ -115,7 +163,25 @@ function ResponseDetailInner({ apiBaseUrl, submissionId, fetchImpl }: ResponseDe
       ) : state.kind === 'failed' ? (
         <ErrorPanel error={state.error} />
       ) : (
-        <DetailBody row={state.row} />
+        <>
+          <div className="flex items-center gap-3 border-l-2 border-hairline pl-4">
+            {state.row.status === 'voided' ? (
+              <p className="text-sm text-muted-foreground">
+                This response is <span className="font-mono text-xs uppercase">voided</span> — kept for audit, excluded from counts, reports, and exports.
+              </p>
+            ) : (
+              <Button variant="outline" size="sm" disabled={voidBusy} onClick={() => void handleVoid()}>
+                {voidBusy ? 'Voiding…' : 'Void response…'}
+              </Button>
+            )}
+            {voidMsg ? (
+              <p role="status" className={voidMsg.kind === 'err' ? 'text-sm text-error' : 'text-sm text-muted-foreground'}>
+                {voidMsg.text}
+              </p>
+            ) : null}
+          </div>
+          <DetailBody row={state.row} />
+        </>
       )}
     </section>
   );
@@ -156,7 +222,15 @@ function ProvenanceBlock({ row }: { row: ResponseRow }): JSX.Element {
       <Field label="Facility" mono>{row.facility_id || '—'}</Field>
       <Field label="Source path" mono>{row.source_path || '—'}</Field>
       <Field label="Status">
-        <span className={row.status === 'rejected' ? 'text-error' : 'text-muted-foreground'}>
+        <span
+          className={
+            row.status === 'rejected'
+              ? 'text-error'
+              : row.status === 'voided'
+                ? 'text-muted-foreground line-through'
+                : 'text-muted-foreground'
+          }
+        >
           {row.status || '—'}
         </span>
       </Field>

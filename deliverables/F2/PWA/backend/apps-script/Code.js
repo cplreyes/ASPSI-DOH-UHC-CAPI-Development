@@ -178,6 +178,33 @@ function _buildResponsesCtx(sheet) {
         return obj;
       });
     },
+    // #831: row-level read + status write for the admin void action.
+    // Same shape as _buildDlqCtx.findByDlqId — rows are 1-indexed, header
+    // is row 1, so data starts at row 2. Rows are never deleted: void is a
+    // status flip so the sheet stays append-only for auditability.
+    findBySubmissionId: function (submissionId) {
+      var idIdx = cols.indexOf('submission_id');
+      if (!submissionId || idIdx < 0) return null;
+      var last = sheet.getLastRow();
+      if (last < 2) return null;
+      var idCol = sheet.getRange(2, idIdx + 1, last - 1, 1).getValues();
+      for (var i = 0; i < idCol.length; i++) {
+        if (idCol[i][0] === submissionId) {
+          var rowNumber = i + 2;
+          var rowData = sheet.getRange(rowNumber, 1, 1, cols.length).getValues()[0];
+          var obj = { _rowNumber: rowNumber };
+          for (var j = 0; j < cols.length; j++) obj[cols[j]] = rowData[j];
+          return obj;
+        }
+      }
+      return null;
+    },
+    setStatusByRowNumber: function (rowNumber, newStatus) {
+      var stIdx = cols.indexOf('status');
+      if (stIdx < 0) return false;
+      sheet.getRange(rowNumber, stIdx + 1).setValue(newStatus);
+      return true;
+    },
   };
 }
 
