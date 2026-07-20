@@ -158,6 +158,8 @@ function _adminHandlers() {
       // R2-#84: replay (re-attempt submit) + delete a DLQ row.
       admin_dlq_replay: typeof adminDlqReplay !== 'undefined' ? adminDlqReplay : null,
       admin_dlq_delete: typeof adminDlqDelete !== 'undefined' ? adminDlqDelete : null,
+      // #831: void a response (status flip + audit trail; never hard-delete).
+      admin_void_response: typeof adminVoidResponse !== 'undefined' ? adminVoidResponse : null,
       admin_form_revisions: typeof adminFormRevisions !== 'undefined' ? adminFormRevisions : null,
       admin_sync_report: typeof adminSyncReport !== 'undefined' ? adminSyncReport : null,
       admin_map_report: typeof adminMapReport !== 'undefined' ? adminMapReport : null,

@@ -125,6 +125,7 @@ function adminSettingsRunDue() {
       for (var m = 0; m < rData.length; m++) {
         var rowObj = {};
         for (var n = 0; n < rHeaders.length; n++) rowObj[rHeaders[n]] = rData[m][n];
+        if (rowObj.status === 'voided') continue; // #831: voided rows stay out of breakouts
         responseRows.push(rowObj);
       }
     }

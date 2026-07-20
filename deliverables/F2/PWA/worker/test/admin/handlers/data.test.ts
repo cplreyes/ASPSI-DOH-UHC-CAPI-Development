@@ -7,6 +7,7 @@ import { describe, expect, it } from 'vitest';
 import {
   handleListResponses,
   handleGetResponseById,
+  handleVoidResponse,
   handleKillSwitchGet,
   handleKillSwitchSet,
   handleBroadcastGet,
@@ -258,6 +259,59 @@ describe('handleKillSwitchSet', () => {
 
   it('502s when Apps Script rejects the write', async () => {
     const r = await handleKillSwitchSet(req({ kill_switch: false }), () => asErr('E_BACKEND', 'down'));
+    expect(r.status).toBe(502);
+  });
+});
+
+describe('handleVoidResponse (#831)', () => {
+  it('voids via the AS callable and returns the mutation result', async () => {
+    let captured: { submission_id: string; reason: string } | null = null;
+    const r = await handleVoidResponse('srv-1', '  encoder pasted token into HCW ID  ', async (p) => {
+      captured = p;
+      return asOk({ submission_id: 'srv-1', status: 'voided', prev_status: 'stored' });
+    });
+    expect(r.status).toBe(200);
+    expect(captured).toEqual({ submission_id: 'srv-1', reason: 'encoder pasted token into HCW ID' });
+    expect(await r.json()).toEqual({ submission_id: 'srv-1', status: 'voided', prev_status: 'stored' });
+  });
+
+  it('400s on a missing id without calling Apps Script', async () => {
+    let called = false;
+    const r = await handleVoidResponse('', 'x', async () => {
+      called = true;
+      return asOk({ submission_id: '', status: 'voided' });
+    });
+    expect(r.status).toBe(400);
+    expect(called).toBe(false);
+  });
+
+  it('400s on a blank or non-string reason without calling Apps Script', async () => {
+    let called = false;
+    const blank = await handleVoidResponse('srv-1', '   ', async () => {
+      called = true;
+      return asOk({ submission_id: 'srv-1', status: 'voided' });
+    });
+    const nonString = await handleVoidResponse('srv-1', 42, async () => {
+      called = true;
+      return asOk({ submission_id: 'srv-1', status: 'voided' });
+    });
+    expect(blank.status).toBe(400);
+    expect(nonString.status).toBe(400);
+    expect(called).toBe(false);
+  });
+
+  it('404s on E_NOT_FOUND from Apps Script', async () => {
+    const r = await handleVoidResponse('srv-x', 'reason', () => asErr('E_NOT_FOUND', 'submission srv-x not found'));
+    expect(r.status).toBe(404);
+  });
+
+  it('409s on E_ALREADY_VOIDED from Apps Script', async () => {
+    const r = await handleVoidResponse('srv-1', 'reason', () => asErr('E_ALREADY_VOIDED', 'already voided'));
+    expect(r.status).toBe(409);
+  });
+
+  it('502s on other Apps Script errors', async () => {
+    const r = await handleVoidResponse('srv-1', 'reason', () => asErr('E_BACKEND', 'down'));
     expect(r.status).toBe(502);
   });
 });

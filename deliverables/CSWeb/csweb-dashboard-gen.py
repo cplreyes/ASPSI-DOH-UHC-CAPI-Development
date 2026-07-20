@@ -16,6 +16,14 @@ Completed/Partial · no-GPS · freshness), a submissions-over-time chart (daily 
 cumulative), and a full Result-of-Visit disposition breakdown for F3/F4 (F1 already
 had one). All recompute under the existing filters. No new data, no new service.
 
+Case list (Phase 4, 2026-07-17): a per-case drill-down table at the bottom — one row
+per synced case (QN · facility/area · result · status · visit · enumerator · login),
+honouring every filter, with a search box. Each F1/F3/F4 row deep-links to the CSWeb
+Sync Report's View case modal (?dict=<DICT>&case=<QN> — on-box patch #7 auto-opens
+it; CSWeb login required), so full responses are one click away WITHOUT putting any
+response data on this unauthenticated page. `qn` is the RAW stored key (legacy
+region-01 keys may be 11-digit unpadded) so the deep link always matches the case.
+
 Refresh: host cron re-runs this (every 2 min, flock-guarded, since 2026-06-26 —
 near-real-time for fieldwork; was every 15 min). Deploy: scp to /opt/, cron:
   */2 * * * * flock -n /tmp/csweb-dashboard.lock bash -c "cd /opt/app && python3 /opt/csweb-dashboard-gen.py" >> /var/log/csweb-dashboard.log 2>&1
@@ -123,9 +131,14 @@ F2_SQL = (
     # code9 = first 9 of the 12-digit QN (2026-07-08 rollout) — the same
     # facility code F1 uses, so F2 joins targets.json/geo like the others;
     # falls back to facility_id for pre-qn rows (demo slugs → no join, as before).
-    " LEFT(COALESCE(NULLIF(r.qn,''),r.facility_id,''),9)"
+    " LEFT(COALESCE(NULLIF(r.qn,''),r.facility_id,''),9),"
+    # qn = the full stored key for the Case list (12-digit QN post-2026-07-08; earlier
+    # rows fall back to facility_id/slug). F2 rows never deep-link (not a CSWeb dict).
+    " COALESCE(NULLIF(r.qn,''),r.facility_id,'')"
     " FROM csweb_f2.f2_responses r"
-    " LEFT JOIN csweb_f2.f2_facility_master fm ON fm.facility_id=r.facility_id")
+    " LEFT JOIN csweb_f2.f2_facility_master fm ON fm.facility_id=r.facility_id"
+    # #831: voided responses (admin void action, status='voided') never count.
+    " WHERE COALESCE(r.status,'') <> 'voided'")
 
 # `enumerator` = FIELD_CONTROL.ENUMERATOR_S_NAME (CHAR 50, all three dicts) — the field-control
 # record is already joined as `fc` for every instrument, so productivity costs one column.
@@ -173,7 +186,7 @@ SYNC_JOIN = (" LEFT JOIN csweb_uhc_y2.cspro_sync_history sh"
              " ON sh.revision = c.last_modified_revision AND sh.direction = 'put'")
 
 QUERIES = {
-    "f1": (["region", "province", "city", "facility", "ownership", "service_level", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl", "syncuser"],
+    "f1": (["region", "province", "city", "facility", "ownership", "service_level", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl", "syncuser", "qn"],
            # NB: SYNC_JOIN is concatenated INSIDE the parens, before the % — `%` binds tighter
            # than `+`, so `"..." + SYNC_JOIN % (...)` would try to format SYNC_JOIN (which has no
            # placeholders) and raise. Keep the whole SQL in one parenthesised expression.
@@ -181,7 +194,8 @@ QUERIES = {
             " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
             " COALESCE(NULLIF(fc.city_name,''),'(unknown)'),"
             " COALESCE(fn.name,'(unlabeled)'), %s, %s, %s,"
-            " COALESCE(CAST(fc.date_first_visited_the_facility AS CHAR),''), %s, %s, %s, %s, %s, %s, %s"
+            " COALESCE(CAST(fc.date_first_visited_the_facility AS CHAR),''), %s, %s, %s, %s, %s, %s, %s,"
+            " COALESCE(l.`questionnaire_number`,'')"
             " FROM csweb_f1_breakout.`level-1` l"
             " JOIN csweb_f1_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
             " LEFT JOIN csweb_f1_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
@@ -190,11 +204,12 @@ QUERIES = {
             " LEFT JOIN csweb_reports.facility_names fn ON fn.code9=%s"
             + SYNC_JOIN)
            % (F1_OWN, F1_SVC, F1_RES, STATUS, F1_GPS, F1_CODE9, ENUM, SUP, REPL, SYNCUSER, F1_CODE9)),
-    "f3": (["region", "patient_type", "sex", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl", "syncuser"],
+    "f3": (["region", "patient_type", "sex", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl", "syncuser", "qn"],
            ("SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
             " CASE fc.patient_type WHEN '1' THEN 'Outpatient' WHEN '2' THEN 'Inpatient' ELSE COALESCE(NULLIF(fc.patient_type,''),'(blank)') END,"
             " CASE bp.q7_sex WHEN '1' THEN 'Male' WHEN '2' THEN 'Female' ELSE COALESCE(NULLIF(bp.q7_sex,''),'(blank)') END,"
-            " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s, %s, %s, %s"
+            " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s, %s, %s, %s,"
+            " COALESCE(l.`questionnaire_number`,'')"
             " FROM csweb_f3_breakout.`level-1` l"
             " JOIN csweb_f3_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
             " LEFT JOIN csweb_f3_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
@@ -202,10 +217,11 @@ QUERIES = {
             " LEFT JOIN csweb_f3_breakout.rec_facility_capture g ON g.`level-1-id`=l.`level-1-id`"
             + SYNC_JOIN)
            % (F3_RES, STATUS, F3_GPS, ENUM, SUP, REPL, SYNCUSER)),
-    "f4": (["region", "province", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl", "syncuser"],
+    "f4": (["region", "province", "result", "date", "status", "gps", "code9", "enumerator", "supervisor", "repl", "syncuser", "qn"],
            ("SELECT COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
             " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
-            " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s, %s, %s, %s"
+            " %s, COALESCE(CAST(fc.date_first_visited AS CHAR),''), %s, %s, LEFT(LPAD(l.`questionnaire_number`,12,'0'),9), %s, %s, %s, %s,"
+            " COALESCE(l.`questionnaire_number`,'')"
             " FROM csweb_f4_breakout.`level-1` l"
             " JOIN csweb_f4_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
             " LEFT JOIN csweb_f4_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
@@ -216,7 +232,7 @@ QUERIES = {
     # no field-control record. Its rows simply lack those keys — the productivity panel skips
     # F2 entirely, and `r.repl==='1'` is false for a missing key, so the Replacements KPI is
     # unaffected. Do NOT synthesise placeholder columns for it.
-    "f2": (["region", "province", "result", "source", "date", "status", "gps", "code9"], F2_SQL),
+    "f2": (["region", "province", "result", "source", "date", "status", "gps", "code9", "qn"], F2_SQL),
 }
 
 
@@ -229,10 +245,15 @@ def rootpw():
 
 
 def q(sql):
+    # --default-character-set=utf8mb4: without it the client negotiates latin1, the
+    # server transcodes, and the first enye in a selected value (Biñan, Peña) becomes
+    # byte 0xF1 — which crashes the strict UTF-8 decode. Found 2026-07-18 via the
+    # responses generator (which SELECTs everything); latent here until a ñ lands in a
+    # selected field. errors="replace" backstops any genuinely broken byte.
     r = subprocess.run(
         ["docker", "compose", "exec", "-T", "database", "mysql", "-uroot",
-         "-p" + rootpw(), "--batch", "-N", "-e", sql],
-        cwd=COMPOSE_DIR, capture_output=True, text=True)
+         "-p" + rootpw(), "--default-character-set=utf8mb4", "--batch", "-N", "-e", sql],
+        cwd=COMPOSE_DIR, capture_output=True, text=True, errors="replace")
     # Raise on a real MySQL error rather than silently returning [] — otherwise a
     # broken query (e.g. csweb_f2 not created yet) is indistinguishable from "no rows"
     # and would be mis-reported as an empty mirror. fetch_live catches this per-instrument.
@@ -324,6 +345,7 @@ TEMPLATE = r"""<!doctype html>
   .filters .reset{margin-left:auto;align-self:end;font:13px system-ui;padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer}
   .filters .reset:hover{background:var(--bg)}
   .enumchip{display:flex;align-items:center;gap:8px;background:#e7f3ec;border:1px solid #b7d9c4;color:#004d2c;border-radius:10px;padding:7px 12px;font-size:13px;margin:0 2px 14px;width:fit-content;max-width:100%}
+  .enumchip[hidden]{display:none}  /* display:flex would otherwise beat the hidden attribute's UA rule */
   .enumchip b{font-weight:700}
   .enumchip button{border:none;background:transparent;color:#006b3f;font-size:18px;line-height:1;cursor:pointer;padding:0 2px}
   .enumchip button:hover{color:#d32f2f}
@@ -356,6 +378,13 @@ TEMPLATE = r"""<!doctype html>
   .cov-note{color:var(--muted);font-size:12px;font-style:italic;margin:2px 2px 10px}
   .cov-inst{margin:14px 0 6px;font-size:14px;font-weight:700;color:var(--gd)}
   .cov-sum{color:var(--muted);font-size:12.5px;margin:0 2px 8px}
+  /* ===== Downloads band (2026-07-18, post-#843): dual case-data paths ===== */
+  .dl{display:flex;flex-wrap:wrap;gap:10px;margin:10px 2px;align-items:center}
+  .dl .rl{font-size:12.5px;color:var(--muted);min-width:168px;font-weight:700}
+  .dl a{display:inline-block;padding:8px 14px;border-radius:10px;font-weight:700;font-size:13px;text-decoration:none;border:1.5px solid var(--g);color:var(--gd);background:#fff}
+  .dl a:hover{background:#eef7f2}
+  .dl a.zip{background:var(--g);color:#fff;border-color:var(--g)}
+  .dl a.zip:hover{background:var(--gd)}
   .cov-sum b{color:var(--ink)}
   .covtbl{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:6px}
   .covtbl th,.covtbl td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
@@ -385,6 +414,44 @@ TEMPLATE = r"""<!doctype html>
   /* a row with no CSWeb login is keyed on the typed name — the unreliable path. Say so. */
   .covtbl td.nolog{color:var(--muted);font-style:italic}
   .stale{color:#b7860b}
+  /* ===== purpose bands + accordion + quality panel (2026-07-17 IA redesign) ===== */
+  .band{margin:34px 2px 10px;font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gd);display:flex;align-items:center;gap:10px}
+  .band::after{content:"";flex:1;height:2px;background:var(--g);opacity:.22;border-radius:1px}
+  details.inote{margin:2px 2px 10px}
+  details.inote summary{cursor:pointer;color:var(--muted);font-size:12px;font-style:italic;user-select:none;width:fit-content}
+  details.inote summary:hover{color:var(--gd)}
+  details.inote[open] summary{margin-bottom:4px}
+  .covtbl tr.grp>td{background:#f4f8f5;font-weight:700;color:var(--gd)}
+  .covtbl tr.grp.prov>td{background:#fbfdfb;font-weight:600}
+  .covtbl .sub2{color:var(--muted);font-weight:400;font-size:12px}
+  .covtbl .caret{display:inline-block;width:16px;color:var(--g);font-weight:700}
+  .covtbl td.ind1{padding-left:30px}
+  .covtbl td.ind2{padding-left:48px;font-weight:400;color:var(--ink)}
+  .covsearch{font:13px system-ui;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;min-width:280px;margin:0 0 8px;display:block}
+  .qtiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:8px}
+  .qtile{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--g);border-radius:12px;padding:12px 14px;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  .qtile .num{font-size:26px;font-weight:800;line-height:1;color:var(--g)}
+  .qtile.warn{border-top-color:var(--gold)}.qtile.warn .num{color:#b7860b}
+  .qtile.bad{border-top-color:var(--red)}.qtile.bad .num{color:var(--red)}
+  .qtile .lbl{color:var(--muted);font-size:11.5px;font-weight:600;margin-top:5px;text-transform:uppercase;letter-spacing:.03em}
+  .qtile.sel{outline:2px solid var(--g)}
+  .qmore{color:var(--muted);font-size:12px;font-style:italic;margin:4px 2px 10px}
+  h2.sechead{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+  h2.sechead .caret{color:var(--g)}
+  h2.sechead .cnt{color:var(--muted);font-size:12.5px;font-weight:400}
+  h2.sechead .f2s{font-size:12px;color:var(--muted);font-weight:400;margin-left:auto}
+  h2.sechead .f2s.badapi{color:var(--red);font-weight:700}
+  .card{cursor:pointer}
+  .card.sel{outline:2px solid var(--g)}
+  @media(max-width:820px){.qtiles{grid-template-columns:repeat(2,1fr)}}
+  .clbar{margin:2px 2px 8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .clbar input{font:13px system-ui;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;width:360px;max-width:100%}
+  .clbar .dlink{color:var(--g);font-weight:600;font-size:13px;text-decoration:none;white-space:nowrap}
+  .clbar .dlink:hover{text-decoration:underline}
+  .covtbl td.mono{font-family:ui-monospace,'Cascadia Mono',Consolas,monospace;font-size:12px;white-space:nowrap}
+  .covtbl a.rlink{color:var(--g);font-weight:600;text-decoration:none;white-space:nowrap}
+  .covtbl a.rlink:hover{text-decoration:underline}
+  .covtbl .instchip{display:inline-block;font-size:11px;font-weight:700;color:#006b3f;background:#e7f3ec;border-radius:5px;padding:0 6px}
   @media(max-width:820px){.kpis{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.covbar{width:90px}}
 </style>
 </head>
@@ -401,6 +468,8 @@ TEMPLATE = r"""<!doctype html>
     <div class="f"><label for="fTo">Visit to</label><input type="date" id="fTo" /></div>
     <button class="reset" id="fReset" type="button">Reset</button>
   </div>
+  <div id="enumChip" class="enumchip" hidden></div>
+  <div class="band">Status now</div>
   <div class="kpis">
     <div class="kpi"><div class="num" id="kTotal">0</div><div class="lbl">Cases (filtered)</div></div>
     <div class="kpi ok"><div class="num" id="kCompleted">0</div><div class="lbl">Completed</div></div>
@@ -409,16 +478,26 @@ TEMPLATE = r"""<!doctype html>
     <div class="kpi warn"><div class="num" id="kRepl">0</div><div class="lbl">Replacements</div></div>
     <div class="kpi bad"><div class="num" id="kNogps">0</div><div class="lbl">No GPS fix</div></div>
   </div>
+  <div class="cards" id="totals"></div>
   <div class="freshness">Data as of <b id="fresh"></b> · auto-refreshes ~every 2 min · "today" = <span id="todayLbl"></span> (Manila)</div>
-  <div id="enumChip" class="enumchip" hidden></div>
+  <div class="band">Progress vs plan</div>
   <div class="chart wide"><h3>Submissions over time — new per day &amp; cumulative</h3><div class="canvas-wrap"><canvas id="trend"></canvas></div></div>
   <div id="coverage"></div>
   <div id="productivity"></div>
-  <div class="cards" id="totals"></div>
-  <div class="note">Counts exclude deleted cases. Filters recompute every tile in your browser. Empty/blank categories reflect minimal test cases in the current data — they populate as real fieldwork syncs. For the per-case list with facility labels, see the CSWeb <b>Sync Report</b>.</div>
+  <div class="band">Data quality</div>
+  <div id="quality"></div>
+  <div class="band">Instrument detail</div>
+  <div class="note">Counts exclude deleted cases. Filters recompute every tile in your browser. Empty/blank categories reflect minimal test cases in the current data — they populate as real fieldwork syncs. Per-case drill-down: the <b>Case list</b> at the bottom — F1/F3/F4 rows open the full responses in CSWeb (login required).</div>
   <div id="sections"></div>
+  <div class="band">Case drill-down</div>
+  <h2>Case list</h2>
+  <div class="cov-note">Every synced case in the current view — honours every filter above. F1/F3/F4 rows link to the CSWeb <b>View case</b> (the full question-by-question responses; CSWeb login required). F2 is self-administered outside CSWeb, so its rows have no link. QN is shown exactly as stored. <b>Export CSV</b> downloads the current view (every metadata column, including ones this table hides). The <b>Responses data room</b> holds the full answer spreadsheets — one wide CSV per instrument plus roster CSVs (same login as this page).</div>
+  <div class="clbar"><input type="search" id="clSearch" placeholder="Search QN, facility, enumerator, login&hellip;" /><button class="reset" id="clExport" type="button">Export CSV</button><a class="dlink" href="/docs/data/" target="_blank" rel="noopener">Responses data room &#8599;</a></div>
+  <div class="cov-sum" id="clSum"></div>
+  <div id="caselist"></div>
+__DOWNLOADS__
 </main>
-<footer>Generated <span id="gen"></span> · auto-refreshes ~every 2 min · source: F1/F3/F4 breakout DBs via <code>csweb_reports</code> + F2 <code>csweb_f2</code> mirror · see also the <a href="/docs/map.html" style="color:#006b3f">Map Report</a>.</footer>
+<footer>Generated <span id="gen"></span> · source: F1/F3/F4 breakout DBs via <code>csweb_reports</code> + F2 <code>csweb_f2</code> mirror · see also the <a href="/docs/map.html" style="color:#006b3f">Map Report</a>.</footer>
 <script type="application/json" id="dash-data">__PAYLOAD__</script>
 <script>
 const P = JSON.parse(document.getElementById('dash-data').textContent);
@@ -477,13 +556,37 @@ INSTS.forEach(k=>{
   d.appendChild(num);
   const lbl=document.createElement('div'); lbl.className='lbl'; lbl.textContent=k.toUpperCase()+' · '+NAMES[k]; d.appendChild(lbl);
   const sub=document.createElement('div'); sub.className='sub'; sub.textContent='cases (filtered)'; d.appendChild(sub);
+  d.title='Click to filter the dashboard to this instrument (click again to clear)';
+  d.onclick=()=>{ instSel.value=(instSel.value===k?'ALL':k); render(); };
   tc.appendChild(d); cardNum[k]=num; d.dataset.k=k;
 });
 const sec=document.getElementById('sections');
 const charts={}; // id -> Chart
 P.spec.forEach(s=>{
   const wrapSec=document.createElement('div'); wrapSec.dataset.prefix=s.prefix;
-  const h=document.createElement('h2'); h.textContent=s.title; wrapSec.appendChild(h);
+  // collapsed-by-default section (2026-07-17 IA redesign) — charts build lazily on first
+  // expand, because Chart.js cannot size itself on a hidden canvas. The F2 health note is
+  // summarised in the header so an outage is never hidden behind a collapsed section.
+  s._open=false;
+  const h=document.createElement('h2'); h.className='sechead';
+  const car=document.createElement('span'); car.className='caret'; car.textContent='▸'; h.appendChild(car);
+  h.appendChild(document.createTextNode(s.title+' '));
+  const cnt=document.createElement('span'); cnt.className='cnt'; h.appendChild(cnt);
+  s._cnt=cnt; s._car=car;
+  if(s.prefix==='f2' && P.f2meta){
+    const f2s=document.createElement('span'); f2s.className='f2s';
+    if(P.f2meta.err){ f2s.textContent='F2 read FAILED — see note inside'; f2s.classList.add('badapi'); }
+    else{
+      f2s.textContent=(P.f2meta.n||0)+' submission'+(P.f2meta.n===1?'':'s')
+        +(P.f2meta.last?' · last '+P.f2meta.last.slice(0,4)+'-'+P.f2meta.last.slice(4,6)+'-'+P.f2meta.last.slice(6,8):'');
+      if(P.f2meta.api===false){ f2s.textContent+=' · f2-api DOWN'; f2s.classList.add('badapi'); }
+    }
+    h.appendChild(f2s);
+  }
+  h.title='Click to expand / collapse';
+  h.onclick=()=>{ s._open=!s._open; render(); };
+  wrapSec.appendChild(h);
+  const body=document.createElement('div'); s._body=body; body.style.display='none';
   // F2 reads the live store (csweb_f2 became authoritative at the P4 cutover,
   // 2026-07 serving migration) — surface freshness so an empty/failed read is
   // visible (not a silent flatline). n=0 → an explicit "no data yet" note.
@@ -502,9 +605,9 @@ P.spec.forEach(s=>{
       if(!P.f2meta.api){svc.style.color='var(--red)';svc.style.fontWeight='600';}
       fn.appendChild(svc);
     }
-    wrapSec.appendChild(fn);
+    body.appendChild(fn);
   }
-  const grid=document.createElement('div'); grid.className='grid'; wrapSec.appendChild(grid);
+  const grid=document.createElement('div'); grid.className='grid'; body.appendChild(grid);
   s.charts.forEach(c=>{
     const w=document.createElement('div'); w.className='chart';
     const t=document.createElement('h3'); t.textContent=c.title; w.appendChild(t);
@@ -512,6 +615,7 @@ P.spec.forEach(s=>{
     const cv=document.createElement('canvas'); cv.id=s.prefix+'__'+c.field; cw.appendChild(cv);
     w.appendChild(cw); grid.appendChild(w);
   });
+  wrapSec.appendChild(body);
   sec.appendChild(wrapSec); s._el=wrapSec;
 });
 
@@ -566,6 +670,12 @@ function renderTrend(passOf){
 const provByCode={};   // code9 -> province from cases (fallback area when targets aren't masterlist-enriched)
 INSTS.forEach(k=>(P.data[k]||[]).forEach(r=>{ if(r.code9 && r.province && r.province!=='(unknown)' && !provByCode[r.code9]) provByCode[r.code9]=r.province; }));
 const covSort={};      // inst -> {col,dir}
+// accordion state — lives OUTSIDE render() so filter changes and column sorts never
+// collapse what the reader opened. An explicit click always beats the auto-default
+// (rows with any landed case start open); a live search force-opens every match.
+const covUser=new Map();   // 'inst|region' / 'inst|region|province' -> explicit open/closed
+const covSearch={};        // inst -> facility search string
+let covFocus=null;         // instrument whose search box must regain focus after a re-render
 function esc(s){const d=document.createElement('div'); d.textContent=(s==null?'':s); return d.innerHTML;}
 function covColor(pct){ return pct>=80?'#006b3f':(pct>=40?'#e5b23b':'#d32f2f'); }
 // plan.provisional is a bool (whole plan) OR an object keyed by instrument — F1 can be real
@@ -609,44 +719,92 @@ function renderCoverage(pass){
     r.innerHTML='<b>'+esc(who)+'</b> — targets are REAL, from <b>'+esc(src)+'</b>.';
     cov.appendChild(r);
   }
+  const noteWrap=document.createElement('details'); noteWrap.className='inote';
+  noteWrap.innerHTML='<summary>&#9432; how to read this section</summary>';
   const note=document.createElement('div'); note.className='cov-note';
-  note.textContent='Landed = Completed cases in the current view (instrument · region · visit-date). Expected = the assignment plan’s target. The Status filter does not apply here.';
-  cov.appendChild(note);
+  note.textContent='Landed = Completed cases in the current view (instrument · region · visit-date). Expected = the assignment plan’s target. The Status filter does not apply here. Region and province rows roll their facilities up — click a row to open it; rows with any landed case start open. The search finds facilities by name or 9-digit code.';
+  noteWrap.appendChild(note); cov.appendChild(noteWrap);
   visible.forEach(k=>{
     const tgt=T[k], comp={}; let untarget=0;
     (P.data[k]||[]).forEach(r=>{ if(r.status!=='Completed'||!pass(r,true,true)) return; if(tgt[r.code9]) comp[r.code9]=(comp[r.code9]||0)+1; else untarget++; });
-    let rows=Object.keys(tgt).map(code=>{
+    const facs=Object.keys(tgt).map(code=>{
       const t=tgt[code], exp=+t.target||0, landed=comp[code]||0;
-      return {name:t.name||('(code '+code+')'), area:t.province||provByCode[code]||'(area TBD)', exp, landed,
+      return {code, name:t.name||('(code '+code+')'), region:t.region||'(region TBD)',
+              area:t.province||provByCode[code]||'(area TBD)', exp, landed,
               pct: exp>0?Math.round(100*landed/exp):null, short: Math.max(0,exp-landed)};
     });
-    const st=covSort[k]||{col:'pct',dir:1};
-    const val=(o,c)=> (c==='name'||c==='area') ? (o[c]||'').toLowerCase() : (o[c]==null?-1:o[c]);
-    rows.sort((a,b)=>{const x=val(a,st.col),y=val(b,st.col); return (x<y?-1:x>y?1:0)*st.dir;});
-    const sumExp=rows.reduce((s,r)=>s+r.exp,0), sumLanded=rows.reduce((s,r)=>s+r.landed,0);
+    const provAll=new Set(facs.map(f=>f.area)), provAct=new Set(facs.filter(f=>f.landed>0).map(f=>f.area));
+    const sumExp=facs.reduce((s,r)=>s+r.exp,0), sumLanded=facs.reduce((s,r)=>s+r.landed,0);
     const opct=sumExp>0?Math.round(100*sumLanded/sumExp):0;
     const title=document.createElement('div'); title.className='cov-inst'; title.textContent=k.toUpperCase()+' · '+NAMES[k]; cov.appendChild(title);
     const sum=document.createElement('div'); sum.className='cov-sum';
-    sum.innerHTML='<b>'+sumLanded+'</b> / '+sumExp+' completed ('+opct+'%) across '+rows.length+' facilit'+(rows.length===1?'y':'ies')
+    sum.innerHTML='<b>'+sumLanded+'</b> / '+sumExp+' completed ('+opct+'%) across '+facs.length+' facilit'+(facs.length===1?'y':'ies')
+      +(provAll.size>1?' in '+provAll.size+' provinces (<b>'+provAct.size+'</b> started)':'')
       +(untarget?' · <b>'+untarget+'</b> completed at facilities not in the plan':'');
     cov.appendChild(sum);
+    // facility search — filters the accordion and force-opens whatever matches
+    const si=document.createElement('input'); si.type='search'; si.className='covsearch';
+    si.placeholder='Search facility name or 9-digit code…'; si.value=covSearch[k]||'';
+    si.oninput=()=>{ covSearch[k]=si.value; covFocus=k; render(); };
+    cov.appendChild(si);
+    const q=(covSearch[k]||'').trim().toLowerCase();
+    const shown=q?facs.filter(f=>f.name.toLowerCase().indexOf(q)>=0||f.code.indexOf(q)>=0):facs;
+    // group facilities region -> province, aggregating on the way. Grouping keys come ONLY
+    // from the targets' own strings — never joined to case-row region names, which are
+    // survey-internal and word-reordered (the known name-mismatch trap). Cases contribute
+    // to landed exclusively via code9, which is already the join key.
+    const regs=new Map();
+    shown.forEach(f=>{
+      let R=regs.get(f.region); if(!R){R={name:f.region,provs:new Map(),exp:0,landed:0,fac:0}; regs.set(f.region,R);}
+      let V=R.provs.get(f.area); if(!V){V={name:f.area,rows:[],exp:0,landed:0}; R.provs.set(f.area,V);}
+      V.rows.push(f); V.exp+=f.exp; V.landed+=f.landed; R.exp+=f.exp; R.landed+=f.landed; R.fac++;
+    });
+    const fin=o=>{o.pct=o.exp>0?Math.round(100*o.landed/o.exp):null; o.short=Math.max(0,o.exp-o.landed); return o;};
+    const st=covSort[k]||{col:'pct',dir:-1};
+    const val=(o,c)=> (c==='name') ? (o.name||'').toLowerCase()
+                    : (c==='area') ? ((o.area!==undefined?o.area:o.name)||'').toLowerCase()
+                    : (o[c]==null?-1:o[c]);
+    const cmp=(a,b)=>{const x=val(a,st.col),y=val(b,st.col); const d=(x<y?-1:x>y?1:0)*st.dir;
+      if(d) return d; const nx=(a.name||'').toLowerCase(), ny=(b.name||'').toLowerCase(); return nx<ny?-1:nx>ny?1:0;};
+    const isOpen=key=>{ if(q) return true; if(covUser.has(key)) return covUser.get(key); return null; };
     const tbl=document.createElement('table'); tbl.className='covtbl';
-    const cols=[['name','Facility',''],['area','Area',''],['exp','Expected','n'],['landed','Landed','n'],['pct','%','n'],['short','Shortfall','n'],['bar','Progress','s']];
+    const cols=[['name','Region / Province / Facility',''],['area','Area',''],['exp','Expected','n'],['landed','Landed','n'],['pct','%','n'],['short','Shortfall','n'],['bar','Progress','s']];
     const thead=document.createElement('tr');
     cols.forEach(([c,lbl,cl])=>{ const th=document.createElement('th'); if(cl)th.className=cl;
       th.textContent=lbl+(st.col===c?(st.dir>0?' ▲':' ▼'):'');
       if(c!=='bar'){th.onclick=()=>{covSort[k]={col:c,dir:(st.col===c?-st.dir:1)}; render();};}
       thead.appendChild(th); });
     tbl.appendChild(thead);
-    rows.forEach(r=>{ const tr=document.createElement('tr');
-      const pct=r.pct==null?'—':r.pct+'%', col=r.pct==null?'#5b6b63':covColor(r.pct);
-      tr.innerHTML='<td>'+esc(r.name)+'</td><td>'+esc(r.area)+'</td>'
-        +'<td class="n">'+r.exp+'</td><td class="n">'+r.landed+'</td>'
+    const numCells=o=>{
+      const pct=o.pct==null?'—':o.pct+'%', col=o.pct==null?'#5b6b63':covColor(o.pct);
+      return '<td class="n">'+o.exp+'</td><td class="n">'+o.landed+'</td>'
         +'<td class="n pct" style="color:'+col+'">'+pct+'</td>'
-        +'<td class="n short'+(r.short?'':' zero')+'">'+r.short+'</td>'
-        +'<td class="s"><div class="covbar"><span style="width:'+Math.min(100,r.pct||0)+'%;background:'+col+'"></span></div></td>';
-      tbl.appendChild(tr); });
+        +'<td class="n short'+(o.short?'':' zero')+'">'+o.short+'</td>'
+        +'<td class="s"><div class="covbar"><span style="width:'+Math.min(100,o.pct||0)+'%;background:'+col+'"></span></div></td>';
+    };
+    [...regs.values()].map(fin).sort(cmp).forEach(R=>{
+      const rk=k+'|'+R.name, ro=isOpen(rk), rOpen=(ro===null)?(R.landed>0):ro;
+      const tr=document.createElement('tr'); tr.className='grp clickable';
+      tr.innerHTML='<td><span class="caret">'+(rOpen?'▾':'▸')+'</span>'+esc(R.name)+'</td>'
+        +'<td class="sub2">'+R.provs.size+' province'+(R.provs.size===1?'':'s')+' · '+R.fac+' facilit'+(R.fac===1?'y':'ies')+'</td>'+numCells(R);
+      tr.onclick=()=>{ covUser.set(rk,!rOpen); render(); };
+      tbl.appendChild(tr);
+      if(!rOpen) return;
+      [...R.provs.values()].map(fin).sort(cmp).forEach(V=>{
+        const pk=rk+'|'+V.name, po=isOpen(pk), pOpen=(po===null)?(V.landed>0):po;
+        const tp=document.createElement('tr'); tp.className='grp prov clickable';
+        tp.innerHTML='<td class="ind1"><span class="caret">'+(pOpen?'▾':'▸')+'</span>'+esc(V.name)+'</td>'
+          +'<td class="sub2">'+V.rows.length+' facilit'+(V.rows.length===1?'y':'ies')+'</td>'+numCells(V);
+        tp.onclick=()=>{ covUser.set(pk,!pOpen); render(); };
+        tbl.appendChild(tp);
+        if(!pOpen) return;
+        V.rows.slice().sort(cmp).forEach(r=>{ const tf=document.createElement('tr');
+          tf.innerHTML='<td class="ind2">'+esc(r.name)+'</td><td>'+esc(r.area)+'</td>'+numCells(r);
+          tbl.appendChild(tf); });
+      });
+    });
     cov.appendChild(tbl);
+    if(covFocus===k){ si.focus(); const n=si.value.length; try{si.setSelectionRange(n,n);}catch(e){} covFocus=null; }
   });
 }
 // --- Phase 3: enumerator productivity (F1/F3/F4) ---
@@ -686,7 +844,12 @@ function renderProductivity(pass){
     });
   });
   if(!m.size) return;                           // no named enumerators in view -> hide, like coverage
+  // the Team band label is emitted HERE (not in the static skeleton) so it vanishes
+  // together with the panel when no enumerator is in view — no orphaned heading.
+  const band=document.createElement('div'); band.className='band'; band.textContent='Team'; el.appendChild(band);
   const h=document.createElement('h2'); h.textContent='Enumerator productivity'; el.appendChild(h);
+  const noteWrap=document.createElement('details'); noteWrap.className='inote';
+  noteWrap.innerHTML='<summary>&#9432; how to read this table</summary>';
   const note=document.createElement('div'); note.className='cov-note';
   note.textContent='Rows are keyed on the CSWeb login that uploaded the case (stable), not the typed '
     +'Enumerator name (free text — two people can share one, and one person can type theirs three ways). '
@@ -704,7 +867,7 @@ function renderProductivity(pass){
     +'F2 is absent by design: it is self-administered and has no enumerator. '
     +'Click any row to filter the whole dashboard to that enumerator (click again to clear).'
     +(unnamed?' '+unnamed+' case(s) in view carry no enumerator name.':'');
-  el.appendChild(note);
+  noteWrap.appendChild(note); el.appendChild(noteWrap);
   let rows=[...m.values()].map(o=>{
     const days=o.days.size;
     // display name = the one this login types most often; keep the alternates for the tooltip
@@ -787,6 +950,181 @@ function renderProductivity(pass){
     tbl.appendChild(tr); });
   el.appendChild(tbl);
 }
+// --- Data quality panel (2026-07-17 IA redesign) ---
+// Gives the bell's transient signals an on-page home + itemises what the KPIs only count.
+// Honours every filter EXCEPT Status (a quality problem must not hide because the status
+// filter is set to Completed). F2 is excluded from the GPS tile by design: it is
+// self-administered and its gps flag is a deliberate constant, never a real fix.
+const QMAX=40;                 // list cap — beyond this it's a data pull, not a glance
+let qOpen=null;                // which tile's list is expanded
+let qAlertsStr=null;           // latest sync-feed alerts as JSON string (null = not loaded yet)
+let lastPass=null;             // the current render()'s pass fn, for feed-driven re-renders
+function fmtYmd(d){return (d&&/^\d{8}$/.test(d)&&d!=='00000000')?d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8):'—';}
+function enumLbl(r){
+  const nm=(r.enumerator&&r.enumerator!=='(unassigned)')?r.enumerator:'';
+  const lg=(r.syncuser&&r.syncuser!=='(unknown)')?r.syncuser:'';
+  return nm&&lg?nm+' · '+lg:(nm||lg||'—');
+}
+function renderQuality(pass){
+  const el=document.getElementById('quality'); if(!el) return; el.innerHTML='';
+  const nogps=[],stale=[],oop=[];
+  visInsts(instSel.value).forEach(k=>{
+    const tgt=(P.targets||{})[k], hasPlan=!!(tgt&&Object.keys(tgt).length);
+    (P.data[k]||[]).forEach(r=>{ if(!pass(r,true)) return;
+      if(k!=='f2'&&(r.gps==='0'||r.gps===0)) nogps.push({k,r});
+      if(r.status==='Partial'&&P.today&&r.date&&/^\d{8}$/.test(r.date)&&r.date!=='00000000'){
+        const age=daysBetween(r.date,P.today); if(age>2) stale.push({k,r,age});
+      }
+      if(hasPlan&&r.status==='Completed'&&!tgt[r.code9]) oop.push({k,r});
+    });
+  });
+  const alerts=qAlertsStr?JSON.parse(qAlertsStr):[];
+  const tiles=[
+    {id:'nogps', n:nogps.length, lbl:'No GPS fix', cls:nogps.length?'bad':''},
+    {id:'stale', n:stale.length, lbl:'Partials >2 days old', cls:stale.length?'warn':''},
+    {id:'oop',   n:oop.length,   lbl:'Completed off-plan', cls:oop.length?'warn':''},
+    {id:'alerts',n:alerts.length,lbl:qAlertsStr===null?'Live alerts (loading…)':'Live alerts', cls:alerts.length?'bad':''}
+  ];
+  const grid=document.createElement('div'); grid.className='qtiles';
+  tiles.forEach(t=>{ const d=document.createElement('div'); d.className=('qtile '+t.cls).trim()+(qOpen===t.id?' sel':'');
+    d.title='Click to list the cases behind this number';
+    d.innerHTML='<div class="num">'+t.n+'</div><div class="lbl">'+t.lbl+'</div>';
+    d.onclick=()=>{ qOpen=(qOpen===t.id?null:t.id); renderQuality(pass); };
+    grid.appendChild(d); });
+  el.appendChild(grid);
+  const noteWrap=document.createElement('details'); noteWrap.className='inote';
+  noteWrap.innerHTML='<summary>&#9432; how to read this panel</summary>'
+    +'<div class="cov-note">Honours the filters above except Status. F2 is self-administered — it captures no GPS by design and is never counted here. '
+    +'Live alerts (duplicate case keys, off-plan uploads) come from the sync feed, refresh every 20 seconds, ignore the filters, and clear when the underlying data is fixed.</div>';
+  el.appendChild(noteWrap);
+  if(!qOpen) return;
+  const mk=(headCols,rows,rowHtml)=>{
+    const t=document.createElement('table'); t.className='covtbl';
+    t.innerHTML='<tr>'+headCols.map(c=>'<th>'+c+'</th>').join('')+'</tr>'
+      +rows.slice(0,QMAX).map(rowHtml).join('');
+    el.appendChild(t);
+    if(rows.length>QMAX){ const m=document.createElement('div'); m.className='qmore';
+      m.textContent='…and '+(rows.length-QMAX)+' more — narrow the filters to see them.'; el.appendChild(m); }
+  };
+  if(qOpen==='nogps') mk(['Instrument','Facility / Area','Enumerator','Visit date'],nogps,
+    x=>'<tr><td>'+x.k.toUpperCase()+'</td><td>'+esc(x.r.facility||x.r.province||'—')+'</td><td>'+esc(enumLbl(x.r))+'</td><td>'+fmtYmd(x.r.date)+'</td></tr>');
+  if(qOpen==='stale') mk(['Instrument','Facility / Area','Enumerator','Visit date','Age'],stale,
+    x=>'<tr><td>'+x.k.toUpperCase()+'</td><td>'+esc(x.r.facility||x.r.province||'—')+'</td><td>'+esc(enumLbl(x.r))+'</td><td>'+fmtYmd(x.r.date)+'</td><td class="n">'+x.age+'d</td></tr>');
+  if(qOpen==='oop') mk(['Instrument','Facility code','Area','Enumerator'],oop,
+    x=>'<tr><td>'+x.k.toUpperCase()+'</td><td>'+esc(x.r.code9||'—')+'</td><td>'+esc(x.r.province||'—')+'</td><td>'+esc(enumLbl(x.r))+'</td></tr>');
+  if(qOpen==='alerts') mk(['Type','Detail'],alerts,
+    a=>'<tr><td>'+(a.type==='dup'?'⚠️ Duplicate key':'⚠️ Off-plan')+'</td><td>'
+      +(a.type==='dup'
+        ? esc(a.key||'')+' · '+esc(a.inst||'')+' · '+(a.n||0)+' cases'
+        : 'facility '+esc(a.code9||a.example||'')+' · '+esc(a.inst||'')+' · '+(a.n||0)+' not in plan')
+      +((a.users&&a.users.length)?' · '+esc(a.users.join(', ')):'')+'</td></tr>');
+}
+// The panel does its OWN 20-second fetch of the sync feed (a second tiny GET of a static
+// file) so the notification bell's IIFE below stays byte-identical. Re-render only when
+// the alert set actually changes — a full render() every 20s would flicker the charts.
+function qpoll(){
+  fetch('/docs/sync-feed.json?_='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{
+    const s=JSON.stringify((d&&d.alerts)||[]);
+    if(s!==qAlertsStr){ qAlertsStr=s; if(lastPass) renderQuality(lastPass); }
+  }).catch(()=>{});
+}
+qpoll(); setInterval(qpoll,20000);
+// --- Case list (drill-down to specific cases, 2026-07-17) ---
+// One row per synced case in the current view. F1/F3/F4 rows deep-link to the CSWeb
+// Sync Report (?dict=<DICT>&case=<QN> — on-box patch #7 auto-opens the View case
+// modal), so the FULL responses stay behind the CSWeb login and never enter this
+// unauthenticated page. F2 has no CSWeb dictionary, so its rows carry no link.
+const DICT={f1:'FACILITYHEADSURVEY_DICT',f3:'PATIENTSURVEY_DICT',f4:'HOUSEHOLDSURVEY_DICT'};
+const CL_CAP=400;   // render cap — the summary line says when it bites
+let caseSort={col:'date',dir:-1};
+function areaOf(k,r){ return k==='f1' ? (r.facility||'(unlabeled)') : (r.province||r.region||'—'); }
+// shared by the table render AND the CSV export, so both always see the exact same
+// slice: instrument/region/supervisor/enumerator/status/date filters + the search box.
+// Keeps the raw row as `r` so the export can reach fields the table doesn't show.
+function collectCases(pass){
+  const q=(document.getElementById('clSearch').value||'').trim().toLowerCase();
+  const out=[];
+  visInsts(instSel.value).forEach(k=>{
+    (P.data[k]||[]).forEach(r=>{ if(!pass(r)) return;
+      const en=(r.enumerator&&r.enumerator!=='(unassigned)')?r.enumerator:'';
+      const lg=(r.syncuser&&r.syncuser!=='(unknown)')?r.syncuser:'';
+      const o={k, r, qn:r.qn||'', area:areaOf(k,r), region:r.region||'', result:r.result||'',
+               status:r.status||'', date:r.date||'', en, lg, repl:r.repl==='1'};
+      if(q){ const hay=(o.qn+' '+o.area+' '+o.region+' '+o.en+' '+o.lg+' '+o.result).toLowerCase();
+             if(hay.indexOf(q)<0) return; }
+      out.push(o);
+    });
+  });
+  return out;
+}
+const isoDate=d=>(d&&/^\d{8}$/.test(d)&&d!=='00000000')?d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8):'';
+// export columns: every payload field, labeled; blank where an instrument lacks the field
+const CSV_COLS=[
+  ['inst',o=>o.k.toUpperCase()], ['questionnaire_number',o=>o.qn],
+  ['region',o=>o.r.region||''], ['province',o=>o.r.province||''], ['city',o=>o.r.city||''],
+  ['facility',o=>o.k==='f1'?(o.r.facility||''):''],
+  ['ownership',o=>o.r.ownership||''], ['service_level',o=>o.r.service_level||''],
+  ['patient_type',o=>o.r.patient_type||''], ['sex',o=>o.r.sex||''],
+  ['capture_mode',o=>o.r.source||''],
+  ['result',o=>o.result], ['status',o=>o.status], ['visit_date',o=>isoDate(o.date)],
+  ['enumerator',o=>o.en], ['csweb_login',o=>o.lg],
+  ['supervisor',o=>{const s=o.r.supervisor; return (s&&s!=='(unassigned)')?s:'';}],
+  ['replacement',o=>o.repl?'1':'0'],
+  ['gps_fix',o=>o.r.gps===undefined?'':(o.r.gps==='0'?'0':'1')],
+  ['facility_code9',o=>o.r.code9||'']];
+function csvCell(v){ v=String(v==null?'':v); return /[",\n\r]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v; }
+function exportCaseCsv(){
+  if(!lastPass) return;
+  const rows=collectCases(lastPass);           // the FULL filtered view — not the 400-row render cap
+  const lines=[CSV_COLS.map(c=>c[0]).join(',')];
+  rows.forEach(o=>lines.push(CSV_COLS.map(c=>csvCell(c[1](o))).join(',')));
+  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'});  // BOM so Excel reads UTF-8 (enye names)
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='uhc-cases-'+(P.today||'export')+'-'+rows.length+'.csv';
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},500);
+}
+function renderCaseList(pass){
+  const el=document.getElementById('caselist'); el.innerHTML='';
+  const q=(document.getElementById('clSearch').value||'').trim().toLowerCase();
+  let rows=collectCases(pass);
+  const total=rows.length;
+  const st=caseSort;
+  const val=(o,c)=> (c==='inst') ? o.k : (c==='qn'||c==='date') ? (o[c]||'') : ((o[c]||'')+'').toLowerCase();
+  rows.sort((a,b)=>{const x=val(a,st.col),y=val(b,st.col); return (x<y?-1:x>y?1:0)*st.dir;});
+  const capped=rows.length>CL_CAP; if(capped) rows=rows.slice(0,CL_CAP);
+  const sum=document.getElementById('clSum');
+  sum.innerHTML='<b>'+total+'</b> case'+(total===1?'':'s')+' in view'
+    +(capped?' · showing the first '+CL_CAP+' — narrow the filters or search':'')
+    +(q?' · search: “'+esc(q)+'”':'');
+  if(!total) return;
+  const tbl=document.createElement('table'); tbl.className='covtbl';
+  const cols=[['inst','Inst',''],['qn','QN',''],['area','Facility / area',''],['result','Result',''],
+              ['status','Status',''],['date','Visit',''],['en','Enumerator',''],['lg','CSWeb login',''],['link','Full detail','s']];
+  const thead=document.createElement('tr');
+  cols.forEach(([c,lbl,cl])=>{ const th=document.createElement('th'); if(cl)th.className=cl;
+    th.textContent=lbl+(st.col===c?(st.dir>0?' ▲':' ▼'):'');
+    if(c!=='link'){th.onclick=()=>{caseSort={col:c,dir:(st.col===c?-st.dir:1)}; if(lastPass)renderCaseList(lastPass);};}
+    thead.appendChild(th); });
+  tbl.appendChild(thead);
+  const fd=d=>(d&&/^\d{8}$/.test(d)&&d!=='00000000')?d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8):'—';
+  rows.forEach(r=>{ const tr=document.createElement('tr');
+    const link=(DICT[r.k]&&r.qn)
+      ? '<a class="rlink" target="_blank" rel="noopener" href="/csweb/sync-report?dict='+DICT[r.k]+'&case='+encodeURIComponent(r.qn)+'">Responses ↗</a>'
+      : '<span class="mix" title="self-administered PWA — outside CSWeb">—</span>';
+    tr.innerHTML='<td><span class="instchip">'+r.k.toUpperCase()+'</span></td>'
+      +'<td class="mono">'+esc(r.qn||'—')+'</td>'
+      +'<td>'+esc(r.area)+'</td>'
+      +'<td'+(r.repl?' class="hot" title="replacement — the sampled unit was never interviewed; a substitute was drawn"':'')+'>'+esc(r.result||'—')+'</td>'
+      +'<td class="short'+(r.status==='Partial'?'':' zero')+'">'+esc(r.status||'—')+'</td>'
+      +'<td class="mono">'+fd(r.date)+'</td>'
+      +'<td>'+esc(r.en||'—')+'</td>'
+      +'<td'+(r.lg?'':' class="nolog" title="no sync record — no CSWeb account attributable"')+'>'+esc(r.lg||'—')+'</td>'
+      +'<td class="s">'+link+'</td>';
+    tbl.appendChild(tr); });
+  el.appendChild(tbl);
+}
 function render(){
   const inst=instSel.value, region=regSel.value, status=statSel.value, sup=supSel.value, enumK=enumSel.value;
   const fromY=fromInp.value?fromInp.value.replace(/-/g,''):'';
@@ -813,19 +1151,32 @@ function render(){
   renderTrend(pass);
   renderCoverage(pass);
   renderProductivity(pass);
+  renderCaseList(pass);
+  renderQuality(pass);
+  lastPass=pass;             // lets the 20s feed poll refresh the quality panel alone
   // INSTS (not a hardcoded f1/f3/f4 list) so F2 keeps its own card — the productivity
   // panel above still skips F2 internally, since it has no enumerator.
   INSTS.forEach(k=>{
     const rows=(P.data[k]||[]).filter(pass);
     cardNum[k].textContent=rows.length;
-    cardNum[k].closest('.card').style.display=(inst==='ALL'||inst===k)?'':'none';
+    const card=cardNum[k].closest('.card');
+    card.style.display=(inst==='ALL'||inst===k)?'':'none';
+    card.classList.toggle('sel', inst===k);
   });
-  if(typeof Chart==='undefined') return;             // per-instrument charts need the vendored lib
   P.spec.forEach(s=>{
     const show=(inst==='ALL'||inst===s.prefix);
     s._el.style.display=show?'':'none';
     if(!show) return;
     const rows=(P.data[s.prefix]||[]).filter(pass);
+    s._cnt.textContent='· '+s.charts.length+' chart'+(s.charts.length===1?'':'s')+' · '+rows.length+' case'+(rows.length===1?'':'s')+' in view';
+    s._car.textContent=s._open?'▾':'▸';
+    s._body.style.display=s._open?'':'none';
+    if(!s._open){
+      // free the hidden charts so re-expanding always builds fresh against current filters
+      s.charts.forEach(c=>{const id=s.prefix+'__'+c.field; if(charts[id]){charts[id].destroy(); delete charts[id];}});
+      return;
+    }
+    if(typeof Chart==='undefined') return;           // charts need the vendored lib
     s.charts.forEach(c=>{
       const id=s.prefix+'__'+c.field, cv=document.getElementById(id);
       const a=agg(rows,c.field), bar=c.type==='bar';
@@ -838,7 +1189,9 @@ function render(){
   });
 }
 instSel.onchange=render; regSel.onchange=render; supSel.onchange=render; enumSel.onchange=render; statSel.onchange=render; fromInp.onchange=render; toInp.onchange=render;
-document.getElementById('fReset').onclick=()=>{instSel.value='ALL';regSel.value='ALL';supSel.value='ALL';enumSel.value='ALL';statSel.value='ALL';fromInp.value='';toInp.value='';render();};
+document.getElementById('fReset').onclick=()=>{instSel.value='ALL';regSel.value='ALL';supSel.value='ALL';enumSel.value='ALL';statSel.value='ALL';fromInp.value='';toInp.value='';document.getElementById('clSearch').value='';render();};
+document.getElementById('clSearch').oninput=()=>{ if(lastPass) renderCaseList(lastPass); };
+document.getElementById('clExport').onclick=exportCaseCsv;
 render();
 </script>
 <!-- ===== sync-activity notification bell (2026-07-15) — polls /docs/sync-feed.json ===== -->
@@ -1055,7 +1408,52 @@ def build(data, targets=None, plan=None, errored=None, f2_api_ok=None):
     # XSS-safe: JSON in a non-executable <script type="application/json">, HTML-escaped,
     # read back via JSON.parse(el.textContent). &,<,> can't break out of the tag.
     payload = html.escape(json.dumps(payload_obj), quote=False)
-    return TEMPLATE.replace("__PAYLOAD__", payload).replace("__FAVICON__", FAVICON)
+    return (TEMPLATE.replace("__PAYLOAD__", payload).replace("__FAVICON__", FAVICON)
+            .replace("__DOWNLOADS__", downloads_html()))
+
+
+DATA_MANIFEST = "/opt/app/lamp/www/docs/data/manifest.json"
+
+
+def downloads_html():
+    """Downloads band: CSPro sync .pffs + data-room zip bundles (manifest-driven).
+
+    Two INDEPENDENT paths by design (post-#843): the .pff route needs the CSWeb
+    sync API; the zips are built straight from MySQL by csweb-responses-gen, so
+    they keep working when the app/API is down. Renders gracefully (pffs only)
+    if the manifest has not been generated yet."""
+    try:
+        with open(DATA_MANIFEST, encoding="utf-8") as f:
+            man = json.load(f)
+    except Exception:
+        man = {}
+    inst_meta = man.get("instruments") or {}
+    gen = man.get("generated")
+    out = ['<div class="band">Downloads</div>']
+    out.append('<div class="cov-note">Two independent ways to pull case data, so a broken sync path never '
+               'blocks analysis. <b>CSPro sync</b>: download a .pff and double-click it &mdash; CSPro Data Viewer '
+               'pulls a full <code>.csdb</code> (photos included) from the sync API. Run it in a <b>new folder</b> '
+               'for a complete pull; re-running in the same folder fetches increments only. <b>Direct export</b>: '
+               'zip of analysis-ready CSVs built straight from the database every ~2 min &mdash; works even when '
+               'the CSWeb app or sync API is down. Same login as this page.</div>')
+    out.append('<div class="dl"><span class="rl">CSPro sync (.pff)</span>')
+    for label, fn in (("F1 &mdash; Facility Head", "facilityheadsurvey_dict.pff"),
+                      ("F3 &mdash; Patient", "patientsurvey_dict.pff"),
+                      ("F4 &mdash; Household", "householdsurvey_dict.pff")):
+        out.append('<a href="/docs/data/%s" download>%s</a>' % (fn, label))
+    out.append('</div>')
+    zrow = ['<div class="dl"><span class="rl">Direct export (CSV zip)</span>']
+    for inst, label in (("f1", "F1"), ("f3", "F3"), ("f4", "F4"), ("f2", "F2")):
+        m = inst_meta.get(inst)
+        if m:
+            zrow.append('<a class="zip" href="/docs/data/%s" download>%s &mdash; %s cases</a>'
+                        % (m["zip"], label, m["cases"]))
+    zrow.append('<a href="/docs/data/" target="_blank" rel="noopener">browse all CSVs &#8599;</a></div>')
+    out.append("".join(zrow))
+    if gen:
+        out.append('<div class="cov-sum">export bundles generated %s &middot; refreshed ~every 2 min</div>'
+                   % html.escape(str(gen), quote=False))
+    return chr(10).join(out)
 
 
 def main():

@@ -280,6 +280,43 @@ export async function handleDlqMutation(
   return jsonResponse(r.data, 200);
 }
 
+// #831: void a response — status flip on the AS side (never a hard delete;
+// the sheet stays append-only and the reason lands in F2_Audit). Reason is
+// validated here so a bad request never round-trips to Apps Script.
+export type VoidResponseAsCallable = (payload: {
+  submission_id: string;
+  reason: string;
+}) => Promise<{
+  ok: boolean;
+  data?: { submission_id: string; status: string; prev_status?: string };
+  error?: { code?: string; message?: string };
+}>;
+
+export async function handleVoidResponse(
+  id: string,
+  reason: unknown,
+  asCallable: VoidResponseAsCallable,
+): Promise<Response> {
+  if (!id) return errorJson('E_VALIDATION', 'submission id required', 400);
+  const trimmed = typeof reason === 'string' ? reason.trim() : '';
+  if (!trimmed) return errorJson('E_VALIDATION', 'reason required', 400);
+  const r = await asCallable({ submission_id: id, reason: trimmed });
+  if (!r.ok || !r.data) {
+    if (r.error?.code === 'E_NOT_FOUND') {
+      return errorJson('E_NOT_FOUND', r.error.message ?? 'not found', 404);
+    }
+    if (r.error?.code === 'E_ALREADY_VOIDED') {
+      return errorJson('E_ALREADY_VOIDED', r.error.message ?? 'already voided', 409);
+    }
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      502,
+    );
+  }
+  return jsonResponse(r.data, 200);
+}
+
 // ----- HCWs lookup (Task 2.9) ---------------------------------------------
 
 export interface HcwRow {
