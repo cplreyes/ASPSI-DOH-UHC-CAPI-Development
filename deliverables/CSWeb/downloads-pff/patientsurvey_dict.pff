@@ -1,0 +1,12 @@
+[Run Information]
+Version=8.0
+AppType=Sync
+
+[ExternalFiles]
+PATIENTSURVEY_DICT=patientsurvey_dict.csdb
+
+[Parameters]
+SyncDirection=Get
+SyncType=CSWeb
+SyncUrl=https://csweb.asiansocial.org/csweb/api/
+Silent=No

@@ -1,0 +1,390 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "appState": { "viewBackgroundColor": "#ffffff", "gridSize": 20 },
+  "files": {},
+  "elements": [
+    {
+      "type": "text", "id": "title", "x": 40, "y": 26, "width": 1100, "height": 33,
+      "text": "Responses spreadsheet + CSV export - where does the full data live?",
+      "originalText": "Responses spreadsheet + CSV export - where does the full data live?",
+      "fontSize": 26, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500001, "version": 1, "versionNonce": 500002, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "context", "x": 40, "y": 66, "width": 1400, "height": 17,
+      "text": "Case drill-down follow-up . F1: 315 items / 11 records (all singular) . F3: 369 / 37 (10 rosters) . F4: 300 / 32 (10 rosters) . F2: 18 cols flat . 2026-07-18",
+      "originalText": "Case drill-down follow-up . F1: 315 items / 11 records (all singular) . F3: 369 / 37 (10 rosters) . F4: 300 / 32 (10 rosters) . F2: 18 cols flat . 2026-07-18",
+      "fontSize": 13, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500003, "version": 1, "versionNonce": 500004, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "today_label", "x": 40, "y": 108, "width": 300, "height": 20,
+      "text": "WHAT EXISTS SINCE YESTERDAY",
+      "originalText": "WHAT EXISTS SINCE YESTERDAY",
+      "fontSize": 16, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500005, "version": 1, "versionNonce": 500006, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "now_box", "x": 40, "y": 140, "width": 700, "height": 120,
+      "strokeColor": "#1e3a5f", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500007, "version": 1, "versionNonce": 500008, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "now_txt", "x": 56, "y": 150, "width": 670, "height": 100,
+      "text": "Case drill-down (LIVE): Case list = one METADATA row per case\n(QN . facility . result . status . visit . enumerator . login)\n'Responses ->' opens CSWeb View case - full answers, but ONE case\nat a time, in a modal, no table view, no export.\nDashboard sits behind the shared /docs basic-auth (user aspsi).",
+      "originalText": "Case drill-down (LIVE): Case list = one METADATA row per case\n(QN . facility . result . status . visit . enumerator . login)\n'Responses ->' opens CSWeb View case - full answers, but ONE case\nat a time, in a modal, no table view, no export.\nDashboard sits behind the shared /docs basic-auth (user aspsi).",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#374151", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500009, "version": 1, "versionNonce": 500010, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "ask_box", "x": 800, "y": 140, "width": 560, "height": 120,
+      "strokeColor": "#b45309", "backgroundColor": "#fdf3d7", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500011, "version": 1, "versionNonce": 500012, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "ask_txt", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "ask_txt", "x": 812, "y": 150, "width": 536, "height": 100,
+      "text": "THE ASK: all response info, tabular, exportable to CSV.\nThat is a 300+ column matrix per instrument, and it is\nRESPONSE data - the credential it sits behind matters\nmore than the rendering.",
+      "originalText": "THE ASK: all response info, tabular, exportable to CSV.\nThat is a 300+ column matrix per instrument, and it is\nRESPONSE data - the credential it sits behind matters\nmore than the rendering.",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "middle",
+      "strokeColor": "#6b5418", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500013, "version": 1, "versionNonce": 500014, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "ask_box", "lineHeight": 1.25
+    },
+    {
+      "type": "line", "id": "divider", "x": 40, "y": 290, "width": 1480, "height": 0,
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "dashed", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500015, "version": 1, "versionNonce": 500016, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [1480, 0]]
+    },
+    {
+      "type": "rectangle", "id": "colA_frame", "x": 40, "y": 312, "width": 460, "height": 500,
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600001, "version": 1, "versionNonce": 600002, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "colA_head", "x": 56, "y": 324, "width": 430, "height": 18,
+      "text": "OPTION A * REC (with B) - Case-list CSV export",
+      "originalText": "OPTION A * REC (with B) - Case-list CSV export",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600003, "version": 1, "versionNonce": 600004, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colA_sub", "x": 56, "y": 346, "width": 430, "height": 14,
+      "text": "metadata already in the page - export what you see",
+      "originalText": "metadata already in the page - export what you see",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600005, "version": 1, "versionNonce": 600006, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "colA_mock", "x": 60, "y": 372, "width": 420, "height": 128,
+      "strokeColor": "#1e3a5f", "backgroundColor": "#ffffff", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600007, "version": 1, "versionNonce": 600008, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "colA_mock_txt", "x": 72, "y": 380, "width": 396, "height": 112,
+      "text": "Case list - 26 in view   [ Export CSV (26) ]\n----------------------------------------\ncsv: inst,qn,region,province,city,facility,\n     ownership,service_level,patient_type,\n     sex,result,status,visit,enumerator,\n     login,supervisor,replacement,gps,mode\n1 row per case IN THE CURRENT VIEW\n(filters + search applied) - built client-side",
+      "originalText": "Case list - 26 in view   [ Export CSV (26) ]\n----------------------------------------\ncsv: inst,qn,region,province,city,facility,\n     ownership,service_level,patient_type,\n     sex,result,status,visit,enumerator,\n     login,supervisor,replacement,gps,mode\n1 row per case IN THE CURRENT VIEW\n(filters + search applied) - built client-side",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#374151", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600009, "version": 1, "versionNonce": 600010, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colA_b1", "x": 60, "y": 530, "width": 420, "height": 15,
+      "text": "+ instant - no new data, no server change",
+      "originalText": "+ instant - no new data, no server change",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600011, "version": 1, "versionNonce": 600012, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colA_b2", "x": 60, "y": 554, "width": 420, "height": 30,
+      "text": "+ every payload field, incl. columns the table\n  hides (province, city, ownership, sex, ...)",
+      "originalText": "+ every payload field, incl. columns the table\n  hides (province, city, ownership, sex, ...)",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600013, "version": 1, "versionNonce": 600014, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colA_b3", "x": 60, "y": 594, "width": 420, "height": 30,
+      "text": "+ honours filters - 'Bangui F3 Partials only'\n  exports exactly that slice",
+      "originalText": "+ honours filters - 'Bangui F3 Partials only'\n  exports exactly that slice",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600015, "version": 1, "versionNonce": 600016, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colA_b4", "x": 60, "y": 634, "width": 420, "height": 30,
+      "text": "o METADATA only - not a single question\n  answer is in this file",
+      "originalText": "o METADATA only - not a single question\n  answer is in this file",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600017, "version": 1, "versionNonce": 600018, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "colB_frame", "x": 540, "y": 312, "width": 500, "height": 500,
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600019, "version": 1, "versionNonce": 600020, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "colB_head", "x": 556, "y": 324, "width": 470, "height": 18,
+      "text": "OPTION B * REC (with A) - Responses data room",
+      "originalText": "OPTION B * REC (with A) - Responses data room",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600021, "version": 1, "versionNonce": 600022, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colB_sub", "x": 556, "y": 346, "width": 470, "height": 14,
+      "text": "server-generated wide CSVs + preview, own credential",
+      "originalText": "server-generated wide CSVs + preview, own credential",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600023, "version": 1, "versionNonce": 600024, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "colB_mock", "x": 560, "y": 372, "width": 460, "height": 178,
+      "strokeColor": "#1e293b", "backgroundColor": "#1e293b", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600025, "version": 1, "versionNonce": 600026, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "colB_mock_txt", "x": 572, "y": 380, "width": 436, "height": 162,
+      "text": "/docs/data/  (SEPARATE login, not the dashboard's)\nResponses data room - regenerated every 2 min\n f1_responses.csv        1 row/case . ~315 cols\n f3_responses.csv        1 row/case . ~330 cols\n f3_roster_q94_lab.csv   1 row/QN x occurrence\n   ... 10 F3 roster files\n f4_responses.csv        1 row/case . ~230 cols\n f4_roster_household.csv  23 items x 20 occ\n   ... 10 F4 roster files\n f2_responses.csv        1 row/response . 18 cols\n+ per-instrument PREVIEW table (sticky header,\n  scrollable) so you can eyeball before download",
+      "originalText": "/docs/data/  (SEPARATE login, not the dashboard's)\nResponses data room - regenerated every 2 min\n f1_responses.csv        1 row/case . ~315 cols\n f3_responses.csv        1 row/case . ~330 cols\n f3_roster_q94_lab.csv   1 row/QN x occurrence\n   ... 10 F3 roster files\n f4_responses.csv        1 row/case . ~230 cols\n f4_roster_household.csv  23 items x 20 occ\n   ... 10 F4 roster files\n f2_responses.csv        1 row/response . 18 cols\n+ per-instrument PREVIEW table (sticky header,\n  scrollable) so you can eyeball before download",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#22c55e", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600027, "version": 1, "versionNonce": 600028, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colB_b1", "x": 560, "y": 566, "width": 470, "height": 15,
+      "text": "+ ALL answers, spreadsheet-shaped, Excel-ready",
+      "originalText": "+ ALL answers, spreadsheet-shaped, Excel-ready",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600029, "version": 1, "versionNonce": 600030, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colB_b2", "x": 560, "y": 590, "width": 470, "height": 30,
+      "text": "+ own htpasswd: dashboard watchers and response-\n  data holders are different audiences",
+      "originalText": "+ own htpasswd: dashboard watchers and response-\n  data holders are different audiences",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600031, "version": 1, "versionNonce": 600032, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colB_b3", "x": 560, "y": 630, "width": 470, "height": 30,
+      "text": "+ same on-box pattern: one new generator on the\n  existing 2-min cron; Case list links to it",
+      "originalText": "+ same on-box pattern: one new generator on the\n  existing 2-min cron; Case list links to it",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600033, "version": 1, "versionNonce": 600034, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colB_b4", "x": 560, "y": 670, "width": 470, "height": 30,
+      "text": "o values = RAW codes (1/2, not Male/Female) -\n  the dcf codebook is the labeling truth",
+      "originalText": "o values = RAW codes (1/2, not Male/Female) -\n  the dcf codebook is the labeling truth",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600035, "version": 1, "versionNonce": 600036, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colB_b5", "x": 560, "y": 710, "width": 470, "height": 30,
+      "text": "o new Apache auth stanza + credential to hand out\n  (Carl decides who gets it)",
+      "originalText": "o new Apache auth stanza + credential to hand out\n  (Carl decides who gets it)",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600037, "version": 1, "versionNonce": 600038, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "colC_frame", "x": 1080, "y": 312, "width": 440, "height": 500,
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600039, "version": 1, "versionNonce": 600040, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "colC_head", "x": 1096, "y": 324, "width": 410, "height": 18,
+      "text": "OPTION C - full matrix inside dashboard.html",
+      "originalText": "OPTION C - full matrix inside dashboard.html",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#b91c1c", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600041, "version": 1, "versionNonce": 600042, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colC_sub", "x": 1096, "y": 346, "width": 410, "height": 14,
+      "text": "embed every answer in the page payload + JS grid",
+      "originalText": "embed every answer in the page payload + JS grid",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600043, "version": 1, "versionNonce": 600044, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "colC_mock", "x": 1100, "y": 372, "width": 400, "height": 108,
+      "strokeColor": "#1e3a5f", "backgroundColor": "#ffffff", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600045, "version": 1, "versionNonce": 600046, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "colC_mock_txt", "x": 1112, "y": 380, "width": 376, "height": 92,
+      "text": "dashboard.html . Case drill-down\n[spreadsheet grid: 315..369 columns x\n every case, scrolling both ways]\npayload today ~260 KB -> multi-MB,\nre-shipped to every viewer every 2 min",
+      "originalText": "dashboard.html . Case drill-down\n[spreadsheet grid: 315..369 columns x\n every case, scrolling both ways]\npayload today ~260 KB -> multi-MB,\nre-shipped to every viewer every 2 min",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#374151", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600047, "version": 1, "versionNonce": 600048, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colC_b1", "x": 1100, "y": 530, "width": 410, "height": 15,
+      "text": "+ everything on one page, no second login",
+      "originalText": "+ everything on one page, no second login",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600049, "version": 1, "versionNonce": 600050, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colC_b2", "x": 1100, "y": 554, "width": 410, "height": 30,
+      "text": "x every response rides the DASHBOARD credential -\n  the boundary we chose yesterday dissolves",
+      "originalText": "x every response rides the DASHBOARD credential -\n  the boundary we chose yesterday dissolves",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#b91c1c", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600051, "version": 1, "versionNonce": 600052, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colC_b3", "x": 1100, "y": 594, "width": 410, "height": 30,
+      "text": "x payload multiplies ~10-20x and grows with\n  every synced case - fieldwork scale kills it",
+      "originalText": "x payload multiplies ~10-20x and grows with\n  every synced case - fieldwork scale kills it",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#b91c1c", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600053, "version": 1, "versionNonce": 600054, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colC_b4", "x": 1100, "y": 634, "width": 410, "height": 30,
+      "text": "x a 369-column HTML grid is a worse spreadsheet\n  than the CSV opened in Excel",
+      "originalText": "x a 369-column HTML grid is a worse spreadsheet\n  than the CSV opened in Excel",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#b91c1c", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600055, "version": 1, "versionNonce": 600056, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "rec_banner", "x": 40, "y": 840, "width": 1480, "height": 62,
+      "strokeColor": "#047857", "backgroundColor": "#a7f3d0", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600057, "version": 1, "versionNonce": 600058, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "rec_banner_txt", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "rec_banner_txt", "x": 60, "y": 850, "width": 1440, "height": 42,
+      "text": "RECOMMENDATION - A + B together: Export-CSV button on the Case list (metadata, instant), plus a\ncredential-gated /docs/data/ room with the full wide-CSV spreadsheets. The dashboard page itself stays light.",
+      "originalText": "RECOMMENDATION - A + B together: Export-CSV button on the Case list (metadata, instant), plus a\ncredential-gated /docs/data/ room with the full wide-CSV spreadsheets. The dashboard page itself stays light.",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "center", "verticalAlign": "middle",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 600059, "version": 1, "versionNonce": 600060, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "rec_banner", "lineHeight": 1.25
+    }
+  ]
+}

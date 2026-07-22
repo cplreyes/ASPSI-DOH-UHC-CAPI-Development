@@ -416,6 +416,22 @@ TEMPLATE = r"""<!doctype html>
   .stale{color:#b7860b}
   /* ===== purpose bands + accordion + quality panel (2026-07-17 IA redesign) ===== */
   .band{margin:34px 2px 10px;font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gd);display:flex;align-items:center;gap:10px}
+  header nav{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px}
+  header nav a{color:#fff;opacity:.92;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.45);padding-bottom:1px}
+  header nav a:hover{opacity:1;border-bottom-color:#fff}
+  header nav .here{opacity:1;font-weight:700;border-bottom:2px solid var(--gold)}
+  .howto{margin:14px 2px 4px;border:1px solid var(--line);border-left:4px solid var(--g);border-radius:10px;background:#fff}
+  .howto>summary{cursor:pointer;padding:11px 14px;font-weight:700;color:var(--gd);font-size:14px;list-style:none}
+  .howto>summary::-webkit-details-marker{display:none}
+  .howto>summary::before{content:"▸ ";color:var(--g)}
+  .howto[open]>summary::before{content:"▾ "}
+  .howto .body{padding:2px 16px 14px;font-size:13.5px;color:var(--ink);line-height:1.55}
+  .howto .body p{margin:6px 0}
+  .howto .body ul{margin:6px 0 6px 18px;padding:0}
+  .howto .body li{margin:3px 0}
+  .howto .body a{color:var(--g);font-weight:600}
+  .howto .jump{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+  .howto .jump a{font-size:12.5px;background:#eef3f0;border:1px solid var(--line);border-radius:999px;padding:4px 11px;text-decoration:none}
   .band::after{content:"";flex:1;height:2px;background:var(--g);opacity:.22;border-radius:1px}
   details.inote{margin:2px 2px 10px}
   details.inote summary{cursor:pointer;color:var(--muted);font-size:12px;font-style:italic;user-select:none;width:fit-content}
@@ -456,8 +472,33 @@ TEMPLATE = r"""<!doctype html>
 </style>
 </head>
 <body>
-<header><h1>UHC Survey Year 2 — Sync Dashboard</h1><div class="s">Unified monitoring · F1 / F3 / F4 (CSEntry) · F2 (Healthcare-Worker PWA)</div></header>
+<header><h1>UHC Survey Year 2 — Sync Dashboard</h1><div class="s">Fieldwork monitoring for the ASPSI × DOH UHC survey · F1 / F3 / F4 (CSEntry tablets) · F2 (Healthcare-Worker PWA)</div>
+<nav aria-label="Site sections"><a href="/">Home</a><a href="/help.html">Help &amp; guides</a><span class="here">Sync Dashboard</span><a href="/docs/map.html">Map report</a><a href="/docs/data/">Responses data room</a><a href="/csweb/">CSWeb app</a></nav></header>
 <main>
+  <details class="howto"><summary>New here? What this page is and how to use it</summary>
+    <div class="body">
+      <p><b>What this is.</b> A read-only monitoring view of survey data as it arrives from the field.
+      Tablets (F1/F3/F4) and the healthcare-worker web form (F2) sync into CSWeb; this page re-reads that
+      database <b>every 2 minutes</b> and shows where collection stands. Nothing here changes any data.</p>
+      <p><b>Who it's for.</b> ASPSI and DOH staff supervising fieldwork, and analysts pulling data.
+      For step-by-step instructions on collecting or syncing, use <a href="/help.html">Help &amp; guides</a>.</p>
+      <p><b>How to read it.</b> The filter bar at the top (instrument, region, supervisor, enumerator,
+      status, visit dates) drives <i>every</i> section below it — set a filter once and the whole page follows.
+      Coverage-vs-plan deliberately ignores the enumerator filter, because the plan assigns facilities, not people.</p>
+      <ul>
+        <li><b>Status now</b> — headline counts: cases in, completed vs partial, visited today, missing GPS.</li>
+        <li><b>Progress vs plan</b> — submissions over time, and coverage against the assignment plan (region → province → facility), plus enumerator productivity.</li>
+        <li><b>Data quality</b> — things worth acting on today: no-GPS cases, partials older than 2 days, cases outside the plan, and live sync alerts.</li>
+        <li><b>Instrument detail</b> — per-instrument charts (collapsed; click a heading to expand).</li>
+        <li><b>Case drill-down</b> — the case list. Search it, sort it, export the filtered view to CSV, or open any F1/F3/F4 case's full responses in CSWeb.</li>
+        <li><b>Downloads</b> — get the data out: CSPro sync files, CSV/SPSS/Stata/R exports, the CSPro applications, and the codebook.</li>
+      </ul>
+      <p><b>Definitions that trip people up.</b> "Today" is Manila time. F2 is self-administered, so it never
+      counts as no-GPS and is always recorded as completed. Case counts here follow the filters, so they can
+      differ from CSWeb's raw Data tab.</p>
+      <div class="jump"><a href="#b-status">Status now</a><a href="#b-progress">Progress vs plan</a><a href="#b-quality">Data quality</a><a href="#b-detail">Instrument detail</a><a href="#b-cases">Case drill-down</a><a href="#b-downloads">Downloads</a></div>
+    </div>
+  </details>
   <div class="filters">
     <div class="f"><label for="fInst">Instrument</label><select id="fInst"></select></div>
     <div class="f"><label for="fRegion">Region</label><select id="fRegion"></select></div>
@@ -469,7 +510,7 @@ TEMPLATE = r"""<!doctype html>
     <button class="reset" id="fReset" type="button">Reset</button>
   </div>
   <div id="enumChip" class="enumchip" hidden></div>
-  <div class="band">Status now</div>
+  <div class="band" id="b-status">Status now</div>
   <div class="kpis">
     <div class="kpi"><div class="num" id="kTotal">0</div><div class="lbl">Cases (filtered)</div></div>
     <div class="kpi ok"><div class="num" id="kCompleted">0</div><div class="lbl">Completed</div></div>
@@ -480,18 +521,18 @@ TEMPLATE = r"""<!doctype html>
   </div>
   <div class="cards" id="totals"></div>
   <div class="freshness">Data as of <b id="fresh"></b> · auto-refreshes ~every 2 min · "today" = <span id="todayLbl"></span> (Manila)</div>
-  <div class="band">Progress vs plan</div>
+  <div class="band" id="b-progress">Progress vs plan</div>
   <div class="chart wide"><h3>Submissions over time — new per day &amp; cumulative</h3><div class="canvas-wrap"><canvas id="trend"></canvas></div></div>
   <div id="coverage"></div>
   <div id="productivity"></div>
-  <div class="band">Data quality</div>
+  <div class="band" id="b-quality">Data quality</div>
   <div id="quality"></div>
-  <div class="band">Instrument detail</div>
+  <div class="band" id="b-detail">Instrument detail</div>
   <div class="note">Counts exclude deleted cases. Filters recompute every tile in your browser. Empty/blank categories reflect minimal test cases in the current data — they populate as real fieldwork syncs. Per-case drill-down: the <b>Case list</b> at the bottom — F1/F3/F4 rows open the full responses in CSWeb (login required).</div>
   <div id="sections"></div>
-  <div class="band">Case drill-down</div>
+  <div class="band" id="b-cases">Case drill-down</div>
   <h2>Case list</h2>
-  <div class="cov-note">Every synced case in the current view — honours every filter above. F1/F3/F4 rows link to the CSWeb <b>View case</b> (the full question-by-question responses; CSWeb login required). F2 is self-administered outside CSWeb, so its rows have no link. QN is shown exactly as stored. <b>Export CSV</b> downloads the current view (every metadata column, including ones this table hides). The <b>Responses data room</b> holds the full answer spreadsheets — one wide CSV per instrument plus roster CSVs (same login as this page).</div>
+  <div class="cov-note">Every synced case in the current view — honours every filter above. F1/F3/F4 rows link to the CSWeb <b>View case</b> (the full question-by-question responses; CSWeb login required). F2 is self-administered outside CSWeb, so its rows have no link. QN is shown exactly as stored. <b>Export CSV</b> downloads the current view (every metadata column, including ones this table hides). The <b>Responses data room</b> holds the full answer spreadsheets — one wide CSV per instrument plus roster CSVs, and the labeled SPSS/Stata/R extracts (same login as this page).</div>
   <div class="clbar"><input type="search" id="clSearch" placeholder="Search QN, facility, enumerator, login&hellip;" /><button class="reset" id="clExport" type="button">Export CSV</button><a class="dlink" href="/docs/data/" target="_blank" rel="noopener">Responses data room &#8599;</a></div>
   <div class="cov-sum" id="clSum"></div>
   <div id="caselist"></div>
@@ -1413,29 +1454,51 @@ def build(data, targets=None, plan=None, errored=None, f2_api_ok=None):
 
 
 DATA_MANIFEST = "/opt/app/lamp/www/docs/data/manifest.json"
+SPSS_MANIFEST = "/opt/app/lamp/www/docs/data/spss-manifest.json"
+CSPRO_MANIFEST = "/opt/app/lamp/www/docs/data/cspro-manifest.json"
+CODEBOOK_MANIFEST = "/opt/app/lamp/www/docs/data/codebook-manifest.json"
+
+
+def _load_manifest(path):
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
 
 
 def downloads_html():
     """Downloads band: CSPro sync .pffs + data-room zip bundles (manifest-driven).
 
-    Two INDEPENDENT paths by design (post-#843): the .pff route needs the CSWeb
-    sync API; the zips are built straight from MySQL by csweb-responses-gen, so
-    they keep working when the app/API is down. Renders gracefully (pffs only)
-    if the manifest has not been generated yet."""
-    try:
-        with open(DATA_MANIFEST, encoding="utf-8") as f:
-            man = json.load(f)
-    except Exception:
-        man = {}
+    Three INDEPENDENT paths by design (post-#843): the .pff route needs the CSWeb
+    sync API; the CSV zips are built straight from MySQL by csweb-responses-gen,
+    so they keep working when the app/API is down; the SPSS/Stata/R zips are
+    built from those CSVs + the questionnaire codebooks by csweb-spss-gen
+    (labels embedded; the R zips carry a codebook CSV instead).
+    Renders gracefully (pffs only) if a manifest has not been generated yet."""
+    man = _load_manifest(DATA_MANIFEST)
+    spss = _load_manifest(SPSS_MANIFEST)
+    cspro = _load_manifest(CSPRO_MANIFEST)
+    cbook = _load_manifest(CODEBOOK_MANIFEST)
     inst_meta = man.get("instruments") or {}
+    spss_meta = spss.get("instruments") or {}
     gen = man.get("generated")
-    out = ['<div class="band">Downloads</div>']
-    out.append('<div class="cov-note">Two independent ways to pull case data, so a broken sync path never '
+    out = ['<div class="band" id="b-downloads">Downloads</div>']
+    out.append('<div class="cov-note">Three independent ways to pull case data, so a broken sync path never '
                'blocks analysis. <b>CSPro sync</b>: download a .pff and double-click it &mdash; CSPro Data Viewer '
                'pulls a full <code>.csdb</code> (photos included) from the sync API. Run it in a <b>new folder</b> '
                'for a complete pull; re-running in the same folder fetches increments only. <b>Direct export</b>: '
                'zip of analysis-ready CSVs built straight from the database every ~2 min &mdash; works even when '
-               'the CSWeb app or sync API is down. Same login as this page.</div>')
+               'the CSWeb app or sync API is down; values are raw stored codes. <b>Stats exports</b>: the same '
+               'cases packaged for SPSS (<code>.sav</code>) and Stata (<code>.dta</code>) with variable labels '
+               '(question text) and value labels (code &rarr; answer) embedded from the questionnaire codebook, '
+               'and for R (<code>.rds</code> plus a codebook CSV, raw codes preserved). '
+               '<b>CSPro packages</b>: the complete CAPI entry applications (compiled .pen + Designer source + '
+               'lookup files) and the questionnaire dictionaries, so CSPro users can run the instruments '
+               'locally &mdash; extracted apps start with an empty local case file, no sync. '
+               '<b>Codebook</b>: what every variable means — label, question, universe (who was asked), '
+               'value codes and validation rules, as Excel + PDF, documented to the DDI/PSADA convention. '
+               'Same login as this page.</div>')
     out.append('<div class="dl"><span class="rl">CSPro sync (.pff)</span>')
     for label, fn in (("F1 &mdash; Facility Head", "facilityheadsurvey_dict.pff"),
                       ("F3 &mdash; Patient", "patientsurvey_dict.pff"),
@@ -1450,9 +1513,64 @@ def downloads_html():
                         % (m["zip"], label, m["cases"]))
     zrow.append('<a href="/docs/data/" target="_blank" rel="noopener">browse all CSVs &#8599;</a></div>')
     out.append("".join(zrow))
+    for fkey, rl in (("spss", "SPSS export (.sav zip)"),
+                     ("stata", "Stata export (.dta zip)"),
+                     ("r", "R export (.rds zip)")):
+        srow = ['<div class="dl"><span class="rl">%s</span>' % rl]
+        have = False
+        for inst, label in (("f1", "F1"), ("f3", "F3"), ("f4", "F4"), ("f2", "F2")):
+            m = spss_meta.get(inst) or {}
+            # "zips" is the per-format manifest; fall back to the legacy
+            # spss-only "zip" key during a deploy window
+            z = (m.get("zips") or {}).get(fkey) or (m.get("zip") if fkey == "spss" else None)
+            if z:
+                have = True
+                srow.append('<a class="zip" href="/docs/data/%s" download>%s &mdash; %s cases</a>'
+                            % (z, label, m["cases"]))
+        comb = (spss.get("combined_zips") or {}).get(fkey) or (
+            spss.get("combined") if fkey == "spss" else None)
+        if comb and have:
+            srow.append('<a href="/docs/data/%s" download>all instruments</a>' % comb)
+        srow.append('</div>')
+        if have:
+            out.append("".join(srow))
+    cbi = cbook.get("instruments") or {}
+    brow = ['<div class="dl"><span class="rl">Codebook (Excel / PDF)</span>']
+    have_b = False
+    for inst, label in (("f1", "F1"), ("f3", "F3"), ("f4", "F4"), ("f2", "F2")):
+        m = cbi.get(inst) or {}
+        if m.get("xlsx"):
+            have_b = True
+            brow.append('<a class="zip" href="/docs/data/%s" download>%s &mdash; %s vars</a>'
+                        % (m["xlsx"], label, m.get("variables", "")))
+            if m.get("pdf"):
+                brow.append('<a href="/docs/data/%s" download>%s PDF</a>' % (m["pdf"], label))
+    combb = cbook.get("combined") or {}
+    if combb.get("pdf") and have_b:
+        brow.append('<a href="/docs/data/%s" download>all instruments (PDF)</a>' % combb["pdf"])
+    brow.append('</div>')
+    if have_b:
+        out.append("".join(brow))
+    cins = cspro.get("instruments") or {}
+    crow = ['<div class="dl"><span class="rl">CSPro app (zip)</span>']
+    have_c = False
+    for inst, label in (("f1", "F1"), ("f3", "F3"), ("f4", "F4")):
+        m = cins.get(inst) or {}
+        if m.get("zip"):
+            have_c = True
+            crow.append('<a class="zip" href="/docs/data/%s" download>%s &mdash; v%s</a>'
+                        % (m["zip"], label, m.get("version", "?")))
+    if cspro.get("dictionaries_zip") and have_c:
+        crow.append('<a href="/docs/data/%s" download>dictionaries (.dcf)</a>'
+                    % cspro["dictionaries_zip"])
+    crow.append('</div>')
+    if have_c:
+        out.append("".join(crow))
     if gen:
-        out.append('<div class="cov-sum">export bundles generated %s &middot; refreshed ~every 2 min</div>'
-                   % html.escape(str(gen), quote=False))
+        stamp = 'export bundles generated %s' % html.escape(str(gen), quote=False)
+        if spss.get("generated"):
+            stamp += ' &middot; stats exports %s' % html.escape(str(spss["generated"]), quote=False)
+        out.append('<div class="cov-sum">%s &middot; refreshed ~every 2 min</div>' % stamp)
     return chr(10).join(out)
 
 

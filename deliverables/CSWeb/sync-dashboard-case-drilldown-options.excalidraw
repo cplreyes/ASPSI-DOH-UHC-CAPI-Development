@@ -1,0 +1,574 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "appState": { "viewBackgroundColor": "#ffffff", "gridSize": 20 },
+  "files": {},
+  "elements": [
+    {
+      "type": "text", "id": "title", "x": 40, "y": 26, "width": 1050, "height": 33,
+      "text": "Sync Dashboard - how to drill down to specific cases & responses",
+      "originalText": "Sync Dashboard - how to drill down to specific cases & responses",
+      "fontSize": 26, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100001, "version": 1, "versionNonce": 100002, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "context", "x": 40, "y": 66, "width": 1300, "height": 17,
+      "text": "Deciding: where case-level detail lives. dashboard.html is PUBLIC + static (regen every 2 min); full responses today = CSWeb Sync Report 'View case' (login). 2026-07-17",
+      "originalText": "Deciding: where case-level detail lives. dashboard.html is PUBLIC + static (regen every 2 min); full responses today = CSWeb Sync Report 'View case' (login). 2026-07-17",
+      "fontSize": 13, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100003, "version": 1, "versionNonce": 100004, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "today_label", "x": 40, "y": 108, "width": 220, "height": 20,
+      "text": "WHAT EXISTS TODAY",
+      "originalText": "WHAT EXISTS TODAY",
+      "fontSize": 16, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100005, "version": 1, "versionNonce": 100006, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "dash_box", "x": 40, "y": 140, "width": 580, "height": 196,
+      "strokeColor": "#1e3a5f", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100007, "version": 1, "versionNonce": 100008, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "dash_title", "x": 56, "y": 150, "width": 520, "height": 17,
+      "text": "dashboard.html - PUBLIC, no login, static, regen every 2 min",
+      "originalText": "dashboard.html - PUBLIC, no login, static, regen every 2 min",
+      "fontSize": 13, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100009, "version": 1, "versionNonce": 100010, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "dash_widgets", "x": 56, "y": 176, "width": 540, "height": 45,
+      "text": "KPIs: 128 cases | 117 Completed | 9 Partial | 2 today\ncharts: trend / doughnuts / bars - coverage table - productivity\nleaderboard - notification bell",
+      "originalText": "KPIs: 128 cases | 117 Completed | 9 Partial | 2 today\ncharts: trend / doughnuts / bars - coverage table - productivity\nleaderboard - notification bell",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#374151", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100011, "version": 1, "versionNonce": 100012, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "dash_payload", "x": 56, "y": 236, "width": 548, "height": 84,
+      "strokeColor": "#64748b", "backgroundColor": "#dbeafe", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "dashed", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100013, "version": 1, "versionNonce": 100014, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "dash_payload_txt", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "dash_payload_txt", "x": 66, "y": 244, "width": 528, "height": 68,
+      "text": "already embedded in the page: ONE LABELED ROW PER CASE\n(region, facility, result, status, date, enumerator,\nCSWeb login) - but only ever aggregated, never listed",
+      "originalText": "already embedded in the page: ONE LABELED ROW PER CASE\n(region, facility, result, status, date, enumerator,\nCSWeb login) - but only ever aggregated, never listed",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "middle",
+      "strokeColor": "#374151", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100015, "version": 1, "versionNonce": 100016, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "dash_payload", "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "sr_box", "x": 780, "y": 140, "width": 580, "height": 196,
+      "strokeColor": "#1e3a5f", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100017, "version": 1, "versionNonce": 100018, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "sr_title", "x": 796, "y": 150, "width": 520, "height": 17,
+      "text": "CSWeb Sync Report - LOGIN required - /csweb/sync-report",
+      "originalText": "CSWeb Sync Report - LOGIN required - /csweb/sync-report",
+      "fontSize": 13, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100019, "version": 1, "versionNonce": 100020, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "sr_rows", "x": 796, "y": 176, "width": 540, "height": 45,
+      "text": "BANGUI DISTRICT HOSPITAL . 501   1 case   [View case]\nBANGUI DISTRICT HOSPITAL . 001   1 case   [View case]\none row per questionnaire_number (F1/F3/F4 only - no F2)",
+      "originalText": "BANGUI DISTRICT HOSPITAL . 501   1 case   [View case]\nBANGUI DISTRICT HOSPITAL . 001   1 case   [View case]\none row per questionnaire_number (F1/F3/F4 only - no F2)",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#374151", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100021, "version": 1, "versionNonce": 100022, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "sr_modal", "x": 796, "y": 236, "width": 548, "height": 84,
+      "strokeColor": "#1e293b", "backgroundColor": "#1e293b", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100023, "version": 1, "versionNonce": 100024, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "sr_modal_txt", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "sr_modal_txt", "x": 806, "y": 244, "width": 528, "height": 68,
+      "text": "'View case' modal = the FULL case: every record table,\nevery response (FIELD_CONTROL, B_..., D_..., rosters)\n- the detail view already exists here",
+      "originalText": "'View case' modal = the FULL case: every record table,\nevery response (FIELD_CONTROL, B_..., D_..., rosters)\n- the detail view already exists here",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "middle",
+      "strokeColor": "#22c55e", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100025, "version": 1, "versionNonce": 100026, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "sr_modal", "lineHeight": 1.25
+    },
+    {
+      "type": "arrow", "id": "today_arrow", "x": 624, "y": 210, "width": 152, "height": 0,
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "dashed", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100027, "version": 1, "versionNonce": 100028, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [152, 0]],
+      "startBinding": {"elementId": "dash_box", "focus": 0, "gap": 4},
+      "endBinding": {"elementId": "sr_box", "focus": 0, "gap": 4},
+      "startArrowhead": null, "endArrowhead": "arrow"
+    },
+    {
+      "type": "text", "id": "today_arrow_lbl", "x": 610, "y": 168, "width": 180, "height": 28,
+      "text": "today: a footer note\n'see the Sync Report'",
+      "originalText": "today: a footer note\n'see the Sync Report'",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100029, "version": 1, "versionNonce": 100030, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "tension", "x": 40, "y": 352, "width": 1200, "height": 17,
+      "text": "! The gap: specific cases are visible ONLY behind the CSWeb login - the dashboard everyone watches shows aggregates only",
+      "originalText": "! The gap: specific cases are visible ONLY behind the CSWeb login - the dashboard everyone watches shows aggregates only",
+      "fontSize": 13, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#b45309", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100031, "version": 1, "versionNonce": 100032, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "line", "id": "divider", "x": 40, "y": 392, "width": 1480, "height": 0,
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "dashed", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100033, "version": 1, "versionNonce": 100034, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [1480, 0]]
+    },
+    {
+      "type": "rectangle", "id": "colA_frame", "x": 40, "y": 412, "width": 480, "height": 468,
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200001, "version": 1, "versionNonce": 200002, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "colA_head", "x": 56, "y": 424, "width": 440, "height": 19,
+      "text": "OPTION A - case-list panel in the dashboard",
+      "originalText": "OPTION A - case-list panel in the dashboard",
+      "fontSize": 15, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200003, "version": 1, "versionNonce": 200004, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colA_sub", "x": 56, "y": 448, "width": 440, "height": 14,
+      "text": "generator-only change - renders rows already in the payload",
+      "originalText": "generator-only change - renders rows already in the payload",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200005, "version": 1, "versionNonce": 200006, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "colA_mock", "x": 60, "y": 474, "width": 440, "height": 142,
+      "strokeColor": "#1e3a5f", "backgroundColor": "#ffffff", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200007, "version": 1, "versionNonce": 200008, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "colA_mock_title", "x": 72, "y": 482, "width": 416, "height": 14,
+      "text": "CASE LIST - 128 in view - honors every filter above",
+      "originalText": "CASE LIST - 128 in view - honors every filter above",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200009, "version": 1, "versionNonce": 200010, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colA_mock_hdr", "x": 72, "y": 502, "width": 416, "height": 14,
+      "text": "QN            FACILITY          RESULT     ENUM . LOGIN",
+      "originalText": "QN            FACILITY          RESULT     ENUM . LOGIN",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200011, "version": 1, "versionNonce": 200012, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colA_mock_rows", "x": 72, "y": 520, "width": 416, "height": 42,
+      "text": "102800010011  BANGUI DIST HOSP  Completed  R.CRUZ . rcruz\n102800015012  BANGUI DIST HOSP  Replaced   M.STOS . msantos\n102800016013  (unlabeled)       Partial    (no login)",
+      "originalText": "102800010011  BANGUI DIST HOSP  Completed  R.CRUZ . rcruz\n102800015012  BANGUI DIST HOSP  Replaced   M.STOS . msantos\n102800016013  (unlabeled)       Partial    (no login)",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#374151", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200013, "version": 1, "versionNonce": 200014, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colA_mock_foot", "x": 72, "y": 572, "width": 416, "height": 28,
+      "text": "sortable columns - click a row to filter the whole page\n(same behaviour as the productivity leaderboard)",
+      "originalText": "sortable columns - click a row to filter the whole page\n(same behaviour as the productivity leaderboard)",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200015, "version": 1, "versionNonce": 200016, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colA_pro1", "x": 60, "y": 648, "width": 440, "height": 30,
+      "text": "+ zero new exposure - these fields are already\n  in the public page payload today",
+      "originalText": "+ zero new exposure - these fields are already\n  in the public page payload today",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200017, "version": 1, "versionNonce": 200018, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colA_pro2", "x": 60, "y": 690, "width": 440, "height": 30,
+      "text": "+ one file (csweb-dashboard-gen.py), scp deploy,\n  live on the next 2-min regen",
+      "originalText": "+ one file (csweb-dashboard-gen.py), scp deploy,\n  live on the next 2-min regen",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200019, "version": 1, "versionNonce": 200020, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colA_con1", "x": 60, "y": 732, "width": 440, "height": 30,
+      "text": "o detail = the ~12 dashboard fields per case,\n  NOT the full questionnaire",
+      "originalText": "o detail = the ~12 dashboard fields per case,\n  NOT the full questionnaire",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200021, "version": 1, "versionNonce": 200022, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colA_con2", "x": 60, "y": 774, "width": 440, "height": 30,
+      "text": "o full responses still mean a manual hop:\n  log in to CSWeb, find the case again",
+      "originalText": "o full responses still mean a manual hop:\n  log in to CSWeb, find the case again",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200023, "version": 1, "versionNonce": 200024, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "colB_frame", "x": 560, "y": 412, "width": 480, "height": 468,
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300001, "version": 1, "versionNonce": 300002, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "colB_head", "x": 576, "y": 424, "width": 450, "height": 19,
+      "text": "OPTION B * RECOMMENDED - case list + 1-click View case",
+      "originalText": "OPTION B * RECOMMENDED - case list + 1-click View case",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300003, "version": 1, "versionNonce": 300004, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colB_sub", "x": 576, "y": 448, "width": 450, "height": 14,
+      "text": "everything in A, plus each row deep-links into CSWeb",
+      "originalText": "everything in A, plus each row deep-links into CSWeb",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300005, "version": 1, "versionNonce": 300006, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "colB_mock", "x": 580, "y": 474, "width": 440, "height": 74,
+      "strokeColor": "#1e3a5f", "backgroundColor": "#ffffff", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300007, "version": 1, "versionNonce": 300008, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "colB_mock_rows", "x": 592, "y": 482, "width": 416, "height": 56,
+      "text": "QN            RESULT     FULL DETAIL\n102800015012  Replaced   [ Responses -> ]\n102800010011  Completed  [ Responses -> ]\nsame case list as Option A - plus one extra column",
+      "originalText": "QN            RESULT     FULL DETAIL\n102800015012  Replaced   [ Responses -> ]\n102800010011  Completed  [ Responses -> ]\nsame case list as Option A - plus one extra column",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#374151", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300009, "version": 1, "versionNonce": 300010, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "arrow", "id": "colB_arrow", "x": 800, "y": 550, "width": 0, "height": 34,
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300011, "version": 1, "versionNonce": 300012, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [0, 34]],
+      "startBinding": {"elementId": "colB_mock", "focus": 0, "gap": 3},
+      "endBinding": {"elementId": "colB_modal", "focus": 0, "gap": 3},
+      "startArrowhead": null, "endArrowhead": "arrow"
+    },
+    {
+      "type": "text", "id": "colB_arrow_lbl", "x": 812, "y": 552, "width": 220, "height": 28,
+      "text": "sync-report?dict=F3&case=...\nauto-opens the modal (LOGIN)",
+      "originalText": "sync-report?dict=F3&case=...\nauto-opens the modal (LOGIN)",
+      "fontSize": 10, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300013, "version": 1, "versionNonce": 300014, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "colB_modal", "x": 580, "y": 588, "width": 440, "height": 96,
+      "strokeColor": "#1e293b", "backgroundColor": "#1e293b", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300015, "version": 1, "versionNonce": 300016, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "colB_modal_txt", "x": 592, "y": 596, "width": 416, "height": 80,
+      "text": "View case - 102800015012 (PATIENTSURVEY_DICT)\nFIELD_CONTROL      REGION 01 . ENUM_RESULT 7\nB_PATIENT_PROFILE  Q7_SEX 2 . Q8_AGE 34\nD_MEDS (roster)    ROW 1..6\n-> every record table, every answer",
+      "originalText": "View case - 102800015012 (PATIENTSURVEY_DICT)\nFIELD_CONTROL      REGION 01 . ENUM_RESULT 7\nB_PATIENT_PROFILE  Q7_SEX 2 . Q8_AGE 34\nD_MEDS (roster)    ROW 1..6\n-> every record table, every answer",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#22c55e", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300017, "version": 1, "versionNonce": 300018, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colB_pro1", "x": 580, "y": 700, "width": 450, "height": 15,
+      "text": "+ full responses, one click from the dashboard",
+      "originalText": "+ full responses, one click from the dashboard",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300019, "version": 1, "versionNonce": 300020, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colB_pro2", "x": 580, "y": 724, "width": 450, "height": 15,
+      "text": "+ detail stays behind the CSWeb login - nothing new public",
+      "originalText": "+ detail stays behind the CSWeb login - nothing new public",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300021, "version": 1, "versionNonce": 300022, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colB_pro3", "x": 580, "y": 748, "width": 450, "height": 15,
+      "text": "+ tiny JS patch = survival-kit patch #7 (marker, idempotent)",
+      "originalText": "+ tiny JS patch = survival-kit patch #7 (marker, idempotent)",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300023, "version": 1, "versionNonce": 300024, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colB_con1", "x": 580, "y": 772, "width": 450, "height": 15,
+      "text": "o one more on-box patch to re-apply after a CSWeb upgrade",
+      "originalText": "o one more on-box patch to re-apply after a CSWeb upgrade",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300025, "version": 1, "versionNonce": 300026, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colB_con2", "x": 580, "y": 796, "width": 450, "height": 30,
+      "text": "o F2 is not a CSWeb dictionary - its rows list fine but\n  link nowhere (or to the F2 admin portal instead)",
+      "originalText": "o F2 is not a CSWeb dictionary - its rows list fine but\n  link nowhere (or to the F2 admin portal instead)",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300027, "version": 1, "versionNonce": 300028, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "colC_frame", "x": 1080, "y": 412, "width": 440, "height": 468,
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400001, "version": 1, "versionNonce": 400002, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "colC_head", "x": 1096, "y": 424, "width": 410, "height": 19,
+      "text": "OPTION C - embed FULL responses in the page",
+      "originalText": "OPTION C - embed FULL responses in the page",
+      "fontSize": 15, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#b91c1c", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400003, "version": 1, "versionNonce": 400004, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colC_sub", "x": 1096, "y": 448, "width": 410, "height": 14,
+      "text": "generator dumps every answer into static pages",
+      "originalText": "generator dumps every answer into static pages",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400005, "version": 1, "versionNonce": 400006, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "colC_mock", "x": 1100, "y": 474, "width": 400, "height": 130,
+      "strokeColor": "#1e3a5f", "backgroundColor": "#ffffff", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400007, "version": 1, "versionNonce": 400008, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "colC_mock_txt", "x": 1112, "y": 482, "width": 376, "height": 84,
+      "text": "/docs/cases/102800015012.html\nQ1  OWNERSHIP     2 . Private\nQ7  SEX           2 . Female\nQ34 DIAGNOSIS     E11.9 ...\n... hundreds of answers, in the clear",
+      "originalText": "/docs/cases/102800015012.html\nQ1  OWNERSHIP     2 . Private\nQ7  SEX           2 . Female\nQ34 DIAGNOSIS     E11.9 ...\n... hundreds of answers, in the clear",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#374151", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400009, "version": 1, "versionNonce": 400010, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "colC_badge", "x": 1330, "y": 570, "width": 158, "height": 26,
+      "strokeColor": "#b91c1c", "backgroundColor": "#fecaca", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400011, "version": 1, "versionNonce": 400012, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "colC_badge_txt", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "colC_badge_txt", "x": 1336, "y": 576, "width": 146, "height": 14,
+      "text": "PUBLIC - no login",
+      "originalText": "PUBLIC - no login",
+      "fontSize": 11, "fontFamily": 3, "textAlign": "center", "verticalAlign": "middle",
+      "strokeColor": "#b91c1c", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400013, "version": 1, "versionNonce": 400014, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "colC_badge", "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colC_pro1", "x": 1100, "y": 648, "width": 410, "height": 15,
+      "text": "+ no CSWeb login needed to read a case",
+      "originalText": "+ no CSWeb login needed to read a case",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400015, "version": 1, "versionNonce": 400016, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colC_con1", "x": 1100, "y": 690, "width": 410, "height": 30,
+      "text": "x patient / HCW answers on an UNAUTHENTICATED\n  page - disqualifying (privacy / DOH data)",
+      "originalText": "x patient / HCW answers on an UNAUTHENTICATED\n  page - disqualifying (privacy / DOH data)",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#b91c1c", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400017, "version": 1, "versionNonce": 400018, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colC_con2", "x": 1100, "y": 732, "width": 410, "height": 30,
+      "text": "x payload explodes at scale: 100s of fields x\n  1000s of cases, regenerated every 2 min",
+      "originalText": "x payload explodes at scale: 100s of fields x\n  1000s of cases, regenerated every 2 min",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#b91c1c", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400019, "version": 1, "versionNonce": 400020, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "colC_con3", "x": 1100, "y": 774, "width": 410, "height": 30,
+      "text": "x rebuilds what CSWeb's View case already\n  renders well, behind auth",
+      "originalText": "x rebuilds what CSWeb's View case already\n  renders well, behind auth",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#b91c1c", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400021, "version": 1, "versionNonce": 400022, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "rec_banner", "x": 40, "y": 908, "width": 1480, "height": 62,
+      "strokeColor": "#047857", "backgroundColor": "#a7f3d0", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400023, "version": 1, "versionNonce": 400024, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "rec_banner_txt", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "rec_banner_txt", "x": 60, "y": 918, "width": 1440, "height": 42,
+      "text": "RECOMMENDATION - Option B: render the case list the dashboard already carries, and make every row\none click from the full View case. Detail stays behind the CSWeb login; the dashboard stays a static page.",
+      "originalText": "RECOMMENDATION - Option B: render the case list the dashboard already carries, and make every row\none click from the full View case. Detail stays behind the CSWeb login; the dashboard stays a static page.",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "center", "verticalAlign": "middle",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400025, "version": 1, "versionNonce": 400026, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "rec_banner", "lineHeight": 1.25
+    }
+  ]
+}

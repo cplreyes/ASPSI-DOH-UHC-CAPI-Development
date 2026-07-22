@@ -21,6 +21,8 @@ truth) and `/root/csweb-patches/` on `aspsi-csweb-prod`.
 | 3 | `src/.../Controller/api/ReportController.php` | `importAreaNames()` wrong return type → every successful label import 500'd |
 | 4 | `templates/mapReport.twig` | Map Report defaults to the Philippines (`setView([12.88,121.77],6)`) instead of `fitWorld()` (×2 call sites) |
 | 5 | `dist/css/cspro-styles.css` | sidebar submenu label wrap + View-case modal width 92vw |
+| 6 | `src/.../Data/MySQLQuestionnaireSerializer.php` | array-guard the single-occurrence bind — a binary Image item (verification photo) as array killed the whole F3/F4 breakout job at 0 cases |
+| 7 | `templates/syncReport.twig` | deep-link `?dict=<DICT>&case=<QN>` auto-opens the View case modal — the Sync Dashboard's Case list links land here (2026-07-17) |
 
 Plus (idempotent): `SET PERSIST log_bin_trust_function_creators=1` and `sql_mode`
 minus `ONLY_FULL_GROUP_BY`; Twig cache clear; `var/` ownership back to uid 33;

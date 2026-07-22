@@ -1,12 +1,27 @@
 #!/usr/bin/env python3
-r"""Generate SPSS (.sav) case exports for ALL FOUR instruments from the
-Responses Data Room CSVs + the questionnaire codebooks.
+r"""Generate SPSS (.sav) + Stata (.dta) + R (.rds) case exports for ALL FOUR
+instruments from the Responses Data Room CSVs + the questionnaire codebooks.
+(Filename kept as csweb-spss-gen.py for cron/log continuity — since 2026-07-21
+it is the stats-package generator for all three formats.)
 
 Why a separate generator (not just the CSVs): the data-room CSVs carry RAW
-codes (1/2, not Male/Female). SPSS's whole value over CSV is the embedded
-metadata — variable labels (the question text) and value labels (1="Male").
-This script attaches both, so Marriz opens a .sav and every variable/value is
-self-describing, no codebook lookup.
+codes (1/2, not Male/Female). The stats formats' whole value over CSV is the
+embedded metadata — variable labels (the question text) and value labels
+(1="Male"). This script attaches both, so an analyst opens a .sav/.dta and
+every variable/value is self-describing, no codebook lookup.
+
+Per format:
+  SPSS .sav   variable labels + value labels embedded (as before).
+  Stata .dta  same labels embedded; variable names sanitized to Stata's rules
+              (<=32 chars, [A-Za-z_][A-Za-z0-9_]*) with any renames listed in
+              the zip's README.txt; variable labels capped at Stata's 80 chars.
+              Written as DTA 118 (Stata 14+, UTF-8).
+  R .rds      typed data frames (readRDS()), values stay the RAW codes — R has
+              no standard embedded-label slot pyreadr can write, so labels ride
+              along as <inst>_codebook.csv (variable + value labels, one file
+              per instrument, included in the R zips). Deliberately NOT factor-
+              converted: partially-labeled numerics (amounts with 98=DK style
+              specials) would corrupt to NA. Nullable ints become R numeric.
 
 Label sources (the codebook truth):
   F1/F3/F4  the CSPro .dcf dictionaries (JSON, CSPro 8.0) — item labels +
@@ -22,21 +37,36 @@ Input = the Responses Data Room CSVs (produced by csweb-responses-gen.py):
   f1_responses.csv / f3_responses.csv / f4_responses.csv  (wide: 1 row/case)
   f{3,4}_roster_*.csv                                      (1 row/case x occ)
   f2_responses.csv                                         (values_json blob)
-Output = one .sav per CSV + a per-instrument zip + a combined zip + manifest.
+Output = one .sav + .dta + .rds per CSV + a codebook CSV per instrument +
+per-instrument-per-format zips + combined per-format zips + one manifest
+(spss-manifest.json — name kept; it now carries "zips"/"combined_zips" per
+format, plus the legacy "zip"/"combined" SPSS keys).
 
-Decoupled from MySQL and from the box on purpose: it reads the CSVs the
-responses generator already writes, so it runs anywhere those CSVs + the
-committed DCFs land. To refresh: re-pull the data room, re-run.
+Decoupled from MySQL on purpose: it reads the CSVs the responses generator
+already writes, so it runs anywhere those CSVs + the DCF codebooks land.
 
+ON-BOX (the live extract on the dashboard/data room, added 2026-07-20):
+runs from cron on the odd minutes, sharing the responses-gen lock file so it
+never reads a CSV mid-rewrite. Codebooks live flat in /opt/spss-meta (3 .dcf +
+f2-item-labels.json — re-scp after any dictionary redeploy). Deps live in a
+venv (Ubuntu 24.04 blocks system pip): /opt/venvs/spss.
+  1-59/2 * * * * flock -n /tmp/csweb-responses.lock /opt/venvs/spss/bin/python \
+    /opt/csweb-spss-gen.py --meta-dir /opt/spss-meta >> /var/log/csweb-spss.log 2>&1
+Same .htaccess guard as the responses generator: refuses to write into the
+live dir unless the dir carries its own auth stanza.
+
+OFF-BOX (ad-hoc rebuild, e.g. a one-off cut for ASPSI):
   # pull the latest CSVs off the box (credential-free, read-only)
   scp -i ~/.ssh/aspsi-csweb 'root@207.148.65.115:/opt/app/lamp/www/docs/data/*.csv' <data-dir>/
   python deliverables/CSWeb/csweb-spss-gen.py --data-dir <data-dir> --out-dir <out>
 
-Requires: pyreadstat, pandas (pip). Built 2026-07-20 ("the file Marriz needed").
+Requires: pyreadstat, pyreadr, pandas (pip). Built 2026-07-20 ("the file
+Marriz needed"); Stata + R formats added 2026-07-21.
 """
-import argparse, csv, io, json, os, sys, zipfile, datetime
+import argparse, csv, io, json, os, re, sys, zipfile, datetime
 import pandas as pd
 import pyreadstat
+import pyreadr
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, ".."))               # deliverables/
@@ -44,10 +74,19 @@ CSPRO = os.path.join(REPO, "CSPro")
 DCF = {"f1": os.path.join(CSPRO, "F1", "FacilityHeadSurvey.dcf"),
        "f3": os.path.join(CSPRO, "F3", "PatientSurvey.dcf"),
        "f4": os.path.join(CSPRO, "F4", "HouseholdSurvey.dcf")}
+DCF_NAME = {k: os.path.basename(v) for k, v in DCF.items()}    # flat --meta-dir layout
+LIVE_DATA = "/opt/app/lamp/www/docs/data"
 NAMES = {"f1": "F1 - Facility Head", "f3": "F3 - Patient",
          "f4": "F4 - Household", "f2": "F2 - Healthcare Worker (PWA)"}
 VARLABEL_MAX = 256      # SPSS variable-label byte cap
 VALLABEL_MAX = 120      # SPSS value-label byte cap
+STATA_NAME_MAX = 32     # Stata variable-name cap
+STATA_VARLABEL_MAX = 80 # Stata variable-label cap
+# format -> (made-entry key, combined-zip name)
+FORMATS = (("spss", "file"), ("stata", "dta"), ("r", "rds"))
+COMBINED = {"spss": "uhc-year2-cases-spss.zip",
+            "stata": "uhc-year2-cases-stata.zip",
+            "r": "uhc-year2-cases-r.zip"}
 
 # F2: the values_json keys that are provenance, not survey answers (kept as
 # plain columns, no explode); everything else Q* is an answer column.
@@ -123,8 +162,8 @@ def numeric_or_none(cells):
     return out, is_int
 
 
-def build_sav(csv_path, sav_path, itemmap, title, extra_labels=None):
-    """Write one .sav from one wide/roster CSV using the DCF item map."""
+def prep_frame(csv_path, itemmap, extra_labels=None):
+    """One wide/roster CSV -> (df, header, var_labels{col:label}, val_labels{col:{code:label}})."""
     header, rows = read_csv_rows(csv_path)
     cols = {c: [r[i] if i < len(r) else "" for r in rows] for i, c in enumerate(header)}
     # Restore the canonical 12-digit QN: the F1/F3/F4 breakout stores
@@ -161,16 +200,11 @@ def build_sav(csv_path, sav_path, itemmap, title, extra_labels=None):
                     val_labels[c] = vl
         else:
             data[c] = pd.Series(["" if v is None else str(v) for v in raw], dtype="object")
-    df = pd.DataFrame(data, columns=header)
-    pyreadstat.write_sav(
-        df, sav_path, file_label=title[:60],
-        column_labels=[var_labels[c] for c in header],
-        variable_value_labels=val_labels)
-    return {"file": os.path.basename(sav_path), "rows": len(df), "cols": len(header)}
+    return pd.DataFrame(data, columns=header), header, var_labels, val_labels
 
 
-def build_f2(csv_path, sav_path, f2labels):
-    """Explode f2 values_json into per-question columns and write .sav."""
+def prep_f2(csv_path, f2labels):
+    """Explode f2 values_json into per-question columns -> (df, header, var_labels)."""
     header, rows = read_csv_rows(csv_path)
     idx = {c: i for i, c in enumerate(header)}
     recs = []
@@ -220,64 +254,203 @@ def build_f2(csv_path, sav_path, f2labels):
                 "status": "Submission status", "source_path": "Capture path (self-admin / paper-encoded)",
                 "spec_version": "Questionnaire spec version", "app_version": "PWA app version",
                 "submission_lat": "GPS latitude", "submission_lng": "GPS longitude"}
-    labels = []
+    var_labels = {}
     for c in header_out:
         lab = base_lab.get(c) or (f2labels.get(c, {}).get("label") if c in f2labels else "") or c
-        labels.append(lab[:VARLABEL_MAX])
-    pyreadstat.write_sav(df, sav_path, file_label=NAMES["f2"][:60], column_labels=labels)
-    return {"file": os.path.basename(sav_path), "rows": len(df), "cols": len(header_out)}
+        var_labels[c] = lab[:VARLABEL_MAX]
+    return df, header_out, var_labels
+
+
+def stata_names(header):
+    """Sanitize columns to legal, unique Stata names; return (names, renames)."""
+    names, used, renamed = [], set(), []
+    for c in header:
+        n = re.sub(r"[^A-Za-z0-9_]", "_", c)
+        if not re.match(r"[A-Za-z_]", n):
+            n = "v_" + n
+        n = n[:STATA_NAME_MAX]
+        base, i = n, 2
+        while n.lower() in used:
+            suf = "_%d" % i
+            n = base[:STATA_NAME_MAX - len(suf)] + suf
+            i += 1
+        used.add(n.lower())
+        names.append(n)
+        if n != c:
+            renamed.append((c, n))
+    return names, renamed
+
+
+def write_formats(df, header, var_labels, val_labels, out_dir, base, title):
+    """Write base.{sav,dta,rds}; return (manifest entry, stata renames)."""
+    pyreadstat.write_sav(
+        df, os.path.join(out_dir, base + ".sav"), file_label=title[:60],
+        column_labels=[var_labels[c] for c in header],
+        variable_value_labels=val_labels)
+    names, renamed = stata_names(header)
+    sdf = df.copy()
+    sdf.columns = names
+    colmap = dict(zip(header, names))
+    pyreadstat.write_dta(
+        sdf, os.path.join(out_dir, base + ".dta"), file_label=title[:80],
+        column_labels=[var_labels[c][:STATA_VARLABEL_MAX] for c in header],
+        variable_value_labels={colmap[c]: v for c, v in val_labels.items()})
+    rdf = df.copy()
+    for c in rdf.columns:                     # pyreadr can't take nullable Int64
+        if str(rdf[c].dtype) == "Int64":
+            rdf[c] = rdf[c].astype("float64")
+    pyreadr.write_rds(os.path.join(out_dir, base + ".rds"), rdf, compress="gzip")
+    return ({"file": base + ".sav", "dta": base + ".dta", "rds": base + ".rds",
+             "rows": len(df), "cols": len(header)}, renamed)
+
+
+def cb_add(cb, header, var_labels, val_labels):
+    for c in header:
+        if c not in cb:
+            cb[c] = (var_labels.get(c, c), val_labels.get(c) or {})
+
+
+def write_codebook(cb, path):
+    """variable/value labels as CSV — the R zips' label companion."""
+    with open(path, "w", encoding="utf-8-sig", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["variable", "variable_label", "value", "value_label"])
+        for c, (lab, vl) in cb.items():
+            w.writerow([c, lab, "", ""])
+            for code in sorted(vl):
+                w.writerow([c, "", code, vl[code]])
+
+
+def readme_text(inst, fmt, cases, stamp, renames, nl):
+    head = [NAMES[inst],
+            "%s export generated %s UTC from the Responses Data Room CSVs."
+            % ({"spss": "SPSS", "stata": "Stata", "r": "R"}[fmt], stamp),
+            "Cases: %d" % cases, ""]
+    if fmt == "spss":
+        body = ["One wide .sav (a row per case) plus one .sav per roster record (a row per",
+                "case x occurrence). Variable labels (question text) and value labels",
+                "(code -> answer) are embedded from the questionnaire codebook — no lookup",
+                "needed. questionnaire_number is a 12-digit string."]
+    elif fmt == "stata":
+        body = ["One wide .dta (a row per case) plus one .dta per roster record (a row per",
+                "case x occurrence). Variable labels and value labels are embedded from the",
+                "questionnaire codebook. Format: DTA 118 (Stata 14 or newer, UTF-8).",
+                "questionnaire_number is a 12-digit string."]
+        if renames:
+            body += ["",
+                     "Variable names beyond Stata's 32-char limit were shortened:"]
+            body += ["  %s -> %s" % (o, n) for o, n in renames]
+    else:
+        body = ["One wide .rds (a row per case) plus one .rds per roster record (a row per",
+                "case x occurrence); open with readRDS(). Values are the RAW stored codes",
+                "typed numeric/character — R has no standard embedded-label slot, so the",
+                "variable + value labels are in %s_codebook.csv (in this zip)." % inst,
+                "Deliberately not factor-converted: partially-labeled numerics (amounts",
+                "with 98=Don't-know style specials) would corrupt to NA.",
+                "questionnaire_number is a 12-digit string."]
+    return nl.join(head + body + [""])
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Generate SPSS .sav case exports for all instruments.")
-    ap.add_argument("--data-dir", required=True, help="dir holding the data-room CSVs")
-    ap.add_argument("--out-dir", required=True, help="output dir for the .sav files + zips")
-    ap.add_argument("--f2-labels", default=os.path.join(HERE, "f2-item-labels.json"))
+    ap = argparse.ArgumentParser(description="Generate SPSS/Stata/R case exports for all instruments.")
+    ap.add_argument("--data-dir", default=LIVE_DATA, help="dir holding the data-room CSVs (default: %(default)s)")
+    ap.add_argument("--out-dir", default=LIVE_DATA, help="output dir for the export files + zips (default: %(default)s)")
+    ap.add_argument("--meta-dir", default=None,
+                    help="flat dir with the 3 .dcf codebooks + f2-item-labels.json "
+                         "(on-box: /opt/spss-meta); default: the repo checkout layout")
+    ap.add_argument("--f2-labels", default=None, help="override the f2-item-labels.json path")
     a = ap.parse_args()
+    dcf = ({k: os.path.join(a.meta_dir, DCF_NAME[k]) for k in DCF} if a.meta_dir else DCF)
+    f2p = a.f2_labels or os.path.join(a.meta_dir or HERE, "f2-item-labels.json")
+    live = os.path.abspath(a.out_dir) == os.path.abspath(LIVE_DATA)
     os.makedirs(a.out_dir, exist_ok=True)
-    f2labels = json.load(open(a.f2_labels, encoding="utf-8")) if os.path.exists(a.f2_labels) else {}
+    if live and not os.path.exists(os.path.join(a.out_dir, ".htaccess")):
+        sys.exit("REFUSING to write: %s/.htaccess is missing — the parent /docs/.htaccess only "
+                 "gates three filenames, so this dir would serve every response PUBLICLY. "
+                 "Restore the auth stanza first (see deliverables/CSWeb docs)." % a.out_dir)
+    f2labels = json.load(open(f2p, encoding="utf-8")) if os.path.exists(f2p) else {}
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M")
-    manifest = {"generated": stamp + " UTC", "instruments": {}}
+    manifest = {"generated": stamp + " UTC", "combined": COMBINED["spss"],
+                "combined_zips": dict(COMBINED), "instruments": {}}
+    renames_by_inst = {}
 
+    # one instrument failing (stale codebook, torn CSV) must not sink the others
     for inst in ("f1", "f3", "f4"):
-        itemmap = parse_dcf(DCF[inst])
-        made = []
-        wide = os.path.join(a.data_dir, "%s_responses.csv" % inst)
-        if os.path.exists(wide):
-            made.append(build_sav(wide, os.path.join(a.out_dir, "%s_responses.sav" % inst),
-                                  itemmap, NAMES[inst]))
-        for fn in sorted(os.listdir(a.data_dir)):
-            if fn.startswith("%s_roster_" % inst) and fn.endswith(".csv"):
-                sav = fn[:-4] + ".sav"
-                made.append(build_sav(os.path.join(a.data_dir, fn),
-                                      os.path.join(a.out_dir, sav), itemmap, NAMES[inst]))
-        manifest["instruments"][inst] = made
+        made, renames, cb = [], [], {}
+        try:
+            itemmap = parse_dcf(dcf[inst])
+            wide = os.path.join(a.data_dir, "%s_responses.csv" % inst)
+            srcs = ([wide] if os.path.exists(wide) else [])
+            srcs += [os.path.join(a.data_dir, fn) for fn in sorted(os.listdir(a.data_dir))
+                     if fn.startswith("%s_roster_" % inst) and fn.endswith(".csv")]
+            for src in srcs:
+                df, header, vlab, vall = prep_frame(src, itemmap)
+                e, ren = write_formats(df, header, vlab, vall, a.out_dir,
+                                       os.path.basename(src)[:-4], NAMES[inst])
+                made.append(e)
+                renames += ren
+                cb_add(cb, header, vlab, vall)
+            if made:
+                write_codebook(cb, os.path.join(a.out_dir, "%s_codebook.csv" % inst))
+        except Exception as e:
+            made = []
+            print("WARN: %s failed: %s" % (inst, str(e)[:300]))
+        manifest["instruments"][inst] = {"files": made}
+        renames_by_inst[inst] = list(dict.fromkeys(renames))
 
+    f2made = []
     f2csv = os.path.join(a.data_dir, "f2_responses.csv")
     if os.path.exists(f2csv):
-        manifest["instruments"]["f2"] = [
-            build_f2(f2csv, os.path.join(a.out_dir, "f2_responses.sav"), f2labels)]
+        try:
+            df, header, vlab = prep_f2(f2csv, f2labels)
+            e, ren = write_formats(df, header, vlab, {}, a.out_dir,
+                                   "f2_responses", NAMES["f2"])
+            f2made = [e]
+            cb = {}
+            cb_add(cb, header, vlab, {})
+            write_codebook(cb, os.path.join(a.out_dir, "f2_codebook.csv"))
+            renames_by_inst["f2"] = list(dict.fromkeys(ren))
+        except Exception as e:
+            print("WARN: f2 failed: %s" % str(e)[:300])
+    manifest["instruments"]["f2"] = {"files": f2made}
+    renames_by_inst.setdefault("f2", [])
 
-    # per-instrument zip + a combined bundle
-    combined = os.path.join(a.out_dir, "uhc-year2-cases-spss.zip")
-    with zipfile.ZipFile(combined, "w", zipfile.ZIP_DEFLATED) as cz:
-        for inst, made in manifest["instruments"].items():
-            if not made:
-                continue
-            iz = os.path.join(a.out_dir, "%s-cases-spss.zip" % inst)
-            with zipfile.ZipFile(iz, "w", zipfile.ZIP_DEFLATED) as z:
-                for e in made:
-                    p = os.path.join(a.out_dir, e["file"])
-                    z.write(p, e["file"])
-                    cz.write(p, e["file"])
+    # zips: per instrument per format + a combined bundle per format; zip/cases
+    # mirror manifest.json so the dashboard Downloads band + data-room index can
+    # label buttons without parsing files
+    NL = chr(10)
+    for inst, m in manifest["instruments"].items():
+        if m["files"]:
+            m["cases"] = m["files"][0]["rows"]
+            m["zip"] = "%s-cases-spss.zip" % inst                    # legacy key
+            m["zips"] = {fmt: "%s-cases-%s.zip" % (inst, fmt) for fmt, _ in FORMATS}
+    for fmt, key in FORMATS:
+        with zipfile.ZipFile(os.path.join(a.out_dir, COMBINED[fmt]), "w",
+                             zipfile.ZIP_DEFLATED) as cz:
+            for inst, m in manifest["instruments"].items():
+                if not m["files"]:
+                    continue
+                cbname = "%s_codebook.csv" % inst
+                with zipfile.ZipFile(os.path.join(a.out_dir, m["zips"][fmt]), "w",
+                                     zipfile.ZIP_DEFLATED) as z:
+                    z.writestr("README.txt", readme_text(inst, fmt, m["cases"], stamp,
+                                                         renames_by_inst[inst], NL))
+                    if fmt == "r" and os.path.exists(os.path.join(a.out_dir, cbname)):
+                        z.write(os.path.join(a.out_dir, cbname), cbname)
+                        cz.write(os.path.join(a.out_dir, cbname), cbname)
+                    for e in m["files"]:
+                        p = os.path.join(a.out_dir, e[key])
+                        z.write(p, e[key])
+                        cz.write(p, e[key])
     with open(os.path.join(a.out_dir, "spss-manifest.json"), "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=1)
 
-    print("SPSS export -> %s" % a.out_dir)
-    for inst, made in manifest["instruments"].items():
-        rows = made[0]["rows"] if made else 0
-        print("  %-4s %2d file(s), %d cases: %s"
-              % (inst, len(made), rows, ", ".join(e["file"] for e in made)))
+    print("SPSS/Stata/R export -> %s" % a.out_dir)
+    for inst, m in manifest["instruments"].items():
+        made = m["files"]
+        print("  %-4s %2d file(s) x 3 formats, %s cases: %s"
+              % (inst, len(made), m.get("cases", 0),
+                 ", ".join(e["file"] for e in made) or "FAIL"))
 
 
 if __name__ == "__main__":

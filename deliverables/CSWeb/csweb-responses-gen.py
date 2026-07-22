@@ -235,8 +235,10 @@ PAGE_TOP = """<!doctype html>
 <div class="note">One <b>wide CSV per instrument</b> (a row per case, every singular-record item) plus a
 <b>CSV per roster record</b> (a row per case &times; occurrence). Values are the <b>raw codes</b> — labels live in
 the questionnaire codebook; the <a href="/docs/dashboard.html" style="color:#6b5418"><b>Sync Dashboard</b></a> is the labeled view.
-Excel tip: import CSVs via <i>Data &rarr; From Text/CSV</i> and set <code>questionnaire_number</code> to Text,
-or the 12-digit key renders as 1.02E+11. Regenerated every ~2 min from the live breakout DBs.</div>
+Prefer stats-ready files? The <b>labeled exports</b> below carry the same cases as SPSS .sav / Stata .dta
+(labels embedded) and R .rds (+ codebook CSV). Excel tip: import CSVs via <i>Data &rarr; From Text/CSV</i> and set
+<code>questionnaire_number</code> to Text, or the 12-digit key renders as 1.02E+11.
+Regenerated every ~2 min from the live breakout DBs.</div>
 """
 
 
@@ -244,8 +246,114 @@ def esc(s):
     return html.escape(str(s if s is not None else ""), quote=False)
 
 
-def index_html(manifests, generated):
+def fmt_zip(m, fmt):
+    """Per-format zip name from a stats-manifest instrument entry; tolerates the
+    legacy spss-only manifest shape during a deploy window."""
+    return (m.get("zips") or {}).get(fmt) or (m.get("zip") if fmt == "spss" else None)
+
+
+def zip_cells(zips):
+    return "".join('<td><a href="%s" download>%s</a></td>' % (z, esc(z)) if z else "<td></td>"
+                   for z in zips)
+
+
+def index_html(manifests, generated, spss=None, cspro=None, cbook=None):
     out = [PAGE_TOP.replace("__FAVICON__", FAVICON)]
+    # Labeled-exports band (written by csweb-spss-gen.py on the odd minutes; this
+    # index just reflects its manifest, so a stopped stats cron simply hides it)
+    insts = (spss or {}).get("instruments") or {}
+    if any(fmt_zip(m, "spss") for m in insts.values()):
+        out.append("<h2>Labeled exports — SPSS · Stata · R</h2>")
+        out.append('<div class="sub">The same cases as the CSVs below, packaged for the stats tools: '
+                   'SPSS <b>.sav</b> and Stata <b>.dta</b> carry variable labels (question text) and value '
+                   'labels (code &rarr; answer) embedded from the questionnaire codebook — no lookup needed; '
+                   'the R zips hold typed <b>.rds</b> files (raw codes) plus a per-instrument '
+                   '<code>*_codebook.csv</code> with both label sets. Each zip holds the wide file plus its '
+                   'roster files; every file is also served individually at its filename. Generated %s.</div>'
+                   % esc((spss or {}).get("generated", "")))
+        out.append('<table class="files"><tr><th>Instrument</th><th class="n">Cases</th>'
+                   '<th>SPSS (.sav)</th><th>Stata (.dta)</th><th>R (.rds)</th></tr>')
+        for inst in ("f1", "f3", "f4", "f2"):
+            m = insts.get(inst) or {}
+            if not fmt_zip(m, "spss"):
+                continue
+            out.append('<tr><td>%s</td><td class="n">%d</td>%s</tr>'
+                       % (esc(NAMES[inst]), m.get("cases", 0),
+                          zip_cells(fmt_zip(m, f) for f in ("spss", "stata", "r"))))
+        combz = (spss or {}).get("combined_zips") or {}
+        comb = [combz.get(f) or ((spss or {}).get("combined") if f == "spss" else None)
+                for f in ("spss", "stata", "r")]
+        if any(comb):
+            out.append('<tr><td>All instruments (one zip per format)</td><td class="n"></td>%s</tr>'
+                       % zip_cells(comb))
+        out.append("</table>")
+    # Codebook band (static, built by data-harmonization/generate_codebook.py;
+    # hidden until codebook-manifest.json lands)
+    cbi = (cbook or {}).get("instruments") or {}
+    if any(m.get("xlsx") for m in cbi.values()):
+        out.append("<h2>Codebook — what every variable means</h2>")
+        out.append('<div class="sub">The official variable documentation for all four instruments: '
+                   'variable name, label, the literal question text, <b>universe</b> (who was asked, '
+                   'i.e. the skip logic), outbound <b>routing</b>, value categories, special codes '
+                   '(Don\'t know / Refused) and the <b>CAPI validation rules</b>. Documented to the '
+                   '<b>DDI-Codebook 2.5</b> element set that the PSA Data Archive (PSADA/NADA) uses, '
+                   'presented in DHS recode-manual table style. Generated from the deployed build of '
+                   'each instrument — the version below is the instrument it documents. Packaged %s.</div>'
+                   % esc((cbook or {}).get("generated", "")))
+        out.append('<table class="files"><tr><th>Instrument</th><th>Documents build</th>'
+                   '<th class="n">Variables</th><th>Excel</th><th>PDF</th></tr>')
+        for inst in ("f1", "f3", "f4", "f2"):
+            m = cbi.get(inst) or {}
+            if not m.get("xlsx"):
+                continue
+            ver = m.get("version") or ""
+            vtxt = ("v%s (%s)" % (ver, m.get("date", "")) if ver and ver != "PWA"
+                    else "PWA (in-app spec)")
+            out.append('<tr><td>%s</td><td>%s</td><td class="n">%d</td>'
+                       '<td><a href="%s" download>%s</a></td><td>%s</td></tr>'
+                       % (esc(m.get("name", inst)), esc(vtxt), m.get("variables", 0),
+                          m["xlsx"], esc(m["xlsx"]),
+                          ('<a href="%s" download>%s</a>' % (m["pdf"], esc(m["pdf"])))
+                          if m.get("pdf") else ""))
+        comb = (cbook or {}).get("combined") or {}
+        if comb.get("pdf") or comb.get("zip"):
+            links = []
+            if comb.get("pdf"):
+                links.append('<a href="%s" download>%s</a>' % (comb["pdf"], esc(comb["pdf"])))
+            if comb.get("zip"):
+                links.append('<a href="%s" download>%s</a>' % (comb["zip"], esc(comb["zip"])))
+            out.append('<tr><td>All instruments in one book</td><td></td><td class="n"></td>'
+                       '<td>%s</td><td>%s</td></tr>'
+                       % (links[-1] if comb.get("zip") else "", links[0] if comb.get("pdf") else ""))
+        out.append("</table>")
+    # CSPro band (static packages built by gen-cspro-packages.py, re-scp'd on
+    # instrument redeploys; hidden until cspro-manifest.json lands)
+    cins = (cspro or {}).get("instruments") or {}
+    if any(m.get("zip") for m in cins.values()):
+        out.append("<h2>CSPro applications &amp; dictionaries</h2>")
+        out.append('<div class="sub">Run the actual CAPI instruments locally: each app package is the complete '
+                   'CSPro 8.0 entry application — compiled <b>.pen</b>, versioned <b>.pff</b>, Designer source '
+                   '(.ent / .apc / .qsf / .fmf / .dcf) and the PSGC/facility lookup files. Extract and '
+                   'double-click the .pff: it opens with an <b>empty local case file</b> — no sync, no '
+                   'credentials in the package. Dictionaries (<b>.dcf</b>, CSPro 8.0 JSON) are also served '
+                   'individually for data users. F2 is a PWA (no CSPro app); its codebook is '
+                   '<code>f2_codebook.csv</code>. Packaged %s.</div>'
+                   % esc((cspro or {}).get("generated", "")))
+        out.append('<table class="files"><tr><th>Instrument</th><th>Version</th><th>App package</th>'
+                   '<th>Dictionary (.dcf)</th></tr>')
+        for inst in ("f1", "f3", "f4"):
+            m = cins.get(inst) or {}
+            if not m.get("zip"):
+                continue
+            out.append('<tr><td>%s</td><td>v%s (%s)</td><td><a href="%s" download>%s</a></td>'
+                       '<td><a href="%s" download>%s</a></td></tr>'
+                       % (esc(m.get("app") or NAMES.get(inst, inst)), esc(m.get("version", "?")),
+                          esc(m.get("date", "")), m["zip"], esc(m["zip"]), m["dcf"], esc(m["dcf"])))
+        dz = (cspro or {}).get("dictionaries_zip")
+        if dz:
+            out.append('<tr><td>All dictionaries in one zip</td><td></td><td></td>'
+                       '<td><a href="%s" download>%s</a></td></tr>' % (dz, esc(dz)))
+        out.append("</table>")
     for inst in ("f1", "f3", "f4", "f2"):
         entries = manifests.get(inst) or []
         out.append("<h2>%s</h2>" % esc(NAMES[inst]))
@@ -299,8 +407,23 @@ def main():
         print("WARN: f2 failed: %s" % str(e)[:300])
 
     generated = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M")
+    try:
+        with open(os.path.join(a.out_dir, "spss-manifest.json"), encoding="utf-8") as f:
+            spss = json.load(f)
+    except Exception:
+        spss = None
+    try:
+        with open(os.path.join(a.out_dir, "cspro-manifest.json"), encoding="utf-8") as f:
+            cspro = json.load(f)
+    except Exception:
+        cspro = None
+    try:
+        with open(os.path.join(a.out_dir, "codebook-manifest.json"), encoding="utf-8") as f:
+            cbook = json.load(f)
+    except Exception:
+        cbook = None
     with open(os.path.join(a.out_dir, "index.html"), "w", encoding="utf-8") as f:
-        f.write(index_html(manifests, generated))
+        f.write(index_html(manifests, generated, spss, cspro, cbook))
 
     # ---- per-instrument zip bundles + manifest.json (dashboard Downloads band) ----
     # zipped AFTER the CSVs so a bundle is always internally consistent; the dashboard
