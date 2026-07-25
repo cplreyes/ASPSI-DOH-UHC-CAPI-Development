@@ -13,7 +13,8 @@ quality ALERTS the Sync Dashboard's notification bell polls (~every 20s).
   Both `created_time`/`modified_time` on the case row equal the corresponding
   cspro_sync_history put's `created_time` exactly (same transaction), so cases match
   sync sessions by timestamp per dictionary — no per-run recompute can move a count.
-- alerts[]: 🔴 duplicate/colliding case key · 🔴 case outside the assignment plan,
+- alerts[]: 🔕 no sync from an enumerator in 24-96 h (silence alarm, 2026-07-24; auto-expires) ·
+  🔴 duplicate/colliding case key · 🔴 case outside the assignment plan,
   each attributing the enumerator(s).
 
 Sources: cspro_sync_history + the primary <DICT> case tables + targets.json (all on box).
@@ -194,18 +195,146 @@ def sync_sessions(new_ct, edt_ct):
     return events
 
 
+
+# --- silence alarm + Slack delivery (2026-07-24) -----------------------------
+# Carl, 2026-07-24: the bell only ever announced ACTIVITY, so a fleet that had
+# been silent for 45.8 h looked identical to a calm one. These two additions
+# close that: a per-enumerator "no sync in N hours" alert, and an off-page
+# delivery path so alerts reach a phone instead of an unopened dashboard tab.
+
+SILENCE_HOURS = 24          # per-enumerator threshold (Carl's call, 2026-07-24)
+SILENCE_EXPIRE_HOURS = 96   # stop nagging past this: 24h-96h = 'went quiet' (actionable);
+                            # beyond 4 days it means 'finished', not a live problem. Prevents
+                            # a permanent red bell as fieldwork winds down (Carl, 2026-07-24).
+ALERT_CONF = "/opt/csweb-alerts.conf"       # KEY=VALUE; SLACK_WEBHOOK_URL=...
+ALERT_STATE = "/opt/csweb-alert-state.json"  # ids already delivered off-page
+MAX_PUSH = 6                # never fire-hose a channel from one cron tick
+
+
+def last_sync_per_user():
+    """login -> datetime of its most recent upload (put)."""
+    out = {}
+    for row in q("SELECT username, MAX(created_time) FROM csweb_uhc_y2.cspro_sync_history "
+                 "WHERE direction='put' GROUP BY username"):
+        if len(row) < 2 or not row[1] or row[1] == "NULL":
+            continue
+        try:
+            out[row[0]] = datetime.datetime.strptime(row[1].strip(), "%Y-%m-%d %H:%M:%S")
+        except ValueError:
+            pass
+    return out
+
+
+def compute_silence_alerts(now=None):
+    """One alert per enumerator who HAS synced before but not in SILENCE_HOURS.
+
+    Deliberately scoped to logins with sync history: a login that has never
+    synced has no established rhythm to break, and alerting on it would fire
+    forever. The alert id carries the last-sync timestamp, so an ongoing
+    silence notifies ONCE, while a new silent spell after a fresh sync is a
+    genuinely new alert. Alerts auto-expire past SILENCE_EXPIRE_HOURS so a
+    wound-down fleet does not leave the bell permanently red."""
+    # naive-UTC to match cspro_sync_history.created_time, which MySQL stores
+    # without a zone; utcnow() is deprecated so derive it explicitly
+    now = now or datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+    out = []
+    for user, when in last_sync_per_user().items():
+        hours = (now - when).total_seconds() / 3600.0
+        if hours < SILENCE_HOURS or hours >= SILENCE_EXPIRE_HOURS:
+            continue          # only the actionable window: recently went quiet
+        out.append({
+            "type": "silence", "user": user, "name": NAMES.get(user, user),
+            "hours": int(hours), "since": when.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "level": "high" if hours >= 72 else "warn",   # 3+ days = escalate
+            "id": "silence|%s|%s" % (user, when.strftime("%Y%m%dT%H%M%S")),
+            "rev": 0,
+        })
+    out.sort(key=lambda a: -a["hours"])
+    return out
+
+
+def _conf(path):
+    d = {}
+    try:
+        for line in open(path, encoding="utf-8"):
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                k, v = line.split("=", 1)
+                d[k.strip()] = v.strip()
+    except OSError:
+        pass
+    return d
+
+
+def _alert_line(a):
+    """One human sentence per alert — this is what lands on someone's phone."""
+    if a["type"] == "silence":
+        return (":no_bell: *No sync from %s* (`%s`) in *%d h* — last upload %s UTC"
+                % (a.get("name") or a["user"], a["user"], a["hours"],
+                   a["since"].replace("T", " ").rstrip("Z")))
+    who = (" · " + ", ".join(a["users"])) if a.get("users") else ""
+    if a["type"] == "dup":
+        return (":warning: *Duplicate case key* `%s` · %s · %d cases%s"
+                % (a.get("key"), a.get("inst"), a.get("n", 0), who))
+    return (":warning: *Case outside the plan* · facility `%s` · %s · %d case(s)%s"
+            % (a.get("code9"), a.get("inst"), a.get("n", 0), who))
+
+
+def push_alerts(alerts):
+    """Deliver NEW alerts off-page (Slack incoming webhook).
+
+    No-ops silently when no webhook is configured, so this is safe to ship
+    before the URL exists. State file keeps a delivered-id list so the same
+    alert is never posted twice, and MAX_PUSH caps one tick's noise."""
+    import urllib.request
+    hook = _conf(ALERT_CONF).get("SLACK_WEBHOOK_URL", "")
+    if not hook:
+        return 0, "no webhook configured"
+    try:
+        seen = set(json.loads(Path(ALERT_STATE).read_text(encoding="utf-8")))
+    except Exception:
+        seen = set()
+    fresh = [a for a in alerts if a.get("id") and a["id"] not in seen]
+    if not fresh:
+        return 0, "nothing new"
+    # First ever run must not replay history into the channel; record and stay quiet.
+    if not seen:
+        Path(ALERT_STATE).write_text(json.dumps([a["id"] for a in alerts if a.get("id")]),
+                                     encoding="utf-8")
+        return 0, "primed state (%d existing alerts suppressed)" % len(fresh)
+    sent = 0
+    for a in fresh[:MAX_PUSH]:
+        body = json.dumps({"text": _alert_line(a)}).encode("utf-8")
+        req = urllib.request.Request(hook, data=body,
+                                     headers={"Content-Type": "application/json"})
+        try:
+            urllib.request.urlopen(req, timeout=10).read()
+            seen.add(a["id"])
+            sent += 1
+        except Exception as e:
+            print("WARN: slack post failed: %s" % str(e)[:160])
+            break
+    if len(fresh) > MAX_PUSH:
+        print("NOTE: %d alert(s) held back this tick (MAX_PUSH=%d)"
+              % (len(fresh) - MAX_PUSH, MAX_PUSH))
+    Path(ALERT_STATE).write_text(json.dumps(sorted(seen)[-500:]), encoding="utf-8")
+    return sent, "ok"
+
 def main():
     rev2user = rev_user_map()
     new_ct, edt_ct = case_time_index()
     targets = load_targets()
     events = sync_sessions(new_ct, edt_ct)
-    alerts = compute_alerts(rev2user, targets)
+    alerts = compute_silence_alerts() + compute_alerts(rev2user, targets)
     payload = {"generated": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
                "count": len(events), "events": events, "alerts": alerts}
     Path(OUT).write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
-    print("wrote %s (%d sessions: %d w/new, %d w/edited; %d alerts)"
+    nsil = sum(1 for a in alerts if a["type"] == "silence")
+    sent, how = push_alerts(alerts)
+    print("wrote %s (%d sessions: %d w/new, %d w/edited; %d alerts incl. %d silence) "
+          "| pushed %d (%s)"
           % (OUT, len(events), sum(1 for e in events if e["total_new"] > 0),
-             sum(1 for e in events if e["total_edited"] > 0), len(alerts)))
+             sum(1 for e in events if e["total_edited"] > 0), len(alerts), nsil, sent, how))
 
 
 if __name__ == "__main__":

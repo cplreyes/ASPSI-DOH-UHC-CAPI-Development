@@ -37,6 +37,9 @@ Vendored libs (no CDN JS): /docs/assets/{leaflet.css,leaflet.js,MarkerCluster*.c
 First built 2026-06-21 (v1); v2 + v3 same day.
 """
 import subprocess, json, datetime, html, math, re, argparse
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+import portal_shell as PS
 from collections import defaultdict
 
 # Phase 2 (2026-07-06): province coverage choropleth (completed ÷ target). Adds a
@@ -623,6 +626,64 @@ render();
 </body>
 </html>
 """
+
+
+# ---------------------------------------------------------------------------
+# Unified portal shell (2026-07-25). The map renders inside the same
+# sidebar / topbar / footer chrome as capi.asiansocial.org (shared
+# portal_shell). A full-bleed canvas lets the Leaflet map fill the viewport.
+# Leaflet CSS/JS, the payload script and all map JS are untouched.
+# ---------------------------------------------------------------------------
+_DESC = ("Synced CAPI cases plotted by captured GPS \u2014 F1/F3/F4 with field-QA "
+         "flags and a coverage choropleth, ASPSI \u00d7 DOH UHC Survey Year 2.")
+
+_MAP_CHROME_RULES = (
+    "*{box-sizing:border-box}html,body{margin:0;height:100%}",
+    "body{font:15px/1.5 system-ui,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg);display:flex;flex-direction:column}",
+    "header{background:var(--g);color:#fff;padding:14px 24px}",
+    "header h1{margin:0;font-size:20px;letter-spacing:-.01em}",
+    "header .s{opacity:.85;font-size:13px;margin-top:3px}",
+    "footer{padding:8px 20px;color:var(--muted);font-size:12px;background:var(--card);border-top:1px solid var(--line)}",
+    "footer a{color:var(--g)}",
+)
+
+_LEAFLET_HEAD = ('<link rel="stylesheet" href="/docs/assets/leaflet.css" />\n'
+                 '<link rel="stylesheet" href="/docs/assets/MarkerCluster.css" />\n'
+                 '<link rel="stylesheet" href="/docs/assets/MarkerCluster.Default.css" />\n'
+                 '<script src="/docs/assets/leaflet.js"></script>\n'
+                 '<script src="/docs/assets/leaflet.markercluster.js"></script>')
+
+
+def _shellify_map(t):
+    head_part, _, body_part = t.partition("<body>\n")
+    _, _, after_header = body_part.partition("</header>\n")
+    controls_and_map, _, rest2 = after_header.partition("<footer>")
+    footer_inner, _, scripts = rest2.partition("</footer>")
+    css = head_part.split("<style>", 1)[1].split("</style>", 1)[0]
+    for rule in _MAP_CHROME_RULES:
+        css = css.replace(rule, "")
+    base = PS.PORTAL_ORIGIN
+    crumbs = [("UHC Survey Year 2", PS.P + "/"),
+              ("Monitoring", PS.P + "/monitoring/"),
+              ("Map", None)]
+    seg = ('<div class="tb-seg"><a href="/docs/dashboard.html">Sync Dashboard</a>'
+           '<a class="on" href="/docs/map.html">Map</a></div>')
+    tb_right = seg + PS.PILL_LOCK
+    head_html = PS.head("UHC Survey Year 2 \u2014 Map Report", _DESC, extra_css=css)
+    head_html = head_html.replace("</head>", _LEAFLET_HEAD + "\n</head>")
+    opened = (head_html + '\n<body>\n<div class="app">\n'
+              + PS.sidebar(PS.P + "/monitoring/", base)
+              + '\n<div class="main">\n<div class="topbar"><div class="crumbs">'
+              + PS.crumbs_html(crumbs, base) + '</div><div class="tb-right">' + tb_right
+              + '</div></div>\n<div class="canvas bleed">\n')
+    closed = ('<footer class="page-foot">' + footer_inner + '</footer>\n'
+              '</div>\n</div>\n</div>\n')
+    out = opened + controls_and_map + closed + scripts
+    out = out.replace("#006b3f", "#046a38").replace("#004d2c", "#04331d")
+    return out
+
+
+TEMPLATE = _shellify_map(TEMPLATE)
 
 out_html = TEMPLATE.replace("__PAYLOAD__", payload).replace("__FAVICON__", FAVICON)
 with open(OUT, "w", encoding="utf-8") as f:

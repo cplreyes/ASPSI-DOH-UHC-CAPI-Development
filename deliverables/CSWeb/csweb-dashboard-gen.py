@@ -37,6 +37,9 @@ names the live queries return (see QUERIES cols). On-box verification against re
 synced cases remains the final gate.
 """
 import subprocess, json, datetime, html, argparse
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import portal_shell as PS
 
 ENV = "/opt/app/.env"
 COMPOSE_DIR = "/opt/app"
@@ -1036,7 +1039,7 @@ function renderQuality(pass){
   const noteWrap=document.createElement('details'); noteWrap.className='inote';
   noteWrap.innerHTML='<summary>&#9432; how to read this panel</summary>'
     +'<div class="cov-note">Honours the filters above except Status. F2 is self-administered — it captures no GPS by design and is never counted here. '
-    +'Live alerts (duplicate case keys, off-plan uploads) come from the sync feed, refresh every 20 seconds, ignore the filters, and clear when the underlying data is fixed.</div>';
+    +'Live alerts (no-sync warnings, duplicate case keys, off-plan uploads) come from the sync feed, refresh every 20 seconds, ignore the filters, and clear when the underlying issue is resolved — a no-sync warning clears as soon as that enumerator uploads again.</div>';
   el.appendChild(noteWrap);
   if(!qOpen) return;
   const mk=(headCols,rows,rowHtml)=>{
@@ -1054,8 +1057,10 @@ function renderQuality(pass){
   if(qOpen==='oop') mk(['Instrument','Facility code','Area','Enumerator'],oop,
     x=>'<tr><td>'+x.k.toUpperCase()+'</td><td>'+esc(x.r.code9||'—')+'</td><td>'+esc(x.r.province||'—')+'</td><td>'+esc(enumLbl(x.r))+'</td></tr>');
   if(qOpen==='alerts') mk(['Type','Detail'],alerts,
-    a=>'<tr><td>'+(a.type==='dup'?'⚠️ Duplicate key':'⚠️ Off-plan')+'</td><td>'
-      +(a.type==='dup'
+    a=>'<tr><td>'+(a.type==='silence'?'🔔 No sync':a.type==='dup'?'⚠️ Duplicate key':'⚠️ Off-plan')+'</td><td>'
+      +(a.type==='silence'
+        ? esc(a.name||a.user||'')+' ('+esc(a.user||'')+') · '+(a.hours||0)+' h since the last upload'+(a.level==='high'?' · 3+ days':'')
+        : a.type==='dup'
         ? esc(a.key||'')+' · '+esc(a.inst||'')+' · '+(a.n||0)+' cases'
         : 'facility '+esc(a.code9||a.example||'')+' · '+esc(a.inst||'')+' · '+(a.n||0)+' not in plan')
       +((a.users&&a.users.length)?' · '+esc(a.users.join(', ')):'')+'</td></tr>');
@@ -1238,48 +1243,101 @@ render();
 <!-- ===== sync-activity notification bell (2026-07-15) — polls /docs/sync-feed.json ===== -->
 <style>
 #bellWrap{position:fixed;top:14px;right:20px;z-index:9999;font:14px system-ui,Segoe UI,Roboto,sans-serif}
-#bellBtn{position:relative;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.4);border-radius:10px;padding:7px 9px;cursor:pointer;line-height:0}
+#bellBtn{position:relative;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.4);border-radius:10px;padding:7px 9px;cursor:pointer;line-height:0;transition:background .15s ease}
 #bellBtn:hover{background:rgba(255,255,255,.3)}
-#bellBadge{position:absolute;top:-7px;right:-7px;min-width:19px;height:19px;padding:0 4px;background:#d32f2f;color:#fff;border-radius:10px;font-size:11px;font-weight:700;line-height:19px;text-align:center;box-shadow:0 0 0 2px #006b3f}
-#bellPanel{position:absolute;top:46px;right:0;width:330px;max-height:62vh;background:#fff;color:#1c2b25;border:1px solid #dfe7e2;border-radius:12px;box-shadow:0 10px 34px rgba(0,0,0,.2);overflow:hidden;display:flex;flex-direction:column}
+#bellBtn:focus-visible{outline:2px solid #e5b23b;outline-offset:2px}
+#bellBadge{position:absolute;top:-7px;right:-7px;min-width:19px;height:19px;padding:0 5px;background:#d32f2f;color:#fff;border-radius:10px;font-size:11px;font-weight:700;line-height:19px;text-align:center;box-shadow:0 0 0 2px #006b3f}
+#bellBadge.calm{background:#0a7f4a}
+#bellPanel{position:absolute;top:46px;right:0;width:372px;max-height:74vh;background:#fff;color:#1c2b25;border:1px solid #dfe7e2;border-radius:14px;box-shadow:0 16px 44px rgba(9,30,20,.22);overflow:hidden;display:flex;flex-direction:column;animation:bpin .16s ease-out}
+@keyframes bpin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 #bellPanel[hidden]{display:none}
-#bellHead{padding:11px 14px;font-weight:700;color:#004d2c;border-bottom:1px solid #eef3f0;display:flex;justify-content:space-between;align-items:center;gap:8px}
+#bellHead{padding:12px 14px 11px;border-bottom:1px solid #eef3f0;display:flex;justify-content:space-between;align-items:center;gap:8px}
+#bellHead .ttl{font-weight:700;color:#004d2c;font-size:14.5px;flex:1;min-width:0}
+#bellHead .ttl small{display:block;font-weight:400;font-size:11.5px;color:#7b8a83;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#bellHead .bh-right{flex:0 0 auto}
 #bellEnable{font:12px system-ui;padding:4px 9px;border:1px solid #dfe7e2;border-radius:7px;background:#f4f7f5;cursor:pointer;color:#006b3f;font-weight:600;white-space:nowrap}
 #bellEnable.on{background:#006b3f;color:#fff;border-color:#006b3f}
 .bh-right{display:flex;align-items:center;gap:4px}
 #bellClose{font:20px/1 system-ui;width:26px;height:26px;border:none;background:transparent;color:#5b6b63;cursor:pointer;border-radius:6px}
 #bellClose:hover{background:#eef3f0;color:#1c2b25}
-#bellList{overflow-y:auto;padding:2px 0}
-#bellList .brow{padding:9px 14px;border-bottom:1px solid #f1f5f3}
+#bellTools{display:flex;align-items:center;gap:5px;padding:7px 12px;border-bottom:1px solid #eef3f0;background:#fbfdfc}
+#bellTools select{font:11.5px system-ui;padding:3px 6px;border:1px solid #dfe7e2;border-radius:6px;background:#fff;color:#1c2b25;max-width:118px;flex:0 1 auto;min-width:0}
+#bellTools button{font:11.5px system-ui;padding:3px 8px;white-space:nowrap;border:1px solid #dfe7e2;border-radius:6px;background:#fff;color:#5b6b63;cursor:pointer}
+#bellTools button:hover{background:#eef3f0;color:#1c2b25}
+#bellTools button.on{background:#006b3f;color:#fff;border-color:#006b3f}
+#bellTools .spacer{margin-left:auto}
+#bellTools :focus-visible,#bellHead :focus-visible{outline:2px solid #006b3f;outline-offset:1px}
+#bellScroll{overflow-y:auto;flex:1}
+/* section headings — the fix for one undifferentiated scroll */
+.bsec{position:sticky;top:0;z-index:2;background:#f4f7f5;border-bottom:1px solid #e6ede9;padding:6px 13px;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#5b6b63;display:flex;align-items:center;gap:7px}
+.bsec .n{background:#dfe7e2;color:#41514a;border-radius:9px;padding:0 6px;font-size:10px;line-height:15px;min-width:16px;text-align:center}
+.bsec.attn{background:#fdf3f3;border-bottom-color:#f6dede;color:#8a1c1c}
+/* class display:flex would otherwise beat the hidden attribute (same trap as
+   the .enumchip empty-pill bug, 2026-07-17) */
+.bsec[hidden]{display:none}
+.bsec.attn .n{background:#f3d3d3;color:#8a1c1c}
+/* alert rows: severity rail + name-first copy + right-aligned relative age */
+.balert{display:flex;gap:9px;padding:10px 13px;border-bottom:1px solid #f4eaea;background:#fdf5f5;font-size:13px;line-height:1.4;border-left:3px solid #d32f2f}
+.balert:last-child{border-bottom:none}
+.balert.quiet{background:#fffaef;border-bottom-color:#f4ecd8;border-left-color:#e0a52d}
+.balert.acked{opacity:.5}
+.balert .bic{flex:0 0 auto;font-size:13px;line-height:1.35}
+.balert .bbody{flex:1;min-width:0}
+.balert .bt{color:#1c2b25;font-weight:600}
+.balert .bt b{color:#8a1c1c}
+.balert.quiet .bt b{color:#8a6412}
+.balert .bwhy{color:#6b7a73;font-size:11.8px;margin-top:2px}
+.balert .bage{flex:0 0 auto;color:#8a9791;font-size:11px;font-variant-numeric:tabular-nums;white-space:nowrap;padding-top:1px}
+.balert .tier{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#c62828;border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:1px}
+/* activity rows */
+#bellList .brow{display:flex;gap:9px;padding:9px 13px;border-bottom:1px solid #f4f7f5}
 #bellList .brow:last-child{border-bottom:none}
-#bellList .brow.fresh{background:#eef8f1}
-#bellList .brow.dim{opacity:.6}
-#bellList .bmuted{color:#8a9791;font-style:italic}
-#bellAlerts:empty{display:none}
-.balert{padding:10px 14px;border-bottom:1px solid #fbe3e3;background:#fdf0f0;color:#8a1c1c;font-size:12.8px;line-height:1.45}
-.balert b{color:#b71c1c}
-.btoast.alert{background:#b71c1c}.btoast.alert b{color:#ffe08a}
-#bellList .who{font-weight:700}
-#bellList .sub{color:#5b6b63;font-size:12.5px}
-#bellList .inst{display:inline-block;font-size:11px;font-weight:700;color:#006b3f;background:#e7f3ec;border-radius:5px;padding:0 6px;margin-right:6px}
-.bellEmpty{padding:24px 14px;color:#5b6b63;font-style:italic;text-align:center}
-#bellFoot{padding:8px 14px;border-top:1px solid #eef3f0;color:#5b6b63;font-size:11.5px}
-#toastWrap{position:fixed;bottom:18px;right:18px;z-index:10000;display:flex;flex-direction:column;gap:10px}
-.btoast{background:#004d2c;color:#fff;border-radius:10px;padding:11px 15px;box-shadow:0 6px 24px rgba(0,0,0,.25);max-width:320px;transition:opacity .4s;animation:btin .25s ease}
+#bellList .brow.fresh{background:#f0f9f4;border-left:3px solid #0a7f4a;padding-left:10px}
+#bellList .brow.dim{opacity:.55}
+#bellList .bbody{flex:1;min-width:0}
+#bellList .who{font-weight:700;color:#1c2b25;font-size:13px}
+#bellList .who .lg{font-weight:400;color:#8a9791;font-size:11.5px;margin-left:4px}
+#bellList .sub{color:#5b6b63;font-size:12.2px;margin-top:2px}
+#bellList .bage{flex:0 0 auto;color:#8a9791;font-size:11px;font-variant-numeric:tabular-nums;white-space:nowrap;padding-top:2px}
+#bellList .bmuted{color:#9aa8a1;font-style:italic}
+#bellList .inst{display:inline-block;font-size:10.5px;font-weight:700;color:#006b3f;background:#e7f3ec;border-radius:5px;padding:0 6px;margin-right:5px}
+.bellEmpty{padding:22px 16px;color:#7b8a83;font-size:12.8px;text-align:center}
+.ballclear{padding:18px 16px;text-align:center;color:#2f6b4f;background:#f3fbf6;border-bottom:1px solid #e2f0e8}
+.ballclear .big{font-size:22px;line-height:1}
+.ballclear .t{font-weight:700;color:#046a38;margin-top:5px;font-size:13.5px}
+.ballclear .s{color:#6b7a73;font-size:11.8px;margin-top:2px}
+#bellFoot{padding:8px 13px;border-top:1px solid #eef3f0;color:#7b8a83;font-size:11px;background:#fbfdfc}
+#toastWrap{position:fixed;bottom:18px;right:18px;z-index:10000;display:flex;flex-direction:column;gap:10px;max-width:min(360px,calc(100vw - 36px))}
+.btoast{position:relative;background:#004d2c;color:#fff;border-radius:11px;padding:11px 34px 11px 15px;box-shadow:0 8px 28px rgba(9,30,20,.3);transition:opacity .4s,transform .4s;animation:btin .25s ease;font-size:13px;line-height:1.4}
 .btoast b{color:#ffe08a}
+.btoast .x{position:absolute;top:6px;right:8px;border:none;background:transparent;color:rgba(255,255,255,.65);font:16px/1 system-ui;cursor:pointer;padding:2px 4px;border-radius:5px}
+.btoast .x:hover{background:rgba(255,255,255,.16);color:#fff}
+.btoast.alert{background:#b71c1c}.btoast.alert b{color:#ffe08a}
+.btoast.quiet{background:#8a5a00}.btoast.quiet b{color:#ffe9b3}
 @keyframes btin{from{transform:translateX(20px);opacity:0}to{transform:none;opacity:1}}
-@media(max-width:820px){#bellPanel{width:290px}#bellWrap{top:12px;right:12px}}
+@media(max-width:820px){#bellPanel{width:min(330px,calc(100vw - 24px));max-height:70vh}#bellWrap{top:12px;right:12px}}
+@media(prefers-reduced-motion:reduce){#bellPanel,.btoast{animation:none}}
 </style>
 <div id="bellWrap">
-  <button id="bellBtn" title="Sync activity" aria-label="Sync activity">
+  <button id="bellBtn" title="Notifications" aria-label="Notifications" aria-expanded="false" aria-haspopup="dialog">
     <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
     <span id="bellBadge" hidden>0</span>
   </button>
-  <div id="bellPanel" hidden>
-    <div id="bellHead"><span>Activity</span><span class="bh-right"><button id="bellEnable" type="button">Enable alerts</button><button id="bellClose" type="button" aria-label="Close" title="Close">&times;</button></span></div>
-    <div id="bellAlerts"></div>
-    <div id="bellList"><div class="bellEmpty">Waiting for the next device sync&hellip;</div></div>
-    <div id="bellFoot">Live &middot; every device sync (upload) appears here</div>
+  <div id="bellPanel" role="dialog" aria-label="Notifications" hidden>
+    <div id="bellHead"><span class="ttl">Notifications<small id="bellSummary">Loading&hellip;</small></span><span class="bh-right"><button id="bellEnable" type="button">Enable alerts</button><button id="bellClose" type="button" aria-label="Close" title="Close">&times;</button></span></div>
+    <div id="bellTools">
+      <select id="bellEnum" title="Filter by enumerator"><option value="">All enumerators</option></select>
+      <button id="bellSound" type="button" title="Play a sound on new activity" aria-label="Sound on new activity">&#128266;</button>
+      <button id="bellEdited" type="button" title="Also notify when a sync only edits existing cases">Edited</button>
+      <button id="bellRead" type="button" class="spacer" title="Clear the badge and acknowledge current alerts">Read all</button>
+    </div>
+    <div id="bellScroll">
+      <div id="bellAlertSec" class="bsec attn" hidden><span>Needs attention</span><span class="n" id="bellAlertN">0</span></div>
+      <div id="bellAlerts" aria-live="polite"></div>
+      <div id="bellActSec" class="bsec"><span>Recent activity</span><span class="n" id="bellActN">0</span></div>
+      <div id="bellList"><div class="bellEmpty">Waiting for the next device sync&hellip;</div></div>
+    </div>
+    <div id="bellFoot">Updates every 20s &middot; alerts stay until you mark them read</div>
   </div>
 </div>
 <div id="toastWrap"></div>
@@ -1290,16 +1348,88 @@ render();
       btn=document.getElementById('bellBtn'), list=document.getElementById('bellList'),
       enableBtn=document.getElementById('bellEnable'), toastWrap=document.getElementById('toastWrap'),
       wrap=document.getElementById('bellWrap'), alertBox=document.getElementById('bellAlerts');
-  var LS2='uhc_bell_alert_notified';
+  var LS2='uhc_bell_alert_notified', LS3='uhc_bell_prefs', LS4='uhc_bell_ack';
+  // prefs: snd = beep on new activity, edt = also notify on edited-only syncs,
+  // enm = enumerator filter. All persist per browser; all default OFF/empty so
+  // the page behaves exactly as before until someone opts in.
+  var prefs={snd:0,edt:0,enm:''};
+  try{prefs=Object.assign(prefs,JSON.parse(localStorage.getItem(LS3)||'{}'));}catch(e){}
+  function savePrefs(){try{localStorage.setItem(LS3,JSON.stringify(prefs));}catch(e){}}
+  var ack={};
+  try{(JSON.parse(localStorage.getItem(LS4)||'[]')).forEach(function(k){ack[k]=1;});}catch(e){}
+  function saveAck(){try{localStorage.setItem(LS4,JSON.stringify(Object.keys(ack).slice(-400)));}catch(e){}}
+  // A short WebAudio blip — no asset to host, and it stays silent until the user
+  // has interacted with the page (browsers block audio before a gesture anyway).
+  var actx=null;
+  function beep(alert){
+    if(!prefs.snd)return;
+    try{
+      actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+      if(actx.state==='suspended'){actx.resume();}
+      var o=actx.createOscillator(), g=actx.createGain(), t=actx.currentTime;
+      o.type='sine'; o.frequency.setValueAtTime(alert?520:760,t);
+      if(alert)o.frequency.setValueAtTime(430,t+0.13);
+      g.gain.setValueAtTime(0.0001,t);
+      g.gain.exponentialRampToValueAtTime(0.09,t+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+(alert?0.30:0.18));
+      o.connect(g);g.connect(actx.destination);o.start(t);o.stop(t+(alert?0.32:0.2));
+    }catch(e){}
+  }
+  function activeCount(e){return (e.total_new||0)+(prefs.edt?(e.total_edited||0):0);}
   var s0=localStorage.getItem(LS);
   var seenRev = s0===null ? null : parseInt(s0,10);
   var notifiedRev=null, latest=[], alerts=[];
+  // toasts are dismissible and self-limiting: 4 on screen at once is plenty
+  function addToast(t,ms){
+    toastWrap.appendChild(t);
+    while(toastWrap.children.length>4)toastWrap.removeChild(toastWrap.firstChild);
+    var kill=function(){t.style.opacity='0';setTimeout(function(){if(t.parentNode)t.remove();},400);};
+    var x=t.querySelector('.x'); if(x)x.addEventListener('click',kill);
+    setTimeout(kill,ms);
+  }
   function esc(x){return String(x==null?'':x).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function fmt(iso){try{return new Date(iso).toLocaleString('en-PH',{hour:'numeric',minute:'2-digit',hour12:true,month:'short',day:'numeric'});}catch(e){return iso||'';}}
+  // Relative age is what a monitor actually reads ("3 days ago"), so it leads;
+  // the absolute stamp stays in the title attribute for when precision matters.
+  function ago(iso){
+    try{
+      var ms=Date.now()-new Date(iso).getTime();
+      if(!isFinite(ms))return '';
+      var m=Math.round(ms/60000);
+      if(m<1)return 'just now';
+      if(m<60)return m+' min ago';
+      var h=Math.round(m/60);
+      if(h<24)return h+' h ago';
+      var d=Math.round(h/24);
+      return d===1?'yesterday':(d+' days ago');
+    }catch(e){return '';}
+  }
+  // one phrasing used by the toast AND the OS notification, so they never drift
+  function detail(e){
+    return (e.items||[]).filter(function(it){return (it.new||0)>0||(prefs.edt&&(it.edited||0)>0);})
+      .map(function(it){
+        var p=[];
+        if(it.new>0)p.push(it.new+' new case'+(it.new==1?'':'s'));
+        if(prefs.edt&&it.edited>0)p.push(it.edited+' edited');
+        return it.inst+': '+p.join(' + ');
+      }).join(', ');
+  }
+  function fillEnum(){
+    var sel=document.getElementById('bellEnum'); if(!sel)return;
+    var seenU={}, opts=[];
+    latest.forEach(function(e){ if(e.user&&!seenU[e.user]){seenU[e.user]=1;opts.push([e.user,e.name||e.user]);} });
+    opts.sort(function(a,b){return a[1].localeCompare(b[1]);});
+    var want='<option value="">All enumerators</option>'+opts.map(function(o){
+      return '<option value="'+esc(o[0])+'">'+esc(o[1])+'</option>';}).join('');
+    if(sel.innerHTML!==want){sel.innerHTML=want;}
+    if(sel.value!==prefs.enm)sel.value=prefs.enm;
+  }
   function render(){
     if(!latest.length){list.innerHTML='<div class="bellEmpty">Waiting for the next device sync&hellip;</div>';return;}
     var base=(seenRev==null)?Infinity:seenRev;
-    list.innerHTML=latest.map(function(e){
+    var rows=prefs.enm?latest.filter(function(e){return (e.user||'')===prefs.enm;}):latest;
+    if(!rows.length){list.innerHTML='<div class="bellEmpty">No syncs from '+esc(prefs.enm)+' yet&hellip;</div>';return;}
+    list.innerHTML=rows.map(function(e){
       var tn=e.total_new||0, te=e.total_edited||0, active=(tn>0||te>0);
       var fresh=(e.rev>base&&tn>0)?' fresh':'';
       var det;
@@ -1307,54 +1437,117 @@ render();
         det=(e.items||[]).filter(function(it){return (it.new||0)>0||(it.edited||0)>0;}).map(function(it){
           var p=[]; if(it.new>0)p.push('<b>'+it.new+'</b> new'); if(it.edited>0)p.push('<b>'+it.edited+'</b> edited');
           return '<span class="inst">'+esc(it.inst)+'</span> '+p.join(' + ');
-        }).join(' &middot; ')+' &middot; '+fmt(e.time);
+        }).join(' &middot; ');
       }else{
-        det='<span class="bmuted">no new cases</span> &middot; '+fmt(e.time);
+        det='<span class="bmuted">connected, no new cases</span>';
       }
-      return '<div class="brow'+fresh+(active?'':' dim')+'"><div class="who">'+esc(e.name||e.user)+(e.name?' <span class="sub">'+esc(e.user)+'</span>':'')+' synced</div>'+
-             '<div class="sub">'+det+'</div></div>';
+      return '<div class="brow'+fresh+(active?'':' dim')+'" title="'+esc(fmt(e.time))+'">'+
+             '<span class="bbody"><div class="who">'+esc(e.name||e.user)+(e.name?'<span class="lg">'+esc(e.user)+'</span>':'')+'</div>'+
+             '<div class="sub">'+det+'</div></span>'+
+             '<span class="bage">'+esc(ago(e.time))+'</span></div>';
     }).join('');
+    var an=document.getElementById('bellActN'); if(an)an.textContent=rows.length;
+  }
+  // one plain-language line under the title, so the panel says how things ARE
+  function summarise(){
+    var el=document.getElementById('bellSummary'); if(!el)return;
+    var nAl=alerts.filter(function(a){return !ack[a.id];}).length;
+    var last=latest.length?ago(latest[0].time):null;
+    el.textContent=(nAl?(nAl+' need'+(nAl===1?'s':'')+' attention'):'All clear')
+      +(last?(' \u00b7 last sync '+last):'');
   }
   function badgeUpd(){
     var base=(seenRev==null)?Infinity:seenRev;
-    var n=latest.filter(function(e){return e.rev>base&&(e.total_new||0)>0;}).length + alerts.length;
-    if(n>0){badge.textContent=n>99?'99+':n;badge.hidden=false;}else{badge.hidden=true;}
+    // only UNACKNOWLEDGED alerts count — before this the badge could never reach
+    // zero while any alert existed, which trained people to ignore it entirely.
+    var nAl=alerts.filter(function(a){return !ack[a.id];}).length;
+    var n=latest.filter(function(e){return e.rev>base&&activeCount(e)>0;}).length + nAl;
+    if(n>0){
+      badge.textContent=n>99?'99+':n;
+      badge.hidden=false;
+      // red = unresolved alerts; green = only unread sync activity
+      badge.classList.toggle('calm',nAl===0);
+      btn.setAttribute('aria-label',nAl?(nAl+' alerts need attention'):(n+' new syncs'));
+    }else{badge.hidden=true;btn.setAttribute('aria-label','Notifications');}
+    summarise();
   }
   function toast(e){
-    var d=(e.items||[]).filter(function(it){return (it.new||0)>0;}).map(function(it){return it.inst+': '+it.new+' new case'+(it.new==1?'':'s');}).join(', ');
+    var d=detail(e);
     var t=document.createElement('div');t.className='btoast';
-    t.innerHTML='&#128276; <b>'+esc(e.name||e.user)+'</b> synced &middot; <b>'+esc(d)+'</b>';
-    toastWrap.appendChild(t);
-    setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},400);},6000);
+    t.innerHTML='&#128276; <b>'+esc(e.name||e.user)+'</b> synced &middot; <b>'+esc(d)+'</b>'
+      +'<button class="x" type="button" aria-label="Dismiss">&times;</button>';
+    addToast(t,6000);
   }
   function osNotify(e){
     if(!('Notification' in window)||Notification.permission!=='granted')return;
-    var d=(e.items||[]).filter(function(it){return (it.new||0)>0;}).map(function(it){return it.inst+': '+it.new+' new case'+(it.new==1?'':'s');}).join(', ');
+    var d=detail(e);
     try{new Notification((e.name||e.user)+' synced',{body:d+' · '+fmt(e.time),tag:'sync-'+e.rev});}catch(err){}
   }
+  // Each alert answers three questions in a fixed place: WHO/WHAT (bold, first),
+  // WHY IT MATTERS / what to do (muted second line), HOW OLD (right rail).
+  function alertParts(a){
+    if(a.type==='silence'){
+      var tier=(a.level==='high')?'<span class="tier">3+ days</span>':'';
+      return {ic:'&#128276;',
+        t:'<b>'+esc(a.name||a.user)+'</b> has not synced'+tier,
+        why:'No upload for '+a.hours+' h &middot; check the tablet or reach the enumerator',
+        age:ago(a.since), ttl:'Last upload '+fmt(a.since), quiet:(a.level!=='high')};
+    }
+    var who=(a.users&&a.users.length)?(' &middot; '+esc(a.users.join(', '))):'';
+    if(a.type==='dup'){
+      return {ic:'&#9888;&#65039;',
+        t:'<b>Duplicate case key</b> '+esc(a.key),
+        why:esc(a.inst)+' &middot; '+a.n+' cases share this key'+who+' &middot; resolve before analysis',
+        age:'', ttl:'', quiet:false};
+    }
+    return {ic:'&#9888;&#65039;',
+      t:'<b>Case outside the plan</b> &middot; facility '+esc(a.code9||a.example||''),
+      why:esc(a.inst)+' &middot; '+a.n+' case'+(a.n>1?'s':'')+' not in the assignment plan'+who,
+      age:'', ttl:'', quiet:false};
+  }
   function renderAlerts(){
-    if(!alerts.length){alertBox.innerHTML='';return;}
-    alertBox.innerHTML=alerts.map(function(a){
-      var txt;
-      if(a.type==='dup'){
-        txt='<b>Duplicate case key</b> '+esc(a.key)+' &middot; '+esc(a.inst)+' &middot; '+a.n+' cases'+((a.users&&a.users.length)?(' &middot; '+esc(a.users.join(', '))):'');
-      }else{
-        txt='<b>Off-plan '+(a.n>1?'cases':'case')+'</b> facility '+esc(a.code9)+' &middot; '+esc(a.inst)+' &middot; '+a.n+' not in plan'+((a.users&&a.users.length)?(' &middot; '+esc(a.users.join(', '))):'');
-      }
-      return '<div class="balert">&#9888;&#65039; '+txt+'</div>';
+    var sec=document.getElementById('bellAlertSec'), cnt=document.getElementById('bellAlertN');
+    if(!alerts.length){
+      alertBox.innerHTML='<div class="ballclear"><div class="big">&#9989;</div>'
+        +'<div class="t">Nothing needs attention</div>'
+        +'<div class="s">No missed syncs, duplicate keys or off-plan cases.</div></div>';
+      if(sec)sec.hidden=true;
+      return;
+    }
+    if(sec)sec.hidden=false;
+    if(cnt)cnt.textContent=alerts.length;
+    // unacknowledged first, then loudest, so the top of the list is the next thing to do
+    var ordered=alerts.slice().sort(function(x,y){
+      var ax=ack[x.id]?1:0, ay=ack[y.id]?1:0; if(ax!==ay)return ax-ay;
+      var lx=(x.level==='high'||x.type!=='silence')?0:1, ly=(y.level==='high'||y.type!=='silence')?0:1;
+      if(lx!==ly)return lx-ly;
+      return (y.hours||0)-(x.hours||0);
+    });
+    alertBox.innerHTML=ordered.map(function(a){
+      var p=alertParts(a);
+      var cls='balert'+(p.quiet?' quiet':'')+(ack[a.id]?' acked':'');
+      return '<div class="'+cls+'"'+(p.ttl?(' title="'+esc(p.ttl)+'"'):'')+'>'
+        +'<span class="bic">'+p.ic+'</span>'
+        +'<span class="bbody"><span class="bt">'+p.t+'</span>'
+        +'<div class="bwhy">'+p.why+'</div></span>'
+        +(p.age?('<span class="bage">'+esc(p.age)+'</span>'):'')
+        +'</div>';
     }).join('');
   }
   function alertToast(a){
-    var msg=(a.type==='dup')?('Duplicate key '+a.key+' ('+a.inst+')'):('Off-plan case '+(a.code9||a.example||'')+' ('+a.inst+')');
-    var t=document.createElement('div');t.className='btoast alert';
-    t.innerHTML='&#9888;&#65039; <b>'+esc(msg)+'</b>'+((a.users&&a.users.length)?(' &middot; '+esc(a.users.join(', '))):'');
-    toastWrap.appendChild(t);
-    setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},400);},9000);
+    var msg=(a.type==='silence')?('No sync from '+(a.name||a.user)+' in '+a.hours+' h')
+      :(a.type==='dup')?('Duplicate key '+a.key+' ('+a.inst+')'):('Off-plan case '+(a.code9||a.example||'')+' ('+a.inst+')');
+    var t=document.createElement('div');t.className='btoast '+((a.type==='silence'&&a.level!=='high')?'quiet':'alert');
+    t.innerHTML='&#9888;&#65039; <b>'+esc(msg)+'</b>'+((a.users&&a.users.length)?(' &middot; '+esc(a.users.join(', '))):'')
+      +'<button class="x" type="button" aria-label="Dismiss">&times;</button>';
+    addToast(t,9000);
   }
   function alertNotify(a){
     if(!('Notification' in window)||Notification.permission!=='granted')return;
-    var title=(a.type==='dup')?'⚠️ Duplicate case key':'⚠️ Case outside the plan';
-    var body=(a.type==='dup')?(a.key+' · '+a.inst+' · '+a.n+' cases'):('facility '+a.code9+' · '+a.inst+' · '+a.n+' case(s)');
+    var title=(a.type==='silence')?'🔕 No sync from '+(a.name||a.user)
+      :(a.type==='dup')?'⚠️ Duplicate case key':'⚠️ Case outside the plan';
+    var body=(a.type==='silence')?(a.hours+' hours since the last upload · '+fmt(a.since))
+      :(a.type==='dup')?(a.key+' · '+a.inst+' · '+a.n+' cases'):('facility '+a.code9+' · '+a.inst+' · '+a.n+' case(s)');
     if(a.users&&a.users.length)body+=' · '+a.users.join(', ');
     try{new Notification(title,{body:body,tag:a.id,requireInteraction:true});}catch(err){}
   }
@@ -1366,38 +1559,133 @@ render();
         if(seenRev==null){seenRev=maxRev;localStorage.setItem(LS,String(seenRev));}
         if(notifiedRev==null){notifiedRev=maxRev;}
         else if(maxRev>notifiedRev){
-          latest.filter(function(e){return e.rev>notifiedRev&&(e.total_new||0)>0;}).sort(function(a,b){return a.rev-b.rev;}).forEach(function(e){toast(e);osNotify(e);});
+          var fresh=latest.filter(function(e){return e.rev>notifiedRev&&activeCount(e)>0;}).sort(function(a,b){return a.rev-b.rev;});
+          fresh.forEach(function(e){toast(e);osNotify(e);});
+          if(fresh.length)beep(false);
           notifiedRev=maxRev;
         }
       }
       var firstA=(localStorage.getItem(LS2)===null), seen=[];
       try{seen=JSON.parse(localStorage.getItem(LS2)||'[]');}catch(e){seen=[];}
       var sset={}; seen.forEach(function(k){sset[k]=1;});
-      alerts.forEach(function(a){ if(!sset[a.id]){ if(!firstA){alertToast(a);alertNotify(a);} seen.push(a.id); sset[a.id]=1; } });
+      var newAl=0;
+      alerts.forEach(function(a){ if(!sset[a.id]){ if(!firstA){alertToast(a);alertNotify(a);newAl++;} seen.push(a.id); sset[a.id]=1; } });
+      if(newAl)beep(true);
+      fillEnum();
       localStorage.setItem(LS2, JSON.stringify(seen.slice(-300)));
       render(); renderAlerts(); badgeUpd();
     }).catch(function(){});
   }
+  function openPanel(){
+    panel.removeAttribute('hidden');
+    btn.setAttribute('aria-expanded','true');
+    if(latest.length){seenRev=latest[0].rev;localStorage.setItem(LS,String(seenRev));}
+    badgeUpd();render();
+    var f=panel.querySelector('#bellEnum'); if(f)f.focus();
+  }
+  function closePanel(refocus){
+    panel.setAttribute('hidden','');
+    btn.setAttribute('aria-expanded','false');
+    if(refocus)btn.focus();
+  }
   btn.addEventListener('click',function(){
-    if(panel.hasAttribute('hidden')){
-      panel.removeAttribute('hidden');
-      if(latest.length){seenRev=latest[0].rev;localStorage.setItem(LS,String(seenRev));}
-      badgeUpd();render();
-    }else{panel.setAttribute('hidden','');}
+    if(panel.hasAttribute('hidden'))openPanel(); else closePanel(false);
   });
-  document.getElementById('bellClose').addEventListener('click',function(ev){ev.stopPropagation();panel.setAttribute('hidden','');});
+  document.getElementById('bellClose').addEventListener('click',function(ev){ev.stopPropagation();closePanel(true);});
+  document.addEventListener('keydown',function(ev){
+    if(ev.key==='Escape'&&!panel.hasAttribute('hidden')){closePanel(true);}
+  });
   document.addEventListener('click',function(ev){if(!wrap.contains(ev.target)){panel.setAttribute('hidden','');}});
   function reflect(){if(('Notification' in window)&&Notification.permission==='granted'){enableBtn.textContent='Alerts on';enableBtn.classList.add('on');}}
   enableBtn.addEventListener('click',function(ev){ev.stopPropagation();
     if(!('Notification' in window)){enableBtn.textContent='Not supported';return;}
     Notification.requestPermission().then(reflect);
   });
-  reflect(); poll(); setInterval(poll,20000);
+  var soundBtn=document.getElementById('bellSound'), editedBtn=document.getElementById('bellEdited'),
+      readBtn=document.getElementById('bellRead'), enumSel=document.getElementById('bellEnum');
+  function reflectPrefs(){
+    soundBtn.classList.toggle('on',!!prefs.snd);
+    editedBtn.classList.toggle('on',!!prefs.edt);
+  }
+  soundBtn.addEventListener('click',function(ev){ev.stopPropagation();
+    prefs.snd=prefs.snd?0:1;savePrefs();reflectPrefs();if(prefs.snd)beep(false);});
+  editedBtn.addEventListener('click',function(ev){ev.stopPropagation();
+    prefs.edt=prefs.edt?0:1;savePrefs();reflectPrefs();render();badgeUpd();});
+  enumSel.addEventListener('change',function(ev){ev.stopPropagation();
+    prefs.enm=enumSel.value;savePrefs();render();});
+  readBtn.addEventListener('click',function(ev){ev.stopPropagation();
+    if(latest.length){seenRev=latest[0].rev;localStorage.setItem(LS,String(seenRev));}
+    alerts.forEach(function(a){ack[a.id]=1;});saveAck();
+    badgeUpd();render();renderAlerts();});
+  reflectPrefs(); reflect(); poll(); setInterval(poll,20000);
 })();
 </script>
 </body>
 </html>
 """
+
+
+# ---------------------------------------------------------------------------
+# Unified portal shell (2026-07-25). The dashboard now renders inside the same
+# sidebar / topbar / footer chrome as capi.asiansocial.org, via the shared
+# portal_shell module. The large TEMPLATE above is left intact; its outer
+# chrome is re-wrapped here so the change stays small and reversible. The
+# notification bell, the payload script and all dashboard JS (everything below
+# the footer) are untouched. Served on csweb during pretest; the sidebar links
+# point back to the portal origin so navigation is unified across domains.
+# ---------------------------------------------------------------------------
+_DESC = ("Fieldwork monitoring for the ASPSI \u00d7 DOH UHC Survey Year 2 \u2014 "
+         "F1/F3/F4 CSEntry tablets and the F2 healthcare-worker web form.")
+
+_CHROME_RULES = (
+    "header{background:var(--g);color:#fff;padding:20px 24px}",
+    "header h1{margin:0;font-size:20px;letter-spacing:-.01em}",
+    "header .s{opacity:.85;font-size:13px;margin-top:4px}",
+    "footer{max-width:1180px;margin:0 auto;padding:14px 22px 40px;color:var(--muted);font-size:12.5px}",
+    "header nav{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px}",
+    "header nav a{color:#fff;opacity:.92;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.45);padding-bottom:1px}",
+    "header nav a:hover{opacity:1;border-bottom-color:#fff}",
+    "header nav .here{opacity:1;font-weight:700;border-bottom:2px solid var(--gold)}",
+    "body{margin:0;font:15px/1.5 system-ui,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg)}",
+)
+
+
+def _shellify_dashboard(t):
+    head_chrome, _, rest1 = t.partition("<main>")
+    main_content, _, rest2 = rest1.partition("</main>")
+    footer_block, _, scripts = rest2.partition("</footer>")
+    # page CSS = the single <style> block in the old head; strip its chrome rules
+    css = head_chrome.split("<style>", 1)[1].split("</style>", 1)[0]
+    for rule in _CHROME_RULES:
+        css = css.replace(rule, "")
+    css = css.replace("main{max-width:1180px;margin:0 auto;padding:22px}",
+                      "main{max-width:none;margin:0;padding:0}")
+    footer_inner = footer_block.split("<footer>", 1)[1]
+    base = PS.PORTAL_ORIGIN
+    crumbs = [("UHC Survey Year 2", PS.P + "/"),
+              ("Monitoring", PS.P + "/monitoring/"),
+              ("Sync Dashboard", None)]
+    # dashboard + map are same-origin on csweb during pretest
+    seg = ('<div class="tb-seg"><a class="on" href="/docs/dashboard.html">Sync Dashboard</a>'
+           '<a href="/docs/map.html">Map</a></div>')
+    tb_right = seg + PS.PILL_LOCK
+    head_html = PS.head("UHC Survey Year 2 \u2014 Sync Dashboard", _DESC, extra_css=css)
+    head_html = head_html.replace(
+        "</head>", '<script src="/docs/assets/chart.umd.min.js"></script>\n</head>')
+    opened = (head_html + '\n<body>\n<div class="app">\n'
+              + PS.sidebar(PS.P + "/monitoring/", base)
+              + '\n<div class="main">\n<div class="topbar"><div class="crumbs">'
+              + PS.crumbs_html(crumbs, base) + '</div><div class="tb-right">' + tb_right
+              + '</div></div>\n<div class="canvas">\n<main>')
+    closed = ('\n</main>\n<footer class="page-foot">' + footer_inner + '</footer>\n'
+              '</div>\n</div>\n</div>\n')
+    out = opened + main_content + closed + scripts
+    # one canonical verde across css, client JS and the bell
+    out = out.replace("#006b3f", "#046a38").replace("#004d2c", "#04331d")
+    return out
+
+
+TEMPLATE = _shellify_dashboard(TEMPLATE)
 
 
 def build(data, targets=None, plan=None, errored=None, f2_api_ok=None):
