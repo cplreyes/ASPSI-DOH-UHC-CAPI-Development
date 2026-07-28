@@ -40,6 +40,8 @@ import subprocess, json, datetime, html, argparse
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import portal_shell as PS
+import phase_lib
+import activity_lib
 
 ENV = "/opt/app/.env"
 COMPOSE_DIR = "/opt/app"
@@ -508,6 +510,8 @@ TEMPLATE = r"""<!doctype html>
     <div class="f"><label for="fSup">Field supervisor</label><select id="fSup"></select></div>
     <div class="f"><label for="fEnum">Enumerator</label><select id="fEnum"></select></div>
     <div class="f"><label for="fStatus">Status</label><select id="fStatus"></select></div>
+    <div class="f"><label for="fPhase">Phase</label><select id="fPhase"></select></div>
+    <div class="f"><label for="fAct">Activity</label><select id="fAct"></select></div>
     <div class="f"><label for="fFrom">Visit from</label><input type="date" id="fFrom" /></div>
     <div class="f"><label for="fTo">Visit to</label><input type="date" id="fTo" /></div>
     <button class="reset" id="fReset" type="button">Reset</button>
@@ -556,6 +560,8 @@ const INSTS = P.spec.map(s=>s.prefix);
 
 // --- filter controls ---
 const instSel=document.getElementById('fInst'), regSel=document.getElementById('fRegion');
+const phaseSel=document.getElementById('fPhase');
+const actSel=document.getElementById('fAct');
 instSel.add(new Option('All instruments','ALL'));
 INSTS.forEach(k=>instSel.add(new Option(k.toUpperCase()+' · '+NAMES[k], k)));
 regSel.add(new Option('All regions','ALL'));
@@ -568,6 +574,13 @@ supSel.add(new Option('All supervisors','ALL'));
 (P.supervisors||[]).forEach(x=>supSel.add(new Option(x,x)));
 const statSel=document.getElementById('fStatus');
 [['ALL','All statuses'],['Completed','Completed'],['Partial','Partial']].forEach(([v,t])=>statSel.add(new Option(t,v)));
+phaseSel.add(new Option('All phases','ALL'));
+actSel.add(new Option('All activities','ALL'));
+(()=>{const have=new Set(); INSTS.forEach(k=>(P.data[k]||[]).forEach(r=>have.add(r.activity||'unassigned')));
+ (P.actreg||[]).filter(a=>have.has(a.id)).forEach(a=>actSel.add(new Option(a.label,a.id)));
+ if(have.has('unassigned'))actSel.add(new Option('Unassigned','unassigned'));})();
+(()=>{const ps=new Set(); INSTS.forEach(k=>(P.data[k]||[]).forEach(r=>ps.add(r.phase||'unphased')));
+ ['pretest','training','survey','unphased'].filter(x=>ps.has(x)).forEach(x=>phaseSel.add(new Option(x[0].toUpperCase()+x.slice(1),x)));})();
 // Enumerator filter — keyed on the CSWeb upload login (syncuser) with typed-name fallback,
 // exactly like the productivity panel below, so a person reads the same on both. Built from
 // f1/f3/f4 rows only (F2 is self-administered — no enumerator).
@@ -1107,6 +1120,7 @@ const isoDate=d=>(d&&/^\d{8}$/.test(d)&&d!=='00000000')?d.slice(0,4)+'-'+d.slice
 // export columns: every payload field, labeled; blank where an instrument lacks the field
 const CSV_COLS=[
   ['inst',o=>o.k.toUpperCase()], ['questionnaire_number',o=>o.qn],
+  ['phase',o=>o.r.phase||'unphased'], ['activity',o=>o.r.activity||'unassigned'],
   ['region',o=>o.r.region||''], ['province',o=>o.r.province||''], ['city',o=>o.r.city||''],
   ['facility',o=>o.k==='f1'?(o.r.facility||''):''],
   ['ownership',o=>o.r.ownership||''], ['service_level',o=>o.r.service_level||''],
@@ -1179,6 +1193,8 @@ function render(){
   // facilities in the plan (assignments-source.csv has a blank enumerator_id), so an
   // enumerator filter can't slice a facility target — coverage passes ignoreEnum=true.
   const pass=(r,ignoreStatus,ignoreEnum)=>{
+    if(phaseSel.value!=='ALL' && (r.phase||'unphased')!==phaseSel.value) return false;
+    if(actSel.value!=='ALL' && (r.activity||'unassigned')!==actSel.value) return false;
     if(region!=='ALL' && r.region!==region) return false;
     if(sup!=='ALL' && r.supervisor!==sup) return false;
     if(!ignoreEnum && enumK!=='ALL' && enumKeyOf(r)!==enumK) return false;
@@ -1234,8 +1250,8 @@ function render(){
     });
   });
 }
-instSel.onchange=render; regSel.onchange=render; supSel.onchange=render; enumSel.onchange=render; statSel.onchange=render; fromInp.onchange=render; toInp.onchange=render;
-document.getElementById('fReset').onclick=()=>{instSel.value='ALL';regSel.value='ALL';supSel.value='ALL';enumSel.value='ALL';statSel.value='ALL';fromInp.value='';toInp.value='';document.getElementById('clSearch').value='';render();};
+instSel.onchange=render; phaseSel.onchange=render; actSel.onchange=render; regSel.onchange=render; supSel.onchange=render; enumSel.onchange=render; statSel.onchange=render; fromInp.onchange=render; toInp.onchange=render;
+document.getElementById('fReset').onclick=()=>{instSel.value='ALL';regSel.value='ALL';phaseSel.value='ALL';actSel.value='ALL';supSel.value='ALL';enumSel.value='ALL';statSel.value='ALL';fromInp.value='';toInp.value='';document.getElementById('clSearch').value='';render();};
 document.getElementById('clSearch').oninput=()=>{ if(lastPass) renderCaseList(lastPass); };
 document.getElementById('clExport').onclick=exportCaseCsv;
 render();
@@ -1675,11 +1691,11 @@ def _shellify_dashboard(t):
     opened = (head_html + '\n<body>\n<div class="app">\n'
               + PS.sidebar(PS.P + "/monitoring/", base)
               + '\n<div class="main">\n<div class="topbar"><div class="crumbs">'
-              + PS.crumbs_html(crumbs, base) + '</div><div class="tb-right">' + tb_right
+              + PS.crumbs_html(crumbs, base) + '</div><div class="tb-right">' + tb_right + PS.SIGNOUT_CHIP
               + '</div></div>\n<div class="canvas">\n<main>')
     closed = ('\n</main>\n<footer class="page-foot">' + footer_inner + '</footer>\n'
               '</div>\n</div>\n</div>\n')
-    out = opened + main_content + closed + scripts
+    out = opened + main_content + closed + PS.SIGNOUT_JS + scripts
     # one canonical verde across css, client JS and the bell
     out = out.replace("#006b3f", "#046a38").replace("#004d2c", "#04331d")
     return out
@@ -1696,6 +1712,18 @@ def build(data, targets=None, plan=None, errored=None, f2_api_ok=None):
                 freshness note).
     """
     errored = errored or set()
+    # activity phase per case (Carl, 2026-07-27): roster wins, date falls back.
+    _preg = phase_lib.load()
+    _areg = activity_lib.load()
+    for _rows in data.values():
+        for _r in _rows:
+            _d = _r.get("date") or ""
+            _day = ("%s-%s-%s" % (_d[:4], _d[4:6], _d[6:8])
+                    if _d.isdigit() and len(_d) == 8 and _d != "00000000" else None)
+            _u = _r.get("syncuser")
+            _lg = None if not _u or _u == "(unknown)" else _u
+            _r["phase"] = phase_lib.phase_of(_lg, _day, _preg)
+            _r["activity"] = activity_lib.activity_of(_lg, _day, _areg)
     regions, supervisors = set(), set()
     for rows in data.values():
         for rec in rows:
@@ -1732,6 +1760,7 @@ def build(data, targets=None, plan=None, errored=None, f2_api_ok=None):
         "targets": targets or {},
         "f2meta": f2meta,
         "plan": plan or {},
+        "actreg": activity_lib.public_view(),
         "generated": now_utc.strftime("%Y-%m-%d %H:%M UTC"),
     }
     # XSS-safe: JSON in a non-executable <script type="application/json">, HTML-escaped,

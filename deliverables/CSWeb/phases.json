@@ -1,0 +1,30 @@
+{
+ "phases": [
+  {
+   "name": "pretest",
+   "from": "2026-07-15",
+   "to": null,
+   "logins": [
+    "se-001",
+    "se-002",
+    "se-003",
+    "se-004",
+    "se-005",
+    "se-006",
+    "se-007"
+   ]
+  },
+  {
+   "name": "training",
+   "from": null,
+   "to": null,
+   "logins": []
+  },
+  {
+   "name": "survey",
+   "from": null,
+   "to": null,
+   "logins": []
+  }
+ ]
+}

@@ -207,6 +207,16 @@ SILENCE_EXPIRE_HOURS = 96   # stop nagging past this: 24h-96h = 'went quiet' (ac
                             # beyond 4 days it means 'finished', not a live problem. Prevents
                             # a permanent red bell as fieldwork winds down (Carl, 2026-07-24).
 ALERT_CONF = "/opt/csweb-alerts.conf"       # KEY=VALUE; SLACK_WEBHOOK_URL=...
+# Admin console settings (webhook, thresholds, quiet hours, enabled types).
+# Written by /docs/admin/ -> takes precedence over the constants below.
+ADMIN_ALERTS = "/opt/app/lamp/www/docs/admin/alerts.json"
+
+
+def admin_alerts():
+    try:
+        return json.load(open(ADMIN_ALERTS, encoding="utf-8")) or {}
+    except Exception:
+        return {}
 ALERT_STATE = "/opt/csweb-alert-state.json"  # ids already delivered off-page
 MAX_PUSH = 6                # never fire-hose a channel from one cron tick
 
@@ -226,6 +236,10 @@ def last_sync_per_user():
 
 
 def compute_silence_alerts(now=None):
+    _a = admin_alerts()
+    _sil = int(_a.get("silence_hours") or SILENCE_HOURS)
+    _exp = int(_a.get("expire_hours") or SILENCE_EXPIRE_HOURS)
+    _high = int(_a.get("high_hours") or 72)
     """One alert per enumerator who HAS synced before but not in SILENCE_HOURS.
 
     Deliberately scoped to logins with sync history: a login that has never
@@ -240,12 +254,12 @@ def compute_silence_alerts(now=None):
     out = []
     for user, when in last_sync_per_user().items():
         hours = (now - when).total_seconds() / 3600.0
-        if hours < SILENCE_HOURS or hours >= SILENCE_EXPIRE_HOURS:
+        if hours < _sil or hours >= _exp:
             continue          # only the actionable window: recently went quiet
         out.append({
             "type": "silence", "user": user, "name": NAMES.get(user, user),
             "hours": int(hours), "since": when.strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "level": "high" if hours >= 72 else "warn",   # 3+ days = escalate
+            "level": "high" if hours >= _high else "warn",  # escalation threshold
             "id": "silence|%s|%s" % (user, when.strftime("%Y%m%dT%H%M%S")),
             "rev": 0,
         })

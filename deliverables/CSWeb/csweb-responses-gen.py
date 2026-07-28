@@ -40,6 +40,9 @@ First built 2026-07-18 (Case drill-down follow-up: "all responses in a
 spreadsheet + export to CSV", Option A+B).
 """
 import subprocess, csv, io, os, sys, html, datetime, argparse, zipfile, json
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import phase_lib  # activity-phase classification (Carl, 2026-07-27)
+import activity_lib  # Survey Activities: named windows w/ dates (2026-07-27)
 
 ENV = "/opt/app/.env"
 COMPOSE_DIR = "/opt/app"
@@ -128,6 +131,23 @@ def qn_map(schema):
     return {r[0]: r[1] for r in rows}
 
 
+def phase_map(schema):
+    """level-1-id -> (phase, activity): the uploading login (roster wins) with
+    the Manila sync day as fallback -- one shared rule, see phase/activity_lib."""
+    reg = phase_lib.load()
+    areg = activity_lib.load()
+    rows = q("SELECT l.`level-1-id`, COALESCE(sh.username,''),"
+             " COALESCE(DATE_FORMAT(DATE_ADD(sh.created_time, INTERVAL 8 HOUR),"
+             " '%%Y-%%m-%%d'),'')"
+             " FROM %s.`level-1` l JOIN %s.cases c ON c.id=l.`case-id` AND c.deleted=0"
+             " LEFT JOIN csweb_uhc_y2.cspro_sync_history sh"
+             " ON sh.revision = c.last_modified_revision AND sh.direction='put'"
+             % (schema, schema))
+    return {r[0]: (phase_lib.phase_of(r[1] or None, r[2] or None, reg),
+                   activity_lib.activity_of(r[1] or None, r[2] or None, areg))
+            for r in rows}
+
+
 def write_csv(path, header, rows):
     with open(path, "w", encoding="utf-8-sig", newline="") as f:
         w = csv.writer(f)
@@ -139,6 +159,7 @@ def build_instrument(inst, schema, out_dir):
     """Write the wide CSV + roster CSVs for one breakout; return manifest entries."""
     singular, rosters = discover(schema)
     qns = qn_map(schema)
+    phases = phase_map(schema)
     made = []
 
     # ---- wide sheet: one row per case, all singular-record items ----
@@ -148,7 +169,7 @@ def build_instrument(inst, schema, out_dir):
     for _, cs in singular:
         for c in cs:
             (clash if c in seen else seen).add(c)
-    header, parts = ["questionnaire_number"], []
+    header, parts = ["questionnaire_number", "phase", "activity"], []
     for t, cs in singular:
         data = {}
         for row in q("SELECT `level-1-id`, %s FROM %s.%s"
@@ -158,7 +179,8 @@ def build_instrument(inst, schema, out_dir):
         header += [("%s__%s" % (t, c)) if c in clash else c for c in cs]
     wide = []
     for lid, qn in sorted(qns.items(), key=lambda kv: kv[1]):
-        row = [qn]
+        ph, act = phases.get(lid, (phase_lib.UNKNOWN, activity_lib.UNKNOWN))
+        row = [qn, ph, act]
         for cs, data in parts:
             row += list(data.get(lid, [""] * len(cs)))
         wide.append(row)
@@ -192,6 +214,22 @@ def build_f2(out_dir):
     rows = q("SELECT %s FROM %s.f2_responses WHERE COALESCE(`status`,'') <> 'voided'"
              " ORDER BY qn, submitted_at_server"
              % (", ".join(bt(c) for c in cols), F2_SCHEMA))
+    # phase/activity: F2 has no CSWeb login -- classify by Manila submission day
+    reg = phase_lib.load()
+    areg = activity_lib.load()
+    si = cols.index("submitted_at_server") if "submitted_at_server" in cols else None
+    def f2_phase(r):
+        if si is None or not r[si]:
+            return (phase_lib.UNKNOWN, activity_lib.UNKNOWN)
+        try:
+            d = (datetime.datetime.strptime(r[si][:19], "%Y-%m-%d %H:%M:%S")
+                 + datetime.timedelta(hours=8)).strftime("%Y-%m-%d")
+        except ValueError:
+            return (phase_lib.UNKNOWN, activity_lib.UNKNOWN)
+        return (phase_lib.phase_of(None, d, reg),
+                activity_lib.activity_of(None, d, areg))
+    cols = cols + ["phase", "activity"]
+    rows = [r + list(f2_phase(r)) for r in rows]
     fn = "f2_responses.csv"
     write_csv(os.path.join(out_dir, fn), cols, rows)
     return [{"file": fn, "rows": len(rows), "cols": len(cols), "kind": "wide",
@@ -228,9 +266,9 @@ PAGE_TOP = """<!doctype html>
  .sub{color:var(--muted);font-size:12.5px;margin:2px 0 14px}
  footer{max-width:1180px;margin:0 auto;padding:14px 22px 40px;color:var(--muted);font-size:12.5px}
  footer a{color:var(--g)}
-</style></head><body>
+.tb-user{display:none;align-items:center;gap:8px;font-size:12.5px;margin-top:8px}.tb-user.on{display:inline-flex}.tb-user b{font-weight:650}.tb-user .tier{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:5px;background:#eefaf3;color:#046a38;border:1px solid #cfe6d8}.tb-user a{color:#046a38;font-weight:650}</style></head><body>
 <header><h1>UHC Survey Year 2 — Responses Data Room</h1>
-<div class="s">Full response spreadsheets · raw stored codes · same login as the Sync Dashboard</div></header>
+<div class="s">Full response spreadsheets · raw stored codes · staff tier — signed in through the CAPI console</div><div id="tbUser" class="tb-user"></div></header>
 <main>
 <div class="note">One <b>wide CSV per instrument</b> (a row per case, every singular-record item) plus a
 <b>CSV per roster record</b> (a row per case &times; occurrence). Values are the <b>raw codes</b> — labels live in
@@ -378,7 +416,7 @@ def index_html(manifests, generated, spss=None, cspro=None, cbook=None):
                 out.append("<tr>%s</tr>" % "".join("<td>%s</td>" % esc(c) for c in row))
             out.append("</table></div>")
     out.append('</main><footer>Generated %s UTC · source: F1/F3/F4 breakout DBs + <code>csweb_f2</code> mirror · '
-               'back to the <a href="/docs/dashboard.html">Sync Dashboard</a>.</footer></body></html>' % esc(generated))
+               'back to the <a href="/docs/dashboard.html">Sync Dashboard</a>.</footer><script>(function(){var e=document.getElementById("tbUser");if(!e)return;fetch("/docs/whoami.php",{credentials:"same-origin"}).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d||!d.signed_in)return;var u=document.createElement("b");u.textContent=d.user;var t=document.createElement("span");t.className="tier";t.textContent=d.tier;var a=document.createElement("a");a.href="/docs/auth/logout";a.textContent="Sign out";e.appendChild(u);e.appendChild(t);e.appendChild(a);e.className="tb-user on";}).catch(function(){});})();</script></body></html>' % esc(generated))
     return "\n".join(out)
 
 
