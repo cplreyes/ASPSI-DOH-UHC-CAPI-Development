@@ -163,8 +163,19 @@ def build_field_control():
 # Item names match Carl's manual scaffold exactly so existing references survive.
 
 def build_section_a():
+    # #1005 (pretest finding, 2026-08-03): the printed Annex F1 Q2 grid carries
+    # THIRTEEN options, laid out in a 3-column table read column-major (down col 1,
+    # then col 2, then col 3). This list stopped one row into column 3, so it
+    # dropped "Rural Health Physician" and "Other (specify)" — a facility head who
+    # is a Rural Health Physician had no correct code to give.
+    # Codes 1-11 are UNCHANGED so pretest data already collected stays valid; the
+    # two recovered options take fresh codes (12, and 99 for Other per the house
+    # convention used by _cb_codes and auto_other_specify_procs).
+    # Option 1 also carried a paraphrase ("Rural / Urban Health Unit Head");
+    # restored to the printed wording. Closes the F1-QC-02 drift recorded in
+    # F1-Skip-Logic-and-Validations.md ("11 options, no Other").
     Q2_ROLES = [
-        ("Rural / Urban Health Unit Head",      "1"),
+        ("Rural Health Unit / Health Center Head", "1"),
         ("Physician",                           "2"),
         ("Chief of Hospital",                   "3"),
         ("Medical Director",                    "4"),
@@ -175,6 +186,8 @@ def build_section_a():
         ("Administrative Officer / Assistant",  "9"),
         ("Midwife",                            "10"),
         ("Health Promotion / Nutrition Officer","11"),
+        ("Rural Health Physician",             "12"),
+        ("Other (specify)",                    "99"),
     ]
     items = [
         # Respondent contact block — moved out of FIELD_CONTROL so it lives
@@ -189,6 +202,17 @@ def build_section_a():
         select_one("Q2_FACILITY_ROLE",
                    "2. What is your official designation at this health facility?",
                    Q2_ROLES, length=2),
+        # #1005: companion free-text for the recovered "Other (specify)" (code 99).
+        # auto_other_specify_procs() in generate_apc.py derives the gate from the dcf
+        # itself — it finds the single same-Q parent whose value set carries an
+        # 'other'-labelled code and emits preproc noinput / postproc reenter against
+        # Q2_FACILITY_ROLE = 99. No hand-written PROC needed.
+        # NOTE: F1's .fmf is hand-maintained (no FMF generator), so this item needs a
+        # matching form field or it lands UNREACHABLE — supplied by the idempotent
+        # post-processor inject_q2_other_txt.py, which must run in the .fmf pipeline.
+        alpha("Q2_OTHER_TXT",
+              "2. What is your official designation at this health facility? — Other (specify) text",
+              length=120),
         numeric("Q3_AGE", "3. How old are you (in years), as of your last birthday?",
                 length=2),
         numeric("Q4_SEX", "4. What is your sex assigned at birth?", length=1,

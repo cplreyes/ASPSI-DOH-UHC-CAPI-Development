@@ -13,6 +13,7 @@ import { useEffect, type ReactNode } from 'react';
 import { RouterProvider, useRouter, matchRoute } from './lib/pages-router';
 import { AdminAuthProvider, useAdminAuth } from './lib/auth-context';
 import { Login } from './Login';
+import { rememberReturnTo } from './return-to';
 import { Layout } from './Layout';
 import { EncodeQueue } from './encode/EncodeQueue';
 import { EncodePage } from './encode/EncodePage';
@@ -85,6 +86,10 @@ function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
       pathname !== '/admin/help/' &&
       pathname.startsWith('/admin')
     ) {
+      // Remember where they were headed. Without this the guard discards the
+      // attempted route and Login lands everyone on /admin/data, so a deep link
+      // to one response signed you in and then showed you the list instead.
+      rememberReturnTo(pathname + window.location.search);
       navigate('/admin/login');
     }
   }, [isAuthenticated, pathname, navigate]);

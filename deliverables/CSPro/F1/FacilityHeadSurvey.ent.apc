@@ -2922,6 +2922,18 @@ postproc
     reenter;
   endif;
 
+PROC Q2_OTHER_TXT
+preproc
+  if not (Q2_FACILITY_ROLE = 99) then
+    Q2_OTHER_TXT = "";   { skip + clear: no 'other' option chosen }
+    noinput;
+  endif;
+postproc
+  if (Q2_FACILITY_ROLE = 99) and length(strip(Q2_OTHER_TXT)) = 0 then
+    errmsg(1202);
+    reenter;
+  endif;
+
 PROC Q33_OTHER_TXT
 preproc
   if not (Q33_DATA_FREQ = 6) then

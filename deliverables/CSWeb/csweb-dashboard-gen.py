@@ -36,7 +36,7 @@ The fixture is {"f1":[{col:val,...}], "f3":[...], "f4":[...]} using the same col
 names the live queries return (see QUERIES cols). On-box verification against real
 synced cases remains the final gate.
 """
-import subprocess, json, datetime, html, argparse
+import subprocess, json, datetime, html, argparse, hashlib
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import portal_shell as PS
@@ -138,8 +138,13 @@ F2_SQL = (
     # falls back to facility_id for pre-qn rows (demo slugs → no join, as before).
     " LEFT(COALESCE(NULLIF(r.qn,''),r.facility_id,''),9),"
     # qn = the full stored key for the Case list (12-digit QN post-2026-07-08; earlier
-    # rows fall back to facility_id/slug). F2 rows never deep-link (not a CSWeb dict).
-    " COALESCE(NULLIF(r.qn,''),r.facility_id,'')"
+    # rows fall back to facility_id/slug).
+    " COALESCE(NULLIF(r.qn,''),r.facility_id,''),"
+    # sub = submission_id, the F2 Admin Portal's own response key. It is what
+    # GET /admin/api/dashboards/data/responses/:id resolves on, and what the Data
+    # tab's ?q= filter matches unambiguously - unlike qn, which is a 12-digit number
+    # the q filter could also find inside another row's values_json.
+    " COALESCE(r.submission_id,'')"
     " FROM csweb_f2.f2_responses r"
     " LEFT JOIN csweb_f2.f2_facility_master fm ON fm.facility_id=r.facility_id"
     # #831: voided responses (admin void action, status='voided') never count.
@@ -237,7 +242,8 @@ QUERIES = {
     # no field-control record. Its rows simply lack those keys — the productivity panel skips
     # F2 entirely, and `r.repl==='1'` is false for a missing key, so the Replacements KPI is
     # unaffected. Do NOT synthesise placeholder columns for it.
-    "f2": (["region", "province", "result", "source", "date", "status", "gps", "code9", "qn"], F2_SQL),
+    "f2": (["region", "province", "result", "source", "date", "status", "gps", "code9", "qn",
+            "sub"], F2_SQL),
 }
 
 
@@ -364,6 +370,26 @@ TEMPLATE = r"""<!doctype html>
   .kpi.ok{border-top-color:var(--g)}.kpi.ok .num{color:var(--g)}
   .kpi.warn{border-top-color:var(--gold)}.kpi.warn .num{color:#b7860b}
   .kpi.bad{border-top-color:var(--red)}.kpi.bad .num{color:var(--red)}
+  /* Audit F5: progress and exception measures used to sit in one undifferentiated row of
+     six, so a rising "No GPS fix" read exactly like a rising "Completed". They are now two
+     labelled groups, and the exception group is set off by a rule and a warning glyph. */
+  .kpiwrap{display:grid;grid-template-columns:2fr 1fr;gap:20px;align-items:start;margin-bottom:6px}
+  .kpigrp{min-width:0}
+  .kpigrp .kpis{grid-template-columns:repeat(4,1fr);margin-bottom:0}
+  .kpigrp.attn .kpis{grid-template-columns:repeat(2,1fr)}
+  .kpigrp.attn{border-left:3px solid var(--red);padding-left:15px}
+  .grph{font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0 2px 9px}
+  .kpigrp.attn .grph{color:var(--red)}
+  /* Audit F4: the comparator line. Deliberately quiet - it must be readable without
+     competing with the number it qualifies. */
+  .kpi .cmp{margin-top:7px;font-size:11.5px;font-weight:600;color:var(--muted);min-height:15px}
+  /* Audit F12: one-line universe statement per panel. */
+  .universe{color:var(--muted);font-size:12.5px;margin:-6px 2px 14px;max-width:95ch}
+  /* Audit F6: shown only while the enumerator filter is active. */
+  .scopebadge{background:#fff8e6;border-left:3px solid var(--gold);color:#5c4708;font-size:12.5px;
+    margin:2px 2px 12px;padding:8px 12px;border-radius:0 8px 8px 0}
+  @media(max-width:1100px){.kpiwrap{grid-template-columns:1fr}
+    .kpigrp.attn{border-left:0;padding-left:0;border-top:3px solid var(--red);padding-top:14px}}
   .freshness{color:var(--muted);font-size:12.5px;margin:2px 2px 16px}
   .freshness b{color:var(--ink)}
   .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:8px}
@@ -420,7 +446,7 @@ TEMPLATE = r"""<!doctype html>
   .covtbl td.nolog{color:var(--muted);font-style:italic}
   .stale{color:#b7860b}
   /* ===== purpose bands + accordion + quality panel (2026-07-17 IA redesign) ===== */
-  .band{margin:34px 2px 10px;font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gd);display:flex;align-items:center;gap:10px}
+  .band{margin:42px 2px 14px;padding-bottom:9px;font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gd);display:flex;align-items:center;gap:10px;border-bottom:2px solid rgba(0,107,63,.16);scroll-margin-top:10px}.band:first-of-type{margin-top:24px}#caselist{max-height:62vh;overflow:auto;border:1px solid #e2e9e5;border-radius:10px;background:#fff}#caselist table{margin:0}#caselist thead th{position:sticky;top:0;z-index:2;background:#f4f8f6;box-shadow:inset 0 -1px 0 #e2e9e5}.cl-hint{font-size:12px;color:#63736a;margin:8px 2px 0}@media(max-width:900px){#caselist{max-height:70vh}}
   header nav{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px}
   header nav a{color:#fff;opacity:.92;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.45);padding-bottom:1px}
   header nav a:hover{opacity:1;border-bottom-color:#fff}
@@ -456,6 +482,76 @@ TEMPLATE = r"""<!doctype html>
   .qtile.bad{border-top-color:var(--red)}.qtile.bad .num{color:var(--red)}
   .qtile .lbl{color:var(--muted);font-size:11.5px;font-weight:600;margin-top:5px;text-transform:uppercase;letter-spacing:.03em}
   .qtile.sel{outline:2px solid var(--g)}
+  /* A 7-column coverage table is wider than a tablet. It used to widen the whole
+     document, so the page itself scrolled sideways and the headings drifted off
+     screen. Now each wide table scrolls within its own panel. Restoring display:table
+     on the tbody keeps column widths computing as a table, so the header row stays
+     aligned with the body (verified in-browser: identical cell widths). */
+  .covtbl{display:block;overflow-x:auto;max-width:100%}
+  .covtbl>tbody{display:table;width:100%;min-width:720px}
+  /* ---- BI canvas (2026-07-29) ---------------------------------------------
+     Composition, not paint. The page used to be one 1240px column of full-width
+     sections, which reads as a document you scroll rather than a dashboard you
+     take in. Wider canvas, consistent panel cards, panels sharing rows, sticky
+     controls, tighter type. Scoped to this page: .canvas and the neutral tokens
+     are overridden here rather than in portal.css, which the map and the data
+     room also load. */
+  .canvas{max-width:1600px!important;padding:20px 24px 56px!important}
+  body{background:#eef1f5}
+  main{font-size:14px}
+  /* Panels become cards so the eye reads regions of a canvas, not a continuous page. */
+  #coverage,#productivity,#quality,#sections{background:#fff;border:1px solid #d8dee7;
+    border-radius:6px;padding:14px 16px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,32,64,.06)}
+  #coverage>h2:first-child,#productivity>h2:first-child{margin-top:0}
+  /* Two panels per row where both fit; one per row where they do not. No fixed
+     column count, so this degrades to the old stack on a narrow screen instead
+     of squashing a table nobody can then read. */
+  .bigrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(620px,1fr));
+    gap:16px;align-items:start;margin-bottom:16px}
+  .bigrid>*{min-width:0;margin-bottom:0}
+  .band{margin:22px 2px 10px;padding-bottom:6px;font-size:11.5px;letter-spacing:.13em;
+    border-bottom:1px solid #d8dee7;color:#33455a}
+  .band:first-of-type{margin-top:10px}
+  .chart{border-radius:6px;box-shadow:0 1px 3px rgba(16,32,64,.06);border-color:#d8dee7;
+    padding:12px 14px}
+  /* KPI accent moves from the top edge to the left edge - the Power BI card idiom,
+     and it survives the tighter vertical rhythm better than a top rule. */
+  .kpi{border-radius:6px;border-top:1px solid #d8dee7;border-left:4px solid var(--g);
+    padding:11px 13px;box-shadow:0 1px 3px rgba(16,32,64,.06)}
+  .kpi.ok{border-left-color:#0f7b46}
+  .kpi.warn{border-left-color:#c98a12}
+  .kpi.bad{border-left-color:#c62828}
+  .kpi .num{font-size:26px}.kpi .lbl{font-size:10.5px}.kpi .cmp{font-size:10.5px}
+  .card{border-radius:6px;box-shadow:0 1px 3px rgba(16,32,64,.06)}
+  .card .num{font-size:26px}
+  .qtile{border-radius:6px;padding:10px 12px}
+  .universe{font-size:11.5px;margin:-2px 2px 10px}
+  /* A BI canvas keeps its controls reachable; below the bell's z-index so the
+     alert panel still opens over it. */
+  .filters{border-radius:6px;border-color:#d8dee7;position:sticky;top:0;z-index:30;
+    box-shadow:0 2px 10px rgba(16,32,64,.10)}
+  @media(max-width:1000px){.filters{position:static;box-shadow:none}}
+  /* One dense KPI header band instead of two stacked rows: Progress | Needs
+     attention | By instrument, 4-2-4 tiles across the canvas. This is the part
+     that makes the top of the page read as a dashboard rather than a document. */
+  .kpiwrap{grid-template-columns:2fr 1fr 2fr}
+  .kpigrp.insts .cards{grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:0}
+  .kpigrp.insts .card{padding:11px 13px;cursor:pointer}
+  .kpigrp.insts .card .num{font-size:22px}
+  .kpigrp.insts .card .lbl{font-size:11px;font-weight:600;margin-top:4px}
+  .kpigrp.insts .card .sub{font-size:10.5px}
+  /* The leaderboard grows with the team - 6 enumerators in the pretest, dozens at
+     rollout. Bound it so it stays a panel on the canvas instead of becoming the
+     page, exactly like the case list below. */
+  #productivity .covtbl{max-height:440px;overflow:auto}
+  /* Tables fill their panel. Auto-width left the case list floating short of the
+     card edge, which reads as a rendering fault on a wide canvas. */
+  #caselist table{width:100%}
+  #coverage .covtbl>tbody,#productivity .covtbl>tbody{width:100%}
+  #productivity .covtbl thead th,#productivity .covtbl tr:first-child th{position:sticky;top:0;z-index:2;
+    background:#f4f6f9;box-shadow:inset 0 -1px 0 #d8dee7}
+  @media(max-width:1360px){.kpiwrap{grid-template-columns:1fr}
+    .kpigrp.insts{border-top:1px solid #d8dee7;padding-top:12px}}
   .qmore{color:var(--muted);font-size:12px;font-style:italic;margin:4px 2px 10px}
   h2.sechead{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
   h2.sechead .caret{color:var(--g)}
@@ -472,8 +568,12 @@ TEMPLATE = r"""<!doctype html>
   .covtbl td.mono{font-family:ui-monospace,'Cascadia Mono',Consolas,monospace;font-size:12px;white-space:nowrap}
   .covtbl a.rlink{color:var(--g);font-weight:600;text-decoration:none;white-space:nowrap}
   .covtbl a.rlink:hover{text-decoration:underline}
+  /* Secondary link: present but deliberately quiet — most readers want the console
+     viewer; only someone editing a case needs CSWeb. */
+  .covtbl a.rlink2{margin-left:9px;font-size:11.5px;font-weight:600;color:var(--muted);text-decoration:none;white-space:nowrap}
+  .covtbl a.rlink2:hover{color:var(--g);text-decoration:underline}
   .covtbl .instchip{display:inline-block;font-size:11px;font-weight:700;color:#006b3f;background:#e7f3ec;border-radius:5px;padding:0 6px}
-  @media(max-width:820px){.kpis{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.covbar{width:90px}}
+  @media(max-width:820px){.kpis,.kpigrp .kpis{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.covbar{width:90px}}
 </style>
 </head>
 <body>
@@ -495,7 +595,7 @@ TEMPLATE = r"""<!doctype html>
         <li><b>Progress vs plan</b> — submissions over time, and coverage against the assignment plan (region → province → facility), plus enumerator productivity.</li>
         <li><b>Data quality</b> — things worth acting on today: no-GPS cases, partials older than 2 days, cases outside the plan, and live sync alerts.</li>
         <li><b>Instrument detail</b> — per-instrument charts (collapsed; click a heading to expand).</li>
-        <li><b>Case drill-down</b> — the case list. Search it, sort it, export the filtered view to CSV, or open any F1/F3/F4 case's full responses in CSWeb.</li>
+        <li><b>Case drill-down</b> — the case list. Search it, sort it, export the filtered view to CSV, or open any case's full responses — every instrument opens here on this console, on the same login as this page.</li>
         <li><b>Downloads</b> — get the data out: CSPro sync files, CSV/SPSS/Stata/R exports, the CSPro applications, and the codebook.</li>
       </ul>
       <p><b>Definitions that trip people up.</b> "Today" is Manila time. F2 is self-administered, so it never
@@ -517,32 +617,50 @@ TEMPLATE = r"""<!doctype html>
     <button class="reset" id="fReset" type="button">Reset</button>
   </div>
   <div id="enumChip" class="enumchip" hidden></div>
-  <div class="band" id="b-status">Status now</div>
-  <div class="kpis">
-    <div class="kpi"><div class="num" id="kTotal">0</div><div class="lbl">Cases (filtered)</div></div>
-    <div class="kpi ok"><div class="num" id="kCompleted">0</div><div class="lbl">Completed</div></div>
-    <div class="kpi warn"><div class="num" id="kPartial">0</div><div class="lbl">Partial</div></div>
-    <div class="kpi"><div class="num" id="kToday">0</div><div class="lbl">Visited today</div></div>
-    <div class="kpi warn"><div class="num" id="kRepl">0</div><div class="lbl">Replacements</div></div>
-    <div class="kpi bad"><div class="num" id="kNogps">0</div><div class="lbl">No GPS fix</div></div>
+  <h2 class="band" id="b-status">Status now</h2>
+  <p class="universe">Every synced case matching the filters above. F2 is self-administered, so it is always recorded as Completed and never counted as missing a GPS fix.</p>
+  <div class="kpiwrap">
+    <section class="kpigrp" aria-labelledby="grpProg">
+      <h3 class="grph" id="grpProg">Progress</h3>
+      <div class="kpis">
+        <div class="kpi"><div class="num" id="kTotal">0</div><div class="lbl">Cases (filtered)</div><div class="cmp" id="cTotal"></div></div>
+        <div class="kpi ok"><div class="num" id="kCompleted">0</div><div class="lbl">Completed</div><div class="cmp" id="cCompleted"></div></div>
+        <div class="kpi warn"><div class="num" id="kPartial">0</div><div class="lbl">Partial</div><div class="cmp" id="cPartial"></div></div>
+        <div class="kpi"><div class="num" id="kToday">0</div><div class="lbl">Visited today</div><div class="cmp" id="cToday"></div></div>
+      </div>
+    </section>
+    <section class="kpigrp attn" aria-labelledby="grpAttn">
+      <h3 class="grph" id="grpAttn">&#9888; Needs attention</h3>
+      <div class="kpis">
+        <div class="kpi warn"><div class="num" id="kRepl">0</div><div class="lbl">Replacements</div><div class="cmp" id="cRepl"></div></div>
+        <div class="kpi bad"><div class="num" id="kNogps">0</div><div class="lbl">No GPS fix</div><div class="cmp" id="cNogps"></div></div>
+      </div>
+    </section>
+    <section class="kpigrp insts" aria-labelledby="grpInst">
+      <h3 class="grph" id="grpInst">By instrument</h3>
+      <div class="cards" id="totals"></div>
+    </section>
   </div>
-  <div class="cards" id="totals"></div>
   <div class="freshness">Data as of <b id="fresh"></b> · auto-refreshes ~every 2 min · "today" = <span id="todayLbl"></span> (Manila)</div>
-  <div class="band" id="b-progress">Progress vs plan</div>
-  <div class="chart wide"><h3>Submissions over time — new per day &amp; cumulative</h3><div class="canvas-wrap"><canvas id="trend"></canvas></div></div>
+  <h2 class="band" id="b-progress">Progress vs plan</h2>
+  <p class="universe">Submissions counted by visit date. Coverage is measured against the assignment plan, which allocates facilities to places rather than to people &mdash; so it answers &ldquo;are these facilities covered?&rdquo;, not &ldquo;how much did this person do?&rdquo;</p>
+  <div class="chart wide"><h3>New submissions per day</h3><p class="sub">Bars are cases received that day; the line is the trailing 7-day average. Both use the same scale, so a flat or falling week is visible.</p><div class="canvas-wrap"><canvas id="trend" role="img" aria-label="Bar chart of new submissions per day with a trailing seven-day average line. The figures are listed in the case list table below."></canvas></div></div>
   <div id="coverage"></div>
   <div id="productivity"></div>
-  <div class="band" id="b-quality">Data quality</div>
+  <h2 class="band" id="b-quality">Data quality</h2>
+  <p class="universe">Exceptions among the filtered cases, ignoring the Status filter so a partial case can still be flagged. F2 is excluded from GPS checks by design.</p>
   <div id="quality"></div>
-  <div class="band" id="b-detail">Instrument detail</div>
-  <div class="note">Counts exclude deleted cases. Filters recompute every tile in your browser. Empty/blank categories reflect minimal test cases in the current data — they populate as real fieldwork syncs. Per-case drill-down: the <b>Case list</b> at the bottom — F1/F3/F4 rows open the full responses in CSWeb (login required).</div>
+  <h2 class="band" id="b-detail">Instrument detail</h2>
+  <div class="note">Counts exclude deleted cases. Filters recompute every tile in your browser. Empty/blank categories reflect minimal test cases in the current data — they populate as real fieldwork syncs. Per-case drill-down: the <b>Case list</b> at the bottom — every row opens its full responses here on this console.</div>
   <div id="sections"></div>
-  <div class="band" id="b-cases">Case drill-down</div>
-  <h2>Case list</h2>
-  <div class="cov-note">Every synced case in the current view — honours every filter above. F1/F3/F4 rows link to the CSWeb <b>View case</b> (the full question-by-question responses; CSWeb login required). F2 is self-administered outside CSWeb, so its rows have no link. QN is shown exactly as stored. <b>Export CSV</b> downloads the current view (every metadata column, including ones this table hides). The <b>Responses data room</b> holds the full answer spreadsheets — one wide CSV per instrument plus roster CSVs, and the labeled SPSS/Stata/R extracts (same login as this page).</div>
+  <h2 class="band" id="b-cases">Case drill-down</h2>
+  <p class="universe">One row per synced case in the current view. This is record-level operational data, not weighted survey estimates.</p>
+  <h3>Case list</h3>
+  <div class="cov-note">Every synced case in the current view — honours every filter above. Every row opens its <b>full question-by-question detail on this console</b>, on the same login as this page — no second sign-in, for any instrument. F1/F3/F4 also carry a quieter <b>CSWeb</b> link, because CSWeb is still where a case is edited; this viewer is read-only. Coded answers show the stored code with its codebook label alongside, so this page always agrees with the CSV/SPSS/Stata/R exports. QN is shown exactly as stored. <b>Export CSV</b> downloads the current view (every metadata column, including ones this table hides). The <b>Responses data room</b> holds the full answer spreadsheets — one wide CSV per instrument plus roster CSVs, and the labeled SPSS/Stata/R extracts (same login as this page).</div>
   <div class="clbar"><input type="search" id="clSearch" placeholder="Search QN, facility, enumerator, login&hellip;" /><button class="reset" id="clExport" type="button">Export CSV</button><a class="dlink" href="/docs/data/" target="_blank" rel="noopener">Responses data room &#8599;</a></div>
   <div class="cov-sum" id="clSum"></div>
   <div id="caselist"></div>
+  <p class="cl-hint" id="clHint">The list scrolls within this panel and reflects every filter above. Use Download CSV for the full set.</p>
 __DOWNLOADS__
 </main>
 <footer>Generated <span id="gen"></span> · source: F1/F3/F4 breakout DBs via <code>csweb_reports</code> + F2 <code>csweb_f2</code> mirror · see also the <a href="/docs/map.html" style="color:#006b3f">Map Report</a>.</footer>
@@ -552,8 +670,16 @@ const P = JSON.parse(document.getElementById('dash-data').textContent);
 document.getElementById('gen').textContent = P.generated;
 document.getElementById('fresh').textContent = P.generated;
 document.getElementById('todayLbl').textContent = P.today ? (P.today.slice(0,4)+'-'+P.today.slice(4,6)+'-'+P.today.slice(6,8)) : '—';
+// Reporting rule (audit F1/F2): a percentage on a tiny base is noise with a
+// decimal point, and at n=1 it describes one identifiable person. Below this
+// base the rate is emitted as null - which the renderers already show as an
+// em dash - so the underlying count stays visible while the rate is withheld.
+const MIN_BASE = 25;
 const NAMES = {f1:'Facility Head', f3:'Patient', f4:'Household', f2:'Healthcare Worker'};
-const PAL=['#006b3f','#e5b23b','#1e88e5','#8e44ad','#e64a19','#00897b','#c2185b','#5d4037','#546e7a','#7cb342','#3949ab','#f4511e'];
+// Audit F9: the old ramp leaned on hues that deuteranopes cannot separate. This is the
+// Okabe-Ito colour-blind-safe qualitative set, with the ASPSI green kept in first place so
+// the brand still leads. Categories are also always labelled, so hue is never the only cue.
+const PAL=['#006b3f','#E69F00','#56B4E9','#CC79A7','#0072B2','#D55E00','#009E73','#7F3C8D','#8C8C8C','#B26F16','#3B7EA1','#A15C5C'];
 // instrument prefixes, in section order (F1, F3, F4, F2) — derived once so every
 // per-instrument loop below (cards, KPIs, coverage) stays in sync with the sections.
 const INSTS = P.spec.map(s=>s.prefix);
@@ -685,18 +811,37 @@ function agg(rows,field){
 // visible instruments for the current Instrument filter
 function visInsts(inst){ return inst==='ALL' ? INSTS : [inst]; }
 // KPI strip — recomputes over every filtered, visible row
+function setCmp(id,txt){ const e=document.getElementById(id); if(e) e.textContent=txt; }
 function renderKpis(passOf){
-  let tot=0,comp=0,part=0,today=0,nogps=0,repl=0;
+  let tot=0,comp=0,part=0,today=0,nogps=0,repl=0,gpsElig=0,last7=0;
   visInsts(instSel.value).forEach(k=>{
     (P.data[k]||[]).forEach(r=>{ if(!passOf(r))return;
       tot++; if(r.status==='Completed')comp++; else if(r.status==='Partial')part++;
       if(P.today && r.date===P.today)today++;
+      if(k!=='f2') gpsElig++;   // F2 is self-administered — it captures no GPS by design,
+                                // so counting it in the denominator would invent a problem
       if(r.gps==='0'||r.gps===0)nogps++;
       if(r.repl==='1')repl++;   // BREAKOFF 5/6/7 — sampled unit never interviewed, substitute drawn
+      const d=r.date;
+      if(P.today && d && /^\d{8}$/.test(d) && d!=='00000000'){
+        const age=daysBetween(d,P.today); if(age>=0&&age<7) last7++;
+      }
     });
   });
   kTotal.textContent=tot; kCompleted.textContent=comp; kPartial.textContent=part;
   kToday.textContent=today; kNogps.textContent=nogps; kRepl.textContent=repl;
+  // Audit F4: a bare count cannot answer "is this good?", which is the only question a
+  // KPI exists to answer. Each tile now carries a reference point. Every comparator that
+  // is a rate shows its base and obeys MIN_BASE, so none of them can print a confident
+  // percentage on a base too small to carry one.
+  const rate=(n,d,noun)=>d>=MIN_BASE ? (Math.round(100*n/d)+'% of '+d+(noun?' '+noun:''))
+                                     : ('base too small (n='+d+')');
+  setCmp('cTotal', last7+' in the last 7 days');
+  setCmp('cCompleted', rate(comp,tot,'cases'));
+  setCmp('cPartial', rate(part,tot,'cases'));
+  setCmp('cToday', 'vs '+(Math.round(10*last7/7)/10)+'/day over 7 days');
+  setCmp('cRepl', rate(repl,tot,'cases'));
+  setCmp('cNogps', rate(nogps,gpsElig,'GPS-eligible'));
 }
 // submissions-over-time — daily + cumulative across filtered, visible rows
 function renderTrend(passOf){
@@ -714,13 +859,23 @@ function renderTrend(passOf){
   const labels=keys.map(d=>d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8));
   const daily=keys.map(d=>day.get(d)); let run=0; const cum=daily.map(n=>run+=n);
   if(!keys.length){const ctx=cv.getContext('2d');ctx.clearRect(0,0,cv.width,cv.height);return;}
+  // Reporting rule (audit F1/F2): a percentage on a tiny base is noise with a
+  // decimal point, and at n=1 it describes one identifiable person. Below this
+  // base we emit null, which every renderer already shows as an em dash.
+  const roll7=daily.map((_,i)=>{const w=daily.slice(Math.max(0,i-6),i+1);
+    return Math.round(10*w.reduce((a,b)=>a+(b||0),0)/w.length)/10;});
   charts.trend=new Chart(cv,{data:{labels,datasets:[
       {type:'bar',label:'New per day',data:daily,backgroundColor:'#e5b23b',order:2,yAxisID:'y'},
-      {type:'line',label:'Cumulative',data:cum,borderColor:'#006b3f',backgroundColor:'#006b3f',tension:.25,pointRadius:2,borderWidth:2,order:1,yAxisID:'y2'}]},
+      // Audit F3: the cumulative series lived on a second y-axis, so its slope was
+      // an artefact of scaling AND it only ever rose - the chart read as growth on
+      // days when nothing arrived. Replaced with a 7-day mean on the SAME axis,
+      // which is comparable to the bars and can fall.
+      {type:'line',label:'7-day average',data:roll7,borderColor:'#006b3f',backgroundColor:'#006b3f',tension:.25,pointRadius:0,borderWidth:2,order:1,yAxisID:'y'}]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}}},
       scales:{y:{position:'left',beginAtZero:true,ticks:{precision:0},title:{display:true,text:'new/day'}},
-              y2:{position:'right',beginAtZero:true,grid:{drawOnChartArea:false},ticks:{precision:0},title:{display:true,text:'cumulative'}},
+              // (no second axis - audit F3 removed the cumulative series that used it;
+              //  leaving the scale declared risks it reappearing on a future edit)
               x:{ticks:{font:{size:10},maxRotation:60,minRotation:0}}}}});
 }
 // --- Phase 2: coverage vs. target ---
@@ -734,7 +889,10 @@ const covUser=new Map();   // 'inst|region' / 'inst|region|province' -> explicit
 const covSearch={};        // inst -> facility search string
 let covFocus=null;         // instrument whose search box must regain focus after a re-render
 function esc(s){const d=document.createElement('div'); d.textContent=(s==null?'':s); return d.innerHTML;}
-function covColor(pct){ return pct>=80?'#006b3f':(pct>=40?'#e5b23b':'#d32f2f'); }
+// Audit F9: green/amber/red is the classic red-green trap. Vermillion replaces the red -
+// it separates from green for the ~8% of men with red-green deficiency. The percentage is
+// printed beside every bar, so the number, not the hue, carries the meaning.
+function covColor(pct){ return pct>=80?'#006b3f':(pct>=40?'#E69F00':'#D55E00'); }
 // plan.provisional is a bool (whole plan) OR an object keyed by instrument — F1 can be real
 // (facility-derived denominator) while F3/F4 stay provisional. Resolve PER instrument so a
 // real F1 is never tarred with a placeholder warning, and a placeholder is never let through.
@@ -749,6 +907,14 @@ function renderCoverage(pass){
   const visible=visInsts(instSel.value).filter(k=>T[k]&&Object.keys(T[k]).length);
   if(!visible.length) return;                         // no targets → section hides (graceful)
   const h=document.createElement('h2'); h.textContent='Coverage vs. target'; cov.appendChild(h);
+  // Audit F6: this panel ignores the enumerator filter on purpose. Explaining that only in
+  // the page's general copy means a reader who filters to one person sees these numbers
+  // not move and concludes the panel is broken. Say it here, and only when it applies.
+  if(enumSel.value!=='ALL'){
+    const b=document.createElement('p'); b.className='scopebadge';
+    b.textContent='Not filtered by enumerator. The plan assigns facilities to places, not to people, so these figures cover every enumerator working these facilities.';
+    cov.appendChild(b);
+  }
   // Provenance FIRST. A coverage % divided by a placeholder plan renders identically to a
   // real one; this banner is the only thing standing between a fixture and a DOH briefing.
   const pl=P.plan||{};
@@ -788,14 +954,17 @@ function renderCoverage(pass){
       const t=tgt[code], exp=+t.target||0, landed=comp[code]||0;
       return {code, name:t.name||('(code '+code+')'), region:t.region||'(region TBD)',
               area:t.province||provByCode[code]||'(area TBD)', exp, landed,
-              pct: exp>0?Math.round(100*landed/exp):null, short: Math.max(0,exp-landed)};
+              pct: exp>=MIN_BASE?Math.round(100*landed/exp):null, base: exp, short: Math.max(0,exp-landed)};
     });
     const provAll=new Set(facs.map(f=>f.area)), provAct=new Set(facs.filter(f=>f.landed>0).map(f=>f.area));
     const sumExp=facs.reduce((s,r)=>s+r.exp,0), sumLanded=facs.reduce((s,r)=>s+r.landed,0);
-    const opct=sumExp>0?Math.round(100*sumLanded/sumExp):0;
+    const opct=sumExp>=MIN_BASE?Math.round(100*sumLanded/sumExp):null;
     const title=document.createElement('div'); title.className='cov-inst'; title.textContent=k.toUpperCase()+' · '+NAMES[k]; cov.appendChild(title);
     const sum=document.createElement('div'); sum.className='cov-sum';
-    sum.innerHTML='<b>'+sumLanded+'</b> / '+sumExp+' completed ('+opct+'%) across '+facs.length+' facilit'+(facs.length===1?'y':'ies')
+    // opct is null whenever the plan is below MIN_BASE. Interpolating it produced a
+    // literal "(null%)" on the page; say what the suppression means instead.
+    const opctTxt=(opct==null)?'rate withheld \u2014 plan under '+MIN_BASE:opct+'%';
+    sum.innerHTML='<b>'+sumLanded+'</b> / '+sumExp+' completed ('+opctTxt+') across '+facs.length+' facilit'+(facs.length===1?'y':'ies')
       +(provAll.size>1?' in '+provAll.size+' provinces (<b>'+provAct.size+'</b> started)':'')
       +(untarget?' · <b>'+untarget+'</b> completed at facilities not in the plan':'');
     cov.appendChild(sum);
@@ -816,7 +985,7 @@ function renderCoverage(pass){
       let V=R.provs.get(f.area); if(!V){V={name:f.area,rows:[],exp:0,landed:0}; R.provs.set(f.area,V);}
       V.rows.push(f); V.exp+=f.exp; V.landed+=f.landed; R.exp+=f.exp; R.landed+=f.landed; R.fac++;
     });
-    const fin=o=>{o.pct=o.exp>0?Math.round(100*o.landed/o.exp):null; o.short=Math.max(0,o.exp-o.landed); return o;};
+    const fin=o=>{o.pct=o.exp>=MIN_BASE?Math.round(100*o.landed/o.exp):null; o.base=o.exp; o.short=Math.max(0,o.exp-o.landed); return o;};
     const st=covSort[k]||{col:'pct',dir:-1};
     const val=(o,c)=> (c==='name') ? (o.name||'').toLowerCase()
                     : (c==='area') ? ((o.area!==undefined?o.area:o.name)||'').toLowerCase()
@@ -943,7 +1112,7 @@ function renderProductivity(pass){
     // hard area legitimately racks up replacements, so only the proportion is comparable. Same
     // small-denominator discipline as cases/day — a share over <5 cases is noise, so it is not
     // flagged (2 of 3 replaced = 67% would otherwise outrank every real outlier).
-    const replPct = o.cases>0 ? Math.round(100*o.repl/o.cases) : null;
+    const replPct = o.cases>=MIN_BASE ? Math.round(100*o.repl/o.cases) : null;
     return {key:o.key, name, login:o.login, nameSplit, nameList, sup,
             cases:o.cases, completed:o.completed, partial:o.partial,
             repl:o.repl, replPct, replHot: (o.cases>=5 && replPct>=30), days,
@@ -1057,7 +1226,7 @@ function renderQuality(pass){
   if(!qOpen) return;
   const mk=(headCols,rows,rowHtml)=>{
     const t=document.createElement('table'); t.className='covtbl';
-    t.innerHTML='<tr>'+headCols.map(c=>'<th>'+c+'</th>').join('')+'</tr>'
+    t.innerHTML='<tr>'+headCols.map(c=>'<th scope="col">'+c+'</th>').join('')+'</tr>'
       +rows.slice(0,QMAX).map(rowHtml).join('');
     el.appendChild(t);
     if(rows.length>QMAX){ const m=document.createElement('div'); m.className='qmore';
@@ -1089,11 +1258,28 @@ function qpoll(){
 }
 qpoll(); setInterval(qpoll,20000);
 // --- Case list (drill-down to specific cases, 2026-07-17) ---
-// One row per synced case in the current view. F1/F3/F4 rows deep-link to the CSWeb
-// Sync Report (?dict=<DICT>&case=<QN> — on-box patch #7 auto-opens the View case
-// modal), so the FULL responses stay behind the CSWeb login and never enter this
-// unauthenticated page. F2 has no CSWeb dictionary, so its rows carry no link.
+// One row per synced case in the current view. Every row can now reach its full
+// detail, each in the app that owns it:
+//   F1/F3/F4 → the CSWeb Sync Report (?dict=<DICT>&case=<QN> — on-box patch #7
+//              auto-opens the View case modal)
+//   F2       → the F2 Admin Portal's Data tab, filtered to that submission
+// In both cases the answers themselves stay behind that app's own login and never
+// enter this page's payload.
 const DICT={f1:'FACILITYHEADSURVEY_DICT',f3:'PATIENTSURVEY_DICT',f4:'HOUSEHOLDSURVEY_DICT'};
+// F2 lives in its own app (uhc-hcw.asiansocial.org). Its admin SPA routes
+// /admin/data/responses/<submission_id> to the single-response detail view — the
+// router's exact-match chain ends in a regex fallback that pulls the id straight
+// out of location.pathname, so this resolves on a cold load, and _redirects already
+// serves index.html for it. Same URL the portal's own UI links to. Separate sign-in
+// from this console.
+const F2_ADMIN='https://uhc-hcw.asiansocial.org/admin';
+// The F2 portal's login screen navigates to a hardcoded /admin/data and discards the
+// route you asked for, so signing in there landed you on its list instead of the case
+// (Carl, 2026-07-30). The console now renders F2 detail itself from /docs/f2/<id>.json,
+// so an F2 case opens on the SAME single login as a CSWeb case. The portal URL is kept
+// as the deep-link-out for anyone who wants the owning app.
+function f2DetailUrl(r){ return (r && r.sub) ? '/docs/f2-case.html?id='+encodeURIComponent(r.sub) : ''; }
+function f2PortalUrl(r){ return (r && r.sub) ? F2_ADMIN+'/data/responses/'+encodeURIComponent(r.sub) : ''; }
 const CL_CAP=400;   // render cap — the summary line says when it bites
 let caseSort={col:'date',dir:-1};
 function areaOf(k,r){ return k==='f1' ? (r.facility||'(unlabeled)') : (r.province||r.region||'—'); }
@@ -1131,7 +1317,13 @@ const CSV_COLS=[
   ['supervisor',o=>{const s=o.r.supervisor; return (s&&s!=='(unassigned)')?s:'';}],
   ['replacement',o=>o.repl?'1':'0'],
   ['gps_fix',o=>o.r.gps===undefined?'':(o.r.gps==='0'?'0':'1')],
-  ['facility_code9',o=>o.r.code9||'']];
+  ['facility_code9',o=>o.r.code9||''],
+  // The export is what people reconcile off-platform, so it carries the same
+  // full-detail target the table links to - resolved, not reassembled by hand.
+  ['f2_submission_id',o=>o.r.sub||''],
+  ['full_detail_url',o=>(DICT[o.k]&&o.qn)
+      ? '/docs/case.html?inst='+o.k+'&qn='+encodeURIComponent(o.qn)
+      : (o.k==='f2'?f2DetailUrl(o.r):'')]];
 function csvCell(v){ v=String(v==null?'':v); return /[",\n\r]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v; }
 function exportCaseCsv(){
   if(!lastPass) return;
@@ -1170,9 +1362,16 @@ function renderCaseList(pass){
   tbl.appendChild(thead);
   const fd=d=>(d&&/^\d{8}$/.test(d)&&d!=='00000000')?d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8):'—';
   rows.forEach(r=>{ const tr=document.createElement('tr');
+    const f2url=(r.k==='f2')?f2DetailUrl(r.r):'';
     const link=(DICT[r.k]&&r.qn)
-      ? '<a class="rlink" target="_blank" rel="noopener" href="/csweb/sync-report?dict='+DICT[r.k]+'&case='+encodeURIComponent(r.qn)+'">Responses ↗</a>'
-      : '<span class="mix" title="self-administered PWA — outside CSWeb">—</span>';
+      // Console viewer first — same single sign-in as this page, matching F2.
+      // CSWeb stays as a second, quieter link because it is still where a case is
+      // EDITED; this viewer is read-only.
+      ? '<a class="rlink" target="_blank" rel="noopener" title="Opens this case in full detail on this console — no second sign-in" href="/docs/case.html?inst='+r.k+'&qn='+encodeURIComponent(r.qn)+'">Responses ↗</a>'
+        + '<a class="rlink2" target="_blank" rel="noopener" title="Open in CSWeb — the editing surface; needs a CSWeb login" href="/csweb/sync-report?dict='+DICT[r.k]+'&case='+encodeURIComponent(r.qn)+'">CSWeb</a>'
+      : f2url
+      ? '<a class="rlink" target="_blank" rel="noopener" title="Opens this response in full detail on this console — no second sign-in" href="'+f2url+'">Responses ↗</a>'
+      : '<span class="mix" title="no full-detail view — this F2 row predates submission-id tracking">—</span>';
     tr.innerHTML='<td><span class="instchip">'+r.k.toUpperCase()+'</span></td>'
       +'<td class="mono">'+esc(r.qn||'—')+'</td>'
       +'<td>'+esc(r.area)+'</td>'
@@ -1219,7 +1418,9 @@ function render(){
   // INSTS (not a hardcoded f1/f3/f4 list) so F2 keeps its own card — the productivity
   // panel above still skips F2 internally, since it has no enumerator.
   INSTS.forEach(k=>{
-    const rows=(P.data[k]||[]).filter(pass);
+    // pass() takes optional ignore-flags, so it must NEVER be handed to filter()
+    // directly - filter() would supply (index, array) as those flags.
+    const rows=(P.data[k]||[]).filter(r=>pass(r));
     cardNum[k].textContent=rows.length;
     const card=cardNum[k].closest('.card');
     card.style.display=(inst==='ALL'||inst===k)?'':'none';
@@ -1229,7 +1430,7 @@ function render(){
     const show=(inst==='ALL'||inst===s.prefix);
     s._el.style.display=show?'':'none';
     if(!show) return;
-    const rows=(P.data[s.prefix]||[]).filter(pass);
+    const rows=(P.data[s.prefix]||[]).filter(r=>pass(r));   // see note above
     s._cnt.textContent='· '+s.charts.length+' chart'+(s.charts.length===1?'':'s')+' · '+rows.length+' case'+(rows.length===1?'':'s')+' in view';
     s._car.textContent=s._open?'▾':'▸';
     s._body.style.display=s._open?'':'none';
@@ -1255,6 +1456,21 @@ document.getElementById('fReset').onclick=()=>{instSel.value='ALL';regSel.value=
 document.getElementById('clSearch').oninput=()=>{ if(lastPass) renderCaseList(lastPass); };
 document.getElementById('clExport').onclick=exportCaseCsv;
 render();
+
+// The assignment plan lives outside the page now (see build()). It is fetched once,
+// from a URL whose hash changes only when the plan does, so a 2-minute refresh costs
+// nothing. Coverage is the only panel that needs it and already hides itself when the
+// plan is absent, so nothing above blocks on this request.
+(function loadPlan(){
+  if(!P.targetsUrl) return;
+  const cov=document.getElementById('coverage');
+  if(cov) cov.innerHTML='<p class="cov-note" id="planWait">Loading the assignment plan\u2026</p>';
+  fetch(P.targetsUrl,{cache:'force-cache'})
+    .then(r=>r.ok?r.json():Promise.reject(r.status))
+    .then(j=>{ P.targets=j||{}; render(); })
+    .catch(()=>{ const w=document.getElementById('planWait');
+      if(w) w.textContent='Coverage vs. plan is unavailable \u2014 the assignment plan did not load. Every other panel on this page is unaffected.'; });
+})();
 </script>
 <!-- ===== sync-activity notification bell (2026-07-15) — polls /docs/sync-feed.json ===== -->
 <style>
@@ -1749,6 +1965,13 @@ def build(data, targets=None, plan=None, errored=None, f2_api_ok=None):
                 if r.get("date", "").isdigit() and len(r["date"]) == 8 and r["date"] != "00000000"]
     f2meta = {"n": len(_f2), "last": max(_f2dates) if _f2dates else "", "err": "f2" in errored,
               "api": f2_api_ok}
+    # The assignment plan is 1,521 static facilities - 185 KB that does not change
+    # between 2-minute regenerations. Inline, it was 53% of the page. It now ships as
+    # its own cacheable file; the hash busts that cache only when the plan really
+    # changes. `targets` stays in the payload as an empty object so every consumer
+    # keeps its existing shape and its existing "no plan yet" fallback.
+    plan_blob = json.dumps(targets or {}, separators=(",", ":"))
+    plan_url = "/docs/plan.json?v=" + hashlib.md5(plan_blob.encode("utf-8")).hexdigest()[:10]
     payload_obj = {
         "data": data,
         "spec": spec,
@@ -1757,7 +1980,8 @@ def build(data, targets=None, plan=None, errored=None, f2_api_ok=None):
         "dateMin": date_min,
         "dateMax": date_max,
         "today": today,
-        "targets": targets or {},
+        "targets": {},            # externalised - fetched from targetsUrl, see above
+        "targetsUrl": plan_url,
         "f2meta": f2meta,
         "plan": plan or {},
         "actreg": activity_lib.public_view(),
@@ -1766,8 +1990,9 @@ def build(data, targets=None, plan=None, errored=None, f2_api_ok=None):
     # XSS-safe: JSON in a non-executable <script type="application/json">, HTML-escaped,
     # read back via JSON.parse(el.textContent). &,<,> can't break out of the tag.
     payload = html.escape(json.dumps(payload_obj), quote=False)
-    return (TEMPLATE.replace("__PAYLOAD__", payload).replace("__FAVICON__", FAVICON)
-            .replace("__DOWNLOADS__", downloads_html()))
+    out = (TEMPLATE.replace("__PAYLOAD__", payload).replace("__FAVICON__", FAVICON)
+           .replace("__DOWNLOADS__", downloads_html()))
+    return out, plan_blob
 
 
 DATA_MANIFEST = "/opt/app/lamp/www/docs/data/manifest.json"
@@ -1800,7 +2025,7 @@ def downloads_html():
     inst_meta = man.get("instruments") or {}
     spss_meta = spss.get("instruments") or {}
     gen = man.get("generated")
-    out = ['<div class="band" id="b-downloads">Downloads</div>']
+    out = ['<h2 class="band" id="b-downloads">Downloads</h2>']
     out.append('<div class="cov-note">Three independent ways to pull case data, so a broken sync path never '
                'blocks analysis. <b>CSPro sync</b>: download a .pff and double-click it &mdash; CSPro Data Viewer '
                'pulls a full <code>.csdb</code> (photos included) from the sync API. Run it in a <b>new folder</b> '
@@ -1901,11 +2126,17 @@ def main():
     data, errored = load_sample(a.sample) if a.sample else fetch_live()
     api_ok = None if a.sample else f2_api_health()
     targets, plan = load_targets(a.targets)
-    out_html = build(data, targets, plan, errored, api_ok)
+    out_html, plan_blob = build(data, targets, plan, errored, api_ok)
     with open(a.out, "w", encoding="utf-8") as f:
         f.write(out_html)
-    print("wrote %s (%d bytes); rows: f1=%d f3=%d f4=%d f2=%d%s"
-          % (a.out, len(out_html), len(data.get("f1", [])), len(data.get("f3", [])),
+    # Sidecar: written every run so it can never drift from the hash the page asks
+    # for, but byte-identical between runs, so the browser cache keeps working.
+    plan_path = os.path.join(os.path.dirname(a.out) or ".", "plan.json")
+    with open(plan_path, "w", encoding="utf-8") as f:
+        f.write(plan_blob)
+    print("wrote %s (%d bytes) + plan.json (%d bytes); rows: f1=%d f3=%d f4=%d f2=%d%s"
+          % (a.out, len(out_html), len(plan_blob),
+             len(data.get("f1", [])), len(data.get("f3", [])),
              len(data.get("f4", [])), len(data.get("f2", [])), " [SAMPLE]" if a.sample else ""))
 
 

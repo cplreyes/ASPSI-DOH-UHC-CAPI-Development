@@ -3171,31 +3171,31 @@
                     {
                       "labels": [
                         {
-                          "text": "Rural / Urban Health Unit Head",
+                          "text": "Rural Health Unit / Health Center Head",
                           "language": "EN"
                         },
                         {
-                          "text": "Rural / Urban Health Unit Head",
+                          "text": "Rural Health Unit / Health Center Head",
                           "language": "FIL"
                         },
                         {
-                          "text": "Namamayo sa Rural/Urban Health",
+                          "text": "Rural Health Unit / Health Center Head",
                           "language": "BCL"
                         },
                         {
-                          "text": "Rural / Urban Health Unit Head",
+                          "text": "Rural Health Unit / Health Center Head",
                           "language": "BIS"
                         },
                         {
-                          "text": "Rural / Urban Health Unit Head",
+                          "text": "Rural Health Unit / Health Center Head",
                           "language": "CEB"
                         },
                         {
-                          "text": "Rural / Urban Health Unit Head",
+                          "text": "Rural Health Unit / Health Center Head",
                           "language": "WAR"
                         },
                         {
-                          "text": "Rural / Urban Health Unit Head",
+                          "text": "Rural Health Unit / Health Center Head",
                           "language": "HIL"
                         }
                       ],
@@ -3574,10 +3574,119 @@
                           "value": "11"
                         }
                       ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Rural Health Physician",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Rural Health Physician",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Rural Health Physician",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Rural Health Physician",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Rural Health Physician",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Rural Health Physician",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Rural Health Physician",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "12"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (specify)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Iba pa (tukuyin)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Uban pa (I-specify)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Uban pa (Isulti)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Iban pa (ispecify)",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
+                        }
+                      ]
                     }
                   ]
                 }
               ]
+            },
+            {
+              "name": "Q2_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "2. What is your official designation at this health facility? \u2014 Other (specify) text",
+                  "language": "EN"
+                },
+                {
+                  "text": "2. What is your official designation at this health facility? \u2014 Other (specify) text",
+                  "language": "FIL"
+                },
+                {
+                  "text": "2. What is your official designation at this health facility? \u2014 Other (specify) text",
+                  "language": "BCL"
+                },
+                {
+                  "text": "2. What is your official designation at this health facility? \u2014 Other (specify) text",
+                  "language": "BIS"
+                },
+                {
+                  "text": "2. What is your official designation at this health facility? \u2014 Other (specify) text",
+                  "language": "CEB"
+                },
+                {
+                  "text": "2. What is your official designation at this health facility? \u2014 Other (specify) text",
+                  "language": "WAR"
+                },
+                {
+                  "text": "2. What is your official designation at this health facility? \u2014 Other (specify) text",
+                  "language": "HIL"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
             },
             {
               "name": "Q3_AGE",

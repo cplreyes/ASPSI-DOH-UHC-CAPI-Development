@@ -53,7 +53,7 @@ Item=FACILITY_GPS_READTIME
 Name=FORM003
 Label=A. Facility Head Profile
 Level=1
-Size=1154,390
+Size=1154,420
   
 Item=RESP_NAME
 Item=RESP_POSITION
@@ -61,6 +61,7 @@ Item=RESP_EMAIL
 Item=RESP_MOBILE
 Item=Q1_NAME
 Item=Q2_FACILITY_ROLE
+Item=Q2_OTHER_TXT
 Item=Q3_AGE
 Item=Q4_SEX
 Item=Q5_YEARS_AT_FACILITY
@@ -706,76 +707,89 @@ Text=2. What is your official designation at this health facility?
  
   
 [Field]
+Name=Q2_OTHER_TXT
+Position=760,207,1410,227
+Item=Q2_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=4
+  
+[Text]
+Position=50,210,587,226
+Text=2. What is your official designation at this health facility? — Other (specify) text
+ 
+  
+[Field]
 Name=Q3_AGE
-Position=760,207,789,227
+Position=760,237,789,257
 Item=Q3_AGE,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=4
   
 [Text]
-Position=50,210,391,226
+Position=50,240,391,256
 Text=3. How old are you (in years), as of your last birthday?
  
   
 [Field]
 Name=Q4_SEX
-Position=760,237,775,257
+Position=760,267,775,287
 Item=Q4_SEX,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=4
   
 [Text]
-Position=50,240,287,256
+Position=50,270,287,286
 Text=4. What is your sex assigned at birth?
  
   
 [Field]
 Name=Q5_YEARS_AT_FACILITY
-Position=760,267,789,287
+Position=760,297,789,317
 Item=Q5_YEARS_AT_FACILITY,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=4
   
 [Text]
-Position=50,270,736,286
-Text=5. In your current position, how many months/years have you worked at this health facility? Number of Years
+Position=50,300,146,316
+Text=Number of Years
  
   
 [Field]
 Name=Q5_MONTHS_AT_FACILITY
-Position=760,297,789,317
+Position=760,327,789,347
 Item=Q5_MONTHS_AT_FACILITY,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=4
   
 [Text]
-Position=50,300,746,316
-Text=5. In your current position, how many months/years have you worked at this health facility? Number of Months
+Position=50,330,152,346
+Text=Number of Months
  
   
   
 [Field]
 Name=Q6_YEARS_HEALTH
-Position=760,327,789,347
+Position=760,357,789,377
 Item=Q6_YEARS_HEALTH,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=4
   
 [Text]
-Position=50,330,563,346
-Text=6. How many years have you worked in health-related position? Number of Years
+Position=50,360,146,376
+Text=Number of Years
  
   
 [Field]
 Name=Q6_MONTHS_HEALTH
-Position=760,357,789,377
+Position=760,387,789,407
 Item=Q6_MONTHS_HEALTH,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=4
   
 [Text]
-Position=50,360,573,376
-Text=6. How many years have you worked in health-related position? Number of Months
+Position=50,390,152,406
+Text=Number of Months
  
 [Block]
 Name=DG_A_FACILITY_HEAD_PROFILE_FORM_0

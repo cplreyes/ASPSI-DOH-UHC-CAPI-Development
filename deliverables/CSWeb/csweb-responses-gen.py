@@ -259,6 +259,14 @@ PAGE_TOP = """<!doctype html>
  .files th{background:#eef3f0;color:var(--gd);font-size:12px}
  .files td.n{text-align:right}.files a{color:var(--g);font-weight:600;text-decoration:none}.files a:hover{text-decoration:underline}
  .prevwrap{overflow:auto;max-height:420px;border:1px solid var(--line);border-radius:12px;background:var(--card);margin:8px 0 4px}
+ /* On a phone the file table's name+size+format columns do not fit, and it widened
+    the whole document instead of scrolling. (.prev was already safe inside
+    .prevwrap.) display:block makes the table its own scroller; display:table on
+    the sections keeps the header aligned with the body. */
+ @media(max-width:620px){
+   table.files{display:block;overflow-x:auto}
+   table.files>tbody,table.files>thead{display:table;width:100%;min-width:460px}
+ }
  table.prev{border-collapse:collapse;font:12px ui-monospace,Consolas,monospace;white-space:nowrap}
  .prev th,.prev td{padding:4px 8px;border:1px solid #eef3f0}
  .prev th{background:#eef3f0;color:var(--gd);position:sticky;top:0;z-index:1}

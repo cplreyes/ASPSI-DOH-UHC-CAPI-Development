@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { useAdminAuth, type AdminLoginResponse } from './lib/auth-context';
 import { adminFetch, type ApiError } from './lib/api-client';
 import { useRouter } from './lib/pages-router';
+import { takeReturnTo } from './return-to';
 
 export interface LoginProps {
   apiBaseUrl: string;
@@ -34,7 +35,7 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
   // If already authenticated (e.g., user navigated to /admin/login by
   // accident with an active session), bounce to the operations dashboard.
   if (isAuthenticated) {
-    navigate('/admin/data');
+    navigate(takeReturnTo());
   }
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -62,7 +63,7 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
     if (r.data.password_must_change) {
       navigate('/admin/me/change-password');
     } else {
-      navigate('/admin/data');
+      navigate(takeReturnTo());
     }
   };
 

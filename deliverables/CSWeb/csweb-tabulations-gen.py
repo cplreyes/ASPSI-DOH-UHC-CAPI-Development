@@ -141,43 +141,85 @@ def build_tables(a):
             cells = T.tabulate(df, r["col"], vlab.get(r["col"], {}),
                                breakdown_col=bdcol,
                                breakdown_vlabels=vlab.get(bdcol, {}) if bdcol else None)
-            base.update(kind="freq", cells=cells, n=len(df), status="preview",
-                        note=bnote or "")
+            # A table is a preview ONLY when it actually has cells — an empty
+            # phase frame must not advertise 118 phantom previews (review find #1).
+            if cells:
+                base.update(kind="freq", cells=cells, n=len(df), status="preview",
+                            note=bnote or "")
+            else:
+                base.update(status="partial", note="no pretest responses yet")
             tables.append(base)
         elif klass == "multi":
             if not r["col"] or r["col"] not in df.columns:
                 base["status"] = "partial"; tables.append(base); continue
             cells = T.multi_tally(df, r["col"], vlab.get(r["col"], {}))
             n_resp = next((c["n"] for c in cells if c.get("meta") == "respondents"), 0)
-            base.update(kind="multi", cells=cells, n=n_resp, status="preview",
-                        note="multiple-response — percentages are of respondents and sum > 100")
+            # multi_tally returns a truthy meta-only list when NO respondent
+            # answered (e.g. a skip-gated checkbox nobody reached) — that is not
+            # a preview: no sheet, no View button, honest "planned" status.
+            if n_resp > 0:
+                base.update(kind="multi", cells=cells, n=n_resp, status="preview",
+                            note="multiple-response — percentages are of respondents and sum > 100")
+            else:
+                base.update(status="partial", note="no pretest responses yet")
             tables.append(base)
     return tables, len(plan)
 
 
 def build_f2(a, tables):
-    """Fill the curated F2 previews (Annex 4) in place; return the F2 table list."""
+    """Fill every Annex-4 (F2) preview in place; return the F2 table list.
+
+    Plan-driven: each table takes the items its plan row names, so adding a row
+    to tabulation-plan.csv is enough to get a preview - there is no second list
+    here to keep in sync.
+    """
     f2csv = os.path.join(a.data_dir, "f2_responses.csv")
     f2lab = json.load(open(os.path.join(a.meta_dir, "f2-item-labels.json"), encoding="utf-8"))
     rows = list(csv.DictReader(open(f2csv, encoding="utf-8-sig")))
-    df, _ = T.explode_f2(rows, f2lab)
-    by_no = {t["no"]: t for t in tables if t["inst"] == "f2"}
-    for item, no, fallback in T.F2_PREVIEWS:
-        t = by_no.get(no)
-        if t is None:                                  # plan row absent — synthesize
-            t = {"no": no, "inst": "f2", "annex": "4", "title": fallback,
-                 "breakdown": "", "universe": "", "kind": "f2", "cells": [], "n": 0}
-            tables.append(t)
-        if item in df.columns:
-            cells = T.tabulate(df, item)               # F2 answers are English text
-            t.update(kind="f2", cells=cells, n=len(df), status="preview",
-                     note="all mirrored F2 submissions (no phase split)")
+    df, labels = T.explode_f2(rows, f2lab)
+    present = set(df.columns)
+
+    plan = {}
+    with open(a.plan, encoding="utf-8-sig", newline="") as fh:
+        for r in csv.DictReader(fh):
+            if (r.get("instrument") or "").strip().upper() == "F2":
+                plan[(r.get("no") or "").strip()] = r
+
+    note_all = "all mirrored F2 submissions (no phase split)"
+    for t in [x for x in tables if x["inst"] == "f2"]:
+        prow = plan.get(str(t["no"]).strip(), {})
+        sv = (prow.get("source_variables") or "").strip()
+        wanted = T.f2_items_from_plan(sv)
+        items = [i for i in wanted if i in present]
+
+        if not items:
+            if not sv:
+                t.update(status="gap", cells=[], n=0,
+                         note="no source variable defined for this table yet")
+            else:
+                miss = ", ".join(wanted[:6]) if wanted else sv[:60]
+                t.update(status="partial", cells=[], n=0,
+                         note="F2 items not in the mirrored data yet: %s" % miss)
+            continue
+
+        if len(items) == 1 and T.f2_is_multi(df, items[0]):
+            cells = T.f2_multi_tally(df, items[0])
+            kind, n = "multi", (cells[-1]["n"] if cells else 0)
+        elif len(items) == 1:
+            cells = T.f2_freq(df, items[0])
+            kind, n = "f2", sum(c["n"] for c in cells)
         else:
-            t.update(status="partial", note="F2 item %s not present in current data" % item)
+            cells = T.f2_battery(df, items, labels)
+            kind, n = "f2", len(df)
+
+        if cells:
+            extra = "" if len(items) == 1 else " (%d items)" % len(items)
+            t.update(kind=kind, cells=cells, n=n, status="preview",
+                     note=note_all + extra)
+        else:
+            t.update(status="partial", cells=[], n=0,
+                     note="F2 item %s has no answers yet" % ", ".join(items[:4]))
     return [t for t in tables if t["inst"] == "f2"]
-
-
-# ------------------------------------------------------------- packaging -----
 
 def _hdr(kind):
     if kind == "multi":
@@ -317,6 +359,9 @@ _PAGE_CSS = """
 .tprev .pn{font-size:11px;color:var(--ink-3,#5c6b63);margin:6px 0 0}
 .tprev .perr{font-size:12.5px;color:#a16207;background:#fdf7e8;border:1px solid #f0dcae;border-radius:8px;padding:8px 12px}
 .trow.hide,.tb-annex.hide{display:none}
+/* a filtered-out row must take its companion preview panel with it (review #3):
+   the panel is always the row's immediate next sibling; higher specificity than .tprev.open */
+.trow.hide+.tprev{display:none}
 @media (max-width:700px){.tprev{padding-left:18px}.trow{flex-wrap:wrap}}
 """
 
@@ -452,10 +497,13 @@ def build_page(tables, planned, files, status_counts, gen_ts, path):
             key = e((t["no"] + " " + t["title"]).lower(), quote=True)
             view = ('<button class="tb-view" data-no="%s">View preview</button>'
                     % e(t["no"], quote=True)) if t["status"] == "preview" else ""
+            # gap rows read "planned · no source item", so the Planned chip must
+            # find them too — group them under partial for filtering (review #2)
+            st_attr = "partial" if t["status"] == "gap" else t["status"]
             body.append('<div class="trow" data-k="%s" data-st="%s">'
                         '<span class="no">%s</span><span class="tt">%s</span>'
                         '<span class="st %s">%s</span>%s</div>'
-                        % (key, e(t["status"], quote=True), e(t["no"]), e(t["title"]),
+                        % (key, e(st_attr, quote=True), e(t["no"]), e(t["title"]),
                            cls, label, view))
             if t["status"] == "preview":
                 body.append('<div class="tprev" id="tp-%s"></div>' % _pid(t["no"]))

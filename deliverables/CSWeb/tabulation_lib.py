@@ -306,3 +306,113 @@ def read_headers(csv_path):
     """Set of lowercase column names for a responses CSV (utf-8-sig)."""
     with open(csv_path, encoding="utf-8-sig", newline="") as f:
         return set(c.strip().lower() for c in next(csv.reader(f)))
+
+
+# ------------------------------------------------------------ F2 coverage ----
+
+F2_JOIN = "; "          # explode_f2 flattens multi-selects with this separator
+
+
+def f2_items_from_plan(source_variables):
+    """Item ids named by a plan row, expanding 'Q98-Q107' style ranges.
+
+    Returns ids in plan order without duplicates. Non-item tokens (facility_id,
+    prose) are ignored - the caller intersects with what the data actually has.
+    """
+    out, seen = [], set()
+    for tok in re.split(r"[,;\s]+", (source_variables or "").strip()):
+        tok = tok.strip()
+        if not tok:
+            continue
+        rng = re.fullmatch(r"[Qq](\d+)\s*-\s*[Qq](\d+)", tok)
+        if rng:
+            lo, hi = int(rng.group(1)), int(rng.group(2))
+            if hi < lo or hi - lo > 80:      # guard against a malformed range
+                continue
+            cand = ["Q%d" % n for n in range(lo, hi + 1)]
+        elif re.fullmatch(r"[Qq]\d+[A-Za-z0-9_]*", tok):
+            cand = ["Q" + tok[1:]]
+        else:
+            continue
+        for c in cand:
+            if c not in seen:
+                seen.add(c)
+                out.append(c)
+    return out
+
+
+def f2_is_multi(df, col):
+    """True when this exploded column holds joined multi-select answers."""
+    if col not in df.columns:
+        return False
+    for cell in df[col].tolist():
+        if isinstance(cell, str) and F2_JOIN in cell:
+            return True
+    return False
+
+
+def f2_multi_tally(df, col):
+    """Multiple-response tally of an exploded F2 multi-select column.
+
+    Same shape as multi_tally() so the writers need no special case: one row per
+    option with n = respondents selecting it and pct_resp = % of respondents,
+    then a trailing {'meta': 'respondents'} row. Splits on the explode separator
+    rather than fixed-width codes, which is what F2 actually stores.
+    """
+    if col not in df.columns:
+        return []
+    counts, n_resp = {}, 0
+    for cell in df[col].tolist():
+        if cell is None:
+            continue
+        opts = {o.strip() for o in str(cell).split(F2_JOIN) if o and o.strip()}
+        if not opts:
+            continue
+        n_resp += 1
+        for o in opts:                       # each option once per respondent
+            counts[o] = counts.get(o, 0) + 1
+    rows = [{"category": o, "code": o, "n": counts[o],
+             "pct_resp": round(counts[o] / n_resp * 100, 1) if n_resp else 0.0}
+            for o in sorted(counts, key=lambda o: (-counts[o], o))]
+    rows.append({"meta": "respondents", "n": n_resp})
+    return rows
+
+
+def f2_battery(df, items, labels=None):
+    """Several items in one table: grouped rows, one group per item.
+
+    Reuses the grouped shape tabulate() emits for a breakdown, so existing
+    renderers display it without changes.
+    """
+    labels = labels or {}
+    out = []
+    for it in items:
+        if it not in df.columns:
+            continue
+        ser = df[it]
+        keep = (ser.notna() & (ser.astype(str).str.strip() != "")
+                & (ser.astype(str) != "nan"))
+        vals = ser[keep].tolist()
+        tot = len(vals)
+        if not tot:
+            continue
+        vc = {}
+        for v in vals:
+            vc[str(v)] = vc.get(str(v), 0) + 1
+        grp = str(labels.get(it, it))[:80]
+        for c in sorted(vc, key=lambda c: (-vc[c], c)):
+            out.append({"category": c, "group": grp, "n": vc[c],
+                        "pct": round(vc[c] / tot * 100, 1)})
+    return out
+
+
+def f2_freq(df, col):
+    """Frequency over the respondents who actually ANSWERED col.
+
+    Blank/NaN cells are non-answers, not a response category - see module note.
+    """
+    if col not in df.columns:
+        return []
+    ser = df[col]
+    keep = ser.notna() & (ser.astype(str).str.strip() != "") & (ser.astype(str) != "nan")
+    return tabulate(df[keep], col)

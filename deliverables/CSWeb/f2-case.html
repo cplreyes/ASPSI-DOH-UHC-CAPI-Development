@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>F2 case detail — UHC Survey Year 2</title>
+<!--
+  F2 response detail, served from the CAPI console so it needs only the console
+  login — the same single-sign-in behaviour as the CSWeb "View case" link.
+  Data comes from /docs/f2/<submission_id>.json, written on the box by
+  csweb-f2-cases-gen.py, so no database credential exists in this page.
+  Both this file and /docs/f2/ are gated at the DASHBOARD tier.
+-->
+<style>
+:root{--g:#046a38;--gd:#04331d;--gold:#e5b23b;--red:#d32f2f;--ink:#12171a;
+  --muted:#5a6a7a;--line:#d8dee7;--paper:#eef1f5;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:15px/1.55 system-ui,Segoe UI,Roboto,sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:22px 20px 60px}
+a{color:var(--g)}
+.back{display:inline-block;font-size:13px;font-weight:600;text-decoration:none;margin-bottom:14px}
+.back:hover{text-decoration:underline}
+h1{font-size:22px;margin:0 0 4px}
+.sub{color:var(--muted);font-size:13px;margin:0 0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;
+  padding:16px 18px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,32,64,.06)}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px 20px}
+.meta div{min-width:0}
+.k{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.v{font-weight:600;word-break:break-word}
+table{width:100%;border-collapse:collapse;font-size:14px}
+/* A three-column Q&A table does not fit a phone. Scroll it inside its own panel
+   rather than letting it widen the document — display:block makes the table the
+   scroll container, and display:table on the sections keeps column widths
+   computing so the header stays aligned with the body. */
+@media (max-width:620px){
+  .wrap{padding:16px 12px 48px}
+  table{display:block;overflow-x:auto}
+  thead,tbody{display:table;width:100%;min-width:520px}
+}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{position:sticky;top:0;background:#f4f6f9;font-size:11px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--muted);box-shadow:inset 0 -1px 0 var(--line)}
+td.code{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;color:var(--muted);white-space:nowrap}
+td.q{width:46%}
+td.a{font-weight:600}
+td.a.blank{font-weight:400;color:var(--muted)}
+tr.unlab td.q{color:var(--muted);font-style:italic}
+.tools{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
+/* Scope to the search box: an unscoped `.tools input` also stretched the
+   checkbox, which floated it away from its own label. */
+.tools input[type=search]{flex:1;min-width:200px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;font:inherit}
+.tools input[type=checkbox]{flex:none;margin:0}
+.tools label{font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.count{font-size:12.5px;color:var(--muted)}
+.err{background:#fdecea;border-left:4px solid var(--red);padding:12px 14px;border-radius:0 6px 6px 0}
+.note{color:var(--muted);font-size:12.5px;font-style:italic;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/docs/dashboard.html#b-cases">&larr; Back to the Sync Dashboard case list</a>
+  <div id="out"><p class="sub">Loading&hellip;</p></div>
+</div>
+<script>
+// Only ever fetch a well-formed submission id. This is a static page, so the id
+// becomes part of a URL path — anchoring the pattern keeps a crafted value from
+// walking out of /docs/f2/.
+var ID_RE = /^srv-[0-9a-fA-F-]{8,64}$/;
+var out = document.getElementById('out');
+function esc(s){ var d=document.createElement('div'); d.textContent=(s==null?'':s); return d.innerHTML; }
+function fail(msg, detail){
+  out.innerHTML = '<h1>F2 case detail</h1><div class="err"><b>'+esc(msg)+'</b>'
+    + (detail ? '<div class="note">'+esc(detail)+'</div>' : '') + '</div>';
+}
+var id = new URLSearchParams(location.search).get('id') || '';
+if (!ID_RE.test(id)) {
+  fail('No valid submission id in the link.',
+       'Open this page from the Sync Dashboard case list rather than by typing the address.');
+} else {
+  fetch('/docs/f2/' + encodeURIComponent(id) + '.json', {cache:'no-store'})
+    .then(function(r){
+      if (r.status === 404) throw new Error('notfound');
+      if (r.status === 401 || r.status === 403) throw new Error('auth');
+      if (!r.ok) throw new Error('http ' + r.status);
+      return r.json();
+    })
+    .then(render)
+    .catch(function(e){
+      if (e.message === 'notfound')
+        fail('This response has no detail file yet.',
+             'Detail files are rebuilt every 2 minutes; a submission that arrived seconds ago may not be there yet. Reload shortly.');
+      else if (e.message === 'auth')
+        fail('Your session expired.', 'Reload the page to sign in again.');
+      else fail('Could not load this response.', String(e.message || e));
+    });
+}
+function render(d){
+  var fac = d.facility || {};
+  var head = '<h1>F2 &middot; Healthcare Worker response</h1>'
+    + '<p class="sub">Questionnaire ' + esc(d.qn || '(none)') + ' &middot; '
+    + esc(fac.name || fac.id || 'facility unknown') + '</p>'
+    + '<div class="card"><div class="meta">'
+    + cell('Questionnaire no.', d.qn) + cell('Facility', fac.name || fac.id)
+    + cell('Province', fac.province) + cell('Region', fac.region)
+    + cell('Disposition', d.status === 'refusal' ? 'Refusal' : 'Submitted')
+    + cell('Capture mode', d.source_path === 'paper_encoded' ? 'Paper-encoded' : 'Self-administered')
+    + cell('Submitted (Manila)', d.submitted) + cell('Answered', d.answered + ' of ' + d.answers.length)
+    + '</div></div>';
+  var rows = d.answers.map(function(a){
+    var blank = !a.value;
+    return '<tr class="' + (a.labelled ? '' : 'unlab') + '" data-hay="'
+      + esc(((a.code||'') + ' ' + (a.label||'') + ' ' + (a.value||'')).toLowerCase()) + '"'
+      + (blank ? ' data-blank="1"' : '') + '>'
+      + '<td class="code">' + esc(a.code) + '</td>'
+      + '<td class="q">' + esc(a.label) + '</td>'
+      + '<td class="a' + (blank ? ' blank' : '') + '">' + esc(blank ? '—' : a.value) + '</td></tr>';
+  }).join('');
+  out.innerHTML = head
+    + '<div class="card">'
+    + '<div class="tools"><input type="search" id="q" placeholder="Search question or answer…">'
+    + '<label><input type="checkbox" id="hide"> Hide unanswered</label>'
+    + '<span class="count" id="cnt"></span></div>'
+    + '<table><thead><tr><th>Item</th><th>Question</th><th>Answer</th></tr></thead>'
+    + '<tbody id="tb">' + rows + '</tbody></table>'
+    + '<p class="note">Answers are shown exactly as stored. Unlabelled items show their'
+    + ' field code — those are items not present in the label file.'
+    + ' Detail regenerated ' + esc(d.generated) + '.</p></div>';
+  var q = document.getElementById('q'), hide = document.getElementById('hide'),
+      cnt = document.getElementById('cnt'), tb = document.getElementById('tb');
+  function filter(){
+    var term = (q.value||'').trim().toLowerCase(), hideBlank = hide.checked, shown = 0;
+    Array.prototype.forEach.call(tb.rows, function(tr){
+      var ok = (!term || tr.getAttribute('data-hay').indexOf(term) >= 0)
+            && (!hideBlank || !tr.getAttribute('data-blank'));
+      tr.style.display = ok ? '' : 'none'; if (ok) shown++;
+    });
+    cnt.textContent = shown + ' of ' + tb.rows.length + ' items';
+  }
+  q.oninput = filter; hide.onchange = filter; filter();
+}
+function cell(k, v){
+  return '<div><div class="k">' + esc(k) + '</div><div class="v">' + esc(v || '—') + '</div></div>';
+}
+</script>
+</body></html>

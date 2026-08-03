@@ -752,6 +752,23 @@ questions:
             <p>Ano an imo opisyal nga designasyon hini nga pasilidad panlawas?</p>
           HIL: |
             <p>Ano ang imo opisyal nga katungdanan sa ini nga health facility?</p>
+  - name: FACILITYHEADSURVEY_DICT.Q2_OTHER_TXT
+    conditions:
+      - questionText:
+          EN: |
+            <p>2. What is your official designation at this health facility? — Other (specify) text</p>
+          FIL: |
+            <p>2. What is your official designation at this health facility? — Other (specify) text</p>
+          BCL: |
+            <p>2. What is your official designation at this health facility? — Other (specify) text</p>
+          BIS: |
+            <p>2. What is your official designation at this health facility? — Other (specify) text</p>
+          CEB: |
+            <p>2. What is your official designation at this health facility? — Other (specify) text</p>
+          WAR: |
+            <p>2. What is your official designation at this health facility? — Other (specify) text</p>
+          HIL: |
+            <p>2. What is your official designation at this health facility? — Other (specify) text</p>
   - name: FACILITYHEADSURVEY_DICT.Q3_AGE
     conditions:
       - questionText:

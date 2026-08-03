@@ -130,6 +130,19 @@ a:hover { color: var(--verde-700); text-decoration: underline; }
 .crumbs .sep { opacity: .45; }
 .crumbs .cur { color: var(--ink); font-weight: 600; }
 .tb-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+
+/* The topbar was one non-wrapping flex row at a fixed 58px, so on a phone its
+   right-hand group (segment control + lock pill + user/sign-out) ran past the
+   viewport and scrolled the WHOLE page sideways — measured 448px of content in a
+   430px window on the Sync Dashboard, and it affects every gated surface that
+   loads this stylesheet. Let the bar wrap and let the crumbs truncate: sign-out
+   has to stay reachable, breadcrumbs are the thing you can afford to clip
+   because the sidebar already says where you are. */
+@media (max-width: 560px) {
+  .topbar { height: auto; min-height: 58px; flex-wrap: wrap; row-gap: 6px; padding: 8px 14px; }
+  .crumbs { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tb-right { margin-left: 0; flex-wrap: wrap; min-width: 0; }
+}
 .pill {
   display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600;
   padding: 4px 11px; border-radius: 999px; border: 1px solid var(--line-strong);
