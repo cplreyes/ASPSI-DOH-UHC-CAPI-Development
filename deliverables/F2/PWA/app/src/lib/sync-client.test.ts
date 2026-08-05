@@ -21,6 +21,7 @@ describe('postBatchSubmit', () => {
     {
       client_submission_id: 'csid-1',
       hcw_id: 'h1',
+      qn: '040340002001',
       facility_id: 'f1',
       spec_version: '2026-04-17-m1',
       app_version: '0.1.0',

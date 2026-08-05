@@ -43,11 +43,19 @@ const SECTIONS: SectionModel[] = [
  */
 export type ReviewMode = 'hcw' | 'encoded';
 
+/** #838 — tool-usability feedback captured just before submission (HCW path only). */
+export interface ToolFeedback {
+  easy?: 1 | 0;
+  why: string;
+}
+
 interface ReviewSectionProps {
   values: FormValues;
   onEdit: (sectionId: string) => void;
   onSubmit: () => void;
   mode?: ReviewMode;
+  feedback?: ToolFeedback;
+  onFeedbackChange?: (next: ToolFeedback) => void;
 }
 
 function formatValue(v: unknown): string {
@@ -93,7 +101,14 @@ const SEVERITY_STYLES: Record<Warning['severity'], string> = {
   info: 'border-border border-l-4 border-l-muted-foreground text-foreground',
 };
 
-export function ReviewSection({ values, onEdit, onSubmit, mode = 'hcw' }: ReviewSectionProps) {
+export function ReviewSection({
+  values,
+  onEdit,
+  onSubmit,
+  mode = 'hcw',
+  feedback,
+  onFeedbackChange,
+}: ReviewSectionProps) {
   const { t } = useTranslation();
   const { locale } = useLocale();
   const warnings = useMemo(() => evaluateCrossField(values), [values]);
@@ -178,6 +193,71 @@ export function ReviewSection({ values, onEdit, onSubmit, mode = 'hcw' }: Review
           </section>
         );
       })}
+
+      {/* #838 — tool-usability feedback, HCW self-administered path only. The paper
+          encoder never touches this UI, so asking them about it would be meaningless.
+          Deliberately OPTIONAL: blocking submit on a feedback field risks losing a
+          real survey response, which costs far more than a missing comment. */}
+      {mode === 'hcw' && onFeedbackChange ? (
+        <section aria-labelledby="feedback-heading" className="border-t border-border pt-5">
+          <h2 id="feedback-heading" className="text-base font-medium text-foreground">
+            {t('feedback.heading')}
+          </h2>
+          <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+            {t('feedback.note')}
+          </p>
+
+          <fieldset className="mt-4">
+            <legend className="text-sm text-foreground">{t('feedback.easeQuestion')}</legend>
+            <div className="mt-2 flex gap-2">
+              {([1, 0] as const).map((val) => {
+                const selected = feedback?.easy === val;
+                return (
+                  <button
+                    key={val}
+                    type="button"
+                    aria-pressed={selected}
+                    onClick={() =>
+                      onFeedbackChange({
+                        // tapping the selected chip clears it (no way to un-answer otherwise)
+                        ...(selected ? {} : { easy: val }),
+                        why: feedback?.why ?? '',
+                      })
+                    }
+                    className={
+                      'min-h-11 rounded-md border px-4 text-sm transition-colors ' +
+                      (selected
+                        ? 'border-signal bg-signal/10 text-foreground'
+                        : 'border-border text-muted-foreground hover:border-signal/50')
+                    }
+                  >
+                    {val === 1 ? t('feedback.yes') : t('feedback.no')}
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
+
+          <div className="mt-4">
+            <label htmlFor="feedback-why" className="text-sm text-foreground">
+              {t('feedback.whyLabel')}
+            </label>
+            <textarea
+              id="feedback-why"
+              rows={3}
+              value={feedback?.why ?? ''}
+              placeholder={t('feedback.whyPlaceholder')}
+              onChange={(e) =>
+                onFeedbackChange({
+                  ...(feedback?.easy !== undefined ? { easy: feedback.easy } : {}),
+                  why: e.target.value,
+                })
+              }
+              className="mt-2 w-full rounded-md border border-border bg-transparent p-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-signal focus:outline-none focus:ring-1 focus:ring-signal"
+            />
+          </div>
+        </section>
+      ) : null}
 
       <div className="flex flex-col gap-3 pt-2">
         {mode === 'hcw' ? (

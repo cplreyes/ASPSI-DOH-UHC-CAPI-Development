@@ -9,8 +9,13 @@ import { Button } from '@/components/ui/button';
 const AdminApp = lazy(() => import('@/admin/App'));
 import { MultiSectionForm } from '@/components/survey/MultiSectionForm';
 import { EnrollmentScreen } from '@/components/enrollment/EnrollmentScreen';
+import { ClaimScreen } from '@/components/enrollment/ClaimScreen';
+import { FacilityStartScreen } from '@/components/enrollment/FacilityStartScreen';
+import { parseClaimUrl } from '@/lib/claim-client';
+import { parseFacilityUrl } from '@/lib/facility-start-client';
 import { ConsentScreen } from '@/components/survey/ConsentScreen';
 import { PendingCount } from '@/components/sync/PendingCount';
+import { DeliveryStatus } from '@/components/sync/DeliveryStatus';
 import { LanguageSwitcher } from '@/components/i18n/LanguageSwitcher';
 import { BroadcastBanner } from '@/components/chrome/BroadcastBanner';
 import { KillSwitchOverlay } from '@/components/chrome/KillSwitchOverlay';
@@ -26,6 +31,7 @@ import {
   submitDraft,
   LOCAL_SPEC_VERSION,
   COMPLETED_CSID_KEY,
+  DRAFT_ID_KEY,
   type EnrollmentInfo,
 } from '@/lib/draft';
 import { getSyncEnv } from '@/lib/env';
@@ -132,7 +138,7 @@ function AppShell() {
   const { t } = useTranslation();
   const { locale } = useLocale();
   const { canInstall, install } = useInstallPrompt();
-  const { status: authStatus, enrollment } = useAuth();
+  const { status: authStatus, enrollment, unenroll } = useAuth();
   const runtimeConfig = useRuntimeConfig();
   const [status, setStatus] = useState<Status>('loading');
   const [view, setView] = useState<View>('form');
@@ -148,6 +154,7 @@ function AppShell() {
         ? {
             hcw_id: enrollment.hcw_id,
             facility_id: enrollment.facility_id,
+            ...(enrollment.qn ? { qn: enrollment.qn } : {}),
             // facility_type is optional on EnrollmentRow (Issue #46); only
             // include the field if populated so exactOptionalPropertyTypes
             // is happy.
@@ -158,6 +165,17 @@ function AppShell() {
   );
 
   const specDrift = isServerNewer(LOCAL_SPEC_VERSION, runtimeConfig.min_accepted_spec_version);
+
+  // Model C — a `/e/<slug>?k=…` deep link is a numbered self-register claim: an
+  // unenrolled device auto-claims its pre-assigned QN slot instead of showing the
+  // token-paste enrollment. Computed once per load (the URL doesn't change here).
+  const claimTarget = typeof window !== 'undefined' ? parseClaimUrl(window.location) : null;
+  // Facility slug links (design F2-Facility-Slug-Links-2026-07-16): `/f/<slug>`
+  // is the per-facility public start page — the PRIMARY way in. The token-paste
+  // EnrollmentScreen stays reachable behind /enroll for enumerator-assisted use.
+  const facilityTarget = typeof window !== 'undefined' ? parseFacilityUrl(window.location) : null;
+  const legacyEnroll =
+    typeof window !== 'undefined' && window.location.pathname.startsWith('/enroll');
 
   useEffect(() => {
     if (authStatus !== 'enrolled') return;
@@ -252,12 +270,13 @@ function AppShell() {
       // longer assumed at submit time.
       const valuesWithMeta: FormValues = { ...values, survey_language: locale };
       await saveDraft(draftId, valuesWithMeta, enrollmentInfo);
-      // Capture GPS at the click moment (5s timeout, all failures map to null).
-      // Per spec §9 the disclosure is shown on the review screen near submit.
-      // Submission rides through with null coords if the user declines or the
-      // browser doesn't support geolocation — admin Map Report tolerates it.
-      const coords = await getGeolocation();
-      const submission = await submitDraft(draftId, enrollmentInfo, coords);
+      // Capture GPS at the click moment (5s timeout). Per spec §9 the
+      // disclosure is shown on the review screen near submit. Submission rides
+      // through with null coords if the user declines or the browser doesn't
+      // support geolocation — and the OUTCOME (granted/denied/timeout/…) is
+      // recorded so the admin Map Report can explain missing GPS (audit P1-4).
+      const { coords, status: gpsStatus } = await getGeolocation();
+      const submission = await submitDraft(draftId, enrollmentInfo, coords, gpsStatus);
       // R2-#120 S.A2: persist the submitted state across refresh.
       // The thank-you screen reads COMPLETED_CSID_KEY on next mount.
       try {
@@ -271,7 +290,14 @@ function AppShell() {
       setSubmitError(null);
       setPendingValuesRef(null);
       setStatus('submitted');
-      void runSyncRef.current();
+      // Immediate delivery push — but only when not definitely offline. An
+      // offline run would just burn the row into retry_scheduled (+30s), and
+      // a reconnect inside that window finds nothing ready (findReady skips
+      // unelapsed retries), stranding a one-and-done phone until the 5-min
+      // interval. Left pending_sync, the 'online' trigger sends it instantly.
+      if (typeof navigator === 'undefined' || navigator.onLine !== false) {
+        void runSyncRef.current();
+      }
     } catch (err) {
       console.error('[F2] submit failed:', err);
       setSubmitError(t('chrome.submitFailedBody'));
@@ -296,6 +322,21 @@ function AppShell() {
       localStorage.removeItem(COMPLETED_CSID_KEY);
     } catch {
       /* private-mode Safari etc. — non-blocking */
+    }
+    // Facility-slug devices (opened via /f/<slug>) are one-case-per-
+    // registration: this enrollment's token is bound to THIS respondent's QN,
+    // so a second respondent must NOT reuse it (two people would share one
+    // 12-digit case key). Unenroll instead — enroll() cleared per-case state,
+    // AppShell falls back to the FacilityStartScreen, and the next respondent's
+    // Start tap self-registers a fresh sr- case with its own QN.
+    if (facilityTarget) {
+      try {
+        localStorage.removeItem(DRAFT_ID_KEY);
+      } catch {
+        /* non-blocking */
+      }
+      void unenroll();
+      return;
     }
     const id = getOrCreateDraftId();
     setDraftId(id);
@@ -338,8 +379,14 @@ function AppShell() {
           survey_language: locale,
         };
         await saveDraft(draftId, refusalValues, enrollmentInfo);
-        await submitDraft(draftId, enrollmentInfo, null);
-        void runSyncRef.current();
+        // GPS is never requested from someone who just declined consent —
+        // recorded as 'not_requested' (the submitDraft default).
+        await submitDraft(draftId, enrollmentInfo, null, 'not_requested');
+        // Same offline guard as handleSubmit: keep the row pending_sync so the
+        // on-reconnect trigger delivers it immediately.
+        if (typeof navigator === 'undefined' || navigator.onLine !== false) {
+          void runSyncRef.current();
+        }
       }
     } catch (err) {
       console.error('[F2] refusal queue failed (non-blocking):', err);
@@ -380,7 +427,20 @@ function AppShell() {
       {authStatus === 'loading' ? (
         <p className="p-6 text-sm text-muted-foreground">{t('chrome.loading')}</p>
       ) : authStatus === 'unenrolled' ? (
-        <EnrollmentScreen />
+        claimTarget ? (
+          <ClaimScreen />
+        ) : facilityTarget ? (
+          <FacilityStartScreen />
+        ) : legacyEnroll ? (
+          <EnrollmentScreen />
+        ) : (
+          <section className="mx-auto flex max-w-xl flex-col gap-4 p-6">
+            <h2 className="font-serif text-2xl font-medium tracking-tight">
+              {t('facilityStart.noLinkHeading')}
+            </h2>
+            <p className="text-sm text-muted-foreground">{t('facilityStart.noLinkBody')}</p>
+          </section>
+        )
       ) : view === 'sync' ? (
         <Suspense
           fallback={<p className="p-6 text-sm text-muted-foreground">{t('chrome.loading')}</p>}
@@ -406,7 +466,9 @@ function AppShell() {
           <h2 className="font-serif text-2xl font-medium tracking-tight">
             {t('chrome.thankYouHeading')}
           </h2>
-          <p className="text-sm text-muted-foreground">{t('chrome.thankYouBody')}</p>
+          {/* Sync-on-submit delivery gate: "Submitting…" → "Submitted ✓" (or the
+              offline "saved, will send" line) instead of a static promise. */}
+          <DeliveryStatus />
           <div className="flex flex-wrap items-center gap-3">
             <Button onClick={handleStartNewSurvey}>{t('chrome.startNewSurvey')}</Button>
             <Button variant="outline" size="sm" onClick={() => setView('sync')}>

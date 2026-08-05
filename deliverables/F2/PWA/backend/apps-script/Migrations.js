@@ -93,6 +93,29 @@ function migrateExtendF2ResponsesColumns() {
 }
 
 /**
+ * Append the 12-digit Questionnaire Number column ('qn') to BOTH
+ * F2_Responses and F2_HCWs if missing. qn = 9-digit PSGC facility code +
+ * 3-digit HCW sequence, aligning F2 with the F1/F3/F4 QN scheme.
+ * Assigned at AdminHCWs.adminHcwsCreate; carried on every submission.
+ * Existing rows keep a blank qn (legacy/demo enrollments). Idempotent.
+ */
+function migrateAddQnColumn() {
+  var ss = getF2Spreadsheet();
+  var added = { F2_Responses: [], F2_HCWs: [] };
+  var sheets = ['F2_Responses', 'F2_HCWs'];
+  for (var sIdx = 0; sIdx < sheets.length; sIdx++) {
+    var name = sheets[sIdx];
+    var sh = ss.getSheetByName(name);
+    if (!sh) throw new Error(name + ' sheet not found');
+    var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+    if (headers.indexOf('qn') !== -1) continue;
+    sh.getRange(1, sh.getLastColumn() + 1).setValue('qn').setFontWeight('bold');
+    added[name].push('qn');
+  }
+  return { added: added };
+}
+
+/**
  * Append the 7 new admin-context columns to F2_Audit if missing.
  *   actor_username, actor_jti, actor_role, event_resource,
  *   event_payload_json, client_ip_hash, request_id
@@ -153,11 +176,13 @@ function runAllMigrations() {
   var r2 = migrateExtendF2ResponsesColumns();
   var r3 = migrateExtendF2AuditColumns();
   var r4 = migrateExtendF2FileMetaColumns();
+  var r5 = migrateAddQnColumn();
   var summary = {
     adminSheets: r1,
     responses: r2,
     audit: r3,
-    fileMeta: r4
+    fileMeta: r4,
+    qn: r5
   };
   console.log('Migrations complete: ' + JSON.stringify(summary));
   return summary;

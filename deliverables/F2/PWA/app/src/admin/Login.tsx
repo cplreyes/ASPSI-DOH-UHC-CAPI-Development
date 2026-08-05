@@ -6,8 +6,9 @@
  *
  * No card. Hairline border-bottom on inputs. Newsreader serif heading.
  * Signal-color CTA. Inline error banner using --error token. Disclosure
- * about session policy (in-memory token → reload re-prompts) at the
- * bottom in muted mono per the field-manual aesthetic.
+ * about session policy (per-tab session, survives reload, dies with the tab —
+ * see lib/auth-storage.ts) at the bottom in muted mono per the field-manual
+ * aesthetic.
  */
 import { useState, type FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
@@ -141,7 +142,8 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
 
       <footer className="mt-16 border-t border-hairline pt-4">
         <p className="font-mono text-xs leading-relaxed text-muted-foreground">
-          Sessions are held in memory. Closing the tab or reloading signs you out.
+          Sessions last up to 4 hours on this tab. Reloading keeps you signed in; closing the
+          tab signs you out.
         </p>
         {import.meta.env.DEV ? (
           <Button

@@ -39,6 +39,8 @@ interface ResponseRow {
   values_json: string;
   submission_lat: number | string;
   submission_lng: number | string;
+  /** GPS capture outcome ('' on legacy rows) — audit P1-4 instrumentation. */
+  gps_status?: string;
   source_path: string;
   encoded_by: string;
   encoded_at: string;
@@ -167,7 +169,13 @@ function ProvenanceBlock({ row }: { row: ResponseRow }): JSX.Element {
         <Field label="Location" mono>
           {String(row.submission_lat)}, {String(row.submission_lng)}
         </Field>
-      ) : null}
+      ) : (
+        <Field label="Location" mono>
+          <span className="text-muted-foreground">
+            no GPS — {row.gps_status ? row.gps_status.replace('_', ' ') : 'unknown (pre-instrumentation)'}
+          </span>
+        </Field>
+      )}
       {isEncoded ? (
         <Field label="Encoded by" mono>
           {row.encoded_by || '—'} <span className="text-muted-foreground">@ {formatTs(row.encoded_at)}</span>

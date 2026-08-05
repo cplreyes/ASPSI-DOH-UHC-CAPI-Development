@@ -241,9 +241,10 @@ This section grows as components are built. For every domain component:
 
 ### `<LanguageSwitcher>`
 
-- Inline-flex pill, hairline-bordered, `rounded-2px`
-- Active language: `--ink` background, `--paper` text
-- Inactive language: transparent, `--muted` text
+- Native `<select>` dropdown, hairline border (`--input`), `rounded-md`, `h-8` — reuses the tokens of the `sm` outline chrome buttons it sits beside in the header
+- Each option is a ready locale labelled by its native name (English, Filipino, Cebuano, …); the current locale is the selected option
+- Mirrors how the CSPro/CSEntry instruments (F1/F3/F4) present language choice, and keeps the header compact as the list grows from 2 → 8 languages
+- Hidden entirely when English is the only ready locale (`VITE_ENGLISH_ONLY`)
 
 ---
 
@@ -306,6 +307,7 @@ If you're about to commit a UI change, verify:
 | 2026-05-09 | Sidebar avatar swept to `rounded-sm` square monogram | Per #61 (E4-APRT-049 sweep): the circular avatar in `admin/Layout.tsx` was the most cookie-cutter SaaS-admin signal in the portal. Squared monogram aligns with the print-influenced Verde Manual aesthetic and the "no `rounded-full` except for radio dots" rule. PermDots in `roles/RolesDashboard.tsx` remain the only legitimate `rounded-full`. |
 | 2026-06-03 | Verde Manual palette LOCKED against confirmed DOH anchors (#163) | Resolved E3-F2-PWA-DESIGN-005 without the (image-only, unextractable) AO 2020-0011 scan. Confirmed the official DOH palette from the DOH logo vector: emerald `#00A651`, yellow `#FFF200`, cherry `#ED1C24`. **No token values changed** — each Verde Manual token is a deliberate accessibility-adjusted derivation (raw `#00A651` fails AA for white-on-signal CTAs at ≈2.8:1; raw `#ED1C24` fails AA as error text on paper at ≈3.8:1), so swapping in the raw primaries would regress a UAT'd, WCAG-AAA/AA production palette. Removed the "refine when official PDF available" caveat; palette is final. |
 | 2026-06-17 | Dark-mode CTA text + light `--warning` raised to WCAG AA (E6-PWA-009) | The new token-level contrast gate (`scripts/check-contrast.mjs`) found the #163 AA derivation was validated **light-mode only**. Three pairs were still sub-AA: dark `--primary` / `--destructive` button text (2.99 / 3.13:1) and light ochre `--warning` used **as text** (lock strip, broadcast banner, badges) on paper (2.70:1). Fix, staying inside the DOH hue families: flipped the two dark `*-foreground` button tokens to the graphite ground `132 14.3% 6.9%` (dark text on emerald/cherry CTAs → 4.74 / 4.53:1) and darkened light `--warning` from `47.8%`→`34%` L (`#C68A2E`→`#8D6221`, 4.89:1 on paper). Tradeoff accepted: dark-mode CTAs now carry dark text (inverse of light mode's light-on-dark) and the warning ochre reads as a darker amber — both justified because warning is used predominantly as text. No other token changed; the 4 gate exceptions were removed and the gate now enforces 4.5:1 AA across all 20 pairs. |
+| 2026-06-20 | `<LanguageSwitcher>` changed from an 8-button pill row to a native `<select>` dropdown | Consistency with the CSPro/CSEntry instruments (F1/F3/F4), which present language choice as a dropdown menu, plus chrome-bar economy: the pill row grew from 2 → 8 languages (English + the 7 PSA-target PH languages), crowding the header. A native `<select>` is compact, fully keyboard-accessible and self-announces the chosen option to screen readers (so the now-redundant `aria-live` mirror and per-button `aria-pressed` semantics were dropped), lists each locale by native name, and reuses the `--input` / `rounded-md` / `h-8` tokens of the adjacent `sm` outline buttons so it reads as part of the same chrome. No palette or token values changed. |
 
 ---
 

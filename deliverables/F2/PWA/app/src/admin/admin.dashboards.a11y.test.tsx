@@ -4,7 +4,7 @@
  * #191 covered Login / HelpPage / Layout. This file extends component-level
  * axe coverage to the post-login Admin Portal surfaces #191 could not reach
  * without authenticated Lighthouse: the Data / Report / Apps / Users / Roles
- * dashboards, their tables, the file-upload + data-settings forms, the user /
+ * dashboards, their tables, the controls + file-upload forms, the user /
  * role editors, the bulk-import + create-HCW + reissue modals, and the
  * paper-encode flow (which mounts the HCW MultiSectionForm shell).
  *
@@ -40,8 +40,7 @@ import { ReportDashboard } from './report/ReportDashboard';
 import { MapReport } from './report/MapReport';
 import { AppsDashboard } from './apps/AppsDashboard';
 import { Files } from './apps/Files';
-import { DataSettings } from './apps/DataSettings';
-import { QuotaWidget } from './apps/QuotaWidget';
+import { Versioning } from './apps/Versioning';
 import { UsersDashboard } from './users/UsersDashboard';
 import { UserEditor } from './users/UserEditor';
 import { BulkImportModal } from './users/BulkImportModal';
@@ -80,6 +79,11 @@ const ROW_RESPONSE = {
 function routingFetch(): typeof fetch {
   return (async (input: RequestInfo | URL) => {
     const u = String(input);
+    // Filter-bar option endpoints (2026-07-17) — must be checked before the
+    // /data/audit substring match below.
+    if (u.includes('/data/audit-event-types')) return json({ rows: ['admin_login'], total: 1 });
+    if (u.includes('/data/facility-options'))
+      return json({ rows: [{ facility_id: 'fac-1', facility_name: 'RHU One' }], total: 1 });
     // Detail (has an id segment after /responses/) must be checked before the list.
     if (/\/data\/responses\/[^/?]+/.test(u)) return json(ROW_RESPONSE);
     if (u.includes('/data/responses'))
@@ -132,19 +136,39 @@ function routingFetch(): typeof fetch {
         total: 1,
         has_more: false,
       });
-    if (u.includes('/report/sync'))
+    if (u.includes('/report/coverage'))
       return json({
         level: 'region',
-        pivot: [
+        rows: [
           {
-            key: 'Region I',
+            key: 'Region I (Ilocos Region)',
+            label: 'Region I (Ilocos Region)',
+            facilities: 3,
+            links_active: 2,
+            target: 60,
+            started: 4,
             submitted: 10,
-            expected: 20,
-            percent_complete: 50,
-            last_submitted_at: '2026-05-01T12:30:00.000Z',
+            refusals: 2,
+            refusal_rate: 16.7,
+            coverage_pct: 17,
+            paper_encoded: 1,
+            last_activity: '2026-05-01T12:30:00.000Z',
           },
         ],
-        totals: { submitted: 10, expected: 20, keys: 1 },
+        totals: {
+          key: 'TOTAL',
+          label: 'TOTAL',
+          facilities: 3,
+          links_active: 2,
+          target: 60,
+          started: 4,
+          submitted: 10,
+          refusals: 2,
+          refusal_rate: 16.7,
+          coverage_pct: 17,
+          paper_encoded: 1,
+          last_activity: '2026-05-01T12:30:00.000Z',
+        },
       });
     if (u.includes('/report/map'))
       return json({
@@ -164,30 +188,13 @@ function routingFetch(): typeof fetch {
       return json({
         pwa_version: '2.0.2',
         pwa_build_sha: 'abc1234',
-        worker_version: '2.1.0',
+        api_version: '2.1.0',
         form_revisions: [],
         total_submissions: 42,
-        last_pages_deploy_at: '2026-05-01T00:00:00.000Z',
-      });
-    if (u.includes('/apps/quota'))
-      return json({ date_utc: '2026-06-02', count: 1200, cap: 20000, percent: 6 });
-    if (u.includes('/apps/data-settings'))
-      return json({
-        settings: [
-          {
-            setting_id: 'set-1',
-            instrument: 'F2',
-            included_columns: '*',
-            interval_minutes: 60,
-            next_run_at: '2026-06-02T13:00:00.000Z',
-            output_path_template: 'exports/f2-{date}.csv',
-            enabled: true,
-            last_run_status: 'ok',
-          },
-        ],
-        total: 1,
+        api_deployed_at: '2026-05-01T00:00:00.000Z',
       });
     if (u.includes('/apps/kill-switch')) return json({ kill_switch: false });
+    if (u.includes('/apps/broadcast')) return json({ broadcast_message: '' });
     if (u.includes('/apps/files'))
       return json({
         files: [
@@ -252,8 +259,9 @@ describe('admin authenticated-state a11y (#273)', () => {
   });
 
   it('Audit tab', async () => {
+    // findAll — 'admin_login' is a table cell AND an event-type dropdown option.
     await auditClean(<AuditTab apiBaseUrl={api} fetchImpl={routingFetch()} />, () =>
-      screen.findByText('admin_login'),
+      screen.findAllByText('admin_login'),
     );
   });
 
@@ -264,8 +272,9 @@ describe('admin authenticated-state a11y (#273)', () => {
   });
 
   it('HCWs tab', async () => {
+    // findAll — 'RHU One' is a table cell AND a facility dropdown option.
     await auditClean(<HCWsTab apiBaseUrl={api} fetchImpl={routingFetch()} />, () =>
-      screen.findByText('RHU One'),
+      screen.findAllByText('RHU One'),
     );
   });
 
@@ -291,9 +300,9 @@ describe('admin authenticated-state a11y (#273)', () => {
   });
 
   // ---- Report dashboard + tabs ----
-  it('Report dashboard shell (Sync default tab)', async () => {
+  it('Report dashboard shell (Coverage default tab)', async () => {
     await auditClean(<ReportDashboard apiBaseUrl={api} fetchImpl={routingFetch()} />, () =>
-      screen.findByText('Region I'),
+      screen.findByText('Region I (Ilocos Region)'),
     );
   });
 
@@ -302,8 +311,14 @@ describe('admin authenticated-state a11y (#273)', () => {
   });
 
   // ---- Apps & Settings dashboard + sub-tabs ----
-  it('Apps & Settings shell (Versioning default tab)', async () => {
+  it('Apps & Settings shell (Controls default tab)', async () => {
     await auditClean(<AppsDashboard apiBaseUrl={api} fetchImpl={routingFetch()} />, () =>
+      screen.findByText(/OFF — submissions open/),
+    );
+  });
+
+  it('Versioning panel', async () => {
+    await auditClean(<Versioning apiBaseUrl={api} fetchImpl={routingFetch()} />, () =>
       screen.findByText('abc1234'),
     );
   });
@@ -312,16 +327,6 @@ describe('admin authenticated-state a11y (#273)', () => {
     await auditClean(<Files apiBaseUrl={api} fetchImpl={routingFetch()} />, () =>
       screen.findByText('roster.pdf'),
     );
-  });
-
-  it('Data Settings panel', async () => {
-    await auditClean(<DataSettings apiBaseUrl={api} fetchImpl={routingFetch()} />, () =>
-      screen.findByText(/exports\/f2-\{date\}\.csv/),
-    );
-  });
-
-  it('Quota widget', async () => {
-    await auditClean(<QuotaWidget apiBaseUrl={api} fetchImpl={routingFetch()} />);
   });
 
   // ---- Users dashboard + editors ----

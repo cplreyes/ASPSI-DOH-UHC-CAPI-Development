@@ -10,6 +10,13 @@ export const ceb: EnBundle = {
     syncView: 'Sync',
     thankYouHeading: 'Salamat',
     thankYouBody: 'Ang imong tubag natipigan na niini nga device ug mo-sync kini kung naa nay koneksyon ang app.',
+    // Sync-on-submit delivery gate (design F2-Facility-Slug-Links-2026-07-16) —
+    // English until the ASPSI translation pass delivers dialect wording.
+    delivering: 'Submitting…',
+    deliveredBody: 'Submitted ✓ — your response is in. You can close this page.',
+    deliveryOffline: 'Saved on this phone — it will send automatically when you are back online.',
+    deliveryFailed:
+      'Your response is saved on this device but could not be sent automatically. Please show this screen to ASPSI staff.',
     startNewSurvey: 'Pagsugod og bag-ong survey',
     submitFailedHeading: 'Napakyas ang pag-submit',
     submitFailedBody:
@@ -58,6 +65,40 @@ export const ceb: EnBundle = {
     tokenOffline: 'Wala kay koneksyon. Susiha ang imong koneksyon ug sulayi pag-usab.',
     identityStep: 'Lakang 2: Pagpaila sa imong kaugalingon',
     tokenAccepted: 'Gidawat ang token alang sa pasilidad nga {{facility}}. Pilia ang imong kaugalingon gikan sa roster sa ubos.',
+    // Model C — open self-register (English pending translation).
+    selfRegisterIntro: "Tap Start to begin. You'll be given a number, then answer the survey on this phone.",
+    selfRegisterStart: "Start — I'm a healthcare worker here",
+    selfRegisterBusy: 'Assigning your number…',
+    selfRegisterReceiptHeading: 'You are enrolled',
+    selfRegisterReceipt: 'You are respondent {{qn}}. Tap Continue to begin the survey.',
+    selfRegisterContinue: 'Continue',
+    selfRegisterFailed: 'Could not register right now. Check your connection and try again.',
+  },
+  claim: {
+    heading: 'Opening your survey…',
+    claiming: 'Setting up your questionnaire — one moment.',
+    invalidLink: 'This link is invalid or has expired. Please ask ASPSI ops for a new one.',
+    alreadyDone: 'This survey has already been completed. Thank you.',
+    offline: "You're offline. Check your connection and tap Retry.",
+    unavailable: 'The survey is temporarily unavailable. Please try again shortly.',
+    retry: 'Retry',
+  },
+  // Facility slug links (design F2-Facility-Slug-Links-2026-07-16) — English
+  // until the ASPSI translation pass delivers dialect wording.
+  facilityStart: {
+    resolvingHeading: 'Opening the survey…',
+    resolving: 'Checking this link — one moment.',
+    heading: '{{facility}} — HCW Survey',
+    intro: 'Your answers are voluntary and anonymous. Tap Start to begin on this phone.',
+    start: 'Start the survey',
+    starting: 'Setting up your questionnaire…',
+    inactive: "This survey link isn't active. Please check with ASPSI ops.",
+    offline: "You're offline. Check your connection and tap Retry.",
+    unavailable: 'The survey is temporarily unavailable. Please try again shortly.',
+    retry: 'Retry',
+    noLinkHeading: 'Open your facility survey link',
+    noLinkBody:
+      'This survey opens from a facility link that looks like uhc-hcw.asiansocial.org/f/your-facility. Ask ASPSI staff for your facility link.',
   },
   navigator: {
     // #809 — English until the ASPSI translation pass delivers dialect wording.
@@ -93,6 +134,17 @@ export const ceb: EnBundle = {
     submit: 'I-submit',
     // English draft pending ASPSI QC (R3 #305 hard-block message).
     blockingError: 'Please resolve the highlighted issue above before submitting.',
+  },
+  // #838 — tool-usability feedback (pretest). English pending ASPSI translation;
+  // wording is ASPSI's call, so it is NOT localized here.
+  feedback: {
+    heading: 'Before you submit',
+    note: 'This is about the survey tool itself, not your answers. It helps us improve it.',
+    easeQuestion: 'Did you find the survey tool easy to use and navigate?',
+    yes: 'Yes',
+    no: 'No',
+    whyLabel: 'Why or why not?',
+    whyPlaceholder: 'Optional — tell us anything that was confusing or worked well.',
   },
   consent: {
     // #808 consent gate — English until the ASPSI translation pass delivers dialect wording.

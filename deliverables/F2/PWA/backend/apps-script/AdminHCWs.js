@@ -6,7 +6,13 @@
  *
  * F2_HCWs columns (per Migrations.js):
  *   hcw_id, facility_id, facility_name, enrollment_token_jti,
- *   token_issued_at, token_revoked_at, status, created_at
+ *   token_issued_at, token_revoked_at, status, created_at, qn
+ *
+ * qn = the 12-digit Questionnaire Number (9-digit PSGC facility code +
+ * 3-digit HCW sequence within facility), aligning F2 with the F1/F3/F4
+ * QN scheme. Assigned at adminHcwsCreate when facility_id is a 9-digit
+ * code; blank for legacy/demo slug facilities. Once used, a qn is never
+ * reassigned (revoked rows still burn their sequence number).
  *
  * Two RPC entry points:
  *   adminHcwsCreate(payload)  — invoked from the new admin portal token
@@ -50,17 +56,50 @@ function adminHcwsCreate(payload) {
     var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
     var hcwIdIdx = headers.indexOf('hcw_id');
     var statusIdx = headers.indexOf('status');
+    var qnIdx = headers.indexOf('qn');
     var lastRow = sh.getLastRow();
-    if (lastRow > 1) {
-      var existing = sh.getRange(2, 1, lastRow - 1, headers.length).getValues();
-      for (var i = 0; i < existing.length; i++) {
-        if (existing[i][hcwIdIdx] === hcwId && existing[i][statusIdx] !== 'revoked') {
-          return {
-            ok: false,
-            error: { code: 'E_CONFLICT', message: 'hcw_id ' + hcwId + ' already enrolled' },
-          };
+    var existing = lastRow > 1 ? sh.getRange(2, 1, lastRow - 1, headers.length).getValues() : [];
+    for (var i = 0; i < existing.length; i++) {
+      if (existing[i][hcwIdIdx] === hcwId && existing[i][statusIdx] !== 'revoked') {
+        return {
+          ok: false,
+          error: { code: 'E_CONFLICT', message: 'hcw_id ' + hcwId + ' already enrolled' },
+        };
+      }
+    }
+
+    // qn assignment (12-digit Questionnaire Number = 9-digit facility code +
+    // 3-digit HCW sequence). Computed under the same script lock, so two
+    // concurrent creates at one facility cannot double-assign a sequence.
+    // Explicit payload.qn overrides (pre-assigned frames); otherwise auto-
+    // assign next-free when facility_id is a 9-digit code; else blank (legacy
+    // slug facilities keep working with no qn). A sequence is never reused —
+    // revoked rows still burn their number.
+    var qn = String(payload.qn || '').trim();
+    if (qnIdx === -1) {
+      qn = ''; // sheet not yet migrated — never assign a qn we cannot store
+    } else if (qn) {
+      if (!/^\d{12}$/.test(qn)) {
+        return { ok: false, error: { code: 'E_VALIDATION', message: 'qn must be exactly 12 digits' } };
+      }
+      for (var q = 0; q < existing.length; q++) {
+        if (String(existing[q][qnIdx] || '') === qn) {
+          return { ok: false, error: { code: 'E_CONFLICT', message: 'qn ' + qn + ' already assigned' } };
         }
       }
+    } else if (/^\d{9}$/.test(facilityId)) {
+      var maxSeq = 0;
+      for (var m = 0; m < existing.length; m++) {
+        var v = String(existing[m][qnIdx] || '');
+        if (v.length === 12 && v.indexOf(facilityId) === 0) {
+          var s = Number(v.slice(9));
+          if (s > maxSeq) maxSeq = s;
+        }
+      }
+      if (maxSeq >= 999) {
+        return { ok: false, error: { code: 'E_VALIDATION', message: 'facility ' + facilityId + ' HCW sequence exhausted (999)' } };
+      }
+      qn = facilityId + ('00' + (maxSeq + 1)).slice(-3);
     }
 
     var nowIso = new Date().toISOString();
@@ -73,10 +112,11 @@ function adminHcwsCreate(payload) {
       if (h === 'token_revoked_at') return '';
       if (h === 'status') return payload.status || 'enrolled';
       if (h === 'created_at') return nowIso;
+      if (h === 'qn') return qn;
       return '';
     });
     sh.appendRow(row);
-    return { ok: true, data: { hcw_id: hcwId } };
+    return { ok: true, data: { hcw_id: hcwId, qn: qn } };
   } finally {
     lock.releaseLock();
   }
@@ -227,6 +267,7 @@ function adminHcwsReissueToken(payload) {
       data: {
         hcw_id: hcwId,
         facility_id: rowObj.facility_id,
+        qn: rowObj.qn || '',
         new_jti: payload.new_jti,
         old_jti: currentJti,
         token_issued_at: nowIso,

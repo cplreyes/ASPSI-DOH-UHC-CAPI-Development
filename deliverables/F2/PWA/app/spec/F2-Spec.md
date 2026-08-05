@@ -62,6 +62,7 @@ flowchart LR
 Captured by the rewritten cover block (see `F2-Cover-Block-Rewrite-Draft.md`). Not part of the body spec below:
 
 - Facility ID (pre-filled per unique link)
+- Questionnaire Number `qn` — 12 digits = 9-digit PSGC facility code + 3-digit HCW sequence, aligning F2 with the F1/F3/F4 QN scheme (realizes the parked `RR-PP-…` numbering design). Assigned at admin HCW enrollment (auto next-free per facility, or pre-assigned from the frame), bound into the device token's claims, learned by the PWA at /verify-token, and recorded on every response row. Blank for legacy/slug-facility enrollments — additive, never required. (2026-07-08)
 - Region / Province / City-Municipality / Barangay (pre-filled)
 - GPS lat/long (absorbed into facility master list; not asked)
 - `response_source` (auto-set: `self`, `staff_encoded`, `paper_mirror`)

@@ -133,3 +133,6 @@ deliverables/CSWeb/*.sql.gz
 # supervisor-hub: UAT tester credentials (live CSWeb passwords — never commit)
 /deliverables/CSPro/supervisor-hub/config/UAT-R6-tester-credentials.md
 /deliverables/CSPro/supervisor-hub/config/uat-r6-csweb-users.csv
+
+# f2-api server compiled output — rebuildable from src via tsc; never commit.
+/deliverables/F2/PWA/server/dist/

@@ -3,6 +3,8 @@ import { db, type EnrollmentRow } from './db';
 export interface SetEnrollmentInput {
   hcw_id: string;
   facility_id: string;
+  /** 12-digit Questionnaire Number from the verified token's claims ('' / absent for pre-qn tokens). */
+  qn?: string;
   /** Per-tablet JWT (spec §5). Required after the auth re-arch. */
   device_token: string;
 }
@@ -37,6 +39,7 @@ export async function setEnrollment(input: SetEnrollmentInput): Promise<Enrollme
     facility_id: facility?.facility_id ?? input.facility_id,
     enrolled_at: Date.now(),
     device_token: trimmedToken,
+    ...(input.qn ? { qn: input.qn } : {}),
     ...(facility?.facility_type ? { facility_type: facility.facility_type } : {}),
   };
   await db.enrollment.put(row);

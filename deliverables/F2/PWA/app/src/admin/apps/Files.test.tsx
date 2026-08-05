@@ -207,6 +207,26 @@ function makeRichFetch(): {
   return { fetch: impl, calls };
 }
 
+describe('<Files /> — upload extension gate (audit P3-1)', () => {
+  it('rejects an allowed MIME with a disallowed extension before any POST', async () => {
+    // applyAccept: false — the OS picker's accept filter is only a hint; the
+    // test simulates a user forcing an off-list file through it.
+    const user = userEvent.setup({ applyAccept: false });
+    const { fetch: mockFetch, calls } = makeFetch();
+    renderFiles(mockFetch);
+
+    const input = await screen.findByLabelText('Upload file');
+    // Browsers report application/octet-stream for types they can't identify —
+    // the extension list must still reject the file client-side.
+    const exe = new File(['MZ'], 'tool.exe', { type: 'application/octet-stream' });
+    await user.upload(input, exe);
+
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent(/extension \.exe not allowed/i);
+    expect(calls.some((c) => (c.init?.method ?? 'GET').toUpperCase() === 'POST')).toBe(false);
+  });
+});
+
 describe('<Files /> — #175 rename', () => {
   it('commits a rename via an authenticated PATCH carrying the new filename', async () => {
     const user = userEvent.setup();

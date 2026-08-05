@@ -69,6 +69,13 @@ const NAV_GROUPS: NavGroup[] = [
         requiredPerm: 'dash_data',
       },
       {
+        to: '/admin/facilities',
+        label: 'Facilities',
+        description: "Facility master list — create and manage each facility's /f/ survey link.",
+        icon: IconBuilding,
+        requiredPerm: 'dash_users',
+      },
+      {
         to: '/admin/report',
         label: 'Reports',
         description: 'Coverage by region/province/facility + geographic Map Report.',
@@ -164,7 +171,7 @@ export function Layout({ children }: LayoutProps): JSX.Element {
           <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
             F2 Admin
           </span>
-          <span className="font-serif text-lg font-medium tracking-tight">F2 PWA Portal</span>
+          <span className="font-serif text-lg font-medium tracking-tight">HCW Survey Console</span>
         </Link>
 
         <nav className="flex flex-1 flex-col gap-4 overflow-y-auto py-2">
@@ -261,7 +268,7 @@ export function Layout({ children }: LayoutProps): JSX.Element {
             <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
               F2 Admin
             </span>
-            <span className="font-serif text-base font-medium tracking-tight">F2 PWA Portal</span>
+            <span className="font-serif text-base font-medium tracking-tight">HCW Survey Console</span>
           </Link>
           <div className="flex items-center gap-3">
             {isAuthenticated ? (
@@ -381,6 +388,15 @@ function IconTable(props: SVGProps<SVGSVGElement>): JSX.Element {
     <IconBase {...props}>
       <rect x="2" y="3" width="12" height="10" rx="1" />
       <path d="M2 7h12M2 11h12M6 3v10" />
+    </IconBase>
+  );
+}
+
+function IconBuilding(props: SVGProps<SVGSVGElement>): JSX.Element {
+  return (
+    <IconBase {...props}>
+      <rect x="3" y="2" width="10" height="12" rx="1" />
+      <path d="M6 5h1.5M8.5 5H10M6 8h1.5M8.5 8H10M6 14v-3h4v3" />
     </IconBase>
   );
 }
