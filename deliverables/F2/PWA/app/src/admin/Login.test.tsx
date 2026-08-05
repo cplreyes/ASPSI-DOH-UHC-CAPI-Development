@@ -53,10 +53,12 @@ describe('<Login />', () => {
     expect(screen.getByRole('button', { name: /sign in/i })).toBeDisabled();
   });
 
-  it('shows the in-memory session disclosure', () => {
+  it('shows the session-policy disclosure (#1001: tab-scoped, shared across tabs)', () => {
     const fetchImpl = vi.fn() as unknown as typeof fetch;
     renderLogin(fetchImpl);
-    expect(screen.getByText(/sessions are held in memory/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/sessions last while your admin tabs stay open/i),
+    ).toBeInTheDocument();
   });
 
   it('surfaces a typed error message on E_AUTH_INVALID', async () => {

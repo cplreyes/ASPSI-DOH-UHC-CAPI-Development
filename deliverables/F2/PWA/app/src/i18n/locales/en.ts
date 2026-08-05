@@ -114,6 +114,19 @@ export const en = {
       'I have read and understood the information above. I voluntarily agree to participate in this survey.',
     declineOption: 'I do not wish to participate.',
     continueButton: 'Continue',
+    // #1002: optional raffle contact number, shown on the agree path only.
+    // EN-only for now — other locales fall back to EN until the next
+    // translation re-key batch.
+    rafflePhoneHeading: 'Raffle contact number (optional)',
+    rafflePhoneNote:
+      'If you would like to join the raffle, you may enter a phone number below. It will only be used to contact you if you win the raffle. A GCash number is preferred, as it will be used both for contacting you and for sending your prize.',
+    rafflePhoneLabel: 'Phone number',
+    rafflePhonePlaceholder: 'e.g. 09XX XXX XXXX (GCash preferred)',
+    rafflePhoneConfirmHeading: 'No contact number provided',
+    rafflePhoneConfirmBody:
+      'You have not provided a contact number. Without a contact number, you will not be eligible to receive the raffle prize if selected as a winner. Do you want to proceed?',
+    rafflePhoneConfirmBack: 'Go back',
+    rafflePhoneConfirmProceed: 'Proceed without a number',
     declinedHeading: 'Thank you for your time',
     declinedBody:
       'You chose not to participate in this survey. No survey questions will be shown and no response has been recorded on this device. If this was a mistake, you can start over below.',

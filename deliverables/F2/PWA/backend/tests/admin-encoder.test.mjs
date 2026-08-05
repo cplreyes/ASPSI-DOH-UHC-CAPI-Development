@@ -44,6 +44,57 @@ describe('adminEncodeSubmit', () => {
     expect(r.error.message).toMatch(/hcw_id/);
   });
 
+  // #847: an encoder pasted an enrollment token into the HCW ID field and
+  // the row stored normally. Token-shaped and malformed IDs are rejected
+  // before the submit path runs.
+  it('#847: rejects a JWT-shaped hcw_id (pasted enrollment token)', () => {
+    const r = adminEncodeSubmit(
+      {
+        hcw_id: 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoY3ctMDAxIn0.c2lnbmF0dXJl',
+        client_submission_id: 'cli-tok',
+        spec_version: '2026-04-17-m1',
+        values: {},
+      },
+      makeCtx(),
+    );
+    expect(r.ok).toBe(false);
+    expect(r.error.code).toBe('E_VALIDATION');
+    expect(r.error.message).toMatch(/enrollment token/i);
+  });
+
+  it('#847: rejects a pasted enrollment link and bare long-hex secrets', () => {
+    for (const bad of [
+      'https://uhc-hcw.asiansocial.org/e/LBRHU1-HCW-03?k=abc123',
+      'da6ee90c57f00b0b0b98587867c72b1fff7b4586',
+    ]) {
+      const r = adminEncodeSubmit(
+        { hcw_id: bad, client_submission_id: 'cli-tok2', spec_version: '2026-04-17-m1', values: {} },
+        makeCtx(),
+      );
+      expect(r.ok).toBe(false);
+      expect(r.error.message).toMatch(/enrollment token/i);
+    }
+  });
+
+  it('#847: rejects a malformed hcw_id (spaces) with the format message', () => {
+    const r = adminEncodeSubmit(
+      { hcw_id: 'hcw with space', client_submission_id: 'cli-fmt', spec_version: '2026-04-17-m1', values: {} },
+      makeCtx(),
+    );
+    expect(r.ok).toBe(false);
+    expect(r.error.message).toMatch(/not a valid HCW ID/i);
+  });
+
+  it('#847: accepts real slug IDs (hcw-001, LBRHU1-HCW-03)', () => {
+    for (const good of ['hcw-001', 'LBRHU1-HCW-03']) {
+      const r = adminEncodeSubmit(
+        { hcw_id: good, client_submission_id: `cli-ok-${good}`, spec_version: '2026-04-17-m1', values: {} },
+        makeCtx(),
+      );
+      expect(r.ok).toBe(true);
+    }
+  });
+
   it('rejects when neither ctx.actor_username nor payload.encoded_by is set', () => {
     const r = adminEncodeSubmit(
       { hcw_id: 'hcw-1', client_submission_id: 'cli-1', spec_version: '2026-04-17-m1', values: {} },

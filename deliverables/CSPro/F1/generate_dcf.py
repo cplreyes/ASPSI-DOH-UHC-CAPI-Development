@@ -115,8 +115,13 @@ def build_field_control():
         alpha("FIELD_EDITED_BY",                "Field Edited by",                              length=50),
         numeric("DATE_FIRST_VISITED_THE_FACILITY",
                 "Date First Visited the Facility (YYYYMMDD)", length=8),
+        # #1099 F4-parity (2026-08-05): read-only MM/DD/YYYY echo under each visit
+        # date (computed in logic, noinput). Date capture format stays YYYYMMDD —
+        # it defines the STORED composition (Supervisor App + F3/F4 parity).
+        alpha("DATE_FIRST_VISITED_DISP", "Date First Visited (MM/DD/YYYY)", length=10),
         numeric("DATE_OF_FINAL_VISIT_TO_THE_FACILITY",
                 "Date of Final Visit to the Facility (YYYYMMDD)", length=8),
+        alpha("DATE_FINAL_VISIT_DISP", "Date of Final Visit (MM/DD/YYYY)", length=10),
         numeric("TOTAL_NUMBER_OF_VISITS",       "Total Number of Visits",                       length=3),
         # Result-of-Visit codes come from cspro_helpers (ENUM_RESULT_OPTIONS_F1) so F1 cannot
         # drift from F3/F4 — "Replaced" (5) was added there 2026-07-14 and lands here for free.
@@ -278,10 +283,10 @@ def build_section_c():
         ("Not applicable",                            "9"),
     ]
     Q18_HPU_ROLE = [
-        ("Leading health education and awareness campaigns",          "1"),
-        ("Conducting and coordinating health screening and promotion","2"),
-        ("Advocacy and policy formation",                             "3"),
-        ("Resource mobilization and fundraising",                     "4"),
+        ("Leading health education and awareness campaigns (e.g., raising awareness about public health initiatives of DOH, disseminating information about health)",          "1"),
+        ("Conducting and coordinating health screening and promotion activities (e.g., collaborating and implementing with other units and program coordinators to promote healthy lifestyles and preventive care)","2"),
+        ("Advocacy and policy formation (e.g., research, campaigns, collaboration with policymakers)",                             "3"),
+        ("Resource mobilization and fundraising (e.g., securing funding, grants)",                     "4"),
         ("Other (specify)",                                           "5"),
         ("I don't know",                                              "8"),
     ]
@@ -298,7 +303,7 @@ def build_section_c():
         ("Expenditure and budget utilization reports", "4"),
         ("PhilHealth claims and reimbursement reports", "5"),
         ("YAKAP/Konsulta utilization reports", "6"),
-        ("NBB compliance reports", "7"),
+        ("NBB compliance", "7"),
         ("ZBB compliance / monitoring reports", "8"),
         ("HRH staffing and deployment reports", "9"),
         ("Medicines availability and stock status reports", "10"),
@@ -311,14 +316,14 @@ def build_section_c():
     # the high non-prefixing code 99 (no valid code starts with 9) so pos("99",..)
     # on the concatenated string can't false-match across code boundaries.
     QUALITY_ACCESS_CHALLENGES = [
-        ("Limited resources (personnel, equipment, supplies, funding)", "01"),
-        ("Challenging quality standards", "02"),
-        ("Healthcare decisions made by LGUs not the facility", "03"),
-        ("Lack of specific healthcare skills", "04"),
-        ("Inadequate training of healthcare workers", "05"),
-        ("Lack of patient awareness of UHC benefits", "06"),
-        ("Limited accessibility of public healthcare facilities", "07"),
-        ("Infrastructure not conducive for patient care", "08"),
+        ("Limited resources (e.g., shortages in healthcare personnel/manpower, medical equipment, essential supplies, or funding)", "01"),
+        ("Challenging quality standards (e.g., high standards that are difficult to achieve)", "02"),
+        ("Certain healthcare decisions are made by local government units and not the health facility", "03"),
+        ("Lack of specific healthcare skills (i.e., Insufficient specialists, surgeons, or other healthcare professionals with specialized skills needed in the facility)", "04"),
+        ("Inadequate training of healthcare workers (i.e., Healthcare workers needing additional training to meet the facility's quality standards)", "05"),
+        ("Lack of patient awareness of the benefits of UHC (e.g., patients do not know they can avail of free consultations, and selected medicines and laboratory services)", "06"),
+        ("Limited accessibility of public healthcare facilities (e.g., lack of transportation options, inconvenient location, or physical barriers hindering access for patients.)", "07"),
+        ("Infrastructure not conducive for patient care (e.g., no ground floor, shortage of rooms, inadequate sanitation facilities, lack of wheelchair accessibility, etc.)", "08"),
         ("I don't know", "09"),
         ("Other (specify)", "99"),
     ]
@@ -431,8 +436,8 @@ def build_section_d():
     Q58_PERF = [
         ("Beneficiaries consulted a primary care doctor", "01"),
         ("Utilization of laboratory services", "02"),
-        ("Beneficiaries received antibiotics as prescribed", "03"),
-        ("Beneficiaries received NCD medicine as prescribed", "04"),
+        ("Beneficiaries received antibiotics as prescribed by their primary care doctor", "03"),
+        ("Beneficiaries received noncommunicable disease (NCD) medicine as prescribed by their primary care doctor", "04"),
         ("No requirements", "05"),
         ("1st patient encounter", "06"),
         ("I don't know", "07"),
@@ -454,16 +459,16 @@ def build_section_d():
     # checkbox_multiselect (#529): fixed-width 2-char codes, Other=99 (matches the
     # Q49/Q50/Q53/Q58 checkbox convention so pos("99",field) can't false-match).
     Q64_REASONS = [
-        ("Incentives (capitation/payment for registered patients)", "01"),
-        ("Aligns with facility's mission", "02"),
+        ("Incentives (i.e., facility receives capitation/payment for registered patients)", "01"),
+        ("Aligns with facility's mission (i.e., goals of UHC are aligned with the facility)", "02"),
         ("Encouraged by LGU", "03"),
         ("Mandated/required by DOH/UHC", "04"),
-        ("To improve facility services", "05"),
+        ("To improve the services of the facilities", "05"),
         ("Other (specify)", "99"),
     ]
     Q65_DIFFICULT = [
         ("Ability to conduct preventive/screening services and health education", "1"),
-        ("Capability to provide laboratory and radiologic services", "2"),
+        ("Capability to provide services for required laboratory and radiologic services", "2"),
         ("Capability to dispense required medicines", "3"),
         ("General Infrastructure", "4"),
         ("Equipment and Supplies", "5"),
@@ -483,22 +488,22 @@ def build_section_d():
         ("Other (specify)", "7"),
     ]
     Q76_INITIATIVES = [
-        ("On-site Enrollment", "1"),
-        ("LGU Outreach", "2"),
-        ("Facility Outreach", "3"),
-        ("Barangay Health Workers (BHWs) Support", "4"),
-        ("Information Campaigns", "5"),
-        ("Local Health Insurance Offices (LHIO) / YAKAP caravans", "6"),
-        ("Coordination with other government agencies and private sector", "7"),
+        ("On-site Enrollment (e.g., offering patient enrollment at the health facility)", "1"),
+        ("LGU Outreach (e.g., involvement in LGU outreach activities, such as ongoing nutrition programs)", "2"),
+        ("Facility Outreach (e.g., engaging in outreach efforts directly from the facility)", "3"),
+        ("Barangay Health Workers (BHWs) Support (e.g., receiving support from local BHWs)", "4"),
+        ("Information Campaigns (e.g., conducting information campaigns through various channels, including but not limited to online campaigns and house-to-house visits)", "5"),
+        ("Local Health Insurance Offices (LHIO); assistance or partnerships with YAKAP/Konsulta caravans", "6"),
+        ("Coordination with other government agencies and the private sector", "7"),
         ("No initiatives", "8"),
         ("Other (specify)", "9"),
     ]
     Q78_ENROLL_CHALL = [
-        ("Lack of patient awareness", "1"),
-        ("Lack of patient willingness", "2"),
-        ("Lack of resources (manpower)", "3"),
-        ("Competition with other health facilities", "4"),
-        ("Technical / system issues of PhilHealth", "5"),
+        ("Lack of patient awareness (i.e., patients are unaware of YAKAP/Konsulta, its benefits, and registration process)", "1"),
+        ("Lack of patient willingness (i.e., patient is hesitant to provide personal information or has concerns about data security)", "2"),
+        ("Lack of resources (e.g., not enough manpower to conduct information campaigns or outreaches to enroll patients to YAKAP/Konsulta)", "3"),
+        ("Competition with other health facilities over patient registration", "4"),
+        ("Technical / system issues of PhilHealth (e.g., data loss, errors, or platform accessibility problems)", "5"),
         ("Other (specify)", "6"),
     ]
     Q79_NOT_ACCRED = [
@@ -516,24 +521,24 @@ def build_section_d():
         ("I don't know",                           "6"),
     ]
     Q94_ADDL_CAP_REASONS = [
-        ("Cover building maintenance, equipment, non-clinical staff", "1"),
-        ("Patient care costs exceed predetermined fixed payment", "2"),
+        ("To cover expenses related to building maintenance, equipment, and non-clinical staff", "1"),
+        ("A patient’s care costs exceed the predetermined fixed payment", "2"),
         ("Services excluded from capitation coverage", "3"),
-        ("Provide preventive care not adequately compensated", "4"),
+        ("Provide preventive care that may not be adequately compensated under a basic capitation plan", "4"),
         ("Offset losses", "5"),
         ("Other (specify)", "6"),
     ]
     Q95_RECEIVED = [
-        ("Yes, received all expected payments",         "1"),
-        ("Yes, received some but not all expected",     "2"),
-        ("No, have not received any expected payments", "3"),
-        ("No, have not expected any payments yet",      "4"),
+        ("Yes, we have received all expected payments <proceed to Q97>",         "1"),
+        ("Yes, we have received some but not all expected payments yet <proceed to Q97>",     "2"),
+        ("No, we have not received any expected payments yet", "3"),
+        ("No, we have not expected any payments yet",      "4"),
     ]
     Q96_NOT_RECEIVED = [
         ("Delays in PhilHealth processing", "1"),
         ("Delays in facility's tracking of patient enrollment", "2"),
-        ("Difficulties verifying patient enrollment (PhilHealth)", "3"),
-        ("Facility not active in meeting payment criteria", "4"),
+        ("Difficulties in verifying patient enrollment (PhilHealth)", "3"),
+        ("Facility is not active in meeting criteria for payments (e.g., facility doesn't submit necessary requirements, facility doesn't enroll patients to YAKAP/Konsulta)", "4"),
         ("Criteria for payments is unclear", "5"),
         ("I don't know", "6"),
         ("Other (specify)", "7"),
@@ -569,7 +574,9 @@ def build_section_d():
     items.append(yes_no_dk("Q56_YK_REG_BOTH",
                            "56. Is it only possible to register both individual patients and their family members together to YAKAP/Konsulta at this facility?"))
     items.append(numeric("Q57_CAPITATION_AMT",
-                         "57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package? (Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.)",
+                         # #1011: the "(Capitation is ...)" definition is the paper's italic
+                         # enumerator note — testers want it OFF the CAPI question text.
+                         "57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?",
                          length=6))
     # Q58 — TRUE Check Box multi-select (GH #377/#378/#379). Mirrors F3 Q148.
     items.extend(checkbox_multiselect("Q58_PERF_INDICATORS",
@@ -597,15 +604,17 @@ def build_section_d():
                             _cb_codes(Q65_DIFFICULT), with_other_txt=False))
     # Q66-Q74 = nine "why difficult" select-alls, gated on Q65 in PROC.
     Q66_74_TOPICS = [
-        ("Q66_WHY_DIFF_PREVENTIVE",  "66. Why was it difficult to comply with the following? Ability to conduct preventive/screening services and health education"),
-        ("Q67_WHY_DIFF_LAB",         "67. Why was it difficult to comply with the following? Capability to provide services for required laboratory and radiologic services"),
-        ("Q68_WHY_DIFF_MEDS",        "68. Why was it difficult to comply with the following? Capability to dispense required medicines"),
-        ("Q69_WHY_DIFF_INFRA",       "69. Why was it difficult to comply with the following? General Infrastructure"),
-        ("Q70_WHY_DIFF_EQUIPMENT",   "70. Why was it difficult to comply with the following? Equipment and Supplies"),
-        ("Q71_WHY_DIFF_HR",          "71. Why was it difficult to comply with the following? Human resource"),
-        ("Q72_WHY_DIFF_HIS",         "72. Why was it difficult to comply with the following? Functional Health Information System"),
-        ("Q73_WHY_DIFF_DOCS",        "73. Why was it difficult to comply with the following? Documentary requirements"),
-        ("Q74_WHY_DIFF_DOH_LIC",     "74. Why was it difficult to comply with the following? DOH Licensing requirements"),
+        # #1015: paper/sample format — short stem "comply with:" + the one component
+        # (the "the following?" phrasing read as redundant with a single component).
+        ("Q66_WHY_DIFF_PREVENTIVE",  "66. Why was it difficult to comply with: Ability to conduct preventive/screening services and health education?"),
+        ("Q67_WHY_DIFF_LAB",         "67. Why was it difficult to comply with: Capability to provide services for required laboratory and radiologic services?"),
+        ("Q68_WHY_DIFF_MEDS",        "68. Why was it difficult to comply with: Capability to dispense required medicines?"),
+        ("Q69_WHY_DIFF_INFRA",       "69. Why was it difficult to comply with: General Infrastructure?"),
+        ("Q70_WHY_DIFF_EQUIPMENT",   "70. Why was it difficult to comply with: Equipment and Supplies?"),
+        ("Q71_WHY_DIFF_HR",          "71. Why was it difficult to comply with: Human resource?"),
+        ("Q72_WHY_DIFF_HIS",         "72. Why was it difficult to comply with: Functional Health Information System?"),
+        ("Q73_WHY_DIFF_DOCS",        "73. Why was it difficult to comply with: Documentary requirements?"),
+        ("Q74_WHY_DIFF_DOH_LIC",     "74. Why was it difficult to comply with: DOH Licensing requirements?"),
     ]
     for prefix, label in Q66_74_TOPICS:
         items.extend(checkbox_multiselect(prefix, label, _cb_codes(WHY_DIFF_OPTIONS[:6] + [WHY_DIFF_OPTIONS[8]])))
@@ -684,13 +693,15 @@ def build_section_d():
 # ============================================================
 
 def build_section_e():
+    # #1023 (pretest): paper order is column-major — Not applicable precedes
+    # Others (specify). Display order only; codes 1-5/99 UNCHANGED (data-safe).
     Q103_REASON = [
         ("Proposal not yet submitted",            "1"),
         ("Limited information on establishment process", "2"),
         ("Did not meet standard requirements",    "3"),
         ("Awaiting assessment or approval",       "4"),
-        ("Other (specify)",                       "5"),
         ("Not applicable",                       "99"),
+        ("Other (specify)",                       "5"),
     ]
     Q104_SERVICES = [
         ("Urgent care and consultation",         "1"),
@@ -707,13 +718,14 @@ def build_section_e():
         ("Availability of staff/services",          "5"),
         ("Other (specify)",                         "6"),
     ]
+    # #1024 (pretest): same column-major order fix as Q103. Codes unchanged.
     Q110_REASON = [
         ("Application not yet submitted",         "1"),
         ("Limited information on accreditation process", "2"),
         ("Did not meet accreditation requirements","3"),
         ("Awaiting assessment or approval",       "4"),
-        ("Other (specify)",                       "5"),
         ("Not applicable",                       "99"),
+        ("Other (specify)",                       "5"),
     ]
     Q111_FACTORS = [
         ("Availability of GAMOT medicines",                    "1"),
@@ -724,7 +736,7 @@ def build_section_e():
         ("Other (specify)",                                    "6"),
     ]
     Q114_DURATION = [
-        ("Less than 30 days", "1"),
+        ("30 days and less", "1"),
         ("31-60 days",        "2"),
         ("More than 60 days", "3"),
     ]
@@ -812,7 +824,7 @@ def build_section_f():
         ("I don't know",                      "5"),
     ]
     Q120_DAYS = [
-        ("Less than 30 days", "1"),
+        ("30 days and less", "1"),
         ("31-60 days",        "2"),
         ("More than 60 days", "3"),
     ]
@@ -870,19 +882,20 @@ def build_section_f():
         [(t, c) for t, c in _q121_coded if c not in Q121_PCF_ONLY]))
     # Q122-Q134 = thirteen "why difficult for X" Check Box multi-selects, gated on Q121.
     Q122_134_TOPICS = [
-        ("Q122_WHY_DIFF_PT_RIGHTS",  "122. Why was it difficult to comply with the following? Patient rights and organization ethics"),
-        ("Q123_WHY_DIFF_PT_CARE",    "123. Why was it difficult to comply with the following? Patient care"),
-        ("Q124_WHY_DIFF_LEADERSHIP", "124. Why was it difficult to comply with the following? Leadership and management"),
-        ("Q125_WHY_DIFF_HRM",        "125. Why was it difficult to comply with the following? Human resource management"),
-        ("Q126_WHY_DIFF_INFO_MGMT",  "126. Why was it difficult to comply with the following? Information management"),
-        ("Q127_WHY_DIFF_SAFE",       "127. Why was it difficult to comply with the following? Safe practice and environment"),
-        ("Q128_WHY_DIFF_PERF",       "128. Why was it difficult to comply with the following? Improving performance"),
-        ("Q129_WHY_DIFF_PHYS_PLANT", "129. Why was it difficult to comply with the following? Physical plant"),
-        ("Q130_WHY_DIFF_PRICE_INFO", "130. Why was it difficult to comply with the following? Public access to price information"),
-        ("Q131_WHY_DIFF_EQUIPMENT",  "131. Why was it difficult to comply with the following? Equipment and instruments"),
-        ("Q132_WHY_DIFF_NAT_LAWS",   "132. Why was it difficult to comply with the following? National laws and DOH issuances implemented in hospitals and other health facilities"),
-        ("Q133_WHY_DIFF_EMERG_CART", "133. Why was it difficult to comply with the following? Emergency Cart Contents"),
-        ("Q134_WHY_DIFF_ADDONS",     "134. Why was it difficult to comply with the following? Add-on services"),
+        # #1016: same short-stem format as Q66-74 (#1015).
+        ("Q122_WHY_DIFF_PT_RIGHTS",  "122. Why was it difficult to comply with: Patient rights and organization ethics?"),
+        ("Q123_WHY_DIFF_PT_CARE",    "123. Why was it difficult to comply with: Patient care?"),
+        ("Q124_WHY_DIFF_LEADERSHIP", "124. Why was it difficult to comply with: Leadership and management?"),
+        ("Q125_WHY_DIFF_HRM",        "125. Why was it difficult to comply with: Human resource management?"),
+        ("Q126_WHY_DIFF_INFO_MGMT",  "126. Why was it difficult to comply with: Information management?"),
+        ("Q127_WHY_DIFF_SAFE",       "127. Why was it difficult to comply with: Safe practice and environment?"),
+        ("Q128_WHY_DIFF_PERF",       "128. Why was it difficult to comply with: Improving performance?"),
+        ("Q129_WHY_DIFF_PHYS_PLANT", "129. Why was it difficult to comply with: Physical plant?"),
+        ("Q130_WHY_DIFF_PRICE_INFO", "130. Why was it difficult to comply with: Public access to price information?"),
+        ("Q131_WHY_DIFF_EQUIPMENT",  "131. Why was it difficult to comply with: Equipment and instruments?"),
+        ("Q132_WHY_DIFF_NAT_LAWS",   "132. Why was it difficult to comply with: National laws and DOH issuances implemented in hospitals and other health facilities?"),
+        ("Q133_WHY_DIFF_EMERG_CART", "133. Why was it difficult to comply with: Emergency Cart Contents?"),
+        ("Q134_WHY_DIFF_ADDONS",     "134. Why was it difficult to comply with: Add-on services?"),
     ]
     for prefix, label in Q122_134_TOPICS:
         items.extend(checkbox_multiselect(prefix, label, _cb_codes(WHY_DIFF_OPTIONS)))
@@ -895,29 +908,30 @@ def build_section_f():
 
 def build_section_g():
     NBB_ZBB_BARRIERS = [
-        ("Complying with no fees for basic/ward accommodation",        "1"),
-        ("Complying with prescribed allocation ratio (basic vs non-basic)", "2"),
+        ("Complying with the no fees for basic or ward accommodation",        "1"),
+        ("Complying the prescribed ratio of allocation of basic and non-basic accommodation", "2"),
         ("Patients do not go through the process of availing it",      "3"),
-        ("Insufficient PhilHealth support value",                      "4"),
-        ("Insufficient other sources (MAIFIP, DSWD, PCSO)",            "5"),
+        # #1026/#1027: verbatim paper labels for the split pair.
+        ("Insufficient PhilHealth support value and/or",               "4"),
+        ("Insufficient other sources (e.g. MAIFIP, DSWD, PCSO) (late payments applicable for MAIFIP)", "5"),
         ("PhilHealth delayed payment",                                 "6"),
         ("None of the above",                                          "7"),
         ("Other (specify)",                                            "8"),
     ]
     Q143_DIFFICULT_BENEFIT = [
         ("PhilHealth/financial protection benefits",                                "1"),
-        ("Establishment of health care provider networks (HCPNs / referral system)","2"),
+        ("Establishment of health care provider networks (HCPNs) (i.e., referral system)","2"),
         ("Human resources for health reforms",                                      "3"),
         ("Other (specify)",                                                         "4"),
     ]
     Q144_REASONS = [
-        ("UHC implementation heavily reliant on LGU decisions", "1"),
+        ("The implementation of UHC benefits is heavily reliant on LGU decisions", "1"),
         ("Not enough funding/budget",                           "2"),
-        ("Technical/system issues of PhilHealth",               "3"),
+        ("Technical/system issues of PhilHealth (e.g., data loss, errors, or platform accessibility problems)",               "3"),
         ("Other (specify)",                                     "4"),
     ]
     Q146_MALASAKIT_WHY = [
-        ("Streamline access to medical and financial aid for indigent patients", "1"),
+        ("Streamline access to medical and financial aid for indigent and financially incapacitated patients", "1"),
         ("Reduce out-of-pocket expenses",                                        "2"),
         ("Eliminate the need to travel to multiple government agencies",         "3"),
         ("Foster a more compassionate approach to healthcare",                   "4"),
@@ -927,7 +941,7 @@ def build_section_g():
         ("Limited budget",                              "1"),
         ("Stringent eligibility requirements",          "2"),
         ("Incomplete documentation from patients",      "3"),
-        ("High patient volume / service bottlenecks",   "4"),
+        ("High patient volume leading to service bottlenecks",   "4"),
         ("Other (specify)",                             "5"),
     ]
     Q149_LGU_FORMS = [
@@ -940,7 +954,7 @@ def build_section_g():
     Q151_NOT_SAT_WHY = [
         ("Insufficient",                                          "1"),
         ("Hard to coordinate",                                    "2"),
-        ("Support given is not aligned with the needs",           "3"),
+        ("Support given is not aligned with the needs of the facility",           "3"),
         ("I don't know",                                          "4"),
         ("Other (specify)",                                       "5"),
     ]
@@ -972,12 +986,12 @@ def build_section_g():
         ("I don't know",       "4"),
     ]
     Q158_PROPORTION = [
-        ("Almost all patients are referred, very few walk-in",    "1"),
-        ("Majority referred, some walk-in",                       "2"),
-        ("Proportion of referrals about equal to walk-ins",       "3"),
-        ("Majority walk-in, some referred",                       "4"),
-        ("Almost all walk-in, very few referred",                 "5"),
-        ("Unsure about the typical ratio",                        "6"),
+        ("Almost all patients are referred, very few walk-in/self-referred",    "1"),
+        ("Majority of patients are referred, some walk-in/self- referred",                       "2"),
+        ("The proportion of referrals is about equal to walk-ins",       "3"),
+        ("Majority of patients walk-in/self-referred, some are referred",                       "4"),
+        ("Almost all patients walk-in/self-referred, very few are referred",                 "5"),
+        ("I am unsure about the typical ratio of referrals to walk-ins",                        "6"),
     ]
     Q159_RECEIVE_REF = [
         ("Physical referral slip",                          "1"),
@@ -999,21 +1013,24 @@ def build_section_g():
     Q160_EXTERNAL = [
         ("External laboratory",     "01"),
         ("Other private facility",  "02"),
-        ("Other public facility",   "03"),
+        ("Other public facility (e.g., urban/rural health centers, barangay health centers, city/municipal health offices)", "03"),   # #1034 verbatim
         ("I don't know",            "90"),
         ("Other (specify)",         "99"),
     ]
     Q161_SATISFACTION = [
-        ("Very Satisfied",  "1"),
-        ("Satisfied",       "2"),
-        ("Neither",         "3"),
-        ("Dissatisfied",    "4"),
-        ("Very Dissatisfied","5"),
+        # #1035: paper-verbatim rating descriptions (codes unchanged).
+        # (paper's inner double quotes swapped to singles — embedded " in a value-set
+        #  label crashed the CSDeploy pen packager: "fatal error ... could not recover")
+        ("Very Satisfied: No improvements needed, 'patients are always referred appropriately'", "1"),
+        ("Satisfied: Minor improvements needed, patients are generally referred appropriately",    "2"),
+        ("Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional",      "3"),
+        ("Dissatisfied: Moderate improvements needed, a number of patients are referred to the wrong specialists or do not receive appropriate follow-up care", "4"),
+        ("Very Dissatisfied: Major improvements needed, many patients are referred to the wrong specialists or do not receive appropriate follow-up care",      "5"),
     ]
     Q162_NOT_SAT = [
-        ("Facilities overcrowded / do not accept our patient referrals", "1"),
-        ("Referral process is slow",                                     "2"),
-        ("Poor coordination between facilities",                         "3"),
+        ("Facilities are overcrowded/overcapacity and do not accept our patient referrals", "1"),
+        ("The referral process is slow",                                     "2"),
+        ("There is poor coordination between our facility and referred facilities",                         "3"),
         ("Other (specify)",                                              "4"),
     ]
 
@@ -1107,21 +1124,26 @@ def build_section_g():
 
 def build_section_h():
     Q163_CHALL = [
-        ("Understaffing",              "1"),
+        # #1037: code 3 was a copy-paste DUP of code 2 (should be Retention — live
+        # regression in v1.2.3); "Multi-tasking" was missing entirely; paper order
+        # puts Other before I-don't-know. Codes 1-3 + Other(5) unchanged;
+        # Multi-tasking takes 4 and I-don't-know moves 4 -> 6 (noted in codebook).
+        ("Understaffing",                    "1"),
         ("Skills mismatch / lack of skills", "2"),
-        ("Retention / high staff turnover", "3"),
-        ("I don't know",               "4"),
-        ("Other (specify)",            "5"),
+        ("Retention / high staff turnover",  "3"),
+        ("Multi-tasking",                    "4"),
+        ("Other (specify)",                  "5"),
+        ("I don't know",                     "6"),
     ]
     PD_DOCTORS = [
         ("Clinical audits",                                          "1"),
         ("Surgical audits",                                          "2"),
         ("Quality assurance meetings",                               "3"),
         ("Seminars, conferences, workshops",                         "4"),
-        ("Independent professional development: scholarships",       "5"),
-        ("Independent professional development: research grants",    "6"),
+        ("Support for independent professional development: scholarships",    "5"),   # #1038 verbatim
+        ("Support for independent professional development: research grants", "6"),   # #1038 verbatim
         ("LGU/DOH led workshops/initiatives",                        "7"),
-        ("No forms of professional development are provided",        "8"),
+        ("No forms of professional development are provided to our doctors",  "8"),   # #1038 verbatim
         ("Other (specify)",                                          "9"),
     ]
     # Q166 — PENDING DESIGN: nurse list omits audits per printed text. Default
@@ -1132,10 +1154,10 @@ def build_section_h():
         PD_NURSES = [
             ("Quality assurance meetings",                               "1"),
             ("Seminars, conferences, workshops",                         "2"),
-            ("Independent professional development: scholarships",       "3"),
-            ("Independent professional development: research grants",    "4"),
+            ("Support for independent professional development: scholarships",    "3"),   # #1039 verbatim
+            ("Support for independent professional development: research grants", "4"),   # #1039 verbatim
             ("LGU/DOH led workshops/initiatives",                        "5"),
-            ("No forms of professional development are provided",        "6"),
+            ("No forms of professional development are provided to our nurses",   "6"),   # #1039 verbatim
             ("Other (specify)",                                          "7"),
         ]
 

@@ -22,6 +22,7 @@ Invoke:  python generate_apc.py
 """
 
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -463,6 +464,36 @@ postproc
     errmsg("Final-visit date cannot be earlier than the first-visit date.");
     reenter;
   endif;""",
+    # #1099 F4-parity (2026-08-05): read-only MM/DD/YYYY echo under each visit date.
+    # noinput pattern (assign in preproc) — never protect(), whose preproc CSEntry skips.
+    # edit-mask trap: only '9' is a digit slot; '0' is a LITERAL zero ("0999" rendered
+    # 2026 as "0026" on the F4 first build — tablet-caught). '9' keeps leading zeros.
+    "DATE_FIRST_VISITED_DISP": """\
+PROC DATE_FIRST_VISITED_DISP
+preproc
+  numeric dfY; numeric dfM; numeric dfD;
+  if DATE_FIRST_VISITED_THE_FACILITY = notappl then
+    DATE_FIRST_VISITED_DISP = "";
+  else
+    dfY = int(DATE_FIRST_VISITED_THE_FACILITY / 10000);
+    dfM = int(DATE_FIRST_VISITED_THE_FACILITY / 100) - dfY * 100;
+    dfD = DATE_FIRST_VISITED_THE_FACILITY - int(DATE_FIRST_VISITED_THE_FACILITY / 100) * 100;
+    DATE_FIRST_VISITED_DISP = concat(edit("99", dfM), "/", edit("99", dfD), "/", edit("9999", dfY));
+  endif;
+  noinput;""",
+    "DATE_FINAL_VISIT_DISP": """\
+PROC DATE_FINAL_VISIT_DISP
+preproc
+  numeric dvY; numeric dvM; numeric dvD;
+  if DATE_OF_FINAL_VISIT_TO_THE_FACILITY = notappl then
+    DATE_FINAL_VISIT_DISP = "";
+  else
+    dvY = int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 10000);
+    dvM = int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 100) - dvY * 100;
+    dvD = DATE_OF_FINAL_VISIT_TO_THE_FACILITY - int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 100) * 100;
+    DATE_FINAL_VISIT_DISP = concat(edit("99", dvM), "/", edit("99", dvD), "/", edit("9999", dvY));
+  endif;
+  noinput;""",
     # 4.2 + 4.3 eligibility / tenure (Section A) — #148 hard, #152 cross-field
     "Q5_MONTHS_AT_FACILITY": """\
 PROC Q5_MONTHS_AT_FACILITY
@@ -952,19 +983,47 @@ PROC Q102_HAS_BUCAS
 postproc
   if Q102_HAS_BUCAS = 1 then  skip to Q104_BUCAS_SERVICES; endif;  { Yes -> services (skip Q103) }
   if Q102_HAS_BUCAS = 3 then  skip to Q108_HEARD_GAMOT;        endif;  { I don't know -> Q108 }""",
+    # #1023/#1024 (pretest 2026-08-04): the unconditional skip JUMPED OVER the
+    # Q103_OTHER_TXT specify field, so choosing Other (5) never opened the text
+    # box. Route through the specify field on 5; its own postproc resumes the skip.
     "Q103_NO_BUCAS_REASON": """\
 PROC Q103_NO_BUCAS_REASON
 postproc
-  skip to Q108_HEARD_GAMOT;          { any answer -> Q108 (skip Q104-107) }""",
+  if Q103_NO_BUCAS_REASON <> 5 then
+    Q103_OTHER_TXT = "";               { not Other -> clear + skip Q104-107 }
+    skip to Q108_HEARD_GAMOT;
+  endif;
+  { Other (5) -> fall through to Q103_OTHER_TXT }""",
+    "Q103_OTHER_TXT": """\
+PROC Q103_OTHER_TXT
+postproc
+  if length(strip(Q103_OTHER_TXT)) = 0 then
+    errmsg("Q103: 'Other (specify)' was selected. Please specify.");
+    reenter;
+  endif;
+  skip to Q108_HEARD_GAMOT;            { specify captured -> resume the Q103 skip }""",
     # Section E: Q109 GAMOT-accredited (No falls through to Q110)
     "Q109_GAMOT_ACCRED": """\
 PROC Q109_GAMOT_ACCRED
 postproc
   if Q109_GAMOT_ACCRED = 1 then  skip to Q111_GAMOT_FACTORS; endif;  { Yes (skip Q110) }""",
+    # #1024 (tester comment): same skip-over-the-specify-field bug as Q103.
     "Q110_NO_GAMOT_REASON": """\
 PROC Q110_NO_GAMOT_REASON
 postproc
-  skip to Q112_STOCKOUT;             { any answer -> Q112 (skip Q111) }""",
+  if Q110_NO_GAMOT_REASON <> 5 then
+    Q110_OTHER_TXT = "";               { not Other -> clear + skip Q111 }
+    skip to Q112_STOCKOUT;
+  endif;
+  { Other (5) -> fall through to Q110_OTHER_TXT }""",
+    "Q110_OTHER_TXT": """\
+PROC Q110_OTHER_TXT
+postproc
+  if length(strip(Q110_OTHER_TXT)) = 0 then
+    errmsg("Q110: 'Other (specify)' was selected. Please specify.");
+    reenter;
+  endif;
+  skip to Q112_STOCKOUT;               { specify captured -> resume the Q110 skip }""",
     # Section E: Q116 = No / Did-not-experience -> Q118 (codes per dcf value set; verify)
     "Q116_ADDR_STOCKOUT": """\
 PROC Q116_ADDR_STOCKOUT
@@ -1218,6 +1277,18 @@ def main():
         # #376: drop code 7 from the No-branch range so No-other reaches its box
         cond = exclude_code7_from_skip(field, cond) if field in dual_other_skips else cond
         parts.append(skip_proc(field, cond, target))
+        parts.append("")
+
+    # Desk-test pilot (dormant): F1_PILOT_JUMP=<FIELD> at generation time emits a
+    # Q1 postproc jump straight to the named field, so deep questions are reachable
+    # in a few fields for proof-of-fix captures / engine checks (F3's F3_PILOT_JUMP
+    # pattern). OFF by default — NEVER set for a deploy build.
+    _pilot_target = os.environ.get("F1_PILOT_JUMP")
+    if _pilot_target and "Q1_NAME" not in covered:
+        covered.add("Q1_NAME")
+        parts.append("{ ---- desk-test pilot: jump to %s (dormant) ---- }" % _pilot_target)
+        parts.append("PROC Q1_NAME" + chr(10) + "postproc" + chr(10)
+                     + f"  skip to {_pilot_target};")
         parts.append("")
 
     parts.append("{ ---- Why-difficult display gates (spec 4.10) ---- }")

@@ -181,6 +181,14 @@ INSTRUCTIONS = {
          "ANSWERING THIS QUESTION."),
     65: ("These are the requirements for YAKAP/Konsulta accreditation "
          "outlined by DOH. " + _READ_ALL),
+    # #1019: the paper's Q88 stem is 448 chars — over the dcf 255-char label cap —
+    # so the compressed label stays and the full PhilHealth tranche mechanics
+    # render here, verbatim, in the question area (F4 Q46 #1074 precedent).
+    88: ("According to PhilHealth, 40% of the capitation amount will be "
+         "released as the first tranche after the first patient encounter. "
+         "The remaining 60% will be released based on the size of the "
+         "registered catchment population by December and performance "
+         "targets that year."),
     155: ("Our focus is specifically on referrals external to the facility, "
           "excluding internal referrals. " + _READ_ALL),
 }

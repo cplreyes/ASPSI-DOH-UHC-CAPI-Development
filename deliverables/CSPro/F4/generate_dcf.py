@@ -106,7 +106,8 @@ def build_f4_field_control():
                     ("Partial / not completed", "2"),
                 ]),
     ]
-    return build_field_control(survey_code="F4", extra_items=extra + derived_geo_code_items(),
+    return build_field_control(survey_code="F4", date_display=True,   # #1099 MM/DD/YYYY echo
+                               extra_items=extra + derived_geo_code_items(),
                                date_label_entity="the Household",
                                result_options=ENUM_RESULT_OPTIONS_F4)
 
@@ -218,9 +219,11 @@ def build_section_b():
         ("Master Level Education or Equivalent",                                                                                "08"),
         ("Doctoral Level Education or Equivalent",                                                                              "09"),
         ("No schooling",                                                                                                        "10"),
-        ("Other (specify)",                                                                                                     "11"),
+        # #1071 (pretest 2026-08-05): display order matches the paper — No schooling ->
+        # I don't know -> Not applicable -> Other (specify). Codes unchanged (F3 #1057 twin).
         ("I don't know",                                                                                                        "98"),
         ("Not applicable",                                                                                                      "99"),
+        ("Other (specify)",                                                                                                     "11"),
     ]
     Q12_EMPLOYMENT = [
         ("Has a permanent job/ own business",                  "1"),
@@ -361,7 +364,7 @@ def build_section_b():
                 "21. How many senior citizens live in your house now?",
                 length=3),
         yes_no("Q22_ELECTRICITY",
-               "22. Do you have electricity in your household?"),
+               "22. Do you have electricity in your house?"),   # #1072: paper says "house" (F3 #1058 twin)
         select_one("Q23_WATER_SOURCE",
                    "23. What is the family's main source of water supply for daily use?",
                    Q23_WATER, length=1),
@@ -522,8 +525,10 @@ def build_section_c():
         ("Overseas Filipino Worker (OFW)",  "07"),
         ("Qualified dependents",            "08"),
         ("Dependent",                       "09"),
-        ("Other (Specify)",                 "88"),
+        # #1074 (pretest 2026-08-05): paper order — I don't know before Other (Specify).
+        # Codes unchanged. The per-category definitions render in the question text (qsf).
         ("I don't know",                    "55"),
+        ("Other (Specify)",                 "88"),
     ]
     items = [
         numeric("MEMBER_LINE_NO", "Household Member Line Number", length=2, zero_fill=True),
@@ -582,8 +587,10 @@ def build_section_c():
         # respondent only). select_one(len 1, value-set) -> optimize gives a RadioButton,
         # not the old Date picker (date detection is numeric-len-8-no-vset).
         select_one("Q45_1_PIN_REG_WHEN",
-                   "45.1 When did you register and receive your PhilHealth PIN? "
-                   "(Only answer if 'Yes' in Q45 — to be answered by the main respondent only)",
+                   # #1100: the paper's "(Only answer if 'Yes' in Q45 ...)" note is
+                   # programming guidance — the Q45 roster-skip already enforces it;
+                   # dropped from the CAPI text per tester request.
+                   "45.1 When did you register and receive your PhilHealth PIN?",
                    Q45_1_WHEN, length=1),
         select_one("Q46_MEMBER_CATEGORY",
                    "46. What is his/her membership category?",
@@ -598,8 +605,8 @@ def build_section_c():
         # To be answered by the main respondent only. Other(88) -> Q45_2_..._OTHER_TXT
         # (gated by the auto-derived other-specify PROC, same as Q46_MEMBER_OTHER_TXT).
         select_one("Q45_2_WHY_NOT_REG",
-                   "45.2 Why are you not registered? "
-                   "(Only answer if 'No' in Q45 — to be answered by the main respondent only)",
+                   # #1100: paper note dropped (see Q45.1 above) — skip logic enforces it.
+                   "45.2 Why are you not registered?",
                    Q45_2_WHY_NOT, length=2),
         alpha("Q45_2_WHY_NOT_REG_OTHER_TXT",
               "45.2 Why not registered — Other (specify) text", length=120),
@@ -924,7 +931,9 @@ def build_section_g():
                 "67. How much time does it take to reach the nearest pharmacy from your home? — Hours",
                 length=2),
         numeric("Q67_TRAVEL_MM",
-                "67. How much time does it take to reach the nearest pharmacy from your home? — Minutes",
+                # #1073: second component shows a short prompt — the full question reads
+                # once, on Hours (F3 Q150 pattern).
+                "67. Travel time to nearest pharmacy — Minutes",
                 length=2),
         select_one("Q68_PHARMACY_ACCESS",
                    "68. How easy is it for you to access a pharmacy or drugstore?",
@@ -1385,7 +1394,9 @@ def build_section_k():
         yes_no("Q116_WROTE_INFO",
                "116. Did they write down any information for the specialist about the reason for that visit?"),
         yes_no("Q117_SPECIALIST_FOLLOWUP",
-               "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit? (Only if Q112=Yes)"),
+               # #1101: "(Only if Q112=Yes)" dropped — programming note only; the #816
+               # Q117 preproc already gates on Q112=Yes (same clean-up as Q118's #658).
+               "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?"),
         select_one("Q118_SAT_REFERRAL_PROCESS",
                    "118. Overall, how satisfied were you with the referral process — from being referred to the specialist or other facility through your visit there?",  # #658: name which referral (the Q109-Q112 referral journey); dropped the redundant "(Only if Q112=Yes)" — CAPI already gates Q118 on Q112=Yes
                    SATISFACTION_6PT_NA, length=1),
@@ -1721,6 +1732,12 @@ HEALTH_1M_ITEMS = [
 ]
 
 
+WEEKLY_OTHER_ITEMS = [   # #832/#833: the two weekly singles, rosterized (DG form did not commit)
+    ("Q158_RESTAURANT",      "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries)"),
+    ("Q159_SMOKING_TOBACCO", "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut)"),
+]
+
+
 def _expenditure_roster(rec_name, rec_label, rec_type, prefix, items_list, period, noun):
     """Fan-out roster builder: one repeating record per WHO/SHA recall block (the
     build_section_n_food_roster shape, parameterized). Plain hyphens in labels: CSEntry
@@ -1783,16 +1800,16 @@ def build_section_n():
     p_items = []
     p_items.extend(_computed_total("Q157_FOOD_SUBTOTAL",
                                    "157. Sub-total (food, last week)"))
-    p_items.extend(_expenditure_item(
-        "Q158_RESTAURANT",
-        "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries)"))
-    p_items.extend(_expenditure_item(
-        "Q159_SMOKING_TOBACCO",
-        "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut)"))
+    # #832/#833: Q158/Q159 moved OUT of record P into N_WKOTH_ROSTER (below) - the flat
+    # DisplayTogether amounts would not commit on-device; a roster (like Q160-185) does.
     return [
         build_section_n_food_roster(),
         record("N_HOUSEHOLD_EXPENDITURES",
                "N. Household Expenditures (WHO/SHA)", "P", p_items),
+        _expenditure_roster("N_WKOTH_ROSTER",
+                            "N. Restaurant + tobacco, last week (Q158-Q159) - one row per item",
+                            "7", "N_WKOTH", WEEKLY_OTHER_ITEMS, "the last week",
+                            "Expenditure item"),
         _expenditure_roster("N_NF1M_ROSTER",
                             "N. Non-food, last month (Q160-Q167) - one row per item",
                             "W", "N_NF1M", NONFOOD_1M_ITEMS, "the last month",

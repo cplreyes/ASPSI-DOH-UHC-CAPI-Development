@@ -310,11 +310,14 @@ function AppShell() {
   // #808: record affirmative consent into the case values before Section A
   // opens. consent_given=1 keeps audit parity with the F1/F3/F4 CONSENT_GIVEN
   // field; consent_timestamp (epoch ms) documents when the respondent agreed.
-  const handleConsentAgree = () => {
+  // #1002: raffle_phone (optional, agree path only) rides in the same values
+  // payload — the respondent's raffle contact number, GCash preferred.
+  const handleConsentAgree = (rafflePhone: string | null) => {
     const withConsent: FormValues = {
       ...initialValues,
       consent_given: 1,
       consent_timestamp: Date.now(),
+      ...(rafflePhone ? { raffle_phone: rafflePhone } : {}),
     };
     setInitialValues(withConsent);
     if (draftId && enrollmentInfo) void saveDraft(draftId, withConsent, enrollmentInfo);

@@ -142,7 +142,8 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
 
       <footer className="mt-16 border-t border-hairline pt-4">
         <p className="font-mono text-xs leading-relaxed text-muted-foreground">
-          Sessions are held in memory. Closing the tab or reloading signs you out.
+          Sessions last while your admin tabs stay open — new tabs and reloads keep you
+          signed in. Closing every tab or signing out ends the session everywhere.
         </p>
         {import.meta.env.DEV ? (
           <Button

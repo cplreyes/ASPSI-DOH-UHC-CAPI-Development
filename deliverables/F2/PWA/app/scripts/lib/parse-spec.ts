@@ -188,7 +188,9 @@ export function parseTableRows(body: string): RowFields[] {
 
     while (i < lines.length && TABLE_HEADER.test(lines[i])) {
       const cells = splitCells(lines[i]);
-      if (cells[0] && /^Q\d+/.test(cells[0])) {
+      // FB\d+ = app-only items (Section K questionnaire feedback, #1003/#1004)
+      // that deliberately live outside the paper's Q1–Q125 codebook namespace.
+      if (cells[0] && /^(?:Q|FB)\d+/.test(cells[0])) {
         const row: RowFields = {};
         header.forEach((col, idx) => {
           row[normalizeHeader(col)] = cells[idx] ?? '';
@@ -289,7 +291,8 @@ export function normalizeRow(row: RowFields, section: string): NormalizeRowResul
   const required = isRequired(row.required);
   const conditional = isConditional(section, row.pdf_q, row.required, row.gate);
 
-  const { help, choicesText, min, max } = parseChoicesColumn(row.choices ?? '', type);
+  const { help, choicesText, min, max, inputLabel, emphasis } =
+    parseChoicesColumn(row.choices ?? '', type);
 
   const item: Item = {
     id: row.pdf_q,
@@ -304,6 +307,8 @@ export function normalizeRow(row: RowFields, section: string): NormalizeRowResul
     item.legacyId = row.legacy_q;
   }
   if (help) item.help = dual(help);
+  if (inputLabel) item.inputLabel = dual(inputLabel);
+  if (emphasis) item.emphasis = emphasis;
   if (min !== undefined) item.min = min;
   if (max !== undefined) item.max = max;
 
@@ -331,9 +336,51 @@ export function parseSpec(markdown: string): ParseResult {
     const rows = parseTableRows(raw.body);
     const items: Item[] = [];
 
+    // #1040/#1042/#1043 (pretest 2026-08-04): `### E1 — …` sub-headers and
+    // SECOND-and-later `> *Preamble …:* "…"` blocks (the grid instructions)
+    // were parsed for the section only or dropped entirely — on paper they
+    // print above the question that follows them. Attach each pending block
+    // to the NEXT table row's item as its `preamble`.
+    const itemPreambles = new Map<string, string>();
+    {
+      const pending: string[] = [];
+      let sectionPreambleSeen = false;
+      for (const line of raw.body.split('\n')) {
+        const sub = line.match(/^###\s+(.+?)\s*$/);
+        if (sub) {
+          pending.push(sub[1]);
+          continue;
+        }
+        const pre = line.match(/^>\s*\*(?:Preamble|Gate|Scope)[^:]*:\*\s*"(.+)"\s*$/);
+        if (pre) {
+          if (!sectionPreambleSeen && line.includes('Preamble')) {
+            // the first Preamble is the section preamble (extractPreamble) —
+            // Gate lines are routing notes, never displayed; skip both here
+            sectionPreambleSeen = true;
+            continue;
+          }
+          // Scope = a displayable definition block (#1041, the doctor's-fee
+          // note); Preamble (2nd+) = grid instructions. Gate stays hidden.
+          if (line.includes('Preamble') || line.includes('Scope')) {
+            pending.push(pre[1].replace(/\*\*/g, ''));
+          }
+          continue;
+        }
+        const rowMatch = line.match(/^\|\s*(Q[\d.]+)\s*\|/);
+        if (rowMatch && pending.length) {
+          itemPreambles.set(rowMatch[1], pending.join('\n'));
+          pending.length = 0;
+        }
+      }
+    }
+
     for (const row of rows) {
       const normalized = normalizeRow(row, raw.id);
-      if (normalized.item) items.push(normalized.item);
+      if (normalized.item) {
+        const pre = itemPreambles.get(normalized.item.id);
+        if (pre) normalized.item.preamble = dual(pre);
+        items.push(normalized.item);
+      }
       if (normalized.unsupported) unsupported.push(normalized.unsupported);
     }
 
@@ -413,17 +460,32 @@ function escapeRegex(s: string): string {
 function parseChoicesColumn(
   raw: string,
   type: ItemType,
-): { help?: string; choicesText: string; min?: number; max?: number } {
+): { help?: string; choicesText: string; min?: number; max?: number;
+     inputLabel?: string; emphasis?: string } {
   const trimmed = raw.trim();
   if (!trimmed || trimmed === '—') return { choicesText: '' };
 
   const semiIdx = trimmed.indexOf(';');
   const head = semiIdx >= 0 ? trimmed.slice(0, semiIdx).trim() : trimmed;
-  const tail = semiIdx >= 0 ? trimmed.slice(semiIdx + 1).trim() : '';
+  let tail = semiIdx >= 0 ? trimmed.slice(semiIdx + 1).trim() : '';
 
-  const result: { help?: string; choicesText: string; min?: number; max?: number } = {
+  const result: { help?: string; choicesText: string; min?: number; max?: number;
+                  inputLabel?: string; emphasis?: string } = {
     choicesText: head,
   };
+  // #1046/#1047 + #1045: pluck the typed annotations out of the tail FIRST —
+  // whatever remains (if anything) is the help text, exactly as before, so
+  // existing rows with a bare help tail keep parsing unchanged.
+  const il = tail.match(/input label:\s*"([^"]+)"\s*;?\s*/);
+  if (il) {
+    result.inputLabel = il[1];
+    tail = tail.replace(il[0], '').trim().replace(/^;\s*/, '');
+  }
+  const em = tail.match(/emphasis:\s*"([^"]+)"\s*;?\s*/);
+  if (em) {
+    result.emphasis = em[1];
+    tail = tail.replace(em[0], '').trim().replace(/^;\s*/, '');
+  }
   if (tail) {
     const wrapped = tail.match(/^help:\s*"([\s\S]+)"\s*$/);
     // #826: spec rows are single markdown-table lines, so multi-line help

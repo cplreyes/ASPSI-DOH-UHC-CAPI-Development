@@ -86,8 +86,8 @@ The Apr 20 PDF still uses interviewer-style cover blocks (consent-read-aloud, fi
 | Q7 | Q7 | single | Y | Do you practice at any private facility/ clinic? | Yes · No | only for respondents from public facilities | No → Q9 | OK |
 | Q8 | Q8 | single | conditional | How do you divide your time between public and private practice? | I spend all of my time in private practice · I spend over half, but not all of my time in private practice · I spend my time equally in private and public practice · I spend over half, but not all of my time in public practice · I spend all of my time in public practice · I don't know | only for respondents from public facilities | — | **SECTION** — gated by facility type (public) AND Q7=Yes |
 | Q9 | Q9 | number ×2 | Y | In your current position, how many (months/years) have you worked at this health facility? | Year(s) / Month(s) | — | — | OK |
-| Q10 | Q10 | number | Y | How many days in a week do you work at this health facility? | integer 1–7 | — | — | OK |
-| Q11 | Q11 | number | Y | On average, how many hours do you work per day? | integer 1–24; help: "According to DOLE, typically full-time is 8 hours per day, part-time is less than that." | — | — | OK |
+| Q10 | Q10 | number | Y | How many days in a week do you work at this health facility? | integer 1–7; input label: "Number of days" | — | — | OK |
+| Q11 | Q11 | number | Y | On average, how many hours do you work per day? | integer 1–24; input label: "Number of hours"; help: "According to DOLE, typically full-time is 8 hours per day, part-time is less than that." | — | — | OK |
 
 ---
 
@@ -100,18 +100,18 @@ The Apr 20 PDF still uses interviewer-style cover blocks (consent-read-aloud, fi
 | pdf_q | legacy_q | type | required | label (verbatim) | choices / notes | gate | skip | gf_risk |
 |---|---|---|---|---|---|---|---|---|
 | Q12 | Q12 | single | Y | Have you heard about Universal Health Care (UHC) prior to this survey? | Yes · No | — | No → Q31 | **SECTION** — skip spans Section B |
-| Q13 | Q13 | single + specify | Y | Has the increase in equipment been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[standard 8-option UHC-implementation set — see "UHC-impl set" below]* | Q12 = Yes | — | OK |
+| Q13 | Q13 | single + specify | Y | Has the increase in equipment been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[standard 8-option UHC-implementation set — see "UHC-impl set" below]*; emphasis: "increase in equipment" | Q12 = Yes | — | OK |
 | Q14 | Q14 | long-text | conditional | What are these pieces of equipment? | (Specify the equipment) | Q13 = any Yes | — | OK |
-| Q15 | Q15 | single + specify | Y | Has the increase in supplies been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]* | Q12 = Yes | — | OK |
+| Q15 | Q15 | single + specify | Y | Has the increase in supplies been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]*; emphasis: "increase in supplies" | Q12 = Yes | — | OK |
 | Q16 | Q16 | long-text | conditional | What are these supplies? | (Specify the supplies) | Q15 = any Yes | — | OK |
-| Q17 | Q17 | single + specify | Y | Has the use of electronic medical records at the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]* | Q12 = Yes | — | OK |
-| Q18 | Q18 | single + specify | Y | Have the changes to the referral system (inbound or outbound) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]* | Q12 = Yes | — | OK |
-| Q19 | Q19 | single + specify | Y | Have the changes in staffing been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]* | Q12 = Yes | — | OK |
-| Q20 | Q20 | single + specify | Y | Have the improved clinical practice guidelines been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]* | Q12 = Yes | — | OK |
-| Q21 | — | single + specify | Y | Have the DOH licensing standards been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]* | Q12 = Yes | — | OK (**NEW in Apr 20** — Annex G licensing/accreditation track) |
-| Q22 | — | single + specify | Y | Have the PhilHealth accreditation requirements been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]* | Q12 = Yes | — | OK (**NEW in Apr 20**) |
-| Q23 | — | single + specify | Y | Have the service delivery protocols been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]* | Q12 = Yes | — | OK (**NEW in Apr 20**) |
-| Q24 | — | single + specify | Y | Have the primary care quality measures been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]* | Q12 = Yes | — | OK (**NEW in Apr 20**) |
+| Q17 | Q17 | single + specify | Y | Has the use of electronic medical records at the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]*; emphasis: "use of electronic medical records" | Q12 = Yes | — | OK |
+| Q18 | Q18 | single + specify | Y | Have the changes to the referral system (inbound or outbound) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]*; emphasis: "changes to the referral system" | Q12 = Yes | — | OK |
+| Q19 | Q19 | single + specify | Y | Have the changes in staffing been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]*; emphasis: "changes in staffing" | Q12 = Yes | — | OK |
+| Q20 | Q20 | single + specify | Y | Have the improved clinical practice guidelines been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]*; emphasis: "improved clinical practice guidelines" | Q12 = Yes | — | OK |
+| Q21 | — | single + specify | Y | Have the DOH licensing standards been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]*; emphasis: "DOH licensing standards" | Q12 = Yes | — | OK (**NEW in Apr 20** — Annex G licensing/accreditation track) |
+| Q22 | — | single + specify | Y | Have the PhilHealth accreditation requirements been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]*; emphasis: "PhilHealth accreditation requirements" | Q12 = Yes | — | OK (**NEW in Apr 20**) |
+| Q23 | — | single + specify | Y | Have the service delivery protocols been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]*; emphasis: "service delivery protocols" | Q12 = Yes | — | OK (**NEW in Apr 20**) |
+| Q24 | — | single + specify | Y | Have the primary care quality measures been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? | *[UHC-impl set]*; emphasis: "primary care quality measures" | Q12 = Yes | — | OK (**NEW in Apr 20**) |
 | Q25 | Q21 | multi + specify | Y | Which of the following do you expect to change in your personal work as a health worker under UHC? | Salary · Number of patients · Working hours · Standards to follow · Preventative health care · Patients seek healthcare in different ways · I don't know · Other (specify) | Q12 = Yes | — | **SECTION** — Q25 selections drive Q26–Q30 conditionals |
 | Q26 | Q22 | single | conditional | How do you expect the following to change: Salary? | Higher · Lower · I don't know | only if Q25 includes "Salary" | — | OK (conditional display gated by Q25) |
 | Q27 | Q23 | single | conditional | How do you expect the following to change: Number of patients? | Higher · Lower · I don't know | only if Q25 includes "Number of patients" | — | OK |
@@ -353,6 +353,20 @@ The Apr 20 PDF still uses interviewer-style cover blocks (consent-read-aloud, fi
 | Q125 | Q114 | multi + specify | conditional | What are you planning to do after leaving this facility? | Transfer to a new facility with the same role · Change training/specialization within healthcare · Change profession · Take an extended leave from work · Take a position as a health worker in another country · Retire · Other (specify) | only if Q123 = any Yes | OK · R3 #312: "Retire" is standalone (auto-clears the other plan options) per Myra 2026-05-21. (Pending sub-item: new option "Transfer to a new facility (in the Philippines) with the same role" awaits the 7-language translation queue before 2026-06-12 PSA submission — not in this change.) |
 
 > **END OF SURVEY**
+
+## Section K — Questionnaire Feedback
+
+> *Preamble (verbatim):* "Thank you for completing the survey! Before you submit, please answer a few short questions about the questionnaire itself. Your feedback will help us improve it."
+
+> **App-only section (pretest).** Added per UAT #1003 (Shan, 2026-07-28); not in the Apr 20 paper PDF, so there are no legacy ids. All five items are required per #1004 — the Section-K Next gate blocks Review/Submit until they are answered. FB5 is a textbox (not a 3-option single) exactly as the ticket specifies.
+
+| pdf_q | legacy_q | type | required | label (verbatim) | choices / notes | gf_risk |
+|---|---|---|---|---|---|---|
+| FB1 | — | single | Y | Was the questionnaire comprehensive? | Yes · No | OK |
+| FB2 | — | single | Y | Did we adequately cover the topic? | Yes · No | OK |
+| FB3 | — | long-text | Y | Are there any questions you expected that we would ask and that we didn't? | — | OK |
+| FB4 | — | long-text | Y | Are there any questions you feel may be too sensitive or that may affect the response rate that we should consider deleting? | — | OK |
+| FB5 | — | long-text | Y | Was the questionnaire too long, too short, or about right? | — | OK |
 
 ---
 

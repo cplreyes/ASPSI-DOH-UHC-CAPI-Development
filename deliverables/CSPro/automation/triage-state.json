@@ -406,6 +406,7 @@
     803,
     805,
     806,
+    807,
     808,
     809,
     810,
@@ -431,18 +432,130 @@
     830,
     831,
     832,
-    833
+    833,
+    834,
+    835,
+    836,
+    839,
+    840,
+    841,
+    842,
+    843,
+    844,
+    845,
+    847,
+    1001,
+    1002,
+    1003,
+    1004,
+    1005,
+    1006,
+    1007,
+    1008,
+    1009,
+    1010,
+    1011,
+    1012,
+    1013,
+    1014,
+    1015,
+    1016,
+    1017,
+    1018,
+    1019,
+    1020,
+    1021,
+    1022,
+    1023,
+    1024,
+    1025,
+    1026,
+    1027,
+    1028,
+    1029,
+    1030,
+    1031,
+    1032,
+    1033,
+    1034,
+    1035,
+    1036,
+    1037,
+    1038,
+    1039,
+    1040,
+    1041,
+    1042,
+    1043,
+    1044,
+    1045,
+    1046,
+    1047,
+    1048,
+    1049,
+    1050,
+    1051,
+    1052,
+    1053,
+    1054,
+    1055,
+    1056,
+    1057,
+    1058,
+    1059,
+    1060,
+    1061,
+    1062,
+    1063,
+    1064,
+    1065,
+    1066,
+    1067,
+    1068,
+    1069,
+    1070,
+    1071,
+    1072,
+    1073,
+    1074,
+    1075,
+    1076,
+    1077,
+    1078,
+    1079,
+    1080,
+    1081,
+    1082,
+    1083,
+    1084,
+    1085,
+    1086,
+    1087,
+    1088,
+    1089,
+    1090,
+    1091,
+    1092,
+    1093,
+    1094,
+    1095,
+    1096,
+    1097,
+    1098,
+    1099,
+    1100,
+    1101
   ],
   "_note_641_open": "#641 (F4 Q57-Q61 BUCAS-area gate) triaged+flagged status:blocked, left OPEN (ASPSI spec decision, same as F3 #464/#495).",
   "_wave_643_663_handled": "2026-06-17 21-issue F4 wave (Marriz/mmgarciano full walkthrough). FIXED+DEPLOYED: #654 (removed wrong Q97=No->Q100 skip; Q98/Q99 independent of Q97), #656 (Q113 'Other' specify box never showed - unconditional postproc skip jumped past it; fixed _gen_checkbox_proc to guard the tail on pos('99')=0 + append tail to OTHER_TXT box - same class as F1 #630). STALE-closed (Marriz tested 06-16 pre-deploy): #653(Q93=#624), #660(Q129=#625/626), #662(Q132=#627). CODE-FIX QUEUED (flagged open, NOT yet done): #645 Q74 + #655 Q107 + #647/#648 NA-exclusivity (need per-question 90-code to avoid collision with existing IDK=90); #649 Q79-88 gate on roster Q45 (needs ASPSI member/condition); #652 Q90 routing (spec-ambiguous, tester unsure - flagged for ASPSI); #661 Q131 gate on Q130 hospital-type + form separation. ASPSI content/design/spec-gap (status:blocked): #643(GAMOT-area gate), #644(Q73 required?), #646(Q76 don't-know-diff contradicts Q75), #650(Q89 IDK option), #651/#657(delete DOH notes), #658(Q118/Q114-118 vs Q122-125 flow - Marriz consulting Merlyne), #659/#663(Q128/Q134 option reorder).",
   "_queue_664_plus": "NEXT CRON: #664-675 (and growing) UNPROCESSED - continuous F3+F4 re-test sweep. #669-675 = F3 'Question Formatting' = more select_all->checkbox conversions (Q59/61/70/73, Q75/82/85/86/87, Q90, Q91/92, Q93, Q94, Q96) - same proven pattern as #635/#639/#640. #664-668 = F4 (Q135 appearance, Q136 skip, Q138 other-specify, Q141.1, Q202). Also revisit the queued code-fixes from the 643-663 wave.",
   "slack_ts": {
-    "C0ASSTPLX9A": "1783162019.578980",
-    "C0B5TL0BT37": "1783162019.578980",
-    "C0B5X1ZPYHY": "1783162019.578980",
-    "C0B60KYFBKN": "1783162019.578980",
-    "C0AV19GB05P": "1783162019.578980",
-    "C0BENS7D4E4": "1783162019.578980"
+    "C0ASSTPLX9A": "1785970996.288121",
+    "C0B5TL0BT37": "1785970996.288121",
+    "C0B5X1ZPYHY": "1785970996.288121",
+    "C0B60KYFBKN": "1785970996.288121",
+    "C0AV19GB05P": "1785970996.288121",
+    "C0BENS7D4E4": "1783732282.930159"
   },
   "last_run": "2026-06-23 (R5 idle): NO new tester activity — 0 new GH bug issues (highest still #737, all processed), 0 tester comments (scan clean), 0 reopens; #capi-scrum only bot resolved-notes, #f1/#f3-uat empty, #f4-uat only own partial-save clarification. Open queue unchanged: trackers #719-724 (round epics, close Jun 27), #725 infra, F2 PWA #524/#528/#543/#587 (out of scope). Phase-1 Supervisor App confirmed built+green (14/14) this session.",
   "_run_2026_06_20_clearloop": "Session 'keep til we clear gh issues'. COMMENTED (close-auth PENDING Carl â€” classifier blocks closing issues I didn't create): #664 (Q135 gate Q130=DOH-retained, fixed+deployed), #672 [URGENT] (resolved by 2026-06-18 Q92 roster redesign â€” stale-build desk test filed 06-17; Q91/Q92 already separate DG_BLK screens, OOP+Donation in tick-list, amounts via roster=tester Option 2), #713 [URGENT] (photo->binary Image item, fixed+deployed), #712 (force-quit = inherent CSEntry partial-save limit; autosave-enable flagged), #464/#495 (BUCAS/GAMOT blocks ALREADY gated Q99/Q152=No->skip; area-presence-vs-heard-of-it gate is ASPSI call). NO new builds needed â€” all buildable urgents already shipped. REMAINING OPEN = decision-dependent (Carl/ASPSI) | Tagalog-blocked | F2-PWA(out-of-scope) | deferred(#491->Q148 batch). #450 Critical (per-lab Q94 nested roster), #477 (remove redundant Q124 skip instr from prompt), #566 (define Q45.1/Q45.2) await Carl/ASPSI.",
@@ -513,7 +626,7 @@
   },
   "deploy_2026-06-21_F3_cluster5_breakoff_disposition": "Cluster 5 (#515 mid-interview withdrawal + #561 partial visibility) BUILT + DEPLOYED to CSWeb on F3 (pilot). Added BREAKOFF (case-start control on the PATIENT_TYPE screen; postproc sets ENUM_RESULT_FINAL_VISIT + skip to closing Result-of-Visit = the proven Q162 jump) and CASE_DISPOSITION (off-form sentinel: 0 In Progress at case open via QUESTIONNAIRE_NUMBER postproc, 1 Completed when ENUM_RESULT_FINAL_VISIT finalizes to 1/2/5, 2 Partial otherwise). Files: F3 generate_dcf (2 FC fields), generate_fmf (FIELD_CONTROL_CASE_START+=BREAKOFF, _OFF_FORM_ITEMS+=CASE_DISPOSITION), generate_apc (sentinel in QUESTIONNAIRE_NUMBER postproc + DISPOSITION_PROCS: PROC BREAKOFF + PROC ENUM_RESULT_FINAL_VISIT; +covered), automation/verify_questions (KNOWN_OFFFORM+=CASE_DISPOSITION). GATES: verify_questions F3 PASS 363/363, facility fills intact 42 (no #714 regress), Designer compile Successful, strict Publish packager PASSED (deploy dialog opened), auto_deploy F3 success (hwnd 2819144, verified PatientSurvey). NOT YET: device-test of the break-off jump + F4 fan-out + GH close of #515/#561. DUPLICATE deploy dialog parked from the fresh publish: old F3 2950692 (Q98 build) alongside fresh 2819144 - needs Carl auth to close (auto_deploy locks fresh by pkg name, unaffected). Supervisor App spec at docs/superpowers/specs/2026-06-20-supervisor-app-design.md reads CASE_DISPOSITION.",
   "cluster5_2026-06-21_COMPLETE": "Cluster 5 (#515 break-off + #561 disposition) DONE on F3 + F4, device-confirmed on the itel. DEVICE FINDING + FIX: a Withdraw/Postponed break-off jumped to the closing Result-of-Visit fine, but then the Verification Photo trigger LOOPED on an out-of-range stop (the photo gate's noinput clears the filename but the onfocus still fired / the trigger field had no valid value). FIX: in PROC ENUM_RESULT_FINAL_VISIT postproc, `endlevel;` (statement form - the strict Publish packager REJECTS endlevel() with parens: 'Expecting ; or operator') for dispositions NOT in the photo set, so postponed/withdraw end cleanly at 'Accept this case?' with no photo. F3 photo set = (1,2,4,5) -> endlevel for 3,6. F4 photo set = (1,3) -> endlevel for 2,4. BREAKOFF->ENUM_RESULT map differs per instrument (F3: 2->6 withdraw,3->3,4->4; F4: 2->4 withdraw,3->2,4->3). F4 has no Patient-Type screen so BREAKOFF got its OWN first form 'Interview status' (FIELD_CONTROL_CASE_START + FORM_PLAN[0]). Both device-confirmed: BREAKOFF on case-start, withdraw jumps past all sections to closing, records Withdraw, endlevel skips photo, clean Accept prompt. CASE_DISPOSITION off-form sentinel 0/1/2 deployed both. #515/#561 CLOSED completed. Many duplicate deploy dialogs accumulated from the repeated publishes (F3 x4, F4 x2+) - need Carl auth to close. Next: Supervisor App implementation plan.",
-  "last_comment_at": "2026-07-04T10:46:59Z",
+  "last_comment_at": "2026-08-05T12:07:25Z",
   "deploy_2026-06-18_batch664_688": "Cron run on the continued F3+F4 sweep (#664-688, 25 issues). FIXED+DEPLOYED+CLOSED: #668 F4 Q202 select_all->Check Box; #669/670/671/673 F3 (11 questions: Q59/61/70/73, Q75/82/85/86/87, Q90, Q93) select_all->Check Box (SUBAGENT a1fd97af, gates repointed Q60/Q62/Q77/Q93/Q85, independently re-verified F3 555/555 + capture types = CheckBox). CRITICAL CAPTURE-TYPE REGRESSION FOUND+FIXED: my earlier F4 Q196(#638)/Q202(#668) AND F3 Q42/Q50/Q52(#635/639/640) checkbox conversions were missing from the fmf _CHECKBOX_FIELDS + optimize_capture_types CHECKBOX lists, so they shipped as single-select DropDown/RadioButton (multi-select DATA LOSS). Added all to F4 generate_fmf._CHECKBOX_FIELDS + F3 generate_fmf._CHECKBOX_FIELDS + optimize CHECKBOX; rebuilt+redeployed BOTH F4 (Q196/Q202 now CheckBox, compile 01:34) and F3 (compile 01:44). LESSON: an F-instrument select_all->checkbox conversion needs FOUR lists not two: generate_dcf(checkbox_multiselect) + generate_apc(CHECKBOX_BASES+CHECKBOX_CONVERT) + generate_fmf(_CHECKBOX_FIELDS) + optimize_capture_types(CHECKBOX). Also subagent fixed a _cb_codes 'Other' mis-coding (Q85 'Other infection' colliding w/ specify on 99). STALE-closed: #665 part1 (Q136=#628). FLAGGED open: #664/#661(Q130 hospital-type gate cluster), #672/674/675(F3 Q92/94/96 amount-matrix redesign - blocked), #688(Q89 routing-reversal, ASPSI), #677(Section N consumed-amount validation - queued + 'don't know' value ASPSI), #685(Section Q Q200/Q201 end-skips + form sep - sequence after #622), #666/667/676/678/679/680/681/682/683/684/686/687(DOH content/wording/script-placement - status:blocked). UNCOMMITTED: F3 generate_dcf/apc/fmf + optimize_capture_types; F4 generate_dcf/apc/fmf + optimize; all regen artifacts.",
   "deploy47_52_2026-06-17": "Loop continued (active tester sweep). #634 F4 Section O preamble before Q186 missing -> added generate_qsf SECTION_INTROS[186] (deploy #9, display-only). Then a 5-issue batch: #637 F4 Q195<>None skip to Q197 (was falling to Q196; already documented in generate_dcf) + #638 F4 Q196_FOREGONE select_all->Check Box (deploy #12, F4 372/372). #635 F3 Q42_DIFFICULTY + #639 F3 Q50_DIFFICULTY_PAYING select_all->Check Box (deploy #11, F3 664/664; both has_other+IDK-exclusive, not skip-targets). #636 F1 Q34_DATA_REPORTS_USED select_all->Check Box via SUBAGENT a1b23651 (5 F1 sync lists: generate_dcf/apc+fmf_checkbox_convert+inject_blocks+optimize; Q32-No-submit gate preserved; deploy #10, F1 313/313). Re-verified subagent work independently (verify PASS + 0 stale Q34 O-fields) per the deploy33 subagent-stale lesson before compiling. All 5 closed+#368/369/370 notes+#f1/f3/f4-uat patches. UNCOMMITTED: F1 generate_dcf/apc+fmf_checkbox_convert+inject_blocks+optimize_capture_types; F3 generate_dcf/apc; F4 generate_dcf/apc/qsf + all regen artifacts.",
   "deploy46_2026-06-17": "Loop resume run: 1 new issue #633 F4 Section N Q177 subtotal range (High). Q177 (12-month health subtotal) was summing Q173-Q176 (SUBTOTAL_PANELS=(173,176)), wrongly including Q173 Health-insurance + Q174 Other-insurance. ROOT: spec doc line 550 said Q173-Q176 but Q177's OWN rendered question text = 'Total value of 175 and 176 (health, 12-month)' + tester both say Q175+Q176 only. Aligned to the rendered text/tester (authoritative over the internal spec doc). FIX: SUBTOTAL_PANELS Q177 -> (175,176); #617 init/compute re-derives (init at Q175_INPATIENT_CONSUMED, real sum Q175+Q176 at Q178 follower which also inits Q182). Q173/Q174 insurance are standalone (no subtotal). verify F4 PASS(379/379)+Compile 12:41:49. DEPLOY: reused parked HouseholdSurvey dialog 339106; upload outran the 24s driver window (false 'no popup') -> confirmed 'Application Deployed Successfully' via win32 enumerate of owned #32770 popup (hwnd 1246826) + clicked OK + re-minimized dialog. Closed #633 + #370 note + #f4-uat patch (ts 1781671642.355949). Committed+pushed prior batch (#627-632) as 7e4922f before this run, but THIS #633 fix is UNCOMMITTED: F4 generate_apc.py + dcf/apc/fmf/ent.",
@@ -932,73 +1045,73 @@
   "_run_2026-06-27_clear_backlog": "Carl directive: clear gh issues + fix, no permission, do what testers ask. CLEARED ENTIRE in-scope F1/F3/F4 backlog (19 issues) in one pass. BUILT+DEPLOYED F3 (Compile 01:26:29, Publish strict-gate PASSED, auto_deploy PatientSurvey Deployed Successfully): #764/#765 NEW Q38 reroute (added Q38_1_PIN_WHEN select-one Yes-only gate + Q38_2_WHY_NOT_REG tick-all CheckBox No-only via CHECKBOX_CONVERT gate+skip-to-Q43; Q38=Yes skips Q43/Q44 to Q45 via Q41=2->Q45 + Q42 postextra skip; SKIP_RULE Q38 in2,3 -> Q38=3 only; CAUGHT+FIXED strict-publish error: skip-to-next illegal outside roster -> skip to Q38_2 explicit), #777 (Q94 how-much label), #782 (removed Q97/Q115 +-10% SOFT_CROSS warnings). DEPLOYED already-built-pending: #760/#763/#781/#784/#786. BUILT+DEPLOYED F4 (Compile 01:22:31, deployed): #796/#797 (AREA_HAS_BUCAS/GAMOT auto-answer=1+noinput in EXTRA_PROCS+covered, removed the =2 gating SKIP_RULES -> blocks asked of everyone, proceed to Q57/Q69). RESOLUTION-CLOSED (no build; verified addressed/superseded/data-state): #772 (F4 Q88 already multi=stale build; F3 Q88 single per spec), #773/#780 (money-amount policy live #779/#781; non-money 0-cell cosmetic hide = roster-structure change needs device-test, deferred, data correct), #778 (#450 per-lab roster labels each row), #788 (reschedule-date enhancement queued), F4 #733 (partial-save data-state like #806), #743 (-98/-99 standard supersedes -55/-999), #755 (0-prefill + either-value-proceeds live). verify F1/F3(370/370)/F4 all PASS. Patch notes #f3-uat p1782495076 + #f4-uat p1782495080; trackers #719/#720/#721 closeout. NO DEVICE this session (adb absent) -> roster-recode items (#773/#780) responsibly deferred not blind-shipped. Board now: only F2-PWA(#774/#768/#524 out-of-scope)+infra #725+R5 trackers #719-724 open.",
   "field_ready": {
     "last_verdict": "CLEAR-PENDING",
-    "last_evaluated_at": "2026-07-04T10:47:02+00:00",
+    "last_evaluated_at": "2026-08-05T23:03:19+00:00",
     "open_actionable": 0,
-    "last_finding_at": "2026-07-04T08:40:46+00:00",
-    "days_since_finding": 0.1,
+    "last_finding_at": "2026-08-05T07:47:32+00:00",
+    "days_since_finding": 0.6,
     "quiet_days": 2.0,
     "consecutive_clear_evals": 0,
     "error": null,
     "history": [
       {
-        "at": "2026-07-02T05:21:16+00:00",
+        "at": "2026-08-04T13:45:28+00:00",
         "verdict": "NOT-READY",
-        "open_actionable": 4,
-        "days_since_finding": 0.1
-      },
-      {
-        "at": "2026-07-02T10:02:36+00:00",
-        "verdict": "CLEAR-PENDING",
-        "open_actionable": 0,
+        "open_actionable": 17,
         "days_since_finding": 0.3
       },
       {
-        "at": "2026-07-02T10:18:34+00:00",
+        "at": "2026-08-05T01:03:28+00:00",
+        "verdict": "NOT-READY",
+        "open_actionable": 17,
+        "days_since_finding": 0.0
+      },
+      {
+        "at": "2026-08-05T01:22:56+00:00",
+        "verdict": "NOT-READY",
+        "open_actionable": 17,
+        "days_since_finding": 0.0
+      },
+      {
+        "at": "2026-08-05T03:10:24+00:00",
+        "verdict": "NOT-READY",
+        "open_actionable": 17,
+        "days_since_finding": 0.0
+      },
+      {
+        "at": "2026-08-05T05:34:33+00:00",
+        "verdict": "NOT-READY",
+        "open_actionable": 18,
+        "days_since_finding": 0.1
+      },
+      {
+        "at": "2026-08-05T07:20:45+00:00",
+        "verdict": "NOT-READY",
+        "open_actionable": 17,
+        "days_since_finding": 0.1
+      },
+      {
+        "at": "2026-08-05T08:24:50+00:00",
+        "verdict": "NOT-READY",
+        "open_actionable": 18,
+        "days_since_finding": 0.0
+      },
+      {
+        "at": "2026-08-05T10:07:44+00:00",
+        "verdict": "NOT-READY",
+        "open_actionable": 18,
+        "days_since_finding": 0.1
+      },
+      {
+        "at": "2026-08-05T12:12:37+00:00",
         "verdict": "CLEAR-PENDING",
         "open_actionable": 0,
         "days_since_finding": 0.2
       },
       {
-        "at": "2026-07-02T11:21:39+00:00",
+        "at": "2026-08-05T23:03:19+00:00",
         "verdict": "CLEAR-PENDING",
         "open_actionable": 0,
-        "days_since_finding": 0.2
-      },
-      {
-        "at": "2026-07-02T12:34:44+00:00",
-        "verdict": "CLEAR-PENDING",
-        "open_actionable": 0,
-        "days_since_finding": 0.3
-      },
-      {
-        "at": "2026-07-03T02:24:32+00:00",
-        "verdict": "NOT-READY",
-        "open_actionable": 2,
-        "days_since_finding": 0.0
-      },
-      {
-        "at": "2026-07-03T02:48:42+00:00",
-        "verdict": "CLEAR-PENDING",
-        "open_actionable": 0,
-        "days_since_finding": 0.0
-      },
-      {
-        "at": "2026-07-03T03:06:55+00:00",
-        "verdict": "CLEAR-PENDING",
-        "open_actionable": 0,
-        "days_since_finding": 0.0
-      },
-      {
-        "at": "2026-07-03T09:48:26+00:00",
-        "verdict": "NOT-READY",
-        "open_actionable": 1,
-        "days_since_finding": 0.3
-      },
-      {
-        "at": "2026-07-04T10:47:02+00:00",
-        "verdict": "CLEAR-PENDING",
-        "open_actionable": 0,
-        "days_since_finding": 0.1
+        "days_since_finding": 0.6
       }
     ],
     "_doc": "Auto-written by automation/check_field_ready.py (E0-UAT-REFRAME stop-condition gate). FIELD-READY = capi-uat-triage may stop."
@@ -1140,5 +1253,163 @@
       "field_ready_gate": "CLEAR-PENDING — 0 open, quiet window restarted by today's findings, ages out ~2026-07-05"
     }
   },
-  "_run_2026-07-03_830_831": "#830 F1 Q160 (Critical claim): DIAGNOSED as CSEntry ENGINE behavior — resume-to-last-position re-validates stored values raw; a Check Box with 2+ ticks holds packed codes ('0102') that aren't value-set entries -> engine 'Out of range' + forced re-answer. Video-confirmed on current v1.0.2; build wiring audited correct (dcf/apc/fmf/optimize); single ticks resume fine (why R5 partial-save tests passed). NO app-side fix (validation pre-empts logic; CSPro 8 dropped the validate-alpha toggle; combos can't be enumerated). OPEN as engine-blocked: mitigations = case-tree re-tick SOP, upstream forum post drafted (automation/upstream-csentry-checkbox-resume-report.md, Carl posts), device CSEntry version check requested on-issue (8.0.1 vs 8.1 pin decision). Affects ALL multi-ticked checkboxes before a partial-save point, all 3 instruments. #831 F2 admin: ops request to remove one demo-row (2026-07-03 10:44, DEMO-FAC-RHU-QC-1, token typed into HCW ID). No delete exists by design; Carl removes/voids the sheet row (pointer on issue); feature candidates queued: admin void-response action + encoder HCW-ID format validation. OPEN."
+  "_run_2026-07-03_830_831": "#830 F1 Q160 (Critical claim): DIAGNOSED as CSEntry ENGINE behavior — resume-to-last-position re-validates stored values raw; a Check Box with 2+ ticks holds packed codes ('0102') that aren't value-set entries -> engine 'Out of range' + forced re-answer. Video-confirmed on current v1.0.2; build wiring audited correct (dcf/apc/fmf/optimize); single ticks resume fine (why R5 partial-save tests passed). NO app-side fix (validation pre-empts logic; CSPro 8 dropped the validate-alpha toggle; combos can't be enumerated). OPEN as engine-blocked: mitigations = case-tree re-tick SOP, upstream forum post drafted (automation/upstream-csentry-checkbox-resume-report.md, Carl posts), device CSEntry version check requested on-issue (8.0.1 vs 8.1 pin decision). Affects ALL multi-ticked checkboxes before a partial-save point, all 3 instruments. #831 F2 admin: ops request to remove one demo-row (2026-07-03 10:44, DEMO-FAC-RHU-QC-1, token typed into HCW ID). No delete exists by design; Carl removes/voids the sheet row (pointer on issue); feature candidates queued: admin void-response action + encoder HCW-ID format validation. OPEN.",
+  "_run_2026-07-17_pretest_triage": {
+    "new_issues_seen": [
+      839,
+      840,
+      842,
+      843
+    ],
+    "closed_this_session": [
+      841
+    ],
+    "note": "841 (CSWeb View case 500/hang) root-caused + on-box patched + closed earlier this session. 840/842/843 all filed by cplreyes (Carl), already fully root-caused by him; NONE are F1/F3/F4 generator bugs so the fix pipeline does not apply: 840=enhancement, dict change, explicitly deferred post-pretest (frozen); 842=CSWeb reporting layer (R6 placeholder plan still lists Binan + case facility code != plan code); 843=CSPro 8.0.1 CLIENT .csdb write bug (server sends 17, client writes 3, reports complete) - office-side only, no field data loss, needs upstream/workaround not a generator fix.",
+    "zero_tester_filed_findings": "Pretest opened 2026-07-15; as of 2026-07-17 NO enumerator has filed any finding. All 5 pretest issues authored by cplreyes.",
+    "gps_157_deployed": "F1 v1.1.1 / F3 v1.1.1 / F4 v1.4.1 deployed 2026-07-16, device-verified on itel 2026-07-17; NOT yet field-exercised."
+  },
+  "_run_2026-08-03_pretest_f1_q2": {
+    "run": "2026-08-03 capi-uat-triage",
+    "new_issues": {
+      "1005": "F1 Q2 designation - 2 options missing + 1 reworded (REAL defect)",
+      "1006": "F1 Q5-6 stem repeats per component (design choice A/B put to Carl)",
+      "1001-1004": "F2 PWA - out of scope for this loop, F2 hotfix queue"
+    },
+    "fix_1005": "generate_dcf.py Q2_ROLES 11->13 opts (codes 1-11 unchanged; +12 Rural Health Physician, +99 Other) + new Q2_OTHER_TXT item + NEW inject_q2_other_txt.py form injector. apc gate auto-derived.",
+    "verify": "verify_questions.py F1 317/317 reachable PASS; F3/F4 PASS. Injector idempotent, tested vs LIVE .fmf copy.",
+    "DEPLOY": "DONE + VERIFIED 2026-08-03 08:32:11 UTC. Server pkg /opt/app/lamp/www/csweb/files/apps/FacilityHeadSurvey.zip 499199B; .pen decoded (bzip2+UTF-16LE) - new opts present, old wording count=0.",
+    "issues_left_open": "both - deploy incomplete, per skill rule",
+    "translations_owed": "Rural Health Unit / Health Center Head (6 locales, BCL orphaned); Rural Health Physician (6 locales). Other (specify) already translated.",
+    "PORTED_TO_MAIN": "yes 2026-08-03 - generate_dcf.py + inject_q2_other_txt.py + inject_short_component_labels.py copied worktree->main; pipeline re-run in main. GPS-last form CONFIRMED intact after port.",
+    "fix_1006": "Option A (Carl 2026-08-03): inject_short_component_labels.py shortens on-form [Text] for Q5/Q6 year+month to \"Number of Years\"/\"Number of Months\"; dict labels untouched so codebook/exports keep the full stem.",
+    "verify_main": "verify_questions F1 317/317 PASS; Designer compile Successful 15:14:38; Publish packager OK (deploy dialog opened, no Compile Failed).",
+    "backup": "pre-port F1 build backed up to job tmp f1_backup_151305",
+    "NOT_notified": "Slack patch note NOT sent and issues NOT closed - deploy incomplete.",
+    "CLOSED": "#1005 and #1006 closed completed; Slack patch note posted to #f1-uat.",
+    "csweb_account_finding": "cspro_users in csweb_uhc_y2 was NOT rebuilt by the Jul-28 migration: admin + cplreyes both created 2026-06-02, unmodified; marriz 2026-07-14. Role2=Administrator. Was purely a forgotten pw + lost CSDeploy cache.",
+    "SECURITY_FLAG": "cspro_role_permissions: role Field Sync (se-001..007, tablet accounts) holds users_all + roles_all + settings_all on top of data/apps/reports. Over-privileged for field devices. NOT changed - needs Carl decision.",
+    "NEW_WAVE": "18 further F1 pretest tickets #1007-#1024 filed 2026-08-03 (Sections C/D/E) - labelled epic:f1+from-pretest-2026-07, NOT yet triaged or fixed."
+  },
+  "_run_2026-08-03_translations_import": {
+    "what": "Paper-translation import from [FOR DOH ONLY] June-5 questionnaires (8 langs x F1-F4) via anchor extraction",
+    "extractor": "deliverables/CSPro/translations-paper-extract/ (gitignored; anchor_extract.py + 21 clean/flagged JSON pairs + QA-REPORT.md)",
+    "merged": "4978 pairs ADD-ONLY into F1/F3/F4 translations/*.json (both checkouts); ilo.json NEW x3, hil.json NEW for F3/F4",
+    "ilocano": "7th locale wired via cspro_helpers.TRANSLATION_LANGUAGES (drop-in)",
+    "coverage_after": "F1 72-81% / F3 63-71% / F4 69-74%; ILO 46-59%; HIL F3/F4 39-45%",
+    "verify": "apc md5-unchanged x3 (translations cannot touch logic); verify_questions F1/F3/F4 PASS; Designer compile Successful x3 (F1 18:49:44, F3 18:53:53 recompiled after buffer-drift restore, F4 18:51:28)",
+    "versions": "minor bump: F1 1.1.4->1.2.0, F3 1.1.5->1.2.0, F4 1.4.4->1.5.0 (stamp_version, pff+qsf ok)",
+    "deploys": "ALL THREE SUCCEEDED + byte-level verified: F1 v1.2.0 (10:56:53Z), F3 v1.2.0 (11:01:12Z), F4 v1.5.0 (11:03:11Z). Dialogs package-name-verified; no login prompts. Server pens carry ILO/HIL/WAR markers + Ilocano lang + Q2 fix. Patch notes posted to all 3 tester channels.",
+    "gotcha_learned": "bash taskkill /F /IM is MSYS-mangled and silently fails -> stale Designer attach -> Ctrl+L hits Scintilla line-cut. Use PowerShell Stop-Process. Also: File-menu clicks must happen in the SAME process as Alt+F (menu closes on focus loss).",
+    "verification_note": "naive single-pass text decode of a .pen FALSE-reports strings missing - always search raw bytes for s.encode(utf-16-le)"
+  },
+  "_run_2026-08-03_f2_translations": {
+    "what": "F2 PWA translations completed from June-5 papers + audited CSPro cross-borrow",
+    "coverage": "fil 307/ceb 312/bis 312/ilo 313/hil 298/war 324/bcl 310 of 377; remaining gaps STRUCTURAL (clinical terms EN-on-paper, numerals, PWA meta) - papers EXHAUSTED",
+    "gates": "generate clean, tsc -b --force clean, 518/518 tests, bundle content-verified pre+post deploy",
+    "deploy": "LIVE 2026-08-03 ~11:38 UTC bundle index-DhN3LUIe.js; backup /opt/app/f2-www.bak-20260803; GOTCHA: win-scp dir modes 700 broke asset serving until chmod 755",
+    "notify": "#f2-pwa-uat patch note posted"
+  },
+  "_run_2026-08-04_wave41": {
+    "triaged": "41 new tickets #1007-#1047 labelled (F1: epic:f1+from-pretest-2026-07 x33; F2: epic:f2-pwa+from-pretest-2026-07 x8)",
+    "themes": "F1: ~29 option-label fidelity vs PAPI (110 label deltas sized, diff at job tmp xtr/f1_option_diff.txt) + Q34 instruction + Q57 definition placement + Q66-74/Q122-134 roster stems + Q103/Q110 order+specify. F2 x8 = XJ re-files (subheaders E1/E2, instructions Q98/Q113, employment defs, input labels Q10/Q11, highlight, doctors-fee note)",
+    "fixed_this_run": "#1023/#1024: Q103+Q110 value-set order (codes unchanged) + THE SPECIFY SKIP BUG (unconditional skip jumped over _OTHER_TXT; now routes through on Other=5). apc+dcf generators. Compile Successful 12:54:38. v1.2.1.",
+    "deploy": "v1.2.1 DEPLOYED + verified (pff v1.2.1 + both new errmsgs byte-present in server pen). First attempt failed on a picker race (documented); retry clean. #1023/#1024 closed, patch note posted.",
+    "comment_signals": "#869 ASPSI: typo already fixed in PAPI (parked XJ item answered); #1047 do-not-remove note constraint; #1024 comment = the Q110 specify bug (fixed)",
+    "NOT_DONE": "29-question label mass-pass (needs care: shared cspro_helpers constants ripple to F3/F4 + EN label changes re-key translations); Q34/Q57/#1015/#1016; F2 batch = PWA queue per scope guard.",
+    "f1_label_pass": "62 edit groups (60 auto + Q114/Q120 30-days) applied to generate_dcf.py; CODE MAP VERIFIED IDENTICAL (149 value sets, zero code changes); compile OK 13:15:49; v1.2.2 DEPLOYED + byte-verified; 14 tickets closed (#1007,1009,1012,1013,1017,1020,1021,1022,1025,1028,1029,1030,1032,1033). Gotchas: PDF stray-quote broke a Python literal (fixed+ast-guarded); Q137/Q140 shared-list bleed flipped codes via _cb_codes specif-match - reverted, family needs screenshots.",
+    "f2_batch": "ALL 8 FIXED+DEPLOYED+CLOSED (#1040-#1047). Mechanism: parser now attaches mid-section ###-subheads + 2nd+ Preamble/Scope blocks to the next item as item.preamble; new inputLabel + emphasis Item fields (spec-annotated); renderer shows preamble/inputLabel + bolds emphasis phrase. 518/518 tests, tsc clean, live-verified 8/8 markers in bundle admin-BUNl2wql.js. #1044 closed as already-present-since-R6 w/ evidence.",
+    "remaining_open": "F1: #1008 (Q34 instruction) #1010 (Q50 1 delta) #1011 (Q57 def placement) #1014 #1015 #1016 (roster stems) #1018 #1019 (Q88 stem) #1026 #1027 (Q137/Q140 family - screenshots) #1031 #1034-#1039 (short/shared labels + Q161 scale + Q163/165/166) = 17 open; need per-ticket screenshots or shared-constant decisions."
+  },
+  "_run_2026-08-04_f3wave20": {
+    "triaged": "20 new F3 tickets #1048-#1067 (labelled epic:f3+from-pretest-2026-07); no Slack-only reports; no reopens",
+    "fixed_deployed": "19 of 20 in F3 v1.3.0 (compile 20:58:05, verify_questions F1/F3/F4 PASS, server pen byte-verified: v1.3.0 x8, Select-all x215, Tick x0, Q18 RF, Q47/Q131 stems, Q150). Code-map audit: +Q18 RF=98, +Q178 NA=6 (restored, #514 reversed per paper), Q15 display reorder, 10 label-only edits, ZERO code changes.",
+    "clusters": "TICK->SELECT sweep x9 labels; SELECT-ALL notes x16+2 (Q72 excluded - numeric; Q85/86 already present); paper notes Q19/Q33/Q34/Q86/Q18(BY_NAME mechanism added to generate_qsf); component-stem shortening Q5/Q58/Q106/Q150 (2nd component short, dcf labels); per-item stems Q47 x4 + Q131-134 (intros deduped EN+FIL); order Q15; labels house/Other-specify Q22/Q104/Q107/Q109+112; value-set adds Q18 RF, Q178 NA",
+    "deferred_1064": "RESOLVED same day: Carl freed the desktop -> noinput gate RE-LANDED and DESK-PROVEN on Windows CSEntry via new generic F3_PILOT_JUMP=<field> env gate (generalises F3_PILOT_Q107) + csentry_drive stepwise: (1) ALL-non-money Q92 selection advanced cleanly (no hang, landed Q93); (2) mixed Q96 selection stopped ONLY on Out-of-pocket (took 500), non-money row skipped, landed Q97. Deployed v1.3.1 (patch bump), server pen byte-verified, #1064 CLOSED with desk-test screenshot @93cb355. Drive lessons: CSEntry value-set popups = click the code Button then typing digits into the MAIN window advances; errmsg modals are Chromium (#32770-invisible) - dismiss by clicking OK coordinates; PGUP back-navigation is blocked mid-entry.",
+    "xylee_overlap": "XJ reviewed F2+F4 ONLY (151 tickets #849-#999). F2 pretest batch #1040-47 = XJ re-files (cross-ref comments posted on parked #863/865/867/868/872/873 - fixes live, left parked). F3 wave repeats XJ-F4 defect classes (Q18 income=#899, Q22 house=#903, Q15 order~#902, select-all=#896, Others-specify family). F1 never XJ-reviewed.",
+    "evidence": "44 per-ticket evidence renders (F1 x17 v1.2.2, F3 x19 v1.3.0, F2 x8) from DEPLOYED builds (qsf+dcf / items.ts) committed docs/uat-fix-evidence/2026-08-04/ @19632b3 on worktree-f2-productivity-panel (xj-pattern), attached to all 44 issues via raw URLs. CSEntry/on-device captures NOT possible this run (desktop in use).",
+    "desktop_note": "pywinauto case-entry driver stray keystrokes may have landed in Carl's foreground VS Code during the popup fight - flagged in run report.",
+    "notify": "#f3-uat consolidated patch note posted; per-issue GH comments; resolver bot auto-posts Resolved to #capi-scrum (manual thread replies skipped as duplicative)."
+  },
+  "_run_2026-08-05_f4_1068": {
+    "signals": "1 new issue #1068 (first F4 pretest finding); 0 tester comments since 08-04 marker; 0 reopens; Slack quiet. Carl pushed the Jul15-Aug4 sync commits to main this morning (c322022 554 files + 43c2c40 153 files).",
+    "fix_1068": "F4 Q17 missing paper definition -> generate_qsf.py INSTRUCTIONS[17] = definition + _READ_ONE (mirrors F3 #1051; paper order def-first). Worktree F4 gens were STALE - refreshed from main first.",
+    "verify_deploy": "compile Successful 08:56:36; verify_questions F1/F3/F4 PASS; v1.5.1 stamped; publish+auto_deploy clean; server pen byte-verified (v1.5.1 x8, definition x4). #1068 closed w/ evidence render @8d1b89f; #370 noted; #f4-uat patch note posted.",
+    "note": "F4 INSTRUCTIONS[18] still says 'Tick the income category' - the F4 twin of F3 #1048 / parked XJ #899; one-word fix ready if Carl wants to pre-empt the F4 wave."
+  },
+  "_run_2026-08-05b_f4_selectall": {
+    "signals": "2 new F4 issues #1069 (Q66) + #1070 (Q70/71/74/77/78/106/107/202); 0 tester comments; 0 reopens; Slack quiet.",
+    "fix": "F4 twin of F3 #1055: SELECT ALL THAT APPLY notes added via generate_qsf INSTRUCTIONS fromkeys for all 9 (each verified checkbox_multiselect in dcf). GOTCHA repeated from F3: Q70/Q71 sit in the _GAMOT_FAC fromkeys (last-key-wins) - needed explicit combined entries; first build shipped 7/9, caught by the 9-name qsf spot-check before deploy.",
+    "verify_deploy": "compile Successful 09:15:20; verify_questions PASS x3; v1.5.2; publish+auto_deploy clean; server pen byte-verified (v1.5.2 x8, combined GAMOT+select-all note x13, select-all x513). #1069/#1070 closed w/ evidence renders @ac6bede; #370 noted; #f4-uat patch posted."
+  },
+  "_run_2026-08-05c_f4_wave10": {
+    "signals": "10 new F4 issues #1071-#1080 (Sections B-G sweep); 6 HIGH severity (urgent-labelled); 0 comments; 0 reopens.",
+    "urgent_fix": "#1075-#1080 DK-exclusive soft-warn -> HARD reenter, fixed at the _gen_checkbox_proc emitter = CLASS-WIDE (all 26 exclusive bases). Positive pos() polarity, same structure as the field-proven select>=1 / #798 hard checks.",
+    "wording_fixes": "#1071 Q11 reorder (F3 #1057 twin); #1072 Q22 house (F3 #1058 twin); #1073 Q67 short MM stem (F3 #1062 twin); #1074 Q46: 9 verbatim membership definitions in QSF INSTRUCTIONS[46] (255-char label cap forces question-text placement) + DK-before-Other reorder.",
+    "verify_deploy": "code-map: 2 display reorders ONLY, zero code changes; compile Successful 10:17:04; verify_questions PASS x3; v1.5.3; first auto_deploy run STALLED (blank 2.4KB shots - desktop covered by Carl's VS Code, click lost; TaskStop + foreground retry clean); server pen byte-verified (hard-block msg x26, house x16, defs x8, Q67 stem x16).",
+    "SKILL_3C_FIRST_LIVE_RUN": "Tablet proof via capi_tablet emulator: sideloaded the PILOT pen (F4_PILOT_JUMP=Q52_UHC_SOURCE, F7-published, loud DO-NOT-USE pff) + drove QN->geo->Q1-Q3->jump on Android; captured Q52 render, the HARD-BLOCK dialog (News+DK refused), and the valid-path advance to Q53. Renders for #1071-#1074. All @3169a7c. Clean apc regenerated after pen (0 pilot blocks). Drive notes: input text lands in the FOCUSED field only - tap the target box first, verify by shot; keyevent 4 hides the kb to see fields; radio popups on Android are inline (tap circle = select+advance for unselected).",
+    "notify": "#f4-uat patch note; #370 closeout; 10 issues closed w/ evidence."
+  },
+  "_run_2026-08-05d_f4_wave19": {
+    "signals": "19 new F4 issues #1081-#1099 (10:12-10:49 MNL, filed from the pre-v1.5.3 build); Slack quiet; 0 tester comments; 0 reopens.",
+    "dups_closed": "#1081-#1097 (17, all High) = the DK/None-exclusive soft-warn class already hard-blocked class-wide in v1.5.3 — every cited Q verified among the 26 hard bases in the deployed apc; closed w/ class tablet evidence + remove-and-re-add retest.",
+    "fix_1098": "Q141_BILL_ITEMS 'Other expenses' keeps paper code 07 (not specif-99) so its _OTHER_TXT was left ungated (#615 workaround) -> always prompted. Fix: CHECKBOX_OTHER_CODE per-base override in _gen_checkbox_proc; Q141 flipped to has_other=True/code 07. Diff = 1 new PROC. verify PASS x3; compile Successful 13:20:38; deployed v1.5.4; server pen byte-verified (bz2 -> UTF-16LE: v1.5.4 x8, gate PROC + msg present, cannot-be-combined x28).",
+    "PEN_VERIFY_HOWTO": "Deploy-dialog pens are bzip2-compressed with UTF-16LE text inside: bz2.decompress(pen) then count utf-16-le markers.",
+    "deploy_dialog_note": "F4 parked deploy dialog was GONE at run start (consumed by the v1.5.3 stall/retry) - republished via Designer File > Publish and Deploy; auto_deploy then succeeded and re-parked the dialog (pid 23560 owns it). F1/F3 dialogs: NOT present.",
+    "carl_at_desktop": "Pilot-pen F7 publish ABORTED mid-flow: desktop screenshot showed Carl active in Edge (13:30) -> UI-automation stand-down rule. Killed only the pilot Designer, clean apc regenerated (md5 == deployed build). #1098 closed with render-tier evidence per skill 3c fallback; tablet capture DEFERRED to next cycle when desk is free (pilot: F4_PILOT_JUMP=Q140_RECALL_BREAKDOWN).",
+    "flag_1099": "#1099 date format (YYYYMMDD vs MMDDYYYY beside visit-date questions) left OPEN: capture format defines STORED composition; consumers = supervisor-app case_model.py + F1/F3 same fields; mid-round flip = mixed encodings. Needs Carl's coordinated-change go/no-go.",
+    "notify": "#f4-uat patch note (v1.5.3+v1.5.4); #370 closeout; 18/19 closed."
+  },
+  "_run_2026-08-05e_f4_1099_1100": {
+    "signals": "1 new issue #1100 (Q45.1/45.2 note removal); 0 comments; 0 reopens; Slack quiet.",
+    "carl_directive": "#1099 resolved per Carl's in-chat ask ('show frontend their desired format, backend same'): Option A - computed read-only MM/DD/YYYY echo under each visit date; stored YYYYMMDD + picker untouched; shared-helper opt-in flag date_display (F4 on; F1/F3 at next builds).",
+    "builds": "v1.5.5 (echo + Q45 note removal) then v1.5.6 SAME-CYCLE: the on-device run caught edit-mask bug - CSPro edit() treats '0' as LITERAL zero, only '9' is a digit slot; \"0999\" rendered 2026 as \"0026\". Masks -> \"99\"/\"9999\". Both deploys byte-verified (bz2->UTF-16LE pen).",
+    "SKILL_3C_CATCH": "Tablet-proof requirement caught a real formatting defect the compile+render path could never see - echo verified 08/05/2026 on-device after redeploy (f4-1099-echo-tablet.png @2550b77).",
+    "drive_notes": "CSEntry Android IME quirk: after an errmsg dialog reenter, adb 'input text' goes to the TOP EditText of the form page, not the engine's reentered field - always tap the target box, verify by shot. Sidebar 'Stop Adding?' (Partial Save/Discard/Cancel) opens on Back at case level - Cancel returns cleanly. F7-publish pff must mirror the DEPLOYED pff layout (Application= under [Files]; Description= under [Run Information]) and sideload folder must NOT contain the raw .ent (CSEntry then fails to resolve the pen).",
+    "deferred": "#1098 Q141 tablet capture still owed (closed w/ render tier) - next cycle if desk free: F4_PILOT_JUMP=Q140_RECALL_BREAKDOWN.",
+    "notify": "#f4-uat patch note (v1.5.6); #370 5th-batch note; #1099+#1100 closed."
+  },
+  "_run_2026-08-05f_echo_f1f3": {
+    "carl_directive": "apply the same date echo to F1 and F3 now",
+    "builds": "F1 v1.2.3 + F3 v1.3.2 deployed, byte-verified at full symbol parity. F3 = F4 pattern (date_display flag + fmf lists + CUSTOM_VALIDATION). F1 = local build_field_control items + BESPOKE_PROCS entries (F1 date names: DATE_FIRST_VISITED_THE_FACILITY / DATE_OF_FINAL_VISIT_TO_THE_FACILITY) + NEW idempotent inject_date_display.py for the hand-maintained fmf (30px rows; threshold must clear field+label pairs — labels sit at field-y+3; guard caught the tear on first run).",
+    "QSF_ORDERING_LESSON": "F1's generate_qsf sources the DCF FILE (F3/F4's source the python dict builders), so `stamp_version bump` BEFORE the driver build left F1's qsf without the new fields — first F1 deploy shipped dict+form+logic but no question text (pen symbol count 1 vs baseline 3 exposed it). Fix: rerun generate_qsf AFTER the build (footer survives — it reads versions.json), republish, redeploy. RULE: for F1, bump versions AFTER --build, or rerun generate_qsf last; always compare new-symbol counts against a baseline field.",
+    "deploy_dialogs": "Parked 'CSPro Deploy Application' dialogs are accumulating (F4 x3 from today's deploys + F1 + F3) — auto_deploy matches by package name so they're harmless, but Carl may want to close the extras and keep one per instrument.",
+    "notify": "#f1-uat + #f3-uat patch notes; #368/#369 deploy notes."
+  },
+  "_run_2026-08-05g_1101_staged": {
+    "signals": "1 new issue #1101 (Q117 '(Only if Q112=Yes)' note removal, Low); Slack quiet; 0 reopens.",
+    "status": "FIX STAGED, DEPLOY DEFERRED: generator corrected (worktree+main synced; Q118's #658 precedent; #816 gate confirmed) but Carl was AT THE DESKTOP (idle 1s) -> UI stand-down: no compile/deploy/capture this cycle. Issue labeled + status comment posted; left OPEN per skill (close only after fix+verify+deploy).",
+    "next_cycle_owes": "(1) build+deploy F4 v1.5.7 (#1101), close w/ evidence; (2) STILL owed: #1098 Q141 tablet capture (F4_PILOT_JUMP=Q140_RECALL_BREAKDOWN) - desk must be free."
+  },
+  "_run_2026-08-05g_board_clear": {
+    "carl_directive": "fix the gh issues and PRs, clear them",
+    "closed": "18 issues: all 17 F1 (#1008-#1039 set) in v1.2.4 + #1101 (F4 v1.5.7 Q117 note; staged by Carl's other session, built+deployed here). F1+F3+F4 CSEntry boards CLEAR.",
+    "f1_fixes": "6 already-fixed-in-v1.2.3 verified; 11 new: Q57 def removed, Q66-74+Q122-134 short stems, Q88 tranche via INSTRUCTIONS[88], Q137/140 split-pair verbatim, Q160 examples, Q161 descriptions, Q163 Multi-tasking(04)+Retention-dup-regression fix, Q165/Q166 'Support for...'+audience. _cb_codes overrides hand tuple codes: deployed Q163 = 01-04,99,90 (NO code changes vs v1.2.3).",
+    "THREE_ROOT_CAUSES": "(1) embedded double-quote in Q161 dcf label CRASHED the CSDeploy pen packager - truncated 68KiB uploads reported as 'Deployed Successfully' (F1 downloads broken ~18:20-19:50); swap to single quotes. (2) checkbox/select_all specify detection was last-option-only (cspro_helpers, now position-independent) - Q163 paper order dropped the _OTHER_TXT item while apc kept its PROC ('PROC invalid'). (3) Designer compile+save during the broken window DELETED the orphan Q163 form field from the hand fmf; restored via idempotent inject_q163_other_txt.py; a stray keystroke in the Designer editor also ate an apc line (regenerate, never trust an editor-touched apc).",
+    "pr_848": "Reported to Carl: living worktree branch + evidence host; merge is HIS call (main already carries generator content via file-copy).",
+    "f2_queue": "#1001-#1004 still open (PWA lane) - next up under the board-clear mandate.",
+    "notify": "#f1-uat big patch note (incl. corrupted-download warning window); #f4-uat v1.5.7 note; #368/#370 closeouts."
+  },
+  "_run_2026-08-05h_f2_board_clear": {
+    "signals": "No new F1/F3/F4 activity (GH quiet, all 4 Slack channels quiet, no reopens).",
+    "closed": "F2 PWA queue #1001-#1004 fixed + deployed + closed - the last 4 open non-parked issues on the whole board.",
+    "deploy": "F2 PWA v2.1.0 / spec 2026-08-05-r8 -> /opt/app/f2-www on the VPS (uhc-hcw.asiansocial.org; elestio-nginx -> f2-api:8787 serves static+API). Additive tar-over (old hashed assets kept); index.html backup in /tmp. Live-verified: new index chunk served, admin chunk carries FB items + raffle strings x8 + f2admin.session; live /admin/login shows new footer.",
+    "f2_1001": "sessionStorage mirror + BroadcastChannel handoff + broadcast logout in admin auth-context (NO localStorage - spec 10.4 kept); return-to deep-link was already in since 2026-07-30. Login footer copy updated.",
+    "f2_1002": "ConsentScreen raffle phone (agree-path only, optional, GCash note, blank->verbatim confirm); raffle_phone in values; 8-locale EN strings pending re-key.",
+    "f2_1003_1004": "Section K (FB1-FB5, app-only namespace) via spec->generator; parse-spec row filter widened to FB ids; wired into MultiSectionForm/ReviewSection; required via #809 Next gate + sectionKSchema. LOCAL_SPEC_VERSION -> 2026-08-05-r8 (backend min NOT raised - values_json is schemaless, old queue drains fine).",
+    "verify": "tsc -b --force clean; vitest 524/524 (57 files); build gates green.",
+    "evidence": "docs/uat-fix-evidence/2026-08-05/f2-*.png @ f2af0c9e (live login capture + renders)",
+    "notify": "#f2-pwa-uat patch note p1785938095348019",
+    "note": "F2 source changes stay uncommitted in the worktree per standing no-git rule (same as the #1040-#1047 wave); evidence commit is the one sanctioned write."
+  },
+  "_run_2026-08-05i_quiet": "No new tester activity (GH + 5 Slack channels quiet); cursors advanced.",
+  "_run_2026-08-06a_goal_board_clear": {
+    "carl_goal": "/goal fix the gh issues and PRs, clear them (2026-08-06)",
+    "847": "FIXED+DEPLOYED: encoder HCW-ID validation - portal gate live (hcw-id-validation.ts + EncodeQueue inline error, admin-CYtphkVe.js byte-verified); server belt in AdminEncoder.js ships with next AS deploy (as-deploy.yml runs on main push). app 526/526, backend 211/211.",
+    "842": "CLOSED: build-side done since 07-15 (real targets); F3/F4 quotas = ASPSI handoff.",
+    "839_807": "CLOSED: round trackers (pretest + R6 hub) with closeout summaries.",
+    "pr_848": "CLOSED WITHOUT MERGE per goal; branch stays live as evidence host + prod source.",
+    "xj_151": "BLOCKED: mass-close of the 151 parked XJ issues (849-999) denied twice by the permission classifier (bulk-close loops). Disposition comment ready at jobs tmp xj_close.md; needs Carl's go or a Bash permission rule. Board otherwise: 0 open actionable issues, 0 open PRs.",
+    "evidence": "docs/uat-fix-evidence/2026-08-06/f2-847.png @ 2a213340",
+    "notify": "#f2-pwa-uat note for #847"
+  }
 }

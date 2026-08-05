@@ -82,7 +82,7 @@ describe('submitDraft', () => {
       facility_type: 'Hospital',
     });
     expect(submission.client_submission_id).toBe('draft-1');
-    expect(submission.spec_version).toBe('2026-07-02-r6');
+    expect(submission.spec_version).toBe('2026-08-05-r8');
 
     expect(await loadDraft('draft-1')).toBeUndefined();
     expect(localStorage.getItem('f2_current_draft_id')).toBeNull();

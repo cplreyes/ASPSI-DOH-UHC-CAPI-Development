@@ -283,7 +283,11 @@ def select_all(prefix, label, options, with_other_txt=None):
             value_set_options=YES_NO,
         ))
     if with_other_txt is None:
-        with_other_txt = bool(options) and "specify" in options[-1][0].lower()
+        # #1037 (F1 Q163): detect the specify option ANYWHERE in the list, not just
+        # last — paper option order can put an exclusive (e.g. "I don't know") after
+        # "Other (specify)". Last-only detection silently dropped the _OTHER_TXT dict
+        # item while the apc still emitted its PROC -> Publish "PROC invalid" error.
+        with_other_txt = any("specify" in text.lower() for text, _ in options)
     if with_other_txt:
         items.append(alpha(f"{prefix}_OTHER_TXT",
                            f"{label} — Other (specify) text",
@@ -310,7 +314,11 @@ def checkbox_multiselect(prefix, label, options, with_other_txt=None):
     }
     items = [item]
     if with_other_txt is None:
-        with_other_txt = bool(options) and "specify" in options[-1][0].lower()
+        # #1037 (F1 Q163): detect the specify option ANYWHERE in the list, not just
+        # last — paper option order can put an exclusive (e.g. "I don't know") after
+        # "Other (specify)". Last-only detection silently dropped the _OTHER_TXT dict
+        # item while the apc still emitted its PROC -> Publish "PROC invalid" error.
+        with_other_txt = any("specify" in text.lower() for text, _ in options)
     if with_other_txt:
         items.append(alpha(f"{prefix}_OTHER_TXT",
                            f"{label} — Other (specify) text", length=120))
@@ -375,7 +383,7 @@ def _case_control_items(survey_code):
 
 
 def build_field_control(survey_code, extra_items=None, date_label_entity="the Facility",
-                        result_options=None):
+                        result_options=None, date_display=False):
     """Build a FIELD_CONTROL record (record type "A").
 
     Parameters
@@ -412,8 +420,17 @@ def build_field_control(survey_code, extra_items=None, date_label_entity="the Fa
         alpha("FIELD_EDITED_BY",           "Field Edited by",             length=50),
         numeric("DATE_FIRST_VISITED",
                 f"Date First Visited {date_label_entity} (YYYYMMDD)", length=8),
+        # #1099 (F4 pretest): optional read-only MM/DD/YYYY echo under each date.
+        # The Date capture format must stay YYYYMMDD (it also defines the STORED
+        # composition — Supervisor App + cross-instrument parsers depend on it), so
+        # the display-format ask is met with a computed noinput echo field instead.
+        # Opt-in per instrument (date_display=True); F4 first, F1/F3 at their next builds.
+        *([alpha("DATE_FIRST_VISITED_DISP",
+                 "Date First Visited (MM/DD/YYYY)", length=10)] if date_display else []),
         numeric("DATE_FINAL_VISIT",
                 f"Date of Final Visit to {date_label_entity} (YYYYMMDD)", length=8),
+        *([alpha("DATE_FINAL_VISIT_DISP",
+                 "Date of Final Visit (MM/DD/YYYY)", length=10)] if date_display else []),
         numeric("TOTAL_NUMBER_OF_VISITS",  "Total Number of Visits",      length=3),
         numeric("ENUM_RESULT_FIRST_VISIT", "Result of First Visit",       length=1,
                 value_set_options=results),

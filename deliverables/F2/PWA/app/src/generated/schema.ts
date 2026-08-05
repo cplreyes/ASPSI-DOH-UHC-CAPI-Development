@@ -334,3 +334,12 @@ export const sectionJSchema = z.object({
   }
 });
 export type SectionJValues = z.infer<typeof sectionJSchema>;
+
+export const sectionKSchema = z.object({
+  FB1: z.enum(['Yes', 'No']),
+  FB2: z.enum(['Yes', 'No']),
+  FB3: z.string().min(1),
+  FB4: z.string().min(1),
+  FB5: z.string().min(1),
+});
+export type SectionKValues = z.infer<typeof sectionKSchema>;

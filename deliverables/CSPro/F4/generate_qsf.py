@@ -161,15 +161,29 @@ _PWD_CARD = ("Enumerator Instruction (DO NOT READ ALOUD): If the PWD "
              "Identification Card is presented, record the type of disability "
              "as indicated on the card. Do not ask the respondent directly.")
 _GAMOT_FAC = "Enumerator: Applicable only to respondents in areas with GAMOT facility."
+_SELECT_ALL = "SELECT ALL THAT APPLY."
 
 INSTRUCTIONS = {
-    **dict.fromkeys([4, 5, 6, 17, 110, 111, 118, 125], _READ_ONE),
+    # #1069/#1070 (pretest 2026-08-05): bare "SELECT ALL THAT APPLY." on the
+    # multi-selects the paper marks but that carried no note (all 9 verified
+    # checkbox_multiselect in generate_dcf). Mirrors F3's #1055.
+    **dict.fromkeys([66, 70, 71, 74, 77, 78, 106, 107, 202], _SELECT_ALL),
+    **dict.fromkeys([4, 5, 6, 110, 111, 118, 125], _READ_ONE),
+    # #1068 (pretest 2026-08-05): Q17 carries the paper's decision-maker definition
+    # ahead of the standard read-instruction (same definition F3's Q34 got in #1051).
+    17: ("This is the person who makes decisions on health in the family: for "
+         "example, yearly immunizations, manages hospital finances, etc. "
+         + _READ_ONE),
     **dict.fromkeys([7, 11, 80, 81, 112], _DNR_ONE),
     **dict.fromkeys([82, 88, 102, 103, 109, 143], _READ_ALL),
     **dict.fromkeys([52, 53, 55, 56, 58, 59, 85, 91, 93, 94, 113, 121, 127,
                      128, 133, 134, 137], _DNR_ALL),
     **dict.fromkeys([10, 38], _PWD_CARD),
     **dict.fromkeys([70, 71, 72], _GAMOT_FAC),
+    # #1070: Q70/Q71 sit in the GAMOT-area list above (last-key-wins), so their
+    # select-all note must be APPENDED, not merged from the fromkeys block.
+    70: _GAMOT_FAC + " " + _SELECT_ALL,
+    71: _GAMOT_FAC + " " + _SELECT_ALL,
     1: ("Note to enumerator [do not read]: This section is for the Respondent "
         "Profile. The respondent should be the main-decision maker of the "
         "household. Ask all questions in this section unless a skip rule applies."),
@@ -183,6 +197,32 @@ INSTRUCTIONS = {
          "Please include those who are not living here now but will be back "
          "within six months, BUT do not include OFWs."),
     29: "Please choose one from the options I will mention.",
+    # #1074 (pretest 2026-08-05): PhilHealth membership-category definitions, verbatim
+    # from the paper. Rendered in the question text (the option labels stay concise —
+    # the longest definitions exceed the 255-char dcf label cap).
+    46: ("1 - Formal economy (i.e., individuals working in the government or private "
+         "sector based in the country). "
+         "2 - Informal economy (i.e., unemployed, self-employed, informal workers, "
+         "Filipinos with dual citizenship, naturalized Filipino citizens, citizens of "
+         "other countries working and/or residing in the Philippines). "
+         "3 - Indigent (i.e., individuals who have no visible means of income, or whose "
+         "income is insufficient for family subsistence based on DSWD's specific criteria). "
+         "4 - Sponsored (i.e., members whose contributions are being paid for by another "
+         "individual, government agencies, or private entities. Includes some low income "
+         "citizens that are not indigent e.g. BHWs, PWDs). "
+         "5 - Lifetime member (i.e., individuals aged 60 years and above, uniformed "
+         "personnel aged 56 years and above, and SSS underground miner-retirees aged 55 "
+         "years and above and paid at least 120 monthly contribution with PhilHealth and "
+         "the former Medicare Programs of SSS and GSIS). "
+         "6 - Senior citizen (i.e., residents of the Philippines, aged sixty (60) years "
+         "or above and are not currently covered by any membership category of PhilHealth "
+         "and qualified dependents of senior citizen members who are also senior citizen "
+         "themselves or belonging to other membership categories, with or without coverage "
+         "who are senior citizens themselves). "
+         "7 - Overseas Filipino Worker (OFW). "
+         "8 - Qualified dependents (i.e., those whose contributions are declared and "
+         "covered by a principal member). "
+         "9 - Dependent."),
     30: ("Note to enumerator [do not read]: This section is for the "
          "characteristics of the Household. The respondent can answer on behalf "
          "of the household member. However, if the household member is present "
@@ -360,7 +400,7 @@ _PIPE_PRIV = {"Q48_OTHER_INS_REG", "Q49_PRIVATE_INS", "Q50_PRIVATE_INS_OTHER_TXT
 # is for — the auto-filled N_FOOD_ITEM piped as a bold header (Section C piping pattern).
 # Fan-out (2026-07-03): every Section N roster pipes its row's auto-filled *_ITEM into
 # each grid question as a bold header (Section C piping pattern). Maps member -> ITEM field.
-_EXP_ROSTER_PREFIXES = ("N_FOOD", "N_NF1M", "N_NF6M", "N_NF12M", "N_H12M", "N_H6M", "N_H1M")
+_EXP_ROSTER_PREFIXES = ("N_FOOD", "N_WKOTH", "N_NF1M", "N_NF6M", "N_NF12M", "N_H12M", "N_H6M", "N_H1M")
 _PIPE_EXP = {f"{p}_{s}": f"{p}_ITEM"
              for p in _EXP_ROSTER_PREFIXES
              for s in ("CONSUMED", "AMT_STATUS", "PURCHASED_PHP", "INKIND_PHP")}

@@ -47,8 +47,30 @@ export function Question({ item }: QuestionProps) {
   const Heading = isCompound ? 'legend' : 'label';
   const headingProps = isCompound ? {} : { htmlFor: item.id };
 
+  // #1045: the paper bolds the component being asked about. Wrap the first
+  // occurrence of the emphasis phrase in <strong>; locales whose translation
+  // doesn't contain the EN phrase render unchanged (English fallback covers
+  // most, and a plain label is correct rather than wrongly-bolded).
+  const renderLabel = (text: string) => {
+    if (!item.emphasis) return text;
+    const i = text.indexOf(item.emphasis);
+    if (i < 0) return text;
+    return (
+      <>
+        {text.slice(0, i)}
+        <strong>{text.slice(i, i + item.emphasis.length)}</strong>
+        {text.slice(i + item.emphasis.length)}
+      </>
+    );
+  };
+
   return (
     <Outer className="m-0 grid min-w-0 grid-cols-1 gap-y-2 border-0 p-0 py-3 sm:grid-cols-[80px_1fr]">
+      {item.preamble ? (
+        <p className="whitespace-pre-line text-sm font-medium text-foreground sm:col-span-2">
+          {localized(item.preamble, locale)}
+        </p>
+      ) : null}
       <span
         aria-hidden="true"
         className="font-mono text-sm text-muted-foreground sm:pt-1 sm:pr-4 sm:text-right sm:text-base sm:leading-snug"
@@ -61,11 +83,14 @@ export function Question({ item }: QuestionProps) {
             {item.displayNumber ?? item.id}
             {'. '}
           </span>
-          {localized(item.label, locale)}
+          {renderLabel(localized(item.label, locale))}
           {item.required ? <span className="ml-1 text-destructive">*</span> : null}
         </Heading>
         {item.help ? (
           <p className="whitespace-pre-line text-xs text-muted-foreground">{localized(item.help, locale)}</p>
+        ) : null}
+        {item.inputLabel ? (
+          <p className="text-sm font-medium">{localized(item.inputLabel, locale)}</p>
         ) : null}
         {renderControl(
           item,

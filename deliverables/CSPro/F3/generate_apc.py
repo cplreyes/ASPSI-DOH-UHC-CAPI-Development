@@ -20,6 +20,7 @@ Invoke:  python generate_apc.py
 """
 
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -33,6 +34,10 @@ from cspro_helpers import (
 # Per-item numeric range checks (spec §3.6/§3.9/§3.10/§3.13). (field, lo, hi, soft_over)
 # Q106_DAYS is handled in CUSTOM_VALIDATION (range + pair-sanity together).
 RANGE_CHECKS = [
+    # Range.docx (Aly, 2026-07-08): 0-99,999,999. Width already caps the max; this
+    # check blocks stray negatives (e.g. -500), which CSEntry otherwise accepts.
+    # -98/-99 sentinels exempt (#793) via allow_sentinels in the emission loop.
+    ("Q18_INCOME_AMOUNT",     0, 99999999,  None),
     ("Q58_WAIT_DAYS",         0, 365,       None),
     ("Q58_WAIT_MINUTES",      0, 1440,      None),
     ("Q69_USUAL_TRAVEL_HH",   0, 24,        None),
@@ -61,6 +66,35 @@ CUSTOM_VALIDATION = [
      "    errmsg(\"%d day(s) of stay but 0 nights — nights cannot be 0 when days is greater than 1. Please correct.\", Q106_DAYS);\n    reenter;\n  endif;\n"
      "  if Q106_NIGHTS > 1 and Q106_DAYS = 0 then\n"
      "    errmsg(\"%d night(s) of stay but 0 days — days cannot be 0 when nights is greater than 1. Please correct.\", Q106_NIGHTS);\n    reenter;\n  endif;"),
+    # #1099 F4-parity (2026-08-05): read-only MM/DD/YYYY echo under each visit date.
+    # Date capture stays YYYYMMDD (stored composition; Supervisor App parses it).
+    # noinput pattern (assign in preproc) — never protect(), whose preproc CSEntry skips.
+    # edit-mask trap: only '9' is a digit slot; '0' is a LITERAL zero ("0999" rendered
+    # 2026 as "0026" on the F4 first build — tablet-caught). '9' keeps leading zeros.
+    ("DATE_FIRST_VISITED_DISP",
+     "PROC DATE_FIRST_VISITED_DISP\npreproc\n"
+     "  numeric dfY; numeric dfM; numeric dfD;\n"
+     "  if DATE_FIRST_VISITED = notappl then\n"
+     "    DATE_FIRST_VISITED_DISP = \"\";\n"
+     "  else\n"
+     "    dfY = int(DATE_FIRST_VISITED / 10000);\n"
+     "    dfM = int(DATE_FIRST_VISITED / 100) - dfY * 100;\n"
+     "    dfD = DATE_FIRST_VISITED - int(DATE_FIRST_VISITED / 100) * 100;\n"
+     "    DATE_FIRST_VISITED_DISP = concat(edit(\"99\", dfM), \"/\", edit(\"99\", dfD), \"/\", edit(\"9999\", dfY));\n"
+     "  endif;\n"
+     "  noinput;"),
+    ("DATE_FINAL_VISIT_DISP",
+     "PROC DATE_FINAL_VISIT_DISP\npreproc\n"
+     "  numeric dvY; numeric dvM; numeric dvD;\n"
+     "  if DATE_FINAL_VISIT = notappl then\n"
+     "    DATE_FINAL_VISIT_DISP = \"\";\n"
+     "  else\n"
+     "    dvY = int(DATE_FINAL_VISIT / 10000);\n"
+     "    dvM = int(DATE_FINAL_VISIT / 100) - dvY * 100;\n"
+     "    dvD = DATE_FINAL_VISIT - int(DATE_FINAL_VISIT / 100) * 100;\n"
+     "    DATE_FINAL_VISIT_DISP = concat(edit(\"99\", dvM), \"/\", edit(\"99\", dvD), \"/\", edit(\"9999\", dvY));\n"
+     "  endif;\n"
+     "  noinput;"),
     ("DATE_FINAL_VISIT",
      "PROC DATE_FINAL_VISIT\npostproc\n"
      "  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then\n"
@@ -191,19 +225,29 @@ preproc
   if pos("07", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 7; endif; endif;
   if pos("08", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 8; endif; endif;
   protect(Q92_PAY_SRC, true);
-  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 and Q92_PAY_SRC <> 7 then
+  { #835-class polarity (2026-07-09): match non-money codes POSITIVELY - the <> chain
+    also matched the resume-replay/buffered notappl and zeroed money rows on-screen. }
+  if Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8 then
     Q92_PAY_AMT = 0;   { #781: non-money source -> default 0. In-kind(7) is a money source for Q92 per ASPSI (2026-06-25). Still enterable so the row stops. }
   endif;
   Q92_PAY_LINE = curocc();
   noinput;
 
 PROC Q92_PAY_AMT
+preproc
+  { #1064 class (2026-08-04): non-money row -> amount is display-only 0 (noinput);
+    the grid no longer offers an amount box for sources with no cost. Positive
+    polarity per #835. Desk-test gate: all-non-money selection must advance. }
+  if Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8 then
+    Q92_PAY_AMT = 0;
+    noinput;
+  endif;
 postproc
   if Q92_PAY_AMT < 0 then
     errmsg("92. Amount cannot be negative.");
     reenter;
   endif;
-  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 and Q92_PAY_SRC <> 7 and Q92_PAY_AMT <> 0 then
+  if (Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8) and Q92_PAY_AMT <> 0 then
     errmsg("92. This source has no out-of-pocket cost — amount reset to 0.");
     Q92_PAY_AMT = 0;
   endif;
@@ -352,34 +396,60 @@ def build_roster_procs(q_no, q_label, sources, amt_codes,
                      f"if seen = curocc() then {srcf} = {int(c)}; endif; endif;")
     L.append(f"  protect({srcf}, true);")
     if partial:
-        cond = " and ".join(f"{srcf} <> {n}" for n in amt_nums)
+        # #835 retest (2026-07-09): POSITIVE-polarity match on the known NON-money codes.
+        # The old negative form ("SRC <> every money code") is a replay bomb: a buffered/
+        # transient notappl SRC satisfies every <> clause, so the zeroing fired on FIRST
+        # forward arrival (write-then-read in this same preproc returns the STORED notappl,
+        # engine rule 2) and repainted stored amounts as 0 on partial-save resume (data
+        # stayed safe on disk -- desk-proven; display/logic artifact only). notappl can
+        # never EQUAL a real code, so the write now fires only when SRC genuinely reads a
+        # non-money code -- the F4 #834 surviving-gate polarity (CONSUMED = 2).
+        non_money = sorted(int(c) for c in codes if c not in amt_codes)
+        cond = " or ".join(f"{srcf} = {n}" for n in non_money)
         L += [f"  if {cond} then",
               f"    {amtf} = 0;   {{ non-money source -> default 0; still enterable }}",
               "  endif;"]
     L += [f"  {line} = curocc();", "  noinput;", ""]
 
-    L += [f"PROC {amtf}", "postproc",
+    L.append(f"PROC {amtf}")
+    if partial:
+        # #1064 (2026-08-04): non-money rows no longer OFFER an amount box — preproc
+        # zeroes and noinputs the cell, so the grid shows a fixed 0 and entry skips to
+        # the next row. Positive-polarity code match per #835 (notappl-proof). NB the
+        # row's LINE field already noinputs and SRC is protected, so a non-money row
+        # has NO enterable field — desk-test the all-non-money selection before deploy
+        # (F3_PILOT_JUMP vehicle; the Q92/Q971 notes flag no-stop rows as a hang risk).
+        non_money = sorted(int(c) for c in codes if c not in amt_codes)
+        cond = " or ".join(f"{srcf} = {n}" for n in non_money)
+        L += ["preproc",
+              f"  if {cond} then",
+              f"    {amtf} = 0;   {{ non-money source -> no cost; display-only }}",
+              "    noinput;",
+              "  endif;"]
+    L += ["postproc",
           f"  if {amtf} < 0 then",
           f'    errmsg("{q_no}. Amount cannot be negative.");',
           "    reenter;", "  endif;"]
     if partial:
-        cond = " and ".join(f"{srcf} <> {n}" for n in amt_nums)
-        L += [f"  if {cond} and {amtf} <> 0 then",
+        # Same polarity flip as the LINE preproc; kept as a backstop.
+        L += [f"  if ({cond}) and {amtf} <> 0 then",
               f'    errmsg("{q_no}. This source has no out-of-pocket cost — amount reset to 0.");',
               f"    {amtf} = 0;", "  endif;"]
     if require_positive:
-        # #749: a ticked PAID source must carry an amount > 0 — entering 0 for a selected
-        # paying source is a data-entry slip. Partial rosters gate only the money-code rows
-        # (non-money rows are forced to 0 just above and stay 0); all-amount rosters gate
-        # every row (every ticked source is, by definition, a paid source).
-        if partial:
-            money_cond = " or ".join(f"{srcf} = {n}" for n in amt_nums)
-            L += [f"  if ({money_cond}) and {amtf} = 0 then"]
-        else:
-            L += [f"  if {amtf} = 0 then"]
-        L += [f'    errmsg("{q_no}. Please enter an amount greater than 0 — you selected '
-              'this as a paid source/item.");',
-              "    reenter;", "  endif;"]
+        # #835/#757 (root-caused on-device 2026-07-08): the per-row "amount > 0" REENTER is REMOVED.
+        # On partial-save resume ("go to last position") CSPro replays the roster with the amount
+        # reading transiently 0, so this per-row postproc reenter FIRED and HARD-BLOCKED the
+        # enumerator at the row - the F4 #834 class (the entered amount is safe on disk; only the
+        # resume replay is broken; desktop-CSEntry + csdb-verified: q107_pay_amt=500 on disk while
+        # the reenter fired). The "ticked paid source must be > 0" nudge moves to a SOFT roster-GROUP
+        # postproc below: it runs ONCE after the roster is left (occurrences settled -> no false
+        # alarm on resume) and never reenters/blocks.
+        # A soft roster-GROUP replacement was tried (2026-07-08) but ALSO fires on the replay
+        # transient (spurious "still shows 0" on resume, device-verified) - no in-roster placement
+        # can read the SETTLED amount during the resume replay (same crux as F4 #834). So the
+        # "paid source > 0" nudge is DROPPED here: a 0-amount paid source is caught in post-hoc
+        # review instead. The negative-amount + non-money-reset AMT checks above are unaffected.
+        pass
 
     for code, field, prompt in (gated_texts or []):
         if two_digit:
@@ -453,8 +523,10 @@ preproc
 
 PROC Q94_LAB_AMT
 preproc
-  { Only Out-of-pocket(1) carries an amount; every other payment type has no OOP cost. }
-  if Q94_LAB_PAY <> 1 then
+  { Only Out-of-pocket(1) carries an amount; every other payment type has no OOP cost.
+    #835-class polarity: match the non-OOP codes POSITIVELY (2..7) -- 'PAY <> 1' also
+    matched the resume-replay transient notappl and zeroed+skipped stored OOP amounts. }
+  if Q94_LAB_PAY in 2:7 then
     Q94_LAB_AMT = 0;
     noinput;
   endif;
@@ -1509,6 +1581,18 @@ def main():
         covered.add(field)
         parts.append(skip_proc(field, cond, target))
         parts.append("")
+    # Desk-test pilot (dormant): jump Q4 straight to a roster so engine checks are
+    # reachable in a few fields. F3_PILOT_Q107=1 keeps the #835 target; the general
+    # form F3_PILOT_JUMP=<FIELD> (added for the #1064 roster-stop test) jumps to any
+    # named field. OFF by default — never set for a deploy build.
+    _pilot_target = ("Q107_SOURCES" if os.environ.get("F3_PILOT_Q107")
+                     else os.environ.get("F3_PILOT_JUMP"))
+    if _pilot_target and "Q4_NAME" not in covered:
+        covered.add("Q4_NAME")
+        parts.append("{ ---- desk-test pilot: jump to %s (dormant) ---- }" % _pilot_target)
+        parts.append("PROC Q4_NAME" + chr(10) + "postproc" + chr(10)
+                     + f"  skip to {_pilot_target};")
+        parts.append("")
 
     parts.append("{ ---- 'Other (specify)' enforcement — UHC9 dual-other (spec 4) ---- }")
     for field, proc in sorted(uhc9_other_specify_procs(dcf_item_names()).items()):
@@ -1582,7 +1666,11 @@ def main():
         if field in covered:
             continue
         covered.add(field)
-        parts.append(range_check_proc(field, lo, hi, hard=True, soft_over=soft))
+        # #793 missing-value standard: the income amount accepts -98/-99 sentinels
+        # (mirrors F4's Q18 emission; other ranged fields have no sentinel provision).
+        allow_sent = field == "Q18_INCOME_AMOUNT"
+        parts.append(range_check_proc(field, lo, hi, hard=True, soft_over=soft,
+                                      allow_sentinels=allow_sent))
         parts.append(""); rng_emitted += 1
     for field, proc in CUSTOM_VALIDATION:
         if field in covered:
