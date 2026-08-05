@@ -27,7 +27,7 @@ The comment legend: **light-red = substantial revisions / new questions**; **yel
 - **F1 (Facility Head):** convert ~18 single Yes/No "…changed since 2019 / result of UHC Act?" items into **two-step** questions (Q19/21/23/25/27/29/31/39–48 + EMR, MoU, NBB, ZBB, no-copay, ward-allocation, CPG, licensing, accreditation, protocols, quality). *Largest potential F1 rework.* Plus Q91 filter note; justify old Q96/Q97 OOP removal.
 - **F2 (HCW, PWA in prod):** ADB-WHO disposition codes; two-step preliminaries (equipment/supplies/EMR); specify standards domains. All "not observed."
 - **F3 (Patient):** **new expenditure block after Q18** (food 7-day; utilities; non-food) + **FIES assets replacing Q24–Q28** (substantial); disposition-code clarification ("Completed/Withdraw"); education to all HH members; skip after Q65; BUCAS LGU-functional instruction; option definitions; MAIFIP understanding; **billed-vs-paid separation (#168–171, "no response from ASPSI")**.
-- **F4 (Household):** ❓**CONTESTED** — DOH asks to adopt their **April 15 PIDS/DHS-format Household Questionnaire** (a "major revision"), but the UP/ASPSI team was **instructed not to follow Xylee's HH suggestions** and the April 20 submission deliberately excluded them. **No F4 comment matrix exists** in these sources — Myra: *"I did not see the comments for the household survey… Pahabol in a separate document"* (still pending). **Do not build to an F4 restructure.**
+- **F4 (Household):** ❓**CONTESTED** — DOH asks to adopt their **April 15 PIDS/DHS-format Household Questionnaire** (a "major revision"), but the UP/ASPSI team was **instructed not to follow Xylee's HH suggestions** and the April 20 submission deliberately excluded them. ~~No F4 comment matrix exists~~ — Myra: *"I did not see the comments for the household survey… Pahabol in a separate document"* (was still pending as of Jun 19). **UPDATE 2026-07-20: the F4 "pahabol" arrived** — XJ's screenshot-based F4 review ([[Source - PAPI vs CAPI Household Review (XJ 2026-07)]], numbered "1_" in a set with the F2/HCW "4_") — ingested from Carl's shared Drive folder. It is **clarification/observation-heavy, not the feared PIDS/DHS restructure** (navigation/autosave/resume, disposition-code justification, 12-digit-QN, geo cascade, repeated-question-text, other-specify fields, roster workflow). Same parked posture applies. **Still: do not build to an F4 restructure.**
 
 ## Forward-looking CAPI-native checklist (mostly already done)
 
@@ -35,17 +35,18 @@ Many comments were CAPI-layer logic ASPSI answered "Will apply in the CAPI versi
 
 ## Timing / relationship context
 
-DOH's comments came in waves on the **April 8** tools, the latest forwarded **June 10** — *after* ASPSI had already submitted to SJREB and PSA. Myra: *"This kind of behavior on their part is unacceptable… they could have given these comments earlier."* Hence the park-and-wait posture: let SJREB/PSA/pre-test be the filter; answer with finality afterward. This ties the comment batch's fate to the **pretest** (ASPSI-scheduled) and the SJREB/PSA reviews — all ASPSI/DOH lane ([[feedback_external_gates_not_carls_concern]]).
+DOH's comments came in waves on the **April 8** tools, the latest forwarded **June 10** — *after* ASPSI had already submitted to SJREB and PSA. Myra: *"This kind of behavior on their part is unacceptable… they could have given these comments earlier."* Hence the park-and-wait posture: let SJREB/PSA/pre-test be the filter; answer with finality afterward. This ties the comment batch's fate to the **pretest** (ASPSI-scheduled) and the SJREB/PSA reviews — all ASPSI/DOH lane (`feedback_external_gates_not_carls_concern`).
 
 ## Attachments not readable (connector can't download)
 
 - `Survey Tools_Comment Matrix_XJ_June9 (MESJ).docx` — Myra-annotated matrix (the red/yellow highlight coding + her per-item dispositions live here; plain-text/Doc extraction can't show highlight classes).
 - The linked Google Doc "XJ_Comments_F1-F3" is **screenshot-heavy** (`[image]` rows) — exact wording for image-only rows isn't in the text layer.
-- **F4 "pahabol" HH comments** — a separate document, not yet provided as of Jun 19.
+- **F4 "pahabol" HH comments** — a separate document, not yet provided as of Jun 19. **→ arrived 2026-07-20** as XJ's PAPI-vs-CAPI F4 review (below).
 
 ## Cross-references
 
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex G DOH Recommendations Matrix]] — the earlier (Apr 20) change-rationale matrix this batch follows on from.
-- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/ADB]] — Xylee Javier ("XJ"), the DOH/ADB reviewer whose comments these are.
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Xylee Javier (XJ)]] — the DOH reviewer whose comments these are.
+- **2026-07 per-instrument PAPI-vs-CAPI reviews (same reviewer, same parked track):** [[Source - PAPI vs CAPI Household Review (XJ 2026-07)]] (the F4 pahabol) · [[Source - PAPI vs CAPI HCW Review (XJ 2026-07)]] · rubric [[PAPI-to-CAPI Translation Review Criteria]] · mapping [[Analysis - XJ PAPI-vs-CAPI Reviews vs Current CAPI Build]].
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/DOH-PMSMD]] · [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Dr Myra Silva-Javier]] — the park decision is Myra's.
 - [[Source - PhilHealth Reinstatement Email (Kidd 2026-06-09)]] — the **approved** change (contrast: build it); this batch is **parked**.

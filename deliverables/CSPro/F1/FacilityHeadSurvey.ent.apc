@@ -537,7 +537,19 @@ postproc
 
 PROC Q103_NO_BUCAS_REASON
 postproc
-  skip to Q108_HEARD_GAMOT;          { any answer -> Q108 (skip Q104-107) }
+  if Q103_NO_BUCAS_REASON <> 5 then
+    Q103_OTHER_TXT = "";               { not Other -> clear + skip Q104-107 }
+    skip to Q108_HEARD_GAMOT;
+  endif;
+  { Other (5) -> fall through to Q103_OTHER_TXT }
+
+PROC Q103_OTHER_TXT
+postproc
+  if length(strip(Q103_OTHER_TXT)) = 0 then
+    errmsg(1203);
+    reenter;
+  endif;
+  skip to Q108_HEARD_GAMOT;            { specify captured -> resume the Q103 skip }
 
 PROC Q104_BUCAS_SERVICES
 postproc
@@ -583,7 +595,19 @@ postproc
 
 PROC Q110_NO_GAMOT_REASON
 postproc
-  skip to Q112_STOCKOUT;             { any answer -> Q112 (skip Q111) }
+  if Q110_NO_GAMOT_REASON <> 5 then
+    Q110_OTHER_TXT = "";               { not Other -> clear + skip Q111 }
+    skip to Q112_STOCKOUT;
+  endif;
+  { Other (5) -> fall through to Q110_OTHER_TXT }
+
+PROC Q110_OTHER_TXT
+postproc
+  if length(strip(Q110_OTHER_TXT)) = 0 then
+    errmsg(1204);
+    reenter;
+  endif;
+  skip to Q112_STOCKOUT;               { specify captured -> resume the Q110 skip }
 
 PROC Q111_GAMOT_FACTORS
 postproc
@@ -2850,30 +2874,6 @@ postproc
   endif;
 
 { ---- 'Other (specify)' enforcement — auto-derived from the dcf (spec 4.13 tail) ---- }
-PROC Q103_OTHER_TXT
-preproc
-  if not (Q103_NO_BUCAS_REASON = 5) then
-    Q103_OTHER_TXT = "";   { skip + clear: no 'other' option chosen }
-    noinput;
-  endif;
-postproc
-  if (Q103_NO_BUCAS_REASON = 5) and length(strip(Q103_OTHER_TXT)) = 0 then
-    errmsg(1194);
-    reenter;
-  endif;
-
-PROC Q110_OTHER_TXT
-preproc
-  if not (Q110_NO_GAMOT_REASON = 5) then
-    Q110_OTHER_TXT = "";   { skip + clear: no 'other' option chosen }
-    noinput;
-  endif;
-postproc
-  if (Q110_NO_GAMOT_REASON = 5) and length(strip(Q110_OTHER_TXT)) = 0 then
-    errmsg(1195);
-    reenter;
-  endif;
-
 PROC Q11_OTHER_TXT
 preproc
   if not (Q11_PRIMARY_PKG_STATUS = 5) then
@@ -2912,13 +2912,25 @@ postproc
 
 PROC Q18_OTHER_TXT
 preproc
-  if not (Q18_HPU_ROLE = 5) then
+  if not (Q18_HPU_ROLE = 2 or Q18_HPU_ROLE = 5) then
     Q18_OTHER_TXT = "";   { skip + clear: no 'other' option chosen }
     noinput;
   endif;
 postproc
-  if (Q18_HPU_ROLE = 5) and length(strip(Q18_OTHER_TXT)) = 0 then
+  if (Q18_HPU_ROLE = 2 or Q18_HPU_ROLE = 5) and length(strip(Q18_OTHER_TXT)) = 0 then
     errmsg(1199);
+    reenter;
+  endif;
+
+PROC Q2_OTHER_TXT
+preproc
+  if not (Q2_FACILITY_ROLE = 99) then
+    Q2_OTHER_TXT = "";   { skip + clear: no 'other' option chosen }
+    noinput;
+  endif;
+postproc
+  if (Q2_FACILITY_ROLE = 99) and length(strip(Q2_OTHER_TXT)) = 0 then
+    errmsg(1202);
     reenter;
   endif;
 

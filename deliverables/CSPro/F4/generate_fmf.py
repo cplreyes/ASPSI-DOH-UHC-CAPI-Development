@@ -70,16 +70,29 @@ FIELD_CONTROL_CASE_END = {
     "ENUM_RESULT_FIRST_VISIT", "ENUM_RESULT_FINAL_VISIT",
 }
 
+# HH GPS items (HOUSEHOLD_GEO_ID items 7-12). Split off the Geographic ID form onto a
+# dead-last GPS form (2026-07-16, #157) — see the FORM_PLAN entries below. Named once
+# here so the geo form's exclude and the GPS form's names list can never drift apart.
+# NOTE: these stay in HOUSEHOLD_GEO_ID in the .dcf — this is a FORM-order change only;
+# form order is already decoupled from dict order throughout this instrument.
+HH_GPS_ITEMS = [
+    "LATITUDE", "LONGITUDE", "HH_GPS_ALTITUDE",
+    "HH_GPS_ACCURACY", "HH_GPS_SATELLITES", "HH_GPS_READTIME",
+]
+
 
 _FORM_PLAN_STATIC = [
     ("Interview status",   # #515: break-off control, first form (case-tree reachable)
      [("FIELD_CONTROL", {"names": FIELD_CONTROL_CASE_START})]),
-    ("FC Geographic ID + HH GPS Capture",
+    ("FC Geographic ID",
      # Single-number redesign (2026-06-11): household region/province/city are
      # derived from QUESTIONNAIRE_NUMBER (off-form); show the read-only PSGC
      # names + keep the barangay picker.
+     # HH GPS split off this form 2026-07-16 (#157) — it now sits dead last, after
+     # the photo. Leaves CLASSIFICATION + BARANGAY + HH_ADDRESS here.
      [("FIELD_CONTROL", {"names": ["REGION_NAME", "PROVINCE_NAME", "CITY_NAME"]}),
-      ("HOUSEHOLD_GEO_ID", {"exclude": ["REGION", "PROVINCE_HUC", "CITY_MUNICIPALITY"]})]),
+      ("HOUSEHOLD_GEO_ID",
+       {"exclude": ["REGION", "PROVINCE_HUC", "CITY_MUNICIPALITY"] + HH_GPS_ITEMS})]),
     ("A. Informed Consent (Q1 gate)",
      [("A_INFORMED_CONSENT", None)]),
     ("B. Respondent Profile",
@@ -149,14 +162,24 @@ _FORM_PLAN_STATIC = [
      [("Q_FINANCIAL_ANXIETY", None)]),
     ("Closing - case end",
      [("FIELD_CONTROL", {"names": FIELD_CONTROL_CASE_END})]),
-    # Verification photo moved to the very end (2026-06-12): the enumerator
-    # photographs the completed visit, and the survey no longer opens with a
-    # camera prompt. HH GPS stays early so it auto-locks while the form is worked.
+    # Verification photo near the end (2026-06-12): the enumerator photographs the
+    # completed visit, and the survey no longer opens with a camera prompt. It must
+    # stay AFTER "Closing - case end" — its preproc gates on ENUM_RESULT_FINAL_VISIT,
+    # so the result has to be entered before the camera fires.
     ("Case Verification Photo",
      # VERIFICATION_PHOTO_IMAGE is a binary Image item (off-form by rule — binary
      # items can't be placed on a form); the on-form trigger CAPTURE_VERIFICATION_PHOTO
      # drives capture into it. Only the trigger + filename label go on the form.
      [("REC_CASE_VERIFICATION", {"exclude": ["VERIFICATION_PHOTO_IMAGE"]})]),
+    # HH GPS moved to dead last, AFTER the photo (2026-07-16, #157). This deliberately
+    # reverses the 2026-06-12 rule "HH GPS stays early so it auto-locks while the form
+    # is worked" — indoors that assumption never held. gps(read) is synchronous, so an
+    # early form froze the enumerator for up to 120s BEFORE consent. Now nothing in the
+    # interview waits on a satellite fix: the enumerator finishes, photographs, walks
+    # out, and GPS acquires outdoors. GPS has no gate of its own, so after the photo is
+    # safe. Items stay in HOUSEHOLD_GEO_ID in the .dcf — form order only.
+    ("FC HH GPS Capture",
+     [("HOUSEHOLD_GEO_ID", {"names": HH_GPS_ITEMS})]),
 ]
 
 # Binary/computed items deliberately kept OFF every form (so the orphan check below

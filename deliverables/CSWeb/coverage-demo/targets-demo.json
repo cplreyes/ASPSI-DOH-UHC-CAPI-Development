@@ -1,0 +1,745 @@
+{
+ "generated": "2026-07-15 DEMO",
+ "plan": {
+  "label": "DEMO — F1 target = sampled facilities/province (REAL, facility_lookup.dat) · completed = ILLUSTRATIVE",
+  "provisional": false,
+  "source": "facility_lookup.dat (1,521 facilities)",
+  "facilities": {
+   "f1": 121,
+   "f3": 0,
+   "f4": 0
+  }
+ },
+ "targets": {
+  "f1": {
+   "Ilocos Norte": {
+    "name": "Ilocos Norte",
+    "region": "REGION 1",
+    "province": "Ilocos Norte",
+    "target": 14
+   },
+   "Ilocos Sur": {
+    "name": "Ilocos Sur",
+    "region": "REGION 1",
+    "province": "Ilocos Sur",
+    "target": 20
+   },
+   "La Union": {
+    "name": "La Union",
+    "region": "REGION 1",
+    "province": "La Union",
+    "target": 15
+   },
+   "Pangasinan": {
+    "name": "Pangasinan",
+    "region": "REGION 1",
+    "province": "Pangasinan",
+    "target": 37
+   },
+   "Pangasinan - City of Dagupan": {
+    "name": "Pangasinan - City of Dagupan",
+    "region": "REGION 1",
+    "province": "Pangasinan - City of Dagupan",
+    "target": 5
+   },
+   "Batanes": {
+    "name": "Batanes",
+    "region": "REGION 2",
+    "province": "Batanes",
+    "target": 3
+   },
+   "Cagayan": {
+    "name": "Cagayan",
+    "region": "REGION 2",
+    "province": "Cagayan",
+    "target": 20
+   },
+   "Isabela": {
+    "name": "Isabela",
+    "region": "REGION 2",
+    "province": "Isabela",
+    "target": 23
+   },
+   "Isabela - City of Santiago": {
+    "name": "Isabela - City of Santiago",
+    "region": "REGION 2",
+    "province": "Isabela - City of Santiago",
+    "target": 5
+   },
+   "Nueva Vizcaya": {
+    "name": "Nueva Vizcaya",
+    "region": "REGION 2",
+    "province": "Nueva Vizcaya",
+    "target": 9
+   },
+   "Quirino": {
+    "name": "Quirino",
+    "region": "REGION 2",
+    "province": "Quirino",
+    "target": 3
+   },
+   "Bataan": {
+    "name": "Bataan",
+    "region": "REGION 3",
+    "province": "Bataan",
+    "target": 15
+   },
+   "Bulacan": {
+    "name": "Bulacan",
+    "region": "REGION 3",
+    "province": "Bulacan",
+    "target": 53
+   },
+   "Nueva Ecija": {
+    "name": "Nueva Ecija",
+    "region": "REGION 3",
+    "province": "Nueva Ecija",
+    "target": 35
+   },
+   "Pampanga": {
+    "name": "Pampanga",
+    "region": "REGION 3",
+    "province": "Pampanga",
+    "target": 32
+   },
+   "Tarlac": {
+    "name": "Tarlac",
+    "region": "REGION 3",
+    "province": "Tarlac",
+    "target": 24
+   },
+   "Zambales": {
+    "name": "Zambales",
+    "region": "REGION 3",
+    "province": "Zambales",
+    "target": 10
+   },
+   "Aurora": {
+    "name": "Aurora",
+    "region": "REGION 3",
+    "province": "Aurora",
+    "target": 5
+   },
+   "City of Angeles (HUC)": {
+    "name": "City of Angeles (HUC)",
+    "region": "REGION 3",
+    "province": "City of Angeles (HUC)",
+    "target": 7
+   },
+   "City of Olongapo (HUC)": {
+    "name": "City of Olongapo (HUC)",
+    "region": "REGION 3",
+    "province": "City of Olongapo (HUC)",
+    "target": 6
+   },
+   "Batangas": {
+    "name": "Batangas",
+    "region": "REGION 4-A",
+    "province": "Batangas",
+    "target": 42
+   },
+   "Cavite": {
+    "name": "Cavite",
+    "region": "REGION 4-A",
+    "province": "Cavite",
+    "target": 32
+   },
+   "Laguna": {
+    "name": "Laguna",
+    "region": "REGION 4-A",
+    "province": "Laguna",
+    "target": 34
+   },
+   "Quezon": {
+    "name": "Quezon",
+    "region": "REGION 4-A",
+    "province": "Quezon",
+    "target": 20
+   },
+   "Rizal": {
+    "name": "Rizal",
+    "region": "REGION 4-A",
+    "province": "Rizal",
+    "target": 30
+   },
+   "City of Lucena (HUC)": {
+    "name": "City of Lucena (HUC)",
+    "region": "REGION 4-A",
+    "province": "City of Lucena (HUC)",
+    "target": 6
+   },
+   "Albay": {
+    "name": "Albay",
+    "region": "REGION 5",
+    "province": "Albay",
+    "target": 13
+   },
+   "Camarines Norte": {
+    "name": "Camarines Norte",
+    "region": "REGION 5",
+    "province": "Camarines Norte",
+    "target": 11
+   },
+   "Camarines Sur": {
+    "name": "Camarines Sur",
+    "region": "REGION 5",
+    "province": "Camarines Sur",
+    "target": 21
+   },
+   "Camarines Sur - City of Naga": {
+    "name": "Camarines Sur - City of Naga",
+    "region": "REGION 5",
+    "province": "Camarines Sur - City of Naga",
+    "target": 6
+   },
+   "Catanduanes": {
+    "name": "Catanduanes",
+    "region": "REGION 5",
+    "province": "Catanduanes",
+    "target": 7
+   },
+   "Masbate": {
+    "name": "Masbate",
+    "region": "REGION 5",
+    "province": "Masbate",
+    "target": 9
+   },
+   "Sorsogon": {
+    "name": "Sorsogon",
+    "region": "REGION 5",
+    "province": "Sorsogon",
+    "target": 11
+   },
+   "Aklan": {
+    "name": "Aklan",
+    "region": "REGION 6",
+    "province": "Aklan",
+    "target": 11
+   },
+   "Antique": {
+    "name": "Antique",
+    "region": "REGION 6",
+    "province": "Antique",
+    "target": 10
+   },
+   "Capiz": {
+    "name": "Capiz",
+    "region": "REGION 6",
+    "province": "Capiz",
+    "target": 10
+   },
+   "Iloilo": {
+    "name": "Iloilo",
+    "region": "REGION 6",
+    "province": "Iloilo",
+    "target": 21
+   },
+   "Guimaras": {
+    "name": "Guimaras",
+    "region": "REGION 6",
+    "province": "Guimaras",
+    "target": 4
+   },
+   "City of Iloilo (HUC)": {
+    "name": "City of Iloilo (HUC)",
+    "region": "REGION 6",
+    "province": "City of Iloilo (HUC)",
+    "target": 7
+   },
+   "Bohol": {
+    "name": "Bohol",
+    "region": "REGION 7",
+    "province": "Bohol",
+    "target": 24
+   },
+   "Cebu": {
+    "name": "Cebu",
+    "region": "REGION 7",
+    "province": "Cebu",
+    "target": 25
+   },
+   "City of Cebu (HUC)": {
+    "name": "City of Cebu (HUC)",
+    "region": "REGION 7",
+    "province": "City of Cebu (HUC)",
+    "target": 10
+   },
+   "City of Lapu-Lapu (HUC)": {
+    "name": "City of Lapu-Lapu (HUC)",
+    "region": "REGION 7",
+    "province": "City of Lapu-Lapu (HUC)",
+    "target": 3
+   },
+   "City of Mandaue (HUC)": {
+    "name": "City of Mandaue (HUC)",
+    "region": "REGION 7",
+    "province": "City of Mandaue (HUC)",
+    "target": 4
+   },
+   "Eastern Samar": {
+    "name": "Eastern Samar",
+    "region": "REGION 8",
+    "province": "Eastern Samar",
+    "target": 13
+   },
+   "Leyte": {
+    "name": "Leyte",
+    "region": "REGION 8",
+    "province": "Leyte",
+    "target": 18
+   },
+   "Leyte - Ormoc City": {
+    "name": "Leyte - Ormoc City",
+    "region": "REGION 8",
+    "province": "Leyte - Ormoc City",
+    "target": 5
+   },
+   "Northern Samar": {
+    "name": "Northern Samar",
+    "region": "REGION 8",
+    "province": "Northern Samar",
+    "target": 11
+   },
+   "Samar": {
+    "name": "Samar",
+    "region": "REGION 8",
+    "province": "Samar",
+    "target": 12
+   },
+   "Southern Leyte": {
+    "name": "Southern Leyte",
+    "region": "REGION 8",
+    "province": "Southern Leyte",
+    "target": 10
+   },
+   "Biliran": {
+    "name": "Biliran",
+    "region": "REGION 8",
+    "province": "Biliran",
+    "target": 4
+   },
+   "City of Tacloban (HUC)": {
+    "name": "City of Tacloban (HUC)",
+    "region": "REGION 8",
+    "province": "City of Tacloban (HUC)",
+    "target": 8
+   },
+   "Zamboanga del Norte": {
+    "name": "Zamboanga del Norte",
+    "region": "REGION 9",
+    "province": "Zamboanga del Norte",
+    "target": 14
+   },
+   "Zamboanga del Sur": {
+    "name": "Zamboanga del Sur",
+    "region": "REGION 9",
+    "province": "Zamboanga del Sur",
+    "target": 15
+   },
+   "Zamboanga Sibugay": {
+    "name": "Zamboanga Sibugay",
+    "region": "REGION 9",
+    "province": "Zamboanga Sibugay",
+    "target": 9
+   },
+   "City of Zamboanga (HUC)": {
+    "name": "City of Zamboanga (HUC)",
+    "region": "REGION 9",
+    "province": "City of Zamboanga (HUC)",
+    "target": 11
+   },
+   "Bukidnon": {
+    "name": "Bukidnon",
+    "region": "REGION 10",
+    "province": "Bukidnon",
+    "target": 15
+   },
+   "Camiguin": {
+    "name": "Camiguin",
+    "region": "REGION 10",
+    "province": "Camiguin",
+    "target": 3
+   },
+   "Lanao del Norte": {
+    "name": "Lanao del Norte",
+    "region": "REGION 10",
+    "province": "Lanao del Norte",
+    "target": 11
+   },
+   "Misamis Occidental": {
+    "name": "Misamis Occidental",
+    "region": "REGION 10",
+    "province": "Misamis Occidental",
+    "target": 12
+   },
+   "Misamis Oriental": {
+    "name": "Misamis Oriental",
+    "region": "REGION 10",
+    "province": "Misamis Oriental",
+    "target": 14
+   },
+   "City of Cagayan de Oro (HUC)": {
+    "name": "City of Cagayan de Oro (HUC)",
+    "region": "REGION 10",
+    "province": "City of Cagayan de Oro (HUC)",
+    "target": 22
+   },
+   "City of Iligan (HUC)": {
+    "name": "City of Iligan (HUC)",
+    "region": "REGION 10",
+    "province": "City of Iligan (HUC)",
+    "target": 4
+   },
+   "Davao del Norte": {
+    "name": "Davao del Norte",
+    "region": "REGION 11",
+    "province": "Davao del Norte",
+    "target": 12
+   },
+   "Davao del Sur": {
+    "name": "Davao del Sur",
+    "region": "REGION 11",
+    "province": "Davao del Sur",
+    "target": 10
+   },
+   "Davao Oriental": {
+    "name": "Davao Oriental",
+    "region": "REGION 11",
+    "province": "Davao Oriental",
+    "target": 6
+   },
+   "Davao de Oro": {
+    "name": "Davao de Oro",
+    "region": "REGION 11",
+    "province": "Davao de Oro",
+    "target": 7
+   },
+   "Davao Occidental": {
+    "name": "Davao Occidental",
+    "region": "REGION 11",
+    "province": "Davao Occidental",
+    "target": 3
+   },
+   "City of Davao (HUC)": {
+    "name": "City of Davao (HUC)",
+    "region": "REGION 11",
+    "province": "City of Davao (HUC)",
+    "target": 15
+   },
+   "North Cotabato - Cotabato": {
+    "name": "North Cotabato - Cotabato",
+    "region": "REGION 12",
+    "province": "North Cotabato - Cotabato",
+    "target": 17
+   },
+   "South Cotabato": {
+    "name": "South Cotabato",
+    "region": "REGION 12",
+    "province": "South Cotabato",
+    "target": 10
+   },
+   "Sultan Kudarat": {
+    "name": "Sultan Kudarat",
+    "region": "REGION 12",
+    "province": "Sultan Kudarat",
+    "target": 12
+   },
+   "Sarangani": {
+    "name": "Sarangani",
+    "region": "REGION 12",
+    "province": "Sarangani",
+    "target": 5
+   },
+   "City of General Santos (HUC)": {
+    "name": "City of General Santos (HUC)",
+    "region": "REGION 12",
+    "province": "City of General Santos (HUC)",
+    "target": 10
+   },
+   "City of Caloocan (HUC)": {
+    "name": "City of Caloocan (HUC)",
+    "region": "NCR",
+    "province": "City of Caloocan (HUC)",
+    "target": 22
+   },
+   "City of Las Piñas (HUC)": {
+    "name": "City of Las Piñas (HUC)",
+    "region": "NCR",
+    "province": "City of Las Piñas (HUC)",
+    "target": 15
+   },
+   "City of Makati (HUC)": {
+    "name": "City of Makati (HUC)",
+    "region": "NCR",
+    "province": "City of Makati (HUC)",
+    "target": 8
+   },
+   "City of Malabon (HUC)": {
+    "name": "City of Malabon (HUC)",
+    "region": "NCR",
+    "province": "City of Malabon (HUC)",
+    "target": 9
+   },
+   "City of Mandaluyong (HUC)": {
+    "name": "City of Mandaluyong (HUC)",
+    "region": "NCR",
+    "province": "City of Mandaluyong (HUC)",
+    "target": 13
+   },
+   "City of Manila (HUC)": {
+    "name": "City of Manila (HUC)",
+    "region": "NCR",
+    "province": "City of Manila (HUC)",
+    "target": 26
+   },
+   "City of Marikina (HUC)": {
+    "name": "City of Marikina (HUC)",
+    "region": "NCR",
+    "province": "City of Marikina (HUC)",
+    "target": 10
+   },
+   "City of Muntinlupa (HUC)": {
+    "name": "City of Muntinlupa (HUC)",
+    "region": "NCR",
+    "province": "City of Muntinlupa (HUC)",
+    "target": 10
+   },
+   "City of Navotas (HUC)": {
+    "name": "City of Navotas (HUC)",
+    "region": "NCR",
+    "province": "City of Navotas (HUC)",
+    "target": 5
+   },
+   "City of Parañaque (HUC)": {
+    "name": "City of Parañaque (HUC)",
+    "region": "NCR",
+    "province": "City of Parañaque (HUC)",
+    "target": 9
+   },
+   "Pasay City (HUC)": {
+    "name": "Pasay City (HUC)",
+    "region": "NCR",
+    "province": "Pasay City (HUC)",
+    "target": 9
+   },
+   "City of Pasig (HUC)": {
+    "name": "City of Pasig (HUC)",
+    "region": "NCR",
+    "province": "City of Pasig (HUC)",
+    "target": 21
+   },
+   "Quezon City (HUC)": {
+    "name": "Quezon City (HUC)",
+    "region": "NCR",
+    "province": "Quezon City (HUC)",
+    "target": 38
+   },
+   "City of San Juan (HUC)": {
+    "name": "City of San Juan (HUC)",
+    "region": "NCR",
+    "province": "City of San Juan (HUC)",
+    "target": 7
+   },
+   "City of Taguig (HUC)": {
+    "name": "City of Taguig (HUC)",
+    "region": "NCR",
+    "province": "City of Taguig (HUC)",
+    "target": 19
+   },
+   "City of Valenzuela (HUC)": {
+    "name": "City of Valenzuela (HUC)",
+    "region": "NCR",
+    "province": "City of Valenzuela (HUC)",
+    "target": 19
+   },
+   "Pateros": {
+    "name": "Pateros",
+    "region": "NCR",
+    "province": "Pateros",
+    "target": 3
+   },
+   "Abra": {
+    "name": "Abra",
+    "region": "CAR",
+    "province": "Abra",
+    "target": 11
+   },
+   "Benguet": {
+    "name": "Benguet",
+    "region": "CAR",
+    "province": "Benguet",
+    "target": 9
+   },
+   "Ifugao": {
+    "name": "Ifugao",
+    "region": "CAR",
+    "province": "Ifugao",
+    "target": 4
+   },
+   "Kalinga": {
+    "name": "Kalinga",
+    "region": "CAR",
+    "province": "Kalinga",
+    "target": 8
+   },
+   "Mountain Province": {
+    "name": "Mountain Province",
+    "region": "CAR",
+    "province": "Mountain Province",
+    "target": 7
+   },
+   "Apayao": {
+    "name": "Apayao",
+    "region": "CAR",
+    "province": "Apayao",
+    "target": 4
+   },
+   "City of Baguio (HUC)": {
+    "name": "City of Baguio (HUC)",
+    "region": "CAR",
+    "province": "City of Baguio (HUC)",
+    "target": 10
+   },
+   "Agusan Del Norte": {
+    "name": "Agusan Del Norte",
+    "region": "REGION 13",
+    "province": "Agusan Del Norte",
+    "target": 4
+   },
+   "Agusan Del Sur": {
+    "name": "Agusan Del Sur",
+    "region": "REGION 13",
+    "province": "Agusan Del Sur",
+    "target": 9
+   },
+   "Surigao Del Norte": {
+    "name": "Surigao Del Norte",
+    "region": "REGION 13",
+    "province": "Surigao Del Norte",
+    "target": 14
+   },
+   "Surigao Del Sur": {
+    "name": "Surigao Del Sur",
+    "region": "REGION 13",
+    "province": "Surigao Del Sur",
+    "target": 13
+   },
+   "Dinagat Islands": {
+    "name": "Dinagat Islands",
+    "region": "REGION 13",
+    "province": "Dinagat Islands",
+    "target": 3
+   },
+   "City of Butuan (HUC)": {
+    "name": "City of Butuan (HUC)",
+    "region": "REGION 13",
+    "province": "City of Butuan (HUC)",
+    "target": 7
+   },
+   "Marinduque": {
+    "name": "Marinduque",
+    "region": "REGION 4-B",
+    "province": "Marinduque",
+    "target": 4
+   },
+   "Occidental Mindoro": {
+    "name": "Occidental Mindoro",
+    "region": "REGION 4-B",
+    "province": "Occidental Mindoro",
+    "target": 6
+   },
+   "Oriental Mindoro": {
+    "name": "Oriental Mindoro",
+    "region": "REGION 4-B",
+    "province": "Oriental Mindoro",
+    "target": 11
+   },
+   "Palawan": {
+    "name": "Palawan",
+    "region": "REGION 4-B",
+    "province": "Palawan",
+    "target": 12
+   },
+   "Romblon": {
+    "name": "Romblon",
+    "region": "REGION 4-B",
+    "province": "Romblon",
+    "target": 8
+   },
+   "City of Puerto Princesa (HUC)": {
+    "name": "City of Puerto Princesa (HUC)",
+    "region": "REGION 4-B",
+    "province": "City of Puerto Princesa (HUC)",
+    "target": 4
+   },
+   "Negros Occidental": {
+    "name": "Negros Occidental",
+    "region": "NIR",
+    "province": "Negros Occidental",
+    "target": 18
+   },
+   "Negros Oriental": {
+    "name": "Negros Oriental",
+    "region": "NIR",
+    "province": "Negros Oriental",
+    "target": 15
+   },
+   "Siquijor": {
+    "name": "Siquijor",
+    "region": "NIR",
+    "province": "Siquijor",
+    "target": 4
+   },
+   "CITY OF BACOLOD (HUC)": {
+    "name": "CITY OF BACOLOD (HUC)",
+    "region": "NIR",
+    "province": "CITY OF BACOLOD (HUC)",
+    "target": 1
+   },
+   "City of Bacolod (HUC)": {
+    "name": "City of Bacolod (HUC)",
+    "region": "NIR",
+    "province": "City of Bacolod (HUC)",
+    "target": 3
+   },
+   "Basilan": {
+    "name": "Basilan",
+    "region": "BARMM",
+    "province": "Basilan",
+    "target": 6
+   },
+   "Lanao Del Sur": {
+    "name": "Lanao Del Sur",
+    "region": "BARMM",
+    "province": "Lanao Del Sur",
+    "target": 19
+   },
+   "Sulu": {
+    "name": "Sulu",
+    "region": "REGION 9",
+    "province": "Sulu",
+    "target": 9
+   },
+   "Tawi-Tawi": {
+    "name": "Tawi-Tawi",
+    "region": "BARMM",
+    "province": "Tawi-Tawi",
+    "target": 5
+   },
+   "Maguindanao - Maguindanao Del Norte": {
+    "name": "Maguindanao - Maguindanao Del Norte",
+    "region": "BARMM",
+    "province": "Maguindanao - Maguindanao Del Norte",
+    "target": 16
+   },
+   "City of Cotabato - Maguindanao Del Norte": {
+    "name": "City of Cotabato - Maguindanao Del Norte",
+    "region": "BARMM",
+    "province": "City of Cotabato - Maguindanao Del Norte",
+    "target": 4
+   }
+  },
+  "f3": {},
+  "f4": {}
+ }
+}

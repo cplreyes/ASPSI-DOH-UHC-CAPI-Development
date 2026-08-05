@@ -195,11 +195,12 @@ Language = EN
 1191 "'Yes, other reason' was selected for Q47_SVC_DELIVERY_PROT. Please specify."
 1192 "'No, other reason' was selected for Q48_PCQM. Please specify."
 1193 "'Yes, other reason' was selected for Q48_PCQM. Please specify."
-1194 An 'other' option was selected for Q103. Please specify.
-1195 An 'other' option was selected for Q110. Please specify.
 1196 An 'other' option was selected for Q11. Please specify.
 1197 An 'other' option was selected for Q143. Please specify.
 1198 An 'other' option was selected for Q15. Please specify.
 1199 An 'other' option was selected for Q18. Please specify.
 1200 An 'other' option was selected for Q33. Please specify.
 1201 No GPS fix after %d s — move near a window or doorway and re-enter this field to retry.
+1202 An 'other' option was selected for Q2. Please specify.
+1203 Q103: 'Other (specify)' was selected. Please specify.
+1204 Q110: 'Other (specify)' was selected. Please specify.

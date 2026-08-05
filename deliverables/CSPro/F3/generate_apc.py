@@ -205,6 +205,14 @@ preproc
   noinput;
 
 PROC Q92_PAY_AMT
+preproc
+  { #1064 class (2026-08-04): non-money row -> amount is display-only 0 (noinput);
+    the grid no longer offers an amount box for sources with no cost. Positive
+    polarity per #835. Desk-test gate: all-non-money selection must advance. }
+  if Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8 then
+    Q92_PAY_AMT = 0;
+    noinput;
+  endif;
 postproc
   if Q92_PAY_AMT < 0 then
     errmsg("92. Amount cannot be negative.");
@@ -374,14 +382,27 @@ def build_roster_procs(q_no, q_label, sources, amt_codes,
               "  endif;"]
     L += [f"  {line} = curocc();", "  noinput;", ""]
 
-    L += [f"PROC {amtf}", "postproc",
+    L.append(f"PROC {amtf}")
+    if partial:
+        # #1064 (2026-08-04): non-money rows no longer OFFER an amount box — preproc
+        # zeroes and noinputs the cell, so the grid shows a fixed 0 and entry skips to
+        # the next row. Positive-polarity code match per #835 (notappl-proof). NB the
+        # row's LINE field already noinputs and SRC is protected, so a non-money row
+        # has NO enterable field — desk-test the all-non-money selection before deploy
+        # (F3_PILOT_JUMP vehicle; the Q92/Q971 notes flag no-stop rows as a hang risk).
+        non_money = sorted(int(c) for c in codes if c not in amt_codes)
+        cond = " or ".join(f"{srcf} = {n}" for n in non_money)
+        L += ["preproc",
+              f"  if {cond} then",
+              f"    {amtf} = 0;   {{ non-money source -> no cost; display-only }}",
+              "    noinput;",
+              "  endif;"]
+    L += ["postproc",
           f"  if {amtf} < 0 then",
           f'    errmsg("{q_no}. Amount cannot be negative.");',
           "    reenter;", "  endif;"]
     if partial:
-        # Same polarity flip as the LINE preproc (see the #835 retest note above).
-        non_money = sorted(int(c) for c in codes if c not in amt_codes)
-        cond = " or ".join(f"{srcf} = {n}" for n in non_money)
+        # Same polarity flip as the LINE preproc; kept as a backstop.
         L += [f"  if ({cond}) and {amtf} <> 0 then",
               f'    errmsg("{q_no}. This source has no out-of-pocket cost — amount reset to 0.");',
               f"    {amtf} = 0;", "  endif;"]
@@ -1531,12 +1552,17 @@ def main():
         covered.add(field)
         parts.append(skip_proc(field, cond, target))
         parts.append("")
-    # #835 root-cause pilot (dormant): F3_PILOT_Q107=1 skips Q4 -> Q107 so the payment roster
-    # is reachable in a few fields for a clean resume reproduction. OFF by default.
-    if os.environ.get("F3_PILOT_Q107") and "Q4_NAME" not in covered:
+    # Desk-test pilot (dormant): jump Q4 straight to a roster so engine checks are
+    # reachable in a few fields. F3_PILOT_Q107=1 keeps the #835 target; the general
+    # form F3_PILOT_JUMP=<FIELD> (added for the #1064 roster-stop test) jumps to any
+    # named field. OFF by default — never set for a deploy build.
+    _pilot_target = ("Q107_SOURCES" if os.environ.get("F3_PILOT_Q107")
+                     else os.environ.get("F3_PILOT_JUMP"))
+    if _pilot_target and "Q4_NAME" not in covered:
         covered.add("Q4_NAME")
-        parts.append("{ ---- #835 pilot: jump to Q107 (dormant) ---- }")
-        parts.append("PROC Q4_NAME" + chr(10) + "postproc" + chr(10) + "  skip to Q107_SOURCES;")
+        parts.append("{ ---- desk-test pilot: jump to %s (dormant) ---- }" % _pilot_target)
+        parts.append("PROC Q4_NAME" + chr(10) + "postproc" + chr(10)
+                     + f"  skip to {_pilot_target};")
         parts.append("")
 
     parts.append("{ ---- 'Other (specify)' enforcement — UHC9 dual-other (spec 4) ---- }")

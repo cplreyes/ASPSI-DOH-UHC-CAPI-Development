@@ -15,10 +15,16 @@ This moves the whole Field Control form (team-leader / enumerator / validator
 names + visit dates + total visits + result-of-visit) to the END, matching
 F3/F4's "all field control at case-end" convention.
 
-The Verification Photo MUST remain the very last form: its preproc gates on
-ENUM_RESULT_FINAL_VISIT (photograph only completed/incomplete visits), so the
-result has to be entered before the camera fires. So Field Control lands in the
-SECOND-TO-LAST position — immediately before the photo.
+Field Control MUST land immediately BEFORE the Verification Photo: the photo's
+preproc gates on ENUM_RESULT_FINAL_VISIT (photograph only completed/incomplete
+visits), so the result has to be entered before the camera fires. That
+adjacency is the invariant this script enforces.
+
+The photo is NO LONGER required to be the very last form (changed 2026-07-16,
+#157): "Facility GPS" now sits after it — see inject_gps_end.py, which runs
+after this script. GPS has no gate of its own, so it is safe there. Do not
+re-add a "photo must be last" assertion; it would abort the pipeline on every
+re-run once GPS has been moved.
 
 POST-PROCESSOR, not a hand-edit (IRON-RULE compliant). The .fmf binds each
 [Group] to a [Form] by a 1-based ordinal (Form=N -> the Nth form, named
@@ -27,9 +33,9 @@ Field Control [Form] block and its [Group] block to just before the photo, then
 RE-DERIVE every form ordinal from position (FORM Name= + every Group/Field Form=).
 
 Idempotent: when Field Control is already right before the photo the move is a
-no-op and re-derivation reproduces identical output. Run it LAST in the F1 .fmf
+no-op and re-derivation reproduces identical output. Run it in the F1 .fmf
 pipeline: fmf_checkbox_convert.py -> inject_blocks.py -> inject_case_key.py ->
-inject_field_control_end.py.
+inject_field_control_end.py -> inject_gps_end.py.
 
 Run:  python inject_field_control_end.py
 """
@@ -105,19 +111,28 @@ def main():
         # links to that group's form; they all become i+1.
         groups[i] = re.sub(r"(?m)^Form=\d+", f"Form={i + 1}", b)
 
-    # --- guard: photo stays last, Field Control is now second-to-last ---
-    if f"Label={PHOTO_FORM_LABEL}" not in forms[-1] or f"Name={PHOTO_GROUP_NAME}" not in groups[-1]:
-        sys.exit("ERROR: Verification Photo is no longer the last form/group — aborting.")
-    if f"Label={FC_FORM_LABEL}" not in forms[-2] or f"Name={FC_GROUP_NAME}" not in groups[-2]:
-        sys.exit("ERROR: Field Control did not land immediately before the photo — aborting.")
+    # --- guard: Field Control sits immediately before the photo ---
+    # Position-independent on purpose: since #157 (2026-07-16) the photo is NOT the
+    # last form — inject_gps_end.py moves "Facility GPS" after it. The invariant that
+    # matters is the ADJACENCY (FC collects ENUM_RESULT_FINAL_VISIT; the photo's
+    # preproc gates on it), not where the pair sits in the file.
+    fc_i = _find_one(forms, f"Label={FC_FORM_LABEL}", "Field Control form")
+    ph_i = _find_one(forms, f"Label={PHOTO_FORM_LABEL}", "Verification Photo form")
+    fc_g = _find_one(groups, f"Name={FC_GROUP_NAME}", "Field Control group")
+    ph_g = _find_one(groups, f"Name={PHOTO_GROUP_NAME}", "Verification Photo group")
+    if ph_i != fc_i + 1:
+        sys.exit("ERROR: Field Control did not land immediately before the photo form — aborting.")
+    if ph_g != fc_g + 1:
+        sys.exit("ERROR: Field Control did not land immediately before the photo group — aborting.")
 
     out = prefix + "".join(forms) + mid + "".join(groups)
     FMF.write_text(out, encoding="utf-8")
 
     print(f"Relocated 'Field Control' -> before 'Case Verification Photo' in {FMF.name}")
     print(f"  forms/groups: {len(forms)} (1:1)")
-    print(f"  new tail order: ... -> {FC_FORM_LABEL} (FORM{len(forms) - 2:03d}, Form={len(forms) - 1})"
-          f" -> {PHOTO_FORM_LABEL} (FORM{len(forms) - 1:03d}, Form={len(forms)})")
+    print(f"  order: {FC_FORM_LABEL} (FORM{fc_i:03d}, Form={fc_i + 1})"
+          f" -> {PHOTO_FORM_LABEL} (FORM{ph_i:03d}, Form={ph_i + 1})"
+          f"{'' if ph_i == len(forms) - 1 else f'  [+{len(forms) - 1 - ph_i} form(s) after the photo — expected: Facility GPS]'}")
     print(f"  {'(was already in place — output identical, no structural change)' if already else 'moved + renumbered'}")
 
 

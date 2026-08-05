@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DOH Reviewer Findings — Triage Progress Report (XJ, Jul 2026)</title>
+<style>
+  @page { size: Letter; margin: 0.55in 0.6in; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: #1f2933; font-size: 10pt; line-height: 1.34;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  header { border-bottom: 3px solid #12667a; padding-bottom: 8px; margin-bottom: 11px; }
+  h1 { font-size: 18pt; color: #0e4f5f; letter-spacing: -0.2px; line-height: 1.1; }
+  h1 .sub { display:block; font-size: 10.5pt; color:#52606d; font-weight:600; margin-top:3px; letter-spacing:0; }
+  .meta { margin-top: 8px; font-size: 8.6pt; color: #52606d; }
+  .meta b { color:#323f4b; font-weight:600; }
+  .meta span { display:inline-block; margin-right: 14px; }
+  .lede {
+    background: #e9f3f6; border-left: 4px solid #12667a; padding: 8px 11px;
+    margin-bottom: 12px; font-size: 9.7pt; border-radius: 0 4px 4px 0;
+  }
+  h2 {
+    font-size: 9.7pt; text-transform: uppercase; letter-spacing: 0.6px;
+    color: #0e4f5f; border-bottom: 1px solid #cbe0e6; padding-bottom: 2px;
+    margin: 0 0 6px 0;
+  }
+  section { margin-bottom: 12px; break-inside: avoid; }
+  p { font-size: 9.4pt; margin-bottom: 5px; }
+  ul { list-style: none; }
+  li { position: relative; padding-left: 15px; margin-bottom: 4px; font-size: 9.3pt; }
+  li::before { content:"▸"; position:absolute; left:0; top:-0.5px; color:#12667a; font-weight:700; }
+  li b { font-weight: 600; color:#243b53; }
+  .parked {
+    background:#fff8ec; border-left:4px solid #c47f17; border-radius:0 4px 4px 0;
+    padding:8px 11px; margin-bottom:12px; font-size:9.4pt;
+  }
+  .parked .h { font-weight:700; color:#8a5a09; text-transform:uppercase; letter-spacing:.5px;
+    font-size:8.8pt; display:block; margin-bottom:3px; }
+  .parked b { color:#7a4f08; }
+  table { border-collapse: collapse; width: 100%; font-size: 8.7pt; margin-top: 3px; }
+  th { background:#0e4f5f; color:#fff; text-align:left; padding:4px 6px; font-weight:600;
+    font-size:8.3pt; text-transform:uppercase; letter-spacing:.3px; vertical-align:top; }
+  td { border-bottom:1px solid #dbe6ea; padding:4px 6px; vertical-align:top; }
+  tr:nth-child(even) td { background:#f4f9fa; }
+  td.c { text-align:center; white-space:nowrap; }
+  /* bucket badges */
+  .b { display:inline-block; border-radius:3px; padding:0.5px 5px; font-weight:700; font-size:8pt;
+    color:#fff; letter-spacing:.3px; }
+  .bA { background:#2e8b57; }   /* already built */
+  .bB { background:#2f6fb0; }   /* deliberate */
+  .bC { background:#c47f17; }   /* evidence gap */
+  .bD { background:#7b52ab; }   /* candidate */
+  .bAD{ background:#6b7785; }   /* other-specify verify */
+  .keyline { font-size:8.6pt; color:#52606d; margin-top:5px; }
+  .keyline .b { margin-right:2px; }
+  .lead-action { background:#e9f3f6; border:1px solid #bcd8df; border-radius:5px;
+    padding:8px 11px; margin-top:4px; font-size:9.3pt; }
+  .lead-action b { color:#0e4f5f; }
+  .bottomline { background:#0e4f5f; color:#fff; border-radius:5px; padding:9px 12px; margin-top:4px; }
+  .bottomline h2 { color:#bfe0e8; border:none; margin-bottom:3px; }
+  .bottomline p { font-size:9.4pt; line-height:1.36; color:#eaf4f6; }
+  .apx h1 { font-size:13pt; color:#0e4f5f; }
+  code { font-family:"Consolas","SF Mono",monospace; font-size:8.2pt; background:#eef4f6;
+    border:1px solid #d6e5ea; border-radius:3px; padding:0 3px; color:#0e4f5f; }
+  footer {
+    margin-top: 12px; padding-top: 7px; border-top: 1px solid #d9e2ec;
+    font-size: 7.9pt; color: #7b8794; display:flex; justify-content:space-between; gap:12px;
+  }
+  .pagebreak { break-before: page; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>DOH Reviewer Findings &mdash; Triage Progress Report
+      <span class="sub">Xylee Javier (XJ) PAPI-vs-CAPI review of the UHC Year-2 CAPI instruments</span>
+    </h1>
+    <div class="meta">
+      <span><b>Prepared for:</b> ASPSI &ndash; DOH UHC Year-2 CAPI Team</span>
+      <span><b>From:</b> Carl Patrick L. Reyes &middot; IT Consultant (CAPI Development)</span>
+      <span><b>Date:</b> 20 July 2026</span>
+      <span><b>Status:</b> Triaged &middot; remediation scheduled post-pretest</span>
+    </div>
+  </header>
+
+  <div class="lede">
+    <b>In plain terms:</b> DOH reviewer <b>Xylee Javier</b> submitted a screenshot-based comparison of the
+    paper (PAPI) questionnaires against the CAPI build for the <b>Healthcare-Worker (F2)</b> and
+    <b>Household (F4)</b> instruments. We triaged <b>all 149 comments one-by-one</b>. The result: the large
+    majority are <b>already handled in the live build</b> or are <b>documentation/screenshot gaps</b> (the
+    reviewer worked from April screenshots with no test-environment access); a smaller set are
+    <b>genuine candidate changes</b> for ASPSI/DOH to weigh <b>after pre-testing</b>. Every comment is now
+    tracked as its own ticket so nothing is lost.
+  </div>
+
+  <div class="parked">
+    <span class="h">Governing posture &mdash; parked through pretest, scheduled for remediation after</span>
+    Per <b>Dr. Myra Silva-Javier's 12 June 2026 decision</b>: the tools were already accepted and submitted
+    to <b>SJREB and PSA</b>; the comments are <b>parked</b> and revisited when they resurface in the SJREB
+    review, PSA review, or <b>pre-testing</b>. The <b>April-20 version is the accepted build baseline</b> and
+    <b>stays frozen through the pretest</b>. The remediation is now <b>scheduled for the post-pretest window</b>
+    (see &sect;5) &mdash; this report tracks and dispositions each item so that pass is ready to execute the
+    moment fieldwork ends. It is <b>not</b> authorization to change the instruments during pretest.
+  </div>
+
+  <section>
+    <h2>1. What was reviewed</h2>
+    <ul>
+      <li><b>Two instruments, 149 comments.</b> HCW / F2 (PWA) &mdash; <b>63</b> comments; Household / F4
+        (CSPro) &mdash; <b>86</b> comments. The Facility-Head (F1) and Patient (F3) review documents have
+        <b>not yet been shared</b>; they will get the same treatment when they arrive.</li>
+      <li><b>The reviewer worked from April screenshots, without test-environment access.</b> This single
+        fact explains most of the findings: many features exist in the live build but simply were not
+        visible in the static April screenshots.</li>
+      <li><b>XJ rates the CAPI favourably where she could see it</b> &mdash; she calls the F2/PWA interface the
+        more polished one (section headers, progress indicators, no repeated question text) and praises the
+        Q35 date design as an improvement over PAPI.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>2. How we triaged &mdash; four buckets</h2>
+    <p>Every comment was sorted into one of four dispositions. Only the last (D) is potential future work.</p>
+    <table>
+      <tr><th style="width:16%">Bucket</th><th style="width:40%">Meaning</th><th class="c" style="width:10%">Count*</th><th style="width:34%">Typical action</th></tr>
+      <tr><td><span class="b bA">A</span> Already built</td><td>Feature exists in the live instrument; the April screenshot just didn't show it.</td><td class="c">&asymp;18</td><td>"Implemented &mdash; current screen attached."</td></tr>
+      <tr><td><span class="b bB">B</span> Deliberate design</td><td>A real, intentional difference from PAPI (chosen on purpose).</td><td class="c">&asymp;6</td><td>Document the rationale.</td></tr>
+      <tr><td><span class="b bC">C</span> Evidence gap</td><td>Real feature, but unverifiable from screenshots alone.</td><td class="c">&asymp;10</td><td>Supply a skip/validation matrix + a test login.</td></tr>
+      <tr><td><span class="b bD">D</span> Candidate change</td><td>A genuine gap or improvement worth considering.</td><td class="c">&asymp;27</td><td>ASPSI/DOH decide, post-pretest.</td></tr>
+      <tr><td><span class="b bAD">A/D</span> Other-specify</td><td>"Every 'Other' option needs a free-text field" &mdash; one comment per question (38 F2 + 51 F4).</td><td class="c">&asymp;88</td><td>Verify per item against the current dictionary; add only where truly missing.</td></tr>
+    </table>
+    <p class="keyline">*Counts approximate &mdash; a handful of comments were merged as duplicates at ticketing.
+      Net: roughly <b>112 of 149</b> are already-built, deliberate, or verify-only (A / B / C / A/D);
+      the genuine candidate-change tail (D) is <b>~27</b>.</p>
+  </section>
+
+  <section>
+    <h2>3. Items raised &mdash; triage result &amp; action (by theme)</h2>
+    <p>All 149 comments consolidated into the recurring themes XJ raised. The complete per-question list is
+      in the appendix and one-per-ticket on GitHub.</p>
+    <table>
+      <tr><th style="width:34%">Item XJ raised</th><th class="c" style="width:9%">Instr.</th><th class="c" style="width:7%">Triage</th><th style="width:50%">Action to be taken</th></tr>
+
+      <tr><td>Informed Consent / ICF section not seen in the screenshots</td><td class="c">F2, F4</td><td class="c"><span class="b bA">A</span></td><td>Attach current consent-gate screens (F2 per-case consent shipped R6; F1/F3/F4 carry consent/break-off); note offline parity.</td></tr>
+      <tr><td>QN / Field-Control / Geographic-ID sections not shown</td><td class="c">F2, F4</td><td class="c"><span class="b bA">A</span></td><td>Attach current screens; explain enrolment carries the facility code + questionnaire number; Field Control handled via the break-off/disposition flow.</td></tr>
+      <tr><td>Navigation controls (Next / Back / Go-To) not shown</td><td class="c">F2, F4</td><td class="c"><span class="b bA">A</span></td><td>Documentation gap &mdash; CSEntry has built-in navigation; the PWA has section navigation. Show it in the screenshot pack.</td></tr>
+      <tr><td>Autosave on interruption + resume from last save</td><td class="c">F2, F4</td><td class="c"><span class="b bA">A</span></td><td>Document IndexedDB autosave/resume (F2, in production) and CSEntry partial-save resume (F1/F3/F4).</td></tr>
+      <tr><td>Session timeout / expiry handling</td><td class="c">F2, F4</td><td class="c"><span class="b bB">B</span></td><td>State the designed behaviour (self-administered PWA / persistent CSEntry case).</td></tr>
+      <tr><td>Geographic ID &mdash; implement cascading Region&rarr;Province&rarr;City&rarr;Barangay</td><td class="c">F4</td><td class="c"><span class="b bA">A</span></td><td>The 12-digit key already gates a PSGC cascade at field 1; verify the household-address presentation and attach current screens.</td></tr>
+      <tr><td>GPS lat/long &mdash; how captured, recorded, validated</td><td class="c">F4</td><td class="c"><span class="b bA">A</span></td><td>Document end-of-flow warm-radio GPS capture with accuracy recorded.</td></tr>
+      <tr><td>Multi-answer exclusivity (block None/Refuse/DK when a listed/Other option is chosen)</td><td class="c">F2, F4</td><td class="c"><span class="b bA">A</span></td><td>Exclusivity + ascending-order shipped (#830 / #832); demonstrate per item.</td></tr>
+      <tr><td>Household roster (Q30&ndash;Q50) &mdash; member-loop workflow + visible member identifier</td><td class="c">F4</td><td class="c"><span class="b bA">A</span></td><td>Document the repeating-record roster workflow; member name is displayed on the roster line.</td></tr>
+      <tr><td>Employment-type definitions available in the self-administered CAPI</td><td class="c">F2</td><td class="c"><span class="b bA">A</span></td><td>Confirm the current #826 newline-rendered Q2 definitions render correctly.</td></tr>
+      <tr><td>Q35 date design (Year required; Month/Day optional) &mdash; praised</td><td class="c">F2</td><td class="c"><span class="b bA">A</span></td><td>No change &mdash; note it as the model pattern to reuse where applicable.</td></tr>
+
+      <tr><td>Disposition: "Refused" &rarr; "Withdraw Participation/Consent"; code order vs the other forms</td><td class="c">F4</td><td class="c"><span class="b bB">B</span></td><td>Document the deliberate change + the cross-instrument harmonization intent.</td></tr>
+      <tr><td>Questionnaire Number: 9-digit (PAPI) vs 12-digit (CAPI)</td><td class="c">F4</td><td class="c"><span class="b bB">B</span></td><td>Document the deliberate 12-digit respondent key (facility-9 + sequence-3), not an inconsistency.</td></tr>
+      <tr><td>Visit-date format (M-D-Y vs YYYYMMDD) &amp; first/final-visit model</td><td class="c">F4</td><td class="c"><span class="b bB">B</span></td><td>Explain the format choice; map the manual's 3-callback Visit Sheet to the CAPI break-off/disposition model.</td></tr>
+
+      <tr><td>Skip patterns / validation checks not verifiable without test access</td><td class="c">F2, F4</td><td class="c"><span class="b bC">C</span></td><td><b>Highest-leverage:</b> supply one skip-pattern + validation matrix (keyed to question numbers) and a test login. Answers most of the "please confirm it's programmed" items at once.</td></tr>
+      <tr><td>Full / near-final CAPI screenshots for review</td><td class="c">F2, F4</td><td class="c"><span class="b bC">C</span></td><td>Provide a current screenshot pack + the deployed test build (covers Q6 "no screenshot", missing sections).</td></tr>
+      <tr><td>Single- vs multi-select correctness per item; "select one/all" instructions</td><td class="c">F2, F4</td><td class="c"><span class="b bC">C</span></td><td>Cover in the validation matrix; enforced by the single/multi controls.</td></tr>
+      <tr><td>Specific routing checks (Q62 "proceed to" typo, Q71 separate input, Q57/Q69&ndash;73 eligibility)</td><td class="c">F2, F4</td><td class="c"><span class="b bC">C</span></td><td>Verify each against the questionnaire spec; confirm or correct.</td></tr>
+
+      <tr><td>"Other (specify)" &mdash; every "Other" option needs a free-text field</td><td class="c">F2 (38 q)<br>F4 (51 q)</td><td class="c"><span class="b bAD">A/D</span></td><td>Per-item verify against the current DCF/spec &mdash; many already expose <code>_OTHER_TXT</code> via the checkbox conversion; add only those genuinely missing.</td></tr>
+      <tr><td>Repeated question text (shown twice on the CSPro screens)</td><td class="c">F4</td><td class="c"><span class="b bD">D</span></td><td>Presentation cleanup candidate (CSPro prompt + field render).</td></tr>
+      <tr><td>Section titles / sub-headers / intros missing or out of order (E1, E2, Q98, Q113, Q186&ndash;194)</td><td class="c">F2, F4</td><td class="c"><span class="b bD">D</span></td><td>Add the section headers/instructions; presentation candidate.</td></tr>
+      <tr><td>Filter instructions ("Ask if&hellip;/Only answer if&hellip;") left inside the question text</td><td class="c">F4</td><td class="c"><span class="b bD">D</span></td><td>Confirm the skips are programmed; style the notes distinctly or automate them (Q1, Q45.1/45.2, Q78, Q117, Q118).</td></tr>
+      <tr><td>Manual enumerator notes that should be system logic &mdash; automate</td><td class="c">F4</td><td class="c"><span class="b bD">D</span></td><td>Broad logic/presentation cleanup candidate; re-word retained notes for CAPI ("tick"&rarr;"select").</td></tr>
+      <tr><td>Auto-derive answers from prior data (Q38 role; roster pre-fill of known respondent info)</td><td class="c">F2, F4</td><td class="c"><span class="b bD">D</span></td><td>Candidate logic changes; ASPSI/DOH call.</td></tr>
+      <tr><td>Q18 income bracket &mdash; dropdown + auto-derive bracket from amount</td><td class="c">F4</td><td class="c"><span class="b bD">D</span></td><td>Multiple candidate changes on one item; verify then decide.</td></tr>
+      <tr><td>Household Expenditure block &mdash; heavy repetition; group per item</td><td class="c">F4</td><td class="c"><span class="b bD">D</span></td><td>Presentation redesign candidate (one labelled screen per item).</td></tr>
+      <tr><td>Q67 travel time split into Hours/Minutes &mdash; combine + show question once</td><td class="c">F4</td><td class="c"><span class="b bD">D</span></td><td>Presentation / data-structure candidate.</td></tr>
+      <tr><td>Travel-duration limit must allow &gt;1 day (&gt;1440 min) for GIDA households</td><td class="c">F4</td><td class="c"><span class="b bD">D</span></td><td>Verify the range validation; widen if capped.</td></tr>
+      <tr><td>Input labels/units (Year/Day/Hour) &mdash; Q9/Q10/Q11; red-asterisk legend</td><td class="c">F2</td><td class="c"><span class="b bD">D</span></td><td>Verify current labels; add a one-line required-field legend. Small UX candidates.</td></tr>
+      <tr><td>Content nits: Q11 option order, Q22 wording, Q29 Refuse option, Q103 missing option, Q199 range, Q15 external list, an added "None" option</td><td class="c">F2, F4</td><td class="c"><span class="b bD">D</span></td><td>Verify each against the spec; correct/add only if confirmed.</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>4. The single highest-leverage action</h2>
+    <div class="lead-action">
+      <b>One deliverable clears most of the review:</b> a <b>skip-pattern + validation matrix</b> (keyed to
+      question numbers) plus a <b>test login</b> to the deployed build. That directly answers the recurring
+      "we have no test access / please confirm the skip is programmed / validation not demonstrated" items
+      across <b>both</b> instruments &mdash; i.e. the entire bucket C and much of A. The project's
+      <code>verify_questions.py</code> reachability output is the starting point for that matrix. This is
+      preparation for the eventual reply, still gated by the parked decision.
+    </div>
+  </section>
+
+  <section>
+    <h2>5. Schedule &mdash; after pretesting</h2>
+    <p>The remediation is <b>scheduled for the post-pretest window</b> (pretest wraps ~22&ndash;24 Jul 2026;
+      LBDH is the last site). Nothing changes on the instruments during fieldwork &mdash; a build change
+      mid-pretest would invalidate the very run that tells us which of these findings actually matter.
+      Immediately after pretest, in this order:</p>
+    <ul>
+      <li><b>Consolidate what pretest surfaced</b> &mdash; cross the pretest findings against this triage; any
+        XJ item that showed up in the field is promoted from "candidate" to "confirmed."</li>
+      <li><b>Ship the bucket-C evidence pack</b> &mdash; the skip/validation matrix + a test login (the single
+        highest-leverage deliverable; answers most of the review at once).</li>
+      <li><b>Decide + implement the bucket-D candidates</b> &mdash; ASPSI/DOH pick which of the ~27 genuine
+        candidate changes to make; implement in the generators, regenerate, redeploy.</li>
+      <li><b>Run the other-specify DCF audit</b> &mdash; the ~88 "verify" items, adding a field only where one
+        is genuinely missing.</li>
+      <li><b>Assemble the consolidated DOH response</b> &mdash; one reply covering all 149, ahead of the
+        August training window.</li>
+    </ul>
+    <p class="keyline">Tracked as a post-pretest epic on the Product Backlog + a milestone on the GitHub
+      trackers (#849 / #850). This is consistent with the park decision &mdash; pretest is exactly the gate
+      Dr. Myra named for revisiting the comments.</p>
+  </section>
+
+  <section>
+    <h2>6. Where this is tracked</h2>
+    <ul>
+      <li><b>GitHub:</b> 149 child issues (<code>#851&ndash;#999</code>) under two tracking epics &mdash;
+        <b>#849 (F2 HCW, 63)</b> and <b>#850 (F4 Household, 86)</b>. Each ticket carries XJ's comment, its
+        disposition bucket, and a one-line current-build status. Label: <code>from-doh-review-xj-2026-07</code>,
+        all marked <code>parked</code>.</li>
+      <li><b>Wiki:</b> the reasoning lives in <code>Analysis - XJ PAPI-vs-CAPI Reviews vs Current CAPI Build</code>,
+        with the source summaries and the <code>PAPI-to-CAPI Translation Review Criteria</code> rubric.</li>
+      <li><b>Next:</b> F1 (Facility-Head) and F3 (Patient) reviews get the same one-ticket-per-finding triage
+        once XJ shares those documents.</li>
+    </ul>
+  </section>
+
+  <div class="bottomline">
+    <h2>Bottom line</h2>
+    <p>All 149 of XJ's comments are triaged and tracked, and the remediation is <b>scheduled for immediately
+      after pretest</b>. The build stays frozen on the accepted April-20 baseline through fieldwork. Roughly
+      three-quarters are already handled in the live build, deliberate design choices, or things a screenshot
+      pack + test login will simply demonstrate; the genuine candidate changes (~27) are a short,
+      clearly-labelled list for ASPSI/DOH to weigh once pretest tells us which actually surfaced. The one move
+      that unlocks the most is a skip/validation matrix plus a test account.</p>
+  </div>
+
+  <footer>
+    <span>Source: XJ PAPI-vs-CAPI reviews (Jul 2026) &middot; governed by the 12 Jun 2026 park decision</span>
+    <span>ASPSI &mdash; DOH UHC Year-2 CAPI Development</span>
+  </footer>
+
+  <!-- ================= APPENDIX ================= -->
+  <div class="apx pagebreak">
+    <header style="border-color:#0e4f5f;">
+      <h1>Appendix &mdash; Full per-finding triage</h1>
+      <div class="meta"><span>Every named finding, verbatim theme + disposition + action. "Other (specify)" items are listed once (identical in nature) with their question numbers.</span></div>
+    </header>
+
+    <section>
+      <h2>F2 &mdash; Healthcare Worker (PWA) &middot; 63 comments</h2>
+      <table>
+        <tr><th style="width:11%">Ref</th><th style="width:36%">Finding</th><th class="c" style="width:7%">Bkt</th><th style="width:46%">Action / current-build status</th></tr>
+        <tr><td>Form-wide</td><td>Interface differs from other instruments &mdash; clarify platform + rationale</td><td class="c"><span class="b bB">B</span></td><td>F2 is the PWA by design (self-administered, online/offline); document the rationale. XJ recommends the others match F2.</td></tr>
+        <tr><td>Docs</td><td>Provide full/near-final CAPI screenshots</td><td class="c"><span class="b bC">C</span></td><td>Supply current screenshots + a test login.</td></tr>
+        <tr><td>Sections</td><td>Screenshots omit QN / ICF / Field Control / Geo ID sections</td><td class="c"><span class="b bA">A</span></td><td>Consent gate shipped (R6 #808); enrolment carries facility/QN. Attach current screens; state offline parity.</td></tr>
+        <tr><td>Navigation</td><td>Next/Back/Go-To/navigator not shown</td><td class="c"><span class="b bA">A</span></td><td>PWA has section navigation. Documentation gap.</td></tr>
+        <tr><td>Autosave</td><td>Autosave on connectivity loss/interruption</td><td class="c"><span class="b bA">A</span></td><td>IndexedDB autosave in production. Document it.</td></tr>
+        <tr><td>Resume</td><td>Resume a partially-completed questionnaire</td><td class="c"><span class="b bA">A</span></td><td>Resume supported in production. Document it.</td></tr>
+        <tr><td>Timeout</td><td>Session timeout / expiration handling</td><td class="c"><span class="b bB">B</span></td><td>State the designed behaviour.</td></tr>
+        <tr><td>Required</td><td>Red-asterisk mark has no legend</td><td class="c"><span class="b bD">D</span></td><td>Add a brief legend. Small UX candidate.</td></tr>
+        <tr><td>Skip matrix</td><td>Provide skip-pattern matrix / specs / test access</td><td class="c"><span class="b bC">C</span></td><td>Highest-leverage: one skip/validation matrix + a test login.</td></tr>
+        <tr><td>Validation</td><td>Multi-answer: block exclusive options when a listed/Other option is chosen</td><td class="c"><span class="b bA">A</span></td><td>Exclusivity handled; demonstrate per item.</td></tr>
+        <tr><td>Validation</td><td>Multi-answer: prevent simultaneous selection of exclusive options</td><td class="c"><span class="b bA">A</span></td><td>Handled; demonstrate.</td></tr>
+        <tr><td>Validation</td><td>Single-answer items shouldn't allow multi-select (and vice versa)</td><td class="c"><span class="b bC">C</span></td><td>Verify via the validation matrix.</td></tr>
+        <tr><td>Employment</td><td>Employment-type definitions not shown in CAPI</td><td class="c"><span class="b bA">A</span></td><td>Shipped as #826 newline-rendered Q2 definitions. Confirm render.</td></tr>
+        <tr><td>Select-one</td><td>"Select one answer only" instruction not observed</td><td class="c"><span class="b bC">C</span></td><td>Enforced by single-select controls; confirm.</td></tr>
+        <tr><td>Q9/10/11</td><td>Add input labels/units (Year(s)/Day(s)/Hour(s))</td><td class="c"><span class="b bD">D</span></td><td>Verify current labels; add.</td></tr>
+        <tr><td>Q38</td><td>Auto-derive "Not a physician/dentist" from Q5 role</td><td class="c"><span class="b bD">D</span></td><td>Candidate logic change; ASPSI/DOH call.</td></tr>
+        <tr><td>E1</td><td>Sub-header "E1. Awareness of &hellip; BUCAS" missing</td><td class="c"><span class="b bD">D</span></td><td>Add section sub-header.</td></tr>
+        <tr><td>E2</td><td>Sub-header "E2. Awareness of GAMOT Package" missing</td><td class="c"><span class="b bD">D</span></td><td>Add section sub-header.</td></tr>
+        <tr><td>Q62</td><td>Possible "proceed to Q63" typo + who answers Q62 given Q61 skip</td><td class="c"><span class="b bC">C</span></td><td>Verify routing against spec; confirm/correct.</td></tr>
+        <tr><td>Q71</td><td>Separate input field when Q69=yes &amp; Q70=yes (as in PAPI)</td><td class="c"><span class="b bC">C</span></td><td>Verify against spec/build.</td></tr>
+        <tr><td>Q35</td><td>Date design (Year required, M/D optional) &mdash; praised</td><td class="c"><span class="b bA">A</span></td><td>Positive; note as the model to reuse.</td></tr>
+        <tr><td>Q98</td><td>Missing instruction before Q98 (to Q107)</td><td class="c"><span class="b bD">D</span></td><td>Add the section instruction; verify.</td></tr>
+        <tr><td>Q113</td><td>Missing instruction before Q113 (to Q120)</td><td class="c"><span class="b bD">D</span></td><td>Add the section instruction; verify.</td></tr>
+        <tr><td>Q6</td><td>Q6 has no screenshot</td><td class="c"><span class="b bC">C</span></td><td>Screenshot gap; attach current screen.</td></tr>
+        <tr><td>Form-wide</td><td>A "None" option appears added &mdash; confirm intent</td><td class="c"><span class="b bD">D</span></td><td>Verify the item; confirm.</td></tr>
+        <tr><td>Other-spec (&times;38)</td><td>Every "Other (specify)" option needs a free-text "specify" field &mdash; Q2, 5, 6, 13, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 34, 36, 37, 39, 42, 43, 45, 46, 47, 50, 52, 55, 56, 57, 60, 62, 92, 93, 94, 109, 110, 112, 123, 124</td><td class="c"><span class="b bAD">A/D</span></td><td>Verify each against the current F2 spec &mdash; some <code>Q*_other</code> fields already exist; add any truly missing.</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>F4 &mdash; Household (CSPro) &middot; 86 comments</h2>
+      <table>
+        <tr><th style="width:11%">Ref</th><th style="width:36%">Finding</th><th class="c" style="width:7%">Bkt</th><th style="width:46%">Action / current-build status</th></tr>
+        <tr><td>Consent</td><td>Consent Form section not found in CAPI</td><td class="c"><span class="b bA">A</span></td><td>Consent/break-off handling exists; screenshot/clarify.</td></tr>
+        <tr><td>Field Ctrl</td><td>Field Control at end &mdash; accessible mid-interview for callbacks?</td><td class="c"><span class="b bA">A</span></td><td>Break-off + disposition model handles this; document callback flow.</td></tr>
+        <tr><td>Disposition</td><td>Justify "Refused"&rarr;"Withdraw Participation/Consent"; harmonize codes/order</td><td class="c"><span class="b bB">B</span></td><td>Deliberate; document rationale + harmonization intent.</td></tr>
+        <tr><td>Visit-date</td><td>PAPI M-D-Y vs CAPI YYYYMMDD &mdash; rationale</td><td class="c"><span class="b bB">B</span></td><td>Design choice; document.</td></tr>
+        <tr><td>Visits</td><td>Only first/final recorded vs manual's 3 callbacks</td><td class="c"><span class="b bC">C</span></td><td>Map callbacks to the break-off/disposition model; document.</td></tr>
+        <tr><td>Navigation</td><td>Navigation controls not shown</td><td class="c"><span class="b bA">A</span></td><td>CSEntry built-in navigation. Documentation gap.</td></tr>
+        <tr><td>Autosave</td><td>Autosave on interruption</td><td class="c"><span class="b bA">A</span></td><td>CSEntry partial-save. Document.</td></tr>
+        <tr><td>Resume</td><td>Resume incomplete interviews from last save</td><td class="c"><span class="b bA">A</span></td><td>Partial-save resume. Document.</td></tr>
+        <tr><td>Timeout</td><td>Session timeout / expiration handling</td><td class="c"><span class="b bB">B</span></td><td>Document behaviour.</td></tr>
+        <tr><td>QN</td><td>9-digit PAPI vs 12-digit CAPI &mdash; flagged inconsistent</td><td class="c"><span class="b bB">B</span></td><td>Deliberate 12-digit key (facility-9 + seq-3). Document.</td></tr>
+        <tr><td>Geo</td><td>Geo ID incomplete + implement cascading Region&rarr;&hellip;&rarr;Barangay</td><td class="c"><span class="b bA">A</span></td><td>12-digit key gates a PSGC cascade. Verify household-address presentation; attach screens.</td></tr>
+        <tr><td>Geocodes</td><td>Geocode status + GPS capture/record/validation</td><td class="c"><span class="b bA">A</span></td><td>GPS captured at end-of-flow (warm-radio); accuracy recorded. Document.</td></tr>
+        <tr><td>Repeated text</td><td>Question text displayed twice throughout</td><td class="c"><span class="b bD">D</span></td><td>Presentation (CSPro prompt+field); candidate cleanup.</td></tr>
+        <tr><td>Section titles</td><td>Titles/introductions missing or out of order</td><td class="c"><span class="b bD">D</span></td><td>Presentation; candidate.</td></tr>
+        <tr><td>Skip matrix</td><td>Provide skip-pattern matrix / specs / test access</td><td class="c"><span class="b bC">C</span></td><td>Same high-leverage answer as F2: matrix + test login.</td></tr>
+        <tr><td>Validation</td><td>Multi-answer: block exclusive options when a listed/Other option chosen</td><td class="c"><span class="b bA">A</span></td><td>Exclusivity handled (#830/#832). Demonstrate.</td></tr>
+        <tr><td>Validation</td><td>Multi-answer: prevent simultaneous selection of exclusive options</td><td class="c"><span class="b bA">A</span></td><td>Handled; demonstrate.</td></tr>
+        <tr><td>Validation</td><td>Single-answer items shouldn't allow multi-select (and vice versa)</td><td class="c"><span class="b bC">C</span></td><td>Verify via validation matrix.</td></tr>
+        <tr><td>Travel dur.</td><td>Must allow &gt;1 day (&gt;1440 min) for GIDA households</td><td class="c"><span class="b bD">D</span></td><td>Verify the range validation; adjust if capped.</td></tr>
+        <tr><td>Notes</td><td>Automate enumerator notes (skip/eligibility/validation)</td><td class="c"><span class="b bD">D</span></td><td>Broad presentation/logic cleanup; candidate.</td></tr>
+        <tr><td>Select-all</td><td>"Select all that apply" instruction missing on some items</td><td class="c"><span class="b bD">D</span></td><td>Verify multi-select items; add instruction.</td></tr>
+        <tr><td>Q1</td><td>"Ask all questions unless a skip applies" note &mdash; remove if skips programmed</td><td class="c"><span class="b bD">D</span></td><td>Presentation cleanup; candidate.</td></tr>
+        <tr><td>Q15</td><td>External-list note + open text &mdash; consider dropdown/searchable</td><td class="c"><span class="b bD">D</span></td><td>Candidate UX/data-quality change.</td></tr>
+        <tr><td>Q18</td><td>Income bracket &mdash; remove note, "tick"&rarr;"select", dropdown, auto-derive</td><td class="c"><span class="b bD">D</span></td><td>Multiple candidate changes on one item.</td></tr>
+        <tr><td>Q45.1/45.2/78/117/118</td><td>Filter instructions retained in question text</td><td class="c"><span class="b bD">D</span></td><td>Presentation; verify these are programmed skips; distinguish/automate.</td></tr>
+        <tr><td>Q57/Q69&ndash;73</td><td>Address-based eligibility &mdash; automate rather than manual instruction</td><td class="c"><span class="b bD">D</span></td><td>Candidate logic change.</td></tr>
+        <tr><td>Q11</td><td>Inconsistent order of options vs PAPI</td><td class="c"><span class="b bD">D</span></td><td>Verify option order; align.</td></tr>
+        <tr><td>Q22</td><td>Inconsistent wording (house vs household)</td><td class="c"><span class="b bD">D</span></td><td>Wording fix; verify.</td></tr>
+        <tr><td>Q29</td><td>No "Refuse to answer" option in CAPI</td><td class="c"><span class="b bD">D</span></td><td>Verify; add if intended.</td></tr>
+        <tr><td>Q103</td><td>Missing option "No, I haven't accessed any medical care"</td><td class="c"><span class="b bD">D</span></td><td>Verify; add if intended.</td></tr>
+        <tr><td>Q199</td><td>Amount range not shown</td><td class="c"><span class="b bD">D</span></td><td>Verify; add range.</td></tr>
+        <tr><td>Q30&ndash;Q50</td><td>Roster member-loop workflow + visible member identifier</td><td class="c"><span class="b bA">A</span></td><td>Repeating-record roster; member name shown. Document the workflow.</td></tr>
+        <tr><td>Roster</td><td>Auto-populate already-collected respondent info for confirmation</td><td class="c"><span class="b bD">D</span></td><td>Candidate UX; verify prefill.</td></tr>
+        <tr><td>Q67</td><td>Travel time split Hours/Minutes; combine + show question once</td><td class="c"><span class="b bD">D</span></td><td>Candidate presentation/data-structure change.</td></tr>
+        <tr><td>Expenditure</td><td>Heavy repetition; group all questions per item on one screen</td><td class="c"><span class="b bD">D</span></td><td>Candidate presentation redesign.</td></tr>
+        <tr><td>Q186&ndash;Q194</td><td>Section intro/overarching question not observed</td><td class="c"><span class="b bD">D</span></td><td>Presentation/context; candidate.</td></tr>
+        <tr><td>Other-spec (&times;51)</td><td>Every "Other (specify)" option needs a free-text "specify" field &mdash; Q5, 10, 11, 17, 23, 38, 45.2, 46, 52, 53, 55, 56, 58, 59, 61, 65, 66, 70, 71, 74, 77, 78, 79, 80, 82, 85, 88, 91, 92, 93, 94, 101, 102, 103, 106, 107, 109, 110, 111, 113, 121, 127, 128, 133, 134, 137, 141, 143, 194, 199</td><td class="c"><span class="b bAD">A/D</span></td><td>Verify each against the current F4 DCF &mdash; the checkbox conversion adds <code>_OTHER_TXT</code> for many; add any truly missing.</td></tr>
+      </table>
+    </section>
+
+    <footer>
+      <span>Full itemization also tracked one-per-ticket: GitHub #851&ndash;#999 under epics #849 (F2) / #850 (F4)</span>
+      <span>Label: from-doh-review-xj-2026-07 &middot; parked</span>
+    </footer>
+  </div>
+</body>
+</html>

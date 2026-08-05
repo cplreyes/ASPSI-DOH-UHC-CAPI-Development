@@ -64,11 +64,11 @@ Item=BREAKOFF
 
 Name=FORM002
 
-Label=FC Geographic ID + HH GPS Capture
+Label=FC Geographic ID
 
 Level=1
 
-Size=806,427
+Size=806,300
 
   
 
@@ -83,18 +83,6 @@ Item=CLASSIFICATION
 Item=BARANGAY
 
 Item=HH_ADDRESS
-
-Item=LATITUDE
-
-Item=LONGITUDE
-
-Item=HH_GPS_ALTITUDE
-
-Item=HH_GPS_ACCURACY
-
-Item=HH_GPS_SATELLITES
-
-Item=HH_GPS_READTIME
 
   
 
@@ -1646,6 +1634,36 @@ Item=CAPTURE_VERIFICATION_PHOTO
 
   
 
+[Form]
+
+Name=FORM055
+
+Label=FC HH GPS Capture
+
+Level=1
+
+Size=806,300
+
+  
+
+Item=LATITUDE
+
+Item=LONGITUDE
+
+Item=HH_GPS_ALTITUDE
+
+Item=HH_GPS_ACCURACY
+
+Item=HH_GPS_SATELLITES
+
+Item=HH_GPS_READTIME
+
+  
+
+[EndForm]
+
+  
+
 [Level]
 
 Name=HOUSEHOLDSURVEY_LEVEL
@@ -1744,7 +1762,7 @@ Required=Yes
 
 Name=FIELD_CONTROL_FORM_2
 
-Label=FC Geographic ID + HH GPS Capture
+Label=FC Geographic ID
 
 Form=3
 
@@ -1899,158 +1917,6 @@ Form=3
 Position=50,180,330,196
 
 Text=Household Address
-
- 
-
-  
-
-[Field]
-
-Name=LATITUDE
-
-Position=350,207,760,227
-
-Item=LATITUDE,HOUSEHOLDSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,210,330,226
-
-Text=GPS Latitude
-
- 
-
-  
-
-[Field]
-
-Name=LONGITUDE
-
-Position=350,237,760,257
-
-Item=LONGITUDE,HOUSEHOLDSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,240,330,256
-
-Text=GPS Longitude
-
- 
-
-  
-
-[Field]
-
-Name=HH_GPS_ALTITUDE
-
-Position=350,267,760,287
-
-Item=HH_GPS_ALTITUDE,HOUSEHOLDSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,270,330,286
-
-Text=GPS Altitude (m)
-
- 
-
-  
-
-[Field]
-
-Name=HH_GPS_ACCURACY
-
-Position=350,297,760,317
-
-Item=HH_GPS_ACCURACY,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,300,330,316
-
-Text=GPS Accuracy (m)
-
- 
-
-  
-
-[Field]
-
-Name=HH_GPS_SATELLITES
-
-Position=350,327,760,347
-
-Item=HH_GPS_SATELLITES,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,330,330,346
-
-Text=GPS Satellites
-
- 
-
-  
-
-[Field]
-
-Name=HH_GPS_READTIME
-
-Position=350,357,760,377
-
-Item=HH_GPS_READTIME,HOUSEHOLDSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,360,330,376
-
-Text=GPS Read Time (UTC)
 
  
 
@@ -12057,6 +11923,176 @@ Form=55
 Position=50,60,330,76
 
 Text=Take Verification Photo
+
+ 
+
+  
+
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=HOUSEHOLD_GEO_ID_FORM
+
+Label=FC HH GPS Capture
+
+Form=56
+
+Max=1
+
+  
+
+[Field]
+
+Name=LATITUDE
+
+Position=350,27,760,47
+
+Item=LATITUDE,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=56
+
+  
+
+[Text]
+
+Position=50,30,330,46
+
+Text=GPS Latitude
+
+ 
+
+  
+
+[Field]
+
+Name=LONGITUDE
+
+Position=350,57,760,77
+
+Item=LONGITUDE,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=56
+
+  
+
+[Text]
+
+Position=50,60,330,76
+
+Text=GPS Longitude
+
+ 
+
+  
+
+[Field]
+
+Name=HH_GPS_ALTITUDE
+
+Position=350,87,760,107
+
+Item=HH_GPS_ALTITUDE,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=56
+
+  
+
+[Text]
+
+Position=50,90,330,106
+
+Text=GPS Altitude (m)
+
+ 
+
+  
+
+[Field]
+
+Name=HH_GPS_ACCURACY
+
+Position=350,117,760,137
+
+Item=HH_GPS_ACCURACY,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=56
+
+  
+
+[Text]
+
+Position=50,120,330,136
+
+Text=GPS Accuracy (m)
+
+ 
+
+  
+
+[Field]
+
+Name=HH_GPS_SATELLITES
+
+Position=350,147,760,167
+
+Item=HH_GPS_SATELLITES,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=56
+
+  
+
+[Text]
+
+Position=50,150,330,166
+
+Text=GPS Satellites
+
+ 
+
+  
+
+[Field]
+
+Name=HH_GPS_READTIME
+
+Position=350,177,760,197
+
+Item=HH_GPS_READTIME,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=56
+
+  
+
+[Text]
+
+Position=50,180,330,196
+
+Text=GPS Read Time (UTC)
 
  
 

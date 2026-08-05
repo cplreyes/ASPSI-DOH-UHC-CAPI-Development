@@ -1,0 +1,122 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "appState": { "viewBackgroundColor": "#ffffff", "gridSize": 20 },
+  "files": {},
+  "elements": [
+    {
+      "type": "text", "id": "title", "x": 60, "y": 40, "width": 1400, "height": 35,
+      "text": "F2 Admin — managing the facility master: three shapes",
+      "originalText": "F2 Admin — managing the facility master: three shapes",
+      "fontSize": 28, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500001, "version": 1, "versionNonce": 500002, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "subtitle", "x": 60, "y": 82, "width": 1500, "height": 20,
+      "text": "today: 4 pretest rows ported from the FacilityMasterList sheet at P4 · rollout brings waves of new facilities",
+      "originalText": "today: 4 pretest rows ported from the FacilityMasterList sheet at P4 · rollout brings waves of new facilities",
+      "fontSize": 15, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500003, "version": 1, "versionNonce": 500004, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+
+    {
+      "type": "rectangle", "id": "optA", "x": 60, "y": 140, "width": 480, "height": 330,
+      "strokeColor": "#1e40af", "backgroundColor": "#dbeafe", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500005, "version": 1, "versionNonce": 500006, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "optA_t", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "optA_t", "x": 80, "y": 156, "width": 440, "height": 298,
+      "text": "A — Batch CSV import only\n\nUpload the 7-column facility CSV →\ndry-run preview (creates / updates /\nerrors) → confirm → upsert.\n\nGreat for rollout waves (one file per\nwave, reviewable before it lands).\n\nBut a single typo fix or one new\nfacility still needs a whole CSV\nround-trip.",
+      "originalText": "A — Batch CSV import only\n\nUpload the 7-column facility CSV →\ndry-run preview (creates / updates /\nerrors) → confirm → upsert.\n\nGreat for rollout waves (one file per\nwave, reviewable before it lands).\n\nBut a single typo fix or one new\nfacility still needs a whole CSV\nround-trip.",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "middle",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500007, "version": 1, "versionNonce": 500008, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "optA", "lineHeight": 1.25
+    },
+
+    {
+      "type": "rectangle", "id": "optB", "x": 580, "y": 140, "width": 480, "height": 330,
+      "strokeColor": "#1e40af", "backgroundColor": "#dbeafe", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500009, "version": 1, "versionNonce": 500010, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "optB_t", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "optB_t", "x": 600, "y": 156, "width": 440, "height": 298,
+      "text": "B — Row-level CRUD only\n\n\"+ Add facility\" form + per-row Edit\n(name / type / geo) + Archive on the\nFacilities page.\n\nPerfect for corrections and the odd\nlate addition.\n\nBut entering 60 rollout facilities\nby hand is error-prone drudgery —\nthe wave problem stays unsolved.",
+      "originalText": "B — Row-level CRUD only\n\n\"+ Add facility\" form + per-row Edit\n(name / type / geo) + Archive on the\nFacilities page.\n\nPerfect for corrections and the odd\nlate addition.\n\nBut entering 60 rollout facilities\nby hand is error-prone drudgery —\nthe wave problem stays unsolved.",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "middle",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500011, "version": 1, "versionNonce": 500012, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "optB", "lineHeight": 1.25
+    },
+
+    {
+      "type": "rectangle", "id": "optC", "x": 1100, "y": 140, "width": 480, "height": 330,
+      "strokeColor": "#047857", "backgroundColor": "#a7f3d0", "fillStyle": "solid",
+      "strokeWidth": 3, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500013, "version": 1, "versionNonce": 500014, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "optC_t", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "optC_t", "x": 1120, "y": 156, "width": 440, "height": 298,
+      "text": "C — Both   RECOMMENDED\n\nCSV import (dry-run → confirm) for\nrollout waves, PLUS add/edit/archive\nfor one-off fixes.\n\nSame validation core underneath —\nthe form and each CSV row run the\nidentical checks, so the two paths\ncan never disagree.\n\nModerate extra build over A or B\nalone; one coherent surface.",
+      "originalText": "C — Both   RECOMMENDED\n\nCSV import (dry-run → confirm) for\nrollout waves, PLUS add/edit/archive\nfor one-off fixes.\n\nSame validation core underneath —\nthe form and each CSV row run the\nidentical checks, so the two paths\ncan never disagree.\n\nModerate extra build over A or B\nalone; one coherent surface.",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "middle",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500015, "version": 1, "versionNonce": 500016, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "optC", "lineHeight": 1.25
+    },
+
+    {
+      "type": "text", "id": "guard_title", "x": 60, "y": 520, "width": 900, "height": 26,
+      "text": "Guardrails — non-negotiable in EVERY option (from csweb_f2_schema.sql)",
+      "originalText": "Guardrails — non-negotiable in EVERY option (from csweb_f2_schema.sql)",
+      "fontSize": 20, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500017, "version": 1, "versionNonce": 500018, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "guard_box", "x": 60, "y": 560, "width": 1520, "height": 210,
+      "strokeColor": "#dc2626", "backgroundColor": "#fee2e2", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500019, "version": 1, "versionNonce": 500020, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "guard_t", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "guard_t", "x": 84, "y": 574, "width": 1470, "height": 182,
+      "text": "1. facility_id is IMMUTABLE once created — 12-digit QNs embed it and every case references it. Edit fixes names/geo, never the ID.\n2. NO hard delete — a facility with cases/links can only be ARCHIVED (hidden from pickers, history intact). Needs one additive column.\n3. region / province must match CSWeb's F1/F3/F4 names BYTE-IDENTICAL — the unified dashboard joins areas by NAME. Both paths\n   validate against the CSWeb geo name list; a typo'd region breaks the cross-instrument rollup silently.\n4. 9-digit facility_id validated on entry (the sheet-port had to repair stripped leading zeros — never again).\n5. Every create/update/archive/import writes an audit event (who, what, when), same trail as the link actions.",
+      "originalText": "1. facility_id is IMMUTABLE once created — 12-digit QNs embed it and every case references it. Edit fixes names/geo, never the ID.\n2. NO hard delete — a facility with cases/links can only be ARCHIVED (hidden from pickers, history intact). Needs one additive column.\n3. region / province must match CSWeb's F1/F3/F4 names BYTE-IDENTICAL — the unified dashboard joins areas by NAME. Both paths\n   validate against the CSWeb geo name list; a typo'd region breaks the cross-instrument rollup silently.\n4. 9-digit facility_id validated on entry (the sheet-port had to repair stripped leading zeros — never again).\n5. Every create/update/archive/import writes an audit event (who, what, when), same trail as the link actions.",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "middle",
+      "strokeColor": "#b91c1c", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500021, "version": 1, "versionNonce": 500022, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "guard_box", "lineHeight": 1.25
+    }
+  ]
+}

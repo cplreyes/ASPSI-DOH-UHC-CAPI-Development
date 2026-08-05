@@ -952,19 +952,47 @@ PROC Q102_HAS_BUCAS
 postproc
   if Q102_HAS_BUCAS = 1 then  skip to Q104_BUCAS_SERVICES; endif;  { Yes -> services (skip Q103) }
   if Q102_HAS_BUCAS = 3 then  skip to Q108_HEARD_GAMOT;        endif;  { I don't know -> Q108 }""",
+    # #1023/#1024 (pretest 2026-08-04): the unconditional skip JUMPED OVER the
+    # Q103_OTHER_TXT specify field, so choosing Other (5) never opened the text
+    # box. Route through the specify field on 5; its own postproc resumes the skip.
     "Q103_NO_BUCAS_REASON": """\
 PROC Q103_NO_BUCAS_REASON
 postproc
-  skip to Q108_HEARD_GAMOT;          { any answer -> Q108 (skip Q104-107) }""",
+  if Q103_NO_BUCAS_REASON <> 5 then
+    Q103_OTHER_TXT = "";               { not Other -> clear + skip Q104-107 }
+    skip to Q108_HEARD_GAMOT;
+  endif;
+  { Other (5) -> fall through to Q103_OTHER_TXT }""",
+    "Q103_OTHER_TXT": """\
+PROC Q103_OTHER_TXT
+postproc
+  if length(strip(Q103_OTHER_TXT)) = 0 then
+    errmsg("Q103: 'Other (specify)' was selected. Please specify.");
+    reenter;
+  endif;
+  skip to Q108_HEARD_GAMOT;            { specify captured -> resume the Q103 skip }""",
     # Section E: Q109 GAMOT-accredited (No falls through to Q110)
     "Q109_GAMOT_ACCRED": """\
 PROC Q109_GAMOT_ACCRED
 postproc
   if Q109_GAMOT_ACCRED = 1 then  skip to Q111_GAMOT_FACTORS; endif;  { Yes (skip Q110) }""",
+    # #1024 (tester comment): same skip-over-the-specify-field bug as Q103.
     "Q110_NO_GAMOT_REASON": """\
 PROC Q110_NO_GAMOT_REASON
 postproc
-  skip to Q112_STOCKOUT;             { any answer -> Q112 (skip Q111) }""",
+  if Q110_NO_GAMOT_REASON <> 5 then
+    Q110_OTHER_TXT = "";               { not Other -> clear + skip Q111 }
+    skip to Q112_STOCKOUT;
+  endif;
+  { Other (5) -> fall through to Q110_OTHER_TXT }""",
+    "Q110_OTHER_TXT": """\
+PROC Q110_OTHER_TXT
+postproc
+  if length(strip(Q110_OTHER_TXT)) = 0 then
+    errmsg("Q110: 'Other (specify)' was selected. Please specify.");
+    reenter;
+  endif;
+  skip to Q112_STOCKOUT;               { specify captured -> resume the Q110 skip }""",
     # Section E: Q116 = No / Did-not-experience -> Q118 (codes per dcf value set; verify)
     "Q116_ADDR_STOCKOUT": """\
 PROC Q116_ADDR_STOCKOUT

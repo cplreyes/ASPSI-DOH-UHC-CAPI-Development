@@ -1,7 +1,7 @@
 ---
 type: entity
 tags: [aspsi, health-policy, team, stakeholder]
-source_count: 3
+source_count: 5
 ---
 
 # Dr. Ma. Esmeralda Silva-Javier ("Myra")
@@ -15,6 +15,7 @@ Health policy specialist on the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wi
 - **Set the hard PSA translations deadline of 2026-05-13** for the CAPI translation stream (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CAPI Translations PSA Deadline (Myra 2026-05-13)]]) — the forcing date behind the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CAPI Seven-Language Translation Build|CAPI Seven-Language Translation Build]].
 - **Answered the nine-item HCW R3 decision matrix (2026-05-21)** (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - HCW CAPI Comments Matrix (Myra answers 2026-05-21)]]); her decisions were mapped to build actions in [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - 2026-05-21 HCW R3 Myra Decisions to Build Actions]].
 - **CAPI UAT Round 4 observer** (round open 2026-06-12 → 2026-06-15) — explicitly has **no CSWeb account**; she observes the round rather than entering or administering data.
+- **Authored both field training programs (2026-07)** — the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Field Supervisor Training Program (MESJ 2026-07-28 FINAL)|Field Supervisor program]] (FINAL, 28 July) and the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Field Enumerator Training Program (v2 MESJ 2026-07)|Field Enumerator program]] (Version 2). Both carry her initials in the filename ("MESJ") and name **MESilva-Javier** as in-charge of the opening program. The documents assign **Carl ("CReyes") the Day-2 CAPI slot in both** — see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/Field Training Program|Field Training Program]].
 
 ## Context
 

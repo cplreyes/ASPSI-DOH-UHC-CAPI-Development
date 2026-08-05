@@ -1,0 +1,2168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>F1 Facility Head — Paper ↔ CAPI Comparison · UHC Survey Year 2</title>
+    <meta
+      name="description"
+      content="Side-by-side comparison of the paper Facility Head (F1) questionnaire and its CAPI (CSEntry) version, question by question, with notes where the tablet version differs. Format pilot."
+    />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#006b3f" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23006b3f'/%3E%3Cpath d='M11 26.5c2.6 2 5.2 3 7.8 3 2.4 0 3.8-1 3.8-2.6 0-1.6-1.3-2.3-4.4-3.1-3.9-1-6.6-2.4-6.6-5.9 0-3.3 2.7-5.6 6.8-5.6 2.4 0 4.6.6 6.6 1.8l-1.5 3.2c-1.8-1-3.5-1.5-5.2-1.5-2.1 0-3.2.9-3.2 2.2 0 1.5 1.4 2.1 4.4 2.9 4 1 6.6 2.5 6.6 6 0 3.5-2.8 6-7.4 6-3 0-5.9-1-8.4-2.9z' fill='%23e5b23b'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="/assets/docs.css" />
+    <style>
+      /* Crosswalk-specific layout (reused later for F3/F4/F2) */
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        margin: 18px 0 4px;
+        padding: 14px 16px;
+        background: var(--surface);
+        border: 1px solid var(--hairline);
+        border-radius: var(--radius);
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .legend b {
+        color: var(--ink);
+      }
+      .xsection {
+        margin: 34px 0 6px;
+        padding-bottom: 6px;
+        border-bottom: 2px solid var(--primary);
+        font-size: 19px;
+        font-weight: 700;
+        color: var(--primary-dark);
+        letter-spacing: -0.01em;
+      }
+      .xrow {
+        border: 1px solid var(--hairline-strong);
+        border-radius: var(--radius-lg);
+        background: var(--surface);
+        box-shadow: var(--shadow-sm);
+        margin: 16px 0;
+        overflow: hidden;
+      }
+      .xrow-head {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--paper);
+        border-bottom: 1px solid var(--hairline);
+      }
+      .qbadge {
+        flex: none;
+        font-size: 12.5px;
+        font-weight: 700;
+        color: #fff;
+        background: var(--primary);
+        border-radius: 999px;
+        padding: 2px 10px;
+      }
+      .qtitle {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .xcols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .xcol {
+        padding: 16px;
+      }
+      .xcol.paper {
+        border-right: 1px solid var(--hairline);
+      }
+      .xcol h4 {
+        margin: 0 0 10px;
+        font-size: 11.5px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .qtext {
+        font-size: 15px;
+        margin: 0 0 10px;
+      }
+      .opts {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .opts li {
+        position: relative;
+        padding-left: 26px;
+        margin: 0 0 6px;
+        font-size: 14.5px;
+      }
+      .opts li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 2px;
+        width: 15px;
+        height: 15px;
+        border: 1.5px solid var(--hairline-strong);
+        border-radius: 3px;
+        background: #fff;
+      }
+      .opts.radio li::before {
+        border-radius: 50%;
+      }
+      .field-line {
+        border-bottom: 1.5px dotted var(--hairline-strong);
+        min-height: 22px;
+        margin: 4px 0 10px;
+      }
+      .field-label {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      /* CAPI screenshot slot (placeholder until captured) */
+      .capi-shot {
+        border: 2px dashed var(--hairline-strong);
+        border-radius: var(--radius);
+        background: repeating-linear-gradient(
+          135deg,
+          #fbfcf9,
+          #fbfcf9 10px,
+          #f4f7f0 10px,
+          #f4f7f0 20px
+        );
+        min-height: 150px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 6px;
+        padding: 18px;
+        color: var(--muted);
+      }
+      .capi-shot svg {
+        opacity: 0.5;
+      }
+      .capi-shot .ph {
+        font-size: 12.5px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .capi-shot img {
+        max-width: 260px;
+        width: 100%;
+        height: auto;
+        border-radius: 6px;
+        border: 1px solid var(--hairline-strong);
+      }
+      .capi-shot-link {
+        display: block;
+        line-height: 0;
+      }
+      .capi-img {
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--hairline-strong);
+        border-radius: 6px;
+        background: #fff;
+      }
+      .capi-cap {
+        font-size: 13.5px;
+        color: var(--muted);
+        margin: 10px 0 0;
+      }
+      .xnote {
+        display: flex;
+        gap: 9px;
+        padding: 11px 16px;
+        background: rgba(229, 178, 59, 0.09);
+        border-top: 1px solid var(--hairline);
+        font-size: 13.5px;
+        color: var(--ink);
+      }
+      .xnote b {
+        color: var(--primary-dark);
+      }
+      .xnote .tag {
+        flex: none;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #8a6500;
+      }
+      /* End-of-section: the real printed page ↔ the CAPI screen-page */
+      .xpage {
+        border: 1px solid var(--primary);
+        border-radius: var(--radius-lg);
+        background: var(--surface);
+        box-shadow: var(--shadow-md);
+        margin: 22px 0 8px;
+        overflow: hidden;
+      }
+      .xpage-head {
+        padding: 12px 16px;
+        background: var(--primary);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+      .xpage-cols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .xpage-col {
+        padding: 16px;
+      }
+      .xpage-col.paper {
+        border-right: 1px solid var(--hairline);
+      }
+      .xpage-col h4 {
+        margin: 0 0 10px;
+        font-size: 11.5px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .page-img-link {
+        display: block;
+        line-height: 0;
+      }
+      .page-img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--hairline-strong);
+        border-radius: 6px;
+        background: #fff;
+      }
+      .flow-ph {
+        border: 2px dashed var(--hairline-strong);
+        border-radius: 6px;
+        background: repeating-linear-gradient(
+          135deg,
+          #fbfcf9,
+          #fbfcf9 10px,
+          #f4f7f0 10px,
+          #f4f7f0 20px
+        );
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 8px;
+        padding: 28px 18px;
+        color: var(--muted);
+      }
+      .flow-ph svg {
+        opacity: 0.5;
+      }
+      .flow-ph .ph {
+        font-size: 12.5px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .pcap {
+        font-size: 13px;
+        color: var(--muted);
+        margin: 9px 0 0;
+      }
+
+      @media (max-width: 680px) {
+        .xcols,
+        .xpage-cols {
+          grid-template-columns: 1fr;
+        }
+        .xcol.paper,
+        .xpage-col.paper {
+          border-right: none;
+          border-bottom: 1px solid var(--hairline);
+        }
+      }
+    </style>
+  
+<link rel="stylesheet" href="/portal.css">
+<style>
+  body { margin: 0 !important; background: var(--paper) !important; }
+  .pshell { display: flex; min-height: 100vh; align-items: flex-start; }
+  .pshell > .doc { flex: 1; min-width: 0; background: #fff; }
+  .pshell .doc-bar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center;
+    gap: 10px; height: 52px; padding: 0 24px; background: rgba(255,255,255,.92);
+    backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--line);
+    font-family: var(--sans); font-size: 13px; color: var(--ink-3); }
+  .pshell .doc-bar a { color: var(--ink-3); text-decoration: none; }
+  .pshell .doc-bar a:hover { color: var(--verde); }
+  .pshell .doc-bar .cur { color: var(--ink); font-weight: 600; }
+  .pshell .doc-bar .sep { opacity: .45; }
+  @media (max-width: 900px) { .pshell { display: block; } }
+</style>
+</head>
+  <body><div class="pshell"><aside class="sidebar"><a class="sb-brand" href="/"><span class="sb-mark">A</span><span><b>ASPSI CAPI</b><span>capi.asiansocial.org</span></span></a><div class="sb-proj"><a class="sb-proj-card" href="/projects/uhc-y2/"><div class="k">Active project</div><div class="v">UHC Survey Year 2</div></a></div><nav class="sb-nav"><div class="sb-sec">Project</div><a class="" href="/projects/uhc-y2/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Overview</span></a><a class="" href="/projects/uhc-y2/guides/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h7M8 11h7"/></svg><span>Guides</span></a><a class="on" href="/projects/uhc-y2/instruments/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Instruments</span></a><a class="" href="/projects/uhc-y2/manual/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v6h6"/></svg><span>Manual</span></a><div class="sb-sec">Operations</div><a class="" href="/projects/uhc-y2/monitoring/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Monitoring</span><span class="lk">&#128274;</span></a><a class="" href="/projects/uhc-y2/data/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg><span>Data &amp; exports</span><span class="lk">&#128274;</span></a><a class="" href="/projects/uhc-y2/tabulations/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18v14H3z"/><path d="M3 10h18M9 5v14M15 5v14"/></svg><span>Tabulations</span></a><a class="" href="/projects/uhc-y2/archive/pretest-2026-07-15/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><path d="M10 12h4"/></svg><span>Archive</span></a><div class="sb-sec">Platform</div><a class="" href="/projects/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg><span>All projects</span></a><a class="" href="/platform/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>What we build</span></a><a class="" href="/about/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>About</span></a></nav><div class="sb-foot">Asian Social Project Services, Inc.<br><a href="https://asiansocial.org">asiansocial.org</a><div class="sb-powered">Powered by Analytiflow.</div></div></aside><div class="doc"><div class="doc-bar"><a href="/projects/uhc-y2/">UHC Survey Year 2</a><span class="sep">/</span><a href="/projects/uhc-y2/instruments/">Instruments</a><span class="sep">/</span><a href="/projects/uhc-y2/instruments/f1/">F1</a><span class="sep">/</span><span class="cur">Crosswalk</span><span style="margin-left:auto"><a href="/projects/uhc-y2/">&larr; Project home</a></span></div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="accent-bar"></div>
+
+    <div class="topbar">
+      <div class="container">
+        <div class="topbar-brand">
+          <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true">
+            <rect width="40" height="40" rx="8" fill="#006b3f" />
+            <path
+              d="M11 26.5c2.6 2 5.2 3 7.8 3 2.4 0 3.8-1 3.8-2.6 0-1.6-1.3-2.3-4.4-3.1-3.9-1-6.6-2.4-6.6-5.9 0-3.3 2.7-5.6 6.8-5.6 2.4 0 4.6.6 6.6 1.8l-1.5 3.2c-1.8-1-3.5-1.5-5.2-1.5-2.1 0-3.2.9-3.2 2.2 0 1.5 1.4 2.1 4.4 2.9 4 1 6.6 2.5 6.6 6 0 3.5-2.8 6-7.4 6-3 0-5.9-1-8.4-2.9z"
+              fill="#e5b23b"
+            />
+          </svg>
+          <div>
+            <div class="topbar-org">UHC Survey Year 2</div>
+            <div class="topbar-sub">Paper ↔ CAPI · F1 Facility Head</div>
+          </div>
+        </div>
+        <a class="home-link" href="/projects/uhc-y2/">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M19 12H6M11 6l-6 6 6 6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          Back to project home
+        </a>
+      </div>
+    </div>
+
+    <main id="main">
+      <div class="container">
+        <p class="page-eyebrow">Instrument comparison · F1 Facility Head</p>
+        <h1>Paper questionnaire ↔ CAPI version</h1>
+        <p class="lede">
+          Each survey question shown two ways: the printed Facility Head (F1)
+          questionnaire on the left, and how it appears in the CSEntry app on the
+          tablet on the right — with notes wherever the tablet version works
+          differently.
+        </p>
+        <p class="banner">
+          <strong>Format pilot.</strong> This shows the front matter and the
+          first sections so the layout can be approved. The tablet screenshots
+          are being captured and will replace the placeholder panels; every other
+          section follows in the same format once this is signed off.
+        </p>
+
+        <div class="legend">
+          <span><b>Left:</b> the paper questionnaire, wording verbatim.</span>
+          <span><b>Right:</b> the CSEntry (tablet) screen.</span>
+          <span><b>Amber note:</b> where CAPI differs from paper.</span>
+        </div>
+
+        <div class="xsection">Informed Consent</div>
+
+        <div class="xpage">
+          <div class="xpage-head">
+            Printed pages ↔ CAPI screens — Informed Consent
+          </div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper">
+              <h4>The real printed pages</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-paper-p01.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-paper-p01.png"
+                  alt="Page 1 of the F1 questionnaire — Informed Consent Form, Part I: information about the study"
+                  loading="lazy"
+                />
+              </a>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-paper-p02.png"
+                target="_blank"
+                rel="noopener"
+                style="margin-top: 12px"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-paper-p02.png"
+                  alt="Page 2 of the F1 questionnaire — Part II: Certificate of Consent with signature lines"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Pages 1–2 — the consent script read aloud (Part I) and the signed
+                Certificate of Consent (Part II). Tap a page to open it full size.
+              </p>
+            </div>
+            <div class="xpage-col capi">
+              <h4>The same on the tablet (CAPI)</h4>
+              <div class="flow-ph" role="img" aria-label="No on-screen consent step in CAPI — consent is handled on the printed sheet">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg>
+                <span class="ph">No on-screen consent step</span>
+              </div>
+              <p class="pcap">
+                There is no consent screen in CAPI. The consent script is read
+                aloud from the <b>printed SJREB consent form</b> (kept off the
+                tablet); the respondent's consent or refusal is then recorded on
+                the tablet as the <b>Result of Visit</b> disposition in Field
+                Control — a "Refused" result ends the case.
+              </p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Consent is captured as the Result-of-Visit disposition, not an on-screen gate.</b> Per the 2026-06-12 design (matched to the paper Field Control layout), the separate "Informed consent given" field was removed from CAPI: the script stays on the printed sheet, and a <b>"Refused"</b> Result of Visit records a declined interview.</span>
+          </div>
+        </div>
+
+        <div class="xsection">Front matter — control &amp; identification</div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Cover</span>
+            <span class="qtitle">Questionnaire Number</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">Questionnaire No: ____________</p>
+              <p class="field-label">A blank box the enumerator writes by hand.</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-questionnaire-number.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-questionnaire-number.png" alt="CSEntry Questionnaire Number entry screen — a left navigation tree (Case Key, Field Control, Geographic ID, Facility GPS, Section A) and the 12-digit Questionnaire Number field on the right" loading="lazy" />
+              </a>
+              <p class="capi-cap">
+                The live CSEntry screen — note the section navigation tree on the
+                left. The 12-digit number is entered here (Region → Province/HUC
+                → City/Municipality → Facility No. → Case sequence).
+              </p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Auto-fill.</b> Once the facility code is entered, the app fills in the facility’s <b>name and address</b> from the official facility list and protects them — no hand-writing, no wrong-facility mistakes.</span>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Field control</span>
+            <span class="qtitle">Visit metadata &amp; result</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">Survey Team Leader’s Name; Enumerator’s Name; Field Validated by; Field Edited by; Date First Visited; Date of Final Visit; Total number of visits; <b>Resulta</b> (1 Completed · 2 Postponed · 3 Refused · 4 Incomplete).</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-field-control.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-field-control.png" alt="CSEntry Field Control screen showing Survey Team Leader's Name and Enumerator's Name fields with the section tree on the left" loading="lazy" />
+              </a>
+              <p class="capi-cap">The live Field Control form — team leader and enumerator names, dates, and result, entered on screen.</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span>Dates use a date picker; the result is chosen from a list (no mis-keyed codes).</span>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Geo ID</span>
+            <span class="qtitle">Health facility &amp; geographic identification</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">Classification:</p>
+              <ul class="opts">
+                <li>UHC IS</li>
+                <li>Non-UHC IS</li>
+              </ul>
+              <p class="qtext" style="margin-top:10px">Region · Province/HUC · City/Municipality · Barangay (written in). Location: Latitude ____ Longitude ____.</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-geo-classification.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-geo-classification.png" alt="CSEntry Classification screen (UHC IS / Non-UHC IS) with Region, Province and City already filled in the section tree from the questionnaire number" loading="lazy" />
+              </a>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-geo-barangay.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-geo-barangay.png" alt="CSEntry Barangay selection — a long single-select list of barangays filtered to the chosen city/municipality" loading="lazy" />
+              </a>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-facility-gps.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-facility-gps.png" alt="CSEntry Facility GPS fields — latitude, longitude, altitude, accuracy, satellites and read time captured by the tablet" loading="lazy" />
+              </a>
+              <p class="capi-cap">Region/Province/City/Barangay are dependent drop-downs — each choice filters the next (the PSGC cascade). The first three are pre-filled from the questionnaire number; the enumerator only picks the barangay. GPS is then captured automatically into the fields shown.</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>GPS is automatic.</b> Latitude/Longitude are captured by the tablet’s GPS at the facility — the enumerator doesn’t type coordinates. Geography is chosen from filtered lists, so an invalid code can’t be entered.</span>
+          </div>
+        </div>
+
+        <div class="xsection">A. Facility Head Profile</div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q1</span>
+            <span class="qtitle">Respondent’s name</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">1. What is your name? (Last Name, First Name, Middle Initial, Ext)</p>
+              <div class="field-line"></div>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q1-name.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q1-name.png" alt="CSEntry respondent name text-entry screen with the on-screen keyboard" loading="lazy" />
+              </a>
+              <p class="capi-cap">A text field with the on-screen keyboard.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q2</span>
+            <span class="qtitle">Official designation</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">2. What is your official designation at this health facility?</p>
+              <ul class="opts">
+                <li>Rural Health Unit / Health Center Head</li>
+                <li>Hospital Administrator</li>
+                <li>Administrative Officer / Assistant</li>
+                <li>Physician · Nurse · Midwife</li>
+                <li>Chief of Hospital</li>
+                <li>Municipal / City Health Officer</li>
+                <li>Medical Director · Medical Officer · Rural Health Physician</li>
+                <li>… (full option list)</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q2-designation.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q2-designation.png" alt="CSEntry official designation screen — a tap-to-open drop-down of facility roles, shown with the age and sex questions below" loading="lazy" />
+              </a>
+              <p class="capi-cap">Pick one from a drop-down. (Age and sex follow on the same form, shown below.)</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span>A long option list like this was set to a <b>drop-down</b> in the mobile redesign (easier to scan on a tablet than a long column of radio buttons).</span>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q3</span>
+            <span class="qtitle">Age</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">3. How old are you (in years), as of your last birthday?</p>
+              <div class="field-line"></div>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q3-q4-demographics.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q3-q4-demographics.png" alt="CSEntry demographics screen — age entered on a number pad, with the sex single-select shown directly below" loading="lazy" />
+              </a>
+              <p class="capi-cap">Number-pad entry. (Sex follows on the same screen, shown below.)</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Range check.</b> The app rejects an out-of-range age on the spot, so it can’t be miswritten.</span>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q4</span>
+            <span class="qtitle">Sex assigned at birth</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">4. What is your sex assigned at birth?</p>
+              <ul class="opts radio">
+                <li>Male</li>
+                <li>Female</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q3-q4-demographics.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q3-q4-demographics.png" alt="CSEntry sex single-select screen — Male / Female radio options, shown below the age question" loading="lazy" />
+              </a>
+              <p class="capi-cap">Single-select — tap one option (Male / Female).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q5–Q6</span>
+            <span class="qtitle">Tenure (years &amp; months)</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">5. In your current position, how many months/years have you worked at this health facility? &nbsp;·&nbsp; 6. How many years have you worked in a health-related position?</p>
+              <p class="field-label">Number of Years ____ &nbsp; Number of Months ____ (each question).</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q5-q6-tenure.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q5-q6-tenure.png" alt="CSEntry tenure screens — Number of Years and Number of Months as separate number entries for current-position and health-career tenure" loading="lazy" />
+              </a>
+              <p class="capi-cap">Years and months as separate number entries.</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Consistency checks.</b> Tenure can’t exceed the respondent’s age or health-career length — the app warns if the numbers don’t line up.</span>
+          </div>
+        </div>
+
+        <div class="xsection">B. Facility Profile</div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q7</span>
+            <span class="qtitle">Type of ownership</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">7. What type of ownership is this hospital?</p>
+              <ul class="opts radio">
+                <li>Public</li>
+                <li>Private</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry Facility Profile screen — Q7 ownership single-select (Public / Private) with Q8 service-capacity level shown directly below" loading="lazy" />
+              </a>
+              <p class="capi-cap">Single-select — Public / Private. (Service-capacity level follows on the same screen, shown below.)</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q8</span>
+            <span class="qtitle">Service capacity level</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">8. What is the facility’s service capacity level?</p>
+              <ul class="opts radio">
+                <li>Primary Care Facility</li>
+                <li>Level 1 Hospital</li>
+                <li>Level 2 Hospital</li>
+                <li>Level 3 Hospital</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry service-capacity single-select — Primary Care Facility / Level 1 / Level 2 / Level 3 Hospital, shown below the ownership question" loading="lazy" />
+              </a>
+              <p class="capi-cap">Single-select — Primary Care Facility / Level 1–3 Hospital.</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span>This answer drives later <b>skip logic</b> — hospital-only questions appear or hide automatically based on the level chosen here.</span>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">
+            End of section — printed page ↔ CAPI screens (Sections A–B)
+          </div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper">
+              <h4>The real printed page</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-paper-p03.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-paper-p03.png"
+                  alt="Page 3 of the printed F1 Facility Head questionnaire: Field Control, Health Facility and Geographic Identification, Section A Facility Head Profile, and Section B Facility Profile"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Page 3 of the printed questionnaire — Field Control, Geographic
+                ID, Section A, and Section B. Tap to open full size.
+              </p>
+            </div>
+            <div class="xpage-col capi">
+              <h4>The same on the tablet (CAPI)</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-capi-b-facility-profile.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-capi-b-facility-profile.png"
+                  alt="CSEntry tablet screen for Section B Facility Profile — the section tree on the left shows Field Control, Geographic ID, Section A and Section B all completed, with the ownership and service-capacity questions on the right"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                The matching run of CSEntry screens on the tablet — the section
+                tree (left) shows Field Control → Geographic ID → Section A →
+                Section B completed, the same flow as the printed page.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xsection">C. Universal Health Care (UHC) Implementation</div>
+
+        <p class="banner" style="margin-top:0">
+          Section C is the long one — <strong>Q9–Q50, paper pages 4–12</strong>.
+          Most of it is a single repeated question shape — the “UHC attribution”
+          pattern — asked about ~20 different facility changes. Below, the
+          distinctive questions are shown individually; the repeated pattern is
+          shown <strong>once</strong>, with the full list of questions that use
+          it.
+        </p>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q9–Q10</span>
+            <span class="qtitle">UHC awareness &amp; primary-care packages</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">9. Have you heard about Universal Health Care (UHC) prior to this survey?</p>
+              <ul class="opts radio">
+                <li>Yes</li>
+                <li>No</li>
+              </ul>
+              <p class="qtext" style="margin-top:12px">10. Does the facility have primary care packages?</p>
+              <ul class="opts radio">
+                <li>Yes</li>
+                <li>No</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Section C opening screen — Q9 (heard of UHC) and Q10 (has primary care packages) as Yes / No single-selects, with the section tree on the left" loading="lazy" />
+              </a>
+              <p class="capi-cap">Two Yes / No single-selects on one screen — the section’s entry point.</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Skip gate.</b> Q11 (below) only opens when <b>Q10 = Yes</b> — on paper it’s a written “if yes” instruction; in CAPI the field is hidden until the gate is met.</span>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q11</span>
+            <span class="qtitle">Primary-package implementation status</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">11. If yes, specify its implementation status relative to the UHC Act.</p>
+              <ul class="opts radio">
+                <li>Implemented as a direct result of the UHC Act (i.e. YAKAP/Konsulta)</li>
+                <li>Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act</li>
+                <li>Newly implemented or improved independent of UHC Act</li>
+                <li>Not yet implemented but planned within the next 1-2 years</li>
+                <li>Other (specify)</li>
+                <li>I don’t know</li>
+                <li>Not applicable</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select screen — a vertical list of fixed options with one tappable per question; Q11's status options render in this same single-select control" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Single-select</b>, 7 options + an “Other (specify)” text box that opens when “Other” is picked. <b>Appears only when Q10 = Yes</b> — otherwise the field is hidden. <i>(Shown: the matching single-select control; this exact screen renders with Q11’s package-status options.)</i></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q13 · Q16</span>
+            <span class="qtitle">Public-health &amp; health-promotion units</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">13. Do you have a public health unit at this facility?</p>
+              <ul class="opts radio">
+                <li>Yes</li>
+                <li>No</li>
+                <li>Not applicable</li>
+              </ul>
+              <p class="field-label" style="margin-top:8px">16. <em>Do you have a health promotion unit at this facility?</em> — same Yes / No / Not applicable shape.</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes / No / Not-applicable single-select — Q13 and Q16 render in this same control (the Q9/Q10 screen)." loading="lazy" />
+              </a>
+              <p class="capi-cap">Yes / No / Not&nbsp;applicable single-select — same control as Q9/Q10 above. A “Yes” on Q13 opens the unit-creation attribution (Q14) and unit-role select (Q15); a “Yes” on Q16 opens Q17/Q18. <i>(Shown: the matching control — the live screen carries this row’s own options.)</i></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q15 · Q18</span>
+            <span class="qtitle">Main role of the unit</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">15. What is the main role of the public health unit?</p>
+              <ul class="opts radio">
+                <li>Health promotion and education</li>
+                <li>Disease surveillance report</li>
+                <li>Referral and patient navigation</li>
+                <li>Alignment with national public health programs</li>
+                <li>Other (specify)</li>
+                <li>I don’t know</li>
+                <li>Not applicable</li>
+              </ul>
+              <p class="field-label" style="margin-top:8px">18. <em>Main role of the health promotion unit?</em> — same single-select shape, with its own option list.</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select list — Q15 and Q18 unit-role options render in this same control." loading="lazy" />
+              </a>
+              <p class="capi-cap">Single-select + “Other (specify)”, rendered like Q11 above. Each opens only when its parent unit question (Q13 / Q16) is answered “Yes”. <i>(Shown: the matching control — the live screen carries this row’s own options.)</i></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q32</span>
+            <span class="qtitle">Data submission to DOH / PhilHealth</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">32. Does your facility currently submit health and financial data to the DOH Information System and/or the PhilHealth Dashboard?</p>
+              <ul class="opts radio">
+                <li>Yes, to DOH Information System only</li>
+                <li>Yes, to PhilHealth Dashboard only</li>
+                <li>Yes, to both DOH Information System and PhilHealth Dashboard</li>
+                <li>No, we are not submitting these data</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select — Q32's data-submission options render in this control." loading="lazy" />
+              </a>
+              <p class="capi-cap">Single-select, 4 options — rendered like Q11 above. <i>(Shown: the matching control — the live screen carries this row’s own options.)</i></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q33</span>
+            <span class="qtitle">Submission frequency</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">33. If yes, how frequent has your facility submit these data?</p>
+              <ul class="opts radio">
+                <li>Weekly</li>
+                <li>Monthly</li>
+                <li>Quarterly</li>
+                <li>Semi-annually</li>
+                <li>Annually</li>
+                <li>Other (specify)</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select — Q33's submission-frequency options render in this control." loading="lazy" />
+              </a>
+              <p class="capi-cap">Single-select + “Other (specify)” text box. Opens only when Q32 is any “Yes”. <i>(Shown: the matching control — the live screen carries this row’s own options.)</i></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q34</span>
+            <span class="qtitle">Reports used for decision-making</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">34. Which of the submitted reports are actually used for decision-making?</p>
+              <ul class="opts">
+                <li>OPD/IPD census and morbidity reports</li>
+                <li>Maternal, newborn, child, and adolescent health (MNCAH) reports</li>
+                <li>Notifiable diseases / surveillance reports</li>
+                <li>Expenditure and budget utilization reports</li>
+                <li>PhilHealth claims and reimbursement reports</li>
+                <li>YAKAP/Konsulta utilization reports</li>
+                <li>… and 6 more, incl. “Other (specify)”</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap"><b>Check-box multi-select</b> — tick all that apply, on one screen. A real CAPI difference: on paper this is a free list of boxes; in CAPI it’s one true multi-select field with mutually-exclusive “I don’t know” / “Other” rules enforced on the spot.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q35 · Q37</span>
+            <span class="qtitle">Changes since 2019 (staffing, referral)</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">35. Have there been changes in the facility staffing since 2019?</p>
+              <ul class="opts radio">
+                <li>Yes</li>
+                <li>No</li>
+              </ul>
+              <p class="field-label" style="margin-top:8px">37. <em>Have there been changes in the referral system since 2019?</em> — same Yes / No shape.</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes / No single-select — Q35 and Q37 render in this same control." loading="lazy" />
+              </a>
+              <p class="capi-cap">Yes / No single-select. A “Yes” opens its matching attribution question — Q35 → Q36 (staffing), Q37 → Q38 (referral) — both in the pattern below. <i>(Shown: the matching control — the live screen carries this row’s own options.)</i></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q49 · Q50</span>
+            <span class="qtitle">Quality &amp; access challenges</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">49. What are the major challenges to improving the <b>quality</b> of patient care in your local area? &nbsp;·&nbsp; 50. … the <b>accessibility</b> of patient care?</p>
+              <ul class="opts">
+                <li>Limited resources (personnel, equipment, supplies, funding)</li>
+                <li>Challenging quality standards</li>
+                <li>Healthcare decisions made by LGUs not the facility</li>
+                <li>Lack of specific healthcare skills</li>
+                <li>… and 6 more, incl. “I don’t know” / “Other (specify)”</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap">Both use the same 10-option <b>check-box multi-select</b> (quality vs. accessibility). “I don’t know” and “Other” are mutually exclusive with the rest.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow" style="border:1px solid var(--primary);border-radius:var(--radius-lg);overflow:hidden">
+          <div class="xrow-head" style="background:var(--primary);color:#fff">
+            <span class="qbadge" style="background:#fff;color:var(--primary-dark)">×22</span>
+            <span class="qtitle" style="color:#fff">The “UHC attribution” pattern</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>The repeated question</h4>
+              <p class="qtext">“Has [<em>some facility change</em>] been implemented since the UHC Act was passed in 2019 — and was it a result of the UHC Act?” &nbsp;Always the same 9 answers:</p>
+              <ul class="opts radio">
+                <li>Yes, this was implemented as a direct result of the UHC Act</li>
+                <li>Yes, this was pre-existing, but it has significantly improved due to the UHC Act</li>
+                <li>Yes, this has been implemented or improved recently, but not due to the UHC Act</li>
+                <li>Yes, other reason (specify)</li>
+                <li>No, this has not been implemented yet, but we plan to in the next 1-2 years</li>
+                <li>No, and we have no plans to do this in the next 1-2 years</li>
+                <li>No, other reason (specify)</li>
+                <li>I don’t know</li>
+                <li>Not applicable</li>
+              </ul>
+              <p class="field-label" style="margin-top:10px"><b>Used by 22 questions:</b> Q12, Q14, Q17, Q19, Q21, Q23, Q25, Q27, Q29, Q31, Q36, Q38, Q39, Q40, Q41, Q42, Q43, Q44, Q45, Q46, Q47, Q48 — covering licensing, units, new roles/departments, buildings, rooms, equipment, supplies, EMR, staffing, referrals, MoU/MoA, NBB, ZBB, co-payment, ward allocation, clinical guidelines, licensing standards, accreditation, service protocols and quality measures.</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry UHC attribution screen — Q12 DOH primary-care licensing shown with its nine fixed answer options, the same answer set reused by all 22 attribution questions" loading="lazy" />
+              </a>
+              <p class="capi-cap">One screen, nine fixed options — the same control for all 22. Shown here for Q12 (DOH primary-care licensing).</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Free-text follow-ups.</b> A “Yes” on several of these opens a “what was it?” text field — new roles (Q20), new departments (Q22), buildings (Q24), rooms (Q26), equipment (Q28), supplies (Q30). In CAPI those fields stay hidden until the “Yes” is chosen.</span>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">
+            End of section — printed pages ↔ CAPI screens (Section C)
+          </div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper">
+              <h4>The real printed page</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-paper-p04.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-paper-p04.png"
+                  alt="Page 4 of the printed F1 Facility Head questionnaire — the start of Section C, UHC Implementation, with Q9 through Q14"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Page 4 — the opening of Section C (Q9–Q14). The section runs
+                across <b>printed pages 4–12</b>; tap to open this page full size.
+              </p>
+            </div>
+            <div class="xpage-col capi">
+              <h4>The same on the tablet (CAPI)</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-capi-c-uhc-entry.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-capi-c-uhc-entry.png"
+                  alt="CSEntry Section C screen on the tablet — the section tree on the left shows C. UHC Implementation open, with Q9 and Q10 on the right"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                The same section on the tablet — the left-hand tree shows
+                “C. Universal Health Care (UHC) Implementation” open, the run of
+                C screens flowing one question at a time.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xsection">D. YAKAP / Konsulta Package</div>
+
+        <p class="banner" style="margin-top:0">
+          Section D — <strong>Q51–Q100, paper pages 12–18</strong> — forks at
+          Q51. An <b>accredited</b> YAKAP/Konsulta provider answers the
+          operations questions (Q52–Q78); a <b>non-accredited</b> one skips
+          straight to the intent questions (Q79–Q84); the costing &amp; payment
+          questions (Q85–Q100) close the section for everyone. The nine “why was
+          it difficult to comply” questions (Q66–Q74) share one shape, shown
+          once. Every control type here already appears with a real tablet
+          screen in Sections A–C — the captions point to the matching one.
+        </p>
+
+        <div class="xrow" style="border:1px solid var(--primary);border-radius:var(--radius-lg);overflow:hidden">
+          <div class="xrow-head" style="background:var(--primary);color:#fff">
+            <span class="qbadge" style="background:#fff;color:var(--primary-dark)">Q51</span>
+            <span class="qtitle" style="color:#fff">The accreditation gate — the section forks here</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">51. Are you currently an accredited YAKAP/Konsulta provider?</p>
+              <ul class="opts radio">
+                <li>Yes&nbsp; → answer Q52–Q78 (accredited operations)</li>
+                <li>No&nbsp; → skip to Q79–Q84 (intent to accredit)</li>
+              </ul>
+              <p class="field-label" style="margin-top:8px">Either way, Q85–Q100 (costing, payments, expansion) are asked of everyone.</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select control — Q51 renders as a single Yes / No like the questions shown here" loading="lazy" />
+              </a>
+              <p class="capi-cap">A single <b>Yes / No</b> that re-routes the whole section. <b>Appears first in Section D</b>; its answer decides whether Q52–Q78 (accredited) or Q79–Q84 (non-accredited) follow. <i>(Shown: the matching Yes/No control.)</i></p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Form-level skip.</b> On paper the interviewer follows printed “if&nbsp;not&nbsp;accredited, proceed to Q79” arrows by hand. In CAPI the entire accredited block (Q52–Q78) is shown or skipped automatically from this one answer — no chance of running the wrong path.</span>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q52–Q57</span>
+            <span class="qtitle">Accredited · setup &amp; capitation</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">52. If yes, since when? <span class="field-label">Month __ / Year ____</span> &nbsp;·&nbsp; 53. Which services are in the YAKAP/Konsulta package? &nbsp;·&nbsp; 54–56. Can you register individuals / whole families / only both together? &nbsp;·&nbsp; 57. Capitation amount of the package?</p>
+              <ul class="opts">
+                <li>Q53 (package): Pap smear, Mammogram, Lipid profile, Chest X-ray … <i>+ “All of the above” / “Other”</i></li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q3-q4-demographics.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q3-q4-demographics.png" alt="CSEntry number-pad entry control — the date (Q52) and capitation amount (Q57) use this number-pad" loading="lazy" />
+              </a>
+              <p class="capi-cap">Mixed controls (shown: the <b>number-pad</b>, used for the Q52 date and Q57 capitation amount). <b>All appear only when Q51 = Yes.</b> Q53 is a <b>check-box multi-select</b> (see the pattern below); Q54–Q56 are <b>Yes / No / Don’t-know</b> single-selects.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q58–Q64</span>
+            <span class="qtitle">Accredited · performance &amp; payments</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">58. Performance indicators for the 2nd tranche? &nbsp;·&nbsp; 59. Do you know how often payments arrive? &nbsp;·&nbsp; 60. How often should you be paid? &nbsp;·&nbsp; 61. Delays in tranches? (+ reasons) &nbsp;·&nbsp; 62. Typical interval between tranches? &nbsp;·&nbsp; 63. Days waited for accreditation? &nbsp;·&nbsp; 64. Why did you apply?</p>
+              <ul class="opts radio">
+                <li>Q60 frequency: Monthly · Quarterly · Semi-annually · Annually</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select control — the frequency/interval/wait buckets (Q60/Q62/Q63) render as single-selects like the ones shown here" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Single-selects</b> for the frequency/interval/wait buckets (shown). <b>All in the Q51 = Yes branch.</b> Q59/Q61 are <b>Yes / No</b> gates, Q61.1 a free-text reason, and Q58 &amp; Q64 are <b>check-box multi-selects</b> (pattern below).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow" style="border:1px solid var(--primary);border-radius:var(--radius-lg);overflow:hidden">
+          <div class="xrow-head" style="background:var(--primary);color:#fff">
+            <span class="qbadge" style="background:#fff;color:var(--primary-dark)">Q65 + ×9</span>
+            <span class="qtitle" style="color:#fff">The “why was it difficult to comply” pattern</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>The repeated question</h4>
+              <p class="qtext">65. Which requirements were difficult to comply with for accreditation? <span class="field-label">(check-box list of 10 — preventive services, laboratory, medicines, infrastructure, equipment, HR, health information system, documents, DOH licensing …)</span></p>
+              <p class="qtext" style="margin-top:10px">Then, for <b>each requirement ticked in Q65</b>, the same follow-up is asked — “<em>Why was it difficult to comply with this?</em>” — with the same set of reasons:</p>
+              <ul class="opts">
+                <li>Not enough budget / too expensive</li>
+                <li>… the shared “why difficult” reason list, + “Other (specify)”</li>
+              </ul>
+              <p class="field-label" style="margin-top:10px"><b>Q66–Q74</b> are these nine follow-ups (preventive, lab, medicines, infrastructure, equipment, HR, health-info-system, documents, DOH licensing).</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select — tick all that apply; Q65 and its Q66–Q74 follow-ups render in this same control (CSEntry renders check-boxes identically across instruments)." loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Check-box multi-selects</b> (like Q34/Q49, Section C). The CAPI difference: each of Q66–Q74 only appears if its requirement was ticked in Q65 — on paper all nine are printed and the interviewer hand-skips the ones that don’t apply. <i>(Shown: the matching control — the live screen carries this row’s own options.)</i></p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Field-level gating.</b> Nine display-logic toggles driven by Q65’s ticks — the form shows only the follow-ups that matter for this facility.</span>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q75–Q78</span>
+            <span class="qtitle">Accredited · patient enrollment</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">75. Whose responsibility is it to enroll patients? &nbsp;·&nbsp; 76. Which enrollment initiatives do you run? &nbsp;·&nbsp; 77. Any challenges enrolling patients? &nbsp;·&nbsp; 78. What challenges?</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select — tick all that apply; Q75/Q76/Q78 render in this same control (CSEntry renders check-boxes identically across instruments)." loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Check-box multi-selects</b> for Q75/Q76/Q78 (like Q34, Section C), gated by a <b>Yes / No</b> on Q77. <i>(Shown: the matching control — the live screen carries this row’s own options.)</i></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q79–Q84</span>
+            <span class="qtitle">Non-accredited path · intent to accredit</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">79. Why are you not accredited? &nbsp;·&nbsp; 80. Are you intending to become a provider? &nbsp;·&nbsp; 81. Would you know how to start? &nbsp;·&nbsp; 82–84. Deciding factor / what went wrong / process challenges.</p>
+              <ul class="opts radio">
+                <li>Q80: Yes, already in process · Yes, not yet · No, decided not to · No, tried and failed · No, haven’t thought about it · I don’t know</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select control — Q80 'intending to accredit' renders as a single-select list like the one shown" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Reached only when Q51 = No.</b> Shown: the <b>single-select</b> control used for Q80 (intent). The row also has a <b>check-box multi-select</b> (Q79), a <b>Yes / No</b> (Q81), and <b>free-text</b> boxes (Q82–Q84).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q85–Q87</span>
+            <span class="qtitle">Both paths · catchment &amp; patient counts</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">85. What is the facility’s catchment area? &nbsp;·&nbsp; 86. How many patients in it are <b>eligible</b> to register? &nbsp;·&nbsp; 87. How many eligible patients are <b>already registered</b>?</p>
+              <div class="field-line"></div>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q5-q6-tenure.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q5-q6-tenure.png" alt="CSEntry number-pad entries — the eligible (Q86) and registered (Q87) patient counts use number-pad fields like the two shown here" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Asked of everyone.</b> Shown: two <b>number-pad</b> entries (the Q86 eligible and Q87 registered counts render like these); Q85 catchment is <b>free-text</b>. The app blocks entry if Q87 &gt; Q86 — see the validation note below.</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Consistency check.</b> The app enforces <b>registered ≤ eligible</b> (Q87 ≤ Q86) on the spot — a cross-field rule the paper form can’t catch until data entry.</span>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q88–Q92</span>
+            <span class="qtitle">Both paths · costing viability</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">88. Is the Php&nbsp;1,700 per-capita rate enough? &nbsp;·&nbsp; 89. Did you do a costing exercise? &nbsp;·&nbsp; 90. Did it show Php&nbsp;1,700 was viable? &nbsp;·&nbsp; 91–92. Minimum acceptable capitation value (as a provider / to consider becoming one).</p>
+              <ul class="opts radio">
+                <li>Q88–Q90: Yes · No · I don’t know</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No-style single-select — Q88-Q90 costing-viability questions render as Yes / No / Don't-know single-selects like these" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Asked of everyone.</b> Shown: the <b>Yes / No / Don’t-know</b> single-select control (Q88–Q90). Q91/Q92 are two <b>number-pad</b> peso amounts.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q93–Q100</span>
+            <span class="qtitle">Both paths · fees, payments, expansion</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">93. Charge additional capitation fees? → 94. Why? &nbsp;·&nbsp; 95. Already received payments? → 96. Why not? &nbsp;·&nbsp; 97. Challenges getting payments? → 98. What challenges? &nbsp;·&nbsp; 99. What would you expand next? → 100. Additional features.</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select control — the gate questions Q93/Q95/Q97 render as Yes/No or single-selects like the ones shown" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Asked of everyone.</b> A run of <b>gate → detail</b> pairs (shown: the single-select gate control): a Yes / No or single-select opens a <b>check-box multi-select</b> of reasons (Q94, Q96, Q98, Q99), closing with a <b>free-text</b> Q100. Each detail field appears only when its gate is answered.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">
+            End of section — printed pages ↔ CAPI screens (Section D)
+          </div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper">
+              <h4>The real printed page</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-paper-p12.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-paper-p12.png"
+                  alt="Page 12 of the printed F1 Facility Head questionnaire — the start of Section D, YAKAP/Konsulta, with the Q51 accreditation gate and Q52–Q56"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Page 12 — the start of Section D, with the Q51 accreditation gate
+                that forks the section. Section D runs across <b>printed pages
+                12–18</b>; tap to open full size.
+              </p>
+            </div>
+            <div class="xpage-col capi">
+              <h4>The same on the tablet (CAPI)</h4>
+              <a class="page-img-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select control on the tablet — the Q51 accreditation gate that opens Section D renders like this" loading="lazy" /></a>
+              <p class="pcap">
+                The Q51 accreditation gate (shown as the Yes/No control) opens
+                Section D and forks it into the accredited / non-accredited
+                branches; every control type used in D is already shown live in
+                Sections A–C above.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xsection">E. Awareness on Expanded Health Programs (BUCAS &amp; GAMOT)</div>
+
+        <p class="banner" style="margin-top:0">
+          Section E — <strong>Q101–Q117, paper pages 19–20</strong> — has two
+          halves: <b>BUCAS</b> (Bagong Urgent Care and Ambulatory Service,
+          Q101–Q107) and <b>GAMOT</b> (Guaranteed and Accessible Medications for
+          Outpatient Treatment, Q108–Q117, including medicine stock-outs). All
+          standard controls — Yes/No, single-select, free-text — shown with the
+          matching real CAPI screen; the check-box lists use the same tick-list
+          control flagged in Section C.
+        </p>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q101–Q102</span>
+            <span class="qtitle">BUCAS · awareness &amp; center</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">101. Have you heard about the Bagong Urgent Care and Ambulatory Service (BUCAS)? &nbsp;·&nbsp; 102. Do you have a BUCAS Center?</p>
+              <ul class="opts radio">
+                <li>Q101: Yes · No</li>
+                <li>Q102: Yes · No · I don’t know</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select control — Q101 (heard of BUCAS) and Q102 (have a BUCAS center) render as Yes / No single-selects like the ones shown" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Yes / No</b> single-selects (Q102 adds “I don’t know”). <b>A “No / Don’t know” on Q102 opens Q103</b> (the reason field).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q103</span>
+            <span class="qtitle">BUCAS · reason for no center</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">103. If none, what is the primary reason?</p>
+              <ul class="opts radio">
+                <li>Proposal not yet submitted</li>
+                <li>Limited information on establishment process</li>
+                <li>Did not meet standard requirements</li>
+                <li>Awaiting assessment or approval</li>
+                <li>Other (specify) · Not applicable</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select control — Q103's primary-reason options render as a single-select list like the one shown" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Single-select</b> + “Other (specify)” text. <b>Appears only when the facility has no BUCAS center</b> (Q102 ≠ Yes); otherwise hidden.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q104–Q105</span>
+            <span class="qtitle">BUCAS · services &amp; utilization factors</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">104. What services does your BUCAS Center offer? &nbsp;·&nbsp; 105. Main factors affecting BUCAS utilization?</p>
+              <ul class="opts">
+                <li>Q104: Urgent care · Minor surgery · Diagnostics/lab · Reproductive &amp; special health · Other</li>
+                <li>Q105: Patient awareness · Location/access · Referral patterns · PhilHealth coverage · Staff/services · Other</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap"><b>Check-box multi-select</b> (tick all that apply) — same control flagged at Q34, Section C. <b>Both appear only when a BUCAS center exists</b> (Q102 = Yes).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q106–Q107</span>
+            <span class="qtitle">BUCAS · resources &amp; impact</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">106. What resources do you need to sustain the BUCAS center? &nbsp;·&nbsp; 107. Does the BUCAS Center decongest your facility of patients?</p>
+              <div class="field-line"></div>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q1-name.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q1-name.png" alt="CSEntry free-text entry control — Q106 (resources needed) is a free-text field like the one shown" loading="lazy" />
+              </a>
+              <p class="capi-cap">Q106 is a <b>free-text</b> field (shown); Q107 is a <b>Yes / No</b> single-select.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q108–Q109</span>
+            <span class="qtitle">GAMOT · awareness &amp; accreditation</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">108. Have you heard about the GAMOT (Guaranteed and Accessible Medications for Outpatient Treatment) package? &nbsp;·&nbsp; 109. Is your facility an accredited GAMOT provider?</p>
+              <ul class="opts radio">
+                <li>Yes · No (each)</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select control — Q108 (heard of GAMOT) and Q109 (accredited GAMOT provider) render as Yes / No single-selects" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Yes / No</b> single-selects. <b>A “No” on Q109 opens Q110</b> (the reason field).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q110–Q111</span>
+            <span class="qtitle">GAMOT · reason &amp; utilization factors</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">110. If not accredited, what is the primary reason? &nbsp;·&nbsp; 111. Main factors affecting GAMOT utilization?</p>
+              <ul class="opts radio">
+                <li>Q110: Application not yet submitted · Limited info on process · Did not meet requirements · Awaiting approval · Other · N/A</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select control — Q110's reason options render as a single-select list like the one shown" loading="lazy" />
+              </a>
+              <p class="capi-cap">Q110 is a <b>single-select</b> + “Other” (shown), <b>opening only when Q109 = No</b>. Q111 is a <b>check-box multi-select</b> (same control flagged at Q34).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q112–Q116</span>
+            <span class="qtitle">GAMOT · medicine stock-outs</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">112. In the past 3 months, any stock-out of tracer essential medicines? &nbsp;·&nbsp; 113. Which medicines? &nbsp;·&nbsp; 114. How many days did it last? &nbsp;·&nbsp; 115. On average, how many months? &nbsp;·&nbsp; 116. Did you do anything to address it?</p>
+              <ul class="opts radio">
+                <li>Q114: &lt;30 days · 31–60 days · &gt;60 days</li>
+                <li>Q116: Yes · No · Did not experience stock-outs</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select control — the stock-out duration/average/response questions (Q114-Q116) render as single-select lists like the one shown" loading="lazy" />
+              </a>
+              <p class="capi-cap">Q112 is a <b>Yes / No</b>, Q113 a <b>free-text</b> medicine list, and Q114–Q116 are <b>single-selects</b> (shown). <b>Q113–Q116 open only when Q112 = Yes</b> (a stock-out occurred).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q117</span>
+            <span class="qtitle">GAMOT · stock-out response</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">117. If yes, what did you do to address the medicine stock-outs?</p>
+              <ul class="opts">
+                <li>Resorted to alternative procurement</li>
+                <li>Active inventory monitoring</li>
+                <li>Improve forecasting and quantification</li>
+                <li>Other (specify)</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap"><b>Check-box multi-select</b> (same control flagged at Q34). <b>Appears only when Q116 = Yes</b> (the facility addressed the stock-out).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">
+            End of section — printed pages ↔ CAPI screens (Section E)
+          </div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper">
+              <h4>The real printed page</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-paper-p19.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-paper-p19.png"
+                  alt="Page 19 of the printed F1 Facility Head questionnaire — the start of Section E, BUCAS and GAMOT awareness, with Q101 through Q111"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Page 19 — the opening of Section E (BUCAS Q101–Q107 and the start
+                of GAMOT). The section spans <b>printed pages 19–20</b>; tap to
+                open full size.
+              </p>
+            </div>
+            <div class="xpage-col capi">
+              <h4>The same on the tablet (CAPI)</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-capi-c-uhc-entry.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-capi-c-uhc-entry.png"
+                  alt="CSEntry Yes/No control on the tablet — Section E opens with the BUCAS / GAMOT awareness Yes/No questions, rendered like this"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Section E opens with the BUCAS / GAMOT awareness Yes/No questions
+                — the same single-select control shown here. The check-box
+                control is shown from a live capture (CSEntry renders it
+                identically across instruments).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xsection">F. DOH Licensing: Status and Barriers</div>
+
+        <p class="banner" style="margin-top:0">
+          Section F — <strong>Q118–Q134, paper pages 20–24</strong> — is short
+          but has one big repeated block: after the licensing-status questions
+          (Q118–Q121), the “why was it difficult to comply” question (Q122–Q134)
+          is asked <b>thirteen times</b>, once per requirement area, all sharing
+          one answer set — shown once below.
+        </p>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q118–Q120</span>
+            <span class="qtitle">Licensing status &amp; timing</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">118. Is this facility DOH licensed? &nbsp;·&nbsp; 119. When did you receive your DOH license? &nbsp;·&nbsp; 120. How many days did it take?</p>
+              <ul class="opts radio">
+                <li>Q118: Yes · No · No, but submitted &amp; waiting · Don’t know what DOH licensing is</li>
+                <li>Q120: &lt;30 days · 31–60 days · &gt;60 days</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select control — the licensing-status and timing questions (Q118-Q120) render as single-select lists like the one shown" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Single-selects</b> (shown). Q118 is the gate: <b>Q119–Q120 open only when the facility is licensed</b> (or licensing is in progress).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q121</span>
+            <span class="qtitle">Difficult licensing requirements</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">121. Which requirements were difficult to comply with in the DOH licensing process?</p>
+              <ul class="opts">
+                <li>Patient rights &amp; ethics · Patient care · Leadership · HR management · Information management · Safe practice · Performance · Physical plant · Equipment …</li>
+                <li><i>Hospital-only:</i> National laws &amp; DOH issuances · Emergency cart contents · Add-on services</li>
+                <li><i>Primary-care-only:</i> Public access to price information</li>
+                <li>None of the above</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap"><b>Check-box multi-select</b> (same control flagged at Q34).</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>The option list changes by facility type.</b> Driven by Q8 (service-capacity level): a hospital sees the hospital-only rows and hides the primary-care one; a primary-care facility sees the reverse. On paper both sets are printed and the interviewer reads only the right ones.</span>
+          </div>
+        </div>
+
+        <div class="xrow" style="border:1px solid var(--primary);border-radius:var(--radius-lg);overflow:hidden">
+          <div class="xrow-head" style="background:var(--primary);color:#fff">
+            <span class="qbadge" style="background:#fff;color:var(--primary-dark)">×13</span>
+            <span class="qtitle" style="color:#fff">The “why was it difficult to comply” pattern</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>The repeated question</h4>
+              <p class="qtext">For <b>each requirement ticked in Q121</b>, the same follow-up is asked — “<em>Why was it difficult to comply with this?</em>” — with the same answer set:</p>
+              <ul class="opts">
+                <li>Not enough budget / too expensive</li>
+                <li>Time-consuming</li>
+                <li>Limited human resources</li>
+                <li>Legal processes · Compiling documentary requirements · Stringent standards · Lack of training · Lack of space · Resistance to change · Other (specify)</li>
+              </ul>
+              <p class="field-label" style="margin-top:10px"><b>Q122–Q134</b> are these thirteen follow-ups (patient rights, patient care, leadership, HR, information management, safe practice, performance, physical plant, price info, equipment, national laws, emergency cart, add-on services).</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap"><b>Check-box multi-selects</b> (same control flagged at Q34). Each of Q122–Q134 appears only if its requirement was ticked in Q121.</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Field-level gating.</b> Thirteen display-logic toggles driven by Q121’s ticks — the form shows only the “why” follow-ups for requirements the facility actually found difficult.</span>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">
+            End of section — printed pages ↔ CAPI screens (Section F)
+          </div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper">
+              <h4>The real printed page</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-paper-p20.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-paper-p20.png"
+                  alt="Page 20 of the printed F1 Facility Head questionnaire — the start of Section F, DOH Licensing, with Q118 through Q121"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Page 20 — the licensing-status questions (Q118–Q121) that open
+                Section F. The thirteen “why difficult” follow-ups (Q122–Q134)
+                run across <b>printed pages 20–24</b>; tap to open full size.
+              </p>
+            </div>
+            <div class="xpage-col capi">
+              <h4>The same on the tablet (CAPI)</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-capi-b-facility-profile.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-capi-b-facility-profile.png"
+                  alt="CSEntry single-select control on the tablet — Section F opens with the DOH-licensing single-select questions, rendered like this"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Section F opens with the licensing single-selects (shown). The
+                thirteen “why difficult” follow-ups are check-box lists — the
+                check-box control is shown from a live capture (it renders
+                identically across instruments).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xsection">G. Service Delivery Process</div>
+
+        <p class="banner" style="margin-top:0">
+          Section G — <strong>Q135–Q162, paper pages 25–28</strong> — the
+          largest section, in three parts: <b>billing policies</b> (No/Zero
+          Balance Billing, Q135–Q142), <b>UHC benefits &amp; social welfare</b>
+          (Malasakit, LGU support, Q143–Q151), and the <b>referral system</b>
+          (Q152–Q162). It introduces one new control — a <b>5-point rating
+          scale</b> (Q152 protocol clarity, Q161 referral satisfaction).
+        </p>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q135–Q140</span>
+            <span class="qtitle">No / Zero Balance Billing</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">135–137. Do you implement <b>No Balance Billing</b>? For all patients? Barriers? &nbsp;·&nbsp; 138–140. The same three for <b>Zero Balance Billing</b>.</p>
+              <ul class="opts radio">
+                <li>Q135/136/138/139: Yes · No</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select control — the NBB and ZBB implementation questions render as Yes / No single-selects like the ones shown" loading="lazy" />
+              </a>
+              <p class="capi-cap">Parallel <b>Yes / No</b> pairs (shown) for NBB and ZBB; each opens a <b>check-box</b> barriers list (Q137/Q140, same control flagged at Q34). <b>The barriers list opens regardless</b>, so respondents can flag barriers even where the policy is in place.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q141–Q142</span>
+            <span class="qtitle">Out-of-pocket for basic accommodation</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">141. Does the facility allow out-of-pocket (OOP) expenses for basic accommodation? &nbsp;·&nbsp; 142. Why?</p>
+              <div class="field-line"></div>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select control — Q141 renders as a Yes / No like the questions shown" loading="lazy" />
+              </a>
+              <p class="capi-cap">Q141 is a <b>Yes / No</b> (shown). <b>A “Yes” opens the free-text reason</b> (Q142).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q143–Q144</span>
+            <span class="qtitle">Most difficult UHC benefit</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">143. Which UHC benefit is most difficult to implement? &nbsp;·&nbsp; 144. Why is it difficult?</p>
+              <ul class="opts radio">
+                <li>Q143: PhilHealth/financial protection · Health care provider networks · HR-for-health reforms · Other</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select control — Q143 renders as a single-select list like the one shown" loading="lazy" />
+              </a>
+              <p class="capi-cap">Q143 is a <b>single-select</b> + “Other” (shown); Q144 is a <b>check-box</b> reasons list (same control flagged at Q34).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q145–Q147</span>
+            <span class="qtitle">Malasakit / MAIFIP social welfare</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">145. Has the facility been providing medical social welfare (Malasakit Centers, MAIFIP)? &nbsp;·&nbsp; 146. Why? &nbsp;·&nbsp; 147. Why not?</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select control — Q145 renders as a Yes / No like the questions shown" loading="lazy" />
+              </a>
+              <p class="capi-cap">Q145 is a <b>Yes / No</b> (shown) that branches: a “Yes” opens the “why” check-box (Q146), a “No” opens the “why not” check-box (Q147) — only one path appears.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q148–Q151</span>
+            <span class="qtitle">LGU support for UHC reforms</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">148. Do you receive LGU support to implement UHC reforms? &nbsp;·&nbsp; 149. What forms? &nbsp;·&nbsp; 150. Satisfied with it? &nbsp;·&nbsp; 151. Why not?</p>
+              <ul class="opts">
+                <li>Q149: Financial · Technical · Medical supplies/equipment · Manpower · Other</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select control — Q148/Q150 render as Yes / No like the questions shown" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Yes / No</b> gates (shown) for Q148/Q150, each opening a <b>check-box</b> list (Q149 forms of support; Q151 why-not). The Q149 list appears only when Q148 = Yes; Q151 only when Q150 = No.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q152–Q153</span>
+            <span class="qtitle">Provincial Health Office protocol clarity</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">152. How clear are the protocols on which decisions need PHO approval vs. facility-level? &nbsp;·&nbsp; 153. Which protocol is unclear?</p>
+              <ul class="opts radio">
+                <li>Very Clear · Clear · Neither · Unclear · Very Unclear</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select control used for the 5-point rating scale — Q152 clarity renders as a vertical single-select of the five rating options" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>5-point rating scale</b> (Very Clear → Very Unclear), rendered as a single-select vertical list (shown). Q153 is a <b>free-text</b> follow-up.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q154–Q156</span>
+            <span class="qtitle">Referral volume &amp; methods (outbound)</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">154. In the past 6 months, how many patients did you refer to a higher-level facility? &nbsp;·&nbsp; 155. How do you send referrals? &nbsp;·&nbsp; 156. What referral form do you use?</p>
+              <ul class="opts">
+                <li>Q155/156: Physical slip · E-referral · Phone call · DOH/facility/LGU form · Other</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q3-q4-demographics.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q3-q4-demographics.png" alt="CSEntry number-pad entry control — Q154 referral count uses this number-pad" loading="lazy" />
+              </a>
+              <p class="capi-cap">Q154 is a <b>number-pad</b> count (shown); Q155/Q156 are <b>check-box</b> lists of referral methods/forms (same control flagged at Q34).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q157–Q160</span>
+            <span class="qtitle">Referral network &amp; inbound flow</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">157. Do you have a specialist network to refer to? &nbsp;·&nbsp; 158. Proportion referred-in vs. walk-in? &nbsp;·&nbsp; 159. How do you receive referrals? &nbsp;·&nbsp; 160. Where do patients go for services you don’t offer?</p>
+              <ul class="opts radio">
+                <li>Q158: Almost all referred → almost all walk-in (5-band scale) · Unsure</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select control — Q157/Q158/Q160 render as single-select lists like the one shown" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Single-selects</b> (shown) for Q157/Q158/Q160; Q159 is a <b>check-box</b> list of inbound referral methods (same control flagged at Q34).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q161–Q162</span>
+            <span class="qtitle">Referral-system satisfaction</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">161. How would you rate your satisfaction with your current referral system? &nbsp;·&nbsp; 162. Why are you not satisfied?</p>
+              <ul class="opts radio">
+                <li>Very Satisfied · Satisfied · Neither · Dissatisfied · Very Dissatisfied</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select control used for the 5-point satisfaction scale — Q161 renders as a vertical single-select of the five rating options" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>5-point satisfaction scale</b> (shown). <b>A “Dissatisfied / Very Dissatisfied” opens Q162</b>, a <b>check-box</b> list of reasons (same control flagged at Q34).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">
+            End of section — printed pages ↔ CAPI screens (Section G)
+          </div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper">
+              <h4>The real printed page</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-paper-p25.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-paper-p25.png"
+                  alt="Page 25 of the printed F1 Facility Head questionnaire — the start of Section G, Service Delivery Process, with the No/Zero Balance Billing questions"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Page 25 — the opening of Section G with the No/Zero Balance
+                Billing questions. The section runs across <b>printed pages
+                25–28</b>; tap to open full size.
+              </p>
+            </div>
+            <div class="xpage-col capi">
+              <h4>The same on the tablet (CAPI)</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-capi-c-attribution.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-capi-c-attribution.png"
+                  alt="CSEntry single-select control on the tablet — Section G's rating scales and single-selects render like this vertical option list"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Section G mixes Yes/No gates, single-selects, two 5-point rating
+                scales (shown), a referral count, and check-box lists — the
+                check-box control is shown from a live capture (it renders
+                identically across instruments).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xsection">H. Human Resources for Health</div>
+
+        <p class="banner" style="margin-top:0">
+          Section H — <strong>Q163–Q166, paper pages 28–29</strong> — the short
+          closing section: human-resource challenges and the professional
+          development offered to staff.
+        </p>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q163–Q164</span>
+            <span class="qtitle">HR challenges &amp; improvement area</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">163. What challenges in human resources do you have? &nbsp;·&nbsp; 164. What area has the most room for improvement in your staff?</p>
+              <ul class="opts">
+                <li>Q163: Understaffing · Skills mismatch / lack of skills · Retention / high turnover · I don’t know · Other</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q1-name.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q1-name.png" alt="CSEntry free-text entry control — Q164 improvement area is a free-text field like the one shown" loading="lazy" />
+              </a>
+              <p class="capi-cap">Q163 is a <b>check-box multi-select</b> (same control flagged at Q34); Q164 is a <b>free-text</b> field (shown).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q165–Q166</span>
+            <span class="qtitle">Professional development (doctors vs. nurses)</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">165. What professional development do you provide to your <b>doctors</b>? &nbsp;·&nbsp; 166. … to your <b>nurses</b>?</p>
+              <ul class="opts">
+                <li>Clinical audits · Surgical audits <i>(doctors only)</i></li>
+                <li>QA meetings · Seminars/conferences/workshops · Scholarships · Research grants · LGU/DOH workshops · None provided · Other</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap">Both are <b>check-box multi-selects</b> (same control flagged at Q34).</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Different option lists.</b> The nurses’ list (Q166) drops the <b>Clinical audits</b> and <b>Surgical audits</b> options the doctors’ list (Q165) has — two separate value sets, matching the printed questionnaire.</span>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">
+            End of section — printed pages ↔ CAPI screens (Section H)
+          </div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper">
+              <h4>The real printed page</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-paper-p28.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-paper-p28.png"
+                  alt="Page 28 of the printed F1 Facility Head questionnaire — the end of Section G and the start of Section H, Human Resources for Health, Q163 through Q166"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Page 28 — Section H, Human Resources for Health (Q163–Q166),
+                closing the interviewer questionnaire on <b>printed pages
+                28–29</b>; tap to open full size.
+              </p>
+            </div>
+            <div class="xpage-col capi">
+              <h4>The same on the tablet (CAPI)</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-capi-q1-name.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-capi-q1-name.png"
+                  alt="CSEntry free-text and check-box controls on the tablet — Section H uses the free-text and check-box controls already shown throughout"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Section H closes the questionnaire with a free-text field (shown)
+                and check-box lists — the check-box control is shown from a live
+                capture (it renders identically across instruments).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <p class="banner" style="margin-top:22px">
+          <strong>All eight sections (A–H) of the interviewer questionnaire are
+          now in place.</strong> Every question sits beside the real CSEntry
+          control that captures it, with a note on when each screen appears.
+          The <strong>check-box multi-select</strong> control is shown from a
+          live tablet capture (CSEntry renders it identically across
+          instruments). Beyond Q166 the paper
+          questionnaire also has a <strong>secondary-data section</strong>
+          (statistical tables a facility submits — hospital census, patient
+          load, HCW roster, lab prices); that part isn’t question-numbered and
+          can be crosswalked separately if useful.
+        </p>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p class="foot-org">
+          Asian Social Project Services, Inc. (ASPSI) — for the Department of
+          Health (DOH)
+        </p>
+        <p class="foot-meta">
+          UHC Survey Year 2 · F1 paper ↔ CAPI comparison (pilot)
+          <span class="dot">·</span>
+          <a href="/projects/uhc-y2/">Help</a>
+          <span class="dot">·</span>
+          <a href="/">Home</a>
+          <span class="dot">·</span>
+          &copy; 2026
+        </p>
+      </div>
+    </footer>
+  </div></div></body>
+</html>

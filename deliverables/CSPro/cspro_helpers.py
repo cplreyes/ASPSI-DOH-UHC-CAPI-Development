@@ -866,6 +866,10 @@ TRANSLATION_LANGUAGES = [
     ("CEB", "Cebuano",    "ceb.json"),
     ("WAR", "Waray",      "war.json"),
     ("HIL", "Hiligaynon", "hil.json"),
+    # 2026-08-03: seventh locale — the June-5 DOH-cleared papers exist in Ilocano
+    # for all four instruments; seeded from translations-paper-extract (#see
+    # deliverables/CSPro/translations-paper-extract/QA-REPORT.md).
+    ("ILO", "Ilocano",    "ilo.json"),
 ]
 
 

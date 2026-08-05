@@ -1,7 +1,7 @@
 ---
 type: entity
 tags: [organization, government, statistics, sampling]
-source_count: 2
+source_count: 3
 ---
 
 # PSA — Philippine Statistics Authority
@@ -24,3 +24,4 @@ PSA endorsement on the sampling design is one of the formal items needed for Tra
 - (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - Project Intelligence Brief]])
 - (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - DOH TOR UHC Survey Year 2]]) — TOR requires PSA clearance in Months 1–3
 - (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - ASPSI Proposal Approach and Methodology]]) — proposal details SSRCS submission forms (Forms 1, 4, 6) + required attachments
+- (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - PSA Survey Clearance 26SS02-481 (2026-07-23)]]) — **CLEARANCE GRANTED 23 July 2026, Ref. 26SS02-481**, signed by Usec. Claire Dennis S. Mara, National Statistician; conditional on SSRCS Forms 4 and 6, revised PAPI questionnaires + **CAPI/CAWI user interface + updated dummy tables**, and survey results in e-format. PSA notes the standard SSRCS cycle is **20 working days**.

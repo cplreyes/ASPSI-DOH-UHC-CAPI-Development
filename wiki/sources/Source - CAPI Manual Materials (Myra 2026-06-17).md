@@ -52,4 +52,4 @@ tags: [capi, capi-manual, documentation, epic-7, d5, training, style-guide]
 ## Cross-references
 
 - [[Source - Survey Manual Set Architecture (Myra brainstorm 2026-06-08)]] — the CAPI Manual is one of the 4 separate manuals Myra recommends; this is its outline + style.
-- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro CAPI Strategies]] · the supervisor hub ([[project_aspsi_supervisor_app]]) · the live enumerator guide + crosswalks (`deliverables/CSWeb/landing/docs/`) — existing assets to feed the manual.
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro CAPI Strategies]] · the supervisor hub (`project_aspsi_supervisor_app`) · the live enumerator guide + crosswalks (`deliverables/CSWeb/landing/docs/`) — existing assets to feed the manual.

@@ -2498,6 +2498,14 @@ preproc
   noinput;
 
 PROC Q92_PAY_AMT
+preproc
+  { #1064 class (2026-08-04): non-money row -> amount is display-only 0 (noinput);
+    the grid no longer offers an amount box for sources with no cost. Positive
+    polarity per #835. Desk-test gate: all-non-money selection must advance. }
+  if Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8 then
+    Q92_PAY_AMT = 0;
+    noinput;
+  endif;
 postproc
   if Q92_PAY_AMT < 0 then
     errmsg(1135);
@@ -2656,6 +2664,11 @@ preproc
   noinput;
 
 PROC Q96_PAY_AMT
+preproc
+  if Q96_PAY_SRC = 2 or Q96_PAY_SRC = 3 or Q96_PAY_SRC = 4 or Q96_PAY_SRC = 5 or Q96_PAY_SRC = 6 or Q96_PAY_SRC = 8 then
+    Q96_PAY_AMT = 0;   { non-money source -> no cost; display-only }
+    noinput;
+  endif;
 postproc
   if Q96_PAY_AMT < 0 then
     errmsg(1144);
@@ -2830,6 +2843,11 @@ preproc
   noinput;
 
 PROC Q107_PAY_AMT
+preproc
+  if Q107_PAY_SRC = 9 then
+    Q107_PAY_AMT = 0;   { non-money source -> no cost; display-only }
+    noinput;
+  endif;
 postproc
   if Q107_PAY_AMT < 0 then
     errmsg(1157);
@@ -2910,6 +2928,11 @@ preproc
   noinput;
 
 PROC Q109_PAY_AMT
+preproc
+  if Q109_PAY_SRC = 8 then
+    Q109_PAY_AMT = 0;   { non-money source -> no cost; display-only }
+    noinput;
+  endif;
 postproc
   if Q109_PAY_AMT < 0 then
     errmsg(1162);
@@ -2978,6 +3001,11 @@ preproc
   noinput;
 
 PROC Q112_PAY_AMT
+preproc
+  if Q112_PAY_SRC = 8 then
+    Q112_PAY_AMT = 0;   { non-money source -> no cost; display-only }
+    noinput;
+  endif;
 postproc
   if Q112_PAY_AMT < 0 then
     errmsg(1167);

@@ -63,6 +63,9 @@ function emitItem(item: Item): string {
   );
   if (item.conditional) fields.push(`conditional: true`);
   if (item.legacyId) fields.push(`legacyId: '${item.legacyId}'`);
+  if (item.preamble) fields.push(`preamble: ${quoteLocalized(item.preamble)}`);
+  if (item.inputLabel) fields.push(`inputLabel: ${quoteLocalized(item.inputLabel)}`);
+  if (item.emphasis) fields.push(`emphasis: ${quote(item.emphasis)}`);
   if (item.help) fields.push(`help: ${quoteLocalized(item.help)}`);
   if (item.min !== undefined) fields.push(`min: ${item.min}`);
   if (item.max !== undefined) fields.push(`max: ${item.max}`);

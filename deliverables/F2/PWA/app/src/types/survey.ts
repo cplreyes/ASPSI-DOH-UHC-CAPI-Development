@@ -57,6 +57,16 @@ export interface Item {
   min?: number;
   max?: number;
   subFields?: SubField[];
+  // #1042/#1043/#1040/#1041 (pretest 2026-08-04): mid-section instructions,
+  // sub-headers (E1/E2) and notes from the paper attach to the item they
+  // precede and render above the question.
+  preamble?: LocalizedString;
+  // #1046/#1047: unit label shown directly above a number/short-text input
+  // ("Number of days") — separate from `help`, which stays below the label.
+  inputLabel?: LocalizedString;
+  // #1045: paper bolds the component being asked about; renderer wraps the
+  // first occurrence of this EN phrase (per-locale when present) in <strong>.
+  emphasis?: string;
 }
 
 export interface Section {

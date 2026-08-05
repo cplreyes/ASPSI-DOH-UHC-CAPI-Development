@@ -1,82 +1,81 @@
 ---
-sprint: 013
-start: 2026-07-06
-end: 2026-07-10
+sprint: 014
+start: 2026-07-20
+end: 2026-07-24
 status: active
 sprint_length: 1 week (5 working days)
-deliverable_anchor: F2 configuration-setup migration to our prod server (also backs F1/F3/F4 CSWeb) · Supervisor App finalization (+ UAT Round 6) · stay pretest-ready · ETL extraction DEFERRED; tabulation clarifications → 3pm meeting · open: questionnaire-change timing
-created: 2026-07-03 — Mode D skeleton at the S012→S013 boundary
-locked: 2026-07-06 (Mode A — Monday kickoff); RE-ALIGNED 2026-07-06 to the Monday meeting notes
+deliverable_anchor: PRETEST WEEK — same-day field support · daily data-quality sweep of incoming cases · fleet on current builds · GPS-on-endlevel shipped-or-declined · debrief-ready record (feeds D4) · F2 serving migration + hub/R6 opportunistic only
+created: 2026-07-20 — cut at the LATE S013 close (Day 15 of 5)
+locked: 2026-07-20 (Mode A — Monday kickoff); RE-LOCKED 2026-07-20 (Carl — "focus this sprint to Pretesting this week")
 ---
 
-# Sprint 013 — F2 to prod server + Supervisor App finalization (pretest-ready)
+# Sprint 014 — PRETEST WEEK (field support + data QA); F2/hub opportunistic
 
-> [!info] Where S012 left the project
-> **Goal landed — first sprint where plan and value agreed.** All four perennial carries cleared by Day 2 (E0-SCRUM-SYNC finally BUILT; PSA closed out-of-lane; Goal B killed; field-ready criterion wired into `check_field_ready.py` + verified FIELD-READY). UAT R5 closed 06-29 (78/79). The freeze week became a build week: pretest assignments ready (Los Baños, 84 QNs, printed sheets), tabulation plan spec-complete + Stata-12 proven (197 SSRCS tables), fleet version-stamped v1.0.x on all 4 surfaces, DHS benchmark → data layer + R1a + R2 + R3 shipped byte-identical (freeze intact). Full record: `scrum/sprints/sprint-012.md` + `log.md`.
+> [!info] Where S013 left the project
+> **Closed LATE 2026-07-20 (Day 15 of 5) — goal PARTIAL, value high.** The pretest went live Wed 07-15 (Brgy. Mayondon, Los Baños) and reactive field support rightfully took the lane: #157 GPS → end-of-flow, #840 paradata `.pff` switch, the GPS warm-radio patch, and the F3 Q162 Field-Control fix all shipped from live tester reports, ending at **fleet F1 v1.1.4 · F3 v1.1.5 · F4 v1.4.4 (2026-07-19)** with the UAT gate at **CLEAR-PENDING** (0 open actionable; quiet window ages out ~07-21). F2's data-plane reached the prod server (07-08) but the serving migration stopped at a written plan-of-record; the hub stayed blocked-on-ASPSI. Full record: `scrum/sprints/sprint-013.md` + `log.md` (2026-07-19 entries ×4).
 
 ## Sprint Goal
 
-> **Migrate the F2 configuration setup onto our own production server (which also backs the F1/F3/F4 CSWeb sync) and finalize the Supervisor App (through UAT Round 6) — while staying pretest-ready.** ETL variable extraction (`transform.py`) is **deferred**; the tabulation clarifications go to Ms. Myra's **3pm tabulation meeting today** (Carl shares the findings). _Re-aligned to Carl's Monday meeting notes, 2026-07-06._
+> **Pretesting IS the sprint.** Support the live pretest end-to-end this week: same-day field support on every tester report, a **daily data-quality sweep** of incoming cases (catch the next Q162-class pattern in-flight, not after), the fleet confirmed on current builds, and the **GPS-on-endlevel decision shipped-or-declined** — so the pretest completes with clean, complete data and a **debrief-ready record feeding D4**. F2 serving migration and hub/R6 move **only with slack**. _Re-locked to Carl's direction the same day the sprint locked — the S013-retro rule working as intended._
 
-## Carry-in from Sprint 012
+## Carry-in from Sprint 013
 
-| ID | Item | State | S013 disposition |
+| ID | Item | State | S014 disposition |
 |---|---|---|---|
-| **E10-ETL-EXTRACT** | `transform.py` — per-instrument questionnaire-variable extraction from the CSWeb breakout DBs per codebook (checkbox split-to-dummies; F3 pay-roster + F2 extracts; lowercased-DCF instrument vars + harmonized shared dims) | scoped; codebook v0.4 + ETL skeleton + Stata-12 do-files proven | **DEFERRED (Carl re-prioritized 2026-07-06)** — not this sprint; revisit after F2/hub. NOTE: **variable/data inconsistencies surfaced during the 197-table mapping** — will feed this extraction. Kept in Goal B. |
-| **Tabulation decision memo** | 47-partial / 3-gap (tables 1.6, 2.51, 4.2) memo → ASPSI | mapping complete in `deliverables/tabulation-plan/` | Deferred with E10-ETL-EXTRACT — revisit together. |
-| **Designer compile gate** | fresh-Designer compile of the R2-numbered builds (F1/F3/F4 + hub) | **F1/F3/F4 effectively CLEARED** — the weekend #830/#832/#833 redeploys went out via the `.csds` route, which compiles the `.pen` fresh (a compile failure hard-stops the deploy), so their message-numbered builds passed. **HUB still pending** (not redeployed; still v1.0.1). | Run the hub's compile before its next deploy; F1/F3/F4 satisfied. |
-| **Supervisor App finalization + UAT R6** | hub built + device-verified; needs finalization polish + hub Designer compile + deploy; R6 blocked on ASPSI account import + real names + `supervisor-qa` | roster built + deployed + device-verified (Carl-side done) | **Goal A (Carl, 2026-07-06)** — finalize + deploy; open R6 the day ASPSI lands the accounts. |
-| **Support deliverables (rest)** | governance (privacy/backup/retention) · training finalize (decks + Survey Manual screenshots, Kidd review) | did not advance in S012 | Opportunistic (Goal B). |
-| **Pretest reactivity** | freeze gate ~Jul 5; assignments + printed sheets ready | awaiting ASPSI's confirmed date | Reactive — field support jumps the queue when the date lands. |
-| **E4-F2-ELESTIO** | F2 Survey + Admin off Cloudflare/Google → our own prod server (initial-setup migration) | prod server now available — un-parked | **Goal A (Carl, 2026-07-06)** — Cloudflare free tier won't hold the live user load; migrate the initial setup this week. |
-| **Translations Batch 2** | Tagalog-final / Ilocano / Hiligaynon-F3F4 — labels AND (new, via R2) runtime messages | blocked on ASPSI delivery | Drop-in when delivered (both pipelines proven). |
-| **F4 Option C food-roster pilot** | block-as-roster Section N rebuild running in a parallel session; on v1.2.2 (deployed 2026-07-04 with #832/#833) | live feature stream, not previously a tracked sprint item | **Goal B (Carl, 2026-07-06)** — tracked here so the board reflects it; Carl drives it in the parallel session, this sprint just accounts for it. |
-| **Refactor register (rest)** | R1b `library/` (Aug, with G1/G2) · F1 hand-fmf → generator fold (post-pretest) · K1 encrypted roster (Sep) | queued by design | Not S013 work — noted so it isn't lost. |
+| **Pretest reactivity** | pretest LIVE since 07-15; triage loop + `check_field_ready.py` gate at **CLEAR-PENDING** (quiet window ~07-21); 6 affected F3 cases have posted recovery steps; fleet tablets beyond the itel still on v1.1.3/v1.4.3 until testers tap UPDATE | standing, hot | **Goal A — the sprint headline.** Same-day loop + daily data QA + fleet shepherding + recovered-case watch. |
+| **GPS-on-endlevel design gap** | flagged 07-19, NOT shipped: postponed/refused/replaced outcomes `endlevel` before the end-of-flow GPS forms → those cases save with **no facility GPS** (map plotting + replacement tracking); proposed ~1–2 s warm read in the endlevel branch | Carl's call | **Goal A decision item** — pretest data-integrity; decide + ship-or-decline this week. |
+| **E4-F2-PROD** (was E4-F2-ELESTIO) | data-plane DONE on prod (mirror + unified dashboard + 12-digit QN); serving migration = plan-of-record `deliverables/F2/F2-Prod-Migration-Plan.md` (8 gated phases; respondent path ~3 focused days; admin port may trail) | ready to execute | **Goal B (demoted at the re-lock)** — advance only with slack; no commitment this week. |
+| **Supervisor App finalization + UAT R6** | hub Designer compile pending; LoginApp update pending server-side (07-15); R6 blocked on ASPSI accounts + real names + `supervisor-qa` | blocked-on-ASPSI | **Goal B** — reactive: finalize + open R6 the day ASPSI lands the accounts. |
+| **F3 "Closing - case end" relabel** | 07-19 triage suggestion: the closing block's name hides that it IS the survey-team/Field-Control section — testers reported it "missing" partly on naming | small, freeze-adjacent (label-only) | **Goal B** — opportunistic; pretest-driven, so it may ride any deploy this week. |
+| **ETL extraction (E10) + tabulation follow-ups** | deferred since 07-06; variable/data inconsistencies from the 197-table mapping feed it | backlog | Not S014 — revisit after the pretest (backlog). |
+| **E3-RELEASE-001 · E8-SUPERVISOR-003** | release lane + hub rename, spec'd 07-15 | parked post-pretest | Not S014. |
+| **Support deliverables (governance · training finalize)** | unchanged two sprints running | opportunistic | Goal B if slack appears. |
+| **Translations Batch 2** | blocked on ASPSI delivery | drop-in when delivered | Reactive. |
 
-## Committed Items — LOCKED 2026-07-06 (Mode A) · RE-ALIGNED 2026-07-06 to the Monday meeting notes
+## Committed Items — LOCKED 2026-07-20 (Mode A) · RE-LOCKED 2026-07-20 to PRETEST FOCUS (Carl)
 
-> Re-aligned to Carl's ASPSI-team-meeting outline: this week is **F2 to our prod server + Supervisor App finalization**, not the transform.py ETL headline the sprint locked at kickoff. ETL extraction + tabulation memo are deferred (Goal B), kept visible because the variable/data inconsistencies Carl flagged during the tabulation mapping feed them.
+### Goal A — the pretest week
 
-### Goal A — F2 onto our prod server + Supervisor App finalization
+- [ ] **Pretest field support (standing, FIRST priority)** — same-day triage/fix/deploy loop on tester reports (`capi-uat-triage` + `check_field_ready.py` gate each run, currently CLEAR-PENDING); shepherd the fleet onto v1.1.4/v1.1.5/v1.4.4 (UPDATE per patch notes — treat stale-build reports as suspect until the build is confirmed); watch the 6 recovered F3 cases land on sync. `status::in-progress` `priority::critical`
+- [ ] **Pretest data-quality sweep (daily)** — every day, sweep the incoming cases (responses data room CSVs / dashboard) for blank-section, missing-field, and off-plan patterns — the Q162 blanking sat in the data for two days before anyone looked; this catches the next one in-flight. Log findings; anything real enters the triage loop same-day. `status::in-progress` `priority::high` `estimate::0.5h/day`
+- [ ] **GPS-on-endlevel decision (Carl) — ship-or-decline this week** — postponed/refused/replaced cases currently save with NO facility GPS (`endlevel` fires before the end-of-flow GPS forms). If go: ~1–2 s warm read in the endlevel branch, shipped as a data-integrity exception (cheap on the warm radio); if no-go: rationale recorded here + backlog. Pretest replacements make this live NOW (BREAKOFF 5/6/7 = replacement flow). `status::todo` `priority::high` `estimate::0.5d`
+- [ ] **Debrief-ready pretest record (feeds D4)** — keep a running per-day account of pretest issues found/fixed, affected cases + recovery status, and data-quality observations, so the enumerator debrief and the D4 pilot report can be assembled without archaeology. (GitHub #839 tracker + log.md are the sources; this item = keeping them current daily.) `status::in-progress` `priority::medium`
 
-- [ ] **E4-F2-ELESTIO — F2 → prod-server migration** — migrate the F2 configuration/setup off Cloudflare/Google onto our own production server (the free tier won't hold the live user load once fielded); the prod server also backs the F1/F3/F4 CSWeb sync. `status::in-progress` `priority::high` `estimate::2d`
-  - **Wed 07-08 progress — data-plane ON the prod server:** `csweb_f2` MySQL read-mirror LIVE (41 submissions, 2-min poller cron, adversarially reviewed ×2); **unified dashboard now shows all 4 instruments** incl. F2. **12-digit QN alignment code-complete** through AS/Worker/app/spec×2/mirror (tests 202+238+518 green, `tsc -b --force` clean) — deploys Carl-gated (clasp push + `runAllMigrations()` + wrangler + staging→prod). Remaining in lane: app/admin **serving** migration off Cloudflare/Google — **PLAN OF RECORD written Wed eve: `deliverables/F2/F2-Prod-Migration-Plan.md`** (end-state call MADE: consolidate on this box — it's Elestio-managed; `uhc-hcw.asiansocial.org` vhost + f2-api container + `csweb_f2` as THE store; 8 gated phases, respondent path pretest-ready in ~3 focused days, admin port may trail). Also still queued: encoder-path qn, `f2_facility_master` seed when the frame lands.
-- [ ] **Supervisor App finalization (+ UAT R6)** — finalize the hub (login → menu → Bluetooth → CSWeb relay → reports → map), run the hub Designer compile, deploy, and open **UAT Round 6** the day ASPSI imports the accounts + sends real names. `status::in-progress` `priority::high` `estimate::1.5d`
+### Goal B — opportunistic (must not displace the pretest)
 
-### Goal B — reactive / opportunistic (must not displace Goal A)
+- [ ] **E4-F2-PROD — F2 serving migration, respondent path** — *demoted at the re-lock*: advance the plan-of-record phases (`deliverables/F2/F2-Prod-Migration-Plan.md`) only in slack hours; no completion commitment this week. `status::todo (slack only)` `priority::medium` `estimate::—`
+- [ ] **Supervisor App finalization (+ UAT R6)** — hub Designer compile + deploy (LoginApp update pending server-side since 07-15); open R6 the day ASPSI imports the accounts + sends real names. `status::blocked-on-ASPSI` `priority::medium` `estimate::1d`
+- [ ] **F3 "Closing - case end" relabel** — rename the closing block so testers recognize the survey-team/Field-Control section (label-only; from the 07-19 triage). Rides any F3 deploy this week. `status::todo` `priority::low` `estimate::0.5h`
+- [ ] **Support deliverables** — governance + training finalize (Kidd review): only if the week gives slack. `status::todo` `priority::low`
 
-- [ ] **Pretest reactivity** — assignments + printed sheets ready; freeze stands (data-integrity exceptions only). Field support jumps the queue the day ASPSI confirms the pretest date. `status::reactive` `priority::high`
-- [ ] **Round 6 tester support** — support the Supervisor-hub testers once ASPSI sets up the accounts (the reactive tail of Supervisor App finalization). `status::blocked-on-ASPSI` `priority::medium`
-- [ ] **F4 Option C pilot** — continues in the parallel session (v1.2.x); tracked for visibility. `status::in-progress (parallel)` `priority::medium`
-- [ ] **ETL extraction — DEFERRED; tabulation → Ms. Myra's 3pm meeting** — `transform.py` variable extraction stays deferred (revisit after F2/hub). The 47-clarifications/3-gaps + the **variable/data inconsistencies** from the 197-table mapping go to **Ms. Myra's 3pm tabulation meeting today** (Carl shares the findings), not a written memo; the outcomes feed the eventual extraction + the data manager. `status::deferred` `priority::medium`
+## Definition of Done — Sprint 014
 
-## Definition of Done — Sprint 013
-
-- [ ] **F2 Survey + Admin initial setup running on our prod server** (off Cloudflare/Google), verified reachable.
-- [ ] **Supervisor App finalized + deployed** — hub Designer compile clean; UAT Round 6 opened, or blocked-on-ASPSI (accounts/names) explicitly documented.
-- [ ] Any pretest-date arrival handled reactively without derailing Goal A.
-- [ ] Board stays honest — the sprint reflects the real week (this re-alignment is the example; keep it in sync if the week shifts again).
-- [ ] **Sprint 013 retrospective filled ON TIME Fri 2026-07-10**; archived; `sprint-current.md` reset for Sprint 014.
+- [ ] **Every pretest tester report handled same-day** (root-caused + fixed/deployed, or explicitly triaged with a stated next step); triage gate consulted each run.
+- [ ] **Data-quality sweep ran every fieldwork day** — findings logged even when clean ("swept, clean" counts; silence doesn't).
+- [ ] **GPS-on-endlevel decision RECORDED** (shipped, or declined with rationale) — it does not silently carry a third sprint.
+- [ ] **Debrief-ready record current at week's end** — a D4-feeding account of the pretest exists without archaeology.
+- [ ] Fleet confirmed on v1.1.4/v1.1.5/v1.4.4 (or the holdout tablets named).
+- [ ] R6 opened, or still-blocked-on-ASPSI re-documented with the date last checked. F2 advances only in slack — no DoD claim on it this week.
+- [ ] **Board honesty, S013 edition:** if reality shifts again, the board is re-locked the SAME DAY (this re-lock is the first exercise of the rule); on the first "Sprint window exceeded" standup warning, the sprint is closed-or-rolled that morning.
+- [ ] **Sprint 014 retrospective filled ON TIME Fri 2026-07-24**; archived; `sprint-current.md` reset for Sprint 015.
 
 ## Daily Notes
 
 _Auto-standup writes here daily via the `CAPI Scrum Daily Standup MD` scheduled task (08:30 MNL) + the SessionStart hook as intraday top-up._
 
-**Mon 2026-07-06 — Sprint 013 LOCKED (Mode A).** Goal A is deliberately singular — **E10-ETL-EXTRACT (`transform.py`)** + its **tabulation decision memo** — per the S012 retro Q4 (protect the committed build item from the reactive stream). Everything else is Goal B: pretest reactivity, F4 Option C (parallel session), hub compile + R6, governance/training. **Freeze clarified (Carl):** the pretest freeze STANDS; the weekend F1/F3 → v1.0.3 + F4 → v1.2.2 deploys (#830 checkbox ascending-order = partial-save data-loss guard; #832/#833 F4 amount-entry gate) were **data-integrity exceptions**, not a lift. **Board drift trued at lock:** the S012-close board still showed F1/F3 v1.0.2 + F4 v1.0.3 + "nothing deploys ~Jul 5"; corrected to real git state (F1 v1.0.3 · F3 v1.0.3 · F4 v1.2.2 · Hub v1.0.1) across `sprint-current.md` + `product-backlog.md`. **This drift is the S012-retro-Q2 lesson biting on schedule:** the date-drift canary stayed silent (log/board dates aligned at Friday's close) while the *version/freeze content* rotted over the weekend via the parallel/loop deploys — content rot the canary can't see. **Designer-compile gate:** F1/F3/F4 effectively cleared (weekend `.csds` deploys compile the `.pen` fresh); hub still pending.
+**Mon 2026-07-20 — Sprint 014 LOCKED (Mode A) at the late S013 close.** Six items committed (3 Goal A + 3 Goal B). Standing context at lock: pretest live (fieldwork week 2); fleet at F1 v1.1.4 / F3 v1.1.5 / F4 v1.4.4 (itel confirmed; other tablets pending tester UPDATE); UAT gate CLEAR-PENDING (quiet window from the 07-19 findings ages out ~07-21 — a clean next triage run flips it FIELD-READY); Carl-side loose ends from the weekend: drop stash `gps-merge-set-aside-2026-07-19` (`bcb76de2`) after review; hub LoginApp update pending. S013's retro action is baked into this sprint's DoD (close-or-roll on first warning; re-lock same-day on lane shifts).
 
-**Mon 2026-07-06 (later) — S013 RE-ALIGNED to Carl's Monday meeting notes.** Carl updated the ASPSI-team-meeting outline; his real week = **F2 initial-setup migration to our prod server + Supervisor App finalization** (+ stay pretest-ready / support Round 6), NOT the `transform.py` ETL headline this sprint locked at kickoff hours earlier. Re-locked **Goal A → F2-prod-migration + Supervisor-App-finalization**; **ETL variable extraction + tabulation memo deferred** (kept visible in Goal B). His edit also flagged **variable/data inconsistencies seen during the 197-table tabulation mapping** — noted to feed the deferred ETL work. `E4-F2-ELESTIO` un-parked (prod server now available). Linear Sprint-013 mirror patched to match (parent goal + Goal-A sub-issues added, ETL/memo sub-issues → Canceled/deferred). Same-day re-plan, cleanly recorded — the board tracking reality rather than the morning's lock.
+**Mon 2026-07-20 (later) — S014 RE-LOCKED to PRETEST FOCUS (Carl: "focus this sprint to Pretesting this week").** Same-day re-lock per the S013-retro rule, first exercise. Goal A is now the pretest week itself: standing field support + a NEW **daily data-quality sweep** of incoming cases (the Q162 lesson institutionalized — the pattern sat in live data two days before anyone swept) + **GPS-on-endlevel ship-or-decline** (live now via the BREAKOFF replacement flow) + a **debrief-ready record feeding D4**. **F2 serving migration DEMOTED to Goal B slack-only** (was Goal A at the morning lock); hub/R6 unchanged (blocked-on-ASPSI). Linear mirror re-pointed to match (ANA-262 parent + ANA-264 demotion + new data-QA sub-issue).
 
-**Wed 2026-07-08 (intraday) — E4-F2-ELESTIO: F2's data-plane is on our prod server; QN alignment built full-stack.** Three moves in the lane today: (1) **F2 read-mirror DEPLOYED** — `csweb_f2` (MySQL, same `lamp-mysql8` as the breakouts) mirrors the F2 Sheet via a 2-min HMAC-RPC poller; backfill 41/41 after widening `hcw_id` (real data: 301-char value) — the Sheet stays write-authority, so zero risk to the live survey. (2) **Unified monitoring dashboard live with all 4 instruments** (F2 = Submitted/Refusal + capture-mode + freshness; adds 0 false Partial/No-GPS). (3) **Carl decided F2 adopts the 12-digit QN** (facility-9 + HCW-seq-3, realizes the parked RR-PP-… design) — built through AS (ScriptLock seq assignment + `migrateAddQnColumn`), Worker (qn in JWT claims), app (enrollment→submission→batch), spec×2 (generator byte-identical), mirror (col live) — all backward-compatible; backend 202/202 · worker 238/238 · app 518/518 + `tsc -b --force` clean. **Carl's gates:** clasp push + `runAllMigrations()` + `/exec` redeploy · `wrangler deploy` · app staging→prod. Also: rotate the AS `HMAC_SECRET` post-cron (value transited chat during the walk). Goal A's remaining scope = the serving migration itself (box-vs-Elestio end-state call needed before Phase B).
+**Mon 2026-07-20 (intraday) — triage run clean · #831 tackled end-to-end · F2 pretest data flowing.** `/capi-uat-triage`: zero tester activity in all 4 channels since Saturday's patch notes; no new GH issues/comments/reopens; gate **CLEAR-PENDING** (0 open actionable, quiet window to ~07-21). Then, on Carl's ask, took the one open non-tracker issue **#831** (F2: remove a bad response — token pasted into HCW ID): built the durable **admin void action** across all three tiers (AS `admin_void_response` + audit-trail row · Worker POST route w/ `dash_data` perm · Response-Detail "Void response…" button) + voided-row exclusions in AS reports/breakouts and both CSWeb generators. Gates: backend 207/207 · worker 241/241 · app 518/518 + tsc clean. **Draft PR #846** (repo stacks + app UI; NOTE: CI deploy workflows are disabled since the 07-14 cutover — the merge deploys nothing by itself); the **live f2-api stack got its own implementation** in the `aspsi-f2-staging-wt` server source (voidResponse in both stores + POST route + coverage/map/revisions exclusions, 143/143 + tsc clean) — **f2-api deploy deliberately held until post-pretest** (a container rebuild restarts the live respondent path); generators already deployed on-box (backed up, LF-verified, regen clean). **#831 CLOSED** — the reported row verified OUT of the operational data plane (demo-era data retired at the 07-14 cutover; live store = 28 real pretest rows, facility 040340210); **#847 filed** (encoder-path HCW-ID format validation, the queued follow-up). _Data-QA sweep, F2 side (today):_ 28 pretest responses flowing (27 stored + 1 refusal, latest 2026-07-20 08:04 MNL); dashboard counts F1=2 · F3=8 · F4=17 · F2=28 — F1's second case landed.
 
-**Mon 2026-07-06 (later²) — re-aligned again to the updated notes + a 3pm tabulation meeting.** F2 Goal-A item refined to **F2 configuration-setup migration to the prod server** (which also backs the F1/F3/F4 CSWeb sync). **Ms. Myra requested a 3pm tabulation meeting today** — Carl shares the tabulation findings there (the 47-clarifications/3-gaps + the variable/data inconsistencies from the 197-table mapping), so the deferred "tabulation memo" is now that meeting, not a written deliverable I produce. New open constraint on the board: **"questionnaire change — when?"** — the timing of the DOH questionnaire revision governs when the freeze lifts / whether the instruments change before the pretest (ASPSI/DOH call, [[project_aspsi_doh_june_comments_parked]]). Pre-test assignments clarified as pushed to the Enumerator App from the Supervisor App **offline over Bluetooth** (not printed sheets). Linear F2 sub-issue (ANA-222) + parent updated to match.
-
-## Retrospective — Sprint 013
+## Retrospective — Sprint 014
 
 > 5-minute time-box. Four questions, fixed order. Written, not thought-through-only.
 
 ### 1. Did the sprint goal land? (yes / partial / no — one line why)
 
-_TBD 2026-07-10._
+_TBD 2026-07-24._
 
 ### 2. What surprised me? (process, not work — max 3 bullets)
 
@@ -86,6 +85,6 @@ _TBD_
 
 _Informational only (out of Data Programmer scope per CSA D1–D6)._
 
-### 4. One thing to change in Sprint 014
+### 4. One thing to change in Sprint 015
 
 _TBD_

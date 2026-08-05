@@ -308,9 +308,11 @@ def build_section_b():
         ("Master Level Education or Equivalent",                                            "08"),
         ("Doctoral Level Education or Equivalent",                                          "09"),
         ("No schooling",                                                                    "10"),
-        ("Other (specify)",                                                                 "11"),
+        # #1057 (pretest 2026-08-04): display order matches the paper — No schooling ->
+        # I don't know -> Not applicable -> Other (specify). Codes unchanged.
         ("I don't know",                                                                    "98"),
         ("Not applicable",                                                                  "99"),
+        ("Other (specify)",                                                                 "11"),
     ]
     Q16_EMPLOYMENT = [
         ("Has a permanent job/ own business",                  "1"),
@@ -360,7 +362,11 @@ def build_section_b():
         ("400,000 - 449,999", "09"),
         ("450,000 - 499,999", "10"),
         ("500,000 and above", "11"),
-        ("Don't know",        "99"),   # #398: respondent doesn't know even the estimate; out-of-range so the bracket<->amount + SEC cross-checks bypass it
+        # #1048 (pretest 2026-08-04): paper carries both missing-value options with the
+        # do-not-read tag. DK keeps its deployed code 99 (#398); Refuse is NEW on 98 —
+        # both out-of-range so the bracket<->amount + SEC cross-checks bypass them.
+        ("I don't know [DO NOT READ OUT LOUD]",     "99"),
+        ("Refuse to answer [DO NOT READ OUT LOUD]", "98"),
     ]
     Q23_WATER = [
         ("Faucet inside the house", "1"),
@@ -412,7 +418,9 @@ def build_section_b():
         numeric("Q5_BIRTH_MONTH",
                 "5. In what month and year was the patient born? — Month", length=2),
         numeric("Q5_BIRTH_YEAR",
-                "5. In what month and year was the patient born? — Year", length=4),
+                # #1056: second component shows a short prompt (F4's month/year pattern) —
+                # the full question reads once, on the Month component.
+                "5. Year of birth", length=4),
         numeric("Q6_AGE",
                 "6. Just to confirm, how old is the patient as of his/her last birthday? (in years)",
                 length=3),
@@ -466,7 +474,7 @@ def build_section_b():
         numeric("Q21_HH_SENIORS",
                 "21. How many senior citizens live in the patient's house now?", length=2),
         yes_no("Q22_ELECTRICITY",
-               "22. Does the patient have electricity in their household?"),
+               "22. Does the patient have electricity in their house?"),   # #1058: paper says "house"
         select_one("Q23_WATER",
                    "23. What is the patient's family's main source of water supply for daily use?",
                    Q23_WATER, length=1),
@@ -660,11 +668,14 @@ def build_section_d():
         ("I don't know",       "6"),
         ("Others (specify)",   "7"),
     ]
+    # #1059 (pretest 2026-08-04): each battery row carries the FULL respondent-facing
+    # question naming its category (paper-style), instead of an encoding-style stub under
+    # a once-only stem. The qsf SECTION_INTROS[47] stem was dropped in the same change.
     Q47_PACKAGES = [
-        ("Q47_PHYSICIAN_CHECKUP", "47. Awareness of PhilHealth package — Physician check-up"),
-        ("Q47_DIAGNOSTIC_TESTS",  "47. Awareness of PhilHealth package — Diagnostic tests (e.g. laboratory tests and imaging)"),
-        ("Q47_HOSPITAL_CONF",     "47. Awareness of PhilHealth package — Hospital confinement"),
-        ("Q47_OUTPATIENT_DRUGS",  "47. Awareness of PhilHealth package — Outpatient drugs"),
+        ("Q47_PHYSICIAN_CHECKUP", "47. Are you aware that there is/are PhilHealth package/s for physician check-up?"),
+        ("Q47_DIAGNOSTIC_TESTS",  "47. Are you aware that there is/are PhilHealth package/s for diagnostic tests (e.g. laboratory tests and imaging)?"),
+        ("Q47_HOSPITAL_CONF",     "47. Are you aware that there is/are PhilHealth package/s for hospital confinement?"),
+        ("Q47_OUTPATIENT_DRUGS",  "47. Are you aware that there is/are PhilHealth package/s for outpatient drugs?"),
     ]
     items = [
         select_one("Q38_PHILHEALTH_REG",
@@ -885,8 +896,9 @@ def build_section_e():
                 "58. What is your waiting time, in days and/or minutes to set an appointment with "
                 "your main primary care provider ([facility_name_input])? — Days", length=3),
         numeric("Q58_WAIT_MINUTES",
-                "58. What is your waiting time, in days and/or minutes to set an appointment with "
-                "your main primary care provider ([facility_name_input])? — Minutes", length=4),
+                # #1060: second component shows a short prompt — the full question reads once
+                # (on Q58_WAIT_DAYS) per the paper's grouped Days/Minutes presentation.
+                "58. Waiting time to set an appointment — Minutes", length=4),
         *checkbox_multiselect("Q59_SCHED_COMM",   # #669: select_all -> Check Box (tick-all)
                     "59. What mode/s of communication was/were available to you when scheduling a "
                     "consultation with your main primary care provider?", _cb_codes(COMM_MODES)),
@@ -1025,8 +1037,10 @@ def build_section_f():
         ("Had any laboratory tests done (e.g. blood, urine sample)",                          "05"),
         ("Had any imaging done (e.g. ultrasound, Xray, CT)",                                  "06"),
         ("Prescribed medication",                                                             "07"),
-        ("Had any minor procedure/surgery done",                                              "08"),
-        ("Picked up medical certificate/other administration",                                "09"),
+        # #1052 (pretest 2026-08-04): inline paper definitions appended (the #789 Q103
+        # convention). No 'specif'/'none'/DK trigger words introduced — codes unchanged.
+        ("Had any minor procedure/surgery done (minor surgery involves minimally invasive, low-risk procedures often performed on an outpatient basis)",  "08"),
+        ("Picked up medical certificate/other administration (claiming of medical clearance for travel, fit to work, surgery, etc.)",                     "09"),
         ("Was admitted for confinement",                                                      "10"),
         ("Other (Specify)",                                                                   "99"),   # #438: none-of-the-above escape (e.g. came for a consult but couldn't see the doctor)
     ]
@@ -1206,7 +1220,7 @@ def build_section_g():
         ("LGU hospital",                            "3"),
         ("Rural Health Unit / Health Center",       "4"),
         ("Would not seek care",                     "5"),
-        ("Others",                                  "6"),
+        ("Other (specify)",                         "6"),   # #1065: paper label; code + specify gate unchanged
     ]
     items = [
         select_one("Q88_WHY_VISIT",
@@ -1235,7 +1249,7 @@ def build_section_g():
     items.extend(checkbox_multiselect(
         "Q92_SOURCES",
         "92. Which of the following did you use to pay for the cost of consultation? "
-        "(Tick all that apply.)",
+        "(Select all that apply.)",
         Q92_PAYMENT_SRC, with_other_txt=False))
     items.extend([
         *checkbox_multiselect("Q93_LABS",   # #673: select_all -> Check Box (tick-all)
@@ -1280,7 +1294,7 @@ def build_section_g():
     items.extend(checkbox_multiselect(
         "Q96_SOURCES",
         "96. Which of the following did you use to pay for the prescribed medicines? "
-        "(Tick all that apply.)",
+        "(Select all that apply.)",
         Q96_MEDS_PAY, with_other_txt=False))
     items.append(numeric("Q97_FINAL_AMOUNT",
                          "97. What was the final amount you paid in cash for your outpatient care? "
@@ -1294,7 +1308,7 @@ def build_section_g():
     items.extend(checkbox_multiselect(
         "Q971_SOURCES",
         "97.1 Which other items were included in your outpatient bill? "
-        "(Tick all that apply.)",
+        "(Select all that apply.)",
         Q971_SOURCES, with_other_txt=False))   # OTHER_TXT emitted after roster split
     items.append(alpha("Q971_OTHER_TXT",
                        "97.1 Other expenses — specify text", length=120))
@@ -1309,7 +1323,7 @@ def build_section_g():
     items.extend(checkbox_multiselect(
         "Q972_SOURCES",
         "97.2 Which other expenses did you have during the OPD visit that were NOT in the "
-        "bill? (Tick all that apply.)",
+        "bill? (Select all that apply.)",
         Q972_SOURCES, with_other_txt=False))
     items.append(alpha("Q972_OTHER_TXT",
                        "97.2 Other expenses — specify text", length=120))
@@ -1322,7 +1336,7 @@ def build_section_g():
     items.extend(checkbox_multiselect(
         "Q98_SOURCES",
         "98. Which of the following did you use to pay for the medical costs? "
-        "(Tick all that apply.)",
+        "(Select all that apply.)",
         Q98_SOURCES, with_other_txt=False))
     items.append(alpha("Q98_OTHER_DONATION_TXT",
                        "98. Other Donation/Charity/Assistance from Government Organization — specify text",
@@ -1424,7 +1438,7 @@ def build_section_h():
         ("Donation",                           "07"),
         ("In kind",                            "08"),
         ("Don't know",                         "09"),
-        ("Other",                              "10"),
+        ("Other (specify)",                    "10"),   # #1067: paper label; explicit code — gate reads pos("10"), unchanged
     ]
     Q109_PAYMENT = [
         ("Out-of-pocket",                      "01"),
@@ -1435,7 +1449,7 @@ def build_section_h():
         ("Free, charge to MAIFIP",             "06"),
         ("In kind",                            "07"),
         ("Don't know",                         "08"),
-        ("Other",                              "09"),
+        ("Other (specify)",                    "09"),   # #1067: paper label for Q109 AND Q112 (shared list); code unchanged
     ]
     Q113_SOURCES = [
         ("Salary/income",                                                  "01"),
@@ -1487,7 +1501,9 @@ def build_section_h():
         numeric("Q106_NIGHTS",
                 "106. How long were you confined? — Nights", length=3),
         numeric("Q106_DAYS",
-                "106. How long were you confined? — Days", length=3),
+                # #1066: second component shows a short prompt — the full question reads
+                # once (on Nights) per the paper's grouped Nights/Days presentation.
+                "106. Length of confinement — Days", length=3),
     ]
     # Q107 total bill — Option B ROSTER fan-out (#691, 2026-06-19). WAS a flat 10-source
     # Yes/No + per-source _AMT matrix (every source carried an amount). NOW a CheckBox
@@ -1496,7 +1512,7 @@ def build_section_h():
     items.extend(checkbox_multiselect(
         "Q107_SOURCES",
         "107. Which of the following did you use to pay for the total bill for confinement? "
-        "(Tick all that apply.)",
+        "(Select all that apply.)",
         Q107_PAYMENT, with_other_txt=False))
     items.append(alpha("Q107_PAY_OTHER_TXT",
                        "107. Total bill — Other, specify text", length=120))
@@ -1510,7 +1526,7 @@ def build_section_h():
     items.extend(checkbox_multiselect(
         "Q109_SOURCES",
         "109. Which of the following did you use to pay for the medicines bought outside "
-        "the hospital? (Tick all that apply.)",
+        "the hospital? (Select all that apply.)",
         Q109_PAYMENT, with_other_txt=False))
     items.append(alpha("Q109_PAY_OTHER_TXT",
                        "109. Meds outside — Other, specify text", length=120))
@@ -1526,7 +1542,7 @@ def build_section_h():
     items.extend(checkbox_multiselect(
         "Q112_SOURCES",
         "112. Which of the following did you use to pay for the services done outside the "
-        "hospital? (Tick all that apply.)",
+        "hospital? (Select all that apply.)",
         Q109_PAYMENT, with_other_txt=False))
     items.append(alpha("Q112_PAY_OTHER_TXT",
                        "112. Services outside — Other, specify text", length=120))
@@ -1539,7 +1555,7 @@ def build_section_h():
     items.extend(checkbox_multiselect(
         "Q113_SOURCES",
         "113. Which of the following did you use to pay for the hospital bill? "
-        "(Tick all that apply.)",
+        "(Select all that apply.)",
         Q113_SOURCES, with_other_txt=False))
     items.append(alpha("Q113_PAY_OTHER_TXT",
                        "113. Hospital bill payment — Other specify text", length=120))
@@ -1754,11 +1770,15 @@ def build_section_j():
         ("No",           "2"),
         ("I don't know", "3"),
     ]
+    # #1061 (pretest 2026-08-04): each amenity row carries the FULL respondent-facing
+    # question naming its amenity (paper grid rows), instead of an encoding-style stub
+    # under the once-only #486 battery stem (dropped from qsf SECTION_INTROS in the
+    # same change).
     AMENITY_ITEMS = [
-        ("Q131_AMEN_WAITING",       "131. Satisfaction with cleanliness and comfort — Waiting areas"),
-        ("Q132_AMEN_BATHROOMS",     "132. Satisfaction with cleanliness and comfort — Bathrooms and toilets"),
-        ("Q133_AMEN_CONSULT_ROOMS", "133. Satisfaction with cleanliness and comfort — Consultation Rooms"),
-        ("Q134_AMEN_ROOMS",         "134. Satisfaction with cleanliness and comfort — Rooms (for inpatients only)"),
+        ("Q131_AMEN_WAITING",       "131. How would you rate the cleanliness and comfort of the waiting areas in this facility?"),
+        ("Q132_AMEN_BATHROOMS",     "132. How would you rate the cleanliness and comfort of the bathrooms and toilets in this facility?"),
+        ("Q133_AMEN_CONSULT_ROOMS", "133. How would you rate the cleanliness and comfort of the consultation rooms in this facility?"),
+        ("Q134_AMEN_ROOMS",         "134. How would you rate the cleanliness and comfort of the rooms in this facility? (For inpatients only)"),
     ]
     STAFF_FREQ_ITEMS = [
         ("Q136_STAFF_COURTESY", "136. In most recent visit, how often did the staff treat you with courtesy and respect?"),
@@ -1935,9 +1955,12 @@ def build_section_k():
                     "149. Where do you usually buy or receive your medicines? "
                     "Select all that apply.", _cb_codes(Q149_WHERE_BUY), with_other_txt=True),
         numeric("Q150_TRAVEL_HH",
-                "150. Travel time from home to nearest pharmacy — hours (HH)", length=2),
+                # #1062: respondent-facing question reads once (here); the MM component
+                # keeps a short prompt. Pharmacy definition rides only this field (qsf).
+                "150. How much time does it take for you to reach the nearest pharmacy "
+                "from your home? — Hours (HH)", length=2),
         numeric("Q150_TRAVEL_MM",
-                "150. Travel time from home to nearest pharmacy — minutes (MM)", length=2),
+                "150. Travel time to nearest pharmacy — Minutes (MM)", length=2),
         select_one("Q151_PHARM_EASE",
                    "151. How easy is it for you to access a pharmacy or drugstore?",
                    Q151_EASE, length=1),
@@ -2075,8 +2098,10 @@ def build_section_l():
         ("Neither Satisfied nor Dissatisfied","3"),
         ("Dissatisfied",                      "4"),
         ("Very Dissatisfied",                 "5"),
-        # #514: 'Not applicable' (6) removed — Q178 is only reached when there WAS a referral
-        # (Q162=Yes gates Section L), so the referral-satisfaction question always applies.
+        # #1063 (pretest 2026-08-04): 'Not applicable' RESTORED on its original code 6 —
+        # the paper carries it, and Section L is also walked by non-referral paths
+        # (Q172-Q177), so #514's "always applies" premise didn't hold in the field.
+        ("Not applicable",                    "6"),
     ]
     items = [
         yes_no("Q162_REFERRED",
