@@ -1276,20 +1276,14 @@
   "_run_2026-06-27_clear_backlog": "Carl directive: clear gh issues + fix, no permission, do what testers ask. CLEARED ENTIRE in-scope F1/F3/F4 backlog (19 issues) in one pass. BUILT+DEPLOYED F3 (Compile 01:26:29, Publish strict-gate PASSED, auto_deploy PatientSurvey Deployed Successfully): #764/#765 NEW Q38 reroute (added Q38_1_PIN_WHEN select-one Yes-only gate + Q38_2_WHY_NOT_REG tick-all CheckBox No-only via CHECKBOX_CONVERT gate+skip-to-Q43; Q38=Yes skips Q43/Q44 to Q45 via Q41=2->Q45 + Q42 postextra skip; SKIP_RULE Q38 in2,3 -> Q38=3 only; CAUGHT+FIXED strict-publish error: skip-to-next illegal outside roster -> skip to Q38_2 explicit), #777 (Q94 how-much label), #782 (removed Q97/Q115 +-10% SOFT_CROSS warnings). DEPLOYED already-built-pending: #760/#763/#781/#784/#786. BUILT+DEPLOYED F4 (Compile 01:22:31, deployed): #796/#797 (AREA_HAS_BUCAS/GAMOT auto-answer=1+noinput in EXTRA_PROCS+covered, removed the =2 gating SKIP_RULES -> blocks asked of everyone, proceed to Q57/Q69). RESOLUTION-CLOSED (no build; verified addressed/superseded/data-state): #772 (F4 Q88 already multi=stale build; F3 Q88 single per spec), #773/#780 (money-amount policy live #779/#781; non-money 0-cell cosmetic hide = roster-structure change needs device-test, deferred, data correct), #778 (#450 per-lab roster labels each row), #788 (reschedule-date enhancement queued), F4 #733 (partial-save data-state like #806), #743 (-98/-99 standard supersedes -55/-999), #755 (0-prefill + either-value-proceeds live). verify F1/F3(370/370)/F4 all PASS. Patch notes #f3-uat p1782495076 + #f4-uat p1782495080; trackers #719/#720/#721 closeout. NO DEVICE this session (adb absent) -> roster-recode items (#773/#780) responsibly deferred not blind-shipped. Board now: only F2-PWA(#774/#768/#524 out-of-scope)+infra #725+R5 trackers #719-724 open.",
   "field_ready": {
     "last_verdict": "NOT-READY",
-    "last_evaluated_at": "2026-08-07T05:42:38+00:00",
-    "open_actionable": 77,
+    "last_evaluated_at": "2026-08-08T07:55:22+00:00",
+    "open_actionable": 13,
     "last_finding_at": "2026-08-07T02:15:43+00:00",
-    "days_since_finding": 0.1,
+    "days_since_finding": 1.2,
     "quiet_days": 2.0,
     "consecutive_clear_evals": 0,
     "error": null,
     "history": [
-      {
-        "at": "2026-08-05T05:34:33+00:00",
-        "verdict": "NOT-READY",
-        "open_actionable": 18,
-        "days_since_finding": 0.1
-      },
       {
         "at": "2026-08-05T07:20:45+00:00",
         "verdict": "NOT-READY",
@@ -1343,6 +1337,12 @@
         "verdict": "NOT-READY",
         "open_actionable": 77,
         "days_since_finding": 0.1
+      },
+      {
+        "at": "2026-08-08T07:55:22+00:00",
+        "verdict": "NOT-READY",
+        "open_actionable": 13,
+        "days_since_finding": 1.2
       }
     ],
     "_doc": "Auto-written by automation/check_field_ready.py (E0-UAT-REFRAME stop-condition gate). FIELD-READY = capi-uat-triage may stop."
@@ -1930,5 +1930,18 @@
     "REGRESSION_FOUND_AND_FIXED": "My earlier capi re-publish of the hub used a FRESH Designer publish, which ignored the saved LoginApp.csds spec and shipped the package with 4 files instead of 29 - MenuApp, UserRoster, menu.html, report.html, the 26MB basemap and the assignment files were all missing, so a fresh install would have logged in and chain-launched a MenuApp that was not there. Fixed by loading the spec with open_csdeploy_spec.py then auto_deploy --deploy-only.",
     "RULE": "The HUB must ALWAYS be deployed from supervisor-hub/LoginApp.csds (open_csdeploy_spec.py -> auto_deploy --deploy-only). A plain Designer Publish-and-Deploy silently drops every file not referenced by the .ent. CSDeploy rebuilds the .pen from the .ent at deploy time, so no Designer publish is needed at all.",
     "residual": "Supervisors must still ADD SupervisorApp once from CSWeb - CSPro has no app-installs-app mechanism. launch_instrument() reports that clearly if it is missing."
+  },
+  "_closeout_2026-08-08": {
+    "closed": "64/64 fixed+deployed tickets closed, zero failures. Board 80 -> 16.",
+    "evidence": "Tier-2 capi_tablet emulator capture of the DEPLOYED packages sideloaded from CSWeb: CSEntry app list showing F1 v1.3.0 / F3 v1.4.0 / F4 v1.5.8. SHA-pinned at docs/uat-fix-evidence/2026-08-08/csentry-applist-all-three.png (commit 3ea5d71). Stated plainly in every closing note that this is BUILD-IDENTITY evidence, not a per-question capture - the itel was not connected.",
+    "testers_notified": {
+      "f1-uat": "v1.3.0 patch note",
+      "f3-uat": "v1.4.0 patch note",
+      "f4-uat": "v1.5.8 patch note",
+      "capi-scrum": "consolidated round summary"
+    },
+    "notes_lead_with": "(1) SYNC FIRST then remove+re-add - removing an app with unsynced cases destroys them; (2) sync endpoint moved to capi, effective only on re-add; (3) validation is now STRICTER by design, do not file as a bug.",
+    "remaining_16": "13 CSEntry blocked on ASPSI/Carl decisions or a device check + 3 F2 PWA (other queue). None blocked on build work.",
+    "gate": "NOT-READY (correct - 13 open actionable findings remain)."
   }
 }
