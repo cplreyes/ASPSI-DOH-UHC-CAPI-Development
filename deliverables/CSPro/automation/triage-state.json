@@ -1900,6 +1900,25 @@
         "ASPSI comms: testers SYNC FIRST, then remove + re-add (removing an app with unsynced cases loses them). This same re-add also delivers the 64 fixes and the new version strings.",
         "Then monitor csweb/api for CSPro sync-client traffic; switch off once it stays at zero."
       ]
+    },
+    "COMPLETE_client_side": {
+      "all_five_packages_on_capi": [
+        "FacilityHeadSurvey v1.3.0",
+        "PatientSurvey v1.4.0",
+        "HouseholdSurvey v1.5.8",
+        "SupervisorApp",
+        "LoginApp (hub bundle: LoginApp+MenuApp)"
+      ],
+      "verified": "package.json cswebUrl re-read off the server for all five -> https://capi.asiansocial.org",
+      "hub_builder_fix": "build_hub_apps.py could not run: assignments-source.csv 'expected 6 columns, found 8' (the CSV gained region+province for the coverage work). Fixed _load_csv_rows to select columns BY HEADER NAME instead of by count. Chose that over bumping 6->8 because the assignment record is FIXED-WIDTH via zip(row, _ASSIGNMENT_WIDTHS): zip already tolerated extra TRAILING columns, but a reordered/renamed column would have silently shifted every field into the wrong width and written a corrupt-but-plausible .dat. By-name makes future column additions a no-op and makes a rename/removal a hard stop. Both call sites (roster + assignments) converted. Verified after rebuild: AS_*.dat lines are exactly 97 chars (9+20+4+4+50+10), 7 per-enumerator files.",
+      "hub_relay_url": "supervisor-hub/build_hub_apps.py line ~725 csweb_url -> capi; baked into MenuApp.ent.apc.",
+      "supervisor_app": "SV/SupervisorApp.ent.apc has NO hard-coded URL - only its package-level cswebUrl, fixed by the re-publish.",
+      "psgc_warnings": "Expected for HUB/SV - those bundles do not ship PSGC lookups; auto_deploy looks in a per-instrument folder that has none. Deploys succeeded."
+    },
+    "REMAINING": {
+      "csweb_still_live": "Correct and required. Installed tablets still hold the OLD url inside their app and only move on remove+re-add. A redirect cannot rescue them - the CSPro sync client does not follow 301 for PUT/POST.",
+      "aspsi_comms": "Tester instruction must lead with SYNC FIRST, then remove, then re-add. Removing an app with unsynced cases destroys them. This one re-add also delivers the 64 fixes and the new version strings (v1.3.0/v1.4.0/v1.5.8), so it is one disruption, not two.",
+      "retire_when": "Monitor nginx for 'CSPro sync client' hits on csweb.asiansocial.org/csweb/api. Switch the host off only after that stays at zero."
     }
   }
 }
