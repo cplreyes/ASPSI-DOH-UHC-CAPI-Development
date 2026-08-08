@@ -1920,5 +1920,15 @@
       "aspsi_comms": "Tester instruction must lead with SYNC FIRST, then remove, then re-add. Removing an app with unsynced cases destroys them. This one re-add also delivers the 64 fixes and the new version strings (v1.3.0/v1.4.0/v1.5.8), so it is one disruption, not two.",
       "retire_when": "Monitor nginx for 'CSPro sync client' hits on csweb.asiansocial.org/csweb/api. Switch the host off only after that stays at zero."
     }
+  },
+  "_hub_supervisorapp_integration_2026-08-08": {
+    "ask": "Carl: one LoginApp, credentials decide enumerator vs supervisor, everything reachable from it.",
+    "already_existed": "Role-based single login was already built: UserRoster.UR_ROLE -> LoginApp loadcase+savesetting -> MenuApp branches supervisor/enumerator. Ships as ONE package (LoginApp.zip bundles LoginApp+MenuApp).",
+    "cspro_constraint": "Instruments CANNOT live inside the hub .ent - a CSPro entry app has ONE main dictionary + one form file, and F1/F3/F4/SV each have their own case structure. launch_instrument() (loads the instrument OWN .pff, OnExit back to menu) is the idiomatic workaround and was already in place for F1/F3/F4.",
+    "change_made": "Added SupervisorApp to SUPERVISOR_MENU_GROUPED as \"Conduct/Open Supervisor App - Courtesy Call\" (action open_sv) + MENU_ACTIONS[open_sv]=launch_instrument(\"../SupervisorApp/SupervisorApp.pff\"). Supervisor role ONLY - deliberately not on the enumerator menu. Hub bumped v1.1.4 -> v1.1.5.",
+    "verified_on_server": "LoginApp.zip 26.4MB / 29 files, cswebUrl=capi, MenuApp.ent.apc contains open_sv x2 + the label + Hub v1.1.5 + capi relay URL.",
+    "REGRESSION_FOUND_AND_FIXED": "My earlier capi re-publish of the hub used a FRESH Designer publish, which ignored the saved LoginApp.csds spec and shipped the package with 4 files instead of 29 - MenuApp, UserRoster, menu.html, report.html, the 26MB basemap and the assignment files were all missing, so a fresh install would have logged in and chain-launched a MenuApp that was not there. Fixed by loading the spec with open_csdeploy_spec.py then auto_deploy --deploy-only.",
+    "RULE": "The HUB must ALWAYS be deployed from supervisor-hub/LoginApp.csds (open_csdeploy_spec.py -> auto_deploy --deploy-only). A plain Designer Publish-and-Deploy silently drops every file not referenced by the .ent. CSDeploy rebuilds the .pen from the .ent at deploy time, so no Designer publish is needed at all.",
+    "residual": "Supervisors must still ADD SupervisorApp once from CSWeb - CSPro has no app-installs-app mechanism. launch_instrument() reports that clearly if it is missing."
   }
 }
