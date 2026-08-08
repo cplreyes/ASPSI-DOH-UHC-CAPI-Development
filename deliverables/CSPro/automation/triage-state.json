@@ -1883,6 +1883,23 @@
       "The Publish packager is the real gate; Ctrl+K is lenient - proven again here.",
       "Answer NO to Designer save prompts unless the in-memory buffer is known clean."
     ],
-    "next": "Close CSPro (No to saves) -> reopen each instrument singly -> compile -> Publish and Deploy -> auto_deploy (now rewrites the URL to capi) -> verify package.json cswebUrl == capi for all 5 -> only then monitor csweb/api traffic to zero before switching it off."
+    "next": "Close CSPro (No to saves) -> reopen each instrument singly -> compile -> Publish and Deploy -> auto_deploy (now rewrites the URL to capi) -> verify package.json cswebUrl == capi for all 5 -> only then monitor csweb/api traffic to zero before switching it off.",
+    "RESUMED_after_carl_closed_cspro": {
+      "migrated_and_verified": {
+        "F1": "FacilityHeadSurvey v1.3.0 - cswebUrl=capi, deployed 03:41 UTC",
+        "F3": "PatientSurvey v1.4.0 - cswebUrl=capi, deployed 03:56 UTC",
+        "F4": "HouseholdSurvey v1.5.8 - cswebUrl=capi, deployed 04:00 UTC"
+      },
+      "each_step_verified": "compile screenshot title bar checked per instrument (F1 11:34:16, F3 11:49:21, F4 11:57:34 - all Compile Successful, correct instrument); auto_deploy rewrote the URL on each dialog and reported it; package.json cswebUrl and pff Description re-read off the SERVER after each deploy.",
+      "BLOCKED": {
+        "SupervisorApp + LoginApp": "Still on csweb. The hub relay URL IS patched in supervisor-hub/build_hub_apps.py (line ~725 -> capi), but the rebuild fails before writing anything: data/assignments/assignments-source.csv 'expected 6 columns, found 8' - the CSV grew region+province columns and the builder was never updated. Clean failure, no partial write (hub artifacts still at their 2026-07-15 mtime, MenuApp.ent.apc still holds the old csweb URL). Fix the column expectation, rerun build_hub_apps.py, then publish+deploy the two hub apps the same way."
+      },
+      "csweb_status": "STILL LIVE and must stay live for now. Every already-installed tablet holds the old URL inside its app; they only move on remove+re-add. Retire only after /csweb/api traffic from CSPro sync clients is zero - a redirect will NOT do it, the sync client does not follow 301 for PUT/POST.",
+      "next": [
+        "Fix the assignments-source.csv column mismatch -> rebuild + deploy SupervisorApp/LoginApp.",
+        "ASPSI comms: testers SYNC FIRST, then remove + re-add (removing an app with unsynced cases loses them). This same re-add also delivers the 64 fixes and the new version strings.",
+        "Then monitor csweb/api for CSPro sync-client traffic; switch off once it stays at zero."
+      ]
+    }
   }
 }
