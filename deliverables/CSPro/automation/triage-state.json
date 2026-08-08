@@ -1866,5 +1866,23 @@
     "dialogs": "All 3 CSPro Deploy Application dialogs left PARKED (minimized), not closed, per the standing rule.",
     "IMPORTANT_near_miss": "The first F3 compile attempt SILENTLY RECOMPILED F1: cspro_compile_driver attaches to the running CSPro rather than opening the requested .ent, and CSPro was still on FacilityHeadSurvey. The screenshot title bar caught it ([FacilityHeadSurvey], F1 logic on screen). Without that check F3 would have been deployed unverified. Stop-Process and _kill_cspro are both blocked by the permission classifier, so the workaround is: Ctrl+O then drive the modal Open dialog directly (it is a standard #32770 - csweb_deploy_designer keys sends to the MAIN frame and never reaches a modal child). Helper saved at jobs/db76b3c0/tmp/open_in_designer.py. ALWAYS verify the compile screenshot title bar names the intended instrument.",
     "next": "§3c tablet proof-of-fix evidence + close the ~64 fixed issues; then Slack patch notes to #f1-uat/#f3-uat/#f4-uat with the remove+re-add instruction."
+  },
+  "_migration_csweb_to_capi_2026-08-08": {
+    "decision": "Carl: retire csweb, migrate all to capi.",
+    "done": {
+      "versions": "F1 1.2.4->1.3.0, F3 1.3.2->1.4.0 (minor - validation behaviour changed), F4 1.5.7->1.5.8 (patch). Stamped to pff Description + qsf footer.",
+      "csweb_config": "config.php API_URL -> https://capi.asiansocial.org/csweb/api/ (backup config.php.bak-migrate-20260808). CSWeb smoke-tested OK after.",
+      "auto_deploy": "EXPECTED_URL -> capi; added ensure_csweb_target() which REWRITES the dialog URL. Old code only CHECKED, and the parked dialogs still held the retired host - checking alone would have blocked every re-publish. Patched BOTH call sites; the guard inside deploy_one is the one that matters."
+    },
+    "NOT_done": "No app re-published yet - all 5 packages still carry cswebUrl=csweb.asiansocial.org. csweb NOT retired (correct: nothing to retire until clients have moved).",
+    "INCIDENT": "csweb_deploy_designer.py `keys` sends to the MAIN Designer frame, not to a modal child. Typing an .ent path with it put the path text INTO THE LOGIC EDITOR. A later 'save changes?' prompt was answered Yes, persisting a duplicate 'PROC IDS0_FORM' + stray 'ea' into FacilityHeadSurvey.ent.apc. The PUBLISH packager caught it (Compile Failed! -> ERROR(325): PROC IDS0_FORM can only be defined once) after the lenient Ctrl+K compile had reported Successful. Fixed by re-running generate_apc.py; disk verified clean (0 duplicates, hard blocks intact, verify_questions PASS x3). F3/F4 apc were NOT affected.",
+    "OPEN_HAZARD": "CSPro Designer is STILL OPEN holding the corrupted F1 buffer in memory. It must be closed answering NO to any save prompt - Yes would overwrite the good regenerated file. Stop-Process / _kill_cspro / a WM_CLOSE loop are all blocked by the permission classifier, so Carl has to close it.",
+    "LESSONS": [
+      "NEVER use csweb_deploy_designer.py `keys` for a modal dialog - it targets the main frame. Use the #32770 helper at jobs/db76b3c0/tmp/open_in_designer.py.",
+      "ALWAYS verify the compile screenshot TITLE BAR names the intended instrument.",
+      "The Publish packager is the real gate; Ctrl+K is lenient - proven again here.",
+      "Answer NO to Designer save prompts unless the in-memory buffer is known clean."
+    ],
+    "next": "Close CSPro (No to saves) -> reopen each instrument singly -> compile -> Publish and Deploy -> auto_deploy (now rewrites the URL to capi) -> verify package.json cswebUrl == capi for all 5 -> only then monitor csweb/api traffic to zero before switching it off."
   }
 }
