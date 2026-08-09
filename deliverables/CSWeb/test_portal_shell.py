@@ -57,6 +57,18 @@ missing("unpermissioned entry carries none", side,
 contains("active entry is marked", side, 'class="on" href="/projects/uhc-y2/monitoring/"')
 missing("the decorative padlock is gone", side, '<span class="lk">')
 
+# External systems: in the rail since the monitoring signpost died (Slice 3),
+# new tab + separate-sign-in warning, never dimmed (we don't hold their perms).
+contains("f2 admin is in the rail", side, 'href="https://uhc-hcw.asiansocial.org/admin"')
+contains("csweb is in the rail", side, 'href="https://csweb.asiansocial.org/csweb/"')
+contains("external opens a new tab", side,
+         'href="https://csweb.asiansocial.org/csweb/" target="_blank" rel="noopener"')
+contains("external warns separate sign-in", side, "separate sign-in")
+missing("externals carry no data-perm", side,
+        'href="https://csweb.asiansocial.org/csweb/" data-perm')
+missing("internal links never open new tabs", side,
+        'href="/projects/uhc-y2/guides/" target')
+
 # --- the lock pill is gone, dimming replaces it ----------------------------
 check("PILL_LOCK is removed", hasattr(PS, "PILL_LOCK"), False)
 contains("PILL_LIVE survives", PS.PILL_LIVE, "Fieldwork live")

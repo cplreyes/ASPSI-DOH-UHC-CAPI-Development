@@ -84,6 +84,15 @@ _NAV = [
     ("Administration", [
         ("Admin console", "/docs/admin/", _ico('<path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h9M17 17h3"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="17" r="2"/>'), "admin.system"),
     ]),
+    # The two working systems behind their own credentials. They lived as cards
+    # on the monitoring signpost until Slice 3 deleted it — the rail is now the
+    # one place every surface shares, so the links live here. sidebar() renders
+    # any http(s) href with target=_blank + a "separate sign-in" title: an
+    # external system opens in its own tab and never inherits console identity.
+    ("Systems", [
+        ("F2 admin portal", "https://uhc-hcw.asiansocial.org/admin", _ico('<rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><path d="M13 13h3v3h-3zM18 13h3M13 18h3M18 18h3v3h-3z"/>'), ""),
+        ("CSWeb", "https://csweb.asiansocial.org/csweb/", _ico('<ellipse cx="12" cy="5.5" rx="8" ry="2.8"/><path d="M4 5.5V12c0 1.6 3.6 2.8 8 2.8s8-1.2 8-2.8V5.5"/><path d="M4 12v6.5c0 1.6 3.6 2.8 8 2.8s8-1.2 8-2.8V12"/>'), ""),
+    ]),
     ("Platform", [
         ("All projects", "/projects/", _ico('<path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/>'), ""),
         ("What we build", "/platform/", _ico('<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>'), ""),
@@ -117,8 +126,10 @@ def sidebar(active, base=""):
         o.append('<div class="sb-sec">%s</div>' % sec)
         for label, href, icon, perm in items:
             dp = ' data-perm="%s"' % perm if perm else ""
-            o.append('<a class="%s" href="%s"%s>%s<span>%s</span></a>'
-                     % ("on" if href == active else "", _href(href, base), dp, icon, label))
+            ext = (' target="_blank" rel="noopener" title="Opens in a new tab '
+                   '&mdash; separate sign-in"') if href.startswith("http") else ""
+            o.append('<a class="%s" href="%s"%s%s>%s<span>%s</span></a>'
+                     % ("on" if href == active else "", _href(href, base), dp, ext, icon, label))
     o.append('</nav><div class="sb-foot">Asian Social Project Services, Inc.<br>'
              '<a href="https://asiansocial.org">asiansocial.org</a>'
              '<div class="sb-powered">Powered by Analytiflow.</div></div></aside>')
