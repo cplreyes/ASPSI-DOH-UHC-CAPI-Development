@@ -1,0 +1,16 @@
+# field_supervisor: case.view + monitoring.view + tabulations.view
+/projects/uhc-y2/                              200
+/projects/uhc-y2/monitoring/                   200
+/projects/uhc-y2/monitoring/map/               200
+/projects/uhc-y2/tabulations/                  200
+# no data.export
+/projects/uhc-y2/data/                         403
+/docs/data/f1_responses.csv                    403
+# no admin.system — the edge refuses before capi-www could even 404
+/projects/uhc-y2/admin/                        403
+# every account may read the operator guide
+/docs/admin-portal-guide.html                  200
+# old URLs redirect, gated first
+/docs/dashboard.html                           301
+/docs/map.html                                 301
+/docs/data/                                    403

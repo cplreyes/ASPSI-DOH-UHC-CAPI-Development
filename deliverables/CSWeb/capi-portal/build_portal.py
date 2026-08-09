@@ -314,35 +314,10 @@ def instrument_page(i):
 # clobber it on every deploy. Same pattern as tabulations (2026-07-28).
 
 
-def data_index():
-    body = (hero("UHC Survey Y2", "Data",
-                 "Analysis-ready exports of everything collected so far, rebuilt from the database "
-                 "every two minutes and documented variable by variable.")
-            + '<main><section><div class="grid">'
-              '<div class="card project">'
-              '<h3>Data room</h3><p>Wide and roster CSVs per instrument, labelled SPSS '
-              '<code>.sav</code>, Stata <code>.dta</code> and R <code>.rds</code> exports, the '
-              'codebooks, the CSPro dictionaries and the application packages — with a preview of '
-              'each table in the browser.</p>'
-              '<a class="go" href="' + CONSOLE + '/docs/data/">Open the data room</a></div>'
-              '<div class="card"><h3>Codebook</h3><p>What every variable means: label, the literal '
-              'question, universe (who was asked it), value codes, Don\'t-know / Refused codes, and '
-              'the validation rules enforced during the interview. Excel and PDF.</p>'
-              '<a class="go" href="%s/instruments/">Per instrument</a></div>'
-              '</div></section>'
-              '<section><h2>Before you analyse</h2><ul class="rolelinks">'
-              '<li><b>Values are raw stored codes</b> — <span>1 / 2, not Male / Female. The SPSS and '
-              'Stata files carry the labels embedded; the R files ship with a codebook CSV.</span></li>'
-              '<li><b>Missing values are coded, not blank</b> — <span>categorical items use 8 / 98 for '
-              'Don\'t know and 9 / 99 for Refused; amount fields use −98 and −99 so no real amount is '
-              'ever confused with a refusal.</span></li>'
-              '<li><b>The questionnaire number is a 12-digit string</b> — <span>keep it as text; Excel '
-              'will otherwise render it as 1.02E+11.</span></li>'
-              '<li><b>Everything is a snapshot of live fieldwork</b> — <span>counts move as tablets '
-              'sync. Each file carries the timestamp it was generated.</span></li>'
-              '</ul></section></main>' % P)
-    return shell("Data — UHC Survey Y2",
-                 "Analysis-ready exports and codebooks for UHC Survey Year 2.", body, active=P + "/data/")
+# data_index() deleted 2026-08-09 (unification Slice 4): the page at
+# /projects/uhc-y2/data/ is now the LIVE data-room index, written by
+# csweb-responses-gen.py --index-out on its 2-minute cron. Same rule as
+# monitoring/ and tabulations/: generator-owned, never written here.
 
 
 def platform_page():
@@ -593,7 +568,7 @@ def main():
     # (hourly cron bakes fresh preview counts; a static build here would go stale
     # and clobber it). tabulations_index() kept for reference only.
     # write("projects/uhc-y2/tabulations/index.html", tabulations_index())
-    write("projects/uhc-y2/data/index.html", data_index())
+    # data/: OWNED by csweb-responses-gen.py since 2026-08-09.
 
     # ported content pages
     port("enumerator-guide.html", "projects/uhc-y2/guides/enumerator/index.html")

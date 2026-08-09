@@ -440,7 +440,11 @@ window.CAPI = (function () {
   }
 
   function paintNav(activeName) {
-    document.querySelectorAll('.sb-nav a[data-route]').forEach(function (a) {
+    // Scoped to the in-canvas subnav (2026-08-09): the page's LEFT rail is now
+    // the site-wide sidebar from the shared shell, which also uses .sb-nav and
+    // data-perm — an unscoped selector here would hide site entries outright
+    // while portal_shell's PERM_DIM_JS dims them.
+    document.querySelectorAll('.adm-subnav a[data-route]').forEach(function (a) {
       var on = a.getAttribute('data-route') === activeName;
       a.classList.toggle('on', on);
       if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
@@ -453,10 +457,10 @@ window.CAPI = (function () {
    * temptation to treat a hidden link as a control is perennial.
    */
   function applyNavPermissions() {
-    document.querySelectorAll('.sb-nav a[data-perm]').forEach(function (a) {
+    document.querySelectorAll('.adm-subnav a[data-perm]').forEach(function (a) {
       if (!can(a.getAttribute('data-perm'))) a.hidden = true;
     });
-    document.querySelectorAll('.sb-nav .sb-sec').forEach(function (sec) {
+    document.querySelectorAll('.adm-subnav .sb-sec').forEach(function (sec) {
       var any = false, n = sec.nextElementSibling;
       while (n && !n.classList.contains('sb-sec')) {
         if (n.tagName === 'A' && !n.hidden) any = true;

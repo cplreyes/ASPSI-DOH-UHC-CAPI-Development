@@ -64,10 +64,10 @@ def _ico(d):
 # 2026-07-28. Now it drives data-perm, and PERM_DIM_JS dims what YOUR account
 # cannot open.
 #
-# Admin console deliberately still points at /docs/admin/ — the portal URL
-# /projects/uhc-y2/admin/ only starts existing when its nginx proxy lands
-# (unification Slice 5), and a nav link must never point at a 404. Flip the
-# href and the emit_php_partial default together in that slice.
+# Admin console points at its portal URL since unification Slice 5
+# (2026-08-09) — nginx proxies /projects/uhc-y2/admin/ to Apache's
+# /docs/admin/, and the old URL 301s in NGINX, never Apache (an Apache-level
+# redirect would answer the proxy's own request and loop).
 _NAV = [
     ("Project", [
         ("Overview", P + "/", _ico('<path d="M3 10.5 12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'), ""),
@@ -82,7 +82,7 @@ _NAV = [
         ("Archive", P + "/archive/pretest-2026-07-15/", _ico('<rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><path d="M10 12h4"/>'), ""),
     ]),
     ("Administration", [
-        ("Admin console", "/docs/admin/", _ico('<path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h9M17 17h3"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="17" r="2"/>'), "admin.system"),
+        ("Admin console", P + "/admin/", _ico('<path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h9M17 17h3"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="17" r="2"/>'), "admin.system"),
     ]),
     # The two working systems behind their own credentials. They lived as cards
     # on the monitoring signpost until Slice 3 deleted it — the rail is now the
@@ -299,11 +299,18 @@ const CAPI_SHELL_SIGNOUT_JS = <<<'CAPIHTML'
 %(signout)s
 CAPIHTML;
 
-function capi_shell_open(string $title, string $crumbLeaf): string
+const CAPI_SHELL_PERMDIM_JS = <<<'CAPIHTML'
+%(permdim)s
+CAPIHTML;
+
+function capi_shell_open(string $title, string $crumbLeaf, string $headExtra = ''): string
 {
     $t = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
     $l = htmlspecialchars($crumbLeaf, ENT_QUOTES, 'UTF-8');
     $head = str_replace('__CAPI_TITLE__', $t, CAPI_SHELL_HEAD);
+    if ($headExtra !== '') {
+        $head = str_replace('</head>', $headExtra . "\\n</head>", $head);
+    }
     return $head . "\\n<body>\\n<div class=\\"app\\">\\n" . CAPI_SHELL_SIDEBAR
         . "\\n<div class=\\"main\\">\\n<div class=\\"topbar\\"><div class=\\"crumbs\\">"
         . CAPI_SHELL_CRUMB_PREFIX . '<span class="sep">/</span><span class="cur">' . $l
@@ -314,12 +321,13 @@ function capi_shell_open(string $title, string $crumbLeaf): string
 
 function capi_shell_close(): string
 {
-    return "\\n</div>\\n</div>\\n</div>\\n" . CAPI_SHELL_SIGNOUT_JS . "\\n</body>\\n</html>\\n";
+    return "\\n</div>\\n</div>\\n</div>\\n" . CAPI_SHELL_SIGNOUT_JS
+        . CAPI_SHELL_PERMDIM_JS . "\\n</body>\\n</html>\\n";
 }
 """
 
 
-def emit_php_partial(path, active="/docs/admin/", base=""):
+def emit_php_partial(path, active=P + "/admin/", base=""):
     """Write the shell as a generated PHP include for admin/index.php.
 
     Nowdoc (<<<'CAPIHTML') is used deliberately: it does not interpolate, so
@@ -327,9 +335,8 @@ def emit_php_partial(path, active="/docs/admin/", base=""):
     without newlines, so no emitted line can equal the terminator; the guard
     below is belt-and-braces for the day that stops being true.
 
-    `active` defaults to the admin console's CURRENT nav href. When the nav
-    entry flips to the portal URL (unification Slice 5), flip this default in
-    the same commit or the sidebar stops highlighting.
+    `active` matches the admin console's nav href — flipped to the portal URL
+    together with _NAV in unification Slice 5 (2026-08-09).
     """
     body = _PHP_TEMPLATE % {
         "path": path.replace("\\", "/"),
@@ -338,6 +345,7 @@ def emit_php_partial(path, active="/docs/admin/", base=""):
         "crumbs": crumbs_html([("Console", _href("/", base)),
                                ("UHC Survey Year 2", _href(P + "/", base))], ""),
         "signout": SIGNOUT_JS,
+        "permdim": PERM_DIM_JS,
     }
     for line in body.splitlines():
         if line.strip() == "CAPIHTML;" and line != "CAPIHTML;":

@@ -781,10 +781,10 @@
   "_wave_643_663_handled": "2026-06-17 21-issue F4 wave (Marriz/mmgarciano full walkthrough). FIXED+DEPLOYED: #654 (removed wrong Q97=No->Q100 skip; Q98/Q99 independent of Q97), #656 (Q113 'Other' specify box never showed - unconditional postproc skip jumped past it; fixed _gen_checkbox_proc to guard the tail on pos('99')=0 + append tail to OTHER_TXT box - same class as F1 #630). STALE-closed (Marriz tested 06-16 pre-deploy): #653(Q93=#624), #660(Q129=#625/626), #662(Q132=#627). CODE-FIX QUEUED (flagged open, NOT yet done): #645 Q74 + #655 Q107 + #647/#648 NA-exclusivity (need per-question 90-code to avoid collision with existing IDK=90); #649 Q79-88 gate on roster Q45 (needs ASPSI member/condition); #652 Q90 routing (spec-ambiguous, tester unsure - flagged for ASPSI); #661 Q131 gate on Q130 hospital-type + form separation. ASPSI content/design/spec-gap (status:blocked): #643(GAMOT-area gate), #644(Q73 required?), #646(Q76 don't-know-diff contradicts Q75), #650(Q89 IDK option), #651/#657(delete DOH notes), #658(Q118/Q114-118 vs Q122-125 flow - Marriz consulting Merlyne), #659/#663(Q128/Q134 option reorder).",
   "_queue_664_plus": "NEXT CRON: #664-675 (and growing) UNPROCESSED - continuous F3+F4 re-test sweep. #669-675 = F3 'Question Formatting' = more select_all->checkbox conversions (Q59/61/70/73, Q75/82/85/86/87, Q90, Q91/92, Q93, Q94, Q96) - same proven pattern as #635/#639/#640. #664-668 = F4 (Q135 appearance, Q136 skip, Q138 other-specify, Q141.1, Q202). Also revisit the queued code-fixes from the 643-663 wave.",
   "slack_ts": {
-    "C0ASSTPLX9A": "1786257451.967593",
-    "C0B5TL0BT37": "1786257451.967593",
-    "C0B5X1ZPYHY": "1786257451.967593",
-    "C0B60KYFBKN": "1786257451.967593",
+    "C0ASSTPLX9A": "1786289001.847203",
+    "C0B5TL0BT37": "1786289001.847203",
+    "C0B5X1ZPYHY": "1786289001.847203",
+    "C0B60KYFBKN": "1786289001.847203",
     "C0AV19GB05P": "1785970996.288121",
     "C0BENS7D4E4": "1783732282.930159"
   },
@@ -1276,20 +1276,14 @@
   "_run_2026-06-27_clear_backlog": "Carl directive: clear gh issues + fix, no permission, do what testers ask. CLEARED ENTIRE in-scope F1/F3/F4 backlog (19 issues) in one pass. BUILT+DEPLOYED F3 (Compile 01:26:29, Publish strict-gate PASSED, auto_deploy PatientSurvey Deployed Successfully): #764/#765 NEW Q38 reroute (added Q38_1_PIN_WHEN select-one Yes-only gate + Q38_2_WHY_NOT_REG tick-all CheckBox No-only via CHECKBOX_CONVERT gate+skip-to-Q43; Q38=Yes skips Q43/Q44 to Q45 via Q41=2->Q45 + Q42 postextra skip; SKIP_RULE Q38 in2,3 -> Q38=3 only; CAUGHT+FIXED strict-publish error: skip-to-next illegal outside roster -> skip to Q38_2 explicit), #777 (Q94 how-much label), #782 (removed Q97/Q115 +-10% SOFT_CROSS warnings). DEPLOYED already-built-pending: #760/#763/#781/#784/#786. BUILT+DEPLOYED F4 (Compile 01:22:31, deployed): #796/#797 (AREA_HAS_BUCAS/GAMOT auto-answer=1+noinput in EXTRA_PROCS+covered, removed the =2 gating SKIP_RULES -> blocks asked of everyone, proceed to Q57/Q69). RESOLUTION-CLOSED (no build; verified addressed/superseded/data-state): #772 (F4 Q88 already multi=stale build; F3 Q88 single per spec), #773/#780 (money-amount policy live #779/#781; non-money 0-cell cosmetic hide = roster-structure change needs device-test, deferred, data correct), #778 (#450 per-lab roster labels each row), #788 (reschedule-date enhancement queued), F4 #733 (partial-save data-state like #806), #743 (-98/-99 standard supersedes -55/-999), #755 (0-prefill + either-value-proceeds live). verify F1/F3(370/370)/F4 all PASS. Patch notes #f3-uat p1782495076 + #f4-uat p1782495080; trackers #719/#720/#721 closeout. NO DEVICE this session (adb absent) -> roster-recode items (#773/#780) responsibly deferred not blind-shipped. Board now: only F2-PWA(#774/#768/#524 out-of-scope)+infra #725+R5 trackers #719-724 open.",
   "field_ready": {
     "last_verdict": "NOT-READY",
-    "last_evaluated_at": "2026-08-09T12:07:27+00:00",
+    "last_evaluated_at": "2026-08-09T15:19:00+00:00",
     "open_actionable": 5,
     "last_finding_at": "2026-08-07T02:15:43+00:00",
-    "days_since_finding": 2.4,
+    "days_since_finding": 2.5,
     "quiet_days": 2.0,
     "consecutive_clear_evals": 0,
     "error": null,
     "history": [
-      {
-        "at": "2026-08-06T06:46:50+00:00",
-        "verdict": "NOT-READY",
-        "open_actionable": 32,
-        "days_since_finding": 0.0
-      },
       {
         "at": "2026-08-06T07:58:32+00:00",
         "verdict": "NOT-READY",
@@ -1343,6 +1337,12 @@
         "verdict": "NOT-READY",
         "open_actionable": 5,
         "days_since_finding": 2.4
+      },
+      {
+        "at": "2026-08-09T15:19:00+00:00",
+        "verdict": "NOT-READY",
+        "open_actionable": 5,
+        "days_since_finding": 2.5
       }
     ],
     "_doc": "Auto-written by automation/check_field_ready.py (E0-UAT-REFRAME stop-condition gate). FIELD-READY = capi-uat-triage may stop."
@@ -2036,5 +2036,22 @@
       "board": "open actionable 14 -> 5. Remaining: #1102 (device check) + #1109/#1132/#1174/#1177 (fixed, pending deploy).",
       "worktree_note": "git status in the worktree shows more F3 files changed than I edited - those are the main->worktree SYNC (27 files; the worktree F3 was stale). The worktree is main + my changes, not a divergent branch."
     }
+  },
+  "_cycle_2026-08-09d_1102": {
+    "signals": "No new tester activity - no new issues, no comments, no reopens, all 4 channels silent.",
+    "1102_CONFIRMED_ON_DEVICE": {
+      "verdict": "Tester is RIGHT. CSEntry DOES paint the Q2 'Other (specify) text' box, with a visible empty input, before any answer is given. My earlier triage could not settle this from source; now settled empirically.",
+      "how": "Tier-2: capi_tablet emulator; pulled the DEPLOYED FacilityHeadSurvey.zip off CSWeb by scp and adb-pushed it to the scoped-storage csentry folder under a loud 'ZZ Q2 CHECK - do not use for fieldwork' pff. No credentials typed anywhere. Cover footer read 'Build: F1 v1.3.0 (2026-08-08)' so it was the deployed build on a fresh case. Case key 138010001001 (region 13 / province 80 / municipality 100 = City of Caloocan) cleared the PSGC gate.",
+      "ROOT_CAUSE": "NOT the skip logic - PROC Q2_OTHER_TXT's noinput gate works and the box cannot capture text. The field is a member of form block DG_A_FACILITY_HEAD_PROFILE_FORM_1 (Label=Q2-Q5) which is DisplayTogether=Yes. A DisplayTogether block PAINTS EVERY MEMBER AT ONCE, and noinput governs enterability, not visibility. So the gate can stop typing but cannot hide the box. Form-layout consequence, not a logic fault - which is why it looks broken but tests clean on data.",
+      "evidence": "docs/uat-fix-evidence/2026-08-09/f1-q2-other-specify-painted.png, committed aa6ea68ccc17b3ed9ef84e55f6da059bddfd53c7 and pushed; SHA-pinned raw URL verified HTTP 200 and embedded on the issue.",
+      "options_offered": [
+        "1 split Q2_OTHER_TXT out of the block (costs one extra screen in Section A)",
+        "2 leave it (cosmetic only, no data risk)",
+        "3 sweep the whole class at round close - RECOMMENDED; same pattern applies to every gated other-specify/follow-up inside a DisplayTogether block (same class as F3 Q148)"
+      ],
+      "status": "OPEN pending Carl/ASPSI's pick. Not a build blocker."
+    },
+    "gate": "NOT-READY, 5 open actionable: #1102 (awaiting the option pick) + #1109/#1132/#1174/#1177 (all fixed and verified, blocked only on main-checkout deploy).",
+    "note": "This cycle produced no new fixes because there was no new tester activity - it converted the last un-diagnosed item into a diagnosed one with device evidence."
   }
 }

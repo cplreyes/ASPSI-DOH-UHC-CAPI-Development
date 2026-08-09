@@ -219,10 +219,32 @@ table.matrix thead th .hdr-verb { font-size: 10px; text-transform: lowercase; le
   user-select: all; word-break: break-all;
 }
 
-/* --------------------------------------------------------------- sidebar */
-.sb-nav a[data-route] { cursor: pointer; }
-.sb-nav a.on { background: rgba(229, 178, 59, .13); color: #fff; font-weight: 600; }
-.sb-nav a[hidden], .sb-nav .sb-sec[hidden] { display: none; }
+/* ------------------------------------------------------- in-canvas subnav
+   The admin's own sections, since the left rail became the SITE's sidebar
+   (unification Slice 5). Light-canvas styling — the old .sb-nav rules here
+   assumed the dark rail and would have restyled the shared sidebar. ui.js
+   routes/hides scoped to .adm-subnav only. */
+.adm-subnav {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px;
+  margin: 2px 0 18px; padding: 8px 10px;
+  background: #fff; border: 1px solid var(--line, #dfe7e2); border-radius: 12px;
+}
+.adm-subnav .sb-sec {
+  font-size: 10px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: #8a978f; margin: 0 2px 0 10px;
+}
+.adm-subnav .sb-sec:first-child { margin-left: 2px; }
+.adm-subnav a {
+  display: inline-flex; align-items: center; padding: 5px 11px;
+  border-radius: 8px; font-size: 13px; font-weight: 550;
+  color: #2a3a32; text-decoration: none;
+}
+.adm-subnav a:hover { background: #eef3f0; text-decoration: none; }
+.adm-subnav a[data-route] { cursor: pointer; }
+.adm-subnav a.on { background: var(--verde, #046a38); color: #fff; font-weight: 600; }
+.adm-subnav a.adm-guide { margin-left: auto; color: var(--verde, #046a38); font-weight: 600; }
+.adm-subnav a[hidden], .adm-subnav .sb-sec[hidden] { display: none; }
+.adm-subnav a:focus-visible { outline: 2px solid var(--verde); outline-offset: 2px; border-radius: 8px; }
 
 /* Skip link. The sidebar is ~15 links; without this a keyboard or screen
    reader user tabs through all of them on every single navigation. */

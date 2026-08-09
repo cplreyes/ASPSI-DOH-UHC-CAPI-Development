@@ -274,11 +274,24 @@ _PAGE_OPEN = (
     '</p></div>'
     '<div class="note">One <b>wide CSV per instrument</b> (a row per case, every singular-record item) plus a\n'
     '<b>CSV per roster record</b> (a row per case &times; occurrence). Values are the <b>raw codes</b> — labels live in\n'
-    'the questionnaire codebook; the <a href="/docs/dashboard.html" style="color:#6b5418"><b>Sync Dashboard</b></a> is the labeled view.\n'
+    'the questionnaire codebook; the <a href="/projects/uhc-y2/monitoring/" style="color:#6b5418"><b>Sync Dashboard</b></a> is the labeled view.\n'
     'Prefer stats-ready files? The <b>labeled exports</b> below carry the same cases as SPSS .sav / Stata .dta\n'
     '(labels embedded) and R .rds (+ codebook CSV). Excel tip: import CSVs via <i>Data &rarr; From Text/CSV</i> and set\n'
     '<code>questionnaire_number</code> to Text, or the 12-digit key renders as 1.02E+11.\n'
     'Regenerated every ~2 min from the live breakout DBs.</div>')
+
+
+# Where the PAYLOAD lives, absolute. The index page moved to
+# /projects/uhc-y2/data/ (unification Slice 4) but the 149 export files did
+# not — so every file href must be /docs/data/-absolute. A bare relative
+# filename would resolve against the page's new directory and 404 every
+# download while looking perfectly fine in the source.
+_D = "/docs/data/"
+
+
+def _f(name):
+    """Absolute href for a payload file served from /docs/data/."""
+    return _D + str(name)
 
 
 def esc(s):
@@ -292,7 +305,7 @@ def fmt_zip(m, fmt):
 
 
 def zip_cells(zips):
-    return "".join('<td><a href="%s" download>%s</a></td>' % (z, esc(z)) if z else "<td></td>"
+    return "".join('<td><a href="%s" download>%s</a></td>' % (_f(z), esc(z)) if z else "<td></td>"
                    for z in zips)
 
 
@@ -359,16 +372,16 @@ def index_html(manifests, generated, spss=None, cspro=None, cbook=None):
             out.append('<tr><td>%s</td><td>%s</td><td class="n">%d</td>'
                        '<td><a href="%s" download>%s</a></td><td>%s</td></tr>'
                        % (esc(m.get("name", inst)), esc(vtxt), m.get("variables", 0),
-                          m["xlsx"], esc(m["xlsx"]),
-                          ('<a href="%s" download>%s</a>' % (m["pdf"], esc(m["pdf"])))
+                          _f(m["xlsx"]), esc(m["xlsx"]),
+                          ('<a href="%s" download>%s</a>' % (_f(m["pdf"]), esc(m["pdf"])))
                           if m.get("pdf") else ""))
         comb = (cbook or {}).get("combined") or {}
         if comb.get("pdf") or comb.get("zip"):
             links = []
             if comb.get("pdf"):
-                links.append('<a href="%s" download>%s</a>' % (comb["pdf"], esc(comb["pdf"])))
+                links.append('<a href="%s" download>%s</a>' % (_f(comb["pdf"]), esc(comb["pdf"])))
             if comb.get("zip"):
-                links.append('<a href="%s" download>%s</a>' % (comb["zip"], esc(comb["zip"])))
+                links.append('<a href="%s" download>%s</a>' % (_f(comb["zip"]), esc(comb["zip"])))
             out.append('<tr><td>All instruments in one book</td><td></td><td class="n"></td>'
                        '<td>%s</td><td>%s</td></tr>'
                        % (links[-1] if comb.get("zip") else "", links[0] if comb.get("pdf") else ""))
@@ -395,11 +408,12 @@ def index_html(manifests, generated, spss=None, cspro=None, cbook=None):
             out.append('<tr><td>%s</td><td>v%s (%s)</td><td><a href="%s" download>%s</a></td>'
                        '<td><a href="%s" download>%s</a></td></tr>'
                        % (esc(m.get("app") or NAMES.get(inst, inst)), esc(m.get("version", "?")),
-                          esc(m.get("date", "")), m["zip"], esc(m["zip"]), m["dcf"], esc(m["dcf"])))
+                          esc(m.get("date", "")), _f(m["zip"]), esc(m["zip"]),
+                          _f(m["dcf"]), esc(m["dcf"])))
         dz = (cspro or {}).get("dictionaries_zip")
         if dz:
             out.append('<tr><td>All dictionaries in one zip</td><td></td><td></td>'
-                       '<td><a href="%s" download>%s</a></td></tr>' % (dz, esc(dz)))
+                       '<td><a href="%s" download>%s</a></td></tr>' % (_f(dz), esc(dz)))
         out.append("</table>")
     for inst in ("f1", "f3", "f4", "f2"):
         entries = manifests.get(inst) or []
@@ -412,7 +426,7 @@ def index_html(manifests, generated, spss=None, cspro=None, cbook=None):
             what = ("all singular-record items, one row per case" if e["kind"] == "wide"
                     else "roster record, one row per case &times; occurrence")
             out.append('<tr><td><a href="%s" download>%s</a></td><td class="n">%d</td><td class="n">%d</td><td>%s</td></tr>'
-                       % (e["file"], esc(e["file"]), e["rows"], e["cols"], what))
+                       % (_f(e["file"]), esc(e["file"]), e["rows"], e["cols"], what))
         out.append("</table>")
         for e in entries:
             if e["kind"] != "wide" or "preview" not in e:
@@ -428,13 +442,19 @@ def index_html(manifests, generated, spss=None, cspro=None, cbook=None):
     # endpoints) — the page no longer carries its own whoami script.
     out.append(PS.close_shell(footer_html=(
         'Generated %s UTC · source: F1/F3/F4 breakout DBs + <code>csweb_f2</code> mirror · '
-        'back to the <a href="/docs/dashboard.html">Sync Dashboard</a>.' % esc(generated))))
+        'back to the <a href="/projects/uhc-y2/monitoring/">Sync Dashboard</a>.' % esc(generated))))
     return "\n".join(out)
 
 
 def main():
     ap = argparse.ArgumentParser(description="Generate the responses data room (CSVs + index).")
     ap.add_argument("--out-dir", default=OUT_DIR, help="output dir (default: %(default)s)")
+    ap.add_argument("--index-out",
+                    default="/opt/app/capi-www/projects/uhc-y2/data/index.html",
+                    help="where the data-room PAGE goes (unification Slice 4). The "
+                         "149 export FILES stay in --out-dir under /docs/data/ — a "
+                         ".csv needs no chrome, and moving them would churn every "
+                         "manifest and the data.export ACL rule.")
     a = ap.parse_args()
     live = os.path.abspath(a.out_dir) == os.path.abspath(OUT_DIR)
     os.makedirs(a.out_dir, exist_ok=True)
@@ -472,7 +492,11 @@ def main():
             cbook = json.load(f)
     except Exception:
         cbook = None
-    with open(os.path.join(a.out_dir, "index.html"), "w", encoding="utf-8") as f:
+    # The page lives in the portal docroot; the payload stays in out_dir.
+    # Off-box runs (--out-dir /tmp/...) keep the index beside the CSVs.
+    idx = a.index_out if live else os.path.join(a.out_dir, "index.html")
+    os.makedirs(os.path.dirname(idx), exist_ok=True)
+    with open(idx, "w", encoding="utf-8") as f:
         f.write(index_html(manifests, generated, spss, cspro, cbook))
 
     # ---- per-instrument zip bundles + manifest.json (dashboard Downloads band) ----
