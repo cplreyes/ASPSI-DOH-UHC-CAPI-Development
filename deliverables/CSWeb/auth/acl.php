@@ -158,6 +158,17 @@ const ACL_PREFIX = [
     ['/uhc/',                    'AUTH'],
     ['/about/',                  'AUTH'],
 
+    // The console's live pages now live at portal URLs (2026-08-09 unification,
+    // Option A). These MUST precede the generic '/projects/' rule below, which
+    // is AUTH — first match wins, so a rule appended after it would never be
+    // reached and the data room would be readable by anyone with any account.
+    // /monitoring/ covers /monitoring/map/ by prefix. The admin rules land
+    // ahead of Slice 5 so the path can never exist ungated; /users before /
+    // because an auditor-style split must stay expressible.
+    ['/projects/uhc-y2/monitoring/', 'monitoring.view'],
+    ['/projects/uhc-y2/data/',       'data.export'],
+    ['/projects/uhc-y2/admin/users', 'admin.users'],
+    ['/projects/uhc-y2/admin/',      'admin.system'],
     ['/projects/uhc-y2/tabulations/', 'tabulations.view'],
     ['/projects/',               'AUTH'],
 

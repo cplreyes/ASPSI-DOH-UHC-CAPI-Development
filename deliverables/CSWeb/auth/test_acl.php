@@ -91,6 +91,18 @@ $paths = [
     // tabulations must beat the generic /projects/ rule
     '/projects/uhc-y2/tabulations/t01.html'   => 'tabulations.view',
 
+    // the console's live pages at their portal URLs (2026-08-09 unification)
+    '/projects/uhc-y2/monitoring/'            => 'monitoring.view',
+    '/projects/uhc-y2/monitoring/map/'        => 'monitoring.view',
+    '/projects/uhc-y2/data/'                  => 'data.export',
+    '/projects/uhc-y2/admin/'                 => 'admin.system',
+    '/projects/uhc-y2/admin/users'            => 'admin.users',
+    // the payload does NOT move: exports keep resolving under /docs/
+    '/docs/data/f1_responses.csv'             => 'data.export',
+    // unrelated project paths still fall through to the generic AUTH rule
+    '/projects/uhc-y2/guides/'                => 'AUTH',
+    '/projects/uhc-y2/instruments/f1/'        => 'AUTH',
+
     // THE REGRESSION TEST: anything not named is denied. This is the whole
     // point of the migration — under FilesMatch a new file was PUBLIC.
     '/docs/newthing.json'                     => 'DENY',
@@ -101,6 +113,18 @@ $paths = [
 foreach ($paths as $p => $want) {
     check("perm($p)", acl_required_perm($p), $want);
 }
+
+// Ordering: ACL_PREFIX is first-match-wins, so the portal admin users rule must
+// be listed before the general portal admin rule and both before '/projects/'.
+// Asserting resolved values is not enough — assert the ORDER, because a later
+// edit that appends rather than inserts would still pass the value checks above
+// while quietly granting admin.system where admin.users was required.
+$order   = array_map(static fn(array $r): string => $r[0], ACL_PREFIX);
+$ixUsers = array_search('/projects/uhc-y2/admin/users', $order, true);
+$ixAdmin = array_search('/projects/uhc-y2/admin/', $order, true);
+$ixProj  = array_search('/projects/', $order, true);
+check('order: portal admin/users precedes admin/', $ixUsers !== false && $ixUsers < $ixAdmin, true);
+check('order: portal admin/ precedes /projects/',  $ixAdmin !== false && $ixAdmin < $ixProj, true);
 
 // ---------------------------------------------------------------------------
 // 2. Normalisation / bypass attempts
