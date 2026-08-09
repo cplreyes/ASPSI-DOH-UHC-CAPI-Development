@@ -151,11 +151,11 @@ ROLES = [
     ("I'm supervising fieldwork", "ASPSI and DOH staff tracking collection as it happens.",
      [("Sync Dashboard", CONSOLE + "/docs/dashboard.html", "cases in, completed vs partial, coverage against plan, data quality"),
       ("Map Report", CONSOLE + "/docs/map.html", "where cases were collected, GPS quality flags"),
-      ("Monitoring overview", P + "/monitoring/", "what each view answers")], "login"),
+      ("Monitoring overview", P + "/monitoring/", "what each view answers")], ""),
     ("I'm working with the data", "Analysts and data users.",
      [("Data room", P + "/data/", "CSV, SPSS, Stata and R exports, refreshed every ~2 minutes"),
       ("Codebooks", P + "/instruments/", "every variable: label, question, universe, codes, validation"),
-      ("Instruments", P + "/instruments/", "questionnaires, dictionaries, runnable CSPro packages")], "login"),
+      ("Instruments", P + "/instruments/", "questionnaires, dictionaries, runnable CSPro packages")], ""),
 ]
 
 
@@ -164,7 +164,11 @@ def project_home():
     for title, sub, links, gate in ROLES:
         ls = "".join(
             '<li><a href="%s">%s</a> — <span>%s</span></li>' % (u, t, d) for t, u, d in links)
-        badge = '<span class="badge soon">login needed</span>' if gate else ""
+        # "separate login" is the only badge left: after 2026-07-28 the whole
+        # portal sits behind ONE sign-in, so "login needed" said nothing. What a
+        # reader must actually be warned about is a SECOND credential (F2 admin,
+        # CSWeb) -- and only those cards carry the badge now.
+        badge = '<span class="badge soon">separate login</span>' if gate else ""
         rows.append('<div class="rolerow"><div class="roletitle"><h3>%s</h3>%s</div>'
                     '<p class="rolesub">%s</p><ul class="rolelinks">%s</ul></div>'
                     % (title, badge, sub, ls))
@@ -309,12 +313,12 @@ def monitoring_index():
                  "Live views of fieldwork — rebuilt from the database every two minutes — "
                  "plus the two consoles that operate it. Everything here requires the survey login.")
             + '<main><section><div class="grid">'
-              '<div class="card project"><span class="badge soon">login needed</span>'
+              '<div class="card project">'
               '<h3>Sync Dashboard</h3><p>Cases collected, completed vs partial, visited today, '
               'coverage against the assignment plan (region → province → facility), enumerator '
               'productivity, data-quality alerts, a searchable case list, and every data download.</p>'
               '<a class="go" href="' + CONSOLE + '/docs/dashboard.html">Open the dashboard</a></div>'
-              '<div class="card project"><span class="badge soon">login needed</span>'
+              '<div class="card project">'
               '<h3>Map Report</h3><p>Where cases were actually collected: a pin per case coloured by '
               'status, clustering, coverage choropleth by province, and flags for weak GPS fixes or '
               'cases far from their assigned facility.</p>'
@@ -326,12 +330,12 @@ def monitoring_index():
               '<p class="sub">The working consoles behind the views — for administering '
               'collection, not just watching it.</p>'
               '<div class="grid">'
-              '<div class="card project"><span class="badge soon">login needed</span>'
+              '<div class="card project"><span class="badge soon">separate login</span>'
               '<h3>F2 Admin Portal</h3><p>Runs the healthcare-worker web survey: facility '
               'links and QR codes, reminder waves, submission review, the coverage report, '
               'and app settings.</p>'
               '<a class="go" href="https://uhc-hcw.asiansocial.org/admin">Open the F2 admin portal</a></div>'
-              '<div class="card project"><span class="badge soon">login needed</span>'
+              '<div class="card project"><span class="badge soon">separate login</span>'
               '<h3>CSWeb</h3><p>The CSPro sync server itself — the system of record the '
               'tablets sync into: raw case data per instrument, user accounts and roles, '
               'and the sync report.</p>'
@@ -360,7 +364,7 @@ def data_index():
                  "Analysis-ready exports of everything collected so far, rebuilt from the database "
                  "every two minutes and documented variable by variable.")
             + '<main><section><div class="grid">'
-              '<div class="card project"><span class="badge soon">login needed</span>'
+              '<div class="card project">'
               '<h3>Data room</h3><p>Wide and roster CSVs per instrument, labelled SPSS '
               '<code>.sav</code>, Stata <code>.dta</code> and R <code>.rds</code> exports, the '
               'codebooks, the CSPro dictionaries and the application packages — with a preview of '

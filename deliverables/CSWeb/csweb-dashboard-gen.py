@@ -577,8 +577,10 @@ TEMPLATE = r"""<!doctype html>
 </style>
 </head>
 <body>
-<header><h1>UHC Survey Year 2 — Sync Dashboard</h1><div class="s">Fieldwork monitoring for the ASPSI × DOH UHC survey · F1 / F3 / F4 (CSEntry tablets) · F2 (Healthcare-Worker PWA)</div>
-<nav aria-label="Site sections"><a href="/">Home</a><a href="/help.html">Help &amp; guides</a><span class="here">Sync Dashboard</span><a href="/docs/map.html">Map report</a><a href="/docs/data/">Responses data room</a><a href="/csweb/">CSWeb app</a></nav></header>
+<header><h1>UHC Survey Year 2 — Sync Dashboard</h1><div class="s">Fieldwork monitoring for the ASPSI × DOH UHC survey · F1 / F3 / F4 (CSEntry tablets) · F2 (Healthcare-Worker PWA)</div></header>
+<!-- The old "Site sections" second nav died with the shared-shell migration:
+     confirmed absent from the deployed page 2026-08-09. The sidebar is the
+     one navigation; a second one contradicting it was the defect. -->
 <main>
   <details class="howto"><summary>New here? What this page is and how to use it</summary>
     <div class="body">
