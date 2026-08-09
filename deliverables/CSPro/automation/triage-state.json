@@ -781,10 +781,10 @@
   "_wave_643_663_handled": "2026-06-17 21-issue F4 wave (Marriz/mmgarciano full walkthrough). FIXED+DEPLOYED: #654 (removed wrong Q97=No->Q100 skip; Q98/Q99 independent of Q97), #656 (Q113 'Other' specify box never showed - unconditional postproc skip jumped past it; fixed _gen_checkbox_proc to guard the tail on pos('99')=0 + append tail to OTHER_TXT box - same class as F1 #630). STALE-closed (Marriz tested 06-16 pre-deploy): #653(Q93=#624), #660(Q129=#625/626), #662(Q132=#627). CODE-FIX QUEUED (flagged open, NOT yet done): #645 Q74 + #655 Q107 + #647/#648 NA-exclusivity (need per-question 90-code to avoid collision with existing IDK=90); #649 Q79-88 gate on roster Q45 (needs ASPSI member/condition); #652 Q90 routing (spec-ambiguous, tester unsure - flagged for ASPSI); #661 Q131 gate on Q130 hospital-type + form separation. ASPSI content/design/spec-gap (status:blocked): #643(GAMOT-area gate), #644(Q73 required?), #646(Q76 don't-know-diff contradicts Q75), #650(Q89 IDK option), #651/#657(delete DOH notes), #658(Q118/Q114-118 vs Q122-125 flow - Marriz consulting Merlyne), #659/#663(Q128/Q134 option reorder).",
   "_queue_664_plus": "NEXT CRON: #664-675 (and growing) UNPROCESSED - continuous F3+F4 re-test sweep. #669-675 = F3 'Question Formatting' = more select_all->checkbox conversions (Q59/61/70/73, Q75/82/85/86/87, Q90, Q91/92, Q93, Q94, Q96) - same proven pattern as #635/#639/#640. #664-668 = F4 (Q135 appearance, Q136 skip, Q138 other-specify, Q141.1, Q202). Also revisit the queued code-fixes from the 643-663 wave.",
   "slack_ts": {
-    "C0ASSTPLX9A": "1786248983.889389",
-    "C0B5TL0BT37": "1786248983.889389",
-    "C0B5X1ZPYHY": "1786248983.889389",
-    "C0B60KYFBKN": "1786248983.889389",
+    "C0ASSTPLX9A": "1786257451.967593",
+    "C0B5TL0BT37": "1786257451.967593",
+    "C0B5X1ZPYHY": "1786257451.967593",
+    "C0B60KYFBKN": "1786257451.967593",
     "C0AV19GB05P": "1785970996.288121",
     "C0BENS7D4E4": "1783732282.930159"
   },
@@ -1276,20 +1276,14 @@
   "_run_2026-06-27_clear_backlog": "Carl directive: clear gh issues + fix, no permission, do what testers ask. CLEARED ENTIRE in-scope F1/F3/F4 backlog (19 issues) in one pass. BUILT+DEPLOYED F3 (Compile 01:26:29, Publish strict-gate PASSED, auto_deploy PatientSurvey Deployed Successfully): #764/#765 NEW Q38 reroute (added Q38_1_PIN_WHEN select-one Yes-only gate + Q38_2_WHY_NOT_REG tick-all CheckBox No-only via CHECKBOX_CONVERT gate+skip-to-Q43; Q38=Yes skips Q43/Q44 to Q45 via Q41=2->Q45 + Q42 postextra skip; SKIP_RULE Q38 in2,3 -> Q38=3 only; CAUGHT+FIXED strict-publish error: skip-to-next illegal outside roster -> skip to Q38_2 explicit), #777 (Q94 how-much label), #782 (removed Q97/Q115 +-10% SOFT_CROSS warnings). DEPLOYED already-built-pending: #760/#763/#781/#784/#786. BUILT+DEPLOYED F4 (Compile 01:22:31, deployed): #796/#797 (AREA_HAS_BUCAS/GAMOT auto-answer=1+noinput in EXTRA_PROCS+covered, removed the =2 gating SKIP_RULES -> blocks asked of everyone, proceed to Q57/Q69). RESOLUTION-CLOSED (no build; verified addressed/superseded/data-state): #772 (F4 Q88 already multi=stale build; F3 Q88 single per spec), #773/#780 (money-amount policy live #779/#781; non-money 0-cell cosmetic hide = roster-structure change needs device-test, deferred, data correct), #778 (#450 per-lab roster labels each row), #788 (reschedule-date enhancement queued), F4 #733 (partial-save data-state like #806), #743 (-98/-99 standard supersedes -55/-999), #755 (0-prefill + either-value-proceeds live). verify F1/F3(370/370)/F4 all PASS. Patch notes #f3-uat p1782495076 + #f4-uat p1782495080; trackers #719/#720/#721 closeout. NO DEVICE this session (adb absent) -> roster-recode items (#773/#780) responsibly deferred not blind-shipped. Board now: only F2-PWA(#774/#768/#524 out-of-scope)+infra #725+R5 trackers #719-724 open.",
   "field_ready": {
     "last_verdict": "NOT-READY",
-    "last_evaluated_at": "2026-08-09T04:15:25+00:00",
+    "last_evaluated_at": "2026-08-09T06:36:37+00:00",
     "open_actionable": 14,
     "last_finding_at": "2026-08-09T04:15:05+00:00",
-    "days_since_finding": 0.0,
+    "days_since_finding": 0.1,
     "quiet_days": 2.0,
     "consecutive_clear_evals": 0,
     "error": null,
     "history": [
-      {
-        "at": "2026-08-05T08:24:50+00:00",
-        "verdict": "NOT-READY",
-        "open_actionable": 18,
-        "days_since_finding": 0.0
-      },
       {
         "at": "2026-08-05T10:07:44+00:00",
         "verdict": "NOT-READY",
@@ -1343,6 +1337,12 @@
         "verdict": "NOT-READY",
         "open_actionable": 14,
         "days_since_finding": 0.0
+      },
+      {
+        "at": "2026-08-09T06:36:37+00:00",
+        "verdict": "NOT-READY",
+        "open_actionable": 14,
+        "days_since_finding": 0.1
       }
     ],
     "_doc": "Auto-written by automation/check_field_ready.py (E0-UAT-REFRAME stop-condition gate). FIELD-READY = capi-uat-triage may stop."
@@ -1971,5 +1971,22 @@
       "next": "Copy the 12 changed files from the worktree to main, run generate_dcf + generate_qsf, verify_questions (expect PASS), Designer compile, Publish, auto_deploy F4 -> v1.5.9, then tablet evidence + close #1177 + patch note to #f4-uat."
     },
     "gate": "NOT-READY - 14 open actionable (was 13 + the new #1182). Loop continues."
+  },
+  "_cycle_2026-08-09b": {
+    "signals": "NO new tester activity - no new issues, no new comments, no reopens, all 4 Slack channels silent.",
+    "carl_commit": "1974fc9 (Carl's session-end auto-commit, 06:06Z) committed my 12 Q46 files + triage-state + the standup to branch worktree-f2-productivity-panel. Working tree now clean. NOTE: that is the WORKTREE branch - it does NOT put the fix in main's working tree, which is where the build chain runs. #1177 deploy is still blocked on the same thing.",
+    "diff_gate_1177": "Ran the diff-verification I owed. Semantic compare of the regenerated F4 dcf vs main's deployed one: items 168->168, item-label changes 0, one code removed (Q46 '09'), 7 Q46 option labels rewritten, nothing else. VERDICT CLEAN - only Q46_MEMBER_CATEGORY changed.",
+    "1182_CORRECTED": {
+      "what_i_got_wrong": [
+        "Attributed the 8 F4 roster labels' 0/7 translation coverage to the truncated-key mismatch. Wrong - those strings have NO key in any of the 7 maps, full or truncated. They were never translated. Re-keying would fix nothing; they need translating.",
+        "Claimed F3 Q45 was fixed as part of #1177. It was not - only F4 Q46 was. F3 Q45 is untouched and still ships truncated with English in FIL/HIL/ILO."
+      ],
+      "severity_downgraded": "Checked exactly which characters are lost on the F4 8: only the tail of the parenthetical enumerator code-hint (' answer - do not read these codes aloud)'). The respondent-facing question is fully intact in all 8. Low, not medium. Issue retitled + relabelled severity:low.",
+      "why_not_fixed": "Two blockers, both deliberate. (a) The .qsf question text is DERIVED FROM the .dcf item label - same string - so shortening the label also shortens what is read aloud. That is a questionnaire wording change, not mine to make. (b) The clean fix already exists and is ASPSI-gated: generate_dcf.py line 1638 DK_RF_STATUS=False; flipping it True collapses _php_tail() from 107 chars to ' (PHP)', dropping all 8 to ~150 chars with NO wording change. Do not flip it - it moves DK/RF to AMT_STATUS and needs ASPSI's blessing.",
+      "remaining_real_work": "F3 Q45 only - same condense + re-key pattern already proven on F4 Q46.",
+      "F3_not_touched_on_purpose": "F3/generate_dcf.py in the worktree is STALE vs main (main holds Friday's uncommitted F3 fixes). Editing the worktree copy risks someone copying it back over main and regressing those. F3 Q45 must be fixed IN main."
+    },
+    "gate": "NOT-READY - 14 open actionable. Loop continues.",
+    "still_blocked": "#1177 fixed+verified but NOT deployed; #1182 F3 Q45 not started. Both need the main checkout: this session is sandboxed to the worktree and the harness refuses Edit and git there."
   }
 }
