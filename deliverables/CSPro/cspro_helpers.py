@@ -811,12 +811,29 @@ def build_dictionary(dict_name, dict_label, records=None,
 CSPRO_LABEL_MAX = 255  # CSPro hard limit on any label (item/value/value-set/record).
 
 
-def _truncate_long_labels(node, max_len=CSPRO_LABEL_MAX):
+def _truncate_long_labels(node, max_len=CSPRO_LABEL_MAX, hits=None):
     """Recursively cap every labels[].text at CSPro's max_len, truncating at a word
     boundary + '...'. CSPro rejects a dictionary outright if any label exceeds 255
     chars; long verbatim option/category descriptions from the questionnaire trip this.
-    Returns the count truncated. The full text remains in the questionnaire source."""
-    n = 0
+    Returns a list of (language, original_length, truncated_text) for everything capped.
+
+    This is a LAST-RESORT safety net, not a feature. A capped label is a real defect on
+    two counts, which is why write_dcf now NAMES every label it cuts instead of printing
+    a bare count (#1177, 2026-08-09 — the bare count is why the two below went unnoticed
+    through several deployed builds):
+
+      1. The enumerator reads a definition that stops mid-sentence.
+      2. It silently breaks translation lookup. apply_translations() keys off the FULL
+         English source text, but a translation map extracted from an already-truncated
+         .dcf carries the TRUNCATED string as its key. Those never match, so the label
+         falls back to English in precisely the languages that had a translation.
+         F3 Q45 'Lifetime member' / 'Senior citizen' shipped English in FIL/HIL/ILO
+         for exactly this reason.
+
+    The fix for a capped label is always to shorten it AT SOURCE and re-key its
+    translation entries — never to let this function silently absorb it."""
+    if hits is None:
+        hits = []
     if isinstance(node, dict):
         labs = node.get("labels")
         if isinstance(labs, list):
@@ -828,13 +845,13 @@ def _truncate_long_labels(node, max_len=CSPRO_LABEL_MAX):
                     if sp > max_len * 0.6:
                         cut = cut[:sp]
                     lab["text"] = cut.rstrip(" ,;:-") + "..."
-                    n += 1
+                    hits.append((lab.get("language", "?"), len(t), lab["text"]))
         for k, v in node.items():
-            n += _truncate_long_labels(v, max_len)
+            _truncate_long_labels(v, max_len, hits)
     elif isinstance(node, list):
         for x in node:
-            n += _truncate_long_labels(x, max_len)
-    return n
+            _truncate_long_labels(x, max_len, hits)
+    return hits
 
 
 def write_dcf(dictionary, out_path):
@@ -853,9 +870,31 @@ def write_dcf(dictionary, out_path):
           Items:   <n>  (sum across all records)
     """
     out_path = Path(out_path)
-    n_truncated = _truncate_long_labels(dictionary)
-    if n_truncated:
-        print(f"  Capped {n_truncated} label(s) at {CSPRO_LABEL_MAX} chars (CSPro max)")
+    capped = _truncate_long_labels(dictionary)
+    if capped:
+        # An EN cap and a translation cap are NOT the same severity, so report them apart
+        # (#1177). EN is the authored source AND the key apply_translations() looks up:
+        # capping it truncates the text *and* silently drops that label's translation in
+        # every locale. Those are named individually - they are always a bug to fix at
+        # source. A capped translation only truncates that one locale's display, so those
+        # are summarised per language and belong in the next translation pass.
+        en = [c for c in capped if c[0] == "EN"]
+        other = [c for c in capped if c[0] != "EN"]
+        if en:
+            print(f"  !! {len(en)} ENGLISH label(s) exceed {CSPRO_LABEL_MAX} chars and were cut. "
+                  f"Fix AT SOURCE - a capped EN label also breaks its translation lookup:")
+            for _lang, orig_len, text in en:
+                # ASCII-safe: build logs run on a cp1252 console and questionnaire text
+                # carries non-breaking hyphens, curly quotes and other non-cp1252 chars.
+                safe = text[:80].encode("ascii", "replace").decode("ascii")
+                print(f"       {orig_len} chars -> {safe}...")
+        if other:
+            by_lang = {}
+            for lang, _orig_len, _text in other:
+                by_lang[lang] = by_lang.get(lang, 0) + 1
+            summary = ", ".join(f"{k}:{v}" for k, v in sorted(by_lang.items()))
+            print(f"  -- {len(other)} translated label(s) cut at {CSPRO_LABEL_MAX} chars "
+                  f"({summary}) - for the next translation pass, display only")
     out_path.write_text(json.dumps(dictionary, indent=2), encoding="utf-8")
 
     record_list = dictionary["levels"][0]["records"]

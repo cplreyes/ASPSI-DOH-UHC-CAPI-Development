@@ -197,32 +197,14 @@ INSTRUCTIONS = {
          "Please include those who are not living here now but will be back "
          "within six months, BUT do not include OFWs."),
     29: "Please choose one from the options I will mention.",
-    # #1074 (pretest 2026-08-05): PhilHealth membership-category definitions, verbatim
-    # from the paper. Rendered in the question text (the option labels stay concise —
-    # the longest definitions exceed the 255-char dcf label cap).
-    46: ("1 - Formal economy (i.e., individuals working in the government or private "
-         "sector based in the country). "
-         "2 - Informal economy (i.e., unemployed, self-employed, informal workers, "
-         "Filipinos with dual citizenship, naturalized Filipino citizens, citizens of "
-         "other countries working and/or residing in the Philippines). "
-         "3 - Indigent (i.e., individuals who have no visible means of income, or whose "
-         "income is insufficient for family subsistence based on DSWD's specific criteria). "
-         "4 - Sponsored (i.e., members whose contributions are being paid for by another "
-         "individual, government agencies, or private entities. Includes some low income "
-         "citizens that are not indigent e.g. BHWs, PWDs). "
-         "5 - Lifetime member (i.e., individuals aged 60 years and above, uniformed "
-         "personnel aged 56 years and above, and SSS underground miner-retirees aged 55 "
-         "years and above and paid at least 120 monthly contribution with PhilHealth and "
-         "the former Medicare Programs of SSS and GSIS). "
-         "6 - Senior citizen (i.e., residents of the Philippines, aged sixty (60) years "
-         "or above and are not currently covered by any membership category of PhilHealth "
-         "and qualified dependents of senior citizen members who are also senior citizen "
-         "themselves or belonging to other membership categories, with or without coverage "
-         "who are senior citizens themselves). "
-         "7 - Overseas Filipino Worker (OFW). "
-         "8 - Qualified dependents (i.e., those whose contributions are declared and "
-         "covered by a principal member). "
-         "9 - Dependent."),
+    # #1074 put the PhilHealth membership-category definitions here, in a note above the
+    # question, because the two longest blow CSPro's 255-char label cap.
+    # #1177 (ASPSI, 2026-08-06) asked for them BESIDE each option instead: reading a wall
+    # of ten definitions before the options, then the bare options, made the enumerator
+    # hold all ten in their head. The definitions now live in the Q46 value-set labels
+    # (generate_dcf.py), so this note is deleted rather than duplicated — otherwise the
+    # enumerator reads every definition twice. The cap is handled there by condensing the
+    # two long ones; see the comment on Q46_MEMBER_CATEGORY.
     30: ("Note to enumerator [do not read]: This section is for the "
          "characteristics of the Household. The respondent can answer on behalf "
          "of the household member. However, if the household member is present "

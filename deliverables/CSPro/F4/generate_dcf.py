@@ -515,18 +515,47 @@ def build_section_c():
         ("No valid ID to register",                                  "08"),
         ("Other (specify)",                                          "88"),
     ]
+    # #1177 (ASPSI review 2026-08-06, list confirmed by ops 2026-08-07): each category's
+    # definition now sits INLINE in its own option label, beside the option, instead of
+    # being read out of a separate note above the question. The note at qsf index 46 is
+    # removed in the same change so the enumerator does not read the definitions twice.
+    #
+    # This also fixes an EN/translation mismatch that predates the ticket: the FIL/BCL/BIS
+    # option labels already carried their definitions inline, so English was the only
+    # language showing bare category names.
+    #
+    # Codes are UNCHANGED (01-08, 55, 88) — no codebook or tabulation impact. Option 09
+    # "Dependent" is REMOVED per ops' confirmed final list; it duplicated 08 "Qualified
+    # dependents", carried no translation in any locale, and is referenced by no logic
+    # (only 88 is, for the other-specify gate). Matches F3 Q45, which never had it.
+    #
+    # 05 and 06 are CONDENSED, not verbatim: at 273 and 349 chars the paper wording blows
+    # CSPro's hard 255-char label cap, and being auto-capped would both cut the sentence
+    # mid-word AND break their translation lookup (see cspro_helpers._truncate_long_labels).
+    # Every other option is verbatim. Longest here is 250.
     Q46_MEMBER_CATEGORY = [
-        ("Formal economy",                  "01"),
-        ("Informal economy",                "02"),
-        ("Indigent",                        "03"),
-        ("Sponsored",                       "04"),
-        ("Lifetime member",                 "05"),
-        ("Senior citizen",                  "06"),
-        ("Overseas Filipino Worker (OFW)",  "07"),
-        ("Qualified dependents",            "08"),
-        ("Dependent",                       "09"),
+        ("Formal economy (i.e., individuals working in the government or private sector "
+         "based in the country)", "01"),
+        ("Informal economy (i.e., unemployed, self-employed, informal workers, Filipinos "
+         "with dual citizenship, naturalized Filipino citizens, citizens of other countries "
+         "working and/or residing in the Philippines)", "02"),
+        ("Indigent (i.e., individuals who have no visible means of income, or whose income "
+         "is insufficient for family subsistence based on DSWD's specific criteria)", "03"),
+        ("Sponsored (i.e., members whose contributions are being paid for by another "
+         "individual, government agencies, or private entities. Includes some low-income "
+         "citizens that are not indigent e.g. BHWs, PWDs)", "04"),
+        ("Lifetime member (i.e., individuals aged 60 and above, uniformed personnel aged 56 "
+         "and above, and SSS underground miner-retirees aged 55 and above, who paid at least "
+         "120 monthly contributions to PhilHealth or the former SSS/GSIS Medicare Programs)",
+         "05"),
+        ("Senior citizen (i.e., residents of the Philippines aged sixty (60) or above not "
+         "currently covered by any other PhilHealth category, and qualified dependents of "
+         "senior citizen members who are themselves senior citizens, with or without other "
+         "coverage)", "06"),
+        ("Overseas Filipino Worker (OFW)", "07"),
+        ("Qualified dependents (i.e., those whose contributions are declared and covered by "
+         "a principal member)", "08"),
         # #1074 (pretest 2026-08-05): paper order — I don't know before Other (Specify).
-        # Codes unchanged. The per-category definitions render in the question text (qsf).
         ("I don't know",                    "55"),
         ("Other (Specify)",                 "88"),
     ]
