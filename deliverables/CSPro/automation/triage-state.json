@@ -1276,20 +1276,14 @@
   "_run_2026-06-27_clear_backlog": "Carl directive: clear gh issues + fix, no permission, do what testers ask. CLEARED ENTIRE in-scope F1/F3/F4 backlog (19 issues) in one pass. BUILT+DEPLOYED F3 (Compile 01:26:29, Publish strict-gate PASSED, auto_deploy PatientSurvey Deployed Successfully): #764/#765 NEW Q38 reroute (added Q38_1_PIN_WHEN select-one Yes-only gate + Q38_2_WHY_NOT_REG tick-all CheckBox No-only via CHECKBOX_CONVERT gate+skip-to-Q43; Q38=Yes skips Q43/Q44 to Q45 via Q41=2->Q45 + Q42 postextra skip; SKIP_RULE Q38 in2,3 -> Q38=3 only; CAUGHT+FIXED strict-publish error: skip-to-next illegal outside roster -> skip to Q38_2 explicit), #777 (Q94 how-much label), #782 (removed Q97/Q115 +-10% SOFT_CROSS warnings). DEPLOYED already-built-pending: #760/#763/#781/#784/#786. BUILT+DEPLOYED F4 (Compile 01:22:31, deployed): #796/#797 (AREA_HAS_BUCAS/GAMOT auto-answer=1+noinput in EXTRA_PROCS+covered, removed the =2 gating SKIP_RULES -> blocks asked of everyone, proceed to Q57/Q69). RESOLUTION-CLOSED (no build; verified addressed/superseded/data-state): #772 (F4 Q88 already multi=stale build; F3 Q88 single per spec), #773/#780 (money-amount policy live #779/#781; non-money 0-cell cosmetic hide = roster-structure change needs device-test, deferred, data correct), #778 (#450 per-lab roster labels each row), #788 (reschedule-date enhancement queued), F4 #733 (partial-save data-state like #806), #743 (-98/-99 standard supersedes -55/-999), #755 (0-prefill + either-value-proceeds live). verify F1/F3(370/370)/F4 all PASS. Patch notes #f3-uat p1782495076 + #f4-uat p1782495080; trackers #719/#720/#721 closeout. NO DEVICE this session (adb absent) -> roster-recode items (#773/#780) responsibly deferred not blind-shipped. Board now: only F2-PWA(#774/#768/#524 out-of-scope)+infra #725+R5 trackers #719-724 open.",
   "field_ready": {
     "last_verdict": "NOT-READY",
-    "last_evaluated_at": "2026-08-09T11:38:43+00:00",
-    "open_actionable": 7,
+    "last_evaluated_at": "2026-08-09T12:07:27+00:00",
+    "open_actionable": 5,
     "last_finding_at": "2026-08-07T02:15:43+00:00",
     "days_since_finding": 2.4,
     "quiet_days": 2.0,
     "consecutive_clear_evals": 0,
     "error": null,
     "history": [
-      {
-        "at": "2026-08-05T12:12:37+00:00",
-        "verdict": "CLEAR-PENDING",
-        "open_actionable": 0,
-        "days_since_finding": 0.2
-      },
       {
         "at": "2026-08-06T06:46:50+00:00",
         "verdict": "NOT-READY",
@@ -1342,6 +1336,12 @@
         "at": "2026-08-09T11:38:43+00:00",
         "verdict": "NOT-READY",
         "open_actionable": 7,
+        "days_since_finding": 2.4
+      },
+      {
+        "at": "2026-08-09T12:07:27+00:00",
+        "verdict": "NOT-READY",
+        "open_actionable": 5,
         "days_since_finding": 2.4
       }
     ],
@@ -2016,6 +2016,25 @@
       "2 Result-of-Visit (#1133 F1, #1175 F3)": "My option (a) was 'hide from the enumerator picker, keep the codes for logic'. Inspection says that is UNSAFE as stated. ENUM_RESULT_FINAL_VISIT is BOTH on a form AND logic-assigned, and FacilityHeadSurvey.ent.apc line 494 does 'skip to ENUM_RESULT_FINAL_VISIT;' right after BREAKOFF 5/6/7 sets it to 5 - i.e. the enumerator is deliberately NAVIGATED ONTO the field holding the value. Remove 5 from the displayed value set and they land on an out-of-set value and must pick a wrong code, destroying replacement tracking. The apc comment at line 478 warns about exactly this class of bug ('anything outside it is silently reset ... would have erased every replacement the moment the field was revisited'). A conditional-noinput + reduced value-set variant is POSSIBLE but is real logic work on a live instrument, and F3 also asks to remove 'Completed', which is the normal-path answer.",
       "3 Date of Visit (#1132 F1, #1174 F3)": "My option (a) was 'display + instruction text only'. That is WRONG and would corrupt data. The prompt reads '(YYYYMMDD)' because that is what the enumerator TYPES into the stored field. Changing only the text to MMDDYYYY makes them type 08092026 for 9 Aug 2026, which stores as year 0809 month 20 day 26. Making the entry format MMDDYYYY needs a real conversion + validation in logic, not a text edit. NOTE the DATE_*_DISP mirror already shows MM/DD/YYYY back to the enumerator after entry."
     },
-    "gate": "NOT-READY, open actionable 14 -> 7 (#1102 device check, #1109 + #1177 fixed-pending-deploy, #1132/#1133/#1174/#1175 = decisions 2 and 3 back with Carl)."
+    "gate": "NOT-READY, open actionable 14 -> 7 (#1102 device check, #1109 + #1177 fixed-pending-deploy, #1132/#1133/#1174/#1175 = decisions 2 and 3 back with Carl).",
+    "ROUND2": {
+      "2b Result-of-Visit (#1133 F1, #1175 F3)": "DECLINED + CLOSED with the mechanism written out. F3 was the decisive one: line 822 'ENUM_RESULT_FINAL_VISIT = 1; { default Completed; enumerator confirms it on the closing form }' - removing 'Completed' would strand the enumerator on an out-of-list value on EVERY normally-finished interview, and CASE_DISPOSITION derives from it. Both notes offer the safe round-close build (reduced list + conditional noinput).",
+      "3 Date of Visit - Carl chose BUILD REAL MMDDYYYY ENTRY": {
+        "shipped": "F1 (#1132) and F3 (#1174): enumerator types MMDDYYYY like the paper; postproc converts to YYYYMMDD on exit so STORAGE is unchanged. #1099's MM/DD/YYYY echo KEPT deliberately - it is now the parse confirmation.",
+        "idempotence": "The double-conversion hazard is closed BY CONSTRUCTION, not by a flag: a stored YYYYMMDD value starts with the century (20) and 20 is not a valid month, so the conversion branch cannot fire twice. Unit-tested in python before generating: typed dates, revisits, and garbage all behave.",
+        "files": [
+          "F1/generate_dcf.py (label)",
+          "F1/generate_apc.py (2 conversion postprocs)",
+          "F3/generate_dcf.py (date_mmddyyyy=True)",
+          "F3/generate_apc.py (2 conversion postprocs)",
+          "cspro_helpers.py (_date_fmt + date_mmddyyyy param on build_field_control)"
+        ],
+        "F4_deliberately_untouched": "F4 shares the label via build_field_control and has the same two fields, but no ticket. Left on YYYYMMDD ON PURPOSE - flipping the prompt WITHOUT the conversion PROC would have enumerators typing MMDDYYYY into a raw-stored field and silently corrupt every date. _date_fmt's docstring says so. Offered to ASPSI on both issues.",
+        "bonus_fix": "F3's final-vs-first-visit check had NO blank-date guards, unlike F1's - 'if DATE_FINAL_VISIT < DATE_FIRST_VISITED then' false-fires on a single-visit case with an empty final date. Guarded both sides. Unreported, found in passing."
+      },
+      "verification": "verify_questions F1 319/319, F3 372/372, F4 301/301 all PASS; preflight_validate ALL CLEAN (PROC targets, arity, dict refs, every errmsg number present in the .mgf).",
+      "board": "open actionable 14 -> 5. Remaining: #1102 (device check) + #1109/#1132/#1174/#1177 (fixed, pending deploy).",
+      "worktree_note": "git status in the worktree shows more F3 files changed than I edited - those are the main->worktree SYNC (27 files; the worktree F3 was stale). The worktree is main + my changes, not a divergent branch."
+    }
   }
 }

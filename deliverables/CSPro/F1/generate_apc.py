@@ -457,9 +457,61 @@ postproc
   endif;""",
     # G3 (F2 benchmark — DISP-02 / parity with F3 + F4): final-visit date cannot precede
     # the first-visit date. Guarded so a blank final date (single visit) never false-fires.
+    # #1132 (ASPSI 2026-08-06, Carl 2026-08-09): the enumerator types the date in the
+    # PAPI's MMDDYYYY order; storage stays YYYYMMDD. Converting on exit keeps every
+    # downstream consumer untouched — the final<first comparison below, the MM/DD/YYYY
+    # echo (#1099), the Supervisor App, and F3/F4 stored parity.
+    #
+    # Idempotent BY CONSTRUCTION, which is what makes this safe on a revisited field:
+    # a value already stored as YYYYMMDD starts with the century (20), and 20 is not a
+    # valid month, so the conversion branch cannot fire twice on the same value. The
+    # else-branch then range-checks the year so genuine typos still get caught rather
+    # than being silently accepted as "already converted".
+    "DATE_FIRST_VISITED_THE_FACILITY": """\
+PROC DATE_FIRST_VISITED_THE_FACILITY
+postproc
+  numeric fvMM; numeric fvDD; numeric fvYY; numeric fvHead;
+  if DATE_FIRST_VISITED_THE_FACILITY <> notappl then
+    fvMM   = int(DATE_FIRST_VISITED_THE_FACILITY / 1000000);
+    fvHead = int(DATE_FIRST_VISITED_THE_FACILITY / 10000);
+    if fvMM >= 1 and fvMM <= 12 then
+      fvDD = fvHead - fvMM * 100;
+      fvYY = DATE_FIRST_VISITED_THE_FACILITY - fvHead * 10000;
+      if fvDD < 1 or fvDD > 31 or fvYY < 2020 or fvYY > 2035 then
+        errmsg("Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.");
+        reenter;
+      endif;
+      DATE_FIRST_VISITED_THE_FACILITY = fvYY * 10000 + fvMM * 100 + fvDD;
+    else
+      if fvHead < 2020 or fvHead > 2035 then
+        errmsg("Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.");
+        reenter;
+      endif;
+    endif;
+  endif;""",
     "DATE_OF_FINAL_VISIT_TO_THE_FACILITY": """\
 PROC DATE_OF_FINAL_VISIT_TO_THE_FACILITY
 postproc
+  numeric lvMM; numeric lvDD; numeric lvYY; numeric lvHead;
+  if DATE_OF_FINAL_VISIT_TO_THE_FACILITY <> notappl then
+    lvMM   = int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 1000000);
+    lvHead = int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 10000);
+    if lvMM >= 1 and lvMM <= 12 then
+      lvDD = lvHead - lvMM * 100;
+      lvYY = DATE_OF_FINAL_VISIT_TO_THE_FACILITY - lvHead * 10000;
+      if lvDD < 1 or lvDD > 31 or lvYY < 2020 or lvYY > 2035 then
+        errmsg("Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.");
+        reenter;
+      endif;
+      DATE_OF_FINAL_VISIT_TO_THE_FACILITY = lvYY * 10000 + lvMM * 100 + lvDD;
+    else
+      if lvHead < 2020 or lvHead > 2035 then
+        errmsg("Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.");
+        reenter;
+      endif;
+    endif;
+  endif;
+  { conversion above runs FIRST so both sides of this comparison are YYYYMMDD }
   if DATE_OF_FINAL_VISIT_TO_THE_FACILITY <> notappl and DATE_FIRST_VISITED_THE_FACILITY <> notappl and DATE_OF_FINAL_VISIT_TO_THE_FACILITY < DATE_FIRST_VISITED_THE_FACILITY then
     errmsg("Final-visit date cannot be earlier than the first-visit date.");
     reenter;

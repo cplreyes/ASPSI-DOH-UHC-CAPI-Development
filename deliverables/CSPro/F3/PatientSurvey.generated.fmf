@@ -54,36 +54,6 @@ Item=P_BARANGAY
   
 [Form]
 Name=FORM003
-Label=FC Facility GPS Capture
-Level=1
-Size=806,300
-  
-Item=FACILITY_GPS_LATITUDE
-Item=FACILITY_GPS_LONGITUDE
-Item=FACILITY_GPS_ALTITUDE
-Item=FACILITY_GPS_ACCURACY
-Item=FACILITY_GPS_SATELLITES
-Item=FACILITY_GPS_READTIME
-  
-[EndForm]
-  
-[Form]
-Name=FORM004
-Label=FC Patient Home GPS
-Level=1
-Size=806,300
-  
-Item=P_HOME_GPS_LATITUDE
-Item=P_HOME_GPS_LONGITUDE
-Item=P_HOME_GPS_ALTITUDE
-Item=P_HOME_GPS_ACCURACY
-Item=P_HOME_GPS_SATELLITES
-Item=P_HOME_GPS_READTIME
-  
-[EndForm]
-  
-[Form]
-Name=FORM005
 Label=A. Informed Consent (Q1 gate)
 Level=1
 Size=806,300
@@ -96,7 +66,7 @@ Item=Q3_SAME_HOUSE
 [EndForm]
   
 [Form]
-Name=FORM006
+Name=FORM004
 Label=B. Patient Profile
 Level=1
 Size=806,1207
@@ -143,7 +113,7 @@ Item=Q34_WHO_DECIDES_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM007
+Name=FORM005
 Label=C. UHC Awareness
 Level=1
 Size=806,300
@@ -157,7 +127,7 @@ Item=Q37_UHC_UNDERSTAND_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM008
+Name=FORM006
 Label=D. PhilHealth Registration
 Level=1
 Size=806,937
@@ -195,7 +165,7 @@ Item=Q52_PLANS_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM009
+Name=FORM007
 Label=E. Primary Care + YAKAP/Konsulta
 Level=1
 Size=806,1357
@@ -247,7 +217,7 @@ Item=Q82_KON_WHY_NOT_REG_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM010
+Name=FORM008
 Label=F. Health-Seeking
 Level=1
 Size=806,367
@@ -266,7 +236,7 @@ Item=Q87_OTHER_ACTIONS_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM011
+Name=FORM009
 Label=G. Outpatient Care
 Level=1
 Size=806,300
@@ -282,7 +252,7 @@ Item=Q92_SOURCES
 [EndForm]
   
 [Form]
-Name=FORM012
+Name=FORM010
 Label=G. Cost of consultation — amount by source
 Level=1
 Repeat=Q92_PAY_ROSTER
@@ -295,7 +265,7 @@ Item=Q92_PAY_AMT
 [EndForm]
   
 [Form]
-Name=FORM013
+Name=FORM011
 Label=G. Outpatient Care (cont.)
 Level=1
 Size=806,300
@@ -306,7 +276,7 @@ Item=Q93_LABS_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM014
+Name=FORM012
 Label=G. Cost of laboratory tests — per test (Q94)
 Level=1
 Repeat=Q94_LAB_ROSTER
@@ -320,7 +290,7 @@ Item=Q94_LAB_AMT
 [EndForm]
   
 [Form]
-Name=FORM015
+Name=FORM013
 Label=G. Outpatient Care (cont. 2)
 Level=1
 Size=806,300
@@ -331,7 +301,7 @@ Item=Q96_SOURCES
 [EndForm]
   
 [Form]
-Name=FORM016
+Name=FORM014
 Label=G. Cost of prescribed medicines — amount by source
 Level=1
 Repeat=Q96_PAY_ROSTER
@@ -344,7 +314,7 @@ Item=Q96_PAY_AMT
 [EndForm]
   
 [Form]
-Name=FORM017
+Name=FORM015
 Label=G. Outpatient Care (cont. 3)
 Level=1
 Size=806,300
@@ -355,7 +325,7 @@ Item=Q971_SOURCES
 [EndForm]
   
 [Form]
-Name=FORM018
+Name=FORM016
 Label=G. Other items in outpatient bill — amount by category
 Level=1
 Repeat=Q971_ROSTER
@@ -368,7 +338,7 @@ Item=Q971_PAY_AMT
 [EndForm]
   
 [Form]
-Name=FORM019
+Name=FORM017
 Label=G. Outpatient Care (cont. 4)
 Level=1
 Size=806,300
@@ -379,7 +349,7 @@ Item=Q972_SOURCES
 [EndForm]
   
 [Form]
-Name=FORM020
+Name=FORM018
 Label=G. Other expenses not in bill — amount by item
 Level=1
 Repeat=Q972_PAY_ROSTER
@@ -392,7 +362,7 @@ Item=Q972_PAY_AMT
 [EndForm]
   
 [Form]
-Name=FORM021
+Name=FORM019
 Label=G. Outpatient Care (cont. 5)
 Level=1
 Size=806,300
@@ -403,7 +373,7 @@ Item=Q98_SOURCES
 [EndForm]
   
 [Form]
-Name=FORM022
+Name=FORM020
 Label=G. Sources of money for medical costs — amount by source
 Level=1
 Repeat=Q98_PAY_ROSTER
@@ -416,7 +386,7 @@ Item=Q98_PAY_AMT
 [EndForm]
   
 [Form]
-Name=FORM023
+Name=FORM021
 Label=G. Outpatient Care (cont. 6)
 Level=1
 Size=806,457
@@ -438,7 +408,7 @@ Item=Q104_WITHOUT_BUCAS_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM024
+Name=FORM022
 Label=H. Inpatient Care
 Level=1
 Size=806,300
@@ -452,7 +422,7 @@ Item=Q107_SOURCES
 [EndForm]
   
 [Form]
-Name=FORM025
+Name=FORM023
 Label=H. Total bill for confinement — amount by source
 Level=1
 Repeat=Q107_PAY_ROSTER
@@ -465,7 +435,7 @@ Item=Q107_PAY_AMT
 [EndForm]
   
 [Form]
-Name=FORM026
+Name=FORM024
 Label=H. Inpatient Care (cont.)
 Level=1
 Size=806,300
@@ -477,7 +447,7 @@ Item=Q109_SOURCES
 [EndForm]
   
 [Form]
-Name=FORM027
+Name=FORM025
 Label=H. Medicines bought outside — amount by source
 Level=1
 Repeat=Q109_PAY_ROSTER
@@ -490,7 +460,7 @@ Item=Q109_PAY_AMT
 [EndForm]
   
 [Form]
-Name=FORM028
+Name=FORM026
 Label=H. Inpatient Care (cont. 2)
 Level=1
 Size=806,300
@@ -503,7 +473,7 @@ Item=Q112_SOURCES
 [EndForm]
   
 [Form]
-Name=FORM029
+Name=FORM027
 Label=H. Services done outside — amount by source
 Level=1
 Repeat=Q112_PAY_ROSTER
@@ -516,7 +486,7 @@ Item=Q112_PAY_AMT
 [EndForm]
   
 [Form]
-Name=FORM030
+Name=FORM028
 Label=H. Inpatient Care (cont. 3)
 Level=1
 Size=806,300
@@ -527,7 +497,7 @@ Item=Q113_SOURCES
 [EndForm]
   
 [Form]
-Name=FORM031
+Name=FORM029
 Label=H. Hospital bill — amount by source
 Level=1
 Repeat=Q113_PAY_ROSTER
@@ -540,7 +510,7 @@ Item=Q113_PAY_AMT
 [EndForm]
   
 [Form]
-Name=FORM032
+Name=FORM030
 Label=H. Inpatient Care (cont. 4)
 Level=1
 Size=806,1027
@@ -581,7 +551,7 @@ Item=Q1142_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM033
+Name=FORM031
 Label=I. Financial Risk
 Level=1
 Size=806,727
@@ -612,7 +582,7 @@ Item=Q130_REDUCED_SPEND
 [EndForm]
   
 [Form]
-Name=FORM034
+Name=FORM032
 Label=J. Satisfaction
 Level=1
 Size=806,487
@@ -635,7 +605,7 @@ Item=Q144_QUALITY
 [EndForm]
   
 [Form]
-Name=FORM035
+Name=FORM033
 Label=K. Access to Medicines
 Level=1
 Size=806,847
@@ -670,7 +640,7 @@ Item=Q161_WHY_BRANDED_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM036
+Name=FORM034
 Label=L. Referrals
 Level=1
 Size=806,727
@@ -701,17 +671,19 @@ Item=Q178_SAT_REFERRAL
 [EndForm]
   
 [Form]
-Name=FORM037
+Name=FORM035
 Label=Closing - case end
 Level=1
-Size=806,337
+Size=806,397
   
 Item=SURVEY_TEAM_LEADER_S_NAME
 Item=ENUMERATOR_S_NAME
 Item=FIELD_VALIDATED_BY
 Item=FIELD_EDITED_BY
 Item=DATE_FIRST_VISITED
+Item=DATE_FIRST_VISITED_DISP
 Item=DATE_FINAL_VISIT
+Item=DATE_FINAL_VISIT_DISP
 Item=TOTAL_NUMBER_OF_VISITS
 Item=ENUM_RESULT_FIRST_VISIT
 Item=ENUM_RESULT_FINAL_VISIT
@@ -719,13 +691,43 @@ Item=ENUM_RESULT_FINAL_VISIT
 [EndForm]
   
 [Form]
-Name=FORM038
+Name=FORM036
 Label=Case Verification Photo
 Level=1
 Size=806,300
   
 Item=VERIFICATION_PHOTO_FILENAME
 Item=CAPTURE_VERIFICATION_PHOTO
+  
+[EndForm]
+  
+[Form]
+Name=FORM037
+Label=FC Facility GPS Capture
+Level=1
+Size=806,300
+  
+Item=FACILITY_GPS_LATITUDE
+Item=FACILITY_GPS_LONGITUDE
+Item=FACILITY_GPS_ALTITUDE
+Item=FACILITY_GPS_ACCURACY
+Item=FACILITY_GPS_SATELLITES
+Item=FACILITY_GPS_READTIME
+  
+[EndForm]
+  
+[Form]
+Name=FORM038
+Label=FC Patient Home GPS
+Level=1
+Size=806,300
+  
+Item=P_HOME_GPS_LATITUDE
+Item=P_HOME_GPS_LONGITUDE
+Item=P_HOME_GPS_ALTITUDE
+Item=P_HOME_GPS_ACCURACY
+Item=P_HOME_GPS_SATELLITES
+Item=P_HOME_GPS_READTIME
   
 [EndForm]
   
@@ -961,179 +963,9 @@ Text=Patient Home Barangay
   
 [Group]
 Required=Yes
-Name=REC_FACILITY_CAPTURE_FORM
-Label=FC Facility GPS Capture
-Form=4
-Max=1
-  
-[Field]
-Name=FACILITY_GPS_LATITUDE
-Position=350,27,760,47
-Item=FACILITY_GPS_LATITUDE,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=4
-  
-[Text]
-Position=50,30,330,46
-Text=GPS Latitude
- 
-  
-[Field]
-Name=FACILITY_GPS_LONGITUDE
-Position=350,57,760,77
-Item=FACILITY_GPS_LONGITUDE,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=4
-  
-[Text]
-Position=50,60,330,76
-Text=GPS Longitude
- 
-  
-[Field]
-Name=FACILITY_GPS_ALTITUDE
-Position=350,87,760,107
-Item=FACILITY_GPS_ALTITUDE,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=4
-  
-[Text]
-Position=50,90,330,106
-Text=GPS Altitude (m)
- 
-  
-[Field]
-Name=FACILITY_GPS_ACCURACY
-Position=350,117,760,137
-Item=FACILITY_GPS_ACCURACY,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=4
-  
-[Text]
-Position=50,120,330,136
-Text=GPS Accuracy (m)
- 
-  
-[Field]
-Name=FACILITY_GPS_SATELLITES
-Position=350,147,760,167
-Item=FACILITY_GPS_SATELLITES,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=4
-  
-[Text]
-Position=50,150,330,166
-Text=GPS Satellites
- 
-  
-[Field]
-Name=FACILITY_GPS_READTIME
-Position=350,177,760,197
-Item=FACILITY_GPS_READTIME,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=4
-  
-[Text]
-Position=50,180,330,196
-Text=GPS Read Time (UTC)
- 
-  
-[EndGroup]
-  
-[Group]
-Required=Yes
-Name=REC_PATIENT_HOME_CAPTURE_FORM
-Label=FC Patient Home GPS
-Form=5
-Max=1
-  
-[Field]
-Name=P_HOME_GPS_LATITUDE
-Position=350,27,760,47
-Item=P_HOME_GPS_LATITUDE,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=5
-  
-[Text]
-Position=50,30,330,46
-Text=GPS Latitude
- 
-  
-[Field]
-Name=P_HOME_GPS_LONGITUDE
-Position=350,57,760,77
-Item=P_HOME_GPS_LONGITUDE,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=5
-  
-[Text]
-Position=50,60,330,76
-Text=GPS Longitude
- 
-  
-[Field]
-Name=P_HOME_GPS_ALTITUDE
-Position=350,87,760,107
-Item=P_HOME_GPS_ALTITUDE,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=5
-  
-[Text]
-Position=50,90,330,106
-Text=GPS Altitude (m)
- 
-  
-[Field]
-Name=P_HOME_GPS_ACCURACY
-Position=350,117,760,137
-Item=P_HOME_GPS_ACCURACY,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=5
-  
-[Text]
-Position=50,120,330,136
-Text=GPS Accuracy (m)
- 
-  
-[Field]
-Name=P_HOME_GPS_SATELLITES
-Position=350,147,760,167
-Item=P_HOME_GPS_SATELLITES,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=5
-  
-[Text]
-Position=50,150,330,166
-Text=GPS Satellites
- 
-  
-[Field]
-Name=P_HOME_GPS_READTIME
-Position=350,177,760,197
-Item=P_HOME_GPS_READTIME,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=5
-  
-[Text]
-Position=50,180,330,196
-Text=GPS Read Time (UTC)
- 
-  
-[EndGroup]
-  
-[Group]
-Required=Yes
 Name=A_INFORMED_CONSENT_FORM
 Label=A. Informed Consent (Q1 gate)
-Form=6
+Form=4
 Max=1
   
 [Field]
@@ -1141,7 +973,7 @@ Name=Q1_IS_PATIENT
 Position=350,27,365,47
 Item=Q1_IS_PATIENT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=6
+Form=4
   
 [Text]
 Position=50,30,330,46
@@ -1153,7 +985,7 @@ Name=Q2_RELATIONSHIP
 Position=350,57,365,77
 Item=Q2_RELATIONSHIP,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=6
+Form=4
   
 [Text]
 Position=50,60,330,76
@@ -1166,7 +998,7 @@ Position=350,87,760,107
 Item=Q2_RELATIONSHIP_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=6
+Form=4
   
 [Text]
 Position=50,90,330,106
@@ -1178,7 +1010,7 @@ Name=Q3_SAME_HOUSE
 Position=350,117,365,137
 Item=Q3_SAME_HOUSE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=6
+Form=4
   
 [Text]
 Position=50,120,330,136
@@ -1219,7 +1051,7 @@ Length=1
 Required=Yes
 Name=B_PATIENT_PROFILE_FORM
 Label=B. Patient Profile
-Form=7
+Form=5
 Max=1
   
 [Field]
@@ -1228,7 +1060,7 @@ Position=350,27,760,47
 Item=Q4_NAME,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=5
   
 [Text]
 Position=50,30,330,46
@@ -1240,7 +1072,7 @@ Name=Q5_BIRTH_MONTH
 Position=350,57,760,77
 Item=Q5_BIRTH_MONTH,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=7
+Form=5
   
 [Text]
 Position=50,60,330,76
@@ -1252,11 +1084,11 @@ Name=Q5_BIRTH_YEAR
 Position=350,87,760,107
 Item=Q5_BIRTH_YEAR,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=7
+Form=5
   
 [Text]
 Position=50,90,330,106
-Text=5. In what month and year was the patient born? — Year
+Text=5. Year of birth
  
   
 [Field]
@@ -1264,7 +1096,7 @@ Name=Q6_AGE
 Position=350,117,760,137
 Item=Q6_AGE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=7
+Form=5
   
 [Text]
 Position=50,120,330,136
@@ -1276,7 +1108,7 @@ Name=Q7_SEX
 Position=350,147,365,167
 Item=Q7_SEX,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,150,330,166
@@ -1288,7 +1120,7 @@ Name=Q8_LGBTQIA
 Position=350,177,365,197
 Item=Q8_LGBTQIA,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,180,330,196
@@ -1300,7 +1132,7 @@ Name=Q9_GROUP
 Position=350,207,365,227
 Item=Q9_GROUP,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,210,330,226
@@ -1313,7 +1145,7 @@ Position=350,237,760,257
 Item=Q9_GROUP_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=5
   
 [Text]
 Position=50,240,330,256
@@ -1325,7 +1157,7 @@ Name=Q10_CIVIL_STATUS
 Position=350,267,365,287
 Item=Q10_CIVIL_STATUS,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,270,330,286
@@ -1337,7 +1169,7 @@ Name=Q11_PWD
 Position=350,297,365,317
 Item=Q11_PWD,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,300,330,316
@@ -1349,7 +1181,7 @@ Name=Q12_PWD_SPECIFY
 Position=350,327,365,347
 Item=Q12_PWD_SPECIFY,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,330,330,346
@@ -1361,7 +1193,7 @@ Name=Q13_PWD_CARD
 Position=350,357,365,377
 Item=Q13_PWD_CARD,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,360,330,376
@@ -1373,7 +1205,7 @@ Name=Q14_DISABILITY_TYPE
 Position=350,387,365,407
 Item=Q14_DISABILITY_TYPE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,390,330,406
@@ -1386,7 +1218,7 @@ Position=350,417,760,437
 Item=Q14_DISABILITY_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=5
   
 [Text]
 Position=50,420,330,436
@@ -1398,7 +1230,7 @@ Name=Q15_EDUCATION
 Position=350,447,365,467
 Item=Q15_EDUCATION,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,450,330,466
@@ -1411,7 +1243,7 @@ Position=350,477,760,497
 Item=Q15_EDUCATION_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=5
   
 [Text]
 Position=50,480,330,496
@@ -1423,7 +1255,7 @@ Name=Q16_EMPLOYMENT
 Position=350,507,365,527
 Item=Q16_EMPLOYMENT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,510,330,526
@@ -1435,7 +1267,7 @@ Name=Q17_INCOME_SOURCE
 Position=350,537,365,557
 Item=Q17_INCOME_SOURCE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,540,330,556
@@ -1447,7 +1279,7 @@ Name=Q18_INCOME_AMOUNT
 Position=350,567,760,587
 Item=Q18_INCOME_AMOUNT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=7
+Form=5
   
 [Text]
 Position=50,570,330,586
@@ -1459,7 +1291,7 @@ Name=Q18_INCOME_BRACKET
 Position=350,597,365,617
 Item=Q18_INCOME_BRACKET,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,600,330,616
@@ -1471,7 +1303,7 @@ Name=Q19_HH_SIZE
 Position=350,627,760,647
 Item=Q19_HH_SIZE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=7
+Form=5
   
 [Text]
 Position=50,630,330,646
@@ -1483,7 +1315,7 @@ Name=Q20_HH_CHILDREN
 Position=350,657,760,677
 Item=Q20_HH_CHILDREN,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=7
+Form=5
   
 [Text]
 Position=50,660,330,676
@@ -1495,7 +1327,7 @@ Name=Q21_HH_SENIORS
 Position=350,687,760,707
 Item=Q21_HH_SENIORS,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=7
+Form=5
   
 [Text]
 Position=50,690,330,706
@@ -1507,11 +1339,11 @@ Name=Q22_ELECTRICITY
 Position=350,717,365,737
 Item=Q22_ELECTRICITY,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,720,330,736
-Text=22. Does the patient have electricity in their household?
+Text=22. Does the patient have electricity in their house?
  
   
 [Field]
@@ -1519,7 +1351,7 @@ Name=Q23_WATER
 Position=350,747,365,767
 Item=Q23_WATER,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,750,330,766
@@ -1532,7 +1364,7 @@ Position=350,777,760,797
 Item=Q23_WATER_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=5
   
 [Text]
 Position=50,780,330,796
@@ -1544,7 +1376,7 @@ Name=Q24_FAUCET_OWN
 Position=350,807,365,827
 Item=Q24_FAUCET_OWN,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,810,330,826
@@ -1556,7 +1388,7 @@ Name=Q25_TUBE_OWN
 Position=350,837,365,857
 Item=Q25_TUBE_OWN,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,840,330,856
@@ -1568,7 +1400,7 @@ Name=Q26_REFRIGERATOR
 Position=350,867,365,887
 Item=Q26_REFRIGERATOR,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,870,330,886
@@ -1580,7 +1412,7 @@ Name=Q27_TELEVISION
 Position=350,897,365,917
 Item=Q27_TELEVISION,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,900,330,916
@@ -1592,7 +1424,7 @@ Name=Q28_WASHER
 Position=350,927,365,947
 Item=Q28_WASHER,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,930,330,946
@@ -1604,7 +1436,7 @@ Name=Q29_SEC_CLASS
 Position=350,957,365,977
 Item=Q29_SEC_CLASS,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,960,330,976
@@ -1616,7 +1448,7 @@ Name=Q30_IP
 Position=350,987,365,1007
 Item=Q30_IP,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,990,330,1006
@@ -1629,7 +1461,7 @@ Position=350,1017,760,1037
 Item=Q31_IP_GROUP,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=5
   
 [Text]
 Position=50,1020,330,1036
@@ -1641,7 +1473,7 @@ Name=Q32_4PS
 Position=350,1047,365,1067
 Item=Q32_4PS,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,1050,330,1066
@@ -1653,7 +1485,7 @@ Name=Q33_DECISION_MAKER
 Position=350,1077,365,1097
 Item=Q33_DECISION_MAKER,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,1080,330,1096
@@ -1665,7 +1497,7 @@ Name=Q34_WHO_DECIDES
 Position=350,1107,365,1127
 Item=Q34_WHO_DECIDES,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=5
   
 [Text]
 Position=50,1110,330,1126
@@ -1678,7 +1510,7 @@ Position=350,1137,760,1157
 Item=Q34_WHO_DECIDES_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=5
   
 [Text]
 Position=50,1140,330,1156
@@ -1831,7 +1663,7 @@ Length=1
 Required=Yes
 Name=C_UHC_AWARENESS_FORM
 Label=C. UHC Awareness
-Form=8
+Form=6
 Max=1
   
 [Field]
@@ -1839,7 +1671,7 @@ Name=Q35_UHC_HEARD
 Position=350,27,365,47
 Item=Q35_UHC_HEARD,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=6
   
 [Text]
 Position=50,30,330,46
@@ -1851,7 +1683,7 @@ Name=Q36_UHC_SOURCE
 Position=350,57,365,77
 Item=Q36_UHC_SOURCE,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=6
   
 [Text]
 Position=50,60,330,76
@@ -1864,7 +1696,7 @@ Position=350,87,760,107
 Item=Q36_UHC_SOURCE_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=6
   
 [Text]
 Position=50,90,330,106
@@ -1876,7 +1708,7 @@ Name=Q37_UHC_UNDERSTAND
 Position=350,117,365,137
 Item=Q37_UHC_UNDERSTAND,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=6
   
 [Text]
 Position=50,120,330,136
@@ -1889,7 +1721,7 @@ Position=350,147,760,167
 Item=Q37_UHC_UNDERSTAND_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=6
   
 [Text]
 Position=50,150,330,166
@@ -1937,7 +1769,7 @@ Length=1
 Required=Yes
 Name=D_PHILHEALTH_REG_FORM
 Label=D. PhilHealth Registration
-Form=9
+Form=7
 Max=1
   
 [Field]
@@ -1945,7 +1777,7 @@ Name=Q38_PHILHEALTH_REG
 Position=350,27,365,47
 Item=Q38_PHILHEALTH_REG,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=7
   
 [Text]
 Position=50,30,330,46
@@ -1957,11 +1789,11 @@ Name=Q38_1_PIN_WHEN
 Position=350,57,365,77
 Item=Q38_1_PIN_WHEN,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=7
   
 [Text]
 Position=50,60,330,76
-Text=38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.
+Text=38.1. When did you register and receive your PhilHealth PIN?
  
   
 [Field]
@@ -1969,11 +1801,11 @@ Name=Q38_2_WHY_NOT_REG
 Position=350,87,365,107
 Item=Q38_2_WHY_NOT_REG,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=9
+Form=7
   
 [Text]
 Position=50,90,330,106
-Text=38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.
+Text=38.2. Why are you not registered?
  
   
 [Field]
@@ -1982,11 +1814,11 @@ Position=350,117,760,137
 Item=Q38_2_WHY_NOT_REG_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=9
+Form=7
   
 [Text]
 Position=50,120,330,136
-Text=38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. — Other (specify) text
+Text=38.2. Why are you not registered? — Other (specify) text
  
   
 [Field]
@@ -1994,7 +1826,7 @@ Name=Q39_HOW_FIND_OUT
 Position=350,147,365,167
 Item=Q39_HOW_FIND_OUT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=7
   
 [Text]
 Position=50,150,330,166
@@ -2007,7 +1839,7 @@ Position=350,177,760,197
 Item=Q39_HOW_FIND_OUT_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=9
+Form=7
   
 [Text]
 Position=50,180,330,196
@@ -2019,7 +1851,7 @@ Name=Q40_WHO_ASSISTED
 Position=350,207,365,227
 Item=Q40_WHO_ASSISTED,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=7
   
 [Text]
 Position=50,210,330,226
@@ -2032,7 +1864,7 @@ Position=350,237,760,257
 Item=Q40_WHO_ASSISTED_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=9
+Form=7
   
 [Text]
 Position=50,240,330,256
@@ -2044,7 +1876,7 @@ Name=Q41_REG_DIFFICULTY
 Position=350,267,365,287
 Item=Q41_REG_DIFFICULTY,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=7
   
 [Text]
 Position=50,270,330,286
@@ -2056,7 +1888,7 @@ Name=Q42_DIFFICULTY
 Position=350,297,365,317
 Item=Q42_DIFFICULTY,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=9
+Form=7
   
 [Text]
 Position=50,300,330,316
@@ -2069,7 +1901,7 @@ Position=350,327,760,347
 Item=Q42_DIFFICULTY_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=9
+Form=7
   
 [Text]
 Position=50,330,330,346
@@ -2081,7 +1913,7 @@ Name=Q43_KNOWS_ASSIST
 Position=350,357,365,377
 Item=Q43_KNOWS_ASSIST,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=7
   
 [Text]
 Position=50,360,330,376
@@ -2093,7 +1925,7 @@ Name=Q44_WHERE_ASSIST
 Position=350,387,365,407
 Item=Q44_WHERE_ASSIST,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=7
   
 [Text]
 Position=50,390,330,406
@@ -2106,7 +1938,7 @@ Position=350,417,760,437
 Item=Q44_WHERE_ASSIST_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=9
+Form=7
   
 [Text]
 Position=50,420,330,436
@@ -2118,7 +1950,7 @@ Name=Q45_CATEGORY
 Position=350,447,365,467
 Item=Q45_CATEGORY,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=7
   
 [Text]
 Position=50,450,330,466
@@ -2131,7 +1963,7 @@ Position=350,477,760,497
 Item=Q45_CATEGORY_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=9
+Form=7
   
 [Text]
 Position=50,480,330,496
@@ -2143,7 +1975,7 @@ Name=Q46_BENEFITS
 Position=350,507,365,527
 Item=Q46_BENEFITS,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=9
+Form=7
   
 [Text]
 Position=50,510,330,526
@@ -2156,7 +1988,7 @@ Position=350,537,760,557
 Item=Q46_BENEFITS_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=9
+Form=7
   
 [Text]
 Position=50,540,330,556
@@ -2168,11 +2000,11 @@ Name=Q47_PHYSICIAN_CHECKUP
 Position=350,567,365,587
 Item=Q47_PHYSICIAN_CHECKUP,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=7
   
 [Text]
 Position=50,570,330,586
-Text=47. Awareness of PhilHealth package — Physician check-up
+Text=47. Are you aware that there is/are PhilHealth package/s for physician check-up?
  
   
 [Field]
@@ -2180,11 +2012,11 @@ Name=Q47_DIAGNOSTIC_TESTS
 Position=350,597,365,617
 Item=Q47_DIAGNOSTIC_TESTS,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=7
   
 [Text]
 Position=50,600,330,616
-Text=47. Awareness of PhilHealth package — Diagnostic tests (e.g. laboratory tests and imaging)
+Text=47. Are you aware that there is/are PhilHealth package/s for diagnostic tests (e.g. laboratory tests and imaging)?
  
   
 [Field]
@@ -2192,11 +2024,11 @@ Name=Q47_HOSPITAL_CONF
 Position=350,627,365,647
 Item=Q47_HOSPITAL_CONF,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=7
   
 [Text]
 Position=50,630,330,646
-Text=47. Awareness of PhilHealth package — Hospital confinement
+Text=47. Are you aware that there is/are PhilHealth package/s for hospital confinement?
  
   
 [Field]
@@ -2204,11 +2036,11 @@ Name=Q47_OUTPATIENT_DRUGS
 Position=350,657,365,677
 Item=Q47_OUTPATIENT_DRUGS,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=7
   
 [Text]
 Position=50,660,330,676
-Text=47. Awareness of PhilHealth package — Outpatient drugs
+Text=47. Are you aware that there is/are PhilHealth package/s for outpatient drugs?
  
   
 [Field]
@@ -2216,7 +2048,7 @@ Name=Q48_PREMIUM_PAY
 Position=350,687,365,707
 Item=Q48_PREMIUM_PAY,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=7
   
 [Text]
 Position=50,690,330,706
@@ -2228,7 +2060,7 @@ Name=Q49_PREMIUM_DIFFICULT
 Position=350,717,365,737
 Item=Q49_PREMIUM_DIFFICULT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=7
   
 [Text]
 Position=50,720,330,736
@@ -2240,7 +2072,7 @@ Name=Q50_DIFFICULTY_PAYING
 Position=350,747,365,767
 Item=Q50_DIFFICULTY_PAYING,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=9
+Form=7
   
 [Text]
 Position=50,750,330,766
@@ -2253,7 +2085,7 @@ Position=350,777,760,797
 Item=Q50_DIFFICULTY_PAYING_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=9
+Form=7
   
 [Text]
 Position=50,780,330,796
@@ -2265,7 +2097,7 @@ Name=Q51_OTHER_INSURANCE
 Position=350,807,365,827
 Item=Q51_OTHER_INSURANCE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=7
   
 [Text]
 Position=50,810,330,826
@@ -2277,7 +2109,7 @@ Name=Q52_PLANS
 Position=350,837,365,857
 Item=Q52_PLANS,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=9
+Form=7
   
 [Text]
 Position=50,840,330,856
@@ -2290,7 +2122,7 @@ Position=350,867,760,887
 Item=Q52_PLANS_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=9
+Form=7
   
 [Text]
 Position=50,870,330,886
@@ -2478,7 +2310,7 @@ Length=1
 Required=Yes
 Name=E_PRIMARY_CARE_FORM
 Label=E. Primary Care + YAKAP/Konsulta
-Form=10
+Form=8
 Max=1
   
 [Field]
@@ -2486,7 +2318,7 @@ Name=Q53_HAS_PCP
 Position=350,27,365,47
 Item=Q53_HAS_PCP,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,30,330,46
@@ -2498,7 +2330,7 @@ Name=Q54_PCP_TYPE
 Position=350,57,365,77
 Item=Q54_PCP_TYPE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,60,330,76
@@ -2511,7 +2343,7 @@ Position=350,87,760,107
 Item=Q54_PCP_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,90,330,106
@@ -2523,7 +2355,7 @@ Name=Q55_LOC_CONVENIENT
 Position=350,117,365,137
 Item=Q55_LOC_CONVENIENT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,120,330,136
@@ -2535,7 +2367,7 @@ Name=Q56_HOURS_CONVENIENT
 Position=350,147,365,167
 Item=Q56_HOURS_CONVENIENT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,150,330,166
@@ -2547,7 +2379,7 @@ Name=Q57_WAIT_CONVENIENT
 Position=350,177,365,197
 Item=Q57_WAIT_CONVENIENT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,180,330,196
@@ -2559,11 +2391,11 @@ Name=Q58_WAIT_DAYS
 Position=350,207,760,227
 Item=Q58_WAIT_DAYS,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,210,330,226
-Text=58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (this facility)? — Days
+Text=Number of Day(s)
  
   
 [Field]
@@ -2571,11 +2403,11 @@ Name=Q58_WAIT_MINUTES
 Position=350,237,760,257
 Item=Q58_WAIT_MINUTES,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,240,330,256
-Text=58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (this facility)? — Minutes
+Text=Number of Minute(s)
  
   
 [Field]
@@ -2583,7 +2415,7 @@ Name=Q59_SCHED_COMM
 Position=350,267,365,287
 Item=Q59_SCHED_COMM,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=8
   
 [Text]
 Position=50,270,330,286
@@ -2595,7 +2427,7 @@ Name=Q60_SCHED_TELECON_OK
 Position=350,297,365,317
 Item=Q60_SCHED_TELECON_OK,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,300,330,316
@@ -2607,7 +2439,7 @@ Name=Q61_CONSULT_COMM
 Position=350,327,365,347
 Item=Q61_CONSULT_COMM,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=8
   
 [Text]
 Position=50,330,330,346
@@ -2619,7 +2451,7 @@ Name=Q62_CONSULT_TELECON_OK
 Position=350,357,365,377
 Item=Q62_CONSULT_TELECON_OK,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,360,330,376
@@ -2631,7 +2463,7 @@ Name=Q63_HAS_USUAL_FACILITY
 Position=350,387,365,407
 Item=Q63_HAS_USUAL_FACILITY,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,390,330,406
@@ -2644,7 +2476,7 @@ Position=350,417,760,437
 Item=Q64_FACILITY_NAME,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,420,330,436
@@ -2656,7 +2488,7 @@ Name=Q65_WHY_NO_USUAL
 Position=350,447,365,467
 Item=Q65_WHY_NO_USUAL,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=8
   
 [Text]
 Position=50,450,330,466
@@ -2669,7 +2501,7 @@ Position=350,477,760,497
 Item=Q65_WHY_NO_USUAL_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,480,330,496
@@ -2681,7 +2513,7 @@ Name=Q66_SAME_AS_USUAL
 Position=350,507,365,527
 Item=Q66_SAME_AS_USUAL,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,510,330,526
@@ -2693,7 +2525,7 @@ Name=Q67_WHY_THIS_FACILITY
 Position=350,537,365,557
 Item=Q67_WHY_THIS_FACILITY,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=8
   
 [Text]
 Position=50,540,330,556
@@ -2706,7 +2538,7 @@ Position=350,567,760,587
 Item=Q67_WHY_THIS_FACILITY_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,570,330,586
@@ -2718,7 +2550,7 @@ Name=Q68_USUAL_FAC_TYPE
 Position=350,597,365,617
 Item=Q68_USUAL_FAC_TYPE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,600,330,616
@@ -2731,7 +2563,7 @@ Position=350,627,760,647
 Item=Q68_USUAL_FAC_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,630,330,646
@@ -2743,11 +2575,11 @@ Name=Q69_USUAL_TRAVEL_HH
 Position=350,657,760,677
 Item=Q69_USUAL_TRAVEL_HH,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,660,330,676
-Text=69. How long does it take you to travel to the health facility you usually go to — Hours
+Text=Number of Hour(s)
  
   
 [Field]
@@ -2755,11 +2587,11 @@ Name=Q69_USUAL_TRAVEL_MM
 Position=350,687,760,707
 Item=Q69_USUAL_TRAVEL_MM,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,690,330,706
-Text=69. How long does it take you to travel to the health facility you usually go to — Minutes
+Text=Number of Minute(s)
  
   
 [Field]
@@ -2767,7 +2599,7 @@ Name=Q70_USUAL_TRANSPORT
 Position=350,717,365,737
 Item=Q70_USUAL_TRANSPORT,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=8
   
 [Text]
 Position=50,720,330,736
@@ -2780,7 +2612,7 @@ Position=350,747,760,767
 Item=Q70_USUAL_TRANSPORT_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,750,330,766
@@ -2792,7 +2624,7 @@ Name=Q71_NEAREST_TYPE
 Position=350,777,365,797
 Item=Q71_NEAREST_TYPE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,780,330,796
@@ -2805,7 +2637,7 @@ Position=350,807,760,827
 Item=Q71_NEAREST_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,810,330,826
@@ -2817,11 +2649,11 @@ Name=Q72_NEAREST_TRAVEL_HH
 Position=350,837,760,857
 Item=Q72_NEAREST_TRAVEL_HH,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,840,330,856
-Text=72. How long does it take you to travel from your house when going to the nearest primary care facility? — Hours
+Text=Number of Hour(s)
  
   
 [Field]
@@ -2829,11 +2661,11 @@ Name=Q72_NEAREST_TRAVEL_MM
 Position=350,867,760,887
 Item=Q72_NEAREST_TRAVEL_MM,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,870,330,886
-Text=72. How long does it take you to travel from your house when going to the nearest primary care facility? — Minutes
+Text=Number of Minute(s)
  
   
 [Field]
@@ -2841,7 +2673,7 @@ Name=Q73_NEAREST_TRANSPORT
 Position=350,897,365,917
 Item=Q73_NEAREST_TRANSPORT,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=8
   
 [Text]
 Position=50,900,330,916
@@ -2854,7 +2686,7 @@ Position=350,927,760,947
 Item=Q73_NEAREST_TRANSPORT_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,930,330,946
@@ -2866,7 +2698,7 @@ Name=Q74_KON_HEARD
 Position=350,957,365,977
 Item=Q74_KON_HEARD,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,960,330,976
@@ -2878,7 +2710,7 @@ Name=Q75_KON_SOURCE
 Position=350,987,365,1007
 Item=Q75_KON_SOURCE,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=8
   
 [Text]
 Position=50,990,330,1006
@@ -2891,7 +2723,7 @@ Position=350,1017,760,1037
 Item=Q75_KON_SOURCE_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,1020,330,1036
@@ -2903,7 +2735,7 @@ Name=Q76_KON_UNDERSTAND
 Position=350,1047,365,1067
 Item=Q76_KON_UNDERSTAND,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=8
   
 [Text]
 Position=50,1050,330,1066
@@ -2916,7 +2748,7 @@ Position=350,1077,760,1097
 Item=Q76_KON_UNDERSTAND_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,1080,330,1096
@@ -2928,7 +2760,7 @@ Name=Q77_KON_REGISTERED
 Position=350,1107,365,1127
 Item=Q77_KON_REGISTERED,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,1110,330,1126
@@ -2940,7 +2772,7 @@ Name=Q78_KON_WHEN_REG
 Position=350,1137,365,1157
 Item=Q78_KON_WHEN_REG,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,1140,330,1156
@@ -2952,7 +2784,7 @@ Name=Q79_KON_HAD_APPT
 Position=350,1167,365,1187
 Item=Q79_KON_HAD_APPT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,1170,330,1186
@@ -2964,7 +2796,7 @@ Name=Q80_KON_KNOWS_BOOKING
 Position=350,1197,365,1217
 Item=Q80_KON_KNOWS_BOOKING,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,1200,330,1216
@@ -2976,7 +2808,7 @@ Name=Q81_KON_APPT_CHECKUP
 Position=350,1227,365,1247
 Item=Q81_KON_APPT_CHECKUP,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,1230,330,1246
@@ -2988,7 +2820,7 @@ Name=Q82_KON_WHY_NOT_REG
 Position=350,1257,365,1277
 Item=Q82_KON_WHY_NOT_REG,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=8
   
 [Text]
 Position=50,1260,330,1276
@@ -3001,7 +2833,7 @@ Position=350,1287,760,1307
 Item=Q82_KON_WHY_NOT_REG_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,1290,330,1306
@@ -3259,7 +3091,7 @@ Length=1
 Required=Yes
 Name=F_HEALTH_SEEKING_FORM
 Label=F. Health-Seeking
-Form=11
+Form=9
 Max=1
   
 [Field]
@@ -3267,7 +3099,7 @@ Name=Q83_VISIT_REASON
 Position=350,27,365,47
 Item=Q83_VISIT_REASON,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=11
+Form=9
   
 [Text]
 Position=50,30,330,46
@@ -3280,7 +3112,7 @@ Position=350,57,760,77
 Item=Q83_VISIT_REASON_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=9
   
 [Text]
 Position=50,60,330,76
@@ -3292,7 +3124,7 @@ Name=Q84_SERVICE_TYPE
 Position=350,87,365,107
 Item=Q84_SERVICE_TYPE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=11
+Form=9
   
 [Text]
 Position=50,90,330,106
@@ -3305,7 +3137,7 @@ Position=350,117,760,137
 Item=Q84_SERVICE_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=9
   
 [Text]
 Position=50,120,330,136
@@ -3317,7 +3149,7 @@ Name=Q85_CONDITIONS
 Position=350,147,365,167
 Item=Q85_CONDITIONS,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=11
+Form=9
   
 [Text]
 Position=50,150,330,166
@@ -3330,7 +3162,7 @@ Position=350,177,760,197
 Item=Q85_CONDITIONS_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=9
   
 [Text]
 Position=50,180,330,196
@@ -3342,7 +3174,7 @@ Name=Q86_VISIT_EVENTS
 Position=350,207,365,227
 Item=Q86_VISIT_EVENTS,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=11
+Form=9
   
 [Text]
 Position=50,210,330,226
@@ -3355,7 +3187,7 @@ Position=350,237,760,257
 Item=Q86_VISIT_EVENTS_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=9
   
 [Text]
 Position=50,240,330,256
@@ -3367,7 +3199,7 @@ Name=Q87_OTHER_ACTIONS
 Position=350,267,365,287
 Item=Q87_OTHER_ACTIONS,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=11
+Form=9
   
 [Text]
 Position=50,270,330,286
@@ -3380,7 +3212,7 @@ Position=350,297,760,317
 Item=Q87_OTHER_ACTIONS_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=9
   
 [Text]
 Position=50,300,330,316
@@ -3463,7 +3295,7 @@ Length=1
 Required=Yes
 Name=G_OUTPATIENT_CARE_FORM
 Label=G. Outpatient Care
-Form=12
+Form=10
 Max=1
   
 [Field]
@@ -3471,7 +3303,7 @@ Name=Q88_WHY_VISIT
 Position=350,27,365,47
 Item=Q88_WHY_VISIT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=12
+Form=10
   
 [Text]
 Position=50,30,330,46
@@ -3484,7 +3316,7 @@ Position=350,57,760,77
 Item=Q88_WHY_VISIT_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=12
+Form=10
   
 [Text]
 Position=50,60,330,76
@@ -3496,7 +3328,7 @@ Name=Q89_ADVISED_ADMIT
 Position=350,87,365,107
 Item=Q89_ADVISED_ADMIT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=12
+Form=10
   
 [Text]
 Position=50,90,330,106
@@ -3508,7 +3340,7 @@ Name=Q90_NOT_CONFINED
 Position=350,117,365,137
 Item=Q90_NOT_CONFINED,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=12
+Form=10
   
 [Text]
 Position=50,120,330,136
@@ -3521,7 +3353,7 @@ Position=350,147,760,167
 Item=Q90_NOT_CONFINED_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=12
+Form=10
   
 [Text]
 Position=50,150,330,166
@@ -3533,7 +3365,7 @@ Name=Q91_USUAL_OUTPATIENT
 Position=350,177,365,197
 Item=Q91_USUAL_OUTPATIENT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=12
+Form=10
   
 [Text]
 Position=50,180,330,196
@@ -3545,11 +3377,11 @@ Name=Q92_SOURCES
 Position=350,207,365,227
 Item=Q92_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=12
+Form=10
   
 [Text]
 Position=50,210,330,226
-Text=92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)
+Text=92. Which of the following did you use to pay for the cost of consultation? (Select all that apply.)
  
   
 [Block]
@@ -3607,7 +3439,7 @@ Length=1
 Required=Yes
 Name=Q92_PAY_ROSTER_FORM
 Label=G. Cost of consultation — amount by source
-Form=13
+Form=11
 Type=Record
 TypeName=Q92_PAY_ROSTER
 Max=8
@@ -3617,7 +3449,7 @@ Name=Q92_PAY_LINE
 Position=350,27,760,47
 Item=Q92_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=13
+Form=11
   
 [Text]
 Position=50,30,330,46
@@ -3629,7 +3461,7 @@ Name=Q92_PAY_SRC
 Position=350,57,365,77
 Item=Q92_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=13
+Form=11
   
 [Text]
 Position=50,60,330,76
@@ -3641,7 +3473,7 @@ Name=Q92_PAY_AMT
 Position=350,87,760,107
 Item=Q92_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=13
+Form=11
   
 [Text]
 Position=50,90,330,106
@@ -3654,7 +3486,7 @@ Text=92. Amount paid for the consultation, by source (Pesos)
 Required=Yes
 Name=G_OUTPATIENT_CARE_2_FORM
 Label=G. Outpatient Care (cont.)
-Form=14
+Form=12
 Max=1
   
 [Field]
@@ -3662,7 +3494,7 @@ Name=Q93_LABS
 Position=350,27,365,47
 Item=Q93_LABS,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=14
+Form=12
   
 [Text]
 Position=50,30,330,46
@@ -3675,7 +3507,7 @@ Position=350,57,760,77
 Item=Q93_LABS_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=14
+Form=12
   
 [Text]
 Position=50,60,330,76
@@ -3702,7 +3534,7 @@ Length=1
 Required=Yes
 Name=Q94_LAB_ROSTER_FORM
 Label=G. Cost of laboratory tests — per test (Q94)
-Form=15
+Form=13
 Type=Record
 TypeName=Q94_LAB_ROSTER
 Max=16
@@ -3712,7 +3544,7 @@ Name=Q94_LAB_LINE
 Position=350,27,760,47
 Item=Q94_LAB_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=15
+Form=13
   
 [Text]
 Position=50,30,330,46
@@ -3724,7 +3556,7 @@ Name=Q94_LAB_CODE
 Position=350,57,365,77
 Item=Q94_LAB_CODE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=15
+Form=13
   
 [Text]
 Position=50,60,330,76
@@ -3736,7 +3568,7 @@ Name=Q94_LAB_PAY
 Position=350,87,365,107
 Item=Q94_LAB_PAY,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=15
+Form=13
   
 [Text]
 Position=50,90,330,106
@@ -3748,7 +3580,7 @@ Name=Q94_LAB_AMT
 Position=350,117,760,137
 Item=Q94_LAB_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=15
+Form=13
   
 [Text]
 Position=50,120,330,136
@@ -3761,7 +3593,7 @@ Text=94. How much was the cost of this laboratory test? (amount paid out-of-pock
 Required=Yes
 Name=G_OUTPATIENT_CARE_3_FORM
 Label=G. Outpatient Care (cont. 2)
-Form=16
+Form=14
 Max=1
   
 [Field]
@@ -3769,7 +3601,7 @@ Name=Q95_PRESCRIBED
 Position=350,27,365,47
 Item=Q95_PRESCRIBED,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=16
+Form=14
   
 [Text]
 Position=50,30,330,46
@@ -3781,11 +3613,11 @@ Name=Q96_SOURCES
 Position=350,57,365,77
 Item=Q96_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=16
+Form=14
   
 [Text]
 Position=50,60,330,76
-Text=96. Which of the following did you use to pay for the prescribed medicines? (Tick all that apply.)
+Text=96. Which of the following did you use to pay for the prescribed medicines? (Select all that apply.)
  
   
 [Block]
@@ -3808,7 +3640,7 @@ Length=1
 Required=Yes
 Name=Q96_PAY_ROSTER_FORM
 Label=G. Cost of prescribed medicines — amount by source
-Form=17
+Form=15
 Type=Record
 TypeName=Q96_PAY_ROSTER
 Max=8
@@ -3818,7 +3650,7 @@ Name=Q96_PAY_LINE
 Position=350,27,760,47
 Item=Q96_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=17
+Form=15
   
 [Text]
 Position=50,30,330,46
@@ -3830,7 +3662,7 @@ Name=Q96_PAY_SRC
 Position=350,57,365,77
 Item=Q96_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=17
+Form=15
   
 [Text]
 Position=50,60,330,76
@@ -3842,7 +3674,7 @@ Name=Q96_PAY_AMT
 Position=350,87,760,107
 Item=Q96_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=17
+Form=15
   
 [Text]
 Position=50,90,330,106
@@ -3855,7 +3687,7 @@ Text=96. Amount spent for the prescribed medicines, by source (Pesos)
 Required=Yes
 Name=G_OUTPATIENT_CARE_4_FORM
 Label=G. Outpatient Care (cont. 3)
-Form=18
+Form=16
 Max=1
   
 [Field]
@@ -3863,7 +3695,7 @@ Name=Q97_FINAL_AMOUNT
 Position=350,27,760,47
 Item=Q97_FINAL_AMOUNT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=18
+Form=16
   
 [Text]
 Position=50,30,330,46
@@ -3875,11 +3707,11 @@ Name=Q971_SOURCES
 Position=350,57,365,77
 Item=Q971_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=18
+Form=16
   
 [Text]
 Position=50,60,330,76
-Text=97.1 Which other items were included in your outpatient bill? (Tick all that apply.)
+Text=97.1 Which other items were included in your outpatient bill? (Select all that apply.)
  
   
 [Block]
@@ -3902,7 +3734,7 @@ Length=1
 Required=Yes
 Name=Q971_ROSTER_FORM
 Label=G. Other items in outpatient bill — amount by category
-Form=19
+Form=17
 Type=Record
 TypeName=Q971_ROSTER
 Max=4
@@ -3912,7 +3744,7 @@ Name=Q971_PAY_LINE
 Position=350,27,760,47
 Item=Q971_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=19
+Form=17
   
 [Text]
 Position=50,30,330,46
@@ -3924,7 +3756,7 @@ Name=Q971_PAY_SRC
 Position=350,57,365,77
 Item=Q971_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=19
+Form=17
   
 [Text]
 Position=50,60,330,76
@@ -3936,7 +3768,7 @@ Name=Q971_PAY_AMT
 Position=350,87,760,107
 Item=Q971_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=19
+Form=17
   
 [Text]
 Position=50,90,330,106
@@ -3949,7 +3781,7 @@ Text=97.1 Amount charged for this item (Pesos)
 Required=Yes
 Name=G_OUTPATIENT_CARE_5_FORM
 Label=G. Outpatient Care (cont. 4)
-Form=20
+Form=18
 Max=1
   
 [Field]
@@ -3958,7 +3790,7 @@ Position=350,27,760,47
 Item=Q971_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=20
+Form=18
   
 [Text]
 Position=50,30,330,46
@@ -3970,11 +3802,11 @@ Name=Q972_SOURCES
 Position=350,57,365,77
 Item=Q972_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=20
+Form=18
   
 [Text]
 Position=50,60,330,76
-Text=97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Tick all that apply.)
+Text=97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Select all that apply.)
  
   
 [Block]
@@ -3997,7 +3829,7 @@ Length=1
 Required=Yes
 Name=Q972_PAY_ROSTER_FORM
 Label=G. Other expenses not in bill — amount by item
-Form=21
+Form=19
 Type=Record
 TypeName=Q972_PAY_ROSTER
 Max=6
@@ -4007,7 +3839,7 @@ Name=Q972_PAY_LINE
 Position=350,27,760,47
 Item=Q972_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=21
+Form=19
   
 [Text]
 Position=50,30,330,46
@@ -4019,7 +3851,7 @@ Name=Q972_PAY_SRC
 Position=350,57,365,77
 Item=Q972_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=21
+Form=19
   
 [Text]
 Position=50,60,330,76
@@ -4031,7 +3863,7 @@ Name=Q972_PAY_AMT
 Position=350,87,760,107
 Item=Q972_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=21
+Form=19
   
 [Text]
 Position=50,90,330,106
@@ -4044,7 +3876,7 @@ Text=97.2 Amount for this expense (Pesos)
 Required=Yes
 Name=G_OUTPATIENT_CARE_6_FORM
 Label=G. Outpatient Care (cont. 5)
-Form=22
+Form=20
 Max=1
   
 [Field]
@@ -4053,7 +3885,7 @@ Position=350,27,760,47
 Item=Q972_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=22
+Form=20
   
 [Text]
 Position=50,30,330,46
@@ -4065,11 +3897,11 @@ Name=Q98_SOURCES
 Position=350,57,365,77
 Item=Q98_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=22
+Form=20
   
 [Text]
 Position=50,60,330,76
-Text=98. Which of the following did you use to pay for the medical costs? (Tick all that apply.)
+Text=98. Which of the following did you use to pay for the medical costs? (Select all that apply.)
  
   
 [Block]
@@ -4092,7 +3924,7 @@ Length=1
 Required=Yes
 Name=Q98_PAY_ROSTER_FORM
 Label=G. Sources of money for medical costs — amount by source
-Form=23
+Form=21
 Type=Record
 TypeName=Q98_PAY_ROSTER
 Max=15
@@ -4102,7 +3934,7 @@ Name=Q98_PAY_LINE
 Position=350,27,760,47
 Item=Q98_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=23
+Form=21
   
 [Text]
 Position=50,30,330,46
@@ -4114,7 +3946,7 @@ Name=Q98_PAY_SRC
 Position=350,57,365,77
 Item=Q98_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=23
+Form=21
   
 [Text]
 Position=50,60,330,76
@@ -4126,7 +3958,7 @@ Name=Q98_PAY_AMT
 Position=350,87,760,107
 Item=Q98_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=23
+Form=21
   
 [Text]
 Position=50,90,330,106
@@ -4139,7 +3971,7 @@ Text=98. Amount from this source (Pesos)
 Required=Yes
 Name=G_OUTPATIENT_CARE_7_FORM
 Label=G. Outpatient Care (cont. 6)
-Form=24
+Form=22
 Max=1
   
 [Field]
@@ -4148,7 +3980,7 @@ Position=350,27,760,47
 Item=Q98_OTHER_DONATION_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=24
+Form=22
   
 [Text]
 Position=50,30,330,46
@@ -4161,7 +3993,7 @@ Position=350,57,760,77
 Item=Q98_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=24
+Form=22
   
 [Text]
 Position=50,60,330,76
@@ -4173,7 +4005,7 @@ Name=AREA_HAS_BUCAS
 Position=350,87,365,107
 Item=AREA_HAS_BUCAS,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=24
+Form=22
   
 [Text]
 Position=50,90,330,106
@@ -4185,7 +4017,7 @@ Name=Q99_BUCAS_HEARD
 Position=350,117,365,137
 Item=Q99_BUCAS_HEARD,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=24
+Form=22
   
 [Text]
 Position=50,120,330,136
@@ -4197,7 +4029,7 @@ Name=Q100_BUCAS_SOURCE
 Position=350,147,365,167
 Item=Q100_BUCAS_SOURCE,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=24
+Form=22
   
 [Text]
 Position=50,150,330,166
@@ -4210,7 +4042,7 @@ Position=350,177,760,197
 Item=Q100_BUCAS_SOURCE_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=24
+Form=22
   
 [Text]
 Position=50,180,330,196
@@ -4222,7 +4054,7 @@ Name=Q101_BUCAS_UNDERSTAND
 Position=350,207,365,227
 Item=Q101_BUCAS_UNDERSTAND,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=24
+Form=22
   
 [Text]
 Position=50,210,330,226
@@ -4235,7 +4067,7 @@ Position=350,237,760,257
 Item=Q101_BUCAS_UNDERSTAND_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=24
+Form=22
   
 [Text]
 Position=50,240,330,256
@@ -4247,7 +4079,7 @@ Name=Q102_BUCAS_ACCESSED
 Position=350,267,365,287
 Item=Q102_BUCAS_ACCESSED,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=24
+Form=22
   
 [Text]
 Position=50,270,330,286
@@ -4259,7 +4091,7 @@ Name=Q103_BUCAS_SERVICES
 Position=350,297,365,317
 Item=Q103_BUCAS_SERVICES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=24
+Form=22
   
 [Text]
 Position=50,300,330,316
@@ -4272,7 +4104,7 @@ Position=350,327,760,347
 Item=Q103_BUCAS_SERVICES_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=24
+Form=22
   
 [Text]
 Position=50,330,330,346
@@ -4284,7 +4116,7 @@ Name=Q104_WITHOUT_BUCAS
 Position=350,357,365,377
 Item=Q104_WITHOUT_BUCAS,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=24
+Form=22
   
 [Text]
 Position=50,360,330,376
@@ -4297,7 +4129,7 @@ Position=350,387,760,407
 Item=Q104_WITHOUT_BUCAS_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=24
+Form=22
   
 [Text]
 Position=50,390,330,406
@@ -4401,7 +4233,7 @@ Length=1
 Required=Yes
 Name=H_INPATIENT_CARE_FORM
 Label=H. Inpatient Care
-Form=25
+Form=23
 Max=1
   
 [Field]
@@ -4409,7 +4241,7 @@ Name=Q105_REASON
 Position=350,27,365,47
 Item=Q105_REASON,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=25
+Form=23
   
 [Text]
 Position=50,30,330,46
@@ -4422,7 +4254,7 @@ Position=350,57,760,77
 Item=Q105_REASON_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=25
+Form=23
   
 [Text]
 Position=50,60,330,76
@@ -4434,11 +4266,11 @@ Name=Q106_NIGHTS
 Position=350,87,760,107
 Item=Q106_NIGHTS,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=25
+Form=23
   
 [Text]
 Position=50,90,330,106
-Text=106. How long were you confined? — Nights
+Text=Number of Night(s)
  
   
 [Field]
@@ -4446,11 +4278,11 @@ Name=Q106_DAYS
 Position=350,117,760,137
 Item=Q106_DAYS,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=25
+Form=23
   
 [Text]
 Position=50,120,330,136
-Text=106. How long were you confined? — Days
+Text=Number of Day(s)
  
   
 [Field]
@@ -4458,11 +4290,11 @@ Name=Q107_SOURCES
 Position=350,147,365,167
 Item=Q107_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=25
+Form=23
   
 [Text]
 Position=50,150,330,166
-Text=107. Which of the following did you use to pay for the total bill for confinement? (Tick all that apply.)
+Text=107. Which of the following did you use to pay for the total bill for confinement? (Select all that apply.)
  
   
 [Block]
@@ -4499,7 +4331,7 @@ Length=1
 Required=Yes
 Name=Q107_PAY_ROSTER_FORM
 Label=H. Total bill for confinement — amount by source
-Form=26
+Form=24
 Type=Record
 TypeName=Q107_PAY_ROSTER
 Max=10
@@ -4509,7 +4341,7 @@ Name=Q107_PAY_LINE
 Position=350,27,760,47
 Item=Q107_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=26
+Form=24
   
 [Text]
 Position=50,30,330,46
@@ -4521,7 +4353,7 @@ Name=Q107_PAY_SRC
 Position=350,57,365,77
 Item=Q107_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=26
+Form=24
   
 [Text]
 Position=50,60,330,76
@@ -4533,7 +4365,7 @@ Name=Q107_PAY_AMT
 Position=350,87,760,107
 Item=Q107_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=26
+Form=24
   
 [Text]
 Position=50,90,330,106
@@ -4546,7 +4378,7 @@ Text=107. Amount of the total bill, by source (Pesos)
 Required=Yes
 Name=H_INPATIENT_CARE_2_FORM
 Label=H. Inpatient Care (cont.)
-Form=27
+Form=25
 Max=1
   
 [Field]
@@ -4555,7 +4387,7 @@ Position=350,27,760,47
 Item=Q107_PAY_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=27
+Form=25
   
 [Text]
 Position=50,30,330,46
@@ -4567,7 +4399,7 @@ Name=Q108_MEDS_OUTSIDE
 Position=350,57,365,77
 Item=Q108_MEDS_OUTSIDE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=27
+Form=25
   
 [Text]
 Position=50,60,330,76
@@ -4579,11 +4411,11 @@ Name=Q109_SOURCES
 Position=350,87,365,107
 Item=Q109_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=27
+Form=25
   
 [Text]
 Position=50,90,330,106
-Text=109. Which of the following did you use to pay for the medicines bought outside the hospital? (Tick all that apply.)
+Text=109. Which of the following did you use to pay for the medicines bought outside the hospital? (Select all that apply.)
  
   
 [Block]
@@ -4613,7 +4445,7 @@ Length=1
 Required=Yes
 Name=Q109_PAY_ROSTER_FORM
 Label=H. Medicines bought outside — amount by source
-Form=28
+Form=26
 Type=Record
 TypeName=Q109_PAY_ROSTER
 Max=9
@@ -4623,7 +4455,7 @@ Name=Q109_PAY_LINE
 Position=350,27,760,47
 Item=Q109_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=28
+Form=26
   
 [Text]
 Position=50,30,330,46
@@ -4635,7 +4467,7 @@ Name=Q109_PAY_SRC
 Position=350,57,365,77
 Item=Q109_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=28
+Form=26
   
 [Text]
 Position=50,60,330,76
@@ -4647,7 +4479,7 @@ Name=Q109_PAY_AMT
 Position=350,87,760,107
 Item=Q109_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=28
+Form=26
   
 [Text]
 Position=50,90,330,106
@@ -4660,7 +4492,7 @@ Text=109. Amount paid for medicines outside, by source (Pesos)
 Required=Yes
 Name=H_INPATIENT_CARE_3_FORM
 Label=H. Inpatient Care (cont. 2)
-Form=29
+Form=27
 Max=1
   
 [Field]
@@ -4669,7 +4501,7 @@ Position=350,27,760,47
 Item=Q109_PAY_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=29
+Form=27
   
 [Text]
 Position=50,30,330,46
@@ -4681,7 +4513,7 @@ Name=Q110_LAB_OUTSIDE
 Position=350,57,365,77
 Item=Q110_LAB_OUTSIDE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=29
+Form=27
   
 [Text]
 Position=50,60,330,76
@@ -4694,7 +4526,7 @@ Position=350,87,760,107
 Item=Q111_SERVICES_OUTSIDE,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=29
+Form=27
   
 [Text]
 Position=50,90,330,106
@@ -4706,11 +4538,11 @@ Name=Q112_SOURCES
 Position=350,117,365,137
 Item=Q112_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=29
+Form=27
   
 [Text]
 Position=50,120,330,136
-Text=112. Which of the following did you use to pay for the services done outside the hospital? (Tick all that apply.)
+Text=112. Which of the following did you use to pay for the services done outside the hospital? (Select all that apply.)
  
   
 [Block]
@@ -4747,7 +4579,7 @@ Length=1
 Required=Yes
 Name=Q112_PAY_ROSTER_FORM
 Label=H. Services done outside — amount by source
-Form=30
+Form=28
 Type=Record
 TypeName=Q112_PAY_ROSTER
 Max=9
@@ -4757,7 +4589,7 @@ Name=Q112_PAY_LINE
 Position=350,27,760,47
 Item=Q112_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=30
+Form=28
   
 [Text]
 Position=50,30,330,46
@@ -4769,7 +4601,7 @@ Name=Q112_PAY_SRC
 Position=350,57,365,77
 Item=Q112_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=30
+Form=28
   
 [Text]
 Position=50,60,330,76
@@ -4781,7 +4613,7 @@ Name=Q112_PAY_AMT
 Position=350,87,760,107
 Item=Q112_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=30
+Form=28
   
 [Text]
 Position=50,90,330,106
@@ -4794,7 +4626,7 @@ Text=112. Amount paid for services outside, by source (Pesos)
 Required=Yes
 Name=H_INPATIENT_CARE_4_FORM
 Label=H. Inpatient Care (cont. 3)
-Form=31
+Form=29
 Max=1
   
 [Field]
@@ -4803,7 +4635,7 @@ Position=350,27,760,47
 Item=Q112_PAY_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
 Position=50,30,330,46
@@ -4815,11 +4647,11 @@ Name=Q113_SOURCES
 Position=350,57,365,77
 Item=Q113_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=31
+Form=29
   
 [Text]
 Position=50,60,330,76
-Text=113. Which of the following did you use to pay for the hospital bill? (Tick all that apply.)
+Text=113. Which of the following did you use to pay for the hospital bill? (Select all that apply.)
  
   
 [Block]
@@ -4842,7 +4674,7 @@ Length=1
 Required=Yes
 Name=Q113_PAY_ROSTER_FORM
 Label=H. Hospital bill — amount by source
-Form=32
+Form=30
 Type=Record
 TypeName=Q113_PAY_ROSTER
 Max=13
@@ -4852,7 +4684,7 @@ Name=Q113_PAY_LINE
 Position=350,27,760,47
 Item=Q113_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=32
+Form=30
   
 [Text]
 Position=50,30,330,46
@@ -4864,7 +4696,7 @@ Name=Q113_PAY_SRC
 Position=350,57,365,77
 Item=Q113_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=32
+Form=30
   
 [Text]
 Position=50,60,330,76
@@ -4876,7 +4708,7 @@ Name=Q113_PAY_AMT
 Position=350,87,760,107
 Item=Q113_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=32
+Form=30
   
 [Text]
 Position=50,90,330,106
@@ -4889,7 +4721,7 @@ Text=113. Amount paid for the hospital bill, by source (Pesos)
 Required=Yes
 Name=H_INPATIENT_CARE_5_FORM
 Label=H. Inpatient Care (cont. 4)
-Form=33
+Form=31
 Max=1
   
 [Field]
@@ -4898,7 +4730,7 @@ Position=350,27,760,47
 Item=Q113_PAY_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,30,330,46
@@ -4910,11 +4742,11 @@ Name=Q114_NO_PH
 Position=350,57,365,77
 Item=Q114_NO_PH,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=33
+Form=31
   
 [Text]
 Position=50,60,330,76
-Text=114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113)
+Text=114. Why did you not avail of PhilHealth benefits?
  
   
 [Field]
@@ -4923,11 +4755,11 @@ Position=350,87,760,107
 Item=Q114_NO_PH_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,90,330,106
-Text=114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) — Other (specify) text
+Text=114. Why did you not avail of PhilHealth benefits? — Other (specify) text
  
   
 [Field]
@@ -4935,7 +4767,7 @@ Name=Q115_FINAL_CASH
 Position=350,117,760,137
 Item=Q115_FINAL_CASH,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,120,330,136
@@ -4947,7 +4779,7 @@ Name=Q1141_1
 Position=350,147,365,167
 Item=Q1141_1,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=31
   
 [Text]
 Position=50,150,330,166
@@ -4959,7 +4791,7 @@ Name=Q1141_1_AMT
 Position=350,177,760,197
 Item=Q1141_1_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,180,330,196
@@ -4971,7 +4803,7 @@ Name=Q1141_2
 Position=350,207,365,227
 Item=Q1141_2,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=31
   
 [Text]
 Position=50,210,330,226
@@ -4983,7 +4815,7 @@ Name=Q1141_2_AMT
 Position=350,237,760,257
 Item=Q1141_2_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,240,330,256
@@ -4995,7 +4827,7 @@ Name=Q1141_3
 Position=350,267,365,287
 Item=Q1141_3,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=31
   
 [Text]
 Position=50,270,330,286
@@ -5007,7 +4839,7 @@ Name=Q1141_3_AMT
 Position=350,297,760,317
 Item=Q1141_3_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,300,330,316
@@ -5019,7 +4851,7 @@ Name=Q1141_4
 Position=350,327,365,347
 Item=Q1141_4,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=31
   
 [Text]
 Position=50,330,330,346
@@ -5031,7 +4863,7 @@ Name=Q1141_4_AMT
 Position=350,357,760,377
 Item=Q1141_4_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,360,330,376
@@ -5043,7 +4875,7 @@ Name=Q1141_5
 Position=350,387,365,407
 Item=Q1141_5,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=31
   
 [Text]
 Position=50,390,330,406
@@ -5055,7 +4887,7 @@ Name=Q1141_5_AMT
 Position=350,417,760,437
 Item=Q1141_5_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,420,330,436
@@ -5067,7 +4899,7 @@ Name=Q1141_6
 Position=350,447,365,467
 Item=Q1141_6,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=31
   
 [Text]
 Position=50,450,330,466
@@ -5079,7 +4911,7 @@ Name=Q1141_6_AMT
 Position=350,477,760,497
 Item=Q1141_6_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,480,330,496
@@ -5092,7 +4924,7 @@ Position=350,507,760,527
 Item=Q1141_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,510,330,526
@@ -5104,7 +4936,7 @@ Name=Q1142_1
 Position=350,537,365,557
 Item=Q1142_1,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=31
   
 [Text]
 Position=50,540,330,556
@@ -5116,7 +4948,7 @@ Name=Q1142_1_AMT
 Position=350,567,760,587
 Item=Q1142_1_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,570,330,586
@@ -5128,7 +4960,7 @@ Name=Q1142_2
 Position=350,597,365,617
 Item=Q1142_2,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=31
   
 [Text]
 Position=50,600,330,616
@@ -5140,7 +4972,7 @@ Name=Q1142_2_AMT
 Position=350,627,760,647
 Item=Q1142_2_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,630,330,646
@@ -5152,7 +4984,7 @@ Name=Q1142_3
 Position=350,657,365,677
 Item=Q1142_3,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=31
   
 [Text]
 Position=50,660,330,676
@@ -5164,7 +4996,7 @@ Name=Q1142_3_AMT
 Position=350,687,760,707
 Item=Q1142_3_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,690,330,706
@@ -5176,7 +5008,7 @@ Name=Q1142_4
 Position=350,717,365,737
 Item=Q1142_4,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=31
   
 [Text]
 Position=50,720,330,736
@@ -5188,7 +5020,7 @@ Name=Q1142_4_AMT
 Position=350,747,760,767
 Item=Q1142_4_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,750,330,766
@@ -5200,7 +5032,7 @@ Name=Q1142_5
 Position=350,777,365,797
 Item=Q1142_5,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=31
   
 [Text]
 Position=50,780,330,796
@@ -5212,7 +5044,7 @@ Name=Q1142_5_AMT
 Position=350,807,760,827
 Item=Q1142_5_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,810,330,826
@@ -5224,7 +5056,7 @@ Name=Q1142_6
 Position=350,837,365,857
 Item=Q1142_6,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=31
   
 [Text]
 Position=50,840,330,856
@@ -5236,7 +5068,7 @@ Name=Q1142_6_AMT
 Position=350,867,760,887
 Item=Q1142_6_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,870,330,886
@@ -5248,7 +5080,7 @@ Name=Q1142_7
 Position=350,897,365,917
 Item=Q1142_7,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=31
   
 [Text]
 Position=50,900,330,916
@@ -5260,7 +5092,7 @@ Name=Q1142_7_AMT
 Position=350,927,760,947
 Item=Q1142_7_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,930,330,946
@@ -5273,7 +5105,7 @@ Position=350,957,760,977
 Item=Q1142_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=33
+Form=31
   
 [Text]
 Position=50,960,330,976
@@ -5510,7 +5342,7 @@ Length=1
 Required=Yes
 Name=I_FINANCIAL_RISK_FORM
 Label=I. Financial Risk
-Form=34
+Form=32
 Max=1
   
 [Field]
@@ -5518,7 +5350,7 @@ Name=Q116_NBB_HEARD
 Position=350,27,365,47
 Item=Q116_NBB_HEARD,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=34
+Form=32
   
 [Text]
 Position=50,30,330,46
@@ -5530,7 +5362,7 @@ Name=Q117_NBB_SOURCE
 Position=350,57,365,77
 Item=Q117_NBB_SOURCE,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=34
+Form=32
   
 [Text]
 Position=50,60,330,76
@@ -5543,7 +5375,7 @@ Position=350,87,760,107
 Item=Q117_NBB_SOURCE_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=34
+Form=32
   
 [Text]
 Position=50,90,330,106
@@ -5555,7 +5387,7 @@ Name=Q118_NBB_UNDERSTAND
 Position=350,117,365,137
 Item=Q118_NBB_UNDERSTAND,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=34
+Form=32
   
 [Text]
 Position=50,120,330,136
@@ -5568,7 +5400,7 @@ Position=350,147,760,167
 Item=Q118_NBB_UNDERSTAND_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=34
+Form=32
   
 [Text]
 Position=50,150,330,166
@@ -5580,7 +5412,7 @@ Name=Q119_ZBB_HEARD
 Position=350,177,365,197
 Item=Q119_ZBB_HEARD,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=34
+Form=32
   
 [Text]
 Position=50,180,330,196
@@ -5592,7 +5424,7 @@ Name=Q120_ZBB_SOURCE
 Position=350,207,365,227
 Item=Q120_ZBB_SOURCE,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=34
+Form=32
   
 [Text]
 Position=50,210,330,226
@@ -5605,7 +5437,7 @@ Position=350,237,760,257
 Item=Q120_ZBB_SOURCE_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=34
+Form=32
   
 [Text]
 Position=50,240,330,256
@@ -5617,7 +5449,7 @@ Name=Q121_ZBB_UNDERSTAND
 Position=350,267,365,287
 Item=Q121_ZBB_UNDERSTAND,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=34
+Form=32
   
 [Text]
 Position=50,270,330,286
@@ -5630,7 +5462,7 @@ Position=350,297,760,317
 Item=Q121_ZBB_UNDERSTAND_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=34
+Form=32
   
 [Text]
 Position=50,300,330,316
@@ -5642,7 +5474,7 @@ Name=Q122_ZBB_INFORMED
 Position=350,327,365,347
 Item=Q122_ZBB_INFORMED,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=34
+Form=32
   
 [Text]
 Position=50,330,330,346
@@ -5654,7 +5486,7 @@ Name=Q123_ZBB_EXTENT
 Position=350,357,365,377
 Item=Q123_ZBB_EXTENT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=34
+Form=32
   
 [Text]
 Position=50,360,330,376
@@ -5666,7 +5498,7 @@ Name=Q124_MAIFIP_HEARD
 Position=350,387,365,407
 Item=Q124_MAIFIP_HEARD,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=34
+Form=32
   
 [Text]
 Position=50,390,330,406
@@ -5678,7 +5510,7 @@ Name=Q125_MAIFIP_SOURCE
 Position=350,417,365,437
 Item=Q125_MAIFIP_SOURCE,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=34
+Form=32
   
 [Text]
 Position=50,420,330,436
@@ -5691,7 +5523,7 @@ Position=350,447,760,467
 Item=Q125_MAIFIP_SOURCE_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=34
+Form=32
   
 [Text]
 Position=50,450,330,466
@@ -5703,7 +5535,7 @@ Name=Q126_MAIFIP_AVAILED
 Position=350,477,365,497
 Item=Q126_MAIFIP_AVAILED,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=34
+Form=32
   
 [Text]
 Position=50,480,330,496
@@ -5715,7 +5547,7 @@ Name=Q127_MAIFIP_OOP
 Position=350,507,365,527
 Item=Q127_MAIFIP_OOP,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=34
+Form=32
   
 [Text]
 Position=50,510,330,526
@@ -5727,7 +5559,7 @@ Name=Q128_MAIFIP_OOP_ITEMS
 Position=350,537,365,557
 Item=Q128_MAIFIP_OOP_ITEMS,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=34
+Form=32
   
 [Text]
 Position=50,540,330,556
@@ -5740,7 +5572,7 @@ Position=350,567,760,587
 Item=Q128_MAIFIP_OOP_ITEMS_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=34
+Form=32
   
 [Text]
 Position=50,570,330,586
@@ -5752,7 +5584,7 @@ Name=Q129_WHY_NO_MAIFIP
 Position=350,597,365,617
 Item=Q129_WHY_NO_MAIFIP,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=34
+Form=32
   
 [Text]
 Position=50,600,330,616
@@ -5765,7 +5597,7 @@ Position=350,627,760,647
 Item=Q129_WHY_NO_MAIFIP_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=34
+Form=32
   
 [Text]
 Position=50,630,330,646
@@ -5777,7 +5609,7 @@ Name=Q130_REDUCED_SPEND
 Position=350,657,365,677
 Item=Q130_REDUCED_SPEND,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=34
+Form=32
   
 [Text]
 Position=50,660,330,676
@@ -5944,7 +5776,7 @@ Length=1
 Required=Yes
 Name=J_SATISFACTION_FORM
 Label=J. Satisfaction
-Form=35
+Form=33
 Max=1
   
 [Field]
@@ -5952,11 +5784,11 @@ Name=Q131_AMEN_WAITING
 Position=350,27,365,47
 Item=Q131_AMEN_WAITING,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=35
+Form=33
   
 [Text]
 Position=50,30,330,46
-Text=131. Satisfaction with cleanliness and comfort — Waiting areas
+Text=131. How would you rate the cleanliness and comfort of the waiting areas in this facility?
  
   
 [Field]
@@ -5964,11 +5796,11 @@ Name=Q132_AMEN_BATHROOMS
 Position=350,57,365,77
 Item=Q132_AMEN_BATHROOMS,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=35
+Form=33
   
 [Text]
 Position=50,60,330,76
-Text=132. Satisfaction with cleanliness and comfort — Bathrooms and toilets
+Text=132. How would you rate the cleanliness and comfort of the bathrooms and toilets in this facility?
  
   
 [Field]
@@ -5976,11 +5808,11 @@ Name=Q133_AMEN_CONSULT_ROOMS
 Position=350,87,365,107
 Item=Q133_AMEN_CONSULT_ROOMS,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=35
+Form=33
   
 [Text]
 Position=50,90,330,106
-Text=133. Satisfaction with cleanliness and comfort — Consultation Rooms
+Text=133. How would you rate the cleanliness and comfort of the consultation rooms in this facility?
  
   
 [Field]
@@ -5988,11 +5820,11 @@ Name=Q134_AMEN_ROOMS
 Position=350,117,365,137
 Item=Q134_AMEN_ROOMS,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=35
+Form=33
   
 [Text]
 Position=50,120,330,136
-Text=134. Satisfaction with cleanliness and comfort — Rooms (for inpatients only)
+Text=134. How would you rate the cleanliness and comfort of the rooms in this facility? (For inpatients only)
  
   
 [Field]
@@ -6000,7 +5832,7 @@ Name=Q135_SAT_OVERALL_TIME
 Position=350,147,365,167
 Item=Q135_SAT_OVERALL_TIME,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=35
+Form=33
   
 [Text]
 Position=50,150,330,166
@@ -6012,7 +5844,7 @@ Name=Q136_STAFF_COURTESY
 Position=350,177,365,197
 Item=Q136_STAFF_COURTESY,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=35
+Form=33
   
 [Text]
 Position=50,180,330,196
@@ -6024,7 +5856,7 @@ Name=Q137_STAFF_LISTEN
 Position=350,207,365,227
 Item=Q137_STAFF_LISTEN,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=35
+Form=33
   
 [Text]
 Position=50,210,330,226
@@ -6036,7 +5868,7 @@ Name=Q138_STAFF_EXPLAIN
 Position=350,237,365,257
 Item=Q138_STAFF_EXPLAIN,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=35
+Form=33
   
 [Text]
 Position=50,240,330,256
@@ -6048,7 +5880,7 @@ Name=Q139_STAFF_DECIDE
 Position=350,267,365,287
 Item=Q139_STAFF_DECIDE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=35
+Form=33
   
 [Text]
 Position=50,270,330,286
@@ -6060,7 +5892,7 @@ Name=Q140_STAFF_CONSENT
 Position=350,297,365,317
 Item=Q140_STAFF_CONSENT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=35
+Form=33
   
 [Text]
 Position=50,300,330,316
@@ -6072,7 +5904,7 @@ Name=Q141_CONFIDENTIALITY
 Position=350,327,365,347
 Item=Q141_CONFIDENTIALITY,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=35
+Form=33
   
 [Text]
 Position=50,330,330,346
@@ -6084,7 +5916,7 @@ Name=Q142_PRIVACY
 Position=350,357,365,377
 Item=Q142_PRIVACY,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=35
+Form=33
   
 [Text]
 Position=50,360,330,376
@@ -6096,7 +5928,7 @@ Name=Q143_RECOMMEND
 Position=350,387,365,407
 Item=Q143_RECOMMEND,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=35
+Form=33
   
 [Text]
 Position=50,390,330,406
@@ -6108,7 +5940,7 @@ Name=Q144_QUALITY
 Position=350,417,365,437
 Item=Q144_QUALITY,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=35
+Form=33
   
 [Text]
 Position=50,420,330,436
@@ -6142,7 +5974,7 @@ Length=4
 Required=Yes
 Name=K_ACCESS_MEDICINES_FORM
 Label=K. Access to Medicines
-Form=36
+Form=34
 Max=1
   
 [Field]
@@ -6150,7 +5982,7 @@ Name=Q145_PURCHASE_FREQ
 Position=350,27,365,47
 Item=Q145_PURCHASE_FREQ,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=34
   
 [Text]
 Position=50,30,330,46
@@ -6162,7 +5994,7 @@ Name=Q146_RX_OR_OTC
 Position=350,57,365,77
 Item=Q146_RX_OR_OTC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=34
   
 [Text]
 Position=50,60,330,76
@@ -6175,7 +6007,7 @@ Position=350,87,760,107
 Item=Q147_MEDS_LIST,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=36
+Form=34
   
 [Text]
 Position=50,90,330,106
@@ -6187,7 +6019,7 @@ Name=Q148_CONDITIONS
 Position=350,117,365,137
 Item=Q148_CONDITIONS,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=36
+Form=34
   
 [Text]
 Position=50,120,330,136
@@ -6200,7 +6032,7 @@ Position=350,147,760,167
 Item=Q148_CONDITIONS_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=36
+Form=34
   
 [Text]
 Position=50,150,330,166
@@ -6212,7 +6044,7 @@ Name=Q149_WHERE_BUY
 Position=350,177,365,197
 Item=Q149_WHERE_BUY,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=36
+Form=34
   
 [Text]
 Position=50,180,330,196
@@ -6225,7 +6057,7 @@ Position=350,207,760,227
 Item=Q149_WHERE_BUY_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=36
+Form=34
   
 [Text]
 Position=50,210,330,226
@@ -6237,11 +6069,11 @@ Name=Q150_TRAVEL_HH
 Position=350,237,760,257
 Item=Q150_TRAVEL_HH,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=36
+Form=34
   
 [Text]
 Position=50,240,330,256
-Text=150. Travel time from home to nearest pharmacy — hours (HH)
+Text=150. How much time does it take for you to reach the nearest pharmacy from your home? — Hours (HH)
  
   
 [Field]
@@ -6249,11 +6081,11 @@ Name=Q150_TRAVEL_MM
 Position=350,267,760,287
 Item=Q150_TRAVEL_MM,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=36
+Form=34
   
 [Text]
 Position=50,270,330,286
-Text=150. Travel time from home to nearest pharmacy — minutes (MM)
+Text=150. Travel time to nearest pharmacy — Minutes (MM)
  
   
 [Field]
@@ -6261,7 +6093,7 @@ Name=Q151_PHARM_EASE
 Position=350,297,365,317
 Item=Q151_PHARM_EASE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=34
   
 [Text]
 Position=50,300,330,316
@@ -6273,7 +6105,7 @@ Name=AREA_HAS_GAMOT
 Position=350,327,365,347
 Item=AREA_HAS_GAMOT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=34
   
 [Text]
 Position=50,330,330,346
@@ -6285,7 +6117,7 @@ Name=Q152_GAMOT_HEARD
 Position=350,357,365,377
 Item=Q152_GAMOT_HEARD,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=34
   
 [Text]
 Position=50,360,330,376
@@ -6297,7 +6129,7 @@ Name=Q153_GAMOT_SOURCE
 Position=350,387,365,407
 Item=Q153_GAMOT_SOURCE,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=36
+Form=34
   
 [Text]
 Position=50,390,330,406
@@ -6310,7 +6142,7 @@ Position=350,417,760,437
 Item=Q153_GAMOT_SOURCE_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=36
+Form=34
   
 [Text]
 Position=50,420,330,436
@@ -6322,7 +6154,7 @@ Name=Q154_GAMOT_UNDERSTAND
 Position=350,447,365,467
 Item=Q154_GAMOT_UNDERSTAND,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=36
+Form=34
   
 [Text]
 Position=50,450,330,466
@@ -6335,7 +6167,7 @@ Position=350,477,760,497
 Item=Q154_GAMOT_UNDERSTAND_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=36
+Form=34
   
 [Text]
 Position=50,480,330,496
@@ -6347,7 +6179,7 @@ Name=Q155_GAMOT_GOT_MEDS
 Position=350,507,365,527
 Item=Q155_GAMOT_GOT_MEDS,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=34
   
 [Text]
 Position=50,510,330,526
@@ -6360,7 +6192,7 @@ Position=350,537,760,557
 Item=Q156_GAMOT_MEDS_LIST,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=36
+Form=34
   
 [Text]
 Position=50,540,330,556
@@ -6372,7 +6204,7 @@ Name=Q157_WHERE_REST
 Position=350,567,365,587
 Item=Q157_WHERE_REST,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=36
+Form=34
   
 [Text]
 Position=50,570,330,586
@@ -6385,7 +6217,7 @@ Position=350,597,760,617
 Item=Q157_WHERE_REST_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=36
+Form=34
   
 [Text]
 Position=50,600,330,616
@@ -6397,7 +6229,7 @@ Name=Q158_BRAND_GEN_KNOW
 Position=350,627,365,647
 Item=Q158_BRAND_GEN_KNOW,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=34
   
 [Text]
 Position=50,630,330,646
@@ -6409,7 +6241,7 @@ Name=Q159_BRAND_GEN_BOUGHT
 Position=350,657,365,677
 Item=Q159_BRAND_GEN_BOUGHT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=34
   
 [Text]
 Position=50,660,330,676
@@ -6421,7 +6253,7 @@ Name=Q160_WHY_GENERIC
 Position=350,687,365,707
 Item=Q160_WHY_GENERIC,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=36
+Form=34
   
 [Text]
 Position=50,690,330,706
@@ -6434,7 +6266,7 @@ Position=350,717,760,737
 Item=Q160_WHY_GENERIC_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=36
+Form=34
   
 [Text]
 Position=50,720,330,736
@@ -6446,7 +6278,7 @@ Name=Q161_WHY_BRANDED
 Position=350,747,365,767
 Item=Q161_WHY_BRANDED,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=36
+Form=34
   
 [Text]
 Position=50,750,330,766
@@ -6459,7 +6291,7 @@ Position=350,777,760,797
 Item=Q161_WHY_BRANDED_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=36
+Form=34
   
 [Text]
 Position=50,780,330,796
@@ -6633,7 +6465,7 @@ Length=1
 Required=Yes
 Name=L_REFERRALS_FORM
 Label=L. Referrals
-Form=37
+Form=35
 Max=1
   
 [Field]
@@ -6641,7 +6473,7 @@ Name=Q162_REFERRED
 Position=350,27,365,47
 Item=Q162_REFERRED,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=35
   
 [Text]
 Position=50,30,330,46
@@ -6653,7 +6485,7 @@ Name=Q163_CARE_TYPE
 Position=350,57,365,77
 Item=Q163_CARE_TYPE,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=37
+Form=35
   
 [Text]
 Position=50,60,330,76
@@ -6666,7 +6498,7 @@ Position=350,87,760,107
 Item=Q163_CARE_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=37
+Form=35
   
 [Text]
 Position=50,90,330,106
@@ -6678,7 +6510,7 @@ Name=Q164_SPECIALIST
 Position=350,117,365,137
 Item=Q164_SPECIALIST,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=35
   
 [Text]
 Position=50,120,330,136
@@ -6691,7 +6523,7 @@ Position=350,147,760,167
 Item=Q164_SPECIALIST_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=37
+Form=35
   
 [Text]
 Position=50,150,330,166
@@ -6703,7 +6535,7 @@ Name=Q165_HOW_REFERRED
 Position=350,177,365,197
 Item=Q165_HOW_REFERRED,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=35
   
 [Text]
 Position=50,180,330,196
@@ -6716,7 +6548,7 @@ Position=350,207,760,227
 Item=Q165_HOW_REFERRED_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=37
+Form=35
   
 [Text]
 Position=50,210,330,226
@@ -6728,7 +6560,7 @@ Name=Q166_DISCUSSED_OPTIONS
 Position=350,237,365,257
 Item=Q166_DISCUSSED_OPTIONS,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=35
   
 [Text]
 Position=50,240,330,256
@@ -6740,7 +6572,7 @@ Name=Q167_HELPED_APPT
 Position=350,267,365,287
 Item=Q167_HELPED_APPT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=35
   
 [Text]
 Position=50,270,330,286
@@ -6752,7 +6584,7 @@ Name=Q168_WROTE_INFO
 Position=350,297,365,317
 Item=Q168_WROTE_INFO,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=35
   
 [Text]
 Position=50,300,330,316
@@ -6764,7 +6596,7 @@ Name=Q169_VISITED
 Position=350,327,365,347
 Item=Q169_VISITED,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=35
   
 [Text]
 Position=50,330,330,346
@@ -6776,7 +6608,7 @@ Name=Q170_FOLLOWUP
 Position=350,357,365,377
 Item=Q170_FOLLOWUP,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=35
   
 [Text]
 Position=50,360,330,376
@@ -6788,7 +6620,7 @@ Name=Q171_WHY_NOT
 Position=350,387,365,407
 Item=Q171_WHY_NOT,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=37
+Form=35
   
 [Text]
 Position=50,390,330,406
@@ -6801,7 +6633,7 @@ Position=350,417,760,437
 Item=Q171_WHY_NOT_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=37
+Form=35
   
 [Text]
 Position=50,420,330,436
@@ -6813,7 +6645,7 @@ Name=Q172_PCP_REFERRAL
 Position=350,447,365,467
 Item=Q172_PCP_REFERRAL,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=35
   
 [Text]
 Position=50,450,330,466
@@ -6825,7 +6657,7 @@ Name=Q173_PCP_KNOWS
 Position=350,477,365,497
 Item=Q173_PCP_KNOWS,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=35
   
 [Text]
 Position=50,480,330,496
@@ -6837,7 +6669,7 @@ Name=Q174_PCP_DISCUSSED
 Position=350,507,365,527
 Item=Q174_PCP_DISCUSSED,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=35
   
 [Text]
 Position=50,510,330,526
@@ -6849,7 +6681,7 @@ Name=Q175_PCP_HELPED_APPT
 Position=350,537,365,557
 Item=Q175_PCP_HELPED_APPT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=35
   
 [Text]
 Position=50,540,330,556
@@ -6861,7 +6693,7 @@ Name=Q176_PCP_WROTE_INFO
 Position=350,567,365,587
 Item=Q176_PCP_WROTE_INFO,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=35
   
 [Text]
 Position=50,570,330,586
@@ -6873,7 +6705,7 @@ Name=Q177_WHY_HOSPITAL
 Position=350,597,365,617
 Item=Q177_WHY_HOSPITAL,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=37
+Form=35
   
 [Text]
 Position=50,600,330,616
@@ -6886,7 +6718,7 @@ Position=350,627,760,647
 Item=Q177_WHY_HOSPITAL_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=37
+Form=35
   
 [Text]
 Position=50,630,330,646
@@ -6898,7 +6730,7 @@ Name=Q178_SAT_REFERRAL
 Position=350,657,365,677
 Item=Q178_SAT_REFERRAL,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=35
   
 [Text]
 Position=50,660,330,676
@@ -7023,7 +6855,7 @@ Length=1
 Required=Yes
 Name=FIELD_CONTROL_FORM_3
 Label=Closing - case end
-Form=38
+Form=36
 Max=1
   
 [Field]
@@ -7032,7 +6864,7 @@ Position=350,27,760,47
 Item=SURVEY_TEAM_LEADER_S_NAME,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=38
+Form=36
   
 [Text]
 Position=50,30,330,46
@@ -7045,7 +6877,7 @@ Position=350,57,760,77
 Item=ENUMERATOR_S_NAME,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=38
+Form=36
   
 [Text]
 Position=50,60,330,76
@@ -7058,7 +6890,7 @@ Position=350,87,760,107
 Item=FIELD_VALIDATED_BY,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=38
+Form=36
   
 [Text]
 Position=50,90,330,106
@@ -7071,7 +6903,7 @@ Position=350,117,760,137
 Item=FIELD_EDITED_BY,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=38
+Form=36
   
 [Text]
 Position=50,120,330,136
@@ -7083,7 +6915,7 @@ Name=DATE_FIRST_VISITED
 Position=350,147,760,167
 Item=DATE_FIRST_VISITED,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=38
+Form=36
   
 [Text]
 Position=50,150,330,166
@@ -7091,50 +6923,76 @@ Text=Date First Visited the Patient (YYYYMMDD)
  
   
 [Field]
-Name=DATE_FINAL_VISIT
+Name=DATE_FIRST_VISITED_DISP
 Position=350,177,760,197
-Item=DATE_FINAL_VISIT,PATIENTSURVEY_DICT
+Item=DATE_FIRST_VISITED_DISP,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=38
+Form=36
   
 [Text]
 Position=50,180,330,196
+Text=Date First Visited (MM/DD/YYYY)
+ 
+  
+[Field]
+Name=DATE_FINAL_VISIT
+Position=350,207,760,227
+Item=DATE_FINAL_VISIT,PATIENTSURVEY_DICT
+DataCaptureType=TextBox
+Form=36
+  
+[Text]
+Position=50,210,330,226
 Text=Date of Final Visit to the Patient (YYYYMMDD)
  
   
 [Field]
-Name=TOTAL_NUMBER_OF_VISITS
-Position=350,207,760,227
-Item=TOTAL_NUMBER_OF_VISITS,PATIENTSURVEY_DICT
+Name=DATE_FINAL_VISIT_DISP
+Position=350,237,760,257
+Item=DATE_FINAL_VISIT_DISP,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=38
+Form=36
   
 [Text]
-Position=50,210,330,226
+Position=50,240,330,256
+Text=Date of Final Visit (MM/DD/YYYY)
+ 
+  
+[Field]
+Name=TOTAL_NUMBER_OF_VISITS
+Position=350,267,760,287
+Item=TOTAL_NUMBER_OF_VISITS,PATIENTSURVEY_DICT
+DataCaptureType=TextBox
+Form=36
+  
+[Text]
+Position=50,270,330,286
 Text=Total Number of Visits
  
   
 [Field]
 Name=ENUM_RESULT_FIRST_VISIT
-Position=350,237,365,257
+Position=350,297,365,317
 Item=ENUM_RESULT_FIRST_VISIT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=38
+Form=36
   
 [Text]
-Position=50,240,330,256
+Position=50,300,330,316
 Text=Result of First Visit
  
   
 [Field]
 Name=ENUM_RESULT_FINAL_VISIT
-Position=350,267,365,287
+Position=350,327,365,347
 Item=ENUM_RESULT_FINAL_VISIT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=38
+Form=36
   
 [Text]
-Position=50,270,330,286
+Position=50,330,330,346
 Text=Result of Final Visit
  
   
@@ -7150,7 +7008,7 @@ Name=VISIT_RECORD_BLOCK
 Label=Visit Record
 DisplayTogether=Yes
 Position=5
-Length=5
+Length=7
   
 [EndGroup]
   
@@ -7158,7 +7016,7 @@ Length=5
 Required=Yes
 Name=REC_CASE_VERIFICATION_FORM
 Label=Case Verification Photo
-Form=39
+Form=37
 Max=1
   
 [Field]
@@ -7167,7 +7025,7 @@ Position=350,27,760,47
 Item=VERIFICATION_PHOTO_FILENAME,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=39
+Form=37
   
 [Text]
 Position=50,30,330,46
@@ -7179,11 +7037,181 @@ Name=CAPTURE_VERIFICATION_PHOTO
 Position=350,57,365,77
 Item=CAPTURE_VERIFICATION_PHOTO,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=39
+Form=37
   
 [Text]
 Position=50,60,330,76
 Text=Take Verification Photo
+ 
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=REC_FACILITY_CAPTURE_FORM
+Label=FC Facility GPS Capture
+Form=38
+Max=1
+  
+[Field]
+Name=FACILITY_GPS_LATITUDE
+Position=350,27,760,47
+Item=FACILITY_GPS_LATITUDE,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=38
+  
+[Text]
+Position=50,30,330,46
+Text=GPS Latitude
+ 
+  
+[Field]
+Name=FACILITY_GPS_LONGITUDE
+Position=350,57,760,77
+Item=FACILITY_GPS_LONGITUDE,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=38
+  
+[Text]
+Position=50,60,330,76
+Text=GPS Longitude
+ 
+  
+[Field]
+Name=FACILITY_GPS_ALTITUDE
+Position=350,87,760,107
+Item=FACILITY_GPS_ALTITUDE,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=38
+  
+[Text]
+Position=50,90,330,106
+Text=GPS Altitude (m)
+ 
+  
+[Field]
+Name=FACILITY_GPS_ACCURACY
+Position=350,117,760,137
+Item=FACILITY_GPS_ACCURACY,PATIENTSURVEY_DICT
+DataCaptureType=TextBox
+Form=38
+  
+[Text]
+Position=50,120,330,136
+Text=GPS Accuracy (m)
+ 
+  
+[Field]
+Name=FACILITY_GPS_SATELLITES
+Position=350,147,760,167
+Item=FACILITY_GPS_SATELLITES,PATIENTSURVEY_DICT
+DataCaptureType=TextBox
+Form=38
+  
+[Text]
+Position=50,150,330,166
+Text=GPS Satellites
+ 
+  
+[Field]
+Name=FACILITY_GPS_READTIME
+Position=350,177,760,197
+Item=FACILITY_GPS_READTIME,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=38
+  
+[Text]
+Position=50,180,330,196
+Text=GPS Read Time (UTC)
+ 
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=REC_PATIENT_HOME_CAPTURE_FORM
+Label=FC Patient Home GPS
+Form=39
+Max=1
+  
+[Field]
+Name=P_HOME_GPS_LATITUDE
+Position=350,27,760,47
+Item=P_HOME_GPS_LATITUDE,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,30,330,46
+Text=GPS Latitude
+ 
+  
+[Field]
+Name=P_HOME_GPS_LONGITUDE
+Position=350,57,760,77
+Item=P_HOME_GPS_LONGITUDE,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,60,330,76
+Text=GPS Longitude
+ 
+  
+[Field]
+Name=P_HOME_GPS_ALTITUDE
+Position=350,87,760,107
+Item=P_HOME_GPS_ALTITUDE,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,90,330,106
+Text=GPS Altitude (m)
+ 
+  
+[Field]
+Name=P_HOME_GPS_ACCURACY
+Position=350,117,760,137
+Item=P_HOME_GPS_ACCURACY,PATIENTSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,120,330,136
+Text=GPS Accuracy (m)
+ 
+  
+[Field]
+Name=P_HOME_GPS_SATELLITES
+Position=350,147,760,167
+Item=P_HOME_GPS_SATELLITES,PATIENTSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,150,330,166
+Text=GPS Satellites
+ 
+  
+[Field]
+Name=P_HOME_GPS_READTIME
+Position=350,177,760,197
+Item=P_HOME_GPS_READTIME,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,180,330,196
+Text=GPS Read Time (UTC)
  
   
 [EndGroup]

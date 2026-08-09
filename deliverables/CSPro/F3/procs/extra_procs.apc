@@ -201,7 +201,8 @@ postproc
     errmsg("Tick at least one medical condition (or 'No condition - Regular check-up only').");
     reenter;
   endif;
-  { exclusivity (soft warn): 'No condition - Regular check-up only' (19) should stand alone }
+  { exclusivity (HARD — #1166): 'No condition - Regular check-up only' (19) must stand alone.
+    Aligned 2-char chunk scan, NOT pos(): codes 01 + 99 pack to "0199", which contains "19". }
   qcHit19 = 0;
   qcN = length(strip(Q148_CONDITIONS)) / 2;
   do qcK = 1 while qcK <= qcN
@@ -209,7 +210,8 @@ postproc
     if tonumber(Q148_CONDITIONS[qcP:2]) = 19 then qcHit19 = 1; endif;
   enddo;
   if qcHit19 = 1 and length(strip(Q148_CONDITIONS)) > 2 then
-    errmsg("'No condition - Regular check-up only' is usually the only choice — please review the conditions ticked.");
+    errmsg("'No condition - Regular check-up only' must be the only choice — untick it or the other conditions before continuing.");
+    reenter;
   endif;
 
 PROC Q148_CONDITIONS_OTHER_TXT

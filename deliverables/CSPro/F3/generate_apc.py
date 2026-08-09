@@ -95,9 +95,58 @@ CUSTOM_VALIDATION = [
      "    DATE_FINAL_VISIT_DISP = concat(edit(\"99\", dvM), \"/\", edit(\"99\", dvD), \"/\", edit(\"9999\", dvY));\n"
      "  endif;\n"
      "  noinput;"),
+    # #1174 (ASPSI 2026-08-06, Carl 2026-08-09): the enumerator types MMDDYYYY like the
+    # paper; the STORED value stays YYYYMMDD so the comparison below, the MM/DD/YYYY echo
+    # (#1099), the Supervisor App and the cross-instrument parsers are all untouched.
+    # Idempotent by construction: a stored YYYYMMDD value starts with the century (20),
+    # which is not a valid month, so the conversion branch cannot fire twice. The
+    # else-branch still range-checks the year, so a real typo is caught rather than being
+    # waved through as "already converted".
+    ("DATE_FIRST_VISITED",
+     "PROC DATE_FIRST_VISITED\npostproc\n"
+     "  numeric fvMM; numeric fvDD; numeric fvYY; numeric fvHead;\n"
+     "  if DATE_FIRST_VISITED <> notappl then\n"
+     "    fvMM   = int(DATE_FIRST_VISITED / 1000000);\n"
+     "    fvHead = int(DATE_FIRST_VISITED / 10000);\n"
+     "    if fvMM >= 1 and fvMM <= 12 then\n"
+     "      fvDD = fvHead - fvMM * 100;\n"
+     "      fvYY = DATE_FIRST_VISITED - fvHead * 10000;\n"
+     "      if fvDD < 1 or fvDD > 31 or fvYY < 2020 or fvYY > 2035 then\n"
+     "        errmsg(\"Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.\");\n"
+     "        reenter;\n"
+     "      endif;\n"
+     "      DATE_FIRST_VISITED = fvYY * 10000 + fvMM * 100 + fvDD;\n"
+     "    else\n"
+     "      if fvHead < 2020 or fvHead > 2035 then\n"
+     "        errmsg(\"Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.\");\n"
+     "        reenter;\n"
+     "      endif;\n"
+     "    endif;\n"
+     "  endif;"),
     ("DATE_FINAL_VISIT",
      "PROC DATE_FINAL_VISIT\npostproc\n"
-     "  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then\n"
+     "  numeric lvMM; numeric lvDD; numeric lvYY; numeric lvHead;\n"
+     "  if DATE_FINAL_VISIT <> notappl then\n"
+     "    lvMM   = int(DATE_FINAL_VISIT / 1000000);\n"
+     "    lvHead = int(DATE_FINAL_VISIT / 10000);\n"
+     "    if lvMM >= 1 and lvMM <= 12 then\n"
+     "      lvDD = lvHead - lvMM * 100;\n"
+     "      lvYY = DATE_FINAL_VISIT - lvHead * 10000;\n"
+     "      if lvDD < 1 or lvDD > 31 or lvYY < 2020 or lvYY > 2035 then\n"
+     "        errmsg(\"Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.\");\n"
+     "        reenter;\n"
+     "      endif;\n"
+     "      DATE_FINAL_VISIT = lvYY * 10000 + lvMM * 100 + lvDD;\n"
+     "    else\n"
+     "      if lvHead < 2020 or lvHead > 2035 then\n"
+     "        errmsg(\"Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.\");\n"
+     "        reenter;\n"
+     "      endif;\n"
+     "    endif;\n"
+     "  endif;\n"
+     "  { conversion above runs FIRST so both sides below are YYYYMMDD. The notappl guards\n"
+     "    match F1: without them a blank final date (single visit) false-fires this. }\n"
+     "  if DATE_FINAL_VISIT <> notappl and DATE_FIRST_VISITED <> notappl and DATE_FINAL_VISIT < DATE_FIRST_VISITED then\n"
      "    errmsg(\"Final-visit date cannot be earlier than the first-visit date.\");\n    reenter;\n  endif;"),
     # F3-LOGIC-01 (2026-06-27): spec 4.6/L480/L661 — if the patient ALREADY availed MAIFIP
     # (Q113_SOURCES contains code 07), don't re-ask the awareness question: auto-set Q124=Yes +
@@ -338,7 +387,8 @@ postproc
 #     roster). PARTIAL matrices default non-money rows to 0 (still enterable); ALL-amount
 #     matrices leave every row enterable with no zeroing.
 def build_roster_procs(q_no, q_label, sources, amt_codes,
-                       require_msg, gated_texts=None, require_positive=False):
+                       require_msg, gated_texts=None, require_positive=False,
+                       exclusive_code=None, exclusive_msg=None):
     """Emit the SOURCES/LINE/AMT (+ optional gated specify-text) PROCs for one
     CheckBox->roster conversion.
       q_no        question stem used in field names (Q<q_no>_SOURCES / _PAY_LINE / ...).
@@ -362,11 +412,31 @@ def build_roster_procs(q_no, q_label, sources, amt_codes,
     two_digit = any(int(c) >= 10 for c in codes)
 
     L = [f"{{ ---- Q{q_no} payment roster (Option B fan-out) ---- }}",
-         f"PROC {src}", "postproc",
-         "  { Require >=1 source ticked — the roster grid needs >=1 row. }"]
+         f"PROC {src}", "postproc"]
+    if exclusive_code:   # #1157: CSPro locals must be declared at the top
+        L.append("  numeric xcN; numeric xcK; numeric xcP; numeric xcHit;")
+    L.append("  { Require >=1 source ticked — the roster grid needs >=1 row. }")
     L.append(f"  if length(strip({src})) = 0 then")
     L.append(f'    errmsg("{require_msg}");')
-    L += ["    reenter;", "  endif;", ""]
+    L += ["    reenter;", "  endif;"]
+    # #1157 (ASPSI review 2026-08-06): HARD exclusivity for a standalone option
+    # (Q107 = 09 "Don't know"). Uses the SAME aligned 2-char chunk scan as the
+    # population loop below, never pos() — these lists reach 2-digit codes, so a
+    # raw pos() would substring-match across a code boundary (#450 class).
+    if exclusive_code:
+        xn = int(exclusive_code)
+        L += ["  { exclusivity (HARD — #1157): the standalone option must not be",
+              "    combined with any other source. Aligned chunk scan, not pos(). }",
+              "  xcHit = 0;",
+              f"  xcN = length(strip({src})) / 2;",
+              "  do xcK = 1 while xcK <= xcN",
+              "    xcP = (xcK - 1) * 2 + 1;",
+              f"    if tonumber({src}[xcP:2]) = {xn} then xcHit = 1; endif;",
+              "  enddo;",
+              f"  if xcHit = 1 and length(strip({src})) > 2 then",
+              f'    errmsg("{exclusive_msg}");',
+              "    reenter;", "  endif;"]
+    L += [""]
 
     L += [f"PROC {line}", "preproc",
           "  { Build one row per ticked source (canonical order). The curocc()-th ticked",
@@ -578,7 +648,9 @@ Q107_ROSTER_PROCS = build_roster_procs(
     {f"{n:02d}" for n in range(1, 11)} - {"09"},   # 2026-07-02: 09 "Don't know" -> non-money (auto-0) — a DK row must not hard-require a fabricated > 0 amount
     "107. Tick at least one payment source for the total bill before continuing.",
     gated_texts=[("10", "Q107_PAY_OTHER_TXT", "107. 'Other' was ticked — please specify.")],
-    require_positive=True)   # #757: every ticked payment source must be > 0
+    require_positive=True,   # #757: every ticked payment source must be > 0
+    exclusive_code="09",     # #1157: 09 "Don't know" must stand alone
+    exclusive_msg="107. 'Don't know' must be the only payment source — untick it or the other sources before continuing.")
 Q109_ROSTER_PROCS = build_roster_procs(
     109, "109", [(None, f"{n:02d}") for n in range(1, 10)],
     {f"{n:02d}" for n in range(1, 10)} - {"08"},   # 2026-07-02: 08 "Don't know" -> non-money (auto-0)
@@ -1079,7 +1151,7 @@ CHECKBOX_CONVERT = [
      "    skip to Q51_OTHER_INSURANCE;\n  endif;"),   # 'I don't know' (90); 'Other (Specify)' (99)
     ("Q65_WHY_NO_USUAL",         True,  True,  None),   # 'I don't know' (90) exclusive — NOT 'I don't know where to go for care' (05); 'Other (Specify)' (99)
     ("Q67_WHY_THIS_FACILITY",    True,  False, None),   # no None/IDK option; 'Other (Specify)' (99)
-    ("Q76_KON_UNDERSTAND",       True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q76_KON_UNDERSTAND",       True,  ("90", "05"), None),   # 'I don't know' (90); 'Other (Specify)' (99)
     ("Q101_BUCAS_UNDERSTAND",    True,  False, None),   # no None/IDK option; 'Other (specify)' (99)
     ("Q117_NBB_SOURCE",          True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
     ("Q118_NBB_UNDERSTAND",      True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
@@ -1118,7 +1190,7 @@ CHECKBOX_CONVERT = [
      "  if Q83_VISIT_REASON = 4 and q85Hit19 = 0 then\n"
      "    errmsg(\"Q83 = general check-up but Q85 is not 'No condition / regular check-up only' — confirm.\");\n  endif;\n"
      "  if q85Hit19 = 1 and length(strip(Q85_CONDITIONS)) > 2 then\n"
-     "    errmsg(\"'No condition - Regular check-up only' was ticked with other condition(s) — it should usually be the only choice. Please review.\");\n  endif;",
+     "    errmsg(\"'No condition - Regular check-up only' must be the only choice — untick it or the other conditions before continuing.\");\n    reenter;\n  endif;",
      "  numeric q85N; numeric q85K; numeric q85P; numeric q85Hit19;"),  # 'Other (Specify)' (99)
     ("Q86_VISIT_EVENTS",         True,  False, None),  # #438: + 'Other (Specify)' (99) escape; no None/IDK
     # Q87 'Did not seek other forms of care' is code 06 (a substantive option, NOT the
@@ -1134,7 +1206,7 @@ CHECKBOX_CONVERT = [
      "    errmsg(\"Q87: 'Did not seek other forms of care' cannot be combined with any other "
      'action — untick the others (or untick this) so only one applies, then continue.");\n'
      "    reenter;\n  endif;"),   # #715: code 06 is exclusive (HARD); 'Other (Specify)' (99)
-    ("Q90_NOT_CONFINED",         True,  False, None),  # #673: 'Other (specify)' (99); no None/IDK
+    ("Q90_NOT_CONFINED",         True,  "06",  None),  # #673: 'Other (specify)' (99); no None/IDK
     # Q93 'None'(90) -> skip the Q94 lab-cost matrix (was PROC Q93_LABS_O17 skip, #448/#673).
     ("Q93_LABS",                 True,  True,  None,
      '  if pos("90", Q93_LABS) > 0 then   { #448/#673: \'None\' -> skip Q94 lab-cost matrix }\n'
@@ -1189,10 +1261,18 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postextra=None,
              f'    errmsg("Select at least one option for Q{qn} before continuing.");',
              "    reenter;", "  endif;"]
     if exclusive:
-        body += [f'  if pos("90", {base}) > 0 and length(strip({base})) > 2 then',
-                 f'    errmsg("Q{qn}: an exclusive option (None / I don\'t know) should be the '
-                 f'only choice - please review the options ticked.");',
-                 "  endif;"]
+        # #1134-#1150 (ASPSI review 2026-08-06): HARD block, not a soft warn. The
+        # exclusive code is 90 by convention, but some lists code their standalone
+        # option sequentially (Q90 = 06 "No need/regular check-up only") and some
+        # carry TWO (Q76 = 90 "I don't know" + 05 "There are no benefits") - so
+        # `exclusive` may be True, a code str, or a tuple/list of code strs.
+        codes = (["90"] if exclusive is True
+                 else [exclusive] if isinstance(exclusive, str) else list(exclusive))
+        for code in codes:
+            body += [f'  if pos("{code}", {base}) > 0 and length(strip({base})) > 2 then',
+                     f'    errmsg("Q{qn}: an exclusive option (None / I don\'t know) must be the '
+                     f'only choice - untick it or the other options before continuing.");',
+                     "    reenter;", "  endif;"]
     if postextra:
         body += [postextra]
     procs = {base: "\n".join(body)}

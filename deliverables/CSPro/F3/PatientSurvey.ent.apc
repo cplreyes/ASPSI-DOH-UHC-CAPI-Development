@@ -806,14 +806,21 @@ postproc
   #700: Q129 is now a Check Box base; this gate is folded into its checkbox PROC via
   CHECKBOX_CONVERT. The old PROC Q129_WHY_NO_MAIFIP_O01 field no longer exists. ---- }
 
-{ ---- Section L: not referred -> end of survey. Route to the closing Result-of-Visit +
-  Verification Photo. Do NOT endlevel here: the photo form is the LAST form, so ending
-  the level at this point skips the photo (bug found in R4 on-device review 2026-06-12). ---- }
+{ ---- Section L: not referred -> end of survey. Route to the START of the closing
+  Field Control block, NOT the Result-of-Visit. Do NOT endlevel here: the photo form
+  follows the closing block, so ending the level here skips the photo (R4 2026-06-12).
+  2026-07-19 FIELD-DATA FIX: the old target was ENUM_RESULT_FINAL_VISIT, which
+  overshoots — `skip to` jumps EVERYTHING in between, so every "not referred"
+  completed interview saved with a BLANK survey-team block (no team-leader /
+  enumerator names, no visit dates, no total visits, no first-visit result).
+  6 of the 8 live pretest F3 cases hit this (testers reported it as "Field
+  Control section missing"). Target the block's FIRST field instead; the
+  Completed default on Result-of-Visit stays (enumerator confirms it there). ---- }
 PROC Q162_REFERRED
 postproc
   if Q162_REFERRED = 2 then
     ENUM_RESULT_FINAL_VISIT = 1;   { default Completed; enumerator confirms it on the closing form }
-    skip to ENUM_RESULT_FINAL_VISIT;   { skip the referred-only Q163/Q164, land on Result-of-Visit; the Verification Photo form follows it }
+    skip to SURVEY_TEAM_LEADER_S_NAME;   { skip the referred-only Q163-Q168; land at the closing block's first field }
   endif;
 
 { ---- Section K/L R4 sweep (Wave 4, 2026-06-14): gating + required fixes ---- }
@@ -882,7 +889,8 @@ postproc
     errmsg(1011);
     reenter;
   endif;
-  { exclusivity (soft warn): 'No condition - Regular check-up only' (19) should stand alone }
+  { exclusivity (HARD — #1166): 'No condition - Regular check-up only' (19) must stand alone.
+    Aligned 2-char chunk scan, NOT pos(): codes 01 + 99 pack to "0199", which contains "19". }
   qcHit19 = 0;
   qcN = length(strip(Q148_CONDITIONS)) / 2;
   do qcK = 1 while qcK <= qcN
@@ -890,7 +898,8 @@ postproc
     if tonumber(Q148_CONDITIONS[qcP:2]) = 19 then qcHit19 = 1; endif;
   enddo;
   if qcHit19 = 1 and length(strip(Q148_CONDITIONS)) > 2 then
-    errmsg(1012);
+    errmsg(1264);
+    reenter;
   endif;
 
 PROC Q148_CONDITIONS_OTHER_TXT
@@ -913,7 +922,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q100_BUCAS_SOURCE) > 0 and length(strip(Q100_BUCAS_SOURCE)) > 2 then
-    errmsg(1015);
+    errmsg(1239);
+    reenter;
   endif;
 
 PROC Q100_BUCAS_SOURCE_OTHER_TXT
@@ -982,7 +992,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q103_BUCAS_SERVICES) > 0 and length(strip(Q103_BUCAS_SERVICES)) > 2 then
-    errmsg(1020);
+    errmsg(1240);
+    reenter;
   endif;
 
 PROC Q103_BUCAS_SERVICES_OTHER_TXT
@@ -1057,7 +1068,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q117_NBB_SOURCE) > 0 and length(strip(Q117_NBB_SOURCE)) > 2 then
-    errmsg(1025);
+    errmsg(1241);
+    reenter;
   endif;
 
 PROC Q117_NBB_SOURCE_OTHER_TXT
@@ -1093,7 +1105,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q118_NBB_UNDERSTAND) > 0 and length(strip(Q118_NBB_UNDERSTAND)) > 2 then
-    errmsg(1028);
+    errmsg(1242);
+    reenter;
   endif;
 
 PROC Q118_NBB_UNDERSTAND_OTHER_TXT
@@ -1129,7 +1142,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q120_ZBB_SOURCE) > 0 and length(strip(Q120_ZBB_SOURCE)) > 2 then
-    errmsg(1031);
+    errmsg(1243);
+    reenter;
   endif;
 
 PROC Q120_ZBB_SOURCE_OTHER_TXT
@@ -1165,7 +1179,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q121_ZBB_UNDERSTAND) > 0 and length(strip(Q121_ZBB_UNDERSTAND)) > 2 then
-    errmsg(1034);
+    errmsg(1244);
+    reenter;
   endif;
 
 PROC Q121_ZBB_UNDERSTAND_OTHER_TXT
@@ -1201,7 +1216,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q125_MAIFIP_SOURCE) > 0 and length(strip(Q125_MAIFIP_SOURCE)) > 2 then
-    errmsg(1037);
+    errmsg(1245);
+    reenter;
   endif;
 
 PROC Q125_MAIFIP_SOURCE_OTHER_TXT
@@ -1237,7 +1253,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q128_MAIFIP_OOP_ITEMS) > 0 and length(strip(Q128_MAIFIP_OOP_ITEMS)) > 2 then
-    errmsg(1040);
+    errmsg(1246);
+    reenter;
   endif;
 
 PROC Q128_MAIFIP_OOP_ITEMS_OTHER_TXT
@@ -1344,7 +1361,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q153_GAMOT_SOURCE) > 0 and length(strip(Q153_GAMOT_SOURCE)) > 2 then
-    errmsg(1047);
+    errmsg(1247);
+    reenter;
   endif;
 
 PROC Q153_GAMOT_SOURCE_OTHER_TXT
@@ -1380,7 +1398,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q154_GAMOT_UNDERSTAND) > 0 and length(strip(Q154_GAMOT_UNDERSTAND)) > 2 then
-    errmsg(1050);
+    errmsg(1248);
+    reenter;
   endif;
 
 PROC Q154_GAMOT_UNDERSTAND_OTHER_TXT
@@ -1416,7 +1435,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q157_WHERE_REST) > 0 and length(strip(Q157_WHERE_REST)) > 2 then
-    errmsg(1053);
+    errmsg(1249);
+    reenter;
   endif;
 
 PROC Q157_WHERE_REST_OTHER_TXT
@@ -1452,7 +1472,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q160_WHY_GENERIC) > 0 and length(strip(Q160_WHY_GENERIC)) > 2 then
-    errmsg(1056);
+    errmsg(1250);
+    reenter;
   endif;
 
 PROC Q160_WHY_GENERIC_OTHER_TXT
@@ -1493,7 +1514,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q161_WHY_BRANDED) > 0 and length(strip(Q161_WHY_BRANDED)) > 2 then
-    errmsg(1059);
+    errmsg(1251);
+    reenter;
   endif;
 
 PROC Q161_WHY_BRANDED_OTHER_TXT
@@ -1529,7 +1551,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q163_CARE_TYPE) > 0 and length(strip(Q163_CARE_TYPE)) > 2 then
-    errmsg(1062);
+    errmsg(1252);
+    reenter;
   endif;
 
 PROC Q163_CARE_TYPE_OTHER_TXT
@@ -1602,7 +1625,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q177_WHY_HOSPITAL) > 0 and length(strip(Q177_WHY_HOSPITAL)) > 2 then
-    errmsg(1067);
+    errmsg(1253);
+    reenter;
   endif;
 
 PROC Q177_WHY_HOSPITAL_OTHER_TXT
@@ -1638,7 +1662,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q36_UHC_SOURCE) > 0 and length(strip(Q36_UHC_SOURCE)) > 2 then
-    errmsg(1070);
+    errmsg(1254);
+    reenter;
   endif;
 
 PROC Q36_UHC_SOURCE_OTHER_TXT
@@ -1674,7 +1699,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q37_UHC_UNDERSTAND) > 0 and length(strip(Q37_UHC_UNDERSTAND)) > 2 then
-    errmsg(1073);
+    errmsg(1255);
+    reenter;
   endif;
 
 PROC Q37_UHC_UNDERSTAND_OTHER_TXT
@@ -1748,7 +1774,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q42_DIFFICULTY) > 0 and length(strip(Q42_DIFFICULTY)) > 2 then
-    errmsg(1078);
+    errmsg(1256);
+    reenter;
   endif;
   skip to Q45_CATEGORY;   { #765: registered (Q38=Yes) path skips Q43/Q44 after the difficulty detail }
 
@@ -1789,7 +1816,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q46_BENEFITS) > 0 and length(strip(Q46_BENEFITS)) > 2 then
-    errmsg(1081);
+    errmsg(1257);
+    reenter;
   endif;
 
 PROC Q46_BENEFITS_OTHER_TXT
@@ -1825,7 +1853,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q50_DIFFICULTY_PAYING) > 0 and length(strip(Q50_DIFFICULTY_PAYING)) > 2 then
-    errmsg(1084);
+    errmsg(1258);
+    reenter;
   endif;
 
 PROC Q50_DIFFICULTY_PAYING_OTHER_TXT
@@ -1861,7 +1890,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q52_PLANS) > 0 and length(strip(Q52_PLANS)) > 2 then
-    errmsg(1087);
+    errmsg(1259);
+    reenter;
   endif;
 
 PROC Q52_PLANS_OTHER_TXT
@@ -1911,7 +1941,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q65_WHY_NO_USUAL) > 0 and length(strip(Q65_WHY_NO_USUAL)) > 2 then
-    errmsg(1092);
+    errmsg(1260);
+    reenter;
   endif;
 
 PROC Q65_WHY_NO_USUAL_OTHER_TXT
@@ -2046,7 +2077,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q75_KON_SOURCE) > 0 and length(strip(Q75_KON_SOURCE)) > 2 then
-    errmsg(1101);
+    errmsg(1261);
+    reenter;
   endif;
 
 PROC Q75_KON_SOURCE_OTHER_TXT
@@ -2082,7 +2114,12 @@ postproc
     reenter;
   endif;
   if pos("90", Q76_KON_UNDERSTAND) > 0 and length(strip(Q76_KON_UNDERSTAND)) > 2 then
-    errmsg(1104);
+    errmsg(1262);
+    reenter;
+  endif;
+  if pos("05", Q76_KON_UNDERSTAND) > 0 and length(strip(Q76_KON_UNDERSTAND)) > 2 then
+    errmsg(1262);
+    reenter;
   endif;
 
 PROC Q76_KON_UNDERSTAND_OTHER_TXT
@@ -2123,7 +2160,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q82_KON_WHY_NOT_REG) > 0 and length(strip(Q82_KON_WHY_NOT_REG)) > 2 then
-    errmsg(1107);
+    errmsg(1263);
+    reenter;
   endif;
 
 PROC Q82_KON_WHY_NOT_REG_OTHER_TXT
@@ -2172,7 +2210,8 @@ postproc
     errmsg(1110);
   endif;
   if q85Hit19 = 1 and length(strip(Q85_CONDITIONS)) > 2 then
-    errmsg(1111);
+    errmsg(1264);
+    reenter;
   endif;
 
 PROC Q85_CONDITIONS_OTHER_TXT
@@ -2277,6 +2316,10 @@ postproc
     errmsg(1118);
     reenter;
   endif;
+  if pos("06", Q90_NOT_CONFINED) > 0 and length(strip(Q90_NOT_CONFINED)) > 2 then
+    errmsg(1265);
+    reenter;
+  endif;
 
 PROC Q90_NOT_CONFINED_OTHER_TXT
 preproc
@@ -2311,7 +2354,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q93_LABS) > 0 and length(strip(Q93_LABS)) > 2 then
-    errmsg(1121);
+    errmsg(1266);
+    reenter;
   endif;
   if pos("90", Q93_LABS) > 0 then   { #448/#673: 'None' -> skip Q94 lab-cost matrix }
     skip to Q95_PRESCRIBED;
@@ -2482,19 +2526,29 @@ preproc
   if pos("07", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 7; endif; endif;
   if pos("08", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 8; endif; endif;
   protect(Q92_PAY_SRC, true);
-  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 and Q92_PAY_SRC <> 7 then
+  { #835-class polarity (2026-07-09): match non-money codes POSITIVELY - the <> chain
+    also matched the resume-replay/buffered notappl and zeroed money rows on-screen. }
+  if Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8 then
     Q92_PAY_AMT = 0;   { #781: non-money source -> default 0. In-kind(7) is a money source for Q92 per ASPSI (2026-06-25). Still enterable so the row stops. }
   endif;
   Q92_PAY_LINE = curocc();
   noinput;
 
 PROC Q92_PAY_AMT
+preproc
+  { #1064 class (2026-08-04): non-money row -> amount is display-only 0 (noinput);
+    the grid no longer offers an amount box for sources with no cost. Positive
+    polarity per #835. Desk-test gate: all-non-money selection must advance. }
+  if Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8 then
+    Q92_PAY_AMT = 0;
+    noinput;
+  endif;
 postproc
   if Q92_PAY_AMT < 0 then
     errmsg(1135);
     reenter;
   endif;
-  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 and Q92_PAY_SRC <> 7 and Q92_PAY_AMT <> 0 then
+  if (Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8) and Q92_PAY_AMT <> 0 then
     errmsg(1136);
     Q92_PAY_AMT = 0;
   endif;
@@ -2586,8 +2640,10 @@ preproc
 
 PROC Q94_LAB_AMT
 preproc
-  { Only Out-of-pocket(1) carries an amount; every other payment type has no OOP cost. }
-  if Q94_LAB_PAY <> 1 then
+  { Only Out-of-pocket(1) carries an amount; every other payment type has no OOP cost.
+    #835-class polarity: match the non-OOP codes POSITIVELY (2..7) -- 'PAY <> 1' also
+    matched the resume-replay transient notappl and zeroed+skipped stored OOP amounts. }
+  if Q94_LAB_PAY in 2:7 then
     Q94_LAB_AMT = 0;
     noinput;
   endif;
@@ -2638,25 +2694,26 @@ preproc
   if pos("07", Q96_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q96_PAY_SRC = 7; endif; endif;
   if pos("08", Q96_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q96_PAY_SRC = 8; endif; endif;
   protect(Q96_PAY_SRC, true);
-  if Q96_PAY_SRC <> 1 and Q96_PAY_SRC <> 7 then
+  if Q96_PAY_SRC = 2 or Q96_PAY_SRC = 3 or Q96_PAY_SRC = 4 or Q96_PAY_SRC = 5 or Q96_PAY_SRC = 6 or Q96_PAY_SRC = 8 then
     Q96_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
   endif;
   Q96_PAY_LINE = curocc();
   noinput;
 
 PROC Q96_PAY_AMT
+preproc
+  if Q96_PAY_SRC = 2 or Q96_PAY_SRC = 3 or Q96_PAY_SRC = 4 or Q96_PAY_SRC = 5 or Q96_PAY_SRC = 6 or Q96_PAY_SRC = 8 then
+    Q96_PAY_AMT = 0;   { non-money source -> no cost; display-only }
+    noinput;
+  endif;
 postproc
   if Q96_PAY_AMT < 0 then
     errmsg(1144);
     reenter;
   endif;
-  if Q96_PAY_SRC <> 1 and Q96_PAY_SRC <> 7 and Q96_PAY_AMT <> 0 then
+  if (Q96_PAY_SRC = 2 or Q96_PAY_SRC = 3 or Q96_PAY_SRC = 4 or Q96_PAY_SRC = 5 or Q96_PAY_SRC = 6 or Q96_PAY_SRC = 8) and Q96_PAY_AMT <> 0 then
     errmsg(1145);
     Q96_PAY_AMT = 0;
-  endif;
-  if (Q96_PAY_SRC = 1 or Q96_PAY_SRC = 7) and Q96_PAY_AMT = 0 then
-    errmsg(1146);
-    reenter;
   endif;
 
 
@@ -2701,10 +2758,6 @@ postproc
     errmsg(1148);
     reenter;
   endif;
-  if Q972_PAY_AMT = 0 then
-    errmsg(1149);
-    reenter;
-  endif;
 
 PROC Q972_OTHER_TXT
 preproc
@@ -2747,10 +2800,6 @@ PROC Q98_PAY_AMT
 postproc
   if Q98_PAY_AMT < 0 then
     errmsg(1152);
-    reenter;
-  endif;
-  if Q98_PAY_AMT = 0 then
-    errmsg(1153);
     reenter;
   endif;
 
@@ -2806,9 +2855,22 @@ postproc
 { ---- Q107 payment roster (Option B fan-out) ---- }
 PROC Q107_SOURCES
 postproc
+  numeric xcN; numeric xcK; numeric xcP; numeric xcHit;
   { Require >=1 source ticked — the roster grid needs >=1 row. }
   if length(strip(Q107_SOURCES)) = 0 then
     errmsg(1156);
+    reenter;
+  endif;
+  { exclusivity (HARD — #1157): the standalone option must not be
+    combined with any other source. Aligned chunk scan, not pos(). }
+  xcHit = 0;
+  xcN = length(strip(Q107_SOURCES)) / 2;
+  do xcK = 1 while xcK <= xcN
+    xcP = (xcK - 1) * 2 + 1;
+    if tonumber(Q107_SOURCES[xcP:2]) = 9 then xcHit = 1; endif;
+  enddo;
+  if xcHit = 1 and length(strip(Q107_SOURCES)) > 2 then
+    errmsg(1267);
     reenter;
   endif;
 
@@ -2824,25 +2886,26 @@ preproc
   pp = (curocc() - 1) * 2 + 1;
   Q107_PAY_SRC = tonumber(Q107_SOURCES[pp:2]);
   protect(Q107_PAY_SRC, true);
-  if Q107_PAY_SRC <> 1 and Q107_PAY_SRC <> 2 and Q107_PAY_SRC <> 3 and Q107_PAY_SRC <> 4 and Q107_PAY_SRC <> 5 and Q107_PAY_SRC <> 6 and Q107_PAY_SRC <> 7 and Q107_PAY_SRC <> 8 and Q107_PAY_SRC <> 10 then
+  if Q107_PAY_SRC = 9 then
     Q107_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
   endif;
   Q107_PAY_LINE = curocc();
   noinput;
 
 PROC Q107_PAY_AMT
+preproc
+  if Q107_PAY_SRC = 9 then
+    Q107_PAY_AMT = 0;   { non-money source -> no cost; display-only }
+    noinput;
+  endif;
 postproc
   if Q107_PAY_AMT < 0 then
     errmsg(1157);
     reenter;
   endif;
-  if Q107_PAY_SRC <> 1 and Q107_PAY_SRC <> 2 and Q107_PAY_SRC <> 3 and Q107_PAY_SRC <> 4 and Q107_PAY_SRC <> 5 and Q107_PAY_SRC <> 6 and Q107_PAY_SRC <> 7 and Q107_PAY_SRC <> 8 and Q107_PAY_SRC <> 10 and Q107_PAY_AMT <> 0 then
+  if (Q107_PAY_SRC = 9) and Q107_PAY_AMT <> 0 then
     errmsg(1158);
     Q107_PAY_AMT = 0;
-  endif;
-  if (Q107_PAY_SRC = 1 or Q107_PAY_SRC = 2 or Q107_PAY_SRC = 3 or Q107_PAY_SRC = 4 or Q107_PAY_SRC = 5 or Q107_PAY_SRC = 6 or Q107_PAY_SRC = 7 or Q107_PAY_SRC = 8 or Q107_PAY_SRC = 10) and Q107_PAY_AMT = 0 then
-    errmsg(1159);
-    reenter;
   endif;
 
 PROC Q107_PAY_OTHER_TXT
@@ -2908,25 +2971,26 @@ preproc
   if pos("08", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 8; endif; endif;
   if pos("09", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 9; endif; endif;
   protect(Q109_PAY_SRC, true);
-  if Q109_PAY_SRC <> 1 and Q109_PAY_SRC <> 2 and Q109_PAY_SRC <> 3 and Q109_PAY_SRC <> 4 and Q109_PAY_SRC <> 5 and Q109_PAY_SRC <> 6 and Q109_PAY_SRC <> 7 and Q109_PAY_SRC <> 9 then
+  if Q109_PAY_SRC = 8 then
     Q109_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
   endif;
   Q109_PAY_LINE = curocc();
   noinput;
 
 PROC Q109_PAY_AMT
+preproc
+  if Q109_PAY_SRC = 8 then
+    Q109_PAY_AMT = 0;   { non-money source -> no cost; display-only }
+    noinput;
+  endif;
 postproc
   if Q109_PAY_AMT < 0 then
     errmsg(1162);
     reenter;
   endif;
-  if Q109_PAY_SRC <> 1 and Q109_PAY_SRC <> 2 and Q109_PAY_SRC <> 3 and Q109_PAY_SRC <> 4 and Q109_PAY_SRC <> 5 and Q109_PAY_SRC <> 6 and Q109_PAY_SRC <> 7 and Q109_PAY_SRC <> 9 and Q109_PAY_AMT <> 0 then
+  if (Q109_PAY_SRC = 8) and Q109_PAY_AMT <> 0 then
     errmsg(1163);
     Q109_PAY_AMT = 0;
-  endif;
-  if (Q109_PAY_SRC = 1 or Q109_PAY_SRC = 2 or Q109_PAY_SRC = 3 or Q109_PAY_SRC = 4 or Q109_PAY_SRC = 5 or Q109_PAY_SRC = 6 or Q109_PAY_SRC = 7 or Q109_PAY_SRC = 9) and Q109_PAY_AMT = 0 then
-    errmsg(1164);
-    reenter;
   endif;
 
 PROC Q109_PAY_OTHER_TXT
@@ -2980,25 +3044,26 @@ preproc
   if pos("08", Q112_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q112_PAY_SRC = 8; endif; endif;
   if pos("09", Q112_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q112_PAY_SRC = 9; endif; endif;
   protect(Q112_PAY_SRC, true);
-  if Q112_PAY_SRC <> 1 and Q112_PAY_SRC <> 2 and Q112_PAY_SRC <> 3 and Q112_PAY_SRC <> 4 and Q112_PAY_SRC <> 5 and Q112_PAY_SRC <> 6 and Q112_PAY_SRC <> 7 and Q112_PAY_SRC <> 9 then
+  if Q112_PAY_SRC = 8 then
     Q112_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
   endif;
   Q112_PAY_LINE = curocc();
   noinput;
 
 PROC Q112_PAY_AMT
+preproc
+  if Q112_PAY_SRC = 8 then
+    Q112_PAY_AMT = 0;   { non-money source -> no cost; display-only }
+    noinput;
+  endif;
 postproc
   if Q112_PAY_AMT < 0 then
     errmsg(1167);
     reenter;
   endif;
-  if Q112_PAY_SRC <> 1 and Q112_PAY_SRC <> 2 and Q112_PAY_SRC <> 3 and Q112_PAY_SRC <> 4 and Q112_PAY_SRC <> 5 and Q112_PAY_SRC <> 6 and Q112_PAY_SRC <> 7 and Q112_PAY_SRC <> 9 and Q112_PAY_AMT <> 0 then
+  if (Q112_PAY_SRC = 8) and Q112_PAY_AMT <> 0 then
     errmsg(1168);
     Q112_PAY_AMT = 0;
-  endif;
-  if (Q112_PAY_SRC = 1 or Q112_PAY_SRC = 2 or Q112_PAY_SRC = 3 or Q112_PAY_SRC = 4 or Q112_PAY_SRC = 5 or Q112_PAY_SRC = 6 or Q112_PAY_SRC = 7 or Q112_PAY_SRC = 9) and Q112_PAY_AMT = 0 then
-    errmsg(1169);
-    reenter;
   endif;
 
 PROC Q112_PAY_OTHER_TXT
@@ -3042,10 +3107,6 @@ PROC Q113_PAY_AMT
 postproc
   if Q113_PAY_AMT < 0 then
     errmsg(1172);
-    reenter;
-  endif;
-  if Q113_PAY_AMT = 0 then
-    errmsg(1173);
     reenter;
   endif;
 
@@ -3687,6 +3748,13 @@ postproc
 
 { ---- Payment-matrix '>=1 ticked' (#555/#556/#557) ---- }
 { ---- Range + cross-field validations (spec §3.6-§3.13) ---- }
+PROC Q18_INCOME_AMOUNT
+postproc
+  if Q18_INCOME_AMOUNT <> -98 and Q18_INCOME_AMOUNT <> -99 and (Q18_INCOME_AMOUNT < 0 or Q18_INCOME_AMOUNT > 99999999) then
+    errmsg(1238);
+    reenter;
+  endif;
+
 PROC Q58_WAIT_DAYS
 postproc
   if (Q58_WAIT_DAYS < 0 or Q58_WAIT_DAYS > 365) then
@@ -3796,9 +3864,78 @@ postproc
     reenter;
   endif;
 
+PROC DATE_FIRST_VISITED_DISP
+preproc
+  numeric dfY; numeric dfM; numeric dfD;
+  if DATE_FIRST_VISITED = notappl then
+    DATE_FIRST_VISITED_DISP = "";
+  else
+    dfY = int(DATE_FIRST_VISITED / 10000);
+    dfM = int(DATE_FIRST_VISITED / 100) - dfY * 100;
+    dfD = DATE_FIRST_VISITED - int(DATE_FIRST_VISITED / 100) * 100;
+    DATE_FIRST_VISITED_DISP = concat(edit("99", dfM), "/", edit("99", dfD), "/", edit("9999", dfY));
+  endif;
+  noinput;
+
+PROC DATE_FINAL_VISIT_DISP
+preproc
+  numeric dvY; numeric dvM; numeric dvD;
+  if DATE_FINAL_VISIT = notappl then
+    DATE_FINAL_VISIT_DISP = "";
+  else
+    dvY = int(DATE_FINAL_VISIT / 10000);
+    dvM = int(DATE_FINAL_VISIT / 100) - dvY * 100;
+    dvD = DATE_FINAL_VISIT - int(DATE_FINAL_VISIT / 100) * 100;
+    DATE_FINAL_VISIT_DISP = concat(edit("99", dvM), "/", edit("99", dvD), "/", edit("9999", dvY));
+  endif;
+  noinput;
+
+PROC DATE_FIRST_VISITED
+postproc
+  numeric fvMM; numeric fvDD; numeric fvYY; numeric fvHead;
+  if DATE_FIRST_VISITED <> notappl then
+    fvMM   = int(DATE_FIRST_VISITED / 1000000);
+    fvHead = int(DATE_FIRST_VISITED / 10000);
+    if fvMM >= 1 and fvMM <= 12 then
+      fvDD = fvHead - fvMM * 100;
+      fvYY = DATE_FIRST_VISITED - fvHead * 10000;
+      if fvDD < 1 or fvDD > 31 or fvYY < 2020 or fvYY > 2035 then
+        errmsg(1268);
+        reenter;
+      endif;
+      DATE_FIRST_VISITED = fvYY * 10000 + fvMM * 100 + fvDD;
+    else
+      if fvHead < 2020 or fvHead > 2035 then
+        errmsg(1268);
+        reenter;
+      endif;
+    endif;
+  endif;
+
 PROC DATE_FINAL_VISIT
 postproc
-  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then
+  numeric lvMM; numeric lvDD; numeric lvYY; numeric lvHead;
+  if DATE_FINAL_VISIT <> notappl then
+    lvMM   = int(DATE_FINAL_VISIT / 1000000);
+    lvHead = int(DATE_FINAL_VISIT / 10000);
+    if lvMM >= 1 and lvMM <= 12 then
+      lvDD = lvHead - lvMM * 100;
+      lvYY = DATE_FINAL_VISIT - lvHead * 10000;
+      if lvDD < 1 or lvDD > 31 or lvYY < 2020 or lvYY > 2035 then
+        errmsg(1268);
+        reenter;
+      endif;
+      DATE_FINAL_VISIT = lvYY * 10000 + lvMM * 100 + lvDD;
+    else
+      if lvHead < 2020 or lvHead > 2035 then
+        errmsg(1268);
+        reenter;
+      endif;
+    endif;
+  endif;
+  { conversion above runs FIRST so both sides below are YYYYMMDD. The notappl guards
+    match F1: without them a blank final date (single visit) false-fires this. }
+  if DATE_FINAL_VISIT <> notappl and DATE_FIRST_VISITED <> notappl and DATE_FINAL_VISIT < DATE_FIRST_VISITED then
     errmsg(1229);
     reenter;
   endif;

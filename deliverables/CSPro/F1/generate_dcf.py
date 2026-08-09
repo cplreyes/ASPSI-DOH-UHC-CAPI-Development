@@ -113,14 +113,19 @@ def build_field_control():
         alpha("ENUMERATOR_S_NAME",              "Enumerator's Name",                            length=50),
         alpha("FIELD_VALIDATED_BY",             "Field Validated by",                           length=50),
         alpha("FIELD_EDITED_BY",                "Field Edited by",                              length=50),
+        # #1132 (ASPSI 2026-08-06, Carl 2026-08-09): the ENUMERATOR now types MMDDYYYY,
+        # matching the paper. STORAGE is still YYYYMMDD — generate_apc's postproc converts
+        # on exit — so dates stay sortable, the final<first check keeps working, and the
+        # Supervisor App / F3 / F4 stored composition is unchanged. Only the typed order
+        # and this prompt moved; nothing downstream sees a different value.
         numeric("DATE_FIRST_VISITED_THE_FACILITY",
-                "Date First Visited the Facility (YYYYMMDD)", length=8),
+                "Date First Visited the Facility (MMDDYYYY)", length=8),
         # #1099 F4-parity (2026-08-05): read-only MM/DD/YYYY echo under each visit
-        # date (computed in logic, noinput). Date capture format stays YYYYMMDD —
-        # it defines the STORED composition (Supervisor App + F3/F4 parity).
+        # date (computed in logic, noinput). Kept deliberately under #1132 — it is now
+        # the enumerator's confirmation that their MMDDYYYY entry parsed correctly.
         alpha("DATE_FIRST_VISITED_DISP", "Date First Visited (MM/DD/YYYY)", length=10),
         numeric("DATE_OF_FINAL_VISIT_TO_THE_FACILITY",
-                "Date of Final Visit to the Facility (YYYYMMDD)", length=8),
+                "Date of Final Visit to the Facility (MMDDYYYY)", length=8),
         alpha("DATE_FINAL_VISIT_DISP", "Date of Final Visit (MM/DD/YYYY)", length=10),
         numeric("TOTAL_NUMBER_OF_VISITS",       "Total Number of Visits",                       length=3),
         # Result-of-Visit codes come from cspro_helpers (ENUM_RESULT_OPTIONS_F1) so F1 cannot

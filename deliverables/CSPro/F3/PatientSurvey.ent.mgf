@@ -13,87 +13,64 @@ Language = EN
 1009 Q147: list the medications taken (type 'None' if the patient takes none) — required.
 1010 Q156: list the medicines obtained from GAMOT — required when Q155 = Yes.
 1011 Tick at least one medical condition (or 'No condition - Regular check-up only').
-1012 "'No condition - Regular check-up only' is usually the only choice — please review the conditions ticked."
 1013 "'Other (specify)' was ticked for Q148 — please specify."
 1014 Select at least one option for Q100 before continuing.
-1015 Q100: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1016 "'Other (specify)' was ticked for Q100 - please specify."
 1017 Select at least one option for Q101 before continuing.
 1018 "'Other (specify)' was ticked for Q101 - please specify."
 1019 Select at least one option for Q103 before continuing.
-1020 Q103: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1021 "'Other (specify)' was ticked for Q103 - please specify."
 1022 Select at least one option for Q114 before continuing.
 1023 "'Other (specify)' was ticked for Q114 - please specify."
 1024 Select at least one option for Q117 before continuing.
-1025 Q117: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1026 "'Other (specify)' was ticked for Q117 - please specify."
 1027 Select at least one option for Q118 before continuing.
-1028 Q118: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1029 "'Other (specify)' was ticked for Q118 - please specify."
 1030 Select at least one option for Q120 before continuing.
-1031 Q120: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1032 "'Other (specify)' was ticked for Q120 - please specify."
 1033 Select at least one option for Q121 before continuing.
-1034 Q121: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1035 "'Other (specify)' was ticked for Q121 - please specify."
 1036 Select at least one option for Q125 before continuing.
-1037 Q125: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1038 "'Other (specify)' was ticked for Q125 - please specify."
 1039 Select at least one option for Q128 before continuing.
-1040 Q128: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1041 "'Other (specify)' was ticked for Q128 - please specify."
 1042 Select at least one option for Q129 before continuing.
 1043 "'Other (specify)' was ticked for Q129 - please specify."
 1044 Select at least one option for Q149 before continuing.
 1045 "'Other (specify)' was ticked for Q149 - please specify."
 1046 Select at least one option for Q153 before continuing.
-1047 Q153: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1048 "'Other (specify)' was ticked for Q153 - please specify."
 1049 Select at least one option for Q154 before continuing.
-1050 Q154: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1051 "'Other (specify)' was ticked for Q154 - please specify."
 1052 Select at least one option for Q157 before continuing.
-1053 Q157: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1054 "'Other (specify)' was ticked for Q157 - please specify."
 1055 Select at least one option for Q160 before continuing.
-1056 Q160: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1057 "'Other (specify)' was ticked for Q160 - please specify."
 1058 Select at least one option for Q161 before continuing.
-1059 Q161: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1060 "'Other (specify)' was ticked for Q161 - please specify."
 1061 Select at least one option for Q163 before continuing.
-1062 Q163: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1063 "'Other (specify)' was ticked for Q163 - please specify."
 1064 Select at least one option for Q171 before continuing.
 1065 "'Other (specify)' was ticked for Q171 - please specify."
 1066 Select at least one option for Q177 before continuing.
-1067 Q177: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1068 "'Other (specify)' was ticked for Q177 - please specify."
 1069 Select at least one option for Q36 before continuing.
-1070 Q36: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1071 "'Other (specify)' was ticked for Q36 - please specify."
 1072 Select at least one option for Q37 before continuing.
-1073 Q37: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1074 "'Other (specify)' was ticked for Q37 - please specify."
 1075 Select at least one option for Q38 before continuing.
 1076 "'Other (specify)' was ticked for Q38 - please specify."
 1077 Select at least one option for Q42 before continuing.
-1078 Q42: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1079 "'Other (specify)' was ticked for Q42 - please specify."
 1080 Select at least one option for Q46 before continuing.
-1081 Q46: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1082 "'Other (specify)' was ticked for Q46 - please specify."
 1083 Select at least one option for Q50 before continuing.
-1084 Q50: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1085 "'Other (specify)' was ticked for Q50 - please specify."
 1086 Select at least one option for Q52 before continuing.
-1087 Q52: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1088 "'Other (specify)' was ticked for Q52 - please specify."
 1089 Select at least one option for Q59 before continuing.
 1090 Select at least one option for Q61 before continuing.
 1091 Select at least one option for Q65 before continuing.
-1092 Q65: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1093 "'Other (specify)' was ticked for Q65 - please specify."
 1094 Select at least one option for Q67 before continuing.
 1095 "'Other (specify)' was ticked for Q67 - please specify."
@@ -102,17 +79,13 @@ Language = EN
 1098 Select at least one option for Q73 before continuing.
 1099 "'Other (specify)' was ticked for Q73 - please specify."
 1100 Select at least one option for Q75 before continuing.
-1101 Q75: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1102 "'Other (specify)' was ticked for Q75 - please specify."
 1103 Select at least one option for Q76 before continuing.
-1104 Q76: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1105 "'Other (specify)' was ticked for Q76 - please specify."
 1106 Select at least one option for Q82 before continuing.
-1107 Q82: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1108 "'Other (specify)' was ticked for Q82 - please specify."
 1109 Select at least one option for Q85 before continuing.
 1110 Q83 = general check-up but Q85 is not 'No condition / regular check-up only' — confirm.
-1111 "'No condition - Regular check-up only' was ticked with other condition(s) — it should usually be the only choice. Please review."
 1112 "'Other (specify)' was ticked for Q85 - please specify."
 1113 Select at least one option for Q86 before continuing.
 1114 "'Other (specify)' was ticked for Q86 - please specify."
@@ -122,7 +95,6 @@ Language = EN
 1118 Select at least one option for Q90 before continuing.
 1119 "'Other (specify)' was ticked for Q90 - please specify."
 1120 Select at least one option for Q93 before continuing.
-1121 Q93: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.
 1122 "'Other (specify)' was ticked for Q93 - please specify."
 1123 Birth month must be 1-12.
 1124 Birth year must be between 1900 and %d.
@@ -147,34 +119,27 @@ Language = EN
 1143 96. Tick at least one payment source for the prescribed medicines before continuing.
 1144 96. Amount cannot be negative.
 1145 96. This source has no out-of-pocket cost — amount reset to 0.
-1146 96. Please enter an amount greater than 0 — you selected this as a paid source/item.
 1147 97.2 Tick at least one expense item before continuing (or correct Q97 if none).
 1148 972. Amount cannot be negative.
-1149 972. Please enter an amount greater than 0 — you selected this as a paid source/item.
 1150 97.2 'Other expenses' was ticked — please specify.
 1151 98. Tick at least one source of money used to pay for the medical costs before continuing.
 1152 98. Amount cannot be negative.
-1153 98. Please enter an amount greater than 0 — you selected this as a paid source/item.
 1154 "'Other Donation/Charity/Assistance' was selected in Q98. Please specify."
 1155 "'Other (specify)' was selected in Q98. Please specify."
 1156 107. Tick at least one payment source for the total bill before continuing.
 1157 107. Amount cannot be negative.
 1158 107. This source has no out-of-pocket cost — amount reset to 0.
-1159 107. Please enter an amount greater than 0 — you selected this as a paid source/item.
 1160 107. 'Other' was ticked — please specify.
 1161 109. Tick at least one payment source for the medicines bought outside before continuing.
 1162 109. Amount cannot be negative.
 1163 109. This source has no out-of-pocket cost — amount reset to 0.
-1164 109. Please enter an amount greater than 0 — you selected this as a paid source/item.
 1165 109. 'Other' was ticked — please specify.
 1166 112. Tick at least one payment source for the services done outside before continuing.
 1167 112. Amount cannot be negative.
 1168 112. This source has no out-of-pocket cost — amount reset to 0.
-1169 112. Please enter an amount greater than 0 — you selected this as a paid source/item.
 1170 112. 'Other' was ticked — please specify.
 1171 113. Tick at least one payment source for the hospital bill before continuing.
 1172 113. Amount cannot be negative.
-1173 113. Please enter an amount greater than 0 — you selected this as a paid source/item.
 1174 113. 'Other (specify)' was ticked — please specify.
 1175 "'Other' was selected for Q104_WITHOUT_BUCAS but no text was entered. Please specify."
 1176 "'Other' was selected for Q105_REASON but no text was entered. Please specify."
@@ -239,3 +204,34 @@ Language = EN
 1235 Q29 = socio-economic Class A/B but income is in the lowest bracket — confirm.
 1236 Q29 = socio-economic Class D/E but income is in a high bracket — confirm.
 1237 No GPS fix after %d s — move near a window or doorway and re-enter this field to retry.
+1238 Q18_INCOME_AMOUNT must be between 0 and 99999999 (or -98 don't-know / -99 refused).
+1239 Q100: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1240 Q103: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1241 Q117: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1242 Q118: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1243 Q120: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1244 Q121: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1245 Q125: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1246 Q128: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1247 Q153: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1248 Q154: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1249 Q157: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1250 Q160: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1251 Q161: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1252 Q163: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1253 Q177: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1254 Q36: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1255 Q37: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1256 Q42: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1257 Q46: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1258 Q50: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1259 Q52: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1260 Q65: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1261 Q75: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1262 Q76: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1263 Q82: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1264 "'No condition - Regular check-up only' must be the only choice — untick it or the other conditions before continuing."
+1265 Q90: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1266 Q93: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
+1267 107. 'Don't know' must be the only payment source — untick it or the other sources before continuing.
+1268 Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.

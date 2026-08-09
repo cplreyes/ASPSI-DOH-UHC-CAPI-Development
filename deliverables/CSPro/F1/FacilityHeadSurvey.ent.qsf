@@ -139,21 +139,21 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>Date First Visited the Facility (YYYYMMDD)</p>
+            <p>Date First Visited the Facility (MMDDYYYY)</p>
           FIL: |
-            <p>Date First Visited the Facility (YYYYMMDD)</p>
+            <p>Date First Visited the Facility (MMDDYYYY)</p>
           BCL: |
-            <p>Date First Visited the Facility (YYYYMMDD)</p>
+            <p>Date First Visited the Facility (MMDDYYYY)</p>
           BIS: |
-            <p>Date First Visited the Facility (YYYYMMDD)</p>
+            <p>Date First Visited the Facility (MMDDYYYY)</p>
           CEB: |
-            <p>Date First Visited the Facility (YYYYMMDD)</p>
+            <p>Date First Visited the Facility (MMDDYYYY)</p>
           WAR: |
-            <p>Date First Visited the Facility (YYYYMMDD)</p>
+            <p>Date First Visited the Facility (MMDDYYYY)</p>
           HIL: |
-            <p>Date First Visited the Facility (YYYYMMDD)</p>
+            <p>Date First Visited the Facility (MMDDYYYY)</p>
           ILO: |
-            <p>Date First Visited the Facility (YYYYMMDD)</p>
+            <p>Date First Visited the Facility (MMDDYYYY)</p>
   - name: FACILITYHEADSURVEY_DICT.DATE_FIRST_VISITED_DISP
     conditions:
       - questionText:
@@ -177,21 +177,21 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>Date of Final Visit to the Facility (YYYYMMDD)</p>
+            <p>Date of Final Visit to the Facility (MMDDYYYY)</p>
           FIL: |
-            <p>Date of Final Visit to the Facility (YYYYMMDD)</p>
+            <p>Date of Final Visit to the Facility (MMDDYYYY)</p>
           BCL: |
-            <p>Date of Final Visit to the Facility (YYYYMMDD)</p>
+            <p>Date of Final Visit to the Facility (MMDDYYYY)</p>
           BIS: |
-            <p>Date of Final Visit to the Facility (YYYYMMDD)</p>
+            <p>Date of Final Visit to the Facility (MMDDYYYY)</p>
           CEB: |
-            <p>Date of Final Visit to the Facility (YYYYMMDD)</p>
+            <p>Date of Final Visit to the Facility (MMDDYYYY)</p>
           WAR: |
-            <p>Date of Final Visit to the Facility (YYYYMMDD)</p>
+            <p>Date of Final Visit to the Facility (MMDDYYYY)</p>
           HIL: |
-            <p>Date of Final Visit to the Facility (YYYYMMDD)</p>
+            <p>Date of Final Visit to the Facility (MMDDYYYY)</p>
           ILO: |
-            <p>Date of Final Visit to the Facility (YYYYMMDD)</p>
+            <p>Date of Final Visit to the Facility (MMDDYYYY)</p>
   - name: FACILITYHEADSURVEY_DICT.DATE_FINAL_VISIT_DISP
     conditions:
       - questionText:

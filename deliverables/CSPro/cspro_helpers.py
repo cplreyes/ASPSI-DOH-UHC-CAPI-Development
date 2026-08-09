@@ -382,8 +382,25 @@ def _case_control_items(survey_code):
     return []
 
 
+def _date_fmt(mmddyyyy):
+    """Prompt suffix for the two visit-date fields.
+
+    #1132/#1174 (ASPSI 2026-08-06): the paper asks the enumerator for MMDDYYYY, the CAPI
+    asked for YYYYMMDD. Opting an instrument in flips only the PROMPT — the value is
+    converted back to YYYYMMDD in that instrument's date postproc, so STORAGE never
+    changes and every downstream consumer (final<first check, MM/DD/YYYY echo, Supervisor
+    App, cross-instrument parsers) is untouched.
+
+    Opt-in per instrument ON PURPOSE, and it is not cosmetic: flipping this without also
+    adding the conversion postproc would have enumerators typing MMDDYYYY into a field
+    stored raw as YYYYMMDD, silently corrupting every date. Only flip it together with
+    that PROC.
+    """
+    return "MMDDYYYY" if mmddyyyy else "YYYYMMDD"
+
+
 def build_field_control(survey_code, extra_items=None, date_label_entity="the Facility",
-                        result_options=None, date_display=False):
+                        result_options=None, date_display=False, date_mmddyyyy=False):
     """Build a FIELD_CONTROL record (record type "A").
 
     Parameters
@@ -419,16 +436,16 @@ def build_field_control(survey_code, extra_items=None, date_label_entity="the Fa
         alpha("FIELD_VALIDATED_BY",        "Field Validated by",          length=50),
         alpha("FIELD_EDITED_BY",           "Field Edited by",             length=50),
         numeric("DATE_FIRST_VISITED",
-                f"Date First Visited {date_label_entity} (YYYYMMDD)", length=8),
+                f"Date First Visited {date_label_entity} ({_date_fmt(date_mmddyyyy)})", length=8),
         # #1099 (F4 pretest): optional read-only MM/DD/YYYY echo under each date.
-        # The Date capture format must stay YYYYMMDD (it also defines the STORED
-        # composition — Supervisor App + cross-instrument parsers depend on it), so
-        # the display-format ask is met with a computed noinput echo field instead.
-        # Opt-in per instrument (date_display=True); F4 first, F1/F3 at their next builds.
+        # The STORED composition is always YYYYMMDD (Supervisor App + cross-instrument
+        # parsers depend on it). Under #1132/#1174 the TYPED order may now differ from
+        # the stored one — see date_mmddyyyy — which makes this echo the enumerator's
+        # confirmation that their entry parsed correctly. Opt-in (date_display=True).
         *([alpha("DATE_FIRST_VISITED_DISP",
                  "Date First Visited (MM/DD/YYYY)", length=10)] if date_display else []),
         numeric("DATE_FINAL_VISIT",
-                f"Date of Final Visit to {date_label_entity} (YYYYMMDD)", length=8),
+                f"Date of Final Visit to {date_label_entity} ({_date_fmt(date_mmddyyyy)})", length=8),
         *([alpha("DATE_FINAL_VISIT_DISP",
                  "Date of Final Visit (MM/DD/YYYY)", length=10)] if date_display else []),
         numeric("TOTAL_NUMBER_OF_VISITS",  "Total Number of Visits",      length=3),

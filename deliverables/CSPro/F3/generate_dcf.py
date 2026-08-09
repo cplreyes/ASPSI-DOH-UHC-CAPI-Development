@@ -194,7 +194,11 @@ def build_f3_field_control():
                     ("Partial / not completed", "2"),
                 ]),
     ]
+    # date_mmddyyyy: #1174 — enumerator types the paper's MMDDYYYY; storage stays YYYYMMDD
+    # (converted in generate_apc's DATE_FIRST_VISITED / DATE_FINAL_VISIT postprocs). Never
+    # flip this flag without that PROC — see cspro_helpers._date_fmt.
     return build_field_control(survey_code="F3", date_display=True,   # #1099 F4-parity MM/DD/YYYY echo
+                               date_mmddyyyy=True,
                                extra_items=extra + derived_geo_code_items(),
                                date_label_entity="the Patient",
                                result_options=ENUM_RESULT_OPTIONS_F3)
@@ -685,14 +689,18 @@ def build_section_d():
         # #764: Q38.1 asked ONLY when Q38 = Yes (apc preproc gate skips it otherwise);
         # after it, flow falls through to Q39. SELECT ONE ANSWER ONLY.
         select_one("Q38_1_PIN_WHEN",
-                   "38.1. When did you register and receive your PhilHealth PIN? "
-                   "(Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                   # #1136: "(Only answer if 'Yes' in Q38.)" was CAPI-programming
+                   # guidance leaking into the question - the gate is automated in
+                   # PROC Q38_1_PIN_WHEN, so it is deleted. "SELECT ONE ANSWER ONLY."
+                   # moves to INSTRUCTIONS_BY_NAME (blue note), not lost.
+                   "38.1. When did you register and receive your PhilHealth PIN?",
                    Q38_1_WHEN, length=1),
         # #764: Q38.2 asked ONLY when Q38 = No (CHECKBOX_CONVERT gate); after it, skip to Q43.
         # READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.
         *checkbox_multiselect("Q38_2_WHY_NOT_REG",
-                    "38.2. Why are you not registered? READ OPTIONS OUT LOUD. "
-                    "SELECT ALL THAT APPLY.",
+                    # #1137: the read-aloud instruction moved to INSTRUCTIONS_BY_NAME so it
+                    # renders as a blue note instead of part of the question stem.
+                    "38.2. Why are you not registered?",
                     _cb_codes(Q38_2_WHY_NOT), with_other_txt=True),
         select_one("Q39_HOW_FIND_OUT",
                    "39. How did you find out about how to register for PhilHealth?",
@@ -1562,7 +1570,9 @@ def build_section_h():
                        "113. Hospital bill payment — Other specify text", length=120))
     items.extend([
         *checkbox_multiselect("Q114_NO_PH",   # #694: select_all -> Check Box (tick-all)
-                    "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113)",
+                    # #1159: "(If PhilHealth was not availed in 113)" was CAPI-
+                    # programming guidance; the gate lives in the Q114 checkbox PROC.
+                    "114. Why did you not avail of PhilHealth benefits?",
                     _cb_codes(Q114_NO_PH), with_other_txt=True),
     ])
     # Q115 final cash first, then the 115.1/115.2 breakdowns sit UNDER it (#517 — mirrors

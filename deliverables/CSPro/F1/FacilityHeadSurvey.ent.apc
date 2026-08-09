@@ -520,8 +520,50 @@ preproc
   endif;
   noinput;
 
+PROC DATE_FIRST_VISITED_THE_FACILITY
+postproc
+  numeric fvMM; numeric fvDD; numeric fvYY; numeric fvHead;
+  if DATE_FIRST_VISITED_THE_FACILITY <> notappl then
+    fvMM   = int(DATE_FIRST_VISITED_THE_FACILITY / 1000000);
+    fvHead = int(DATE_FIRST_VISITED_THE_FACILITY / 10000);
+    if fvMM >= 1 and fvMM <= 12 then
+      fvDD = fvHead - fvMM * 100;
+      fvYY = DATE_FIRST_VISITED_THE_FACILITY - fvHead * 10000;
+      if fvDD < 1 or fvDD > 31 or fvYY < 2020 or fvYY > 2035 then
+        errmsg(1225);
+        reenter;
+      endif;
+      DATE_FIRST_VISITED_THE_FACILITY = fvYY * 10000 + fvMM * 100 + fvDD;
+    else
+      if fvHead < 2020 or fvHead > 2035 then
+        errmsg(1225);
+        reenter;
+      endif;
+    endif;
+  endif;
+
 PROC DATE_OF_FINAL_VISIT_TO_THE_FACILITY
 postproc
+  numeric lvMM; numeric lvDD; numeric lvYY; numeric lvHead;
+  if DATE_OF_FINAL_VISIT_TO_THE_FACILITY <> notappl then
+    lvMM   = int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 1000000);
+    lvHead = int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 10000);
+    if lvMM >= 1 and lvMM <= 12 then
+      lvDD = lvHead - lvMM * 100;
+      lvYY = DATE_OF_FINAL_VISIT_TO_THE_FACILITY - lvHead * 10000;
+      if lvDD < 1 or lvDD > 31 or lvYY < 2020 or lvYY > 2035 then
+        errmsg(1225);
+        reenter;
+      endif;
+      DATE_OF_FINAL_VISIT_TO_THE_FACILITY = lvYY * 10000 + lvMM * 100 + lvDD;
+    else
+      if lvHead < 2020 or lvHead > 2035 then
+        errmsg(1225);
+        reenter;
+      endif;
+    endif;
+  endif;
+  { conversion above runs FIRST so both sides of this comparison are YYYYMMDD }
   if DATE_OF_FINAL_VISIT_TO_THE_FACILITY <> notappl and DATE_FIRST_VISITED_THE_FACILITY <> notappl and DATE_OF_FINAL_VISIT_TO_THE_FACILITY < DATE_FIRST_VISITED_THE_FACILITY then
     errmsg(1008);
     reenter;

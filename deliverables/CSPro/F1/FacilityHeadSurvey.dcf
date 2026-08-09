@@ -332,35 +332,35 @@
               "name": "DATE_FIRST_VISITED_THE_FACILITY",
               "labels": [
                 {
-                  "text": "Date First Visited the Facility (YYYYMMDD)",
+                  "text": "Date First Visited the Facility (MMDDYYYY)",
                   "language": "EN"
                 },
                 {
-                  "text": "Date First Visited the Facility (YYYYMMDD)",
+                  "text": "Date First Visited the Facility (MMDDYYYY)",
                   "language": "FIL"
                 },
                 {
-                  "text": "Date First Visited the Facility (YYYYMMDD)",
+                  "text": "Date First Visited the Facility (MMDDYYYY)",
                   "language": "BCL"
                 },
                 {
-                  "text": "Date First Visited the Facility (YYYYMMDD)",
+                  "text": "Date First Visited the Facility (MMDDYYYY)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Date First Visited the Facility (YYYYMMDD)",
+                  "text": "Date First Visited the Facility (MMDDYYYY)",
                   "language": "CEB"
                 },
                 {
-                  "text": "Date First Visited the Facility (YYYYMMDD)",
+                  "text": "Date First Visited the Facility (MMDDYYYY)",
                   "language": "WAR"
                 },
                 {
-                  "text": "Date First Visited the Facility (YYYYMMDD)",
+                  "text": "Date First Visited the Facility (MMDDYYYY)",
                   "language": "HIL"
                 },
                 {
-                  "text": "Date First Visited the Facility (YYYYMMDD)",
+                  "text": "Date First Visited the Facility (MMDDYYYY)",
                   "language": "ILO"
                 }
               ],
@@ -411,35 +411,35 @@
               "name": "DATE_OF_FINAL_VISIT_TO_THE_FACILITY",
               "labels": [
                 {
-                  "text": "Date of Final Visit to the Facility (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Facility (MMDDYYYY)",
                   "language": "EN"
                 },
                 {
-                  "text": "Date of Final Visit to the Facility (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Facility (MMDDYYYY)",
                   "language": "FIL"
                 },
                 {
-                  "text": "Date of Final Visit to the Facility (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Facility (MMDDYYYY)",
                   "language": "BCL"
                 },
                 {
-                  "text": "Date of Final Visit to the Facility (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Facility (MMDDYYYY)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Date of Final Visit to the Facility (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Facility (MMDDYYYY)",
                   "language": "CEB"
                 },
                 {
-                  "text": "Date of Final Visit to the Facility (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Facility (MMDDYYYY)",
                   "language": "WAR"
                 },
                 {
-                  "text": "Date of Final Visit to the Facility (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Facility (MMDDYYYY)",
                   "language": "HIL"
                 },
                 {
-                  "text": "Date of Final Visit to the Facility (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Facility (MMDDYYYY)",
                   "language": "ILO"
                 }
               ],

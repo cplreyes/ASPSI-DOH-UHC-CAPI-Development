@@ -55,6 +55,30 @@ STYLES = """styles:
       font-family: Arial;font-size: 18px;"""
 
 
+# #1142/#1144/#1145/#1155 — split-component questions whose two items share one
+# DisplayTogether screen. The dict label carries a component suffix ("... — Hours")
+# so the two variables stay distinguishable in the exported data and the codebook,
+# but on screen that suffix labels the BLOCK, not one box, and the on-form labels
+# ("Number of Hour(s)" / "Number of Minute(s)", set in generate_fmf.py) already say
+# which is which. Strip it from the question bar so the stem reads once, cleanly.
+_COMPONENT_SUFFIX_ITEMS = {
+    "Q58_WAIT_DAYS", "Q58_WAIT_MINUTES",
+    "Q69_USUAL_TRAVEL_HH", "Q69_USUAL_TRAVEL_MM",
+    "Q72_NEAREST_TRAVEL_HH", "Q72_NEAREST_TRAVEL_MM",
+    "Q106_NIGHTS", "Q106_DAYS",
+}
+_COMPONENT_SUFFIX_RE = re.compile(
+    r"\s*[\u2014\u2013-]\s*(?:Hours?|Minutes?|Nights?|Days?)\s*$", re.I)
+
+
+def _strip_component_suffix(nm, text):
+    """Drop a trailing '— Hours' / '— Minutes' / '— Nights' / '— Days' from the
+    question-bar text of a split-component item. Dict labels are untouched."""
+    if nm in _COMPONENT_SUFFIX_ITEMS:
+        return _COMPONENT_SUFFIX_RE.sub("", text or "")
+    return text
+
+
 def _html(text):
     t = (text or "").replace("\n", " ").replace("\r", " ").strip()
     t = t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
@@ -235,6 +259,12 @@ INSTRUCTIONS = {
 # multi-field question, where the paper-number key would spray the note across
 # every Q<n>_* field (#1048 Q18, #1062 Q150). Wins over the number-keyed map.
 INSTRUCTIONS_BY_NAME = {
+    # #1136/#1137 (ASPSI 2026-08-06): these enumerator instructions used to sit
+    # INSIDE the dictionary label, so they rendered as part of the question stem.
+    # Moved here so they emit as <p class="instruction"> (the blue note), matching
+    # how Q36 and the rest of the instrument already do it.
+    "Q38_1_PIN_WHEN": "SELECT ONE ANSWER ONLY.",
+    "Q38_2_WHY_NOT_REG": "READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
     "Q18_INCOME_BRACKET": ("Enumerator note: Select the income category that "
                            "corresponds to the respondent’s approximate household "
                            "income."),   # #1048: bracket only + "tick" -> "Select"
@@ -460,7 +490,8 @@ def main():
                         body = ov
                     else:
                         pre, post = build_extras(*extras, lnm)
-                        body = pre + _html(labmap.get(lnm) or en) + post
+                        body = pre + _html(_strip_component_suffix(
+                            nm, labmap.get(lnm) or en)) + post
                     body = _pipe_fills(body)
                     body = _pay_amt_source_context(nm) + body   # #750 source/item context
                     lines += [f"          {lnm}: |", f"            {body}"]
