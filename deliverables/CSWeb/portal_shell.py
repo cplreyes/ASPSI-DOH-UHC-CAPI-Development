@@ -55,7 +55,19 @@ def _ico(d):
 
 # Navigation model — identical structure to the portal. Hrefs are stored
 # project-relative / site-absolute; a `base` prefix (e.g. the portal origin)
-# is applied at render time so the same nav works when served from csweb.
+# is applied at render time so the same nav works when served off-origin.
+#
+# The fourth slot is the permission acl.php requires for that path, or "" for
+# entries any signed-in account may open. It used to hold the literal string
+# "lock", which rendered a padlock on three entries regardless of who was
+# looking — decorative, and misleading once the whole portal became gated on
+# 2026-07-28. Now it drives data-perm, and PERM_DIM_JS dims what YOUR account
+# cannot open.
+#
+# Admin console deliberately still points at /docs/admin/ — the portal URL
+# /projects/uhc-y2/admin/ only starts existing when its nginx proxy lands
+# (unification Slice 5), and a nav link must never point at a 404. Flip the
+# href and the emit_php_partial default together in that slice.
 _NAV = [
     ("Project", [
         ("Overview", P + "/", _ico('<path d="M3 10.5 12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'), ""),
@@ -64,13 +76,13 @@ _NAV = [
         ("Manual", P + "/manual/", _ico('<path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v6h6"/>'), ""),
     ]),
     ("Operations", [
-        ("Monitoring", P + "/monitoring/", _ico('<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'), "lock"),
-        ("Data &amp; exports", P + "/data/", _ico('<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>'), "lock"),
-        ("Tabulations", P + "/tabulations/", _ico('<path d="M3 5h18v14H3z"/><path d="M3 10h18M9 5v14M15 5v14"/>'), ""),
+        ("Monitoring", P + "/monitoring/", _ico('<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'), "monitoring.view"),
+        ("Data &amp; exports", P + "/data/", _ico('<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>'), "data.export"),
+        ("Tabulations", P + "/tabulations/", _ico('<path d="M3 5h18v14H3z"/><path d="M3 10h18M9 5v14M15 5v14"/>'), "tabulations.view"),
         ("Archive", P + "/archive/pretest-2026-07-15/", _ico('<rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><path d="M10 12h4"/>'), ""),
     ]),
     ("Administration", [
-        ("Admin console", "https://capi.asiansocial.org/docs/admin/", _ico('<path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h9M17 17h3"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="17" r="2"/>'), "lock"),
+        ("Admin console", "/docs/admin/", _ico('<path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h9M17 17h3"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="17" r="2"/>'), "admin.system"),
     ]),
     ("Platform", [
         ("All projects", "/projects/", _ico('<path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/>'), ""),
@@ -78,6 +90,11 @@ _NAV = [
         ("About", "/about/", _ico('<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>'), ""),
     ]),
 ]
+
+# href -> required permission, for anything that renders nav links outside
+# sidebar() (tests, and any future consumer that needs the mapping).
+NAV_PERMS = {href: perm for _sec, items in _NAV
+             for _label, href, _icon, perm in items if perm}
 
 
 def _href(h, base):
@@ -98,10 +115,10 @@ def sidebar(active, base=""):
          '<nav class="sb-nav">']
     for sec, items in _NAV:
         o.append('<div class="sb-sec">%s</div>' % sec)
-        for label, href, icon, lock in items:
-            lk = '<span class="lk">&#128274;</span>' if lock else ""
-            o.append('<a class="%s" href="%s">%s<span>%s</span>%s</a>'
-                     % ("on" if href == active else "", _href(href, base), icon, label, lk))
+        for label, href, icon, perm in items:
+            dp = ' data-perm="%s"' % perm if perm else ""
+            o.append('<a class="%s" href="%s"%s>%s<span>%s</span></a>'
+                     % ("on" if href == active else "", _href(href, base), dp, icon, label))
     o.append('</nav><div class="sb-foot">Asian Social Project Services, Inc.<br>'
              '<a href="https://asiansocial.org">asiansocial.org</a>'
              '<div class="sb-powered">Powered by Analytiflow.</div></div></aside>')
@@ -151,31 +168,43 @@ PILL_LIVE = '<span class="pill live"><span class="dot"></span>Fieldwork live</sp
 PILL_LOCK = '<span class="pill lock">&#128274; Sign-in required</span>'
 
 
-def head(title, desc="", extra_css="", robots="noindex"):
-    """<!doctype> through </head>. The design system is inlined; `extra_css`
-    (page-specific styles — dashboard tables, bell, Leaflet overrides) follows
-    it so page rules can layer on the shared tokens."""
+def head(title, desc="", extra_css="", robots="noindex", css="inline"):
+    """<!doctype> through </head>.
+
+    css="inline" bakes portal.css into the document. That was required while
+    the dashboards were served from csweb and the portal from capi — a
+    cross-origin stylesheet would have needed CORS. Everything is same-origin
+    since 2026-07-28, so css="link" is now viable and is what the static
+    portal uses; the on-box generators stay on "inline" so their output is
+    self-contained even if /portal.css is mid-deploy.
+
+    `extra_css` (page-specific styles — dashboard tables, bell, Leaflet
+    overrides) follows the design system so page rules can layer on the
+    shared tokens."""
     extra = ("\n<style>%s</style>" % extra_css) if extra_css else ""
+    sheet = ('<style>%s</style>' % tokens_css()) if css == "inline" \
+        else '<link rel="stylesheet" href="/portal.css">'
     return ('<!doctype html>\n<html lang="en">\n<head>\n'
             '<meta charset="UTF-8">\n'
             '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
             '<meta name="robots" content="%s">\n'
             '<title>%s</title>\n'
             '<meta name="description" content="%s">\n'
-            '<style>%s</style>%s\n'
+            '%s%s\n'
             '<link rel="icon" href="%s">\n'
-            '</head>' % (robots, title, desc, tokens_css(), extra, FAVICON))
+            '</head>' % (robots, title, desc, sheet, extra, FAVICON))
 
 
 def open_shell(title, desc="", active="", crumbs=None, tb_right="",
-               extra_css="", base="", head_extra=""):
+               extra_css="", base="", head_extra="", css="inline"):
     """Everything from <!doctype> to the open of the content canvas.
 
     Pair with close_shell(). `tb_right` fills the topbar's right slot (status
     pill, notification bell, view toggles). `head_extra` injects markup just
-    before </head> (e.g. Leaflet stylesheet links for the map)."""
+    before </head> (e.g. Leaflet stylesheet links for the map). `css` is
+    passed through to head() — see there."""
     crumbs = crumbs or [("ASPSI CAPI", None)]
-    h = head(title, desc, extra_css)
+    h = head(title, desc, extra_css, css=css)
     if head_extra:
         h = h.replace("</head>", head_extra + "\n</head>")
     return ('%s\n<body>\n<div class="app">\n%s\n<div class="main">\n'
