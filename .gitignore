@@ -144,3 +144,13 @@ deliverables/CSWeb/*.sql.gz
 /deliverables/CSPro/supervisor-hub/assignments/pretest-assignments.csv
 /deliverables/CSPro/supervisor-hub/assignments/out-pretest/
 /deliverables/CSPro/supervisor-hub/assignments/pretest-credentials.csv
+
+# Paper-translation extraction (2026-08-03) — derived from the [FOR DOH ONLY]
+# June-5 translated questionnaires, so the raw extraction output stays local.
+deliverables/CSPro/translations-paper-extract/
+
+# capi-portal: build output and the workstation-only source tree (ported pages,
+# 113 crosswalk screenshots, manuals, questionnaires). The build is derived;
+# src/ lives in the main checkout and reaches worktrees via junction.
+deliverables/CSWeb/capi-portal/build/
+deliverables/CSWeb/capi-portal/src/

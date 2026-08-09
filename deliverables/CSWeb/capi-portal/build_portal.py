@@ -33,6 +33,14 @@ Usage:
 """
 import argparse, os, re, shutil, subprocess, sys, datetime
 
+# The shared chrome lives one directory up, beside the on-box generators that
+# also import it. Inserting the parent on sys.path keeps ONE copy of the module
+# rather than a build-time duplicate — a duplicate is how portal.css drifted
+# between 2026-07-28 and 2026-08-09 (the portal copy missed the mobile topbar
+# fix and every /projects/ page scrolled sideways on a phone).
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import portal_shell as PS
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, "src")
 CSWEB_SRC = os.path.join(SRC, "csweb")
@@ -105,37 +113,9 @@ PORTAL_BAR = (
 
 
 # ---------------------------------------------------------------- authored pages
-def shell(title, desc, body, crumb="", active=""):
-    nav = "".join(
-        '<a class="link%s" href="%s">%s</a>' % (" on" if active == k else "", u, t)
-        for k, u, t in (("proj", P + "/", "UHC Survey Y2"),
-                        ("platform", "/platform/", "What we build"),
-                        ("about", "/about/", "About")))
-    return """<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex">
-<title>%s</title>
-<meta name="description" content="%s">
-<link rel="stylesheet" href="/portal.css">
-<link rel="icon" href="data:image/svg+xml,%%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%%3E%%3Crect width='40' height='40' rx='8' fill='%%23046a38'/%%3E%%3Cpath d='M20 9l9 5v12l-9 5-9-5V14z' fill='%%23e5b23b'/%%3E%%3C/svg%%3E">
-</head>
-<body>
-<header><nav class="nav">
-<a class="brand" href="/">ASPSI CAPI<small>capi.asiansocial.org</small></a>%s
-</nav></header>
-%s
-<footer><div class="foot">
-<span>&copy; 2026 Asian Social Project Services, Inc. (ASPSI)</span>
-<span><a href="/">Portal home</a> &middot; <a href="%s/">UHC Survey Y2</a> &middot; <a href="https://asiansocial.org">asiansocial.org</a></span>
-</div></footer>
-</body>
-</html>
-""" % (title, desc, nav, body, P)
-
-
+# (The pre-2026-07-22 "document-site" shell that used to sit here was dead code
+# from the day the admin-portal shell below shadowed it. Deleted 2026-08-09 —
+# a resurrectable third chrome is exactly what the unification removes.)
 def hero(crumb, h1, lead):
     return ('<div class="hero"><div class="hero-inner"><div class="crumb">%s</div>'
             '<h1>%s</h1><p class="lead">%s</p></div></div>' % (crumb, h1, lead))
@@ -602,13 +582,31 @@ def official_manual_index():
 def main():
     ap = argparse.ArgumentParser(description="Build the capi.asiansocial.org portal.")
     ap.add_argument("--deploy", action="store_true", help="rsync build/ to the capi-www docroot")
+    ap.add_argument("--check", action="store_true",
+                    help="assert the shared chrome is in use, then exit")
     a = ap.parse_args()
+    if a.check:
+        # The regression this guards against is the one that produced five
+        # chromes in the first place: someone pasting the nav back in "just for
+        # one page". ops/verify-chrome.sh runs the same grep from the outside.
+        import inspect
+        src = inspect.getsource(sys.modules[__name__])
+        bad = [n for n in ("\n_NAV = [", "\ndef _sidebar(", "\n_PILL_LOCK") if n in src]
+        if bad:
+            print("FAIL: build_portal.py has regrown its own chrome: %s" % ", ".join(bad))
+            sys.exit(1)
+        print("ok: chrome comes from portal_shell (%s)" % PS.__file__)
+        sys.exit(0)
     if os.path.isdir(BUILD):
         shutil.rmtree(BUILD)
     os.makedirs(BUILD)
 
-    # styles: existing sheet + portal additions
-    shutil.copyfile(os.path.join(HERE, "portal.css"), os.path.join(BUILD, "portal.css"))
+    # capi-www serves /portal.css. It must be the SAME file the on-box
+    # generators inline, or the two halves of the site drift — which is exactly
+    # what happened between 2026-07-28 and 2026-08-09 (the portal copy missed
+    # the mobile topbar fix). The canonical sheet lives beside portal_shell.py.
+    shutil.copyfile(os.path.join(os.path.dirname(PS.__file__), "portal.css"),
+                    os.path.join(BUILD, "portal.css"))
 
     # assets the ported pages depend on — copied so the portal is self-contained
     # (docs.css / crosswalk.css + the 113 crosswalk screenshots). Paths are kept
@@ -689,56 +687,18 @@ def main():
 # ============================================================================
 
 
-def _ico(d):
-    return ('<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
-            'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" '
-            'aria-hidden="true">%s</svg>' % d)
+# The chrome — sidebar, topbar, head, pills — comes from portal_shell, the
+# same module the on-box generators import. These aliases exist because the
+# ported-page injection (port(), below) and the home page reference the old
+# private names; they are the shared functions, not copies.
+_sidebar = PS.sidebar
+_crumbs_html = PS.crumbs_html
+_PILL_LIVE = PS.PILL_LIVE
 
 
-_NAV = [
-    ("Project", [
-        ("Overview", P + "/", _ico('<path d="M3 10.5 12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'), ""),
-        ("Guides", P + "/guides/", _ico('<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h7M8 11h7"/>'), ""),
-        ("Instruments", P + "/instruments/", _ico('<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'), ""),
-        ("Manual", P + "/manual/", _ico('<path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v6h6"/>'), ""),
-    ]),
-    ("Operations", [
-        ("Monitoring", P + "/monitoring/", _ico('<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'), "lock"),
-        ("Data &amp; exports", P + "/data/", _ico('<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>'), "lock"),
-        ("Tabulations", P + "/tabulations/", _ico('<path d="M3 5h18v14H3z"/><path d="M3 10h18M9 5v14M15 5v14"/>'), ""),
-        ("Archive", P + "/archive/pretest-2026-07-15/", _ico('<rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><path d="M10 12h4"/>'), ""),
-    ]),
-    # The whole portal is sign-in-gated since 2026-07-28, so the Administration
-    # entry now belongs here too (it was omitted while the portal was public).
-    ("Administration", [
-        ("Admin console", CONSOLE + "/docs/admin/", _ico('<path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h9M17 17h3"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="17" r="2"/>'), "lock"),
-    ]),
-    ("Platform", [
-        ("All projects", "/projects/", _ico('<path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/>'), ""),
-        ("What we build", "/platform/", _ico('<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>'), ""),
-        ("About", "/about/", _ico('<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>'), ""),
-    ]),
-]
-
-
-def _sidebar(active):
-    o = ['<aside class="sidebar">',
-         '<a class="sb-brand" href="/"><span class="sb-mark">A</span><span><b>ASPSI CAPI</b>'
-         '<span>capi.asiansocial.org</span></span></a>',
-         '<div class="sb-proj"><a class="sb-proj-card" href="%s/"><div class="k">Active project</div>'
-         '<div class="v">UHC Survey Year 2</div></a></div>' % P, '<nav class="sb-nav">']
-    for sec, items in _NAV:
-        o.append('<div class="sb-sec">%s</div>' % sec)
-        for label, href, icon, lock in items:
-            lk = '<span class="lk">&#128274;</span>' if lock else ""
-            o.append('<a class="%s" href="%s">%s<span>%s</span>%s</a>'
-                     % ("on" if href == active else "", href, icon, label, lk))
-    o.append('</nav><div class="sb-foot">Asian Social Project Services, Inc.<br>'
-             '<a href="https://asiansocial.org">asiansocial.org</a>'
-             '<div class="sb-powered">Powered by Analytiflow.</div></div></aside>')
-    return "".join(o)
-
-
+# Crumb trails for the authored pages. The shell itself comes from portal_shell.
+# The monitoring/ and data/ keys die with their signpost pages in unification
+# Slices 3 and 4 — the live generators own those URLs from then on.
 _CRUMBS = {
     "/": [("Console", None)],
     "/projects/": [("Projects", None)],
@@ -754,20 +714,6 @@ _CRUMBS = {
 }
 
 
-def _crumbs_html(crumbs):
-    c = []
-    for i, (label, href) in enumerate(crumbs):
-        if i:
-            c.append('<span class="sep">/</span>')
-        c.append('<a href="%s">%s</a>' % (href, label) if href
-                 else '<span class="cur">%s</span>' % label)
-    return "".join(c)
-
-
-_PILL_LIVE = '<span class="pill live"><span class="dot"></span>Fieldwork live</span>'
-_PILL_LOCK = '<span class="pill lock">&#128274; Sign-in required</span>'
-
-
 def tiles(items):
     return '<div class="tiles">%s</div>' % "".join(
         '<div class="tile"><div class="k">%s</div><div class="v">%s</div><div class="s">%s</div></div>'
@@ -775,33 +721,21 @@ def tiles(items):
 
 
 def shell(title, desc, body, crumb="", active=""):
-    """App shell: sidebar + sticky topbar + canvas."""
-    crumbs = _CRUMBS.get(active) or [("ASPSI CAPI", None)]
-    pill = _PILL_LOCK if active in (P + "/monitoring/", P + "/data/") else _PILL_LIVE
-    return """<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
-<title>%s</title>
-<meta name="description" content="%s">
-<link rel="stylesheet" href="/portal.css">
-<link rel="icon" href="data:image/svg+xml,%%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%%3E%%3Crect width='40' height='40' rx='9' fill='%%23046a38'/%%3E%%3Cpath d='M20 9l9 5v12l-9 5-9-5V14z' fill='%%23e5b23b'/%%3E%%3C/svg%%3E">
-</head>
-<body>
-<div class="app">
-%s
-<div class="main">
-<div class="topbar"><div class="crumbs">%s</div><div class="tb-right">%s</div></div>
-<div class="canvas">
-%s
-</div>
-</div>
-</div>
-</body>
-</html>
-""" % (title, desc, _sidebar(active), _crumbs_html(crumbs), pill, body)
+    """App shell. Markup and CSS both come from portal_shell; this function is
+    now only a crumb lookup and a css-mode choice.
+
+    css="link" because these pages are static files served by capi-www and a
+    shared stylesheet is cached once for the whole site. The on-box generators
+    keep css="inline" — see portal_shell.head(). The pill is always PILL_LIVE:
+    the lock pill it used to show on two pages was a lie by omission once the
+    whole portal became sign-in-gated (2026-07-28)."""
+    return (PS.open_shell(title, desc,
+                          active=active,
+                          crumbs=_CRUMBS.get(active) or [("ASPSI CAPI", None)],
+                          tb_right=PS.PILL_LIVE,
+                          css="link")
+            + body
+            + PS.close_shell())
 
 
 _TOTAL_VARS = sum(i["vars"] for i in INSTRUMENTS)
