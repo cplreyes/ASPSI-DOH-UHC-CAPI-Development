@@ -1161,6 +1161,7 @@ def _shellify_map(t):
     crumbs = [("UHC Survey Year 2", PS.P + "/"),
               ("Monitoring", PS.P + "/monitoring/"),
               ("Map", None)]
+    # No lock pill -- see csweb-dashboard-gen.py; the identity chip covers it.
     seg = ('<div class="tb-seg"><a href="/docs/dashboard.html">Sync Dashboard</a>'
            '<a class="on" href="/docs/map.html">Map</a></div>')
     tb_right = seg + PS.PILL_LOCK

@@ -1900,7 +1900,9 @@ def _shellify_dashboard(t):
     # dashboard + map are same-origin on csweb during pretest
     seg = ('<div class="tb-seg"><a class="on" href="/docs/dashboard.html">Sync Dashboard</a>'
            '<a href="/docs/map.html">Map</a></div>')
-    tb_right = seg + PS.PILL_LOCK
+    # No lock pill: the identity chip open_shell puts in .tb-right already says
+    # who is signed in, which is the true version of what the pill implied.
+    tb_right = seg
     head_html = PS.head("UHC Survey Year 2 \u2014 Sync Dashboard", _DESC, extra_css=css)
     head_html = head_html.replace(
         "</head>", '<script src="/docs/assets/chart.umd.min.js"></script>\n</head>')

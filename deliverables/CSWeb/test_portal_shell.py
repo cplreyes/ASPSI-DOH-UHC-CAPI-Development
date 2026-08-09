@@ -57,6 +57,24 @@ missing("unpermissioned entry carries none", side,
 contains("active entry is marked", side, 'class="on" href="/projects/uhc-y2/monitoring/"')
 missing("the decorative padlock is gone", side, '<span class="lk">')
 
+# --- the lock pill is gone, dimming replaces it ----------------------------
+check("PILL_LOCK is removed", hasattr(PS, "PILL_LOCK"), False)
+contains("PILL_LIVE survives", PS.PILL_LIVE, "Fieldwork live")
+contains("dim script reads the session", PS.PERM_DIM_JS, "/docs/idp/me")
+contains("dim script keys off data-perm", PS.PERM_DIM_JS, "data-perm")
+contains("dim css ships with the tokens", PS.tokens_css(), ".sb-nav a.sb-off")
+contains("close_shell ships the dim script", PS.close_shell(), "data-perm")
+# me.php returns a FLAT object -- {signed_in, user, perms, tier, logout} --
+# NOT the {ok,data} envelope the admin API uses. Reading d.data here would
+# silently blank the chip on every page (each fetch ends in an empty .catch()).
+contains("signout uses the idp endpoint", PS.SIGNOUT_JS, "/docs/idp/me")
+contains("signout reads the flat shape", PS.SIGNOUT_JS, "d.signed_in")
+missing("signout never reads an envelope", PS.SIGNOUT_JS, "d.data")
+contains("dim script reads the flat perms", PS.PERM_DIM_JS, "d.perms")
+contains("signout links the idp logout", PS.SIGNOUT_JS, "/docs/idp/logout")
+missing("no legacy whoami", PS.SIGNOUT_JS, "whoami.php")
+missing("no legacy logout", PS.SIGNOUT_JS, "/docs/auth/logout")
+
 # --- generated php partial -------------------------------------------------
 import os
 import tempfile

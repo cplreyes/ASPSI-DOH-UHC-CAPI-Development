@@ -36,10 +36,10 @@ def tokens_css():
                  os.path.join(_HERE, "assets", "portal.css")):
         try:
             with open(cand, encoding="utf-8") as fh:
-                return fh.read() + SIGNOUT_CSS
+                return fh.read() + SIGNOUT_CSS + PERM_DIM_CSS
         except OSError:
             continue
-    return _CSS_FALLBACK + SIGNOUT_CSS
+    return _CSS_FALLBACK + SIGNOUT_CSS + PERM_DIM_CSS
 
 
 FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' "
@@ -150,22 +150,57 @@ SIGNOUT_CSS = (
 
 # Fills the chip from the session. Kept tiny and defensive: any failure just
 # leaves the chip hidden rather than showing a broken control.
+#
+# /docs/idp/me and /docs/idp/logout are the canonical endpoints since the
+# 2026-08-08 cutover; whoami.php and /docs/auth/logout are legacy shims kept
+# alive only so old bookmarks resolve. me.php returns a FLAT object --
+# {signed_in, user, roles, perms, must_change, can{}, tier, logout} -- NOT the
+# {ok,data,request_id} envelope the admin API wraps around everything. Reading
+# d.data here would not throw (the .catch() is deliberately empty), it would
+# just silently blank the chip on every page. me.php emits `tier` precisely so
+# this chip keeps working (me.php:44-55).
 SIGNOUT_CHIP = '<span class="tb-user" id="tbUser"></span>'
 
 SIGNOUT_JS = (
     '<script>(function(){var e=document.getElementById("tbUser");if(!e)return;'
-    'fetch("/docs/whoami.php",{credentials:"same-origin"})'
+    'fetch("/docs/idp/me",{credentials:"same-origin"})'
     '.then(function(r){return r.ok?r.json():null})'
     '.then(function(d){if(!d||!d.signed_in)return;'
     'var u=document.createElement("b");u.textContent=d.user;'
-    'var t=document.createElement("span");t.className="tier";t.textContent=d.tier;'
-    'var a=document.createElement("a");a.href="/docs/auth/logout";a.textContent="Sign out";'
+    'var t=document.createElement("span");t.className="tier";t.textContent=d.tier||"user";'
+    'var a=document.createElement("a");a.href=d.logout||"/docs/idp/logout";'
+    'a.textContent="Sign out";'
     'e.appendChild(u);e.appendChild(t);e.appendChild(a);e.className="tb-user on";'
     '}).catch(function(){});})();</script>'
 )
 
 PILL_LIVE = '<span class="pill live"><span class="dot"></span>Fieldwork live</span>'
-PILL_LOCK = '<span class="pill lock">&#128274; Sign-in required</span>'
+# PILL_LOCK is gone deliberately. It claimed "Sign-in required" on two pages
+# while the WHOLE portal has required sign-in since 2026-07-28 -- so the ten
+# pages without it read as public. Status pills state facts; access is shown
+# per-account by PERM_DIM_JS below.
+
+# A padlock on a nav entry told every reader the same thing regardless of who
+# they were, which is decoration. This dims the entries YOUR account cannot
+# open. It fails open: if /docs/idp/me is unreachable, nothing is dimmed and
+# the edge still enforces -- a cosmetic script must never be the gate.
+PERM_DIM_CSS = (
+    '.sb-nav a.sb-off{opacity:.45}'
+    '.sb-nav a.sb-off span{text-decoration:none}'
+)
+
+PERM_DIM_JS = (
+    '<script>(function(){'
+    'var links=document.querySelectorAll(".sb-nav a[data-perm]");if(!links.length)return;'
+    'fetch("/docs/idp/me",{credentials:"same-origin"})'
+    '.then(function(r){return r.ok?r.json():null})'
+    '.then(function(d){if(!d||!d.signed_in)return;'
+    'var held=d.perms||[];'
+    'Array.prototype.forEach.call(links,function(a){'
+    'if(held.indexOf(a.getAttribute("data-perm"))<0){a.className+=" sb-off";'
+    'a.setAttribute("title","Your account does not have access to this");}});'
+    '}).catch(function(){});})();</script>'
+)
 
 
 def head(title, desc="", extra_css="", robots="noindex", css="inline"):
@@ -219,8 +254,8 @@ def close_shell(footer_html="", body_extra=""):
     the canvas as a page footer; `body_extra` (fixed-position widgets, scripts)
     is emitted after .app but before </body>."""
     foot = ('<footer class="page-foot">%s</footer>' % footer_html) if footer_html else ""
-    return ('%s\n</div>\n</div>\n</div>\n%s\n%s\n</body>\n</html>\n'
-            % (foot, body_extra, SIGNOUT_JS))
+    return ('%s\n</div>\n</div>\n</div>\n%s\n%s%s\n</body>\n</html>\n'
+            % (foot, body_extra, SIGNOUT_JS, PERM_DIM_JS))
 
 
 # ---------------------------------------------------------------------------
