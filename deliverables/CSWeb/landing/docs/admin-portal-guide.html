@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CAPI Console Admin Portal — How to Use It · UHC Survey Year 2</title>
+    <meta
+      name="description"
+      content="How to sign in to the UHC Survey Year 2 CAPI Console and use the admin portal: the five roles, adding and disabling accounts, resetting passwords, ending sessions, reading the audit trail, and what to do when someone is locked out."
+    />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#006b3f" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23006b3f'/%3E%3Cpath d='M11 26.5c2.6 2 5.2 3 7.8 3 2.4 0 3.8-1 3.8-2.6 0-1.6-1.3-2.3-4.4-3.1-3.9-1-6.6-2.4-6.6-5.9 0-3.3 2.7-5.6 6.8-5.6 2.4 0 4.6.6 6.6 1.8l-1.5 3.2c-1.8-1-3.5-1.5-5.2-1.5-2.1 0-3.2.9-3.2 2.2 0 1.5 1.4 2.1 4.4 2.9 4 1 6.6 2.5 6.6 6 0 3.5-2.8 6-7.4 6-3 0-5.9-1-8.4-2.9z' fill='%23e5b23b'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="/assets/docs.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="accent-bar"></div>
+
+    <div class="topbar">
+      <div class="container">
+        <div class="topbar-brand">
+          <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true">
+            <rect width="40" height="40" rx="8" fill="#006b3f" />
+            <path
+              d="M11 26.5c2.6 2 5.2 3 7.8 3 2.4 0 3.8-1 3.8-2.6 0-1.6-1.3-2.3-4.4-3.1-3.9-1-6.6-2.4-6.6-5.9 0-3.3 2.7-5.6 6.8-5.6 2.4 0 4.6.6 6.6 1.8l-1.5 3.2c-1.8-1-3.5-1.5-5.2-1.5-2.1 0-3.2.9-3.2 2.2 0 1.5 1.4 2.1 4.4 2.9 4 1 6.6 2.5 6.6 6 0 3.5-2.8 6-7.4 6-3 0-5.9-1-8.4-2.9z"
+              fill="#e5b23b"
+            />
+          </svg>
+          <div>
+            <div class="topbar-org">UHC Survey Year 2</div>
+            <div class="topbar-sub">CAPI Console — admin portal</div>
+          </div>
+        </div>
+        <a class="home-link" href="/help.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M19 12H6M11 6l-6 6 6 6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          Back to help
+        </a>
+      </div>
+    </div>
+
+    <main id="main">
+      <div class="container">
+        <p class="page-eyebrow">For console administrators · owner &amp; programme admin</p>
+        <h1>The admin portal — how to use it</h1>
+        <p class="lede">
+          The CAPI Console holds respondent-level survey data, so every person
+          who opens it has a named account and a role that decides what they can
+          reach. This guide covers signing in, the screens in the admin portal,
+          and the handful of tasks you will actually do: adding someone,
+          removing someone, resetting a password, and finding out who looked at
+          what.
+        </p>
+        <p class="banner">
+          <strong>Everyone reads the first section.</strong> The sign-in and
+          password rules apply to all console accounts, not just administrators.
+          The rest of the guide is for the two roles that can administer
+          accounts.
+        </p>
+
+        <article>
+          <section>
+            <h2>Signing in</h2>
+            <p>
+              The console sign-in page is
+              <strong>capi.asiansocial.org/docs/idp/login</strong>. Old links
+              still work — they redirect here — so a bookmark to the previous
+              page is fine.
+            </p>
+            <div class="callout">
+              <strong>Your first sign-in will ask you to change your password.</strong>
+              That is expected, not a fault. Sign in with the console password
+              you already use, and you will be taken straight to a page to set a
+              new one. You cannot reach anything else until you do.
+            </div>
+            <p>A new password must:</p>
+            <ul>
+              <li>be <strong>at least 12 characters</strong> — length matters more than punctuation, so a short phrase you can remember beats a mangled word;</li>
+              <li>not contain your username;</li>
+              <li>not be one of the well-known setup passwords, or contain <em>capi</em>, <em>aspsi</em> or <em>123456</em>.</li>
+            </ul>
+            <p>
+              Changing your password later, by choice, additionally asks for your
+              <strong>current</strong> password — and signs out every other
+              device you are signed in on.
+            </p>
+            <table>
+              <thead>
+                <tr><th>Rule</th><th>What it means for you</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Signed out after 60 minutes idle</td><td>Leave the tab alone for an hour and you sign in again.</td></tr>
+                <tr><td>Signed out after 12 hours regardless</td><td>A working day is one sign-in.</td></tr>
+                <tr><td>8 wrong passwords locks the account for 15 minutes</td><td>Wait it out, or ask an administrator to clear it.</td></tr>
+                <tr><td>20 failures from one network blocks that network for 15 minutes</td><td>Only comes up if something is repeatedly guessing.</td></tr>
+              </tbody>
+            </table>
+            <p>
+              <strong>None of this affects tablet syncing.</strong> CSEntry uses
+              its own sync login and never asks for a console password. If the
+              console is unavailable, fieldwork carries on.
+            </p>
+          </section>
+
+          <section>
+            <h2>Finding your way around</h2>
+            <p>
+              The admin portal is at
+              <strong>capi.asiansocial.org/docs/admin/</strong>. The sidebar is
+              in four groups:
+            </p>
+            <table>
+              <thead>
+                <tr><th>Group</th><th>Screens</th><th>What it governs</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Access</strong></td>
+                  <td>Users &amp; access · Roles &amp; permissions · Active sessions · Audit trail</td>
+                  <td>Who may open the console and what they may see.</td>
+                </tr>
+                <tr>
+                  <td><strong>Console</strong></td>
+                  <td>Activities · Alerting · Assignment plan</td>
+                  <td>How the console behaves. Nothing here decides access.</td>
+                </tr>
+                <tr>
+                  <td><strong>You</strong></td>
+                  <td>My account</td>
+                  <td>Your own password, roles and sessions.</td>
+                </tr>
+                <tr>
+                  <td><strong>Elsewhere</strong></td>
+                  <td>Overview · Sync dashboard · Data room · Sign out</td>
+                  <td>Links out of the portal.</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="callout">
+              <strong>You only see what you can use.</strong> Screens your
+              account cannot open are hidden from the sidebar. If a whole group
+              disappears, that is why — not a fault.
+            </div>
+          </section>
+
+          <section>
+            <h2>The five roles</h2>
+            <p>
+              A person is given a <strong>role</strong>; the role carries
+              <strong>permissions</strong>. You assign roles on the Users screen;
+              you change what a role means on the Roles screen.
+            </p>
+            <table>
+              <thead>
+                <tr><th>Role</th><th>Can reach</th><th>Typically</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Owner</strong></td>
+                  <td>Everything, including editing what each role is allowed to do.</td>
+                  <td>Carl. Keep the number of owners very small.</td>
+                </tr>
+                <tr>
+                  <td><strong>Programme Admin</strong></td>
+                  <td>Everything except editing role permissions — including adding and removing accounts.</td>
+                  <td>ASPSI staff who onboard and offboard the field team.</td>
+                </tr>
+                <tr>
+                  <td><strong>Analyst</strong></td>
+                  <td>Monitoring, individual cases, tabulations, and the data room (bulk export).</td>
+                  <td>Someone doing analysis on the collected data.</td>
+                </tr>
+                <tr>
+                  <td><strong>Field Supervisor</strong></td>
+                  <td>Monitoring, individual cases and tabulations. <strong>No bulk export.</strong></td>
+                  <td>Supervisors checking their team’s work. Reading one case for QC is not the same act as taking the whole dataset.</td>
+                </tr>
+                <tr>
+                  <td><strong>Client Viewer</strong></td>
+                  <td>Monitoring and tabulations only. <strong>No respondent-level detail.</strong></td>
+                  <td>DOH, when they should see progress and tables but not individual answers.</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section>
+            <h2>Users &amp; access</h2>
+            <p>The list shows every console account. The columns worth knowing:</p>
+            <table>
+              <thead>
+                <tr><th>Column</th><th>Reading it</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Status</strong></td><td><em>active</em> · <em>setup password</em> (has not chosen their own yet) · <em>locked out</em> (too many wrong attempts) · <em>disabled</em>.</td></tr>
+                <tr><td><strong>Sessions</strong></td><td>How many devices are signed in as that account <em>right now</em>. A dot means none.</td></tr>
+                <tr><td><strong>Hash</strong></td><td>How the password is stored. <em>apr1</em> means the account is still on the password it was migrated with; it upgrades itself the next time they sign in. Nothing to do.</td></tr>
+                <tr><td><strong>duplicate</strong> badge</td><td>Another account differs from this one only by an underscore versus a hyphen (<em>se_001</em> and <em>se-001</em>). Compare their sign-in history before disabling either — they may be two different people.</td></tr>
+              </tbody>
+            </table>
+            <p>Click a username to open it. Everything below happens on that page.</p>
+          </section>
+
+          <section>
+            <h2>Adding someone</h2>
+            <ol>
+              <li><strong>Users &amp; access → Add account.</strong></li>
+              <li>Username in lowercase — letters, digits, dot, underscore or hyphen.</li>
+              <li>Tick the role. If in doubt, pick the narrower one; widening later is one click.</li>
+              <li>Save. A <strong>temporary password appears once</strong>.</li>
+            </ol>
+            <div class="callout">
+              <strong>Copy the temporary password before you close the dialog.</strong>
+              The server keeps only a scrambled form of it, so it genuinely
+              cannot be shown again. If it is lost, reset the password — that is
+              quicker than looking for it.
+            </div>
+            <p>
+              Give it to the person directly, not in a group chat. They will be
+              made to change it the first time they sign in.
+            </p>
+          </section>
+
+          <section>
+            <h2>Removing someone</h2>
+            <p>
+              Open the account and choose <strong>Disable account</strong>. You
+              will be asked to type the username to confirm, and told how many
+              sessions it will end. Disabling takes effect immediately — any
+              device signed in as that account is signed out on its next click.
+            </p>
+            <div class="callout">
+              <strong>There is no delete, deliberately.</strong> Removing the
+              account outright would also remove the record of what it did.
+              Disabling blocks sign-in and keeps the history. To bring someone
+              back, open the account and re-enable it.
+            </div>
+            <p>Some things are refused on purpose:</p>
+            <ul>
+              <li>You <strong>cannot disable your own account</strong>, or change your own roles. Ask another administrator.</li>
+              <li>The <strong>last remaining owner</strong> cannot be disabled or demoted.</li>
+              <li>Two <strong>break-glass accounts</strong> (<em>aspsi</em>, <em>marriz_admin</em>) cannot be disabled here — that is what makes them a way back in.</li>
+              <li>Only an <strong>owner</strong> can grant the owner role, or change an owner’s roles.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Passwords and sessions</h2>
+            <table>
+              <thead>
+                <tr><th>You want to…</th><th>Do this</th><th>What happens</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Give someone a new password</td>
+                  <td>Open the account → <strong>Reset password</strong></td>
+                  <td>A new temporary password is shown once; their old one stops working and every session ends.</td>
+                </tr>
+                <tr>
+                  <td>Clear a lockout</td>
+                  <td>Open the account → <strong>Clear lockout</strong></td>
+                  <td>They can try again straight away. Their password is unchanged.</td>
+                </tr>
+                <tr>
+                  <td>Sign someone out everywhere</td>
+                  <td>Open the account → <strong>Sign out everywhere</strong></td>
+                  <td>All their sessions end. Their password still works, so they can sign back in.</td>
+                </tr>
+                <tr>
+                  <td>End one suspicious session</td>
+                  <td><strong>Active sessions</strong> → End session</td>
+                  <td>Only that one device is signed out.</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              <strong>Active sessions</strong> lists everyone signed in right
+              now, with the client and IP address. Your own session is marked
+              and cannot be ended from there — use <em>Sign out</em> in the
+              sidebar instead.
+            </p>
+          </section>
+
+          <section>
+            <h2>Roles &amp; permissions</h2>
+            <p>
+              This screen is the grid of five roles against seven permissions.
+              Everyone who administers accounts can read it; <strong>only an
+              owner can change it</strong>.
+            </p>
+            <div class="callout">
+              <strong>Changing a role affects every person who holds it, at
+              once.</strong> Saving signs out everyone with that role, so a
+              permission you remove stops applying immediately rather than at
+              their next sign-in. The hatched cells on the owner row cannot be
+              un-ticked — removing them would leave nobody able to administer
+              the console.
+            </div>
+            <p>
+              Moving one person between roles is the Users screen, not this one.
+              Come here only when the <em>meaning</em> of a role should change.
+            </p>
+          </section>
+
+          <section>
+            <h2>Audit trail</h2>
+            <p>
+              Every sign-in, failed sign-in, permission refusal, account change
+              and — since the console gate moved — every read of respondent data
+              is recorded with who, when and from which address.
+            </p>
+            <ul>
+              <li>Filter by actor, action, target or date. Typing <strong>user.</strong> in the action box selects the whole family of account changes.</li>
+              <li>Click an actor to filter to just them.</li>
+              <li><strong>Export CSV</strong> gives you exactly the rows your filters are showing — not the whole table.</li>
+            </ul>
+            <p>
+              The trail is <strong>append-only</strong>. Nothing in the portal
+              can edit or delete a row, including this screen, and that is
+              enforced by the database rather than by good manners.
+            </p>
+          </section>
+
+          <section>
+            <h2>When something goes wrong</h2>
+            <table>
+              <thead>
+                <tr><th>Symptom</th><th>What it means</th><th>What to do</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>“Set a new password before using the admin tools”</td>
+                  <td>The account is still on its setup password.</td>
+                  <td>Change it. Nothing else works until you do.</td>
+                </tr>
+                <tr>
+                  <td>“Too many attempts. Try again in N minutes.”</td>
+                  <td>Eight wrong passwords.</td>
+                  <td>Wait, or ask an administrator to clear the lockout.</td>
+                </tr>
+                <tr>
+                  <td>Someone forgot their password</td>
+                  <td>Normal.</td>
+                  <td>Reset it for them and hand over the temporary one directly.</td>
+                </tr>
+                <tr>
+                  <td>“Not permitted”</td>
+                  <td>Signed in, but the role does not carry that permission.</td>
+                  <td>Check the role on the Users screen. Widen only if it should be widened.</td>
+                </tr>
+                <tr>
+                  <td>Sent back to sign-in repeatedly</td>
+                  <td>The session expired, or an administrator ended it.</td>
+                  <td>Sign in again. If it repeats immediately, the account may have been disabled.</td>
+                </tr>
+                <tr>
+                  <td>“Console temporarily unavailable”</td>
+                  <td>The sign-in service is down. Nothing is lost.</td>
+                  <td>Wait a minute and retry. <strong>Tablet syncing is unaffected</strong> — tell the field team to carry on.</td>
+                </tr>
+                <tr>
+                  <td>A screen says a change failed</td>
+                  <td>It failed. The portal never reports success for something it did not save.</td>
+                  <td>Reload and try again. If it mentions a request id, quote it when reporting.</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="callout">
+              <strong>Nobody can get in at all?</strong> That is what the
+              break-glass route is for, and it needs the server key rather than
+              a console password. It is written up in the deployment runbook —
+              contact Carl.
+            </div>
+          </section>
+
+          <section>
+            <h2>Two habits worth keeping</h2>
+            <ul>
+              <li>
+                <strong>Offboard the same day.</strong> Disabling takes effect
+                immediately and keeps the person’s history — there is no reason
+                to leave it until the end of the week.
+              </li>
+              <li>
+                <strong>Give the narrowest role that works.</strong>
+                <em>Field Supervisor</em> can review individual cases without
+                being able to export the whole dataset; that difference is the
+                point of having five roles rather than one.
+              </li>
+            </ul>
+          </section>
+        </article>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p class="foot-org">
+          Asian Social Project Services, Inc. (ASPSI) — for the Department of
+          Health (DOH)
+        </p>
+        <p class="foot-meta">
+          UHC Survey Year 2 · CAPI Console admin portal
+          <span class="dot">·</span>
+          <a href="/help.html">Help</a>
+          <span class="dot">·</span>
+          <a href="/">Home</a>
+          <span class="dot">·</span>
+          &copy; 2026
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

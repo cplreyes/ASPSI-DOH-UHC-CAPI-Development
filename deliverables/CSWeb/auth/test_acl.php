@@ -302,6 +302,15 @@ foreach ($portalPaths as $path => $want) {
     check('portal acl(' . $path . ')', acl_required_perm($path), $want);
 }
 
+// Operator guides. The admin portal guide must be reachable by EVERY account,
+// because it is where "why am I being asked to change my password" is
+// answered — and that applies to all 18, most of whom hold no admin
+// permission at all.
+foreach (['/docs/admin-portal-guide.html', '/docs/capi-manual.html',
+          '/docs/enumerator-guide.html', '/docs/hcw-guide.html'] as $g) {
+    check('guide acl(' . $g . ')', acl_required_perm($g), 'AUTH');
+}
+
 // Admin API traffic is not a respondent-data read; logging it here would
 // double-count against the audit rows the endpoints write themselves.
 foreach (['/docs/idp/admin/users', '/docs/idp/admin/audit'] as $p) {

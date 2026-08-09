@@ -94,6 +94,11 @@ const ACL_EXACT = [
     '/portal.css'                => 'AUTH',
 
     // Operator documentation — readable by anyone with an account.
+    // The admin portal guide is AUTH, not admin.users, on purpose: its first
+    // section explains the forced password change, which every one of the 18
+    // accounts hits at their next sign-in. Gating the explanation behind the
+    // permission most of them lack would be perverse.
+    '/docs/admin-portal-guide.html' => 'AUTH',
     '/docs/capi-manual.html'     => 'AUTH',
     '/docs/enumerator-guide.html'=> 'AUTH',
     '/docs/hcw-guide.html'       => 'AUTH',

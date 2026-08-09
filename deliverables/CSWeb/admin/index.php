@@ -100,6 +100,10 @@ $e = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
       <a href="#/account" data-route="account"><span>My account</span></a>
 
       <div class="sb-sec">Elsewhere</div>
+      <!-- The operator guide, linked from the thing it documents. A guide
+           nobody can find from the screen it describes is a guide nobody
+           reads. AUTH in the ACL, so every account can open it. -->
+      <a href="/docs/admin-portal-guide.html"><span>How to use this portal</span></a>
       <a href="https://capi.asiansocial.org/projects/uhc-y2/"><span>Project overview</span></a>
       <a href="/docs/dashboard.html"><span>Sync dashboard</span></a>
       <a href="/docs/data/"><span>Data room</span></a>
