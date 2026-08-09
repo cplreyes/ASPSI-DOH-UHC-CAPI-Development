@@ -283,3 +283,29 @@ fix — with no URL risk at all. 3–5 are the URL move.
 3. **The `Archive` nav entry** points at `…/archive/pretest-2026-07-15/`. After
    rollout there will be a second archive; the entry should probably point at an
    archive index rather than one dated page.
+
+## 10. Execution record (2026-08-09/10)
+
+All five slices shipped. Deviations from this spec, found during execution:
+
+- **§3.3's "gated first" redirect for `/docs/admin/` is impossible in nginx** —
+  `return` runs at the rewrite phase, before `auth_request`, so the bounce is
+  unconditional. Harmless (no content served; the destination location runs
+  the full gate) and the deployed conf documents it.
+- **The signpost deletion orphaned the F2-admin/CSWeb links** (their only home
+  was the monitoring page's "Operate" cards, which §3.3 deleted). Fixed with a
+  "Systems" section in the shared rail; `sidebar()` renders any external href
+  with `target="_blank"` and a separate-sign-in title.
+- **`adm_csrf` had to widen from `Path=/docs/admin/` to `Path=/`** — a
+  path-scoped cookie is invisible to `document.cookie` at the proxied portal
+  path, and the double-submit would fail with no error anywhere. §3.5 did not
+  anticipate this.
+- **The data-room payload hrefs had to become `/docs/data/`-absolute** — §3.4
+  kept the files in place, which means every relative href on the moved page
+  would have 404'd. Fifteen offline assertions now pin this.
+- **Four legacy `.htaccess` gates** (`assets`, `img`, `cases`, `f2`) were found
+  401ing every post-cutover session and removed with Carl's approval — the
+  defect §1 could not have known about.
+- Discovered during Slice 1: `build_portal.py` also carried a THIRD, shadowed
+  document-site shell (pre-2026-07-22) — deleted; and `me.php` computed but
+  never emitted its whoami-compat `tier` — fixed.

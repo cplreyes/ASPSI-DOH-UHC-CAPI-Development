@@ -9,3 +9,4 @@
 /docs/data/                                    301
 # no admin.system
 /projects/uhc-y2/admin/                        403
+/docs/admin/                                   301

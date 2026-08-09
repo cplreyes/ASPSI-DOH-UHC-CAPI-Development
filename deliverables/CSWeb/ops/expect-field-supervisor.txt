@@ -10,7 +10,11 @@
 /projects/uhc-y2/admin/                        403
 # every account may read the operator guide
 /docs/admin-portal-guide.html                  200
-# old URLs redirect, gated first
+# old page URLs: Apache redirects run BEHIND the gate, so a supervisor sees
+# the 301s for pages they may read and 403 where they may not; the nginx-side
+# /docs/admin/ bounce is unconditional (rewrite phase precedes auth_request —
+# nothing is served, the destination enforces).
 /docs/dashboard.html                           301
 /docs/map.html                                 301
 /docs/data/                                    403
+/docs/admin/                                   301
