@@ -43,6 +43,7 @@ import subprocess, csv, io, os, sys, html, datetime, argparse, zipfile, json
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import phase_lib  # activity-phase classification (Carl, 2026-07-27)
 import activity_lib  # Survey Activities: named windows w/ dates (2026-07-27)
+import portal_shell as PS  # page chrome — /opt/portal_shell.py + portal.css on the box
 
 ENV = "/opt/app/.env"
 COMPOSE_DIR = "/opt/app"
@@ -236,23 +237,14 @@ def build_f2(out_dir):
              "header": cols, "preview": rows[:PREVIEW_ROWS]}]
 
 
-FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E"
-           "%3Crect width='40' height='40' rx='8' fill='%23006b3f'/%3E"
-           "%3Cpath d='M20 9l9 5v12l-9 5-9-5V14z' fill='%23e5b23b'/%3E%3C/svg%3E")
-
-PAGE_TOP = """<!doctype html>
-<html lang="en"><head><meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="robots" content="noindex" />
-<link rel="icon" href="__FAVICON__" />
-<title>UHC Survey Year 2 — Responses Data Room</title>
-<style>
- :root{--g:#006b3f;--gd:#004d2c;--gold:#e5b23b;--ink:#1c2b25;--muted:#5b6b63;--line:#dfe7e2;--bg:#f4f7f5;--card:#fff}
- *{box-sizing:border-box}body{margin:0;font:15px/1.5 system-ui,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg)}
- header{background:var(--g);color:#fff;padding:20px 24px}
- header h1{margin:0;font-size:20px}header .s{opacity:.85;font-size:13px;margin-top:4px}
- main{max-width:1180px;margin:0 auto;padding:22px}
- h2{font-size:17px;color:var(--gd);border-bottom:2px solid var(--g);padding-bottom:6px;margin:28px 0 8px}
+# Page-specific styles only. The document chrome — reset, sidebar, topbar,
+# canvas, identity chip — comes from portal_shell/portal.css; this bespoke page
+# was shell #3 of the five the console accumulated, retired 2026-08-09.
+# --g is aliased onto the canonical verde so the copied table rules keep
+# working; the old page still carried the pre-2026-07-25 green (#006b3f).
+_PAGE_CSS = """
+ .canvas{--g:var(--verde,#046a38);--gd:#004d2c;--gold:#e5b23b;--card:#fff}
+ .canvas h2{font-size:17px;color:var(--gd);border-bottom:2px solid var(--g);padding-bottom:6px;margin:28px 0 8px}
  .note{background:#fffaf0;border:1px solid var(--gold);border-radius:8px;padding:10px 14px;color:#6b5418;font-size:13px;margin:14px 0}
  table.files{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
  .files th,.files td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}
@@ -271,21 +263,22 @@ PAGE_TOP = """<!doctype html>
  .prev th,.prev td{padding:4px 8px;border:1px solid #eef3f0}
  .prev th{background:#eef3f0;color:var(--gd);position:sticky;top:0;z-index:1}
  .prev td:first-child,.prev th:first-child{position:sticky;left:0;background:#f7faf8;font-weight:600}
- .sub{color:var(--muted);font-size:12.5px;margin:2px 0 14px}
- footer{max-width:1180px;margin:0 auto;padding:14px 22px 40px;color:var(--muted);font-size:12.5px}
- footer a{color:var(--g)}
-.tb-user{display:none;align-items:center;gap:8px;font-size:12.5px;margin-top:8px}.tb-user.on{display:inline-flex}.tb-user b{font-weight:650}.tb-user .tier{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:5px;background:#eefaf3;color:#046a38;border:1px solid #cfe6d8}.tb-user a{color:#046a38;font-weight:650}</style></head><body>
-<header><h1>UHC Survey Year 2 — Responses Data Room</h1>
-<div class="s">Full response spreadsheets · raw stored codes · staff tier — signed in through the CAPI console</div><div id="tbUser" class="tb-user"></div></header>
-<main>
-<div class="note">One <b>wide CSV per instrument</b> (a row per case, every singular-record item) plus a
-<b>CSV per roster record</b> (a row per case &times; occurrence). Values are the <b>raw codes</b> — labels live in
-the questionnaire codebook; the <a href="/docs/dashboard.html" style="color:#6b5418"><b>Sync Dashboard</b></a> is the labeled view.
-Prefer stats-ready files? The <b>labeled exports</b> below carry the same cases as SPSS .sav / Stata .dta
-(labels embedded) and R .rds (+ codebook CSV). Excel tip: import CSVs via <i>Data &rarr; From Text/CSV</i> and set
-<code>questionnaire_number</code> to Text, or the 12-digit key renders as 1.02E+11.
-Regenerated every ~2 min from the live breakout DBs.</div>
+ .canvas .sub{color:var(--ink-3,#5b6b63);font-size:12.5px;margin:2px 0 14px}
 """
+
+# Everything from the doctype to the intro note, via the shared shell.
+_PAGE_OPEN = (
+    '<div class="page-head"><div class="eyebrow">UHC Survey Year 2</div>'
+    '<h1>Data room</h1><p class="lead">Full response spreadsheets &middot; raw '
+    'stored codes &middot; rebuilt from the live breakout DBs every ~2 minutes.'
+    '</p></div>'
+    '<div class="note">One <b>wide CSV per instrument</b> (a row per case, every singular-record item) plus a\n'
+    '<b>CSV per roster record</b> (a row per case &times; occurrence). Values are the <b>raw codes</b> — labels live in\n'
+    'the questionnaire codebook; the <a href="/docs/dashboard.html" style="color:#6b5418"><b>Sync Dashboard</b></a> is the labeled view.\n'
+    'Prefer stats-ready files? The <b>labeled exports</b> below carry the same cases as SPSS .sav / Stata .dta\n'
+    '(labels embedded) and R .rds (+ codebook CSV). Excel tip: import CSVs via <i>Data &rarr; From Text/CSV</i> and set\n'
+    '<code>questionnaire_number</code> to Text, or the 12-digit key renders as 1.02E+11.\n'
+    'Regenerated every ~2 min from the live breakout DBs.</div>')
 
 
 def esc(s):
@@ -304,7 +297,15 @@ def zip_cells(zips):
 
 
 def index_html(manifests, generated, spss=None, cspro=None, cbook=None):
-    out = [PAGE_TOP.replace("__FAVICON__", FAVICON)]
+    out = [PS.open_shell("Data room — UHC Survey Y2",
+                         "Analysis-ready exports for UHC Survey Year 2, rebuilt "
+                         "from the live database every two minutes.",
+                         active=PS.P + "/data/",
+                         crumbs=[("UHC Survey Year 2", PS.P + "/"),
+                                 ("Data &amp; exports", None)],
+                         tb_right=PS.PILL_LIVE,
+                         extra_css=_PAGE_CSS),
+           _PAGE_OPEN]
     # Labeled-exports band (written by csweb-spss-gen.py on the odd minutes; this
     # index just reflects its manifest, so a stopped stats cron simply hides it)
     insts = (spss or {}).get("instruments") or {}
@@ -423,8 +424,11 @@ def index_html(manifests, generated, spss=None, cspro=None, cbook=None):
             for row in e["preview"]:
                 out.append("<tr>%s</tr>" % "".join("<td>%s</td>" % esc(c) for c in row))
             out.append("</table></div>")
-    out.append('</main><footer>Generated %s UTC · source: F1/F3/F4 breakout DBs + <code>csweb_f2</code> mirror · '
-               'back to the <a href="/docs/dashboard.html">Sync Dashboard</a>.</footer><script>(function(){var e=document.getElementById("tbUser");if(!e)return;fetch("/docs/whoami.php",{credentials:"same-origin"}).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d||!d.signed_in)return;var u=document.createElement("b");u.textContent=d.user;var t=document.createElement("span");t.className="tier";t.textContent=d.tier;var a=document.createElement("a");a.href="/docs/auth/logout";a.textContent="Sign out";e.appendChild(u);e.appendChild(t);e.appendChild(a);e.className="tb-user on";}).catch(function(){});})();</script></body></html>' % esc(generated))
+    # The identity chip + sign-out come from close_shell (canonical /docs/idp/
+    # endpoints) — the page no longer carries its own whoami script.
+    out.append(PS.close_shell(footer_html=(
+        'Generated %s UTC · source: F1/F3/F4 breakout DBs + <code>csweb_f2</code> mirror · '
+        'back to the <a href="/docs/dashboard.html">Sync Dashboard</a>.' % esc(generated))))
     return "\n".join(out)
 
 

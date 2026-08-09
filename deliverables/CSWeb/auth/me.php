@@ -57,6 +57,7 @@ if (in_array('admin.system', $perms, true)
 echo json_encode([
     'signed_in'   => true,
     'user'        => $sess['username'],
+    'tier'        => $tier,
     'roles'       => $grants['roles'],
     'perms'       => $perms,
     'must_change' => (int) $sess['must_change'] === 1,

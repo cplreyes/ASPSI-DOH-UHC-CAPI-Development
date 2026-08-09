@@ -1164,7 +1164,7 @@ def _shellify_map(t):
     # No lock pill -- see csweb-dashboard-gen.py; the identity chip covers it.
     seg = ('<div class="tb-seg"><a href="/docs/dashboard.html">Sync Dashboard</a>'
            '<a class="on" href="/docs/map.html">Map</a></div>')
-    tb_right = seg + PS.PILL_LOCK
+    tb_right = seg
     head_html = PS.head("UHC Survey Year 2 \u2014 Map Report", _DESC, extra_css=css)
     head_html = head_html.replace("</head>", _LEAFLET_HEAD + "\n</head>")
     opened = (head_html + '\n<body>\n<div class="app">\n'
