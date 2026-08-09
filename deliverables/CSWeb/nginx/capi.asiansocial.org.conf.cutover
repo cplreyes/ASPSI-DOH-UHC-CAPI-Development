@@ -82,13 +82,12 @@ server {
     add_header Cache-Control "no-store, private" always;
   }
 
-  # The old admin URL. Gated first (auth_request still runs), then bounced.
+  # The old admin URL bounces UNCONDITIONALLY — `return` runs at the rewrite
+  # phase, BEFORE auth_request, so putting the gate here would be dead config
+  # that only misleads (verified live 2026-08-09: a field_supervisor got the
+  # 301, not 403). That is fine: no content is served from this URL, only a
+  # Location header to a path whose own location enforces the full gate.
   location = /docs/admin/ {
-    auth_request /_capi_auth;
-    auth_request_set $auth_reason $upstream_http_x_auth_reason;
-    error_page 401 = @capi_login;
-    error_page 403 = @capi_denied;
-    error_page 500 = @capi_authdown;
     return 301 https://capi.asiansocial.org/projects/uhc-y2/admin/;
   }
 
