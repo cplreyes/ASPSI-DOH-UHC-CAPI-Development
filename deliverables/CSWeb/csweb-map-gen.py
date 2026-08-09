@@ -49,7 +49,8 @@ _ap = argparse.ArgumentParser(description="Generate the CSWeb Map Report.")
 _ap.add_argument("--sample", help="off-box dev: JSON fixture (points/completed_prov) instead of MySQL")
 _ap.add_argument("--targets", default="/opt/targets.json", help="targets.json for the coverage choropleth")
 _ap.add_argument("--areas", default="/opt/app/lamp/www/docs/assets/ph-areas.json")
-_ap.add_argument("--out", default="/opt/app/lamp/www/docs/map.html")
+# Portal docroot since Slice 3 (2026-08-09) — see csweb-dashboard-gen.py OUT.
+_ap.add_argument("--out", default="/opt/app/capi-www/projects/uhc-y2/monitoring/map/index.html")
 _ap.add_argument("--facility-coords", default="/opt/facility_coords.csv",
                  help="geocoded facility coordinates CSV (code9 -> lat/lon + confidence)")
 _ap.add_argument("--manual-coords", default="/opt/app/lamp/www/docs/data/facility_coords_manual.csv",
@@ -698,7 +699,7 @@ TEMPLATE = r"""<!doctype html>
     <div class="awfoot">Type a facility's <b>lat / lon</b> and Save — or download the template, fill it, and Import. Saved coordinates become violet pins within ~2 minutes. (Get coordinates by right-clicking the spot in Google Maps → the lat, lon at the top.)</div>
   </div>
 </div>
-<footer>Generated <span id="gen"></span> · auto-refreshes ~every 2 min · tiles © OpenStreetMap contributors · QA: low accuracy (&gt;<span id="tAcc"></span> m / &lt;<span id="tSat"></span> sat), duplicate respondent location, displacement (home &gt;<span id="tHome"></span> km from facility / facility off its cluster), wrong area (outside declared province) · admin areas © faeldon PH JSON maps (2011) · the UHC-facilities layer plots each facility at its exact location — on-site GPS where visited, else DOH National Health Facility Registry coordinates, else an OpenStreetMap geocode; facilities without an exact fix are not pinned (their GPS is captured on the first visit) · see also the <a href="/docs/dashboard.html">Sync Dashboard</a>.</footer>
+<footer>Generated <span id="gen"></span> · auto-refreshes ~every 2 min · tiles © OpenStreetMap contributors · QA: low accuracy (&gt;<span id="tAcc"></span> m / &lt;<span id="tSat"></span> sat), duplicate respondent location, displacement (home &gt;<span id="tHome"></span> km from facility / facility off its cluster), wrong area (outside declared province) · admin areas © faeldon PH JSON maps (2011) · the UHC-facilities layer plots each facility at its exact location — on-site GPS where visited, else DOH National Health Facility Registry coordinates, else an OpenStreetMap geocode; facilities without an exact fix are not pinned (their GPS is captured on the first visit) · see also the <a href="/projects/uhc-y2/monitoring/">Sync Dashboard</a>.</footer>
 <script type="application/json" id="map-data">__PAYLOAD__</script>
 <script>
 const P = JSON.parse(document.getElementById('map-data').textContent);
@@ -1162,8 +1163,8 @@ def _shellify_map(t):
               ("Monitoring", PS.P + "/monitoring/"),
               ("Map", None)]
     # No lock pill -- see csweb-dashboard-gen.py; the identity chip covers it.
-    seg = ('<div class="tb-seg"><a href="/docs/dashboard.html">Sync Dashboard</a>'
-           '<a class="on" href="/docs/map.html">Map</a></div>')
+    seg = ('<div class="tb-seg"><a href="/projects/uhc-y2/monitoring/">Sync Dashboard</a>'
+           '<a class="on" href="/projects/uhc-y2/monitoring/map/">Map</a></div>')
     tb_right = seg
     head_html = PS.head("UHC Survey Year 2 \u2014 Map Report", _DESC, extra_css=css)
     head_html = head_html.replace("</head>", _LEAFLET_HEAD + "\n</head>")
@@ -1174,7 +1175,7 @@ def _shellify_map(t):
               + '</div></div>\n<div class="canvas bleed">\n')
     closed = ('<footer class="page-foot">' + footer_inner + '</footer>\n'
               '</div>\n</div>\n</div>\n')
-    out = opened + controls_and_map + closed + PS.SIGNOUT_JS + scripts
+    out = opened + controls_and_map + closed + PS.SIGNOUT_JS + PS.PERM_DIM_JS + scripts
     out = out.replace("#006b3f", "#046a38").replace("#004d2c", "#04331d")
     return out
 

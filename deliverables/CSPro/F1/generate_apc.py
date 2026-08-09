@@ -622,9 +622,10 @@ postproc
     errmsg("Select at least one option for Q49 before continuing.");
     reenter;
   endif;
-  { exclusivity (soft warn): 'I don't know' (09) should stand alone }
+  { exclusivity (HARD — #1106..#1131): 'I don't know' (09) should stand alone }
   if pos("09", Q49_QUALITY_CHALL) > 0 and length(strip(Q49_QUALITY_CHALL)) > 2 then
-    errmsg("Q49: 'I don't know' is usually the only choice — please review the options ticked.");
+    errmsg("Q49: 'I don't know' must be the only choice — untick it or the other options before continuing.");
+    reenter;
   endif;""",
     "Q49_QUALITY_CHALL_OTHER_TXT": """\
 PROC Q49_QUALITY_CHALL_OTHER_TXT
@@ -645,9 +646,10 @@ postproc
     errmsg("Select at least one option for Q50 before continuing.");
     reenter;
   endif;
-  { exclusivity (soft warn): 'I don't know' (09) should stand alone }
+  { exclusivity (HARD — #1106..#1131): 'I don't know' (09) should stand alone }
   if pos("09", Q50_ACCESS_CHALL) > 0 and length(strip(Q50_ACCESS_CHALL)) > 2 then
-    errmsg("Q50: 'I don't know' is usually the only choice — please review the options ticked.");
+    errmsg("Q50: 'I don't know' must be the only choice — untick it or the other options before continuing.");
+    reenter;
   endif;""",
     "Q50_ACCESS_CHALL_OTHER_TXT": """\
 PROC Q50_ACCESS_CHALL_OTHER_TXT
@@ -668,13 +670,15 @@ postproc
     errmsg("Select at least one option for Q53 before continuing.");
     reenter;
   endif;
-  { exclusivity (soft warn): 'I don't know' (09) should stand alone }
+  { exclusivity (HARD — #1106..#1131): 'I don't know' (09) should stand alone }
   if pos("09", Q53_YK_PACKAGE) > 0 and length(strip(Q53_YK_PACKAGE)) > 2 then
-    errmsg("Q53: 'I don't know' is usually the only choice — please review the options ticked.");
+    errmsg("Q53: 'I don't know' must be the only choice — untick it or the other options before continuing.");
+    reenter;
   endif;
-  { #526 exclusivity (soft warn): 'All of the above' (08) implies every item — it should stand alone }
+  { #526 exclusivity (HARD — #1108): 'All of the above' (08) implies every item — it should stand alone }
   if pos("08", Q53_YK_PACKAGE) > 0 and length(strip(Q53_YK_PACKAGE)) > 2 then
-    errmsg("Q53: 'All of the above' was ticked with other option(s) — it should be the only choice. Please review.");
+    errmsg("Q53: 'All of the above' must be the only choice — untick it or the other options before continuing.");
+    reenter;
   endif;""",
     "Q53_YK_PACKAGE_OTHER_TXT": """\
 PROC Q53_YK_PACKAGE_OTHER_TXT
@@ -695,9 +699,10 @@ postproc
     errmsg("Select at least one option for Q58 before continuing.");
     reenter;
   endif;
-  { exclusivity (soft warn): 'I don't know' (07) should stand alone }
+  { exclusivity (HARD — #1106..#1131): 'I don't know' (07) should stand alone }
   if pos("07", Q58_PERF_INDICATORS) > 0 and length(strip(Q58_PERF_INDICATORS)) > 2 then
-    errmsg("Q58: 'I don't know' is usually the only choice — please review the options ticked.");
+    errmsg("Q58: 'I don't know' must be the only choice — untick it or the other options before continuing.");
+    reenter;
   endif;""",
     "Q58_PERF_INDICATORS_OTHER_TXT": """\
 PROC Q58_PERF_INDICATORS_OTHER_TXT
@@ -804,11 +809,11 @@ CHECKBOX_CONVERT_A = [
      "not-provided block }\n    skip to Q148_LGU_SUPPORT;\n  endif;"),
     ("Q149_LGU_SUPPORT_FORMS",      True, False, None),
     ("Q155_SEND_REFERRAL_HOW",      True, False, None),
-    ("Q156_REFERRAL_FORM_TYPE",     True, False, None),
+    ("Q156_REFERRAL_FORM_TYPE",     True, "05", None),
     ("Q159_RECEIVE_REFERRAL_HOW",   True, False, None),
     ("Q163_HR_CHALL",               True, True,  None),
-    ("Q165_PD_DOCTORS",             True, False, None),
-    ("Q166_PD_NURSES",              True, False, None),
+    ("Q165_PD_DOCTORS",             True, "08", None),
+    ("Q166_PD_NURSES",              True, "06", None),
     # #567 parts 1 & 2: Section F DOH-licensing why-difficult battery.
     # Q121 = the gate (14 options, last is 'None of the above' -> recoded 90 ->
     # exclusive; no 'Other'). It gates Q122-134 the same way Q65 gates Q66-74; the
@@ -853,10 +858,14 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None):
              f'    errmsg("Select at least one option for Q{qn} before continuing.");',
              "    reenter;", "  endif;"]
     if exclusive:
-        body += [f'  if pos("90", {base}) > 0 and length(strip({base})) > 2 then',
+        # #1106-#1131 (ASPSI review 2026-08-06): HARD block, not a soft warn. The
+        # exclusive code is 90 by convention, but a few lists code their "No ..."
+        # option sequentially (Q156=05, Q165=08, Q166=06) - pass the code as a str.
+        code = exclusive if isinstance(exclusive, str) else "90"
+        body += [f'  if pos("{code}", {base}) > 0 and length(strip({base})) > 2 then',
                  f'    errmsg("Q{qn}: an exclusive option (None / No initiatives / Do not know) '
-                 f'should be the only choice - please review the options ticked.");',
-                 "  endif;"]
+                 f'must be the only choice - untick it or the other options before continuing.");',
+                 "    reenter;", "  endif;"]
     procs = {base: "\n".join(body)}
     if has_other:
         procs[f"{base}_OTHER_TXT"] = (

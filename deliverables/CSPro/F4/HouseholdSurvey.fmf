@@ -64,11 +64,11 @@ Item=BREAKOFF
 
 Name=FORM002
 
-Label=FC Geographic ID + HH GPS Capture
+Label=FC Geographic ID
 
 Level=1
 
-Size=806,427
+Size=806,300
 
   
 
@@ -83,18 +83,6 @@ Item=CLASSIFICATION
 Item=BARANGAY
 
 Item=HH_ADDRESS
-
-Item=LATITUDE
-
-Item=LONGITUDE
-
-Item=HH_GPS_ALTITUDE
-
-Item=HH_GPS_ACCURACY
-
-Item=HH_GPS_SATELLITES
-
-Item=HH_GPS_READTIME
 
   
 
@@ -574,7 +562,7 @@ Item=Q45_PHILHEALTH_REG
 
 Name=FORM021
 
-Label=C. 45.1 When did you register and receive your PhilHealth PIN?  (REPEATING)
+Label=C. 45.1 When did you register and receive your PhilHealth PIN? (REPEATING)
 
 Level=1
 
@@ -640,7 +628,7 @@ Item=Q46_MEMBER_OTHER_TXT
 
 Name=FORM024
 
-Label=C. 45.2 Why are you not registered? (Only answer if 'No' in Q45 (REPEATING)
+Label=C. 45.2 Why are you not registered? (REPEATING)
 
 Level=1
 
@@ -1220,7 +1208,7 @@ Item=N_FOOD_INKIND_PHP
 
 Name=FORM039
 
-Label=N. Household Expenditures (Q157-159)
+Label=N. Household Expenditures (Q157)
 
 Level=1
 
@@ -1229,18 +1217,6 @@ Size=806,300
   
 
 Item=Q157_FOOD_SUBTOTAL_TOTAL_PHP
-
-Item=Q158_RESTAURANT_CONSUMED
-
-Item=Q158_RESTAURANT_PURCHASED_PHP
-
-Item=Q158_RESTAURANT_INKIND_PHP
-
-Item=Q159_SMOKING_TOBACCO_CONSUMED
-
-Item=Q159_SMOKING_TOBACCO_PURCHASED_PHP
-
-Item=Q159_SMOKING_TOBACCO_INKIND_PHP
 
   
 
@@ -1251,6 +1227,34 @@ Item=Q159_SMOKING_TOBACCO_INKIND_PHP
 [Form]
 
 Name=FORM040
+
+Label=N. Restaurant + tobacco, last week (Q158-159) - one row per item
+
+Level=1
+
+Repeat=N_WKOTH_ROSTER
+
+Size=806,300
+
+  
+
+Item=N_WKOTH_ITEM
+
+Item=N_WKOTH_CONSUMED
+
+Item=N_WKOTH_PURCHASED_PHP
+
+Item=N_WKOTH_INKIND_PHP
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM041
 
 Label=N. Non-food, last month (Q160-167) - one row per item
 
@@ -1278,7 +1282,7 @@ Item=N_NF1M_INKIND_PHP
 
 [Form]
 
-Name=FORM041
+Name=FORM042
 
 Label=N. Non-food, last 6 months (Q168-169) - one row per item
 
@@ -1306,7 +1310,7 @@ Item=N_NF6M_INKIND_PHP
 
 [Form]
 
-Name=FORM042
+Name=FORM043
 
 Label=N. Non-food, last 12 months (Q170-174) - one row per item
 
@@ -1334,7 +1338,7 @@ Item=N_NF12M_INKIND_PHP
 
 [Form]
 
-Name=FORM043
+Name=FORM044
 
 Label=N. Health, last 12 months (Q175-176) - one row per item
 
@@ -1362,7 +1366,7 @@ Item=N_H12M_INKIND_PHP
 
 [Form]
 
-Name=FORM044
+Name=FORM045
 
 Label=N. Health 12-month subtotal (Q177)
 
@@ -1382,7 +1386,7 @@ Item=Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP
 
 [Form]
 
-Name=FORM045
+Name=FORM046
 
 Label=N. Health, last 6 months (Q178-181) - one row per item
 
@@ -1410,7 +1414,7 @@ Item=N_H6M_INKIND_PHP
 
 [Form]
 
-Name=FORM046
+Name=FORM047
 
 Label=N. Health 6-month subtotal (Q182)
 
@@ -1430,7 +1434,7 @@ Item=Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP
 
 [Form]
 
-Name=FORM047
+Name=FORM048
 
 Label=N. Health, last month (Q183-184) - one row per item
 
@@ -1458,7 +1462,7 @@ Item=N_H1M_INKIND_PHP
 
 [Form]
 
-Name=FORM048
+Name=FORM049
 
 Label=N. Health 1-month subtotal (Q185)
 
@@ -1478,7 +1482,7 @@ Item=Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP
 
 [Form]
 
-Name=FORM049
+Name=FORM050
 
 Label=O. Sources of Funds for Health
 
@@ -1522,7 +1526,7 @@ Item=Q196_FOREGONE_OTHER_TXT
 
 [Form]
 
-Name=FORM050
+Name=FORM051
 
 Label=P. Financial Risk
 
@@ -1548,7 +1552,7 @@ Item=Q199_WTP_OTHER_TXT
 
 [Form]
 
-Name=FORM051
+Name=FORM052
 
 Label=Q. Financial Anxiety
 
@@ -1574,13 +1578,13 @@ Item=Q202_WORRY_REASONS_OTHER_TXT
 
 [Form]
 
-Name=FORM052
+Name=FORM053
 
 Label=Closing - case end
 
 Level=1
 
-Size=806,337
+Size=806,397
 
   
 
@@ -1594,7 +1598,11 @@ Item=FIELD_EDITED_BY
 
 Item=DATE_FIRST_VISITED
 
+Item=DATE_FIRST_VISITED_DISP
+
 Item=DATE_FINAL_VISIT
+
+Item=DATE_FINAL_VISIT_DISP
 
 Item=TOTAL_NUMBER_OF_VISITS
 
@@ -1610,7 +1618,7 @@ Item=ENUM_RESULT_FINAL_VISIT
 
 [Form]
 
-Name=FORM053
+Name=FORM054
 
 Label=Case Verification Photo
 
@@ -1623,6 +1631,36 @@ Size=806,300
 Item=VERIFICATION_PHOTO_FILENAME
 
 Item=CAPTURE_VERIFICATION_PHOTO
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM055
+
+Label=FC HH GPS Capture
+
+Level=1
+
+Size=806,300
+
+  
+
+Item=LATITUDE
+
+Item=LONGITUDE
+
+Item=HH_GPS_ALTITUDE
+
+Item=HH_GPS_ACCURACY
+
+Item=HH_GPS_SATELLITES
+
+Item=HH_GPS_READTIME
 
   
 
@@ -1728,7 +1766,7 @@ Required=Yes
 
 Name=FIELD_CONTROL_FORM_2
 
-Label=FC Geographic ID + HH GPS Capture
+Label=FC Geographic ID
 
 Form=3
 
@@ -1883,158 +1921,6 @@ Form=3
 Position=50,180,330,196
 
 Text=Household Address
-
- 
-
-  
-
-[Field]
-
-Name=LATITUDE
-
-Position=350,207,760,227
-
-Item=LATITUDE,HOUSEHOLDSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,210,330,226
-
-Text=GPS Latitude
-
- 
-
-  
-
-[Field]
-
-Name=LONGITUDE
-
-Position=350,237,760,257
-
-Item=LONGITUDE,HOUSEHOLDSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,240,330,256
-
-Text=GPS Longitude
-
- 
-
-  
-
-[Field]
-
-Name=HH_GPS_ALTITUDE
-
-Position=350,267,760,287
-
-Item=HH_GPS_ALTITUDE,HOUSEHOLDSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,270,330,286
-
-Text=GPS Altitude (m)
-
- 
-
-  
-
-[Field]
-
-Name=HH_GPS_ACCURACY
-
-Position=350,297,760,317
-
-Item=HH_GPS_ACCURACY,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,300,330,316
-
-Text=GPS Accuracy (m)
-
- 
-
-  
-
-[Field]
-
-Name=HH_GPS_SATELLITES
-
-Position=350,327,760,347
-
-Item=HH_GPS_SATELLITES,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,330,330,346
-
-Text=GPS Satellites
-
- 
-
-  
-
-[Field]
-
-Name=HH_GPS_READTIME
-
-Position=350,357,760,377
-
-Item=HH_GPS_READTIME,HOUSEHOLDSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,360,330,376
-
-Text=GPS Read Time (UTC)
 
  
 
@@ -2816,7 +2702,7 @@ Form=5
 
 Position=50,870,330,886
 
-Text=22. Do you have electricity in your household?
+Text=22. Do you have electricity in your house?
 
  
 
@@ -4094,7 +3980,7 @@ Required=Yes
 
 Name=C_HOUSEHOLD_ROSTER_FORM_17
 
-Label=C. 45.1 When did you register and receive your PhilHealth PIN?  (REPEATING)
+Label=C. 45.1 When did you register and receive your PhilHealth PIN? (REPEATING)
 
 Form=22
 
@@ -4124,7 +4010,7 @@ Form=22
 
 Position=50,30,330,46
 
-Text=45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)
+Text=45.1 When did you register and receive your PhilHealth PIN?
 
  
 
@@ -4234,7 +4120,7 @@ Required=Yes
 
 Name=C_HOUSEHOLD_ROSTER_FORM_20
 
-Label=C. 45.2 Why are you not registered? (Only answer if 'No' in Q45 (REPEATING)
+Label=C. 45.2 Why are you not registered? (REPEATING)
 
 Form=25
 
@@ -4264,7 +4150,7 @@ Form=25
 
 Position=50,30,330,46
 
-Text=45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)
+Text=45.2 Why are you not registered?
 
  
 
@@ -5518,7 +5404,7 @@ Form=32
 
 Position=50,270,330,286
 
-Text=67. How much time does it take to reach the nearest pharmacy from your home? — Minutes
+Text=67. Travel time to nearest pharmacy — Minutes
 
  
 
@@ -8320,7 +8206,7 @@ Form=36
 
 Position=50,420,330,436
 
-Text=117. After you went to the specialist or special service, did they follow up with you about what happened at the visit? (Only if Q112=Yes)
+Text=117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?
 
  
 
@@ -9976,7 +9862,7 @@ Required=Yes
 
 Name=N_HOUSEHOLD_EXPENDITURES_FORM
 
-Label=N. Household Expenditures (Q157-159)
+Label=N. Household Expenditures (Q157)
 
 Form=40
 
@@ -10008,17 +9894,65 @@ Text=157. Sub-total (food, last week) — Auto-computed total (PHP, [DO NOT ASK]
 
   
 
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=N_WKOTH_ROSTER_FORM
+
+Label=N. Restaurant + tobacco, last week (Q158-159) - one row per item
+
+Form=41
+
+Type=Record
+
+TypeName=N_WKOTH_ROSTER
+
+Max=2
+
+  
+
 [Field]
 
-Name=Q158_RESTAURANT_CONSUMED
+Name=N_WKOTH_ITEM
+
+Position=350,27,760,47
+
+Item=N_WKOTH_ITEM,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=41
+
+  
+
+[Text]
+
+Position=50,30,330,46
+
+Text=Expenditure item (auto - one grid row per item)
+
+ 
+
+  
+
+[Field]
+
+Name=N_WKOTH_CONSUMED
 
 Position=350,57,365,77
 
-Item=Q158_RESTAURANT_CONSUMED,HOUSEHOLDSURVEY_DICT
+Item=N_WKOTH_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=40
+Form=41
 
   
 
@@ -10026,7 +9960,7 @@ Form=40
 
 Position=50,60,330,76
 
-Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — In the last week, did you or any member of your household consume this item?
+Text=Expenditure item - In the last week, did you or any member of your household consume this item?
 
  
 
@@ -10034,15 +9968,15 @@ Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, an
 
 [Field]
 
-Name=Q158_RESTAURANT_PURCHASED_PHP
+Name=N_WKOTH_PURCHASED_PHP
 
 Position=350,87,760,107
 
-Item=Q158_RESTAURANT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
+Item=N_WKOTH_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=40
+Form=41
 
   
 
@@ -10050,7 +9984,7 @@ Form=40
 
 Position=50,90,330,106
 
-Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do...
+Text=Expenditure item - During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)
 
  
 
@@ -10058,15 +9992,15 @@ Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, an
 
 [Field]
 
-Name=Q158_RESTAURANT_INKIND_PHP
+Name=N_WKOTH_INKIND_PHP
 
 Position=350,117,760,137
 
-Item=Q158_RESTAURANT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
+Item=N_WKOTH_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=40
+Form=41
 
   
 
@@ -10074,109 +10008,9 @@ Form=40
 
 Position=50,120,330,136
 
-Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP...
+Text=Expenditure item - During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...
 
  
-
-  
-
-[Field]
-
-Name=Q159_SMOKING_TOBACCO_CONSUMED
-
-Position=350,147,365,167
-
-Item=Q159_SMOKING_TOBACCO_CONSUMED,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=40
-
-  
-
-[Text]
-
-Position=50,150,330,166
-
-Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — In the last week, did you or any member of your household consume this item?
-
- 
-
-  
-
-[Field]
-
-Name=Q159_SMOKING_TOBACCO_PURCHASED_PHP
-
-Position=350,177,760,197
-
-Item=Q159_SMOKING_TOBACCO_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=40
-
-  
-
-[Text]
-
-Position=50,180,330,196
-
-Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the...
-
- 
-
-  
-
-[Field]
-
-Name=Q159_SMOKING_TOBACCO_INKIND_PHP
-
-Position=350,207,760,227
-
-Item=Q159_SMOKING_TOBACCO_INKIND_PHP,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=40
-
-  
-
-[Text]
-
-Position=50,210,330,226
-
-Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your...
-
- 
-
-  
-
-[Block]
-
-Name=DG_BLK_145
-
-Label=Q158
-
-DisplayTogether=Yes
-
-Position=1
-
-Length=3
-
-  
-
-[Block]
-
-Name=DG_BLK_146
-
-Label=Q159
-
-DisplayTogether=Yes
-
-Position=5
-
-Length=3
 
   
 
@@ -10192,7 +10026,7 @@ Name=N_NF1M_ROSTER_FORM
 
 Label=N. Non-food, last month (Q160-167) - one row per item
 
-Form=41
+Form=42
 
 Type=Record
 
@@ -10214,7 +10048,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=41
+Form=42
 
   
 
@@ -10238,7 +10072,7 @@ Item=N_NF1M_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=41
+Form=42
 
   
 
@@ -10262,7 +10096,7 @@ Item=N_NF1M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=41
+Form=42
 
   
 
@@ -10286,7 +10120,7 @@ Item=N_NF1M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=41
+Form=42
 
   
 
@@ -10312,7 +10146,7 @@ Name=N_NF6M_ROSTER_FORM
 
 Label=N. Non-food, last 6 months (Q168-169) - one row per item
 
-Form=42
+Form=43
 
 Type=Record
 
@@ -10334,7 +10168,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=42
+Form=43
 
   
 
@@ -10358,7 +10192,7 @@ Item=N_NF6M_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=42
+Form=43
 
   
 
@@ -10382,7 +10216,7 @@ Item=N_NF6M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=42
+Form=43
 
   
 
@@ -10406,7 +10240,7 @@ Item=N_NF6M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=42
+Form=43
 
   
 
@@ -10432,7 +10266,7 @@ Name=N_NF12M_ROSTER_FORM
 
 Label=N. Non-food, last 12 months (Q170-174) - one row per item
 
-Form=43
+Form=44
 
 Type=Record
 
@@ -10454,7 +10288,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=43
+Form=44
 
   
 
@@ -10478,7 +10312,7 @@ Item=N_NF12M_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=43
+Form=44
 
   
 
@@ -10502,7 +10336,7 @@ Item=N_NF12M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=43
+Form=44
 
   
 
@@ -10526,7 +10360,7 @@ Item=N_NF12M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=43
+Form=44
 
   
 
@@ -10552,7 +10386,7 @@ Name=N_H12M_ROSTER_FORM
 
 Label=N. Health, last 12 months (Q175-176) - one row per item
 
-Form=44
+Form=45
 
 Type=Record
 
@@ -10574,7 +10408,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=44
+Form=45
 
   
 
@@ -10598,7 +10432,7 @@ Item=N_H12M_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=44
+Form=45
 
   
 
@@ -10622,7 +10456,7 @@ Item=N_H12M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=44
+Form=45
 
   
 
@@ -10646,7 +10480,7 @@ Item=N_H12M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=44
+Form=45
 
   
 
@@ -10672,7 +10506,7 @@ Name=N_H12M_TOTAL_FORM
 
 Label=N. Health 12-month subtotal (Q177)
 
-Form=45
+Form=46
 
 Max=1
 
@@ -10688,7 +10522,7 @@ Item=Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=45
+Form=46
 
   
 
@@ -10714,7 +10548,7 @@ Name=N_H6M_ROSTER_FORM
 
 Label=N. Health, last 6 months (Q178-181) - one row per item
 
-Form=46
+Form=47
 
 Type=Record
 
@@ -10736,7 +10570,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=46
+Form=47
 
   
 
@@ -10760,7 +10594,7 @@ Item=N_H6M_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=46
+Form=47
 
   
 
@@ -10784,7 +10618,7 @@ Item=N_H6M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=46
+Form=47
 
   
 
@@ -10808,7 +10642,7 @@ Item=N_H6M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=46
+Form=47
 
   
 
@@ -10834,7 +10668,7 @@ Name=N_H6M_TOTAL_FORM
 
 Label=N. Health 6-month subtotal (Q182)
 
-Form=47
+Form=48
 
 Max=1
 
@@ -10850,7 +10684,7 @@ Item=Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=47
+Form=48
 
   
 
@@ -10876,7 +10710,7 @@ Name=N_H1M_ROSTER_FORM
 
 Label=N. Health, last month (Q183-184) - one row per item
 
-Form=48
+Form=49
 
 Type=Record
 
@@ -10898,7 +10732,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=48
+Form=49
 
   
 
@@ -10922,7 +10756,7 @@ Item=N_H1M_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=48
+Form=49
 
   
 
@@ -10946,7 +10780,7 @@ Item=N_H1M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=48
+Form=49
 
   
 
@@ -10970,7 +10804,7 @@ Item=N_H1M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=48
+Form=49
 
   
 
@@ -10996,7 +10830,7 @@ Name=N_H1M_TOTAL_FORM
 
 Label=N. Health 1-month subtotal (Q185)
 
-Form=49
+Form=50
 
 Max=1
 
@@ -11012,7 +10846,7 @@ Item=Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=49
+Form=50
 
   
 
@@ -11038,7 +10872,7 @@ Name=O_SOURCES_OF_FUNDS_FORM
 
 Label=O. Sources of Funds for Health
 
-Form=50
+Form=51
 
 Max=1
 
@@ -11054,7 +10888,7 @@ Item=Q186_CURRENT_INCOME,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=50
+Form=51
 
   
 
@@ -11078,7 +10912,7 @@ Item=Q187_SAVINGS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=50
+Form=51
 
   
 
@@ -11102,7 +10936,7 @@ Item=Q188_SOLD_ASSETS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=50
+Form=51
 
   
 
@@ -11126,7 +10960,7 @@ Item=Q189_BORROW_FAMILY,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=50
+Form=51
 
   
 
@@ -11150,7 +10984,7 @@ Item=Q190_BORROW_INST,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=50
+Form=51
 
   
 
@@ -11174,7 +11008,7 @@ Item=Q191_REMITTANCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=50
+Form=51
 
   
 
@@ -11198,7 +11032,7 @@ Item=Q192_GOVT_ASSIST,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=50
+Form=51
 
   
 
@@ -11222,7 +11056,7 @@ Item=Q193_LGU_DONATION,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=50
+Form=51
 
   
 
@@ -11246,7 +11080,7 @@ Item=Q194_OTHER_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=50
+Form=51
 
   
 
@@ -11272,7 +11106,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=50
+Form=51
 
   
 
@@ -11296,7 +11130,7 @@ Item=Q195_INCOME_PCT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=50
+Form=51
 
   
 
@@ -11320,7 +11154,7 @@ Item=Q196_FOREGONE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=50
+Form=51
 
   
 
@@ -11346,7 +11180,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=50
+Form=51
 
   
 
@@ -11362,7 +11196,7 @@ Text=196. If your household chooses not to spend on health care for financial re
 
 [Block]
 
-Name=DG_BLK_147
+Name=DG_BLK_145
 
 Label=Q186-Q190
 
@@ -11376,7 +11210,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_148
+Name=DG_BLK_146
 
 Label=Q191-Q194
 
@@ -11390,7 +11224,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_149
+Name=DG_BLK_147
 
 Label=Q194
 
@@ -11404,7 +11238,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_150
+Name=DG_BLK_148
 
 Label=Q195
 
@@ -11418,7 +11252,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_151
+Name=DG_BLK_149
 
 Label=Q196
 
@@ -11432,7 +11266,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_152
+Name=DG_BLK_150
 
 Label=Q196
 
@@ -11456,7 +11290,7 @@ Name=P_FINANCIAL_RISK_FORM
 
 Label=P. Financial Risk
 
-Form=51
+Form=52
 
 Max=1
 
@@ -11472,7 +11306,7 @@ Item=Q197_DELAYED_CARE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=51
+Form=52
 
   
 
@@ -11496,7 +11330,7 @@ Item=Q198_NOT_FOLLOWED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=51
+Form=52
 
   
 
@@ -11520,7 +11354,7 @@ Item=Q199_WTP_CONSULT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=51
+Form=52
 
   
 
@@ -11546,7 +11380,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=51
+Form=52
 
   
 
@@ -11562,7 +11396,7 @@ Text=199. Other (Specify) — text
 
 [Block]
 
-Name=DG_BLK_153
+Name=DG_BLK_151
 
 Label=Q197-Q199
 
@@ -11576,7 +11410,7 @@ Length=3
 
 [Block]
 
-Name=DG_BLK_154
+Name=DG_BLK_152
 
 Label=Q199
 
@@ -11600,7 +11434,7 @@ Name=Q_FINANCIAL_ANXIETY_FORM
 
 Label=Q. Financial Anxiety
 
-Form=52
+Form=53
 
 Max=1
 
@@ -11616,7 +11450,7 @@ Item=Q200_REDUCED_SPEND,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=52
+Form=53
 
   
 
@@ -11640,7 +11474,7 @@ Item=Q201_WORRIED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=52
+Form=53
 
   
 
@@ -11664,7 +11498,7 @@ Item=Q202_WORRY_REASONS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=52
+Form=53
 
   
 
@@ -11690,7 +11524,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=52
+Form=53
 
   
 
@@ -11706,7 +11540,7 @@ Text=202. Do any of the following reasons describe why you are worried about you
 
 [Block]
 
-Name=DG_BLK_155
+Name=DG_BLK_153
 
 Label=Q200
 
@@ -11720,7 +11554,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_156
+Name=DG_BLK_154
 
 Label=Q201
 
@@ -11734,7 +11568,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_157
+Name=DG_BLK_155
 
 Label=Q202
 
@@ -11748,7 +11582,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_158
+Name=DG_BLK_156
 
 Label=Q202
 
@@ -11772,7 +11606,7 @@ Name=FIELD_CONTROL_FORM_3
 
 Label=Closing - case end
 
-Form=53
+Form=54
 
 Max=1
 
@@ -11790,7 +11624,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=53
+Form=54
 
   
 
@@ -11816,7 +11650,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=53
+Form=54
 
   
 
@@ -11842,7 +11676,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=53
+Form=54
 
   
 
@@ -11868,7 +11702,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=53
+Form=54
 
   
 
@@ -11892,7 +11726,7 @@ Item=DATE_FIRST_VISITED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=Date,YYYYMMDD
 
-Form=53
+Form=54
 
   
 
@@ -11908,21 +11742,47 @@ Text=Date First Visited the Household (YYYYMMDD)
 
 [Field]
 
-Name=DATE_FINAL_VISIT
+Name=DATE_FIRST_VISITED_DISP
 
 Position=350,177,760,197
 
-Item=DATE_FINAL_VISIT,HOUSEHOLDSURVEY_DICT
+Item=DATE_FIRST_VISITED_DISP,HOUSEHOLDSURVEY_DICT
 
-DataCaptureType=Date,YYYYMMDD
+UseUnicodeTextBox=Yes
 
-Form=53
+DataCaptureType=TextBox
+
+Form=54
 
   
 
 [Text]
 
 Position=50,180,330,196
+
+Text=Date First Visited (MM/DD/YYYY)
+
+ 
+
+  
+
+[Field]
+
+Name=DATE_FINAL_VISIT
+
+Position=350,207,760,227
+
+Item=DATE_FINAL_VISIT,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=Date,YYYYMMDD
+
+Form=54
+
+  
+
+[Text]
+
+Position=50,210,330,226
 
 Text=Date of Final Visit to the Household (YYYYMMDD)
 
@@ -11932,21 +11792,47 @@ Text=Date of Final Visit to the Household (YYYYMMDD)
 
 [Field]
 
-Name=TOTAL_NUMBER_OF_VISITS
+Name=DATE_FINAL_VISIT_DISP
 
-Position=350,207,760,227
+Position=350,237,760,257
 
-Item=TOTAL_NUMBER_OF_VISITS,HOUSEHOLDSURVEY_DICT
+Item=DATE_FINAL_VISIT_DISP,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=53
+Form=54
 
   
 
 [Text]
 
-Position=50,210,330,226
+Position=50,240,330,256
+
+Text=Date of Final Visit (MM/DD/YYYY)
+
+ 
+
+  
+
+[Field]
+
+Name=TOTAL_NUMBER_OF_VISITS
+
+Position=350,267,760,287
+
+Item=TOTAL_NUMBER_OF_VISITS,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=54
+
+  
+
+[Text]
+
+Position=50,270,330,286
 
 Text=Total Number of Visits
 
@@ -11958,19 +11844,19 @@ Text=Total Number of Visits
 
 Name=ENUM_RESULT_FIRST_VISIT
 
-Position=350,237,365,257
+Position=350,297,365,317
 
 Item=ENUM_RESULT_FIRST_VISIT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=53
+Form=54
 
   
 
 [Text]
 
-Position=50,240,330,256
+Position=50,300,330,316
 
 Text=Result of First Visit
 
@@ -11982,19 +11868,19 @@ Text=Result of First Visit
 
 Name=ENUM_RESULT_FINAL_VISIT
 
-Position=350,267,365,287
+Position=350,327,365,347
 
 Item=ENUM_RESULT_FINAL_VISIT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=53
+Form=54
 
   
 
 [Text]
 
-Position=50,270,330,286
+Position=50,330,330,346
 
 Text=Result of Final Visit
 
@@ -12026,7 +11912,7 @@ DisplayTogether=Yes
 
 Position=5
 
-Length=5
+Length=7
 
   
 
@@ -12042,7 +11928,7 @@ Name=REC_CASE_VERIFICATION_FORM
 
 Label=Case Verification Photo
 
-Form=54
+Form=55
 
 Max=1
 
@@ -12060,7 +11946,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=54
+Form=55
 
   
 
@@ -12084,7 +11970,7 @@ Item=CAPTURE_VERIFICATION_PHOTO,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=54
+Form=55
 
   
 
@@ -12093,6 +11979,176 @@ Form=54
 Position=50,60,330,76
 
 Text=Take Verification Photo
+
+ 
+
+  
+
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=HOUSEHOLD_GEO_ID_FORM
+
+Label=FC HH GPS Capture
+
+Form=56
+
+Max=1
+
+  
+
+[Field]
+
+Name=LATITUDE
+
+Position=350,27,760,47
+
+Item=LATITUDE,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=56
+
+  
+
+[Text]
+
+Position=50,30,330,46
+
+Text=GPS Latitude
+
+ 
+
+  
+
+[Field]
+
+Name=LONGITUDE
+
+Position=350,57,760,77
+
+Item=LONGITUDE,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=56
+
+  
+
+[Text]
+
+Position=50,60,330,76
+
+Text=GPS Longitude
+
+ 
+
+  
+
+[Field]
+
+Name=HH_GPS_ALTITUDE
+
+Position=350,87,760,107
+
+Item=HH_GPS_ALTITUDE,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=56
+
+  
+
+[Text]
+
+Position=50,90,330,106
+
+Text=GPS Altitude (m)
+
+ 
+
+  
+
+[Field]
+
+Name=HH_GPS_ACCURACY
+
+Position=350,117,760,137
+
+Item=HH_GPS_ACCURACY,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=56
+
+  
+
+[Text]
+
+Position=50,120,330,136
+
+Text=GPS Accuracy (m)
+
+ 
+
+  
+
+[Field]
+
+Name=HH_GPS_SATELLITES
+
+Position=350,147,760,167
+
+Item=HH_GPS_SATELLITES,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=56
+
+  
+
+[Text]
+
+Position=50,150,330,166
+
+Text=GPS Satellites
+
+ 
+
+  
+
+[Field]
+
+Name=HH_GPS_READTIME
+
+Position=350,177,760,197
+
+Item=HH_GPS_READTIME,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=56
+
+  
+
+[Text]
+
+Position=50,180,330,196
+
+Text=GPS Read Time (UTC)
 
  
 

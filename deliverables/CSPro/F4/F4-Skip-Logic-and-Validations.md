@@ -610,6 +610,30 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | `Q202_WORRY_REASONS` select-all | ≥ 1 option when enabled; `_OTHER_TXT` on Other | HARD |
 | Q202 completion | Set `ENUM_RESULT_FINAL_VISIT = Completed` | HARD (PROC) |
 
+### 3.19 Numeric field range checks — as-built (CAPI real-time enforcement) · 2026-07-08
+
+> **Provenance.** Confirmed against the live **F4 v1.3.1** build in response to Doc Silva's Survey-Manual note (relayed by Aly, 2026-07-08): *"confirm with the CAPI/CSPro programmer whether real-time range checks exist for income, travel time, and expenditure fields."* Source of truth: `generate_apc.py` `RANGE_CHECKS` + `cspro_helpers.range_check_proc`; `numeric()` with no value-set emits **length only** (no dictionary range).
+>
+> **2026-07-08 (v1.3.2):** ASPSI sent the official expected ranges (**Range.docx**, Aly via Viber). All documented ranges were already enforced (hard check or exact width cap); the one residual gap — stray *negative* entry on Q95/Q96/Section N (CSEntry accepts a typed minus; width caps only the maximum) — was closed in **v1.3.2** (F3's Q18 got the same treatment in F3 v1.0.5). The table below reflects v1.3.2.
+
+As of **v1.3.2** every field below carries a real-time check (out-of-range → errmsg + `reenter`, i.e. entry is blocked until valid). For Q95/Q96/Section N the upper bound coincides with the field's digit width — their checks exist to block stray negatives, which width alone cannot. **Maximum-plausibility** screening beyond these bounds remains post-hoc (data manager), consistent with DraftManual.txt's Logic and Consistency Check section.
+
+| Q (Apr-20) | Field | dcf width | Real-time check | Enforced range | −98 / −99 |
+|---|---|---|---|---|---|
+| **Q18** avg. monthly HH income | `Q18_INCOME_AMOUNT` | 9 | **HARD** (block) | **₱0 – 99,999,999** | ✅ accepted |
+| **Q67** time to nearest **pharmacy** (Sec G) | `Q67_TRAVEL_HH` / `Q67_TRAVEL_MM` | 2 / 2 | **HARD** (block) | **Hours 0–24**, **Minutes 0–59** | ❌ |
+| **Q95** travel time to nearest **primary-care facility** (Sec I) | `Q95_TRAVEL_TIME_MIN` | 3 | **HARD** (block, v1.3.2) | **0–999 min** | ❌ |
+| **Q96** cost of travel to facility (Sec I) | `Q96_TRAVEL_COST_PHP` | 5 | **HARD** (block, v1.3.2) | **₱0–99,999** | ❌ |
+| **Section N** every expenditure cell | `N_<blk>_PURCHASED_PHP` / `_INKIND_PHP` | 8 | **HARD** negative-block (v1.3.2) | **₱0–99,999,999** per cell | ✅ accepted |
+
+Notes:
+- **Section N** (v1.3.2): each amount's postproc rejects anything other than ₱0–99,999,999 or −98/−99 (replay-safe: the partial-save resume transient reads 0/notappl, never negative — the #834/#835 misfire class was checked before adding). *Completeness* is still the **soft** end-of-section reminder (#834, v1.3.1, `section_n_review_proc`/Q186): it lists any *consumed* item still missing an amount and lets the enumerator continue — it does **not** force an amount. (The per-row `#677` consumed-needs-an-amount `reenter` was removed in v1.3.1; see [[reference_cspro_roster_engine_rules]] rule 5.)
+- **Q67 ≠ Q95.** Q67 is the nearest **pharmacy** (Section G, Access to Medicines); Q95 is the nearest **primary-care facility** (Section I). Distinct fields — document them separately in the manual.
+- **F4-VAL-02 (open, minor):** `Q18_INCOME_AMOUNT` is 9 digits wide but the hard check caps at **₱99,999,999** (8 nines). Functionally fine (already implausibly high), but the enforced max and the field width disagree by one order of magnitude — align if a deliberate cap is wanted (one-line change to `RANGE_CHECKS`).
+- For reference, the only other hard numeric check in F4 is `TOTAL_NUMBER_OF_VISITS` (1–10, HARD) + a soft "unusually high" nudge above 3 (§3.1).
+
+---
+
 ---
 
 ## 4. CSPro logic templates

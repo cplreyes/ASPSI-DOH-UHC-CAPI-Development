@@ -1988,5 +1988,20 @@
     },
     "gate": "NOT-READY - 14 open actionable. Loop continues.",
     "still_blocked": "#1177 fixed+verified but NOT deployed; #1182 F3 Q45 not started. Both need the main checkout: this session is sandboxed to the worktree and the harness refuses Edit and git there."
+  },
+  "_cycle_2026-08-09c_1109": {
+    "fixed": "#1109 F1 Q57 - capitation definition restored as a blue note. Added INSTRUCTIONS[57] in F1/generate_qsf.py; renders via <p class=\"instruction\">, the same class as Q43/Q58/Q65/Q88.",
+    "root_cause": "#1011 DELETED the definition off the Q57 question text and nothing re-homed it, so the enumerator had no definition at all. My 2026-08-07 'cannot reproduce' comment observed the absence correctly but drew the wrong conclusion - the absence WAS the bug. Corrected on the issue.",
+    "wording": "Verbatim from raw/Project-Deliverable-1/F1.txt: 'Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.' Only the outer parentheses dropped (house style - every other F1 blue note is a plain sentence). Flagged on the issue for objection.",
+    "verified": "verify_questions F1 PASS 319/319, F3 PASS 370/370, F4 PASS 301/301 - matches main's baseline exactly. qsf diff vs previous build = 8 lines, one per language, all Q57.",
+    "WORKTREE_NOW_MIRRORS_MAIN": "IMPORTANT for the copy-back. The worktree F1 and F4 folders were STALE (F1 was missing Friday's emphasis pass entirely - _emphasize count 0 vs main's 2 - and regenerating against that stale base would have regressed deployed v1.3.0 work, plus it re-stamped the build footer v1.3.0 -> v1.1.0 off a stale versions.json). Fixed by mirroring main -> worktree for the whole F1 and F4 folders and versions.json, preserving only my edited files. The worktree is now main + exactly 3 changes.",
+    "the_three_changes": [
+      "F4 Q46 (#1177) - generate_dcf.py, generate_qsf.py, translations/*.json (7), regenerated dcf+qsf",
+      "F1 Q57 (#1109) - generate_qsf.py, regenerated qsf",
+      "cspro_helpers.py - the capped-label diagnostic (names EN caps, summarises translation caps)"
+    ],
+    "version_policy_note": "Did NOT bump versions.json. Per its own readme the bump is atomic with the deploy: 'py automation/stamp_version.py bump F1' updates the file, re-stamps the .pff and regenerates the .qsf in one step. F1 -> v1.3.1 and F4 -> v1.5.9 belong to whoever runs the deploy.",
+    "still_blocked": "Both #1177 and #1109 are fixed+verified but NOT deployed - needs the main checkout.",
+    "slack_now_stale": "The #f1-uat patch note and the #capi-scrum round summary both say Q57 is 'waiting on ASPSI' / 'cannot be reproduced'. That is now wrong. Worth a short correction to #f1-uat so ASPSI does not spend time answering a non-question."
   }
 }

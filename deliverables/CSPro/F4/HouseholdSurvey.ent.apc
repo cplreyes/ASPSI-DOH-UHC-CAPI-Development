@@ -655,57 +655,59 @@ preproc
 
 PROC N_FOOD_PURCHASED_PHP
 preproc
-  { Not consumed -> auto 0 + noinput (0, not notappl, for codebook/subtotal parity
-    with the flat build); consumed -> #755/#818 pre-fill so Enter passes an empty
-    amount. Per-occurrence preproc gate (Section C pattern). }
+  { #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE with
+    NO special() pre-fill (the pre-fill zeroed stored amounts on partial-save resume-
+    replay, #834). Completeness is checked once at section end (Q186), not per row. }
   if N_FOOD_CONSUMED = 2 then
     N_FOOD_PURCHASED_PHP = 0;
     noinput;
-  else
-    if special(N_FOOD_PURCHASED_PHP) then N_FOOD_PURCHASED_PHP = 0; endif;
+  endif;
+
+postproc
+  { Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)
+    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed
+    minus). Replay-safe: the partial-save resume transient reads 0/notappl,
+    never < 0 (#834/#835 class checked before adding). }
+  if N_FOOD_PURCHASED_PHP < 0 and N_FOOD_PURCHASED_PHP <> -98 and N_FOOD_PURCHASED_PHP <> -99 then
+    errmsg(1156);
+    reenter;
   endif;
 
 PROC N_FOOD_INKIND_PHP
 preproc
-  { Not consumed -> auto 0 + noinput (0, not notappl, for codebook/subtotal parity
-    with the flat build); consumed -> #755/#818 pre-fill so Enter passes an empty
-    amount. Per-occurrence preproc gate (Section C pattern). }
+  { #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE with
+    NO special() pre-fill (the pre-fill zeroed stored amounts on partial-save resume-
+    replay, #834). Completeness is checked once at section end (Q186), not per row. }
   if N_FOOD_CONSUMED = 2 then
     N_FOOD_INKIND_PHP = 0;
     noinput;
-  else
-    if special(N_FOOD_INKIND_PHP) then N_FOOD_INKIND_PHP = 0; endif;
   endif;
+
 postproc
-  { #677 consumed-needs-an-amount — roster edition (same rule + wording as the flat build). }
-  if N_FOOD_CONSUMED = 1 and not (N_FOOD_PURCHASED_PHP in -99, -98, 1:99999999)
-      and not (N_FOOD_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg(1010);
+  { Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)
+    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed
+    minus). Replay-safe: the partial-save resume transient reads 0/notappl,
+    never < 0 (#834/#835 class checked before adding). }
+  if N_FOOD_INKIND_PHP < 0 and N_FOOD_INKIND_PHP <> -98 and N_FOOD_INKIND_PHP <> -99 then
+    errmsg(1156);
     reenter;
   endif;
 
 PROC Q157_FOOD_SUBTOTAL_TOTAL_PHP
 preproc
-  { Q157 food subtotal (spec §4.9) — Option C: computed in Q157's OWN preproc +
-    noinput, NOT protect() (#617: protected fields skip their preproc) and NOT a
-    group proc (spike 2026-07-03: BOTH the roster group postproc AND the cont form's
-    group preproc get wiped by record P's buffer init — 'protected field Q157... out
-    of range - value is NOTAPPL' at grid exit). A noinput field's preproc runs AT
-    arrival, inside the record context, before validation — the proven
-    MEMBER_LINE_NO / N_FOOD_ITEM pattern. Re-runs on back-nav + resume. Sentinels
-    -98/-99 excluded (#743). }
-  { Accumulate in a LOCAL, assign once (q92_oop rule) — reading the CURRENT field
-    inside its own preproc returns the stored notappl even after assigning it in the
-    same preproc (spike trace 2026-07-03: total=NOTAPPL with all row reads valid), so
-    self-accumulation `Q157 = Q157 + x` poisons the sum. }
+  { Q157 food subtotal (spec 4.9) - computed in Q157's OWN preproc + noinput (#617: a
+    protected field skips its preproc; a group proc gets wiped by record P buffer init).
+    LOCAL accumulator (q92_oop rule). #834: amounts can now be blank (notappl), so add only
+    real non-negative amounts - 'in 0:99999999' excludes notappl AND the -98/-99 sentinels
+    (#743). Re-runs on back-nav + resume. }
   numeric nfr_i; numeric nfr_total;
   nfr_total = 0;
   do nfr_i = 1 while nfr_i <= 13
     if N_FOOD_CONSUMED(nfr_i) = 1 then
-      if N_FOOD_PURCHASED_PHP(nfr_i) <> -98 and N_FOOD_PURCHASED_PHP(nfr_i) <> -99 then
+      if N_FOOD_PURCHASED_PHP(nfr_i) in 0:99999999 then
         nfr_total = nfr_total + N_FOOD_PURCHASED_PHP(nfr_i);
       endif;
-      if N_FOOD_INKIND_PHP(nfr_i) <> -98 and N_FOOD_INKIND_PHP(nfr_i) <> -99 then
+      if N_FOOD_INKIND_PHP(nfr_i) in 0:99999999 then
         nfr_total = nfr_total + N_FOOD_INKIND_PHP(nfr_i);
       endif;
     endif;
@@ -715,6 +717,54 @@ preproc
 
 
 { ---- Section N fan-out: remaining recall blocks as rosters (2026-07-03) ---- }
+PROC N_WKOTH_ITEM
+preproc
+  { Auto-name this grid row from the WHO/SHA item list (one occurrence per item). }
+  if curocc() = 1 then N_WKOTH_ITEM = "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries)";
+  elseif curocc() = 2 then N_WKOTH_ITEM = "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut)";
+  endif;
+  noinput;
+
+PROC N_WKOTH_PURCHASED_PHP
+preproc
+  { #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE, NO
+    special() pre-fill (it clobbered stored amounts on resume-replay, #834).
+    Completeness checked once at section end (Q186), not per row. }
+  if N_WKOTH_CONSUMED = 2 then
+    N_WKOTH_PURCHASED_PHP = 0;
+    noinput;
+  endif;
+
+postproc
+  { Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)
+    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed
+    minus). Replay-safe: the partial-save resume transient reads 0/notappl,
+    never < 0 (#834/#835 class checked before adding). }
+  if N_WKOTH_PURCHASED_PHP < 0 and N_WKOTH_PURCHASED_PHP <> -98 and N_WKOTH_PURCHASED_PHP <> -99 then
+    errmsg(1156);
+    reenter;
+  endif;
+
+PROC N_WKOTH_INKIND_PHP
+preproc
+  { #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE, NO
+    special() pre-fill (it clobbered stored amounts on resume-replay, #834).
+    Completeness checked once at section end (Q186), not per row. }
+  if N_WKOTH_CONSUMED = 2 then
+    N_WKOTH_INKIND_PHP = 0;
+    noinput;
+  endif;
+
+postproc
+  { Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)
+    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed
+    minus). Replay-safe: the partial-save resume transient reads 0/notappl,
+    never < 0 (#834/#835 class checked before adding). }
+  if N_WKOTH_INKIND_PHP < 0 and N_WKOTH_INKIND_PHP <> -98 and N_WKOTH_INKIND_PHP <> -99 then
+    errmsg(1156);
+    reenter;
+  endif;
+
 PROC N_NF1M_ITEM
 preproc
   { Auto-name this grid row from the WHO/SHA item list (one occurrence per item). }
@@ -731,30 +781,41 @@ preproc
 
 PROC N_NF1M_PURCHASED_PHP
 preproc
-  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
-    (#755/#818). Same per-occurrence gate as the food grid. }
+  { #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE, NO
+    special() pre-fill (it clobbered stored amounts on resume-replay, #834).
+    Completeness checked once at section end (Q186), not per row. }
   if N_NF1M_CONSUMED = 2 then
     N_NF1M_PURCHASED_PHP = 0;
     noinput;
-  else
-    if special(N_NF1M_PURCHASED_PHP) then N_NF1M_PURCHASED_PHP = 0; endif;
+  endif;
+
+postproc
+  { Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)
+    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed
+    minus). Replay-safe: the partial-save resume transient reads 0/notappl,
+    never < 0 (#834/#835 class checked before adding). }
+  if N_NF1M_PURCHASED_PHP < 0 and N_NF1M_PURCHASED_PHP <> -98 and N_NF1M_PURCHASED_PHP <> -99 then
+    errmsg(1156);
+    reenter;
   endif;
 
 PROC N_NF1M_INKIND_PHP
 preproc
-  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
-    (#755/#818). Same per-occurrence gate as the food grid. }
+  { #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE, NO
+    special() pre-fill (it clobbered stored amounts on resume-replay, #834).
+    Completeness checked once at section end (Q186), not per row. }
   if N_NF1M_CONSUMED = 2 then
     N_NF1M_INKIND_PHP = 0;
     noinput;
-  else
-    if special(N_NF1M_INKIND_PHP) then N_NF1M_INKIND_PHP = 0; endif;
   endif;
+
 postproc
-  { #677 consumed-needs-an-amount — roster edition (same rule + wording as the food grid). }
-  if N_NF1M_CONSUMED = 1 and not (N_NF1M_PURCHASED_PHP in -99, -98, 1:99999999)
-      and not (N_NF1M_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg(1010);
+  { Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)
+    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed
+    minus). Replay-safe: the partial-save resume transient reads 0/notappl,
+    never < 0 (#834/#835 class checked before adding). }
+  if N_NF1M_INKIND_PHP < 0 and N_NF1M_INKIND_PHP <> -98 and N_NF1M_INKIND_PHP <> -99 then
+    errmsg(1156);
     reenter;
   endif;
 
@@ -768,30 +829,41 @@ preproc
 
 PROC N_NF6M_PURCHASED_PHP
 preproc
-  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
-    (#755/#818). Same per-occurrence gate as the food grid. }
+  { #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE, NO
+    special() pre-fill (it clobbered stored amounts on resume-replay, #834).
+    Completeness checked once at section end (Q186), not per row. }
   if N_NF6M_CONSUMED = 2 then
     N_NF6M_PURCHASED_PHP = 0;
     noinput;
-  else
-    if special(N_NF6M_PURCHASED_PHP) then N_NF6M_PURCHASED_PHP = 0; endif;
+  endif;
+
+postproc
+  { Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)
+    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed
+    minus). Replay-safe: the partial-save resume transient reads 0/notappl,
+    never < 0 (#834/#835 class checked before adding). }
+  if N_NF6M_PURCHASED_PHP < 0 and N_NF6M_PURCHASED_PHP <> -98 and N_NF6M_PURCHASED_PHP <> -99 then
+    errmsg(1156);
+    reenter;
   endif;
 
 PROC N_NF6M_INKIND_PHP
 preproc
-  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
-    (#755/#818). Same per-occurrence gate as the food grid. }
+  { #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE, NO
+    special() pre-fill (it clobbered stored amounts on resume-replay, #834).
+    Completeness checked once at section end (Q186), not per row. }
   if N_NF6M_CONSUMED = 2 then
     N_NF6M_INKIND_PHP = 0;
     noinput;
-  else
-    if special(N_NF6M_INKIND_PHP) then N_NF6M_INKIND_PHP = 0; endif;
   endif;
+
 postproc
-  { #677 consumed-needs-an-amount — roster edition (same rule + wording as the food grid). }
-  if N_NF6M_CONSUMED = 1 and not (N_NF6M_PURCHASED_PHP in -99, -98, 1:99999999)
-      and not (N_NF6M_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg(1010);
+  { Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)
+    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed
+    minus). Replay-safe: the partial-save resume transient reads 0/notappl,
+    never < 0 (#834/#835 class checked before adding). }
+  if N_NF6M_INKIND_PHP < 0 and N_NF6M_INKIND_PHP <> -98 and N_NF6M_INKIND_PHP <> -99 then
+    errmsg(1156);
     reenter;
   endif;
 
@@ -808,30 +880,41 @@ preproc
 
 PROC N_NF12M_PURCHASED_PHP
 preproc
-  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
-    (#755/#818). Same per-occurrence gate as the food grid. }
+  { #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE, NO
+    special() pre-fill (it clobbered stored amounts on resume-replay, #834).
+    Completeness checked once at section end (Q186), not per row. }
   if N_NF12M_CONSUMED = 2 then
     N_NF12M_PURCHASED_PHP = 0;
     noinput;
-  else
-    if special(N_NF12M_PURCHASED_PHP) then N_NF12M_PURCHASED_PHP = 0; endif;
+  endif;
+
+postproc
+  { Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)
+    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed
+    minus). Replay-safe: the partial-save resume transient reads 0/notappl,
+    never < 0 (#834/#835 class checked before adding). }
+  if N_NF12M_PURCHASED_PHP < 0 and N_NF12M_PURCHASED_PHP <> -98 and N_NF12M_PURCHASED_PHP <> -99 then
+    errmsg(1156);
+    reenter;
   endif;
 
 PROC N_NF12M_INKIND_PHP
 preproc
-  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
-    (#755/#818). Same per-occurrence gate as the food grid. }
+  { #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE, NO
+    special() pre-fill (it clobbered stored amounts on resume-replay, #834).
+    Completeness checked once at section end (Q186), not per row. }
   if N_NF12M_CONSUMED = 2 then
     N_NF12M_INKIND_PHP = 0;
     noinput;
-  else
-    if special(N_NF12M_INKIND_PHP) then N_NF12M_INKIND_PHP = 0; endif;
   endif;
+
 postproc
-  { #677 consumed-needs-an-amount — roster edition (same rule + wording as the food grid). }
-  if N_NF12M_CONSUMED = 1 and not (N_NF12M_PURCHASED_PHP in -99, -98, 1:99999999)
-      and not (N_NF12M_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg(1010);
+  { Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)
+    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed
+    minus). Replay-safe: the partial-save resume transient reads 0/notappl,
+    never < 0 (#834/#835 class checked before adding). }
+  if N_NF12M_INKIND_PHP < 0 and N_NF12M_INKIND_PHP <> -98 and N_NF12M_INKIND_PHP <> -99 then
+    errmsg(1156);
     reenter;
   endif;
 
@@ -845,47 +928,57 @@ preproc
 
 PROC N_H12M_PURCHASED_PHP
 preproc
-  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
-    (#755/#818). Same per-occurrence gate as the food grid. }
+  { #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE, NO
+    special() pre-fill (it clobbered stored amounts on resume-replay, #834).
+    Completeness checked once at section end (Q186), not per row. }
   if N_H12M_CONSUMED = 2 then
     N_H12M_PURCHASED_PHP = 0;
     noinput;
-  else
-    if special(N_H12M_PURCHASED_PHP) then N_H12M_PURCHASED_PHP = 0; endif;
+  endif;
+
+postproc
+  { Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)
+    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed
+    minus). Replay-safe: the partial-save resume transient reads 0/notappl,
+    never < 0 (#834/#835 class checked before adding). }
+  if N_H12M_PURCHASED_PHP < 0 and N_H12M_PURCHASED_PHP <> -98 and N_H12M_PURCHASED_PHP <> -99 then
+    errmsg(1156);
+    reenter;
   endif;
 
 PROC N_H12M_INKIND_PHP
 preproc
-  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
-    (#755/#818). Same per-occurrence gate as the food grid. }
+  { #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE, NO
+    special() pre-fill (it clobbered stored amounts on resume-replay, #834).
+    Completeness checked once at section end (Q186), not per row. }
   if N_H12M_CONSUMED = 2 then
     N_H12M_INKIND_PHP = 0;
     noinput;
-  else
-    if special(N_H12M_INKIND_PHP) then N_H12M_INKIND_PHP = 0; endif;
   endif;
+
 postproc
-  { #677 consumed-needs-an-amount — roster edition (same rule + wording as the food grid). }
-  if N_H12M_CONSUMED = 1 and not (N_H12M_PURCHASED_PHP in -99, -98, 1:99999999)
-      and not (N_H12M_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg(1010);
+  { Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)
+    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed
+    minus). Replay-safe: the partial-save resume transient reads 0/notappl,
+    never < 0 (#834/#835 class checked before adding). }
+  if N_H12M_INKIND_PHP < 0 and N_H12M_INKIND_PHP <> -98 and N_H12M_INKIND_PHP <> -99 then
+    errmsg(1156);
     reenter;
   endif;
 
 PROC Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP
 preproc
-  { Q157-pattern subtotal (device-proven 2026-07-03): computed in the TOTAL field's OWN
-    preproc + noinput with a LOCAL accumulator; sums CONSUMED=1 rows of N_H12M_ROSTER;
-    sentinels -98/-99 excluded (#743). See section_n_food_roster_procs for why not
-    protect() and not a group proc (record buffer-init wipes; self-read poisoning). }
+  { Health subtotal (device-proven pattern): TOTAL field's OWN preproc + noinput, LOCAL
+    accumulator; sums CONSUMED=1 rows of N_H12M_ROSTER. #834: 'in 0:99999999' excludes
+    notappl AND the -98/-99 sentinels (#743). Not protect(), not a group proc. }
   numeric nsr_i; numeric nsr_total;
   nsr_total = 0;
   do nsr_i = 1 while nsr_i <= 2
     if N_H12M_CONSUMED(nsr_i) = 1 then
-      if N_H12M_PURCHASED_PHP(nsr_i) <> -98 and N_H12M_PURCHASED_PHP(nsr_i) <> -99 then
+      if N_H12M_PURCHASED_PHP(nsr_i) in 0:99999999 then
         nsr_total = nsr_total + N_H12M_PURCHASED_PHP(nsr_i);
       endif;
-      if N_H12M_INKIND_PHP(nsr_i) <> -98 and N_H12M_INKIND_PHP(nsr_i) <> -99 then
+      if N_H12M_INKIND_PHP(nsr_i) in 0:99999999 then
         nsr_total = nsr_total + N_H12M_INKIND_PHP(nsr_i);
       endif;
     endif;
@@ -905,47 +998,57 @@ preproc
 
 PROC N_H6M_PURCHASED_PHP
 preproc
-  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
-    (#755/#818). Same per-occurrence gate as the food grid. }
+  { #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE, NO
+    special() pre-fill (it clobbered stored amounts on resume-replay, #834).
+    Completeness checked once at section end (Q186), not per row. }
   if N_H6M_CONSUMED = 2 then
     N_H6M_PURCHASED_PHP = 0;
     noinput;
-  else
-    if special(N_H6M_PURCHASED_PHP) then N_H6M_PURCHASED_PHP = 0; endif;
+  endif;
+
+postproc
+  { Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)
+    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed
+    minus). Replay-safe: the partial-save resume transient reads 0/notappl,
+    never < 0 (#834/#835 class checked before adding). }
+  if N_H6M_PURCHASED_PHP < 0 and N_H6M_PURCHASED_PHP <> -98 and N_H6M_PURCHASED_PHP <> -99 then
+    errmsg(1156);
+    reenter;
   endif;
 
 PROC N_H6M_INKIND_PHP
 preproc
-  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
-    (#755/#818). Same per-occurrence gate as the food grid. }
+  { #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE, NO
+    special() pre-fill (it clobbered stored amounts on resume-replay, #834).
+    Completeness checked once at section end (Q186), not per row. }
   if N_H6M_CONSUMED = 2 then
     N_H6M_INKIND_PHP = 0;
     noinput;
-  else
-    if special(N_H6M_INKIND_PHP) then N_H6M_INKIND_PHP = 0; endif;
   endif;
+
 postproc
-  { #677 consumed-needs-an-amount — roster edition (same rule + wording as the food grid). }
-  if N_H6M_CONSUMED = 1 and not (N_H6M_PURCHASED_PHP in -99, -98, 1:99999999)
-      and not (N_H6M_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg(1010);
+  { Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)
+    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed
+    minus). Replay-safe: the partial-save resume transient reads 0/notappl,
+    never < 0 (#834/#835 class checked before adding). }
+  if N_H6M_INKIND_PHP < 0 and N_H6M_INKIND_PHP <> -98 and N_H6M_INKIND_PHP <> -99 then
+    errmsg(1156);
     reenter;
   endif;
 
 PROC Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP
 preproc
-  { Q157-pattern subtotal (device-proven 2026-07-03): computed in the TOTAL field's OWN
-    preproc + noinput with a LOCAL accumulator; sums CONSUMED=1 rows of N_H6M_ROSTER;
-    sentinels -98/-99 excluded (#743). See section_n_food_roster_procs for why not
-    protect() and not a group proc (record buffer-init wipes; self-read poisoning). }
+  { Health subtotal (device-proven pattern): TOTAL field's OWN preproc + noinput, LOCAL
+    accumulator; sums CONSUMED=1 rows of N_H6M_ROSTER. #834: 'in 0:99999999' excludes
+    notappl AND the -98/-99 sentinels (#743). Not protect(), not a group proc. }
   numeric nsr_i; numeric nsr_total;
   nsr_total = 0;
   do nsr_i = 1 while nsr_i <= 4
     if N_H6M_CONSUMED(nsr_i) = 1 then
-      if N_H6M_PURCHASED_PHP(nsr_i) <> -98 and N_H6M_PURCHASED_PHP(nsr_i) <> -99 then
+      if N_H6M_PURCHASED_PHP(nsr_i) in 0:99999999 then
         nsr_total = nsr_total + N_H6M_PURCHASED_PHP(nsr_i);
       endif;
-      if N_H6M_INKIND_PHP(nsr_i) <> -98 and N_H6M_INKIND_PHP(nsr_i) <> -99 then
+      if N_H6M_INKIND_PHP(nsr_i) in 0:99999999 then
         nsr_total = nsr_total + N_H6M_INKIND_PHP(nsr_i);
       endif;
     endif;
@@ -963,47 +1066,57 @@ preproc
 
 PROC N_H1M_PURCHASED_PHP
 preproc
-  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
-    (#755/#818). Same per-occurrence gate as the food grid. }
+  { #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE, NO
+    special() pre-fill (it clobbered stored amounts on resume-replay, #834).
+    Completeness checked once at section end (Q186), not per row. }
   if N_H1M_CONSUMED = 2 then
     N_H1M_PURCHASED_PHP = 0;
     noinput;
-  else
-    if special(N_H1M_PURCHASED_PHP) then N_H1M_PURCHASED_PHP = 0; endif;
+  endif;
+
+postproc
+  { Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)
+    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed
+    minus). Replay-safe: the partial-save resume transient reads 0/notappl,
+    never < 0 (#834/#835 class checked before adding). }
+  if N_H1M_PURCHASED_PHP < 0 and N_H1M_PURCHASED_PHP <> -98 and N_H1M_PURCHASED_PHP <> -99 then
+    errmsg(1156);
+    reenter;
   endif;
 
 PROC N_H1M_INKIND_PHP
 preproc
-  { Not consumed -> auto 0 + noinput; consumed -> special()-guarded 0 pre-fill
-    (#755/#818). Same per-occurrence gate as the food grid. }
+  { #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE, NO
+    special() pre-fill (it clobbered stored amounts on resume-replay, #834).
+    Completeness checked once at section end (Q186), not per row. }
   if N_H1M_CONSUMED = 2 then
     N_H1M_INKIND_PHP = 0;
     noinput;
-  else
-    if special(N_H1M_INKIND_PHP) then N_H1M_INKIND_PHP = 0; endif;
   endif;
+
 postproc
-  { #677 consumed-needs-an-amount — roster edition (same rule + wording as the food grid). }
-  if N_H1M_CONSUMED = 1 and not (N_H1M_PURCHASED_PHP in -99, -98, 1:99999999)
-      and not (N_H1M_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg(1010);
+  { Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)
+    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed
+    minus). Replay-safe: the partial-save resume transient reads 0/notappl,
+    never < 0 (#834/#835 class checked before adding). }
+  if N_H1M_INKIND_PHP < 0 and N_H1M_INKIND_PHP <> -98 and N_H1M_INKIND_PHP <> -99 then
+    errmsg(1156);
     reenter;
   endif;
 
 PROC Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP
 preproc
-  { Q157-pattern subtotal (device-proven 2026-07-03): computed in the TOTAL field's OWN
-    preproc + noinput with a LOCAL accumulator; sums CONSUMED=1 rows of N_H1M_ROSTER;
-    sentinels -98/-99 excluded (#743). See section_n_food_roster_procs for why not
-    protect() and not a group proc (record buffer-init wipes; self-read poisoning). }
+  { Health subtotal (device-proven pattern): TOTAL field's OWN preproc + noinput, LOCAL
+    accumulator; sums CONSUMED=1 rows of N_H1M_ROSTER. #834: 'in 0:99999999' excludes
+    notappl AND the -98/-99 sentinels (#743). Not protect(), not a group proc. }
   numeric nsr_i; numeric nsr_total;
   nsr_total = 0;
   do nsr_i = 1 while nsr_i <= 2
     if N_H1M_CONSUMED(nsr_i) = 1 then
-      if N_H1M_PURCHASED_PHP(nsr_i) <> -98 and N_H1M_PURCHASED_PHP(nsr_i) <> -99 then
+      if N_H1M_PURCHASED_PHP(nsr_i) in 0:99999999 then
         nsr_total = nsr_total + N_H1M_PURCHASED_PHP(nsr_i);
       endif;
-      if N_H1M_INKIND_PHP(nsr_i) <> -98 and N_H1M_INKIND_PHP(nsr_i) <> -99 then
+      if N_H1M_INKIND_PHP(nsr_i) in 0:99999999 then
         nsr_total = nsr_total + N_H1M_INKIND_PHP(nsr_i);
       endif;
     endif;
@@ -1012,46 +1125,80 @@ preproc
   noinput;
 
 
-{ ---- Section N end-of-section expenditure recap (htmldialog review.html) ---- }
+{ ---- Section N end-of-section: #834 completeness reminder + expenditure recap (review.html) ---- }
 PROC Q186_CURRENT_INCOME
 preproc
-  { Read back the 9 Section N block subtotals to the respondent before funding sources.
-    Stored subtotals (Q157/Q177/Q182/Q185) read direct; restaurant/smoking/non-food summed
-    here (CONSUMED=1, -98/-99 excluded). Informational modal - OK returns to Q186. }
+  { All locals declared first (CSPro: declarations precede executable statements). }
+  numeric nmiss; numeric mchk;
   numeric srv_i;
   numeric srv_rest; numeric srv_smoke;
   numeric srv_nf1m; numeric srv_nf6m; numeric srv_nf12m;
   numeric srv_grand;
   string  srv_j; string srv_res;
+  { #834 Option A: section-end completeness reminder (soft, NO reenter). Counts Section N
+    items marked consumed whose amount is still blank or both-zero (same predicate as the
+    retired per-row #677) across all 7 rosters, then warns once. Flow always continues. }
+  nmiss = 0;
+  do mchk = 1 while mchk <= 13
+    if N_FOOD_CONSUMED(mchk) = 1 and not (N_FOOD_PURCHASED_PHP(mchk) in -99, -98, 1:99999999) and not (N_FOOD_INKIND_PHP(mchk) in -99, -98, 1:99999999) then nmiss = nmiss + 1; endif;
+  enddo;
+  do mchk = 1 while mchk <= 2
+    if N_WKOTH_CONSUMED(mchk) = 1 and not (N_WKOTH_PURCHASED_PHP(mchk) in -99, -98, 1:99999999) and not (N_WKOTH_INKIND_PHP(mchk) in -99, -98, 1:99999999) then nmiss = nmiss + 1; endif;
+  enddo;
+  do mchk = 1 while mchk <= 8
+    if N_NF1M_CONSUMED(mchk) = 1 and not (N_NF1M_PURCHASED_PHP(mchk) in -99, -98, 1:99999999) and not (N_NF1M_INKIND_PHP(mchk) in -99, -98, 1:99999999) then nmiss = nmiss + 1; endif;
+  enddo;
+  do mchk = 1 while mchk <= 2
+    if N_NF6M_CONSUMED(mchk) = 1 and not (N_NF6M_PURCHASED_PHP(mchk) in -99, -98, 1:99999999) and not (N_NF6M_INKIND_PHP(mchk) in -99, -98, 1:99999999) then nmiss = nmiss + 1; endif;
+  enddo;
+  do mchk = 1 while mchk <= 5
+    if N_NF12M_CONSUMED(mchk) = 1 and not (N_NF12M_PURCHASED_PHP(mchk) in -99, -98, 1:99999999) and not (N_NF12M_INKIND_PHP(mchk) in -99, -98, 1:99999999) then nmiss = nmiss + 1; endif;
+  enddo;
+  do mchk = 1 while mchk <= 2
+    if N_H12M_CONSUMED(mchk) = 1 and not (N_H12M_PURCHASED_PHP(mchk) in -99, -98, 1:99999999) and not (N_H12M_INKIND_PHP(mchk) in -99, -98, 1:99999999) then nmiss = nmiss + 1; endif;
+  enddo;
+  do mchk = 1 while mchk <= 4
+    if N_H6M_CONSUMED(mchk) = 1 and not (N_H6M_PURCHASED_PHP(mchk) in -99, -98, 1:99999999) and not (N_H6M_INKIND_PHP(mchk) in -99, -98, 1:99999999) then nmiss = nmiss + 1; endif;
+  enddo;
+  do mchk = 1 while mchk <= 2
+    if N_H1M_CONSUMED(mchk) = 1 and not (N_H1M_PURCHASED_PHP(mchk) in -99, -98, 1:99999999) and not (N_H1M_INKIND_PHP(mchk) in -99, -98, 1:99999999) then nmiss = nmiss + 1; endif;
+  enddo;
+  if nmiss > 0 then
+    errmsg(1157, nmiss);
+  endif;
+  { Read back the 9 Section N block subtotals to the respondent before funding sources.
+    Stored subtotals read direct; restaurant/smoking/non-food summed here. Every sum uses
+    'in 0:99999999' so notappl + -98/-99 are excluded. Informational modal - OK to Q186. }
+  { #832/#833: restaurant (Q158) + tobacco (Q159) are N_WKOTH_ROSTER occ 1 + occ 2. }
   srv_rest = 0;
-  if Q158_RESTAURANT_CONSUMED = 1 then
-    if Q158_RESTAURANT_PURCHASED_PHP <> -98 and Q158_RESTAURANT_PURCHASED_PHP <> -99 then srv_rest = srv_rest + Q158_RESTAURANT_PURCHASED_PHP; endif;
-    if Q158_RESTAURANT_INKIND_PHP <> -98 and Q158_RESTAURANT_INKIND_PHP <> -99 then srv_rest = srv_rest + Q158_RESTAURANT_INKIND_PHP; endif;
+  if N_WKOTH_CONSUMED(1) = 1 then
+    if N_WKOTH_PURCHASED_PHP(1) in 0:99999999 then srv_rest = srv_rest + N_WKOTH_PURCHASED_PHP(1); endif;
+    if N_WKOTH_INKIND_PHP(1) in 0:99999999 then srv_rest = srv_rest + N_WKOTH_INKIND_PHP(1); endif;
   endif;
   srv_smoke = 0;
-  if Q159_SMOKING_TOBACCO_CONSUMED = 1 then
-    if Q159_SMOKING_TOBACCO_PURCHASED_PHP <> -98 and Q159_SMOKING_TOBACCO_PURCHASED_PHP <> -99 then srv_smoke = srv_smoke + Q159_SMOKING_TOBACCO_PURCHASED_PHP; endif;
-    if Q159_SMOKING_TOBACCO_INKIND_PHP <> -98 and Q159_SMOKING_TOBACCO_INKIND_PHP <> -99 then srv_smoke = srv_smoke + Q159_SMOKING_TOBACCO_INKIND_PHP; endif;
+  if N_WKOTH_CONSUMED(2) = 1 then
+    if N_WKOTH_PURCHASED_PHP(2) in 0:99999999 then srv_smoke = srv_smoke + N_WKOTH_PURCHASED_PHP(2); endif;
+    if N_WKOTH_INKIND_PHP(2) in 0:99999999 then srv_smoke = srv_smoke + N_WKOTH_INKIND_PHP(2); endif;
   endif;
   srv_nf1m = 0;
   do srv_i = 1 while srv_i <= 8
     if N_NF1M_CONSUMED(srv_i) = 1 then
-      if N_NF1M_PURCHASED_PHP(srv_i) <> -98 and N_NF1M_PURCHASED_PHP(srv_i) <> -99 then srv_nf1m = srv_nf1m + N_NF1M_PURCHASED_PHP(srv_i); endif;
-      if N_NF1M_INKIND_PHP(srv_i) <> -98 and N_NF1M_INKIND_PHP(srv_i) <> -99 then srv_nf1m = srv_nf1m + N_NF1M_INKIND_PHP(srv_i); endif;
+      if N_NF1M_PURCHASED_PHP(srv_i) in 0:99999999 then srv_nf1m = srv_nf1m + N_NF1M_PURCHASED_PHP(srv_i); endif;
+      if N_NF1M_INKIND_PHP(srv_i) in 0:99999999 then srv_nf1m = srv_nf1m + N_NF1M_INKIND_PHP(srv_i); endif;
     endif;
   enddo;
   srv_nf6m = 0;
   do srv_i = 1 while srv_i <= 2
     if N_NF6M_CONSUMED(srv_i) = 1 then
-      if N_NF6M_PURCHASED_PHP(srv_i) <> -98 and N_NF6M_PURCHASED_PHP(srv_i) <> -99 then srv_nf6m = srv_nf6m + N_NF6M_PURCHASED_PHP(srv_i); endif;
-      if N_NF6M_INKIND_PHP(srv_i) <> -98 and N_NF6M_INKIND_PHP(srv_i) <> -99 then srv_nf6m = srv_nf6m + N_NF6M_INKIND_PHP(srv_i); endif;
+      if N_NF6M_PURCHASED_PHP(srv_i) in 0:99999999 then srv_nf6m = srv_nf6m + N_NF6M_PURCHASED_PHP(srv_i); endif;
+      if N_NF6M_INKIND_PHP(srv_i) in 0:99999999 then srv_nf6m = srv_nf6m + N_NF6M_INKIND_PHP(srv_i); endif;
     endif;
   enddo;
   srv_nf12m = 0;
   do srv_i = 1 while srv_i <= 5
     if N_NF12M_CONSUMED(srv_i) = 1 then
-      if N_NF12M_PURCHASED_PHP(srv_i) <> -98 and N_NF12M_PURCHASED_PHP(srv_i) <> -99 then srv_nf12m = srv_nf12m + N_NF12M_PURCHASED_PHP(srv_i); endif;
-      if N_NF12M_INKIND_PHP(srv_i) <> -98 and N_NF12M_INKIND_PHP(srv_i) <> -99 then srv_nf12m = srv_nf12m + N_NF12M_INKIND_PHP(srv_i); endif;
+      if N_NF12M_PURCHASED_PHP(srv_i) in 0:99999999 then srv_nf12m = srv_nf12m + N_NF12M_PURCHASED_PHP(srv_i); endif;
+      if N_NF12M_INKIND_PHP(srv_i) in 0:99999999 then srv_nf12m = srv_nf12m + N_NF12M_INKIND_PHP(srv_i); endif;
     endif;
   enddo;
   srv_grand = Q157_FOOD_SUBTOTAL_TOTAL_PHP + srv_rest + srv_smoke
@@ -1254,7 +1401,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q103_CARE_TYPE) > 0 and length(strip(Q103_CARE_TYPE)) > 2 then
-    errmsg(1019);
+    errmsg(1160);
+    reenter;
   endif;
 
 PROC Q103_CARE_TYPE_OTHER_TXT
@@ -1290,7 +1438,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q106_FORGONE_WHY) > 0 and length(strip(Q106_FORGONE_WHY)) > 2 then
-    errmsg(1022);
+    errmsg(1161);
+    reenter;
   endif;
 
 PROC Q106_FORGONE_WHY_OTHER_TXT
@@ -1326,7 +1475,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q107_OTHER_ACTIONS) > 0 and length(strip(Q107_OTHER_ACTIONS)) > 2 then
-    errmsg(1025);
+    errmsg(1162);
+    reenter;
   endif;
 
 PROC Q107_OTHER_ACTIONS_OTHER_TXT
@@ -1362,7 +1512,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q109_TYPE) > 0 and length(strip(Q109_TYPE)) > 2 then
-    errmsg(1028);
+    errmsg(1163);
+    reenter;
   endif;
 
 PROC Q109_TYPE_OTHER_TXT
@@ -1442,7 +1593,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q121_WHY_HOSPITAL) > 0 and length(strip(Q121_WHY_HOSPITAL)) > 2 then
-    errmsg(1033);
+    errmsg(1164);
+    reenter;
   endif;
 
 PROC Q121_WHY_HOSPITAL_OTHER_TXT
@@ -1478,7 +1630,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q127_NBB_SOURCE) > 0 and length(strip(Q127_NBB_SOURCE)) > 2 then
-    errmsg(1036);
+    errmsg(1165);
+    reenter;
   endif;
 
 PROC Q127_NBB_SOURCE_OTHER_TXT
@@ -1514,7 +1667,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q128_NBB_UNDERSTAND) > 0 and length(strip(Q128_NBB_UNDERSTAND)) > 2 then
-    errmsg(1039);
+    errmsg(1166);
+    reenter;
   endif;
 
 PROC Q128_NBB_UNDERSTAND_OTHER_TXT
@@ -1550,7 +1704,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q133_ZBB_SOURCE) > 0 and length(strip(Q133_ZBB_SOURCE)) > 2 then
-    errmsg(1042);
+    errmsg(1167);
+    reenter;
   endif;
 
 PROC Q133_ZBB_SOURCE_OTHER_TXT
@@ -1586,7 +1741,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q134_ZBB_UNDERSTAND) > 0 and length(strip(Q134_ZBB_UNDERSTAND)) > 2 then
-    errmsg(1045);
+    errmsg(1168);
+    reenter;
   endif;
 
 PROC Q134_ZBB_UNDERSTAND_OTHER_TXT
@@ -1622,7 +1778,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q137_MAIFIP_SOURCE) > 0 and length(strip(Q137_MAIFIP_SOURCE)) > 2 then
-    errmsg(1048);
+    errmsg(1169);
+    reenter;
   endif;
 
 PROC Q137_MAIFIP_SOURCE_OTHER_TXT
@@ -1655,6 +1812,32 @@ PROC Q141_BILL_ITEMS
 postproc
   if length(strip(Q141_BILL_ITEMS)) = 0 then
     errmsg(1050);
+    reenter;
+  endif;
+
+PROC Q141_BILL_ITEMS_OTHER_TXT
+preproc
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q141_BILL_ITEMS)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q141_BILL_ITEMS[otP:2]) = 7 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
+    Q141_BILL_ITEMS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q141_BILL_ITEMS)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q141_BILL_ITEMS[otP2:2]) = 7 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q141_BILL_ITEMS_OTHER_TXT)) = 0 then
+    errmsg(1186);
     reenter;
   endif;
 
@@ -1695,6 +1878,10 @@ PROC Q196_FOREGONE
 postproc
   if length(strip(Q196_FOREGONE)) = 0 then
     errmsg(1053);
+    reenter;
+  endif;
+  if pos("07", Q196_FOREGONE) > 0 and length(strip(Q196_FOREGONE)) > 2 then
+    errmsg(1187);
     reenter;
   endif;
 
@@ -1764,7 +1951,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q52_UHC_SOURCE) > 0 and length(strip(Q52_UHC_SOURCE)) > 2 then
-    errmsg(1058);
+    errmsg(1170);
+    reenter;
   endif;
 
 PROC Q52_UHC_SOURCE_OTHER_TXT
@@ -1800,7 +1988,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q53_UHC_UNDERSTAND) > 0 and length(strip(Q53_UHC_UNDERSTAND)) > 2 then
-    errmsg(1061);
+    errmsg(1171);
+    reenter;
   endif;
 
 PROC Q53_UHC_UNDERSTAND_OTHER_TXT
@@ -1836,7 +2025,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q55_YAKAP_SOURCE) > 0 and length(strip(Q55_YAKAP_SOURCE)) > 2 then
-    errmsg(1064);
+    errmsg(1172);
+    reenter;
   endif;
 
 PROC Q55_YAKAP_SOURCE_OTHER_TXT
@@ -1872,7 +2062,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q56_YAKAP_UNDERSTAND) > 0 and length(strip(Q56_YAKAP_UNDERSTAND)) > 2 then
-    errmsg(1067);
+    errmsg(1173);
+    reenter;
   endif;
   if pos("05", Q56_YAKAP_UNDERSTAND) > 0 and length(strip(Q56_YAKAP_UNDERSTAND)) > 2 then
     errmsg(1068);
@@ -1912,7 +2103,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q58_BUCAS_SOURCE) > 0 and length(strip(Q58_BUCAS_SOURCE)) > 2 then
-    errmsg(1071);
+    errmsg(1174);
+    reenter;
   endif;
 
 PROC Q58_BUCAS_SOURCE_OTHER_TXT
@@ -1981,7 +2173,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q61_BUCAS_SERVICES) > 0 and length(strip(Q61_BUCAS_SERVICES)) > 2 then
-    errmsg(1076);
+    errmsg(1175);
+    reenter;
   endif;
 
 PROC Q61_BUCAS_SERVICES_OTHER_TXT
@@ -2017,7 +2210,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q65_CONDITIONS) > 0 and length(strip(Q65_CONDITIONS)) > 2 then
-    errmsg(1079);
+    errmsg(1176);
+    reenter;
   endif;
 
 PROC Q65_CONDITIONS_OTHER_TXT
@@ -2086,7 +2280,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q70_GAMOT_SOURCE) > 0 and length(strip(Q70_GAMOT_SOURCE)) > 2 then
-    errmsg(1084);
+    errmsg(1177);
+    reenter;
   endif;
 
 PROC Q70_GAMOT_SOURCE_OTHER_TXT
@@ -2122,7 +2317,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q71_GAMOT_UNDERSTAND) > 0 and length(strip(Q71_GAMOT_UNDERSTAND)) > 2 then
-    errmsg(1087);
+    errmsg(1178);
+    reenter;
   endif;
 
 PROC Q71_GAMOT_UNDERSTAND_OTHER_TXT
@@ -2158,7 +2354,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q74_WHERE_REST) > 0 and length(strip(Q74_WHERE_REST)) > 2 then
-    errmsg(1090);
+    errmsg(1179);
+    reenter;
   endif;
 
 PROC Q74_WHERE_REST_OTHER_TXT
@@ -2194,7 +2391,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q77_WHY_GENERIC) > 0 and length(strip(Q77_WHY_GENERIC)) > 2 then
-    errmsg(1093);
+    errmsg(1180);
+    reenter;
   endif;
 
 PROC Q77_WHY_GENERIC_OTHER_TXT
@@ -2234,7 +2432,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q78_WHY_BRANDED) > 0 and length(strip(Q78_WHY_BRANDED)) > 2 then
-    errmsg(1096);
+    errmsg(1181);
+    reenter;
   endif;
 
 PROC Q78_WHY_BRANDED_OTHER_TXT
@@ -2270,7 +2469,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q82_DIFFICULTY_REASONS) > 0 and length(strip(Q82_DIFFICULTY_REASONS)) > 2 then
-    errmsg(1099);
+    errmsg(1182);
+    reenter;
   endif;
 
 PROC Q82_DIFFICULTY_REASONS_OTHER_TXT
@@ -2339,7 +2539,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q85_BENEFITS) > 0 and length(strip(Q85_BENEFITS)) > 2 then
-    errmsg(1104);
+    errmsg(1183);
+    reenter;
   endif;
   if pos("04", Q85_BENEFITS) > 0 and length(strip(Q85_BENEFITS)) > 2 then
     errmsg(1105);
@@ -2379,7 +2580,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q88_DIFF_PAYING) > 0 and length(strip(Q88_DIFF_PAYING)) > 2 then
-    errmsg(1108);
+    errmsg(1184);
+    reenter;
   endif;
 
 PROC Q88_DIFF_PAYING_OTHER_TXT
@@ -2455,7 +2657,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q93_WHY_NOT) > 0 and length(strip(Q93_WHY_NOT)) > 2 then
-    errmsg(1113);
+    errmsg(1185);
+    reenter;
   endif;
 
 PROC Q93_WHY_NOT_OTHER_TXT
@@ -2812,64 +3015,6 @@ postproc
 { ---- Section N consumed-gate (#169) + subtotal init/compute (#9/#617) — merged per _CONSUMED field (#708/#709 combined-view) ---- }
 { ---- Section N subtotals — auto-compute + protect at follower (#9/#617, spec §4.9) ---- }
 { ---- Section N flat items (Q158/Q159): roster-parity amount gate + #677 (#832/#833) ---- }
-PROC Q158_RESTAURANT_INKIND_PHP
-preproc
-  { #832/#833 roster-parity gate (Q144-Q156): not consumed -> 0 + noinput
-    (DG-safe, no skip-to, no protect); consumed -> #755/#818 special() pre-fill
-    so Enter passes an empty amount. Always enterable when consumed. }
-  if Q158_RESTAURANT_CONSUMED = 2 then
-    Q158_RESTAURANT_INKIND_PHP = 0;
-    noinput;
-  else
-    if special(Q158_RESTAURANT_INKIND_PHP) then Q158_RESTAURANT_INKIND_PHP = 0; endif;
-  endif;
-postproc
-  if Q158_RESTAURANT_CONSUMED = 1 and not (Q158_RESTAURANT_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q158_RESTAURANT_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg(1010);
-    reenter;
-  endif;
-
-PROC Q158_RESTAURANT_PURCHASED_PHP
-preproc
-  { #832/#833 roster-parity gate (Q144-Q156): not consumed -> 0 + noinput
-    (DG-safe, no skip-to, no protect); consumed -> #755/#818 special() pre-fill
-    so Enter passes an empty amount. Always enterable when consumed. }
-  if Q158_RESTAURANT_CONSUMED = 2 then
-    Q158_RESTAURANT_PURCHASED_PHP = 0;
-    noinput;
-  else
-    if special(Q158_RESTAURANT_PURCHASED_PHP) then Q158_RESTAURANT_PURCHASED_PHP = 0; endif;
-  endif;
-
-PROC Q159_SMOKING_TOBACCO_INKIND_PHP
-preproc
-  { #832/#833 roster-parity gate (Q144-Q156): not consumed -> 0 + noinput
-    (DG-safe, no skip-to, no protect); consumed -> #755/#818 special() pre-fill
-    so Enter passes an empty amount. Always enterable when consumed. }
-  if Q159_SMOKING_TOBACCO_CONSUMED = 2 then
-    Q159_SMOKING_TOBACCO_INKIND_PHP = 0;
-    noinput;
-  else
-    if special(Q159_SMOKING_TOBACCO_INKIND_PHP) then Q159_SMOKING_TOBACCO_INKIND_PHP = 0; endif;
-  endif;
-postproc
-  if Q159_SMOKING_TOBACCO_CONSUMED = 1 and not (Q159_SMOKING_TOBACCO_PURCHASED_PHP in -99, -98, 1:99999999) and not (Q159_SMOKING_TOBACCO_INKIND_PHP in -99, -98, 1:99999999) then
-    errmsg(1010);
-    reenter;
-  endif;
-
-PROC Q159_SMOKING_TOBACCO_PURCHASED_PHP
-preproc
-  { #832/#833 roster-parity gate (Q144-Q156): not consumed -> 0 + noinput
-    (DG-safe, no skip-to, no protect); consumed -> #755/#818 special() pre-fill
-    so Enter passes an empty amount. Always enterable when consumed. }
-  if Q159_SMOKING_TOBACCO_CONSUMED = 2 then
-    Q159_SMOKING_TOBACCO_PURCHASED_PHP = 0;
-    noinput;
-  else
-    if special(Q159_SMOKING_TOBACCO_PURCHASED_PHP) then Q159_SMOKING_TOBACCO_PURCHASED_PHP = 0; endif;
-  endif;
-
 { ---- 'Other (specify)' enforcement — UHC9 dual-other ---- }
 { ---- 'Other (specify)' enforcement — single-choice + select-all (auto-derived from dcf: 53 items) ---- }
 PROC Q101_CHECKUP_FREQ_OTHER_TXT
@@ -3100,12 +3245,52 @@ postproc
     errmsg(1151, TOTAL_NUMBER_OF_VISITS);
   endif;
 
+PROC Q95_TRAVEL_TIME_MIN
+postproc
+  if (Q95_TRAVEL_TIME_MIN < 0 or Q95_TRAVEL_TIME_MIN > 999) then
+    errmsg(1158);
+    reenter;
+  endif;
+
+PROC Q96_TRAVEL_COST_PHP
+postproc
+  if (Q96_TRAVEL_COST_PHP < 0 or Q96_TRAVEL_COST_PHP > 99999) then
+    errmsg(1159);
+    reenter;
+  endif;
+
 PROC Q199_WTP_CONSULT
 postproc
   if (Q199_WTP_CONSULT < 0 or Q199_WTP_CONSULT > 99999999) then
     errmsg(1152);
     reenter;
   endif;
+
+PROC DATE_FIRST_VISITED_DISP
+preproc
+  numeric dfY; numeric dfM; numeric dfD;
+  if DATE_FIRST_VISITED = notappl then
+    DATE_FIRST_VISITED_DISP = "";
+  else
+    dfY = int(DATE_FIRST_VISITED / 10000);
+    dfM = int(DATE_FIRST_VISITED / 100) - dfY * 100;
+    dfD = DATE_FIRST_VISITED - int(DATE_FIRST_VISITED / 100) * 100;
+    DATE_FIRST_VISITED_DISP = concat(edit("99", dfM), "/", edit("99", dfD), "/", edit("9999", dfY));
+  endif;
+  noinput;
+
+PROC DATE_FINAL_VISIT_DISP
+preproc
+  numeric dvY; numeric dvM; numeric dvD;
+  if DATE_FINAL_VISIT = notappl then
+    DATE_FINAL_VISIT_DISP = "";
+  else
+    dvY = int(DATE_FINAL_VISIT / 10000);
+    dvM = int(DATE_FINAL_VISIT / 100) - dvY * 100;
+    dvD = DATE_FINAL_VISIT - int(DATE_FINAL_VISIT / 100) * 100;
+    DATE_FINAL_VISIT_DISP = concat(edit("99", dvM), "/", edit("99", dvD), "/", edit("9999", dvY));
+  endif;
+  noinput;
 
 PROC DATE_FINAL_VISIT
 postproc

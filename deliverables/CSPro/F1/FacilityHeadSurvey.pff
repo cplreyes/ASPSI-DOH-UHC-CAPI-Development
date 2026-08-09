@@ -1,11 +1,12 @@
 ﻿[Run Information]
 Version=CSPro 8.0
 AppType=Entry
-Description=Facility Head Survey (F1) - v1.1.0 (2026-07-14)
+Description=Facility Head Survey (F1) - v1.3.0 (2026-08-08)
 
 [Files]
 Application=.\FacilityHeadSurvey.ent
 InputData=.\FacilityHeadSurvey.csdb
+Paradata=.\FacilityHeadSurvey.cslog
 
 [ExternalFiles]
 PSGC_REGION_DICT=.\psgc_region.dat

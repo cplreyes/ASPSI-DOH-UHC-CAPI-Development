@@ -657,6 +657,12 @@ CHECKBOX_EXTRA_STANDALONE = {
     # 5-/4-starting one; the only 0-ending code in either value set is 90 and no code starts
     # with 5 or 4 — so the #450 chunk-scan is not required here; re-check if codes change).
     "Q56_YAKAP_UNDERSTAND": [("05", "There are no benefits in the package")],
+    # #1178 (ASPSI review 2026-08-07): Q196 "We do not forego care" (07) - saying the
+    # household foregoes NO care is contradictory with naming specific foregone care.
+    # Coded 07, not 90, so the generic exclusive branch never matched it. pos() is
+    # cross-boundary-safe: a false "07" needs a 0-ending code followed by a 7-starting
+    # one, and none of Q196's codes (01-07, 99) end in 0.
+    "Q196_FOREGONE": [("07", "We do not forego care")],
 }
 
 # #1098 (pretest 2026-08-05): bases whose 'Other (specify)' option is NOT 99-coded.

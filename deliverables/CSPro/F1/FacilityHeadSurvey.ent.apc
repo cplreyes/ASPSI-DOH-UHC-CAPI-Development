@@ -494,6 +494,32 @@ postproc
     skip to ENUM_RESULT_FINAL_VISIT;
   endif;
 
+PROC DATE_FINAL_VISIT_DISP
+preproc
+  numeric dvY; numeric dvM; numeric dvD;
+  if DATE_OF_FINAL_VISIT_TO_THE_FACILITY = notappl then
+    DATE_FINAL_VISIT_DISP = "";
+  else
+    dvY = int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 10000);
+    dvM = int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 100) - dvY * 100;
+    dvD = DATE_OF_FINAL_VISIT_TO_THE_FACILITY - int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 100) * 100;
+    DATE_FINAL_VISIT_DISP = concat(edit("99", dvM), "/", edit("99", dvD), "/", edit("9999", dvY));
+  endif;
+  noinput;
+
+PROC DATE_FIRST_VISITED_DISP
+preproc
+  numeric dfY; numeric dfM; numeric dfD;
+  if DATE_FIRST_VISITED_THE_FACILITY = notappl then
+    DATE_FIRST_VISITED_DISP = "";
+  else
+    dfY = int(DATE_FIRST_VISITED_THE_FACILITY / 10000);
+    dfM = int(DATE_FIRST_VISITED_THE_FACILITY / 100) - dfY * 100;
+    dfD = DATE_FIRST_VISITED_THE_FACILITY - int(DATE_FIRST_VISITED_THE_FACILITY / 100) * 100;
+    DATE_FIRST_VISITED_DISP = concat(edit("99", dfM), "/", edit("99", dfD), "/", edit("9999", dfY));
+  endif;
+  noinput;
+
 PROC DATE_OF_FINAL_VISIT_TO_THE_FACILITY
 postproc
   if DATE_OF_FINAL_VISIT_TO_THE_FACILITY <> notappl and DATE_FIRST_VISITED_THE_FACILITY <> notappl and DATE_OF_FINAL_VISIT_TO_THE_FACILITY < DATE_FIRST_VISITED_THE_FACILITY then
@@ -537,7 +563,19 @@ postproc
 
 PROC Q103_NO_BUCAS_REASON
 postproc
-  skip to Q108_HEARD_GAMOT;          { any answer -> Q108 (skip Q104-107) }
+  if Q103_NO_BUCAS_REASON <> 5 then
+    Q103_OTHER_TXT = "";               { not Other -> clear + skip Q104-107 }
+    skip to Q108_HEARD_GAMOT;
+  endif;
+  { Other (5) -> fall through to Q103_OTHER_TXT }
+
+PROC Q103_OTHER_TXT
+postproc
+  if length(strip(Q103_OTHER_TXT)) = 0 then
+    errmsg(1203);
+    reenter;
+  endif;
+  skip to Q108_HEARD_GAMOT;            { specify captured -> resume the Q103 skip }
 
 PROC Q104_BUCAS_SERVICES
 postproc
@@ -583,7 +621,19 @@ postproc
 
 PROC Q110_NO_GAMOT_REASON
 postproc
-  skip to Q112_STOCKOUT;             { any answer -> Q112 (skip Q111) }
+  if Q110_NO_GAMOT_REASON <> 5 then
+    Q110_OTHER_TXT = "";               { not Other -> clear + skip Q111 }
+    skip to Q112_STOCKOUT;
+  endif;
+  { Other (5) -> fall through to Q110_OTHER_TXT }
+
+PROC Q110_OTHER_TXT
+postproc
+  if length(strip(Q110_OTHER_TXT)) = 0 then
+    errmsg(1204);
+    reenter;
+  endif;
+  skip to Q112_STOCKOUT;               { specify captured -> resume the Q110 skip }
 
 PROC Q111_GAMOT_FACTORS
 postproc
@@ -649,7 +699,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q121_DOH_LIC_DIFFICULT) > 0 and length(strip(Q121_DOH_LIC_DIFFICULT)) > 2 then
-    errmsg(1019);
+    errmsg(1205);
+    reenter;
   endif;
 
 PROC Q137_NBB_BARRIERS
@@ -659,7 +710,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q137_NBB_BARRIERS) > 0 and length(strip(Q137_NBB_BARRIERS)) > 2 then
-    errmsg(1021);
+    errmsg(1206);
+    reenter;
   endif;
 
 PROC Q137_NBB_BARRIERS_OTHER_TXT
@@ -681,7 +733,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q140_ZBB_BARRIERS) > 0 and length(strip(Q140_ZBB_BARRIERS)) > 2 then
-    errmsg(1024);
+    errmsg(1207);
+    reenter;
   endif;
 
 PROC Q140_ZBB_BARRIERS_OTHER_TXT
@@ -789,7 +842,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q151_LGU_NOT_SAT_WHY) > 0 and length(strip(Q151_LGU_NOT_SAT_WHY)) > 2 then
-    errmsg(1035);
+    errmsg(1208);
+    reenter;
   endif;
 
 PROC Q151_LGU_NOT_SAT_WHY_OTHER_TXT
@@ -839,6 +893,10 @@ postproc
     errmsg(1039);
     reenter;
   endif;
+  if pos("05", Q156_REFERRAL_FORM_TYPE) > 0 and length(strip(Q156_REFERRAL_FORM_TYPE)) > 2 then
+    errmsg(1209);
+    reenter;
+  endif;
 
 PROC Q156_REFERRAL_FORM_TYPE_OTHER_TXT
 preproc
@@ -878,7 +936,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q160_EXTERNAL_SERVICES_GO) > 0 and length(strip(Q160_EXTERNAL_SERVICES_GO)) > 2 then
-    errmsg(1044);
+    errmsg(1210);
+    reenter;
   endif;
 
 PROC Q162_NOT_SATISFIED_WHY
@@ -907,7 +966,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q163_HR_CHALL) > 0 and length(strip(Q163_HR_CHALL)) > 2 then
-    errmsg(1048);
+    errmsg(1211);
+    reenter;
   endif;
 
 PROC Q163_HR_CHALL_OTHER_TXT
@@ -928,6 +988,10 @@ postproc
     errmsg(1050);
     reenter;
   endif;
+  if pos("08", Q165_PD_DOCTORS) > 0 and length(strip(Q165_PD_DOCTORS)) > 2 then
+    errmsg(1212);
+    reenter;
+  endif;
 
 PROC Q165_PD_DOCTORS_OTHER_TXT
 preproc
@@ -945,6 +1009,10 @@ PROC Q166_PD_NURSES
 postproc
   if length(strip(Q166_PD_NURSES)) = 0 then
     errmsg(1052);
+    reenter;
+  endif;
+  if pos("06", Q166_PD_NURSES) > 0 and length(strip(Q166_PD_NURSES)) > 2 then
+    errmsg(1213);
     reenter;
   endif;
 
@@ -1001,9 +1069,10 @@ postproc
     errmsg(1058);
     reenter;
   endif;
-  { exclusivity (soft warn): 'I don't know' (09) should stand alone }
+  { exclusivity (HARD — #1106..#1131): 'I don't know' (09) should stand alone }
   if pos("09", Q49_QUALITY_CHALL) > 0 and length(strip(Q49_QUALITY_CHALL)) > 2 then
-    errmsg(1059);
+    errmsg(1214);
+    reenter;
   endif;
 
 PROC Q49_QUALITY_CHALL_OTHER_TXT
@@ -1024,9 +1093,10 @@ postproc
     errmsg(1061);
     reenter;
   endif;
-  { exclusivity (soft warn): 'I don't know' (09) should stand alone }
+  { exclusivity (HARD — #1106..#1131): 'I don't know' (09) should stand alone }
   if pos("09", Q50_ACCESS_CHALL) > 0 and length(strip(Q50_ACCESS_CHALL)) > 2 then
-    errmsg(1062);
+    errmsg(1215);
+    reenter;
   endif;
 
 PROC Q50_ACCESS_CHALL_OTHER_TXT
@@ -1065,13 +1135,15 @@ postproc
     errmsg(1067);
     reenter;
   endif;
-  { exclusivity (soft warn): 'I don't know' (09) should stand alone }
+  { exclusivity (HARD — #1106..#1131): 'I don't know' (09) should stand alone }
   if pos("09", Q53_YK_PACKAGE) > 0 and length(strip(Q53_YK_PACKAGE)) > 2 then
-    errmsg(1068);
+    errmsg(1216);
+    reenter;
   endif;
-  { #526 exclusivity (soft warn): 'All of the above' (08) implies every item — it should stand alone }
+  { #526 exclusivity (HARD — #1108): 'All of the above' (08) implies every item — it should stand alone }
   if pos("08", Q53_YK_PACKAGE) > 0 and length(strip(Q53_YK_PACKAGE)) > 2 then
-    errmsg(1069);
+    errmsg(1217);
+    reenter;
   endif;
 
 PROC Q53_YK_PACKAGE_OTHER_TXT
@@ -1104,9 +1176,10 @@ postproc
     errmsg(1072);
     reenter;
   endif;
-  { exclusivity (soft warn): 'I don't know' (07) should stand alone }
+  { exclusivity (HARD — #1106..#1131): 'I don't know' (07) should stand alone }
   if pos("07", Q58_PERF_INDICATORS) > 0 and length(strip(Q58_PERF_INDICATORS)) > 2 then
-    errmsg(1073);
+    errmsg(1218);
+    reenter;
   endif;
 
 PROC Q58_PERF_INDICATORS_OTHER_TXT
@@ -1166,7 +1239,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q65_ACCRED_DIFFICULT) > 0 and length(strip(Q65_ACCRED_DIFFICULT)) > 2 then
-    errmsg(1080);
+    errmsg(1219);
+    reenter;
   endif;
 
 PROC Q6_MONTHS_HEALTH
@@ -1191,7 +1265,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q75_ENROLL_RESPONSIBILITY) > 0 and length(strip(Q75_ENROLL_RESPONSIBILITY)) > 2 then
-    errmsg(1084);
+    errmsg(1220);
+    reenter;
   endif;
 
 PROC Q75_ENROLL_RESPONSIBILITY_OTHER_TXT
@@ -1213,7 +1288,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q76_ENROLL_INITIATIVES) > 0 and length(strip(Q76_ENROLL_INITIATIVES)) > 2 then
-    errmsg(1087);
+    errmsg(1221);
+    reenter;
   endif;
 
 PROC Q76_ENROLL_INITIATIVES_OTHER_TXT
@@ -1356,7 +1432,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q96_NOT_RECEIVED_REASONS) > 0 and length(strip(Q96_NOT_RECEIVED_REASONS)) > 2 then
-    errmsg(1098);
+    errmsg(1222);
+    reenter;
   endif;
 
 PROC Q96_NOT_RECEIVED_REASONS_OTHER_TXT
@@ -1378,7 +1455,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q98_PAYMENT_CHALL_LIST) > 0 and length(strip(Q98_PAYMENT_CHALL_LIST)) > 2 then
-    errmsg(1101);
+    errmsg(1223);
+    reenter;
   endif;
 
 PROC Q98_PAYMENT_CHALL_LIST_OTHER_TXT
@@ -1400,7 +1478,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q99_EXPAND_NEXT) > 0 and length(strip(Q99_EXPAND_NEXT)) > 2 then
-    errmsg(1104);
+    errmsg(1224);
+    reenter;
   endif;
 
 PROC Q99_EXPAND_NEXT_OTHER_TXT
@@ -2850,30 +2929,6 @@ postproc
   endif;
 
 { ---- 'Other (specify)' enforcement — auto-derived from the dcf (spec 4.13 tail) ---- }
-PROC Q103_OTHER_TXT
-preproc
-  if not (Q103_NO_BUCAS_REASON = 5) then
-    Q103_OTHER_TXT = "";   { skip + clear: no 'other' option chosen }
-    noinput;
-  endif;
-postproc
-  if (Q103_NO_BUCAS_REASON = 5) and length(strip(Q103_OTHER_TXT)) = 0 then
-    errmsg(1194);
-    reenter;
-  endif;
-
-PROC Q110_OTHER_TXT
-preproc
-  if not (Q110_NO_GAMOT_REASON = 5) then
-    Q110_OTHER_TXT = "";   { skip + clear: no 'other' option chosen }
-    noinput;
-  endif;
-postproc
-  if (Q110_NO_GAMOT_REASON = 5) and length(strip(Q110_OTHER_TXT)) = 0 then
-    errmsg(1195);
-    reenter;
-  endif;
-
 PROC Q11_OTHER_TXT
 preproc
   if not (Q11_PRIMARY_PKG_STATUS = 5) then
@@ -2912,12 +2967,12 @@ postproc
 
 PROC Q18_OTHER_TXT
 preproc
-  if not (Q18_HPU_ROLE = 5) then
+  if not (Q18_HPU_ROLE = 2 or Q18_HPU_ROLE = 5) then
     Q18_OTHER_TXT = "";   { skip + clear: no 'other' option chosen }
     noinput;
   endif;
 postproc
-  if (Q18_HPU_ROLE = 5) and length(strip(Q18_OTHER_TXT)) = 0 then
+  if (Q18_HPU_ROLE = 2 or Q18_HPU_ROLE = 5) and length(strip(Q18_OTHER_TXT)) = 0 then
     errmsg(1199);
     reenter;
   endif;

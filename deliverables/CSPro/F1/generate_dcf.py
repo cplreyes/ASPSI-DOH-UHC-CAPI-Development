@@ -529,8 +529,11 @@ def build_section_d():
         ("Other (specify)", "6"),
     ]
     Q95_RECEIVED = [
-        ("Yes, we have received all expected payments <proceed to Q97>",         "1"),
-        ("Yes, we have received some but not all expected payments yet <proceed to Q97>",     "2"),
+        # #1113: the paper's "<proceed to Q97>" navigation note removed - CAPI
+        # automates the routing, so printing it in an answer option is paper-only
+        # furniture. The Q95 -> Q97 skip itself is unchanged (see generate_apc).
+        ("Yes, we have received all expected payments",         "1"),
+        ("Yes, we have received some but not all expected payments yet",     "2"),
         ("No, we have not received any expected payments yet", "3"),
         ("No, we have not expected any payments yet",      "4"),
     ]
@@ -552,8 +555,10 @@ def build_section_d():
         ("Other (specify)", "6"),
     ]
     Q99_EXPAND = [
-        ("Current list of medicines and drugs", "1"),
-        ("Current laboratory/diagnostic services", "2"),
+        # #1116: PAPI wording ("The current ... offered"). Wording only - no
+        # option is missing or added; codes unchanged.
+        ("The current list of medicines and drugs offered", "1"),
+        ("The current laboratory/diagnostic services offered", "2"),
         ("Additional features", "3"),
         ("I don't know", "4"),
         ("Other (specify)", "5"),
@@ -838,10 +843,14 @@ def build_section_f():
         ("Improving performance",                                   "7"),
         ("Physical plant",                                          "8"),
         ("Equipment and instruments",                               "9"),
-        ("National laws and DOH issuances (hospitals only)",       "10"),
+        # #1117: full PAPI wording restored (was abbreviated for tablet width).
+        # Kept the parenthetical style of options 11/12 rather than the paper's
+        # <angle brackets>, so the qualifier reads consistently across the list.
+        ("National laws and DOH issuances implemented in hospitals and other health facilities (hospitals only)", "10"),
         ("Emergency cart contents (hospitals only)",               "11"),
         ("Add-on services (hospitals only)",                       "12"),
-        ("Public access to price information (PCF only)",          "13"),
+        # #1117: full PAPI wording restored; "PCF" spelled out.
+        ("Public access to price information (primary care facilities only)", "13"),
         ("None of the above",                                      "14"),
     ]
 
@@ -911,8 +920,10 @@ def build_section_g():
         ("Complying with the no fees for basic or ward accommodation",        "1"),
         ("Complying the prescribed ratio of allocation of basic and non-basic accommodation", "2"),
         ("Patients do not go through the process of availing it",      "3"),
-        # #1026/#1027: verbatim paper labels for the split pair.
-        ("Insufficient PhilHealth support value and/or",               "4"),
+        # #1026/#1027 kept the paper's trailing "and/or" here verbatim. #1121
+        # (ASPSI 2026-08-06) lists the option WITHOUT it, so the dangling
+        # conjunction goes. Shared list -> applies to Q137 (NBB) and Q140 (ZBB).
+        ("Insufficient PhilHealth support value",                      "4"),
         ("Insufficient other sources (e.g. MAIFIP, DSWD, PCSO) (late payments applicable for MAIFIP)", "5"),
         ("PhilHealth delayed payment",                                 "6"),
         ("None of the above",                                          "7"),
@@ -1132,8 +1143,13 @@ def build_section_h():
         ("Skills mismatch / lack of skills", "2"),
         ("Retention / high staff turnover",  "3"),
         ("Multi-tasking",                    "4"),
-        ("Other (specify)",                  "5"),
-        ("I don't know",                     "6"),
+        # #1126: ASPSI's list puts "I don't know" BEFORE "Other (specify)".
+        # Only the display ORDER swaps - _cb_codes still maps Other->99 and
+        # I-don't-know->90, so no captured value changes meaning. Bonus: the
+        # emitted value set is now in ASCENDING code order (...90, 99) instead
+        # of 99 then 90 - the non-ascending state behind the #830 data-loss bug.
+        ("I don't know",                     "5"),
+        ("Other (specify)",                  "6"),
     ]
     PD_DOCTORS = [
         ("Clinical audits",                                          "1"),

@@ -56,11 +56,11 @@ P = "/projects/uhc-y2"
 # old csweb URL -> new portal path (order matters: longest first)
 LINKMAP = [
     ("https://csweb.asiansocial.org/docs/data/", CONSOLE + "/docs/data/"),
-    ("https://csweb.asiansocial.org/docs/dashboard.html", CONSOLE + "/docs/dashboard.html"),
-    ("https://csweb.asiansocial.org/docs/map.html", CONSOLE + "/docs/map.html"),
+    ("https://csweb.asiansocial.org/docs/dashboard.html", CONSOLE + P + "/monitoring/"),
+    ("https://csweb.asiansocial.org/docs/map.html", CONSOLE + P + "/monitoring/map/"),
     ("/docs/data/", CONSOLE + "/docs/data/"),
-    ("/docs/dashboard.html", CONSOLE + "/docs/dashboard.html"),
-    ("/docs/map.html", CONSOLE + "/docs/map.html"),
+    ("/docs/dashboard.html", CONSOLE + P + "/monitoring/"),
+    ("/docs/map.html", CONSOLE + P + "/monitoring/map/"),
     ("/docs/capi-manual.html", P + "/archive/capi-manual-2026-07/"),
     ("/docs/enumerator-guide.html", P + "/guides/enumerator/"),
     ("/docs/hub-guide.html", P + "/guides/supervisor/"),
@@ -149,8 +149,8 @@ ROLES = [
      [("How to complete the survey", P + "/guides/healthcare-worker/", "what it asks, how long it takes, your privacy"),
       ("Open the survey app", "https://uhc-hcw.asiansocial.org", "works offline; submits when you have a signal")], ""),
     ("I'm supervising fieldwork", "ASPSI and DOH staff tracking collection as it happens.",
-     [("Sync Dashboard", CONSOLE + "/docs/dashboard.html", "cases in, completed vs partial, coverage against plan, data quality"),
-      ("Map Report", CONSOLE + "/docs/map.html", "where cases were collected, GPS quality flags"),
+     [("Sync Dashboard", P + "/monitoring/", "cases in, completed vs partial, coverage against plan, data quality"),
+      ("Map Report", P + "/monitoring/map/", "where cases were collected, GPS quality flags"),
       ("Monitoring overview", P + "/monitoring/", "what each view answers")], ""),
     ("I'm working with the data", "Analysts and data users.",
      [("Data room", P + "/data/", "CSV, SPSS, Stata and R exports, refreshed every ~2 minutes"),
@@ -308,55 +308,10 @@ def instrument_page(i):
                  body, active=P + "/instruments/")
 
 
-def monitoring_index():
-    body = (hero("UHC Survey Y2", "Monitoring",
-                 "Live views of fieldwork — rebuilt from the database every two minutes — "
-                 "plus the two consoles that operate it. Everything here requires the survey login.")
-            + '<main><section><div class="grid">'
-              '<div class="card project">'
-              '<h3>Sync Dashboard</h3><p>Cases collected, completed vs partial, visited today, '
-              'coverage against the assignment plan (region → province → facility), enumerator '
-              'productivity, data-quality alerts, a searchable case list, and every data download.</p>'
-              '<a class="go" href="' + CONSOLE + '/docs/dashboard.html">Open the dashboard</a></div>'
-              '<div class="card project">'
-              '<h3>Map Report</h3><p>Where cases were actually collected: a pin per case coloured by '
-              'status, clustering, coverage choropleth by province, and flags for weak GPS fixes or '
-              'cases far from their assigned facility.</p>'
-              '<a class="go" href="' + CONSOLE + '/docs/map.html">Open the map</a></div>'
-              '</div></section>'
-              # Carl, 2026-07-27: the two working consoles moved in from the old
-              # csweb front door, so Monitoring is the single operational hub.
-              '<section><h2>Operate</h2>'
-              '<p class="sub">The working consoles behind the views — for administering '
-              'collection, not just watching it.</p>'
-              '<div class="grid">'
-              '<div class="card project"><span class="badge soon">separate login</span>'
-              '<h3>F2 Admin Portal</h3><p>Runs the healthcare-worker web survey: facility '
-              'links and QR codes, reminder waves, submission review, the coverage report, '
-              'and app settings.</p>'
-              '<a class="go" href="https://uhc-hcw.asiansocial.org/admin">Open the F2 admin portal</a></div>'
-              '<div class="card project"><span class="badge soon">separate login</span>'
-              '<h3>CSWeb</h3><p>The CSPro sync server itself — the system of record the '
-              'tablets sync into: raw case data per instrument, user accounts and roles, '
-              'and the sync report.</p>'
-              '<a class="go" href="' + CSWEB + '/csweb/">Open CSWeb</a></div>'
-
-              '</div></section>'
-              '<section><h2>How to read them</h2>'
-              '<p class="sub">Three things that surprise people the first time.</p>'
-              '<ul class="rolelinks">'
-              '<li><b>The filter bar drives everything below it</b> — <span>set instrument, region, '
-              'supervisor, enumerator, status or visit dates once and the whole page follows. '
-              'Coverage-vs-plan deliberately ignores the enumerator filter, because the plan assigns '
-              'facilities, not people.</span></li>'
-              '<li><b>&ldquo;Today&rdquo; is Manila time</b> — <span>and F2 is self-administered, so it never '
-              'counts as missing GPS and is always recorded as completed.</span></li>'
-              '<li><b>Counts follow your filters</b> — <span>so they can differ from the raw case count '
-              'in CSWeb\'s own Data tab. Both are correct; they answer different questions.</span></li>'
-              '</ul></section></main>')
-    return shell("Monitoring — UHC Survey Y2",
-                 "Live fieldwork monitoring for UHC Survey Year 2: sync dashboard and map report.",
-                 body, active=P + "/monitoring/")
+# monitoring_index() deleted 2026-08-09 (unification Slice 3): the page at
+# /projects/uhc-y2/monitoring/ is now the LIVE Sync Dashboard, written by
+# csweb-dashboard-gen.py on its 2-minute cron. A static signpost here would
+# clobber it on every deploy. Same pattern as tabulations (2026-07-28).
 
 
 def data_index():
@@ -632,7 +587,8 @@ def main():
     write("projects/uhc-y2/instruments/index.html", instruments_index())
     for i in INSTRUMENTS:
         write("projects/uhc-y2/instruments/%s/index.html" % i["k"], instrument_page(i))
-    write("projects/uhc-y2/monitoring/index.html", monitoring_index())
+    # monitoring/: OWNED by csweb-dashboard-gen.py since 2026-08-09 —
+    # never write it here (see the deleted monitoring_index above).
     # tabulations/index.html is OWNED by csweb-tabulations-gen.py since 2026-07-28
     # (hourly cron bakes fresh preview counts; a static build here would go stale
     # and clobber it). tabulations_index() kept for reference only.
@@ -968,8 +924,8 @@ def instruments_index():
 # ============================================================================
 
 OV_STATUS_URL = "https://capi.asiansocial.org/projects/uhc-y2/status.json"
-OV_DASH = CONSOLE + "/docs/dashboard.html"
-OV_MAP = CONSOLE + "/docs/map.html"
+OV_DASH = P + "/monitoring/"
+OV_MAP = P + "/monitoring/map/"
 OV_F2_APP = "https://uhc-hcw.asiansocial.org"
 
 

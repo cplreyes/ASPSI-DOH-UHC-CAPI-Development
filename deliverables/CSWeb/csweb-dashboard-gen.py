@@ -45,7 +45,11 @@ import activity_lib
 
 ENV = "/opt/app/.env"
 COMPOSE_DIR = "/opt/app"
-OUT = "/opt/app/lamp/www/docs/dashboard.html"
+# Writes into the STATIC PORTAL docroot, not the Apache one (2026-08-09,
+# unification Slice 3). This is the pattern csweb-tabulations-gen.py has used
+# since 2026-07-28: a live, database-backed page published at its project URL,
+# so the nav entry IS the page. The old /docs/dashboard.html 301s here.
+OUT = "/opt/app/capi-www/projects/uhc-y2/monitoring/index.html"
 
 # chart spec per instrument: (row field, chart title, chart type)
 SECTIONS = [
@@ -665,7 +669,7 @@ TEMPLATE = r"""<!doctype html>
   <p class="cl-hint" id="clHint">The list scrolls within this panel and reflects every filter above. Use Download CSV for the full set.</p>
 __DOWNLOADS__
 </main>
-<footer>Generated <span id="gen"></span> · source: F1/F3/F4 breakout DBs via <code>csweb_reports</code> + F2 <code>csweb_f2</code> mirror · see also the <a href="/docs/map.html" style="color:#006b3f">Map Report</a>.</footer>
+<footer>Generated <span id="gen"></span> · source: F1/F3/F4 breakout DBs via <code>csweb_reports</code> + F2 <code>csweb_f2</code> mirror · see also the <a href="/projects/uhc-y2/monitoring/map/" style="color:#006b3f">Map Report</a>.</footer>
 <script type="application/json" id="dash-data">__PAYLOAD__</script>
 <script>
 const P = JSON.parse(document.getElementById('dash-data').textContent);
@@ -1896,12 +1900,12 @@ def _shellify_dashboard(t):
                       "main{max-width:none;margin:0;padding:0}")
     footer_inner = footer_block.split("<footer>", 1)[1]
     base = PS.PORTAL_ORIGIN
+    # This page IS /projects/uhc-y2/monitoring/ since Slice 3 — the crumb leaf
+    # is Monitoring itself, and the seg toggles the two views inside it.
     crumbs = [("UHC Survey Year 2", PS.P + "/"),
-              ("Monitoring", PS.P + "/monitoring/"),
-              ("Sync Dashboard", None)]
-    # dashboard + map are same-origin on csweb during pretest
-    seg = ('<div class="tb-seg"><a class="on" href="/docs/dashboard.html">Sync Dashboard</a>'
-           '<a href="/docs/map.html">Map</a></div>')
+              ("Monitoring", None)]
+    seg = ('<div class="tb-seg"><a class="on" href="/projects/uhc-y2/monitoring/">Sync Dashboard</a>'
+           '<a href="/projects/uhc-y2/monitoring/map/">Map</a></div>')
     # No lock pill: the identity chip open_shell puts in .tb-right already says
     # who is signed in, which is the true version of what the pill implied.
     tb_right = seg
@@ -1915,7 +1919,7 @@ def _shellify_dashboard(t):
               + '</div></div>\n<div class="canvas">\n<main>')
     closed = ('\n</main>\n<footer class="page-foot">' + footer_inner + '</footer>\n'
               '</div>\n</div>\n</div>\n')
-    out = opened + main_content + closed + PS.SIGNOUT_JS + scripts
+    out = opened + main_content + closed + PS.SIGNOUT_JS + PS.PERM_DIM_JS + scripts
     # one canonical verde across css, client JS and the bell
     out = out.replace("#006b3f", "#046a38").replace("#004d2c", "#04331d")
     return out
