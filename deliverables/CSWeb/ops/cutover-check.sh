@@ -57,7 +57,15 @@ printf "\nACCESS CONTROL\n"
 
 # Denied is 401 before the flip (Apache) and 302 to the sign-in page after it
 # (nginx error_page). Both are "refused"; 200 is the failure that matters.
-for p in /docs/dashboard.html /docs/map.html /docs/admin/ /docs/data/ /docs/idp/admin/users; do
+# Since the console unification (2026-08-09) the old page URLs answer 301 to
+# their portal homes — the gate runs at the DESTINATION, which the second loop
+# asserts. A 301 here leaks nothing: no content, only a Location header.
+for p in /docs/dashboard.html /docs/map.html /docs/admin/ /docs/data/; do
+  c=$(code "$HOST$p")
+  if in_list "$c" "401 302 403 301"; then ok "4. anonymous $p refused/moved ($c)"
+  else bad "4. anonymous $p" "got $c — expected 401/302/403/301"; fi
+done
+for p in /docs/idp/admin/users /projects/uhc-y2/monitoring/ /projects/uhc-y2/data/ /projects/uhc-y2/admin/; do
   c=$(code "$HOST$p")
   if in_list "$c" "401 302 403"; then ok "4. anonymous $p refused ($c)"
   else bad "4. anonymous $p" "got $c — expected 401/302/403"; fi
