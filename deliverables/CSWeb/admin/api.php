@@ -1,15 +1,44 @@
 <?php
 /**
- * CAPI Console — Admin API (Carl, 2026-07-27).
+ * CAPI Console — Admin API (Carl, 2026-07-27; repointed 2026-08-08).
  *
- * Single JSON endpoint behind the existing /docs/admin/ basic-auth gate.
- * Reusing that gate is deliberate: no second auth system to get wrong, and
- * REMOTE_USER gives every audit entry a real actor for free.
+ * Single JSON endpoint behind the /docs/admin/ gate.
+ * Resources:  session · users · alerts · plan · activities · audit
  *
- * Resources:  session · users · tiers · alerts · plan · activities · audit
- * Every mutation: strict allowlist validation -> timestamped backup ->
- * atomic write -> audit entry. Writes that touch Apache config additionally
- * run a loopback canary and self-restore if the server starts 500ing.
+ * E9-ADMIN-004 — THE CUTOVER BLOCKER, closed here.
+ * -----------------------------------------------------------------------
+ * Until now this file was the only thing that administered console access,
+ * and it did so by editing `.htpasswd` and the `Require user` lines in three
+ * `.htaccess` files. After the identity provider takes over the gate, those
+ * files stop being consulted — so every write here would have reported
+ * success while changing nothing that decides access. "Disable user" would
+ * have said Done and the account would have kept working. That is the single
+ * worst failure an access-control screen can have, so the writes are gone
+ * rather than left to rot:
+ *
+ *   - users GET   now reads console_users / console_user_roles, the store the
+ *                 provider actually consults.
+ *   - create | password | tier | delete  return 501 with a pointer to the new
+ *                 admin API. They are not silently disabled; a 501 with a
+ *                 message is the difference between "this moved" and "this is
+ *                 broken".
+ *   - actor()     prefers X-Auth-User (set by nginx after cutover) and the
+ *                 console session, because PHP_AUTH_USER and REMOTE_USER are
+ *                 both empty once mod_auth_form is retired — every audit row
+ *                 would otherwise read `unknown`.
+ *   - canary_ok() is gone. It probed Apache directly on loopback, bypassing
+ *                 the openresty gate entirely, so after cutover it would have
+ *                 answered 200 forever regardless of what the real front door
+ *                 was doing. A canary that cannot die is worse than none.
+ *
+ * The htpasswd files are still READ, in one place only: the drift report on
+ * the users list, which shows accounts present in one store and not the
+ * other. That comparison is exactly what you want to look at before flipping
+ * the gate, and it is the reason those helpers survive.
+ *
+ * Alerts / plan / activities keep their file-backed writes. They are
+ * configuration, not access control, and nothing about the cutover changes
+ * where they live.
  */
 declare(strict_types=1);
 ini_set('display_errors', '0');
@@ -17,11 +46,25 @@ header('Content-Type: application/json');
 header('X-Content-Type-Options: nosniff');
 header('Cache-Control: no-store');
 
+// The identity library. Loaded defensively: this screen managed alerts and
+// activities long before the provider existed, and a provider outage must
+// degrade the users tab, not take the whole admin app down with it.
+$CAPI_AUTH_LIB = is_dir('/var/www/private/capi-auth') ? '/var/www/private/capi-auth' : '';
+$CAPI_AUTH_OK  = false;
+if ($CAPI_AUTH_LIB !== '' && is_file($CAPI_AUTH_LIB . '/lib.php')) {
+    try {
+        require_once $CAPI_AUTH_LIB . '/lib.php';
+        $CAPI_AUTH_OK = true;
+    } catch (Throwable $e) {
+        error_log('admin/api.php: identity library unavailable: ' . $e->getMessage());
+    }
+}
+
 const WWW      = '/var/www/html';
+// Read-only now, for the drift report. The three .htaccess gate files this
+// file used to rewrite (DOCS_HT / DATA_HT / ADMIN_HT) are no longer referenced
+// at all — see E9-ADMIN-004 in the header comment.
 const HTPASSWD = WWW . '/.htpasswd-docs';
-const DOCS_HT  = WWW . '/docs/.htaccess';
-const DATA_HT  = WWW . '/docs/data/.htaccess';
-const ADMIN_HT = WWW . '/docs/admin/.htaccess';
 const REG      = __DIR__ . '/activities-registry.json';
 const ALERTS   = __DIR__ . '/alerts.json';       // mirrored to /opt by the sync cron
 const AUDIT    = __DIR__ . '/audit.log';
@@ -43,8 +86,52 @@ function read_json(string $path) {
     return json_decode($raw, true);
 }
 
+/**
+ * Who is making this request.
+ *
+ * Order matters and each step covers a different era:
+ *   1. X-Auth-User  — set by nginx from the auth_request subrequest after
+ *                     cutover. E9-ADMIN-009 blanks any client-supplied copy at
+ *                     the edge, which is what makes it trustworthy here.
+ *   2. the console session cookie — works before AND after cutover, and is
+ *                     verified against the database rather than taken on
+ *                     trust; this is the path that runs today.
+ *   3. PHP_AUTH_USER / REMOTE_USER — mod_auth_form's variables. Both go empty
+ *                     at cutover, which is why they are last rather than
+ *                     first as they were before.
+ */
 function actor(): string {
-    return $_SERVER['PHP_AUTH_USER'] ?? $_SERVER['REMOTE_USER'] ?? 'unknown';
+    static $who = null;
+    if ($who !== null) { return $who; }
+
+    $hdr = trim((string) ($_SERVER['HTTP_X_AUTH_USER'] ?? ''));
+    // \z, not $: `$` also matches before a trailing newline, and this value is
+    // written verbatim into every audit line this file emits.
+    if ($hdr !== '' && preg_match('/^[A-Za-z0-9._-]{2,64}\z/', $hdr)) { return $who = $hdr; }
+
+    if ($GLOBALS['CAPI_AUTH_OK'] ?? false) {
+        try {
+            $s = auth_session_resolve($_COOKIE[AUTH_COOKIE] ?? null);
+            if ($s !== null) { return $who = (string) $s['username']; }
+        } catch (Throwable $e) {
+            error_log('admin/api.php: session lookup failed: ' . $e->getMessage());
+        }
+    }
+
+    $legacy = $_SERVER['PHP_AUTH_USER'] ?? $_SERVER['REMOTE_USER'] ?? '';
+    return $who = ($legacy !== '' ? (string) $legacy : 'unknown');
+}
+
+/** A write path that has moved to the new admin API. Never a silent no-op. */
+function moved(string $what): void {
+    http_response_code(501);
+    echo json_encode(['ok' => false,
+        'error' => $what . ' has moved. Account changes are now made in the CAPI Console '
+                 . 'admin portal, which writes to the identity provider — this screen '
+                 . 'could only edit .htpasswd, which the gate no longer reads.',
+        'moved_to' => '/docs/idp/admin/users',
+        'code' => 'moved']);
+    exit;
 }
 
 function fail(string $msg, int $code = 400) {
@@ -58,6 +145,19 @@ function ok(array $data = []) {
     exit;
 }
 
+/**
+ * Record a configuration change.
+ *
+ * Written to BOTH trails on purpose. The file is the one that still works when
+ * MySQL is down, which is exactly when you most want a record of what someone
+ * just changed. `console_audit` is the one the Audit screen reads — and a
+ * screen that calls itself the audit trail while silently omitting every
+ * alerting, activity and plan change is worse than one that admits its scope.
+ *
+ * Verbs keep their existing spelling (`alerts.update`, `plan.provisional`,
+ * `activities.save`) so the file trail and the table agree and the two can be
+ * read as one history.
+ */
 function audit(string $action, string $target, array $detail = []): void {
     $line = json_encode([
         'ts' => gmdate('c'), 'actor' => actor(), 'action' => $action,
@@ -65,6 +165,12 @@ function audit(string $action, string $target, array $detail = []): void {
         'ip' => $_SERVER['REMOTE_ADDR'] ?? '',
     ]);
     @file_put_contents(AUDIT, $line . "\n", FILE_APPEND | LOCK_EX);
+
+    if ($GLOBALS['CAPI_AUTH_OK'] ?? false) {
+        // auth_audit() already swallows its own failures, so a provider outage
+        // costs a table row and never the configuration write itself.
+        auth_audit(actor(), $action, $target, $detail === [] ? null : $detail);
+    }
 }
 
 function backup(string $path): void {
@@ -91,25 +197,21 @@ function write_atomic(string $path, string $body): bool {
     return @file_get_contents($path) === $body;   // read-back proof
 }
 
-/** Loopback canary: a healthy gated URL answers 401 to an anonymous request.
- *  A 500 means we just wrote broken Apache config -- restore and shout. */
-function canary_ok(): bool {
-    $ch = curl_init('http://127.0.0.1/docs/dashboard.html');
-    curl_setopt_array($ch, [CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 5,
-                            CURLOPT_HEADER => false, CURLOPT_NOBODY => true,
-                            CURLOPT_HTTPHEADER => ['Host: csweb.asiansocial.org']]);
-    curl_exec($ch);
-    $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-    return $code === 401 || $code === 200;
-}
+// canary_ok() was removed in E9-ADMIN-004. It fetched
+// http://127.0.0.1/docs/dashboard.html with a spoofed Host header, i.e. it
+// asked Apache directly and never traversed the openresty gate that actually
+// decides access. After cutover it would have returned 200 no matter what the
+// front door was doing, so every gate write would have "passed" its own
+// safety check. There is nothing left for it to guard now that the gate
+// writes are gone.
 
-function restore_latest(string $path): void {
-    $g = glob(BAK . '/' . basename($path) . '.*');
-    if ($g) { rsort($g); @copy($g[0], $path); }
-}
+// ------------------------------------------------------ users (console store)
+//
+// The htpasswd readers below are READ-ONLY and exist for one purpose: the
+// drift report. Before the gate is flipped, the question worth asking is
+// "which accounts exist in one store and not the other", and answering it
+// needs both lists side by side.
 
-// ---------------------------------------------------------------- users/tiers
 function htpasswd_users(): array {
     $out = [];
     foreach (@file(HTPASSWD, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [] as $l) {
@@ -120,32 +222,68 @@ function htpasswd_users(): array {
     return $out;
 }
 
-/** Parse the `Require user ...` list out of a gate file. */
-function require_list(string $file): array {
-    foreach (@file($file, FILE_IGNORE_NEW_LINES) ?: [] as $l) {
-        if (preg_match('/^\s*Require\s+user\s+(.+)$/i', $l, $m)) {
-            return preg_split('/\s+/', trim($m[1]), -1, PREG_SPLIT_NO_EMPTY);
-        }
+/**
+ * The five console roles mapped back onto the three legacy tiers, so the
+ * existing app.js keeps rendering while Slice B replaces the screen.
+ *
+ * This is a display shim, not a model. The tiers were a property of which
+ * .htaccess file listed you; roles are a property of the account. Anything
+ * that needs the truth should read `roles`, which is also in the payload.
+ */
+function tier_from_roles(array $roles): string {
+    if (array_intersect($roles, ['owner', 'programme_admin'])) { return 'admin'; }
+    if (array_intersect($roles, ['analyst']))                  { return 'staff'; }
+    if ($roles === [])                                         { return 'none'; }
+    return 'field';
+}
+
+/**
+ * Users as the identity provider sees them — the store that decides access
+ * after cutover, and therefore the only honest thing for this screen to show.
+ *
+ * Returns null when the provider is unreachable, so the caller can say so
+ * instead of rendering an empty list that looks like "no users exist".
+ */
+function console_users(): ?array {
+    if (!($GLOBALS['CAPI_AUTH_OK'] ?? false)) { return null; }
+    try {
+        $rows = auth_db()->query(
+            'SELECT u.id, u.username, u.full_name, u.status, u.must_change,
+                    u.pw_algo, u.last_login_at, u.locked_until,
+                    (SELECT GROUP_CONCAT(r.name ORDER BY r.name SEPARATOR ",")
+                       FROM console_user_roles ur
+                       JOIN console_roles r ON r.id = ur.role_id
+                      WHERE ur.user_id = u.id) AS role_csv,
+                    (SELECT COUNT(*) FROM console_sessions s
+                      WHERE s.user_id = u.id AND s.revoked_at IS NULL
+                        AND s.expires_at > NOW()) AS live_sessions
+               FROM console_users u ORDER BY u.username'
+        )->fetchAll();
+    } catch (Throwable $e) {
+        error_log('admin/api.php: console_users failed: ' . $e->getMessage());
+        return null;
     }
-    return [];
-}
 
-function set_require_list(string $file, array $users): bool {
-    if (!count($users)) { return false; }          // never write an empty gate
-    $src = @file_get_contents($file);
-    if ($src === false) { return false; }
-    $line = '  Require user ' . implode(' ', $users);
-    $new = preg_replace('/^\s*Require\s+user\s+.+$/mi', $line, $src, 1, $n);
-    if (!$n) { return false; }
-    backup($file);
-    return write_atomic($file, $new);
-}
-
-function tier_of(string $u, array $docs, array $data, array $admin): string {
-    if (in_array($u, $admin, true)) { return 'admin'; }
-    if (in_array($u, $data, true))  { return 'staff'; }
-    if (in_array($u, $docs, true))  { return 'field'; }
-    return 'none';
+    $out = [];
+    foreach ($rows as $r) {
+        $roles = ($r['role_csv'] ?? '') === '' || $r['role_csv'] === null
+                   ? [] : explode(',', (string) $r['role_csv']);
+        $out[] = [
+            'id'            => (int) $r['id'],
+            'user'          => (string) $r['username'],
+            'full_name'     => (string) $r['full_name'],
+            'roles'         => $roles,
+            'tier'          => tier_from_roles($roles),
+            'status'        => (string) $r['status'],
+            'must_change'   => ((int) $r['must_change'] === 1),
+            'pw_algo'       => (string) $r['pw_algo'],
+            'locked'        => $r['locked_until'] !== null,
+            'live_sessions' => (int) $r['live_sessions'],
+            'last_login'    => $r['last_login_at'],
+            'protected'     => in_array((string) $r['username'], ROOT_ADMINS, true),
+        ];
+    }
+    return $out;
 }
 
 function last_seen(): array {
@@ -160,27 +298,11 @@ function last_seen(): array {
     return $out;
 }
 
-function apply_tier(string $user, string $tier): bool {
-    $docs = require_list(DOCS_HT); $data = require_list(DATA_HT); $adm = require_list(ADMIN_HT);
-    $rm = function (array $a) use ($user) { return array_values(array_diff($a, [$user])); };
-    $add = function (array $a) use ($user) { return in_array($user, $a, true) ? $a : array_merge($a, [$user]); };
-    $docs = $rm($docs); $data = $rm($data); $adm = $rm($adm);
-    if ($tier === 'field') { $docs = $add($docs); }
-    if ($tier === 'staff') { $docs = $add($docs); $data = $add($data); }
-    if ($tier === 'admin') { $docs = $add($docs); $data = $add($data); $adm = $add($adm); }
-    foreach (ROOT_ADMINS as $ra) {                       // lockout insurance
-        if (!in_array($ra, $adm, true)) { $adm[] = $ra; }
-        if (!in_array($ra, $data, true)) { $data[] = $ra; }
-        if (!in_array($ra, $docs, true)) { $docs[] = $ra; }
-    }
-    $wrote = set_require_list(DOCS_HT, $docs) && set_require_list(DATA_HT, $data)
-             && set_require_list(ADMIN_HT, $adm);
-    if (!$wrote || !canary_ok()) {
-        restore_latest(DOCS_HT); restore_latest(DATA_HT); restore_latest(ADMIN_HT);
-        return false;
-    }
-    return true;
-}
+// apply_tier() / set_require_list() were removed in E9-ADMIN-004 along with
+// the canary. They rewrote `Require user` lines in three .htaccess files —
+// the mechanism the identity provider replaces. Keeping them would mean this
+// screen could still edit a file nothing reads, which is exactly the silent
+// no-op the cutover has to be free of.
 
 // ------------------------------------------------------------------- dispatch
 $r = $_GET['r'] ?? '';
@@ -198,82 +320,70 @@ if ($isPost) {
 
 switch ($r) {
 
-case 'session':
-    ok(['user' => actor(), 'tiers' => TIERS, 'insts' => INSTS]);
+case 'session': {
+    $roles = [];
+    $perms = [];
+    if ($CAPI_AUTH_OK) {
+        try {
+            $s = auth_session_resolve($_COOKIE[AUTH_COOKIE] ?? null);
+            if ($s !== null) {
+                // Carried on the session since E9-ADMIN-030.
+                $roles = $s['roles'];
+                $perms = $s['perms'];
+            }
+        } catch (Throwable $e) { /* leave both empty; the screen still loads */ }
+    }
+    ok(['user' => actor(), 'tiers' => TIERS, 'insts' => INSTS,
+        'roles' => $roles, 'perms' => $perms,
+        'user_writes_moved' => true]);
+}
 
 case 'users': {
     if (!$isPost) {
-        $docs = require_list(DOCS_HT); $data = require_list(DATA_HT); $adm = require_list(ADMIN_HT);
-        $seen = last_seen();
-        $rows = [];
-        foreach (htpasswd_users() as $u) {
-            $rows[] = ['user' => $u, 'tier' => tier_of($u, $docs, $data, $adm),
-                       'last_seen' => $seen[$u] ?? null,
-                       'protected' => in_array($u, ROOT_ADMINS, true)];
+        $rows = console_users();
+        if ($rows === null) {
+            // Say so. An empty array here would render as "no accounts",
+            // which is indistinguishable from a wiped user table.
+            fail('The identity provider is unreachable, so the account list cannot be '
+               . 'shown. Alerts, plan and activities are unaffected.', 503);
         }
-        ok(['users' => $rows]);
-    }
-    $act = $body['action'] ?? '';
-    $u = trim((string)($body['user'] ?? ''));
-    if (!preg_match('/^[A-Za-z0-9._-]{2,32}$/', $u)) { fail('username must be 2-32 chars: letters, digits, . _ -'); }
 
-    if ($act === 'create' || $act === 'password') {
-        $pw = (string)($body['password'] ?? '');
-        if (strlen($pw) < 10) { fail('password must be at least 10 characters'); }
-        $exists = in_array($u, htpasswd_users(), true);
-        if ($act === 'create' && $exists) { fail("user '$u' already exists"); }
-        if ($act === 'password' && !$exists) { fail("user '$u' not found"); }
-        $hash = password_hash($pw, PASSWORD_BCRYPT);
-        $lines = [];
-        foreach (@file(HTPASSWD, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [] as $l) {
-            if (strpos($l, $u . ':') !== 0) { $lines[] = $l; }
-        }
-        $lines[] = $u . ':' . $hash;
-        backup(HTPASSWD);
-        if (!write_atomic(HTPASSWD, implode("\n", $lines) . "\n")) { fail('could not write htpasswd', 500); }
-        @chmod(HTPASSWD, 0640);
-        if ($act === 'create') {
-            $tier = (string)($body['tier'] ?? 'field');
-            if (!in_array($tier, TIERS, true)) { fail('unknown tier'); }
-            if (!apply_tier($u, $tier)) { fail('tier write failed; gates restored from backup', 500); }
-            audit('user.create', $u, ['tier' => $tier]);
-            ok(['user' => $u, 'tier' => $tier]);
-        }
-        audit('user.password', $u);
-        ok(['user' => $u]);
+        // Drift between the two stores, while both still exist. Which side
+        // matters depends on which store the gate is reading:
+        //   before cutover  htpasswd decides, so `console_only` accounts
+        //                   exist but cannot sign in;
+        //   after cutover   console_users decides, so `htpasswd_only`
+        //                   accounts have just silently lost access.
+        // This is the list to look at immediately before flipping.
+        $gateLive = strtolower((string) getenv('CAPI_IDP_GATE')) === 'live';
+        $ht       = htpasswd_users();
+        $console  = array_map(static fn($r) => $r['user'], $rows);
+        $seen     = last_seen();
+        foreach ($rows as &$r) { $r['last_seen'] = $seen[$r['user']] ?? null; }
+        unset($r);
+
+        ok([
+            'users'  => $rows,
+            'source' => 'console_users',
+            'writes' => 'moved',           // app.js may use this to hide buttons
+            'drift'  => [
+                'htpasswd_only' => array_values(array_diff($ht, $console)),
+                'console_only'  => array_values(array_diff($console, $ht)),
+                'gate'          => $gateLive ? 'idp' : 'htpasswd',
+                'blocking'      => $gateLive ? 'htpasswd_only' : 'console_only',
+            ],
+        ]);
     }
 
-    if ($act === 'tier') {
-        $tier = (string)($body['tier'] ?? '');
-        if (!in_array($tier, TIERS, true)) { fail('unknown tier'); }
-        if (in_array($u, ROOT_ADMINS, true) && $tier !== 'admin') {
-            fail("$u is a protected admin and cannot be demoted here");
-        }
-        if (!in_array($u, htpasswd_users(), true)) { fail("user '$u' not found"); }
-        if (!apply_tier($u, $tier)) { fail('tier write failed; gates restored from backup', 500); }
-        audit('user.tier', $u, ['tier' => $tier]);
-        ok(['user' => $u, 'tier' => $tier]);
-    }
-
-    if ($act === 'delete') {
-        if (in_array($u, ROOT_ADMINS, true)) { fail("$u is protected and cannot be removed"); }
-        $lines = [];
-        foreach (@file(HTPASSWD, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [] as $l) {
-            if (strpos($l, $u . ':') !== 0) { $lines[] = $l; }
-        }
-        backup(HTPASSWD);
-        if (!write_atomic(HTPASSWD, implode("\n", $lines) . "\n")) { fail('could not write htpasswd', 500); }
-        @chmod(HTPASSWD, 0640);
-        $docs = array_values(array_diff(require_list(DOCS_HT), [$u]));
-        $data = array_values(array_diff(require_list(DATA_HT), [$u]));
-        $adm  = array_values(array_diff(require_list(ADMIN_HT), [$u]));
-        set_require_list(DOCS_HT, $docs); set_require_list(DATA_HT, $data); set_require_list(ADMIN_HT, $adm);
-        if (!canary_ok()) {
-            restore_latest(DOCS_HT); restore_latest(DATA_HT); restore_latest(ADMIN_HT);
-            fail('gate write failed; restored from backup', 500);
-        }
-        audit('user.delete', $u);
-        ok(['user' => $u]);
+    // Every write path is gone. See the header comment: these edited
+    // .htpasswd and .htaccess, and after cutover that is a store nothing
+    // reads — so the honest answer is 501 and a pointer, not a success.
+    $act = (string)($body['action'] ?? '');
+    switch ($act) {
+        case 'create':   moved('Creating an account');
+        case 'password': moved('Setting a password');
+        case 'tier':     moved('Changing a role');
+        case 'delete':   moved('Removing an account');
     }
     fail('unknown users action');
 }
@@ -415,14 +525,43 @@ case 'activities': {
 }
 
 case 'audit': {
-    $lines = @file(AUDIT, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [];
-    $lines = array_slice($lines, -200);
+    // Two trails exist during the transition: this file, written by the
+    // config screens below, and console_audit, written by the identity
+    // provider. Merge them rather than showing one and calling it "the audit
+    // trail" — the whole point of an audit trail is that it is not partial.
     $out = [];
-    foreach (array_reverse($lines) as $l) {
+
+    $lines = @file(AUDIT, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [];
+    foreach (array_slice($lines, -200) as $l) {
         $j = json_decode($l, true);
-        if (is_array($j)) { $out[] = $j; }
+        if (is_array($j)) { $j['source'] = 'config'; $out[] = $j; }
     }
-    ok(['entries' => $out]);
+
+    if ($CAPI_AUTH_OK) {
+        try {
+            foreach (auth_db()->query(
+                'SELECT ts, actor, verb, target, detail, ip FROM console_audit
+                  ORDER BY id DESC LIMIT 200'
+            )->fetchAll() as $r) {
+                $out[] = [
+                    // gmdate('c') to match the file trail's format, so the
+                    // merged list sorts as strings without a parse step.
+                    'ts'     => gmdate('c', strtotime((string) $r['ts'] . ' UTC')),
+                    'actor'  => (string) $r['actor'],
+                    'action' => (string) $r['verb'],
+                    'target' => (string) $r['target'],
+                    'detail' => $r['detail'] === null ? [] : json_decode((string) $r['detail'], true),
+                    'ip'     => (string) $r['ip'],
+                    'source' => 'identity',
+                ];
+            }
+        } catch (Throwable $e) {
+            error_log('admin/api.php: console_audit read failed: ' . $e->getMessage());
+        }
+    }
+
+    usort($out, static fn($a, $b) => strcmp((string) ($b['ts'] ?? ''), (string) ($a['ts'] ?? '')));
+    ok(['entries' => array_slice($out, 0, 200)]);
 }
 
 default:

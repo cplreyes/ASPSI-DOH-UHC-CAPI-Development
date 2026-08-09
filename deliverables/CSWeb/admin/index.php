@@ -1,14 +1,67 @@
 <?php
 /**
- * CAPI Console — Admin (SPA shell).
- * Serves the app frame + issues the CSRF token the API checks. All data flows
- * through api.php; this file renders no survey data itself.
+ * CAPI Console — Admin portal shell (E9-ADMIN-020 / -026).
+ *
+ * Serves the app frame and the two CSRF tokens the two APIs check. Renders no
+ * survey data and no account data itself — everything arrives over fetch, so
+ * this file has nothing worth leaking.
+ *
+ * TWO APIS, DELIBERATELY
+ *   /docs/admin/api.php   console configuration (activities, alerting, plan).
+ *                         Flat envelope, `adm_csrf` cookie. Unchanged.
+ *   /docs/idp/admin/...   identity (users, roles, sessions, audit).
+ *                         {ok,data,request_id} envelope, `__Host-capi_csrf` cookie.
+ *
+ * The nav is split the same way, because that split is real: one side edits
+ * JSON files on disk, the other decides who may read respondent data.
  */
 ini_set('display_errors', '0');
+
+// Identity library. Loaded defensively — this page administered alerts and
+// activities long before the provider existed, and a provider outage must
+// degrade the access screens, not blank the whole console.
+$AUTH_LIB   = is_dir('/var/www/private/capi-auth') ? '/var/www/private/capi-auth' : '';
+$AUTH_OK    = false;
+if ($AUTH_LIB !== '' && is_file($AUTH_LIB . '/lib.php')) {
+    try { require_once $AUTH_LIB . '/lib.php'; $AUTH_OK = true; }
+    catch (Throwable $e) { error_log('admin/index.php: identity library unavailable: ' . $e->getMessage()); }
+}
+
+// CSRF for the legacy console API. Path-scoped and Strict, as before.
 $csrf = bin2hex(random_bytes(16));
 setcookie('adm_csrf', $csrf, ['expires' => 0, 'path' => '/docs/admin/',
     'secure' => true, 'httponly' => false, 'samesite' => 'Strict']);
-$user = $_SERVER['PHP_AUTH_USER'] ?? $_SERVER['REMOTE_USER'] ?? '';
+
+// CSRF for the identity API. Minting it here matters: today an operator
+// reaches this page through mod_auth_form, never through the provider's
+// sign-in page, so `__Host-capi_csrf` may not exist yet and every write would 403.
+if ($AUTH_OK) {
+    try { auth_csrf_token(); }
+    catch (Throwable $e) { error_log('admin/index.php: csrf mint failed: ' . $e->getMessage()); }
+}
+
+/**
+ * Who to name in the sidebar.
+ *
+ * Same precedence as api.php's actor(), and for the same reason: PHP_AUTH_USER
+ * and REMOTE_USER both go empty the moment mod_auth_form is retired, so a
+ * shell that trusts them renders "Signed in as" followed by nothing on the day
+ * of the cutover. Resolved server-side rather than left to the /me fetch so
+ * the name is right in the first paint, with no flash of an empty chip.
+ */
+$user = '';
+$hdr  = trim((string) ($_SERVER['HTTP_X_AUTH_USER'] ?? ''));
+if ($hdr !== '' && preg_match('/^[A-Za-z0-9._-]{2,64}\z/', $hdr)) {
+    $user = $hdr;
+} elseif ($AUTH_OK) {
+    try {
+        $s = auth_session_resolve($_COOKIE[AUTH_COOKIE] ?? null);
+        if ($s !== null) { $user = (string) $s['username']; }
+    } catch (Throwable $e) { /* fall through to the legacy vars */ }
+}
+if ($user === '') { $user = (string) ($_SERVER['PHP_AUTH_USER'] ?? $_SERVER['REMOTE_USER'] ?? ''); }
+
+$e = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
 ?><!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8">
@@ -16,70 +69,48 @@ $user = $_SERVER['PHP_AUTH_USER'] ?? $_SERVER['REMOTE_USER'] ?? '';
 <meta name="robots" content="noindex">
 <title>Admin — ASPSI CAPI</title>
 <link rel="stylesheet" href="/docs/admin/portal.css">
+<link rel="stylesheet" href="/docs/admin/admin.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%23046a38'/%3E%3Cpath d='M20 9l9 5v12l-9 5-9-5V14z' fill='%23e5b23b'/%3E%3C/svg%3E">
-<style>
-.adm-tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:20px;flex-wrap:wrap}
-.adm-tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:9px 15px;
-  font:600 13.5px var(--sans);color:var(--ink-3);cursor:pointer}
-.adm-tabs button:hover{color:var(--verde)}
-.adm-tabs button.on{color:var(--verde-900);border-bottom-color:var(--verde)}
-.adm-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
-  padding:18px 20px;box-shadow:var(--shadow-1);margin-bottom:16px}
-.adm-card h3{font-size:15.5px;color:var(--verde-900);margin-bottom:4px}
-.adm-card .sub{font-size:12.5px;color:var(--ink-3);margin-bottom:12px}
-.adm-f{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:10px}
-.adm-f label{display:flex;flex-direction:column;gap:4px;font-size:11px;font-weight:700;
-  letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
-input,select{font:13.5px var(--sans);padding:7px 9px;border:1px solid var(--line-strong);
-  border-radius:8px;background:#fff;color:var(--ink)}
-input:focus,select:focus{outline:2px solid var(--verde-300);outline-offset:0}
-.btn{background:var(--verde);color:#fff;font:700 13px var(--sans);border:0;border-radius:8px;
-  padding:9px 16px;cursor:pointer}
-.btn:hover{background:var(--verde-700)}
-.btn.sec{background:var(--surface);color:var(--ink-2);border:1px solid var(--line-strong)}
-.btn.sec:hover{background:var(--surface-2);color:var(--verde)}
-.btn.danger{background:#b91c1c}.btn.danger:hover{background:#991b1b}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.msg{border-radius:9px;padding:10px 14px;margin-bottom:14px;font-size:13.5px;font-weight:600}
-.msg.ok{background:#eefaf3;color:#047857;border:1px solid #b9e2cb}
-.msg.err{background:#fdecea;color:#b91c1c;border:1px solid #f5c6c0}
-.pillt{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
-  padding:2px 8px;border-radius:6px;white-space:nowrap}
-.pillt.field{background:var(--verde-100);color:var(--verde);border:1px solid #cfe6d8}
-.pillt.staff{background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe}
-.pillt.admin{background:#fdf7e8;color:var(--lock);border:1px solid #f0dcae}
-.pillt.none{background:#f1f5f9;color:var(--muted);border:1px solid #dde5ec}
-.mono{font-family:var(--mono);font-size:12.5px}
-.muted{color:var(--ink-3);font-size:12.5px}
-.rowacts{display:flex;gap:6px;flex-wrap:wrap}
-.rowacts button{font-size:11.5px;padding:5px 10px}
-.audit{font-family:var(--mono);font-size:11.5px;line-height:1.7;max-height:460px;overflow:auto}
-.audit b{color:var(--verde-900)}
-.spin{color:var(--ink-3);font-size:13px;padding:12px 0}
-</style></head>
+</head>
 <body>
+<a class="skip" href="#admView">Skip to content</a>
 <div class="app">
   <aside class="sidebar">
     <a class="sb-brand" href="https://capi.asiansocial.org/"><span class="sb-mark">A</span>
       <span><b>ASPSI CAPI</b><span>admin console</span></span></a>
     <div class="sb-proj"><div class="sb-proj-card"><div class="k">Signed in as</div>
-      <div class="v"><?= htmlspecialchars($user, ENT_QUOTES) ?></div></div></div>
-    <nav class="sb-nav">
-      <div class="sb-sec">Admin</div>
-      <a href="#" data-tab="activities"><span>Activities</span></a>
-      <a href="#" data-tab="users"><span>Users &amp; access</span></a>
-      <a href="#" data-tab="alerts"><span>Alerting</span></a>
-      <a href="#" data-tab="plan"><span>Assignment plan</span></a>
-      <a href="#" data-tab="audit"><span>Audit trail</span></a>
+      <div class="v" id="admWho"><?= $e($user) ?></div></div></div>
+
+    <nav class="sb-nav" aria-label="Admin sections">
+      <!-- Access: everything backed by the identity provider. data-perm hides
+           an entry the account cannot use; the edge enforces regardless. -->
+      <div class="sb-sec">Access</div>
+      <a href="#/users"    data-route="users"    data-perm="admin.users"><span>Users &amp; access</span></a>
+      <a href="#/roles"    data-route="roles"    data-perm="admin.users"><span>Roles &amp; permissions</span></a>
+      <a href="#/sessions" data-route="sessions" data-perm="admin.users"><span>Active sessions</span></a>
+      <a href="#/audit"    data-route="audit"    data-perm="audit.view"><span>Audit trail</span></a>
+
+      <!-- Console: file-backed configuration. Nothing here decides access. -->
       <div class="sb-sec">Console</div>
+      <a href="#/activities" data-route="activities" data-perm="admin.system"><span>Activities</span></a>
+      <a href="#/alerts"     data-route="alerts"     data-perm="admin.system"><span>Alerting</span></a>
+      <a href="#/plan"       data-route="plan"       data-perm="admin.system"><span>Assignment plan</span></a>
+
+      <div class="sb-sec">You</div>
+      <a href="#/account" data-route="account"><span>My account</span></a>
+
+      <div class="sb-sec">Elsewhere</div>
       <a href="https://capi.asiansocial.org/projects/uhc-y2/"><span>Project overview</span></a>
       <a href="/docs/dashboard.html"><span>Sync dashboard</span></a>
       <a href="/docs/data/"><span>Data room</span></a>
+      <a href="/docs/idp/logout"><span>Sign out</span></a>
     </nav>
+
     <div class="sb-foot">Asian Social Project Services, Inc.<br>
       <a href="https://asiansocial.org">asiansocial.org</a>
       <div class="sb-powered">Powered by Analytiflow.</div></div>
   </aside>
+
   <div class="main">
     <div class="topbar"><div class="crumbs"><a href="https://capi.asiansocial.org/">Console</a>
       <span class="sep">/</span><span class="cur">Admin</span></div>
@@ -87,13 +118,22 @@ input:focus,select:focus{outline:2px solid var(--verde-300);outline-offset:0}
     <div class="canvas">
       <div class="page-head"><div class="eyebrow">UHC Survey Year 2</div>
         <h1 id="admTitle">Admin</h1>
-        <p class="lead" id="admLead">Manage what the console runs on. Every change here is
-        recorded in the audit trail and reaches the live surfaces within about two minutes.</p></div>
-      <div class="adm-tabs" id="admTabs"></div>
-      <div id="admMsg"></div>
-      <div id="admView"><div class="spin">Loading&hellip;</div></div>
+        <p class="lead" id="admLead">Loading&hellip;</p></div>
+      <div id="admMsg" aria-live="polite"></div>
+      <main id="admView" tabindex="-1"><div class="spin">Loading&hellip;</div></main>
     </div>
   </div>
 </div>
+
+<!-- Ordered classic scripts: ui.js defines window.CAPI, each view registers a
+     route on it, boot.js starts the router last. No modules, because there is
+     no build step on the box and MIME-typed module loading buys nothing here. -->
+<script src="/docs/admin/ui.js"></script>
+<script src="/docs/admin/view-users.js"></script>
+<script src="/docs/admin/view-roles.js"></script>
+<script src="/docs/admin/view-sessions.js"></script>
+<script src="/docs/admin/view-audit.js"></script>
+<script src="/docs/admin/view-account.js"></script>
 <script src="/docs/admin/app.js"></script>
+<script src="/docs/admin/boot.js"></script>
 </body></html>

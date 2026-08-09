@@ -1,0 +1,40 @@
+# Deploy to /opt/app/lamp/www/docs/idp/.htaccess
+#
+# /docs/idp/ — CAPI Console identity endpoints.
+#
+# NOT /docs/auth/: `00-uhc-auth.conf` declares
+#   <Location /docs/auth/login>  SetHandler form-login-handler
+# for mod_auth_form, so anything placed there is intercepted by Apache and
+# never executes — it returns a bare 500 with no log line (log_errors is Off
+# in this image). Cost an hour on 2026-08-08; hence this note.
+#
+# Pretty URLs so links read /docs/idp/logout rather than a .php filename.
+
+RewriteEngine On
+RewriteRule ^login$           login.php  [L]
+RewriteRule ^logout$          logout.php [L]
+RewriteRule ^change-password$ login.php  [L]
+RewriteRule ^me$              me.php     [L]
+
+# Admin API (E9-ADMIN-006). One front controller for every /admin/... route;
+# QSA keeps the list/filter query string, which the handlers read from $_GET.
+# admin.php re-derives the path from REQUEST_URI, so no PATH_INFO is needed.
+RewriteRule ^admin(/.*)?$     admin.php  [QSA,L]
+
+# Defence in depth only: these files live OUTSIDE the docroot in
+# /var/www/private/capi-auth and are not reachable here. This exists so that a
+# flat deployment -- or someone copying lib.php here "just to test something" --
+# does not become a credential disclosure.
+<FilesMatch "^(lib|acl|import_htpasswd|admin_bootstrap|admin_users|admin_roles|admin_sessions|admin_audit|test_acl|test_lib|test_db)\.php$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "\.(sql|ini|md|log|bak)$">
+  Require all denied
+</FilesMatch>
+
+# authz.php is an internal auth_request subrequest target. openresty marks the
+# /_capi_auth location `internal`, and the ACL denies this path anyway; this is
+# the third layer, not the first.
+<Files "authz.php">
+  Require ip 127.0.0.1 172.16.0.0/12 10.0.0.0/8
+</Files>

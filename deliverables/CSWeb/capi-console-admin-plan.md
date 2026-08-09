@@ -11,7 +11,7 @@
 | | Today |
 |---|---|
 | Authentication | Apache `mod_auth_form` against `.htpasswd-docs` — **18 accounts, `$apr1$` (MD5-crypt) hashes** |
-| Authorization | Hand-edited `Require user` lists in `.htaccess` — 2 tiers in `/docs/`, plus per-directory files for `data/`, `admin/`, `f2/`, `cases/` |
+| Authorization | `Require user` name lists inside `.htaccess` — 3 tiers (`field`/`staff`/`admin`) in `/docs/`, plus per-directory files for `data/`, `admin/`, `f2/`, `cases/`. Edited **through the admin UI**, not by hand — but the files are still the store |
 | Sessions | `mod_session_cookie` — **stateless, encrypted, 8 h, NO server-side revocation.** Logout is browser-side only; a captured cookie stays valid until expiry |
 | MFA | None |
 | Audit | `/docs/admin/audit.log` covers admin-app mutations only. **No record of who read respondent data** |
@@ -24,7 +24,7 @@ This is what makes the plan cheap rather than speculative:
 - **`mod_session_dbd.so`, `mod_dbd.so`, `mod_authn_dbd.so`, `mod_authn_socache.so` all ship in the image** — present, simply not loaded. `LoadModule` lines in the host-mounted `config/vhosts/` survive container recreation (`mods-enabled` is NOT mounted — this is the known-good route).
 - **bcrypt is supported**: `htpasswd -nbB` returns `$2y$05$…`.
 - **nginx `auth_request` already gates the capi vhost in production** (`capi.asiansocial.org.conf:61`). The auth-service pattern is proven here, not theoretical.
-- **A working identity system already exists on the same MySQL**: the F2 admin portal (`csweb_f2`) has RBAC with granular permission keys, roles, user lifecycle incl. bulk import, login throttling, **server-side session revocation**, and an audit log.
+- **A working identity system already exists — but NOT on this box.** Corrected 2026-08-08 by reading the source: the F2 admin portal runs in a **Cloudflare Worker** (`f2-pwa-worker`), hashes with **PBKDF2-SHA256 @ 100k**, issues **JWT bearer tokens**, revokes via **Workers KV** (`revoked_jti:` / `revoked_user:`), and stores users and roles in **Google Sheets** (`F2_Users`, `F2_Roles`) reached through **Apps Script**. Its RBAC is 11 boolean permission keys with a `role_version` claim, version-validated cache and active eviction. Excellent design — but its store is a spreadsheet behind two external services, not `csweb_f2` on the VPS.
 
 **The single most valuable consequence:** the estate does not need a *new* identity system. It needs the one that already works to serve both surfaces.
 
@@ -72,10 +72,10 @@ Do this regardless of the fork; nothing here is wasted work under any option.
 
 ### P1 — Authorization from a source of truth (~1 day)
 
-5. **Move the tier lists out of `.htaccess`.** Today `Require user …` is hand-maintained in five files and drifts. Create `console_users`/`console_roles` in MySQL, and either
+5. **Move the tier lists out of `.htaccess`.** The **UI already exists** — `/docs/admin/` has a *Users & access* screen doing create / reset-password / change-tier / delete, with bcrypt hashing, backup-canary-restore on every gate write and protected root admins. What is missing is not the screen but the **store**: a "role" is currently just whoever's username appears in a given file. Create `console_users`/`console_roles` in MySQL, and either
    - generate the `.htaccess` blocks from it (Option A path — keeps Apache authoritative), or
    - use `mod_authz_dbd` to evaluate group membership directly (no regeneration step).
-   Either way the admin console gains a **Users & Roles** screen instead of an SSH session.
+   Then repoint the existing screen at the table. A tier becomes a role with permissions, instead of a name on a list.
    *Guardrail:* the admin console already rewrites `Require user` lines; any generator must preserve them byte-identically for blocks it does not own — that assertion has caught mistakes twice.
 
 6. **Read auditing.** The cheapest correct source is Apache's own access log: it already records `REMOTE_USER` + path + timestamp. Ship a small parser into an `access_audit` table, filtered to respondent-data paths (`/docs/cases/**`, `/docs/f2/**`, `/docs/data/**`, `case.html`, `f2-case.html`). Surface it in the admin console as "who viewed what".

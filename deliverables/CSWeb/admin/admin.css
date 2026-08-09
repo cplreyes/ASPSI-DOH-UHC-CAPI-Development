@@ -1,0 +1,274 @@
+/* ============================================================================
+   CAPI Console — admin portal component layer (E9-ADMIN-020 / -028)
+   Carl, 2026-08-09.  Loads AFTER portal.css and only adds; portal.css is the
+   shared design system for the generated pages and is not edited here.
+
+   The look is portal.css's: "statistical instrument panel" — institutional
+   serif headings, dense operational surfaces, figures in tabular mono. The
+   admin screens are the densest surface in the console, so everything below
+   leans on that grid rather than inventing a second visual language.
+   ========================================================================= */
+
+:root {
+  /* ACCESSIBILITY, measured rather than assumed.
+     --ink-3 (#74838c) on white is 3.91:1 — it FAILS WCAG AA for body text,
+     and portal.css uses it for .muted, "last sync" and inactive tabs. It is
+     fine for a hairline or an icon; it is not fine for a word someone has to
+     read. --ink-3-text (#5c6a73) is 5.58:1 and is used wherever the text
+     carries meaning. Both figures computed against #ffffff, 2026-08-08. */
+  --ink-3-text: #5c6a73;
+
+  --danger: #b91c1c;
+  --danger-bg: #fdecea;
+  --danger-line: #f5c6c0;
+  --focus: 0 0 0 3px rgba(4, 106, 56, .28);
+}
+
+/* ------------------------------------------------------------------- tabs */
+.adm-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 20px; flex-wrap: wrap; }
+.adm-tabs button {
+  background: none; border: 0; border-bottom: 2px solid transparent; padding: 9px 15px;
+  font: 600 13.5px var(--sans); color: var(--ink-3-text); cursor: pointer;
+}
+.adm-tabs button:hover { color: var(--verde); }
+.adm-tabs button.on { color: var(--verde-900); border-bottom-color: var(--verde); }
+
+/* ------------------------------------------------------------------ cards */
+.adm-card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
+  padding: 18px 20px; box-shadow: var(--shadow-1); margin-bottom: 16px;
+}
+.adm-card h3 { font-size: 15.5px; color: var(--verde-900); margin-bottom: 4px; }
+.adm-card .sub { font-size: 12.5px; color: var(--ink-3-text); margin-bottom: 12px; max-width: 76ch; }
+.adm-card > p { font-size: 13.5px; color: var(--ink-2); margin-bottom: 8px; max-width: 76ch; }
+
+.adm-deny { border-left: 3px solid var(--gold); }
+.act-sep { border: 0; border-top: 1px solid var(--line); margin: 8px 0 4px; }
+.adm-empty { padding: 26px 4px; text-align: center; color: var(--ink-2); }
+.adm-empty p { font-size: 13.5px; }
+.adm-empty p + p { margin-top: 6px; }
+.adm-none { color: var(--ink-3-text); font-style: italic; }
+
+/* ------------------------------------------------------------------ forms */
+.adm-f { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 10px; }
+/* .adm-bar is the filter/toolbar row and carries the same labelled controls;
+   omitting it here left every filter label rendering as inline body text. */
+.adm-f label, .adm-bar label, .dlg-type label {
+  display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 700;
+  letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3-text);
+}
+.fhint { display: block; font-size: 11.5px; font-weight: 400; letter-spacing: 0;
+  text-transform: none; color: var(--ink-3-text); font-style: normal; margin-top: 2px; max-width: 42ch; }
+
+input, select, textarea {
+  font: 13.5px var(--sans); padding: 7px 9px; border: 1px solid var(--line-strong);
+  border-radius: 8px; background: #fff; color: var(--ink);
+}
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--verde-300); outline-offset: 0; }
+input[aria-invalid="true"] { border-color: var(--danger); }
+
+/* --------------------------------------------------------------- buttons */
+.btn {
+  background: var(--verde); color: #fff; font: 700 13px var(--sans); border: 0; border-radius: 8px;
+  padding: 9px 16px; cursor: pointer;
+}
+.btn:hover { background: var(--verde-700); }
+.btn.sec { background: var(--surface); color: var(--ink-2); border: 1px solid var(--line-strong); }
+.btn.sec:hover { background: var(--surface-2); color: var(--verde); }
+.btn.danger { background: var(--danger); }
+.btn.danger:hover { background: #991b1b; }
+.btn.link { background: none; border: 0; color: var(--verde); padding: 0; font-weight: 600; text-decoration: underline; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn:disabled:hover { background: var(--verde); }
+.btn.sec:disabled:hover { background: var(--surface); }
+.btn.danger:disabled:hover { background: var(--danger); }
+
+/* FOCUS RINGS. portal.css gives buttons none at all, so a keyboard user
+   navigating this page cannot see where they are — on the one screen in the
+   estate that disables accounts. :focus-visible keeps the ring off mouse
+   clicks, which is why it was left out in the first place. */
+.btn:focus-visible,
+.adm-tabs button:focus-visible,
+.sb-nav a:focus-visible,
+.tbl a:focus-visible,
+[tabindex]:focus-visible { outline: 2px solid var(--verde); outline-offset: 2px; box-shadow: var(--focus); border-radius: 8px; }
+.btn.danger:focus-visible { outline-color: var(--danger); box-shadow: 0 0 0 3px rgba(185, 28, 28, .25); }
+
+/* -------------------------------------------------------------- messaging */
+.msg { border-radius: 9px; padding: 10px 14px; margin-bottom: 14px; font-size: 13.5px; font-weight: 600; }
+.msg.ok   { background: #eefaf3; color: #047857; border: 1px solid #b9e2cb; }
+.msg.err  { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger-line); }
+.msg.warn { background: #fdf7e8; color: #8a6410; border: 1px solid #f0dcae; }
+.msg.info { background: #eef2ff; color: #3730a3; border: 1px solid #c7d2fe; }
+
+/* ------------------------------------------------------------------ pills */
+.pillt {
+  font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 6px; white-space: nowrap; display: inline-block;
+}
+/* legacy tiers, still rendered by the console-config screens */
+.pillt.field { background: var(--verde-100); color: var(--verde); border: 1px solid #cfe6d8; }
+.pillt.staff { background: #eef2ff; color: #3730a3; border: 1px solid #c7d2fe; }
+.pillt.admin { background: #fdf7e8; color: var(--lock); border: 1px solid #f0dcae; }
+.pillt.none  { background: #f1f5f9; color: var(--muted); border: 1px solid #dde5ec; }
+
+/* the five identity roles. Gold for owner because gold is the console's
+   accent for "privileged" (see .pill.lock in the topbar). */
+.pillt.owner            { background: #fdf7e8; color: var(--gold-deep); border: 1px solid #f0dcae; }
+.pillt.programme_admin  { background: #eef2ff; color: #3730a3; border: 1px solid #c7d2fe; }
+.pillt.analyst          { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.pillt.field_supervisor { background: var(--verde-100); color: var(--verde); border: 1px solid #cfe6d8; }
+.pillt.client_viewer    { background: #f1f5f9; color: #475569; border: 1px solid #dde5ec; }
+
+.badge { display: inline-flex; align-items: center; font-size: 10.5px; font-weight: 700;
+  padding: 2px 8px; border-radius: 999px; letter-spacing: .03em; white-space: nowrap; }
+.badge.live { background: #eefaf3; color: var(--live); border: 1px solid #b9e2cb; }
+.badge.soon { background: #fdf7e8; color: var(--lock); border: 1px solid #f0dcae; }
+.badge.off  { background: #f1f5f9; color: var(--muted); border: 1px solid #dde5ec; }
+.badge.bad  { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger-line); }
+
+.mono { font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+
+/* Identity cell: name and its markers on one line, the human name beneath.
+   Stacking every marker on its own row made an 18-account list four screens
+   long, which is how a duplicate-spelling warning stops being noticed. */
+.u-line { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+.u-line a { font-weight: 600; }
+table.tbl td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; }
+.muted { color: var(--ink-3-text); font-size: 12.5px; }
+.rowacts { display: flex; gap: 6px; flex-wrap: wrap; }
+.rowacts button { font-size: 11.5px; padding: 5px 10px; }
+.spin { color: var(--ink-3-text); font-size: 13px; padding: 12px 0; }
+.audit { font-family: var(--mono); font-size: 11.5px; line-height: 1.7; max-height: 460px; overflow: auto; }
+.audit b { color: var(--verde-900); }
+
+/* --------------------------------------------------------------- toolbars */
+.adm-bar { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 14px; }
+.adm-bar .grow { flex: 1 1 200px; }
+.adm-bar .right { margin-left: auto; display: flex; gap: 8px; align-items: flex-end; }
+.adm-count { font-size: 12.5px; color: var(--ink-3-text); font-variant-numeric: tabular-nums; }
+
+/* -------------------------------------------------------- detail: key/value */
+.adm-kv { display: grid; grid-template-columns: minmax(140px, 200px) 1fr; gap: 2px 18px; align-items: baseline; }
+.adm-kv dt {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-3-text); padding: 7px 0;
+}
+.adm-kv dd { font-size: 13.5px; color: var(--ink); padding: 7px 0; border-bottom: 1px solid var(--line); }
+.adm-kv dt { border-bottom: 1px solid var(--line); }
+.adm-kv dt:last-of-type, .adm-kv dd:last-of-type { border-bottom: 0; }
+
+.adm-split { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 1000px) { .adm-split.two { grid-template-columns: 1.55fr 1fr; align-items: start; } }
+
+/* ------------------------------------------------ role x permission matrix */
+.matrix-wrap { overflow-x: auto; }
+table.matrix { border-collapse: collapse; width: 100%; min-width: 640px; }
+table.matrix th, table.matrix td { border-bottom: 1px solid var(--line); padding: 10px 12px; text-align: center; }
+table.matrix thead th {
+  font: 700 10.5px var(--sans); letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-3-text); background: var(--surface-2); vertical-align: bottom;
+}
+table.matrix tbody th {
+  text-align: left; font: 600 13px var(--sans); color: var(--ink);
+  position: sticky; left: 0; background: var(--surface);
+}
+table.matrix tbody th .k { display: block; font: 400 11.5px var(--mono); color: var(--ink-3-text); }
+table.matrix tbody tr:hover td, table.matrix tbody tr:hover th { background: #f7fbf8; }
+table.matrix input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--verde); cursor: pointer; }
+table.matrix input[type=checkbox]:disabled { cursor: not-allowed; }
+table.matrix td.locked { background: repeating-linear-gradient(45deg, #fdf7e8, #fdf7e8 5px, #fbf1d8 5px, #fbf1d8 10px); }
+table.matrix thead th .hdr-verb { font-size: 10px; text-transform: lowercase; letter-spacing: 0; opacity: .75; font-weight: 400; }
+.matrix-legend { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 12px; font-size: 12px; color: var(--ink-3-text); }
+.matrix-legend .sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -2px; margin-right: 5px; }
+
+/* --------------------------------------------------------------- dialogs */
+.adm-dlg {
+  border: 1px solid var(--line-strong); border-radius: var(--r-lg); padding: 24px 26px 20px;
+  max-width: 520px; width: calc(100vw - 32px); box-shadow: var(--shadow-3);
+  color: var(--ink); background: var(--surface);
+  /* margin:auto is what centres a native modal <dialog>. portal.css opens with
+     `* { margin: 0 }`, which silently zeroes it and pins every dialog to the
+     top-left corner — including the one that disables accounts. Restated here
+     rather than weakened in the reset, which the generated pages also use. */
+  margin: auto;
+}
+.adm-dlg::backdrop { background: rgba(2, 36, 22, .44); backdrop-filter: blur(2px); }
+.adm-dlg h3 { font-size: 18px; color: var(--verde-900); margin-bottom: 6px; padding-right: 24px; }
+.adm-dlg .dlg-lead { font-size: 13.5px; color: var(--ink-2); margin-bottom: 14px; }
+.adm-dlg .dlg-x { position: absolute; top: 14px; right: 16px; }
+.adm-dlg .dlg-x .x { background: none; border: 0; font-size: 22px; line-height: 1; color: var(--ink-3-text); cursor: pointer; }
+.adm-dlg .dlg-x .x:hover { color: var(--ink); }
+.dlg-body { margin-bottom: 16px; }
+.dlg-foot { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+
+.dlg-check { font-size: 13px; color: var(--ink-3-text); font-style: italic; padding: 10px 0; }
+.dlg-radius { font-size: 13.5px; color: var(--ink); background: var(--surface-2);
+  border: 1px solid var(--line); border-radius: var(--r-sm); padding: 12px 14px; }
+.dlg-radius > div + div { margin-top: 5px; }
+.dlg-radius .msg { margin: 10px 0 0; }
+.dlg-type { margin-top: 14px; }
+.dlg-type input { width: 100%; font-family: var(--mono); }
+
+/* A credential shown exactly once. Deliberately loud — the admin has one
+   chance to copy it, and only its argon2id hash was stored. */
+.cred {
+  font: 700 17px var(--mono); letter-spacing: .04em; color: var(--verde-900);
+  background: var(--verde-100); border: 1px dashed var(--verde-300);
+  border-radius: var(--r-sm); padding: 12px 14px; text-align: center;
+  user-select: all; word-break: break-all;
+}
+
+/* --------------------------------------------------------------- sidebar */
+.sb-nav a[data-route] { cursor: pointer; }
+.sb-nav a.on { background: rgba(229, 178, 59, .13); color: #fff; font-weight: 600; }
+.sb-nav a[hidden], .sb-nav .sb-sec[hidden] { display: none; }
+
+/* Skip link. The sidebar is ~15 links; without this a keyboard or screen
+   reader user tabs through all of them on every single navigation. */
+.skip {
+  position: absolute; left: -9999px; top: 0; z-index: 50;
+  background: var(--verde); color: #fff; padding: 10px 16px;
+  border-radius: 0 0 var(--r-sm) 0; font: 700 13px var(--sans);
+}
+.skip:focus { left: 0; text-decoration: none; }
+
+/* The router moves focus here on navigation so the next Tab starts in the
+   content, not back at the top of the page. No visible ring: the heading
+   change is the affordance, and a box around the whole pane reads as an error. */
+#admView:focus { outline: none; }
+
+/* --------------------------------------------- responsive tables (<640px) */
+@media (max-width: 640px) {
+  table.tbl.stack thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  table.tbl.stack tbody tr {
+    display: block; border: 1px solid var(--line); border-radius: var(--r-sm);
+    margin-bottom: 10px; background: var(--surface); padding: 4px 0;
+  }
+  table.tbl.stack tbody td {
+    display: grid; grid-template-columns: 40% 1fr; gap: 10px; align-items: baseline;
+    border-bottom: 1px solid var(--line); padding: 9px 14px;
+  }
+  table.tbl.stack tbody tr td:last-child { border-bottom: 0; }
+  table.tbl.stack tbody td::before {
+    content: attr(data-label);
+    font: 700 10px var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3-text);
+  }
+  table.tbl.stack tbody td.adm-none { display: block; }
+  table.tbl.stack tbody td.adm-none::before { content: none; }
+
+  /* A right-aligned numeric column drags its generated label right with it
+     once the row becomes a card, so the heading floats away from its value. */
+  table.tbl.stack tbody td.num { text-align: left; }
+
+  /* 44px minimum touch target — these screens get used on a tablet in the
+     field office, not only on Carl's laptop. */
+  .btn, .rowacts button, .adm-tabs button { min-height: 44px; }
+  .rowacts { gap: 8px; }
+  .adm-kv { grid-template-columns: 1fr; gap: 0; }
+  .adm-kv dt { border-bottom: 0; padding-bottom: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
