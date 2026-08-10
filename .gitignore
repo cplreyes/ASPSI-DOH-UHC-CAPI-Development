@@ -175,3 +175,6 @@ deliverables/CSPro/translations-paper-extract/
 # Auth-lab E2E script embeds a working labuser password for the live server.
 # Sanitize (env-var the password) before ever tracking it.
 /deliverables/CSWeb/auth/labtest.sh
+
+# f2-api server compiled output — rebuildable from src via tsc; never commit.
+/deliverables/F2/PWA/server/dist/

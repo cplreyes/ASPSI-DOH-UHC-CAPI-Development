@@ -38,6 +38,10 @@ function _buildResponseRow(payload, serverSubmissionId, ctx) {
     encoded_at: payload.encoded_at
       ? new Date(payload.encoded_at).toISOString()
       : '',
+    // 12-digit Questionnaire Number (facility-9 + HCW-seq-3), assigned at HCW
+    // enrollment and carried by the device; encoder path may send it top-level.
+    // Blank for legacy enrollments — additive, never required.
+    qn: payload.qn || values.qn || '',
   };
 }
 

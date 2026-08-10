@@ -53,10 +53,15 @@ describe('<Login />', () => {
     expect(screen.getByRole('button', { name: /sign in/i })).toBeDisabled();
   });
 
-  it('shows the in-memory session disclosure', () => {
+  it('discloses the per-tab session policy', () => {
     const fetchImpl = vi.fn() as unknown as typeof fetch;
     renderLogin(fetchImpl);
-    expect(screen.getByText(/sessions are held in memory/i)).toBeInTheDocument();
+    // Reworded 2026-07-24 when sessions began surviving a reload — the old
+    // copy ("closing the tab or reloading signs you out") now describes
+    // behaviour the portal no longer has.
+    expect(
+      screen.getByText(/reloading keeps you signed in; closing the tab signs you out/i),
+    ).toBeInTheDocument();
   });
 
   it('surfaces a typed error message on E_AUTH_INVALID', async () => {

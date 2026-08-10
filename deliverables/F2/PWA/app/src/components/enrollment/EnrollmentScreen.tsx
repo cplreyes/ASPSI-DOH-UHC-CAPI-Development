@@ -7,6 +7,15 @@ import type { FacilityRow } from '@/lib/db';
 import { getSyncEnv } from '@/lib/env';
 import { getFacilities } from '@/lib/facilities-client';
 import { verifyDeviceToken } from '@/lib/verify-token-client';
+import { selfRegister } from '@/lib/self-register-client';
+
+/**
+ * Sentinel tablet_id on a Model-C facility QR token (mirrors the server's
+ * SELF_REGISTER_TABLET_ID in server/src/jwt.ts). When the verified token carries
+ * it, the screen shows the open self-register path (Start → server assigns a QN →
+ * receipt → enrol) instead of the HCW-ID picker.
+ */
+const SELF_REGISTER_TABLET_ID = '__self_register__';
 
 /**
  * Two-step enrollment after the auth re-arch (spec §4.2):
@@ -25,7 +34,16 @@ export function EnrollmentScreen() {
   const [tokenInput, setTokenInput] = useState('');
   const [verifiedToken, setVerifiedToken] = useState<string | null>(null);
   const [tokenFacilityId, setTokenFacilityId] = useState<string | null>(null);
+  // 12-digit Questionnaire Number from the token claims ('' for pre-qn tokens).
+  const [tokenQn, setTokenQn] = useState<string>('');
   const [verifying, setVerifying] = useState(false);
+
+  // Model C — open self-register state. srMode flips on when the verified token
+  // is a facility QR; srQn/srHcwId hold the server-assigned case after Start.
+  const [srMode, setSrMode] = useState(false);
+  const [srQn, setSrQn] = useState<string>('');
+  const [srHcwId, setSrHcwId] = useState<string>('');
+  const [srBusy, setSrBusy] = useState(false);
 
   // Step 2 state
   const [facilities, setFacilities] = useState<FacilityRow[]>([]);
@@ -87,6 +105,8 @@ export function EnrollmentScreen() {
       }
       setVerifiedToken(token);
       setTokenFacilityId(result.claims.facility_id);
+      setTokenQn(result.claims.qn ?? '');
+      setSrMode(result.claims.tablet_id === SELF_REGISTER_TABLET_ID);
       // Auto-seed the facility cache so the user can enroll without an extra
       // Refresh click. Pre-cutover, the bundle had its own HMAC and refresh
       // worked at any time; post-cutover the only cred we have is this just-
@@ -144,6 +164,52 @@ export function EnrollmentScreen() {
       await enroll({
         hcw_id: hcwId,
         facility_id: tokenFacilityId,
+        ...(tokenQn ? { qn: tokenQn } : {}),
+        device_token: verifiedToken,
+      });
+    } catch (err) {
+      setError((err as Error).message);
+    }
+  };
+
+  // Model C — Start: ask the server for a fresh QN, then show the receipt.
+  const handleSelfRegister = async () => {
+    if (!verifiedToken) return;
+    setSrBusy(true);
+    setError(null);
+    try {
+      const env = getSyncEnv();
+      const result = await selfRegister({
+        proxyUrl: env.proxyUrl,
+        deviceToken: verifiedToken,
+        fetchImpl: fetch.bind(globalThis),
+      });
+      if (!result.ok) {
+        setError(
+          result.error.code === 'E_NETWORK'
+            ? t('enrollment.tokenOffline')
+            : result.error.message || t('enrollment.selfRegisterFailed'),
+        );
+        return;
+      }
+      setSrHcwId(result.hcw_id);
+      setSrQn(result.qn);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setSrBusy(false);
+    }
+  };
+
+  // Model C — Continue from the receipt: bind the device to the assigned case.
+  const handleSelfRegisterContinue = async () => {
+    if (!verifiedToken || !tokenFacilityId || !srHcwId) return;
+    setError(null);
+    try {
+      await enroll({
+        hcw_id: srHcwId,
+        facility_id: tokenFacilityId,
+        ...(srQn ? { qn: srQn } : {}),
         device_token: verifiedToken,
       });
     } catch (err) {
@@ -191,8 +257,47 @@ export function EnrollmentScreen() {
         )}
       </section>
 
-      {/* Step 2 — Identity (only after token verified) */}
-      {verifiedToken ? (
+      {/* Model C — open self-register path (facility QR token) */}
+      {verifiedToken && srMode ? (
+        <section className="flex flex-col gap-3 border-t border-border pt-4">
+          {!srQn ? (
+            <>
+              <p className="text-sm text-muted-foreground">{t('enrollment.selfRegisterIntro')}</p>
+              <div>
+                <Button
+                  type="button"
+                  onClick={() => void handleSelfRegister()}
+                  disabled={srBusy}
+                  data-testid="self-register-start"
+                >
+                  {srBusy ? t('enrollment.selfRegisterBusy') : t('enrollment.selfRegisterStart')}
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <h3 className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
+                {t('enrollment.selfRegisterReceiptHeading')}
+              </h3>
+              <p className="text-sm" data-testid="self-register-receipt">
+                {t('enrollment.selfRegisterReceipt', { qn: srQn })}
+              </p>
+              <div>
+                <Button
+                  type="button"
+                  onClick={() => void handleSelfRegisterContinue()}
+                  data-testid="self-register-continue"
+                >
+                  {t('enrollment.selfRegisterContinue')}
+                </Button>
+              </div>
+            </>
+          )}
+        </section>
+      ) : null}
+
+      {/* Step 2 — Identity (per-HCW tokens; models A/B — only after token verified) */}
+      {verifiedToken && !srMode ? (
         <section className="flex flex-col gap-2 border-t border-border pt-4">
           <h3 className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
             {t('enrollment.identityStep')}

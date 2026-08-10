@@ -9,7 +9,7 @@ export interface VerifyTokenDeps {
 }
 
 export type VerifyTokenResponse =
-  | { ok: true; claims: { facility_id: string; exp: number; tablet_id: string } }
+  | { ok: true; claims: { facility_id: string; exp: number; tablet_id: string; qn?: string } }
   | { ok: false; transport: boolean; error: { code: string; message: string } };
 
 export async function verifyDeviceToken(
@@ -57,7 +57,7 @@ export async function verifyDeviceToken(
   }
 
   const env = parsed as
-    | { ok: true; claims: { facility_id: string; exp: number; tablet_id: string } }
+    | { ok: true; claims: { facility_id: string; exp: number; tablet_id: string; qn?: string } }
     | { ok: false; error: { code: string; message: string } };
   if (env.ok === true) {
     return { ok: true, claims: env.claims };

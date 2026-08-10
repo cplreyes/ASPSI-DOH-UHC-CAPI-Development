@@ -70,7 +70,7 @@ The 2026-04-18 M10 plan (`deliverables/F2/PWA/2026-04-18-implementation-plan-M10
 ### 3.1 In scope
 
 **F2 Admin Portal (new build):**
-- Auth: per-user accounts, password ≥8 chars, two-axis throttle (per-username + per-IP), admin JWT in memory.
+- Auth: per-user accounts, password ≥8 chars, two-axis throttle (per-username + per-IP), admin JWT held per browser tab (sessionStorage — see §10.4 rev 2026-07-24).
 - 5 dashboards: `data`, `report`, `apps`, `users`, `roles`, plus a sub-page under `data` for HCW lookup (see §7.14).
 - 5 admin roles + built-in Standard User stub (vestigial, documents equivalence).
 - Per-instrument permissions across 3 F2 "dictionaries" (`f2_self_admin`, `f2_paper_encoded`, `f2_capi_optional`).
@@ -198,7 +198,7 @@ UI copy not specified here defaults to the F2 PWA's existing Verde Manual regist
 
 | Layer | Tech | Owns |
 |---|---|---|
-| Frontend | Pages route `/admin` on the existing project; React + TanStack Query; Verde Manual tokens | Login, 5 dashboards, role/user/HCW editors, file upload, Data Settings UI. JWT in memory only. |
+| Frontend | Pages route `/admin` on the existing project; React + TanStack Query; Verde Manual tokens | Login, 5 dashboards, role/user/HCW editors, file upload, Data Settings UI. JWT in sessionStorage (per tab). |
 | API gateway | Worker (Hono router) | AuthGate (PBKDF2 verify, JWT mint/verify), RBAC middleware (`role_version`-keyed perm cache), file uploads to R2 (allowlisted MIME), single-fixed cron dispatcher reading per-row `next_run_at`, two-axis login throttle, `request_id` propagation. |
 | Data RPCs | Apps Script — new `?action=admin_*` branches | All Sheet I/O. HMAC-signed by Worker with `request_id`. All write RPCs wrapped in `LockService.getDocumentLock().waitLock(30000)`. |
 | Source of truth | Google Sheets | Existing 3 sheets + 5 new. |
@@ -209,7 +209,7 @@ UI copy not specified here defaults to the F2 PWA's existing Verde Manual regist
 
 1. **Worker never touches Sheets directly** — preserves existing data-write contract; all I/O via Apps Script HMAC RPCs.
 2. **Admin JWT separate from HCW JWT** — `aud=admin` vs `aud=hcw`; shared revocation set keyed by `jti`.
-3. **Frontend holds JWT in memory only** — reload = re-login. Reduces XSS blast radius.
+3. **Frontend holds the JWT per browser tab** — sessionStorage, so a reload keeps the session and closing the tab ends it. Originally memory-only (reload = re-login); revised 2026-07-24 after operators lost their place on every refresh. Never localStorage — that would leave a live 4h token on disk on a shared field laptop.
 4. **Cron is a single fixed dispatcher** (`*/5 * * * *`) reading per-row `next_run_at` from F2_DataSettings; admins control schedules without redeploys.
 5. **R2 path layout is admin-readable** — `/breakout/2026-05-15/f2_self_admin/responses.csv`. Stable patterns let downstream BI consume reliably.
 
@@ -467,6 +467,35 @@ Apps Script logs every call with its `request_id` and writes to F2_Audit when ap
 - `exp` = 4 hours after `iat`.
 - HS256 signed with `JWT_SIGNING_KEY` (existing secret; admin uses same secret as HCW with separate `aud` claim).
 
+### 6.3.1 Client-side session storage (revised 2026-07-24)
+
+The portal keeps the admin JWT in **sessionStorage**, key `f2.admin.session.v1`
+(`app/src/admin/lib/auth-storage.ts`). Reloading the page keeps the operator
+signed in on their current screen; closing the tab or the browser ends the
+session.
+
+Originally the token was memory-only, so any refresh forced a re-login. That
+cost operators their place mid-task — the reason for the change — and bought
+little: an attacker with script execution on the origin can read an in-memory
+token just as easily as a stored one.
+
+Rules the implementation holds to:
+
+- **Never localStorage or IndexedDB.** A live 4-hour token must not outlive the
+  tab on a shared field laptop. This is the constraint the original memory-only
+  rule existed to protect, and it still holds.
+- **Expiry is checked before restoring.** A stored session with under 30s of
+  life left is discarded rather than restored, so nobody lands on a dashboard
+  that instantly 401s.
+- **A restored token is never trusted beyond its own expiry.** Revoked `jti`,
+  force-revoked user, and stale `role_version` all still 401 server-side, which
+  the client turns into `clearAuth()` + redirect to login.
+- **Storage failures degrade to the login screen.** Private mode, disabled
+  storage, and corrupt records are caught and treated as "no session".
+- **A restored session owing a password rotation is routed to
+  `/admin/me/change-password`** before any dashboard renders (§7.1.1) — that
+  case was unreachable when only the login flow could create a session.
+
 ### 6.5 Dashboard layouts (wireframes)
 
 All layouts use Verde Manual constraints from §3.4. Top nav splits into two zones: **Operations** (Data, Reports — primary) and **Configuration** (Files & Settings, Users, Roles — right-side dropdown). User menu in top-right corner with Change password, Sign out, About.
@@ -631,7 +660,7 @@ Reuse the F2 PWA's existing breakpoint tokens.
 5. Worker performs PBKDF2 verify; if fail, increments BOTH throttle counters, returns 401.
 6. Worker calls `admin_roles_list`, finds role, mints JWT with `role` + `role_version`.
 7. Worker returns `{ token, role, role_version, expires_at, password_must_change }`.
-8. Frontend stores JWT in memory; if `password_must_change=true`, redirects to `/admin/me/change-password` (forced); otherwise lands on the role's default landing (§8.5).
+8. Frontend stores JWT in sessionStorage (§10.4); if `password_must_change=true`, redirects to `/admin/me/change-password` (forced); otherwise lands on the role's default landing (§8.5).
 9. Apps Script async-updates `last_login_at`; F2_Audit row written with `event_type=admin_login`.
 
 ### 7.1.1 First login (forced password change)
@@ -872,7 +901,7 @@ Worker submit handler tags `source_path` (`self_admin` for PWA path, `paper_enco
 | # | Threat | Mitigation |
 |---|---|---|
 | 1 | Credential brute force | Two-axis throttle (per-username 10/15min, per-IP 50/15min); PBKDF2-SHA256 with iterations chosen per below |
-| 2 | Session hijack | JWT in memory only; HTTPS-only; 4h expiry; `aud=admin` claim binding |
+| 2 | Session hijack | JWT in sessionStorage, never localStorage (dies with the tab); HTTPS-only; 4h expiry; `aud=admin` claim binding |
 | 3 | Permission escalation post-demotion | `role_version` invalidates JWTs on role change; `revoked_user:` set for force-revoke |
 | 4 | CSRF | JWT in `Authorization` header (not cookie); CORS limited to admin origin |
 | 5 | Stored XSS via uploaded files | MIME allowlist (no SVG, no HTML, no JS); `Content-Disposition: attachment` always |

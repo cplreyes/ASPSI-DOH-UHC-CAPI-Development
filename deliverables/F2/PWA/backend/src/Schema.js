@@ -19,6 +19,12 @@ var F2_RESPONSES_COLUMNS = [
   'source_path',
   'encoded_by',
   'encoded_at',
+  // 12-digit Questionnaire Number (9-digit facility code + 3-digit HCW seq),
+  // aligning F2 with the F1/F3/F4 QN scheme. Assigned at HCW enrollment
+  // (AdminHCWs.adminHcwsCreate) and threaded through the device's enrollment
+  // record into every submission. Physical column appended LAST by
+  // Migrations.migrateAddQnColumn — order MUST match.
+  'qn',
 ];
 
 var F2_AUDIT_COLUMNS = [

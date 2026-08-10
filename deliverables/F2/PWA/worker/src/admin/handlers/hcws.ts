@@ -34,6 +34,7 @@ export interface ReissueAsCallable {
     AppsScriptResponse<{
       hcw_id: string;
       facility_id: string;
+      qn?: string;
       new_jti: string;
       old_jti: string;
       token_issued_at: string;
@@ -48,6 +49,8 @@ export interface ReissueKv {
 export interface ReissueSuccess {
   hcw_id: string;
   facility_id: string;
+  /** 12-digit Questionnaire Number from the HCW's F2_HCWs row; '' if unassigned. */
+  qn: string;
   old_jti: string;
   new_token: string;
   new_jti: string;
@@ -113,6 +116,9 @@ export async function handleReissueToken(
     facility_id: asResp.data.facility_id || '',
     iat: nowS,
     exp,
+    // Bind the enrollment-assigned QN into the token so the device learns it
+    // at /verify-token with no extra round-trip (absent for pre-qn HCWs).
+    ...(asResp.data.qn ? { qn: asResp.data.qn } : {}),
   };
   const token = await mintJwt(claims, signingKey);
 
@@ -135,6 +141,7 @@ export async function handleReissueToken(
   const success: ReissueSuccess = {
     hcw_id: hcwId,
     facility_id: asResp.data.facility_id || '',
+    qn: asResp.data.qn || '',
     old_jti: asResp.data.old_jti,
     new_token: token,
     new_jti: newJti,
@@ -154,11 +161,14 @@ export interface CreateHcwBody {
   facility_id?: unknown;
   facility_name?: unknown;
   status?: unknown;
+  /** Optional pre-assigned 12-digit QN (frame-numbered rollouts). When absent,
+   *  the AS auto-assigns facility-9 + next-free HCW-seq-3 for 9-digit facilities. */
+  qn?: unknown;
 }
 
 export type CreateHcwAsCallable = (
-  payload: { hcw_id: string; facility_id: string; facility_name?: string; status?: string },
-) => Promise<AppsScriptResponse<{ hcw_id: string }>>;
+  payload: { hcw_id: string; facility_id: string; facility_name?: string; status?: string; qn?: string },
+) => Promise<AppsScriptResponse<{ hcw_id: string; qn?: string }>>;
 
 /**
  * Append a new HCW row to F2_HCWs. Worker validates shape; AS dedupes
@@ -175,6 +185,7 @@ export async function handleCreateHcw(
   const hcwId = typeof body.hcw_id === 'string' ? body.hcw_id.trim() : '';
   const facilityId = typeof body.facility_id === 'string' ? body.facility_id.trim() : '';
   const facilityName = typeof body.facility_name === 'string' ? body.facility_name.trim() : '';
+  const qn = typeof body.qn === 'string' ? body.qn.trim() : '';
 
   if (!HCW_ID_RE.test(hcwId)) {
     return errorJson('E_VALIDATION', 'hcw_id must be 1-64 chars [A-Za-z0-9_-]', 400);
@@ -182,11 +193,15 @@ export async function handleCreateHcw(
   if (!FACILITY_ID_RE.test(facilityId)) {
     return errorJson('E_VALIDATION', 'facility_id must be 1-32 chars [A-Za-z0-9_-]', 400);
   }
+  if (qn && !/^\d{12}$/.test(qn)) {
+    return errorJson('E_VALIDATION', 'qn must be exactly 12 digits when provided', 400);
+  }
 
   const r = await asCallable({
     hcw_id: hcwId,
     facility_id: facilityId,
     ...(facilityName ? { facility_name: facilityName } : {}),
+    ...(qn ? { qn } : {}),
     status: 'pending',
   });
   if (!r.ok || !r.data) {
@@ -196,5 +211,8 @@ export async function handleCreateHcw(
       statusForAsError(r.error?.code),
     );
   }
-  return jsonResponse({ hcw_id: r.data.hcw_id, facility_id: facilityId, status: 'pending' }, 201);
+  return jsonResponse(
+    { hcw_id: r.data.hcw_id, facility_id: facilityId, qn: r.data.qn ?? '', status: 'pending' },
+    201,
+  );
 }

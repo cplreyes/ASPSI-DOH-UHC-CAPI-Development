@@ -9,6 +9,13 @@ export const en = {
     syncView: 'Sync',
     thankYouHeading: 'Thank you',
     thankYouBody: 'Your response is saved on this device and will sync when the app is online.',
+    // Sync-on-submit delivery gate (design F2-Facility-Slug-Links-2026-07-16):
+    // the self-register device is one-and-done, so delivery must be visible.
+    delivering: 'Submitting…',
+    deliveredBody: 'Submitted ✓ — your response is in. You can close this page.',
+    deliveryOffline: 'Saved on this phone — it will send automatically when you are back online.',
+    deliveryFailed:
+      'Your response is saved on this device but could not be sent automatically. Please show this screen to ASPSI staff.',
     startNewSurvey: 'Start new survey',
     submitFailedHeading: 'Submission failed',
     submitFailedBody:
@@ -57,6 +64,41 @@ export const en = {
     tokenOffline: "You're offline. Check your connection and retry.",
     identityStep: 'Step 2: Identify yourself',
     tokenAccepted: 'Token accepted for facility {{facility}}. Pick yourself from the roster below.',
+    // Model C — open self-register (facility QR).
+    selfRegisterIntro:
+      "Tap Start to begin. You'll be given a number, then you can answer the survey on this phone.",
+    selfRegisterStart: "Start — I'm a healthcare worker here",
+    selfRegisterBusy: 'Assigning your number…',
+    selfRegisterReceiptHeading: 'You are enrolled',
+    selfRegisterReceipt: 'You are respondent {{qn}}. Tap Continue to begin the survey.',
+    selfRegisterContinue: 'Continue',
+    selfRegisterFailed: 'Could not register right now. Check your connection and try again.',
+  },
+  claim: {
+    heading: 'Opening your survey…',
+    claiming: 'Setting up your questionnaire — one moment.',
+    invalidLink: 'This link is invalid or has expired. Please ask ASPSI ops for a new one.',
+    alreadyDone: 'This survey has already been completed. Thank you.',
+    offline: "You're offline. Check your connection and tap Retry.",
+    unavailable: 'The survey is temporarily unavailable. Please try again shortly.',
+    retry: 'Retry',
+  },
+  // Facility slug links (design F2-Facility-Slug-Links-2026-07-16): one public
+  // /f/<slug> link per facility — resolve on load, self-register on Start tap.
+  facilityStart: {
+    resolvingHeading: 'Opening the survey…',
+    resolving: 'Checking this link — one moment.',
+    heading: '{{facility}} — HCW Survey',
+    intro: 'Your answers are voluntary and anonymous. Tap Start to begin on this phone.',
+    start: 'Start the survey',
+    starting: 'Setting up your questionnaire…',
+    inactive: "This survey link isn't active. Please check with ASPSI ops.",
+    offline: "You're offline. Check your connection and tap Retry.",
+    unavailable: 'The survey is temporarily unavailable. Please try again shortly.',
+    retry: 'Retry',
+    noLinkHeading: 'Open your facility survey link',
+    noLinkBody:
+      'This survey opens from a facility link that looks like uhc-hcw.asiansocial.org/f/your-facility. Ask ASPSI staff for your facility link.',
   },
   navigator: {
     requiredIncomplete: 'Some required (*) questions are unanswered. Please complete them to continue.',
@@ -89,6 +131,19 @@ export const en = {
     edit: 'Edit',
     submit: 'Submit',
     blockingError: 'Please resolve the highlighted issue above before submitting.',
+  },
+  // #838 (Shan, 2026-07-14) — pretest tool-usability feedback, asked once before
+  // submission. This is feedback about the TOOL, not UHC survey content: it is
+  // optional by design (a required field here could block a real submission and
+  // lose survey data, which is a far worse outcome than a missing comment).
+  feedback: {
+    heading: 'Before you submit',
+    note: 'This is about the survey tool itself, not your answers. It helps us improve it.',
+    easeQuestion: 'Did you find the survey tool easy to use and navigate?',
+    yes: 'Yes',
+    no: 'No',
+    whyLabel: 'Why or why not?',
+    whyPlaceholder: 'Optional — tell us anything that was confusing or worked well.',
   },
   consent: {
     heading: 'Informed Consent — Please Read Carefully',
