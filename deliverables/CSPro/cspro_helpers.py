@@ -33,7 +33,7 @@ from pathlib import Path
 
 
 def load_psgc_value_set(csv_path, code_col="code", name_col="name"):
-    """Load a PSGC CSV (produced by F1/inputs/parse_psgc.py) into
+    """Load a PSGC CSV (produced by data/psgc/parse_psgc.py) into
     value_set_options tuples (label, code). Source: PSA 1Q 2026 publication.
     """
     options = []
@@ -112,11 +112,24 @@ SATISFACTION_5PT = [
 # paper FIELD CONTROL block (2026-06-12). The consent/refusal outcome is now
 # captured HERE (no separate "Informed consent given" field): F1 = "Refused";
 # F3/F4 = "Withdraw Participation/Consent".
+#
+# "Replaced" (2026-07-14) — the sampled unit was never interviewed, so a substitute is
+# drawn to hold the sample size. Set by PROC BREAKOFF from the never-started codes
+# (BREAKOFF 5/6/7 = refused at the door / not found / ineligible); the REASON stays on
+# BREAKOFF, this only records the OUTCOME. Appended at the end of each list so existing
+# codes keep their values — never renumber, it would orphan already-synced cases.
+# The per-instrument code differs (F1=5, F3=7, F4=5) because each list has a different
+# length, so cross-instrument queries must count BREAKOFF in 5,6,7 — that IS uniform.
+REPLACED_CODE_F1 = "5"
+REPLACED_CODE_F3 = "7"
+REPLACED_CODE_F4 = "5"
+
 ENUM_RESULT_OPTIONS_F1 = [          # F1 Facility Head
     ("Completed",  "1"),
     ("Postponed",  "2"),
     ("Refused",    "3"),
     ("Incomplete", "4"),
+    ("Replaced",   REPLACED_CODE_F1),
 ]
 ENUM_RESULT_OPTIONS_F3 = [          # F3 Patient
     ("Completed",                       "1"),
@@ -125,33 +138,60 @@ ENUM_RESULT_OPTIONS_F3 = [          # F3 Patient
     ("Incomplete",                      "4"),
     ("Completed at Home",               "5"),
     ("Withdraw Participation/Consent",  "6"),
+    ("Replaced",                        REPLACED_CODE_F3),
 ]
 ENUM_RESULT_OPTIONS_F4 = [          # F4 Household
     ("Completed",                       "1"),
     ("Postponed",                       "2"),
     ("Incomplete",                      "3"),
     ("Withdraw Participation/Consent",  "4"),
+    ("Replaced",                        REPLACED_CODE_F4),
 ]
 ENUM_RESULT_OPTIONS = ENUM_RESULT_OPTIONS_F1   # default / back-compat
 
-# AAPOR Standard Definitions 10th ed. (2023) — Final Disposition Codes
-# adapted for in-person CAPI health surveys. 3-digit numeric (zero-filled)
-# maps AAPOR decimals to integers (×100). The "In Progress" (000) sentinel
-# is ASPSI-internal — set at case start by FIELD_CONTROL.preproc, rewritten
-# to the final code on the CLOSING form.
-AAPOR_DISPOSITION_OPTIONS = [
-    ("000 — In Progress (initial)",                       "000"),
-    ("110 — Complete interview",                          "110"),
-    ("120 — Partial interview / break-off",               "120"),
-    ("210 — Refusal — respondent",                        "210"),
-    ("211 — Refusal — gatekeeper / household",            "211"),
-    ("220 — Non-contact — respondent unavailable",        "220"),
-    ("230 — Other eligible non-interview",                "230"),
-    ("310 — Unknown eligibility — facility/household",    "310"),
-    ("320 — Unknown eligibility — respondent",            "320"),
-    ("410 — Not eligible — out of sample / ineligible",   "410"),
-    ("450 — Not eligible — other",                        "450"),
+# Break-off / interview-status codes. IDENTICAL across F1/F3/F4 on purpose: this is the
+# one field a cross-instrument query can rely on. Codes 1-4 are the original #515/#744
+# break-off set (the interview STARTED and then stopped). Codes 5-7 were added 2026-07-14
+# for the never-started outcomes — the case that ASPSI/SAAD calls a replacement.
+#
+# Per ASPSI (Marriz, 2026-07-14): every unit that cannot be interviewed is replaced by a
+# substitute, so refused-at-the-door + not-found + ineligible are ALL replacements; the
+# code distinguishes only WHY. "Postponed" (3) is deliberately NOT a replacement — that
+# unit is revisited, not substituted, and counting it would overstate the rate and blunt
+# the curbstoning signal (a high replacement rate per enumerator is the standard check).
+BREAKOFF_OPTIONS = [
+    ("Continue interview",           "1"),
+    ("Respondent withdrew",          "2"),
+    ("Postponed / reschedule",       "3"),
+    ("Stop — other (incomplete)",    "4"),
+    ("Not interviewed — refused",    "5"),
+    ("Not interviewed — not found",  "6"),
+    ("Not interviewed — ineligible", "7"),
 ]
+BREAKOFF_REPLACED_CODES = ("5", "6", "7")
+
+# NOTE (2026-07-14) — an AAPOR_DISPOSITION_OPTIONS constant lived here from 2026-04-22 until
+# today. AAPOR (the survey-research disposition taxonomy) was never requested by ASPSI or DOH,
+# is not their vocabulary, and was not on the April-20 paper Field Control form. The whole
+# case-start block it belonged to (SURVEY_CODE, DATE_STARTED, TIME_STARTED, INTERVIEWER_ID,
+# AAPOR_DISPOSITION, CONSENT_GIVEN) was removed from F1/F3/F4 on 2026-06-12; the constant was
+# left behind as dead code and is now deleted with it. Do not reintroduce it.
+#
+# The real dispositions are the paper ones, defined above:
+#   CASE_DISPOSITION            0 In progress · 1 Completed · 2 Partial/not completed
+#   BREAKOFF                    BREAKOFF_OPTIONS  ("Interview status", 1-7, same in F1/F3/F4)
+#   ENUM_RESULT_FIRST/FINAL_VISIT   ENUM_RESULT_OPTIONS_F1 / _F3 / _F4  ("Result of Visit")
+#
+# RESOLVED 2026-07-14 — this block previously recorded a known gap: no instrument had a
+# doorstep-refusal or non-contact code, so a replaced/never-started unit left no trace and
+# replacement counts could not be derived (which also removed the standard curbstoning check).
+# ASPSI (Marriz) confirmed the SAAD convention: any unit that cannot be interviewed is marked
+# as such up front and then replaced. BREAKOFF codes 5/6/7 now capture exactly that, the case
+# is still created and still syncs, and:
+#
+#     replacements = count(BREAKOFF in 5, 6, 7)     — per facility / enumerator / supervisor
+#
+# Postponed (BREAKOFF 3) is excluded by design: revisited, not substituted.
 
 
 # ============================================================
@@ -290,12 +330,22 @@ def uhc9_item(name, label):
     ]
 
 
-def record(name, label, record_type, items, max_occurs=1, required=True):
+def record(name, label, record_type, items, max_occurs=1, required=True, occ_labels=None):
+    """occ_labels: optional list of per-occurrence label strings (1-based order) for a
+    repeating record — emitted as occurrences.labels per the CSPro 8 JSON dictionary shape
+    ([{occurrence, labels: [{text}]}], zDictO/DictRecord.cpp). Names the roster row stub +
+    case-tree occurrences (first use: F4 Section N Option C food grid, 2026-07-03)."""
+    occurrences = {"required": required, "maximum": max_occurs}
+    if occ_labels:
+        occurrences["labels"] = [
+            {"occurrence": k, "labels": [{"text": t}]}
+            for k, t in enumerate(occ_labels, start=1)
+        ]
     return {
         "name": name,
         "labels": [{"text": label}],
         "recordType": record_type,
-        "occurrences": {"required": required, "maximum": max_occurs},
+        "occurrences": occurrences,
         "items": items,
     }
 
@@ -816,6 +866,10 @@ TRANSLATION_LANGUAGES = [
     ("CEB", "Cebuano",    "ceb.json"),
     ("WAR", "Waray",      "war.json"),
     ("HIL", "Hiligaynon", "hil.json"),
+    # 2026-08-03: seventh locale — the June-5 DOH-cleared papers exist in Ilocano
+    # for all four instruments; seeded from translations-paper-extract (#see
+    # deliverables/CSPro/translations-paper-extract/QA-REPORT.md).
+    ("ILO", "Ilocano",    "ilo.json"),
 ]
 
 
@@ -877,6 +931,175 @@ def apply_translations(dictionary, translations_dir, languages=TRANSLATION_LANGU
         pct = (100 * matched // total) if total else 0
         print(f"    {code}: {matched}/{total} labels translated ({pct}%)")
     return dictionary
+
+
+# R2 (2026-07-03): runtime errmsg texts move out of the logic into numbered .mgf
+# messages so they can be translated like question text. Numbers are permanent
+# once assigned — see numberize_errmsgs() below.
+ERRMSG_NUMBER_BASE = 1001
+
+_ERRMSG_OPEN = re.compile(r'errmsg\s*\(\s*(?=")', re.IGNORECASE)
+
+
+def _parse_literal_chain(text, i):
+    """Parse a CSPro string-literal chain starting at text[i] == '"'.
+
+    Handles line-wrapped messages written as `"part one " + "part two"`.
+    Returns (folded_text, end_index, clean) where end_index is just past the
+    last closing quote and clean=True only when the chain is the COMPLETE
+    argument (next non-space char is ',' or ')'). A chain that continues with
+    a non-literal term (`+ strip(X)` etc.) returns clean=False — converting it
+    would corrupt the call, so the caller must leave it inline.
+    """
+    parts = []
+    while True:
+        j = text.find('"', i + 1)
+        if j < 0:
+            return None, i, False               # unterminated — leave untouched
+        parts.append(text[i + 1:j])
+        k = j + 1
+        while k < len(text) and text[k] in " \t\r\n":
+            k += 1
+        if k < len(text) and text[k] == "+":
+            k2 = k + 1
+            while k2 < len(text) and text[k2] in " \t\r\n":
+                k2 += 1
+            if k2 < len(text) and text[k2] == '"':
+                i = k2                          # `+ "more text"` — keep folding
+                continue
+            return "".join(parts), j + 1, False  # `+ <expr>` — runtime concat
+        clean = k < len(text) and text[k] in ",)"
+        return "".join(parts), j + 1, clean
+
+
+def _mgf_safe_text(text):
+    """Make one message text safe for the strict .mgf parser (Publish/CSPack).
+
+    zMessageO/MessageFile.cpp ProcessMessageText(): a text that BEGINS with a
+    quote character is parsed as a string literal, and any trailing text then
+    fails with "No text can follow a string literal" (mid-text quotes in bare
+    text are fine). Remedy: emit the whole text as ONE string literal in the
+    other quote type — the parser strips the enclosing quotes, so the
+    displayed message is unchanged. A leading-quote text that contains both
+    quote types (or a backslash, an escape hazard inside literals) falls back
+    to typographic quotes so no delimiter starts the line.
+    """
+    if not text.startswith(("'", '"')):
+        return text
+    if '"' not in text and "\\" not in text:
+        return f'"{text}"'
+    if "'" not in text and "\\" not in text:
+        return f"'{text}'"
+    return text.replace("'", "’").replace('"', "”")
+
+
+def numberize_errmsgs(apc_text, instrument_dir, mgf_path, app_label,
+                      languages=TRANSLATION_LANGUAGES, generated_by="generate_apc.py"):
+    """Swap inline errmsg("...") literals for numbered messages + emit the .mgf.
+
+    Rewrites every errmsg("<text>", ...) in the assembled .apc to
+    errmsg(<number>, ...) — fill arguments and everything after the literal are
+    untouched, and the displayed text is unchanged (the .ent files set
+    showErrorMessageNumbers=false). Generator/fragment sources keep their
+    readable inline English; only the assembled output is numbered.
+
+    Numbering is STABLE across regenerations via <instrument>/messages-registry.json
+    (machine-managed — do not hand-edit): a text keeps its number forever, new
+    texts append at the next free number, and retired texts stay in the registry
+    so their numbers are never reused. That makes the numbers safe to key
+    translations on.
+
+    The .mgf gets a `Language = EN` section with the exact texts, plus one
+    section per drop-in translations/messages.<locale>.json (same convention as
+    apply_translations: keyed by the English text; a missing key falls back to
+    English so every language section stays complete).
+
+    Line-wrapped messages written as adjacent literals (`"part one " + "part
+    two"`) are folded into ONE message. Calls whose first argument is NOT a
+    complete literal (runtime concat like `"EA " + strip(X)`) are left inline
+    and reported — rewrite those to fill-style (`errmsg("EA %s ...", strip(X))`)
+    at the source to make them numberable. A text containing { or } would be
+    truncated by the .mgf comment syntax, so it is also left inline (none exist).
+    """
+    instrument_dir = Path(instrument_dir)
+    registry_path = instrument_dir / "messages-registry.json"
+    if registry_path.exists():
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    else:
+        registry = {
+            "_note": ("Machine-managed by cspro_helpers.numberize_errmsgs() — do not "
+                      "hand-edit. Maps each errmsg text to its permanent message "
+                      "number; numbers are never reused or renumbered."),
+            "next": ERRMSG_NUMBER_BASE,
+            "messages": {},
+        }
+    messages = registry["messages"]
+
+    live, skipped = [], []      # texts in this build (first-appearance order); inline leftovers
+    out, pos, n_calls = [], 0, 0
+    for m in _ERRMSG_OPEN.finditer(apc_text):
+        if m.start() < pos:
+            continue                            # inside a chain already consumed
+        text, end, clean = _parse_literal_chain(apc_text, m.end())
+        if text is None:
+            continue
+        n_calls += 1
+        if not clean or "{" in text or "}" in text:
+            # runtime concat (`+ <expr>`) would be corrupted by numbering;
+            # braces are .mgf comment syntax and would truncate the message.
+            if text not in skipped:
+                skipped.append(text)
+            continue
+        if text not in messages:
+            messages[text] = registry["next"]
+            registry["next"] += 1
+        if text not in live:
+            live.append(text)
+        out.append(apc_text[pos:m.start()])
+        out.append(f"errmsg({messages[text]}")
+        pos = end
+    out.append(apc_text[pos:])
+    new_text = "".join(out)
+
+    registry_path.write_text(json.dumps(registry, indent=2, ensure_ascii=False) + "\n",
+                             encoding="utf-8")
+
+    # ---- emit the .mgf: EN section always; translated sections are drop-in ----
+    live_numbered = sorted((messages[t], t) for t in live)
+    lines = [
+        f"{{ {app_label} runtime messages — generated by {generated_by}; do NOT hand-edit. }}",
+        "{ Numbering is permanent via messages-registry.json. To add a locale, drop        }",
+        "{ translations/messages.<locale>.json (English text -> translated text) next to  }",
+        "{ the generator and re-run — same convention as the .dcf label translations.     }",
+        "Language = EN",
+    ]
+    lines += [f"{num} {_mgf_safe_text(text)}" for num, text in live_numbered]
+
+    coverage = []
+    for code, _disp, fname in languages:
+        if fname is None:
+            continue
+        map_path = instrument_dir / "translations" / f"messages.{fname}"
+        if not map_path.exists():
+            continue
+        tr_map = json.loads(map_path.read_text(encoding="utf-8"))
+        matched = sum(1 for _n, t in live_numbered if t in tr_map)
+        coverage.append((code, matched, len(live_numbered)))
+        lines += ["", f"Language = {code}"]
+        lines += [f"{num} {_mgf_safe_text(tr_map.get(text, text))}" for num, text in live_numbered]
+
+    mgf_path = Path(mgf_path)
+    mgf_path.write_text("\n".join(lines) + "\n", encoding="utf-8-sig", newline="\r\n")
+
+    print(f"  errmsg -> .mgf: {n_calls - len(skipped)} of {n_calls} calls numbered "
+          f"({len(live_numbered)} distinct texts) -> {mgf_path.name}")
+    for code, matched, total in coverage:
+        pct = (100 * matched // total) if total else 0
+        print(f"    {code}: {matched}/{total} messages translated ({pct}%)")
+    if skipped:
+        print(f"    WARNING: {len(skipped)} text(s) left inline (runtime concat or braces): "
+              + "; ".join(t[:60] for t in skipped[:3]))
+    return new_text
 
 
 # ---------------------------------------------------------------------------

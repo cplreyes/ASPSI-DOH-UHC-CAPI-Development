@@ -87,10 +87,6 @@ FORM_PLAN = [
      # names + keep the barangay picker. Patient-home P_* cascade stays manual.
      [("FIELD_CONTROL", {"names": ["REGION_NAME", "PROVINCE_NAME", "CITY_NAME"]}),
       ("PATIENT_GEO_ID", {"exclude": ["REGION", "PROVINCE_HUC", "CITY_MUNICIPALITY"]})]),
-    ("FC Facility GPS Capture",
-     [("REC_FACILITY_CAPTURE", None)]),
-    ("FC Patient Home GPS",
-     [("REC_PATIENT_HOME_CAPTURE", None)]),
     ("A. Informed Consent (Q1 gate)",
      [("A_INFORMED_CONSENT", None)]),
     ("B. Patient Profile",
@@ -162,14 +158,26 @@ FORM_PLAN = [
      [("L_REFERRALS", None)]),
     ("Closing - case end",
      [("FIELD_CONTROL", {"names": FIELD_CONTROL_CASE_END})]),
-    # Verification photo moved to the very end (2026-06-12): the enumerator
-    # photographs the completed visit, and the survey no longer opens with a
-    # camera prompt. GPS stays early so it auto-locks while the form is worked.
+    # Verification photo near the end (2026-06-12): the enumerator photographs the
+    # completed visit, and the survey no longer opens with a camera prompt. It must
+    # stay AFTER "Closing - case end" — its preproc gates on ENUM_RESULT_FINAL_VISIT,
+    # so the result has to be entered before the camera fires.
     ("Case Verification Photo",
      # VERIFICATION_PHOTO_IMAGE is a binary Image item (off-form by rule — binary
      # items can't be placed on a form); the on-form trigger CAPTURE_VERIFICATION_PHOTO
      # drives capture into it. Only the trigger + filename label go on the form.
      [("REC_CASE_VERIFICATION", {"exclude": ["VERIFICATION_PHOTO_IMAGE"]})]),
+    # GPS moved to dead last, AFTER the photo (2026-07-16, #157). This deliberately
+    # reverses the 2026-06-12 rule "GPS stays early so it auto-locks while the form
+    # is worked" — indoors that assumption never held. gps(read) is synchronous, so
+    # an early form froze the enumerator for up to 120s BEFORE consent, and F3 paid
+    # it twice per patient. Now nothing in the interview waits on a satellite fix:
+    # the enumerator finishes, photographs, walks out, and GPS acquires outdoors.
+    # GPS has no gate of its own, so sitting after the photo is safe.
+    ("FC Facility GPS Capture",
+     [("REC_FACILITY_CAPTURE", None)]),
+    ("FC Patient Home GPS",
+     [("REC_PATIENT_HOME_CAPTURE", None)]),
 ]
 
 # Binary/computed items deliberately kept OFF every form (so the orphan check below

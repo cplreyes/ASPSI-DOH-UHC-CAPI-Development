@@ -12,6 +12,7 @@ const {
   adminReadResponseById,
   adminReadAudit,
   adminReadDlq,
+  adminVoidResponse,
   adminFormRevisions,
 } = require('../src/AdminData.js');
 
@@ -288,5 +289,104 @@ describe('adminReadDlq', () => {
     ]);
     expect(adminReadDlq({ from: '2026-05-01', to: '2026-05-02' }, ctx).data.total).toBe(1);
     expect(adminReadDlq({ q: 'spec_version' }, ctx).data.total).toBe(1);
+  });
+});
+
+describe('adminVoidResponse (#831)', () => {
+  function makeVoidCtx(rows) {
+    const statusWrites = [];
+    const auditRows = [];
+    return {
+      ctx: {
+        nowMs: () => Date.parse('2026-07-20T04:00:00.000Z'),
+        generateUuid: () => 'uuid-test',
+        responses: {
+          readAll: () => rows.slice(),
+          findBySubmissionId: (id) => {
+            const i = rows.findIndex((r) => r.submission_id === id);
+            return i === -1 ? null : Object.assign({ _rowNumber: i + 2 }, rows[i]);
+          },
+          setStatusByRowNumber: (rowNumber, status) => {
+            statusWrites.push({ rowNumber, status });
+            rows[rowNumber - 2].status = status;
+            return true;
+          },
+        },
+        audit: { appendRow: (r) => { auditRows.push(r); return r.audit_id; } },
+      },
+      statusWrites,
+      auditRows,
+    };
+  }
+
+  it('voids a stored row, records prev_status, writes the audit trail with the reason', () => {
+    const { ctx, statusWrites, auditRows } = makeVoidCtx([
+      row({ submission_id: 'keep-1' }),
+      row({ submission_id: 'bad-1', hcw_id: 'token-pasted', facility_id: 'DEMO-FAC-RHU-QC-1' }),
+    ]);
+    const r = adminVoidResponse({ submission_id: 'bad-1', reason: 'encoder pasted token into HCW ID' }, ctx);
+    expect(r.ok).toBe(true);
+    expect(r.data).toEqual({ submission_id: 'bad-1', status: 'voided', prev_status: 'stored' });
+    expect(statusWrites).toEqual([{ rowNumber: 3, status: 'voided' }]);
+    expect(auditRows).toHaveLength(1);
+    expect(auditRows[0].event_type).toBe('response_voided');
+    expect(auditRows[0].facility_id).toBe('DEMO-FAC-RHU-QC-1');
+    expect(JSON.parse(auditRows[0].payload_json)).toEqual({
+      submission_id: 'bad-1',
+      reason: 'encoder pasted token into HCW ID',
+      prev_status: 'stored',
+    });
+  });
+
+  it('rejects a missing reason', () => {
+    const { ctx, statusWrites } = makeVoidCtx([row({ submission_id: 'bad-1' })]);
+    const r = adminVoidResponse({ submission_id: 'bad-1', reason: '   ' }, ctx);
+    expect(r.ok).toBe(false);
+    expect(r.error.code).toBe('E_PAYLOAD_INVALID');
+    expect(statusWrites).toHaveLength(0);
+  });
+
+  it('rejects a missing submission_id', () => {
+    const { ctx } = makeVoidCtx([]);
+    const r = adminVoidResponse({ reason: 'x' }, ctx);
+    expect(r.ok).toBe(false);
+    expect(r.error.code).toBe('E_PAYLOAD_INVALID');
+  });
+
+  it('returns E_NOT_FOUND for an unknown id', () => {
+    const { ctx } = makeVoidCtx([row({ submission_id: 'keep-1' })]);
+    const r = adminVoidResponse({ submission_id: 'nope', reason: 'x' }, ctx);
+    expect(r.ok).toBe(false);
+    expect(r.error.code).toBe('E_NOT_FOUND');
+  });
+
+  it('returns E_ALREADY_VOIDED on a repeat void and does not double-write', () => {
+    const { ctx, statusWrites, auditRows } = makeVoidCtx([
+      row({ submission_id: 'bad-1', status: 'voided' }),
+    ]);
+    const r = adminVoidResponse({ submission_id: 'bad-1', reason: 'again' }, ctx);
+    expect(r.ok).toBe(false);
+    expect(r.error.code).toBe('E_ALREADY_VOIDED');
+    expect(statusWrites).toHaveLength(0);
+    expect(auditRows).toHaveLength(0);
+  });
+
+  it('returns E_NOT_CONFIGURED when the extended responses ctx is absent', () => {
+    const r = adminVoidResponse(
+      { submission_id: 'bad-1', reason: 'x' },
+      { responses: { readAll: () => [] } },
+    );
+    expect(r.ok).toBe(false);
+    expect(r.error.code).toBe('E_NOT_CONFIGURED');
+  });
+});
+
+describe('voided rows are excluded downstream (#831)', () => {
+  it('adminReadResponses still returns voided rows (admin can see them; filter is opt-in)', () => {
+    const ctx = makeCtx([row({ submission_id: 'a' }), row({ submission_id: 'v', status: 'voided' })]);
+    const r = adminReadResponses({}, ctx);
+    expect(r.data.total).toBe(2);
+    const rv = adminReadResponses({ status: 'voided' }, ctx);
+    expect(rv.data.rows.map((x) => x.submission_id)).toEqual(['v']);
   });
 });

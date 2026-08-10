@@ -23,6 +23,15 @@ HERE = Path(__file__).parent
 DCF = HERE / "PatientSurvey.dcf"
 OUT = HERE / "PatientSurvey.ent.qsf"
 
+# Build version (tester request 2026-07-02): ../versions.json is the single source of truth
+# (bumped via automation/stamp_version.py, which also stamps the .pff Description for the
+# CSEntry app list). This footer rides the case-key (QN) screen — the FIRST screen of every
+# case; the cover/FC block that is first in DICT order sits at case-END on the F3 form, so
+# dict-first placement was wrong (v1.0.1). Same string in every language — UI chrome, not
+# questionnaire text.
+_BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F3"]
+BUILD_FOOTER = f'<p class="instruction">Build: F3 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+
 STYLES = """styles:
   - name: Normal
     className: normal
@@ -154,22 +163,40 @@ _RECEIPT = ("If patient provides a receipt, select all that apply. If no "
             "receipt was provided, read options out loud. Select all that "
             "apply. If yes, indicate the amount spent.")
 _GAMOT_AREA = "Enumerator: Applicable only to respondents in areas with GAMOT."
+_SELECT_ALL = "SELECT ALL THAT APPLY."
 
 INSTRUCTIONS = {
-    **dict.fromkeys([8, 9, 10, 16, 34, 45, 48, 84, 123, 164, 165, 178], _READ_ONE),
+    **dict.fromkeys([8, 9, 10, 16, 45, 48, 84, 123, 164, 165, 178], _READ_ONE),
     **dict.fromkeys([15, 39, 40, 41, 169], _DNR_ONE),   # #763: Q30 note omitted (per tester)
     **dict.fromkeys([42, 50, 52, 85, 86, 163], _READ_ALL),
     **dict.fromkeys([36, 37, 46, 65, 67, 76, 101, 117, 118, 120, 121, 125,
                      171, 177], _DNR_ALL),
+    # #1055 (pretest 2026-08-04): bare "SELECT ALL THAT APPLY." on the multi-selects the
+    # paper marks but that carried no note. From the ticket's list: Q72 EXCLUDED (numeric
+    # HH/MM travel time, not a multi-select — reported back as a list typo); Q85/Q86
+    # already carry _READ_ALL; Q153/Q154 get the note appended to _GAMOT_AREA below.
+    **dict.fromkeys([59, 61, 70, 73, 75, 82, 87, 90, 93, 100, 103, 128, 129,
+                     148, 160, 161], _SELECT_ALL),
     **dict.fromkeys([153, 154, 155, 156], _GAMOT_AREA),
+    153: _GAMOT_AREA + " " + _SELECT_ALL,   # #1055
+    154: _GAMOT_AREA + " " + _SELECT_ALL,   # #1055
     971: _RECEIPT,  # #455: the receipt/"select all that apply" note belongs on Q97.1 (the Q971_* bill-items battery), NOT on Q97 (Q97_FINAL_AMOUNT, a single cash figure). Re-keyed 97 -> 971 so _QNUM attaches it to the Q971_* fields. (#559: also not on Q114, a reasons select-all.)
     **dict.fromkeys([14], _PWD_CARD),
     4: ("Note to enumerator [do not read]: This section is for the Patient "
         "Profile. Ask all questions in this section unless a skip rule applies."),
     17: _READ_ONE + " IF MORE THAN ONE, ASK FOR THE MAIN SOURCE.",
-    18: ("Enumerator note: Tick the income category that corresponds to the "
-         "respondent’s approximate household income."),
+    # #1048: the income-category note moved to INSTRUCTIONS_BY_NAME (bracket field only —
+    # it was wrongly riding the Approximate-amount field too) and now reads "Select".
+    19: ("Please count the patient and all the people who usually live with the "
+         "patient. Please include those who are not living here now but will be "
+         "back within six months, BUT do not include OFWs."),   # #1049: paper note restored
     29: "Please choose one from the options I will mention.",
+    33: ("The decision-maker is the person that takes responsibility on decisions "
+         "regarding health in the family: for example, yearly immunizations, "
+         "hospital finances, etc."),   # #1050: paper definition restored
+    34: _READ_ONE + (" This is the person who makes decisions on health in the "
+                     "family: for example, yearly immunizations, manages hospital "
+                     "finances, etc."),   # #1051: paper definition restored
     # #763: Q31 enumerator note omitted (per tester).
     35: ("Note to enumerator [do not read]: This section is for the Patient’s "
          "awareness on Universal Health Care. Ask all questions in this "
@@ -198,10 +225,21 @@ INSTRUCTIONS = {
     142: ("For example, your consultation was done in a private area, and no "
           "one could overhear your private medical information."),
     147: "PLEASE LIST DOWN ALL MEDICINES THAT YOU TOOK FOR THE HEALTH CONDITION.",
-    150: ("A Pharmacy is an ancillary primary care facility with a FDA LTO "
-          "where registered medicines can be bought."),
+    # #1062: the pharmacy definition moved to INSTRUCTIONS_BY_NAME (HH field only — it
+    # was repeating on the Minutes component too).
     152: ("Q152 to Q157, Q159 are applicable only to respondents in areas "
           "with GAMOT. Otherwise, skip."),
+}
+
+# Item-NAME-keyed instructions — for notes that belong to ONE component of a
+# multi-field question, where the paper-number key would spray the note across
+# every Q<n>_* field (#1048 Q18, #1062 Q150). Wins over the number-keyed map.
+INSTRUCTIONS_BY_NAME = {
+    "Q18_INCOME_BRACKET": ("Enumerator note: Select the income category that "
+                           "corresponds to the respondent’s approximate household "
+                           "income."),   # #1048: bracket only + "tick" -> "Select"
+    "Q150_TRAVEL_HH": ("A Pharmacy is an ancillary primary care facility with a "
+                       "FDA LTO where registered medicines can be bought."),
 }
 
 SECTION_INTROS = {
@@ -212,8 +250,8 @@ SECTION_INTROS = {
          "PhilHealth registration experience. We will also confirm their "
          "PhilHealth registration status and membership, and their "
          "registration to other health insurance."),
-    47: "Are you aware that there are PhilHealth packages for the following health services?",  # #404: verbatim Q47 stem from the paper questionnaire (battery had item labels but no question stem)
-    131: "How would you rate the cleanliness and comfort of the following amenities at this facility?",  # #486: verbatim Q131-134 stem from the paper questionnaire
+    # #404's Q47 stem removed (#1059): each Q47_* label now carries the full per-category
+    # question, so the once-only stem would duplicate it.
     53: "We will now ask questions about the patient’s access to a primary care provider.",
     74: "We will now ask about the patient’s awareness of the YAKAP/Konsulta package.",
     83: ("We will now be asking about the patient’s actions taken for health "
@@ -230,6 +268,8 @@ SECTION_INTROS = {
     113: ("I would like to know where you got the money to pay for medical "
           "costs incurred (IN ___, and ____) at the (FACILITY TYPE INPUT)."),
     116: "For this section, we will be asking about your awareness of NBB, ZBB, and MAIFIP.",
+    # #486's second paragraph (the Q131-134 battery stem) removed (#1061): each amenity
+    # label now carries the full per-item question, so the once-only stem would duplicate it.
     131: ("The following questions relate to the patient’s most recent "
           "experience with [facility_name_input] as an [inpatient] or "
           "[outpatient], where we invited you to participate in our survey "
@@ -263,6 +303,8 @@ SECTION_INTROS_FIL = {
     99: "Magtatanong kami ngayon tungkol sa kaalaman ng pasyente sa BUCAS at sa mga serbisyong natanggap sa isang BUCAS Center.",
     105: "Para sa mga susunod na tanong, magtatanong kami tungkol sa pinakahuling inpatient visit ng pasyente.",
     116: "Para sa seksyon na ito, magtatanong kami tungkol sa kaalaman ninyo tungkol sa NBB, ZBB at MAIFIP.",
+    # (#1061: the #486 battery-stem second paragraph was dropped here too — the per-item
+    # Q131-134 labels now carry the full question.)
     131: ("Ang mga sumusunod na tanong ay may kaugnayan sa pinakahuling karanasan ng pasyente sa "
           "[facility_name_input] bilang isang [inpatient] o [outpatient], kung saan inanyayahan "
           "kayong lumahok sa aming survey noong [date_formatted]."),
@@ -350,7 +392,8 @@ def question_extras(nm, intro_used):
             intro_q = tgt
             intro_used.add(tgt)
             break
-    instr = INSTRUCTIONS.get(q) if not nm.endswith("_TXT") else None
+    instr = INSTRUCTIONS_BY_NAME.get(nm) or (
+        INSTRUCTIONS.get(q) if not nm.endswith("_TXT") else None)
     return intro_q, instr, (intro_q is not None)
 
 
@@ -361,7 +404,9 @@ def build_extras(intro_q, instr, intro_here, lnm):
     pre = post = ""
     if intro_q is not None:
         script = (SECTION_INTROS_FIL.get(intro_q) if lnm == "FIL" else None) or SECTION_INTROS[intro_q]
-        pre = f"<p>{_esc(script)}</p>"
+        # a tuple = multiple read-aloud paragraphs (e.g. Q131: section preamble + #486 battery stem)
+        paras = script if isinstance(script, tuple) else (script,)
+        pre = "".join(f"<p>{_esc(p)}</p>" for p in paras)
     if instr:
         if intro_here:
             pre += f'<p class="instruction">{_esc(instr)}</p>'
@@ -387,6 +432,12 @@ def main():
         lines += [f"  - name: {nm}", f"    label: {lb}"]
     lines.append(STYLES)
     lines.append("questions:")
+
+    # the id item never appears in the records loop below, so emit its (footer-only) entry here
+    qn = d["levels"][0]["ids"]["items"][0]["name"]
+    lines += [f"  - name: {dict_name}.{qn}", "    conditions:", "      - questionText:"]
+    for lnm, _ in langs:
+        lines += [f"          {lnm}: |", f"            {BUILD_FOOTER}"]
 
     seen, n = set(), 0
     intro_used = set()

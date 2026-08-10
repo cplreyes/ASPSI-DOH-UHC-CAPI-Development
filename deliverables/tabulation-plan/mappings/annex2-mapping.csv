@@ -1,0 +1,106 @@
+no,source_variables,mapping_status,notes_add
+2.1,"Q35_UHC_HEARD,PATIENT_TYPE",mapped,"PATIENT_TYPE=in(2)/out(1) split used by ALL a/b tables; province dim=PROVINCE_HUC_CODE (PSGC, see codebook)"
+2.2a,Q36_UHC_SOURCE,mapped,(checkbox multi) UAT-converted tick-all; in/out split via PATIENT_TYPE (see 2.1)
+2.2b,Q36_UHC_SOURCE,mapped,(checkbox multi) UAT-converted tick-all; in/out split via PATIENT_TYPE (see 2.1)
+2.3,Q38_PHILHEALTH_REG,mapped,reinstated Q38_1_PIN_WHEN adds when-registered detail; split via PATIENT_TYPE (see 2.1)
+2.4,"Q43_KNOWS_ASSIST,Q38_PHILHEALTH_REG",mapped,universe filter Q38=No; Q44_WHERE_ASSIST gives where; split via PATIENT_TYPE (see 2.1)
+2.5a,Q39_HOW_FIND_OUT,mapped,single-select source of info on PhilHealth registration
+2.5b,Q39_HOW_FIND_OUT,mapped,single-select source of info on PhilHealth registration
+2.6a,Q46_BENEFITS,mapped,(checkbox multi) correctness scored from codes 01-03 vs 04/90
+2.6b,Q46_BENEFITS,mapped,(checkbox multi) correctness scored from codes 01-03 vs 04/90
+2.7,Q74_KON_HEARD,mapped,split via PATIENT_TYPE (see 2.1)
+2.8a,Q76_KON_UNDERSTAND,mapped,(checkbox multi) benefit identification scored from codes
+2.8b,Q76_KON_UNDERSTAND,mapped,(checkbox multi) benefit identification scored from codes
+2.9a,"Q80_KON_KNOWS_BOOKING,Q53_HAS_PCP",partial,no direct first-point-of-contact item on F3; proxy=Q80 (knows to book Konsulta when sick)+Q53 has PCP
+2.9b,"Q80_KON_KNOWS_BOOKING,Q53_HAS_PCP",partial,no direct first-point-of-contact item on F3; proxy=Q80 (knows to book Konsulta when sick)+Q53 has PCP
+2.10a,"Q42_DIFFICULTY,Q41_REG_DIFFICULTY,Q38_2_WHY_NOT_REG",mapped,(checkbox multi) Q42=registered path; reinstated Q38_2 tick-all covers unregistered/unsuccessful
+2.10b,"Q42_DIFFICULTY,Q41_REG_DIFFICULTY,Q38_2_WHY_NOT_REG",mapped,(checkbox multi) Q42=registered path; reinstated Q38_2 tick-all covers unregistered/unsuccessful
+2.11a,"Q45_CATEGORY,Q49_PREMIUM_DIFFICULT,Q48_PREMIUM_PAY",mapped,member type=Q45; struggled=Q49 (filter Q48=pays premiums)
+2.11b,"Q45_CATEGORY,Q49_PREMIUM_DIFFICULT,Q48_PREMIUM_PAY",mapped,member type=Q45; struggled=Q49 (filter Q48=pays premiums)
+2.12,Q77_KON_REGISTERED,mapped,split via PATIENT_TYPE (see 2.1)
+2.13,"Q79_KON_HAD_APPT,Q77_KON_REGISTERED",mapped,universe filter Q77=Yes; split via PATIENT_TYPE (see 2.1)
+2.14,Q172_PCP_REFERRAL,partial,referral-from-PCP/Konsulta=Q172; 'in HCPN' universe has no F3 flag — define analytically
+2.15,"Q167_HELPED_APPT,Q175_PCP_HELPED_APPT",mapped,referral path Q167; PCP path Q175; split via PATIENT_TYPE (see 2.1)
+2.16,"Q166_DISCUSSED_OPTIONS,Q174_PCP_DISCUSSED",mapped,referral path Q166; PCP path Q174; split via PATIENT_TYPE (see 2.1)
+2.17a,Q178_SAT_REFERRAL,mapped,
+2.17b,Q178_SAT_REFERRAL,mapped,
+2.18,Q158_BRAND_GEN_KNOW,partial,self-reported knows-difference only; no open definition item to score 'correctly define'
+2.19,Q159_BRAND_GEN_BOUGHT,mapped,"asked for meds bought outside GAMOT pharmacy, last purchase"
+2.20a,Q160_WHY_GENERIC,mapped,(checkbox multi)
+2.20b,Q160_WHY_GENERIC,mapped,(checkbox multi)
+2.21a,Q161_WHY_BRANDED,mapped,(checkbox multi)
+2.21b,Q161_WHY_BRANDED,mapped,(checkbox multi)
+2.22a,"Q109_SOURCES,Q96_SOURCES,Q155_GAMOT_GOT_MEDS,Q157_WHERE_REST",partial,no single free/subsidized-meds item; derive from free/donation codes in meds pay sources + GAMOT receipt (checkbox multi)
+2.22b,"Q96_SOURCES,Q109_SOURCES,Q155_GAMOT_GOT_MEDS,Q157_WHERE_REST",partial,no single free/subsidized-meds item; derive from free/donation codes in meds pay sources + GAMOT receipt (checkbox multi)
+2.23a,"Q157_WHERE_REST,Q109_SOURCES,Q96_SOURCES",partial,no LGU/employer subsidy-source battery; nearest=Q157 free-source codes 05-08 + free/donation pay codes (checkbox multi)
+2.23b,"Q157_WHERE_REST,Q96_SOURCES,Q109_SOURCES",partial,no LGU/employer subsidy-source battery; nearest=Q157 free-source codes 05-08 + free/donation pay codes (checkbox multi)
+2.24a,"Q113_SOURCES,Q126_MAIFIP_AVAILED",partial,derived from assistance codes 04-07 of Q113 (checkbox multi) + MAIFIP Q126; no direct fin-assist item
+2.24b,Q98_SOURCES,partial,"derived from assistance codes 04-06,09 of Q98 (checkbox multi); no direct fin-assist item"
+2.25a,"Q113_SOURCES,Q126_MAIFIP_AVAILED,Q115_FINAL_CASH",partial,as 2.24a; 'billed' universe inferred from bill items/final cash — no explicit billed flag
+2.25b,"Q98_SOURCES,Q97_FINAL_AMOUNT",partial,as 2.24b; 'billed' universe inferred from bill/final amount — no explicit billed flag
+2.26,"Q45_CATEGORY,Q115_FINAL_CASH,Q113_SOURCES,Q107_SOURCES",partial,derived indicator: NBB eligibility from Q45 member category; receipt inferred from zero cash at discharge/PhilHealth-covered codes
+2.27,"Q45_CATEGORY,Q122_ZBB_INFORMED,Q123_ZBB_EXTENT",partial,derived indicator: eligibility via Q45; no direct received-ZBB item — infer from Q122/Q123
+2.28a,"Q113_PAY_SRC,Q113_PAY_AMT",mapped,(roster) assistance rows=codes 04-07 of Q113 with amounts
+2.28b,"Q98_PAY_SRC,Q98_PAY_AMT",mapped,"(roster) assistance rows=codes 04-06,09 of Q98 with amounts"
+2.29,"Q18_INCOME_AMOUNT,CLASSIFICATION,Q92_PAY_AMT,Q94_LAB_AMT,Q96_PAY_AMT,Q97_FINAL_AMOUNT,Q971_PAY_AMT,Q972_PAY_AMT,Q107_PAY_AMT,Q109_PAY_AMT,Q112_PAY_AMT,Q113_PAY_AMT,Q115_FINAL_CASH",partial,derived indicator (CHE 25%/40%): OOP summed from expenditure rosters (roster) vs income Q18; UHC-IS flag=CLASSIFICATION
+2.30,"Q98_SOURCES,Q113_SOURCES",mapped,(checkbox multi) Loan/Mortgage=code 02 in both; amounts in Q98/Q113 rosters
+2.31,Q98_SOURCES,partial,(checkbox multi) Sale of Assets=Q98 code 07 (outpatient only); inpatient Q113 has no asset-sale code
+2.32,"Q130_REDUCED_SPEND,Q90_NOT_CONFINED",partial,no direct reduced-care item; proxies=Q130 reduced essential spending + Q90 codes 02/03 (cost) for forgone admission
+2.33a,"Q107_PAY_AMT,Q109_PAY_AMT,Q112_PAY_AMT,Q113_PAY_AMT,Q115_FINAL_CASH",partial,"(roster) sum inpatient expenditure rosters + 115.1/115.2 amounts; facility-type dim from sample frame, not an F3 item"
+2.33b,"Q92_PAY_AMT,Q94_LAB_AMT,Q96_PAY_AMT,Q97_FINAL_AMOUNT,Q971_PAY_AMT,Q972_PAY_AMT",partial,"(roster) sum outpatient expenditure rosters; facility-type dim from sample frame, not an F3 item"
+2.34a,"Q72_NEAREST_TRAVEL_HH,Q72_NEAREST_TRAVEL_MM",mapped,F3 asks nearest primary care facility; convert HH+MM to minutes
+2.34b,"Q72_NEAREST_TRAVEL_HH,Q72_NEAREST_TRAVEL_MM",mapped,F3 asks nearest primary care facility; convert HH+MM to minutes
+2.35a,Q1142_4_AMT,partial,no transport-cost-to-nearest-facility item; proxy=visit transport spend 115.2; level-of-care dim from frame
+2.35b,"Q972_PAY_SRC,Q972_PAY_AMT",partial,(roster) no transport-cost-to-nearest-facility item; proxy=travel rows (code 05) of Q97.2; level-of-care dim from frame
+2.36a,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Walk=code 01 of ONE multi-select Q73; same source var for all of 2.36-2.46
+2.36b,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Walk=code 01 of ONE multi-select Q73; same source var for all of 2.36-2.46
+2.37a,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Bike=code 02 of ONE multi-select Q73 (see 2.36)
+2.37b,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Bike=code 02 of ONE multi-select Q73 (see 2.36)
+2.38a,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Public Bus=code 03 of ONE multi-select Q73 (see 2.36)
+2.38b,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Public Bus=code 03 of ONE multi-select Q73 (see 2.36)
+2.39a,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Jeepney=code 04 of ONE multi-select Q73 (see 2.36)
+2.39b,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Jeepney=code 04 of ONE multi-select Q73 (see 2.36)
+2.40a,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Tricycle=code 05 of ONE multi-select Q73 (see 2.36)
+2.40b,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Tricycle=code 05 of ONE multi-select Q73 (see 2.36)
+2.41a,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Car incl. private taxi=code 06 of ONE multi-select Q73 (see 2.36)
+2.41b,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Car incl. private taxi=code 06 of ONE multi-select Q73 (see 2.36)
+2.42a,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Motorcycle=code 07 of ONE multi-select Q73 (see 2.36)
+2.42b,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Motorcycle=code 07 of ONE multi-select Q73 (see 2.36)
+2.43a,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Boat=code 08 of ONE multi-select Q73 (see 2.36)
+2.43b,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Boat=code 08 of ONE multi-select Q73 (see 2.36)
+2.44a,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Taxi=code 09 of ONE multi-select Q73 (see 2.36)
+2.44b,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Taxi=code 09 of ONE multi-select Q73 (see 2.36)
+2.45a,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Pedicab=code 10 of ONE multi-select Q73 (see 2.36)
+2.45b,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) Pedicab=code 10 of ONE multi-select Q73 (see 2.36)
+2.46a,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) E-bike=code 11 of ONE multi-select Q73 (see 2.36)
+2.46b,Q73_NEAREST_TRANSPORT,mapped,(checkbox multi) E-bike=code 11 of ONE multi-select Q73 (see 2.36)
+2.47a,"Q131_AMEN_WAITING,Q132_AMEN_BATHROOMS,Q133_AMEN_CONSULT_ROOMS,Q134_AMEN_ROOMS,Q135_SAT_OVERALL_TIME,Q136_STAFF_COURTESY,Q137_STAFF_LISTEN,Q138_STAFF_EXPLAIN,Q139_STAFF_DECIDE,Q140_STAFF_CONSENT,Q141_CONFIDENTIALITY,Q142_PRIVACY",partial,derived indicator (responsiveness score) from Section J items; Q134 rooms=inpatient only
+2.47b,"Q131_AMEN_WAITING,Q132_AMEN_BATHROOMS,Q133_AMEN_CONSULT_ROOMS,Q135_SAT_OVERALL_TIME,Q136_STAFF_COURTESY,Q137_STAFF_LISTEN,Q138_STAFF_EXPLAIN,Q139_STAFF_DECIDE,Q140_STAFF_CONSENT,Q141_CONFIDENTIALITY,Q142_PRIVACY",partial,derived indicator (responsiveness score) from Section J items; Q134 rooms excluded for outpatients
+2.48a,"Q136_STAFF_COURTESY,Q139_STAFF_DECIDE,Q140_STAFF_CONSENT,Q141_CONFIDENTIALITY,Q142_PRIVACY",partial,"derived indicator: dignity=Q136/Q142, autonomy=Q139/Q140, confidentiality=Q141"
+2.48b,"Q136_STAFF_COURTESY,Q139_STAFF_DECIDE,Q140_STAFF_CONSENT,Q141_CONFIDENTIALITY,Q142_PRIVACY",partial,"derived indicator: dignity=Q136/Q142, autonomy=Q139/Q140, confidentiality=Q141"
+2.49a,"Q136_STAFF_COURTESY,Q139_STAFF_DECIDE,Q140_STAFF_CONSENT,Q141_CONFIDENTIALITY,Q142_PRIVACY",partial,"as printed, duplicates 2.48; derived indicator (see 2.48)"
+2.49b,"Q136_STAFF_COURTESY,Q139_STAFF_DECIDE,Q140_STAFF_CONSENT,Q141_CONFIDENTIALITY,Q142_PRIVACY",partial,"as printed, duplicates 2.48; derived indicator (see 2.48)"
+2.50a,"Q135_SAT_OVERALL_TIME,Q136_STAFF_COURTESY,Q137_STAFF_LISTEN,Q138_STAFF_EXPLAIN,Q139_STAFF_DECIDE,Q140_STAFF_CONSENT,Q141_CONFIDENTIALITY,Q142_PRIVACY,Q143_RECOMMEND,Q144_QUALITY",partial,"derived indicator (experience score) from Section J; dims: SES=Q29_SEC_CLASS, sex=Q7_SEX, residence=P_* geo, facility level=frame"
+2.50b,"Q135_SAT_OVERALL_TIME,Q136_STAFF_COURTESY,Q137_STAFF_LISTEN,Q138_STAFF_EXPLAIN,Q139_STAFF_DECIDE,Q140_STAFF_CONSENT,Q141_CONFIDENTIALITY,Q142_PRIVACY,Q143_RECOMMEND,Q144_QUALITY",partial,"derived indicator (experience score) from Section J; dims: SES=Q29_SEC_CLASS, sex=Q7_SEX, residence=P_* geo, facility level=frame"
+2.51,,gap,no room/board OOP item on F3; 115.1/97.1 bill itemizations lack rooms; bill rosters are by pay source not line item
+2.52,"Q92_PAY_SRC,Q92_PAY_AMT,Q1141_1_AMT",partial,(roster) OPD direct=OOP rows of Q92 roster; inpatient proxy=115.1 doctor's PF amount
+2.53,"Q94_LAB_PAY,Q94_LAB_AMT,Q1141_4_AMT,Q112_PAY_AMT",mapped,(roster) OPD per-test Q94; IPD=115.1 diagnostics + outside-services Q112 OOP rows
+2.54,"Q96_PAY_SRC,Q96_PAY_AMT,Q109_PAY_SRC,Q109_PAY_AMT,Q1141_5_AMT",mapped,(roster) OPD Q96; IPD outside-meds Q109 + 115.1 in-bill medicines; OOP rows only
+2.55,Q119_ZBB_HEARD,mapped,split via PATIENT_TYPE (see 2.1)
+2.56a,Q120_ZBB_SOURCE,mapped,(checkbox multi)
+2.56b,Q120_ZBB_SOURCE,mapped,(checkbox multi)
+2.57a,Q121_ZBB_UNDERSTAND,mapped,(checkbox multi) correctness scored from codes
+2.57b,Q121_ZBB_UNDERSTAND,mapped,(checkbox multi) correctness scored from codes
+2.58,Q99_BUCAS_HEARD,mapped,asked only where AREA_HAS_BUCAS=1; split via PATIENT_TYPE (see 2.1)
+2.59a,Q100_BUCAS_SOURCE,mapped,(checkbox multi)
+2.59b,Q100_BUCAS_SOURCE,mapped,(checkbox multi)
+2.60a,Q101_BUCAS_UNDERSTAND,mapped,(checkbox multi) benefit identification scored from codes
+2.60b,Q101_BUCAS_UNDERSTAND,mapped,(checkbox multi) benefit identification scored from codes
+2.61a,"Q103_BUCAS_SERVICES,Q102_BUCAS_ACCESSED",mapped,(checkbox multi) universe filter Q102=Yes
+2.61b,"Q103_BUCAS_SERVICES,Q102_BUCAS_ACCESSED",mapped,(checkbox multi) universe filter Q102=Yes
+2.62,Q152_GAMOT_HEARD,mapped,asked only where AREA_HAS_GAMOT=1; split via PATIENT_TYPE (see 2.1)
+2.63a,Q153_GAMOT_SOURCE,mapped,(checkbox multi)
+2.63b,Q153_GAMOT_SOURCE,mapped,(checkbox multi)
+2.64a,Q154_GAMOT_UNDERSTAND,mapped,(checkbox multi) correctness scored from codes
+2.64b,Q154_GAMOT_UNDERSTAND,mapped,(checkbox multi) correctness scored from codes
+2.65,"Q6_AGE,Q7_SEX,Q9_GROUP,Q10_CIVIL_STATUS,Q11_PWD,Q15_EDUCATION,Q16_EMPLOYMENT,Q17_INCOME_SOURCE,Q18_INCOME_BRACKET,Q19_HH_SIZE,Q29_SEC_CLASS,Q30_IP,Q32_4PS",mapped,Section B profile battery; add Q8_LGBTQIA/asset items Q22-Q28 as needed

@@ -1,0 +1,161 @@
+{ ---- Single 12-digit Questionnaire Number (redesign 2026-06-10) ----
+  The enumerator types ONE number (RR PP MMM FF CCC). Parse it into the component
+  PSGC codes (kept as FIELD_CONTROL items so every downstream PROC keeps working),
+  validate region/province/city against the PSGC external dicts (hard-stop on a bad
+  code), and fill the read-only *_NAME items shown on the form. The full 10-digit
+  PSGC codes are also written to the off-form REGION/PROVINCE_HUC/CITY_MUNICIPALITY
+  items so the BARANGAY cascade filters correctly. ---- }
+PROC QUESTIONNAIRE_NUMBER
+preproc
+  { GPS warm-start (2026-07-19): open the radio while the enumerator types the
+    case key so the fix has converged by the Facility GPS form — the capture
+    read is then near-instant instead of a cold acquisition. Desktop no-op. }
+  WarmUpGPS();
+postproc
+  { 0. record the interview language at the true case start (§15.E) }
+  LANGUAGE_USED = getlanguage();
+  { #744/#561: mark the case In Progress at case open; a force-quit case keeps 0.
+    Guarded so a reopened completed/partial case is not reset. }
+  if not (CASE_DISPOSITION in 1, 2) then CASE_DISPOSITION = 0; endif;
+  { 1. decompose the within-parent codes }
+  REGION_CODE            = int(QUESTIONNAIRE_NUMBER / 10000000000);
+  PROVINCE_HUC_CODE      = int(QUESTIONNAIRE_NUMBER / 100000000) % 100;
+  CITY_MUNICIPALITY_CODE = int(QUESTIONNAIRE_NUMBER / 100000) % 1000;
+  FACILITY_NO            = int(QUESTIONNAIRE_NUMBER / 1000) % 100;
+  CASE_SEQ               = QUESTIONNAIRE_NUMBER % 1000;
+
+  { 2. geo prefix: the number's first 7 digits ARE positions 1-7 of the 10-digit
+       PSGC (positional slice per the adopted convention) - append 000 for the
+       full geo code. It matches either a city/municipality code or, for
+       province-anchored facilities (e.g. district hospitals), a province code. }
+  regionFull = REGION_CODE * 100000000;
+  geoFull    = int(QUESTIONNAIRE_NUMBER / 100000) * 1000;
+  REGION     = regionFull;
+
+  { 3a. region: exact match + name }
+  geoFound = 0;
+  R_PARENT_CODE = 0;
+  if loadcase(PSGC_REGION_DICT, R_PARENT_CODE) <> 0 then
+    do varying numeric ri = 1 until ri > count(PSGC_REGION_DICT.PSGC_REGION_REC)
+      if R_CODE(ri) = regionFull then
+        REGION_NAME = strip(R_NAME(ri));
+        geoFound = 1;
+      endif;
+    enddo;
+  endif;
+  if geoFound = 0 then
+    errmsg("Region code %02d not found in PSGC. Check the Questionnaire Number.", REGION_CODE);
+    reenter;
+  endif;
+
+  { 3b. resolve the 7-digit prefix hierarchically: province-level match first,
+       else scan that province's cities. Fills both names + the full PSGC codes
+       (CITY_MUNICIPALITY feeds the barangay cascade). }
+  geoFound = 0;
+  P_PARENT_REGION = regionFull;
+  if loadcase(PSGC_PROVINCE_DICT, P_PARENT_REGION) <> 0 then
+    do varying numeric pi = 1 until pi > count(PSGC_PROVINCE_DICT.PSGC_PROVINCE_REC) or geoFound = 1
+      if P_CODE(pi) = geoFull then
+        { province-anchored facility: geo resolves at province level }
+        PROVINCE_NAME     = strip(P_NAME(pi));
+        CITY_NAME         = strip(P_NAME(pi));
+        PROVINCE_HUC      = geoFull;
+        CITY_MUNICIPALITY = geoFull;
+        geoFound = 1;
+      else
+        C_PARENT_PROVINCE = P_CODE(pi);
+        if loadcase(PSGC_CITY_DICT, C_PARENT_PROVINCE) <> 0 then
+          do varying numeric ci = 1 until ci > count(PSGC_CITY_DICT.PSGC_CITY_REC) or geoFound = 1
+            if C_CODE(ci) = geoFull then
+              PROVINCE_NAME     = strip(P_NAME(pi));
+              CITY_NAME         = strip(C_NAME(ci));
+              PROVINCE_HUC      = P_CODE(pi);
+              CITY_MUNICIPALITY = geoFull;
+              geoFound = 1;
+            endif;
+          enddo;
+        endif;
+      endif;
+    enddo;
+  endif;
+  if geoFound = 0 then
+    errmsg("Geo prefix %07d not found in PSGC (no province or city/municipality matches). Check the Questionnaire Number.", int(QUESTIONNAIRE_NUMBER / 100000));
+    reenter;
+  endif;
+
+  { 4. the geo names are display-only confirmations - lock them read-only }
+  protect(REGION_NAME, true);
+  protect(PROVINCE_NAME, true);
+  protect(CITY_NAME, true);
+
+{ Informed consent: the separate CONSENT_GIVEN field was removed 2026-06-12.
+  Consent refusal is now recorded by the enumerator as the Result-of-Visit
+  disposition ("Refused" = code 3); the read-aloud consent script is read from
+  the printed sheet (off the CAPI). No consent gate PROC. }
+
+{ ---- #157 Facility GPS — AUTO-FETCHED on focus (2026-06-12; no manual trigger).
+  Fires when the enumerator reaches the coordinates; captured once (guarded on
+  read-time), then every GPS field is protected (read-only) so coordinates can't
+  be typed. ReadGPSReading() lives in Capture-Helpers.apc. Desktop (getos 10-19)
+  has no GPS radio → fields stay blank there (device-only). ---- }
+PROC FACILITY_GPS_LATITUDE
+onfocus
+  if length(strip(FACILITY_GPS_READTIME)) = 0 then   { capture once; not on back-nav }
+    { 15 s budget: the radio has been warm since the case key (WarmUpGPS), so a
+      fresh fix normally arrives in ~1-2 s; 15 s only caps the no-signal case. }
+    if ReadGPSReading(15, 20) then
+      FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
+      FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
+      FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
+      FACILITY_GPS_ACCURACY   = gps(accuracy);
+      FACILITY_GPS_SATELLITES = gps(satellites);
+      FACILITY_GPS_READTIME   = maketext("%d", gps(readtime));
+    endif;
+  endif;
+  { Protect ONLY once captured — protecting a blank numeric (no fix / desktop)
+    triggers "protected field is out of range - value is NOTAPPL". }
+  if length(strip(FACILITY_GPS_READTIME)) > 0 then
+    protect(FACILITY_GPS_LATITUDE, true);
+    protect(FACILITY_GPS_LONGITUDE, true);
+    protect(FACILITY_GPS_ALTITUDE, true);
+    protect(FACILITY_GPS_ACCURACY, true);
+    protect(FACILITY_GPS_SATELLITES, true);
+    protect(FACILITY_GPS_READTIME, true);
+    ReleaseGPS();   { F1's only GPS block — close the radio once captured }
+  endif;
+
+{ ---- #231 Verification photo (moved to the END of the form 2026-06-12). Filename
+  pattern case-{12-digit case id RR-PP-MMM-FF-CCC}-verification.jpg. Now CONDITIONAL on
+  the visit outcome and soft-validated (warn, don't trap, on camera failure). ---- }
+PROC VERIFICATION_PHOTO_FILENAME
+preproc
+  { display-only — the camera trigger fills this; it is never typed }
+  noinput;
+
+PROC CAPTURE_VERIFICATION_PHOTO
+preproc
+  { gate: photograph only visits where an interview occurred
+    (1 Completed, 4 Incomplete); skip 2 Postponed / 3 Refused }
+  if not (ENUM_RESULT_FINAL_VISIT in 1, 4) then
+    VERIFICATION_PHOTO_FILENAME = "";   { clear any stale name if outcome was changed back }
+    noinput;
+  endif;
+onfocus
+  { capture once: an empty filename means no photo yet, so (re)try the camera }
+  if length(strip(VERIFICATION_PHOTO_FILENAME)) = 0 then
+    string fn = "case-" + maketext("%02d%02d%03d%02d%03d", REGION_CODE, PROVINCE_HUC_CODE, CITY_MUNICIPALITY_CODE, FACILITY_NO, CASE_SEQ) + "-verification.jpg";
+    if TakeVerificationPhoto(fn) then
+      VERIFICATION_PHOTO_FILENAME = fn;
+    else
+      errmsg("Verification photo not captured (camera cancelled or unavailable). Re-enter this field to retry, or note the reason in your field report.");
+    endif;
+  endif;
+  CAPTURE_VERIFICATION_PHOTO = notappl;
+
+{ ---- #232 / #151 Barangay cascade (single-number redesign): region/province/city
+  are derived from the Questionnaire Number (off-form), so only barangay is picked
+  here — its value set is filtered to the children of the derived city. CITY_MUNICIPALITY
+  holds the full 10-digit city PSGC code (set in QUESTIONNAIRE_NUMBER postproc). ---- }
+PROC BARANGAY
+onfocus
+  FillBarangayValueSet(CITY_MUNICIPALITY);

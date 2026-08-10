@@ -99,7 +99,7 @@ Every case carries a non-tamperable audit trail that supports both QC and post-s
 - **Timestamps** — start, end, and (for F2) submission timestamps are stamped server-side, not by the enumerator.
 - **GPS coordinates** — for F1/F3/F4, captured automatically at the interview site; for F2 PWA self-administered cases, submission-time GPS is captured (with respondent consent disclosure on the consent screen).
 - **Verification photograph** — for F1/F3/F4 (one per case), per the SOP-defined content (e.g., facility signage, consent sheet, respondent setting) — used as evidence of interviewer presence and visit context, not for respondent identification.
-- **AAPOR disposition code** — first-visit and final-visit dispositions captured separately for response-rate accounting and for distinguishing real refusals from temporary unavailability.
+- **Result of Visit** — the Field Control form records a first-visit and a final-visit outcome separately, using the printed questionnaire's own codes (F1: Completed / Postponed / Refused / Incomplete; F3 and F4 add "Completed at the Hospital" / "Completed at Home" / "Withdraw Participation/Consent"), alongside a case disposition of In progress / Completed / Partial. **Limitation to note for analysis:** there is no non-contact code in any instrument, and F3/F4 have no doorstep-refusal code, so a full response rate (completed ÷ eligible contacted) cannot be computed from CAPI data alone. Replaced or never-started units are handled by the field protocol on paper and leave no CAPI record.
 - **Audit log** — every status change (case created, accepted, on-hold, re-approved) is recorded with timestamp and actor identity; the log is read-only from the field side.
 
 ## 6. Synchronization, connectivity, and offline behaviour

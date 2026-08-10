@@ -1,0 +1,37 @@
+no,source_variables,mapping_status,notes_add
+3.1,"Q51_UHC_HEARD, PROVINCE_HUC",mapped,'By province' for all Annex-3 tables = PSGC geo block PROVINCE_HUC (codebook province_code); id-block PROVINCE_HUC_CODE equivalent
+3.2,"Q52_UHC_SOURCE, Q52_UHC_SOURCE_OTHER_TXT",mapped,(checkbox multi)
+3.3,Q45_PHILHEALTH_REG,mapped,Q45 is roster-level; use respondent's own roster row (ambiguous respondent vs all-member rate)
+3.4,"Q83_KNOWS_ASSIST, Q45_PHILHEALTH_REG",mapped,Unregistered universe = respondent roster row Q45=02 No; Q84_WHERE_ASSIST gives where
+3.5,"Q79_REG_SOURCE, Q79_REG_SOURCE_OTHER_TXT",mapped,"Single-select (numeric), not checkbox"
+3.6,"Q85_BENEFITS, Q85_BENEFITS_OTHER_TXT",mapped,(checkbox multi); 'correctly list' scoring derived at analysis vs codes 01-03
+3.7,Q54_YAKAP_HEARD,mapped,Q54 asks package awareness; 'provider assignment' wording not asked verbatim
+3.8,"Q56_YAKAP_UNDERSTAND, Q56_YAKAP_UNDERSTAND_OTHER_TXT",mapped,(checkbox multi); correct-benefit scoring derived at analysis
+3.9,"Q81_REG_DIFFICULTY, Q82_DIFFICULTY_REASONS, Q82_DIFFICULTY_REASONS_OTHER_TXT",partial,(checkbox multi); no 'underwent registration in past yr incl unsuccessful' flag; approx universe via Q45_1_PIN_REG_WHEN
+3.10,"Q87_PREMIUM_DIFFICULT, Q46_MEMBER_CATEGORY",mapped,Membership type Q46 is roster-level (respondent row); Q86 premium-pay gate; Q88 reasons
+3.11,"Q108_REFERRED, Q119_PCF_REFERRAL",partial,"No HCPN-membership flag; Q119 = referral from primary care facility, most recent visit; YAKAP-provider referral not distinguished"
+3.12,"Q115_HELPED_APPT, Q123_PCP_HELPED_APPT",mapped,Two paths: referral chain Q115 vs non-referral PCP chain Q123; Section K gated on Q108=Yes
+3.13,"Q114_DISCUSSED_PLACES, Q122_PCP_DISCUSSED_PLACES",mapped,Two paths: Q114 (referral) vs Q122 (PCP); Section K gated on Q108=Yes
+3.14,"Q118_SAT_REFERRAL_PROCESS, Q125_SAT_REFERRAL_EXP",mapped,"Two 5-pt satisfaction items: referral path Q118, non-referral PCP path Q125"
+3.15,Q75_BRAND_GEN_KNOWS,partial,Self-reported Y/N knowledge only; no scored 'define a generic drug' item to verify correctness
+3.16,Q76_BRAND_OR_GEN,mapped,Scope = meds bought outside GAMOT pharmacy; code 3 = both branded and generic
+3.17,"Q77_WHY_GENERIC, Q77_WHY_GENERIC_OTHER_TXT",mapped,(checkbox multi)
+3.18,"Q78_WHY_BRANDED, Q78_WHY_BRANDED_OTHER_TXT",mapped,(checkbox multi)
+3.19,"Q72_GAMOT_OBTAINED, Q74_WHERE_REST",partial,No direct free/subsidized item; derive from Q72 (GAMOT free meds) + Q74 codes 05-08 'received for free' (checkbox multi)
+3.20,"Q74_WHERE_REST, Q74_WHERE_REST_OTHER_TXT",partial,Free-source codes cover PCP/LGU/public/private hospital only; no employer or dedicated subsidy-source item (checkbox multi)
+3.21,"Q143_HOW_PAID, Q103_CARE_TYPE",partial,No direct assistance-program item; derive Q143 codes 06-08 (+04/05 coping); MAIFIP use not asked; all-patient base via Q103
+3.22,"Q143_HOW_PAID, Q139_FINAL_AMOUNT_PHP, Q140_RECALL_BREAKDOWN",partial,Same Q143 derivation as 3.21; billed universe derived via Q139>0/Q140; Q142=No skips Q143
+3.23,"Q197_DELAYED_CARE, Q198_NOT_FOLLOWED",mapped,'Reduced care' = P block: delayed care Q197 + not-fully-followed advice Q198 (financial reasons); distinct from forgone 3.24/3.25
+3.24,"Q105_FORGONE_CARE, Q106_FORGONE_WHY",mapped,Financial-reason filter via Q106 code 02 'too expensive'; Q196_FOREGONE gives type of care foregone
+3.25,"Q105_FORGONE_CARE, Q106_FORGONE_WHY",mapped,"As printed, identical to 3.24 - same source mapping"
+3.26,Q132_ZBB_HEARD,mapped,
+3.27,"Q133_ZBB_SOURCE, Q133_ZBB_SOURCE_OTHER_TXT",mapped,(checkbox multi); gated on Q132=Yes
+3.28,"Q134_ZBB_UNDERSTAND, Q134_ZBB_UNDERSTAND_OTHER_TXT",mapped,(checkbox multi); correct-benefit scoring derived at analysis
+3.29,Q57_BUCAS_HEARD,mapped,Block gated on AREA_HAS_BUCAS - denominator excludes non-BUCAS areas
+3.30,"Q58_BUCAS_SOURCE, Q58_BUCAS_SOURCE_OTHER_TXT",mapped,(checkbox multi)
+3.31,"Q59_BUCAS_UNDERSTAND, Q59_BUCAS_UNDERSTAND_OTHER_TXT",mapped,(checkbox multi); correct-benefit scoring derived at analysis
+3.32,"Q60_BUCAS_ACCESSED, Q61_BUCAS_SERVICES, Q61_BUCAS_SERVICES_OTHER_TXT",mapped,"(checkbox multi); universe = Q60=Yes accessors, last 6 months"
+3.33,Q69_GAMOT_HEARD,mapped,Block gated on AREA_HAS_GAMOT - denominator excludes non-GAMOT areas
+3.34,"Q70_GAMOT_SOURCE, Q70_GAMOT_SOURCE_OTHER_TXT",mapped,(checkbox multi)
+3.35,"Q71_GAMOT_UNDERSTAND, Q71_GAMOT_UNDERSTAND_OTHER_TXT",mapped,(checkbox multi); correct-benefit scoring derived at analysis
+3.36,"Q2_1_AGE, Q3_SEX, Q4_LGBTQIA, Q5_GROUP, Q6_CIVIL_STATUS, Q7_IS_PWD, Q11_EDUCATION, Q12_EMPLOYMENT, Q13_INCOME_SOURCE, Q14_IP_MEMBER, Q16_4PS, Q18_INCOME_BRACKET, Q19_HH_SIZE_TOTAL, Q20_HH_CHILDREN, Q21_HH_SENIORS, Q29_SOCIOECONOMIC_CLASS, Q32_AGE, Q33_SEX, Q34_RELATIONSHIP, Q40_EDUCATION, Q41_EMPLOYMENT",mapped,Respondent B-block + roster C-block; Q3_SEX has extra 'Other' code (codebook 15.A sex_other flag)

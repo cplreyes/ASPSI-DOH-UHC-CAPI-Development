@@ -50,6 +50,9 @@
     },
     "actionInvoker": {
       "accessFromExternalCaller": "promptIfNoValidAccessToken",
+      "accessTokens": [
+        "2c9e4f71-a6d3-4b8f-9e02-d5c1b7a83e46"
+      ],
       "convertResultsForLogic": true
     }
   },

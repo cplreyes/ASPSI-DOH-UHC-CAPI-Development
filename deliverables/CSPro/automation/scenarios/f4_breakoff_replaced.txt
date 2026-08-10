@@ -1,0 +1,21 @@
+# F4 — BREAKOFF 6 (Not interviewed - not found). Different code from the F3 test, on purpose:
+# covers a second never-started reason AND F4's DIFFERENT Replaced code (5, not 7).
+# BREAKOFF is on its own "Interview status" form immediately after the case key.
+rmdata ../F4/desktest.csdb
+launch ../F4/HouseholdSurvey_desktest.pff
+
+# real pretest facility from pretest-assignments.csv (040341101, Brgy. Mayondon)
+casekey 040341101009
+shot 01_casekey_accepted
+
+note EXPECT: Interview status form, SEVEN options
+shot 02_breakoff_seven_options
+
+type 6
+note EXPECT: skip to closing Result of Visit = 5 Replaced (F4 code), questionnaire NOT walked
+wait 1
+shot 03_after_breakoff_6_should_be_replaced_5
+
+key {ENTER}
+wait 1
+shot 04_case_should_end

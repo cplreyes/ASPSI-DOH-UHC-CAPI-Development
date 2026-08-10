@@ -191,6 +191,15 @@ def build_instrument(key):
         if props.get("autoAdvanceOnSelection") is not True:
             props["autoAdvanceOnSelection"] = True
             changed.append("autoAdvanceOnSelection")
+        # F4 Section N recap htmldialog (2026-07-03): review.html calls CS.UI via
+        # CSProActionInvoker on CSEntry 8.1 (CSPro.* severed there). The token must be
+        # registered so the call is prompt-free (promptIfNoValidAccessToken). Self-heal
+        # here so a rebuild can never drop it. F4 only (the review dialog is F4's).
+        if key == "F4":
+            ai = ent_obj.setdefault("logicSettings", {}).setdefault("actionInvoker", {})
+            if "7b1f9c34-2e8a-4d6b-b0c7-9a5e13f8d240" not in ai.get("accessTokens", []):
+                ai.setdefault("accessTokens", []).append("7b1f9c34-2e8a-4d6b-b0c7-9a5e13f8d240")
+                changed.append("F4 review-dialog accessToken")
         if changed:
             p["ent"].write_text(json.dumps(ent_obj, indent=2), encoding="utf-8")
             print(f"    set {' + '.join(changed)} in {p['ent'].name}")

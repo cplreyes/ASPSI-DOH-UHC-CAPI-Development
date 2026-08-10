@@ -24,6 +24,15 @@ HERE = Path(__file__).parent
 DCF = HERE / "HouseholdSurvey.dcf"
 OUT = HERE / "HouseholdSurvey.ent.qsf"
 
+# Build version (tester request 2026-07-02): ../versions.json is the single source of truth
+# (bumped via automation/stamp_version.py, which also stamps the .pff Description for the
+# CSEntry app list). This footer rides the case-key (QN) screen — the FIRST screen of every
+# case in all three instruments; dict-first placement was wrong because the cover/FC block
+# can sit at case-end on the form (v1.0.1). Same string in every language — UI chrome, not
+# questionnaire text.
+_BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F4"]
+BUILD_FOOTER = f'<p class="instruction">Build: F4 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+
 STYLES = """styles:
   - name: Normal
     className: normal
@@ -347,6 +356,18 @@ def _hh_roster_fields():
 
 _PIPE_HH = _hh_roster_fields()
 _PIPE_PRIV = {"Q48_OTHER_INS_REG", "Q49_PRIVATE_INS", "Q50_PRIVATE_INS_OTHER_TXT"}
+# Option C food roster (2026-07-03): every grid-row question leads with WHICH item the row
+# is for — the auto-filled N_FOOD_ITEM piped as a bold header (Section C piping pattern).
+# Fan-out (2026-07-03): every Section N roster pipes its row's auto-filled *_ITEM into
+# each grid question as a bold header (Section C piping pattern). Maps member -> ITEM field.
+_EXP_ROSTER_PREFIXES = ("N_FOOD", "N_WKOTH", "N_NF1M", "N_NF6M", "N_NF12M", "N_H12M", "N_H6M", "N_H1M")
+_PIPE_EXP = {f"{p}_{s}": f"{p}_ITEM"
+             for p in _EXP_ROSTER_PREFIXES
+             for s in ("CONSUMED", "AMT_STATUS", "PURCHASED_PHP", "INKIND_PHP")}
+# Read-once section intros: attached to each roster's first row (logic: curocc() = 1).
+_ROSTER_INTROS = {"N_FOOD_CONSUMED": 144, "N_NF1M_CONSUMED": 160, "N_NF6M_CONSUMED": 168,
+                  "N_NF12M_CONSUMED": 170, "N_H12M_CONSUMED": 175, "N_H6M_CONSUMED": 178,
+                  "N_H1M_CONSUMED": 183}
 _HH_NAME_FILL = "~~strip(Q30_NAME)~~"
 _PRIV_NAME_FILL = "~~strip(Q30_NAME(curocc()))~~"
 
@@ -379,6 +400,8 @@ def _pipe_member_name(nm, html):
         ctx = (f'<p class="instruction">Household member: {_PRIV_NAME_FILL} '
                f'(Roster line ~~PRIV_MEMBER_LINE_NO~~)</p>')
         return ctx + _NAME_TOKEN_RE.sub(_PRIV_NAME_FILL, html)
+    if nm in _PIPE_EXP:
+        return f'<p><b>~~strip({_PIPE_EXP[nm]})~~</b></p>' + html
     return html
 
 
@@ -428,6 +451,12 @@ def main():
     lines.append(STYLES)
     lines.append("questions:")
 
+    # the id item never appears in the records loop below, so emit its (footer-only) entry here
+    qn = d["levels"][0]["ids"]["items"][0]["name"]
+    lines += [f"  - name: {dict_name}.{qn}", "    conditions:", "      - questionText:"]
+    for lnm, _ in langs:
+        lines += [f"          {lnm}: |", f"            {BUILD_FOOTER}"]
+
     seen, n = set(), 0
     intro_used = set()
     for lvl in d["levels"]:
@@ -443,6 +472,27 @@ def main():
                 en = labmap.get("EN") or nm
                 ov = OVERRIDES.get(nm)
                 pre, post = ("", "") if ov else question_extras(nm, intro_used)
+                # Option C (2026-07-03): the Section N intro script reads ONCE — attached
+                # to the food grid's first row via a qsf condition (logic: curocc() = 1);
+                # the trailing logic-less condition is the default text for rows 2-13.
+                if nm in _ROSTER_INTROS:
+                    _tgt = _ROSTER_INTROS[nm]
+                    intro_used.add(_tgt)
+                    if _tgt in SECTION_INTROS:
+                        intro = f"<p>{_esc(SECTION_INTROS[_tgt])}</p>"
+                    else:   # period-reset note (INSTRUCTIONS) as the read-once row-1 intro
+                        intro = '<p class="instruction">' + _esc(INSTRUCTIONS[_tgt]) + "</p>"
+                    lines += [f"  - name: {dict_name}.{nm}", "    conditions:",
+                              "      - logic: curocc() = 1", "        questionText:"]
+                    for lnm, _ in langs:
+                        body = intro + _pipe_member_name(nm, _html(labmap.get(lnm) or en))
+                        lines += [f"          {lnm}: |", f"            {body}"]
+                    lines += ["      - questionText:"]
+                    for lnm, _ in langs:
+                        body = _pipe_member_name(nm, _html(labmap.get(lnm) or en))
+                        lines += [f"          {lnm}: |", f"            {body}"]
+                    n += 1
+                    continue
                 lines += [f"  - name: {dict_name}.{nm}", "    conditions:", "      - questionText:"]
                 cc = _ROSTER_CROSSCHECK.get(nm)   # #603/#606/#607/#609 line-1 cross-check note
                 for lnm, _ in langs:

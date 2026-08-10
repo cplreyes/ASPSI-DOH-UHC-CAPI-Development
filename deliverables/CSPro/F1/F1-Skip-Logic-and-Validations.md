@@ -41,7 +41,7 @@ The original Apr 10 spec flagged six generator bugs. Five are now closed in code
 | 2 | **Secondary Data section** | PARTIAL — stubs present, structure open | `SECONDARY_DATA_AS_STUBS = True`; four empty-item records exist in the dcf (`SEC_HOSP_CENSUS`, `SEC_HCW_ROSTER`, `SEC_YK_SERVICES`, `SEC_LAB_PRICES`) so the dictionary opens. The internal structure (record-per-month vs flat, roster cadre × employment type) is still pending a Juvy/Kidd decision — see §5 Dispositions. |
 | 3 | **Q63 ACCRED_WAIT label/units mismatch** | OPEN — source bug, needs ASPSI | `Q63_USE_DAY_BUCKETS = False` (months kept as current default). Question stem says "days"; bucket labels are in months. Routed to Juvy/Kidd for a single-source fix to the printed questionnaire before Tranche 2. |
 | 4 | **Q31 EMR — `Not applicable` skip** | CLOSED | `Q31_NA_SKIPS = True`. Handled in CAPI `PROC Q31_EMR_USE` (§4.4 pattern) — NA routes to Q35 alongside the other UHC9 NA branches. |
-| 5 | **Informed-consent block** | CLOSED | `CONSENT_GIVEN` added to `FIELD_CONTROL`; `RESP_NAME` / `RESP_POSITION` / `RESP_EMAIL` / `RESP_MOBILE` live at the top of `A_FACILITY_HEAD_PROFILE` (moved out of FIELD_CONTROL so they sit next to the facility-head profile they describe). Consent=No aborts the interview. |
+| 5 | **Informed-consent block** | CLOSED | No consent item in `FIELD_CONTROL` — the `CONSENT_GIVEN` flag was removed 2026-06-12 (not on the April-20 paper Field Control form). `RESP_NAME` / `RESP_POSITION` / `RESP_EMAIL` / `RESP_MOBILE` live at the top of `A_FACILITY_HEAD_PROFILE`. A respondent who declines is recorded via `BREAKOFF = Respondent withdrew` → `ENUM_RESULT_FINAL_VISIT = 3 (Refused)`, which aborts the interview. |
 | 6 | **Tenure ≥6 months pre-filter** | CLOSED-BY-DESIGN | Enforced in `PROC Q5_MONTHS_AT_FACILITY postproc` (§4.2), not as a separate screening item. Tenure below 6 months terminates and sets `ENUM_RESULT = Refused/Incomplete`. |
 
 ### B. Cosmetic / acceptable as-is
@@ -142,6 +142,7 @@ Format: **Trigger → Destination (skip range)**. Where the source has multiple 
 |  | = No | Q147 (skip Q146) |
 | Q148 LGU_SUPPORT | = No | Q152 (skip Q149, Q150, Q151) |
 | Q150 LGU_SATISFIED | = Yes | Q154 (skip Q151) |
+| Q152 PHO_PROTOCOL_CLARITY | entry gate: printed "only for respondents from public hospitals" — asked only if `Q7 = Public` AND `Q8 ∈ {Level 1/2/3 Hospital}`; every other profile skips Q152+Q153 → **Q154** (#386; surfaced by #822 — a Q148=No skip lands on Q152 whose gate then forwards non-public-hospital profiles to Q154) |
 | Q152 PHO_PROTOCOL_CLARITY | ∈ {Very Clear, Clear} | Q154 (skip Q153) — *implied; confirm with ASPSI* |
 | Q161 REF_SATISFACTION | ∈ {Very Satisfied, Satisfied} | Q163 (skip Q162) |
 
@@ -160,7 +161,8 @@ Categories: **HARD** = block save / reenter, **SOFT** = warn-and-confirm, **GATE
 | `DATE_FIRST_VISITED_THE_FACILITY` | Valid date (YYYYMMDD); `20260101 ≤ d ≤ today + 1` | HARD |
 | `DATE_OF_FINAL_VISIT_TO_THE_FACILITY` | Valid date; `≥ DATE_FIRST_VISITED_THE_FACILITY`; `≤ today + 1` | HARD |
 | `TOTAL_NUMBER_OF_VISITS` | `≥ 1` when `ENUM_RESULT_FIRST_VISIT` or `ENUM_RESULT_FINAL_VISIT = Completed` | HARD |
-| `CONSENT_GIVEN` | Required; if = No → terminate with `ENUM_RESULT = Refused` | HARD |
+| `BREAKOFF` | Required; defaults to `1 — Continue interview`. If ≠ Continue → terminate; sets `ENUM_RESULT_FINAL_VISIT` (2 Withdrew → 3 Refused; 3 Postponed → 2 Postponed; 4 Stop-other → 4 Incomplete) and `CASE_DISPOSITION = 2` | HARD |
+| `CASE_DISPOSITION` | Auto-written by logic, never typed: 0 In progress / 1 Completed / 2 Partial / not completed | — |
 | `CLASSIFICATION`, `REGION`, `PROVINCE_HUC`, `CITY_MUNICIPALITY`, `BARANGAY` | Required, non-blank; must exist in the loaded PSGC external lookup dictionaries (`shared/psgc_*.dcf`) | HARD |
 | Child PSGC parent consistency | Enforced **at pick-time** by `PSGC-Cascade.apc` — `onfocus` on each child filters its value set to children of the chosen parent, so an inconsistent pair is unrepresentable | HARD — cascade enforces |
 | `ENUM_RESULT_FIRST_VISIT = Completed` / `ENUM_RESULT_FINAL_VISIT = Completed` | All Section A–H mandatory items must be non-blank | HARD |
@@ -300,6 +302,7 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | Q147 enabled | Q145 = No | GATE |
 | Q149–Q151 enabled | Q148 = Yes | GATE |
 | Q151 enabled | Q150 = No | GATE |
+| Q152–Q153 enabled | `Q7 = Public` AND `Q8 ∈ {Level 1, 2, 3 Hospital}` | GATE (#386) |
 | Q153 enabled | Q152 ∈ {Unclear, Very Unclear} | GATE |
 | `Q154_NUM_REFERRED_OUT` | `0 ≤ n ≤ 100,000` (over 6 months); warn if `> 10,000` | HARD / SOFT |
 | Q162 enabled | Q161 ∈ {Neither, Dissatisfied, Very Dissatisfied} | GATE |
@@ -542,15 +545,21 @@ postproc
   endif;
 ```
 
-### 4.14 Field Control — consent terminator
+### 4.14 Field Control — break-off terminator
+
+The `CONSENT_GIVEN` item was removed 2026-06-12 (not on the April-20 paper Field Control form). Early termination — including consent refusal — runs through `BREAKOFF` at case start, which sets Result of Visit and the auto `CASE_DISPOSITION`.
 
 ```cspro
-PROC CONSENT_GIVEN
+PROC BREAKOFF
 postproc
-  if CONSENT_GIVEN = 2 then              { No — respondent withdraws }
-    ENUM_RESULT_FINAL_VISIT = 3;         { Refused }
-    errmsg("Consent not given. Close the questionnaire and code as Refused.");
-    endgroup;                            { terminate — do not enter Section A }
+  if not (BREAKOFF in 1, 2, 3, 4) then BREAKOFF = 1; endif;   { default "Continue interview" }
+
+  if BREAKOFF <> 1 then
+    if BREAKOFF = 2 then ENUM_RESULT_FINAL_VISIT = 3; endif;   { Respondent withdrew  -> Refused }
+    if BREAKOFF = 3 then ENUM_RESULT_FINAL_VISIT = 2; endif;   { Postponed / reschedule }
+    if BREAKOFF = 4 then ENUM_RESULT_FINAL_VISIT = 4; endif;   { Stop - other         -> Incomplete }
+    CASE_DISPOSITION = 2;                                      { Partial / not completed }
+    endlevel;                                                  { terminate — do not enter Section A }
   endif;
 ```
 
@@ -594,7 +603,7 @@ Include `Capture-Helpers.apc` in the form's .app:
 { Facility GPS — fired on the capture-trigger item. }
 PROC FACILITY_CAPTURE_GPS
 onfocus
-  if ReadGPSReading(120, 20) then
+  if ReadGPSReading(15, 20)   { radio warm since case start — WarmUpGPS() (2026-07-19) } then
     FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
     FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
     FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
@@ -642,38 +651,9 @@ postproc
 
 ---
 
-### 4.17 Case-control preproc (SURVEY_CODE, DATE_STARTED, TIME_STARTED, AAPOR_DISPOSITION)
+### 4.17 Case-control preproc — REMOVED
 
-Added 2026-04-21 as part of the case-control extension (cross-instrument scope — same block in F3/F4 with `survey_code` set per instrument). These five items live at the top of `FIELD_CONTROL`: `SURVEY_CODE`, `INTERVIEWER_ID`, `DATE_STARTED`, `TIME_STARTED`, `AAPOR_DISPOSITION`.
-
-All four auto-set fields are prefilled on the first visit to the case; `INTERVIEWER_ID` is the only one the enumerator types. `AAPOR_DISPOSITION` is reassigned at well-defined transition points (consent refusal, eligibility termination, and CLOSING postproc).
-
-```
-PROC FIELD_CONTROL
-preproc
-  { Prefill the case-control block on first visit. visualvalue() returns
-    the case's current value — when blank, this is a fresh case. }
-  if visualvalue(SURVEY_CODE) = "" then
-    SURVEY_CODE       = "F1";                         { per-instrument literal }
-    DATE_STARTED      = tonumber(sysdate("YYYYMMDD"));
-    TIME_STARTED      = tonumber(systime("HHMMSS"));
-    AAPOR_DISPOSITION = 0;                            { 000 = In Progress }
-  endif;
-
-PROC CONSENT_GIVEN
-postproc
-  { Consent refusal → final disposition 210 (respondent refusal), jump to closing. }
-  if CONSENT_GIVEN = 2 then
-    AAPOR_DISPOSITION = 210;
-    skip to AAPOR_DISPOSITION_FINAL;  { CLOSING form field }
-  endif;
-```
-
-**Notes:**
-- `sysdate("YYYYMMDD")` and `systime("HHMMSS")` are CSPro 8.0 system functions; `tonumber()` strips any formatting. Store as numeric so range/consistency checks are straightforward downstream.
-- The AAPOR `210` code used on consent refusal is AAPOR 2023 "Refusal — respondent" (see `cspro_helpers.py` `AAPOR_DISPOSITION_OPTIONS`). The eligibility terminator at §4.2 should similarly reassign (`230` for eligible non-interview / tenure < 6mo fails re-screen).
-- `INTERVIEWER_ID` is left blank — enumerator enters manually. Don't prefill from `fieldvar()` even if available, because enumerator assignments may rotate mid-day (two enumerators sharing one tablet).
-- `AAPOR_DISPOSITION` on the CLOSING form is rewritten in `postproc` to the final code per AAPOR 2023 rules. Complete → `110`; Partial → `120`; Non-contact → `220`; etc.
+The case-control block (`SURVEY_CODE`, `DATE_STARTED`, `TIME_STARTED`, `INTERVIEWER_ID`, `AAPOR_DISPOSITION`, `AAPOR_DISPOSITION_FINAL`, `CONSENT_GIVEN`) and its preproc were **removed on 2026-06-12** — they were not on the April-20 paper Field Control form. Case outcome is carried by the real `FIELD_CONTROL` items instead: `ENUM_RESULT_FIRST_VISIT` / `ENUM_RESULT_FINAL_VISIT` (Result of Visit), `BREAKOFF`, and the auto-written `CASE_DISPOSITION` (0 In progress / 1 Completed / 2 Partial / not completed). There is no consent field — consent refusal is recorded as Result of Visit `3 — Refused`.
 
 ---
 
@@ -713,4 +693,4 @@ The six items previously held "open" are now dispositioned. Two still need ASPSI
 
 ---
 
-*This spec is generated from the Apr 20 2026 Annex F1 PDF and the Apr 21 dcf (12 records / 671 items, post-GPS/photo capture pass + case-control extension). Update both this file and `generate_dcf.py` whenever the questionnaire is revised.*
+*This spec is generated from the Apr 20 2026 Annex F1 PDF and the current `generate_dcf.py` output (post-GPS/photo capture pass; the case-control block was removed 2026-06-12). Update both this file and `generate_dcf.py` whenever the questionnaire is revised.*

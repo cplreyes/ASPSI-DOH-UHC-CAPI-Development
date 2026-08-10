@@ -7,6 +7,9 @@ tags: [data-dictionary, value-sets, cspro, f1, facility-head]
 
 # Source — Facility Head Survey Data Dictionary and Value Sets
 
+> [!info] Superseded by the consolidated export
+> This is the **April-9 draft** F1-only sample (flat single-record, ~115 items). The build-current dictionary — all three instruments (F1 now 12 records / 316 items, plus F3 & F4), multi-language labels, full value sets — is [[Source - Dictionary Names Labels and Value Sets]] (ingested 2026-07-20). Use that for anything current; this page is kept as the early-baseline record.
+
 Excel workbook containing the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro|CSPro]] data dictionary structure and value set definitions for the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F1 Facility Head Survey Questionnaire|Facility Head Survey (F1)]]. This is a working/sample dictionary — likely an early draft or reference for building the actual CSPro .dcf file.
 
 ## Sheet 1: Dictionary Names and Labels

@@ -27,7 +27,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from cspro_helpers import select_all_exclusive_warning_procs
+from cspro_helpers import select_all_exclusive_warning_procs, numberize_errmsgs
 
 HERE = Path(__file__).parent
 OUT = HERE / "FacilityHeadSurvey.ent.apc"
@@ -331,18 +331,38 @@ def why_difficult_gate_procs(names, checkbox_fields):
                 continue
             opt_idx = q - start + 1
             code = (override or {}).get(q, f"{opt_idx:02d}")   # F1-LOGIC-01: reordered tail uses explicit code
-            cond = (f'pos("{code}", {gate_dict}) = 0' if gate_cb
-                    else f"{gate_dict}_O{int(code):02d} <> 1")
             idx = names.index(field)
             target = next((names[j] for j in range(idx + 1, len(names))
                            if qnum_of.get(names[j]) != q), None)
             if target is None:
                 continue
+            if gate_cb:
+                # 2026-07-02 #450-class fix: membership via an aligned 2-char chunk scan.
+                # pos("NN", <cb>) substring-matches ACROSS code boundaries once the gate
+                # list carries 2-digit codes (Q121 has 09-13: ticking 01+02 packs "0102",
+                # which contains "10" and falsely opened the hospitals-only batteries;
+                # their >=1 postproc then hard-forced a fabricated answer). do..while +
+                # [p:2] + tonumber are the strict-Publish-safe forms (#450 build notes).
+                cond_block = (
+                    f"  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;\n"
+                    f"  wdHit = 0;\n"
+                    f"  wdN = length(strip({gate_dict})) / 2;\n"
+                    f"  do wdK = 1 while wdK <= wdN\n"
+                    f"    wdP = (wdK - 1) * 2 + 1;\n"
+                    f"    if tonumber({gate_dict}[wdP:2]) = {int(code)} then wdHit = 1; endif;\n"
+                    f"  enddo;\n"
+                    f"  if wdHit = 0 then   {{ Q{q} shown only if Q{gateq} difficulty option {code} ticked }}\n"
+                    f"    skip to {target};\n  endif;"
+                )
+            else:
+                cond_block = (
+                    f"  if {gate_dict}_O{int(code):02d} <> 1 then   {{ Q{q} cluster shown only if {gate_dict}_O{int(code):02d} flagged Yes }}\n"
+                    f"    skip to {target};\n  endif;"
+                )
             if field in checkbox_fields:           # gate + validation on the Check Box
                 procs[field] = (
                     f"PROC {field}\npreproc\n"
-                    f"  if {cond} then   {{ Q{q} shown only if Q{gateq} difficulty option {code} ticked }}\n"
-                    f"    skip to {target};\n  endif;\npostproc\n"
+                    + cond_block + "\npostproc\n"
                     f"  if length(strip({field})) = 0 then\n"
                     f'    errmsg("Select at least one option for Q{q} before continuing.");\n'
                     f"    reenter;\n  endif;"
@@ -360,9 +380,7 @@ def why_difficult_gate_procs(names, checkbox_fields):
                     )
             else:                                  # non-converted select_all -> _O01 gate
                 procs[field] = (
-                    f"PROC {field}\npreproc\n"
-                    f"  if {cond} then   {{ Q{q} cluster shown only if {gate_dict}_O{int(code):02d} flagged Yes }}\n"
-                    f"    skip to {target};\n  endif;"
+                    f"PROC {field}\npreproc\n" + cond_block
                 )
     return procs
 
@@ -415,161 +433,9 @@ preproc
 
 # --- Interview-control scaffolding: consent gate, GPS, photo, PSGC -----------
 # Item names per generate_dcf.py (FIELD_CONTROL, REC_FACILITY_CAPTURE, geo-ID).
-CONTROL_PROCS = """\
-{ ---- Single 12-digit Questionnaire Number (redesign 2026-06-10) ----
-  The enumerator types ONE number (RR PP MMM FF CCC). Parse it into the component
-  PSGC codes (kept as FIELD_CONTROL items so every downstream PROC keeps working),
-  validate region/province/city against the PSGC external dicts (hard-stop on a bad
-  code), and fill the read-only *_NAME items shown on the form. The full 10-digit
-  PSGC codes are also written to the off-form REGION/PROVINCE_HUC/CITY_MUNICIPALITY
-  items so the BARANGAY cascade filters correctly. ---- }
-PROC QUESTIONNAIRE_NUMBER
-postproc
-  { 0. record the interview language at the true case start (§15.E) }
-  LANGUAGE_USED = getlanguage();
-  { #744/#561: mark the case In Progress at case open; a force-quit case keeps 0.
-    Guarded so a reopened completed/partial case is not reset. }
-  if not (CASE_DISPOSITION in 1, 2) then CASE_DISPOSITION = 0; endif;
-  { 1. decompose the within-parent codes }
-  REGION_CODE            = int(QUESTIONNAIRE_NUMBER / 10000000000);
-  PROVINCE_HUC_CODE      = int(QUESTIONNAIRE_NUMBER / 100000000) % 100;
-  CITY_MUNICIPALITY_CODE = int(QUESTIONNAIRE_NUMBER / 100000) % 1000;
-  FACILITY_NO            = int(QUESTIONNAIRE_NUMBER / 1000) % 100;
-  CASE_SEQ               = QUESTIONNAIRE_NUMBER % 1000;
-
-  { 2. geo prefix: the number's first 7 digits ARE positions 1-7 of the 10-digit
-       PSGC (positional slice per the adopted convention) - append 000 for the
-       full geo code. It matches either a city/municipality code or, for
-       province-anchored facilities (e.g. district hospitals), a province code. }
-  regionFull = REGION_CODE * 100000000;
-  geoFull    = int(QUESTIONNAIRE_NUMBER / 100000) * 1000;
-  REGION     = regionFull;
-
-  { 3a. region: exact match + name }
-  geoFound = 0;
-  R_PARENT_CODE = 0;
-  if loadcase(PSGC_REGION_DICT, R_PARENT_CODE) <> 0 then
-    do varying numeric ri = 1 until ri > count(PSGC_REGION_DICT.PSGC_REGION_REC)
-      if R_CODE(ri) = regionFull then
-        REGION_NAME = strip(R_NAME(ri));
-        geoFound = 1;
-      endif;
-    enddo;
-  endif;
-  if geoFound = 0 then
-    errmsg("Region code %02d not found in PSGC. Check the Questionnaire Number.", REGION_CODE);
-    reenter;
-  endif;
-
-  { 3b. resolve the 7-digit prefix hierarchically: province-level match first,
-       else scan that province's cities. Fills both names + the full PSGC codes
-       (CITY_MUNICIPALITY feeds the barangay cascade). }
-  geoFound = 0;
-  P_PARENT_REGION = regionFull;
-  if loadcase(PSGC_PROVINCE_DICT, P_PARENT_REGION) <> 0 then
-    do varying numeric pi = 1 until pi > count(PSGC_PROVINCE_DICT.PSGC_PROVINCE_REC) or geoFound = 1
-      if P_CODE(pi) = geoFull then
-        { province-anchored facility: geo resolves at province level }
-        PROVINCE_NAME     = strip(P_NAME(pi));
-        CITY_NAME         = strip(P_NAME(pi));
-        PROVINCE_HUC      = geoFull;
-        CITY_MUNICIPALITY = geoFull;
-        geoFound = 1;
-      else
-        C_PARENT_PROVINCE = P_CODE(pi);
-        if loadcase(PSGC_CITY_DICT, C_PARENT_PROVINCE) <> 0 then
-          do varying numeric ci = 1 until ci > count(PSGC_CITY_DICT.PSGC_CITY_REC) or geoFound = 1
-            if C_CODE(ci) = geoFull then
-              PROVINCE_NAME     = strip(P_NAME(pi));
-              CITY_NAME         = strip(C_NAME(ci));
-              PROVINCE_HUC      = P_CODE(pi);
-              CITY_MUNICIPALITY = geoFull;
-              geoFound = 1;
-            endif;
-          enddo;
-        endif;
-      endif;
-    enddo;
-  endif;
-  if geoFound = 0 then
-    errmsg("Geo prefix %07d not found in PSGC (no province or city/municipality matches). Check the Questionnaire Number.", int(QUESTIONNAIRE_NUMBER / 100000));
-    reenter;
-  endif;
-
-  { 4. the geo names are display-only confirmations - lock them read-only }
-  protect(REGION_NAME, true);
-  protect(PROVINCE_NAME, true);
-  protect(CITY_NAME, true);
-
-{ Informed consent: the separate CONSENT_GIVEN field was removed 2026-06-12.
-  Consent refusal is now recorded by the enumerator as the Result-of-Visit
-  disposition ("Refused" = code 3); the read-aloud consent script is read from
-  the printed sheet (off the CAPI). No consent gate PROC. }
-
-{ ---- #157 Facility GPS — AUTO-FETCHED on focus (2026-06-12; no manual trigger).
-  Fires when the enumerator reaches the coordinates; captured once (guarded on
-  read-time), then every GPS field is protected (read-only) so coordinates can't
-  be typed. ReadGPSReading() lives in Capture-Helpers.apc. Desktop (getos 10-19)
-  has no GPS radio → fields stay blank there (device-only). ---- }
-PROC FACILITY_GPS_LATITUDE
-onfocus
-  if length(strip(FACILITY_GPS_READTIME)) = 0 then   { capture once; not on back-nav }
-    if ReadGPSReading(120, 20) then
-      FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
-      FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
-      FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
-      FACILITY_GPS_ACCURACY   = gps(accuracy);
-      FACILITY_GPS_SATELLITES = gps(satellites);
-      FACILITY_GPS_READTIME   = maketext("%d", gps(readtime));
-    endif;
-  endif;
-  { Protect ONLY once captured — protecting a blank numeric (no fix / desktop)
-    triggers "protected field is out of range - value is NOTAPPL". }
-  if length(strip(FACILITY_GPS_READTIME)) > 0 then
-    protect(FACILITY_GPS_LATITUDE, true);
-    protect(FACILITY_GPS_LONGITUDE, true);
-    protect(FACILITY_GPS_ALTITUDE, true);
-    protect(FACILITY_GPS_ACCURACY, true);
-    protect(FACILITY_GPS_SATELLITES, true);
-    protect(FACILITY_GPS_READTIME, true);
-  endif;
-
-{ ---- #231 Verification photo (moved to the END of the form 2026-06-12). Filename
-  pattern case-{12-digit case id RR-PP-MMM-FF-CCC}-verification.jpg. Now CONDITIONAL on
-  the visit outcome and soft-validated (warn, don't trap, on camera failure). ---- }
-PROC VERIFICATION_PHOTO_FILENAME
-preproc
-  { display-only — the camera trigger fills this; it is never typed }
-  noinput;
-
-PROC CAPTURE_VERIFICATION_PHOTO
-preproc
-  { gate: photograph only visits where an interview occurred
-    (1 Completed, 4 Incomplete); skip 2 Postponed / 3 Refused }
-  if not (ENUM_RESULT_FINAL_VISIT in 1, 4) then
-    VERIFICATION_PHOTO_FILENAME = "";   { clear any stale name if outcome was changed back }
-    noinput;
-  endif;
-onfocus
-  { capture once: an empty filename means no photo yet, so (re)try the camera }
-  if length(strip(VERIFICATION_PHOTO_FILENAME)) = 0 then
-    string fn = "case-" + maketext("%02d%02d%03d%02d%03d", REGION_CODE, PROVINCE_HUC_CODE, CITY_MUNICIPALITY_CODE, FACILITY_NO, CASE_SEQ) + "-verification.jpg";
-    if TakeVerificationPhoto(fn) then
-      VERIFICATION_PHOTO_FILENAME = fn;
-    else
-      errmsg("Verification photo not captured (camera cancelled or unavailable). Re-enter this field to retry, or note the reason in your field report.");
-    endif;
-  endif;
-  CAPTURE_VERIFICATION_PHOTO = notappl;
-
-{ ---- #232 / #151 Barangay cascade (single-number redesign): region/province/city
-  are derived from the Questionnaire Number (off-form), so only barangay is picked
-  here — its value set is filtered to the children of the derived city. CITY_MUNICIPALITY
-  holds the full 10-digit city PSGC code (set in QUESTIONNAIRE_NUMBER postproc). ---- }
-PROC BARANGAY
-onfocus
-  FillBarangayValueSet(CITY_MUNICIPALITY);
-"""
+# R1a (2026-07-03): the single-QN parse/validate + PSGC-gate control block lives in procs/control_procs.apc — a real .apc fragment,
+# editable/diffable as CSPro code. Spliced verbatim at generation time.
+CONTROL_PROCS = (Path(__file__).resolve().parent / "procs" / "control_procs.apc").read_text(encoding="utf-8")
 
 # --- Bespoke PROCs transcribed verbatim from spec §4 (author-validated names).
 # Each entry is keyed by the field name it owns so we never emit a duplicate
@@ -1086,19 +952,47 @@ PROC Q102_HAS_BUCAS
 postproc
   if Q102_HAS_BUCAS = 1 then  skip to Q104_BUCAS_SERVICES; endif;  { Yes -> services (skip Q103) }
   if Q102_HAS_BUCAS = 3 then  skip to Q108_HEARD_GAMOT;        endif;  { I don't know -> Q108 }""",
+    # #1023/#1024 (pretest 2026-08-04): the unconditional skip JUMPED OVER the
+    # Q103_OTHER_TXT specify field, so choosing Other (5) never opened the text
+    # box. Route through the specify field on 5; its own postproc resumes the skip.
     "Q103_NO_BUCAS_REASON": """\
 PROC Q103_NO_BUCAS_REASON
 postproc
-  skip to Q108_HEARD_GAMOT;          { any answer -> Q108 (skip Q104-107) }""",
+  if Q103_NO_BUCAS_REASON <> 5 then
+    Q103_OTHER_TXT = "";               { not Other -> clear + skip Q104-107 }
+    skip to Q108_HEARD_GAMOT;
+  endif;
+  { Other (5) -> fall through to Q103_OTHER_TXT }""",
+    "Q103_OTHER_TXT": """\
+PROC Q103_OTHER_TXT
+postproc
+  if length(strip(Q103_OTHER_TXT)) = 0 then
+    errmsg("Q103: 'Other (specify)' was selected. Please specify.");
+    reenter;
+  endif;
+  skip to Q108_HEARD_GAMOT;            { specify captured -> resume the Q103 skip }""",
     # Section E: Q109 GAMOT-accredited (No falls through to Q110)
     "Q109_GAMOT_ACCRED": """\
 PROC Q109_GAMOT_ACCRED
 postproc
   if Q109_GAMOT_ACCRED = 1 then  skip to Q111_GAMOT_FACTORS; endif;  { Yes (skip Q110) }""",
+    # #1024 (tester comment): same skip-over-the-specify-field bug as Q103.
     "Q110_NO_GAMOT_REASON": """\
 PROC Q110_NO_GAMOT_REASON
 postproc
-  skip to Q112_STOCKOUT;             { any answer -> Q112 (skip Q111) }""",
+  if Q110_NO_GAMOT_REASON <> 5 then
+    Q110_OTHER_TXT = "";               { not Other -> clear + skip Q111 }
+    skip to Q112_STOCKOUT;
+  endif;
+  { Other (5) -> fall through to Q110_OTHER_TXT }""",
+    "Q110_OTHER_TXT": """\
+PROC Q110_OTHER_TXT
+postproc
+  if length(strip(Q110_OTHER_TXT)) = 0 then
+    errmsg("Q110: 'Other (specify)' was selected. Please specify.");
+    reenter;
+  endif;
+  skip to Q112_STOCKOUT;               { specify captured -> resume the Q110 skip }""",
     # Section E: Q116 = No / Did-not-experience -> Q118 (codes per dcf value set; verify)
     "Q116_ADDR_STOCKOUT": """\
 PROC Q116_ADDR_STOCKOUT
@@ -1155,13 +1049,22 @@ DISPOSITION_PROCS = {
     "BREAKOFF": """\
 PROC BREAKOFF
 preproc
-  if not (BREAKOFF in 1, 2, 3, 4) then BREAKOFF = 1; endif;   { default "Continue interview" }
+  { The guard MUST list every valid code - anything outside it is silently reset to
+    Continue. Widened to 1..7 on 2026-07-14; leaving it at 1..4 would have erased every
+    replacement the moment the field was revisited. }
+  if not (BREAKOFF in 1, 2, 3, 4, 5, 6, 7) then BREAKOFF = 1; endif;   { default "Continue interview" }
 postproc
   if BREAKOFF <> 1 then
+    { 2-4: the interview STARTED and then stopped. }
     if BREAKOFF = 2 then ENUM_RESULT_FINAL_VISIT = 3; endif;   { Respondent withdrew -> Refused }
     if BREAKOFF = 3 then ENUM_RESULT_FINAL_VISIT = 2; endif;   { Postponed / reschedule }
     if BREAKOFF = 4 then ENUM_RESULT_FINAL_VISIT = 4; endif;   { Stop - other -> Incomplete }
-    CASE_DISPOSITION = 2;   { partial / broke off }
+    { 5-7: the interview NEVER STARTED (refused at the door / not found / ineligible).
+      Per ASPSI, every such unit is replaced by a substitute, so all three land on
+      Replaced(5) - BREAKOFF keeps the reason. Replacements = count(BREAKOFF in 5,6,7).
+      Postponed(3) is NOT a replacement: that unit is revisited, not substituted. }
+    if BREAKOFF in 5, 6, 7 then ENUM_RESULT_FINAL_VISIT = 5; endif;   { Replaced }
+    CASE_DISPOSITION = 2;   { partial / not completed }
     skip to ENUM_RESULT_FINAL_VISIT;
   endif;""",
     "ENUM_RESULT_FINAL_VISIT": """\
@@ -1391,6 +1294,9 @@ def main():
     parts.append(TODO_NOTE)
 
     text = "\n".join(parts).rstrip() + "\n"
+    # R2 (2026-07-03): inline errmsg literals -> numbered messages + .ent.mgf
+    # (stable numbers via messages-registry.json; displayed text unchanged).
+    text = numberize_errmsgs(text, HERE, OUT.with_suffix(".mgf"), "FacilityHeadSurvey")
     OUT.write_text(text, encoding="utf-8")
     n_procs = text.count("\nPROC ") + text.startswith("PROC ")
     print(f"Wrote {OUT} ({len(text)} chars, ~{n_procs} PROC blocks).")

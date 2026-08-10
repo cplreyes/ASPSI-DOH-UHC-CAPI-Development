@@ -1,0 +1,7 @@
+# probe: reach Q107 ticklist and shot it (find option-3 checkbox coords)
+rmdata ../F3/desktest.csdb
+launch ../F3/PatientSurvey_desktest.pff
+casekey 04 03 403 02 001
+type 2
+type 1
+shot ticklist03

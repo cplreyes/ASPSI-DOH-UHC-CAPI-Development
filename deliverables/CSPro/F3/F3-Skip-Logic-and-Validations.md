@@ -62,7 +62,7 @@ Format: **Trigger → Destination (skip range)**. Multiple "No / IDK / Not appli
 | Q | Condition | Skip to |
 |---|---|---|
 | Q1 IS_PATIENT | = Yes (1) | **Q4** (skip Q2, Q3; respondent IS the patient, no relationship or co-residence questions needed) |
-| — | `FIELD_CONTROL.CONSENT_GIVEN = No` | **Terminate interview** with `ENUM_RESULT = Withdraw Participation/Consent` |
+| — | `FIELD_CONTROL.BREAKOFF = Respondent withdrew (2)` | **Terminate interview** with `ENUM_RESULT_FINAL_VISIT = 6 (Withdraw Participation/Consent)` + `CASE_DISPOSITION = 2` |
 
 ### Section B — Patient Profile
 
@@ -130,7 +130,8 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | Linkage consistency | `F3.REGION == F1.REGION` (and PROVINCE_HUC / CITY_MUNICIPALITY / BARANGAY) for the linked facility record — prevents accidental cross-region linkage | HARD |
 | `PATIENT_TYPE` | Required, ∈ {Outpatient, Inpatient}; drives Section G vs Section H gating | HARD |
 | `PATIENT_LISTING_NO` | Required, 4-digit zero-filled; must match a row in the F3b patient listing export | HARD |
-| `CONSENT_GIVEN` | Required; if = No → terminate with `ENUM_RESULT = Withdraw Participation/Consent` | HARD |
+| `BREAKOFF` | Required; defaults to `1 — Continue interview`. If ≠ Continue → terminate; sets `ENUM_RESULT_FINAL_VISIT` (2 Withdrew → 6 Withdraw Participation/Consent; 3 Postponed → 3; 4 Stop-other → 4 Incomplete) and `CASE_DISPOSITION = 2` | HARD |
+| `CASE_DISPOSITION` | Auto-written by logic, never typed: 0 In progress / 1 Completed / 2 Partial / not completed | — |
 | `ENUM_RESULT_FIRST_VISIT = Completed` / `Completed at Hospital` / `Completed at Home` | All Section A–L mandatory items must be non-blank | HARD |
 
 ### 3.2 Section A — Introduction and Informed Consent
@@ -870,14 +871,21 @@ preproc
 endpreproc
 ```
 
-### 4.2 Field Control — consent terminator
+### 4.2 Field Control — break-off terminator
+
+The `CONSENT_GIVEN` item was removed 2026-06-12 (not on the April-20 paper Field Control form). Early termination — including consent withdrawal — runs through `BREAKOFF` at case start.
 
 ```cspro
-PROC CONSENT_GIVEN
+PROC BREAKOFF
 postproc
-  if CONSENT_GIVEN = 2 then  { No }
-    ENUM_RESULT_FIRST_VISIT = 4;   { Withdraw Participation/Consent — code per Field Control value set }
-    endgroup;                      { close the questionnaire }
+  if not (BREAKOFF in 1, 2, 3, 4) then BREAKOFF = 1; endif;   { default "Continue" }
+
+  if BREAKOFF <> 1 then
+    if BREAKOFF = 2 then ENUM_RESULT_FINAL_VISIT = 6; endif;   { Withdraw Participation/Consent }
+    if BREAKOFF = 3 then ENUM_RESULT_FINAL_VISIT = 3; endif;   { Postponed }
+    if BREAKOFF = 4 then ENUM_RESULT_FINAL_VISIT = 4; endif;   { Incomplete }
+    CASE_DISPOSITION = 2;                                      { Partial / not completed }
+    endlevel;                                                  { close the questionnaire }
   endif;
 ```
 
@@ -938,7 +946,7 @@ Include `Capture-Helpers.apc` in the form's .app:
 { Facility GPS — fired on the capture-trigger item. }
 PROC FACILITY_CAPTURE_GPS
 onfocus
-  if ReadGPSReading(120, 20) then
+  if ReadGPSReading(15, 20)   { radio warm since case start — WarmUpGPS() (2026-07-19) } then
     FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
     FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
     FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
@@ -951,7 +959,7 @@ onfocus
 { Patient-home GPS — same pattern on the P_HOME_ block. }
 PROC P_HOME_CAPTURE_GPS
 onfocus
-  if ReadGPSReading(120, 20) then
+  if ReadGPSReading(15, 20)   { radio warm since case start — WarmUpGPS() (2026-07-19) } then
     P_HOME_GPS_LATITUDE   = maketext("%f", gps(latitude));
     P_HOME_GPS_LONGITUDE  = maketext("%f", gps(longitude));
     P_HOME_GPS_ALTITUDE   = maketext("%f", gps(altitude));
@@ -1256,29 +1264,9 @@ postproc
 
 ---
 
-### 4.16 Case-control preproc (SURVEY_CODE, DATE_STARTED, TIME_STARTED, AAPOR_DISPOSITION)
+### 4.16 Case-control preproc — REMOVED
 
-Added 2026-04-21 — same shape as F1 §4.17 and F4 §4.X. Five case-control items at the top of `FIELD_CONTROL`: `SURVEY_CODE` (literal "F3"), `INTERVIEWER_ID`, `DATE_STARTED`, `TIME_STARTED`, `AAPOR_DISPOSITION` (AAPOR 2023 value set).
-
-```
-PROC FIELD_CONTROL
-preproc
-  if visualvalue(SURVEY_CODE) = "" then
-    SURVEY_CODE       = "F3";
-    DATE_STARTED      = tonumber(sysdate("YYYYMMDD"));
-    TIME_STARTED      = tonumber(systime("HHMMSS"));
-    AAPOR_DISPOSITION = 0;                            { 000 = In Progress }
-  endif;
-
-PROC CONSENT_GIVEN
-postproc
-  if CONSENT_GIVEN = 2 then
-    AAPOR_DISPOSITION = 210;              { Refusal — respondent }
-    skip to AAPOR_DISPOSITION_FINAL;
-  endif;
-```
-
-See F1 §4.17 for full notes on AAPOR codes and transition rules.
+The case-control block (`SURVEY_CODE`, `DATE_STARTED`, `TIME_STARTED`, `INTERVIEWER_ID`, `AAPOR_DISPOSITION`, `AAPOR_DISPOSITION_FINAL`, `CONSENT_GIVEN`) and its preproc were **removed on 2026-06-12** — they were not on the April-20 paper Field Control form. Case outcome is carried by the real `FIELD_CONTROL` items instead: `ENUM_RESULT_FIRST_VISIT` / `ENUM_RESULT_FINAL_VISIT` (Result of Visit — 1 Completed / 2 Completed at the Hospital / 3 Postponed / 4 Incomplete / 5 Completed at Home / 6 Withdraw Participation/Consent), `BREAKOFF`, and the auto-written `CASE_DISPOSITION` (0 In progress / 1 Completed / 2 Partial / not completed). There is no consent field — withdrawal is recorded as Result of Visit `6 — Withdraw Participation/Consent`.
 
 ---
 

@@ -1,0 +1,50 @@
+{
+ "generated": "2026-07-22 01:19 UTC",
+ "instruments": {
+  "f1": {
+   "name": "F1 \u2014 Facility Head Survey",
+   "version": "1.1.4",
+   "date": "2026-07-19",
+   "variables": 316,
+   "xlsx": "F1-Codebook-v1.1.4.xlsx",
+   "pdf": "F1-Codebook-v1.1.4.pdf",
+   "skip_rules": 46,
+   "validations": 111
+  },
+  "f3": {
+   "name": "F3 \u2014 Patient Survey",
+   "version": "1.1.5",
+   "date": "2026-07-19",
+   "variables": 370,
+   "xlsx": "F3-Codebook-v1.1.5.xlsx",
+   "pdf": "F3-Codebook-v1.1.5.pdf",
+   "skip_rules": 50,
+   "validations": 377
+  },
+  "f4": {
+   "name": "F4 \u2014 Household Survey",
+   "version": "1.4.4",
+   "date": "2026-07-19",
+   "variables": 299,
+   "xlsx": "F4-Codebook-v1.4.4.xlsx",
+   "pdf": "F4-Codebook-v1.4.4.pdf",
+   "skip_rules": 68,
+   "validations": 241
+  },
+  "f2": {
+   "name": "F2 \u2014 Healthcare Worker Survey (PWA)",
+   "version": "PWA",
+   "date": "2026-07-22",
+   "variables": 130,
+   "xlsx": "F2-Codebook-2026-07-22.xlsx",
+   "pdf": "F2-Codebook-2026-07-22.pdf",
+   "skip_rules": 0,
+   "validations": 0
+  }
+ },
+ "combined": {
+  "html": "UHC-Y2-Codebook-2026-07-22.html",
+  "pdf": "UHC-Y2-Codebook-2026-07-22.pdf",
+  "zip": "uhc-year2-codebooks.zip"
+ }
+}

@@ -27,6 +27,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from cspro_helpers import (
     other_specify_procs, select_all_validation_procs, range_check_proc,
+    numberize_errmsgs,
+)
+from generate_dcf import (   # roster ladders (same dir) — single source with the dcf occ labels
+    FOOD_WEEKLY_ITEMS, NONFOOD_1M_ITEMS, NONFOOD_6M_ITEMS, NONFOOD_12M_ITEMS,
+    HEALTH_12M_ITEMS, HEALTH_6M_ITEMS, HEALTH_1M_ITEMS, WEEKLY_OTHER_ITEMS, DK_RF_STATUS,
 )
 
 # Per-item numeric range checks (spec §3.2/§3.6/§3.12). (field, lo, hi, soft_over)
@@ -37,6 +42,10 @@ RANGE_CHECKS = [
     ("Q67_TRAVEL_HH",          0, 24,       None),
     ("Q67_TRAVEL_MM",          0, 59,       None),
     ("TOTAL_NUMBER_OF_VISITS", 1, 10,       3),
+    # Range.docx (Aly, 2026-07-08): Q95 0-999 / Q96 0-99,999. Width caps both maxima;
+    # these checks block stray negatives (CSEntry accepts a typed minus, #743 class).
+    ("Q95_TRAVEL_TIME_MIN",    0, 999,      None),
+    ("Q96_TRAVEL_COST_PHP",    0, 99999,    None),
     ("Q199_WTP_CONSULT",       0, 99999999, None),
 ]
 
@@ -141,6 +150,11 @@ CONTROL_PROCS = """\
   the PSGC dicts, fill the read-only *_NAME items, and set the full PSGC codes
   on the off-form geo items so the BARANGAY cascade filters correctly. ---- }
 PROC QUESTIONNAIRE_NUMBER
+preproc
+  { GPS warm-start (2026-07-19): open the radio while the enumerator types the
+    case key so the fix has converged by the HH GPS capture on the geo form —
+    the read is then near-instant instead of a cold acquisition. Desktop no-op. }
+  WarmUpGPS();
 postproc
   LANGUAGE_USED = getlanguage();   { record interview language at case start (§15.E) }
   if not (CASE_DISPOSITION in 1, 2) then
@@ -220,7 +234,9 @@ onfocus
 PROC LATITUDE
 onfocus
   if length(strip(HH_GPS_READTIME)) = 0 then   { capture once; not on back-nav }
-    if ReadGPSReading(120, 20) then
+    { 15 s budget: the radio has been warm since the case key (WarmUpGPS), so a
+      fresh fix normally arrives in ~1-2 s; 15 s only caps the no-signal case. }
+    if ReadGPSReading(15, 20) then
       LATITUDE          = maketext("%f", gps(latitude));
       LONGITUDE         = maketext("%f", gps(longitude));
       HH_GPS_ALTITUDE   = maketext("%f", gps(altitude));
@@ -238,6 +254,7 @@ onfocus
     protect(HH_GPS_ACCURACY, true);
     protect(HH_GPS_SATELLITES, true);
     protect(HH_GPS_READTIME, true);
+    ReleaseGPS();   { F4's only GPS block — close the radio once captured }
   endif;
 
 { ---- #231 Verification photo (moved to the END of the form 2026-06-12). CONDITIONAL on
@@ -407,125 +424,9 @@ postproc
   endif;
 """
 
-EXTRA_PROCS = """\
-{ ---- Section A: Q1 household-head soft confirm (#520). If the respondent is NOT the
-       HH head (Q1 = No), warn the enumerator and CONTINUE — no skip, no terminate.
-       Per spec (Section A): some items may still be asked but flagged; the survey-design
-       decision is soft-warn-and-continue, not a hard stop. ---- }
-PROC Q1_IS_HH_HEAD
-postproc
-  if Q1_IS_HH_HEAD = 2 then
-    errmsg("Respondent is not the household head. Confirm they are a household decision-maker per the sampling protocol before continuing.");
-  endif;
-
-{ ---- #796/#797: the area-presence screening questions ("Does this area have a BUCAS
-       center?" / "...a GAMOT pharmacy/package?") are REMOVED per tester request — the BUCAS
-       (Q57-61) and GAMOT (Q69-76) blocks are now asked of everyone. The fields are kept only
-       as skip targets (Q54=No -> AREA_HAS_BUCAS, Q62=Never -> AREA_HAS_GAMOT): auto-answer
-       Yes + noinput so they never display and flow falls straight through to Q57 / Q69. The
-       old "= 2 -> skip the block" rules are removed from SKIP_RULES (the block no longer gates
-       on area presence). ---- }
-PROC AREA_HAS_BUCAS
-preproc
-  AREA_HAS_BUCAS = 1;   { #796: area-screening removed -> always ask BUCAS block; never displayed }
-  noinput;
-
-PROC AREA_HAS_GAMOT
-preproc
-  AREA_HAS_GAMOT = 1;   { #797: area-screening removed -> always ask GAMOT block; never displayed }
-  noinput;
-
-{ ---- #664: Q135 (ZBB out-of-pocket) is asked ONLY if the most-recent hospitalization was in
-       a DOH-retained hospital — the paper labels it "[Ask only if they went to a DOH-retained
-       hospital]". Gate on Q130 = 2; otherwise skip to Q136. Parallels Q131 (NBB OOP), which the
-       #661 rule gates the same way. Q130 = notappl (not confined) also falls through the gate
-       (notappl <> 2 is true) -> Q135 correctly skipped. ---- }
-PROC Q135_ZBB_OOP
-preproc
-  if Q130_HOSPITAL_TYPE <> 2 then
-    skip to Q136_MAIFIP_HEARD;
-  endif;
-
-{ ---- 'Other (specify)' enforcement -- Q50 roster insurance + Q194 funds (audit 2026-06-11) ---- }
-PROC Q50_PRIVATE_INS_OTHER_TXT
-preproc
-  if Q49_PRIVATE_INS <> 1 then
-    Q50_PRIVATE_INS_OTHER_TXT = "";   { skip + clear: this member has no private insurance }
-    noinput;
-  endif;
-postproc
-  if Q49_PRIVATE_INS = 1 and length(strip(Q50_PRIVATE_INS_OTHER_TXT)) = 0 then
-    errmsg("Q49 says this member has private insurance. Please specify it in Q50.");
-    reenter;
-  endif;
-
-PROC Q194_OTHER_SOURCE
-postproc
-  { #684: Q186-Q194 are nine independent Yes/No funding-source flags with no aggregate
-    check, so an all-'No' battery passes silently. A household that incurred health
-    expenses must have funded them somehow -> require at least one 'Yes'. Fires on the
-    last flag (Q194) so the whole battery is entered before the check. }
-  if Q186_CURRENT_INCOME = 2 and Q187_SAVINGS = 2 and Q188_SOLD_ASSETS = 2
-     and Q189_BORROW_FAMILY = 2 and Q190_BORROW_INST = 2 and Q191_REMITTANCE = 2
-     and Q192_GOVT_ASSIST = 2 and Q193_LGU_DONATION = 2 and Q194_OTHER_SOURCE = 2 then
-    errmsg("No funding source selected (Q186-Q194 are all 'No'). At least one source must be 'Yes' - how did the household pay for the health expenses? Please review.");
-    reenter;
-  endif;
-
-PROC Q194_OTHER_TXT
-preproc
-  if Q194_OTHER_SOURCE <> 1 then
-    Q194_OTHER_TXT = "";   { skip + clear: 'Other' source not ticked }
-    noinput;
-  endif;
-postproc
-  if Q194_OTHER_SOURCE = 1 and length(strip(Q194_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected in Q194. Please specify.");
-    reenter;
-  endif;
-
-{ ---- Section G: branded/generic multi-branch (spec 2 Q76) ---- }
-PROC Q76_BRAND_OR_GEN
-postproc
-  { Q76 codes: 1 Branded / 2 Generic / 3 Both / 9 Not applicable.
-    (#646: 'Don't know the difference' code 4 removed — it contradicted Q75=Yes.
-    Its exit path is now carried solely by code 9.)
-    Q77 (why-generic) asked for Generic+Both; Q78 (why-branded) for Branded+Both. (#536/#540) }
-  if Q76_BRAND_OR_GEN = 1 then  skip to Q78_WHY_BRANDED; endif;  { Branded only -> why-branded (skip Q77) }
-  if Q76_BRAND_OR_GEN = 9 then  skip to Q79_REG_SOURCE;  endif;  { Not applicable (9) -> exit Section G }
-  { Generic (2) or Both (3) fall through to Q77 why-generic }
-
-{ Q78_WHY_BRANDED is now a Check Box base (#578) — its branded-only preproc gate
-  (was PROC Q78_WHY_BRANDED_O01) is migrated into CHECKBOX_CONVERT's gate param. }
-
-{ ---- Section K: Q112 referral-visit multi-branch (spec 2 Section K) ----
-  Q112 codes: 1 Yes / 2 "No, I'm not planning to" / 3 "Not yet, but I'm planning to".
-  Q113 (why-not-planning) is asked ONLY for code 2; Yes(1) and Not-yet-planning(3)
-  proceed straight to Q114 (skip Q113). (#590/#591/#592/#593: Q112 was always
-  falling through to Q113.) Q113's own postproc then skips to Q126 (handled in the
-  Check Box conversion's postproc tail). ---- }
-PROC Q112_VISITED
-postproc
-  if Q112_VISITED = 1 or Q112_VISITED = 3 then   { Yes / Not yet but planning -> skip Q113 why-not }
-    skip to Q114_DISCUSSED_PLACES;
-  endif;
-  { code 2 ("No, I'm not planning to") falls through to Q113 why-not }
-
-{ ---- Section H gate (#649, tester mmgarciano + paper Annex F4, 2026-06-20): Section H is
-  the RESPONDENT's own PhilHealth-registration EXPERIENCE ("Answer Q79-Q88 if THE RESPONDENT
-  is registered in PhilHealth in Q45"). So gate on the RESPONDENT's Q45, not "any member" —
-  if another household member is registered but the respondent is NOT, the respondent can't
-  speak to a registration experience they never had. The respondent is roster line 1 (the
-  apc's own first-roster-entry soft-check: "First roster entry is normally the respondent
-  (Self) or HH head"), so the gate reads Q45_PHILHEALTH_REG(1). ASSUMPTION flagged to ASPSI:
-  respondent = roster line 1; if respondents are identified some other way, change the index.
-  (Was: loop "any member Q45 = Yes" — wrong per the paper.) ---- }
-PROC Q79_REG_SOURCE
-preproc
-  if Q45_PHILHEALTH_REG(1) <> 1 then
-    skip to Q89_HAS_USUAL_FACILITY;   { respondent (roster line 1) not PhilHealth-registered -> skip Section H to Section I }
-  endif;
-"""
+# R1a (2026-07-03): the hand-written PROCs lives in procs/extra_procs.apc — a real .apc fragment,
+# editable/diffable as CSPro code. Spliced verbatim at generation time.
+EXTRA_PROCS = (Path(__file__).resolve().parent / "procs" / "extra_procs.apc").read_text(encoding="utf-8")
 
 
 # --- #529 (+#573/#574, +#577-585/#588/#590-591) multi-select conversion: the F4
@@ -559,6 +460,7 @@ CHECKBOX_BASES = {
     "Q88_DIFF_PAYING", "Q102_VISIT_REASON", "Q103_CARE_TYPE", "Q106_FORGONE_WHY",
     "Q107_OTHER_ACTIONS", "Q109_TYPE",
     "Q202_WORRY_REASONS",   # #668 Section Q finance-worry reasons select_all -> Check Box
+    "Q84_WHERE_ASSIST",   # #814: Section H where-to-seek-assistance free-text -> 10-option Check Box
 }
 
 CHECKBOX_CONVERT = [
@@ -566,7 +468,7 @@ CHECKBOX_CONVERT = [
     ("Q52_UHC_SOURCE",           True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
     ("Q53_UHC_UNDERSTAND",       True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
     ("Q55_YAKAP_SOURCE",         True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
-    ("Q56_YAKAP_UNDERSTAND",     True,  True,  None),   # 'I don't know' (90) exclusive ('no benefits in the package' stays an 01.. option, mirroring F3 Q46); 'Other (Specify)' (99)
+    ("Q56_YAKAP_UNDERSTAND",     True,  True,  None),   # 'I don't know' (90) exclusive; #824: 'There are no benefits in the package' (05) HARD-standalone via CHECKBOX_EXTRA_STANDALONE (reverses the F3-Q46-mirror decision); 'Other (Specify)' (99)
     ("Q58_BUCAS_SOURCE",         True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
     ("Q59_BUCAS_UNDERSTAND",     True,  False, None),   # no None/IDK option; 'Other (specify)' (99)
     ("Q61_BUCAS_SERVICES",       True,  True,  None),   # #570: 'I don't know' (90) exclusive; 'Other (specify)' (99)
@@ -600,6 +502,7 @@ CHECKBOX_CONVERT = [
      "  endif;"),                                       # #578: gate migrated from old PROC Q78_WHY_BRANDED_O01 preproc; 'I don't know' (90) exclusive; 'Other (Specify)' (99)
     ("Q82_DIFFICULTY_REASONS",   True,  True,  None),   # #582: 'I don't know' (90) exclusive; 'Other (Specify)' (99). Not a skip-target (Q81=No skips PAST it to Q83); falls through from Q81=Yes
     ("Q88_DIFF_PAYING",          True,  True,  None),   # #582: 'I don't know' (90) exclusive; 'Other (Specify)' (99)
+    ("Q84_WHERE_ASSIST",         True,  False, None),   # #814: 10-option tick-all; 'Other (Specify)' (99); no 90 exclusive; the Q83=2 skip already jumps past it
     ("Q102_VISIT_REASON",        True,  False, None),   # #583: no None/IDK option; 'Other (Specify)' (99)
     ("Q103_CARE_TYPE",           True,  True,  None),   # #800: added exclusive 'No, I haven't accessed any form of medical care' (90) so accessed-nothing respondents can satisfy 'select >=1'; soft-warn if combined. 'Other (Specify)' (99)
     ("Q106_FORGONE_WHY",         True,  True,  None),   # #584: 'I don't know' (90) exclusive; 'Other (Specify)' (99). Skip-target from Q105=2 (skip rule repointed to bare base)
@@ -622,8 +525,11 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postproc_tail=None
     body = [f"PROC {base}"]
     if gate:
         body += ["preproc", gate]
-    body += ["postproc",
-             f"  if length(strip({base})) = 0 then",
+    body += ["postproc"]
+    if postproc_tail and has_other:
+        # locals for the chunk-scan '99' tail guard below (declared at block top)
+        body += ["  numeric tgN; numeric tgK; numeric tgP; numeric tgHit;"]
+    body += [f"  if length(strip({base})) = 0 then",
              f'    errmsg("Select at least one option for Q{qn} before continuing.");',
              "    reenter;", "  endif;"]
     if exclusive:
@@ -645,18 +551,42 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postproc_tail=None
             # 'Other' is ticked, the base field must fall through to the _OTHER_TXT box
             # (which re-runs the same tail after capturing the text); otherwise the
             # unconditional skip fires first and the specify box never appears. Guard
-            # the base tail on 'Other' NOT ticked.
-            body += [f'  if pos("99", {base}) = 0 then', postproc_tail, "  endif;"]
+            # the base tail on 'Other' NOT ticked. 2026-07-02 #450-class fix: the '99'
+            # membership chunk-scans (pos("99") false-matched e.g. 09+90 -> "0990").
+            body += ["  tgHit = 0;",
+                     f"  tgN = length(strip({base})) / 2;",
+                     "  do tgK = 1 while tgK <= tgN",
+                     "    tgP = (tgK - 1) * 2 + 1;",
+                     f"    if tonumber({base}[tgP:2]) = 99 then tgHit = 1; endif;",
+                     "  enddo;",
+                     "  if tgHit = 0 then", postproc_tail, "  endif;"]
         else:
             body += [postproc_tail]
     procs = {base: "\n".join(body)}
     if has_other:
+        # 2026-07-02 #450-class fix: '99' membership via an aligned 2-char chunk scan
+        # (pos("99") false-matched when a 9-ending code preceded a 9-starting one,
+        # e.g. 09+90 packs "0990" — the postproc then hard-blocked until junk was typed).
         other_body = (
             f"PROC {base}_OTHER_TXT\npreproc\n"
-            f'  if pos("99", {base}) = 0 then\n'
+            f"  numeric otN; numeric otK; numeric otP; numeric otHit;\n"
+            f"  otHit = 0;\n"
+            f"  otN = length(strip({base})) / 2;\n"
+            f"  do otK = 1 while otK <= otN\n"
+            f"    otP = (otK - 1) * 2 + 1;\n"
+            f"    if tonumber({base}[otP:2]) = 99 then otHit = 1; endif;\n"
+            f"  enddo;\n"
+            f"  if otHit = 0 then\n"
             f'    {base}_OTHER_TXT = "";   {{ gated: \'Other (specify)\' not ticked -> not enterable }}\n'
             f"    noinput;\n  endif;\npostproc\n"
-            f'  if pos("99", {base}) > 0 and length(strip({base}_OTHER_TXT)) = 0 then\n'
+            f"  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;\n"
+            f"  otHit2 = 0;\n"
+            f"  otN2 = length(strip({base})) / 2;\n"
+            f"  do otK2 = 1 while otK2 <= otN2\n"
+            f"    otP2 = (otK2 - 1) * 2 + 1;\n"
+            f"    if tonumber({base}[otP2:2]) = 99 then otHit2 = 1; endif;\n"
+            f"  enddo;\n"
+            f"  if otHit2 = 1 and length(strip({base}_OTHER_TXT)) = 0 then\n"
             f'    errmsg("\'Other (specify)\' was ticked for Q{qn} - please specify.");\n'
             "    reenter;\n  endif;"
         )
@@ -679,6 +609,12 @@ CHECKBOX_POSTPROC_TAILS = {
 # is contradictory with selecting specific benefits.
 CHECKBOX_EXTRA_STANDALONE = {
     "Q85_BENEFITS": [("04", "There are no benefits to being a member")],
+    # #824: Q56 "There are no benefits in the package" (05) — same contradiction class as
+    # Q85/04: claiming NO benefits while ticking specific benefits. pos() is cross-boundary-
+    # safe for both fields (a false "05"/"04" match needs a 0-ending code followed by a
+    # 5-/4-starting one; the only 0-ending code in either value set is 90 and no code starts
+    # with 5 or 4 — so the #450 chunk-scan is not required here; re-check if codes change).
+    "Q56_YAKAP_UNDERSTAND": [("05", "There are no benefits in the package")],
 }
 
 CHECKBOX_MULTISELECT_PROCS = {}
@@ -785,9 +721,15 @@ postproc
   if Q18_INCOME_BRACKET = 4 and a >= 100000 and a <= 249999 then ok = 1; endif;
   if Q18_INCOME_BRACKET = 5 and a >= 250000 and a <= 499999 then ok = 1; endif;
   if Q18_INCOME_BRACKET = 6 and a >= 500000 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 7 then ok = 1; endif;   { 7 = Refuse to answer -> no amount check }
+  { #813: bracket 7 (Refuse) is only valid when the amount itself was refused/unknown
+    (-98/-99, already ok'd above per #793). With a real amount entered the bracket is
+    derivable, so refusing it is a HARD inconsistency. }
   if ok = 0 then
-    errmsg("Income bracket does not match the reported amount (%d PHP). Reconcile.", a);
+    if Q18_INCOME_BRACKET = 7 then
+      errmsg("Q18: an income amount was provided (%d PHP), so the bracket cannot be 'Refuse to answer'. Select the bracket that matches the amount (or re-enter the amount as -99 if the respondent refused).", a);
+    else
+      errmsg("Income bracket does not match the reported amount (%d PHP). Reconcile.", a);
+    endif;
     reenter;
   endif;
 """
@@ -856,15 +798,16 @@ SKIP_RULES = [
     # falling through to questions that presume a usual facility. (The Q93 preproc gate below
     # is widened to admit the IDK path too, so Q93 is actually shown.)
     ("Q89_HAS_USUAL_FACILITY","Q89_HAS_USUAL_FACILITY = 2 or Q89_HAS_USUAL_FACILITY = 3", "Q93_WHY_NOT"),  # #529/#650: Q93 is a Check Box base (was _O01)
-    # #652 (Carl go/no-go 2026-06-20 #2 — OVERRIDE the paper to the tester's routing): Q90 "Is
-    # this the facility you usually go to for general health concerns?". The printed paper says
-    # No -> Q96, but that asks only travel COST while skipping transport (Q94) + travel-time
-    # (Q95) — internally inconsistent, since Q94/Q95/Q96 are one block about the nearest primary
-    # care facility. Per tester mmgarciano + Carl's call, Q90 = No now -> Q94 (skip Q91 why-went,
-    # Q92 type, Q93; ask the full Q94-Q96 PCF transport/time/cost block). Q90 = Yes still natural-
-    # flows to Q91 -> Q92 -> (Q93 self-skips) -> Q94. (Was -> Q96 per the paper; ASPSI to be
-    # notified that the build now departs from the printed Q90=No routing on purpose.)
-    ("Q90_IS_USUAL_FOR_GENERAL","Q90_IS_USUAL_FOR_GENERAL = 2","Q94_TRANSPORT"),
+    # #827 (2026-07-03, supersedes #652's DIRECTION): Q90 "Is this the facility you usually
+    # go to for general health concerns?". Yes(1) -> skip to Q94: their usual facility IS the
+    # general-care facility, so Q91 "why did you go [elsewhere]" / Q92 "type of that facility"
+    # don't apply (every Q91 option compares the visited facility against 'my usual one').
+    # No(2) falls through Q91 -> Q92 -> Q93's preproc gate (Q89=1 on this path) self-skips
+    # to Q94 — exactly the tester-requested "Q91, Q92, then skip to Q94". This now MATCHES
+    # F4-Skip-Logic-and-Validations.md §Section-I. History: the paper prints Yes->Q91 /
+    # No->Q96; #652 (2026-06-20) overrode No->Q94 keeping Yes->Q91; #827 flips the direction.
+    # ASPSI to be notified: BOTH directions now depart from the printed Q90 routing on purpose.
+    ("Q90_IS_USUAL_FOR_GENERAL","Q90_IS_USUAL_FOR_GENERAL = 1","Q94_TRANSPORT"),
     # #654: REMOVED the Q97=No -> Q100 skip. Q97 ("do you know how to book/access care")
     # is independent of Q98/Q99 (phone-advice availability when the facility is open/closed);
     # the paper shows no skip, so Q98/Q99 must be asked regardless of Q97. (Tester confirmed
@@ -911,7 +854,7 @@ SKIP_RULES = [
     ("Q132_ZBB_HEARD",       "Q132_ZBB_HEARD = 2 or Q132_ZBB_HEARD = 3",     "Q136_MAIFIP_HEARD"),
     ("Q136_MAIFIP_HEARD",    "Q136_MAIFIP_HEARD = 2 or Q136_MAIFIP_HEARD = 3", "Q138_MOST_EXPENSIVE"),
     ("Q140_RECALL_BREAKDOWN","Q140_RECALL_BREAKDOWN = 2",   "Q142_RECALL_PAYMENT"),    # no breakdown -> skip Q141/Q141.1
-    ("Q142_RECALL_PAYMENT",  "Q142_RECALL_PAYMENT = 2",     "Q144_CEREALS_CONSUMED"),  # no payment -> skip Q143 -> Section N
+    ("Q142_RECALL_PAYMENT",  "Q142_RECALL_PAYMENT = 2",     "N_FOOD_ITEM(1)"),  # no payment -> skip Q143 -> Section N food grid row 1 (Option C 2026-07-03; explicit occurrence — the skip source is outside the roster)
     # Section O #637: Q195 = any willing-to-set-aside answer (Less than 1%/1-3%/4-6%/
     # More than 6%/Don't know = codes 2-6) bypasses Q196 (the "what care would you
     # forego" item) -> Q197. Only Q195 = "None" (1) falls through to Q196. (Already
@@ -1216,13 +1159,16 @@ def expenditure_gate_procs(names):
         for amt in amts:
             not_consumed.append(f"    {amt} = 0;   {{ item not consumed -> no spend }}")
             not_consumed.append(f"    protect({amt}, true);")
-            # #755 (2026-06-23): pre-fill 0 so the enumerator can press Enter through an amount
-            # they have nothing to record for, instead of being forced to type 0. Clobber-safe:
-            # only set 0 when the field is NOT already a real value (>0) or a -98/-99 sentinel,
-            # so re-entering this item (back-nav) preserves what was entered. (A fresh notappl
-            # field is not > 0, so it falls through to 0 — the desired pre-fill; #617 notappl rule.)
+            # #755/#818 (2026-07-02): pre-fill 0 so the enumerator can press Enter through an
+            # amount they have nothing to record for. Guard = special(): true only while the
+            # field holds notappl/missing — i.e. "no real value yet". The previous
+            # `not ({amt} > 0)` guard was INVERTED: CSPro special values compare GREATER than
+            # any number, so a fresh notappl amount had `> 0` true and the pre-fill never ran,
+            # leaving the DisplayTogether triplet stuck at NOTAPPL (#818, and #805 before it:
+            # "does not accept any value"). special() preserves real values (incl. 0) and the
+            # -98/-99 sentinels on back-nav.
             consumed_branch.append(
-                f"    if {amt} <> {DK_AMOUNT} and {amt} <> {REFUSED_AMOUNT} and not ({amt} > 0) then {amt} = 0; endif;   {{ #755 pre-fill }}")
+                f"    if special({amt}) then {amt} = 0; endif;   {{ #755/#818 pre-fill: no-value-yet -> 0 }}")
             consumed_branch.append(f"    protect({amt}, false);   {{ enterable when consumed }}")
         body = (
             "postproc\n"
@@ -1259,10 +1205,15 @@ def consumed_amount_validation_procs(names):
         if consumed not in have or not amts:
             continue
         last_amt = amts[-1]               # block-exit field when the item is consumed
-        zero_cond = " and ".join(f"{a} = 0" for a in amts)
+        # #818: special-value-safe form — fires when every amount is 0 OR still blank
+        # (notappl is not in the -99/-98/1:99999999 list), so a blank-passed amount can
+        # neither silently satisfy the at-least-one check nor leak NOTAPPL onward.
+        zero_cond = " and ".join(
+            f"not ({a} in {REFUSED_AMOUNT}, {DK_AMOUNT}, 1:99999999)" for a in amts)
+        status_guard = _dkrf_677_guard(f"{base}_AMT_STATUS")
         procs[last_amt] = (
             "postproc\n"
-            f"  if {consumed} = 1 and {zero_cond} then\n"
+            f"  if {status_guard}{consumed} = 1 and {zero_cond} then\n"
             "    errmsg(\"This item is marked consumed by the household, so enter the amount "
             "spent purchasing it and/or the estimated value if received in-kind, as a gift, "
             "or own-produced — at least one must be greater than 0. If the household genuinely "
@@ -1271,6 +1222,45 @@ def consumed_amount_validation_procs(names):
             "    reenter;\n"
             "  endif;"
         )
+    return procs
+
+
+def flat_expenditure_amount_procs(names):
+    """#832/#833 (2026-07-04): the flat Section N weekly singles (Q158 restaurant, Q159
+    tobacco) are the only expenditure items not rosterized. They previously used the
+    CONSUMED-postproc + protect() gate (expenditure_gate_procs); on their DisplayTogether
+    screen the runtime protect(amt, false) did not reliably re-render the sibling amounts
+    enterable, so 'YES not accepting any value'. Switch them to the EXACT roster gate
+    (Q144-Q156): the gate lives in each amount's OWN preproc with noinput (DG-safe, no
+    skip-to) + a special() pre-fill, and NO protect(), so amounts are always enterable when
+    consumed. #677 (consumed-needs->=1-amount) rides on the last amount's postproc, reusing
+    the identical wording via consumed_amount_validation_procs. Returns {amount_field: proc}."""
+    procs = {}
+    have = set(names)
+    v677 = consumed_amount_validation_procs(names)   # {last_amt: 'postproc\n...'} — identical wording
+    bases = [b[: -len("_CONSUMED")] for b in names if b.endswith("_CONSUMED")]
+    for base in bases:
+        consumed = f"{base}_CONSUMED"
+        amts = [a for a in (f"{base}_PURCHASED_PHP", f"{base}_INKIND_PHP") if a in have]
+        if consumed not in have or not amts:
+            continue
+        for a in amts:
+            gate = (
+                "preproc\n"
+                "  { #832/#833 roster-parity gate (Q144-Q156): not consumed -> 0 + noinput\n"
+                "    (DG-safe, no skip-to, no protect); consumed -> #755/#818 special() pre-fill\n"
+                "    so Enter passes an empty amount. Always enterable when consumed. }\n"
+                f"  if {consumed} = 2 then\n"
+                f"    {a} = 0;\n"
+                "    noinput;\n"
+                "  else\n"
+                f"    if special({a}) then {a} = 0; endif;\n"
+                "  endif;"
+            )
+            proc = f"PROC {a}\n{gate}"
+            if a in v677:                # last amount also carries the #677 postproc
+                proc = f"{proc}\n{v677[a]}"
+            procs[a] = proc
     return procs
 
 
@@ -1294,6 +1284,314 @@ def uhc9_other_specify_procs(names):
     return procs
 
 
+def _dkrf_gate_branch(status):
+    """The DK/RF branch spliced into a roster amount preproc gate (empty when the flag is
+    off). When AMT_STATUS is DK(2)/RF(3) the amount is already -98/-99 (set by the status
+    postproc), so skip entry. Post-.format so single braces are fine."""
+    if not DK_RF_STATUS:
+        return ""
+    return (f"  elseif {status} in 2, 3 then\n"
+            f"    noinput;   {{ #7 DK/RF: amount already -98/-99 from the status field }}\n")
+
+
+def _dkrf_677_guard(status):
+    """Prefix for the #677 consumed-needs-an-amount condition — only fires on 'gave'(1)."""
+    return f"{status} = 1 and " if DK_RF_STATUS else ""
+
+
+def _amt_status_proc(prefix):
+    """#7 per-item DK/RF gate proc (empty when the flag is off). Asked only when consumed
+    (not-consumed rows default to 'gave'(1) + noinput). DK(2) -> both amounts -98; RF(3) ->
+    both -99. Amounts then skipped (roster: the gate branch above; flat: shown pre-set)."""
+    if not DK_RF_STATUS:
+        return ""
+    c, st = f"{prefix}_CONSUMED", f"{prefix}_AMT_STATUS"
+    p, k = f"{prefix}_PURCHASED_PHP", f"{prefix}_INKIND_PHP"
+    return f'''PROC {st}
+preproc
+  {{ #7 DK/RF gate - only asked when consumed; not-consumed -> 'gave' + noinput. }}
+  if {c} <> 1 then
+    {st} = 1;
+    noinput;
+  endif;
+postproc
+  {{ Don't know -> both amounts {DK_AMOUNT}; Refused -> both {REFUSED_AMOUNT} (excluded from subtotals). }}
+  if {st} = 2 then
+    {p} = {DK_AMOUNT}; {k} = {DK_AMOUNT};
+  elseif {st} = 3 then
+    {p} = {REFUSED_AMOUNT}; {k} = {REFUSED_AMOUNT};
+  endif;
+'''
+
+
+def section_n_food_roster_procs():
+    """Option C food roster (N_FOOD_ROSTER, 13 rows = Q144-Q156).
+    #834 Option A (2026-07-06): the per-row special() pre-fill AND the per-row #677 reenter
+    were REMOVED - both fired during partial-save resume-replay (rows read transiently
+    notappl on 'go to last position'): the pre-fill zeroed the stored amount and #677
+    hard-blocked at row 1. Amounts are now left enterable (not-consumed still auto-0 +
+    noinput); completeness is checked ONCE at section end (Q186, soft - no reenter, in
+    section_n_review_proc); the subtotal accumulator excludes notappl AND the -98/-99
+    sentinels via 'in 0:99999999'."""
+    nmax = len(FOOD_WEEKLY_ITEMS)
+    ladder = []
+    for k, (_, label) in enumerate(FOOD_WEEKLY_ITEMS, start=1):
+        kw = "if" if k == 1 else "elseif"
+        ladder.append(f'  {kw} curocc() = {k} then N_FOOD_ITEM = "{label}";')
+    ladder.append("  endif;")
+    ladder_txt = "\n".join(ladder)
+
+    amount_gate = (
+        "preproc\n"
+        "  {{ #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE with\n"
+        "    NO special() pre-fill (the pre-fill zeroed stored amounts on partial-save resume-\n"
+        "    replay, #834). Completeness is checked once at section end (Q186), not per row. }}\n"
+        "  if N_FOOD_CONSUMED = 2 then\n"
+        "    {f} = 0;\n"
+        "    noinput;\n"
+        "  endif;\n"
+        "\n"
+        "postproc\n"
+        "  {{ Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)\n"
+        "    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed\n"
+        "    minus). Replay-safe: the partial-save resume transient reads 0/notappl,\n"
+        "    never < 0 (#834/#835 class checked before adding). }}\n"
+        "  if {f} < 0 and {f} <> -98 and {f} <> -99 then\n"
+        "    errmsg(\"Amount must be 0-99999999, or -98 if the household does not know / -99 if they refuse to answer.\");\n"
+        "    reenter;\n"
+        "  endif;"
+    )
+
+    gate_p = amount_gate.format(f="N_FOOD_PURCHASED_PHP")
+    gate_k = amount_gate.format(f="N_FOOD_INKIND_PHP")
+    if DK_RF_STATUS:
+        _br = _dkrf_gate_branch("N_FOOD_AMT_STATUS")
+        gate_p = gate_p.replace("  endif;", _br + "  endif;", 1)
+        gate_k = gate_k.replace("  endif;", _br + "  endif;", 1)
+    status_proc = _amt_status_proc("N_FOOD")
+    return f"""{{ ---- Section N Option C: weekly-food roster (N_FOOD_ROSTER, fixed 13 rows = Q144-Q156) ---- }}
+PROC N_FOOD_ITEM
+preproc
+  {{ Auto-name this grid row from the WHO/SHA item list (one occurrence per item). }}
+{ladder_txt}
+  noinput;
+{status_proc}
+PROC N_FOOD_PURCHASED_PHP
+{gate_p}
+
+PROC N_FOOD_INKIND_PHP
+{gate_k}
+
+PROC Q157_FOOD_SUBTOTAL_TOTAL_PHP
+preproc
+  {{ Q157 food subtotal (spec 4.9) - computed in Q157's OWN preproc + noinput (#617: a
+    protected field skips its preproc; a group proc gets wiped by record P buffer init).
+    LOCAL accumulator (q92_oop rule). #834: amounts can now be blank (notappl), so add only
+    real non-negative amounts - 'in 0:99999999' excludes notappl AND the -98/-99 sentinels
+    (#743). Re-runs on back-nav + resume. }}
+  numeric nfr_i; numeric nfr_total;
+  nfr_total = 0;
+  do nfr_i = 1 while nfr_i <= {nmax}
+    if N_FOOD_CONSUMED(nfr_i) = 1 then
+      if N_FOOD_PURCHASED_PHP(nfr_i) in 0:99999999 then
+        nfr_total = nfr_total + N_FOOD_PURCHASED_PHP(nfr_i);
+      endif;
+      if N_FOOD_INKIND_PHP(nfr_i) in 0:99999999 then
+        nfr_total = nfr_total + N_FOOD_INKIND_PHP(nfr_i);
+      endif;
+    endif;
+  enddo;
+  Q157_FOOD_SUBTOTAL_TOTAL_PHP = nfr_total;
+  noinput;
+"""
+
+
+# Fan-out roster specs (2026-07-03): (field prefix, dcf item list, subtotal field | None).
+SECTION_N_FANOUT = [
+    ("N_WKOTH", WEEKLY_OTHER_ITEMS, None),   # #832/#833: restaurant + tobacco, rosterized
+    ("N_NF1M",  NONFOOD_1M_ITEMS,  None),
+    ("N_NF6M",  NONFOOD_6M_ITEMS,  None),
+    ("N_NF12M", NONFOOD_12M_ITEMS, None),
+    ("N_H12M",  HEALTH_12M_ITEMS,  "Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP"),
+    ("N_H6M",   HEALTH_6M_ITEMS,   "Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP"),
+    ("N_H1M",   HEALTH_1M_ITEMS,   "Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP"),
+]
+
+
+def section_n_fanout_procs():
+    """Section N fan-out rosters - exact replica of the food-grid procs.
+    #834 Option A (2026-07-06): the per-row special() pre-fill AND the per-row #677 reenter
+    were REMOVED (both fired destructively during partial-save resume-replay). Amounts left
+    enterable; not-consumed still auto-0 + noinput; completeness checked once at section end
+    (Q186, soft - in section_n_review_proc); subtotals exclude notappl AND -98/-99 sentinels
+    via 'in 0:99999999'."""
+    blocks = ["{ ---- Section N fan-out: remaining recall blocks as rosters (2026-07-03) ---- }"]
+    amount_gate = (
+        "preproc\n"
+        "  {{ #834 Option A: not consumed -> auto 0 + noinput. Consumed -> LEFT ENTERABLE, NO\n"
+        "    special() pre-fill (it clobbered stored amounts on resume-replay, #834).\n"
+        "    Completeness checked once at section end (Q186), not per row. }}\n"
+        "  if {c} = 2 then\n"
+        "    {f} = 0;\n"
+        "    noinput;\n"
+        "  endif;\n"
+        "\n"
+        "postproc\n"
+        "  {{ Range.docx hardening (2026-07-08): valid = 0..99999999 (width caps the max)\n"
+        "    or the -98/-99 sentinels; block stray negatives (CSEntry accepts a typed\n"
+        "    minus). Replay-safe: the partial-save resume transient reads 0/notappl,\n"
+        "    never < 0 (#834/#835 class checked before adding). }}\n"
+        "  if {f} < 0 and {f} <> -98 and {f} <> -99 then\n"
+        "    errmsg(\"Amount must be 0-99999999, or -98 if the household does not know / -99 if they refuse to answer.\");\n"
+        "    reenter;\n"
+        "  endif;"
+    )
+    for prefix, items_list, subtotal in SECTION_N_FANOUT:
+        ladder = []
+        for k, (_, label) in enumerate(items_list, start=1):
+            kw = "if" if k == 1 else "elseif"
+            ladder.append(f'  {kw} curocc() = {k} then {prefix}_ITEM = "{label}";')
+        ladder.append("  endif;")
+        ladder_txt = "\n".join(ladder)
+        _fo_gate_p = amount_gate.format(c=prefix + "_CONSUMED", f=prefix + "_PURCHASED_PHP")
+        _fo_gate_k = amount_gate.format(c=prefix + "_CONSUMED", f=prefix + "_INKIND_PHP")
+        if DK_RF_STATUS:
+            _fb = _dkrf_gate_branch(prefix + "_AMT_STATUS")
+            _fo_gate_p = _fo_gate_p.replace("  endif;", _fb + "  endif;", 1)
+            _fo_gate_k = _fo_gate_k.replace("  endif;", _fb + "  endif;", 1)
+        _fo_status = _amt_status_proc(prefix)
+        blocks.append(f"""PROC {prefix}_ITEM
+preproc
+  {{ Auto-name this grid row from the WHO/SHA item list (one occurrence per item). }}
+{ladder_txt}
+  noinput;
+{_fo_status}
+PROC {prefix}_PURCHASED_PHP
+{_fo_gate_p}
+
+PROC {prefix}_INKIND_PHP
+{_fo_gate_k}
+""")
+        if subtotal:
+            blocks.append(f"""PROC {subtotal}
+preproc
+  {{ Health subtotal (device-proven pattern): TOTAL field's OWN preproc + noinput, LOCAL
+    accumulator; sums CONSUMED=1 rows of {prefix}_ROSTER. #834: 'in 0:99999999' excludes
+    notappl AND the -98/-99 sentinels (#743). Not protect(), not a group proc. }}
+  numeric nsr_i; numeric nsr_total;
+  nsr_total = 0;
+  do nsr_i = 1 while nsr_i <= {len(items_list)}
+    if {prefix}_CONSUMED(nsr_i) = 1 then
+      if {prefix}_PURCHASED_PHP(nsr_i) in 0:99999999 then
+        nsr_total = nsr_total + {prefix}_PURCHASED_PHP(nsr_i);
+      endif;
+      if {prefix}_INKIND_PHP(nsr_i) in 0:99999999 then
+        nsr_total = nsr_total + {prefix}_INKIND_PHP(nsr_i);
+      endif;
+    endif;
+  enddo;
+  {subtotal} = nsr_total;
+  noinput;
+""")
+    return "\n".join(blocks)
+
+
+def section_n_review_proc():
+    """Section N end-of-section recap (htmldialog review.html) + #834 Option A completeness
+    reminder. Both fire from Q186_CURRENT_INCOME preproc (first Section O field). The
+    reminder is SOFT (errmsg, no reenter - a per-row reenter is what the resume replay
+    tripped on, #834); it counts Section N items marked consumed whose amount is still
+    blank or both-zero (the retired per-row #677 predicate) across all 7 rosters and warns
+    once. Stored subtotals (Q157/Q177/Q182/Q185) read direct; restaurant/smoking/non-food
+    summed here; every sum uses 'in 0:99999999' (excludes notappl + -98/-99), so an
+    incomplete/blank amount can never poison the grand total. JSON: {"v":[9 php],"grand":php};
+    review.html holds the labels."""
+    rosters = [("N_FOOD", len(FOOD_WEEKLY_ITEMS))] + [(p, len(it)) for p, it, _ in SECTION_N_FANOUT]
+    chk = [
+        "  { #834 Option A: section-end completeness reminder (soft, NO reenter). Counts Section N",
+        "    items marked consumed whose amount is still blank or both-zero (same predicate as the",
+        "    retired per-row #677) across all 7 rosters, then warns once. Flow always continues. }",
+        "  nmiss = 0;",
+    ]
+    for prefix, cnt in rosters:
+        chk.append(f"  do mchk = 1 while mchk <= {cnt}")
+        chk.append(
+            f"    if {prefix}_CONSUMED(mchk) = 1"
+            f" and not ({prefix}_PURCHASED_PHP(mchk) in -99, -98, 1:99999999)"
+            f" and not ({prefix}_INKIND_PHP(mchk) in -99, -98, 1:99999999)"
+            f" then nmiss = nmiss + 1; endif;")
+        chk.append("  enddo;")
+    chk += [
+        "  if nmiss > 0 then",
+        '    errmsg("Reminder: %d Section N item(s) marked consumed by the household still have no '
+        'amount. Go back to Section N and enter the amount spent and/or the in-kind value for each '
+        '(or -98 if the household does not know, -99 if they refuse). You may continue, but please '
+        'check.", nmiss);',
+        "  endif;",
+    ]
+    chk_txt = "\n".join(chk) + "\n"
+    return (
+"{ ---- Section N end-of-section: #834 completeness reminder + expenditure recap (review.html) ---- }\n"
+"PROC Q186_CURRENT_INCOME\n"
+"preproc\n"
+"  { All locals declared first (CSPro: declarations precede executable statements). }\n"
+"  numeric nmiss; numeric mchk;\n"
+"  numeric srv_i;\n"
+"  numeric srv_rest; numeric srv_smoke;\n"
+"  numeric srv_nf1m; numeric srv_nf6m; numeric srv_nf12m;\n"
+"  numeric srv_grand;\n"
+"  string  srv_j; string srv_res;\n"
++ chk_txt +
+"  { Read back the 9 Section N block subtotals to the respondent before funding sources.\n"
+"    Stored subtotals read direct; restaurant/smoking/non-food summed here. Every sum uses\n"
+"    'in 0:99999999' so notappl + -98/-99 are excluded. Informational modal - OK to Q186. }\n"
+"  { #832/#833: restaurant (Q158) + tobacco (Q159) are N_WKOTH_ROSTER occ 1 + occ 2. }\n"
+"  srv_rest = 0;\n"
+"  if N_WKOTH_CONSUMED(1) = 1 then\n"
+"    if N_WKOTH_PURCHASED_PHP(1) in 0:99999999 then srv_rest = srv_rest + N_WKOTH_PURCHASED_PHP(1); endif;\n"
+"    if N_WKOTH_INKIND_PHP(1) in 0:99999999 then srv_rest = srv_rest + N_WKOTH_INKIND_PHP(1); endif;\n"
+"  endif;\n"
+"  srv_smoke = 0;\n"
+"  if N_WKOTH_CONSUMED(2) = 1 then\n"
+"    if N_WKOTH_PURCHASED_PHP(2) in 0:99999999 then srv_smoke = srv_smoke + N_WKOTH_PURCHASED_PHP(2); endif;\n"
+"    if N_WKOTH_INKIND_PHP(2) in 0:99999999 then srv_smoke = srv_smoke + N_WKOTH_INKIND_PHP(2); endif;\n"
+"  endif;\n"
+"  srv_nf1m = 0;\n"
+"  do srv_i = 1 while srv_i <= 8\n"
+"    if N_NF1M_CONSUMED(srv_i) = 1 then\n"
+"      if N_NF1M_PURCHASED_PHP(srv_i) in 0:99999999 then srv_nf1m = srv_nf1m + N_NF1M_PURCHASED_PHP(srv_i); endif;\n"
+"      if N_NF1M_INKIND_PHP(srv_i) in 0:99999999 then srv_nf1m = srv_nf1m + N_NF1M_INKIND_PHP(srv_i); endif;\n"
+"    endif;\n"
+"  enddo;\n"
+"  srv_nf6m = 0;\n"
+"  do srv_i = 1 while srv_i <= 2\n"
+"    if N_NF6M_CONSUMED(srv_i) = 1 then\n"
+"      if N_NF6M_PURCHASED_PHP(srv_i) in 0:99999999 then srv_nf6m = srv_nf6m + N_NF6M_PURCHASED_PHP(srv_i); endif;\n"
+"      if N_NF6M_INKIND_PHP(srv_i) in 0:99999999 then srv_nf6m = srv_nf6m + N_NF6M_INKIND_PHP(srv_i); endif;\n"
+"    endif;\n"
+"  enddo;\n"
+"  srv_nf12m = 0;\n"
+"  do srv_i = 1 while srv_i <= 5\n"
+"    if N_NF12M_CONSUMED(srv_i) = 1 then\n"
+"      if N_NF12M_PURCHASED_PHP(srv_i) in 0:99999999 then srv_nf12m = srv_nf12m + N_NF12M_PURCHASED_PHP(srv_i); endif;\n"
+"      if N_NF12M_INKIND_PHP(srv_i) in 0:99999999 then srv_nf12m = srv_nf12m + N_NF12M_INKIND_PHP(srv_i); endif;\n"
+"    endif;\n"
+"  enddo;\n"
+"  srv_grand = Q157_FOOD_SUBTOTAL_TOTAL_PHP + srv_rest + srv_smoke\n"
+"            + srv_nf1m + srv_nf6m + srv_nf12m\n"
+"            + Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP\n"
+"            + Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP;\n"
+'  srv_j = maketext("%d", Q157_FOOD_SUBTOTAL_TOTAL_PHP)\n'
+'        + "," + maketext("%d", srv_rest) + "," + maketext("%d", srv_smoke)\n'
+'        + "," + maketext("%d", srv_nf1m) + "," + maketext("%d", srv_nf6m) + "," + maketext("%d", srv_nf12m)\n'
+'        + "," + maketext("%d", Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP)\n'
+'        + "," + maketext("%d", Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP)\n'
+'        + "," + maketext("%d", Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP)\n'
+'        + "," + maketext("%d", srv_grand);\n'
+'  srv_res = htmldialog("review.html", inputData := srv_j);\n'
+    )
+
+
 def skip_proc(field, cond, target):
     return f"PROC {field}\npostproc\n  if {cond} then\n    skip to {target};\n  endif;"
 
@@ -1310,13 +1608,22 @@ DISPOSITION_PROCS = """\
   F4 result codes: 1 Completed, 2 Postponed, 3 Incomplete, 4 Withdraw. }
 PROC BREAKOFF
 preproc
-  if not (BREAKOFF in 1, 2, 3, 4) then BREAKOFF = 1; endif;   { default "Continue" }
+  { The guard MUST list every valid code — anything outside it is silently reset to
+    Continue. Widened to 1..7 on 2026-07-14; leaving it at 1..4 would have erased every
+    replacement the moment the field was revisited. }
+  if not (BREAKOFF in 1, 2, 3, 4, 5, 6, 7) then BREAKOFF = 1; endif;   { default "Continue" }
 postproc
   if BREAKOFF <> 1 then
+    { 2–4: the interview STARTED and then stopped. }
     if BREAKOFF = 2 then ENUM_RESULT_FINAL_VISIT = 4; endif;   { Withdraw Participation/Consent }
     if BREAKOFF = 3 then ENUM_RESULT_FINAL_VISIT = 2; endif;   { Postponed }
     if BREAKOFF = 4 then ENUM_RESULT_FINAL_VISIT = 3; endif;   { Incomplete }
-    CASE_DISPOSITION = 2;   { partial / broke off }
+    { 5–7: the interview NEVER STARTED (refused at the door / not found / ineligible).
+      Per ASPSI, every such unit is replaced by a substitute, so all three land on
+      Replaced(5) — BREAKOFF keeps the reason. Replacements = count(BREAKOFF in 5,6,7).
+      Postponed(3) is NOT a replacement: that unit is revisited, not substituted. }
+    if BREAKOFF in 5, 6, 7 then ENUM_RESULT_FINAL_VISIT = 5; endif;   { Replaced }
+    CASE_DISPOSITION = 2;   { partial / not completed }
     skip to ENUM_RESULT_FINAL_VISIT;
   endif;
 
@@ -1341,6 +1648,9 @@ postproc
 def main():
     names = dcf_item_names()
     parts = [HEADER, "", CONTROL_PROCS, "", DISPOSITION_PROCS, "", ROSTER_PROCS, "", PRIV_ROSTER_PROCS, "",
+             section_n_food_roster_procs(), "",
+             section_n_fanout_procs(), "",
+             section_n_review_proc(), "",
              BILL_VALIDATION, "", EXTRA_PROCS, "", VALIDATION_PROCS, ""]
     covered = {"BREAKOFF", "ENUM_RESULT_FINAL_VISIT", "CASE_DISPOSITION",  # #515/#561 disposition PROCs
                "AREA_HAS_BUCAS", "AREA_HAS_GAMOT",  # #796/#797 auto-answer + noinput (EXTRA_PROCS)
@@ -1352,6 +1662,22 @@ def main():
                "Q45_PHILHEALTH_REG", "Q45_1_PIN_REG_WHEN", "Q46_MEMBER_CATEGORY",  # #563/#565 PhilHealth Yes-only
                "Q45_2_WHY_NOT_REG",   # #795: No-only gate (ROSTER_PROCS); _OTHER_TXT stays auto-gen
                "PRIV_MEMBER_LINE_NO", "Q48_OTHER_INS_REG",  # #525/#612/#613: priv-ins 2nd pass
+               "N_FOOD_ITEM", "N_FOOD_CONSUMED", "N_FOOD_PURCHASED_PHP",   # Option C food roster:
+               "N_FOOD_INKIND_PHP", "Q157_FOOD_SUBTOTAL_TOTAL_PHP",   # bespoke procs (2026-07-03)
+               # Fan-out rosters + health subtotals (2026-07-03): section_n_fanout_procs
+               "N_NF1M_ITEM", "N_NF1M_CONSUMED", "N_NF1M_PURCHASED_PHP", "N_NF1M_INKIND_PHP",
+               "N_NF6M_ITEM", "N_NF6M_CONSUMED", "N_NF6M_PURCHASED_PHP", "N_NF6M_INKIND_PHP",
+               "N_NF12M_ITEM", "N_NF12M_CONSUMED", "N_NF12M_PURCHASED_PHP", "N_NF12M_INKIND_PHP",
+               "N_H12M_ITEM", "N_H12M_CONSUMED", "N_H12M_PURCHASED_PHP", "N_H12M_INKIND_PHP",
+               "N_H6M_ITEM", "N_H6M_CONSUMED", "N_H6M_PURCHASED_PHP", "N_H6M_INKIND_PHP",
+               "N_H1M_ITEM", "N_H1M_CONSUMED", "N_H1M_PURCHASED_PHP", "N_H1M_INKIND_PHP",
+               "Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP", "Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP",
+               "Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP",
+               # #7 DK/RF amount-status gate fields (exist only when DK_RF_STATUS is on):
+               "N_FOOD_AMT_STATUS", "N_NF1M_AMT_STATUS", "N_NF6M_AMT_STATUS", "N_NF12M_AMT_STATUS",
+               "N_H12M_AMT_STATUS", "N_H6M_AMT_STATUS", "N_H1M_AMT_STATUS",
+               "N_WKOTH_AMT_STATUS",
+               "Q186_CURRENT_INCOME",   # Section N recap htmldialog fires from its preproc
                "Q49_PRIVATE_INS", "C_HOUSEHOLD_ROSTER_FORM", "Q47_HH_HAS_PRIVATE_INS",
                "Q141_1_NO_RECEIPT_AMT_PHP",
                # #615: Q141_BILL_ITEMS is now a Check Box base whose 'Other expenses' (07)
@@ -1364,6 +1690,7 @@ def main():
                "Q135_ZBB_OOP",  # EXTRA_PROCS (#664 DOH-retained gate)
                "Q76_BRAND_OR_GEN", "Q79_REG_SOURCE",  # EXTRA_PROCS (Q78_WHY_BRANDED now a Check Box base, covered via CHECKBOX_COVERED)
                "Q112_VISITED",  # EXTRA_PROCS (#590-593 Q112 referral-visit multi-branch)
+               "Q117_SPECIALIST_FOLLOWUP",  # EXTRA_PROCS (#816 Q112=Yes gate + spec §K Q117=No -> Q119)
                "Q194_OTHER_SOURCE",  # EXTRA_PROCS (#684 >=1 funding-source aggregate check)
                "Q2_BIRTH_MONTH", "Q2_BIRTH_YEAR", "Q2_1_AGE", "Q19_HH_SIZE_TOTAL",
                "Q20_HH_CHILDREN", "Q21_HH_SENIORS", "Q32_AGE", "Q39_CIVIL_STATUS",
@@ -1388,8 +1715,16 @@ def main():
     # panel-first-member fields (Q144/Q175/Q178/Q183) carry both sections without a
     # duplicate-PROC collision. (gate_procs[field] = 'postproc\n...'; st_init full PROC
     # strings — split out the preproc body for the merge.)
-    gate_procs = expenditure_gate_procs(names)
-    st_procs = subtotal_init_compute_procs(names, dcf_items_map())
+    # Option C (2026-07-03): the rosterized food block (N_FOOD_*) carries bespoke procs
+    # in section_n_food_roster_procs() — exclude its fields from the flat Section N
+    # suffix-driven auto-gens (gate / subtotal / #677 validation) so nothing double-emits.
+    flat_names = [n for n in names if not n.startswith(
+        ("N_FOOD_", "N_WKOTH_", "N_NF1M_", "N_NF6M_", "N_NF12M_", "N_H12M_", "N_H6M_", "N_H1M_"))]
+    # #832/#833: flat expenditure amounts (Q158/Q159) are now gated in their OWN preproc
+    # (flat_expenditure_amount_procs, roster parity). The protect-based CONSUMED-postproc gate
+    # (expenditure_gate_procs) is retired for the DG combined view — it left amounts locked.
+    gate_procs = {}
+    st_procs = subtotal_init_compute_procs(flat_names, dcf_items_map())
 
     def _preproc_body(proc_text):
         # st_procs entries are 'PROC <field>\npreproc\n<body>' — return '<body>'.
@@ -1421,12 +1756,13 @@ def main():
             raise SystemExit(f"#617 subtotal proc collides with an existing proc: {field}")
         covered.add(field); parts.append(proc); parts.append("")
 
-    # #677: consumed-but-zero hard validation on each Section N item's last amount field.
-    parts.append("{ ---- Section N consumed-amount validation (#677): consumed item needs >=1 amount > 0 ---- }")
-    for field, postproc_body in sorted(consumed_amount_validation_procs(names).items()):
+    # #832/#833: flat Section N items (Q158/Q159) — roster-parity amount gate (noinput +
+    # special() pre-fill, no protect) with #677 folded onto the last amount's postproc.
+    parts.append("{ ---- Section N flat items (Q158/Q159): roster-parity amount gate + #677 (#832/#833) ---- }")
+    for field, proc in sorted(flat_expenditure_amount_procs(flat_names).items()):
         if field in covered:
-            raise SystemExit(f"#677 consumed-amount validation collides with an existing proc: {field}")
-        covered.add(field); parts.append(f"PROC {field}\n{postproc_body}"); parts.append("")
+            raise SystemExit(f"flat expenditure amount proc collides with an existing proc: {field}")
+        covered.add(field); parts.append(proc); parts.append("")
 
     parts.append("{ ---- 'Other (specify)' enforcement — UHC9 dual-other ---- }")
     for field, proc in sorted(uhc9_other_specify_procs(names).items()):
@@ -1479,6 +1815,9 @@ def main():
     # bespoke gates, auto-gen other-specify, and fields with no PROC uniformly.
     rb_fields = roster_bound_fields()
     text = inject_roster_occurrence_bounds(text, rb_fields)
+    # R2 (2026-07-03): inline errmsg literals -> numbered messages + .ent.mgf
+    # (stable numbers via messages-registry.json; displayed text unchanged).
+    text = numberize_errmsgs(text, HERE, OUT.with_suffix(".mgf"), "HouseholdSurvey")
     OUT.write_text(text, encoding="utf-8")
     procs = [l for l in text.splitlines() if l.startswith("PROC ")]
     assert len(procs) == len(set(procs)), "duplicate PROC names emitted"

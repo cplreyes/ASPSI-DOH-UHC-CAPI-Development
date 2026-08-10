@@ -42,7 +42,7 @@ DOH asked Myra (Jun 19) for the estimated timeline impact if the household tool 
 
 - **Tranche 1 is done and paid; the project is mid-review on BOTH tracks** — SJREB (ethics) and PSA-SSRCS (statistical clearance) — which must stay on the **same tool version**.
 - **The timeline is in flux / extension in play:** original CSA close was **Aug 14, 2026** ([[Timetable of Activities]]); a **no-cost extension** is pending; the [[Source - ASPSI Team Meeting 2026-06-22|Jun 22 meeting]] floated **Aug 2026 training / Sep 2026 rollout**; Myra's Jun 19 projection implies **data collection ~Nov 2026** if the June comments were taken now (avoided by parking them).
-- **Carl's lane is unaffected:** the CAPI is built; the gating items (SJREB clearance, PSA review, pretest scheduling, the extension) are all ASPSI/DOH's ([[feedback_external_gates_not_carls_concern]]). Carl waits for the **pretest date**.
+- **Carl's lane is unaffected:** the CAPI is built; the gating items (SJREB clearance, PSA review, pretest scheduling, the extension) are all ASPSI/DOH's (`feedback_external_gates_not_carls_concern`). Carl waits for the **pretest date**.
 
 ## Cross-references
 - [[Source - DOH June Questionnaire Comments (PARKED) 2026-06-19]] — the *content* of the parked comments; this page is the *timeline impact* of (not) adopting them.

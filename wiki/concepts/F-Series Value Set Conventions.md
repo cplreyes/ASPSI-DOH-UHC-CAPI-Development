@@ -1,7 +1,7 @@
 ---
 type: concept
 tags: [cspro, dcf, value-sets, conventions, f-series, na-coding]
-source_count: 0
+source_count: 1
 ---
 
 # F-Series Value Set Conventions
@@ -72,4 +72,5 @@ The convention lives in two places:
 
 - [[CSPro Data Dictionary]] — overall DCF schema and value-set mechanics
 - [[CSPro Capture Types]] — single-response vs multi-mark idioms
+- [[Source - Dictionary Names Labels and Value Sets]] — the current F1/F3/F4 value-set export where these conventions are visible (NA=9/99/999, per-question DK, disposition codes)
 - `E2-F1-010` — sprint task where these conventions were ratified

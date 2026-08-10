@@ -1,0 +1,3 @@
+username,password,role,operator_id,cluster,supervisor_id
+enum-01,CHANGE-ME,enumerator,enum-01,00000,sup-01
+sup-01,CHANGE-ME,supervisor,sup-01,00000,

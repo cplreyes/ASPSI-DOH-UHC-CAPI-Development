@@ -36,13 +36,25 @@ Refresh cron (tightened 2026-06-26, was */15): */2 * * * * flock -n /tmp/csweb-m
 Vendored libs (no CDN JS): /docs/assets/{leaflet.css,leaflet.js,MarkerCluster*.css,leaflet.markercluster.js}.
 First built 2026-06-21 (v1); v2 + v3 same day.
 """
-import subprocess, json, datetime, html, math, re
+import subprocess, json, datetime, html, math, re, argparse
 from collections import defaultdict
+
+# Phase 2 (2026-07-06): province coverage choropleth (completed ÷ target). Adds a
+# --sample mode (off-box: q() returns nothing, coverage comes from the fixture) so
+# the choropleth can be built/verified without MySQL. On-box Leaflet render = Carl's gate.
+_ap = argparse.ArgumentParser(description="Generate the CSWeb Map Report.")
+_ap.add_argument("--sample", help="off-box dev: JSON fixture (points/completed_prov) instead of MySQL")
+_ap.add_argument("--targets", default="/opt/targets.json", help="targets.json for the coverage choropleth")
+_ap.add_argument("--areas", default="/opt/app/lamp/www/docs/assets/ph-areas.json")
+_ap.add_argument("--out", default="/opt/app/lamp/www/docs/map.html")
+ARGS = _ap.parse_args()
+SAMPLE = json.load(open(ARGS.sample, encoding="utf-8")) if ARGS.sample else None
 
 ENV = "/opt/app/.env"
 COMPOSE_DIR = "/opt/app"
-OUT = "/opt/app/lamp/www/docs/map.html"
-AREAS_PATH = "/opt/app/lamp/www/docs/assets/ph-areas.json"
+OUT = ARGS.out
+AREAS_PATH = ARGS.areas
+TARGETS_PATH = ARGS.targets
 
 # PH coordinate sanity bounds (drops garbage pins; counted as "bad")
 LAT_MIN, LAT_MAX = 4.5, 21.5
@@ -60,24 +72,36 @@ STATUS = ("CASE WHEN c.partial_save_mode IS NULL OR c.partial_save_mode=''"
           " THEN 'Completed' ELSE 'Partial' END")
 QN = "LPAD(l.`questionnaire_number`,12,'0')"
 CODE9 = "LEFT(LPAD(l.`questionnaire_number`,12,'0'),9)"
+# enumerator attribution (mirrors csweb-dashboard-gen.py): the typed FIELD_CONTROL name plus
+# the STABLE key — the CSWeb login that UPLOADED the case, via cases.last_modified_revision =
+# cspro_sync_history.revision (direction 'put'). revision is that table's PK, so the join is
+# 1:1 (no row fan-out). Lets the Map Report filter to one enumerator, same as the dashboard.
+ENUM = "COALESCE(NULLIF(fc.enumerator_s_name,''),'(unassigned)')"
+SYNCUSER = "COALESCE(NULLIF(sh.username,''),'(unknown)')"
+SYNC_JOIN = (" LEFT JOIN csweb_uhc_y2.cspro_sync_history sh"
+             " ON sh.revision = c.last_modified_revision AND sh.direction = 'put'")
 
-# cols: qnum, lat, lon, region, prov, status, facility, date, accuracy, satellites
-COLS = ["qnum", "lat", "lon", "region", "prov", "status", "facility", "date", "acc", "sat"]
+# cols: qnum, lat, lon, region, prov, status, facility, date, accuracy, satellites, enumerator, syncuser
+COLS = ["qnum", "lat", "lon", "region", "prov", "status", "facility", "date", "acc", "sat", "enumerator", "syncuser"]
 
 
 def src_q(db, gps_tbl, lat_c, lon_c, acc_c, sat_c, date_c):
+    # SYNC_JOIN is concatenated INSIDE the parens BEFORE the % so the whole string formats as one
+    # unit — `%` binds tighter than `+`, so "..."+SYNC_JOIN % (...) would try (and fail) to format
+    # SYNC_JOIN, which has no placeholders. ENUM/SYNCUSER carry no %s either; passed as args.
     return (
-        "SELECT %s, g.%s, g.%s,"
-        " COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
-        " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
-        " %s, COALESCE(fn.name,'(unlabeled)'),"
-        " COALESCE(CAST(fc.%s AS CHAR),''), g.%s, g.%s"
-        " FROM `%s`.`level-1` l"
-        " JOIN `%s`.cases c ON c.id=l.`case-id` AND c.deleted=0"
-        " LEFT JOIN `%s`.%s g ON g.`level-1-id`=l.`level-1-id`"
-        " LEFT JOIN `%s`.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
-        " LEFT JOIN csweb_reports.facility_names fn ON fn.code9=%s"
-        % (QN, lat_c, lon_c, STATUS, date_c, acc_c, sat_c,
+        ("SELECT %s, g.%s, g.%s,"
+         " COALESCE(NULLIF(fc.region_name,''),'(unknown)'),"
+         " COALESCE(NULLIF(fc.province_name,''),'(unknown)'),"
+         " %s, COALESCE(fn.name,'(unlabeled)'),"
+         " COALESCE(CAST(fc.%s AS CHAR),''), g.%s, g.%s, %s, %s"
+         " FROM `%s`.`level-1` l"
+         " JOIN `%s`.cases c ON c.id=l.`case-id` AND c.deleted=0"
+         " LEFT JOIN `%s`.%s g ON g.`level-1-id`=l.`level-1-id`"
+         " LEFT JOIN `%s`.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
+         " LEFT JOIN csweb_reports.facility_names fn ON fn.code9=%s"
+         + SYNC_JOIN)
+        % (QN, lat_c, lon_c, STATUS, date_c, acc_c, sat_c, ENUM, SYNCUSER,
            db, db, db, gps_tbl, db, CODE9)
     )
 
@@ -116,11 +140,26 @@ def rootpw():
 
 
 def q(sql):
+    if SAMPLE is not None:          # off-box: no MySQL; data comes from the fixture
+        return []
     r = subprocess.run(
         ["docker", "compose", "exec", "-T", "database", "mysql", "-uroot",
          "-p" + rootpw(), "--batch", "-N", "-e", sql],
         cwd=COMPOSE_DIR, capture_output=True, text=True)
     return [ln.split("\t") for ln in r.stdout.splitlines() if ln.strip()]
+
+
+def load_targets(path):
+    """(targets, plan). No `plan` block (pre-provenance targets.json) => PROVISIONAL.
+    Same fail-safe as the dashboard: a shaded province looks equally authoritative
+    whether the denominator is ASPSI's EA plan or a leftover fixture."""
+    try:
+        obj = json.load(open(path, encoding="utf-8"))
+    except Exception:
+        return {}, {}
+    plan = obj.get("plan") or {"label": "unlabelled targets.json", "provisional": True}
+    plan.setdefault("provisional", True)
+    return obj.get("targets", {}), plan
 
 
 def fnum(s):
@@ -199,6 +238,7 @@ for inst, layer, primary, sql in SOURCES:
             "lat": round(lat, 6), "lon": round(lon, 6),
             "region": rec["region"], "prov": rec["prov"], "status": rec["status"],
             "facility": rec["facility"], "qnum": rec["qnum"],
+            "enumerator": rec.get("enumerator", ""), "syncuser": rec.get("syncuser", ""),
             "date": rec["date"] if rec["date"] and rec["date"] != "\\N" else "",
             "acc": None if acc is None else round(acc, 1),
             "sat": None if sat is None else int(sat),
@@ -278,6 +318,46 @@ for p in points:
         p["qaOutArea"] = True
         p["inArea"] = cont["name"]
 
+# ---- Phase 2: province coverage (completed ÷ target) for the choropleth ----
+targets, plan = load_targets(TARGETS_PATH)
+_COMP_SQL = {
+    inst: ("SELECT COALESCE(NULLIF(fc.province_name,''),'(unknown)'), COUNT(*)"
+           " FROM csweb_%s_breakout.`level-1` l"
+           " JOIN csweb_%s_breakout.cases c ON c.id=l.`case-id` AND c.deleted=0"
+           " LEFT JOIN csweb_%s_breakout.field_control fc ON fc.`level-1-id`=l.`level-1-id`"
+           " WHERE (c.partial_save_mode IS NULL OR c.partial_save_mode='') GROUP BY 1"
+           % (inst, inst, inst))
+    for inst in ("f1", "f3", "f4")
+}
+completed_prov = {"f1": {}, "f3": {}, "f4": {}}
+if SAMPLE is not None:
+    for inst, d in (SAMPLE.get("completed_prov") or {}).items():
+        completed_prov[inst] = {k: int(v) for k, v in d.items()}
+else:
+    for inst, sql in _COMP_SQL.items():
+        try:
+            for prov, cnt in q(sql):
+                completed_prov[inst][prov] = int(cnt)
+        except Exception:
+            pass
+coverage = {"f1": {}, "f3": {}, "f4": {}}
+for inst in ("f1", "f3", "f4"):
+    for code, t in (targets.get(inst) or {}).items():      # targets by province
+        prov = (t.get("province") or "").strip()
+        if not prov:
+            continue
+        rec = coverage[inst].setdefault(norm(prov), {"name": prov, "target": 0, "completed": 0})
+        rec["target"] += int(t.get("target") or 0)
+    for prov, cnt in completed_prov[inst].items():          # completed by province
+        if not prov or prov == "(unknown)":
+            continue
+        rec = coverage[inst].setdefault(norm(prov), {"name": prov, "target": 0, "completed": 0})
+        rec["completed"] += cnt
+# ship polygons only for the provinces we actually shade (present in ph-areas.json)
+_shade = set(k for inst in coverage.values() for k in inst)
+prov_polys = {k: {"name": PROV[k]["name"], "polys": PROV[k]["polys"]} for k in _shade if k in PROV}
+has_coverage = bool(targets)
+
 # ---- visit-date bounds ----
 _valid = [p["date"] for p in points
           if p["date"].isdigit() and len(p["date"]) == 8 and p["date"] != "00000000"]
@@ -290,6 +370,7 @@ payload_obj = {
     "nofix": nofix, "bad": bad, "totals": totals,
     "thresh": {"acc": ACC_MAX, "sat": SAT_MIN, "home": A_HOME_KM, "cluster": CLUSTER_KM},
     "dateMin": date_min, "dateMax": date_max,
+    "coverage": coverage, "provPolys": prov_polys, "hasCoverage": has_coverage, "plan": plan,
     "generated": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
 }
 payload = html.escape(json.dumps(payload_obj), quote=False)
@@ -347,6 +428,7 @@ TEMPLATE = r"""<!doctype html>
 <div class="filters">
   <div class="f"><label for="fInst">Instrument</label><select id="fInst"></select></div>
   <div class="f"><label for="fRegion">Region</label><select id="fRegion"></select></div>
+  <div class="f"><label for="fEnum">Enumerator</label><select id="fEnum"></select></div>
   <div class="f"><label for="fStatus">Status</label><select id="fStatus"></select></div>
   <div class="f"><label for="fQa">Data quality</label><select id="fQa"></select></div>
   <div class="f"><label for="fFrom">Visit from</label><input type="date" id="fFrom" /></div>
@@ -358,8 +440,10 @@ TEMPLATE = r"""<!doctype html>
   <label><input type="checkbox" id="lPrimary" checked /> Facility / Household</label>
   <label><input type="checkbox" id="lHome" checked /> F3 patient home</label>
   <label><input type="checkbox" id="lConn" /> Connect F3 pairs</label>
+  <label><input type="checkbox" id="lCoverage" /> Coverage % (choropleth)</label>
 </div>
 <div class="bar">
+  <span class="chip">Data as of <b id="fresh"></b></span>
   <span class="chip">Plotted: <b id="cPlotted">0</b></span>
   <span class="badge" id="cNofix"></span>
   <span class="badge" id="cBad" style="display:none"></span>
@@ -367,6 +451,8 @@ TEMPLATE = r"""<!doctype html>
   <span class="badge warn" id="cDup" style="display:none"></span>
   <span class="badge warn" id="cDisp" style="display:none"></span>
   <span class="badge warn" id="cArea" style="display:none"></span>
+  <span class="badge" id="covLegend" style="display:none">Coverage: <i class="sw" style="background:#d32f2f"></i>&lt;40% <i class="sw" style="background:#e5b23b"></i>40–79% <i class="sw" style="background:#006b3f"></i>&ge;80%</span>
+  <span class="badge" id="covPlan" style="display:none;background:#fdf3d7;border-color:#e5b23b;color:#6b5200;font-weight:700"></span>
   <span class="legend">
     <span><i class="sw dot" style="background:#006b3f"></i>Completed</span>
     <span><i class="sw dot" style="background:#e5b23b"></i>Partial</span>
@@ -381,6 +467,7 @@ TEMPLATE = r"""<!doctype html>
 <script>
 const P = JSON.parse(document.getElementById('map-data').textContent);
 document.getElementById('gen').textContent = P.generated;
+document.getElementById('fresh').textContent = P.generated;
 document.getElementById('tAcc').textContent = P.thresh.acc;
 document.getElementById('tSat').textContent = P.thresh.sat;
 document.getElementById('tHome').textContent = P.thresh.home;
@@ -392,16 +479,31 @@ const isDisp = p => p.qaFarHome||p.qaClusterOut;
 const isArea = p => p.qaFarCentroid||p.qaOutArea;
 
 const instSel=document.getElementById('fInst'), regSel=document.getElementById('fRegion'),
+      enumSel=document.getElementById('fEnum'),
       statSel=document.getElementById('fStatus'), qaSel=document.getElementById('fQa'),
       fromInp=document.getElementById('fFrom'), toInp=document.getElementById('fTo'),
       lPrimary=document.getElementById('lPrimary'), lHome=document.getElementById('lHome'),
-      lConn=document.getElementById('lConn');
+      lConn=document.getElementById('lConn'), lCoverage=document.getElementById('lCoverage');
 [['ALL','All instruments'],['f1','F1 · Facility Head'],['f3','F3 · Patient'],['f4','F4 · Household']]
   .forEach(([v,t])=>instSel.add(new Option(t,v)));
 regSel.add(new Option('All regions','ALL')); P.regions.forEach(r=>regSel.add(new Option(r,r)));
 [['ALL','All statuses'],['Completed','Completed'],['Partial','Partial']].forEach(([v,t])=>statSel.add(new Option(t,v)));
 [['ALL','All points'],['flag','Flagged (any)'],['low','Low accuracy'],['dup','Duplicate location'],
  ['disp','Displacement'],['area','Wrong area']].forEach(([v,t])=>qaSel.add(new Option(t,v)));
+// Enumerator filter — keyed on the CSWeb upload login (syncuser), typed-name fallback; same
+// key scheme as the dashboard so a person reads identically on both surfaces.
+function enumKeyOf(p){ return (p.syncuser&&p.syncuser!=='(unknown)') ? 'u:'+p.syncuser
+                     : (p.enumerator&&p.enumerator!=='(unassigned)') ? 'n:'+p.enumerator : ''; }
+enumSel.add(new Option('All enumerators','ALL'));
+(function(){
+  const em=new Map();
+  P.points.forEach(p=>{ const key=enumKeyOf(p); if(!key) return;
+    let o=em.get(key); if(!o){o={key,login:(p.syncuser&&p.syncuser!=='(unknown)')?p.syncuser:null,names:{}}; em.set(key,o);}
+    if(p.enumerator&&p.enumerator!=='(unassigned)') o.names[p.enumerator]=(o.names[p.enumerator]||0)+1;
+  });
+  const lbl=o=>{const nm=Object.keys(o.names).sort((a,b)=>o.names[b]-o.names[a])[0]||(o.login?'(no name)':'(unknown)'); return o.login?(nm+' · '+o.login):nm;};
+  [...em.values()].map(o=>[o.key,lbl(o)]).sort((a,b)=>a[1].toLowerCase()<b[1].toLowerCase()?-1:1).forEach(([v,t])=>enumSel.add(new Option(t,v)));
+})();
 if(P.dateMin){fromInp.min=P.dateMin;toInp.min=P.dateMin;}
 if(P.dateMax){fromInp.max=P.dateMax;toInp.max=P.dateMax;}
 
@@ -410,8 +512,38 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   {maxZoom:19, attribution:'© OpenStreetMap'}).addTo(map);
 const cluster = L.markerClusterGroup({chunkedLoading:true, maxClusterRadius:45});
 const lines = L.layerGroup();
-map.addLayer(cluster); map.addLayer(lines);
+const covLayer = L.layerGroup();
+map.addLayer(covLayer); map.addLayer(cluster); map.addLayer(lines);
 const PH = [12.5, 122.0];
+// --- Phase 2: province coverage choropleth ---
+function covColorMap(pct){ return pct==null?'#9aa7a0':(pct>=80?'#006b3f':(pct>=40?'#e5b23b':'#d32f2f')); }
+function covForProv(key){
+  const inst=instSel.value, insts = inst==='ALL'?['f1','f3','f4']:[inst];
+  let t=0,c=0,any=false;
+  insts.forEach(k=>{ const r=(P.coverage[k]||{})[key]; if(r){any=true; t+=r.target||0; c+=r.completed||0;} });
+  return any?{t,c,pct:(t>0?Math.round(100*c/t):null)}:null;
+}
+function renderChoropleth(){
+  covLayer.clearLayers();
+  const on = lCoverage && lCoverage.checked && P.hasCoverage;
+  document.getElementById('covLegend').style.display = on?'':'none';
+  // A shaded province reads as fact. Say so when the denominator is a placeholder.
+  const _pl=P.plan||{}, _cp=document.getElementById('covPlan');
+  if(on && _pl.provisional!==false){
+    _cp.textContent='PROVISIONAL PLAN ('+(_pl.label||'unlabelled')+') — shading is not real coverage';
+    _cp.style.display='';
+  } else { _cp.style.display='none'; }
+  if(!on) return;
+  Object.keys(P.provPolys||{}).forEach(key=>{
+    const cov=covForProv(key); if(!cov) return;
+    const color=covColorMap(cov.pct), nm=P.provPolys[key].name||key;
+    (P.provPolys[key].polys||[]).forEach(poly=>{
+      const pg=L.polygon(poly,{color:'#374151',weight:1,fillColor:color,fillOpacity:.45});
+      pg.bindPopup('<div class="lp"><b>'+esc(nm)+'</b><br>'+cov.c+' / '+cov.t+' completed'+(cov.pct==null?' (no target)':' ('+cov.pct+'%)')+'</div>');
+      covLayer.addLayer(pg);
+    });
+  });
+}
 
 function icon(p){
   const c = COLOR[p.status] || '#5b6b63';
@@ -430,21 +562,26 @@ function popup(p){
   if(p.qaClusterOut) qa+='<div class="qa">⚠ Facility point '+esc(p.clusterKm)+' km off its cluster</div>';
   if(p.qaOutArea) qa+='<div class="qa">⚠ Coordinates in '+esc(p.inArea)+', declared '+esc(p.prov)+'</div>';
   else if(p.qaFarCentroid) qa+='<div class="qa">⚠ '+esc(p.provKm)+' km from declared '+esc(p.prov)+'</div>';
+  const who = (p.syncuser&&p.syncuser!=='(unknown)')
+      ? ((p.enumerator&&p.enumerator!=='(unassigned)')?esc(p.enumerator)+' · ':'')+esc(p.syncuser)
+      : (p.enumerator&&p.enumerator!=='(unassigned)'?esc(p.enumerator):'—');
   return '<div class="lp"><b>'+esc(p.facility)+'</b><br>'
     +'<span class="k">'+esc(NAMES[p.inst])+' · '+esc(LAYER[p.layer])+'</span><br>'
     +'Q#: '+esc(p.qnum)+'<br>Status: '+esc(p.status)+'<br>'
+    +'Enumerator: '+who+'<br>'
     +'Declared: '+esc(p.prov)+'<br>Visited: '+d+'<br>'
     +'GPS: '+(p.acc==null?'—':esc(p.acc)+' m')+(p.sat==null?'':', '+esc(p.sat)+' sat')+qa+'</div>';
 }
 function chip(id,n,label){const e=document.getElementById(id); if(n>0){e.style.display='';e.textContent='⚠ '+n+' '+label;}else{e.style.display='none';}}
 function render(){
-  const inst=instSel.value, region=regSel.value, status=statSel.value, qa=qaSel.value;
+  const inst=instSel.value, region=regSel.value, status=statSel.value, qa=qaSel.value, enumK=enumSel.value;
   const fromY=fromInp.value?fromInp.value.replace(/-/g,''):'';
   const toY=toInp.value?toInp.value.replace(/-/g,''):'';
   const pass=p=>{
     if(inst!=='ALL' && p.inst!==inst) return false;
     if(p.layer==='home' ? !lHome.checked : !lPrimary.checked) return false;
     if(region!=='ALL' && p.region!==region) return false;
+    if(enumK!=='ALL' && enumKeyOf(p)!==enumK) return false;
     if(status!=='ALL' && p.status!==status) return false;
     if(qa==='low' && !p.qaLow) return false;
     if(qa==='dup' && !p.qaDup) return false;
@@ -475,11 +612,12 @@ function render(){
   chip('cDup', shown.filter(p=>p.qaDup).length, 'duplicate location');
   chip('cDisp', shown.filter(isDisp).length, 'displacement');
   chip('cArea', shown.filter(isArea).length, 'wrong area');
+  renderChoropleth();
   if(shown.length){map.fitBounds(cluster.getBounds().pad(0.2));}else{map.setView(PH,6);}
 }
-[instSel,regSel,statSel,qaSel,fromInp,toInp].forEach(el=>el.onchange=render);
-[lPrimary,lHome,lConn].forEach(el=>el.onchange=render);
-document.getElementById('fReset').onclick=()=>{instSel.value='ALL';regSel.value='ALL';statSel.value='ALL';qaSel.value='ALL';fromInp.value='';toInp.value='';lPrimary.checked=true;lHome.checked=true;lConn.checked=false;render();};
+[instSel,regSel,enumSel,statSel,qaSel,fromInp,toInp].forEach(el=>el.onchange=render);
+[lPrimary,lHome,lConn,lCoverage].forEach(el=>el.onchange=render);
+document.getElementById('fReset').onclick=()=>{instSel.value='ALL';regSel.value='ALL';enumSel.value='ALL';statSel.value='ALL';qaSel.value='ALL';fromInp.value='';toInp.value='';lPrimary.checked=true;lHome.checked=true;lConn.checked=false;lCoverage.checked=false;render();};
 render();
 </script>
 </body>

@@ -46,6 +46,7 @@ function adminSyncReport(filters, ctx) {
   var byKey = {};
   for (var i = 0; i < all.length; i++) {
     var row = all[i];
+    if (row.status === 'voided') continue; // #831: voided rows never count
     if (f.from && row.submitted_at_server && row.submitted_at_server < f.from) continue;
     if (f.to && row.submitted_at_server && row.submitted_at_server > f.to) continue;
     var key = _extractGeoKey(row.facility_id, f.level);
@@ -102,6 +103,7 @@ function adminMapReport(filters, ctx) {
   var noGps = 0;
   for (var i = 0; i < all.length; i++) {
     var row = all[i];
+    if (row.status === 'voided') continue; // #831: voided rows never count
     if (f.from && row.submitted_at_server && row.submitted_at_server < f.from) continue;
     if (f.to && row.submitted_at_server && row.submitted_at_server > f.to) continue;
     if (f.region_id && row.facility_id && String(row.facility_id).slice(0, 2) !== f.region_id) continue;

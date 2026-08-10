@@ -37,7 +37,7 @@ from cspro_helpers import (
     _value_set, numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, checkbox_multiselect, uhc9_item, record, build_geo_id,
     _gps_fields, _photo_block, _case_control_items, derived_geo_code_items,
-    apply_translations,
+    apply_translations, ENUM_RESULT_OPTIONS_F1, BREAKOFF_OPTIONS,
 )
 
 
@@ -118,20 +118,12 @@ def build_field_control():
         numeric("DATE_OF_FINAL_VISIT_TO_THE_FACILITY",
                 "Date of Final Visit to the Facility (YYYYMMDD)", length=8),
         numeric("TOTAL_NUMBER_OF_VISITS",       "Total Number of Visits",                       length=3),
+        # Result-of-Visit codes come from cspro_helpers (ENUM_RESULT_OPTIONS_F1) so F1 cannot
+        # drift from F3/F4 — "Replaced" (5) was added there 2026-07-14 and lands here for free.
         numeric("ENUM_RESULT_FIRST_VISIT",      "Result of First Visit",                        length=1,
-                value_set_options=[
-                    ("Completed",  "1"),
-                    ("Postponed",  "2"),
-                    ("Refused",    "3"),
-                    ("Incomplete", "4"),
-                ]),
+                value_set_options=ENUM_RESULT_OPTIONS_F1),
         numeric("ENUM_RESULT_FINAL_VISIT",      "Result of Final Visit",                        length=1,
-                value_set_options=[
-                    ("Completed",  "1"),
-                    ("Postponed",  "2"),
-                    ("Refused",    "3"),
-                    ("Incomplete", "4"),
-                ]),
+                value_set_options=ENUM_RESULT_OPTIONS_F1),
         # #744 break-off control — ported from the F3/F4 Cluster-5 pattern. Lives on the
         # FIRST interactive form (case-start, via inject_breakoff.py) so it sits in the
         # case tree from the start and the enumerator can tap back to it mid-interview.
@@ -143,12 +135,7 @@ def build_field_control():
         numeric("BREAKOFF",
                 "Interview status (leave as Continue unless ending the interview early)",
                 length=1,
-                value_set_options=[
-                    ("Continue interview",        "1"),
-                    ("Respondent withdrew",       "2"),
-                    ("Postponed / reschedule",    "3"),
-                    ("Stop — other (incomplete)", "4"),
-                ]),
+                value_set_options=BREAKOFF_OPTIONS),
         # #744/#561 completeness sentinel — OFF-FORM (not in the .fmf), set in logic only:
         # 0 In progress at case open (PROC QUESTIONNAIRE_NUMBER), 1 Completed when the
         # Result-of-Visit finalises to Completed, 2 Partial/broke-off otherwise. Lets the
@@ -176,8 +163,19 @@ def build_field_control():
 # Item names match Carl's manual scaffold exactly so existing references survive.
 
 def build_section_a():
+    # #1005 (pretest finding, 2026-08-03): the printed Annex F1 Q2 grid carries
+    # THIRTEEN options, laid out in a 3-column table read column-major (down col 1,
+    # then col 2, then col 3). This list stopped one row into column 3, so it
+    # dropped "Rural Health Physician" and "Other (specify)" — a facility head who
+    # is a Rural Health Physician had no correct code to give.
+    # Codes 1-11 are UNCHANGED so pretest data already collected stays valid; the
+    # two recovered options take fresh codes (12, and 99 for Other per the house
+    # convention used by _cb_codes and auto_other_specify_procs).
+    # Option 1 also carried a paraphrase ("Rural / Urban Health Unit Head");
+    # restored to the printed wording. Closes the F1-QC-02 drift recorded in
+    # F1-Skip-Logic-and-Validations.md ("11 options, no Other").
     Q2_ROLES = [
-        ("Rural / Urban Health Unit Head",      "1"),
+        ("Rural Health Unit / Health Center Head", "1"),
         ("Physician",                           "2"),
         ("Chief of Hospital",                   "3"),
         ("Medical Director",                    "4"),
@@ -188,6 +186,8 @@ def build_section_a():
         ("Administrative Officer / Assistant",  "9"),
         ("Midwife",                            "10"),
         ("Health Promotion / Nutrition Officer","11"),
+        ("Rural Health Physician",             "12"),
+        ("Other (specify)",                    "99"),
     ]
     items = [
         # Respondent contact block — moved out of FIELD_CONTROL so it lives
@@ -202,6 +202,17 @@ def build_section_a():
         select_one("Q2_FACILITY_ROLE",
                    "2. What is your official designation at this health facility?",
                    Q2_ROLES, length=2),
+        # #1005: companion free-text for the recovered "Other (specify)" (code 99).
+        # auto_other_specify_procs() in generate_apc.py derives the gate from the dcf
+        # itself — it finds the single same-Q parent whose value set carries an
+        # 'other'-labelled code and emits preproc noinput / postproc reenter against
+        # Q2_FACILITY_ROLE = 99. No hand-written PROC needed.
+        # NOTE: F1's .fmf is hand-maintained (no FMF generator), so this item needs a
+        # matching form field or it lands UNREACHABLE — supplied by the idempotent
+        # post-processor inject_q2_other_txt.py, which must run in the .fmf pipeline.
+        alpha("Q2_OTHER_TXT",
+              "2. What is your official designation at this health facility? — Other (specify) text",
+              length=120),
         numeric("Q3_AGE", "3. How old are you (in years), as of your last birthday?",
                 length=2),
         numeric("Q4_SEX", "4. What is your sex assigned at birth?", length=1,
@@ -267,10 +278,10 @@ def build_section_c():
         ("Not applicable",                            "9"),
     ]
     Q18_HPU_ROLE = [
-        ("Leading health education and awareness campaigns",          "1"),
-        ("Conducting and coordinating health screening and promotion","2"),
-        ("Advocacy and policy formation",                             "3"),
-        ("Resource mobilization and fundraising",                     "4"),
+        ("Leading health education and awareness campaigns (e.g., raising awareness about public health initiatives of DOH, disseminating information about health)",          "1"),
+        ("Conducting and coordinating health screening and promotion activities (e.g., collaborating and implementing with other units and program coordinators to promote healthy lifestyles and preventive care)","2"),
+        ("Advocacy and policy formation (e.g., research, campaigns, collaboration with policymakers)",                             "3"),
+        ("Resource mobilization and fundraising (e.g., securing funding, grants)",                     "4"),
         ("Other (specify)",                                           "5"),
         ("I don't know",                                              "8"),
     ]
@@ -287,7 +298,7 @@ def build_section_c():
         ("Expenditure and budget utilization reports", "4"),
         ("PhilHealth claims and reimbursement reports", "5"),
         ("YAKAP/Konsulta utilization reports", "6"),
-        ("NBB compliance reports", "7"),
+        ("NBB compliance", "7"),
         ("ZBB compliance / monitoring reports", "8"),
         ("HRH staffing and deployment reports", "9"),
         ("Medicines availability and stock status reports", "10"),
@@ -300,14 +311,14 @@ def build_section_c():
     # the high non-prefixing code 99 (no valid code starts with 9) so pos("99",..)
     # on the concatenated string can't false-match across code boundaries.
     QUALITY_ACCESS_CHALLENGES = [
-        ("Limited resources (personnel, equipment, supplies, funding)", "01"),
-        ("Challenging quality standards", "02"),
-        ("Healthcare decisions made by LGUs not the facility", "03"),
-        ("Lack of specific healthcare skills", "04"),
-        ("Inadequate training of healthcare workers", "05"),
-        ("Lack of patient awareness of UHC benefits", "06"),
-        ("Limited accessibility of public healthcare facilities", "07"),
-        ("Infrastructure not conducive for patient care", "08"),
+        ("Limited resources (e.g., shortages in healthcare personnel/manpower, medical equipment, essential supplies, or funding)", "01"),
+        ("Challenging quality standards (e.g., high standards that are difficult to achieve)", "02"),
+        ("Certain healthcare decisions are made by local government units and not the health facility", "03"),
+        ("Lack of specific healthcare skills (i.e., Insufficient specialists, surgeons, or other healthcare professionals with specialized skills needed in the facility)", "04"),
+        ("Inadequate training of healthcare workers (i.e., Healthcare workers needing additional training to meet the facility's quality standards)", "05"),
+        ("Lack of patient awareness of the benefits of UHC (e.g., patients do not know they can avail of free consultations, and selected medicines and laboratory services)", "06"),
+        ("Limited accessibility of public healthcare facilities (e.g., lack of transportation options, inconvenient location, or physical barriers hindering access for patients.)", "07"),
+        ("Infrastructure not conducive for patient care (e.g., no ground floor, shortage of rooms, inadequate sanitation facilities, lack of wheelchair accessibility, etc.)", "08"),
         ("I don't know", "09"),
         ("Other (specify)", "99"),
     ]
@@ -420,8 +431,8 @@ def build_section_d():
     Q58_PERF = [
         ("Beneficiaries consulted a primary care doctor", "01"),
         ("Utilization of laboratory services", "02"),
-        ("Beneficiaries received antibiotics as prescribed", "03"),
-        ("Beneficiaries received NCD medicine as prescribed", "04"),
+        ("Beneficiaries received antibiotics as prescribed by their primary care doctor", "03"),
+        ("Beneficiaries received noncommunicable disease (NCD) medicine as prescribed by their primary care doctor", "04"),
         ("No requirements", "05"),
         ("1st patient encounter", "06"),
         ("I don't know", "07"),
@@ -443,16 +454,16 @@ def build_section_d():
     # checkbox_multiselect (#529): fixed-width 2-char codes, Other=99 (matches the
     # Q49/Q50/Q53/Q58 checkbox convention so pos("99",field) can't false-match).
     Q64_REASONS = [
-        ("Incentives (capitation/payment for registered patients)", "01"),
-        ("Aligns with facility's mission", "02"),
+        ("Incentives (i.e., facility receives capitation/payment for registered patients)", "01"),
+        ("Aligns with facility's mission (i.e., goals of UHC are aligned with the facility)", "02"),
         ("Encouraged by LGU", "03"),
         ("Mandated/required by DOH/UHC", "04"),
-        ("To improve facility services", "05"),
+        ("To improve the services of the facilities", "05"),
         ("Other (specify)", "99"),
     ]
     Q65_DIFFICULT = [
         ("Ability to conduct preventive/screening services and health education", "1"),
-        ("Capability to provide laboratory and radiologic services", "2"),
+        ("Capability to provide services for required laboratory and radiologic services", "2"),
         ("Capability to dispense required medicines", "3"),
         ("General Infrastructure", "4"),
         ("Equipment and Supplies", "5"),
@@ -472,22 +483,22 @@ def build_section_d():
         ("Other (specify)", "7"),
     ]
     Q76_INITIATIVES = [
-        ("On-site Enrollment", "1"),
-        ("LGU Outreach", "2"),
-        ("Facility Outreach", "3"),
-        ("Barangay Health Workers (BHWs) Support", "4"),
-        ("Information Campaigns", "5"),
-        ("Local Health Insurance Offices (LHIO) / YAKAP caravans", "6"),
-        ("Coordination with other government agencies and private sector", "7"),
+        ("On-site Enrollment (e.g., offering patient enrollment at the health facility)", "1"),
+        ("LGU Outreach (e.g., involvement in LGU outreach activities, such as ongoing nutrition programs)", "2"),
+        ("Facility Outreach (e.g., engaging in outreach efforts directly from the facility)", "3"),
+        ("Barangay Health Workers (BHWs) Support (e.g., receiving support from local BHWs)", "4"),
+        ("Information Campaigns (e.g., conducting information campaigns through various channels, including but not limited to online campaigns and house-to-house visits)", "5"),
+        ("Local Health Insurance Offices (LHIO); assistance or partnerships with YAKAP/Konsulta caravans", "6"),
+        ("Coordination with other government agencies and the private sector", "7"),
         ("No initiatives", "8"),
         ("Other (specify)", "9"),
     ]
     Q78_ENROLL_CHALL = [
-        ("Lack of patient awareness", "1"),
-        ("Lack of patient willingness", "2"),
-        ("Lack of resources (manpower)", "3"),
-        ("Competition with other health facilities", "4"),
-        ("Technical / system issues of PhilHealth", "5"),
+        ("Lack of patient awareness (i.e., patients are unaware of YAKAP/Konsulta, its benefits, and registration process)", "1"),
+        ("Lack of patient willingness (i.e., patient is hesitant to provide personal information or has concerns about data security)", "2"),
+        ("Lack of resources (e.g., not enough manpower to conduct information campaigns or outreaches to enroll patients to YAKAP/Konsulta)", "3"),
+        ("Competition with other health facilities over patient registration", "4"),
+        ("Technical / system issues of PhilHealth (e.g., data loss, errors, or platform accessibility problems)", "5"),
         ("Other (specify)", "6"),
     ]
     Q79_NOT_ACCRED = [
@@ -505,24 +516,24 @@ def build_section_d():
         ("I don't know",                           "6"),
     ]
     Q94_ADDL_CAP_REASONS = [
-        ("Cover building maintenance, equipment, non-clinical staff", "1"),
-        ("Patient care costs exceed predetermined fixed payment", "2"),
+        ("To cover expenses related to building maintenance, equipment, and non-clinical staff", "1"),
+        ("A patient’s care costs exceed the predetermined fixed payment", "2"),
         ("Services excluded from capitation coverage", "3"),
-        ("Provide preventive care not adequately compensated", "4"),
+        ("Provide preventive care that may not be adequately compensated under a basic capitation plan", "4"),
         ("Offset losses", "5"),
         ("Other (specify)", "6"),
     ]
     Q95_RECEIVED = [
-        ("Yes, received all expected payments",         "1"),
-        ("Yes, received some but not all expected",     "2"),
-        ("No, have not received any expected payments", "3"),
-        ("No, have not expected any payments yet",      "4"),
+        ("Yes, we have received all expected payments <proceed to Q97>",         "1"),
+        ("Yes, we have received some but not all expected payments yet <proceed to Q97>",     "2"),
+        ("No, we have not received any expected payments yet", "3"),
+        ("No, we have not expected any payments yet",      "4"),
     ]
     Q96_NOT_RECEIVED = [
         ("Delays in PhilHealth processing", "1"),
         ("Delays in facility's tracking of patient enrollment", "2"),
-        ("Difficulties verifying patient enrollment (PhilHealth)", "3"),
-        ("Facility not active in meeting payment criteria", "4"),
+        ("Difficulties in verifying patient enrollment (PhilHealth)", "3"),
+        ("Facility is not active in meeting criteria for payments (e.g., facility doesn't submit necessary requirements, facility doesn't enroll patients to YAKAP/Konsulta)", "4"),
         ("Criteria for payments is unclear", "5"),
         ("I don't know", "6"),
         ("Other (specify)", "7"),
@@ -673,13 +684,15 @@ def build_section_d():
 # ============================================================
 
 def build_section_e():
+    # #1023 (pretest): paper order is column-major — Not applicable precedes
+    # Others (specify). Display order only; codes 1-5/99 UNCHANGED (data-safe).
     Q103_REASON = [
         ("Proposal not yet submitted",            "1"),
         ("Limited information on establishment process", "2"),
         ("Did not meet standard requirements",    "3"),
         ("Awaiting assessment or approval",       "4"),
-        ("Other (specify)",                       "5"),
         ("Not applicable",                       "99"),
+        ("Other (specify)",                       "5"),
     ]
     Q104_SERVICES = [
         ("Urgent care and consultation",         "1"),
@@ -696,13 +709,14 @@ def build_section_e():
         ("Availability of staff/services",          "5"),
         ("Other (specify)",                         "6"),
     ]
+    # #1024 (pretest): same column-major order fix as Q103. Codes unchanged.
     Q110_REASON = [
         ("Application not yet submitted",         "1"),
         ("Limited information on accreditation process", "2"),
         ("Did not meet accreditation requirements","3"),
         ("Awaiting assessment or approval",       "4"),
-        ("Other (specify)",                       "5"),
         ("Not applicable",                       "99"),
+        ("Other (specify)",                       "5"),
     ]
     Q111_FACTORS = [
         ("Availability of GAMOT medicines",                    "1"),
@@ -713,7 +727,7 @@ def build_section_e():
         ("Other (specify)",                                    "6"),
     ]
     Q114_DURATION = [
-        ("Less than 30 days", "1"),
+        ("30 days and less", "1"),
         ("31-60 days",        "2"),
         ("More than 60 days", "3"),
     ]
@@ -801,7 +815,7 @@ def build_section_f():
         ("I don't know",                      "5"),
     ]
     Q120_DAYS = [
-        ("Less than 30 days", "1"),
+        ("30 days and less", "1"),
         ("31-60 days",        "2"),
         ("More than 60 days", "3"),
     ]
@@ -884,8 +898,8 @@ def build_section_f():
 
 def build_section_g():
     NBB_ZBB_BARRIERS = [
-        ("Complying with no fees for basic/ward accommodation",        "1"),
-        ("Complying with prescribed allocation ratio (basic vs non-basic)", "2"),
+        ("Complying with the no fees for basic or ward accommodation",        "1"),
+        ("Complying the prescribed ratio of allocation of basic and non-basic accommodation", "2"),
         ("Patients do not go through the process of availing it",      "3"),
         ("Insufficient PhilHealth support value",                      "4"),
         ("Insufficient other sources (MAIFIP, DSWD, PCSO)",            "5"),
@@ -895,18 +909,18 @@ def build_section_g():
     ]
     Q143_DIFFICULT_BENEFIT = [
         ("PhilHealth/financial protection benefits",                                "1"),
-        ("Establishment of health care provider networks (HCPNs / referral system)","2"),
+        ("Establishment of health care provider networks (HCPNs) (i.e., referral system)","2"),
         ("Human resources for health reforms",                                      "3"),
         ("Other (specify)",                                                         "4"),
     ]
     Q144_REASONS = [
-        ("UHC implementation heavily reliant on LGU decisions", "1"),
+        ("The implementation of UHC benefits is heavily reliant on LGU decisions", "1"),
         ("Not enough funding/budget",                           "2"),
-        ("Technical/system issues of PhilHealth",               "3"),
+        ("Technical/system issues of PhilHealth (e.g., data loss, errors, or platform accessibility problems)",               "3"),
         ("Other (specify)",                                     "4"),
     ]
     Q146_MALASAKIT_WHY = [
-        ("Streamline access to medical and financial aid for indigent patients", "1"),
+        ("Streamline access to medical and financial aid for indigent and financially incapacitated patients", "1"),
         ("Reduce out-of-pocket expenses",                                        "2"),
         ("Eliminate the need to travel to multiple government agencies",         "3"),
         ("Foster a more compassionate approach to healthcare",                   "4"),
@@ -916,7 +930,7 @@ def build_section_g():
         ("Limited budget",                              "1"),
         ("Stringent eligibility requirements",          "2"),
         ("Incomplete documentation from patients",      "3"),
-        ("High patient volume / service bottlenecks",   "4"),
+        ("High patient volume leading to service bottlenecks",   "4"),
         ("Other (specify)",                             "5"),
     ]
     Q149_LGU_FORMS = [
@@ -929,7 +943,7 @@ def build_section_g():
     Q151_NOT_SAT_WHY = [
         ("Insufficient",                                          "1"),
         ("Hard to coordinate",                                    "2"),
-        ("Support given is not aligned with the needs",           "3"),
+        ("Support given is not aligned with the needs of the facility",           "3"),
         ("I don't know",                                          "4"),
         ("Other (specify)",                                       "5"),
     ]
@@ -961,12 +975,12 @@ def build_section_g():
         ("I don't know",       "4"),
     ]
     Q158_PROPORTION = [
-        ("Almost all patients are referred, very few walk-in",    "1"),
-        ("Majority referred, some walk-in",                       "2"),
-        ("Proportion of referrals about equal to walk-ins",       "3"),
-        ("Majority walk-in, some referred",                       "4"),
-        ("Almost all walk-in, very few referred",                 "5"),
-        ("Unsure about the typical ratio",                        "6"),
+        ("Almost all patients are referred, very few walk-in/self-referred",    "1"),
+        ("Majority of patients are referred, some walk-in/self- referred",                       "2"),
+        ("The proportion of referrals is about equal to walk-ins",       "3"),
+        ("Majority of patients walk-in/self-referred, some are referred",                       "4"),
+        ("Almost all patients walk-in/self-referred, very few are referred",                 "5"),
+        ("I am unsure about the typical ratio of referrals to walk-ins",                        "6"),
     ]
     Q159_RECEIVE_REF = [
         ("Physical referral slip",                          "1"),
@@ -979,13 +993,18 @@ def build_section_g():
     # hold on the same basis #586 used to convert Q144. Hand-coded, NOT _cb_codes: "Other
     # private facility"/"Other public facility" legitimately start with "Other" and _cb_codes
     # would mis-recode both to 99 (3-way collision). 'Other, (specify)' -> 99 (with_other_txt);
-    # 'I don't know' -> 90 (exclusive). Paper order: specify before I-don't-know.
+    # 'I don't know' -> 90 (exclusive), 'Other (specify)' -> 99. #830: the value set MUST
+    # ascend by code (..., 90, 99). A descending tail (99 then 90) was the ONLY thing that
+    # set Q160 apart from every other F1 checkbox, and it broke CSEntry's checkbox
+    # re-validation on partial-save resume (WARNING: Out of range -> forced re-entry ->
+    # apparent data loss). Ascending order (90=DK before 99=Other) matches all other
+    # multi-selects, which survive the same resume.
     Q160_EXTERNAL = [
         ("External laboratory",     "01"),
         ("Other private facility",  "02"),
         ("Other public facility",   "03"),
-        ("Other (specify)",         "99"),
         ("I don't know",            "90"),
+        ("Other (specify)",         "99"),
     ]
     Q161_SATISFACTION = [
         ("Very Satisfied",  "1"),
@@ -995,9 +1014,9 @@ def build_section_g():
         ("Very Dissatisfied","5"),
     ]
     Q162_NOT_SAT = [
-        ("Facilities overcrowded / do not accept our patient referrals", "1"),
-        ("Referral process is slow",                                     "2"),
-        ("Poor coordination between facilities",                         "3"),
+        ("Facilities are overcrowded/overcapacity and do not accept our patient referrals", "1"),
+        ("The referral process is slow",                                     "2"),
+        ("There is poor coordination between our facility and referred facilities",                         "3"),
         ("Other (specify)",                                              "4"),
     ]
 
@@ -1093,7 +1112,7 @@ def build_section_h():
     Q163_CHALL = [
         ("Understaffing",              "1"),
         ("Skills mismatch / lack of skills", "2"),
-        ("Retention / high staff turnover", "3"),
+        ("Skills mismatch / lack of skills", "3"),
         ("I don't know",               "4"),
         ("Other (specify)",            "5"),
     ]

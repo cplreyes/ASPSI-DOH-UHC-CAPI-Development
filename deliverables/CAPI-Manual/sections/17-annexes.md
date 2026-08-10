@@ -58,6 +58,7 @@ These are the exact **Result of Visit** codes built into each tool (recorded at 
 | **2** | Postponed |
 | **3** | Refused |
 | **4** | Incomplete |
+| **5** | Replaced |
 
 **F3 — Patient**
 
@@ -69,6 +70,7 @@ These are the exact **Result of Visit** codes built into each tool (recorded at 
 | **4** | Incomplete |
 | **5** | Completed at Home |
 | **6** | Withdraw Participation / Consent |
+| **7** | Replaced |
 
 **F4 — Household**
 
@@ -78,15 +80,32 @@ These are the exact **Result of Visit** codes built into each tool (recorded at 
 | **2** | Postponed |
 | **3** | Incomplete |
 | **4** | Withdraw Participation / Consent |
+| **5** | Replaced |
 
-**Interview status (`BREAKOFF`) — same in all three tools.** Leave on **Continue** unless you must end early; choosing 2–4 routes you straight to the closing result and skips the remaining questions.
+> ⚠️ **The same number means different things in different tools.** Code **4** is *Incomplete* in F1 and F3 but *Withdraw Participation / Consent* in F4; **Replaced** is code **5** in F1 and F4 but **7** in F3. Always read the code against the tool you are in — never quote a bare code number on its own.
 
-| Code | Interview status |
+**Interview status (`BREAKOFF`) — same in all three tools.** Leave on **Continue** unless you must end early; choosing 2–7 routes you straight to the closing result and skips the remaining questions.
+
+| Code | Interview status | Use when |
+|---|---|---|
+| **1** | Continue interview | Normal interview (default — leave it here) |
+| **2** | Respondent withdrew | Interview **started**, then the respondent stopped it |
+| **3** | Postponed / reschedule | Interview **started**, will be resumed on a return visit |
+| **4** | Stop — other (incomplete) | Interview **started**, stopped for some other reason |
+| **5** | Not interviewed — refused | Interview **never started** — the respondent declined |
+| **6** | Not interviewed — not found | Interview **never started** — respondent could not be located |
+| **7** | Not interviewed — ineligible | Interview **never started** — respondent did not qualify |
+
+**How Interview status fills in the Result of Visit.** You do **not** type a result code for an early ending — the app sets it for you:
+
+| Interview status | Result of Visit the app records |
 |---|---|
-| **1** | Continue interview |
-| **2** | Respondent withdrew |
-| **3** | Postponed / reschedule |
-| **4** | Stop — other (incomplete) |
+| **2** Respondent withdrew | F1 → *Refused* · F3 → *Withdraw Participation / Consent* · F4 → *Withdraw Participation / Consent* |
+| **3** Postponed / reschedule | *Postponed* |
+| **4** Stop — other | *Incomplete* |
+| **5 / 6 / 7** Not interviewed (refused · not found · ineligible) | **Replaced** — a substitute respondent is drawn |
+
+> 💡 Codes **5, 6, and 7** all mean the respondent was **never interviewed**, so the unit is **replaced** and the Interview status keeps the reason. **Postponed (3) is not a replacement** — that respondent is revisited, not substituted.
 
 ---
 

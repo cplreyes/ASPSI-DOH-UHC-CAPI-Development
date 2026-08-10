@@ -1,7 +1,7 @@
 ---
 type: entity
 tags: [aspsi, project-lead, team, stakeholder]
-source_count: 1
+source_count: 2
 ---
 
 # Dr. Paulyn Jean Claro
@@ -18,3 +18,4 @@ Project Lead for [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/ASP
 ## Context
 
 - Full history of DOH-ASPSI correspondence and decision context lives in [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - Project Intelligence Brief|Analysis - Project Intelligence Brief]].
+- **Coordinating Principal Investigator on the SJREB approval** (SJREB-2026-31, 7 July 2026) — named site PI across the approved regional sites (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - PSA Survey Clearance 26SS02-481 (2026-07-23)]]).

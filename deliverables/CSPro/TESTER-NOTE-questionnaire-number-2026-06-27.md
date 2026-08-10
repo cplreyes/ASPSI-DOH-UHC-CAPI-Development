@@ -24,7 +24,7 @@ region prov  city  facility  sequence
 - **`040340002001`** → resolves on screen to **Region IV-A (CALABARZON) / Laguna / Cabuyao City Hospital**.
   - The app fills in the Region / Province / City names automatically — **check they match the facility you're at.** If they don't, the number was typed wrong.
 
-(F1 also checks the facility code against the facility list; F3/F4 only need the region/province/city to be valid.)
+(All three instruments validate the **region/province/city** prefix against the PSGC reference; the facility and sequence digits are recorded as typed but not checked against a facility list — double-check them visually. *Corrected 2026-07-02: an earlier version of this note said F1 also validates the facility code — that lookup was removed because it hung CSEntry on Android at startup.*)
 
 ## If you get the error
 1. Don't restart the app — just **re-type the Questionnaire Number** correctly.

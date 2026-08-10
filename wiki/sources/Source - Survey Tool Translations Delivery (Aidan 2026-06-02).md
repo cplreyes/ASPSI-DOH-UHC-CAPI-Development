@@ -19,9 +19,9 @@ tags: [capi, translations, multi-language, build-input, f1-f3-f4]
 
 ## Build relevance
 
-Confirms the standing translation gap: **Batch 1 is build-ready; Batch 2 (Tagalog/Ilocano/Hiligaynon) was still not QC-cleared** as of June 2 — consistent with [[project_aspsi_cspro_translations]] (fil/ilo/hil F3-F4 blocked on ASPSI delivery) and the switcher-infra approach in [[project_aspsi_translations_pipeline]]. The drop-in pipeline (maps → regenerate → deploy) is proven; Batch 2 wires in when QC-cleared. Supersedes the snapshot in [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Survey Tool Translation Delivery Status 2026-05-15|the 2026-05-15 status]].
+Confirms the standing translation gap: **Batch 1 is build-ready; Batch 2 (Tagalog/Ilocano/Hiligaynon) was still not QC-cleared** as of June 2 — consistent with `project_aspsi_cspro_translations` (fil/ilo/hil F3-F4 blocked on ASPSI delivery) and the switcher-infra approach in `project_aspsi_translations_pipeline`. The drop-in pipeline (maps → regenerate → deploy) is proven; Batch 2 wires in when QC-cleared. Supersedes the snapshot in [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Survey Tool Translation Delivery Status 2026-05-15|the 2026-05-15 status]].
 
-> [!note] Files are in the Drive folder (not email attachments). Per [[reference_drive_gmail_connector_limits]], folder children are only enumerable/readable once opened in the browser — to pull these via the connector, open each once in Drive first; otherwise download from the folder link.
+> [!note] Files are in the Drive folder (not email attachments). Per `reference_drive_gmail_connector_limits`, folder children are only enumerable/readable once opened in the browser — to pull these via the connector, open each once in Drive first; otherwise download from the folder link.
 
 ## Cross-references
 

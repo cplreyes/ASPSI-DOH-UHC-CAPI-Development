@@ -18,7 +18,7 @@ Extracted directly from the instrument dictionaries (`.dcf`) + the F2 survey sch
 ### 1.1 Collected by every instrument (operational / provenance)
 | Field(s) | Type | Class |
 |---|---|---|
-| `INTERVIEWER_ID`, `ENUMERATOR_S_NAME`, `SURVEY_TEAM_LEADER_S_NAME` | identity of field staff | **PI** (staff) |
+| `ENUMERATOR_S_NAME`, `SURVEY_TEAM_LEADER_S_NAME` | identity of field staff | **PI** (staff) |
 | `REGION` / `PROVINCE_HUC` / `CITY_MUNICIPALITY` / `BARANGAY` | geographic | PI in combination |
 | `FACILITY_NAME`, `FACILITY_ADDRESS` | facility identity | PI (org) |
 | Facility GPS (`*_GPS_LATITUDE/LONGITUDE/...`) + capture trigger | precise geolocation | **PI** |
@@ -88,7 +88,24 @@ The analysis dataset must be a **de-identified extract** (no name, no contact, n
 ## 4. Consent & data-subject rights
 
 ### 4.1 Consent-form wording review  ·  *(closes #214)*
-The informed-consent screen (F1 `CONSENT_GIVEN`, and the equivalents in F3/F4/F2) must, to satisfy §3(b) *consent* + §16 *transparency*, clearly state in language the respondent understands:
+> [!important] Corrected 2026-07-14 — how consent is actually delivered and recorded
+> This section previously said the informed consent is an **in-app screen** backed by a
+> `CONSENT_GIVEN` field in F1/F3/F4. That is **not what the instruments do**, and it must not be
+> represented to SJREB/DOH that way. `CONSENT_GIVEN` was removed from all three CAPI instruments
+> on 2026-06-12. As built:
+>
+> - **F1 / F3 / F4 (CSEntry):** the enumerator reads the SJREB-approved script **aloud from the
+>   printed consent sheet** (Annex H). There is no consent screen and no consent field. A refusal
+>   is recorded on the **Interview status** control (`BREAKOFF = 5`, *Not interviewed — refused*),
+>   which sets Result-of-Visit = *Replaced* and ends the case — so the refusal is captured, and
+>   the case still syncs.
+> - **F2 (HCW PWA):** self-administered, and the **only** instrument with an in-app consent gate —
+>   declining is stored as `status='refusal'` (#825).
+>
+> The disclosure requirements below are unchanged: they govern the **consent script itself**,
+> whichever way it is delivered.
+
+The informed-consent script — read aloud from the printed sheet in F1/F3/F4, presented on screen in F2 — must, to satisfy §3(b) *consent* + §16 *transparency*, clearly state in language the respondent understands:
 1. **Who** is collecting (DOH as PIC; ASPSI as processor) and DOH's DPO contact.
 2. **What** is collected — explicitly name the sensitive categories (health, disability, ethnicity, location, financial) and that a **photo + GPS** are taken.
 3. **Why** (UHC implementation evaluation) and the legal basis (consent for SPI per §13(a)).

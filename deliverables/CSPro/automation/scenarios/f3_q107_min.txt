@@ -1,0 +1,8 @@
+# #835: minimal path to Q107 via BREAKOFF pilot skip.
+rmdata ../F3/desktest.csdb
+launch ../F3/PatientSurvey_desktest.pff
+casekey 04 03 403 02 001
+type 2
+shot patient_type
+type 1
+shot at_q107

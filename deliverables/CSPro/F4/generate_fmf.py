@@ -19,6 +19,7 @@ Run:
     python generate_fmf.py        # writes HouseholdSurvey.generated.fmf next to this file
 """
 
+import os
 import re
 import sys
 from pathlib import Path
@@ -69,16 +70,29 @@ FIELD_CONTROL_CASE_END = {
     "ENUM_RESULT_FIRST_VISIT", "ENUM_RESULT_FINAL_VISIT",
 }
 
+# HH GPS items (HOUSEHOLD_GEO_ID items 7-12). Split off the Geographic ID form onto a
+# dead-last GPS form (2026-07-16, #157) — see the FORM_PLAN entries below. Named once
+# here so the geo form's exclude and the GPS form's names list can never drift apart.
+# NOTE: these stay in HOUSEHOLD_GEO_ID in the .dcf — this is a FORM-order change only;
+# form order is already decoupled from dict order throughout this instrument.
+HH_GPS_ITEMS = [
+    "LATITUDE", "LONGITUDE", "HH_GPS_ALTITUDE",
+    "HH_GPS_ACCURACY", "HH_GPS_SATELLITES", "HH_GPS_READTIME",
+]
+
 
 _FORM_PLAN_STATIC = [
     ("Interview status",   # #515: break-off control, first form (case-tree reachable)
      [("FIELD_CONTROL", {"names": FIELD_CONTROL_CASE_START})]),
-    ("FC Geographic ID + HH GPS Capture",
+    ("FC Geographic ID",
      # Single-number redesign (2026-06-11): household region/province/city are
      # derived from QUESTIONNAIRE_NUMBER (off-form); show the read-only PSGC
      # names + keep the barangay picker.
+     # HH GPS split off this form 2026-07-16 (#157) — it now sits dead last, after
+     # the photo. Leaves CLASSIFICATION + BARANGAY + HH_ADDRESS here.
      [("FIELD_CONTROL", {"names": ["REGION_NAME", "PROVINCE_NAME", "CITY_NAME"]}),
-      ("HOUSEHOLD_GEO_ID", {"exclude": ["REGION", "PROVINCE_HUC", "CITY_MUNICIPALITY"]})]),
+      ("HOUSEHOLD_GEO_ID",
+       {"exclude": ["REGION", "PROVINCE_HUC", "CITY_MUNICIPALITY"] + HH_GPS_ITEMS})]),
     ("A. Informed Consent (Q1 gate)",
      [("A_INFORMED_CONSENT", None)]),
     ("B. Respondent Profile",
@@ -112,8 +126,34 @@ _FORM_PLAN_STATIC = [
      [("L_NBB_AWARENESS", None)]),
     ("M. ZBB / MAIFIP / Bill-Recall",
      [("M_ZBB_MAIFIP_BILL", None)]),
-    ("N. Household Expenditures",
+    # Option C fan-out (2026-07-03): every Section N recall block is a repeating grid
+    # form; record P keeps Q157 + the flat weekly singles (Q158/Q159); each health
+    # subtotal record sits on its own form right after its block. Plain hyphens in
+    # titles (CSEntry renders em-dashes in fmf/dcf labels as mojibake on-device).
+    ("N. Food consumed last week (Q144-156) - one row per item",
+     [("N_FOOD_ROSTER", None)]),
+    ("N. Household Expenditures (Q157)",
      [("N_HOUSEHOLD_EXPENDITURES", None)]),
+    ("N. Restaurant + tobacco, last week (Q158-159) - one row per item",
+     [("N_WKOTH_ROSTER", None)]),
+    ("N. Non-food, last month (Q160-167) - one row per item",
+     [("N_NF1M_ROSTER", None)]),
+    ("N. Non-food, last 6 months (Q168-169) - one row per item",
+     [("N_NF6M_ROSTER", None)]),
+    ("N. Non-food, last 12 months (Q170-174) - one row per item",
+     [("N_NF12M_ROSTER", None)]),
+    ("N. Health, last 12 months (Q175-176) - one row per item",
+     [("N_H12M_ROSTER", None)]),
+    ("N. Health 12-month subtotal (Q177)",
+     [("N_H12M_TOTAL", None)]),
+    ("N. Health, last 6 months (Q178-181) - one row per item",
+     [("N_H6M_ROSTER", None)]),
+    ("N. Health 6-month subtotal (Q182)",
+     [("N_H6M_TOTAL", None)]),
+    ("N. Health, last month (Q183-184) - one row per item",
+     [("N_H1M_ROSTER", None)]),
+    ("N. Health 1-month subtotal (Q185)",
+     [("N_H1M_TOTAL", None)]),
     ("O. Sources of Funds for Health",
      [("O_SOURCES_OF_FUNDS", None)]),
     ("P. Financial Risk",
@@ -122,14 +162,24 @@ _FORM_PLAN_STATIC = [
      [("Q_FINANCIAL_ANXIETY", None)]),
     ("Closing - case end",
      [("FIELD_CONTROL", {"names": FIELD_CONTROL_CASE_END})]),
-    # Verification photo moved to the very end (2026-06-12): the enumerator
-    # photographs the completed visit, and the survey no longer opens with a
-    # camera prompt. HH GPS stays early so it auto-locks while the form is worked.
+    # Verification photo near the end (2026-06-12): the enumerator photographs the
+    # completed visit, and the survey no longer opens with a camera prompt. It must
+    # stay AFTER "Closing - case end" — its preproc gates on ENUM_RESULT_FINAL_VISIT,
+    # so the result has to be entered before the camera fires.
     ("Case Verification Photo",
      # VERIFICATION_PHOTO_IMAGE is a binary Image item (off-form by rule — binary
      # items can't be placed on a form); the on-form trigger CAPTURE_VERIFICATION_PHOTO
      # drives capture into it. Only the trigger + filename label go on the form.
      [("REC_CASE_VERIFICATION", {"exclude": ["VERIFICATION_PHOTO_IMAGE"]})]),
+    # HH GPS moved to dead last, AFTER the photo (2026-07-16, #157). This deliberately
+    # reverses the 2026-06-12 rule "HH GPS stays early so it auto-locks while the form
+    # is worked" — indoors that assumption never held. gps(read) is synchronous, so an
+    # early form froze the enumerator for up to 120s BEFORE consent. Now nothing in the
+    # interview waits on a satellite fix: the enumerator finishes, photographs, walks
+    # out, and GPS acquires outdoors. GPS has no gate of its own, so after the photo is
+    # safe. Items stay in HOUSEHOLD_GEO_ID in the .dcf — form order only.
+    ("FC HH GPS Capture",
+     [("HOUSEHOLD_GEO_ID", {"names": HH_GPS_ITEMS})]),
 ]
 
 # Binary/computed items deliberately kept OFF every form (so the orphan check below
@@ -179,6 +229,16 @@ def build_form_plan(records_by_name):
             plan.extend(_section_c_columnwise(records_by_name))
         else:
             plan.append((label, parts))
+    # Dormant Section-N device-test affordance (#834, 2026-07-06): F4_PILOT_SECTION_N=1
+    # fronts Section N by keeping only the header/geo/closing (FIELD_CONTROL,
+    # HOUSEHOLD_GEO_ID) + every Section N roster form (N_*), dropping A-M and O-Q so a
+    # partial-save/resume in the food roster is reachable in a handful of fields. OFF by
+    # default (full plan); builds a THROWAWAY pilot .pen for on-device resume testing only.
+    if os.environ.get('F4_PILOT_SECTION_N'):
+        def _keep(parts):
+            rec = parts[0][0]
+            return rec in ('FIELD_CONTROL', 'HOUSEHOLD_GEO_ID') or rec.startswith('N_')
+        plan = [(lbl, prts) for lbl, prts in plan if _keep(prts)]
     return plan
 
 
@@ -301,6 +361,10 @@ NAMED_BLOCKS = [
 _NO_AUTOGROUP_RECORDS = {
     "FIELD_CONTROL", "HOUSEHOLD_GEO_ID", "REC_CASE_VERIFICATION", "C_HOUSEHOLD_ROSTER",
     "C_PRIVATE_INS_ROSTER",   # #525/#612/#613: emit as a roster, never auto-blocked
+    "N_FOOD_ROSTER",   # Option C (2026-07-03): food grid — roster, never DG-blocked
+    "N_WKOTH_ROSTER",  # #832/#833 (2026-07-06): restaurant+tobacco rosterized (DG form would not commit)
+    "N_NF1M_ROSTER", "N_NF6M_ROSTER", "N_NF12M_ROSTER",   # fan-out rosters (2026-07-03):
+    "N_H12M_ROSTER", "N_H6M_ROSTER", "N_H1M_ROSTER",      # never DG-blocked
 }
 _MULTISELECT_RE = re.compile(r"^(.+?)_O\d+$")
 # Single alpha fields rendered as a CSPro Check Box (one-question multi-select tick-list).
@@ -321,6 +385,7 @@ _CHECKBOX_FIELDS = {
     "Q107_OTHER_ACTIONS", "Q109_TYPE",
     "Q141_BILL_ITEMS", "Q143_HOW_PAID",   # #615/#616 Section M bill
     "Q196_FOREGONE", "Q202_WORRY_REASONS",   # #638/#668 Section O/Q (without this they render as DropDown/RadioButton = single-select data loss)
+    "Q84_WHERE_ASSIST",   # #814
 }
 # #708/#709 combined-view: a Section N WHO/SHA expenditure item is the fixed triplet
 # {base}_CONSUMED, {base}_PURCHASED_PHP, {base}_INKIND_PHP (see generate_dcf

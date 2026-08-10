@@ -22,6 +22,15 @@ HERE = Path(__file__).parent
 DCF = HERE / "FacilityHeadSurvey.dcf"
 OUT = HERE / "FacilityHeadSurvey.ent.qsf"
 
+# Build version (tester request 2026-07-02): ../versions.json is the single source of truth
+# (bumped via automation/stamp_version.py, which also stamps the .pff Description for the
+# CSEntry app list). This footer rides the case-key (QN) screen — the FIRST screen of every
+# case in all three instruments; dict-first placement was wrong because the cover/FC block
+# can sit at case-end on the form (v1.0.1). Same string in every language — UI chrome, not
+# questionnaire text.
+_BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F1"]
+BUILD_FOOTER = f'<p class="instruction">Build: F1 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+
 STYLES = """styles:
   - name: Normal
     className: normal
@@ -231,6 +240,12 @@ def main():
         lines += [f"  - name: {nm}", f"    label: {lb}"]
     lines.append(STYLES)
     lines.append("questions:")
+
+    # the id item never appears in the records loop below, so emit its (footer-only) entry here
+    qn = d["levels"][0]["ids"]["items"][0]["name"]
+    lines += [f"  - name: {dict_name}.{qn}", "    conditions:", "      - questionText:"]
+    for lnm, _ in langs:
+        lines += [f"          {lnm}: |", f"            {BUILD_FOOTER}"]
 
     seen, n = set(), 0
     intro_used = set()

@@ -1,0 +1,10 @@
+# Hub smoke test: does the MenuApp still COMPILE after the assignment autoload?
+# A CSPro compile error shows a "Compile Failed" dialog at launch, BEFORE any login
+# prompt - so we do not need credentials to prove the logic is syntactically sound.
+# What we must NOT see: "Compile Failed. See application ('GLOBAL') procedure."
+launch ../supervisor-hub/LoginApp.pff
+wait 3
+note EXPECT: the LOGIN prompt - NOT a compile-error dialog
+shot 01_should_be_login_not_compile_error
+wait 1
+shot 02_confirm

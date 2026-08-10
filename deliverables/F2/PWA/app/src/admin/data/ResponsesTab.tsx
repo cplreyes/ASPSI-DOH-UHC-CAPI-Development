@@ -396,6 +396,8 @@ function SourcePill({ value }: { value: string }): JSX.Element {
 
 function StatusText({ value }: { value: string }): JSX.Element {
   if (value === 'rejected') return <span className="text-error">{value}</span>;
+  // #831: voided rows stay visible to admins but read as struck-out.
+  if (value === 'voided') return <span className="text-muted-foreground line-through">{value}</span>;
   return <span className="text-muted-foreground">{value}</span>;
 }
 

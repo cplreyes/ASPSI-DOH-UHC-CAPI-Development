@@ -37,7 +37,14 @@ function launch_instrument(string pffPath)
     .../csentry/<App>/; the running menu lives in .../csentry/LoginApp/, so the instrument
     is "../<App>/<App>.pff" and OnExit back is "../LoginApp/MenuApp.pff". (C1-proven; the
     instruments are launched UNMODIFIED — D6.) }
-  instr_pff.load(pffPath);
+  { If the instrument app is NOT installed, .load() fails and CSEntry shows a bare
+    "The Pff does not exist" - which tells a field enumerator nothing and looks like
+    the hub is broken. The hub is only a LAUNCHER: it can open an instrument only if
+    that instrument was installed as its own app from CSWeb. Say so. }
+  if not instr_pff.load(pffPath) then
+    errmsg(1016, pffPath);
+    exit;
+  endif;
   instr_pff.setProperty("OnExit", "../LoginApp/MenuApp.pff");
   instr_pff.exec();
 end;
@@ -51,7 +58,7 @@ function show_ea_map()
   Map ea_map;
   ok = ea_map.setBaseMap("survey-basemap.mbtiles");
   if ok = 0 then
-    errmsg("Offline base map not found on this device. Remove + re-add LoginApp from the server to install it.");
+    errmsg(1003);
   else
     ea_map.addMarker(14.3400, 121.0800);   { test facility area - Binan, Laguna }
     ea_map.addMarker(14.2840, 121.0680);   { EA reference point }
@@ -82,18 +89,15 @@ function receive_assignment()
       syncdisconnect();
       setfile(ASSIGNMENT_DICT, "MyAssignment.dat");   { reload the freshly-received file }
       forcase ASSIGNMENT_DICT do
-        errmsg("Assignment received - EA " + strip(AS_FACILITY_CODE) + " (" + strip(AS_EA_NAME)
-               + "): instrument " + strip(AS_INSTRUMENT) + ", target " + strip(AS_TARGET_COUNT)
-               + ". Open it from the menu.");
+        errmsg(1004,
+               strip(AS_FACILITY_CODE), strip(AS_EA_NAME), strip(AS_INSTRUMENT), strip(AS_TARGET_COUNT));
       enddo;
     else
       syncdisconnect();
-      errmsg("Connected to the supervisor, but no assignment file (" + fromfile
-               + ") was published for you. Ask the supervisor to run 'Assign Enumeration Area' first.");
+      errmsg(1005, fromfile);
     endif;
   else
-    errmsg("Couldn't connect over Bluetooth. Check: (1) Bluetooth is ON on BOTH tablets, and "
-             + "(2) the supervisor has started 'Assign Enumeration Area' - then retry.");
+    errmsg(1006);
   endif;
 end;
 
@@ -105,45 +109,37 @@ function collect_interviews()
     next (one-host-from-many = the C2-proven loop). Collected cases accumulate by the 12-digit
     key into this hub's own ../<App>/<App>.csdb (the F1/F3/F4 dicts declared EXTERNAL here), ready
     to relay to CSWeb. DEVICE-UNCONFIRMED: receiving syncdata into a sibling app's live .csdb. }
-  errmsg("COLLECT: starting the Bluetooth server to receive interviews. Make sure Bluetooth is ON "
-           + "on both tablets. Keep this screen open; each enumerator now runs 'Send My Interviews to "
-           + "Supervisor'. Receives one enumerator per connection - re-select this item for the next enumerator.");
+  errmsg(1007);
   syncserver(Bluetooth);
-  errmsg("COLLECT: an enumerator connected and synced their interviews to this hub.");
+  errmsg(1008);
 end;
 
 function send_to_supervisor()
   { B6 - push THIS enumerator's captured cases to the supervisor over Bluetooth. Transport = the
     C2-DEVICE-PROVEN syncconnect(Bluetooth)+syncdata(PUT)+syncdisconnect (the exact SyncSpike shape:
-    syncconnect tested in an if, syncdata as a statement). Routes to the assigned instrument
-    (AS_INSTRUMENT from the received assignment; defaults to F3, the test instrument, when none is
-    loaded yet). The cases live in the instrument's OWN separately-installed .csdb (../<App>/<App>.csdb),
-    declared EXTERNAL here. PUT is non-destructive - the enumerator keeps their copy (proven in C2).
-    DEVICE-UNCONFIRMED (verify on the 2-tablet rig): syncdata against an external mapped to a SIBLING
-    app's live .csdb, and the no-assignment default. }
-  string instr;
-  setfile(ASSIGNMENT_DICT, "MyAssignment.dat");
-  instr = "";
-  forcase ASSIGNMENT_DICT do
-    instr = strip(AS_INSTRUMENT);
-  enddo;
-  if instr = "" then
-    instr = "F3";   { default to the F3 test instrument when no assignment has been received }
-  endif;
+    syncconnect tested in an if, syncdata as a statement).
+    #829 (2026-07-03): sends ALL THREE instrument dicts unconditionally. The old send routed by
+    the RECEIVED assignment (MyAssignment.dat) and silently defaulted to F3 when none was loaded -
+    on the R6 rig se-001 conducted an F1 interview, the hub PUT the empty F3 dict, reported
+    "Sent your F3 interviews", and the F1 case never left the tablet. Sending all three closes
+    both gaps (wrong default + interviews conducted off-assignment): PUT of an empty dict syncs
+    nothing, PUT is non-destructive - the enumerator keeps their copies (proven in C2). The cases
+    live in each instrument's OWN separately-installed .csdb (../<App>/<App>.csdb), declared
+    EXTERNAL here. Per-dict forcase counts (the report-proven idiom) make the confirmation state
+    exactly what was sent. }
+  numeric sn1; numeric sn3; numeric sn4;
+  sn1 = 0; sn3 = 0; sn4 = 0;
+  forcase FACILITYHEADSURVEY_DICT do sn1 = sn1 + 1; enddo;
+  forcase PATIENTSURVEY_DICT do sn3 = sn3 + 1; enddo;
+  forcase HOUSEHOLDSURVEY_DICT do sn4 = sn4 + 1; enddo;
   if syncconnect(Bluetooth) then
-    if instr = "F1" then
-      syncdata(PUT, FACILITYHEADSURVEY_DICT);
-    elseif instr = "F4" then
-      syncdata(PUT, HOUSEHOLDSURVEY_DICT);
-    else
-      syncdata(PUT, PATIENTSURVEY_DICT);
-    endif;
+    syncdata(PUT, FACILITYHEADSURVEY_DICT);
+    syncdata(PUT, PATIENTSURVEY_DICT);
+    syncdata(PUT, HOUSEHOLDSURVEY_DICT);
     syncdisconnect();
-    errmsg("Sent your " + instr + " interviews to the supervisor over Bluetooth. Your own copies "
-             + "are unchanged (non-destructive).");
+    errmsg(1009, sn1, sn3, sn4);
   else
-    errmsg("Couldn't connect over Bluetooth. Check: (1) Bluetooth is ON on BOTH tablets, and "
-             + "(2) the supervisor has started 'Collect Interviews from Enumerators' - then retry.");
+    errmsg(1010);
   endif;
 end;
 
@@ -165,11 +161,9 @@ function relay_to_csweb()
     syncdata(PUT, PATIENTSURVEY_DICT);
     syncdata(PUT, HOUSEHOLDSURVEY_DICT);
     syncdisconnect();
-    errmsg("Relayed the hub's collected F1/F3/F4 interviews to CSWeb (supervisor-qa). Cases upsert "
-             + "by the 12-digit key, so direct-synced and hub-relayed copies never conflict.");
+    errmsg(1011);
   else
-    errmsg("CSWeb connect failed - no internet, or sign-in was cancelled. This hub relay is the "
-             + "no-signal safety net; retry on signal. Sign in as the supervisor-qa account when prompted.");
+    errmsg(1012);
   endif;
 end;
 
@@ -177,11 +171,9 @@ function assign_ea()
   { B4 (N1) - publish EA assignments: become a passive Bluetooth host so each enumerator can pull
     their AS_<id>.dat (syncfile GET). syncserver handles ONE client per call; re-select for the next
     enumerator (one-host-from-many). The AS_*.dat files ship in the app folder = the syncserver root. }
-  errmsg("ASSIGN EA: starting the Bluetooth server to publish assignments. Make sure Bluetooth is "
-           + "ON on both tablets. Keep this screen open; the enumerator now runs 'Receive Assigned "
-           + "Data'. Serves one enumerator per connection - re-select this item for the next enumerator.");
+  errmsg(1013);
   syncserver(Bluetooth);
-  errmsg("ASSIGN EA: an enumerator connected and pulled their assignment.");
+  errmsg(1014);
 end;
 
 function show_coverage_report(string scope)
@@ -198,12 +190,22 @@ function show_coverage_report(string scope)
     on-CSEntry render is the device-verify gate (the C8 spike). }
   numeric n1; numeric n3; numeric n4;
   string aInstr; string aTgt; string aEA; string j; string dopt; string res;
+  string aopid;
   n1 = 0; n3 = 0; n4 = 0;
   forcase FACILITYHEADSURVEY_DICT do n1 = n1 + 1; enddo;
   forcase PATIENTSURVEY_DICT do n3 = n3 + 1; enddo;
   forcase HOUSEHOLDSURVEY_DICT do n4 = n4 + 1; enddo;
   aInstr = ""; aTgt = ""; aEA = "";
-  setfile(ASSIGNMENT_DICT, "MyAssignment.dat");
+  { Read THIS operator's shipped assignment (AS_<opid>.dat), same file the level
+    preproc binds. This used to hardcode MyAssignment.dat - which ships EMPTY - so it
+    silently re-bound over the autoload and the report showed no assignment at all.
+    Falls back to MyAssignment.dat, which is where a Bluetooth receive still lands. }
+  aopid = loadsetting("hub_operator_id");
+  if strip(aopid) <> "" then
+    setfile(ASSIGNMENT_DICT, "AS_" + strip(aopid) + ".dat");
+  else
+    setfile(ASSIGNMENT_DICT, "MyAssignment.dat");
+  endif;
   forcase ASSIGNMENT_DICT do
     aInstr = strip(AS_INSTRUMENT); aTgt = strip(AS_TARGET_COUNT); aEA = strip(AS_EA_NAME);
   enddo;
@@ -230,15 +232,35 @@ preproc
     level preproc because #617: a protected field's OWN preproc is skipped, so MENU_SESSION has none. }
   m_role = loadsetting("hub_role");
   m_op = loadsetting("hub_operator_id");
+
+  { ---- AUTO-LOAD THIS ENUMERATOR'S ASSIGNMENT (pretest, 2026-07-15) ----
+    AS_<operator_id>.dat is SHIPPED INSIDE the app package (LoginApp.csds lists all
+    seven), so the assignment is already on the tablet the moment the app is
+    downloaded from CSWeb. Bind the dictionary straight to it.
+
+    This makes the Bluetooth "Receive Assignment" step OPTIONAL rather than required.
+    That matters for Day 1: syncfile-over-Bluetooth is the one transport in this hub
+    that has never been device-confirmed (see receive_assignment) - so making the
+    pretest depend on it would be betting the morning on an unproven path, when the
+    data is already sitting in the app folder.
+
+    Safe because ASSIGNMENT_DICT has readOptimization=False: forcase re-reads from
+    disk, so the rebind takes effect immediately. Bluetooth receive still works and
+    still overwrites MyAssignment.dat - it just is not needed to get started. }
+  if strip(m_op) <> "" then
+    setfile(ASSIGNMENT_DICT, "AS_" + strip(m_op) + ".dat");
+  endif;
+
   MENU_SESSION = 1;
   protect(MENU_SESSION, true);
 
 PROC MENU_PICK
 preproc
-  { HTMLDIALOG role menu - prompt-free + secure. htmldialog() renders menu.html through the deprecated
-    CSPro.* interface, which does NOT trip the Action-Invoker "Allow Access?" consent gate that the
-    accept()/'choice' HtmlDialog does - so no per-show prompt, and accessFromExternalCaller stays the
-    secure promptIfNoValidAccessToken. Menu content = a static JSON per role (from *_MENU_GROUPED via
+  { HTMLDIALOG role menu - prompt-free + secure on BOTH CSEntry generations: 8.0.1 renders menu.html
+    through the deprecated CSPro.* interface (no Action-Invoker consent gate), while 8.1+ (CSPro.*
+    REMOVED - blank-menu bug, Samsung A23 2026-07-02) authenticates to CS.UI with the hub access
+    token registered in this .ent (accessTokens) - still no per-show prompt, and
+    accessFromExternalCaller stays the secure promptIfNoValidAccessToken. Menu content = a static JSON per role (from *_MENU_GROUPED via
     _menu_json_expr); the tapped item returns its action wrapped as "<<action>>", and pos() routing
     survives whatever encoding the htmldialog return comes back in. Loops via `move to MENU_SESSION`;
     "leave" actions launch an instrument (Pff OnExit chains back) or execpff to LoginApp. }
@@ -247,13 +269,13 @@ preproc
   string dopt;
   dopt = '{"width":380,"height":600,"resizable":false,"keyboard":0}';
   if strip(m_role) = "supervisor" then
-    menuJson = concat('{"title":"', strip(m_op), ' - Supervisor","groups":[{"header":"ASSIGNMENTS","items":[{"label":"Assign Enumeration Area","action":"assign"}]},{"header":"COLLECT & RELAY","items":[{"label":"Collect Interviews ', 'from Enumerators","action":"collect"},{"label":"Relay Collected Interviews to CSWeb","action":"relay"}]},{"header":"REVIEW & REPORTS","items":[{"label":"Survey Interview - view rep', 'ort","action":"report_sup"},{"label":"View EA on Map","action":"map"},{"label":"Open F1 - Facility Head (review)","action":"open_f1"},{"label":"Open F3 - Patient (review)","action"', ':"open_f3"},{"label":"Open F4 - Household (review)","action":"open_f4"}]},{"header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
+    menuJson = concat('{"title":"', strip(m_op), ' - Supervisor","ver":"Hub v1.1.4 (2026-07-15)","groups":[{"header":"ASSIGNMENTS","items":[{"label":"Assign Enumeration Area","action":"assign"}]},{"header":"COLLECT & RELAY","items', '":[{"label":"Collect Interviews from Enumerators","action":"collect"},{"label":"Relay Collected Interviews to CSWeb","action":"relay"}]},{"header":"REVIEW & REPORTS","items":[{"lab', 'el":"Survey Interview - view report","action":"report_sup"},{"label":"View EA on Map","action":"map"},{"label":"Conduct/Open F1 - Facility Head","action":"open_f1"},{"label":"Condu', 'ct/Open F3 - Patient","action":"open_f3"},{"label":"Conduct/Open F4 - Household","action":"open_f4"}]},{"header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
     res = htmldialog("menu.html", inputData := menuJson, displayOptions := dopt);
   elseif strip(m_role) = "enumerator" then
-    menuJson = concat('{"title":"', strip(m_op), ' - Enumerator","groups":[{"header":"ASSIGNMENT","items":[{"label":"Receive Assigned Data","action":"receive"}]},{"header":"INTERVIEWS","items":[{"label":"Conduct F1 - Facility Head', ' Interview","action":"open_f1"},{"label":"Conduct F3 - Patient Interview","action":"open_f3"},{"label":"Conduct F4 - Household Interview","action":"open_f4"},{"label":"Send My Inte', 'rviews to Supervisor","action":"send"}]},{"header":"REPORTS","items":[{"label":"View EA on Map","action":"map"},{"label":"View my report","action":"report_enum"}]},{"header":"SESSI', 'ON","items":[{"label":"Log out","action":"logout"}]}]}');
+    menuJson = concat('{"title":"', strip(m_op), ' - Enumerator","ver":"Hub v1.1.4 (2026-07-15)","groups":[{"header":"ASSIGNMENT","items":[{"label":"Receive Assigned Data","action":"receive"}]},{"header":"INTERVIEWS","items":[{"la', 'bel":"Conduct F1 - Facility Head Interview","action":"open_f1"},{"label":"Conduct F3 - Patient Interview","action":"open_f3"},{"label":"Conduct F4 - Household Interview","action":"', 'open_f4"},{"label":"Send My Interviews to Supervisor","action":"send"}]},{"header":"REPORTS","items":[{"label":"View EA on Map","action":"map"},{"label":"View my report","action":"', 'report_enum"}]},{"header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
     res = htmldialog("menu.html", inputData := menuJson, displayOptions := dopt);
   else
-    errmsg("No role found from login. Close and sign in again via LoginApp.");
+    errmsg(1015);
     execpff("LoginApp.pff", stop);
   endif;
   if pos("<<assign>>", res) > 0 then
@@ -289,7 +311,6 @@ preproc
   elseif pos("<<logout>>", res) > 0 then
     execpff("LoginApp.pff", stop);
   else
-    errmsg("(debug) menu returned: [" + res + "]");
     move to MENU_SESSION;
   endif;
   noinput;

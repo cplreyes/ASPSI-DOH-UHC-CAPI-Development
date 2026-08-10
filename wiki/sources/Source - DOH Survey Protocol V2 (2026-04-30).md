@@ -28,7 +28,7 @@ I. Introduction · II. Research Problem · III. Objectives · IV. Significance �
 
 ## Data collection & ethics (relevant to CAPI)
 - **CAPI conversion:** final instruments converted to CSPro tablet forms; the protocol references **pre-testing + bench-testing of the CSPro application + pilot testing** as validation steps (§XII).
-- **Field re-contact rule:** at least **three contact attempts** before a non-response disposition (field supervisor) — ties to the disposition/result-of-visit logic in the CAPI ([[reference_cspro_breakoff_disposition]]).
+- **Field re-contact rule:** at least **three contact attempts** before a non-response disposition (field supervisor) — ties to the disposition/result-of-visit logic in the CAPI (`reference_cspro_breakoff_disposition`).
 - **Informed consent** (Annex H) read verbatim; respondent signs; may decline/withdraw; a present adult HH member may sign where the respondent cannot.
 - **Confidentiality:** names kept out of reports; no sharing of personal data — the data-security posture documented in CAPI Manual §XVI.
 

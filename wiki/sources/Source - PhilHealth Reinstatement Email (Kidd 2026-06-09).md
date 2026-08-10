@@ -13,7 +13,7 @@ tags: [capi, survey-design, philhealth, f3-patient, f4-household, reinstatement,
 
 While organizing files, ASPSI reviewed a recording of a previous DOH meeting and realized the team had **agreed to reinstate additional PhilHealth-registration questions that were previously omitted following comments from OAAED**. DOH wanted these items included given their **intended use of the information**, and their importance was emphasized by **Sir LJ** (LJ Villarante, DOH). The questions were **not reinserted into the survey instruments as agreed** — ASPSI flagged this as their oversight and apologized. Both questions are **conditional** and can be incorporated "with minimal disruption."
 
-> [!note] This is a DOH-originated, ASPSI-relayed questionnaire change — not a tester finding. It belongs to Epic 2 (questionnaire design) feeding Epic 3 (build), and rides the patch loop once the value sets are in hand. Carl produces the CAPI; ASPSI is the DOH interface ([[feedback_carl_produces_capi_no_doh_comms]]).
+> [!note] This is a DOH-originated, ASPSI-relayed questionnaire change — not a tester finding. It belongs to Epic 2 (questionnaire design) feeding Epic 3 (build), and rides the patch loop once the value sets are in hand. Carl produces the CAPI; ASPSI is the DOH interface (`feedback_carl_produces_capi_no_doh_comms`).
 
 ## The reinstated questions (verbatim from the email)
 
@@ -42,7 +42,7 @@ The email carries **3 inline PNG attachments** (yellow-highlighted in the body) 
 3. `be5fe15d-a2e8-4bb0-a8c2-b2cbb0bd22af.png` (449×473) — the longer options table (likely the "why not registered" reasons list).
 
 > [!warning] Connector limitation — images not downloadable
-> The claude.ai Gmail MCP exposes the email **body + attachment IDs** but has **no attachment-download tool** ([[reference_drive_gmail_connector_limits]]). The question **stems and routing are now captured** (above), but the **exact response options remain in the images only**. The CAPI build cannot be coded accurately without them (you cannot guess a value set — verbatim rule). **Unblock:** Carl downloads the 3 PNGs from this email and drops them into the repo (e.g. `deliverables/CSPro/_philhealth-valuesets/`); they can then be read directly and the build completed.
+> The claude.ai Gmail MCP exposes the email **body + attachment IDs** but has **no attachment-download tool** (`reference_drive_gmail_connector_limits`). The question **stems and routing are now captured** (above), but the **exact response options remain in the images only**. The CAPI build cannot be coded accurately without them (you cannot guess a value set — verbatim rule). **Unblock:** Carl downloads the 3 PNGs from this email and drops them into the repo (e.g. `deliverables/CSPro/_philhealth-valuesets/`); they can then be read directly and the build completed.
 
 ## Routing & build implications
 

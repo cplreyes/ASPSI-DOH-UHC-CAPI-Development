@@ -49,8 +49,10 @@ Every case gets a **Result of Visit / final result code**, whether or not the in
 
 **Expected result:** the result is stored with the case; for a non-interview outcome the tool **skips the survey questions** and takes you straight to closing.
 
-![The closing "Interview status" radio: Continue interview / Respondent withdrew / Postponed-reschedule / Stop — other (incomplete)](../img/12-interview-status-breakoff.png)
-*The closing **Interview status / Result of Visit** uses this radio control. Leave it on **Continue interview** during a normal interview; choose another option only to end early (this routes straight to the closing and skips the remaining questions). The full **Result of Visit** codes — which differ by tool — are in **Annex C**.*
+![The closing "Interview status" radio: Continue interview / Respondent withdrew / Postponed-reschedule / Stop — other (incomplete) / Not interviewed — refused / not found / ineligible](../img/12-interview-status-breakoff.png)
+*The closing **Interview status / Result of Visit** uses this radio control. Leave it on **Continue interview** during a normal interview; choose another option only to end early (this routes straight to the closing and skips the remaining questions). The full **Interview status** and **Result of Visit** codes — which differ by tool — are in **Annex C**.*
+
+> ⚠️ **If the interview never started**, use the **"Not interviewed"** options — **refused**, **not found**, or **ineligible**. The tool records the visit as **Replaced** and the respondent is substituted. Use **Respondent withdrew** only when the interview had already **started**. See **Annex C** for the full mapping.
 
 ---
 

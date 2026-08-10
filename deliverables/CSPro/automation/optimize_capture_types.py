@@ -118,6 +118,7 @@ CHECKBOX = {"Q148_CONDITIONS",
             # instrument collision in this shared name-keyed set).
             "Q74_WHERE_REST", "Q77_WHY_GENERIC", "Q78_WHY_BRANDED", "Q82_DIFFICULTY_REASONS",
             "Q88_DIFF_PAYING", "Q102_VISIT_REASON", "Q103_CARE_TYPE", "Q106_FORGONE_WHY",
+            "Q84_WHERE_ASSIST",   # #814
             "Q107_OTHER_ACTIONS", "Q109_TYPE",
             "Q141_BILL_ITEMS", "Q143_HOW_PAID",   # #615/#616 Section M bill
             "Q196_FOREGONE", "Q202_WORRY_REASONS"}   # #638/#668 Section O/Q tick-all (keep CheckBox, don't demote)

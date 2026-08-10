@@ -1,4 +1,7 @@
-blank_issues_enabled: false
+# Blank issues are enabled on purpose: during live fieldwork a tester must never be
+# blocked just because no template fits their situation. Templates are the guided
+# path; the blank form is the escape hatch.
+blank_issues_enabled: true
 contact_links:
   - name: UAT Guide (F2 PWA)
     url: https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/blob/main/docs/F2-PWA-UAT-Guide.md

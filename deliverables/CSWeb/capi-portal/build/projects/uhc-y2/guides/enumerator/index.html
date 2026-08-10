@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSEntry on Your Tablet — Enumerator Guide · UHC Survey Year 2</title>
+    <meta
+      name="description"
+      content="Step-by-step guide for field enumerators: installing CSEntry, connecting to the server, downloading the survey, running an interview, and syncing data. For the Facility Head (F1), Patient (F3), and Household (F4) instruments."
+    />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#006b3f" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23006b3f'/%3E%3Cpath d='M11 26.5c2.6 2 5.2 3 7.8 3 2.4 0 3.8-1 3.8-2.6 0-1.6-1.3-2.3-4.4-3.1-3.9-1-6.6-2.4-6.6-5.9 0-3.3 2.7-5.6 6.8-5.6 2.4 0 4.6.6 6.6 1.8l-1.5 3.2c-1.8-1-3.5-1.5-5.2-1.5-2.1 0-3.2.9-3.2 2.2 0 1.5 1.4 2.1 4.4 2.9 4 1 6.6 2.5 6.6 6 0 3.5-2.8 6-7.4 6-3 0-5.9-1-8.4-2.9z' fill='%23e5b23b'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="/assets/docs.css" />
+  
+<link rel="stylesheet" href="/portal.css">
+<style>
+  body { margin: 0 !important; background: var(--paper) !important; }
+  .pshell { display: flex; min-height: 100vh; align-items: flex-start; }
+  .pshell > .doc { flex: 1; min-width: 0; background: #fff; }
+  .pshell .doc-bar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center;
+    gap: 10px; height: 52px; padding: 0 24px; background: rgba(255,255,255,.92);
+    backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--line);
+    font-family: var(--sans); font-size: 13px; color: var(--ink-3); }
+  .pshell .doc-bar a { color: var(--ink-3); text-decoration: none; }
+  .pshell .doc-bar a:hover { color: var(--verde); }
+  .pshell .doc-bar .cur { color: var(--ink); font-weight: 600; }
+  .pshell .doc-bar .sep { opacity: .45; }
+  @media (max-width: 900px) { .pshell { display: block; } }
+</style>
+</head>
+  <body><div class="pshell"><aside class="sidebar"><a class="sb-brand" href="/"><span class="sb-mark">A</span><span><b>ASPSI CAPI</b><span>capi.asiansocial.org</span></span></a><div class="sb-proj"><a class="sb-proj-card" href="/projects/uhc-y2/"><div class="k">Active project</div><div class="v">UHC Survey Year 2</div></a></div><nav class="sb-nav"><div class="sb-sec">Project</div><a class="" href="/projects/uhc-y2/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Overview</span></a><a class="on" href="/projects/uhc-y2/guides/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h7M8 11h7"/></svg><span>Guides</span></a><a class="" href="/projects/uhc-y2/instruments/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Instruments</span></a><a class="" href="/projects/uhc-y2/manual/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v6h6"/></svg><span>Manual</span></a><div class="sb-sec">Operations</div><a class="" href="/projects/uhc-y2/monitoring/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Monitoring</span><span class="lk">&#128274;</span></a><a class="" href="/projects/uhc-y2/data/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg><span>Data &amp; exports</span><span class="lk">&#128274;</span></a><a class="" href="/projects/uhc-y2/tabulations/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18v14H3z"/><path d="M3 10h18M9 5v14M15 5v14"/></svg><span>Tabulations</span></a><a class="" href="/projects/uhc-y2/archive/pretest-2026-07-15/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><path d="M10 12h4"/></svg><span>Archive</span></a><div class="sb-sec">Platform</div><a class="" href="/projects/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg><span>All projects</span></a><a class="" href="/platform/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>What we build</span></a><a class="" href="/about/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>About</span></a></nav><div class="sb-foot">Asian Social Project Services, Inc.<br><a href="https://asiansocial.org">asiansocial.org</a><div class="sb-powered">Powered by Analytiflow.</div></div></aside><div class="doc"><div class="doc-bar"><a href="/projects/uhc-y2/">UHC Survey Year 2</a><span class="sep">/</span><a href="/projects/uhc-y2/guides/">Guides</a><span class="sep">/</span><span class="cur">Enumerator guide</span><span style="margin-left:auto"><a href="/projects/uhc-y2/">&larr; Project home</a></span></div><div style="background:#f4f8fb;border:1px solid #d5e2ec;border-left:5px solid #2c6b91;border-radius:8px;padding:12px 16px;margin:0 0 18px;color:#1e3a4c;font-size:.95rem"><b>How to operate the software.</b> This guide covers the tablet and the applications. For field procedure &mdash; respondent selection, eligibility, refusals, replacements and quality control &mdash; the ASPSI <a href="/projects/uhc-y2/manual/">field manuals</a> are the approved reference and take precedence.</div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="accent-bar"></div>
+
+    <div class="topbar">
+      <div class="container">
+        <div class="topbar-brand">
+          <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true">
+            <rect width="40" height="40" rx="8" fill="#006b3f" />
+            <path
+              d="M11 26.5c2.6 2 5.2 3 7.8 3 2.4 0 3.8-1 3.8-2.6 0-1.6-1.3-2.3-4.4-3.1-3.9-1-6.6-2.4-6.6-5.9 0-3.3 2.7-5.6 6.8-5.6 2.4 0 4.6.6 6.6 1.8l-1.5 3.2c-1.8-1-3.5-1.5-5.2-1.5-2.1 0-3.2.9-3.2 2.2 0 1.5 1.4 2.1 4.4 2.9 4 1 6.6 2.5 6.6 6 0 3.5-2.8 6-7.4 6-3 0-5.9-1-8.4-2.9z"
+              fill="#e5b23b"
+            />
+          </svg>
+          <div>
+            <div class="topbar-org">UHC Survey Year 2</div>
+            <div class="topbar-sub">Enumerator guide · CSEntry</div>
+          </div>
+        </div>
+        <a class="home-link" href="/projects/uhc-y2/">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M19 12H6M11 6l-6 6 6 6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          Back to project home
+        </a>
+      </div>
+    </div>
+
+    <main id="main">
+      <div class="container">
+        <p class="page-eyebrow">For field enumerators · F1 · F3 · F4</p>
+        <h1>CSEntry on your tablet — a step-by-step guide</h1>
+        <p class="lede">
+          A plain-language walkthrough of using the CSEntry app to collect the
+          DOH UHC Year 2 survey on an Android tablet. No technical background
+          needed — follow the steps in order.
+        </p>
+        <p class="banner">
+          Most teams now sign in through the
+          <a href="/projects/uhc-y2/guides/supervisor/">Supervisor &amp; Enumerator Hub</a>,
+          which opens a menu for your role and launches these same surveys. The
+          direct steps below still work exactly the same — they are what the hub
+          opens — so follow them whether you start from the hub or open a survey
+          on its own.
+        </p>
+
+        <article>
+          <section>
+            <h2>Before you start</h2>
+            <ul>
+              <li>An Android tablet issued by the field team (charged, with mobile data or Wi-Fi).</li>
+              <li>The <strong>CSEntry</strong> app installed (Step 1).</li>
+              <li>Your <strong>sync username and password</strong> — given by your supervisor; keep it private.</li>
+              <li>
+                The CSWeb sync server address (for CSEntry):
+                <code>https://csweb.asiansocial.org/csweb/api</code>.
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>1. Installing CSEntry (one time)</h2>
+            <ol>
+              <li>Open the <strong>Google Play Store</strong>.</li>
+              <li>Search <strong>“CSEntry”</strong> (by the U.S. Census Bureau).</li>
+              <li>Tap <strong>Install</strong>, wait for it to finish, then <strong>Open</strong>.</li>
+            </ol>
+            <figure>
+              <img
+                src="/docs/img/01-csentry-terms-of-service.png"
+                alt="CSEntry first-launch Terms of Service screen with an Accept button"
+                loading="lazy"
+              />
+              <figcaption>
+                On first launch, CSEntry shows the Terms of Service — tap
+                <strong>Accept</strong>, then <strong>Allow</strong> the
+                location, camera, and storage permissions when prompted.
+              </figcaption>
+            </figure>
+            <figure>
+              <img
+                src="/docs/img/02-csentry-home-no-apps.png"
+                alt="The CSEntry home screen before any survey is added, reading 'There are no applications on your device'"
+                loading="lazy"
+              />
+              <figcaption>
+                The CSEntry home before any survey is added. You’ll add yours in
+                Steps 2–3.
+              </figcaption>
+            </figure>
+            <div class="callout">
+              If your tablet was pre-configured by the field team, CSEntry may
+              already be installed — skip to Step 2.
+            </div>
+          </section>
+
+          <section>
+            <h2>2. Connecting your tablet to the survey server (one time)</h2>
+            <p>This tells CSEntry where to download the survey from.</p>
+            <ol>
+              <li>In CSEntry, tap <strong>⋮ → Add Application → CSWeb server</strong>.</li>
+              <li>Server address: <code>https://csweb.asiansocial.org/csweb/api</code> (it is usually already filled in). Tap <strong>Connect</strong>.</li>
+              <li>Sign in with your <strong>username</strong> and <strong>password</strong> when asked. The list of available surveys appears.</li>
+            </ol>
+          </section>
+
+          <section>
+            <h2>3. Downloading the survey</h2>
+            <ol>
+              <li>In the list of available surveys, find the one you’re assigned to — <strong>FacilityHeadSurvey (F1)</strong>, <strong>PatientSurvey (F3)</strong>, or <strong>HouseholdSurvey (F4)</strong>.</li>
+              <li>Tap <strong>Install</strong> (or <strong>Update</strong> if it shows “New version available”). CSEntry downloads the questionnaire.</li>
+              <li>When it finishes, the survey appears on your CSEntry home screen.</li>
+            </ol>
+            <div class="callout">
+              <strong>Keeping the survey current:</strong> when a new build is
+              released, go back to <strong>⋮ → Add Application → CSWeb server →
+              Connect</strong> and tap <strong>Update</strong>. If an update ever
+              looks stale (old screens, see Step&nbsp;6), the reliable fix is to
+              <strong>remove the survey and add it again</strong> from the server —
+              that always pulls the latest. The “⋮ → Update Installed
+              Applications” shortcut can miss new versions.
+            </div>
+          </section>
+
+          <section>
+            <h2>4. Choosing your language</h2>
+            <p>
+              The survey runs in <strong>English</strong> plus the local dialects
+              that have been translated (Cebuano, Bisaya, Waray, Bicolano — and
+              Hiligaynon for F1). You can switch any time during an interview.
+            </p>
+            <ol>
+              <li>Open the survey → menu → <strong>Language</strong>.</li>
+              <li>Pick the language you’ll use with this respondent.</li>
+            </ol>
+            <div class="callout">
+              If a question hasn’t been translated yet, it shows in
+              <strong>English</strong> — that’s expected; just read it as-is.
+            </div>
+          </section>
+
+          <section>
+            <h2>5. Starting a new interview (a “case”)</h2>
+            <ol>
+              <li>On the survey home, tap <strong>Add / New case</strong>.</li>
+              <li>
+                Fill the <strong>ID block</strong> in order — these identify the
+                facility and the interview:
+                <code>Region → Province/HUC → City/Municipality → Facility No. → Case sequence</code>.
+                Each choice narrows the next (pick a region and only its
+                provinces appear — the <strong>PSGC cascade</strong>). Together
+                they form the <strong>12-digit case key</strong>.
+              </li>
+            </ol>
+            <div class="callout">
+              Use the case keys your supervisor assigns. A key whose area code
+              doesn’t match a real place is <strong>rejected at the start of the
+              case</strong> — so don’t invent or guess one.
+            </div>
+          </section>
+
+          <section>
+            <h2>6. Answering questions &amp; how the app moves</h2>
+            <ul>
+              <li><strong>One question per screen.</strong> Tap your answer (or type a number), then <strong>Next (→)</strong> to continue.</li>
+              <li><strong>Back (←)</strong> returns to the previous question if you need to fix an answer.</li>
+              <li><strong>Skip logic is automatic:</strong> the app only shows questions that apply. If a question is skipped, that’s correct — don’t worry that you “missed” it.</li>
+              <li><strong>Single-choice</strong> = pick one. <strong>Multi-choice</strong> = tap all that apply, then Next.</li>
+              <li><strong>“None of the above” / “I don’t know”</strong> behave specially on some questions (they clear other choices).</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>7. Special screens you’ll meet</h2>
+            <ul>
+              <li><strong>Consent:</strong> if the respondent declines, choose the refuse option — the app ends the interview cleanly.</li>
+              <li><strong>GPS:</strong> captured automatically — the app starts searching for satellites as soon as you open a case, so by the GPS screen the coordinates usually appear in a second or two. If there is no signal indoors, it stops after 15 seconds and asks you to move near a window or doorway — step there, tap back into the GPS field, and it retries instantly.</li>
+              <li><strong>Photo (F1):</strong> take the verification photo when prompted.</li>
+              <li><strong>Roster (F4 Household):</strong> add one row per household member; you can edit or remove members.</li>
+              <li><strong>Expenditure grid (F4):</strong> enter the peso amounts in each box.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>8. When the app warns you</h2>
+            <ul>
+              <li><strong>Soft warning</strong> (yellow): the value looks unusual — check it; you <em>can</em> continue if it’s correct.</li>
+              <li><strong>Hard stop</strong> (red): the value isn’t allowed (e.g., age out of range) — you must fix it to continue.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>9. Pausing &amp; resuming</h2>
+            <ul>
+              <li>CSEntry <strong>auto-saves</strong> as you go. To stop mid-interview, just go <strong>Back</strong> to the case list — your answers are kept.</li>
+              <li>To resume: open the survey, tap the <strong>partial case</strong>, and continue where you left off.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>10. Finishing an interview</h2>
+            <ol>
+              <li>Answer the last question → the app asks to <strong>save</strong> the case.</li>
+              <li>Confirm the <strong>disposition</strong> (completed / refused / etc.) if prompted.</li>
+              <li>The case is now marked done on your case list.</li>
+            </ol>
+          </section>
+
+          <section>
+            <h2>11. Sending your work to the server (sync up) — do this daily</h2>
+            <ol>
+              <li>Connect to Wi-Fi or mobile data.</li>
+              <li>From your survey’s case list, tap <strong>Synchronize</strong> (the circular-arrows icon). Sign in with your own account if prompted.</li>
+              <li>Wait for the <strong>“Successfully synced”</strong> confirmation. Only new or changed cases are sent, so it’s quick — your completed cases are now safely on the server.</li>
+            </ol>
+            <div class="callout">
+              <strong>Why daily:</strong> syncing backs up your work and lets
+              supervisors see progress. If your tablet is lost or breaks,
+              anything you’ve synced is safe.
+            </div>
+          </section>
+
+          <section>
+            <h2>12. If something goes wrong</h2>
+            <table>
+              <thead>
+                <tr><th>Problem</th><th>What to do</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Sync fails / “cannot reach server”</td>
+                  <td>Check internet; confirm the server address <code>https://csweb.asiansocial.org/csweb/api</code> (including <code>https://</code> and <code>/csweb/api</code>); try again. Your data is safe locally meanwhile.</td>
+                </tr>
+                <tr>
+                  <td>Old screens (one question per screen)</td>
+                  <td>You’re on an older build — update the survey, or remove it and add it again from the server (Step&nbsp;3).</td>
+                </tr>
+                <tr>
+                  <td>Forgot password</td>
+                  <td>Contact your supervisor — don’t share or guess.</td>
+                </tr>
+                <tr>
+                  <td>GPS won’t get a fix</td>
+                  <td>Move near a window or doorway, then tap back into the GPS field — the retry is instant (the app stops searching after 15 seconds instead of hanging). Make sure location permission is allowed.</td>
+                </tr>
+                <tr>
+                  <td>App froze</td>
+                  <td>Close and reopen CSEntry — auto-saved answers are kept.</td>
+                </tr>
+                <tr>
+                  <td>Wrong language</td>
+                  <td>Menu → Language → switch.</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section>
+            <h2>Do’s and don’ts</h2>
+            <div class="dd-grid">
+              <div class="col">
+                <h3>Do</h3>
+                <ul>
+                  <li>Sync up at the end of every day.</li>
+                  <li>Keep your login private.</li>
+                  <li>Trust the skip logic.</li>
+                </ul>
+              </div>
+              <div class="col">
+                <h3>Don’t</h3>
+                <ul>
+                  <li>Don’t share the tablet login.</li>
+                  <li>Don’t force answers past a red hard-stop.</li>
+                  <li>Don’t delete a case unless your supervisor says so.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </article>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p class="foot-org">
+          Asian Social Project Services, Inc. (ASPSI) — for the Department of
+          Health (DOH)
+        </p>
+        <p class="foot-meta">
+          UHC Survey Year 2 · Enumerator guide
+          <span class="dot">·</span>
+          <a href="/projects/uhc-y2/">Help</a>
+          <span class="dot">·</span>
+          <a href="/">Home</a>
+          <span class="dot">·</span>
+          &copy; 2026
+        </p>
+      </div>
+    </footer>
+  </div></div></body>
+</html>

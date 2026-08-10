@@ -21,6 +21,7 @@ export type ErrorCode =
   | 'E_NOT_FOUND'
   | 'E_NOT_CONFIGURED'
   | 'E_CONFLICT'
+  | 'E_ALREADY_VOIDED'
   | 'E_CAS_FAILED'
   | 'E_LOCK_TIMEOUT'
   | 'E_NETWORK'

@@ -1,0 +1,29 @@
+# Probe the F3 desktop case-start: nail the field sequence (GPS blocks) to Q1.
+rmdata ../F3/desktest.csdb
+launch ../F3/PatientSurvey_desktest.pff
+casekey 04 03 403 02 001
+type 1
+type 1
+type 1
+type 0403403001
+type RHU BINAN
+key {ENTER}
+type TEST ST BINAN
+key {ENTER}
+note --- past fac addr; probe next fields with ENTER, watch status bar 'Field=' ---
+key {ENTER}
+shot s1
+key {ENTER}
+shot s2
+key {ENTER}
+shot s3
+key {ENTER}
+shot s4
+key {ENTER}
+shot s5
+key {ENTER}
+shot s6
+key {ENTER}
+shot s7
+key {ENTER}
+shot s8

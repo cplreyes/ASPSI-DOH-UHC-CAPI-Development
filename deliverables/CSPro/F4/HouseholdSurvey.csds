@@ -1,0 +1,48 @@
+{
+  "software": "CSPro",
+  "version": 8.0,
+  "fileType": "deployment",
+  "name": "HouseholdSurvey",
+  "files": [
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\F4\\HouseholdSurvey.pff"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\F4\\HouseholdSurvey.ent"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\F4\\psgc_region.dcf"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\F4\\psgc_region.dat"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\F4\\psgc_province.dcf"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\F4\\psgc_province.dat"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\F4\\psgc_city.dcf"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\F4\\psgc_city.dat"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\F4\\psgc_barangay.dcf"
+    },
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\F4\\psgc_barangay.dat"
+    }
+  ],
+  "dictionaries": [
+    {
+      "path": "C:\\Users\\analy\\Documents\\analytiflow\\1_Projects\\ASPSI-DOH-CAPI-CSPro-Development\\deliverables\\CSPro\\F4\\HouseholdSurvey.dcf",
+      "uploadForSync": true
+    }
+  ],
+  "deployment": {
+    "type": "CSWeb",
+    "cswebUrl": "https://csweb.asiansocial.org/csweb/api"
+  }
+}

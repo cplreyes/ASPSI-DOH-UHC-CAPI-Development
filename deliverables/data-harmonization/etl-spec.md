@@ -1,7 +1,7 @@
 ---
 project: UHC Survey Year 2 — CAPI Development
 artifact: Harmonization ETL Specification (E4-INT-001)
-version: 0.2 (2026-06-12 — extract mechanism decided: CSWeb breakout DBs; skeleton dry-run passed on live test cases)
+version: 0.3 (2026-07-13 — F2 extract repointed to csweb_f2 MySQL direct (§2.2); R2 break-out path retired ahead of P6)
 status: draft
 owner: Carl Patrick L. Reyes (data programmer)
 closes: #176 (ETL spec); wires #178 (codebook-driven harmonization); feeds #177 (Looker dashboard)
@@ -23,8 +23,8 @@ This spec is the **E (extract) + L (load) + operations** layer. The **T (transfo
 ```
   ┌─ F1/F3/F4 (CSEntry tablets) ──sync(TLS)──► CSWeb (Elestio VPS, SG) ─┐
   │                                            MySQL `csweb` DB          │  EXTRACT
-  └─ F2 (PWA) ─► CF Worker ─► Apps Script ─► Google Sheets + R2 ────────┘
-                                   │ (scheduled R2 CSV break-out — already built)
+  └─ F2 (PWA) ─► f2-api (same VPS) ─► MySQL `csweb_f2` DB ──────────────┘
+                 (authoritative since P4 2026-07-09; same SSH pass as the breakouts)
                                    ▼
         ┌──────────────────────  ETL runner (Python)  ──────────────────────┐
         │  extract/  →  raw per-instrument frames                            │
@@ -69,9 +69,21 @@ One adapter per source backend. Each adapter's job: produce a raw per-instrument
 **Incremental:** CSWeb is append-mostly (cases arrive via sync). Default to **full re-extract each run** (survey-scale data is small — thousands of cases, not millions); the transform is cheap and full-refresh removes incremental-state bugs. Revisit only if volume demands it.
 
 ### 2.2 F2 — from the PWA backend
-1. **R2 CSV break-out (preferred — already built).** The F2 Admin "Data Settings" scheduled break-out writes `F2_Responses` to R2 as CSV on an interval (the feature shipped in the admin portal). Point the extract at the latest R2 object → `f2_raw.csv`. Zero new backend work; reuses an existing, audited path.
-2. **Admin API.** `GET /admin/api/dashboards/data/responses` (paginated) with a `dash_data` service token → assemble the frame. Use if a fresh pull is needed between break-outs.
-3. F2 stores answers as `values_json`; the extract explodes `values_json` into columns keyed by the F2 item ids (`Q3`, `Q5`, …) per `app/src/generated/items.ts`, and carries the provenance columns (`hcw_id`, `facility_id`, `submitted_at_server`, `spec_version`, `device_fingerprint`, `source`).
+
+**DECIDED + BUILT 2026-07-13: read `csweb_f2` MySQL directly, on the same box, in the same SSH pass as the breakouts.** (`extract_csweb.py`: `F2_DB`/`F2_TABLES`.)
+
+The two options below are **retired**, and the first is now actively dangerous:
+
+- ~~R2 CSV break-out~~ — **DO NOT USE.** After the P4 authority flip (2026-07-09) the Apps Script/Sheet is frozen, but the Cloudflare Worker's `*/5` break-out cron *kept running* — so those R2 CSVs are **freshly-dated snapshots of a dead Sheet**. Anything pointed at them would silently ingest stale data. The bucket is deleted at P6 (`F2-P6-Retirement-and-Hardening.md` §3).
+- ~~Admin API~~ — still works (`/admin/api/dashboards/data/responses`), but it is an HTTP round-trip through the same box to reach the same MySQL. Direct SQL is simpler, needs no service token, and joins naturally with the breakout extract.
+
+**What the extract does now:**
+1. Dumps a **whitelist** of `csweb_f2` tables: `f2_responses` (the payload), `f2_hcws` (enrollment frame → response-rate denominators), `f2_facility_master`, `f2_dlq`.
+2. **Never dumps** `f2_users` (PBKDF2 password hashes), `f2_roles`, `auth_revoked` / `auth_token_audit` / `auth_kv` (device + admin session tokens). These are credentials, not survey data, and must never reach `raw/` or a deliverable. `extract()` re-checks after unpacking and deletes + fails loudly if any appear (`F2_DENY`).
+3. `transform_f2()` explodes `values_json` into one column per answer key, **union-ed across submissions** — so an F2 spec change adds columns without an ETL change. Provenance columns are carried with an `f2_` prefix (`f2_submitted_at_server`, `f2_spec_version`, `f2_device_fingerprint`, …).
+4. **`case_key` = the 12-digit `qn`** (the QN rollout put it on `f2_responses` directly, superseding the codebook §11 "derive-at-ETL" rule). Pre-QN submissions keep `facility_id` but get a **blank `case_key`** and a QA flag — they cannot join to F1/F3/F4 by key, and ASPSI must see how many there are.
+5. **Escaping matters:** `mysql --batch` escapes tab/newline/backslash so each row stays on one line. `values_json` is a JSON blob containing free-text answers, so it *will* carry escaped control characters; `load_table()` un-escapes them. Regression-tested in `etl/test_transform.py` ("tab + newline survive mysql escaping") — without this the blob is unparseable and every F2 answer is lost.
+6. **Refusals (#825) are data**, not dropped rows: `status='refusal'` submissions carry `consent_given=0` inside `values_json` and flow through like any other case.
 
 **F2 geography** is **not** collected from the respondent — it is **joined from the facility master list via `facility_id`** (codebook §1/§2). The extract must therefore also load the facility master list (§2.3).
 
@@ -143,7 +155,7 @@ Run after transform; results → `qa_report.md`; a **hard-gate** breach **fails 
 1. **Scaffold** `etl/` package + `run.py` + config (codebook open-item flags) + manifest writer.
 2. **Transform first, on fixtures** (TDD): port codebook §1–§13 into `transform/recode_*` modules; unit-test each against the codebook's stated rules using small synthetic frames. (Transform is fully specified now → buildable without live data.)
 3. **QA gates** (§4) over the transformed fixtures.
-4. **Extract adapters:** F2 from an R2 break-out CSV first (available now); F1/F3/F4 via CSExport once the Elestio box + a sample synced dataset are reachable.
+4. **Extract adapters:** ~~F2 from an R2 break-out CSV / F1-F4 via CSExport~~ superseded — F2 reads `csweb_f2` MySQL direct (§2.2, built 2026-07-13); F1/F3/F4 read the CSWeb breakout DBs (§2.1, live 2026-06-12).
 5. **Load:** harmonized files; then the BigQuery (or Sheet) BI load behind `--no-bi-load`.
 6. **Dry-run end-to-end** on test/pretest data; iterate.
 7. **Production run** — gated on codebook §15 ASPSI sign-offs (#15.A/F/G/H) + the live facility master list.

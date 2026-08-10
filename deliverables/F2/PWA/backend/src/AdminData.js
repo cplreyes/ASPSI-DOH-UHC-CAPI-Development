@@ -293,6 +293,64 @@ function adminDlqDelete(payload, ctx) {
   return { ok: true, data: { dlq_id: payload.dlq_id, status: 'deleted' } };
 }
 
+// ----- Response void (#831) -----------------------------------------------
+
+/**
+ * Void a response: flip its status to 'voided' without deleting the row,
+ * so submissions stay append-only for auditability. Born from #831 — an
+ * encoder pasted the enrollment token into the HCW ID field and the only
+ * removal path was spreadsheet surgery.
+ *
+ * Payload: `{ submission_id, reason }` — reason is REQUIRED (it goes into
+ * the F2_Audit trail; a void without a why is just a slow delete).
+ * Voided rows keep their values_json untouched; downstream consumers
+ * (AdminReports, AdminBreakout, the csweb_f2 dashboard/CSV generators)
+ * exclude status='voided' from counts and exports.
+ *
+ * Returns `{ ok, data: { submission_id, status: 'voided', prev_status } }`.
+ * E_NOT_FOUND for unknown ids; E_ALREADY_VOIDED (→ HTTP 409) on repeat.
+ */
+function adminVoidResponse(payload, ctx) {
+  if (!payload || typeof payload.submission_id !== 'string' || !payload.submission_id) {
+    return { ok: false, error: { code: 'E_PAYLOAD_INVALID', message: 'Missing submission_id' } };
+  }
+  var reason = payload.reason != null ? String(payload.reason).trim() : '';
+  if (!reason) {
+    return { ok: false, error: { code: 'E_PAYLOAD_INVALID', message: 'Missing reason — a void must say why' } };
+  }
+  if (!ctx.responses.findBySubmissionId || !ctx.responses.setStatusByRowNumber) {
+    return { ok: false, error: { code: 'E_NOT_CONFIGURED', message: 'Void requires the extended responses context (findBySubmissionId/setStatusByRowNumber)' } };
+  }
+  var row = ctx.responses.findBySubmissionId(payload.submission_id);
+  if (!row) {
+    return { ok: false, error: { code: 'E_NOT_FOUND', message: 'submission ' + payload.submission_id + ' not found' } };
+  }
+  var prevStatus = row.status || '';
+  if (prevStatus === 'voided') {
+    return { ok: false, error: { code: 'E_ALREADY_VOIDED', message: 'submission ' + payload.submission_id + ' is already voided' } };
+  }
+  ctx.responses.setStatusByRowNumber(row._rowNumber, 'voided');
+  // The reason lives in the AS-side audit row; the worker's auditMutation
+  // separately records the acting admin (actor_username/role/ip) like it
+  // does for DLQ replay/delete.
+  if (ctx.audit && ctx.audit.appendRow) {
+    ctx.audit.appendRow({
+      audit_id: ctx.generateUuid ? ctx.generateUuid() : 'void-' + payload.submission_id,
+      occurred_at_server: new Date(ctx.nowMs ? ctx.nowMs() : Date.now()).toISOString(),
+      occurred_at_client: '',
+      event_type: 'response_voided',
+      hcw_id: row.hcw_id || '',
+      facility_id: row.facility_id || '',
+      app_version: row.app_version || '',
+      payload_json: JSON.stringify({ submission_id: payload.submission_id, reason: reason, prev_status: prevStatus }),
+    });
+  }
+  return {
+    ok: true,
+    data: { submission_id: payload.submission_id, status: 'voided', prev_status: prevStatus },
+  };
+}
+
 // ----- Versioning aggregation (Task 3.6) ----------------------------------
 
 /**
@@ -345,6 +403,7 @@ if (typeof module !== 'undefined') {
     adminReadDlq: adminReadDlq,
     adminDlqReplay: adminDlqReplay,
     adminDlqDelete: adminDlqDelete,
+    adminVoidResponse: adminVoidResponse,
     adminFormRevisions: adminFormRevisions,
   };
 }

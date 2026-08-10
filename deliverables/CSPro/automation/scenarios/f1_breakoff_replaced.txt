@@ -1,0 +1,30 @@
+# F1 — BREAKOFF 7 (Not interviewed - ineligible). Third distinct code across the three tests,
+# and F1's own Replaced code (5). F1's .fmf is HAND-MAINTAINED and BREAKOFF was spliced in by
+# inject_breakoff.py after BARANGAY - so this is the one most likely to be mis-placed. Verify it.
+#
+# NOTE: BARANGAY does NOT auto-advance on fill (it is wider than the code) - it needs an explicit
+# {ENTER}, or the next keystroke appends and trips the out-of-range check.
+rmdata ../F1/desktest.csdb
+launch ../F1/FacilityHeadSurvey_desktest.pff
+
+casekey 040340002161
+shot 01_casekey
+
+type 1
+wait 1
+shot 02_classification_uhc_is
+
+type 403401001
+key {ENTER}
+wait 1
+note EXPECT: focus now on Interview status (BREAKOFF) with SEVEN options
+shot 03_breakoff_seven_options
+
+type 7
+wait 1
+note EXPECT: skip to closing Result of Visit = 5 Replaced (F1 code), questionnaire NOT walked
+shot 04_after_breakoff_7_should_be_replaced_5
+
+key {ENTER}
+wait 1
+shot 05_case_should_end

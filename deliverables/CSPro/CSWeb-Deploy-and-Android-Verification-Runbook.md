@@ -1,5 +1,12 @@
 # CSWeb Deploy + Android Verification Runbook (Stage 2)
 
+> **SUPERSEDED (2026-07-02).** This runbook predates the versioning workflow and routes
+> through `bundle/dist/`, which is a **stale 2026-06-08 pre-versioning build** (no version
+> footer). Do NOT deploy from `bundle/dist/`. The current release path is
+> `automation/stamp_version.py` + the parked Designer deploy dialogs via
+> `automation/auto_deploy.py` — see `VERSIONING.md` ("Release workflow"). Kept for the
+> §D on-device checklist and historical Stage-2 context only.
+
 **Scope:** take the Stage-1 deployable bundles (F1/F3/F4) from `bundle/dist/` onto a real
 Android device via CSEntry, verify them on-device (incl. the hardware-only features), and prove
 the case sync round-trip to CSWeb. Maps to goal Stage 2 (criteria 10–15) and epics
@@ -114,12 +121,12 @@ capture a screenshot per check to the gate issue. Mark ✅/❌/N-A.
 | Check | How | Result |
 |---|---|---|
 | App opens, FC-metadata renders on touch | launch from CSEntry | |
-| Field entry + range validation fires | enter an out-of-range value (e.g. INTERVIEWER_ID) → expect warning | |
+| Field entry + range validation fires | enter an out-of-range value (e.g. `TOTAL_NUMBER_OF_VISITS` = 0, or a `DATE_OF_FINAL_VISIT` earlier than the first visit) → expect warning | |
 | **Multi-language question text** | switch language in CSEntry (EN→WAR); the question-text bar shows the translated prompt | |
 | **GPS capture (device-only)** | trigger the GPS field (below); expect a real lat/long fix + accuracy | |
 | **Verification photo (device-only)** | trigger `CAPTURE_VERIFICATION_PHOTO`; camera opens; JPG saved as `case-<id>-verification.jpg` | |
 | **PSGC cascade** | REGION→PROVINCE_HUC→CITY_MUNICIPALITY→BARANGAY each filters to children of the parent (loads from on-device PSGC `.dat`) | |
-| Consent terminator | `CONSENT_GIVEN = No(2)` ends the interview / sets disposition | |
+| Break-off terminator | `BREAKOFF = Respondent withdrew (2)` at case start ends the interview; Result of Visit is set (F1 `3 Refused`; F3 `6` / F4 `4 Withdraw Participation/Consent`) and `CASE_DISPOSITION = 2` (Partial / not completed) | |
 
 **Per-instrument specifics:**
 - **F1 Facility Head** — GPS trigger `FACILITY_CAPTURE_GPS` → fields `FACILITY_GPS_LATITUDE/LONGITUDE/

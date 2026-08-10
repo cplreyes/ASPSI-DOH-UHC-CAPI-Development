@@ -19,10 +19,10 @@ tags: [cspro, capi, fmf, designer, walkthrough]
 
 ## Pre-flight (~5 min)
 
-- [ ] Open `FacilityHeadSurvey.fmf` in CSPro Designer (the generator skeleton already emits this — confirm via Section A renders with case-control + PSGC blocks first).
+- [ ] Open `FacilityHeadSurvey.fmf` in CSPro Designer (the generator skeleton already emits this — confirm via Section A renders with the case-key + PSGC blocks first).
 - [ ] Open `F1-Form-Layout-Plan.md` in a second pane (this checklist + the plan).
 - [ ] Open `F1-Skip-Logic-and-Validations.md` in a third pane (for the skip/gate verification per form).
-- [ ] Confirm the linked `.dcf` is at 12 records / 671 items (Apr 21+22 build with case-control + GPS/photo/PSGC-cascade).
+- [ ] Confirm the linked `.dcf` matches the current `generate_dcf.py` output (record/item counts as generated; includes GPS/photo capture + PSGC cascade).
 - [ ] Designer settings: zoom to a comfortable level; Form Properties panel docked; Form Tree visible.
 
 ## Walk order — 28 forms (~5–10 min/form average; long forms 15 min)
@@ -31,7 +31,7 @@ The plan groups forms by source record. Walk top-to-bottom — each form's check
 
 ### Phase 1 — Field control + capture (3 forms, ~20 min)
 
-- [ ] **Form 1 — `FC_METADATA`** — case-control block + AAPOR + consent gate.
+- [ ] **Form 1 — `FC_METADATA`** — field-control header: staff names, visit dates, total visits, Result of Visit (first/final), break-off. No consent field.
 - [ ] **Form 2 — `FC_GEO`** — PSGC cascade (REGION → PROVINCE_HUC → CITY_MUNICIPALITY → BARANGAY) + facility name + address.
 - [ ] **Form 3 — `FC_CAPTURE`** — GPS + verification photo triggers (uses `Capture-Helpers.apc`).
 

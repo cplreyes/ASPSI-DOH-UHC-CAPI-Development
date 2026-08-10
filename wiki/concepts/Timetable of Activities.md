@@ -43,6 +43,13 @@ See also [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Sig
 >
 > This pushes the conduct + rollout **past the official project close of Aug 14, 2026** above. Recorded as a **proposed request, not an approved change** — the extension decision sits in the ASPSI/DOH lane (out of Data Programmer scope). Penalty exposure tied to the original dates lives in the signed CSA.
 
+> [!note] Training now has concrete programs (ingested 2026-07-29)
+> The August-training slot above is no longer a placeholder. Myra has issued two five-day programs — see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/Field Training Program|Field Training Program]]:
+> - **Field Supervisors** — marked **FINAL** (28 July), **Los Baños, Laguna**, **August 2026**, 22 FSs, 16 modules, spine deliverable = the Field Implementation Plan.
+> - **Field Enumerators** — **Version 2**, **four simultaneous sites** (Pampanga · Los Baños · Cebu · Cagayan de Oro), ~122–125 FEs, 15 modules.
+>
+> **Both name Carl ("CReyes") as in-charge of the Day-2 CAPI sessions** — CAPI installation plus the questionnaire walkthroughs. The FS program's fixed venue and date make it the first hard, dated commitment in Carl's lane; the FE program's four concurrent sites are an unresolved scheduling conflict for a single named trainer.
+
 > [!warning] Revised projection (Myra → DOH, 2026-06-19)
 > Dr. Silva-Javier's quantified timeline reply (Source: [[Source - Project Movement and Revised Timeline (Apr-Jun 2026)]]) supersedes the original Table-14 dates for forward planning. As of mid-2026 the project is **mid-review on both tracks** — **SJREB (ethics)** and **PSA-SSRCS (statistical clearance)** — which must stay on the **same tool version**.
 > - **Tranche 1 accepted + paid; SJREB endorsement signed (2026-05-15).** SJREB application classified **Expedited Review (ref SJREB-2026-31)**, under primary reviewer — Notice of Approval pending (exemption track ruled out). PSA requirements **submitted Jun 5**; SSRCS completeness check issued **2026-06-09** (Transaction 26SSRCS06-068) — formal 20-working-day PSA clock starts only once completeness + clarifications clear.

@@ -5,11 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Menu</title>
 <!--
-  Supervisor-hub role menu, rendered by htmldialog("menu.html") from MENU_PICK. PROMPT-FREE + SECURE:
-  htmldialog() uses the deprecated CSPro.* interface, which does NOT trip the Action-Invoker
-  "Allow Access?" consent gate that the accept()/'choice' HtmlDialog does. Input:
+  Supervisor-hub role menu, rendered by htmldialog("menu.html") from MENU_PICK. PROMPT-FREE + SECURE
+  on both CSEntry generations: 8.0.1 talks the deprecated CSPro.* interface (no Action-Invoker consent
+  gate); 8.1+ removed CSPro.*, so the page authenticates to CS.UI via /action-invoker.js (served by
+  CSEntry itself) with the hub token registered in MenuApp.ent (accessTokens) - a valid registered
+  token also shows no consent prompt. Input:
   {title, groups:[{header, items:[{label, action}]}]}. A tapped item returns its action wrapped as
-  "<<action>>" via CSPro.returnData, so the logic's pos() routing survives whatever encoding the
+  "<<action>>" via CSPro.returnData / CS.UI.closeDialog({result}), so the logic's pos() routing survives whatever encoding the
   htmldialog return comes back in. Self-contained (inline CSS + vanilla JS), report.html green theme.
 -->
 <style>
@@ -25,22 +27,43 @@
   .item:active { background:var(--greenlt); }
   .item .lbl { flex:1; }
   .item .chev { color:var(--muted); font-size:20px; margin-left:8px; }
+  .ver { text-align:center; color:var(--muted); font-size:11px; padding:8px 0 10px; }
 </style>
 </head>
 <body>
 <div class="hdr"><h1 id="title">Menu</h1></div>
 <div id="list"></div>
+<div id="ver" class="ver"></div>
+<script src="/action-invoker.js"></script>
 <script>
+  // Dual bridge (both DEVICE-PROVEN 2026-07-02): CSEntry 8.0.1 (itel) talks the deprecated
+  // CSPro.* globals, prompt-free. CSEntry 8.1 (Samsung A23) still EXPOSES CSPro.* but it is
+  // SEVERED for htmldialog - getInputData() returns "" and returnData() is a silent no-op - so
+  // there we construct CSProActionInvoker with the hub token registered in MenuApp.ent
+  // (accessTokens): a valid REGISTERED token = CS.UI works with no "Allow Access?" prompt.
+  // BRIDGE remembers which side delivered the input so the RETURN goes out the same side
+  // (returning via dead CSPro.returnData on 8.1 would leave the dialog stuck open).
+  var AI=null, BRIDGE=null;
+  function csAI(){ if(!AI&&typeof CSProActionInvoker!=="undefined")
+      AI=new CSProActionInvoker("2c9e4f71-a6d3-4b8f-9e02-d5c1b7a83e46");
+    return AI; }
   function csGetInput(){ var v;
-    try{ if(typeof CS!=="undefined"&&CS.UI&&CS.UI.getInputData) v=CS.UI.getInputData(); }catch(e){}
-    try{ if((v==null)&&typeof CSPro!=="undefined"&&CSPro.getInputData) v=CSPro.getInputData(); }catch(e){}
+    try{ if(typeof CSPro!=="undefined"&&CSPro.getInputData) v=CSPro.getInputData(); }catch(e){}
+    if(v!=null&&v!==""){ BRIDGE="cspro"; }
+    else{ try{ var A=csAI(); if(A&&A.UI&&A.UI.getInputData){ v=A.UI.getInputData(); if(v!=null&&v!=="") BRIDGE="ai"; } }catch(e){} }
     if(typeof v==="string"){ try{ return JSON.parse(v); }catch(e){ return {}; } } return v||{}; }
   function csReturn(action){ var payload="<<"+action+">>";
-    try{ if(typeof CS!=="undefined"&&CS.UI&&CS.UI.closeDialog){ CS.UI.closeDialog(payload); return; } }catch(e){}
+    if(BRIDGE!=="cspro"){
+      try{ var A=csAI(); if(A&&A.UI&&A.UI.closeDialog){ A.UI.closeDialog({result:payload}); return; } }catch(e){}
+    }
     try{ if(typeof CSPro!=="undefined"&&CSPro.returnData){ CSPro.returnData(payload); return; } }catch(e){}
+    try{ var A2=csAI(); if(A2&&A2.UI&&A2.UI.closeDialog){ A2.UI.closeDialog({result:payload}); return; } }catch(e){}
     try{ window.close(); }catch(e){} }
   function csSetDisplay(o){ var s=JSON.stringify(o);
-    try{ if(typeof CS!=="undefined"&&CS.UI&&CS.UI.setDisplayOptions){ CS.UI.setDisplayOptions(o); return; } }catch(e){}
+    if(BRIDGE==="cspro"){
+      try{ if(typeof CSPro!=="undefined"&&CSPro.setDisplayOptions){ CSPro.setDisplayOptions(s); return; } }catch(e){}
+    }
+    try{ var A=csAI(); if(A&&A.UI&&A.UI.setDisplayOptions){ A.UI.setDisplayOptions(o); return; } }catch(e){}
     try{ if(typeof CSPro!=="undefined"&&CSPro.setDisplayOptions) CSPro.setDisplayOptions(s); }catch(e){} }
   function esc(v){ return String(v==null?"":v).replace(/[<>&]/g,function(c){return c==="<"?"&lt;":c===">"?"&gt;":"&amp;";}); }
   function render(){
@@ -55,6 +78,7 @@
     host.innerHTML=html;
     var rows=host.querySelectorAll(".item");
     for(i=0;i<rows.length;i++){ rows[i].addEventListener("click",function(){ csReturn(this.getAttribute("data-action")); }); }
+    document.getElementById("ver").textContent=(input&&input.ver)||"";
     var w=Math.min(Math.max(document.body.scrollWidth,300),460);
     var h=Math.min(document.body.scrollHeight+16,720);
     csSetDisplay({width:w,height:h,resizable:false,keyboard:0}); }

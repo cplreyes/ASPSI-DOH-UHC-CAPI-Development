@@ -134,5 +134,47 @@ deliverables/CSWeb/*.sql.gz
 /deliverables/CSPro/supervisor-hub/config/UAT-R6-tester-credentials.md
 /deliverables/CSPro/supervisor-hub/config/uat-r6-csweb-users.csv
 
+# data/ layer (2026-07-03 restructure): credential + bulky sources stay local
+/deliverables/CSPro/data/roster/roster-source.csv
+/deliverables/CSPro/data/facilities/source/
+
+# Pretest credential-bearing artifacts (2026-07-14) — same policy as uat-r6-csweb-users.csv
+# above: enumerator/supervisor logins + hub codes stay local, never in history.
+/deliverables/CSPro/supervisor-hub/assignments/pretest-credentials.md
+/deliverables/CSPro/supervisor-hub/assignments/pretest-users.csv
+/deliverables/CSPro/supervisor-hub/assignments/pretest-assignments.csv
+/deliverables/CSPro/supervisor-hub/assignments/out-pretest/
+/deliverables/CSPro/supervisor-hub/assignments/pretest-credentials.csv
+
+# F2 Admin Portal pretest logins (live admin passwords — never commit; same policy).
+/deliverables/F2/pretest-2026-07-16/f2-admin-credentials.md
+# F2 HCW self-register links (the ?k= secret IS the credential — never commit).
+# Glob covers .csv, .html, and the print-ready .pdf (all carry the same secrets).
+/deliverables/F2/pretest-2026-07-16/lph-bay-hcw-links.*
+
+# Hub roster BAKED INTO THE APP PACKAGE — contains every hub/CSWeb password in
+# plaintext. It was tracked until 2026-07-15; those secrets are burned and were
+# rotated. Never commit it again. Regenerate with build_hub_apps.py.
+/deliverables/CSPro/supervisor-hub/UserRoster.dat
+
+# [FOR DOH ONLY] Deliverable No. 2 (ingested 2026-07-31) — the package is explicitly
+# marked FOR DOH ONLY, so its wiki summaries and analysis stay local (public repo).
+wiki/sources/Source - DOH Deliverable No. 2 (2026-07-31).md
+wiki/sources/Source - Pretest Report (2026-07-30).md
+wiki/sources/Source - PSA Survey Clearance 26SS02-481 (2026-07-23).md
+wiki/analyses/Analysis - Pretest Findings vs the CAPI Build.md
+
+# Paper-translation extraction (2026-08-03) — derived from the [FOR DOH ONLY]
+# June-5 translated questionnaires, so the raw extraction output stays local.
+deliverables/CSPro/translations-paper-extract/
+
+# HCW enrollment sheets embed live /enroll?token= JWTs (the token IS the
+# credential — same policy as the lph-bay-hcw-links files above).
+/deliverables/F2/pretest-2026-07-16/lph-bay-hcw-enrollment-sheets.html
+
+# Auth-lab E2E script embeds a working labuser password for the live server.
+# Sanitize (env-var the password) before ever tracking it.
+/deliverables/CSWeb/auth/labtest.sh
+
 # f2-api server compiled output — rebuildable from src via tsc; never commit.
 /deliverables/F2/PWA/server/dist/

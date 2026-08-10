@@ -1,0 +1,15 @@
+# PRETEST KEY GATE — F4 household, Brgy. Mayondon, Los Banos (ASPSI code list).
+# HH 1 = 040341101001. Decodes as geo 0403411 (Los Banos) | FF 01 | SEQ 001.
+# ASPSI's intent is barangay-PSGC 0403411010 + HH seq 01; the app only gates the
+# first 7 digits, so both readings agree. Prove field 1 ACCEPTS it.
+rmdata ../F4/desktest.csdb
+launch ../F4/HouseholdSurvey_desktest.pff
+
+casekey 040341101001
+wait 1
+note EXPECT: accepted - NO "Geo prefix not found in PSGC" errmsg
+shot 01_key_accepted
+
+wait 1
+note EXPECT: barangay picker filtered to Los Banos - Mayondon must be selectable
+shot 02_barangay_picker_los_banos

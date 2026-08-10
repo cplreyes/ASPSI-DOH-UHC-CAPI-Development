@@ -55,7 +55,7 @@ flowchart TD
 
 - The consent form reads *"You are required to read this entire consent form aloud exactly as written"* — enumerator instruction, incompatible with self-admin.
 - The narrative states *"The interview may take up to 1.5 hours"* — framed as an interview, not a form.
-- The **FIELD CONTROL** block is labeled *"(to be filled in by the Enumerator)"* and captures Survey Team Leader's Name, Enumerator's Name, Field Validated by, Field Edited by, Date First Visited, Date of Final Visit, Total visits, and Result (1-Completed / 2-Postponed / 3-Refused / 4-Incomplete — AAPOR disposition codes).
+- The **FIELD CONTROL** block is labeled *"(to be filled in by the Enumerator)"* and captures Survey Team Leader's Name, Enumerator's Name, Field Validated by, Field Edited by, Date First Visited, Date of Final Visit, Total visits, and Result (1-Completed / 2-Postponed / 3-Refused / 4-Incomplete — the paper form's own Result-of-Visit codes).
 - The **Health Facility and Geographic Identification** block is also labeled *"(to be filled in by the Enumerator)"*.
 
 **Request to ASPSI.** Before F2 ships to the field, the following blocks must be rewritten for a self-administering HCW audience:

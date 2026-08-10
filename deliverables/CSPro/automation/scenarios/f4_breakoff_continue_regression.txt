@@ -1,0 +1,18 @@
+# F4 REGRESSION — the case that matters most for pretest: BREAKOFF = 1 (Continue).
+# 99% of real cases take this path. If widening the value set 4->7 or the RadioButton->DropDown
+# flip broke it, every F4 interview dies at the first form. Prove it still walks the questionnaire.
+rmdata ../F4/desktest.csdb
+launch ../F4/HouseholdSurvey_desktest.pff
+
+casekey 040341101010
+shot 01_casekey
+
+note EXPECT: Interview status defaults to 1 Continue
+type 1
+wait 1
+note EXPECT: proceeds INTO the questionnaire (NOT to the closing Result of Visit)
+shot 02_should_enter_questionnaire
+
+key {ENTER}
+wait 1
+shot 03_still_in_questionnaire

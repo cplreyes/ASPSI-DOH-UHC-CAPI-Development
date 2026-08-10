@@ -52,3 +52,23 @@ Deterministic pass over all 13 maps: 0 orphan keys, 0 empty values, English/no-o
 4. Note: the English F1/F3/F4 base was itself still pending CSEntry sign-off — verify English alongside the dialects.
 
 **QC caveat for content review:** the lower-coverage maps (F3 Bisaya 52%, F3/F4 Bicolano) leaned partly on fuzzy-matching during extraction — worth an eyeball pass on a sample of question↔translation alignment during CSEntry review.
+
+## Runtime messages (.mgf) — translatable since 2026-07-03 (R2)
+
+Validation/error messages (`errmsg`) used to be untranslatable inline English in the logic.
+Now every `generate_apc.py` run numbers them into a real `<App>.ent.mgf` (`Language = EN`;
+F1 200 · F3 236 · F4 154 distinct messages) via `cspro_helpers.numberize_errmsgs()`.
+
+- **To translate messages for a locale**: drop `translations/messages.<loc>.json`
+  (e.g. `messages.fil.json`) next to the instrument's generator — **same drop-in
+  convention as the label maps**, keyed by the exact English message text — and re-run
+  `generate_apc.py`. The `.mgf` gains a complete `Language = <LOC>` section (missing keys
+  fall back to English, so a partial map is safe).
+- **Numbers are permanent** (tracked `messages-registry.json` per instrument, machine-managed)
+  — safe to reference in translator worksheets; a wording change in English retires the old
+  number and assigns a new one, so a stale translation can never attach to the wrong text.
+- Preflight now gates this: every `errmsg(N)` in the `.apc` must be defined in the `.mgf`
+  (instruments + the two hub apps).
+- The **supervisor hub** (LoginApp 2 · MenuApp 13 messages) is numbered by the same machinery
+  via `build_hub_apps.py` (shared `supervisor-hub/messages-registry.json`). It stays
+  English-only for now, but a `translations/messages.<loc>.json` drop-in would work there too.

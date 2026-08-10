@@ -18,10 +18,10 @@ postproc
       savesetting("hub_cluster", strip(UR_CLUSTER));
       execpff("MenuApp.pff", stop);   { stop = end LoginApp, launch the menu }
     else
-      errmsg("Incorrect password.");
+      errmsg(1001);
       reenter;
     endif;
   else
-    errmsg("Unknown username.");
+    errmsg(1002);
     reenter;
   endif;

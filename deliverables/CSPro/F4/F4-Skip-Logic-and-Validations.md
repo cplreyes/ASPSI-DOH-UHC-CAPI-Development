@@ -13,7 +13,9 @@ tags: [cspro, capi, skip-logic, validations, f4, household]
 
 > [!warning] SUPERSEDED — the generator is the source of truth (banner added 2026-06-27)
 > This spec **trails the UAT-evolved generator** (F4-DOC-01). For current behavior read the inline comments in `deliverables/CSPro/F4/generate_apc.py` / `generate_dcf.py` and the bound `.apc`. Do **not** "re-fix" code to match this doc — the departures below are intentional UAT closures.
-> Intentional, undocumented departures: `CONSENT_GIVEN` removed (→ BREAKOFF disposition); single 12-digit PSGC case key; **Q138–Q143 bill-recall asked of everyone** (#699/#701); Q195 is a 6-band % (not 0–100); Q105=No→Q107; Q90=No→Q94. One pending ASPSI ruling: **F4-VAL-01** Q141.1 no-receipt gate (recommend drop the gate; cap check stays).
+> Intentional, undocumented departures: `CONSENT_GIVEN` removed (→ BREAKOFF disposition); single 12-digit PSGC case key; **Q138–Q143 bill-recall asked of everyone** (#699/#701); Q195 is a 6-band % (not 0–100); Q105=No→Q107; Q90 routing flipped to this doc's §Section-I table by #827 on 2026-07-03 (Yes→Q94; No→Q91–Q92→Q94; the paper prints Yes→Q91 / No→Q96 — both directions deliberately depart; supersedes #652). One pending ASPSI ruling: **F4-VAL-01** Q141.1 no-receipt gate (recommend drop the gate; cap check stays).
+>
+> **Section N flattened to Option-C rosters (2026-07-03, F4 v1.1.0 LIVE).** Everything below that describes Section N (Q144–Q185) as flat per-question `Q<n>_CONSUMED`/`_PURCHASED_PHP`/`_INKIND_PHP` triplets (the "42 items, three-column" framing in §1 #8/#9, §2, §3.15, and the flat-sum subtotal snippets in §4.9/§4.10) is **SUPERSEDED**: each recall block is now a fixed-occurrence repeating record (`N_FOOD_ROSTER`, `N_NF1M/NF6M/NF12M_ROSTER`, `N_H12M/H6M/H1M_ROSTER`) with generic per-row fields `N_<blk>_CONSUMED/_PURCHASED_PHP/_INKIND_PHP` and the item identity in an auto-filled `N_<blk>_ITEM` label. The retired flat `Q144_*`..`Q156_*` / `Q160_*`..`Q184_*` field names no longer exist; only Q158/Q159 stay flat (record P), and Q157/Q177/Q182/Q185 are CAPI-computed subtotal records summing their roster's `_CONSUMED`=1 rows (excluding `-98`/`-99`). Per-item gate + #677 consumed-needs-an-amount now fire per roster occurrence. Flat→roster occurrence crosswalk: see `deliverables/data-harmonization/codebook.md` CHANGELOG v0.6. Source of truth = `generate_dcf.py` `build_section_n` + `generate_apc.py` `section_n_fanout_procs`.
 
 Source-of-truth for CSPro CAPI logic on `HouseholdSurvey.dcf`. Covers:
 
@@ -62,7 +64,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 
 ### Routing preamble (whole-instrument)
 
-- **Consent terminator.** `FIELD_CONTROL.CONSENT_GIVEN = No` at the top of the interview → terminate with `ENUM_RESULT_FIRST_VISIT = Withdraw Participation/Consent`. Entire questionnaire (A–Q) is suppressed.
+- **Break-off terminator.** `FIELD_CONTROL.BREAKOFF ≠ Continue` at the top of the interview → terminate; `ENUM_RESULT_FINAL_VISIT` is set from the break-off reason (2 Withdrew → `4 Withdraw Participation/Consent`; 3 Postponed → `2 Postponed`; 4 Stop-other → `3 Incomplete`) and `CASE_DISPOSITION = 2` (Partial / not completed). Entire questionnaire (A–Q) is suppressed. There is no `CONSENT_GIVEN` field — it was removed 2026-06-12.
 - **Respondent-is-HH-head gate (Q1).** Q1 captures whether the respondent is the household head. Per source, if the respondent is not the HH head, some items may still be asked but flagged; no hard skip — handle as SOFT validation in §3.1.
 - **HH-confinement gate (Q129, Section L).** Q129 = Yes → Section M (ZBB/MAIFIP/Bill) fully asked. Q129 = No → Section M items Q132–Q143 are skipped (ZBB/MAIFIP awareness still asked per printed form; bill-recall chain Q138–Q143 is the confinement-dependent part). See Section M table below for the precise split.
 - **Roster expansion (Section C).** After B is complete, enumerator enters the roster loop for `count = Q19_HH_SIZE_TOTAL` members. Section J (Health-Seeking) also loops over the same roster per source — see sanity finding #2.
@@ -71,7 +73,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 
 | Q | Condition | Skip to |
 |---|---|---|
-| — | `FIELD_CONTROL.CONSENT_GIVEN = No` | **Terminate interview** with `ENUM_RESULT_FIRST_VISIT = Withdraw Participation/Consent` |
+| — | `FIELD_CONTROL.BREAKOFF = Respondent withdrew (2)` | **Terminate interview** with `ENUM_RESULT_FINAL_VISIT = 4 (Withdraw Participation/Consent)` + `CASE_DISPOSITION = 2` |
 | Q1 IS_HH_HEAD | = No | **Continue to Q2** (SOFT warn to enumerator: "Respondent is not the HH head — confirm they are a household decision-maker per sampling protocol") |
 
 ### Section B — Respondent Profile
@@ -182,6 +184,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 | Q108 REFERRED | = No | **Q126** (skip Q109–Q125 — jumps straight to Section L NBB) |
 | Q112 VISITED | = Yes | **Q114** (skip Q113 why-not) |
 | Q112 VISITED | = No, not planning **or** Not yet, planning | Q113 asked; after Q113 → **Q114** |
+| Q112 VISITED | ≠ Yes | **Q117 + Q118 skipped** — both asked only when Q112 = Yes; after Q116 → **Q119** (#816) |
 | Q117 SPECIALIST_FOLLOWUP | = No | **Q119** (skip Q118 sat-referral-process) |
 | Q119 PCF_REFERRAL | = Yes | **Q120** PCP-knows, then Q122 discussed-places (skip Q121 why-hospital) |
 | Q119 PCF_REFERRAL | = No | **Q121** (skip Q120 — not PCP referral → why-hospital asked) |
@@ -262,7 +265,8 @@ HARD = block save; SOFT = warn-and-confirm; GATE = display-only (items rendered 
 | `DATE_FIRST_VISITED ≤ DATE_FINAL_VISIT` | Temporal ordering | HARD |
 | `TOTAL_NUMBER_OF_VISITS` | `1 ≤ n ≤ 10` (warn if > 3) | HARD + SOFT |
 | `ENUM_RESULT_FIRST_VISIT`, `ENUM_RESULT_FINAL_VISIT` | Required, ∈ value set | HARD |
-| `CONSENT_GIVEN` | Required, ∈ {Yes, No}; if No → terminate | HARD |
+| `BREAKOFF` | Required; defaults to `1 — Continue interview`. If ≠ Continue → terminate; sets `ENUM_RESULT_FINAL_VISIT` (2 Withdrew → 4; 3 Postponed → 2; 4 Stop-other → 3 Incomplete) and `CASE_DISPOSITION = 2` | HARD |
+| `CASE_DISPOSITION` | Auto-written by logic, never typed: 0 In progress / 1 Completed / 2 Partial / not completed | — |
 | `HH_LISTING_NO` | Required, matches F3b listing form entry | HARD |
 | `REGION` → `PROVINCE_HUC` → `CITY_MUNICIPALITY` → `BARANGAY` | PSGC cascade enforced at pick-time by `PSGC-Cascade.apc` — each child's `onfocus` filters its value set to children of the chosen parent, so an inconsistent pair is unrepresentable | HARD — cascade enforces |
 | `HH_ADDRESS` | Required, non-blank | HARD |
@@ -504,6 +508,7 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | `Q113_WHY_NOT` select-all | ≥ 1 option when enabled; `_OTHER_TXT` on Other | HARD |
 | `Q114_DISCUSSED_PLACES`, `Q115_HELPED_APPT`, `Q116_WROTE_INFO` | Required when enabled, ∈ {Yes, No} | HARD |
 | `Q117_SPECIALIST_FOLLOWUP` | Required when enabled, ∈ {Yes, No} | HARD |
+| Q117 enabled | `Q112 = Yes` | GATE (#816) |
 | Q118 enabled | `Q117 = Yes` | GATE |
 | `Q118_SAT_REFERRAL_PROCESS` | Required when enabled, ∈ satisfaction codes | HARD |
 | `Q119_PCF_REFERRAL` | Required when enabled, ∈ {Yes, No} | HARD |
@@ -605,6 +610,30 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | `Q202_WORRY_REASONS` select-all | ≥ 1 option when enabled; `_OTHER_TXT` on Other | HARD |
 | Q202 completion | Set `ENUM_RESULT_FINAL_VISIT = Completed` | HARD (PROC) |
 
+### 3.19 Numeric field range checks — as-built (CAPI real-time enforcement) · 2026-07-08
+
+> **Provenance.** Confirmed against the live **F4 v1.3.1** build in response to Doc Silva's Survey-Manual note (relayed by Aly, 2026-07-08): *"confirm with the CAPI/CSPro programmer whether real-time range checks exist for income, travel time, and expenditure fields."* Source of truth: `generate_apc.py` `RANGE_CHECKS` + `cspro_helpers.range_check_proc`; `numeric()` with no value-set emits **length only** (no dictionary range).
+>
+> **2026-07-08 (v1.3.2):** ASPSI sent the official expected ranges (**Range.docx**, Aly via Viber). All documented ranges were already enforced (hard check or exact width cap); the one residual gap — stray *negative* entry on Q95/Q96/Section N (CSEntry accepts a typed minus; width caps only the maximum) — was closed in **v1.3.2** (F3's Q18 got the same treatment in F3 v1.0.5). The table below reflects v1.3.2.
+
+As of **v1.3.2** every field below carries a real-time check (out-of-range → errmsg + `reenter`, i.e. entry is blocked until valid). For Q95/Q96/Section N the upper bound coincides with the field's digit width — their checks exist to block stray negatives, which width alone cannot. **Maximum-plausibility** screening beyond these bounds remains post-hoc (data manager), consistent with DraftManual.txt's Logic and Consistency Check section.
+
+| Q (Apr-20) | Field | dcf width | Real-time check | Enforced range | −98 / −99 |
+|---|---|---|---|---|---|
+| **Q18** avg. monthly HH income | `Q18_INCOME_AMOUNT` | 9 | **HARD** (block) | **₱0 – 99,999,999** | ✅ accepted |
+| **Q67** time to nearest **pharmacy** (Sec G) | `Q67_TRAVEL_HH` / `Q67_TRAVEL_MM` | 2 / 2 | **HARD** (block) | **Hours 0–24**, **Minutes 0–59** | ❌ |
+| **Q95** travel time to nearest **primary-care facility** (Sec I) | `Q95_TRAVEL_TIME_MIN` | 3 | **HARD** (block, v1.3.2) | **0–999 min** | ❌ |
+| **Q96** cost of travel to facility (Sec I) | `Q96_TRAVEL_COST_PHP` | 5 | **HARD** (block, v1.3.2) | **₱0–99,999** | ❌ |
+| **Section N** every expenditure cell | `N_<blk>_PURCHASED_PHP` / `_INKIND_PHP` | 8 | **HARD** negative-block (v1.3.2) | **₱0–99,999,999** per cell | ✅ accepted |
+
+Notes:
+- **Section N** (v1.3.2): each amount's postproc rejects anything other than ₱0–99,999,999 or −98/−99 (replay-safe: the partial-save resume transient reads 0/notappl, never negative — the #834/#835 misfire class was checked before adding). *Completeness* is still the **soft** end-of-section reminder (#834, v1.3.1, `section_n_review_proc`/Q186): it lists any *consumed* item still missing an amount and lets the enumerator continue — it does **not** force an amount. (The per-row `#677` consumed-needs-an-amount `reenter` was removed in v1.3.1; see [[reference_cspro_roster_engine_rules]] rule 5.)
+- **Q67 ≠ Q95.** Q67 is the nearest **pharmacy** (Section G, Access to Medicines); Q95 is the nearest **primary-care facility** (Section I). Distinct fields — document them separately in the manual.
+- **F4-VAL-02 (open, minor):** `Q18_INCOME_AMOUNT` is 9 digits wide but the hard check caps at **₱99,999,999** (8 nines). Functionally fine (already implausibly high), but the enforced max and the field width disagree by one order of magnitude — align if a deliberate cap is wanted (one-line change to `RANGE_CHECKS`).
+- For reference, the only other hard numeric check in F4 is `TOTAL_NUMBER_OF_VISITS` (1–10, HARD) + a soft "unusually high" nudge above 3 (§3.1).
+
+---
+
 ---
 
 ## 4. CSPro logic templates
@@ -629,14 +658,21 @@ preproc
   currentDay   = mod(currentYYYYMMDD, 100);
 ```
 
-### 4.2 Field Control + consent terminator
+### 4.2 Field Control — break-off terminator
+
+The `CONSENT_GIVEN` item was removed 2026-06-12 (not on the April-20 paper Field Control form). Early termination — including consent withdrawal — runs through `BREAKOFF` at case start.
 
 ```cspro
-PROC FIELD_CONTROL
+PROC BREAKOFF
 postproc
-  if CONSENT_GIVEN = 2 then           { 2 = No }
-    ENUM_RESULT_FIRST_VISIT = 5;      { Withdraw Participation/Consent — confirm code }
-    endgroup;                         { close interview; no data past here }
+  if not (BREAKOFF in 1, 2, 3, 4) then BREAKOFF = 1; endif;   { default "Continue" }
+
+  if BREAKOFF <> 1 then
+    if BREAKOFF = 2 then ENUM_RESULT_FINAL_VISIT = 4; endif;   { Withdraw Participation/Consent }
+    if BREAKOFF = 3 then ENUM_RESULT_FINAL_VISIT = 2; endif;   { Postponed }
+    if BREAKOFF = 4 then ENUM_RESULT_FINAL_VISIT = 3; endif;   { Incomplete }
+    CASE_DISPOSITION = 2;                                      { Partial / not completed }
+    endlevel;                                                  { close interview; no data past here }
   endif;
 ```
 
@@ -681,7 +717,7 @@ Include `Capture-Helpers.apc` in the form's .app:
   LATITUDE/LONGITUDE items plus the new HH_GPS_* metadata. }
 PROC CAPTURE_HH_GPS
 onfocus
-  if ReadGPSReading(120, 20) then
+  if ReadGPSReading(15, 20)   { radio warm since case start — WarmUpGPS() (2026-07-19) } then
     LATITUDE          = maketext("%f", gps(latitude));
     LONGITUDE         = maketext("%f", gps(longitude));
     HH_GPS_ALTITUDE   = maketext("%f", gps(altitude));
@@ -976,29 +1012,9 @@ postproc
 
 ---
 
-### 4.12 Case-control preproc (SURVEY_CODE, DATE_STARTED, TIME_STARTED, AAPOR_DISPOSITION)
+### 4.12 Case-control preproc — REMOVED
 
-Added 2026-04-21 — same shape as F1 §4.17 and F3 §4.16. Five case-control items at the top of `FIELD_CONTROL`: `SURVEY_CODE` (literal "F4"), `INTERVIEWER_ID`, `DATE_STARTED`, `TIME_STARTED`, `AAPOR_DISPOSITION` (AAPOR 2023 value set).
-
-```
-PROC FIELD_CONTROL
-preproc
-  if visualvalue(SURVEY_CODE) = "" then
-    SURVEY_CODE       = "F4";
-    DATE_STARTED      = tonumber(sysdate("YYYYMMDD"));
-    TIME_STARTED      = tonumber(systime("HHMMSS"));
-    AAPOR_DISPOSITION = 0;                            { 000 = In Progress }
-  endif;
-
-PROC CONSENT_GIVEN
-postproc
-  if CONSENT_GIVEN = 2 then
-    AAPOR_DISPOSITION = 210;              { Refusal — respondent }
-    skip to AAPOR_DISPOSITION_FINAL;
-  endif;
-```
-
-See F1 §4.17 for full notes on AAPOR codes and transition rules.
+The case-control block (`SURVEY_CODE`, `DATE_STARTED`, `TIME_STARTED`, `INTERVIEWER_ID`, `AAPOR_DISPOSITION`, `AAPOR_DISPOSITION_FINAL`, `CONSENT_GIVEN`) and its preproc were **removed on 2026-06-12** — they were not on the April-20 paper Field Control form. Case outcome is carried by the real `FIELD_CONTROL` items instead: `ENUM_RESULT_FIRST_VISIT` / `ENUM_RESULT_FINAL_VISIT` (Result of Visit — 1 Completed / 2 Postponed / 3 Incomplete / 4 Withdraw Participation/Consent), `BREAKOFF`, and the auto-written `CASE_DISPOSITION` (0 In progress / 1 Completed / 2 Partial / not completed). There is no consent field — withdrawal is recorded as Result of Visit `4 — Withdraw Participation/Consent`.
 
 ---
 
