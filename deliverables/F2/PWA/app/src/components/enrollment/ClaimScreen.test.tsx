@@ -4,8 +4,8 @@
  * unenrolled device auto-claims the slot: no token box, no HCW-ID picker — on
  * success the device is enrolled device-bound to the returned QN.
  */
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AuthProvider } from '@/lib/auth-context';
 import { LocaleProvider } from '@/i18n/locale-context';
@@ -38,11 +38,23 @@ function setup() {
 }
 
 describe('<ClaimScreen>', () => {
+  // Unmount BEFORE clearing, not after. ClaimScreen's mount effect chain
+  // (runClaim -> enroll) and AuthProvider's own mount effect keep writing after
+  // waitFor() has already seen the row it was waiting for; if the previous test's
+  // component is still mounted, those late writes land after the clear and the
+  // next test inherits an enrollment row it never created. That is what made the
+  // E_CONFLICT case flaky — it found the previous test's `hcw_id: 'h1'` row.
   beforeEach(async () => {
+    cleanup();
     if (!db.isOpen()) await db.open();
     await db.enrollment.clear();
     vi.restoreAllMocks();
     setUrl('/e/LPHBAY-HCW-19?k=a9f3kd');
+  });
+
+  afterEach(async () => {
+    cleanup();
+    await db.enrollment.clear();
   });
 
   it('auto-claims on mount with the slug + secret parsed from the URL', async () => {
