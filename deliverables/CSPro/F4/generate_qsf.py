@@ -32,6 +32,15 @@ OUT = HERE / "HouseholdSurvey.ent.qsf"
 # questionnaire text.
 _BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F4"]
 BUILD_FOOTER = f'<p class="instruction">Build: F4 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+# #1191 (PSA/SJREB, 2026-08-11): survey-tool details required on the CAPI tool.
+BUILD_FOOTER += ('<p class="instruction">PSA SSRCS Clearance No. DOH-2651-04 '
+                 '&middot; issued July 2026 &middot; valid until 31 July 2027<br/>'
+                 'SJREB: ICF ver. 07/25/2026 &middot; Translated Questionnaire ver. 06/05/2026</p>')
+# #1190: brand-book main logo sequence on the first page — see F1/generate_qsf.py.
+import base64 as _b64
+_LOGO_B64 = _b64.b64encode((HERE.parent / "cover_logos.png").read_bytes()).decode()
+BUILD_FOOTER = (f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="400"/></p>'
+                + BUILD_FOOTER)
 
 STYLES = """styles:
   - name: Normal

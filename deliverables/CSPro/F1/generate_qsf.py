@@ -30,6 +30,18 @@ OUT = HERE / "FacilityHeadSurvey.ent.qsf"
 # questionnaire text.
 _BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F1"]
 BUILD_FOOTER = f'<p class="instruction">Build: F1 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+# #1191 (PSA/SJREB, 2026-08-11): survey-tool details required on the CAPI tool.
+BUILD_FOOTER += ('<p class="instruction">PSA SSRCS Clearance No. DOH-2651-01 '
+                 '&middot; issued July 2026 &middot; valid until 31 July 2027<br/>'
+                 'SJREB: ICF ver. 07/25/2026 &middot; Translated Questionnaire ver. 06/05/2026</p>')
+# #1190: DOH Seal / Bagong Pilipinas / Bawat Buhay Mahalaga on the first page —
+# the brand book's main logo sequence (ASPSI, as a private firm, stays OUTSIDE
+# it by rule). Data-URI so the image travels inside the qsf into the .pen with
+# no deploy-packaging changes; ../cover_logos.png is the one shared asset.
+import base64 as _b64
+_LOGO_B64 = _b64.b64encode((HERE.parent / "cover_logos.png").read_bytes()).decode()
+BUILD_FOOTER = (f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="400"/></p>'
+                + BUILD_FOOTER)
 
 STYLES = """styles:
   - name: Normal
@@ -80,6 +92,12 @@ def _p(cls, text):
 # Phrases are DERIVED from the label, never transcribed: each pattern is
 # anchored, and a label that doesn't match is returned unchanged.
 _EMPH_PATTERNS = [
+    # #1185: Section C's Q12/Q14/Q17 use different stems than the Q19-48 battery
+    # ("Has the facility applied for ..." / "If yes, has the creation of ...")
+    # so the anchored rules below never matched them. Underline spans confirmed
+    # against the ASPSI-marked paper (ticket #1185).
+    (re.compile(r"^(<p>12\. Has the )(facility applied for DOH primary care licensing)( since )"), "u"),
+    (re.compile(r"^(<p>1[47]\. If yes, has the )(creation of an? (?:public health|health promotion) unit)( at this facility )"), "u"),
     # Q19-Q48 battery: "NN. Has/Have the <subject> been implemented since ..."
     (re.compile(r"^(<p>\d+\. (?:Has|Have) the )(.+?)( been implemented )"), "u"),
     # Q43 is worded differently: "... has the health facility been implementing
@@ -97,6 +115,14 @@ _EMPH_PATTERNS = [
 def _emphasize(html):
     """Wrap the PAPI-emphasised phrase in <u>/<b>. First matching pattern wins;
     a label matching none is returned untouched."""
+    # #1189: Q88 bolds TWO disjoint spans (the 1,700 anchor and the closing
+    # ask), which the one-span pattern loop below cannot express — handled as
+    # anchored replacements before the loop so no other label can match.
+    if html.startswith("<p>88. "):
+        html = html.replace("Php 1,700", "Php <b>1,700</b>", 1)
+        html = html.replace("Based on your practice, is this enough?",
+                            "<b>Based on your practice, is this enough?</b>", 1)
+        return html
     for rx, tag in _EMPH_PATTERNS:
         m = rx.search(html)
         if m:
