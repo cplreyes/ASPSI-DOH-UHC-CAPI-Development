@@ -153,6 +153,17 @@ describe('<MatrixQuestion>', () => {
     expect(alerts[0]).toHaveTextContent(/required/i);
   });
 
+  // #1179/#1180/#1181: item preambles (mid-section instructions/definitions)
+  // were dropped when their carrier item got folded into a matrix group.
+  it('renders item preambles above the grid, deduped across rows (#1179-#1181)', () => {
+    const note = 'Please think about your experience in this post for the past 6 months.';
+    const withPreamble: Item = { ...row('Q114', 'worked beyond hours', scale15), preamble: dual(note) };
+    const sharing: Item = { ...row('Q115', 'compensated overtime', scale15), preamble: dual(note) };
+    render(<Harness items={[withPreamble, sharing]} choices={scale15} />);
+    // Rendered exactly once despite two rows carrying the same note
+    expect(screen.getAllByText(note)).toHaveLength(1);
+  });
+
   it('renders a stacked card per row alongside the table (responsive)', () => {
     render(<Harness items={[row('Q75', 'fairness ZBB', scale15)]} choices={scale15} />);
     // Table is rendered for desktop (hidden on mobile via md:table)
