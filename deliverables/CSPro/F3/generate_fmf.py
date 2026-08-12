@@ -73,8 +73,8 @@ FIELD_CONTROL_CASE_START = {
 FIELD_CONTROL_CASE_END = {
     "SURVEY_TEAM_LEADER_S_NAME", "ENUMERATOR_S_NAME",
     "FIELD_VALIDATED_BY", "FIELD_EDITED_BY",
-    "DATE_FIRST_VISITED", "DATE_FIRST_VISITED_DISP",   # #1099 F4-parity MM/DD/YYYY echo
-    "DATE_FINAL_VISIT", "DATE_FINAL_VISIT_DISP", "TOTAL_NUMBER_OF_VISITS",
+    "DATE_FIRST_VISITED",   # #1132: echo fields removed at ASPSI's request
+    "DATE_FINAL_VISIT", "TOTAL_NUMBER_OF_VISITS",
     "ENUM_RESULT_FIRST_VISIT", "ENUM_RESULT_FINAL_VISIT",
 }
 
@@ -240,6 +240,8 @@ SHORT_FORM_LABELS = {
     "Q72_NEAREST_TRAVEL_MM": "Number of Minute(s)",
     "Q106_NIGHTS":           "Number of Night(s)",
     "Q106_DAYS":             "Number of Day(s)",
+    "Q150_TRAVEL_HH":        "Number of Hour(s)",     # #1201: Q69/Q72 parity
+    "Q150_TRAVEL_MM":        "Number of Minute(s)",   # #1201
 }
 
 
@@ -330,8 +332,8 @@ NAMED_BLOCKS = [
      ["SURVEY_TEAM_LEADER_S_NAME", "ENUMERATOR_S_NAME",
       "FIELD_VALIDATED_BY", "FIELD_EDITED_BY"]),
     ("VISIT_RECORD_BLOCK", "Visit Record",
-     ["DATE_FIRST_VISITED", "DATE_FIRST_VISITED_DISP",   # #1099 F4-parity MM/DD/YYYY echo
-      "DATE_FINAL_VISIT", "DATE_FINAL_VISIT_DISP", "TOTAL_NUMBER_OF_VISITS",
+     ["DATE_FIRST_VISITED",   # #1132: echo fields removed at ASPSI's request
+      "DATE_FINAL_VISIT", "TOTAL_NUMBER_OF_VISITS",
       "ENUM_RESULT_FIRST_VISIT", "ENUM_RESULT_FINAL_VISIT"]),
 ]
 

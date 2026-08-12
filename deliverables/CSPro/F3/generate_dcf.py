@@ -197,7 +197,7 @@ def build_f3_field_control():
     # date_mmddyyyy: #1174 — enumerator types the paper's MMDDYYYY; storage stays YYYYMMDD
     # (converted in generate_apc's DATE_FIRST_VISITED / DATE_FINAL_VISIT postprocs). Never
     # flip this flag without that PROC — see cspro_helpers._date_fmt.
-    return build_field_control(survey_code="F3", date_display=True,   # #1099 F4-parity MM/DD/YYYY echo
+    return build_field_control(survey_code="F3", date_display=False,  # #1132 F1-parity: echoes removed at ASPSI's request
                                date_mmddyyyy=True,
                                extra_items=extra + derived_geo_code_items(),
                                date_label_entity="the Patient",
@@ -421,11 +421,11 @@ def build_section_b():
         alpha("Q4_NAME",
               "4. Patient's Name (Last Name, First Name, MI, Extension)", length=120),
         numeric("Q5_BIRTH_MONTH",
-                "5. In what month and year was the patient born? — Month", length=2),
+                # #1195 (supersedes #1056's reading): F4's month/year pattern is TWO
+                # self-contained short questions, per the tester's mockup.
+                "5. In what month was the patient born?", length=2),
         numeric("Q5_BIRTH_YEAR",
-                # #1056: second component shows a short prompt (F4's month/year pattern) —
-                # the full question reads once, on the Month component.
-                "5. Year of birth", length=4),
+                "5. In what year was the patient born?", length=4),
         numeric("Q6_AGE",
                 "6. Just to confirm, how old is the patient as of his/her last birthday? (in years)",
                 length=3),
@@ -627,15 +627,18 @@ def build_section_d():
         ("Sponsored (i.e., members whose contributions are being paid for by another "
          "individual, government agencies, or private entities. Includes some low-income "
          "citizens that are not indigent e.g. BHWs, PWDs)", "04"),
-        ("Lifetime member (i.e., individuals aged 60 years and above, uniformed personnel "
-         "aged 56 years and above, and SSS underground miner-retirees aged 55 years and "
-         "above and paid at least 120 monthly contributions with PhilHealth and the former "
-         "Medicare Programs of SSS and GSIS)", "05"),
-        ("Senior citizen (i.e., residents of the Philippines, aged sixty (60) years or above "
-         "and are not currently covered by any membership category of PhilHealth and "
-         "qualified dependents of senior citizen members who are also senior citizen "
-         "themselves or belonging to other membership categories, with or without coverage "
-         "who are senior citizens themselves)", "06"),
+        # #1182: both definitions condensed under CSPro's hard 255-char label cap —
+        # the paper's full text (273/349 chars) was being silently hard-cut mid-sentence
+        # AND broke the translation lookup in every locale keyed to the full string.
+        # Substance preserved; translations re-keyed to these exact strings.
+        ("Lifetime member (i.e., individuals aged 60+, uniformed personnel aged 56+, "
+         "and SSS underground miner-retirees aged 55+ who paid at least 120 monthly "
+         "contributions with PhilHealth and the former Medicare Programs of SSS and "
+         "GSIS)", "05"),
+        ("Senior citizen (i.e., residents of the Philippines aged sixty (60) years or "
+         "above not currently covered by any PhilHealth membership category, and "
+         "qualified dependents of senior citizen members who are themselves senior "
+         "citizens)", "06"),
         ("Overseas Filipino Worker (OFW)", "07"),
         ("Qualified dependents (i.e., those whose contributions are declared and covered by "
          "a principal member)", "08"),
@@ -1510,9 +1513,10 @@ def build_section_h():
         numeric("Q106_NIGHTS",
                 "106. How long were you confined? — Nights", length=3),
         numeric("Q106_DAYS",
-                # #1066: second component shows a short prompt — the full question reads
-                # once (on Nights) per the paper's grouped Nights/Days presentation.
-                "106. Length of confinement — Days", length=3),
+                # #1196 (supersedes #1066): both components carry the paper stem — the
+                # qsf strips "— Days" so both question bars read the identical stem
+                # (Q69/Q72 convention); the on-form label comes from SHORT_FORM_LABELS.
+                "106. How long were you confined? — Days", length=3),
     ]
     # Q107 total bill — Option B ROSTER fan-out (#691, 2026-06-19). WAS a flat 10-source
     # Yes/No + per-source _AMT matrix (every source carried an amount). NOW a CheckBox
@@ -1966,12 +1970,15 @@ def build_section_k():
                     "149. Where do you usually buy or receive your medicines? "
                     "Select all that apply.", _cb_codes(Q149_WHERE_BUY), with_other_txt=True),
         numeric("Q150_TRAVEL_HH",
-                # #1062: respondent-facing question reads once (here); the MM component
-                # keeps a short prompt. Pharmacy definition rides only this field (qsf).
+                # #1201 (supersedes #1062's split): full Q69/Q72 parity — both components
+                # carry the paper stem; the qsf strips the "— Hours/— Minutes" suffix so
+                # both question bars read the identical stem, and the on-form labels come
+                # from SHORT_FORM_LABELS. Pharmacy definition still rides HH only (qsf).
                 "150. How much time does it take for you to reach the nearest pharmacy "
-                "from your home? — Hours (HH)", length=2),
+                "from your home? — Hours", length=2),
         numeric("Q150_TRAVEL_MM",
-                "150. Travel time to nearest pharmacy — Minutes (MM)", length=2),
+                "150. How much time does it take for you to reach the nearest pharmacy "
+                "from your home? — Minutes", length=2),
         select_one("Q151_PHARM_EASE",
                    "151. How easy is it for you to access a pharmacy or drugstore?",
                    Q151_EASE, length=1),

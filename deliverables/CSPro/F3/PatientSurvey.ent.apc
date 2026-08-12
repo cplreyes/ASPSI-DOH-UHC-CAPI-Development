@@ -1815,6 +1815,10 @@ postproc
     errmsg(1080);
     reenter;
   endif;
+  if pos("04", Q46_BENEFITS) > 0 and length(strip(Q46_BENEFITS)) > 2 then
+    errmsg(1257);
+    reenter;
+  endif;
   if pos("90", Q46_BENEFITS) > 0 and length(strip(Q46_BENEFITS)) > 2 then
     errmsg(1257);
     reenter;
@@ -2886,7 +2890,7 @@ preproc
   pp = (curocc() - 1) * 2 + 1;
   Q107_PAY_SRC = tonumber(Q107_SOURCES[pp:2]);
   protect(Q107_PAY_SRC, true);
-  if Q107_PAY_SRC = 9 then
+  if Q107_PAY_SRC = 2 or Q107_PAY_SRC = 3 or Q107_PAY_SRC = 4 or Q107_PAY_SRC = 5 or Q107_PAY_SRC = 6 or Q107_PAY_SRC = 9 or Q107_PAY_SRC = 10 then
     Q107_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
   endif;
   Q107_PAY_LINE = curocc();
@@ -2894,7 +2898,7 @@ preproc
 
 PROC Q107_PAY_AMT
 preproc
-  if Q107_PAY_SRC = 9 then
+  if Q107_PAY_SRC = 2 or Q107_PAY_SRC = 3 or Q107_PAY_SRC = 4 or Q107_PAY_SRC = 5 or Q107_PAY_SRC = 6 or Q107_PAY_SRC = 9 or Q107_PAY_SRC = 10 then
     Q107_PAY_AMT = 0;   { non-money source -> no cost; display-only }
     noinput;
   endif;
@@ -2903,7 +2907,7 @@ postproc
     errmsg(1157);
     reenter;
   endif;
-  if (Q107_PAY_SRC = 9) and Q107_PAY_AMT <> 0 then
+  if (Q107_PAY_SRC = 2 or Q107_PAY_SRC = 3 or Q107_PAY_SRC = 4 or Q107_PAY_SRC = 5 or Q107_PAY_SRC = 6 or Q107_PAY_SRC = 9 or Q107_PAY_SRC = 10) and Q107_PAY_AMT <> 0 then
     errmsg(1158);
     Q107_PAY_AMT = 0;
   endif;
@@ -2936,9 +2940,22 @@ postproc
 { ---- Q109 payment roster (Option B fan-out) ---- }
 PROC Q109_SOURCES
 postproc
+  numeric xcN; numeric xcK; numeric xcP; numeric xcHit;
   { Require >=1 source ticked — the roster grid needs >=1 row. }
   if length(strip(Q109_SOURCES)) = 0 then
     errmsg(1161);
+    reenter;
+  endif;
+  { exclusivity (HARD — #1157): the standalone option must not be
+    combined with any other source. Aligned chunk scan, not pos(). }
+  xcHit = 0;
+  xcN = length(strip(Q109_SOURCES)) / 2;
+  do xcK = 1 while xcK <= xcN
+    xcP = (xcK - 1) * 2 + 1;
+    if tonumber(Q109_SOURCES[xcP:2]) = 8 then xcHit = 1; endif;
+  enddo;
+  if xcHit = 1 and length(strip(Q109_SOURCES)) > 2 then
+    errmsg(1269);
     reenter;
   endif;
 
@@ -2971,7 +2988,7 @@ preproc
   if pos("08", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 8; endif; endif;
   if pos("09", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 9; endif; endif;
   protect(Q109_PAY_SRC, true);
-  if Q109_PAY_SRC = 8 then
+  if Q109_PAY_SRC = 2 or Q109_PAY_SRC = 3 or Q109_PAY_SRC = 4 or Q109_PAY_SRC = 5 or Q109_PAY_SRC = 6 or Q109_PAY_SRC = 7 or Q109_PAY_SRC = 8 or Q109_PAY_SRC = 9 then
     Q109_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
   endif;
   Q109_PAY_LINE = curocc();
@@ -2979,7 +2996,7 @@ preproc
 
 PROC Q109_PAY_AMT
 preproc
-  if Q109_PAY_SRC = 8 then
+  if Q109_PAY_SRC = 2 or Q109_PAY_SRC = 3 or Q109_PAY_SRC = 4 or Q109_PAY_SRC = 5 or Q109_PAY_SRC = 6 or Q109_PAY_SRC = 7 or Q109_PAY_SRC = 8 or Q109_PAY_SRC = 9 then
     Q109_PAY_AMT = 0;   { non-money source -> no cost; display-only }
     noinput;
   endif;
@@ -2988,7 +3005,7 @@ postproc
     errmsg(1162);
     reenter;
   endif;
-  if (Q109_PAY_SRC = 8) and Q109_PAY_AMT <> 0 then
+  if (Q109_PAY_SRC = 2 or Q109_PAY_SRC = 3 or Q109_PAY_SRC = 4 or Q109_PAY_SRC = 5 or Q109_PAY_SRC = 6 or Q109_PAY_SRC = 7 or Q109_PAY_SRC = 8 or Q109_PAY_SRC = 9) and Q109_PAY_AMT <> 0 then
     errmsg(1163);
     Q109_PAY_AMT = 0;
   endif;
@@ -3044,7 +3061,7 @@ preproc
   if pos("08", Q112_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q112_PAY_SRC = 8; endif; endif;
   if pos("09", Q112_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q112_PAY_SRC = 9; endif; endif;
   protect(Q112_PAY_SRC, true);
-  if Q112_PAY_SRC = 8 then
+  if Q112_PAY_SRC = 2 or Q112_PAY_SRC = 3 or Q112_PAY_SRC = 4 or Q112_PAY_SRC = 5 or Q112_PAY_SRC = 6 or Q112_PAY_SRC = 7 or Q112_PAY_SRC = 8 or Q112_PAY_SRC = 9 then
     Q112_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
   endif;
   Q112_PAY_LINE = curocc();
@@ -3052,7 +3069,7 @@ preproc
 
 PROC Q112_PAY_AMT
 preproc
-  if Q112_PAY_SRC = 8 then
+  if Q112_PAY_SRC = 2 or Q112_PAY_SRC = 3 or Q112_PAY_SRC = 4 or Q112_PAY_SRC = 5 or Q112_PAY_SRC = 6 or Q112_PAY_SRC = 7 or Q112_PAY_SRC = 8 or Q112_PAY_SRC = 9 then
     Q112_PAY_AMT = 0;   { non-money source -> no cost; display-only }
     noinput;
   endif;
@@ -3061,7 +3078,7 @@ postproc
     errmsg(1167);
     reenter;
   endif;
-  if (Q112_PAY_SRC = 8) and Q112_PAY_AMT <> 0 then
+  if (Q112_PAY_SRC = 2 or Q112_PAY_SRC = 3 or Q112_PAY_SRC = 4 or Q112_PAY_SRC = 5 or Q112_PAY_SRC = 6 or Q112_PAY_SRC = 7 or Q112_PAY_SRC = 8 or Q112_PAY_SRC = 9) and Q112_PAY_AMT <> 0 then
     errmsg(1168);
     Q112_PAY_AMT = 0;
   endif;
@@ -3863,32 +3880,6 @@ postproc
     errmsg(1228, Q106_NIGHTS);
     reenter;
   endif;
-
-PROC DATE_FIRST_VISITED_DISP
-preproc
-  numeric dfY; numeric dfM; numeric dfD;
-  if DATE_FIRST_VISITED = notappl then
-    DATE_FIRST_VISITED_DISP = "";
-  else
-    dfY = int(DATE_FIRST_VISITED / 10000);
-    dfM = int(DATE_FIRST_VISITED / 100) - dfY * 100;
-    dfD = DATE_FIRST_VISITED - int(DATE_FIRST_VISITED / 100) * 100;
-    DATE_FIRST_VISITED_DISP = concat(edit("99", dfM), "/", edit("99", dfD), "/", edit("9999", dfY));
-  endif;
-  noinput;
-
-PROC DATE_FINAL_VISIT_DISP
-preproc
-  numeric dvY; numeric dvM; numeric dvD;
-  if DATE_FINAL_VISIT = notappl then
-    DATE_FINAL_VISIT_DISP = "";
-  else
-    dvY = int(DATE_FINAL_VISIT / 10000);
-    dvM = int(DATE_FINAL_VISIT / 100) - dvY * 100;
-    dvD = DATE_FINAL_VISIT - int(DATE_FINAL_VISIT / 100) * 100;
-    DATE_FINAL_VISIT_DISP = concat(edit("99", dvM), "/", edit("99", dvD), "/", edit("9999", dvY));
-  endif;
-  noinput;
 
 PROC DATE_FIRST_VISITED
 postproc

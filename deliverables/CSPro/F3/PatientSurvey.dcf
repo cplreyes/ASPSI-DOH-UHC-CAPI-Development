@@ -336,7 +336,7 @@
                   "language": "EN"
                 },
                 {
-                  "text": "Date First Visited the Patient (MMDDYYYY)",
+                  "text": "Petsa ng Unang Pagbisita sa Pasyente",
                   "language": "FIL"
                 },
                 {
@@ -367,45 +367,6 @@
               "contentType": "numeric",
               "length": 8,
               "zeroFill": false
-            },
-            {
-              "name": "DATE_FIRST_VISITED_DISP",
-              "labels": [
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "WAR"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "HIL"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "ILO"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 10
             },
             {
               "name": "DATE_FINAL_VISIT",
@@ -415,7 +376,7 @@
                   "language": "EN"
                 },
                 {
-                  "text": "Date of Final Visit to the Patient (MMDDYYYY)",
+                  "text": "Petsa ng Huling Pagbisita sa Pasyente",
                   "language": "FIL"
                 },
                 {
@@ -446,45 +407,6 @@
               "contentType": "numeric",
               "length": 8,
               "zeroFill": false
-            },
-            {
-              "name": "DATE_FINAL_VISIT_DISP",
-              "labels": [
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "WAR"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "HIL"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "ILO"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 10
             },
             {
               "name": "TOTAL_NUMBER_OF_VISITS",
@@ -5892,35 +5814,35 @@
               "name": "Q5_BIRTH_MONTH",
               "labels": [
                 {
-                  "text": "5. In what month and year was the patient born? \u2014 Month",
+                  "text": "5. In what month was the patient born?",
                   "language": "EN"
                 },
                 {
-                  "text": "5. In what month and year was the patient born? \u2014 Month",
+                  "text": "5. In what month was the patient born?",
                   "language": "FIL"
                 },
                 {
-                  "text": "5. In what month and year was the patient born? \u2014 Month",
+                  "text": "5. In what month was the patient born?",
                   "language": "BCL"
                 },
                 {
-                  "text": "Bulan",
+                  "text": "5. In what month was the patient born?",
                   "language": "BIS"
                 },
                 {
-                  "text": "5. In what month and year was the patient born? \u2014 Month",
+                  "text": "5. In what month was the patient born?",
                   "language": "CEB"
                 },
                 {
-                  "text": "5. In what month and year was the patient born? \u2014 Month",
+                  "text": "5. In what month was the patient born?",
                   "language": "WAR"
                 },
                 {
-                  "text": "5. In what month and year was the patient born? \u2014 Month",
+                  "text": "5. In what month was the patient born?",
                   "language": "HIL"
                 },
                 {
-                  "text": "5. In what month and year was the patient born? \u2014 Month",
+                  "text": "5. In what month was the patient born?",
                   "language": "ILO"
                 }
               ],
@@ -5932,35 +5854,35 @@
               "name": "Q5_BIRTH_YEAR",
               "labels": [
                 {
-                  "text": "5. Year of birth",
+                  "text": "5. In what year was the patient born?",
                   "language": "EN"
                 },
                 {
-                  "text": "5. Year of birth",
+                  "text": "5. In what year was the patient born?",
                   "language": "FIL"
                 },
                 {
-                  "text": "5. Year of birth",
+                  "text": "5. In what year was the patient born?",
                   "language": "BCL"
                 },
                 {
-                  "text": "5. Year of birth",
+                  "text": "5. In what year was the patient born?",
                   "language": "BIS"
                 },
                 {
-                  "text": "5. Year of birth",
+                  "text": "5. In what year was the patient born?",
                   "language": "CEB"
                 },
                 {
-                  "text": "5. Year of birth",
+                  "text": "5. In what year was the patient born?",
                   "language": "WAR"
                 },
                 {
-                  "text": "5. Year of birth",
+                  "text": "5. In what year was the patient born?",
                   "language": "HIL"
                 },
                 {
-                  "text": "5. Year of birth",
+                  "text": "5. In what year was the patient born?",
                   "language": "ILO"
                 }
               ],
@@ -42555,35 +42477,35 @@
               "name": "Q106_DAYS",
               "labels": [
                 {
-                  "text": "106. Length of confinement \u2014 Days",
+                  "text": "106. How long were you confined? \u2014 Days",
                   "language": "EN"
                 },
                 {
-                  "text": "106. Length of confinement \u2014 Days",
+                  "text": "106. How long were you confined? \u2014 Days",
                   "language": "FIL"
                 },
                 {
-                  "text": "106. Length of confinement \u2014 Days",
+                  "text": "Aldaw",
                   "language": "BCL"
                 },
                 {
-                  "text": "106. Length of confinement \u2014 Days",
+                  "text": "Adlaw",
                   "language": "BIS"
                 },
                 {
-                  "text": "106. Length of confinement \u2014 Days",
+                  "text": "Adlaw",
                   "language": "CEB"
                 },
                 {
-                  "text": "106. Length of confinement \u2014 Days",
+                  "text": "Adlaw",
                   "language": "WAR"
                 },
                 {
-                  "text": "106. Length of confinement \u2014 Days",
+                  "text": "106. How long were you confined? \u2014 Days",
                   "language": "HIL"
                 },
                 {
-                  "text": "106. Length of confinement \u2014 Days",
+                  "text": "106. How long were you confined? \u2014 Days",
                   "language": "ILO"
                 }
               ],
@@ -61605,35 +61527,35 @@
               "name": "Q150_TRAVEL_HH",
               "labels": [
                 {
-                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours (HH)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours",
                   "language": "EN"
                 },
                 {
-                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours (HH)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours",
                   "language": "FIL"
                 },
                 {
-                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours (HH)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours",
                   "language": "BCL"
                 },
                 {
-                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours (HH)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours",
                   "language": "BIS"
                 },
                 {
-                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours (HH)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours",
                   "language": "CEB"
                 },
                 {
-                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours (HH)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours",
                   "language": "WAR"
                 },
                 {
-                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours (HH)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours",
                   "language": "HIL"
                 },
                 {
-                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours (HH)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours",
                   "language": "ILO"
                 }
               ],
@@ -61645,35 +61567,35 @@
               "name": "Q150_TRAVEL_MM",
               "labels": [
                 {
-                  "text": "150. Travel time to nearest pharmacy \u2014 Minutes (MM)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Minutes",
                   "language": "EN"
                 },
                 {
-                  "text": "150. Travel time to nearest pharmacy \u2014 Minutes (MM)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Minutes",
                   "language": "FIL"
                 },
                 {
-                  "text": "150. Travel time to nearest pharmacy \u2014 Minutes (MM)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Minutes",
                   "language": "BCL"
                 },
                 {
-                  "text": "150. Travel time to nearest pharmacy \u2014 Minutes (MM)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Minutes",
                   "language": "BIS"
                 },
                 {
-                  "text": "150. Travel time to nearest pharmacy \u2014 Minutes (MM)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Minutes",
                   "language": "CEB"
                 },
                 {
-                  "text": "150. Travel time to nearest pharmacy \u2014 Minutes (MM)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Minutes",
                   "language": "WAR"
                 },
                 {
-                  "text": "150. Travel time to nearest pharmacy \u2014 Minutes (MM)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Minutes",
                   "language": "HIL"
                 },
                 {
-                  "text": "150. Travel time to nearest pharmacy \u2014 Minutes (MM)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Minutes",
                   "language": "ILO"
                 }
               ],

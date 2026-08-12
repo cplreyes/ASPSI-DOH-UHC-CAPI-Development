@@ -494,32 +494,6 @@ postproc
     skip to ENUM_RESULT_FINAL_VISIT;
   endif;
 
-PROC DATE_FINAL_VISIT_DISP
-preproc
-  numeric dvY; numeric dvM; numeric dvD;
-  if DATE_OF_FINAL_VISIT_TO_THE_FACILITY = notappl then
-    DATE_FINAL_VISIT_DISP = "";
-  else
-    dvY = int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 10000);
-    dvM = int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 100) - dvY * 100;
-    dvD = DATE_OF_FINAL_VISIT_TO_THE_FACILITY - int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 100) * 100;
-    DATE_FINAL_VISIT_DISP = concat(edit("99", dvM), "/", edit("99", dvD), "/", edit("9999", dvY));
-  endif;
-  noinput;
-
-PROC DATE_FIRST_VISITED_DISP
-preproc
-  numeric dfY; numeric dfM; numeric dfD;
-  if DATE_FIRST_VISITED_THE_FACILITY = notappl then
-    DATE_FIRST_VISITED_DISP = "";
-  else
-    dfY = int(DATE_FIRST_VISITED_THE_FACILITY / 10000);
-    dfM = int(DATE_FIRST_VISITED_THE_FACILITY / 100) - dfY * 100;
-    dfD = DATE_FIRST_VISITED_THE_FACILITY - int(DATE_FIRST_VISITED_THE_FACILITY / 100) * 100;
-    DATE_FIRST_VISITED_DISP = concat(edit("99", dfM), "/", edit("99", dfD), "/", edit("9999", dfY));
-  endif;
-  noinput;
-
 PROC DATE_FIRST_VISITED_THE_FACILITY
 postproc
   numeric fvMM; numeric fvDD; numeric fvYY; numeric fvHead;
@@ -1221,6 +1195,13 @@ postproc
   { exclusivity (HARD — #1106..#1131): 'I don't know' (07) should stand alone }
   if pos("07", Q58_PERF_INDICATORS) > 0 and length(strip(Q58_PERF_INDICATORS)) > 2 then
     errmsg(1218);
+    reenter;
+  endif;
+  { #1188: 'No requirements' (05) is a SECOND standalone option the #1106 pass
+    missed — it starts with "no " but not "none"/"no initiative", so nothing
+    ever matched it (the same class as Q156/Q165/Q166 in v1.3.0). }
+  if pos("05", Q58_PERF_INDICATORS) > 0 and length(strip(Q58_PERF_INDICATORS)) > 2 then
+    errmsg(1226);
     reenter;
   endif;
 

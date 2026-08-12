@@ -3266,35 +3266,52 @@ postproc
     reenter;
   endif;
 
-PROC DATE_FIRST_VISITED_DISP
-preproc
-  numeric dfY; numeric dfM; numeric dfD;
-  if DATE_FIRST_VISITED = notappl then
-    DATE_FIRST_VISITED_DISP = "";
-  else
-    dfY = int(DATE_FIRST_VISITED / 10000);
-    dfM = int(DATE_FIRST_VISITED / 100) - dfY * 100;
-    dfD = DATE_FIRST_VISITED - int(DATE_FIRST_VISITED / 100) * 100;
-    DATE_FIRST_VISITED_DISP = concat(edit("99", dfM), "/", edit("99", dfD), "/", edit("9999", dfY));
+PROC DATE_FIRST_VISITED
+postproc
+  numeric fvMM; numeric fvDD; numeric fvYY; numeric fvHead;
+  if DATE_FIRST_VISITED <> notappl then
+    fvMM   = int(DATE_FIRST_VISITED / 1000000);
+    fvHead = int(DATE_FIRST_VISITED / 10000);
+    if fvMM >= 1 and fvMM <= 12 then
+      fvDD = fvHead - fvMM * 100;
+      fvYY = DATE_FIRST_VISITED - fvHead * 10000;
+      if fvDD < 1 or fvDD > 31 or fvYY < 2020 or fvYY > 2035 then
+        errmsg(1188);
+        reenter;
+      endif;
+      DATE_FIRST_VISITED = fvYY * 10000 + fvMM * 100 + fvDD;
+    else
+      if fvHead < 2020 or fvHead > 2035 then
+        errmsg(1188);
+        reenter;
+      endif;
+    endif;
   endif;
-  noinput;
-
-PROC DATE_FINAL_VISIT_DISP
-preproc
-  numeric dvY; numeric dvM; numeric dvD;
-  if DATE_FINAL_VISIT = notappl then
-    DATE_FINAL_VISIT_DISP = "";
-  else
-    dvY = int(DATE_FINAL_VISIT / 10000);
-    dvM = int(DATE_FINAL_VISIT / 100) - dvY * 100;
-    dvD = DATE_FINAL_VISIT - int(DATE_FINAL_VISIT / 100) * 100;
-    DATE_FINAL_VISIT_DISP = concat(edit("99", dvM), "/", edit("99", dvD), "/", edit("9999", dvY));
-  endif;
-  noinput;
 
 PROC DATE_FINAL_VISIT
 postproc
-  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then
+  numeric lvMM; numeric lvDD; numeric lvYY; numeric lvHead;
+  if DATE_FINAL_VISIT <> notappl then
+    lvMM   = int(DATE_FINAL_VISIT / 1000000);
+    lvHead = int(DATE_FINAL_VISIT / 10000);
+    if lvMM >= 1 and lvMM <= 12 then
+      lvDD = lvHead - lvMM * 100;
+      lvYY = DATE_FINAL_VISIT - lvHead * 10000;
+      if lvDD < 1 or lvDD > 31 or lvYY < 2020 or lvYY > 2035 then
+        errmsg(1188);
+        reenter;
+      endif;
+      DATE_FINAL_VISIT = lvYY * 10000 + lvMM * 100 + lvDD;
+    else
+      if lvHead < 2020 or lvHead > 2035 then
+        errmsg(1188);
+        reenter;
+      endif;
+    endif;
+  endif;
+  { conversion above runs FIRST so both sides below are YYYYMMDD. The notappl guards
+    match F1/F3: without them a blank final date (single visit) false-fires this. }
+  if DATE_FINAL_VISIT <> notappl and DATE_FIRST_VISITED <> notappl and DATE_FINAL_VISIT < DATE_FIRST_VISITED then
     errmsg(1153);
     reenter;
   endif;

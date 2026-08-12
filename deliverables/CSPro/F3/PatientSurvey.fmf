@@ -1350,7 +1350,7 @@ Label=Closing - case end
 
 Level=1
 
-Size=806,397
+Size=806,337
 
   
 
@@ -1364,11 +1364,7 @@ Item=FIELD_EDITED_BY
 
 Item=DATE_FIRST_VISITED
 
-Item=DATE_FIRST_VISITED_DISP
-
 Item=DATE_FINAL_VISIT
-
-Item=DATE_FINAL_VISIT_DISP
 
 Item=TOTAL_NUMBER_OF_VISITS
 
@@ -2154,7 +2150,7 @@ Form=5
 
 Position=50,60,330,76
 
-Text=5. In what month and year was the patient born? — Month
+Text=5. In what month was the patient born?
 
  
 
@@ -2178,7 +2174,7 @@ Form=5
 
 Position=50,90,330,106
 
-Text=5. Year of birth
+Text=5. In what year was the patient born?
 
  
 
@@ -12148,7 +12144,7 @@ Form=34
 
 Position=50,240,330,256
 
-Text=150. How much time does it take for you to reach the nearest pharmacy from your home? — Hours (HH)
+Text=Number of Hour(s)
 
  
 
@@ -12172,7 +12168,7 @@ Form=34
 
 Position=50,270,330,286
 
-Text=150. Travel time to nearest pharmacy — Minutes (MM)
+Text=Number of Minute(s)
 
  
 
@@ -13840,33 +13836,7 @@ Form=36
 
 Position=50,150,330,166
 
-Text=Date First Visited the Patient (YYYYMMDD)
-
- 
-
-  
-
-[Field]
-
-Name=DATE_FIRST_VISITED_DISP
-
-Position=350,177,760,197
-
-Item=DATE_FIRST_VISITED_DISP,PATIENTSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=36
-
-  
-
-[Text]
-
-Position=50,180,330,196
-
-Text=Date First Visited (MM/DD/YYYY)
+Text=Date First Visited the Patient (MMDDYYYY)
 
  
 
@@ -13876,7 +13846,7 @@ Text=Date First Visited (MM/DD/YYYY)
 
 Name=DATE_FINAL_VISIT
 
-Position=350,207,760,227
+Position=350,177,760,197
 
 Item=DATE_FINAL_VISIT,PATIENTSURVEY_DICT
 
@@ -13888,35 +13858,9 @@ Form=36
 
 [Text]
 
-Position=50,210,330,226
+Position=50,180,330,196
 
-Text=Date of Final Visit to the Patient (YYYYMMDD)
-
- 
-
-  
-
-[Field]
-
-Name=DATE_FINAL_VISIT_DISP
-
-Position=350,237,760,257
-
-Item=DATE_FINAL_VISIT_DISP,PATIENTSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=36
-
-  
-
-[Text]
-
-Position=50,240,330,256
-
-Text=Date of Final Visit (MM/DD/YYYY)
+Text=Date of Final Visit to the Patient (MMDDYYYY)
 
  
 
@@ -13926,7 +13870,7 @@ Text=Date of Final Visit (MM/DD/YYYY)
 
 Name=TOTAL_NUMBER_OF_VISITS
 
-Position=350,267,760,287
+Position=350,207,760,227
 
 Item=TOTAL_NUMBER_OF_VISITS,PATIENTSURVEY_DICT
 
@@ -13938,7 +13882,7 @@ Form=36
 
 [Text]
 
-Position=50,270,330,286
+Position=50,210,330,226
 
 Text=Total Number of Visits
 
@@ -13950,7 +13894,7 @@ Text=Total Number of Visits
 
 Name=ENUM_RESULT_FIRST_VISIT
 
-Position=350,297,365,317
+Position=350,237,365,257
 
 Item=ENUM_RESULT_FIRST_VISIT,PATIENTSURVEY_DICT
 
@@ -13962,7 +13906,7 @@ Form=36
 
 [Text]
 
-Position=50,300,330,316
+Position=50,240,330,256
 
 Text=Result of First Visit
 
@@ -13974,7 +13918,7 @@ Text=Result of First Visit
 
 Name=ENUM_RESULT_FINAL_VISIT
 
-Position=350,327,365,347
+Position=350,267,365,287
 
 Item=ENUM_RESULT_FINAL_VISIT,PATIENTSURVEY_DICT
 
@@ -13986,7 +13930,7 @@ Form=36
 
 [Text]
 
-Position=50,330,330,346
+Position=50,270,330,286
 
 Text=Result of Final Visit
 
@@ -14018,7 +13962,7 @@ DisplayTogether=Yes
 
 Position=5
 
-Length=7
+Length=5
 
   
 

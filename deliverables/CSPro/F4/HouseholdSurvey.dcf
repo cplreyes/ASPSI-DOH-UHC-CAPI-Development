@@ -332,159 +332,81 @@
               "name": "DATE_FIRST_VISITED",
               "labels": [
                 {
-                  "text": "Date First Visited the Household (YYYYMMDD)",
+                  "text": "Date First Visited the Household (MMDDYYYY)",
                   "language": "EN"
                 },
                 {
-                  "text": "Date First Visited the Household (YYYYMMDD)",
+                  "text": "Date First Visited the Household (MMDDYYYY)",
                   "language": "FIL"
                 },
                 {
-                  "text": "Date First Visited the Household (YYYYMMDD)",
+                  "text": "Date First Visited the Household (MMDDYYYY)",
                   "language": "BCL"
                 },
                 {
-                  "text": "Date First Visited the Household (YYYYMMDD)",
+                  "text": "Date First Visited the Household (MMDDYYYY)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Date First Visited the Household (YYYYMMDD)",
+                  "text": "Date First Visited the Household (MMDDYYYY)",
                   "language": "CEB"
                 },
                 {
-                  "text": "Petsa han Syahan na pag bisita han Lugar",
+                  "text": "Date First Visited the Household (MMDDYYYY)",
                   "language": "WAR"
                 },
                 {
-                  "text": "Date First Visited the Household (YYYYMMDD)",
+                  "text": "Date First Visited the Household (MMDDYYYY)",
                   "language": "HIL"
                 },
                 {
-                  "text": "Date First Visited the Household (YYYYMMDD)",
+                  "text": "Date First Visited the Household (MMDDYYYY)",
                   "language": "ILO"
                 }
               ],
               "contentType": "numeric",
               "length": 8,
               "zeroFill": false
-            },
-            {
-              "name": "DATE_FIRST_VISITED_DISP",
-              "labels": [
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "WAR"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "HIL"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "ILO"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 10
             },
             {
               "name": "DATE_FINAL_VISIT",
               "labels": [
                 {
-                  "text": "Date of Final Visit to the Household (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Household (MMDDYYYY)",
                   "language": "EN"
                 },
                 {
-                  "text": "Date of Final Visit to the Household (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Household (MMDDYYYY)",
                   "language": "FIL"
                 },
                 {
-                  "text": "Date of Final Visit to the Household (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Household (MMDDYYYY)",
                   "language": "BCL"
                 },
                 {
-                  "text": "Date of Final Visit to the Household (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Household (MMDDYYYY)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Date of Final Visit to the Household (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Household (MMDDYYYY)",
                   "language": "CEB"
                 },
                 {
-                  "text": "Petsa han Katapusan nga pagbisita ha Pasilidad",
+                  "text": "Date of Final Visit to the Household (MMDDYYYY)",
                   "language": "WAR"
                 },
                 {
-                  "text": "Date of Final Visit to the Household (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Household (MMDDYYYY)",
                   "language": "HIL"
                 },
                 {
-                  "text": "Date of Final Visit to the Household (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Household (MMDDYYYY)",
                   "language": "ILO"
                 }
               ],
               "contentType": "numeric",
               "length": 8,
               "zeroFill": false
-            },
-            {
-              "name": "DATE_FINAL_VISIT_DISP",
-              "labels": [
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "WAR"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "HIL"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "ILO"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 10
             },
             {
               "name": "TOTAL_NUMBER_OF_VISITS",

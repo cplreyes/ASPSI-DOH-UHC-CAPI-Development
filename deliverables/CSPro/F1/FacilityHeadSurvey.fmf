@@ -390,16 +390,14 @@ Item=Q166_PD_NURSES_OTHER_TXT
 Name=FORM010
 Label=Field Control
 Level=1
-Size=806,390
+Size=806,330
   
 Item=SURVEY_TEAM_LEADER_S_NAME
 Item=ENUMERATOR_S_NAME
 Item=FIELD_VALIDATED_BY
 Item=FIELD_EDITED_BY
 Item=DATE_FIRST_VISITED_THE_FACILITY
-Item=DATE_FIRST_VISITED_DISP
 Item=DATE_OF_FINAL_VISIT_TO_THE_FACILITY
-Item=DATE_FINAL_VISIT_DISP
 Item=TOTAL_NUMBER_OF_VISITS
 Item=ENUM_RESULT_FIRST_VISIT
 Item=ENUM_RESULT_FINAL_VISIT
@@ -2808,7 +2806,7 @@ Form=6
   
 [Text]
 Position=50,540,1348,556
-Text=57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package? (Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.)
+Text=57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?
  
   
   
@@ -6194,79 +6192,55 @@ Form=11
   
 [Text]
 Position=50,150,315,166
-Text=Date First Visited the Facility (YYYYMMDD)
- 
-  
-[Field]
-Name=DATE_FIRST_VISITED_DISP
-Position=350,177,491,197
-Item=DATE_FIRST_VISITED_DISP,FACILITYHEADSURVEY_DICT
-DataCaptureType=TextBox
-Form=11
-  
-[Text]
-Position=50,180,249,196
-Text=Date First Visited (MM/DD/YYYY)
+Text=Date First Visited the Facility (MMDDYYYY)
  
   
 [Field]
 Name=DATE_OF_FINAL_VISIT_TO_THE_FACILITY
-Position=350,207,463,227
+Position=350,177,463,197
 Item=DATE_OF_FINAL_VISIT_TO_THE_FACILITY,FACILITYHEADSURVEY_DICT
 DataCaptureType=Date
 CaptureDateFormat=YYYYMMDD
 Form=11
   
 [Text]
-Position=50,210,336,226
-Text=Date of Final Visit to the Facility (YYYYMMDD)
- 
-  
-[Field]
-Name=DATE_FINAL_VISIT_DISP
-Position=350,237,491,257
-Item=DATE_FINAL_VISIT_DISP,FACILITYHEADSURVEY_DICT
-DataCaptureType=TextBox
-Form=11
-  
-[Text]
-Position=50,240,254,256
-Text=Date of Final Visit (MM/DD/YYYY)
+Position=50,180,336,196
+Text=Date of Final Visit to the Facility (MMDDYYYY)
  
   
 [Field]
 Name=TOTAL_NUMBER_OF_VISITS
-Position=350,267,393,287
+Position=350,207,393,227
 Item=TOTAL_NUMBER_OF_VISITS,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=11
   
 [Text]
-Position=50,270,189,286
+Position=50,210,189,226
 Text=Total Number of Visits
  
   
 [Field]
 Name=ENUM_RESULT_FIRST_VISIT
-Position=350,297,365,317
+Position=350,237,365,257
 Item=ENUM_RESULT_FIRST_VISIT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=11
   
 [Text]
-Position=50,300,167,316
+Position=50,240,167,256
 Text=Result of First Visit
  
   
 [Field]
 Name=ENUM_RESULT_FINAL_VISIT
-Position=350,327,365,347
+Position=350,267,365,287
 Item=ENUM_RESULT_FINAL_VISIT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=11
   
 [Text]
-Position=50,330,172,346
+Position=50,270,172,286
 Text=Result of Final Visit
  
 [Block]

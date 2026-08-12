@@ -516,36 +516,9 @@ postproc
     errmsg("Final-visit date cannot be earlier than the first-visit date.");
     reenter;
   endif;""",
-    # #1099 F4-parity (2026-08-05): read-only MM/DD/YYYY echo under each visit date.
-    # noinput pattern (assign in preproc) — never protect(), whose preproc CSEntry skips.
-    # edit-mask trap: only '9' is a digit slot; '0' is a LITERAL zero ("0999" rendered
-    # 2026 as "0026" on the F4 first build — tablet-caught). '9' keeps leading zeros.
-    "DATE_FIRST_VISITED_DISP": """\
-PROC DATE_FIRST_VISITED_DISP
-preproc
-  numeric dfY; numeric dfM; numeric dfD;
-  if DATE_FIRST_VISITED_THE_FACILITY = notappl then
-    DATE_FIRST_VISITED_DISP = "";
-  else
-    dfY = int(DATE_FIRST_VISITED_THE_FACILITY / 10000);
-    dfM = int(DATE_FIRST_VISITED_THE_FACILITY / 100) - dfY * 100;
-    dfD = DATE_FIRST_VISITED_THE_FACILITY - int(DATE_FIRST_VISITED_THE_FACILITY / 100) * 100;
-    DATE_FIRST_VISITED_DISP = concat(edit("99", dfM), "/", edit("99", dfD), "/", edit("9999", dfY));
-  endif;
-  noinput;""",
-    "DATE_FINAL_VISIT_DISP": """\
-PROC DATE_FINAL_VISIT_DISP
-preproc
-  numeric dvY; numeric dvM; numeric dvD;
-  if DATE_OF_FINAL_VISIT_TO_THE_FACILITY = notappl then
-    DATE_FINAL_VISIT_DISP = "";
-  else
-    dvY = int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 10000);
-    dvM = int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 100) - dvY * 100;
-    dvD = DATE_OF_FINAL_VISIT_TO_THE_FACILITY - int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 100) * 100;
-    DATE_FINAL_VISIT_DISP = concat(edit("99", dvM), "/", edit("99", dvD), "/", edit("9999", dvY));
-  endif;
-  noinput;""",
+    # #1132 retest (2026-08-10): the two #1099 DATE_*_DISP echo PROCs are
+    # REMOVED with their dictionary items at ASPSI's request — see generate_dcf.py.
+
     # 4.2 + 4.3 eligibility / tenure (Section A) — #148 hard, #152 cross-field
     "Q5_MONTHS_AT_FACILITY": """\
 PROC Q5_MONTHS_AT_FACILITY
@@ -754,6 +727,13 @@ postproc
   { exclusivity (HARD — #1106..#1131): 'I don't know' (07) should stand alone }
   if pos("07", Q58_PERF_INDICATORS) > 0 and length(strip(Q58_PERF_INDICATORS)) > 2 then
     errmsg("Q58: 'I don't know' must be the only choice — untick it or the other options before continuing.");
+    reenter;
+  endif;
+  { #1188: 'No requirements' (05) is a SECOND standalone option the #1106 pass
+    missed — it starts with "no " but not "none"/"no initiative", so nothing
+    ever matched it (the same class as Q156/Q165/Q166 in v1.3.0). }
+  if pos("05", Q58_PERF_INDICATORS) > 0 and length(strip(Q58_PERF_INDICATORS)) > 2 then
+    errmsg("Q58: 'No requirements' must be the only choice — untick it or the other options before continuing.");
     reenter;
   endif;""",
     "Q58_PERF_INDICATORS_OTHER_TXT": """\

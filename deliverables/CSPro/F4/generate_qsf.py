@@ -39,7 +39,7 @@ BUILD_FOOTER += ('<p class="instruction">PSA SSRCS Clearance No. DOH-2651-04 '
 # #1190: brand-book main logo sequence on the first page — see F1/generate_qsf.py.
 import base64 as _b64
 _LOGO_B64 = _b64.b64encode((HERE.parent / "cover_logos.png").read_bytes()).decode()
-BUILD_FOOTER = (f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="400"/></p>'
+BUILD_FOOTER = (f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
                 + BUILD_FOOTER)
 
 STYLES = """styles:

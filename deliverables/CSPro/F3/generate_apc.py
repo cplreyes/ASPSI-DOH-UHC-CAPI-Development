@@ -71,30 +71,6 @@ CUSTOM_VALIDATION = [
     # noinput pattern (assign in preproc) — never protect(), whose preproc CSEntry skips.
     # edit-mask trap: only '9' is a digit slot; '0' is a LITERAL zero ("0999" rendered
     # 2026 as "0026" on the F4 first build — tablet-caught). '9' keeps leading zeros.
-    ("DATE_FIRST_VISITED_DISP",
-     "PROC DATE_FIRST_VISITED_DISP\npreproc\n"
-     "  numeric dfY; numeric dfM; numeric dfD;\n"
-     "  if DATE_FIRST_VISITED = notappl then\n"
-     "    DATE_FIRST_VISITED_DISP = \"\";\n"
-     "  else\n"
-     "    dfY = int(DATE_FIRST_VISITED / 10000);\n"
-     "    dfM = int(DATE_FIRST_VISITED / 100) - dfY * 100;\n"
-     "    dfD = DATE_FIRST_VISITED - int(DATE_FIRST_VISITED / 100) * 100;\n"
-     "    DATE_FIRST_VISITED_DISP = concat(edit(\"99\", dfM), \"/\", edit(\"99\", dfD), \"/\", edit(\"9999\", dfY));\n"
-     "  endif;\n"
-     "  noinput;"),
-    ("DATE_FINAL_VISIT_DISP",
-     "PROC DATE_FINAL_VISIT_DISP\npreproc\n"
-     "  numeric dvY; numeric dvM; numeric dvD;\n"
-     "  if DATE_FINAL_VISIT = notappl then\n"
-     "    DATE_FINAL_VISIT_DISP = \"\";\n"
-     "  else\n"
-     "    dvY = int(DATE_FINAL_VISIT / 10000);\n"
-     "    dvM = int(DATE_FINAL_VISIT / 100) - dvY * 100;\n"
-     "    dvD = DATE_FINAL_VISIT - int(DATE_FINAL_VISIT / 100) * 100;\n"
-     "    DATE_FINAL_VISIT_DISP = concat(edit(\"99\", dvM), \"/\", edit(\"99\", dvD), \"/\", edit(\"9999\", dvY));\n"
-     "  endif;\n"
-     "  noinput;"),
     # #1174 (ASPSI 2026-08-06, Carl 2026-08-09): the enumerator types MMDDYYYY like the
     # paper; the STORED value stays YYYYMMDD so the comparison below, the MM/DD/YYYY echo
     # (#1099), the Supervisor App and the cross-instrument parsers are all untouched.
@@ -639,13 +615,15 @@ Q98_ROSTER_PROCS = build_roster_procs(
         ("15", "Q98_OTHER_TXT", "'Other (specify)' was selected in Q98. Please specify.")],
     require_positive=True)   # #749: every ticked money source must be > 0
 
-# The four NEW Section H roster conversions (#691/#692/#693). All-amount, length-9 amounts
-# (the amount length lives in the dcf roster field; the apc logic is length-agnostic).
+# The four NEW Section H roster conversions (#691/#692/#693). Amount boxes follow the
+# Apr-20 paper per question (#1198/#1199/#1200): Q107 = OOP/Donation/In-kind; Q109/Q112 =
+# Out-of-pocket only; all other rows are non-money (auto-0 + noinput, #1064 pattern).
+# (The amount length lives in the dcf roster field; the apc logic is length-agnostic.)
 # The Q113 PhilHealth-availed gate (Q114 skip) is re-pointed to pos("08", Q113_SOURCES)
 # in CHECKBOX_CONVERT below; the Q110=No skip target is re-pointed to Q113_SOURCES.
 Q107_ROSTER_PROCS = build_roster_procs(
     107, "107", [(None, f"{n:02d}") for n in range(1, 11)],
-    {f"{n:02d}" for n in range(1, 11)} - {"09"},   # 2026-07-02: 09 "Don't know" -> non-money (auto-0) — a DK row must not hard-require a fabricated > 0 amount
+    {"01", "07", "08"},   # #1198 (Apr-20 paper p.17): only Out-of-pocket(01), Donation(07), In kind(08) carry an amount box — Free/charged-to-X (02-06), DK (09), Other (10) are non-money (auto-0)
     "107. Tick at least one payment source for the total bill before continuing.",
     gated_texts=[("10", "Q107_PAY_OTHER_TXT", "107. 'Other' was ticked — please specify.")],
     require_positive=True,   # #757: every ticked payment source must be > 0
@@ -653,13 +631,15 @@ Q107_ROSTER_PROCS = build_roster_procs(
     exclusive_msg="107. 'Don't know' must be the only payment source — untick it or the other sources before continuing.")
 Q109_ROSTER_PROCS = build_roster_procs(
     109, "109", [(None, f"{n:02d}") for n in range(1, 10)],
-    {f"{n:02d}" for n in range(1, 10)} - {"08"},   # 2026-07-02: 08 "Don't know" -> non-money (auto-0)
+    {"01"},   # #1199/#1200 (Apr-20 paper p.17): amount box ONLY on Out-of-pocket — Free/charged (02-06), In kind (07), DK (08), Other (09) are non-money (auto-0)
     "109. Tick at least one payment source for the medicines bought outside before continuing.",
     gated_texts=[("09", "Q109_PAY_OTHER_TXT", "109. 'Other' was ticked — please specify.")],
-    require_positive=True)   # #757: every ticked payment source must be > 0
+    require_positive=True,   # #757: every ticked payment source must be > 0
+    exclusive_code="08",     # #1197: 08 "Don't know" must stand alone (same decision as #1157/Q107)
+    exclusive_msg="109. 'Don't know' must be the only payment source — untick it or the other sources before continuing.")
 Q112_ROSTER_PROCS = build_roster_procs(
     112, "112", [(None, f"{n:02d}") for n in range(1, 10)],
-    {f"{n:02d}" for n in range(1, 10)} - {"08"},   # 2026-07-02: 08 "Don't know" -> non-money (auto-0)
+    {"01"},   # #1200 (Apr-20 paper Q111): 'Amount in Pesos' ONLY on Out-of-pocket — 02-07 (Free*/In kind), 08 DK, 09 Other are non-money (auto-0)
     "112. Tick at least one payment source for the services done outside before continuing.",
     gated_texts=[("09", "Q112_PAY_OTHER_TXT", "112. 'Other' was ticked — please specify.")],
     require_positive=True)   # #757: every ticked payment source must be > 0
@@ -1146,9 +1126,9 @@ CHECKBOX_CONVERT = [
     ("Q52_PLANS",                True,  True,  None),   # #640: 'I don't know' (90) exclusive; 'Others (specify)' (99). Reached when Q51=Yes (Q51=No skips to Q53)
     ("Q37_UHC_UNDERSTAND",       True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
     # Q46 inherits the non-member gate that used to live on Q46_BENEFITS_O01 (Section D).
-    ("Q46_BENEFITS",             True,  True,
+    ("Q46_BENEFITS",             True,  ("04", "90"),
      "  if Q38_PHILHEALTH_REG <> 1 then   { #529: non-member -> skip the benefits block (was PROC Q46_BENEFITS_O01) }\n"
-     "    skip to Q51_OTHER_INSURANCE;\n  endif;"),   # 'I don't know' (90); 'Other (Specify)' (99)
+     "    skip to Q51_OTHER_INSURANCE;\n  endif;"),   # #1194: 04 'There are no benefits' AND 90 'I don't know' both HARD-exclusive (spec F3-Skip-Logic :330-331; Q76 tuple precedent); 'Other (Specify)' (99)
     ("Q65_WHY_NO_USUAL",         True,  True,  None),   # 'I don't know' (90) exclusive — NOT 'I don't know where to go for care' (05); 'Other (Specify)' (99)
     ("Q67_WHY_THIS_FACILITY",    True,  False, None),   # no None/IDK option; 'Other (Specify)' (99)
     ("Q76_KON_UNDERSTAND",       True,  ("90", "05"), None),   # 'I don't know' (90); 'Other (Specify)' (99)

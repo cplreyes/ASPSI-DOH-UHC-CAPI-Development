@@ -120,13 +120,13 @@ def build_field_control():
         # and this prompt moved; nothing downstream sees a different value.
         numeric("DATE_FIRST_VISITED_THE_FACILITY",
                 "Date First Visited the Facility (MMDDYYYY)", length=8),
-        # #1099 F4-parity (2026-08-05): read-only MM/DD/YYYY echo under each visit
-        # date (computed in logic, noinput). Kept deliberately under #1132 — it is now
-        # the enumerator's confirmation that their MMDDYYYY entry parsed correctly.
-        alpha("DATE_FIRST_VISITED_DISP", "Date First Visited (MM/DD/YYYY)", length=10),
+        # #1132 retest (2026-08-10): the #1099 MM/DD/YYYY echo fields are REMOVED
+        # at ASPSI's explicit request — the reviewer circled both on-device as
+        # confusing (four date rows for two dates). The paper has no echo; the
+        # misparse guard the echo provided is partly covered by the impossible-
+        # date block in the entry postproc. Do not re-add without a new ticket.
         numeric("DATE_OF_FINAL_VISIT_TO_THE_FACILITY",
                 "Date of Final Visit to the Facility (MMDDYYYY)", length=8),
-        alpha("DATE_FINAL_VISIT_DISP", "Date of Final Visit (MM/DD/YYYY)", length=10),
         numeric("TOTAL_NUMBER_OF_VISITS",       "Total Number of Visits",                       length=3),
         # Result-of-Visit codes come from cspro_helpers (ENUM_RESULT_OPTIONS_F1) so F1 cannot
         # drift from F3/F4 — "Replaced" (5) was added there 2026-07-14 and lands here for free.
@@ -662,8 +662,11 @@ def build_section_d():
                          "87. How many eligible patients in your catchment area are already registered to this YAKAP/Konsulta provider?",
                          length=7))
     # Q88 — verbatim text is 448 chars, well over CSPro's 255-char label limit.
-    # Compressed the PhilHealth tranche-mechanics middle into a parenthetical;
-    # question stem and Php 1,700 anchor preserved verbatim.
+    # #1189 round 2: the v1.3.2 attempt put the full stem HERE and the Designer
+    # round-trip hard-cut it at 255 chars (no warning — F1 writes its dcf raw).
+    # The #1019/#1074 architecture is the right one: label stays CONDENSED
+    # (<=255, matches the 5 locale translation keys verbatim); the FULL paper
+    # stem renders from generate_qsf's Q88 branch in the uncapped question area.
     items.append(yes_no_dk("Q88_IS_1700_ENOUGH",
                            "88. The maximum per capita rate for YAKAP/Konsulta is Php 1,700 across private and public facilities (40% after first patient encounter, 60% based on registered catchment population by December). Based on your practice, is this enough?"))
     items.append(yes_no_dk("Q89_COSTING_DONE",
@@ -911,8 +914,21 @@ def build_section_f():
         ("Q133_WHY_DIFF_EMERG_CART", "133. Why was it difficult to comply with: Emergency Cart Contents?"),
         ("Q134_WHY_DIFF_ADDONS",     "134. Why was it difficult to comply with: Add-on services?"),
     ]
+    # #1192/#1193: the paper's option lists are NOT identical across Q122-134 —
+    # Q124 and Q125 carry extra options the shared list lacks. Appended AFTER
+    # "Lack of space" so they take the next sequential codes (09/10) and land
+    # before Other(99): ascending codes preserved (checkbox rule, #830), and no
+    # existing code moves mid-round.
+    Q124_EXTRAS = [("Frequent changes to guidelines and policies", "x"),
+                   ("Resistance to change of staff", "x")]
+    Q125_EXTRAS = [("Staff are resistant to change", "x")]
     for prefix, label in Q122_134_TOPICS:
-        items.extend(checkbox_multiselect(prefix, label, _cb_codes(WHY_DIFF_OPTIONS)))
+        opts = list(WHY_DIFF_OPTIONS)
+        extras = {"Q124_WHY_DIFF_LEADERSHIP": Q124_EXTRAS,
+                  "Q125_WHY_DIFF_HRM": Q125_EXTRAS}.get(prefix, [])
+        if extras:
+            opts = opts[:-1] + extras + opts[-1:]   # keep Other (specify) last
+        items.extend(checkbox_multiselect(prefix, label, _cb_codes(opts)))
     return record("F_DOH_LICENSING", "F. DOH Licensing: Status and Barriers", "7", items)
 
 

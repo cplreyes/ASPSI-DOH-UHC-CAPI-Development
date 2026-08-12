@@ -505,7 +505,6 @@
  "Intellectual disability": "May problema sa pagiisip",
  "It helped lessen some costs, but I still incurred Out-of-Pocket (OOP) expenses": "Nakatabang siya kan gastos pero nadipisilan pa din kami dahil sa kulang an pambayad",
  "Lesbian": "Tomboy",
- "Lifetime member (i.e., individuals aged 60 years and above, uniformed personnel aged 56 years and above, and SSS underground miner-retirees aged 55 years and above and paid at least 120 monthly contributions with PhilHealth and the former Medicare Programs of SSS and GSIS)": "Lifetime member (e.g., mga tawo 60 taon pataas, uniformed personnel 56 taon pataas, asin SSS underground miner-retirees 55 taon pataas na nagbayad nin 120 contributions)",
  "Male": "Lalake",
  "Married": "Kinasal",
  "Master Level Education or Equivalent": "Master",
@@ -566,7 +565,6 @@
  "Retired": "Retired na",
  "Satisfied": "Marayon",
  "Self-employed without any paid employee": "Self Employed/Sariling negosyo/family",
- "Senior citizen (i.e., residents of the Philippines, aged sixty (60) years or above and are not currently covered by any membership category of PhilHealth and qualified dependents of senior citizen members who are also senior citizen themselves or belonging to other membership categories, with or without coverage who are senior citizens themselves)": "Senior citizen (e.g., residente sa Pilipinas 60 taon pataas, dai sakop nin ano mang membership category, o qualified dependents na senior citizen man)",
  "Separated": "Hiwalay",
  "Short-Cycle Tertiary Education or Equivalent (including Technical and Vocational degrees with a diploma)": "(including Technical and Vocational degrees with a diploma)",
  "Sick": "Ilang",
@@ -652,8 +650,6 @@
  "Did not know the required documents to register": "Dai aram kun ano an kaiupuhan na dokumento",
  "Did not know where to ask for help": "Dai aram kun sain mahagad tabang",
  "Had to travel a long way": "Kaipuhan magbyahe arayo",
- "Lifetime member (i.e., individuals aged 60 years and above, uniformed personnel aged 56 years and above, and SSS underground miner-retirees aged 55 years and above and paid at least 120 monthly contributions with PhilHealth and the former Medicare...": "Programs of SSS and GSIS) Lifetime member (e.g., mga tawo 60 taon pataas, uniformed personnel 56 taon pataas, asin SSS underground miner-retirees 55 taon pataas na nagbayad nin 120 contributions)",
- "Senior citizen (i.e., residents of the Philippines, aged sixty (60) years or above and are not currently covered by any membership category of PhilHealth and qualified dependents of senior citizen members who are also senior citizen themselves or...": "belonging to other membership categories, with or without coverage who are senior citizens themselves) Senior citizen (e.g., residente sa Pilipinas 60 taon pataas, dai sakop nin ano mang membership category, o qualified dependents na senior citizen man)",
  "46. What are some of the benefits that come with being a PhilHealth member?": "Ano an benepisyo kan pagiging",
  "No balance billing for basic ward accommodation": "Wara ki balance billing para sa basic ward",
  "There are no benefits to being a member": "Warang benepisyo sa pagiging miyembro",
@@ -830,5 +826,7 @@
  "Facility offers subsidized or free health services": "May subsidized o libreng serbisyo sa kalusugan",
  "Facility is usual source of care": "Ini an karaniwang pinupuntahan kong pasilidad",
  "Facility is the only place that can perform a certain test": "Ini sana an pasilidad na may kakayahang maggibo nin partikular na test",
- "Referred by BHW/nurse/midwife/other community health professional": "Ni-refer kan BHW/nurse/midwife/ibang community health professional"
+ "Referred by BHW/nurse/midwife/other community health professional": "Ni-refer kan BHW/nurse/midwife/ibang community health professional",
+ "Lifetime member (i.e., individuals aged 60+, uniformed personnel aged 56+, and SSS underground miner-retirees aged 55+ who paid at least 120 monthly contributions with PhilHealth and the former Medicare Programs of SSS and GSIS)": "Programs of SSS and GSIS) Lifetime member (e.g., mga tawo 60 taon pataas, uniformed personnel 56 taon pataas, asin SSS underground miner-retirees 55 taon pataas na nagbayad nin 120 contributions)",
+ "Senior citizen (i.e., residents of the Philippines aged sixty (60) years or above not currently covered by any PhilHealth membership category, and qualified dependents of senior citizen members who are themselves senior citizens)": "belonging to other membership categories, with or without coverage who are senior citizens themselves) Senior citizen (e.g., residente sa Pilipinas 60 taon pataas, dai sakop nin ano mang membership category, o qualified dependents na senior citizen man)"
 }

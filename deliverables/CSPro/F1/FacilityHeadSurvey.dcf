@@ -369,45 +369,6 @@
               "zeroFill": false
             },
             {
-              "name": "DATE_FIRST_VISITED_DISP",
-              "labels": [
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "WAR"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "HIL"
-                },
-                {
-                  "text": "Date First Visited (MM/DD/YYYY)",
-                  "language": "ILO"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 10
-            },
-            {
               "name": "DATE_OF_FINAL_VISIT_TO_THE_FACILITY",
               "labels": [
                 {
@@ -446,45 +407,6 @@
               "contentType": "numeric",
               "length": 8,
               "zeroFill": false
-            },
-            {
-              "name": "DATE_FINAL_VISIT_DISP",
-              "labels": [
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "WAR"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "HIL"
-                },
-                {
-                  "text": "Date of Final Visit (MM/DD/YYYY)",
-                  "language": "ILO"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 10
             },
             {
               "name": "TOTAL_NUMBER_OF_VISITS",
@@ -41610,7 +41532,7 @@
                 }
               ],
               "contentType": "alpha",
-              "length": 18,
+              "length": 22,
               "valueSets": [
                 {
                   "name": "Q124_WHY_DIFF_LEADERSHIP_VS1",
@@ -41980,6 +41902,88 @@
                     {
                       "labels": [
                         {
+                          "text": "Frequent changes to guidelines and policies",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Frequent changes to guidelines and policies",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Frequent changes to guidelines and policies",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Frequent changes to guidelines and policies",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Frequent changes to guidelines and policies",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Frequent changes to guidelines and policies",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Frequent changes to guidelines and policies",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Frequent changes to guidelines and policies",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Resistance to change of staff",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Resistance to change of staff",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Resistance to change of staff",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Resistance to change of staff",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Resistance to change of staff",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Resistance to change of staff",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Resistance to change of staff",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Resistance to change of staff",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "10"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
                           "text": "Other (specify)",
                           "language": "EN"
                         },
@@ -42098,7 +42102,7 @@
                 }
               ],
               "contentType": "alpha",
-              "length": 18,
+              "length": 20,
               "valueSets": [
                 {
                   "name": "Q125_WHY_DIFF_HRM_VS1",
@@ -42462,6 +42466,47 @@
                       "pairs": [
                         {
                           "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Staff are resistant to change",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Staff are resistant to change",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Staff are resistant to change",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Staff are resistant to change",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Staff are resistant to change",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Staff are resistant to change",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Staff are resistant to change",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Staff are resistant to change",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
                         }
                       ]
                     },

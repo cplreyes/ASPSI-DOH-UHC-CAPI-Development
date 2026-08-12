@@ -106,7 +106,8 @@ def build_f4_field_control():
                     ("Partial / not completed", "2"),
                 ]),
     ]
-    return build_field_control(survey_code="F4", date_display=True,   # #1099 MM/DD/YYYY echo
+    return build_field_control(survey_code="F4", date_display=False,  # #1132 F1-parity: echoes removed at ASPSI's request
+                               date_mmddyyyy=True,   # #1132/#1174 parity: typed MMDDYYYY, stored YYYYMMDD
                                extra_items=extra + derived_geo_code_items(),
                                date_label_entity="the Household",
                                result_options=ENUM_RESULT_OPTIONS_F4)

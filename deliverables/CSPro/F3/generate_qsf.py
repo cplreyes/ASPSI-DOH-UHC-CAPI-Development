@@ -39,7 +39,7 @@ BUILD_FOOTER += ('<p class="instruction">PSA SSRCS Clearance No. DOH-2651-03 '
 # #1190: brand-book main logo sequence on the first page — see F1/generate_qsf.py.
 import base64 as _b64
 _LOGO_B64 = _b64.b64encode((HERE.parent / "cover_logos.png").read_bytes()).decode()
-BUILD_FOOTER = (f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="400"/></p>'
+BUILD_FOOTER = (f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
                 + BUILD_FOOTER)
 
 STYLES = """styles:
@@ -76,6 +76,7 @@ _COMPONENT_SUFFIX_ITEMS = {
     "Q69_USUAL_TRAVEL_HH", "Q69_USUAL_TRAVEL_MM",
     "Q72_NEAREST_TRAVEL_HH", "Q72_NEAREST_TRAVEL_MM",
     "Q106_NIGHTS", "Q106_DAYS",
+    "Q150_TRAVEL_HH", "Q150_TRAVEL_MM",   # #1201: Q69/Q72 parity for the pharmacy travel time
 }
 _COMPONENT_SUFFIX_RE = re.compile(
     r"\s*[\u2014\u2013-]\s*(?:Hours?|Minutes?|Nights?|Days?)\s*$", re.I)

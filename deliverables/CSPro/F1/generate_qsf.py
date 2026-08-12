@@ -34,13 +34,14 @@ BUILD_FOOTER = f'<p class="instruction">Build: F1 v{_BUILD["version"]} ({_BUILD[
 BUILD_FOOTER += ('<p class="instruction">PSA SSRCS Clearance No. DOH-2651-01 '
                  '&middot; issued July 2026 &middot; valid until 31 July 2027<br/>'
                  'SJREB: ICF ver. 07/25/2026 &middot; Translated Questionnaire ver. 06/05/2026</p>')
-# #1190: DOH Seal / Bagong Pilipinas / Bawat Buhay Mahalaga on the first page —
-# the brand book's main logo sequence (ASPSI, as a private firm, stays OUTSIDE
-# it by rule). Data-URI so the image travels inside the qsf into the .pen with
-# no deploy-packaging changes; ../cover_logos.png is the one shared asset.
+# #1190: DOH Seal / ASPSI / Bagong Pilipinas / Bawat Buhay Mahalaga on the first
+# page — ASPSI sits second, in the "attached agency" slot, per ASPSI's reference
+# image on #1190 (Shan, 2026-08-11). Data-URI so the image travels inside the qsf
+# into the .pen with no deploy-packaging changes; ../cover_logos.png is the one
+# shared asset (built by ../compose_cover_logos.py).
 import base64 as _b64
 _LOGO_B64 = _b64.b64encode((HERE.parent / "cover_logos.png").read_bytes()).decode()
-BUILD_FOOTER = (f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="400"/></p>'
+BUILD_FOOTER = (f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
                 + BUILD_FOOTER)
 
 STYLES = """styles:
@@ -115,14 +116,19 @@ _EMPH_PATTERNS = [
 def _emphasize(html):
     """Wrap the PAPI-emphasised phrase in <u>/<b>. First matching pattern wins;
     a label matching none is returned untouched."""
-    # #1189: Q88 bolds TWO disjoint spans (the 1,700 anchor and the closing
-    # ask), which the one-span pattern loop below cannot express — handled as
-    # anchored replacements before the loop so no other label can match.
+    # #1189: the EN question text for Q88 is the VERBATIM paper stem (448 chars
+    # — over the dcf label cap, so it cannot derive from the label; the dcf
+    # keeps the condensed <=255 string that the locale translations key to).
+    # Both paper bolds included. Locales falling back to English get this too.
     if html.startswith("<p>88. "):
-        html = html.replace("Php 1,700", "Php <b>1,700</b>", 1)
-        html = html.replace("Based on your practice, is this enough?",
-                            "<b>Based on your practice, is this enough?</b>", 1)
-        return html
+        return ("<p>88. The maximum per capita rate amount for YAKAP/Konsulta "
+                "is at Php <b>1,700</b> across private and public facilities. "
+                "According to PhilHealth, 40% of the capitation amount will be "
+                "released as the first tranche after the first patient "
+                "encounter. The remaining 60% will be released based on the "
+                "size of the registered catchment population by December and "
+                "performance targets that year. <b>Based on your practice, is "
+                "this enough?</b></p>")
     for rx, tag in _EMPH_PATTERNS:
         m = rx.search(html)
         if m:
@@ -258,14 +264,8 @@ INSTRUCTIONS = {
          "ANSWERING THIS QUESTION."),
     65: ("These are the requirements for YAKAP/Konsulta accreditation "
          "outlined by DOH. " + _READ_ALL),
-    # #1019: the paper's Q88 stem is 448 chars — over the dcf 255-char label cap —
-    # so the compressed label stays and the full PhilHealth tranche mechanics
-    # render here, verbatim, in the question area (F4 Q46 #1074 precedent).
-    88: ("According to PhilHealth, 40% of the capitation amount will be "
-         "released as the first tranche after the first patient encounter. "
-         "The remaining 60% will be released based on the size of the "
-         "registered catchment population by December and performance "
-         "targets that year."),
+    # (#1189: the old 88 entry is gone — the tranche mechanics now live verbatim
+    # inside the full Q88 stem emitted by _emphasize; a note here would duplicate.)
     155: ("Our focus is specifically on referrals external to the facility, "
           "excluding internal referrals. " + _READ_ALL),
 }

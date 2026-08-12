@@ -52,40 +52,60 @@ RANGE_CHECKS = [
 
 # Cross-field validations needing a custom body (spec §3.1 date ordering).
 CUSTOM_VALIDATION = [
-    # #1099 (pretest 2026-08-05): read-only MM/DD/YYYY echo under each visit date.
-    # The Date-capture field itself must keep YYYYMMDD (the capture format also
-    # defines the STORED composition — Supervisor App and F1/F3 parse it), so the
-    # tester-requested format is shown via a computed noinput echo (AREA_HAS_*
-    # pattern: assign in preproc, noinput — never protect(), whose preproc CSEntry skips).
-    ("DATE_FIRST_VISITED_DISP",
-     "PROC DATE_FIRST_VISITED_DISP\npreproc\n"
-     "  numeric dfY; numeric dfM; numeric dfD;\n"
-     "  if DATE_FIRST_VISITED = notappl then\n"
-     "    DATE_FIRST_VISITED_DISP = \"\";\n"
-     "  else\n"
-     "    dfY = int(DATE_FIRST_VISITED / 10000);\n"
-     "    dfM = int(DATE_FIRST_VISITED / 100) - dfY * 100;\n"
-     "    dfD = DATE_FIRST_VISITED - int(DATE_FIRST_VISITED / 100) * 100;\n"
-     # edit-mask trap (caught on-device 2026-08-05): only '9' is a digit slot; '0' is
-     # a LITERAL zero — "0999" rendered 2026 as "0026". '9' keeps leading zeros.
-     "    DATE_FIRST_VISITED_DISP = concat(edit(\"99\", dfM), \"/\", edit(\"99\", dfD), \"/\", edit(\"9999\", dfY));\n"
-     "  endif;\n"
-     "  noinput;"),
-    ("DATE_FINAL_VISIT_DISP",
-     "PROC DATE_FINAL_VISIT_DISP\npreproc\n"
-     "  numeric dvY; numeric dvM; numeric dvD;\n"
-     "  if DATE_FINAL_VISIT = notappl then\n"
-     "    DATE_FINAL_VISIT_DISP = \"\";\n"
-     "  else\n"
-     "    dvY = int(DATE_FINAL_VISIT / 10000);\n"
-     "    dvM = int(DATE_FINAL_VISIT / 100) - dvY * 100;\n"
-     "    dvD = DATE_FINAL_VISIT - int(DATE_FINAL_VISIT / 100) * 100;\n"
-     "    DATE_FINAL_VISIT_DISP = concat(edit(\"99\", dvM), \"/\", edit(\"99\", dvD), \"/\", edit(\"9999\", dvY));\n"
-     "  endif;\n"
-     "  noinput;"),
+    # #1132 (2026-08-11): the #1099 DATE_*_DISP echo PROCs are removed with their
+    # dictionary items and form fields at ASPSI's request — see generate_dcf.py.
+    # #1132/#1174 parity (2026-08-11): the enumerator types MMDDYYYY like the paper;
+    # the STORED value stays YYYYMMDD (Supervisor App + cross-instrument parsers
+    # untouched). Idempotent: a stored YYYYMMDD starts with the century (20), not a
+    # valid month, so the conversion branch cannot fire twice. Ported verbatim from
+    # F3's #1174 block. The final-visit check also gains the notappl guards F3 got
+    # in v1.4.1 — F4 still had the unguarded compare, so a blank final date
+    # (single-visit case) could false-fire the error here too.
+    ("DATE_FIRST_VISITED",
+     "PROC DATE_FIRST_VISITED\npostproc\n"
+     "  numeric fvMM; numeric fvDD; numeric fvYY; numeric fvHead;\n"
+     "  if DATE_FIRST_VISITED <> notappl then\n"
+     "    fvMM   = int(DATE_FIRST_VISITED / 1000000);\n"
+     "    fvHead = int(DATE_FIRST_VISITED / 10000);\n"
+     "    if fvMM >= 1 and fvMM <= 12 then\n"
+     "      fvDD = fvHead - fvMM * 100;\n"
+     "      fvYY = DATE_FIRST_VISITED - fvHead * 10000;\n"
+     "      if fvDD < 1 or fvDD > 31 or fvYY < 2020 or fvYY > 2035 then\n"
+     "        errmsg(\"Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.\");\n"
+     "        reenter;\n"
+     "      endif;\n"
+     "      DATE_FIRST_VISITED = fvYY * 10000 + fvMM * 100 + fvDD;\n"
+     "    else\n"
+     "      if fvHead < 2020 or fvHead > 2035 then\n"
+     "        errmsg(\"Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.\");\n"
+     "        reenter;\n"
+     "      endif;\n"
+     "    endif;\n"
+     "  endif;"),
     ("DATE_FINAL_VISIT",
      "PROC DATE_FINAL_VISIT\npostproc\n"
-     "  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then\n"
+     "  numeric lvMM; numeric lvDD; numeric lvYY; numeric lvHead;\n"
+     "  if DATE_FINAL_VISIT <> notappl then\n"
+     "    lvMM   = int(DATE_FINAL_VISIT / 1000000);\n"
+     "    lvHead = int(DATE_FINAL_VISIT / 10000);\n"
+     "    if lvMM >= 1 and lvMM <= 12 then\n"
+     "      lvDD = lvHead - lvMM * 100;\n"
+     "      lvYY = DATE_FINAL_VISIT - lvHead * 10000;\n"
+     "      if lvDD < 1 or lvDD > 31 or lvYY < 2020 or lvYY > 2035 then\n"
+     "        errmsg(\"Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.\");\n"
+     "        reenter;\n"
+     "      endif;\n"
+     "      DATE_FINAL_VISIT = lvYY * 10000 + lvMM * 100 + lvDD;\n"
+     "    else\n"
+     "      if lvHead < 2020 or lvHead > 2035 then\n"
+     "        errmsg(\"Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.\");\n"
+     "        reenter;\n"
+     "      endif;\n"
+     "    endif;\n"
+     "  endif;\n"
+     "  { conversion above runs FIRST so both sides below are YYYYMMDD. The notappl guards\n"
+     "    match F1/F3: without them a blank final date (single visit) false-fires this. }\n"
+     "  if DATE_FINAL_VISIT <> notappl and DATE_FIRST_VISITED <> notappl and DATE_FINAL_VISIT < DATE_FIRST_VISITED then\n"
      "    errmsg(\"Final-visit date cannot be earlier than the first-visit date.\");\n    reenter;\n  endif;"),
     # #699/#701 (Carl, 2026-06-18 — "do what the testers said"): the Q138 confinement gate
     # (#625/#626: Q129 <> Yes -> skip Q138-143 to Q144) is REMOVED. Q138 reads "from your most
