@@ -11,6 +11,7 @@ import {
   sectionH,
   sectionI,
   sectionJ,
+  sectionK,
 } from '@/generated/items';
 import type { Section as SectionModel, Item } from '@/types/survey';
 import { evaluateCrossField, type Warning } from '@/lib/cross-field';
@@ -32,6 +33,7 @@ const SECTIONS: SectionModel[] = [
   sectionH,
   sectionI,
   sectionJ,
+  sectionK,
 ];
 
 /**

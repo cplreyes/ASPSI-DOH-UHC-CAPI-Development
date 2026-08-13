@@ -66,9 +66,63 @@ CUSTOM_VALIDATION = [
      "    errmsg(\"%d day(s) of stay but 0 nights — nights cannot be 0 when days is greater than 1. Please correct.\", Q106_DAYS);\n    reenter;\n  endif;\n"
      "  if Q106_NIGHTS > 1 and Q106_DAYS = 0 then\n"
      "    errmsg(\"%d night(s) of stay but 0 days — days cannot be 0 when nights is greater than 1. Please correct.\", Q106_NIGHTS);\n    reenter;\n  endif;"),
+    # #1099 F4-parity (2026-08-05): read-only MM/DD/YYYY echo under each visit date.
+    # Date capture stays YYYYMMDD (stored composition; Supervisor App parses it).
+    # noinput pattern (assign in preproc) — never protect(), whose preproc CSEntry skips.
+    # edit-mask trap: only '9' is a digit slot; '0' is a LITERAL zero ("0999" rendered
+    # 2026 as "0026" on the F4 first build — tablet-caught). '9' keeps leading zeros.
+    # #1174 (ASPSI 2026-08-06, Carl 2026-08-09): the enumerator types MMDDYYYY like the
+    # paper; the STORED value stays YYYYMMDD so the comparison below, the MM/DD/YYYY echo
+    # (#1099), the Supervisor App and the cross-instrument parsers are all untouched.
+    # Idempotent by construction: a stored YYYYMMDD value starts with the century (20),
+    # which is not a valid month, so the conversion branch cannot fire twice. The
+    # else-branch still range-checks the year, so a real typo is caught rather than being
+    # waved through as "already converted".
+    ("DATE_FIRST_VISITED",
+     "PROC DATE_FIRST_VISITED\npostproc\n"
+     "  numeric fvMM; numeric fvDD; numeric fvYY; numeric fvHead;\n"
+     "  if DATE_FIRST_VISITED <> notappl then\n"
+     "    fvMM   = int(DATE_FIRST_VISITED / 1000000);\n"
+     "    fvHead = int(DATE_FIRST_VISITED / 10000);\n"
+     "    if fvMM >= 1 and fvMM <= 12 then\n"
+     "      fvDD = fvHead - fvMM * 100;\n"
+     "      fvYY = DATE_FIRST_VISITED - fvHead * 10000;\n"
+     "      if fvDD < 1 or fvDD > 31 or fvYY < 2020 or fvYY > 2035 then\n"
+     "        errmsg(\"Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.\");\n"
+     "        reenter;\n"
+     "      endif;\n"
+     "      DATE_FIRST_VISITED = fvYY * 10000 + fvMM * 100 + fvDD;\n"
+     "    else\n"
+     "      if fvHead < 2020 or fvHead > 2035 then\n"
+     "        errmsg(\"Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.\");\n"
+     "        reenter;\n"
+     "      endif;\n"
+     "    endif;\n"
+     "  endif;"),
     ("DATE_FINAL_VISIT",
      "PROC DATE_FINAL_VISIT\npostproc\n"
-     "  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then\n"
+     "  numeric lvMM; numeric lvDD; numeric lvYY; numeric lvHead;\n"
+     "  if DATE_FINAL_VISIT <> notappl then\n"
+     "    lvMM   = int(DATE_FINAL_VISIT / 1000000);\n"
+     "    lvHead = int(DATE_FINAL_VISIT / 10000);\n"
+     "    if lvMM >= 1 and lvMM <= 12 then\n"
+     "      lvDD = lvHead - lvMM * 100;\n"
+     "      lvYY = DATE_FINAL_VISIT - lvHead * 10000;\n"
+     "      if lvDD < 1 or lvDD > 31 or lvYY < 2020 or lvYY > 2035 then\n"
+     "        errmsg(\"Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.\");\n"
+     "        reenter;\n"
+     "      endif;\n"
+     "      DATE_FINAL_VISIT = lvYY * 10000 + lvMM * 100 + lvDD;\n"
+     "    else\n"
+     "      if lvHead < 2020 or lvHead > 2035 then\n"
+     "        errmsg(\"Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.\");\n"
+     "        reenter;\n"
+     "      endif;\n"
+     "    endif;\n"
+     "  endif;\n"
+     "  { conversion above runs FIRST so both sides below are YYYYMMDD. The notappl guards\n"
+     "    match F1: without them a blank final date (single visit) false-fires this. }\n"
+     "  if DATE_FINAL_VISIT <> notappl and DATE_FIRST_VISITED <> notappl and DATE_FINAL_VISIT < DATE_FIRST_VISITED then\n"
      "    errmsg(\"Final-visit date cannot be earlier than the first-visit date.\");\n    reenter;\n  endif;"),
     # F3-LOGIC-01 (2026-06-27): spec 4.6/L480/L661 — if the patient ALREADY availed MAIFIP
     # (Q113_SOURCES contains code 07), don't re-ask the awareness question: auto-set Q124=Yes +
@@ -198,8 +252,8 @@ preproc
   protect(Q92_PAY_SRC, true);
   { #835-class polarity (2026-07-09): match non-money codes POSITIVELY - the <> chain
     also matched the resume-replay/buffered notappl and zeroed money rows on-screen. }
-  if Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8 then
-    Q92_PAY_AMT = 0;   { #781: non-money source -> default 0. In-kind(7) is a money source for Q92 per ASPSI (2026-06-25). Still enterable so the row stops. }
+  if Q92_PAY_SRC in 4:8 then
+    Q92_PAY_AMT = 0;   { #1151: after the June-5 renumber the money sources are 1-3 (OOP/Donation/In kind, #781) and every non-money source is 4-8. Still enterable so the row stops. }
   endif;
   Q92_PAY_LINE = curocc();
   noinput;
@@ -209,7 +263,7 @@ preproc
   { #1064 class (2026-08-04): non-money row -> amount is display-only 0 (noinput);
     the grid no longer offers an amount box for sources with no cost. Positive
     polarity per #835. Desk-test gate: all-non-money selection must advance. }
-  if Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8 then
+  if Q92_PAY_SRC in 4:8 then
     Q92_PAY_AMT = 0;
     noinput;
   endif;
@@ -218,11 +272,11 @@ postproc
     errmsg("92. Amount cannot be negative.");
     reenter;
   endif;
-  if (Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8) and Q92_PAY_AMT <> 0 then
+  if (Q92_PAY_SRC in 4:8) and Q92_PAY_AMT <> 0 then
     errmsg("92. This source has no out-of-pocket cost — amount reset to 0.");
     Q92_PAY_AMT = 0;
   endif;
-  if (Q92_PAY_SRC = 1 or Q92_PAY_SRC = 2 or Q92_PAY_SRC = 7) and Q92_PAY_AMT = 0 then
+  if (Q92_PAY_SRC in 1:3) and Q92_PAY_AMT = 0 then
     errmsg("92. Please enter an amount greater than 0 — you selected this as a paid source (in-kind valued in pesos).");
     reenter;
   endif;
@@ -244,10 +298,27 @@ Q971_ROSTER_PROCS = """\
 { ---- Q97.1 other-items-in-bill — CheckBox + roster (Option B Shape B) ---- }
 PROC Q971_SOURCES
 postproc
+  numeric xcN; numeric xcK; numeric xcP; numeric xcHit;
   { Require >=1 item ticked. The roster proc (Q971_PAY_LINE preproc, a visited field)
-    handles population — gating here covers the >=1 requirement before the grid opens. }
+    handles population — gating here covers the >=1 requirement before the grid opens.
+    #1208: 'None of the above' (90) is now a valid answer, so the message points at it
+    instead of sending the enumerator back to Q97. }
   if length(strip(Q971_SOURCES)) = 0 then
-    errmsg("97.1 Tick at least one item included in the bill (or correct Q97 if none).");
+    errmsg("97.1 Tick at least one item included in the bill, or tick 'None of the above' if nothing else was billed.");
+    reenter;
+  endif;
+  { #1208 exclusivity (HARD) — 'None of the above' (90) must stand alone. Same aligned
+    2-char chunk scan as the #1157/#1197 Q107/Q109 exclusivity, never a raw pos() on a
+    2-digit code. Ticking only 90 then leaves nsel=0 in the population loop below, so
+    the grid endgroups with 0 rows and Q971_OTHER_TXT stays gated off on pos("04",...). }
+  xcHit = 0;
+  xcN = length(strip(Q971_SOURCES)) / 2;
+  do xcK = 1 while xcK <= xcN
+    xcP = (xcK - 1) * 2 + 1;
+    if tonumber(Q971_SOURCES[xcP:2]) = 90 then xcHit = 1; endif;
+  enddo;
+  if xcHit = 1 and length(strip(Q971_SOURCES)) > 2 then
+    errmsg("97.1 'None of the above' must be the only choice — untick it or the other items before continuing.");
     reenter;
   endif;
 
@@ -309,7 +380,8 @@ postproc
 #     roster). PARTIAL matrices default non-money rows to 0 (still enterable); ALL-amount
 #     matrices leave every row enterable with no zeroing.
 def build_roster_procs(q_no, q_label, sources, amt_codes,
-                       require_msg, gated_texts=None, require_positive=False):
+                       require_msg, gated_texts=None, require_positive=False,
+                       exclusive_code=None, exclusive_msg=None):
     """Emit the SOURCES/LINE/AMT (+ optional gated specify-text) PROCs for one
     CheckBox->roster conversion.
       q_no        question stem used in field names (Q<q_no>_SOURCES / _PAY_LINE / ...).
@@ -333,11 +405,31 @@ def build_roster_procs(q_no, q_label, sources, amt_codes,
     two_digit = any(int(c) >= 10 for c in codes)
 
     L = [f"{{ ---- Q{q_no} payment roster (Option B fan-out) ---- }}",
-         f"PROC {src}", "postproc",
-         "  { Require >=1 source ticked — the roster grid needs >=1 row. }"]
+         f"PROC {src}", "postproc"]
+    if exclusive_code:   # #1157: CSPro locals must be declared at the top
+        L.append("  numeric xcN; numeric xcK; numeric xcP; numeric xcHit;")
+    L.append("  { Require >=1 source ticked — the roster grid needs >=1 row. }")
     L.append(f"  if length(strip({src})) = 0 then")
     L.append(f'    errmsg("{require_msg}");')
-    L += ["    reenter;", "  endif;", ""]
+    L += ["    reenter;", "  endif;"]
+    # #1157 (ASPSI review 2026-08-06): HARD exclusivity for a standalone option
+    # (Q107 = 09 "Don't know"). Uses the SAME aligned 2-char chunk scan as the
+    # population loop below, never pos() — these lists reach 2-digit codes, so a
+    # raw pos() would substring-match across a code boundary (#450 class).
+    if exclusive_code:
+        xn = int(exclusive_code)
+        L += ["  { exclusivity (HARD — #1157): the standalone option must not be",
+              "    combined with any other source. Aligned chunk scan, not pos(). }",
+              "  xcHit = 0;",
+              f"  xcN = length(strip({src})) / 2;",
+              "  do xcK = 1 while xcK <= xcN",
+              "    xcP = (xcK - 1) * 2 + 1;",
+              f"    if tonumber({src}[xcP:2]) = {xn} then xcHit = 1; endif;",
+              "  enddo;",
+              f"  if xcHit = 1 and length(strip({src})) > 2 then",
+              f'    errmsg("{exclusive_msg}");',
+              "    reenter;", "  endif;"]
+    L += [""]
 
     L += [f"PROC {line}", "preproc",
           "  { Build one row per ticked source (canonical order). The curocc()-th ticked",
@@ -512,24 +604,31 @@ postproc
   endif;
 """
 Q96_ROSTER_PROCS = build_roster_procs(
-    96, "96", [("Out-of-pocket", "01"), ("Free/no cost", "02"),
-               ("Free, charge to PhilHealth", "03"), ("Free, charge to Private Insurance", "04"),
-               ("Free, charge to HMO", "05"), ("In kind", "06"), ("Donation", "07"),
-               ("Don't know", "08")],
-    # #779 (ASPSI clarification 2026-06-25): In-kind (06) is NOT a peso-amount source for Q96
-    # — per-question rule, not blanket. Dropped from amt_codes so In-kind becomes a non-money
-    # row (amount auto-0, stays enterable but no specify/positive requirement). OOP(01) +
-    # Donation(07) still carry a real amount.
-    {"01", "07"},
+    # #1152 (2026-08-13): renumbered to the June-5 order (Donation 07 -> 02). Keep this list
+    # byte-identical to Q96_MEDS_PAY in generate_dcf.py — the roster row numbering is the
+    # value-set order.
+    96, "96", [("Out-of-pocket", "01"), ("Donation", "02"),
+               ("Free/no cost", "03"), ("Free, charge to PhilHealth", "04"),
+               ("Free, charge to Private Insurance", "05"), ("Free, charge to HMO", "06"),
+               ("In kind", "07"), ("Don't know", "08")],
+    # #779 (ASPSI clarification 2026-06-25): In-kind is NOT a peso-amount source for Q96
+    # — per-question rule, not blanket. Kept out of amt_codes so In-kind stays a non-money
+    # row (amount auto-0). June-5 agrees: Q96's amount boxes are Out-of-pocket + Donation.
+    {"01", "02"},
     "96. Tick at least one payment source for the prescribed medicines before continuing.",
     require_positive=True)   # #749/#779: OOP + donation rows must be > 0 (in-kind no longer required)
 Q972_ROSTER_PROCS = build_roster_procs(
     972, "97.2", [(None, "01"), (None, "02"), (None, "03"),
                   (None, "04"), (None, "05"), (None, "06")],
     set(),   # all-amount
-    "97.2 Tick at least one expense item before continuing (or correct Q97 if none).",
+    # #1208: the roster is still driven by the paper's a)-f) items only — 'None of the
+    # above' (90) lives in the CheckBox value set but is never a roster row, so this
+    # population list is unchanged. Ticking only 90 leaves nsel=0 -> 0 rows.
+    "97.2 Tick at least one expense item, or tick 'None of the above' if there were no out-of-bill expenses.",
     gated_texts=[("06", "Q972_OTHER_TXT", "97.2 'Other expenses' was ticked — please specify.")],
-    require_positive=True)   # #749: every ticked expense item must be > 0
+    require_positive=True,   # #749: every ticked expense item must be > 0
+    exclusive_code="90",     # #1208: 'None of the above' must stand alone
+    exclusive_msg="97.2 'None of the above' must be the only choice — untick it or the other expense items before continuing.")
 Q98_ROSTER_PROCS = build_roster_procs(
     98, "98", [(None, f"{n:02d}") for n in range(1, 16)],
     set(),   # all-amount
@@ -540,25 +639,38 @@ Q98_ROSTER_PROCS = build_roster_procs(
         ("15", "Q98_OTHER_TXT", "'Other (specify)' was selected in Q98. Please specify.")],
     require_positive=True)   # #749: every ticked money source must be > 0
 
-# The four NEW Section H roster conversions (#691/#692/#693). All-amount, length-9 amounts
-# (the amount length lives in the dcf roster field; the apc logic is length-agnostic).
+# The four NEW Section H roster conversions (#691/#692/#693). Amount boxes follow the
+# JUNE-5 tool per question (#1156/#1158, superseding the Apr-20 reading in #1198/#1199):
+# Q107 = OOP/Donation/In-kind (codes 01/02/03 after the renumber); Q109 = the same three,
+# because June-5 ADDED Donation to Q109; Q112 = Out-of-pocket only and keeps the Apr-20
+# order untouched. All other rows are non-money (auto-0 + noinput, #1064 pattern).
+# (The amount length lives in the dcf roster field; the apc logic is length-agnostic.)
 # The Q113 PhilHealth-availed gate (Q114 skip) is re-pointed to pos("08", Q113_SOURCES)
 # in CHECKBOX_CONVERT below; the Q110=No skip target is re-pointed to Q113_SOURCES.
 Q107_ROSTER_PROCS = build_roster_procs(
     107, "107", [(None, f"{n:02d}") for n in range(1, 11)],
-    {f"{n:02d}" for n in range(1, 11)} - {"09"},   # 2026-07-02: 09 "Don't know" -> non-money (auto-0) — a DK row must not hard-require a fabricated > 0 amount
+    {"01", "02", "03"},   # #1156 (June-5 p.13): only Out-of-pocket(01), Donation(02), In kind(03) carry an amount box — Free/charged-to-X (04-08), DK (09), Other (10) are non-money (auto-0). Same three sources as #1198, renumbered by the reorder.
     "107. Tick at least one payment source for the total bill before continuing.",
     gated_texts=[("10", "Q107_PAY_OTHER_TXT", "107. 'Other' was ticked — please specify.")],
-    require_positive=True)   # #757: every ticked payment source must be > 0
+    require_positive=True,   # #757: every ticked payment source must be > 0
+    exclusive_code="09",     # #1157: 09 "Don't know" must stand alone
+    exclusive_msg="107. 'Don't know' must be the only payment source — untick it or the other sources before continuing.")
 Q109_ROSTER_PROCS = build_roster_procs(
-    109, "109", [(None, f"{n:02d}") for n in range(1, 10)],
-    {f"{n:02d}" for n in range(1, 10)} - {"08"},   # 2026-07-02: 08 "Don't know" -> non-money (auto-0)
+    # #1158 (2026-08-13): 9 -> 10 codes. June-5 (p.14) ADDED "Donation" to Q109 and gave it,
+    # Out-of-pocket and In kind an amount box each — the Apr-20 reading behind #1199/#1200
+    # (Out-of-pocket only) is superseded. DK moved 08 -> 09 and Other 09 -> 10, so both gates
+    # below moved with them. Reaching 10 codes also flips build_roster_procs into its
+    # aligned 2-char chunk scan automatically (two_digit), which is required here.
+    109, "109", [(None, f"{n:02d}") for n in range(1, 11)],
+    {"01", "02", "03"},   # #1158 (June-5 p.14): Out-of-pocket(01), Donation(02), In kind(03) carry an amount box — Free/charged-to-X (04-08), DK (09), Other (10) are non-money (auto-0)
     "109. Tick at least one payment source for the medicines bought outside before continuing.",
-    gated_texts=[("09", "Q109_PAY_OTHER_TXT", "109. 'Other' was ticked — please specify.")],
-    require_positive=True)   # #757: every ticked payment source must be > 0
+    gated_texts=[("10", "Q109_PAY_OTHER_TXT", "109. 'Other' was ticked — please specify.")],
+    require_positive=True,   # #757: every ticked payment source must be > 0
+    exclusive_code="09",     # #1197: "Don't know" must stand alone (same decision as #1157/Q107); renumbered 08 -> 09 by #1158
+    exclusive_msg="109. 'Don't know' must be the only payment source — untick it or the other sources before continuing.")
 Q112_ROSTER_PROCS = build_roster_procs(
     112, "112", [(None, f"{n:02d}") for n in range(1, 10)],
-    {f"{n:02d}" for n in range(1, 10)} - {"08"},   # 2026-07-02: 08 "Don't know" -> non-money (auto-0)
+    {"01"},   # #1200: 'Amount in Pesos' ONLY on Out-of-pocket — 02-07 (Free*/In kind), 08 DK, 09 Other are non-money (auto-0). UNCHANGED by #1158 on purpose: June-5 (p.14) left Q112 in the Apr-20 order with a single amount box, so Q112 must NOT be renumbered alongside Q109.
     "112. Tick at least one payment source for the services done outside before continuing.",
     gated_texts=[("09", "Q112_PAY_OTHER_TXT", "112. 'Other' was ticked — please specify.")],
     require_positive=True)   # #757: every ticked payment source must be > 0
@@ -1045,12 +1157,12 @@ CHECKBOX_CONVERT = [
     ("Q52_PLANS",                True,  True,  None),   # #640: 'I don't know' (90) exclusive; 'Others (specify)' (99). Reached when Q51=Yes (Q51=No skips to Q53)
     ("Q37_UHC_UNDERSTAND",       True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
     # Q46 inherits the non-member gate that used to live on Q46_BENEFITS_O01 (Section D).
-    ("Q46_BENEFITS",             True,  True,
+    ("Q46_BENEFITS",             True,  ("04", "90"),
      "  if Q38_PHILHEALTH_REG <> 1 then   { #529: non-member -> skip the benefits block (was PROC Q46_BENEFITS_O01) }\n"
-     "    skip to Q51_OTHER_INSURANCE;\n  endif;"),   # 'I don't know' (90); 'Other (Specify)' (99)
+     "    skip to Q51_OTHER_INSURANCE;\n  endif;"),   # #1194: 04 'There are no benefits' AND 90 'I don't know' both HARD-exclusive (spec F3-Skip-Logic :330-331; Q76 tuple precedent); 'Other (Specify)' (99)
     ("Q65_WHY_NO_USUAL",         True,  True,  None),   # 'I don't know' (90) exclusive — NOT 'I don't know where to go for care' (05); 'Other (Specify)' (99)
     ("Q67_WHY_THIS_FACILITY",    True,  False, None),   # no None/IDK option; 'Other (Specify)' (99)
-    ("Q76_KON_UNDERSTAND",       True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q76_KON_UNDERSTAND",       True,  ("90", "05"), None),   # 'I don't know' (90); 'Other (Specify)' (99)
     ("Q101_BUCAS_UNDERSTAND",    True,  False, None),   # no None/IDK option; 'Other (specify)' (99)
     ("Q117_NBB_SOURCE",          True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
     ("Q118_NBB_UNDERSTAND",      True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
@@ -1089,7 +1201,7 @@ CHECKBOX_CONVERT = [
      "  if Q83_VISIT_REASON = 4 and q85Hit19 = 0 then\n"
      "    errmsg(\"Q83 = general check-up but Q85 is not 'No condition / regular check-up only' — confirm.\");\n  endif;\n"
      "  if q85Hit19 = 1 and length(strip(Q85_CONDITIONS)) > 2 then\n"
-     "    errmsg(\"'No condition - Regular check-up only' was ticked with other condition(s) — it should usually be the only choice. Please review.\");\n  endif;",
+     "    errmsg(\"'No condition - Regular check-up only' must be the only choice — untick it or the other conditions before continuing.\");\n    reenter;\n  endif;",
      "  numeric q85N; numeric q85K; numeric q85P; numeric q85Hit19;"),  # 'Other (Specify)' (99)
     ("Q86_VISIT_EVENTS",         True,  False, None),  # #438: + 'Other (Specify)' (99) escape; no None/IDK
     # Q87 'Did not seek other forms of care' is code 06 (a substantive option, NOT the
@@ -1105,7 +1217,7 @@ CHECKBOX_CONVERT = [
      "    errmsg(\"Q87: 'Did not seek other forms of care' cannot be combined with any other "
      'action — untick the others (or untick this) so only one applies, then continue.");\n'
      "    reenter;\n  endif;"),   # #715: code 06 is exclusive (HARD); 'Other (Specify)' (99)
-    ("Q90_NOT_CONFINED",         True,  False, None),  # #673: 'Other (specify)' (99); no None/IDK
+    ("Q90_NOT_CONFINED",         True,  "06",  None),  # #673: 'Other (specify)' (99); no None/IDK
     # Q93 'None'(90) -> skip the Q94 lab-cost matrix (was PROC Q93_LABS_O17 skip, #448/#673).
     ("Q93_LABS",                 True,  True,  None,
      '  if pos("90", Q93_LABS) > 0 then   { #448/#673: \'None\' -> skip Q94 lab-cost matrix }\n'
@@ -1160,10 +1272,18 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postextra=None,
              f'    errmsg("Select at least one option for Q{qn} before continuing.");',
              "    reenter;", "  endif;"]
     if exclusive:
-        body += [f'  if pos("90", {base}) > 0 and length(strip({base})) > 2 then',
-                 f'    errmsg("Q{qn}: an exclusive option (None / I don\'t know) should be the '
-                 f'only choice - please review the options ticked.");',
-                 "  endif;"]
+        # #1134-#1150 (ASPSI review 2026-08-06): HARD block, not a soft warn. The
+        # exclusive code is 90 by convention, but some lists code their standalone
+        # option sequentially (Q90 = 06 "No need/regular check-up only") and some
+        # carry TWO (Q76 = 90 "I don't know" + 05 "There are no benefits") - so
+        # `exclusive` may be True, a code str, or a tuple/list of code strs.
+        codes = (["90"] if exclusive is True
+                 else [exclusive] if isinstance(exclusive, str) else list(exclusive))
+        for code in codes:
+            body += [f'  if pos("{code}", {base}) > 0 and length(strip({base})) > 2 then',
+                     f'    errmsg("Q{qn}: an exclusive option (None / I don\'t know) must be the '
+                     f'only choice - untick it or the other options before continuing.");',
+                     "    reenter;", "  endif;"]
     if postextra:
         body += [postextra]
     procs = {base: "\n".join(body)}
@@ -1487,8 +1607,21 @@ postproc
     2026-06-21). Codes 1/2/4/5 fall through to the photo as before (this matches the
     CAPTURE_VERIFICATION_PHOTO gate exactly). }
   if not (ENUM_RESULT_FINAL_VISIT in 1, 2, 4, 5) then
+    { #1209: this disposition ends the case HERE, so neither GPS form is reached and
+      the ReleaseGPS() in the P_HOME block never runs. gpsRadioOpen is a PROC GLOBAL
+      that outlives the case, so leaking it "open" on this path is what made every
+      LATER case in the same CSEntry session skip gps(open) and report "No GPS fix".
+      Hand the radio back before leaving. }
+    ReleaseGPS();
     endlevel;   { statement form (no parens) — strict packager rejects endlevel() }
   endif;
+  { #1209: F3's two GPS forms are the LAST thing in the case (after the photo), so
+    re-assert the radio here — it then converges during the photo step instead of
+    cold-starting at the capture field. This is also the ONLY warm-up a RESUMED
+    partial case ever gets: CSEntry re-enters a partial case at its stored resume
+    position, so the WarmUpGPS() in the QUESTIONNAIRE_NUMBER preproc (the case-key
+    field, never re-entered on resume) does not fire. }
+  WarmUpGPS();
 """
 
 

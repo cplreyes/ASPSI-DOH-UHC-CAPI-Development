@@ -1,6 +1,10 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
+import { renderHook, act, waitFor } from '@testing-library/react';
 import { AdminAuthProvider, useAdminAuth } from './auth-context';
+
+// Epoch-seconds expiry comfortably in the future (year ~2286) / past.
+const FUTURE_EXP = 9999999999;
+const PAST_EXP = 1000000000;
 
 const LIVE_SESSION = {
   token: 'tok.tok.tok',
@@ -11,6 +15,7 @@ const LIVE_SESSION = {
 };
 
 describe('AdminAuthProvider', () => {
+  // Sessions persist in sessionStorage (#1001 / 2026-07-24) — isolate every test.
   beforeEach(() => sessionStorage.clear());
 
   function wrapper({ children }: { children: React.ReactNode }) {
@@ -70,6 +75,112 @@ describe('AdminAuthProvider', () => {
       });
     });
     expect(result.current.passwordMustChange).toBe(true);
+  });
+
+  // #1001: a same-tab reload (fresh provider, same sessionStorage) keeps the
+  // session instead of forcing a re-login.
+  it('#1001: hydrates a live session from sessionStorage on mount', () => {
+    const first = renderHook(() => useAdminAuth(), { wrapper });
+    act(() => {
+      first.result.current.setAuth('alice', {
+        token: 'tok.tok.tok',
+        role: 'Administrator',
+        role_version: 2,
+        expires_at: FUTURE_EXP,
+        password_must_change: false,
+      });
+    });
+    first.unmount();
+
+    const second = renderHook(() => useAdminAuth(), { wrapper });
+    expect(second.result.current.isAuthenticated).toBe(true);
+    expect(second.result.current.username).toBe('alice');
+    expect(second.result.current.roleVersion).toBe(2);
+  });
+
+  it('#1001: does NOT hydrate an expired stored session', () => {
+    const first = renderHook(() => useAdminAuth(), { wrapper });
+    act(() => {
+      first.result.current.setAuth('alice', {
+        token: 'tok.tok.tok',
+        role: 'Administrator',
+        role_version: 1,
+        expires_at: PAST_EXP,
+        password_must_change: false,
+      });
+    });
+    first.unmount();
+
+    const second = renderHook(() => useAdminAuth(), { wrapper });
+    expect(second.result.current.isAuthenticated).toBe(false);
+  });
+
+  it('#1001: clearAuth drops the stored session (no hydration after logout)', () => {
+    const first = renderHook(() => useAdminAuth(), { wrapper });
+    act(() => {
+      first.result.current.setAuth('alice', {
+        token: 't',
+        role: 'Administrator',
+        role_version: 1,
+        expires_at: FUTURE_EXP,
+        password_must_change: false,
+      });
+    });
+    act(() => first.result.current.clearAuth());
+    first.unmount();
+
+    const second = renderHook(() => useAdminAuth(), { wrapper });
+    expect(second.result.current.isAuthenticated).toBe(false);
+  });
+
+  // BroadcastChannel handoff — the "open in new tab keeps me signed in" path.
+  // Skipped when the test env's jsdom has no BroadcastChannel.
+  const hasBC = typeof BroadcastChannel !== 'undefined';
+
+  it.skipIf(!hasBC)('#1001: a fresh provider adopts a sibling tab\'s session via BroadcastChannel', async () => {
+    const tabA = renderHook(() => useAdminAuth(), { wrapper });
+    act(() => {
+      tabA.result.current.setAuth('alice', {
+        token: 'tok.tok.tok',
+        role: 'Administrator',
+        role_version: 3,
+        expires_at: FUTURE_EXP,
+        password_must_change: false,
+      });
+    });
+    // A real new tab starts with EMPTY sessionStorage; simulate that so the
+    // adoption must ride the channel, not the storage.
+    sessionStorage.clear();
+
+    const tabB = renderHook(() => useAdminAuth(), { wrapper });
+    expect(tabB.result.current.isAuthenticated).toBe(false);
+    await waitFor(() => {
+      expect(tabB.result.current.isAuthenticated).toBe(true);
+    });
+    expect(tabB.result.current.username).toBe('alice');
+    expect(tabB.result.current.roleVersion).toBe(3);
+  });
+
+  it.skipIf(!hasBC)('#1001: logout broadcasts to sibling tabs', async () => {
+    const tabA = renderHook(() => useAdminAuth(), { wrapper });
+    act(() => {
+      tabA.result.current.setAuth('alice', {
+        token: 'tok.tok.tok',
+        role: 'Administrator',
+        role_version: 1,
+        expires_at: FUTURE_EXP,
+        password_must_change: false,
+      });
+    });
+    const tabB = renderHook(() => useAdminAuth(), { wrapper });
+    await waitFor(() => {
+      expect(tabB.result.current.isAuthenticated).toBe(true);
+    });
+
+    act(() => tabB.result.current.clearAuth());
+    await waitFor(() => {
+      expect(tabA.result.current.isAuthenticated).toBe(false);
+    });
   });
 
   // 2026-07-24: a browser refresh used to sign operators out mid-task. Each

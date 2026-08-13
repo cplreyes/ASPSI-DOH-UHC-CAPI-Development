@@ -1,0 +1,48 @@
+{
+ "activities": [
+  {
+   "id": "A1",
+   "name": "Pretest",
+   "phase": "pretest",
+   "kind": "pretest",
+   "start": "2026-07-15",
+   "end": null,
+   "planned": false,
+   "logins": [
+    "se-001",
+    "se-002",
+    "se-003",
+    "se-004",
+    "se-005",
+    "se-006",
+    "se-007"
+   ],
+   "quotas": {
+    "f3": 10,
+    "f4": 20
+   }
+  },
+  {
+   "id": "A2",
+   "name": "Training",
+   "phase": "training",
+   "kind": "training",
+   "start": null,
+   "end": null,
+   "planned": true,
+   "logins": [],
+   "quotas": {}
+  },
+  {
+   "id": "A3",
+   "name": "Survey Wave 1",
+   "phase": "survey",
+   "kind": "collection",
+   "start": null,
+   "end": null,
+   "planned": true,
+   "logins": [],
+   "quotas": {}
+  }
+ ]
+}

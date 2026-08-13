@@ -31,6 +31,16 @@ OUT = HERE / "PatientSurvey.ent.qsf"
 # questionnaire text.
 _BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F3"]
 BUILD_FOOTER = f'<p class="instruction">Build: F3 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+# #1191 (PSA/SJREB, 2026-08-11): survey-tool details required on the CAPI tool.
+# -03 = "In-Patient and Out-Patient Survey Questionnaire" in the PSA table.
+BUILD_FOOTER += ('<p class="instruction">PSA SSRCS Clearance No. DOH-2651-03 '
+                 '&middot; issued July 2026 &middot; valid until 31 July 2027<br/>'
+                 'SJREB: ICF ver. 07/25/2026 &middot; Translated Questionnaire ver. 06/05/2026</p>')
+# #1190: brand-book main logo sequence on the first page — see F1/generate_qsf.py.
+import base64 as _b64
+_LOGO_B64 = _b64.b64encode((HERE.parent / "cover_logos.png").read_bytes()).decode()
+BUILD_FOOTER = (f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
+                + BUILD_FOOTER)
 
 STYLES = """styles:
   - name: Normal
@@ -53,6 +63,31 @@ STYLES = """styles:
     className: heading3
     css: |
       font-family: Arial;font-size: 18px;"""
+
+
+# #1142/#1144/#1145/#1155 — split-component questions whose two items share one
+# DisplayTogether screen. The dict label carries a component suffix ("... — Hours")
+# so the two variables stay distinguishable in the exported data and the codebook,
+# but on screen that suffix labels the BLOCK, not one box, and the on-form labels
+# ("Number of Hour(s)" / "Number of Minute(s)", set in generate_fmf.py) already say
+# which is which. Strip it from the question bar so the stem reads once, cleanly.
+_COMPONENT_SUFFIX_ITEMS = {
+    "Q58_WAIT_DAYS", "Q58_WAIT_MINUTES",
+    "Q69_USUAL_TRAVEL_HH", "Q69_USUAL_TRAVEL_MM",
+    "Q72_NEAREST_TRAVEL_HH", "Q72_NEAREST_TRAVEL_MM",
+    "Q106_NIGHTS", "Q106_DAYS",
+    "Q150_TRAVEL_HH", "Q150_TRAVEL_MM",   # #1201: Q69/Q72 parity for the pharmacy travel time
+}
+_COMPONENT_SUFFIX_RE = re.compile(
+    r"\s*[\u2014\u2013-]\s*(?:Hours?|Minutes?|Nights?|Days?)\s*$", re.I)
+
+
+def _strip_component_suffix(nm, text):
+    """Drop a trailing '— Hours' / '— Minutes' / '— Nights' / '— Days' from the
+    question-bar text of a split-component item. Dict labels are untouched."""
+    if nm in _COMPONENT_SUFFIX_ITEMS:
+        return _COMPONENT_SUFFIX_RE.sub("", text or "")
+    return text
 
 
 def _html(text):
@@ -235,6 +270,12 @@ INSTRUCTIONS = {
 # multi-field question, where the paper-number key would spray the note across
 # every Q<n>_* field (#1048 Q18, #1062 Q150). Wins over the number-keyed map.
 INSTRUCTIONS_BY_NAME = {
+    # #1136/#1137 (ASPSI 2026-08-06): these enumerator instructions used to sit
+    # INSIDE the dictionary label, so they rendered as part of the question stem.
+    # Moved here so they emit as <p class="instruction"> (the blue note), matching
+    # how Q36 and the rest of the instrument already do it.
+    "Q38_1_PIN_WHEN": "SELECT ONE ANSWER ONLY.",
+    "Q38_2_WHY_NOT_REG": "READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
     "Q18_INCOME_BRACKET": ("Enumerator note: Select the income category that "
                            "corresponds to the respondent’s approximate household "
                            "income."),   # #1048: bracket only + "tick" -> "Select"
@@ -460,7 +501,8 @@ def main():
                         body = ov
                     else:
                         pre, post = build_extras(*extras, lnm)
-                        body = pre + _html(labmap.get(lnm) or en) + post
+                        body = pre + _html(_strip_component_suffix(
+                            nm, labmap.get(lnm) or en)) + post
                     body = _pipe_fills(body)
                     body = _pay_amt_source_context(nm) + body   # #750 source/item context
                     lines += [f"          {lnm}: |", f"            {body}"]

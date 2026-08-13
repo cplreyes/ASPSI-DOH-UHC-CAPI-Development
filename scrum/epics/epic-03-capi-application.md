@@ -139,10 +139,10 @@ Per-instrument application build workstream. Turns the validated data dictionary
 
 ### Deferred from M11 (decision required)
 
-- [ ] **E3-F2-PWA-M12a** Per-HCW tokens (replace email-based identity) `status::deferred`
+- [x] **E3-F2-PWA-M12a** Per-HCW tokens (replace email-based identity) `status::done` ✅ *(swept 2026-08-12: shipped as the Model C numbered-link claim flow — per-HCW `/e/<CODE-HCW-NN>?k=` links, device-bound tokens on claim (ClaimScreen/enroll-links); live since July)*
 - [ ] **E3-F2-PWA-M12b** Draft auto-migration across spec versions `status::deferred`
 - [ ] **E3-F2-PWA-M12c** iOS push notifications `status::deferred`
-- [ ] **E3-F2-PWA-M12d** Admin mutations (beyond read-only) `status::deferred`
+- [x] **E3-F2-PWA-M12d** Admin mutations (beyond read-only) `status::done` ✅ *(swept 2026-08-12: the admin portal has long since shipped mutations — HCW create/reissue/re-encode, DLQ replay, and the Facilities page CRUD (`POST /admin/api/facilities`, deployed to prod 2026-08-10))*
 
 ### Pilot readiness
 
@@ -154,9 +154,9 @@ Per-instrument application build workstream. Turns the validated data dictionary
 
 **UX enhancements** (project board #16/#17/#18, `[github]/projects/7`):
 
-- [ ] **E3-F2-PWA-R3-001** Issue #16 — exclusive "I don't know" multi-select option (selecting it clears other selections; selecting any other clears it) `status::todo` `priority::medium` `estimate::3h`
-- [ ] **E3-F2-PWA-R3-002** Issue #17 — "All of the above" auto-select (selecting it auto-selects all other options; deselecting any deselects it) `status::todo` `priority::medium` `estimate::3h`
-- [ ] **E3-F2-PWA-R3-003** Issue #18 — matrix view for scale-style questions (one prompt per row, shared response columns) `status::todo` `priority::medium` `estimate::6h`
+- [x] **E3-F2-PWA-R3-001** Issue #16 — exclusive "I don't know" multi-select option (selecting it clears other selections; selecting any other clears it) `status::done` ✅ *(swept 2026-08-12: #16 CLOSED; exclusivity logic + `Question.exclusivity.test.ts` in the shipping app)*
+- [x] **E3-F2-PWA-R3-002** Issue #17 — "All of the above" auto-select (selecting it auto-selects all other options; deselecting any deselects it) `status::done` ✅ *(swept 2026-08-12: #17 CLOSED; handled in `Question.helpers.ts` with the exclusivity suite)*
+- [x] **E3-F2-PWA-R3-003** Issue #18 — matrix view for scale-style questions (one prompt per row, shared response columns) `status::done` ✅ *(swept 2026-08-12: #18 CLOSED; `MatrixQuestion.tsx` + `group-matrix.ts` shipped)*
 
 **Verde Manual visual-identity migration** (anchor: [`deliverables/F2/PWA/app/DESIGN.md`](../../deliverables/F2/PWA/app/DESIGN.md); memorable thing: *"This is real software, not a government form"*):
 
@@ -167,7 +167,7 @@ Per-instrument application build workstream. Turns the validated data dictionary
 - [x] **E3-F2-PWA-DESIGN-006** Sweep remaining raw Tailwind colors in `PendingCount.tsx` / `BroadcastBanner.tsx` / `SectionTree.tsx` / ReviewSection `warn` severity. Extended `tailwind.config.ts` to alpha-aware HSL slot syntax + new `warning` token; added `--warning` + `--warning-foreground` to `src/index.css`. PR [#40](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/pull/40) merged 2026-04-26 as `1458f29`. Bonus: also fixed a quiet pre-existing bug where `bg-primary/10` in SectionTree was producing malformed CSS in the old non-alpha config. `status::done` `priority::low` `actual::2026-04-26`
 - [x] **E3-F2-PWA-DESIGN-007** Polish PR3 punts — Button.tsx shadcn primitive flattened (no shadows on default/destructive/outline/secondary variants), SpecDriftOverlay/KillSwitchOverlay use bg-background + hairline border (no shadow-lg), MultiSectionForm fixed-side nav arrows softened from shadow-md to shadow-sm. PR [#41](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/pull/41) merged 2026-04-26 as `7bfc28a`. `status::done` `priority::low` `actual::2026-04-26`
 - [x] **E3-F2-PWA-DESIGN-008** Path-B port to production — cherry-picked the 5 staging Verde Manual commits onto a branch off `main`, resolved EnrollmentScreen and App.tsx conflicts (kept main's pre-auth-rearch single-step Enroll logic + applied Verde styling intent), opened PR [#42](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/pull/42) merged 2026-04-26 as `a1c4a3e`. CF Pages auto-deploy didn't fire on the merge (confirms #34 affects main pushes too); manually deployed via `wrangler pages deploy dist --project-name=f2-pwa --branch=main --commit-hash=a1c4a3ea` (deployment `4f61356a`). Verde Manual now live at `https://f2-pwa.pages.dev`. `status::done` `priority::high` `actual::2026-04-26`
-- [ ] **E3-F2-PWA-DESIGN-004** Self-host fonts under `public/fonts/*.woff2` (replaces CDN path from PR #38). **Gated on `pyftsubset`/fontTools tooling** for proper Latin Extended subsetting; lands as a follow-up after Round 3 if Bunny CDN proves problematic. `status::deferred` `priority::low`
+- [x] **E3-F2-PWA-DESIGN-004** Self-host fonts under `public/fonts/*.woff2` (replaces CDN path from PR #38). `status::done` `priority::low` ✅ *(swept 2026-08-12: `public/fonts/` ships jetbrains-mono + newsreader + public-sans with `fonts.css`; no bunny.net reference remains in `index.html` — self-hosting landed with the CSP/self-contained work)*
 - [ ] **E3-F2-PWA-DESIGN-005** Refine Verde Manual hex values from official DOH brand-book PDF (Department Order 2020-0011, Verde Vision 2023+). Current values are best-fit approximations of the visible seal + documented background tint `#e7efe7`. **Async on ASPSI** for PDF acquisition. `status::blocked-external` `priority::low`
 
 ### Retired tracks *(do not re-open without explicit decision reversal)*

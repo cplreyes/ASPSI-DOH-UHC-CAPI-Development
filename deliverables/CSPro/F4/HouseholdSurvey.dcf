@@ -332,23 +332,23 @@
               "name": "DATE_FIRST_VISITED",
               "labels": [
                 {
-                  "text": "Date First Visited the Household (YYYYMMDD)",
+                  "text": "Date First Visited the Household (MMDDYYYY)",
                   "language": "EN"
                 },
                 {
-                  "text": "Date First Visited the Household (YYYYMMDD)",
+                  "text": "Date First Visited the Household (MMDDYYYY)",
                   "language": "FIL"
                 },
                 {
-                  "text": "Date First Visited the Household (YYYYMMDD)",
+                  "text": "Date First Visited the Household (MMDDYYYY)",
                   "language": "BCL"
                 },
                 {
-                  "text": "Date First Visited the Household (YYYYMMDD)",
+                  "text": "Date First Visited the Household (MMDDYYYY)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Date First Visited the Household (YYYYMMDD)",
+                  "text": "Date First Visited the Household (MMDDYYYY)",
                   "language": "CEB"
                 },
                 {
@@ -356,11 +356,11 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "Date First Visited the Household (YYYYMMDD)",
+                  "text": "Date First Visited the Household (MMDDYYYY)",
                   "language": "HIL"
                 },
                 {
-                  "text": "Date First Visited the Household (YYYYMMDD)",
+                  "text": "Date First Visited the Household (MMDDYYYY)",
                   "language": "ILO"
                 }
               ],
@@ -372,23 +372,23 @@
               "name": "DATE_FINAL_VISIT",
               "labels": [
                 {
-                  "text": "Date of Final Visit to the Household (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Household (MMDDYYYY)",
                   "language": "EN"
                 },
                 {
-                  "text": "Date of Final Visit to the Household (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Household (MMDDYYYY)",
                   "language": "FIL"
                 },
                 {
-                  "text": "Date of Final Visit to the Household (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Household (MMDDYYYY)",
                   "language": "BCL"
                 },
                 {
-                  "text": "Date of Final Visit to the Household (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Household (MMDDYYYY)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Date of Final Visit to the Household (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Household (MMDDYYYY)",
                   "language": "CEB"
                 },
                 {
@@ -396,11 +396,11 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "Date of Final Visit to the Household (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Household (MMDDYYYY)",
                   "language": "HIL"
                 },
                 {
-                  "text": "Date of Final Visit to the Household (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Household (MMDDYYYY)",
                   "language": "ILO"
                 }
               ],
@@ -6345,47 +6345,6 @@
                     {
                       "labels": [
                         {
-                          "text": "Other (specify)",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iba pa (tukuyin)",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Other (specify)",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Other (specify)",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Uban pa (isulti)",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Iba pa (ispecify)",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Other (specify)",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "Other (specify)",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "11"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
                           "text": "I don't know",
                           "language": "EN"
                         },
@@ -6462,6 +6421,47 @@
                       "pairs": [
                         {
                           "value": "99"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (specify)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Iba pa (tukuyin)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Other (specify)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Other (specify)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Uban pa (isulti)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Other (specify)",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Other (specify)",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "11"
                         }
                       ]
                     }
@@ -8430,35 +8430,35 @@
               "name": "Q18_INCOME_AMOUNT",
               "labels": [
                 {
-                  "text": "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer \u2014 do not read these codes aloud.)",
+                  "text": "18. In the past 6 months, what is your average monthly household income? Please specify in Philippine pesos.",
                   "language": "EN"
                 },
                 {
-                  "text": "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer \u2014 do not read these codes aloud.)",
+                  "text": "Sa nakalipas na 6 na buwan, ano ang karaniwang buwanang kita ng sambahayan? Pakitukoy sa Philippine pesos.",
                   "language": "FIL"
                 },
                 {
-                  "text": "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer \u2014 do not read these codes aloud.)",
+                  "text": "18. In the past 6 months, what is your average monthly household income? Please specify in Philippine pesos.",
                   "language": "BCL"
                 },
                 {
-                  "text": "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer \u2014 do not read these codes aloud.)",
+                  "text": "Sa miaging 6 ka bulan, pila ang kasagaran ninyong kinitaan sa panimalay matag bulan?",
                   "language": "BIS"
                 },
                 {
-                  "text": "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer \u2014 do not read these codes aloud.)",
+                  "text": "Sa miaging 6 ka bulan, pila ang kasagarang binuwan nga kita sa inyong panimalay?",
                   "language": "CEB"
                 },
                 {
-                  "text": "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer \u2014 do not read these codes aloud.)",
+                  "text": "Ha naglabay nga 6 ka bulan, ano an iyo average nga kita ha panimalay kada bulan? Alayon pag-espesipikar ha Pilipinas nga pesos",
                   "language": "WAR"
                 },
                 {
-                  "text": "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer \u2014 do not read these codes aloud.)",
+                  "text": "18. In the past 6 months, what is your average monthly household income? Please specify in Philippine pesos.",
                   "language": "HIL"
                 },
                 {
-                  "text": "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer \u2014 do not read these codes aloud.)",
+                  "text": "18. In the past 6 months, what is your average monthly household income? Please specify in Philippine pesos.",
                   "language": "ILO"
                 }
               ],
@@ -8470,35 +8470,35 @@
               "name": "Q18_INCOME_BRACKET",
               "labels": [
                 {
-                  "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income.",
+                  "text": "18. Income bracket",
                   "language": "EN"
                 },
                 {
-                  "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income.",
+                  "text": "18. Income bracket",
                   "language": "FIL"
                 },
                 {
-                  "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income.",
+                  "text": "18. Income bracket",
                   "language": "BCL"
                 },
                 {
-                  "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income.",
+                  "text": "18. Income bracket",
                   "language": "BIS"
                 },
                 {
-                  "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income.",
+                  "text": "18. Income bracket",
                   "language": "CEB"
                 },
                 {
-                  "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income.",
+                  "text": "18. Income bracket",
                   "language": "WAR"
                 },
                 {
-                  "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income.",
+                  "text": "18. Income bracket",
                   "language": "HIL"
                 },
                 {
-                  "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income.",
+                  "text": "18. Income bracket",
                   "language": "ILO"
                 }
               ],
@@ -8510,35 +8510,35 @@
                   "name": "Q18_INCOME_BRACKET_VS1",
                   "labels": [
                     {
-                      "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income.",
+                      "text": "18. Income bracket",
                       "language": "EN"
                     },
                     {
-                      "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income.",
+                      "text": "18. Income bracket",
                       "language": "FIL"
                     },
                     {
-                      "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income.",
+                      "text": "18. Income bracket",
                       "language": "BCL"
                     },
                     {
-                      "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income.",
+                      "text": "18. Income bracket",
                       "language": "BIS"
                     },
                     {
-                      "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income.",
+                      "text": "18. Income bracket",
                       "language": "CEB"
                     },
                     {
-                      "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income.",
+                      "text": "18. Income bracket",
                       "language": "WAR"
                     },
                     {
-                      "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income.",
+                      "text": "18. Income bracket",
                       "language": "HIL"
                     },
                     {
-                      "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income.",
+                      "text": "18. Income bracket",
                       "language": "ILO"
                     }
                   ],
@@ -8958,35 +8958,35 @@
               "name": "Q22_ELECTRICITY",
               "labels": [
                 {
-                  "text": "22. Do you have electricity in your household?",
+                  "text": "22. Do you have electricity in your house?",
                   "language": "EN"
                 },
                 {
-                  "text": "May kuryente ba sa bahay ninyo?",
+                  "text": "22. Do you have electricity in your house?",
                   "language": "FIL"
                 },
                 {
-                  "text": "May igwa ba kamong kuryente?",
+                  "text": "22. Do you have electricity in your house?",
                   "language": "BCL"
                 },
                 {
-                  "text": "Aduna ba moy kuryente sa inyong panimalay?",
+                  "text": "22. Do you have electricity in your house?",
                   "language": "BIS"
                 },
                 {
-                  "text": "Aduna bay kuryente sa inyong panimalay?",
+                  "text": "22. Do you have electricity in your house?",
                   "language": "CEB"
                 },
                 {
-                  "text": "Mayda ba kamo kuryente ha iyo panimalay?",
+                  "text": "22. Do you have electricity in your house?",
                   "language": "WAR"
                 },
                 {
-                  "text": "May kuryente bala sa inyo panimalay? Yes Oo No Wala 18. In the past 6 months, what is your average",
+                  "text": "22. Do you have electricity in your house?",
                   "language": "HIL"
                 },
                 {
-                  "text": "22. Do you have electricity in your household?",
+                  "text": "22. Do you have electricity in your house?",
                   "language": "ILO"
                 }
               ],
@@ -8998,35 +8998,35 @@
                   "name": "Q22_ELECTRICITY_VS1",
                   "labels": [
                     {
-                      "text": "22. Do you have electricity in your household?",
+                      "text": "22. Do you have electricity in your house?",
                       "language": "EN"
                     },
                     {
-                      "text": "May kuryente ba sa bahay ninyo?",
+                      "text": "22. Do you have electricity in your house?",
                       "language": "FIL"
                     },
                     {
-                      "text": "May igwa ba kamong kuryente?",
+                      "text": "22. Do you have electricity in your house?",
                       "language": "BCL"
                     },
                     {
-                      "text": "Aduna ba moy kuryente sa inyong panimalay?",
+                      "text": "22. Do you have electricity in your house?",
                       "language": "BIS"
                     },
                     {
-                      "text": "Aduna bay kuryente sa inyong panimalay?",
+                      "text": "22. Do you have electricity in your house?",
                       "language": "CEB"
                     },
                     {
-                      "text": "Mayda ba kamo kuryente ha iyo panimalay?",
+                      "text": "22. Do you have electricity in your house?",
                       "language": "WAR"
                     },
                     {
-                      "text": "May kuryente bala sa inyo panimalay? Yes Oo No Wala 18. In the past 6 months, what is your average",
+                      "text": "22. Do you have electricity in your house?",
                       "language": "HIL"
                     },
                     {
-                      "text": "22. Do you have electricity in your household?",
+                      "text": "22. Do you have electricity in your house?",
                       "language": "ILO"
                     }
                   ],
@@ -13519,10 +13519,172 @@
                           "value": "10"
                         }
                       ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Hindi ko alam",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Dai ko aram",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Wala kabalo",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Wala ko kahibalo",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Dire ako maaram",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Wala ko kabalo",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Saan ko nga ammo",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "98"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Hindi naaangkop",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Dae angkop",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Dili applicable",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Dili angay",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Dire aplikado",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Wala nagakabagay",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Saan nga agaplikar",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (specify)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Iba pa (tukuyin)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Other (specify)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Other (specify)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Uban pa (isulti)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Other (specify)",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Other (specify)",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "11"
+                        }
+                      ]
                     }
                   ]
                 }
               ]
+            },
+            {
+              "name": "Q40_EDUCATION_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "40. Education \u2014 Other (specify) text",
+                  "language": "EN"
+                },
+                {
+                  "text": "40. Education \u2014 Other (specify) text",
+                  "language": "FIL"
+                },
+                {
+                  "text": "40. Education \u2014 Other (specify) text",
+                  "language": "BCL"
+                },
+                {
+                  "text": "40. Education \u2014 Other (specify) text",
+                  "language": "BIS"
+                },
+                {
+                  "text": "40. Education \u2014 Other (specify) text",
+                  "language": "CEB"
+                },
+                {
+                  "text": "40. Education \u2014 Other (specify) text",
+                  "language": "WAR"
+                },
+                {
+                  "text": "40. Education \u2014 Other (specify) text",
+                  "language": "HIL"
+                },
+                {
+                  "text": "40. Education \u2014 Other (specify) text",
+                  "language": "ILO"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
             },
             {
               "name": "Q41_EMPLOYMENT",
@@ -14753,35 +14915,35 @@
               "name": "Q45_1_PIN_REG_WHEN",
               "labels": [
                 {
-                  "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                  "text": "45.1 When did you register and receive your PhilHealth PIN?",
                   "language": "EN"
                 },
                 {
-                  "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                  "text": "45.1 When did you register and receive your PhilHealth PIN?",
                   "language": "FIL"
                 },
                 {
-                  "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                  "text": "45.1 When did you register and receive your PhilHealth PIN?",
                   "language": "BCL"
                 },
                 {
-                  "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                  "text": "45.1 When did you register and receive your PhilHealth PIN?",
                   "language": "BIS"
                 },
                 {
-                  "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                  "text": "45.1 When did you register and receive your PhilHealth PIN?",
                   "language": "CEB"
                 },
                 {
-                  "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                  "text": "45.1 When did you register and receive your PhilHealth PIN?",
                   "language": "WAR"
                 },
                 {
-                  "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                  "text": "45.1 When did you register and receive your PhilHealth PIN?",
                   "language": "HIL"
                 },
                 {
-                  "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                  "text": "45.1 When did you register and receive your PhilHealth PIN?",
                   "language": "ILO"
                 }
               ],
@@ -14793,35 +14955,35 @@
                   "name": "Q45_1_PIN_REG_WHEN_VS1",
                   "labels": [
                     {
-                      "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                      "text": "45.1 When did you register and receive your PhilHealth PIN?",
                       "language": "EN"
                     },
                     {
-                      "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                      "text": "45.1 When did you register and receive your PhilHealth PIN?",
                       "language": "FIL"
                     },
                     {
-                      "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                      "text": "45.1 When did you register and receive your PhilHealth PIN?",
                       "language": "BCL"
                     },
                     {
-                      "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                      "text": "45.1 When did you register and receive your PhilHealth PIN?",
                       "language": "BIS"
                     },
                     {
-                      "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                      "text": "45.1 When did you register and receive your PhilHealth PIN?",
                       "language": "CEB"
                     },
                     {
-                      "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                      "text": "45.1 When did you register and receive your PhilHealth PIN?",
                       "language": "WAR"
                     },
                     {
-                      "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                      "text": "45.1 When did you register and receive your PhilHealth PIN?",
                       "language": "HIL"
                     },
                     {
-                      "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                      "text": "45.1 When did you register and receive your PhilHealth PIN?",
                       "language": "ILO"
                     }
                   ],
@@ -15156,7 +15318,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Formal economy",
+                          "text": "Formal economy (i.e., individuals working in the government or private sector based in the country)",
                           "language": "EN"
                         },
                         {
@@ -15172,7 +15334,7 @@
                           "language": "BIS"
                         },
                         {
-                          "text": "(i.e., individuals working in the government or",
+                          "text": "Formal economy (i.e., individuals working in the government or private sector based in the country)",
                           "language": "CEB"
                         },
                         {
@@ -15180,11 +15342,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "(i.e., individuals working in the government or",
+                          "text": "Formal economy (i.e., individuals working in the government or private sector based in the country)",
                           "language": "HIL"
                         },
                         {
-                          "text": "(i.e., individuals working in the government or",
+                          "text": "Formal economy (i.e., individuals working in the government or private sector based in the country)",
                           "language": "ILO"
                         }
                       ],
@@ -15197,7 +15359,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Informal economy",
+                          "text": "Informal economy (i.e., unemployed, self-employed, informal workers, Filipinos with dual citizenship, naturalized Filipino citizens, citizens of other countries working and/or residing in the Philippines)",
                           "language": "EN"
                         },
                         {
@@ -15213,7 +15375,7 @@
                           "language": "BIS"
                         },
                         {
-                          "text": "Informal economy",
+                          "text": "Informal economy (i.e., unemployed, self-employed, informal workers, Filipinos with dual citizenship, naturalized Filipino citizens, citizens of other countries working and/or residing in the Philippines)",
                           "language": "CEB"
                         },
                         {
@@ -15221,11 +15383,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Informal economy",
+                          "text": "Informal economy (i.e., unemployed, self-employed, informal workers, Filipinos with dual citizenship, naturalized Filipino citizens, citizens of other countries working and/or residing in the Philippines)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Informal economy",
+                          "text": "Informal economy (i.e., unemployed, self-employed, informal workers, Filipinos with dual citizenship, naturalized Filipino citizens, citizens of other countries working and/or residing in the Philippines)",
                           "language": "ILO"
                         }
                       ],
@@ -15238,7 +15400,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Indigent",
+                          "text": "Indigent (i.e., individuals who have no visible means of income, or whose income is insufficient for family subsistence based on DSWD's specific criteria)",
                           "language": "EN"
                         },
                         {
@@ -15254,7 +15416,7 @@
                           "language": "BIS"
                         },
                         {
-                          "text": "e.g. BHWs, PWDs) 4",
+                          "text": "Indigent (i.e., individuals who have no visible means of income, or whose income is insufficient for family subsistence based on DSWD's specific criteria)",
                           "language": "CEB"
                         },
                         {
@@ -15262,11 +15424,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "e.g. BHWs, PWDs) 5 \u2013",
+                          "text": "Indigent (i.e., individuals who have no visible means of income, or whose income is insufficient for family subsistence based on DSWD's specific criteria)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Indigent",
+                          "text": "Indigent (i.e., individuals who have no visible means of income, or whose income is insufficient for family subsistence based on DSWD's specific criteria)",
                           "language": "ILO"
                         }
                       ],
@@ -15279,7 +15441,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Sponsored",
+                          "text": "Sponsored (i.e., members whose contributions are being paid for by another individual, government agencies, or private entities. Includes some low-income citizens that are not indigent e.g. BHWs, PWDs)",
                           "language": "EN"
                         },
                         {
@@ -15295,7 +15457,7 @@
                           "language": "BIS"
                         },
                         {
-                          "text": "Sponsored",
+                          "text": "Sponsored (i.e., members whose contributions are being paid for by another individual, government agencies, or private entities. Includes some low-income citizens that are not indigent e.g. BHWs, PWDs)",
                           "language": "CEB"
                         },
                         {
@@ -15303,11 +15465,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Sponsored",
+                          "text": "Sponsored (i.e., members whose contributions are being paid for by another individual, government agencies, or private entities. Includes some low-income citizens that are not indigent e.g. BHWs, PWDs)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Sponsored",
+                          "text": "Sponsored (i.e., members whose contributions are being paid for by another individual, government agencies, or private entities. Includes some low-income citizens that are not indigent e.g. BHWs, PWDs)",
                           "language": "ILO"
                         }
                       ],
@@ -15320,7 +15482,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Lifetime member",
+                          "text": "Lifetime member (i.e., individuals aged 60 and above, uniformed personnel aged 56 and above, and SSS underground miner-retirees aged 55 and above, who paid at least 120 monthly contributions to PhilHealth or the former SSS/GSIS Medicare Programs)",
                           "language": "EN"
                         },
                         {
@@ -15336,7 +15498,7 @@
                           "language": "BIS"
                         },
                         {
-                          "text": "Lifetime member",
+                          "text": "Lifetime member (i.e., individuals aged 60 and above, uniformed personnel aged 56 and above, and SSS underground miner-retirees aged 55 and above, who paid at least 120 monthly contributions to PhilHealth or the former SSS/GSIS Medicare Programs)",
                           "language": "CEB"
                         },
                         {
@@ -15344,11 +15506,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Lifetime member",
+                          "text": "Lifetime member (i.e., individuals aged 60 and above, uniformed personnel aged 56 and above, and SSS underground miner-retirees aged 55 and above, who paid at least 120 monthly contributions to PhilHealth or the former SSS/GSIS Medicare Programs)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Lifetime member",
+                          "text": "Lifetime member (i.e., individuals aged 60 and above, uniformed personnel aged 56 and above, and SSS underground miner-retirees aged 55 and above, who paid at least 120 monthly contributions to PhilHealth or the former SSS/GSIS Medicare Programs)",
                           "language": "ILO"
                         }
                       ],
@@ -15361,7 +15523,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Senior citizen",
+                          "text": "Senior citizen (i.e., residents of the Philippines aged sixty (60) or above not currently covered by any other PhilHealth category, and qualified dependents of senior citizen members who are themselves senior citizens, with or without other coverage)",
                           "language": "EN"
                         },
                         {
@@ -15377,19 +15539,19 @@
                           "language": "BIS"
                         },
                         {
-                          "text": "members who are also",
+                          "text": "Senior citizen (i.e., residents of the Philippines aged sixty (60) or above not currently covered by any other PhilHealth category, and qualified dependents of senior citizen members who are themselves senior citizens, with or without other coverage)",
                           "language": "CEB"
                         },
                         {
-                          "text": "members who are also",
+                          "text": "Senior citizen (i.e., residents of the Philippines aged sixty (60) or above not currently covered by any other PhilHealth category, and qualified dependents of senior citizen members who are themselves senior citizens, with or without other coverage)",
                           "language": "WAR"
                         },
                         {
-                          "text": "(edad 60 pataas) ang nagapuyo sa inyo balay subong?",
+                          "text": "Senior citizen (i.e., residents of the Philippines aged sixty (60) or above not currently covered by any other PhilHealth category, and qualified dependents of senior citizen members who are themselves senior citizens, with or without other coverage)",
                           "language": "HIL"
                         },
                         {
-                          "text": "ti agnanaed ita iti balayyo?)",
+                          "text": "Senior citizen (i.e., residents of the Philippines aged sixty (60) or above not currently covered by any other PhilHealth category, and qualified dependents of senior citizen members who are themselves senior citizens, with or without other coverage)",
                           "language": "ILO"
                         }
                       ],
@@ -15443,7 +15605,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Qualified dependents",
+                          "text": "Qualified dependents (i.e., those whose contributions are declared and covered by a principal member)",
                           "language": "EN"
                         },
                         {
@@ -15459,7 +15621,7 @@
                           "language": "BIS"
                         },
                         {
-                          "text": "(i.e., those whose contributions are declared and covered by a principal member) 8",
+                          "text": "Qualified dependents (i.e., those whose contributions are declared and covered by a principal member)",
                           "language": "CEB"
                         },
                         {
@@ -15467,99 +15629,17 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Qualified dependents",
+                          "text": "Qualified dependents (i.e., those whose contributions are declared and covered by a principal member)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Qualified dependents",
+                          "text": "Qualified dependents (i.e., those whose contributions are declared and covered by a principal member)",
                           "language": "ILO"
                         }
                       ],
                       "pairs": [
                         {
                           "value": "08"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Dependent",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Dependent",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dependent",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "55 \u2013 Wala kabalo 88 \u2013 Uban pa (I-specify)",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "sa mga",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Mga nakadepende",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "sang",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "(Agpannuray) -55 \u2013",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "09"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Other (Specify)",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iba pa (tukuyin)",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iba pa (ispecify)",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Uban pa (I-specify)",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Uban pa (Isulti)",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Iba pa (ispecify)",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Iban pa (specify)",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "(Dadduma pay (Ibaga)",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "88"
                         }
                       ]
                     },
@@ -15601,6 +15681,47 @@
                       "pairs": [
                         {
                           "value": "55"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (Specify)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Iba pa (tukuyin)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Uban pa (I-specify)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Uban pa (Isulti)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Iban pa (specify)",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "(Dadduma pay (Ibaga)",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "88"
                         }
                       ]
                     }
@@ -15651,35 +15772,35 @@
               "name": "Q45_2_WHY_NOT_REG",
               "labels": [
                 {
-                  "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                  "text": "45.2 Why are you not registered?",
                   "language": "EN"
                 },
                 {
-                  "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                  "text": "45.2 Why are you not registered?",
                   "language": "FIL"
                 },
                 {
-                  "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                  "text": "45.2 Why are you not registered?",
                   "language": "BCL"
                 },
                 {
-                  "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                  "text": "45.2 Why are you not registered?",
                   "language": "BIS"
                 },
                 {
-                  "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                  "text": "45.2 Why are you not registered?",
                   "language": "CEB"
                 },
                 {
-                  "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                  "text": "45.2 Why are you not registered?",
                   "language": "WAR"
                 },
                 {
-                  "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                  "text": "45.2 Why are you not registered?",
                   "language": "HIL"
                 },
                 {
-                  "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                  "text": "45.2 Why are you not registered?",
                   "language": "ILO"
                 }
               ],
@@ -15691,35 +15812,35 @@
                   "name": "Q45_2_WHY_NOT_REG_VS1",
                   "labels": [
                     {
-                      "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                      "text": "45.2 Why are you not registered?",
                       "language": "EN"
                     },
                     {
-                      "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                      "text": "45.2 Why are you not registered?",
                       "language": "FIL"
                     },
                     {
-                      "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                      "text": "45.2 Why are you not registered?",
                       "language": "BCL"
                     },
                     {
-                      "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                      "text": "45.2 Why are you not registered?",
                       "language": "BIS"
                     },
                     {
-                      "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                      "text": "45.2 Why are you not registered?",
                       "language": "CEB"
                     },
                     {
-                      "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                      "text": "45.2 Why are you not registered?",
                       "language": "WAR"
                     },
                     {
-                      "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                      "text": "45.2 Why are you not registered?",
                       "language": "HIL"
                     },
                     {
-                      "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                      "text": "45.2 Why are you not registered?",
                       "language": "ILO"
                     }
                   ],
@@ -21242,7 +21363,7 @@
               "name": "Q64_MEDICATIONS_LIST",
               "labels": [
                 {
-                  "text": "64. What are the medications that you or any member of your household usually take? (List all medicines taken for the health condition.)",
+                  "text": "64. What are the medications that you or any member of your household usually take?",
                   "language": "EN"
                 },
                 {
@@ -21266,11 +21387,11 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "64. What are the medications that you or any member of your household usually take? (List all medicines taken for the health condition.)",
+                  "text": "64. What are the medications that you or any member of your household usually take?",
                   "language": "HIL"
                 },
                 {
-                  "text": "64. What are the medications that you or any member of your household usually take? (List all medicines taken for the health condition.)",
+                  "text": "64. What are the medications that you or any member of your household usually take?",
                   "language": "ILO"
                 }
               ],
@@ -22707,35 +22828,35 @@
               "name": "Q67_TRAVEL_MM",
               "labels": [
                 {
-                  "text": "67. How much time does it take to reach the nearest pharmacy from your home? \u2014 Minutes",
+                  "text": "67. Travel time to nearest pharmacy \u2014 Minutes",
                   "language": "EN"
                 },
                 {
-                  "text": "67. How much time does it take to reach the nearest pharmacy from your home? \u2014 Minutes",
+                  "text": "67. Travel time to nearest pharmacy \u2014 Minutes",
                   "language": "FIL"
                 },
                 {
-                  "text": "67. How much time does it take to reach the nearest pharmacy from your home? \u2014 Minutes",
+                  "text": "67. Travel time to nearest pharmacy \u2014 Minutes",
                   "language": "BCL"
                 },
                 {
-                  "text": "67. How much time does it take to reach the nearest pharmacy from your home? \u2014 Minutes",
+                  "text": "67. Travel time to nearest pharmacy \u2014 Minutes",
                   "language": "BIS"
                 },
                 {
-                  "text": "67. How much time does it take to reach the nearest pharmacy from your home? \u2014 Minutes",
+                  "text": "67. Travel time to nearest pharmacy \u2014 Minutes",
                   "language": "CEB"
                 },
                 {
-                  "text": "67. How much time does it take to reach the nearest pharmacy from your home? \u2014 Minutes",
+                  "text": "67. Travel time to nearest pharmacy \u2014 Minutes",
                   "language": "WAR"
                 },
                 {
-                  "text": "67. How much time does it take to reach the nearest pharmacy from your home? \u2014 Minutes",
+                  "text": "67. Travel time to nearest pharmacy \u2014 Minutes",
                   "language": "HIL"
                 },
                 {
-                  "text": "67. How much time does it take to reach the nearest pharmacy from your home? \u2014 Minutes",
+                  "text": "67. Travel time to nearest pharmacy \u2014 Minutes",
                   "language": "ILO"
                 }
               ],
@@ -38876,35 +38997,35 @@
               "name": "Q117_SPECIALIST_FOLLOWUP",
               "labels": [
                 {
-                  "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit? (Only if Q112=Yes)",
+                  "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?",
                   "language": "EN"
                 },
                 {
-                  "text": "Pagkatapos mong pumunta sa espesyalista o espesyal na serbisyo, nag-follow up ba sila sa iyo tungkol sa nangyari sa iyong pagbisita?",
+                  "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?",
                   "language": "FIL"
                 },
                 {
-                  "text": "Pagkatapos mong magbisita sa espesyalista o espesyal na serbisyo, nag-follow up ba sinda saimo kun nano an nangyari sa pagbisita?",
+                  "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?",
                   "language": "BCL"
                 },
                 {
-                  "text": "Human nimo pag-adto sa espesyalista o espesyal nga serbisyo, nag-follow up ba sila kanimo bahin sa nahitabo sa pagbisita?",
+                  "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?",
                   "language": "BIS"
                 },
                 {
-                  "text": "Human sa imong pag-adto sa espesyalista/special service, gi-follow up ka ba nila bahin sa nahitabo sa pagbisita?",
+                  "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?",
                   "language": "CEB"
                 },
                 {
-                  "text": "Kahuman mo kumadto ha espesyalista o espesyal nga serbisyo, ginsundan ka ba nira mahitungod han nahitabo ha pagbisita?",
+                  "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?",
                   "language": "WAR"
                 },
                 {
-                  "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit? (Only if Q112=Yes)",
+                  "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?",
                   "language": "HIL"
                 },
                 {
-                  "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit? (Only if Q112=Yes)",
+                  "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?",
                   "language": "ILO"
                 }
               ],
@@ -38916,35 +39037,35 @@
                   "name": "Q117_SPECIALIST_FOLLOWUP_VS1",
                   "labels": [
                     {
-                      "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit? (Only if Q112=Yes)",
+                      "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?",
                       "language": "EN"
                     },
                     {
-                      "text": "Pagkatapos mong pumunta sa espesyalista o espesyal na serbisyo, nag-follow up ba sila sa iyo tungkol sa nangyari sa iyong pagbisita?",
+                      "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?",
                       "language": "FIL"
                     },
                     {
-                      "text": "Pagkatapos mong magbisita sa espesyalista o espesyal na serbisyo, nag-follow up ba sinda saimo kun nano an nangyari sa pagbisita?",
+                      "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?",
                       "language": "BCL"
                     },
                     {
-                      "text": "Human nimo pag-adto sa espesyalista o espesyal nga serbisyo, nag-follow up ba sila kanimo bahin sa nahitabo sa pagbisita?",
+                      "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?",
                       "language": "BIS"
                     },
                     {
-                      "text": "Human sa imong pag-adto sa espesyalista/special service, gi-follow up ka ba nila bahin sa nahitabo sa pagbisita?",
+                      "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?",
                       "language": "CEB"
                     },
                     {
-                      "text": "Kahuman mo kumadto ha espesyalista o espesyal nga serbisyo, ginsundan ka ba nira mahitungod han nahitabo ha pagbisita?",
+                      "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?",
                       "language": "WAR"
                     },
                     {
-                      "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit? (Only if Q112=Yes)",
+                      "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?",
                       "language": "HIL"
                     },
                     {
-                      "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit? (Only if Q112=Yes)",
+                      "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?",
                       "language": "ILO"
                     }
                   ],

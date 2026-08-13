@@ -64,8 +64,8 @@ Continuous workstream spanning the full engagement. Governs sprint cadence, stak
 
 > **Scope:** Ethics coordination is owned by ASPSI ops / PI (Dr Claro, Dr Paunlagui, Juvy as PMO) per the signed CSA D1–D6 (TOR + Personnel Schedule). Items below are tracked here for project-level visibility; do not pull into Carl's sprint backlog. See `feedback_sjreb_out_of_scope.md` and `feedback_data_programmer_scope.md`.
 
-- [ ] **E0-020** SJREB application status check (via ASPSI) — ongoing tracking until clearance received `status::in-progress` `priority::critical` `estimate::ongoing` `out_of_scope::data_programmer` `owner::aspsi-pi`
-  - Notes: long-pole blocker for Epic 6 (Testing and Pilot) pretest phase. Project-level dependency, not Carl-actionable.
+- [x] **E0-020** SJREB application status check (via ASPSI) — ongoing tracking until clearance received `status::done` `priority::critical` `estimate::ongoing` `out_of_scope::data_programmer` `owner::aspsi-pi` ✅ *(closed 2026-08-12 per Carl — "all clearances are approved": SJREB-2026-31 Notice of Initial Approval dated 7 Jul 2026 (coordinating PI Dr. Paulyn Jean Claro; CHD site RECs for regional oversight) + PSA Survey Clearance 26SS02-481 (23 Jul 2026), both filed with Deliverable No. 2. This gate is CLOSED — do not re-block Epic 6 items on it.)*
+  - Notes: was the long-pole blocker for Epic 6 (Testing and Pilot) pretest phase; pretest executed 07-15 onward and is complete. Project-level dependency, was not Carl-actionable.
 - [x] **E0-021** PSA sampling endorsement captured in approved Inception Report `status::done` `priority::critical`
 
 ### Risk & Change Management

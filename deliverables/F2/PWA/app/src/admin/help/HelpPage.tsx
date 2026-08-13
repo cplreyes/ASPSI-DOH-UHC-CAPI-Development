@@ -65,11 +65,11 @@ export function HelpPage(): JSX.Element {
           </li>
         </ol>
         <p className="mt-3">
-          <strong>Your session</strong> lasts up to 4 hours and belongs to the browser tab you
-          signed in on. Refreshing the page keeps you signed in where you were; closing the tab
-          (or the browser) signs you out, so a shared laptop never leaves your session open for
-          the next person. Signing out, an expired session, or an admin revoking your access all
-          return you to the sign-in screen.
+          <strong>Your session</strong> lasts up to 4 hours. Refreshing the page keeps you signed
+          in where you were, and new tabs pick up the session while any admin tab is still open.
+          Closing every admin tab — or signing out — ends the session everywhere, so on a shared
+          laptop sign out rather than relying on closing one tab. Signing out, an expired session,
+          or an admin revoking your access all return you to the sign-in screen.
         </p>
       </Article>
 

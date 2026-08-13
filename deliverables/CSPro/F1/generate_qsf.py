@@ -30,6 +30,19 @@ OUT = HERE / "FacilityHeadSurvey.ent.qsf"
 # questionnaire text.
 _BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F1"]
 BUILD_FOOTER = f'<p class="instruction">Build: F1 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+# #1191 (PSA/SJREB, 2026-08-11): survey-tool details required on the CAPI tool.
+BUILD_FOOTER += ('<p class="instruction">PSA SSRCS Clearance No. DOH-2651-01 '
+                 '&middot; issued July 2026 &middot; valid until 31 July 2027<br/>'
+                 'SJREB: ICF ver. 07/25/2026 &middot; Translated Questionnaire ver. 06/05/2026</p>')
+# #1190: DOH Seal / ASPSI / Bagong Pilipinas / Bawat Buhay Mahalaga on the first
+# page — ASPSI sits second, in the "attached agency" slot, per ASPSI's reference
+# image on #1190 (Shan, 2026-08-11). Data-URI so the image travels inside the qsf
+# into the .pen with no deploy-packaging changes; ../cover_logos.png is the one
+# shared asset (built by ../compose_cover_logos.py).
+import base64 as _b64
+_LOGO_B64 = _b64.b64encode((HERE.parent / "cover_logos.png").read_bytes()).decode()
+BUILD_FOOTER = (f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
+                + BUILD_FOOTER)
 
 STYLES = """styles:
   - name: Normal
@@ -62,6 +75,67 @@ def _html(text):
 
 def _p(cls, text):
     return f'<p class="{cls}">{text}</p>'
+
+
+# ------------------------------------------------------------------
+# PAPI emphasis (#1104 / #1105 / #1119 / #1128 / #1130)
+# ------------------------------------------------------------------
+# The paper questionnaire underlines the subject of each Section C
+# "been implemented" question and bolds the compliance area in Q122-Q134;
+# the CAPI rendered them flat. ASPSI asked for parity.
+#
+# Applied to the ENGLISH rendering only. The 7 translated locales keep their
+# current (unemphasised) wording until the next re-key batch - adding markup
+# to a translated string would mean guessing where the phrase falls in each
+# language, and the OVERRIDES map can't be used here because it would emit one
+# English blob to every language and destroy the existing translations.
+#
+# Phrases are DERIVED from the label, never transcribed: each pattern is
+# anchored, and a label that doesn't match is returned unchanged.
+_EMPH_PATTERNS = [
+    # #1185: Section C's Q12/Q14/Q17 use different stems than the Q19-48 battery
+    # ("Has the facility applied for ..." / "If yes, has the creation of ...")
+    # so the anchored rules below never matched them. Underline spans confirmed
+    # against the ASPSI-marked paper (ticket #1185).
+    (re.compile(r"^(<p>12\. Has the )(facility applied for DOH primary care licensing)( since )"), "u"),
+    (re.compile(r"^(<p>1[47]\. If yes, has the )(creation of an? (?:public health|health promotion) unit)( at this facility )"), "u"),
+    # Q19-Q48 battery: "NN. Has/Have the <subject> been implemented since ..."
+    (re.compile(r"^(<p>\d+\. (?:Has|Have) the )(.+?)( been implemented )"), "u"),
+    # Q43 is worded differently: "... has the health facility been implementing
+    # <subject> since ..." - anchor it separately rather than force the rule above.
+    (re.compile(r"^(<p>43\. Has the health facility been implementing )(.+?)( since )"), "u"),
+    # Q122-Q134: "NN. Why was it difficult to comply with: <area>?" - the paper
+    # bolds the area INCLUDING its question mark.
+    (re.compile(r"^(<p>\d+\. Why was it difficult to comply with: )(.+?)(</p>)"), "b"),
+    # Q165/Q166: bold the staff group.
+    (re.compile(r"^(<p>16[56]\. What forms of professional development do you "
+                r"provide to your )(doctors|nurses)(\?)"), "b"),
+]
+
+
+def _emphasize(html):
+    """Wrap the PAPI-emphasised phrase in <u>/<b>. First matching pattern wins;
+    a label matching none is returned untouched."""
+    # #1189: the EN question text for Q88 is the VERBATIM paper stem (448 chars
+    # — over the dcf label cap, so it cannot derive from the label; the dcf
+    # keeps the condensed <=255 string that the locale translations key to).
+    # Both paper bolds included. Locales falling back to English get this too.
+    if html.startswith("<p>88. "):
+        return ("<p>88. The maximum per capita rate amount for YAKAP/Konsulta "
+                "is at Php <b>1,700</b> across private and public facilities. "
+                "According to PhilHealth, 40% of the capitation amount will be "
+                "released as the first tranche after the first patient "
+                "encounter. The remaining 60% will be released based on the "
+                "size of the registered catchment population by December and "
+                "performance targets that year. <b>Based on your practice, is "
+                "this enough?</b></p>")
+    for rx, tag in _EMPH_PATTERNS:
+        m = rx.search(html)
+        if m:
+            return (html[:m.start()] + m.group(1)
+                    + f"<{tag}>{m.group(2)}</{tag}>" + m.group(3)
+                    + html[m.end():])
+    return html
 
 
 # ------------------------------------------------------------------
@@ -173,6 +247,15 @@ INSTRUCTIONS = {
     43: ("Under UHC, basic ward allocation is as follows: 90% for government "
          "general hospitals; 70% for government specialty hospitals, and 10% "
          "for private hospitals. " + _PROBE),
+    # #1109: the capitation definition. #1011 stripped it OUT of the Q57 question text
+    # (testers: it is the paper's italic enumerator note, not part of the spoken question)
+    # but nothing put it back anywhere, so it was simply lost - the enumerator had no
+    # definition at all. #1109 asks for it as a blue note, which is what this class is.
+    # Wording verbatim from the paper (raw/Project-Deliverable-1/F1.txt); only the outer
+    # parentheses are dropped, since they existed to set it off INSIDE the question and
+    # every other note here (43/58/65/88) reads as a plain sentence.
+    57: ("Capitation is the amount per year per registered patient for delivering "
+         "the YAKAP/Konsulta package services."),
     58: ("Performance indicators are the defined set of healthcare goods and "
          "services to be provided for each enrolled patient to receive the "
          "full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL "
@@ -181,6 +264,8 @@ INSTRUCTIONS = {
          "ANSWERING THIS QUESTION."),
     65: ("These are the requirements for YAKAP/Konsulta accreditation "
          "outlined by DOH. " + _READ_ALL),
+    # (#1189: the old 88 entry is gone — the tranche mechanics now live verbatim
+    # inside the full Q88 stem emitted by _emphasize; a note here would duplicate.)
     155: ("Our focus is specifically on referrals external to the facility, "
           "excluding internal referrals. " + _READ_ALL),
 }
@@ -264,7 +349,14 @@ def main():
                 pre, post = ("", "") if ov else question_extras(nm, intro_used)
                 lines += [f"  - name: {dict_name}.{nm}", "    conditions:", "      - questionText:"]
                 for lnm, _ in langs:
-                    body = ov or (pre + _html(labmap.get(lnm) or en) + post)
+                    raw = labmap.get(lnm) or en
+                    txt = _html(raw)
+                    # EN (or a locale falling back to it). _TXT specify-box prompts are
+                    # excluded, matching how question_extras() skips them for instructions -
+                    # the emphasis belongs on the question, not its follow-up specify field.
+                    if raw == en and not nm.endswith("_TXT"):
+                        txt = _emphasize(txt)
+                    body = ov or (pre + txt + post)
                     lines += [f"          {lnm}: |", f"            {body}"]
                 n += 1
     lines.append("...")

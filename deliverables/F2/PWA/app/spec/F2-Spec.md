@@ -355,6 +355,20 @@ The Apr 20 PDF still uses interviewer-style cover blocks (consent-read-aloud, fi
 
 > **END OF SURVEY**
 
+## Section K — Questionnaire Feedback
+
+> *Preamble (verbatim):* "Thank you for completing the survey! Before you submit, please answer a few short questions about the questionnaire itself. Your feedback will help us improve it."
+
+> **App-only section (pretest).** Added per UAT #1003 (Shan, 2026-07-28); not in the Apr 20 paper PDF, so there are no legacy ids. All five items are required per #1004 — the Section-K Next gate blocks Review/Submit until they are answered. FB5 is a textbox (not a 3-option single) exactly as the ticket specifies.
+
+| pdf_q | legacy_q | type | required | label (verbatim) | choices / notes | gf_risk |
+|---|---|---|---|---|---|---|
+| FB1 | — | single | Y | Was the questionnaire comprehensive? | Yes · No | OK |
+| FB2 | — | single | Y | Did we adequately cover the topic? | Yes · No | OK |
+| FB3 | — | long-text | Y | Are there any questions you expected that we would ask and that we didn't? | — | OK |
+| FB4 | — | long-text | Y | Are there any questions you feel may be too sensitive or that may affect the response rate that we should consider deleting? | — | OK |
+| FB5 | — | long-text | Y | Was the questionnaire too long, too short, or about right? | — | OK |
+
 ---
 
 ## Google Forms translation risks — consolidated

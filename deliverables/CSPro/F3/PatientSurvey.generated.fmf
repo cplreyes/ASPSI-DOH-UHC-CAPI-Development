@@ -1074,7 +1074,7 @@ Form=5
   
 [Text]
 Position=50,60,330,76
-Text=5. In what month and year was the patient born? — Month
+Text=5. In what month was the patient born?
  
   
 [Field]
@@ -1086,7 +1086,7 @@ Form=5
   
 [Text]
 Position=50,90,330,106
-Text=5. Year of birth
+Text=5. In what year was the patient born?
  
   
 [Field]
@@ -1791,7 +1791,7 @@ Form=7
   
 [Text]
 Position=50,60,330,76
-Text=38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.
+Text=38.1. When did you register and receive your PhilHealth PIN?
  
   
 [Field]
@@ -1803,7 +1803,7 @@ Form=7
   
 [Text]
 Position=50,90,330,106
-Text=38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.
+Text=38.2. Why are you not registered?
  
   
 [Field]
@@ -1816,7 +1816,7 @@ Form=7
   
 [Text]
 Position=50,120,330,136
-Text=38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. — Other (specify) text
+Text=38.2. Why are you not registered? — Other (specify) text
  
   
 [Field]
@@ -2393,7 +2393,7 @@ Form=8
   
 [Text]
 Position=50,210,330,226
-Text=58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (this facility)? — Days
+Text=Number of Day(s)
  
   
 [Field]
@@ -2405,7 +2405,7 @@ Form=8
   
 [Text]
 Position=50,240,330,256
-Text=58. Waiting time to set an appointment — Minutes
+Text=Number of Minute(s)
  
   
 [Field]
@@ -2577,7 +2577,7 @@ Form=8
   
 [Text]
 Position=50,660,330,676
-Text=69. How long does it take you to travel to the health facility you usually go to — Hours
+Text=Number of Hour(s)
  
   
 [Field]
@@ -2589,7 +2589,7 @@ Form=8
   
 [Text]
 Position=50,690,330,706
-Text=69. How long does it take you to travel to the health facility you usually go to — Minutes
+Text=Number of Minute(s)
  
   
 [Field]
@@ -2651,7 +2651,7 @@ Form=8
   
 [Text]
 Position=50,840,330,856
-Text=72. How long does it take you to travel from your house when going to the nearest primary care facility? — Hours
+Text=Number of Hour(s)
  
   
 [Field]
@@ -2663,7 +2663,7 @@ Form=8
   
 [Text]
 Position=50,870,330,886
-Text=72. How long does it take you to travel from your house when going to the nearest primary care facility? — Minutes
+Text=Number of Minute(s)
  
   
 [Field]
@@ -4268,7 +4268,7 @@ Form=23
   
 [Text]
 Position=50,90,330,106
-Text=106. How long were you confined? — Nights
+Text=Number of Night(s)
  
   
 [Field]
@@ -4280,7 +4280,7 @@ Form=23
   
 [Text]
 Position=50,120,330,136
-Text=106. Length of confinement — Days
+Text=Number of Day(s)
  
   
 [Field]
@@ -4744,7 +4744,7 @@ Form=31
   
 [Text]
 Position=50,60,330,76
-Text=114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113)
+Text=114. Why did you not avail of PhilHealth benefits?
  
   
 [Field]
@@ -4757,7 +4757,7 @@ Form=31
   
 [Text]
 Position=50,90,330,106
-Text=114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) — Other (specify) text
+Text=114. Why did you not avail of PhilHealth benefits? — Other (specify) text
  
   
 [Field]
@@ -6071,7 +6071,7 @@ Form=34
   
 [Text]
 Position=50,240,330,256
-Text=150. How much time does it take for you to reach the nearest pharmacy from your home? — Hours (HH)
+Text=Number of Hour(s)
  
   
 [Field]
@@ -6083,7 +6083,7 @@ Form=34
   
 [Text]
 Position=50,270,330,286
-Text=150. Travel time to nearest pharmacy — Minutes (MM)
+Text=Number of Minute(s)
  
   
 [Field]
@@ -6917,7 +6917,7 @@ Form=36
   
 [Text]
 Position=50,150,330,166
-Text=Date First Visited the Patient (YYYYMMDD)
+Text=Date First Visited the Patient (MMDDYYYY)
  
   
 [Field]
@@ -6929,7 +6929,7 @@ Form=36
   
 [Text]
 Position=50,180,330,196
-Text=Date of Final Visit to the Patient (YYYYMMDD)
+Text=Date of Final Visit to the Patient (MMDDYYYY)
  
   
 [Field]

@@ -19,8 +19,8 @@ describe('<MultiSectionForm>', () => {
     ).toBeInTheDocument();
     // With Q5 unset on initial render: Sections C/D/E (R2-#114 patient-care
     // gating) + G (prescribing-role gating) are all hidden. Visible: A, B, F,
-    // H, I, J = 6.
-    expect(screen.getByText(/Section 1 of 6/)).toBeInTheDocument();
+    // H, I, J + K (#1003 feedback) = 7.
+    expect(screen.getByText(/Section 1 of 7/)).toBeInTheDocument();
   });
 
   it('blocks Next when Section A validation fails and advances when it passes', async () => {
@@ -49,8 +49,9 @@ describe('<MultiSectionForm>', () => {
     await waitFor(() =>
       expect(screen.getByRole('heading', { name: /Section B/ })).toBeInTheDocument(),
     );
-    // Q5='Nurse' is not a prescribing role → Section G hidden → 9 visible sections total
-    expect(screen.getByText(/Section 2 of 9/)).toBeInTheDocument();
+    // Q5='Nurse' is not a prescribing role → Section G hidden → 10 visible
+    // sections total (incl. #1003's Section K feedback)
+    expect(screen.getByText(/Section 2 of 10/)).toBeInTheDocument();
   });
 
   it('#587: blocks advance out of Section A on an implausible tenure (PROF-01) with an inline error', async () => {
@@ -171,7 +172,7 @@ describe('<MultiSectionForm>', () => {
           Q10: 5,
           Q11: 8,
         }}
-        initialIndex={10}
+        initialIndex={11}
         onAutosave={vi.fn()}
         onSubmit={vi.fn()}
       />,
@@ -199,7 +200,7 @@ describe('<MultiSectionForm>', () => {
     renderWithProviders(
       <MultiSectionForm
         initialValues={values}
-        initialIndex={10}
+        initialIndex={11}
         onAutosave={vi.fn()}
         onSubmit={onSubmit}
       />,
@@ -226,7 +227,7 @@ describe('<MultiSectionForm>', () => {
           Q10: 5,
           Q11: 8,
         }}
-        initialIndex={10}
+        initialIndex={11}
         onAutosave={vi.fn()}
         onSubmit={vi.fn()}
       />,
@@ -259,7 +260,7 @@ describe('<MultiSectionForm>', () => {
           Q11: 8,
           Q75: '3', // Section G matrix (1–5 scale) prior answer
         }}
-        initialIndex={10} // REVIEW_INDEX (SECTIONS A–J = 10)
+        initialIndex={11} // REVIEW_INDEX (SECTIONS A–K = 11, #1003)
         onAutosave={vi.fn()}
         onSubmit={vi.fn()}
       />,

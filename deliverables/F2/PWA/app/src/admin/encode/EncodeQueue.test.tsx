@@ -35,12 +35,43 @@ describe('<EncodeQueue />', () => {
     expect(screen.getByTestId('pathname')).toHaveTextContent('/admin/encode/hcw-001');
   });
 
-  it('URL-encodes special characters in hcw_id', async () => {
+  // #847: pre-fix, any string navigated through (a pasted enrollment token
+  // reached the backend and stored). Malformed IDs now stay on the queue
+  // page with an inline error.
+  it('#847: rejects an ID with spaces (format error, no navigation)', async () => {
     const user = userEvent.setup();
     renderWithRouter();
     const input = screen.getByRole('textbox', { name: /hcw id/i });
     await user.type(input, 'hcw with space');
     await user.click(screen.getByRole('button', { name: /open encoder/i }));
-    expect(screen.getByTestId('pathname')).toHaveTextContent('/admin/encode/hcw%20with%20space');
+    expect(screen.getByTestId('hcw-id-error')).toHaveTextContent(/not a valid hcw id/i);
+    expect(screen.getByTestId('pathname')).toHaveTextContent('/');
+  });
+
+  it('#847: rejects a pasted enrollment token (JWT shape) with the token message', async () => {
+    const user = userEvent.setup();
+    renderWithRouter();
+    const input = screen.getByRole('textbox', { name: /hcw id/i });
+    await user.click(input);
+    await user.paste('eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoY3ctMDAxIn0.c2lnbmF0dXJl');
+    await user.click(screen.getByRole('button', { name: /open encoder/i }));
+    expect(screen.getByTestId('hcw-id-error')).toHaveTextContent(/enrollment token or link key/i);
+    expect(screen.getByTestId('pathname')).toHaveTextContent('/');
+  });
+
+  it('#847: rejects a pasted enrollment link (URL with k=) and recovers on retype', async () => {
+    const user = userEvent.setup();
+    renderWithRouter();
+    const input = screen.getByRole('textbox', { name: /hcw id/i });
+    await user.click(input);
+    await user.paste('https://uhc-hcw.asiansocial.org/e/LBRHU1-HCW-03?k=abc123');
+    await user.click(screen.getByRole('button', { name: /open encoder/i }));
+    expect(screen.getByTestId('hcw-id-error')).toHaveTextContent(/enrollment token or link key/i);
+    // Typing clears the error; a real ID then navigates.
+    await user.clear(input);
+    await user.type(input, 'LBRHU1-HCW-03');
+    expect(screen.queryByTestId('hcw-id-error')).not.toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: /open encoder/i }));
+    expect(screen.getByTestId('pathname')).toHaveTextContent('/admin/encode/LBRHU1-HCW-03');
   });
 });

@@ -40,6 +40,10 @@ First built 2026-07-18 (Case drill-down follow-up: "all responses in a
 spreadsheet + export to CSV", Option A+B).
 """
 import subprocess, csv, io, os, sys, html, datetime, argparse, zipfile, json
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import phase_lib  # activity-phase classification (Carl, 2026-07-27)
+import activity_lib  # Survey Activities: named windows w/ dates (2026-07-27)
+import portal_shell as PS  # page chrome — /opt/portal_shell.py + portal.css on the box
 
 ENV = "/opt/app/.env"
 COMPOSE_DIR = "/opt/app"
@@ -128,6 +132,23 @@ def qn_map(schema):
     return {r[0]: r[1] for r in rows}
 
 
+def phase_map(schema):
+    """level-1-id -> (phase, activity): the uploading login (roster wins) with
+    the Manila sync day as fallback -- one shared rule, see phase/activity_lib."""
+    reg = phase_lib.load()
+    areg = activity_lib.load()
+    rows = q("SELECT l.`level-1-id`, COALESCE(sh.username,''),"
+             " COALESCE(DATE_FORMAT(DATE_ADD(sh.created_time, INTERVAL 8 HOUR),"
+             " '%%Y-%%m-%%d'),'')"
+             " FROM %s.`level-1` l JOIN %s.cases c ON c.id=l.`case-id` AND c.deleted=0"
+             " LEFT JOIN csweb_uhc_y2.cspro_sync_history sh"
+             " ON sh.revision = c.last_modified_revision AND sh.direction='put'"
+             % (schema, schema))
+    return {r[0]: (phase_lib.phase_of(r[1] or None, r[2] or None, reg),
+                   activity_lib.activity_of(r[1] or None, r[2] or None, areg))
+            for r in rows}
+
+
 def write_csv(path, header, rows):
     with open(path, "w", encoding="utf-8-sig", newline="") as f:
         w = csv.writer(f)
@@ -139,6 +160,7 @@ def build_instrument(inst, schema, out_dir):
     """Write the wide CSV + roster CSVs for one breakout; return manifest entries."""
     singular, rosters = discover(schema)
     qns = qn_map(schema)
+    phases = phase_map(schema)
     made = []
 
     # ---- wide sheet: one row per case, all singular-record items ----
@@ -148,7 +170,7 @@ def build_instrument(inst, schema, out_dir):
     for _, cs in singular:
         for c in cs:
             (clash if c in seen else seen).add(c)
-    header, parts = ["questionnaire_number"], []
+    header, parts = ["questionnaire_number", "phase", "activity"], []
     for t, cs in singular:
         data = {}
         for row in q("SELECT `level-1-id`, %s FROM %s.%s"
@@ -158,7 +180,8 @@ def build_instrument(inst, schema, out_dir):
         header += [("%s__%s" % (t, c)) if c in clash else c for c in cs]
     wide = []
     for lid, qn in sorted(qns.items(), key=lambda kv: kv[1]):
-        row = [qn]
+        ph, act = phases.get(lid, (phase_lib.UNKNOWN, activity_lib.UNKNOWN))
+        row = [qn, ph, act]
         for cs, data in parts:
             row += list(data.get(lid, [""] * len(cs)))
         wide.append(row)
@@ -192,60 +215,206 @@ def build_f2(out_dir):
     rows = q("SELECT %s FROM %s.f2_responses WHERE COALESCE(`status`,'') <> 'voided'"
              " ORDER BY qn, submitted_at_server"
              % (", ".join(bt(c) for c in cols), F2_SCHEMA))
+    # phase/activity: F2 has no CSWeb login -- classify by Manila submission day
+    reg = phase_lib.load()
+    areg = activity_lib.load()
+    si = cols.index("submitted_at_server") if "submitted_at_server" in cols else None
+    def f2_phase(r):
+        if si is None or not r[si]:
+            return (phase_lib.UNKNOWN, activity_lib.UNKNOWN)
+        try:
+            d = (datetime.datetime.strptime(r[si][:19], "%Y-%m-%d %H:%M:%S")
+                 + datetime.timedelta(hours=8)).strftime("%Y-%m-%d")
+        except ValueError:
+            return (phase_lib.UNKNOWN, activity_lib.UNKNOWN)
+        return (phase_lib.phase_of(None, d, reg),
+                activity_lib.activity_of(None, d, areg))
+    cols = cols + ["phase", "activity"]
+    rows = [r + list(f2_phase(r)) for r in rows]
     fn = "f2_responses.csv"
     write_csv(os.path.join(out_dir, fn), cols, rows)
     return [{"file": fn, "rows": len(rows), "cols": len(cols), "kind": "wide",
              "header": cols, "preview": rows[:PREVIEW_ROWS]}]
 
 
-FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E"
-           "%3Crect width='40' height='40' rx='8' fill='%23006b3f'/%3E"
-           "%3Cpath d='M20 9l9 5v12l-9 5-9-5V14z' fill='%23e5b23b'/%3E%3C/svg%3E")
-
-PAGE_TOP = """<!doctype html>
-<html lang="en"><head><meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="robots" content="noindex" />
-<link rel="icon" href="__FAVICON__" />
-<title>UHC Survey Year 2 — Responses Data Room</title>
-<style>
- :root{--g:#006b3f;--gd:#004d2c;--gold:#e5b23b;--ink:#1c2b25;--muted:#5b6b63;--line:#dfe7e2;--bg:#f4f7f5;--card:#fff}
- *{box-sizing:border-box}body{margin:0;font:15px/1.5 system-ui,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg)}
- header{background:var(--g);color:#fff;padding:20px 24px}
- header h1{margin:0;font-size:20px}header .s{opacity:.85;font-size:13px;margin-top:4px}
- main{max-width:1180px;margin:0 auto;padding:22px}
- h2{font-size:17px;color:var(--gd);border-bottom:2px solid var(--g);padding-bottom:6px;margin:28px 0 8px}
+# Page-specific styles only. The document chrome — reset, sidebar, topbar,
+# canvas, identity chip — comes from portal_shell/portal.css; this bespoke page
+# was shell #3 of the five the console accumulated, retired 2026-08-09.
+# --g is aliased onto the canonical verde so the copied table rules keep
+# working; the old page still carried the pre-2026-07-25 green (#006b3f).
+_PAGE_CSS = """
+ .canvas{--g:var(--verde,#046a38);--gd:#004d2c;--gold:#e5b23b;--card:#fff}
+ .canvas h2{font-size:17px;color:var(--gd);border-bottom:2px solid var(--g);padding-bottom:6px;margin:28px 0 8px}
  .note{background:#fffaf0;border:1px solid var(--gold);border-radius:8px;padding:10px 14px;color:#6b5418;font-size:13px;margin:14px 0}
  table.files{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
  .files th,.files td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}
  .files th{background:#eef3f0;color:var(--gd);font-size:12px}
  .files td.n{text-align:right}.files a{color:var(--g);font-weight:600;text-decoration:none}.files a:hover{text-decoration:underline}
  .prevwrap{overflow:auto;max-height:420px;border:1px solid var(--line);border-radius:12px;background:var(--card);margin:8px 0 4px}
+ /* On a phone the file table's name+size+format columns do not fit, and it widened
+    the whole document instead of scrolling. (.prev was already safe inside
+    .prevwrap.) display:block makes the table its own scroller; display:table on
+    the sections keeps the header aligned with the body. */
+ @media(max-width:620px){
+   table.files{display:block;overflow-x:auto}
+   table.files>tbody,table.files>thead{display:table;width:100%;min-width:460px}
+ }
  table.prev{border-collapse:collapse;font:12px ui-monospace,Consolas,monospace;white-space:nowrap}
  .prev th,.prev td{padding:4px 8px;border:1px solid #eef3f0}
  .prev th{background:#eef3f0;color:var(--gd);position:sticky;top:0;z-index:1}
  .prev td:first-child,.prev th:first-child{position:sticky;left:0;background:#f7faf8;font-weight:600}
- .sub{color:var(--muted);font-size:12.5px;margin:2px 0 14px}
- footer{max-width:1180px;margin:0 auto;padding:14px 22px 40px;color:var(--muted);font-size:12.5px}
- footer a{color:var(--g)}
-</style></head><body>
-<header><h1>UHC Survey Year 2 — Responses Data Room</h1>
-<div class="s">Full response spreadsheets · raw stored codes · same login as the Sync Dashboard</div></header>
-<main>
-<div class="note">One <b>wide CSV per instrument</b> (a row per case, every singular-record item) plus a
-<b>CSV per roster record</b> (a row per case &times; occurrence). Values are the <b>raw codes</b> — labels live in
-the questionnaire codebook; the <a href="/docs/dashboard.html" style="color:#6b5418"><b>Sync Dashboard</b></a> is the labeled view.
-Excel tip: import CSVs via <i>Data &rarr; From Text/CSV</i> and set <code>questionnaire_number</code> to Text,
-or the 12-digit key renders as 1.02E+11. Regenerated every ~2 min from the live breakout DBs.</div>
+ .canvas .sub{color:var(--ink-3,#5b6b63);font-size:12.5px;margin:2px 0 14px}
 """
+
+# Everything from the doctype to the intro note, via the shared shell.
+_PAGE_OPEN = (
+    '<div class="page-head"><div class="eyebrow">UHC Survey Year 2</div>'
+    '<h1>Data room</h1><p class="lead">Full response spreadsheets &middot; raw '
+    'stored codes &middot; rebuilt from the live breakout DBs every ~2 minutes.'
+    '</p></div>'
+    '<div class="note">One <b>wide CSV per instrument</b> (a row per case, every singular-record item) plus a\n'
+    '<b>CSV per roster record</b> (a row per case &times; occurrence). Values are the <b>raw codes</b> — labels live in\n'
+    'the questionnaire codebook; the <a href="/projects/uhc-y2/monitoring/" style="color:#6b5418"><b>Sync Dashboard</b></a> is the labeled view.\n'
+    'Prefer stats-ready files? The <b>labeled exports</b> below carry the same cases as SPSS .sav / Stata .dta\n'
+    '(labels embedded) and R .rds (+ codebook CSV). Excel tip: import CSVs via <i>Data &rarr; From Text/CSV</i> and set\n'
+    '<code>questionnaire_number</code> to Text, or the 12-digit key renders as 1.02E+11.\n'
+    'Regenerated every ~2 min from the live breakout DBs.</div>')
+
+
+# Where the PAYLOAD lives, absolute. The index page moved to
+# /projects/uhc-y2/data/ (unification Slice 4) but the 149 export files did
+# not — so every file href must be /docs/data/-absolute. A bare relative
+# filename would resolve against the page's new directory and 404 every
+# download while looking perfectly fine in the source.
+_D = "/docs/data/"
+
+
+def _f(name):
+    """Absolute href for a payload file served from /docs/data/."""
+    return _D + str(name)
 
 
 def esc(s):
     return html.escape(str(s if s is not None else ""), quote=False)
 
 
-def index_html(manifests, generated):
-    out = [PAGE_TOP.replace("__FAVICON__", FAVICON)]
+def fmt_zip(m, fmt):
+    """Per-format zip name from a stats-manifest instrument entry; tolerates the
+    legacy spss-only manifest shape during a deploy window."""
+    return (m.get("zips") or {}).get(fmt) or (m.get("zip") if fmt == "spss" else None)
+
+
+def zip_cells(zips):
+    return "".join('<td><a href="%s" download>%s</a></td>' % (_f(z), esc(z)) if z else "<td></td>"
+                   for z in zips)
+
+
+def index_html(manifests, generated, spss=None, cspro=None, cbook=None):
+    out = [PS.open_shell("Data room — UHC Survey Y2",
+                         "Analysis-ready exports for UHC Survey Year 2, rebuilt "
+                         "from the live database every two minutes.",
+                         active=PS.P + "/data/",
+                         crumbs=[("UHC Survey Year 2", PS.P + "/"),
+                                 ("Data &amp; exports", None)],
+                         tb_right=PS.PILL_LIVE,
+                         extra_css=_PAGE_CSS),
+           _PAGE_OPEN]
+    # Labeled-exports band (written by csweb-spss-gen.py on the odd minutes; this
+    # index just reflects its manifest, so a stopped stats cron simply hides it)
+    insts = (spss or {}).get("instruments") or {}
+    if any(fmt_zip(m, "spss") for m in insts.values()):
+        out.append("<h2>Labeled exports — SPSS · Stata · R</h2>")
+        out.append('<div class="sub">The same cases as the CSVs below, packaged for the stats tools: '
+                   'SPSS <b>.sav</b> and Stata <b>.dta</b> carry variable labels (question text) and value '
+                   'labels (code &rarr; answer) embedded from the questionnaire codebook — no lookup needed; '
+                   'the R zips hold typed <b>.rds</b> files (raw codes) plus a per-instrument '
+                   '<code>*_codebook.csv</code> with both label sets. Each zip holds the wide file plus its '
+                   'roster files; every file is also served individually at its filename. Generated %s.</div>'
+                   % esc((spss or {}).get("generated", "")))
+        out.append('<table class="files"><tr><th>Instrument</th><th class="n">Cases</th>'
+                   '<th>SPSS (.sav)</th><th>Stata (.dta)</th><th>R (.rds)</th></tr>')
+        for inst in ("f1", "f3", "f4", "f2"):
+            m = insts.get(inst) or {}
+            if not fmt_zip(m, "spss"):
+                continue
+            out.append('<tr><td>%s</td><td class="n">%d</td>%s</tr>'
+                       % (esc(NAMES[inst]), m.get("cases", 0),
+                          zip_cells(fmt_zip(m, f) for f in ("spss", "stata", "r"))))
+        combz = (spss or {}).get("combined_zips") or {}
+        comb = [combz.get(f) or ((spss or {}).get("combined") if f == "spss" else None)
+                for f in ("spss", "stata", "r")]
+        if any(comb):
+            out.append('<tr><td>All instruments (one zip per format)</td><td class="n"></td>%s</tr>'
+                       % zip_cells(comb))
+        out.append("</table>")
+    # Codebook band (static, built by data-harmonization/generate_codebook.py;
+    # hidden until codebook-manifest.json lands)
+    cbi = (cbook or {}).get("instruments") or {}
+    if any(m.get("xlsx") for m in cbi.values()):
+        out.append("<h2>Codebook — what every variable means</h2>")
+        out.append('<div class="sub">The official variable documentation for all four instruments: '
+                   'variable name, label, the literal question text, <b>universe</b> (who was asked, '
+                   'i.e. the skip logic), outbound <b>routing</b>, value categories, special codes '
+                   '(Don\'t know / Refused) and the <b>CAPI validation rules</b>. Documented to the '
+                   '<b>DDI-Codebook 2.5</b> element set that the PSA Data Archive (PSADA/NADA) uses, '
+                   'presented in DHS recode-manual table style. Generated from the deployed build of '
+                   'each instrument — the version below is the instrument it documents. Packaged %s.</div>'
+                   % esc((cbook or {}).get("generated", "")))
+        out.append('<table class="files"><tr><th>Instrument</th><th>Documents build</th>'
+                   '<th class="n">Variables</th><th>Excel</th><th>PDF</th></tr>')
+        for inst in ("f1", "f3", "f4", "f2"):
+            m = cbi.get(inst) or {}
+            if not m.get("xlsx"):
+                continue
+            ver = m.get("version") or ""
+            vtxt = ("v%s (%s)" % (ver, m.get("date", "")) if ver and ver != "PWA"
+                    else "PWA (in-app spec)")
+            out.append('<tr><td>%s</td><td>%s</td><td class="n">%d</td>'
+                       '<td><a href="%s" download>%s</a></td><td>%s</td></tr>'
+                       % (esc(m.get("name", inst)), esc(vtxt), m.get("variables", 0),
+                          _f(m["xlsx"]), esc(m["xlsx"]),
+                          ('<a href="%s" download>%s</a>' % (_f(m["pdf"]), esc(m["pdf"])))
+                          if m.get("pdf") else ""))
+        comb = (cbook or {}).get("combined") or {}
+        if comb.get("pdf") or comb.get("zip"):
+            links = []
+            if comb.get("pdf"):
+                links.append('<a href="%s" download>%s</a>' % (_f(comb["pdf"]), esc(comb["pdf"])))
+            if comb.get("zip"):
+                links.append('<a href="%s" download>%s</a>' % (_f(comb["zip"]), esc(comb["zip"])))
+            out.append('<tr><td>All instruments in one book</td><td></td><td class="n"></td>'
+                       '<td>%s</td><td>%s</td></tr>'
+                       % (links[-1] if comb.get("zip") else "", links[0] if comb.get("pdf") else ""))
+        out.append("</table>")
+    # CSPro band (static packages built by gen-cspro-packages.py, re-scp'd on
+    # instrument redeploys; hidden until cspro-manifest.json lands)
+    cins = (cspro or {}).get("instruments") or {}
+    if any(m.get("zip") for m in cins.values()):
+        out.append("<h2>CSPro applications &amp; dictionaries</h2>")
+        out.append('<div class="sub">Run the actual CAPI instruments locally: each app package is the complete '
+                   'CSPro 8.0 entry application — compiled <b>.pen</b>, versioned <b>.pff</b>, Designer source '
+                   '(.ent / .apc / .qsf / .fmf / .dcf) and the PSGC/facility lookup files. Extract and '
+                   'double-click the .pff: it opens with an <b>empty local case file</b> — no sync, no '
+                   'credentials in the package. Dictionaries (<b>.dcf</b>, CSPro 8.0 JSON) are also served '
+                   'individually for data users. F2 is a PWA (no CSPro app); its codebook is '
+                   '<code>f2_codebook.csv</code>. Packaged %s.</div>'
+                   % esc((cspro or {}).get("generated", "")))
+        out.append('<table class="files"><tr><th>Instrument</th><th>Version</th><th>App package</th>'
+                   '<th>Dictionary (.dcf)</th></tr>')
+        for inst in ("f1", "f3", "f4"):
+            m = cins.get(inst) or {}
+            if not m.get("zip"):
+                continue
+            out.append('<tr><td>%s</td><td>v%s (%s)</td><td><a href="%s" download>%s</a></td>'
+                       '<td><a href="%s" download>%s</a></td></tr>'
+                       % (esc(m.get("app") or NAMES.get(inst, inst)), esc(m.get("version", "?")),
+                          esc(m.get("date", "")), _f(m["zip"]), esc(m["zip"]),
+                          _f(m["dcf"]), esc(m["dcf"])))
+        dz = (cspro or {}).get("dictionaries_zip")
+        if dz:
+            out.append('<tr><td>All dictionaries in one zip</td><td></td><td></td>'
+                       '<td><a href="%s" download>%s</a></td></tr>' % (_f(dz), esc(dz)))
+        out.append("</table>")
     for inst in ("f1", "f3", "f4", "f2"):
         entries = manifests.get(inst) or []
         out.append("<h2>%s</h2>" % esc(NAMES[inst]))
@@ -257,7 +426,7 @@ def index_html(manifests, generated):
             what = ("all singular-record items, one row per case" if e["kind"] == "wide"
                     else "roster record, one row per case &times; occurrence")
             out.append('<tr><td><a href="%s" download>%s</a></td><td class="n">%d</td><td class="n">%d</td><td>%s</td></tr>'
-                       % (e["file"], esc(e["file"]), e["rows"], e["cols"], what))
+                       % (_f(e["file"]), esc(e["file"]), e["rows"], e["cols"], what))
         out.append("</table>")
         for e in entries:
             if e["kind"] != "wide" or "preview" not in e:
@@ -269,14 +438,23 @@ def index_html(manifests, generated):
             for row in e["preview"]:
                 out.append("<tr>%s</tr>" % "".join("<td>%s</td>" % esc(c) for c in row))
             out.append("</table></div>")
-    out.append('</main><footer>Generated %s UTC · source: F1/F3/F4 breakout DBs + <code>csweb_f2</code> mirror · '
-               'back to the <a href="/docs/dashboard.html">Sync Dashboard</a>.</footer></body></html>' % esc(generated))
+    # The identity chip + sign-out come from close_shell (canonical /docs/idp/
+    # endpoints) — the page no longer carries its own whoami script.
+    out.append(PS.close_shell(footer_html=(
+        'Generated %s UTC · source: F1/F3/F4 breakout DBs + <code>csweb_f2</code> mirror · '
+        'back to the <a href="/projects/uhc-y2/monitoring/">Sync Dashboard</a>.' % esc(generated))))
     return "\n".join(out)
 
 
 def main():
     ap = argparse.ArgumentParser(description="Generate the responses data room (CSVs + index).")
     ap.add_argument("--out-dir", default=OUT_DIR, help="output dir (default: %(default)s)")
+    ap.add_argument("--index-out",
+                    default="/opt/app/capi-www/projects/uhc-y2/data/index.html",
+                    help="where the data-room PAGE goes (unification Slice 4). The "
+                         "149 export FILES stay in --out-dir under /docs/data/ — a "
+                         ".csv needs no chrome, and moving them would churn every "
+                         "manifest and the data.export ACL rule.")
     a = ap.parse_args()
     live = os.path.abspath(a.out_dir) == os.path.abspath(OUT_DIR)
     os.makedirs(a.out_dir, exist_ok=True)
@@ -299,8 +477,27 @@ def main():
         print("WARN: f2 failed: %s" % str(e)[:300])
 
     generated = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M")
-    with open(os.path.join(a.out_dir, "index.html"), "w", encoding="utf-8") as f:
-        f.write(index_html(manifests, generated))
+    try:
+        with open(os.path.join(a.out_dir, "spss-manifest.json"), encoding="utf-8") as f:
+            spss = json.load(f)
+    except Exception:
+        spss = None
+    try:
+        with open(os.path.join(a.out_dir, "cspro-manifest.json"), encoding="utf-8") as f:
+            cspro = json.load(f)
+    except Exception:
+        cspro = None
+    try:
+        with open(os.path.join(a.out_dir, "codebook-manifest.json"), encoding="utf-8") as f:
+            cbook = json.load(f)
+    except Exception:
+        cbook = None
+    # The page lives in the portal docroot; the payload stays in out_dir.
+    # Off-box runs (--out-dir /tmp/...) keep the index beside the CSVs.
+    idx = a.index_out if live else os.path.join(a.out_dir, "index.html")
+    os.makedirs(os.path.dirname(idx), exist_ok=True)
+    with open(idx, "w", encoding="utf-8") as f:
+        f.write(index_html(manifests, generated, spss, cspro, cbook))
 
     # ---- per-instrument zip bundles + manifest.json (dashboard Downloads band) ----
     # zipped AFTER the CSVs so a bundle is always internally consistent; the dashboard

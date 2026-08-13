@@ -332,7 +332,7 @@
               "name": "DATE_FIRST_VISITED",
               "labels": [
                 {
-                  "text": "Date First Visited the Patient (YYYYMMDD)",
+                  "text": "Date First Visited the Patient (MMDDYYYY)",
                   "language": "EN"
                 },
                 {
@@ -340,27 +340,27 @@
                   "language": "FIL"
                 },
                 {
-                  "text": "Date First Visited the Patient (YYYYMMDD)",
+                  "text": "Date First Visited the Patient (MMDDYYYY)",
                   "language": "BCL"
                 },
                 {
-                  "text": "Date First Visited the Patient (YYYYMMDD)",
+                  "text": "Date First Visited the Patient (MMDDYYYY)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Date First Visited the Patient (YYYYMMDD)",
+                  "text": "Date First Visited the Patient (MMDDYYYY)",
                   "language": "CEB"
                 },
                 {
-                  "text": "Date First Visited the Patient (YYYYMMDD)",
+                  "text": "Date First Visited the Patient (MMDDYYYY)",
                   "language": "WAR"
                 },
                 {
-                  "text": "Date First Visited the Patient (YYYYMMDD)",
+                  "text": "Date First Visited the Patient (MMDDYYYY)",
                   "language": "HIL"
                 },
                 {
-                  "text": "Date First Visited the Patient (YYYYMMDD)",
+                  "text": "Date First Visited the Patient (MMDDYYYY)",
                   "language": "ILO"
                 }
               ],
@@ -372,7 +372,7 @@
               "name": "DATE_FINAL_VISIT",
               "labels": [
                 {
-                  "text": "Date of Final Visit to the Patient (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Patient (MMDDYYYY)",
                   "language": "EN"
                 },
                 {
@@ -380,27 +380,27 @@
                   "language": "FIL"
                 },
                 {
-                  "text": "Date of Final Visit to the Patient (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Patient (MMDDYYYY)",
                   "language": "BCL"
                 },
                 {
-                  "text": "Date of Final Visit to the Patient (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Patient (MMDDYYYY)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Date of Final Visit to the Patient (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Patient (MMDDYYYY)",
                   "language": "CEB"
                 },
                 {
-                  "text": "Date of Final Visit to the Patient (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Patient (MMDDYYYY)",
                   "language": "WAR"
                 },
                 {
-                  "text": "Date of Final Visit to the Patient (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Patient (MMDDYYYY)",
                   "language": "HIL"
                 },
                 {
-                  "text": "Date of Final Visit to the Patient (YYYYMMDD)",
+                  "text": "Date of Final Visit to the Patient (MMDDYYYY)",
                   "language": "ILO"
                 }
               ],
@@ -5814,35 +5814,35 @@
               "name": "Q5_BIRTH_MONTH",
               "labels": [
                 {
-                  "text": "5. In what month and year was the patient born? \u2014 Month",
+                  "text": "5. In what month was the patient born?",
                   "language": "EN"
                 },
                 {
-                  "text": "5. In what month and year was the patient born? \u2014 Month",
+                  "text": "5. In what month was the patient born?",
                   "language": "FIL"
                 },
                 {
-                  "text": "5. In what month and year was the patient born? \u2014 Month",
+                  "text": "5. In what month was the patient born?",
                   "language": "BCL"
                 },
                 {
-                  "text": "Bulan",
+                  "text": "5. In what month was the patient born?",
                   "language": "BIS"
                 },
                 {
-                  "text": "5. In what month and year was the patient born? \u2014 Month",
+                  "text": "5. In what month was the patient born?",
                   "language": "CEB"
                 },
                 {
-                  "text": "5. In what month and year was the patient born? \u2014 Month",
+                  "text": "5. In what month was the patient born?",
                   "language": "WAR"
                 },
                 {
-                  "text": "5. In what month and year was the patient born? \u2014 Month",
+                  "text": "5. In what month was the patient born?",
                   "language": "HIL"
                 },
                 {
-                  "text": "5. In what month and year was the patient born? \u2014 Month",
+                  "text": "5. In what month was the patient born?",
                   "language": "ILO"
                 }
               ],
@@ -5854,35 +5854,35 @@
               "name": "Q5_BIRTH_YEAR",
               "labels": [
                 {
-                  "text": "5. Year of birth",
+                  "text": "5. In what year was the patient born?",
                   "language": "EN"
                 },
                 {
-                  "text": "5. Year of birth",
+                  "text": "5. In what year was the patient born?",
                   "language": "FIL"
                 },
                 {
-                  "text": "5. Year of birth",
+                  "text": "5. In what year was the patient born?",
                   "language": "BCL"
                 },
                 {
-                  "text": "5. Year of birth",
+                  "text": "5. In what year was the patient born?",
                   "language": "BIS"
                 },
                 {
-                  "text": "5. Year of birth",
+                  "text": "5. In what year was the patient born?",
                   "language": "CEB"
                 },
                 {
-                  "text": "5. Year of birth",
+                  "text": "5. In what year was the patient born?",
                   "language": "WAR"
                 },
                 {
-                  "text": "5. Year of birth",
+                  "text": "5. In what year was the patient born?",
                   "language": "HIL"
                 },
                 {
-                  "text": "5. Year of birth",
+                  "text": "5. In what year was the patient born?",
                   "language": "ILO"
                 }
               ],
@@ -14582,35 +14582,35 @@
               "name": "Q38_1_PIN_WHEN",
               "labels": [
                 {
-                  "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                  "text": "38.1. When did you register and receive your PhilHealth PIN?",
                   "language": "EN"
                 },
                 {
-                  "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                  "text": "38.1. When did you register and receive your PhilHealth PIN?",
                   "language": "FIL"
                 },
                 {
-                  "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                  "text": "38.1. When did you register and receive your PhilHealth PIN?",
                   "language": "BCL"
                 },
                 {
-                  "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                  "text": "38.1. When did you register and receive your PhilHealth PIN?",
                   "language": "BIS"
                 },
                 {
-                  "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                  "text": "38.1. When did you register and receive your PhilHealth PIN?",
                   "language": "CEB"
                 },
                 {
-                  "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                  "text": "38.1. When did you register and receive your PhilHealth PIN?",
                   "language": "WAR"
                 },
                 {
-                  "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                  "text": "38.1. When did you register and receive your PhilHealth PIN?",
                   "language": "HIL"
                 },
                 {
-                  "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                  "text": "38.1. When did you register and receive your PhilHealth PIN?",
                   "language": "ILO"
                 }
               ],
@@ -14622,35 +14622,35 @@
                   "name": "Q38_1_PIN_WHEN_VS1",
                   "labels": [
                     {
-                      "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                      "text": "38.1. When did you register and receive your PhilHealth PIN?",
                       "language": "EN"
                     },
                     {
-                      "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                      "text": "38.1. When did you register and receive your PhilHealth PIN?",
                       "language": "FIL"
                     },
                     {
-                      "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                      "text": "38.1. When did you register and receive your PhilHealth PIN?",
                       "language": "BCL"
                     },
                     {
-                      "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                      "text": "38.1. When did you register and receive your PhilHealth PIN?",
                       "language": "BIS"
                     },
                     {
-                      "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                      "text": "38.1. When did you register and receive your PhilHealth PIN?",
                       "language": "CEB"
                     },
                     {
-                      "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                      "text": "38.1. When did you register and receive your PhilHealth PIN?",
                       "language": "WAR"
                     },
                     {
-                      "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                      "text": "38.1. When did you register and receive your PhilHealth PIN?",
                       "language": "HIL"
                     },
                     {
-                      "text": "38.1. When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                      "text": "38.1. When did you register and receive your PhilHealth PIN?",
                       "language": "ILO"
                     }
                   ],
@@ -14868,35 +14868,35 @@
               "name": "Q38_2_WHY_NOT_REG",
               "labels": [
                 {
-                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                  "text": "38.2. Why are you not registered?",
                   "language": "EN"
                 },
                 {
-                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                  "text": "38.2. Why are you not registered?",
                   "language": "FIL"
                 },
                 {
-                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                  "text": "38.2. Why are you not registered?",
                   "language": "BCL"
                 },
                 {
-                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                  "text": "38.2. Why are you not registered?",
                   "language": "BIS"
                 },
                 {
-                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                  "text": "38.2. Why are you not registered?",
                   "language": "CEB"
                 },
                 {
-                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                  "text": "38.2. Why are you not registered?",
                   "language": "WAR"
                 },
                 {
-                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                  "text": "38.2. Why are you not registered?",
                   "language": "HIL"
                 },
                 {
-                  "text": "Apay a saan kayo a nakarehistro?",
+                  "text": "38.2. Why are you not registered?",
                   "language": "ILO"
                 }
               ],
@@ -14907,35 +14907,35 @@
                   "name": "Q38_2_WHY_NOT_REG_VS1",
                   "labels": [
                     {
-                      "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                      "text": "38.2. Why are you not registered?",
                       "language": "EN"
                     },
                     {
-                      "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                      "text": "38.2. Why are you not registered?",
                       "language": "FIL"
                     },
                     {
-                      "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                      "text": "38.2. Why are you not registered?",
                       "language": "BCL"
                     },
                     {
-                      "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                      "text": "38.2. Why are you not registered?",
                       "language": "BIS"
                     },
                     {
-                      "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                      "text": "38.2. Why are you not registered?",
                       "language": "CEB"
                     },
                     {
-                      "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                      "text": "38.2. Why are you not registered?",
                       "language": "WAR"
                     },
                     {
-                      "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+                      "text": "38.2. Why are you not registered?",
                       "language": "HIL"
                     },
                     {
-                      "text": "Apay a saan kayo a nakarehistro?",
+                      "text": "38.2. Why are you not registered?",
                       "language": "ILO"
                     }
                   ],
@@ -15317,35 +15317,35 @@
               "name": "Q38_2_WHY_NOT_REG_OTHER_TXT",
               "labels": [
                 {
-                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. \u2014 Other (specify) text",
+                  "text": "38.2. Why are you not registered? \u2014 Other (specify) text",
                   "language": "EN"
                 },
                 {
-                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. \u2014 Other (specify) text",
+                  "text": "38.2. Why are you not registered? \u2014 Other (specify) text",
                   "language": "FIL"
                 },
                 {
-                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. \u2014 Other (specify) text",
+                  "text": "38.2. Why are you not registered? \u2014 Other (specify) text",
                   "language": "BCL"
                 },
                 {
-                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. \u2014 Other (specify) text",
+                  "text": "38.2. Why are you not registered? \u2014 Other (specify) text",
                   "language": "BIS"
                 },
                 {
-                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. \u2014 Other (specify) text",
+                  "text": "38.2. Why are you not registered? \u2014 Other (specify) text",
                   "language": "CEB"
                 },
                 {
-                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. \u2014 Other (specify) text",
+                  "text": "38.2. Why are you not registered? \u2014 Other (specify) text",
                   "language": "WAR"
                 },
                 {
-                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. \u2014 Other (specify) text",
+                  "text": "38.2. Why are you not registered? \u2014 Other (specify) text",
                   "language": "HIL"
                 },
                 {
-                  "text": "38.2. Why are you not registered? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. \u2014 Other (specify) text",
+                  "text": "38.2. Why are you not registered? \u2014 Other (specify) text",
                   "language": "ILO"
                 }
               ],
@@ -17959,11 +17959,11 @@
                     {
                       "labels": [
                         {
-                          "text": "Lifetime member (i.e., individuals aged 60 years and above, uniformed personnel aged 56 years and above, and SSS underground miner-retirees aged 55 years and above and paid at least 120 monthly contributions with PhilHealth and the former Medicare...",
+                          "text": "Lifetime member (i.e., individuals aged 60+, uniformed personnel aged 56+, and SSS underground miner-retirees aged 55+ who paid at least 120 monthly contributions with PhilHealth and the former Medicare Programs of SSS and GSIS)",
                           "language": "EN"
                         },
                         {
-                          "text": "Lifetime member (i.e., individuals aged 60 years and above, uniformed personnel aged 56 years and above, and SSS underground miner-retirees aged 55 years and above and paid at least 120 monthly contributions with PhilHealth and the former Medicare...",
+                          "text": "Lifetime member (hal., mga indibidwal na edad 60 pataas, mga uniformed personnel na edad 56 pataas, at SSS underground miner-retirees na edad 55 pataas at nakapagbayad ng hindi bababa sa 120 buwang kontribusyon sa PhilHealth at sa dating Medicare...",
                           "language": "FIL"
                         },
                         {
@@ -17983,11 +17983,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Lifetime member (i.e., individuals aged 60 years and above, uniformed personnel aged 56 years and above, and SSS underground miner-retirees aged 55 years and above and paid at least 120 monthly contributions with PhilHealth and the former Medicare...",
+                          "text": "Lifetime nga miyembro (halimbawa, mga tawo nga 60 anyos pataas, uniformed personnel 56 anyos pataas, kag SSS nga underground miner-retirees 55 anyos pataas kag nakabayad sang labing menos 120 ka bulan nga kontribusyon sa",
                           "language": "HIL"
                         },
                         {
-                          "text": "Lifetime member (i.e., individuals aged 60 years and above, uniformed personnel aged 56 years and above, and SSS underground miner-retirees aged 55 years and above and paid at least 120 monthly contributions with PhilHealth and the former Medicare...",
+                          "text": "(Lifetime member (i.e., dagiti indibidual nga agtawen iti 60 ken nasursurok, dagiti nakauniporme a personnel nga agtawen iti 56 ken nasursurok, ken dagiti SSS underground miner-retiree nga agtawen iti 55 a tawen ken nasursurok ken nagbayad iti di...",
                           "language": "ILO"
                         }
                       ],
@@ -18000,11 +18000,11 @@
                     {
                       "labels": [
                         {
-                          "text": "Senior citizen (i.e., residents of the Philippines, aged sixty (60) years or above and are not currently covered by any membership category of PhilHealth and qualified dependents of senior citizen members who are also senior citizen themselves or...",
+                          "text": "Senior citizen (i.e., residents of the Philippines aged sixty (60) years or above not currently covered by any PhilHealth membership category, and qualified dependents of senior citizen members who are themselves senior citizens)",
                           "language": "EN"
                         },
                         {
-                          "text": "Senior citizen (i.e., residents of the Philippines, aged sixty (60) years or above and are not currently covered by any membership category of PhilHealth and qualified dependents of senior citizen members who are also senior citizen themselves or...",
+                          "text": "Senior citizen (hal., mga residente ng Pilipinas na edad 60 pataas at hindi kasalukuyang sakop ng anumang kategorya ng PhilHealth, pati na rin ang kanilang kwalipikadong dependents na senior citizen din o kabilang sa ibang kategorya ng miyembro, may o...",
                           "language": "FIL"
                         },
                         {
@@ -18024,11 +18024,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Senior citizen (i.e., residents of the Philippines, aged sixty (60) years or above and are not currently covered by any membership category of PhilHealth and qualified dependents of senior citizen members who are also senior citizen themselves or...",
+                          "text": "Matanda nga tawo (halimbawa, mga residente sang Pilipinas nga nagaedad 60 anyos ukon pataas kag wala pa sakop sa bisan ano nga membership sang",
                           "language": "HIL"
                         },
                         {
-                          "text": "Senior citizen (i.e., residents of the Philippines, aged sixty (60) years or above and are not currently covered by any membership category of PhilHealth and qualified dependents of senior citizen members who are also senior citizen themselves or...",
+                          "text": "(Senior citizen (i.e., residente iti Filipinas, agtawen iti innem a pulo (60) a tawen wenno nasursurok ken saan nga agdama a sakupen ti aniaman a kategoria ti pannakaikameng ti",
                           "language": "ILO"
                         }
                       ],
@@ -32738,6 +32738,47 @@
                     {
                       "labels": [
                         {
+                          "text": "In kind",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
                           "text": "Free/no cost",
                           "language": "EN"
                         },
@@ -32772,7 +32813,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "03"
+                          "value": "04"
                         }
                       ]
                     },
@@ -32813,7 +32854,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "04"
+                          "value": "05"
                         }
                       ]
                     },
@@ -32854,7 +32895,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "05"
+                          "value": "06"
                         }
                       ]
                     },
@@ -32890,47 +32931,6 @@
                         },
                         {
                           "text": "Libre, singir iti HMO",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "06"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "In kind",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "In kind",
                           "language": "ILO"
                         }
                       ],
@@ -33231,6 +33231,47 @@
                     {
                       "labels": [
                         {
+                          "text": "In kind",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
                           "text": "Free/no cost",
                           "language": "EN"
                         },
@@ -33265,7 +33306,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "03"
+                          "value": "04"
                         }
                       ]
                     },
@@ -33306,7 +33347,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "04"
+                          "value": "05"
                         }
                       ]
                     },
@@ -33347,7 +33388,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "05"
+                          "value": "06"
                         }
                       ]
                     },
@@ -33383,47 +33424,6 @@
                         },
                         {
                           "text": "Libre, singir iti HMO",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "06"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "In kind",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "In kind",
                           "language": "ILO"
                         }
                       ],
@@ -35934,6 +35934,47 @@
                     {
                       "labels": [
                         {
+                          "text": "Donation",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
                           "text": "Free/no cost",
                           "language": "EN"
                         },
@@ -35968,7 +36009,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "02"
+                          "value": "03"
                         }
                       ]
                     },
@@ -36009,7 +36050,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "03"
+                          "value": "04"
                         }
                       ]
                     },
@@ -36050,7 +36091,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "04"
+                          "value": "05"
                         }
                       ]
                     },
@@ -36091,47 +36132,6 @@
                       ],
                       "pairs": [
                         {
-                          "value": "05"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "In kind",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
                           "value": "06"
                         }
                       ]
@@ -36139,35 +36139,35 @@
                     {
                       "labels": [
                         {
-                          "text": "Donation",
+                          "text": "In kind",
                           "language": "EN"
                         },
                         {
-                          "text": "Donation",
+                          "text": "In kind",
                           "language": "FIL"
                         },
                         {
-                          "text": "Donation",
+                          "text": "In kind",
                           "language": "BCL"
                         },
                         {
-                          "text": "Donation",
+                          "text": "In kind",
                           "language": "BIS"
                         },
                         {
-                          "text": "Donation",
+                          "text": "In kind",
                           "language": "CEB"
                         },
                         {
-                          "text": "Donation",
+                          "text": "In kind",
                           "language": "WAR"
                         },
                         {
-                          "text": "Donation",
+                          "text": "In kind",
                           "language": "HIL"
                         },
                         {
-                          "text": "Donation",
+                          "text": "In kind",
                           "language": "ILO"
                         }
                       ],
@@ -36427,6 +36427,47 @@
                     {
                       "labels": [
                         {
+                          "text": "Donation",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
                           "text": "Free/no cost",
                           "language": "EN"
                         },
@@ -36461,7 +36502,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "02"
+                          "value": "03"
                         }
                       ]
                     },
@@ -36502,7 +36543,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "03"
+                          "value": "04"
                         }
                       ]
                     },
@@ -36543,7 +36584,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "04"
+                          "value": "05"
                         }
                       ]
                     },
@@ -36584,47 +36625,6 @@
                       ],
                       "pairs": [
                         {
-                          "value": "05"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "In kind",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
                           "value": "06"
                         }
                       ]
@@ -36632,35 +36632,35 @@
                     {
                       "labels": [
                         {
-                          "text": "Donation",
+                          "text": "In kind",
                           "language": "EN"
                         },
                         {
-                          "text": "Donation",
+                          "text": "In kind",
                           "language": "FIL"
                         },
                         {
-                          "text": "Donation",
+                          "text": "In kind",
                           "language": "BCL"
                         },
                         {
-                          "text": "Donation",
+                          "text": "In kind",
                           "language": "BIS"
                         },
                         {
-                          "text": "Donation",
+                          "text": "In kind",
                           "language": "CEB"
                         },
                         {
-                          "text": "Donation",
+                          "text": "In kind",
                           "language": "WAR"
                         },
                         {
-                          "text": "Donation",
+                          "text": "In kind",
                           "language": "HIL"
                         },
                         {
-                          "text": "Donation",
+                          "text": "In kind",
                           "language": "ILO"
                         }
                       ],
@@ -36876,7 +36876,7 @@
                 }
               ],
               "contentType": "alpha",
-              "length": 8,
+              "length": 10,
               "valueSets": [
                 {
                   "name": "Q971_SOURCES_VS1",
@@ -37076,6 +37076,47 @@
                       "pairs": [
                         {
                           "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "None of the above",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Wala sa mga nabanggit",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Wara sa nasa itaas",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Wala sa mga nahisgutan",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Wala sa ibabaw",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Waray ha mga nayakan",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Wala sang mga nabanggit",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Awan kadagiti nadakamat",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "90"
                         }
                       ]
                     }
@@ -37572,7 +37613,7 @@
                 }
               ],
               "contentType": "alpha",
-              "length": 12,
+              "length": 14,
               "valueSets": [
                 {
                   "name": "Q972_SOURCES_VS1",
@@ -37854,6 +37895,47 @@
                       "pairs": [
                         {
                           "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "None of the above",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Wala sa mga nabanggit",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Wara sa nasa itaas",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Wala sa mga nahisgutan",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Wala sa ibabaw",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Waray ha mga nayakan",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Wala sang mga nabanggit",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Awan kadagiti nadakamat",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "90"
                         }
                       ]
                     }
@@ -42477,35 +42559,35 @@
               "name": "Q106_DAYS",
               "labels": [
                 {
-                  "text": "106. Length of confinement \u2014 Days",
+                  "text": "106. How long were you confined? \u2014 Days",
                   "language": "EN"
                 },
                 {
-                  "text": "106. Length of confinement \u2014 Days",
+                  "text": "106. How long were you confined? \u2014 Days",
                   "language": "FIL"
                 },
                 {
-                  "text": "106. Length of confinement \u2014 Days",
+                  "text": "Aldaw",
                   "language": "BCL"
                 },
                 {
-                  "text": "106. Length of confinement \u2014 Days",
+                  "text": "Adlaw",
                   "language": "BIS"
                 },
                 {
-                  "text": "106. Length of confinement \u2014 Days",
+                  "text": "Adlaw",
                   "language": "CEB"
                 },
                 {
-                  "text": "106. Length of confinement \u2014 Days",
+                  "text": "Adlaw",
                   "language": "WAR"
                 },
                 {
-                  "text": "106. Length of confinement \u2014 Days",
+                  "text": "106. How long were you confined? \u2014 Days",
                   "language": "HIL"
                 },
                 {
-                  "text": "106. Length of confinement \u2014 Days",
+                  "text": "106. How long were you confined? \u2014 Days",
                   "language": "ILO"
                 }
               ],
@@ -42633,6 +42715,88 @@
                     {
                       "labels": [
                         {
+                          "text": "Donation",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "In kind",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
                           "text": "Free/no cost",
                           "language": "EN"
                         },
@@ -42667,7 +42831,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "02"
+                          "value": "04"
                         }
                       ]
                     },
@@ -42708,7 +42872,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "03"
+                          "value": "05"
                         }
                       ]
                     },
@@ -42749,7 +42913,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "04"
+                          "value": "06"
                         }
                       ]
                     },
@@ -42790,7 +42954,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "05"
+                          "value": "07"
                         }
                       ]
                     },
@@ -42826,88 +42990,6 @@
                         },
                         {
                           "text": "(Libre, singir iti",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "06"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Donation",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "07"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "In kind",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "In kind",
                           "language": "ILO"
                         }
                       ],
@@ -43208,6 +43290,88 @@
                     {
                       "labels": [
                         {
+                          "text": "Donation",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "In kind",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
                           "text": "Free/no cost",
                           "language": "EN"
                         },
@@ -43242,7 +43406,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "02"
+                          "value": "04"
                         }
                       ]
                     },
@@ -43283,7 +43447,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "03"
+                          "value": "05"
                         }
                       ]
                     },
@@ -43324,7 +43488,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "04"
+                          "value": "06"
                         }
                       ]
                     },
@@ -43365,7 +43529,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "05"
+                          "value": "07"
                         }
                       ]
                     },
@@ -43401,88 +43565,6 @@
                         },
                         {
                           "text": "(Libre, singir iti",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "06"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Donation",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "07"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "In kind",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "In kind",
                           "language": "ILO"
                         }
                       ],
@@ -43901,7 +43983,7 @@
                 }
               ],
               "contentType": "alpha",
-              "length": 18,
+              "length": 20,
               "valueSets": [
                 {
                   "name": "Q109_SOURCES_VS1",
@@ -43984,6 +44066,88 @@
                     {
                       "labels": [
                         {
+                          "text": "Donation",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "In kind",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
                           "text": "Free/no cost",
                           "language": "EN"
                         },
@@ -44018,7 +44182,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "02"
+                          "value": "04"
                         }
                       ]
                     },
@@ -44059,7 +44223,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "03"
+                          "value": "05"
                         }
                       ]
                     },
@@ -44100,7 +44264,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "04"
+                          "value": "06"
                         }
                       ]
                     },
@@ -44141,7 +44305,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "05"
+                          "value": "07"
                         }
                       ]
                     },
@@ -44182,48 +44346,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "06"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "In kind",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "07"
+                          "value": "08"
                         }
                       ]
                     },
@@ -44264,7 +44387,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "08"
+                          "value": "09"
                         }
                       ]
                     },
@@ -44305,7 +44428,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "09"
+                          "value": "10"
                         }
                       ]
                     }
@@ -44354,7 +44477,7 @@
           "recordType": "f",
           "occurrences": {
             "required": false,
-            "maximum": 9
+            "maximum": 10
           },
           "items": [
             {
@@ -44518,6 +44641,88 @@
                     {
                       "labels": [
                         {
+                          "text": "Donation",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "In kind",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
                           "text": "Free/no cost",
                           "language": "EN"
                         },
@@ -44552,7 +44757,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "02"
+                          "value": "04"
                         }
                       ]
                     },
@@ -44593,7 +44798,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "03"
+                          "value": "05"
                         }
                       ]
                     },
@@ -44634,7 +44839,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "04"
+                          "value": "06"
                         }
                       ]
                     },
@@ -44675,7 +44880,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "05"
+                          "value": "07"
                         }
                       ]
                     },
@@ -44716,48 +44921,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "06"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "In kind",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "07"
+                          "value": "08"
                         }
                       ]
                     },
@@ -44798,7 +44962,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "08"
+                          "value": "09"
                         }
                       ]
                     },
@@ -44839,7 +45003,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "09"
+                          "value": "10"
                         }
                       ]
                     }
@@ -45662,7 +45826,7 @@
           "recordType": "g",
           "occurrences": {
             "required": false,
-            "maximum": 9
+            "maximum": 10
           },
           "items": [
             {
@@ -45826,6 +45990,88 @@
                     {
                       "labels": [
                         {
+                          "text": "Donation",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "In kind",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
                           "text": "Free/no cost",
                           "language": "EN"
                         },
@@ -45860,7 +46106,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "02"
+                          "value": "04"
                         }
                       ]
                     },
@@ -45901,7 +46147,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "03"
+                          "value": "05"
                         }
                       ]
                     },
@@ -45942,7 +46188,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "04"
+                          "value": "06"
                         }
                       ]
                     },
@@ -45983,7 +46229,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "05"
+                          "value": "07"
                         }
                       ]
                     },
@@ -46024,48 +46270,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "06"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "In kind",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "07"
+                          "value": "08"
                         }
                       ]
                     },
@@ -46106,7 +46311,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "08"
+                          "value": "09"
                         }
                       ]
                     },
@@ -46147,7 +46352,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "09"
+                          "value": "10"
                         }
                       ]
                     }
@@ -47716,35 +47921,35 @@
               "name": "Q114_NO_PH",
               "labels": [
                 {
-                  "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113)",
+                  "text": "114. Why did you not avail of PhilHealth benefits?",
                   "language": "EN"
                 },
                 {
-                  "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113)",
+                  "text": "114. Why did you not avail of PhilHealth benefits?",
                   "language": "FIL"
                 },
                 {
-                  "text": "Ngata dai kamo nagkuha kan",
+                  "text": "114. Why did you not avail of PhilHealth benefits?",
                   "language": "BCL"
                 },
                 {
-                  "text": "Ngano nga wala ka naka-avail sa PhilHealth benefits? (Kung wala na-avail ang PhilHealth sa Q113)",
+                  "text": "114. Why did you not avail of PhilHealth benefits?",
                   "language": "BIS"
                 },
                 {
-                  "text": "Nganong wala ka ni-avail sa mga benepisyo sa PhilHealth? (kung wala gi-avail ang PhilHealth sa 113)",
+                  "text": "114. Why did you not avail of PhilHealth benefits?",
                   "language": "CEB"
                 },
                 {
-                  "text": "Kay ano nga waray ka maka avail han benepisyo han PhilHealth? (Kun waray pa maka avail han PhilHealth ha 113)",
+                  "text": "114. Why did you not avail of PhilHealth benefits?",
                   "language": "WAR"
                 },
                 {
-                  "text": "Ngaa wala mo gin-avail ang",
+                  "text": "114. Why did you not avail of PhilHealth benefits?",
                   "language": "HIL"
                 },
                 {
-                  "text": "Apay a dikay nagun-od dagiti benepisio ti PhilHealth? (No saan a na-availed ti PhilHealth iti 113)",
+                  "text": "114. Why did you not avail of PhilHealth benefits?",
                   "language": "ILO"
                 }
               ],
@@ -47755,35 +47960,35 @@
                   "name": "Q114_NO_PH_VS1",
                   "labels": [
                     {
-                      "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113)",
+                      "text": "114. Why did you not avail of PhilHealth benefits?",
                       "language": "EN"
                     },
                     {
-                      "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113)",
+                      "text": "114. Why did you not avail of PhilHealth benefits?",
                       "language": "FIL"
                     },
                     {
-                      "text": "Ngata dai kamo nagkuha kan",
+                      "text": "114. Why did you not avail of PhilHealth benefits?",
                       "language": "BCL"
                     },
                     {
-                      "text": "Ngano nga wala ka naka-avail sa PhilHealth benefits? (Kung wala na-avail ang PhilHealth sa Q113)",
+                      "text": "114. Why did you not avail of PhilHealth benefits?",
                       "language": "BIS"
                     },
                     {
-                      "text": "Nganong wala ka ni-avail sa mga benepisyo sa PhilHealth? (kung wala gi-avail ang PhilHealth sa 113)",
+                      "text": "114. Why did you not avail of PhilHealth benefits?",
                       "language": "CEB"
                     },
                     {
-                      "text": "Kay ano nga waray ka maka avail han benepisyo han PhilHealth? (Kun waray pa maka avail han PhilHealth ha 113)",
+                      "text": "114. Why did you not avail of PhilHealth benefits?",
                       "language": "WAR"
                     },
                     {
-                      "text": "Ngaa wala mo gin-avail ang",
+                      "text": "114. Why did you not avail of PhilHealth benefits?",
                       "language": "HIL"
                     },
                     {
-                      "text": "Apay a dikay nagun-od dagiti benepisio ti PhilHealth? (No saan a na-availed ti PhilHealth iti 113)",
+                      "text": "114. Why did you not avail of PhilHealth benefits?",
                       "language": "ILO"
                     }
                   ],
@@ -48083,35 +48288,35 @@
               "name": "Q114_NO_PH_OTHER_TXT",
               "labels": [
                 {
-                  "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Other (specify) text",
+                  "text": "114. Why did you not avail of PhilHealth benefits? \u2014 Other (specify) text",
                   "language": "EN"
                 },
                 {
-                  "text": "Iba pa (tukuyin)",
+                  "text": "114. Why did you not avail of PhilHealth benefits? \u2014 Other (specify) text",
                   "language": "FIL"
                 },
                 {
-                  "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Other (specify) text",
+                  "text": "114. Why did you not avail of PhilHealth benefits? \u2014 Other (specify) text",
                   "language": "BCL"
                 },
                 {
-                  "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Other (specify) text",
+                  "text": "114. Why did you not avail of PhilHealth benefits? \u2014 Other (specify) text",
                   "language": "BIS"
                 },
                 {
-                  "text": "Uban pa (isulti)",
+                  "text": "114. Why did you not avail of PhilHealth benefits? \u2014 Other (specify) text",
                   "language": "CEB"
                 },
                 {
-                  "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Other (specify) text",
+                  "text": "114. Why did you not avail of PhilHealth benefits? \u2014 Other (specify) text",
                   "language": "WAR"
                 },
                 {
-                  "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Other (specify) text",
+                  "text": "114. Why did you not avail of PhilHealth benefits? \u2014 Other (specify) text",
                   "language": "HIL"
                 },
                 {
-                  "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Other (specify) text",
+                  "text": "114. Why did you not avail of PhilHealth benefits? \u2014 Other (specify) text",
                   "language": "ILO"
                 }
               ],
@@ -61527,35 +61732,35 @@
               "name": "Q150_TRAVEL_HH",
               "labels": [
                 {
-                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours (HH)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours",
                   "language": "EN"
                 },
                 {
-                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours (HH)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours",
                   "language": "FIL"
                 },
                 {
-                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours (HH)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours",
                   "language": "BCL"
                 },
                 {
-                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours (HH)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours",
                   "language": "BIS"
                 },
                 {
-                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours (HH)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours",
                   "language": "CEB"
                 },
                 {
-                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours (HH)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours",
                   "language": "WAR"
                 },
                 {
-                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours (HH)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours",
                   "language": "HIL"
                 },
                 {
-                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours (HH)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Hours",
                   "language": "ILO"
                 }
               ],
@@ -61567,35 +61772,35 @@
               "name": "Q150_TRAVEL_MM",
               "labels": [
                 {
-                  "text": "150. Travel time to nearest pharmacy \u2014 Minutes (MM)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Minutes",
                   "language": "EN"
                 },
                 {
-                  "text": "150. Travel time to nearest pharmacy \u2014 Minutes (MM)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Minutes",
                   "language": "FIL"
                 },
                 {
-                  "text": "150. Travel time to nearest pharmacy \u2014 Minutes (MM)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Minutes",
                   "language": "BCL"
                 },
                 {
-                  "text": "150. Travel time to nearest pharmacy \u2014 Minutes (MM)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Minutes",
                   "language": "BIS"
                 },
                 {
-                  "text": "150. Travel time to nearest pharmacy \u2014 Minutes (MM)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Minutes",
                   "language": "CEB"
                 },
                 {
-                  "text": "150. Travel time to nearest pharmacy \u2014 Minutes (MM)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Minutes",
                   "language": "WAR"
                 },
                 {
-                  "text": "150. Travel time to nearest pharmacy \u2014 Minutes (MM)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Minutes",
                   "language": "HIL"
                 },
                 {
-                  "text": "150. Travel time to nearest pharmacy \u2014 Minutes (MM)",
+                  "text": "150. How much time does it take for you to reach the nearest pharmacy from your home? \u2014 Minutes",
                   "language": "ILO"
                 }
               ],

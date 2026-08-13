@@ -1,0 +1,13 @@
+# programme_admin: all seven permissions
+/projects/uhc-y2/monitoring/                   200
+/projects/uhc-y2/monitoring/map/               200
+/projects/uhc-y2/data/                         200
+/projects/uhc-y2/admin/                        200
+/docs/data/f1_responses.csv                    200
+/docs/admin/api.php?r=activities               200
+# the admin UI's own assets, still served directly from /docs/admin/
+/docs/admin/ui.js                              200
+/docs/admin/admin.css                          200
+# old URLs
+/docs/admin/                                   301
+/docs/dashboard.html                           301

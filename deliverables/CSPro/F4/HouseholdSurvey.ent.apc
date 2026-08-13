@@ -1401,7 +1401,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q103_CARE_TYPE) > 0 and length(strip(Q103_CARE_TYPE)) > 2 then
-    errmsg(1019);
+    errmsg(1160);
+    reenter;
   endif;
 
 PROC Q103_CARE_TYPE_OTHER_TXT
@@ -1437,7 +1438,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q106_FORGONE_WHY) > 0 and length(strip(Q106_FORGONE_WHY)) > 2 then
-    errmsg(1022);
+    errmsg(1161);
+    reenter;
   endif;
 
 PROC Q106_FORGONE_WHY_OTHER_TXT
@@ -1473,7 +1475,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q107_OTHER_ACTIONS) > 0 and length(strip(Q107_OTHER_ACTIONS)) > 2 then
-    errmsg(1025);
+    errmsg(1162);
+    reenter;
   endif;
 
 PROC Q107_OTHER_ACTIONS_OTHER_TXT
@@ -1509,7 +1512,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q109_TYPE) > 0 and length(strip(Q109_TYPE)) > 2 then
-    errmsg(1028);
+    errmsg(1163);
+    reenter;
   endif;
 
 PROC Q109_TYPE_OTHER_TXT
@@ -1589,7 +1593,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q121_WHY_HOSPITAL) > 0 and length(strip(Q121_WHY_HOSPITAL)) > 2 then
-    errmsg(1033);
+    errmsg(1164);
+    reenter;
   endif;
 
 PROC Q121_WHY_HOSPITAL_OTHER_TXT
@@ -1625,7 +1630,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q127_NBB_SOURCE) > 0 and length(strip(Q127_NBB_SOURCE)) > 2 then
-    errmsg(1036);
+    errmsg(1165);
+    reenter;
   endif;
 
 PROC Q127_NBB_SOURCE_OTHER_TXT
@@ -1661,7 +1667,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q128_NBB_UNDERSTAND) > 0 and length(strip(Q128_NBB_UNDERSTAND)) > 2 then
-    errmsg(1039);
+    errmsg(1166);
+    reenter;
   endif;
 
 PROC Q128_NBB_UNDERSTAND_OTHER_TXT
@@ -1697,7 +1704,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q133_ZBB_SOURCE) > 0 and length(strip(Q133_ZBB_SOURCE)) > 2 then
-    errmsg(1042);
+    errmsg(1167);
+    reenter;
   endif;
 
 PROC Q133_ZBB_SOURCE_OTHER_TXT
@@ -1733,7 +1741,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q134_ZBB_UNDERSTAND) > 0 and length(strip(Q134_ZBB_UNDERSTAND)) > 2 then
-    errmsg(1045);
+    errmsg(1168);
+    reenter;
   endif;
 
 PROC Q134_ZBB_UNDERSTAND_OTHER_TXT
@@ -1769,7 +1778,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q137_MAIFIP_SOURCE) > 0 and length(strip(Q137_MAIFIP_SOURCE)) > 2 then
-    errmsg(1048);
+    errmsg(1169);
+    reenter;
   endif;
 
 PROC Q137_MAIFIP_SOURCE_OTHER_TXT
@@ -1802,6 +1812,32 @@ PROC Q141_BILL_ITEMS
 postproc
   if length(strip(Q141_BILL_ITEMS)) = 0 then
     errmsg(1050);
+    reenter;
+  endif;
+
+PROC Q141_BILL_ITEMS_OTHER_TXT
+preproc
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q141_BILL_ITEMS)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q141_BILL_ITEMS[otP:2]) = 7 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
+    Q141_BILL_ITEMS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q141_BILL_ITEMS)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q141_BILL_ITEMS[otP2:2]) = 7 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q141_BILL_ITEMS_OTHER_TXT)) = 0 then
+    errmsg(1186);
     reenter;
   endif;
 
@@ -1842,6 +1878,10 @@ PROC Q196_FOREGONE
 postproc
   if length(strip(Q196_FOREGONE)) = 0 then
     errmsg(1053);
+    reenter;
+  endif;
+  if pos("07", Q196_FOREGONE) > 0 and length(strip(Q196_FOREGONE)) > 2 then
+    errmsg(1187);
     reenter;
   endif;
 
@@ -1911,7 +1951,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q52_UHC_SOURCE) > 0 and length(strip(Q52_UHC_SOURCE)) > 2 then
-    errmsg(1058);
+    errmsg(1170);
+    reenter;
   endif;
 
 PROC Q52_UHC_SOURCE_OTHER_TXT
@@ -1947,7 +1988,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q53_UHC_UNDERSTAND) > 0 and length(strip(Q53_UHC_UNDERSTAND)) > 2 then
-    errmsg(1061);
+    errmsg(1171);
+    reenter;
   endif;
 
 PROC Q53_UHC_UNDERSTAND_OTHER_TXT
@@ -1983,7 +2025,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q55_YAKAP_SOURCE) > 0 and length(strip(Q55_YAKAP_SOURCE)) > 2 then
-    errmsg(1064);
+    errmsg(1172);
+    reenter;
   endif;
 
 PROC Q55_YAKAP_SOURCE_OTHER_TXT
@@ -2019,7 +2062,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q56_YAKAP_UNDERSTAND) > 0 and length(strip(Q56_YAKAP_UNDERSTAND)) > 2 then
-    errmsg(1067);
+    errmsg(1173);
+    reenter;
   endif;
   if pos("05", Q56_YAKAP_UNDERSTAND) > 0 and length(strip(Q56_YAKAP_UNDERSTAND)) > 2 then
     errmsg(1068);
@@ -2059,7 +2103,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q58_BUCAS_SOURCE) > 0 and length(strip(Q58_BUCAS_SOURCE)) > 2 then
-    errmsg(1071);
+    errmsg(1174);
+    reenter;
   endif;
 
 PROC Q58_BUCAS_SOURCE_OTHER_TXT
@@ -2128,7 +2173,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q61_BUCAS_SERVICES) > 0 and length(strip(Q61_BUCAS_SERVICES)) > 2 then
-    errmsg(1076);
+    errmsg(1175);
+    reenter;
   endif;
 
 PROC Q61_BUCAS_SERVICES_OTHER_TXT
@@ -2164,7 +2210,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q65_CONDITIONS) > 0 and length(strip(Q65_CONDITIONS)) > 2 then
-    errmsg(1079);
+    errmsg(1176);
+    reenter;
   endif;
 
 PROC Q65_CONDITIONS_OTHER_TXT
@@ -2233,7 +2280,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q70_GAMOT_SOURCE) > 0 and length(strip(Q70_GAMOT_SOURCE)) > 2 then
-    errmsg(1084);
+    errmsg(1177);
+    reenter;
   endif;
 
 PROC Q70_GAMOT_SOURCE_OTHER_TXT
@@ -2269,7 +2317,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q71_GAMOT_UNDERSTAND) > 0 and length(strip(Q71_GAMOT_UNDERSTAND)) > 2 then
-    errmsg(1087);
+    errmsg(1178);
+    reenter;
   endif;
 
 PROC Q71_GAMOT_UNDERSTAND_OTHER_TXT
@@ -2305,7 +2354,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q74_WHERE_REST) > 0 and length(strip(Q74_WHERE_REST)) > 2 then
-    errmsg(1090);
+    errmsg(1179);
+    reenter;
   endif;
 
 PROC Q74_WHERE_REST_OTHER_TXT
@@ -2341,7 +2391,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q77_WHY_GENERIC) > 0 and length(strip(Q77_WHY_GENERIC)) > 2 then
-    errmsg(1093);
+    errmsg(1180);
+    reenter;
   endif;
 
 PROC Q77_WHY_GENERIC_OTHER_TXT
@@ -2381,7 +2432,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q78_WHY_BRANDED) > 0 and length(strip(Q78_WHY_BRANDED)) > 2 then
-    errmsg(1096);
+    errmsg(1181);
+    reenter;
   endif;
 
 PROC Q78_WHY_BRANDED_OTHER_TXT
@@ -2417,7 +2469,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q82_DIFFICULTY_REASONS) > 0 and length(strip(Q82_DIFFICULTY_REASONS)) > 2 then
-    errmsg(1099);
+    errmsg(1182);
+    reenter;
   endif;
 
 PROC Q82_DIFFICULTY_REASONS_OTHER_TXT
@@ -2486,7 +2539,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q85_BENEFITS) > 0 and length(strip(Q85_BENEFITS)) > 2 then
-    errmsg(1104);
+    errmsg(1183);
+    reenter;
   endif;
   if pos("04", Q85_BENEFITS) > 0 and length(strip(Q85_BENEFITS)) > 2 then
     errmsg(1105);
@@ -2526,7 +2580,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q88_DIFF_PAYING) > 0 and length(strip(Q88_DIFF_PAYING)) > 2 then
-    errmsg(1108);
+    errmsg(1184);
+    reenter;
   endif;
 
 PROC Q88_DIFF_PAYING_OTHER_TXT
@@ -2602,7 +2657,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q93_WHY_NOT) > 0 and length(strip(Q93_WHY_NOT)) > 2 then
-    errmsg(1113);
+    errmsg(1185);
+    reenter;
   endif;
 
 PROC Q93_WHY_NOT_OTHER_TXT
@@ -3210,9 +3266,52 @@ postproc
     reenter;
   endif;
 
+PROC DATE_FIRST_VISITED
+postproc
+  numeric fvMM; numeric fvDD; numeric fvYY; numeric fvHead;
+  if DATE_FIRST_VISITED <> notappl then
+    fvMM   = int(DATE_FIRST_VISITED / 1000000);
+    fvHead = int(DATE_FIRST_VISITED / 10000);
+    if fvMM >= 1 and fvMM <= 12 then
+      fvDD = fvHead - fvMM * 100;
+      fvYY = DATE_FIRST_VISITED - fvHead * 10000;
+      if fvDD < 1 or fvDD > 31 or fvYY < 2020 or fvYY > 2035 then
+        errmsg(1188);
+        reenter;
+      endif;
+      DATE_FIRST_VISITED = fvYY * 10000 + fvMM * 100 + fvDD;
+    else
+      if fvHead < 2020 or fvHead > 2035 then
+        errmsg(1188);
+        reenter;
+      endif;
+    endif;
+  endif;
+
 PROC DATE_FINAL_VISIT
 postproc
-  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then
+  numeric lvMM; numeric lvDD; numeric lvYY; numeric lvHead;
+  if DATE_FINAL_VISIT <> notappl then
+    lvMM   = int(DATE_FINAL_VISIT / 1000000);
+    lvHead = int(DATE_FINAL_VISIT / 10000);
+    if lvMM >= 1 and lvMM <= 12 then
+      lvDD = lvHead - lvMM * 100;
+      lvYY = DATE_FINAL_VISIT - lvHead * 10000;
+      if lvDD < 1 or lvDD > 31 or lvYY < 2020 or lvYY > 2035 then
+        errmsg(1188);
+        reenter;
+      endif;
+      DATE_FINAL_VISIT = lvYY * 10000 + lvMM * 100 + lvDD;
+    else
+      if lvHead < 2020 or lvHead > 2035 then
+        errmsg(1188);
+        reenter;
+      endif;
+    endif;
+  endif;
+  { conversion above runs FIRST so both sides below are YYYYMMDD. The notappl guards
+    match F1/F3: without them a blank final date (single visit) false-fires this. }
+  if DATE_FINAL_VISIT <> notappl and DATE_FIRST_VISITED <> notappl and DATE_FINAL_VISIT < DATE_FIRST_VISITED then
     errmsg(1153);
     reenter;
   endif;

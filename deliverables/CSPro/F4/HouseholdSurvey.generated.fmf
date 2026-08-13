@@ -280,7 +280,7 @@ Item=Q45_PHILHEALTH_REG
   
 [Form]
 Name=FORM021
-Label=C. 45.1 When did you register and receive your PhilHealth PIN?  (REPEATING)
+Label=C. 45.1 When did you register and receive your PhilHealth PIN? (REPEATING)
 Level=1
 Repeat=C_HOUSEHOLD_ROSTER
 Size=806,300
@@ -313,7 +313,7 @@ Item=Q46_MEMBER_OTHER_TXT
   
 [Form]
 Name=FORM024
-Label=C. 45.2 Why are you not registered? (Only answer if 'No' in Q45 (REPEATING)
+Label=C. 45.2 Why are you not registered? (REPEATING)
 Level=1
 Repeat=C_HOUSEHOLD_ROSTER
 Size=806,300
@@ -791,14 +791,16 @@ Item=Q202_WORRY_REASONS_OTHER_TXT
 Name=FORM053
 Label=Closing - case end
 Level=1
-Size=806,337
+Size=806,397
   
 Item=SURVEY_TEAM_LEADER_S_NAME
 Item=ENUMERATOR_S_NAME
 Item=FIELD_VALIDATED_BY
 Item=FIELD_EDITED_BY
 Item=DATE_FIRST_VISITED
+Item=DATE_FIRST_VISITED_DISP
 Item=DATE_FINAL_VISIT
+Item=DATE_FINAL_VISIT_DISP
 Item=TOTAL_NUMBER_OF_VISITS
 Item=ENUM_RESULT_FIRST_VISIT
 Item=ENUM_RESULT_FINAL_VISIT
@@ -1348,7 +1350,7 @@ Form=5
   
 [Text]
 Position=50,870,330,886
-Text=22. Do you have electricity in your household?
+Text=22. Do you have electricity in your house?
  
   
 [Field]
@@ -1987,7 +1989,7 @@ Text=45. Currently registered with PhilHealth?
 [Group]
 Required=Yes
 Name=C_HOUSEHOLD_ROSTER_FORM_17
-Label=C. 45.1 When did you register and receive your PhilHealth PIN?  (REPEATING)
+Label=C. 45.1 When did you register and receive your PhilHealth PIN? (REPEATING)
 Form=22
 Type=Record
 TypeName=C_HOUSEHOLD_ROSTER
@@ -2002,7 +2004,7 @@ Form=22
   
 [Text]
 Position=50,30,330,46
-Text=45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)
+Text=45.1 When did you register and receive your PhilHealth PIN?
  
   
 [EndGroup]
@@ -2057,7 +2059,7 @@ Text=46. Member category — Other (specify) text
 [Group]
 Required=Yes
 Name=C_HOUSEHOLD_ROSTER_FORM_20
-Label=C. 45.2 Why are you not registered? (Only answer if 'No' in Q45 (REPEATING)
+Label=C. 45.2 Why are you not registered? (REPEATING)
 Form=25
 Type=Record
 TypeName=C_HOUSEHOLD_ROSTER
@@ -2072,7 +2074,7 @@ Form=25
   
 [Text]
 Position=50,30,330,46
-Text=45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)
+Text=45.2 Why are you not registered?
  
   
 [EndGroup]
@@ -2699,7 +2701,7 @@ Form=32
   
 [Text]
 Position=50,270,330,286
-Text=67. How much time does it take to reach the nearest pharmacy from your home? — Minutes
+Text=67. Travel time to nearest pharmacy — Minutes
  
   
 [Field]
@@ -4100,7 +4102,7 @@ Form=36
   
 [Text]
 Position=50,420,330,436
-Text=117. After you went to the specialist or special service, did they follow up with you about what happened at the visit? (Only if Q112=Yes)
+Text=117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?
  
   
 [Field]
@@ -5868,50 +5870,76 @@ Text=Date First Visited the Household (YYYYMMDD)
  
   
 [Field]
-Name=DATE_FINAL_VISIT
+Name=DATE_FIRST_VISITED_DISP
 Position=350,177,760,197
-Item=DATE_FINAL_VISIT,HOUSEHOLDSURVEY_DICT
+Item=DATE_FIRST_VISITED_DISP,HOUSEHOLDSURVEY_DICT
+UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=54
   
 [Text]
 Position=50,180,330,196
-Text=Date of Final Visit to the Household (YYYYMMDD)
+Text=Date First Visited (MM/DD/YYYY)
  
   
 [Field]
-Name=TOTAL_NUMBER_OF_VISITS
+Name=DATE_FINAL_VISIT
 Position=350,207,760,227
-Item=TOTAL_NUMBER_OF_VISITS,HOUSEHOLDSURVEY_DICT
+Item=DATE_FINAL_VISIT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=54
   
 [Text]
 Position=50,210,330,226
+Text=Date of Final Visit to the Household (YYYYMMDD)
+ 
+  
+[Field]
+Name=DATE_FINAL_VISIT_DISP
+Position=350,237,760,257
+Item=DATE_FINAL_VISIT_DISP,HOUSEHOLDSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=54
+  
+[Text]
+Position=50,240,330,256
+Text=Date of Final Visit (MM/DD/YYYY)
+ 
+  
+[Field]
+Name=TOTAL_NUMBER_OF_VISITS
+Position=350,267,760,287
+Item=TOTAL_NUMBER_OF_VISITS,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=54
+  
+[Text]
+Position=50,270,330,286
 Text=Total Number of Visits
  
   
 [Field]
 Name=ENUM_RESULT_FIRST_VISIT
-Position=350,237,365,257
+Position=350,297,365,317
 Item=ENUM_RESULT_FIRST_VISIT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=54
   
 [Text]
-Position=50,240,330,256
+Position=50,300,330,316
 Text=Result of First Visit
  
   
 [Field]
 Name=ENUM_RESULT_FINAL_VISIT
-Position=350,267,365,287
+Position=350,327,365,347
 Item=ENUM_RESULT_FINAL_VISIT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=54
   
 [Text]
-Position=50,270,330,286
+Position=50,330,330,346
 Text=Result of Final Visit
  
   
@@ -5927,7 +5955,7 @@ Name=VISIT_RECORD_BLOCK
 Label=Visit Record
 DisplayTogether=Yes
 Position=5
-Length=5
+Length=7
   
 [EndGroup]
   

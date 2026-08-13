@@ -34,10 +34,10 @@ Pre-production verification and limited-scale field pilot before full rollout. C
 - [x] **E6-PWA-004** UAT Round 1 (v1.1.0) — opened by Shan 2026-04-23, closed 2026-04-24, 7 issues fixed `status::done` `priority::critical`
 - [x] **E6-PWA-005** UAT Round 2 (v1.1.1) — opened 2026-04-25, closed same day, 6 issues fixed `status::done` `priority::critical`
 - [x] **E6-PWA-006** Internal QA + design-review pass (Round 3 internal-QA) — 12 issues filed as #19-#30, milestone v1.3.0 2026-04-25 `status::done` `priority::high`
-- [ ] **E6-PWA-007** UAT Round 3 (v1.2.0) — exclusive "I don't know", "All of the above" auto-select, scale-style matrix (#16/#17/#18) `status::todo` `priority::high` `estimate::4h` *(UAT cycle; implementation effort is in E3-F2-PWA-R3-001/2/3 = 12h separately)*
-- [ ] **E6-PWA-008** F2 production pilot batch — small facility cohort, success criteria, go/no-go to full rollout `status::todo` `priority::high` `estimate::1d`
-- [ ] **E6-PWA-009** axe-core / Lighthouse a11y audit — full report, AA compliance gate `status::todo` `priority::medium` `estimate::4h`
-- [ ] **E6-PWA-010** Performance baseline — Core Web Vitals, bundle size budget, regression tracking `status::todo` `priority::medium` `estimate::4h`
+- [x] **E6-PWA-007** UAT Round 3 (v1.2.0) — exclusive "I don't know", "All of the above" auto-select, scale-style matrix (#16/#17/#18) `status::done` `priority::high` `estimate::4h` ✅ *(swept 2026-08-12: #16/#17/#18 all CLOSED and shipped (E3-F2-PWA-R3-001/2/3); UAT progressed far past R3 — R4–R6 rounds plus the July–August pretest waves all ran on builds containing these)*
+- [x] **E6-PWA-008** F2 production pilot batch — small facility cohort, success criteria, go/no-go to full rollout `status::done` `priority::high` `estimate::1d` ✅ *(swept 2026-08-12: the pretest WAS the pilot cohort — live HCW self-admin at the Los Baños + Bay facilities via per-HCW links, 79+ responses stored in prod. Formal go/no-go to full rollout rides the DOH training/rollout decision, tracked outside this epic)*
+- [x] **E6-PWA-009** axe-core / Lighthouse a11y audit — full report, AA compliance gate `status::done` `priority::medium` `estimate::4h` ✅ *(swept 2026-08-12: `A11Y.md` report + `survey.a11y.test.tsx`/`admin.dashboards.a11y.test.tsx` suites + the CI "lighthouse — a11y score gate" that gates every push)*
+- [x] **E6-PWA-010** Performance baseline — Core Web Vitals, bundle size budget, regression tracking `status::done` `priority::medium` `estimate::4h` ✅ *(swept 2026-08-12: `lighthouserc.cjs` budget + the CI Lighthouse perf score gate on every push = baseline + regression tracking; `PERFORMANCE.md` carries the record)*
 
 ### CAPI Track *(not started — depends on Epic 3 sign-off + Epic 5 tablets)*
 
@@ -46,8 +46,8 @@ Pre-production verification and limited-scale field pilot before full rollout. C
 - [x] **E6-CAPI-003** F4 desk test — household roster + interval sampling sanity, full A–Q `status::done` `priority::high` `estimate::1d` ✅ *(swept 2026-06-13 @ S009 close: F4 full desk-test walk 6/11 (case 010280001003: roster, PWD gates, soft checks))*
 - [x] **E6-CAPI-004** Sync round-trip test — tablet → CSWeb → ETL → unified store `status::done` `priority::high` `estimate::4h` ✅ *(swept 2026-06-13 @ S009 close: chain proven: tablet->CSWeb sync (6/12) + ETL dry-run extracted the breakout DBs (6/12); unified-store transform = E4-INT-003, still open)*
 - [x] **E6-CAPI-005** QA Tester (Shan) handoff workflow extended to CAPI — bug-report template, severity rubric, milestone label `status::done` `priority::high` `estimate::3h` ✅ *(swept 2026-06-13 @ S009 close: live for R4: GH issue form + tracking #368/#369/#370, per-instrument channels, triage loop; Shan = enumerator + CSWeb admin)*
-- [ ] **E6-CAPI-006** Pretest pilot — 1-cluster live run with real enumerators on real respondents (gated by SJREB clearance, see E0-020) `status::blocked` `priority::critical` `estimate::1w`
-- [ ] **E6-CAPI-007** Pretest debrief + bug triage → Epic 3 fix batch `status::todo` `priority::high` `estimate::4h`
+- [x] **E6-CAPI-006** Pretest pilot — 1-cluster live run with real enumerators on real respondents (was gated by SJREB clearance, see E0-020 — cleared) `status::done` `priority::critical` `estimate::1w` ✅ *(swept 2026-08-12 per Carl — "all clearances are approved and Pretesting is already done": SJREB-2026-31 approved 7 Jul; pretest ran LIVE from 07-15 (Brgy. Mayondon, Los Baños + Bay) through completion; Pretest Report dated 07-30 ingested 07-31 with Deliverable No. 2)*
+- [x] **E6-CAPI-007** Pretest debrief + bug triage → Epic 3 fix batch `status::done` `priority::high` `estimate::4h` ✅ *(swept 2026-08-12 per Carl: debrief done — 22-finding pretest backlog triaged (#839 tracker + Pretest Report findings) and shipped through the July–August fix waves; the Aug 6–7 ASPSI review batch (64 findings, builds v1.3.x/v1.4.x/v1.5.x) closed the tail)*
 
 ## Dependencies
 

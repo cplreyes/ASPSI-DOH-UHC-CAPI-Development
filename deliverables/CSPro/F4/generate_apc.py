@@ -20,6 +20,7 @@ Invoke:  python generate_apc.py
 """
 
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -51,9 +52,60 @@ RANGE_CHECKS = [
 
 # Cross-field validations needing a custom body (spec §3.1 date ordering).
 CUSTOM_VALIDATION = [
+    # #1132 (2026-08-11): the #1099 DATE_*_DISP echo PROCs are removed with their
+    # dictionary items and form fields at ASPSI's request — see generate_dcf.py.
+    # #1132/#1174 parity (2026-08-11): the enumerator types MMDDYYYY like the paper;
+    # the STORED value stays YYYYMMDD (Supervisor App + cross-instrument parsers
+    # untouched). Idempotent: a stored YYYYMMDD starts with the century (20), not a
+    # valid month, so the conversion branch cannot fire twice. Ported verbatim from
+    # F3's #1174 block. The final-visit check also gains the notappl guards F3 got
+    # in v1.4.1 — F4 still had the unguarded compare, so a blank final date
+    # (single-visit case) could false-fire the error here too.
+    ("DATE_FIRST_VISITED",
+     "PROC DATE_FIRST_VISITED\npostproc\n"
+     "  numeric fvMM; numeric fvDD; numeric fvYY; numeric fvHead;\n"
+     "  if DATE_FIRST_VISITED <> notappl then\n"
+     "    fvMM   = int(DATE_FIRST_VISITED / 1000000);\n"
+     "    fvHead = int(DATE_FIRST_VISITED / 10000);\n"
+     "    if fvMM >= 1 and fvMM <= 12 then\n"
+     "      fvDD = fvHead - fvMM * 100;\n"
+     "      fvYY = DATE_FIRST_VISITED - fvHead * 10000;\n"
+     "      if fvDD < 1 or fvDD > 31 or fvYY < 2020 or fvYY > 2035 then\n"
+     "        errmsg(\"Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.\");\n"
+     "        reenter;\n"
+     "      endif;\n"
+     "      DATE_FIRST_VISITED = fvYY * 10000 + fvMM * 100 + fvDD;\n"
+     "    else\n"
+     "      if fvHead < 2020 or fvHead > 2035 then\n"
+     "        errmsg(\"Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.\");\n"
+     "        reenter;\n"
+     "      endif;\n"
+     "    endif;\n"
+     "  endif;"),
     ("DATE_FINAL_VISIT",
      "PROC DATE_FINAL_VISIT\npostproc\n"
-     "  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then\n"
+     "  numeric lvMM; numeric lvDD; numeric lvYY; numeric lvHead;\n"
+     "  if DATE_FINAL_VISIT <> notappl then\n"
+     "    lvMM   = int(DATE_FINAL_VISIT / 1000000);\n"
+     "    lvHead = int(DATE_FINAL_VISIT / 10000);\n"
+     "    if lvMM >= 1 and lvMM <= 12 then\n"
+     "      lvDD = lvHead - lvMM * 100;\n"
+     "      lvYY = DATE_FINAL_VISIT - lvHead * 10000;\n"
+     "      if lvDD < 1 or lvDD > 31 or lvYY < 2020 or lvYY > 2035 then\n"
+     "        errmsg(\"Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.\");\n"
+     "        reenter;\n"
+     "      endif;\n"
+     "      DATE_FINAL_VISIT = lvYY * 10000 + lvMM * 100 + lvDD;\n"
+     "    else\n"
+     "      if lvHead < 2020 or lvHead > 2035 then\n"
+     "        errmsg(\"Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.\");\n"
+     "        reenter;\n"
+     "      endif;\n"
+     "    endif;\n"
+     "  endif;\n"
+     "  { conversion above runs FIRST so both sides below are YYYYMMDD. The notappl guards\n"
+     "    match F1/F3: without them a blank final date (single visit) false-fires this. }\n"
+     "  if DATE_FINAL_VISIT <> notappl and DATE_FIRST_VISITED <> notappl and DATE_FINAL_VISIT < DATE_FIRST_VISITED then\n"
      "    errmsg(\"Final-visit date cannot be earlier than the first-visit date.\");\n    reenter;\n  endif;"),
     # #699/#701 (Carl, 2026-06-18 — "do what the testers said"): the Q138 confinement gate
     # (#625/#626: Q129 <> Yes -> skip Q138-143 to Q144) is REMOVED. Q138 reads "from your most
@@ -508,19 +560,22 @@ CHECKBOX_CONVERT = [
     ("Q106_FORGONE_WHY",         True,  True,  None),   # #584: 'I don't know' (90) exclusive; 'Other (Specify)' (99). Skip-target from Q105=2 (skip rule repointed to bare base)
     ("Q107_OTHER_ACTIONS",       True,  True,  None),   # #655: 'Did not seek other forms of care' is now 90-coded exclusive (was substantive per #584 — tester FAIL: tickable alongside real actions; if you sought nothing else, no action co-applies); soft-warn if combined. 'Other (Specify)' (99). Skip-target from Q105=2 chains via the bare base
     ("Q109_TYPE",                True,  True,  None),   # #588: 'None of the above' (11->90) exclusive; 'Other (Specify)' (12->99)
-    ("Q141_BILL_ITEMS",          False, False, None),   # #615: 'Other expenses' (07) is NOT a 'specif' option (no 99 gate); ungated Q141_BILL_ITEMS_OTHER_TXT kept as plain alpha
+    ("Q141_BILL_ITEMS",          True,  False, None),   # #615/#1098: 'Other expenses' keeps paper code 07 (CHECKBOX_OTHER_CODE) — _OTHER_TXT now gated on 07 (was ungated; prompted even when unticked)
     ("Q143_HOW_PAID",            True,  False, None),   # #616: 'Other (Specify)' (10->99); no None/IDK exclusive; reached via Q142=Yes (Q142=No skips to Q144)
     ("Q196_FOREGONE",            True,  False, None),   # #638: 'Other (please specify)' (99); 'We do not forego care' (07) stays ordinary (no 90 exclusive). Reached only when Q195=None (#637 skip routes other Q195 answers to Q197)
     ("Q202_WORRY_REASONS",       True,  False, None),   # #668: 3 reasons + #686 'Other (Specify)' (99, has_other) -> emit gated _OTHER_TXT; no None/IDK exclusive
 ]
 
 
-def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postproc_tail=None, extra_standalone=None):
+def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postproc_tail=None, extra_standalone=None,
+                       other_code="99"):
     """Emit the bespoke PROC(s) for one converted Check Box base — select->=1 (hard),
     an optional exclusivity soft-warn (the 90-coded standalone option should stand alone),
     an optional preproc gate, an optional postproc tail (e.g. a `skip to` that fires
     AFTER the option-count validation), and (when present) the 'Other (specify)' text
-    gate on pos("99", base). Ported from F3 generate_apc._gen_checkbox_proc (+ tail)."""
+    gate on the base's Other code (99 by default; CHECKBOX_OTHER_CODE overrides for
+    bases whose Other option is not 99-coded, e.g. Q141/07 — #1098). Ported from F3
+    generate_apc._gen_checkbox_proc (+ tail)."""
     qn = re.match(r"Q(\d+)", base).group(1)
     body = [f"PROC {base}"]
     if gate:
@@ -533,9 +588,16 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postproc_tail=None
              f'    errmsg("Select at least one option for Q{qn} before continuing.");',
              "    reenter;", "  endif;"]
     if exclusive:
+        # #1075-#1080 (pretest 2026-08-05): HARD block (reenter), was a soft warn.
+        # Testers: DK/None ticked alongside real options must not proceed. Applies
+        # class-wide to every exclusive base (fixing only the 6 ticketed questions
+        # would leave the same defect on the other ~19 for the next wave). Positive
+        # pos() match on the field's own value — notappl-safe; same structure as the
+        # neighboring hard 'select >=1' and #798 standalone checks (field-proven).
         body += [f'  if pos("90", {base}) > 0 and length(strip({base})) > 2 then',
-                 f'    errmsg("Q{qn}: an exclusive option (None / I don\'t know) should be the '
-                 f'only choice - please review the options ticked.");',
+                 f'    errmsg("Q{qn}: an exclusive option (None / I don\'t know) cannot be '
+                 f'combined with other answers - untick the others or untick it.");',
+                 "    reenter;",
                  "  endif;"]
     # #798: named non-90 standalone options that must HARD-block when combined with anything
     # else (e.g. Q85 "There are no benefits to being a member" — code 04).
@@ -557,7 +619,7 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postproc_tail=None
                      f"  tgN = length(strip({base})) / 2;",
                      "  do tgK = 1 while tgK <= tgN",
                      "    tgP = (tgK - 1) * 2 + 1;",
-                     f"    if tonumber({base}[tgP:2]) = 99 then tgHit = 1; endif;",
+                     f"    if tonumber({base}[tgP:2]) = {int(other_code)} then tgHit = 1; endif;",
                      "  enddo;",
                      "  if tgHit = 0 then", postproc_tail, "  endif;"]
         else:
@@ -574,7 +636,7 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postproc_tail=None
             f"  otN = length(strip({base})) / 2;\n"
             f"  do otK = 1 while otK <= otN\n"
             f"    otP = (otK - 1) * 2 + 1;\n"
-            f"    if tonumber({base}[otP:2]) = 99 then otHit = 1; endif;\n"
+            f"    if tonumber({base}[otP:2]) = {int(other_code)} then otHit = 1; endif;\n"
             f"  enddo;\n"
             f"  if otHit = 0 then\n"
             f'    {base}_OTHER_TXT = "";   {{ gated: \'Other (specify)\' not ticked -> not enterable }}\n'
@@ -584,7 +646,7 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postproc_tail=None
             f"  otN2 = length(strip({base})) / 2;\n"
             f"  do otK2 = 1 while otK2 <= otN2\n"
             f"    otP2 = (otK2 - 1) * 2 + 1;\n"
-            f"    if tonumber({base}[otP2:2]) = 99 then otHit2 = 1; endif;\n"
+            f"    if tonumber({base}[otP2:2]) = {int(other_code)} then otHit2 = 1; endif;\n"
             f"  enddo;\n"
             f"  if otHit2 = 1 and length(strip({base}_OTHER_TXT)) = 0 then\n"
             f'    errmsg("\'Other (specify)\' was ticked for Q{qn} - please specify.");\n'
@@ -615,13 +677,29 @@ CHECKBOX_EXTRA_STANDALONE = {
     # 5-/4-starting one; the only 0-ending code in either value set is 90 and no code starts
     # with 5 or 4 — so the #450 chunk-scan is not required here; re-check if codes change).
     "Q56_YAKAP_UNDERSTAND": [("05", "There are no benefits in the package")],
+    # #1178 (ASPSI review 2026-08-07): Q196 "We do not forego care" (07) - saying the
+    # household foregoes NO care is contradictory with naming specific foregone care.
+    # Coded 07, not 90, so the generic exclusive branch never matched it. pos() is
+    # cross-boundary-safe: a false "07" needs a 0-ending code followed by a 7-starting
+    # one, and none of Q196's codes (01-07, 99) end in 0.
+    "Q196_FOREGONE": [("07", "We do not forego care")],
+}
+
+# #1098 (pretest 2026-08-05): bases whose 'Other (specify)' option is NOT 99-coded.
+# Q141 'Other expenses' kept its paper code 07 through the #615 conversion, so the
+# default pos(99) gate never matched and its _OTHER_TXT was left ungated — the
+# specify box prompted even when 07 wasn't ticked. Gate on the real code instead
+# of recoding 07->99 (zero data-code changes mid-pretest).
+CHECKBOX_OTHER_CODE = {
+    "Q141_BILL_ITEMS": "07",
 }
 
 CHECKBOX_MULTISELECT_PROCS = {}
 for _b, _o, _x, _g in CHECKBOX_CONVERT:
     CHECKBOX_MULTISELECT_PROCS.update(
         _gen_checkbox_proc(_b, _o, _x, _g, CHECKBOX_POSTPROC_TAILS.get(_b),
-                           CHECKBOX_EXTRA_STANDALONE.get(_b)))
+                           CHECKBOX_EXTRA_STANDALONE.get(_b),
+                           CHECKBOX_OTHER_CODE.get(_b, "99")))
 
 # Append the generated Check Box PROCs to EXTRA_PROCS so they emit alongside the rest
 # and are seeded into `covered` (via CHECKBOX_COVERED).
@@ -1640,8 +1718,17 @@ postproc
     whose trigger field would otherwise loop on an out-of-range stop. Codes 1/3 fall
     through to the photo as before (this matches the CAPTURE_VERIFICATION_PHOTO gate). }
   if not (ENUM_RESULT_FINAL_VISIT in 1, 3) then
+    { #1209 (mirrors F3/F1): this early exit never reaches the end-of-case GPS form, so
+      the ReleaseGPS() there never runs. gpsRadioOpen is a session-lived PROC GLOBAL, so
+      leaking it "open" here suppressed gps(open) for every later case in the same
+      CSEntry session. Hand the radio back. }
+    ReleaseGPS();
     endlevel;
   endif;
+  { #1209: re-assert the radio for the end-of-case GPS form so it converges during the
+    photo step; also the only warm-up a RESUMED partial case gets (the case-key preproc's
+    WarmUpGPS() does not re-fire when CSEntry resumes mid-case). }
+  WarmUpGPS();
 """
 
 
@@ -1680,17 +1767,17 @@ def main():
                "Q186_CURRENT_INCOME",   # Section N recap htmldialog fires from its preproc
                "Q49_PRIVATE_INS", "C_HOUSEHOLD_ROSTER_FORM", "Q47_HH_HAS_PRIVATE_INS",
                "Q141_1_NO_RECEIPT_AMT_PHP",
-               # #615: Q141_BILL_ITEMS is now a Check Box base whose 'Other expenses' (07)
-               # is NOT 99-coded, so it's not in CHECKBOX_COVERED. Mark its _OTHER_TXT
-               # covered so the generic other-specify auto-gen doesn't emit the invalid
-               # `if Q141_BILL_ITEMS <> 7` gate (alpha field vs numeric) — keep it a plain
-               # ungated free-text, exactly as it was under select_all.
-               "Q141_BILL_ITEMS_OTHER_TXT",
+               # (#615's ungated-_OTHER_TXT workaround removed by #1098: Q141's specify
+               # box is now a gated Check Box _OTHER_TXT via CHECKBOX_OTHER_CODE=07,
+               # so CHECKBOX_COVERED carries Q141_BILL_ITEMS_OTHER_TXT.)
                "Q1_IS_HH_HEAD",  # EXTRA_PROCS (#520 soft confirm)
                "Q135_ZBB_OOP",  # EXTRA_PROCS (#664 DOH-retained gate)
                "Q76_BRAND_OR_GEN", "Q79_REG_SOURCE",  # EXTRA_PROCS (Q78_WHY_BRANDED now a Check Box base, covered via CHECKBOX_COVERED)
                "Q112_VISITED",  # EXTRA_PROCS (#590-593 Q112 referral-visit multi-branch)
-               "Q117_SPECIALIST_FOLLOWUP",  # EXTRA_PROCS (#816 Q112=Yes gate + spec §K Q117=No -> Q119)
+               # EXTRA_PROCS: both carry the paper's shared "[Answer only 'yes' in Q112]"
+               # filter (#816 gate; #1207 dropped the unsupported Q117=No -> Q119 skip and
+               # gave Q118 its own Q112 gate).
+               "Q117_SPECIALIST_FOLLOWUP", "Q118_SAT_REFERRAL_PROCESS",
                "Q194_OTHER_SOURCE",  # EXTRA_PROCS (#684 >=1 funding-source aggregate check)
                "Q2_BIRTH_MONTH", "Q2_BIRTH_YEAR", "Q2_1_AGE", "Q19_HH_SIZE_TOTAL",
                "Q20_HH_CHILDREN", "Q21_HH_SENIORS", "Q32_AGE", "Q39_CIVIL_STATUS",
@@ -1707,6 +1794,19 @@ def main():
             raise SystemExit(f"PROC collision: {field}")
         covered.add(field)
         parts.append(skip_proc(field, cond, target)); parts.append("")
+
+    # Desk-test pilot (dormant): F4_PILOT_JUMP=<FIELD> at generation time emits a
+    # Q3 postproc jump straight to the named field, so deep questions are reachable
+    # in a few fields for proof-of-fix captures / engine checks (F3's F3_PILOT_JUMP
+    # pattern; host = Q3_SEX — Q1/Q2 already own PROCs). OFF by default — NEVER set
+    # for a deploy build.
+    _pilot_target = os.environ.get("F4_PILOT_JUMP")
+    if _pilot_target and "Q3_SEX" not in covered:
+        covered.add("Q3_SEX")
+        parts.append("{ ---- desk-test pilot: jump to %s (dormant) ---- }" % _pilot_target)
+        parts.append("PROC Q3_SEX" + chr(10) + "postproc" + chr(10)
+                     + f"  skip to {_pilot_target};")
+        parts.append("")
 
     # #708/#709 combined-view: the Section N amount gate now lives in each item's
     # *_CONSUMED POSTPROC (DG-safe: visited field, no `skip to` inside the DG block) and

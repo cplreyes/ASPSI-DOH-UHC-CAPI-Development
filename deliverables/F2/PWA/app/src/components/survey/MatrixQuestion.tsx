@@ -30,8 +30,24 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
     | (string | undefined)[]
     | undefined;
 
+  // #1179/#1180/#1181: item-level preambles (mid-section instructions and
+  // definitions added for #1040-#1043) were silently dropped whenever their
+  // items got folded into a matrix — Question.tsx renders item.preamble, but
+  // this grid never did, so the note existed in the bundle yet never showed.
+  // Collect the group's preambles (deduped by their English text — consecutive
+  // rows can share one) and render them as subtext above the grid.
+  const preambles = items
+    .map((i) => i.preamble)
+    .filter((p): p is NonNullable<typeof p> => Boolean(p))
+    .filter((p, idx, arr) => arr.findIndex((q) => q.en === p.en) === idx);
+
   return (
     <div className="flex flex-col gap-2 py-3">
+      {preambles.map((p) => (
+        <p key={p.en} className="text-sm italic text-muted-foreground">
+          {localized(p, locale)}
+        </p>
+      ))}
       {/* Hidden registrations — exactly one ref per item.id, so RHF picks up
           defaultValues for matrix fields. Visible radios below are controlled. */}
       {items.map((item) => (

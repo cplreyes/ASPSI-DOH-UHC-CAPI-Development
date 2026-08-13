@@ -23,6 +23,26 @@ function adminEncodeSubmit(payload, ctx) {
   if (!payload.hcw_id) {
     return { ok: false, error: { code: 'E_VALIDATION', message: 'hcw_id required' } };
   }
+  // #847: an encoder once pasted an enrollment token into the HCW ID field
+  // and the row stored normally (recovered via the #846 void action). Real
+  // HCW IDs are short slugs (hcw-001, LBRHU1-HCW-03); enrollment tokens are
+  // JWTs (three dot-joined base64url segments). Reject token-shaped and
+  // malformed IDs server-side — the Admin Portal encode queue carries the
+  // same check inline (app/src/admin/encode/hcw-id-validation.ts).
+  var hcwIdValue = String(payload.hcw_id).trim();
+  var looksLikeToken =
+    /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(hcwIdValue) ||
+    /^[a-f0-9]{32,}$/i.test(hcwIdValue) ||
+    hcwIdValue.indexOf('://') >= 0 ||
+    hcwIdValue.indexOf('?') >= 0 ||
+    hcwIdValue.indexOf('=') >= 0 ||
+    hcwIdValue.indexOf('/') >= 0;
+  if (looksLikeToken) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'hcw_id looks like an enrollment token or link key, not an HCW ID' } };
+  }
+  if (!/^[A-Za-z0-9][A-Za-z0-9_-]{0,39}$/.test(hcwIdValue)) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'hcw_id is not a valid HCW ID (short codes like hcw-001)' } };
+  }
   // Actor identity comes from one of two sources, in priority order:
   // 1. ctx.actor_username — set by Node tests that inject ctx directly
   // 2. payload.encoded_by — stamped by the Worker from the JWT sub claim

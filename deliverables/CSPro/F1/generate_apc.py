@@ -22,6 +22,7 @@ Invoke:  python generate_apc.py
 """
 
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -456,13 +457,68 @@ postproc
   endif;""",
     # G3 (F2 benchmark — DISP-02 / parity with F3 + F4): final-visit date cannot precede
     # the first-visit date. Guarded so a blank final date (single visit) never false-fires.
+    # #1132 (ASPSI 2026-08-06, Carl 2026-08-09): the enumerator types the date in the
+    # PAPI's MMDDYYYY order; storage stays YYYYMMDD. Converting on exit keeps every
+    # downstream consumer untouched — the final<first comparison below, the MM/DD/YYYY
+    # echo (#1099), the Supervisor App, and F3/F4 stored parity.
+    #
+    # Idempotent BY CONSTRUCTION, which is what makes this safe on a revisited field:
+    # a value already stored as YYYYMMDD starts with the century (20), and 20 is not a
+    # valid month, so the conversion branch cannot fire twice on the same value. The
+    # else-branch then range-checks the year so genuine typos still get caught rather
+    # than being silently accepted as "already converted".
+    "DATE_FIRST_VISITED_THE_FACILITY": """\
+PROC DATE_FIRST_VISITED_THE_FACILITY
+postproc
+  numeric fvMM; numeric fvDD; numeric fvYY; numeric fvHead;
+  if DATE_FIRST_VISITED_THE_FACILITY <> notappl then
+    fvMM   = int(DATE_FIRST_VISITED_THE_FACILITY / 1000000);
+    fvHead = int(DATE_FIRST_VISITED_THE_FACILITY / 10000);
+    if fvMM >= 1 and fvMM <= 12 then
+      fvDD = fvHead - fvMM * 100;
+      fvYY = DATE_FIRST_VISITED_THE_FACILITY - fvHead * 10000;
+      if fvDD < 1 or fvDD > 31 or fvYY < 2020 or fvYY > 2035 then
+        errmsg("Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.");
+        reenter;
+      endif;
+      DATE_FIRST_VISITED_THE_FACILITY = fvYY * 10000 + fvMM * 100 + fvDD;
+    else
+      if fvHead < 2020 or fvHead > 2035 then
+        errmsg("Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.");
+        reenter;
+      endif;
+    endif;
+  endif;""",
     "DATE_OF_FINAL_VISIT_TO_THE_FACILITY": """\
 PROC DATE_OF_FINAL_VISIT_TO_THE_FACILITY
 postproc
+  numeric lvMM; numeric lvDD; numeric lvYY; numeric lvHead;
+  if DATE_OF_FINAL_VISIT_TO_THE_FACILITY <> notappl then
+    lvMM   = int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 1000000);
+    lvHead = int(DATE_OF_FINAL_VISIT_TO_THE_FACILITY / 10000);
+    if lvMM >= 1 and lvMM <= 12 then
+      lvDD = lvHead - lvMM * 100;
+      lvYY = DATE_OF_FINAL_VISIT_TO_THE_FACILITY - lvHead * 10000;
+      if lvDD < 1 or lvDD > 31 or lvYY < 2020 or lvYY > 2035 then
+        errmsg("Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.");
+        reenter;
+      endif;
+      DATE_OF_FINAL_VISIT_TO_THE_FACILITY = lvYY * 10000 + lvMM * 100 + lvDD;
+    else
+      if lvHead < 2020 or lvHead > 2035 then
+        errmsg("Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.");
+        reenter;
+      endif;
+    endif;
+  endif;
+  { conversion above runs FIRST so both sides of this comparison are YYYYMMDD }
   if DATE_OF_FINAL_VISIT_TO_THE_FACILITY <> notappl and DATE_FIRST_VISITED_THE_FACILITY <> notappl and DATE_OF_FINAL_VISIT_TO_THE_FACILITY < DATE_FIRST_VISITED_THE_FACILITY then
     errmsg("Final-visit date cannot be earlier than the first-visit date.");
     reenter;
   endif;""",
+    # #1132 retest (2026-08-10): the two #1099 DATE_*_DISP echo PROCs are
+    # REMOVED with their dictionary items at ASPSI's request — see generate_dcf.py.
+
     # 4.2 + 4.3 eligibility / tenure (Section A) — #148 hard, #152 cross-field
     "Q5_MONTHS_AT_FACILITY": """\
 PROC Q5_MONTHS_AT_FACILITY
@@ -591,9 +647,10 @@ postproc
     errmsg("Select at least one option for Q49 before continuing.");
     reenter;
   endif;
-  { exclusivity (soft warn): 'I don't know' (09) should stand alone }
+  { exclusivity (HARD — #1106..#1131): 'I don't know' (09) should stand alone }
   if pos("09", Q49_QUALITY_CHALL) > 0 and length(strip(Q49_QUALITY_CHALL)) > 2 then
-    errmsg("Q49: 'I don't know' is usually the only choice — please review the options ticked.");
+    errmsg("Q49: 'I don't know' must be the only choice — untick it or the other options before continuing.");
+    reenter;
   endif;""",
     "Q49_QUALITY_CHALL_OTHER_TXT": """\
 PROC Q49_QUALITY_CHALL_OTHER_TXT
@@ -614,9 +671,10 @@ postproc
     errmsg("Select at least one option for Q50 before continuing.");
     reenter;
   endif;
-  { exclusivity (soft warn): 'I don't know' (09) should stand alone }
+  { exclusivity (HARD — #1106..#1131): 'I don't know' (09) should stand alone }
   if pos("09", Q50_ACCESS_CHALL) > 0 and length(strip(Q50_ACCESS_CHALL)) > 2 then
-    errmsg("Q50: 'I don't know' is usually the only choice — please review the options ticked.");
+    errmsg("Q50: 'I don't know' must be the only choice — untick it or the other options before continuing.");
+    reenter;
   endif;""",
     "Q50_ACCESS_CHALL_OTHER_TXT": """\
 PROC Q50_ACCESS_CHALL_OTHER_TXT
@@ -637,13 +695,15 @@ postproc
     errmsg("Select at least one option for Q53 before continuing.");
     reenter;
   endif;
-  { exclusivity (soft warn): 'I don't know' (09) should stand alone }
+  { exclusivity (HARD — #1106..#1131): 'I don't know' (09) should stand alone }
   if pos("09", Q53_YK_PACKAGE) > 0 and length(strip(Q53_YK_PACKAGE)) > 2 then
-    errmsg("Q53: 'I don't know' is usually the only choice — please review the options ticked.");
+    errmsg("Q53: 'I don't know' must be the only choice — untick it or the other options before continuing.");
+    reenter;
   endif;
-  { #526 exclusivity (soft warn): 'All of the above' (08) implies every item — it should stand alone }
+  { #526 exclusivity (HARD — #1108): 'All of the above' (08) implies every item — it should stand alone }
   if pos("08", Q53_YK_PACKAGE) > 0 and length(strip(Q53_YK_PACKAGE)) > 2 then
-    errmsg("Q53: 'All of the above' was ticked with other option(s) — it should be the only choice. Please review.");
+    errmsg("Q53: 'All of the above' must be the only choice — untick it or the other options before continuing.");
+    reenter;
   endif;""",
     "Q53_YK_PACKAGE_OTHER_TXT": """\
 PROC Q53_YK_PACKAGE_OTHER_TXT
@@ -664,9 +724,17 @@ postproc
     errmsg("Select at least one option for Q58 before continuing.");
     reenter;
   endif;
-  { exclusivity (soft warn): 'I don't know' (07) should stand alone }
+  { exclusivity (HARD — #1106..#1131): 'I don't know' (07) should stand alone }
   if pos("07", Q58_PERF_INDICATORS) > 0 and length(strip(Q58_PERF_INDICATORS)) > 2 then
-    errmsg("Q58: 'I don't know' is usually the only choice — please review the options ticked.");
+    errmsg("Q58: 'I don't know' must be the only choice — untick it or the other options before continuing.");
+    reenter;
+  endif;
+  { #1188: 'No requirements' (05) is a SECOND standalone option the #1106 pass
+    missed — it starts with "no " but not "none"/"no initiative", so nothing
+    ever matched it (the same class as Q156/Q165/Q166 in v1.3.0). }
+  if pos("05", Q58_PERF_INDICATORS) > 0 and length(strip(Q58_PERF_INDICATORS)) > 2 then
+    errmsg("Q58: 'No requirements' must be the only choice — untick it or the other options before continuing.");
+    reenter;
   endif;""",
     "Q58_PERF_INDICATORS_OTHER_TXT": """\
 PROC Q58_PERF_INDICATORS_OTHER_TXT
@@ -773,11 +841,11 @@ CHECKBOX_CONVERT_A = [
      "not-provided block }\n    skip to Q148_LGU_SUPPORT;\n  endif;"),
     ("Q149_LGU_SUPPORT_FORMS",      True, False, None),
     ("Q155_SEND_REFERRAL_HOW",      True, False, None),
-    ("Q156_REFERRAL_FORM_TYPE",     True, False, None),
+    ("Q156_REFERRAL_FORM_TYPE",     True, "05", None),
     ("Q159_RECEIVE_REFERRAL_HOW",   True, False, None),
     ("Q163_HR_CHALL",               True, True,  None),
-    ("Q165_PD_DOCTORS",             True, False, None),
-    ("Q166_PD_NURSES",              True, False, None),
+    ("Q165_PD_DOCTORS",             True, "08", None),
+    ("Q166_PD_NURSES",              True, "06", None),
     # #567 parts 1 & 2: Section F DOH-licensing why-difficult battery.
     # Q121 = the gate (14 options, last is 'None of the above' -> recoded 90 ->
     # exclusive; no 'Other'). It gates Q122-134 the same way Q65 gates Q66-74; the
@@ -822,10 +890,14 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None):
              f'    errmsg("Select at least one option for Q{qn} before continuing.");',
              "    reenter;", "  endif;"]
     if exclusive:
-        body += [f'  if pos("90", {base}) > 0 and length(strip({base})) > 2 then',
+        # #1106-#1131 (ASPSI review 2026-08-06): HARD block, not a soft warn. The
+        # exclusive code is 90 by convention, but a few lists code their "No ..."
+        # option sequentially (Q156=05, Q165=08, Q166=06) - pass the code as a str.
+        code = exclusive if isinstance(exclusive, str) else "90"
+        body += [f'  if pos("{code}", {base}) > 0 and length(strip({base})) > 2 then',
                  f'    errmsg("Q{qn}: an exclusive option (None / No initiatives / Do not know) '
-                 f'should be the only choice - please review the options ticked.");',
-                 "  endif;"]
+                 f'must be the only choice - untick it or the other options before continuing.");',
+                 "    reenter;", "  endif;"]
     procs = {base: "\n".join(body)}
     if has_other:
         procs[f"{base}_OTHER_TXT"] = (
@@ -1082,8 +1154,18 @@ postproc
     would otherwise loop on an out-of-range stop; F3/F4 device-confirmed 2026-06-21). Codes
     1/4 fall through to the photo, matching the CAPTURE_VERIFICATION_PHOTO gate (in 1, 4). }
   if not (ENUM_RESULT_FINAL_VISIT in 1, 4) then
+    { #1209 (mirrors F3): F1's Facility GPS form is dead last, after the photo, so this
+      early exit never reaches it and ReleaseGPS() never runs. gpsRadioOpen is a
+      session-lived PROC GLOBAL, so leaking it "open" here suppressed gps(open) for
+      every later case in the same CSEntry session. Hand the radio back. }
+    ReleaseGPS();
     endlevel;   { statement form (no parens) - strict packager rejects endlevel() }
-  endif;""",
+  endif;
+  { #1209 (mirrors F3): re-assert the radio for the end-of-case Facility GPS form so it
+    converges during the photo step. Also the only warm-up a RESUMED partial case gets -
+    the QUESTIONNAIRE_NUMBER preproc WarmUpGPS() does not fire when CSEntry resumes at a
+    mid-case field. }
+  WarmUpGPS();""",
 }
 BESPOKE_PROCS.update(DISPOSITION_PROCS)
 
@@ -1246,6 +1328,18 @@ def main():
         # #376: drop code 7 from the No-branch range so No-other reaches its box
         cond = exclude_code7_from_skip(field, cond) if field in dual_other_skips else cond
         parts.append(skip_proc(field, cond, target))
+        parts.append("")
+
+    # Desk-test pilot (dormant): F1_PILOT_JUMP=<FIELD> at generation time emits a
+    # Q1 postproc jump straight to the named field, so deep questions are reachable
+    # in a few fields for proof-of-fix captures / engine checks (F3's F3_PILOT_JUMP
+    # pattern). OFF by default — NEVER set for a deploy build.
+    _pilot_target = os.environ.get("F1_PILOT_JUMP")
+    if _pilot_target and "Q1_NAME" not in covered:
+        covered.add("Q1_NAME")
+        parts.append("{ ---- desk-test pilot: jump to %s (dormant) ---- }" % _pilot_target)
+        parts.append("PROC Q1_NAME" + chr(10) + "postproc" + chr(10)
+                     + f"  skip to {_pilot_target};")
         parts.append("")
 
     parts.append("{ ---- Why-difficult display gates (spec 4.10) ---- }")

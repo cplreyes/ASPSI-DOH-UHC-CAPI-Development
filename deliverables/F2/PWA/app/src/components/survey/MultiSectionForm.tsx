@@ -16,6 +16,7 @@ import {
   sectionH,
   sectionI,
   sectionJ,
+  sectionK,
 } from '@/generated/items';
 import {
   sectionASchema,
@@ -28,6 +29,7 @@ import {
   sectionHSchema,
   sectionISchema,
   sectionJSchema,
+  sectionKSchema,
 } from '@/generated/schema';
 import { shouldShow, shouldShowSection, type FormValues } from '@/lib/skip-logic';
 import { sectionBlockingErrors } from '@/lib/cross-field';
@@ -53,6 +55,9 @@ const SECTIONS: SectionConfig[] = [
   { id: 'H', section: sectionH, schema: sectionHSchema },
   { id: 'I', section: sectionI, schema: sectionISchema },
   { id: 'J', section: sectionJ, schema: sectionJSchema },
+  // #1003/#1004: app-only questionnaire-feedback section (all items required;
+  // the shared Next gate blocks Review/Submit until FB1–FB5 are answered).
+  { id: 'K', section: sectionK, schema: sectionKSchema },
 ];
 
 const REVIEW_INDEX = SECTIONS.length;

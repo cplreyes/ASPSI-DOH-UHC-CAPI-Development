@@ -523,15 +523,16 @@ Form=2
 Position=50,150,111,166
 Text=Barangay
  
+  
 [Field]
 Name=BREAKOFF
-Position=177,177,360,197
+Position=177,177,192,197
 Item=BREAKOFF,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
 Form=2
   
 [Text]
-Position=50,180,170,196
+Position=50,180,149,196
 Text=Interview status
  
 [EndGroup]
@@ -631,7 +632,7 @@ DataCaptureType=TextBox
 Form=3
   
 [Text]
-Position=50,210,587,226
+Position=50,210,549,226
 Text=2. What is your official designation at this health facility? — Other (specify) text
  
   
@@ -667,9 +668,10 @@ DataCaptureType=TextBox
 Form=3
   
 [Text]
-Position=50,300,146,316
+Position=50,300,155,316
 Text=Number of Years
  
+  
   
 [Field]
 Name=Q5_MONTHS_AT_FACILITY
@@ -679,10 +681,9 @@ DataCaptureType=TextBox
 Form=3
   
 [Text]
-Position=50,330,152,346
+Position=50,330,165,346
 Text=Number of Months
  
-  
   
 [Field]
 Name=Q6_YEARS_HEALTH
@@ -692,7 +693,7 @@ DataCaptureType=TextBox
 Form=3
   
 [Text]
-Position=50,360,146,376
+Position=50,360,155,376
 Text=Number of Years
  
   
@@ -704,7 +705,7 @@ DataCaptureType=TextBox
 Form=3
   
 [Text]
-Position=50,390,152,406
+Position=50,390,165,406
 Text=Number of Months
  
 [Block]
@@ -1446,15 +1447,16 @@ Text=33. If yes, how frequent has your facility submit these data? — Other (sp
   
 [Field]
 Name=Q34_DATA_REPORTS_USED
-Position=1695,1497,1710,1517
+Position=1695,1497,2032,1517
 Item=Q34_DATA_REPORTS_USED,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=5
   
 [Text]
-Position=50,1500,778,1516
+Position=50,1500,516,1516
 Text=34. Which of the submitted reports are actually used for decision-making?
  
+  
   
 [Field]
 Name=Q34_DATA_REPORTS_USED_OTHER_TXT
@@ -2804,7 +2806,7 @@ Form=6
   
 [Text]
 Position=50,540,1348,556
-Text=57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package? (Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.)
+Text=57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?
  
   
   
@@ -2908,7 +2910,7 @@ DataCaptureType=RadioButton
 Form=6
   
 [Text]
-Position=50,990,1006,1006
+Position=50,990,628,1006
 Text=63. How many month/s did you wait from application submission to accreditation approval?
  
   
@@ -5323,7 +5325,7 @@ Text=143. Which of the UHC benefits do you find most difficult to implement? Oth
   
 [Field]
 Name=Q144_DIFFICULT_REASON
-Position=1204,807,1233,827
+Position=1204,807,1317,827
 Item=Q144_DIFFICULT_REASON,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=9
@@ -5332,7 +5334,6 @@ Form=9
 Position=50,810,294,826
 Text=144. Why is this difficult to implement?
  
-  
   
   
 [Field]
@@ -5344,7 +5345,7 @@ DataCaptureType=TextBox
 Form=9
   
 [Text]
-Position=50,840,872,856
+Position=50,840,434,856
 Text=144. Why is this difficult to implement? — Other (specify) text
  
   
@@ -5644,7 +5645,7 @@ Text=159. Of those referred, which of the following are the most common ways you
   
 [Field]
 Name=Q160_EXTERNAL_SERVICES_GO
-Position=1204,2427,1233,2447
+Position=1204,2427,1345,2447
 Item=Q160_EXTERNAL_SERVICES_GO,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=9
@@ -5653,7 +5654,6 @@ Form=9
 Position=50,2430,549,2446
 Text=160. Where do your patients go to get the services not available at this facility?
  
-  
   
   
 [Field]
@@ -5979,7 +5979,7 @@ Max=1
   
 [Field]
 Name=Q163_HR_CHALL
-Position=1202,27,1343,47
+Position=1202,27,1371,47
 Item=Q163_HR_CHALL,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=10
@@ -5990,19 +5990,19 @@ Text=163. What challenges in human resources do you have?
  
   
   
+  
 [Field]
 Name=Q163_HR_CHALL_OTHER_TXT
-Position=1202,177,2172,197
+Position=1202,57,2172,77
 Item=Q163_HR_CHALL_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,180,544,196
+Position=50,60,544,76
 Text=163. What challenges in human resources do you have? — Other (specify) text
  
-  
   
 [Field]
 Name=Q164_IMPROVEMENT_AREA
@@ -6053,7 +6053,7 @@ DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,540,813,556
+Position=50,540,535,556
 Text=166. What forms of professional development do you provide to your nurses?
  
   
@@ -6067,7 +6067,7 @@ DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,750,953,766
+Position=50,750,675,766
 Text=166. What forms of professional development do you provide to your nurses? — Other (specify) text
  
 [Block]
@@ -6082,41 +6082,41 @@ Name=DG_H_HUMAN_RESOURCES_FORM_248
 Label=Q163
 DisplayTogether=Yes
 Position=2
-Length=1
+Length=0
   
 [Block]
 Name=DG_H_HUMAN_RESOURCES_FORM_249
 Label=Q164
 DisplayTogether=Yes
-Position=4
+Position=3
 Length=1
   
 [Block]
 Name=DG_H_HUMAN_RESOURCES_FORM_250
 Label=Q165
 DisplayTogether=Yes
-Position=6
+Position=5
 Length=1
   
 [Block]
 Name=DG_H_HUMAN_RESOURCES_FORM_251
 Label=Q165
 DisplayTogether=Yes
-Position=8
+Position=7
 Length=1
   
 [Block]
 Name=DG_H_HUMAN_RESOURCES_FORM_252
 Label=Q166
 DisplayTogether=Yes
-Position=10
+Position=9
 Length=1
   
 [Block]
 Name=DG_H_HUMAN_RESOURCES_FORM_253
 Label=Q166
 DisplayTogether=Yes
-Position=12
+Position=11
 Length=1
   
 [EndGroup]
@@ -6186,24 +6186,26 @@ Text=Field Edited by
 Name=DATE_FIRST_VISITED_THE_FACILITY
 Position=350,147,463,167
 Item=DATE_FIRST_VISITED_THE_FACILITY,FACILITYHEADSURVEY_DICT
-DataCaptureType=Date,YYYYMMDD
+DataCaptureType=Date
+CaptureDateFormat=YYYYMMDD
 Form=11
   
 [Text]
 Position=50,150,315,166
-Text=Date First Visited the Facility (YYYYMMDD)
+Text=Date First Visited the Facility (MMDDYYYY)
  
   
 [Field]
 Name=DATE_OF_FINAL_VISIT_TO_THE_FACILITY
 Position=350,177,463,197
 Item=DATE_OF_FINAL_VISIT_TO_THE_FACILITY,FACILITYHEADSURVEY_DICT
-DataCaptureType=Date,YYYYMMDD
+DataCaptureType=Date
+CaptureDateFormat=YYYYMMDD
 Form=11
   
 [Text]
 Position=50,180,336,196
-Text=Date of Final Visit to the Facility (YYYYMMDD)
+Text=Date of Final Visit to the Facility (MMDDYYYY)
  
   
 [Field]

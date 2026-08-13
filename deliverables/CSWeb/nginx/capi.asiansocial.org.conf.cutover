@@ -1,0 +1,205 @@
+# CAPI Console — POST-CUTOVER vhost (E9-ADMIN-033 / -034).      Carl, 2026-08-09
+#
+# This is the capi vhost as it should look once authz.php is the gate. It is
+# applied by ops/cutover.sh, which backs up the live file first and rolls back
+# automatically if a canary fails. Do not hand-copy it.
+#
+# WHAT CHANGES FROM THE PRE-CUTOVER FILE
+#   1. /_capi_auth points at authz.php instead of whoami.php, and is given the
+#      original URI — authz.php refuses without it rather than guessing.
+#   2. location /docs/ gains auth_request. This is the actual cutover: until
+#      now /docs/ went straight to Apache and Apache's FilesMatch decided.
+#   3. Both gated locations set X-Auth-User / X-Auth-Roles FROM THE SUBREQUEST
+#      (auth_request_set), replacing the blanked values. Same header names, now
+#      from a source the client cannot influence.
+#   4. error_page 500 -> @capi_authdown. nginx turns ANY non-2xx/401/403
+#      subrequest status into a 500, so 503-from-authz arrives here as 500 —
+#      which is why the maintenance page hangs off 500 and not off 503.
+#
+# WHAT DOES NOT CHANGE, EVER
+#   location /csweb/ — CSEntry cannot do cookie sign-in. Its OAuth bearer is
+#   its own auth. Putting auth_request here stops fieldwork.
+
+server {
+  listen 443 ssl;
+  http2 on;
+  include resty-server-https.conf;
+  server_name capi.asiansocial.org;
+
+  # parity with the csweb vhost — CSPro clients send large/underscore headers
+  client_header_buffer_size 32k;
+  large_client_header_buffers 4 64k;
+  underscores_in_headers on;
+
+  include /usr/local/openresty/nginx/conf/error-pages.conf;
+
+  # ---- CSWeb app + CSEntry SYNC API. NEVER gated. ---------------------------
+  location /csweb/ {
+    proxy_http_version 1.1;
+    proxy_pass http://172.17.0.1:8080;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Port $server_port;
+    proxy_set_header Authorization $http_authorization;
+    proxy_read_timeout 180s;
+    proxy_send_timeout 180s;
+    proxy_connect_timeout 180s;
+  }
+
+  # ---- the admin console at its portal URL (unification Slice 5) -----------
+  # capi-www has no PHP, so the portal path cannot be a file — it proxies to
+  # Apache's /docs/admin/. There must be NO Apache-level redirect on that
+  # target: it would answer this proxy's own request with a 301, be proxied
+  # again, and loop forever. The public /docs/admin/ redirect lives in NGINX,
+  # right below, where the proxy never sees it.
+  location /projects/uhc-y2/admin/ {
+    auth_request /_capi_auth;
+    auth_request_set $auth_user   $upstream_http_x_auth_user;
+    auth_request_set $auth_roles  $upstream_http_x_auth_roles;
+    auth_request_set $auth_reason $upstream_http_x_auth_reason;
+
+    error_page 401 = @capi_login;
+    error_page 403 = @capi_denied;
+    error_page 500 = @capi_authdown;
+
+    proxy_http_version 1.1;
+    proxy_pass http://172.17.0.1:8080/docs/admin/;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Port $server_port;
+    proxy_read_timeout 180s;
+
+    proxy_set_header X-Auth-User    $auth_user;
+    proxy_set_header X-Auth-Roles   $auth_roles;
+    proxy_set_header X-Auth-Reason  "";
+    proxy_set_header X-Original-URI "";
+
+    proxy_hide_header Cache-Control;
+    add_header Cache-Control "no-store, private" always;
+  }
+
+  # The old admin URL bounces UNCONDITIONALLY — `return` runs at the rewrite
+  # phase, BEFORE auth_request, so putting the gate here would be dead config
+  # that only misleads (verified live 2026-08-09: a field_supervisor got the
+  # 301, not 403). That is fine: no content is served from this URL, only a
+  # Location header to a path whose own location enforces the full gate.
+  location = /docs/admin/ {
+    return 301 https://capi.asiansocial.org/projects/uhc-y2/admin/;
+  }
+
+  # ---- the /docs console tree — NOW GATED BY authz.php ----------------------
+  location /docs/ {
+    auth_request /_capi_auth;
+    auth_request_set $auth_user   $upstream_http_x_auth_user;
+    auth_request_set $auth_roles  $upstream_http_x_auth_roles;
+    auth_request_set $auth_reason $upstream_http_x_auth_reason;
+
+    error_page 401 = @capi_login;
+    error_page 403 = @capi_denied;
+    error_page 500 = @capi_authdown;
+
+    proxy_http_version 1.1;
+    proxy_pass http://172.17.0.1:8080;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Port $server_port;
+    proxy_set_header Authorization $http_authorization;
+    proxy_read_timeout 180s;
+
+    # Identity, from the subrequest. Setting these unconditionally also
+    # overwrites anything the client sent, which is the E9-ADMIN-009 guarantee
+    # carried forward — a client value can never survive to the application.
+    proxy_set_header X-Auth-User    $auth_user;
+    proxy_set_header X-Auth-Roles   $auth_roles;
+    proxy_set_header X-Auth-Reason  "";
+    proxy_set_header X-Original-URI "";
+
+    proxy_hide_header Cache-Control;
+    add_header Cache-Control "no-store, private" always;
+  }
+
+  # ---- the one authorization decision point ---------------------------------
+  location = /_capi_auth {
+    internal;
+    proxy_pass http://172.17.0.1:8080/docs/idp/authz.php;
+    proxy_pass_request_body off;
+    proxy_set_header Content-Length "";
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Forwarded-Proto https;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Cookie $http_cookie;
+
+    # authz.php authorizes THE ORIGINAL REQUEST, not this subrequest. It
+    # refuses outright when this header is missing, because guessing the path
+    # would be a bypass.
+    proxy_set_header X-Original-URI $request_uri;
+
+    # ---- OPTIONAL CACHE, deliberately left off -----------------------------
+    # DESIGN.md §5 proposed a 10 s proxy_cache here. It is not enabled because
+    # the reason for it went away: folding the three SELECTs into one
+    # (E9-ADMIN-030) took an authorized request from ~5 statements to ~2.45,
+    # measured. A cache would buy the remainder at the price of a 10-second
+    # revocation SLA — and "disable this account NOW" is the capability this
+    # whole module exists to provide. Enable it only if the database actually
+    # shows load, and write the 10 s into the runbook as the revocation window
+    # if you do:
+    #
+    #   proxy_cache            capi_auth;      # zone declared in capi-cache.conf
+    #   proxy_cache_key        "$cookie___Host_capi_sid|$request_uri";
+    #   proxy_cache_valid      204 401 403 10s;
+    #   proxy_cache_bypass     $cookie___Host_capi_sid = "";
+    #   proxy_cache_use_stale  error timeout;
+  }
+
+  location @capi_login {
+    return 302 /docs/idp/login?next=$request_uri;
+  }
+
+  # Signed in, but not allowed. A user who owes a password change is sent to
+  # change it; everyone else gets a real page rather than a bare 403.
+  location @capi_denied {
+    if ($auth_reason = "pwchange") { return 302 /docs/idp/change-password?next=$request_uri; }
+    default_type text/html;
+    return 403 '<!doctype html><meta charset="utf-8"><title>Not permitted</title><style>body{font:15px/1.6 system-ui,Segoe UI,sans-serif;background:#f5f8f4;color:#12171a;display:flex;min-height:100vh;align-items:center;justify-content:center;margin:0;padding:24px}.c{background:#fff;border:1px solid #e1e9e3;border-radius:12px;padding:28px 32px;max-width:460px;box-shadow:0 2px 10px rgba(9,30,20,.08)}h1{font:600 20px Georgia,serif;color:#04331d;margin:0 0 8px}p{margin:0 0 8px;color:#45535b}a{color:#046a38}</style><div class="c"><h1>Not permitted</h1><p>Your account is signed in but does not have permission to open this page.</p><p>If you think it should, ask an owner to grant it \xE2\x80\x94 the console records who has what.</p><p><a href="/docs/">Back to the console</a></p></div>';
+  }
+
+  # The identity provider is unreachable. authz.php answers 503 and nginx
+  # converts that to 500, so this hangs off 500. Fails CLOSED: no content is
+  # served, but the message says "we are down" rather than "your password is
+  # wrong", which is what a 401 would imply.
+  location @capi_authdown {
+    default_type text/html;
+    add_header Retry-After 60 always;
+    return 503 '<!doctype html><meta charset="utf-8"><title>Console unavailable</title><style>body{font:15px/1.6 system-ui,Segoe UI,sans-serif;background:#f5f8f4;color:#12171a;display:flex;min-height:100vh;align-items:center;justify-content:center;margin:0;padding:24px}.c{background:#fff;border:1px solid #e1e9e3;border-radius:12px;padding:28px 32px;max-width:480px;box-shadow:0 2px 10px rgba(9,30,20,.08)}h1{font:600 20px Georgia,serif;color:#04331d;margin:0 0 8px}p{margin:0 0 8px;color:#45535b}b{color:#046a38}</style><div class="c"><h1>Console temporarily unavailable</h1><p>The sign-in service is not responding, so the console cannot verify who you are. Nothing has been lost.</p><p><b>Tablet syncing is unaffected</b> and needs no sign-in \xE2\x80\x94 carry on collecting.</p><p>Try again in a minute.</p></div>';
+  }
+
+  # ---- the static portal (capi-www), same gate ------------------------------
+  location / {
+    auth_request /_capi_auth;
+    auth_request_set $auth_user  $upstream_http_x_auth_user;
+    auth_request_set $auth_roles $upstream_http_x_auth_roles;
+    auth_request_set $auth_reason $upstream_http_x_auth_reason;
+
+    error_page 401 = @capi_login;
+    error_page 403 = @capi_denied;
+    error_page 500 = @capi_authdown;
+
+    proxy_http_version 1.1;
+    proxy_pass http://127.0.0.1:8788;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+
+    proxy_set_header X-Auth-User    $auth_user;
+    proxy_set_header X-Auth-Roles   $auth_roles;
+    proxy_set_header X-Auth-Reason  "";
+    proxy_set_header X-Original-URI "";
+  }
+}

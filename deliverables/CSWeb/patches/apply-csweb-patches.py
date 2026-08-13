@@ -7,7 +7,7 @@ Idempotent: each patch is skipped if its marker is already present. If the
 "old" text is missing AND the marker is absent, upstream changed that code —
 the script stops loudly so you can review (the bug may be fixed upstream).
 
-Covers the 6 patched files (see *.patch diffs in this folder for reference)
+Covers the 7 patched files (see *.patch diffs in this folder for reference)
 plus the two MySQL settings, then clears the Twig cache and restarts PHP.
 Record: deliverables/CSWeb/CSWeb-Sync-Report-and-Case-Breakout-Setup.md
 """
@@ -120,6 +120,52 @@ PATCHES = [
         "                    $this->logger->warning(\"Record [\" . $record->getName() . \"] Item [$itemName] has array value (binary/blob in scalar column); setting null.\");\n"
         "                    $insertValue = null;\n"
         "                } else if ($isNumeric) {",
+    ),
+    (
+        # Patch #7 (ASPSI 2026-07-17): Sync Report deep-link. The Sync Dashboard's Case
+        # list (docs/dashboard.html) links each F1/F3/F4 row to
+        #   /csweb/sync-report?dict=<DICT_NAME>&case=<QN>
+        # This appends a small JS hook after showModal(): on page load, if both params
+        # are present, it selects that dictionary in the sidebar and calls the same
+        # report-view-case-json endpoint the "View case" links use (ids[0] = the raw
+        # stored case key), opening the full-responses modal directly. Single-ID
+        # dictionaries only (ours are). Auth untouched — the page still requires the
+        # CSWeb login; the endpoint is the one the UI already calls.
+        "templates/syncReport.twig",
+        "ASPSI 2026-07-17 (patch #7)",
+        '            $("#pointInfoModal").modal("show");\n'
+        "        }",
+        '            $("#pointInfoModal").modal("show");\n'
+        "        }\n"
+        "\n"
+        "        /* ASPSI 2026-07-17 (patch #7): dashboard deep-link - ?dict=<DICT_NAME>&case=<QN>\n"
+        "           opens the View case modal directly. Used by the Sync Dashboard's Case list\n"
+        "           (docs/dashboard.html); single-ID dictionaries only (ids[0] = the case key). */\n"
+        "        function deepLinkViewCase() {\n"
+        "            var qp = new URLSearchParams(window.location.search);\n"
+        "            var dlDict = qp.get('dict'), dlCase = qp.get('case');\n"
+        "            if (!dlDict || !dlCase) return;\n"
+        "            var tries = 0;\n"
+        "            var timer = setInterval(function () {\n"
+        "                var el = document.getElementById(dlDict);\n"
+        "                if (el) {\n"
+        "                    clearInterval(timer);\n"
+        "                    if (!el.className.includes('active')) ui.changeDictionary(dlDict);\n"
+        "                    var params = new URLSearchParams();\n"
+        "                    params.append('dictionary', dlDict);\n"
+        "                    params.append('ids[0]', dlCase);\n"
+        '                    $("body").addClass("loading");\n'
+        "                    $.ajax({\n"
+        '                        type: "GET",\n'
+        "                        url: \"{{ url('report-view-case-json') }}\",\n"
+        "                        data: params.toString()\n"
+        '                    }).done(showModal).always(function () { $("body").removeClass("loading"); });\n'
+        "                } else if (++tries > 150) {\n"
+        "                    clearInterval(timer);\n"
+        "                }\n"
+        "            }, 200);\n"
+        "        }\n"
+        "        $(document).ready(deepLinkViewCase);",
     ),
 ]
 

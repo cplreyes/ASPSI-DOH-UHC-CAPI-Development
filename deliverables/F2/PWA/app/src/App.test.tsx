@@ -50,11 +50,14 @@ async function seedEnrollment() {
 
 /**
  * #808: the per-case ConsentScreen now gates Section A. Click through it —
- * agree + continue — the way a consenting respondent would.
+ * agree + continue — the way a consenting respondent would. #1002: the agree
+ * path now shows an optional raffle phone field; fill it so Continue advances
+ * without the blank-number confirm (which has its own dedicated test).
  */
 async function passConsent(user: ReturnType<typeof userEvent.setup>) {
   await screen.findByTestId('consent-agree');
   await user.click(screen.getByTestId('consent-agree'));
+  await user.type(screen.getByTestId('consent-raffle-phone'), '09171234567');
   await user.click(screen.getByTestId('consent-continue'));
 }
 
@@ -82,6 +85,29 @@ describe('<App>', () => {
       await screen.findByRole('heading', {
         name: /Section A — Healthcare Worker Profile/,
       }),
+    ).toBeInTheDocument();
+  });
+
+  it('#1002: agreeing with a blank raffle phone asks for confirmation, then proceeds', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByTestId('consent-agree');
+    await user.click(screen.getByTestId('consent-agree'));
+    // Phone field is optional but blank → Continue opens the confirm panel
+    // instead of advancing.
+    await user.click(screen.getByTestId('consent-continue'));
+    expect(await screen.findByTestId('consent-blank-phone-confirm')).toBeInTheDocument();
+    expect(
+      screen.queryByRole('heading', { name: /Section A — Healthcare Worker Profile/ }),
+    ).not.toBeInTheDocument();
+    // "Go back" returns to the form without advancing.
+    await user.click(screen.getByTestId('consent-blank-phone-back'));
+    expect(screen.queryByTestId('consent-blank-phone-confirm')).not.toBeInTheDocument();
+    // Re-confirm and proceed without a number.
+    await user.click(screen.getByTestId('consent-continue'));
+    await user.click(screen.getByTestId('consent-blank-phone-proceed'));
+    expect(
+      await screen.findByRole('heading', { name: /Section A — Healthcare Worker Profile/ }),
     ).toBeInTheDocument();
   });
 

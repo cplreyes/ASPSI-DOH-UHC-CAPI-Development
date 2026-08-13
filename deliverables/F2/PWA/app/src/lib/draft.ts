@@ -11,7 +11,11 @@ export const COMPLETED_CSID_KEY = 'f2_completed_csid';
 // lexicographically later than '2026-04-17-m1' so post-split submissions are
 // demarcated by spec_version. Do NOT raise the backend's
 // min_accepted_spec_version until the offline queue drains.
-export const LOCAL_SPEC_VERSION = '2026-07-14-r7';
+// r7 (2026-07-14): enrollment `qn` + submit-time `gps_status` join the payload.
+// r8 (2026-08-05, #1003/#1004): Section K questionnaire-feedback items
+// FB1–FB5 + optional consent-page raffle_phone (#1002) join the values
+// payload — post-r8 submissions carry them, earlier ones don't.
+export const LOCAL_SPEC_VERSION = '2026-08-05-r8';
 
 export interface EnrollmentInfo {
   hcw_id: string;
