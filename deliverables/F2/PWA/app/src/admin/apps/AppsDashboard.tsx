@@ -4,48 +4,42 @@
  * Plan: docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md (Tasks 3.6–3.10)
  * Spec: docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md (§7.6, §7.9)
  *
- * Refactored 2026-05-04 from a single stacked page to a tabbed layout
- * matching DataDashboard / ReportDashboard. Versioning / Files / Data
- * Settings / Apps Script Quota are now four sub-tabs instead of vertically
- * stacked sections — operators can deep-link into any of them and the
- * dashboard shows one focused view at a time.
+ * Reworked 2026-07-17 (Apps-tab audit): the Data Settings and Apps Script
+ * Quota sub-tabs were removed — scheduled exports never had an executor on
+ * this stack and the AS quota gauge measured a retired system. The global
+ * kill switch + broadcast message moved out of Data Settings into a
+ * first-position Controls sub-tab (they are the portal's incident controls).
+ * Legacy ?tab=data-settings / ?tab=quota deep links fall back to Controls.
  */
 import { useMemo, type ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { useRouter } from '../lib/pages-router';
+import { Controls } from './Controls';
 import { Versioning } from './Versioning';
 import { Files } from './Files';
-import { DataSettings } from './DataSettings';
-import { QuotaWidget } from './QuotaWidget';
 
-type TabKey = 'versioning' | 'files' | 'data-settings' | 'quota';
+type TabKey = 'controls' | 'versioning' | 'files';
 
 // `description` renders as the native browser tooltip + screen-reader aria-label
 // (same pattern as DataDashboard / ReportDashboard).
 const TABS: Array<{ key: TabKey; label: string; description: string }> = [
   {
+    key: 'controls',
+    label: 'Controls',
+    description:
+      'Global survey controls: the kill switch (immediately blocks all submissions server-side) and the broadcast banner shown to every respondent.',
+  },
+  {
     key: 'versioning',
     label: 'Versioning',
     description:
-      'Live build identifiers (PWA bundle + SHA, Worker, last Pages deploy) and per-spec submission counts. First place to look during incident triage.',
+      'Live build identifiers (PWA bundle + SHA, API version, last deploy) and per-spec response counts. First place to look during incident triage.',
   },
   {
     key: 'files',
     label: 'Files',
     description:
-      'Operator-uploaded files (training plans, facility rosters, fieldwork checklists) stored in Cloudflare R2. PDF / ZIP / PNG / JPEG / GIF, up to 100 MB.',
-  },
-  {
-    key: 'data-settings',
-    label: 'Data Settings',
-    description:
-      'Scheduled break-out exports of F2_Responses to R2. Worker cron fires every 5 minutes and runs settings whose next_run_at has elapsed.',
-  },
-  {
-    key: 'quota',
-    label: 'Apps Script Quota',
-    description:
-      'Daily Apps Script execution count vs the 20,000-call limit. Hard ceiling — when this hits 100% the backend rejects writes until UTC rollover.',
+      'Operator-uploaded files (training plans, facility rosters, fieldwork checklists) stored on the survey server. PDF / ZIP / PNG / JPEG / GIF, up to 100 MB.',
   },
 ];
 
@@ -59,7 +53,8 @@ export function AppsDashboard({ apiBaseUrl, fetchImpl }: AppsDashboardProps): JS
   const activeTab = useMemo<TabKey>(() => {
     const params = new URLSearchParams(search);
     const t = params.get('tab');
-    return TABS.some((x) => x.key === t) ? (t as TabKey) : 'versioning';
+    // Unknown keys (incl. legacy data-settings / quota links) fall back to Controls.
+    return TABS.some((x) => x.key === t) ? (t as TabKey) : 'controls';
   }, [search]);
 
   const switchTab = (key: TabKey) => {
@@ -74,7 +69,7 @@ export function AppsDashboard({ apiBaseUrl, fetchImpl }: AppsDashboardProps): JS
         <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Section</p>
         <h2 className="mt-1 font-serif text-2xl font-medium tracking-tight">Apps &amp; Settings</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Build versions, file uploads, scheduled break-out exports, quota usage.
+          Survey controls, build versions, file uploads.
         </p>
       </header>
 
@@ -101,14 +96,12 @@ export function AppsDashboard({ apiBaseUrl, fetchImpl }: AppsDashboardProps): JS
       </nav>
 
       <div className="pt-2">
-        {activeTab === 'versioning' ? (
+        {activeTab === 'controls' ? (
+          <Controls apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
+        ) : activeTab === 'versioning' ? (
           <Versioning apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
         ) : activeTab === 'files' ? (
           <Files apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
-        ) : activeTab === 'data-settings' ? (
-          <DataSettings apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
-        ) : activeTab === 'quota' ? (
-          <QuotaWidget apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
         ) : (
           <TabComingSoon name={TABS.find((t) => t.key === activeTab)!.label} />
         )}

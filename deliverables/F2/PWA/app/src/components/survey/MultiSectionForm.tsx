@@ -35,7 +35,7 @@ import { shouldShow, shouldShowSection, type FormValues } from '@/lib/skip-logic
 import { sectionBlockingErrors } from '@/lib/cross-field';
 import { Section } from './Section';
 import { ProgressBar } from './ProgressBar';
-import { ReviewSection } from './ReviewSection';
+import { ReviewSection, type ToolFeedback } from './ReviewSection';
 import { SectionTree, type SectionStatus } from './SectionTree';
 
 interface SectionConfig {
@@ -141,6 +141,8 @@ export function MultiSectionForm({
   const { locale } = useLocale();
   const [merged, setMerged] = useState<FormValues>(initialValues);
   const [index, setIndex] = useState(initialIndex);
+  // #838 — tool feedback (HCW path). Local, ephemeral, never autosaved into the draft.
+  const [feedback, setFeedback] = useState<ToolFeedback>({ why: '' });
   const [maxVisitedIndex, setMaxVisitedIndex] = useState(initialIndex);
   const [showSaved, setShowSaved] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -389,13 +391,31 @@ export function MultiSectionForm({
     if (target >= 0) setIndex(target);
   };
 
+  // #838 — tool-usability feedback. Kept OUT of the section state on purpose: it is
+  // not survey content, so it must not touch draft autosave, cross-field validation,
+  // or section completeness. It is merged into the payload only at submit.
   const handleFinalSubmit = () => {
-    onSubmit(merged);
+    if (mode !== 'hcw' || (feedback.easy === undefined && !feedback.why.trim())) {
+      onSubmit(merged);
+      return;
+    }
+    onSubmit({
+      ...merged,
+      ...(feedback.easy !== undefined ? { feedback_tool_easy: feedback.easy } : {}),
+      ...(feedback.why.trim() ? { feedback_tool_why: feedback.why.trim() } : {}),
+    });
   };
 
   if (isReview) {
     return (
-      <ReviewSection values={merged} onEdit={handleEdit} onSubmit={handleFinalSubmit} mode={mode} />
+      <ReviewSection
+        values={merged}
+        onEdit={handleEdit}
+        onSubmit={handleFinalSubmit}
+        mode={mode}
+        feedback={feedback}
+        onFeedbackChange={setFeedback}
+      />
     );
   }
 

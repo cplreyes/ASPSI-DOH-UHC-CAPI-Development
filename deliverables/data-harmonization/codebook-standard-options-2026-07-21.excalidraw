@@ -1,0 +1,453 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "type": "text", "id": "title", "x": 60, "y": 40, "width": 1200, "height": 35,
+      "text": "Official Codebook / Coding Standard — UHC Survey Year 2",
+      "originalText": "Official Codebook / Coding Standard — UHC Survey Year 2",
+      "fontSize": 28, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100001, "version": 1, "versionNonce": 100002, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "subtitle", "x": 60, "y": 82, "width": 1400, "height": 20,
+      "text": "What becomes the citable variable/coding reference for analysts, DOH and PSA?  ·  input: Dictionary Macros xlsx (2026-07-20)  ·  ~190 PSA-committed tables (SSRCS Form 1)",
+      "originalText": "What becomes the citable variable/coding reference for analysts, DOH and PSA?  ·  input: Dictionary Macros xlsx (2026-07-20)  ·  ~190 PSA-committed tables (SSRCS Form 1)",
+      "fontSize": 15, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100003, "version": 1, "versionNonce": 100004, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "today_label", "x": 60, "y": 130, "width": 300, "height": 24,
+      "text": "WHAT EXISTS TODAY", "originalText": "WHAT EXISTS TODAY",
+      "fontSize": 18, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100005, "version": 1, "versionNonce": 100006, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "today_dcf", "x": 60, "y": 168, "width": 350, "height": 72,
+      "strokeColor": "#1e3a5f", "backgroundColor": "#3b82f6", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100007, "version": 1, "versionNonce": 100008, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "today_dcf_t", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "today_dcf_t", "x": 70, "y": 178, "width": 330, "height": 50,
+      "text": ".dcf dictionaries — MACHINE TRUTH\nF1 v1.1.4 · F3 v1.1.5 · F4 v1.4.4",
+      "originalText": ".dcf dictionaries — MACHINE TRUTH\nF1 v1.1.4 · F3 v1.1.5 · F4 v1.4.4",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "center", "verticalAlign": "middle",
+      "strokeColor": "#ffffff", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100009, "version": 1, "versionNonce": 100010, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "today_dcf", "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "today_xlsx", "x": 450, "y": 168, "width": 350, "height": 72,
+      "strokeColor": "#1e3a5f", "backgroundColor": "#93c5fd", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100011, "version": 1, "versionNonce": 100012, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "today_xlsx_t", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "today_xlsx_t", "x": 460, "y": 178, "width": 330, "height": 50,
+      "text": "Dictionary Macros .xlsx — 6 sheets\nMANUAL export, snapshot 2026-07-20",
+      "originalText": "Dictionary Macros .xlsx — 6 sheets\nMANUAL export, snapshot 2026-07-20",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "center", "verticalAlign": "middle",
+      "strokeColor": "#374151", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100013, "version": 1, "versionNonce": 100014, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "today_xlsx", "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "today_csv", "x": 840, "y": 168, "width": 350, "height": 72,
+      "strokeColor": "#1e3a5f", "backgroundColor": "#93c5fd", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100015, "version": 1, "versionNonce": 100016, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "today_csv_t", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "today_csv_t", "x": 850, "y": 178, "width": 330, "height": 50,
+      "text": "*_codebook.csv — AUTO from .dcf\n(data room, ships in the R zips)",
+      "originalText": "*_codebook.csv — AUTO from .dcf\n(data room, ships in the R zips)",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "center", "verticalAlign": "middle",
+      "strokeColor": "#374151", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100017, "version": 1, "versionNonce": 100018, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "today_csv", "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "today_shared", "x": 1230, "y": 168, "width": 350, "height": 72,
+      "strokeColor": "#1e3a5f", "backgroundColor": "#93c5fd", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100019, "version": 1, "versionNonce": 100020, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "today_shared_t", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "today_shared_t", "x": 1240, "y": 178, "width": 330, "height": 50,
+      "text": "Shared Codebook v0.8 — 13 cross-inst\ndims + missing rules (.a/.b/.c, #743)",
+      "originalText": "Shared Codebook v0.8 — 13 cross-inst\ndims + missing rules (.a/.b/.c, #743)",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "center", "verticalAlign": "middle",
+      "strokeColor": "#374151", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100021, "version": 1, "versionNonce": 100022, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "today_shared", "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "today_warn", "x": 60, "y": 262, "width": 1500, "height": 20,
+      "text": "⚠ four codebook-ish artifacts, none is THE official one — the manual xlsx silently drifts on every redeploy, and DOH/PSA will eventually ask for a citable codebook",
+      "originalText": "⚠ four codebook-ish artifacts, none is THE official one — the manual xlsx silently drifts on every redeploy, and DOH/PSA will eventually ask for a citable codebook",
+      "fontSize": 15, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#dc2626", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100023, "version": 1, "versionNonce": 100024, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "line", "id": "divider1", "x": 60, "y": 310, "width": 1540, "height": 0,
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "dashed", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100025, "version": 1, "versionNonce": 100026, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [1540, 0]]
+    }
+,
+    {
+      "type": "rectangle", "id": "a_head", "x": 60, "y": 340, "width": 480, "height": 48,
+      "strokeColor": "#047857", "backgroundColor": "#a7f3d0", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200001, "version": 1, "versionNonce": 200002, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "a_head_t", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "a_head_t", "x": 70, "y": 352, "width": 460, "height": 25,
+      "text": "OPTION A ★ — Generated Project Codebook (from .dcf)",
+      "originalText": "OPTION A ★ — Generated Project Codebook (from .dcf)",
+      "fontSize": 15, "fontFamily": 3, "textAlign": "center", "verticalAlign": "middle",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200003, "version": 1, "versionNonce": 200004, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "a_head", "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "a_mock", "x": 60, "y": 408, "width": 480, "height": 268,
+      "strokeColor": "#047857", "backgroundColor": "#ffffff", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200005, "version": 1, "versionNonce": 200006, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "a_mock_title", "x": 76, "y": 420, "width": 450, "height": 18,
+      "text": "F1-Codebook-v1.1.4.xlsx — regenerated every build",
+      "originalText": "F1-Codebook-v1.1.4.xlsx — regenerated every build",
+      "fontSize": 13, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200007, "version": 1, "versionNonce": 200008, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "line", "id": "a_mock_rule", "x": 76, "y": 466, "width": 448, "height": 0,
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200009, "version": 1, "versionNonce": 200010, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [448, 0]]
+    },
+    {
+      "type": "text", "id": "a_mock_body", "x": 76, "y": 446, "width": 450, "height": 210,
+      "text": "variable      label                type  codes / missing\n\nbreakoff      Result of visit      num   1 Continue interview\n                                         2 Respondent withdrew\n                                         8 DK · 9 Refused\nq18_income    Monthly income (PHP) num   -98 DK · -99 Refused\nfacility_type Facility type        num   1 RHU · 2 Hospital ...\n\n+ universe & skip refs (Skip-Logic docs)\n+ question text from .qsf · F2 from PWA spec\n→ per instrument: xlsx + PDF + data-room CSVs",
+      "originalText": "variable      label                type  codes / missing\n\nbreakoff      Result of visit      num   1 Continue interview\n                                         2 Respondent withdrew\n                                         8 DK · 9 Refused\nq18_income    Monthly income (PHP) num   -98 DK · -99 Refused\nfacility_type Facility type        num   1 RHU · 2 Hospital ...\n\n+ universe & skip refs (Skip-Logic docs)\n+ question text from .qsf · F2 from PWA spec\n→ per instrument: xlsx + PDF + data-room CSVs",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#374151", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200011, "version": 1, "versionNonce": 200012, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "a_pro1", "x": 70, "y": 696, "width": 460, "height": 18,
+      "text": "✓ zero drift — regenerates from the .dcf on every build",
+      "originalText": "✓ zero drift — regenerates from the .dcf on every build",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200013, "version": 1, "versionNonce": 200014, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "a_pro2", "x": 70, "y": 724, "width": 460, "height": 18,
+      "text": "✓ days of work, not weeks — retires the manual xlsx export",
+      "originalText": "✓ days of work, not weeks — retires the manual xlsx export",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200015, "version": 1, "versionNonce": 200016, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "a_pro3", "x": 70, "y": 752, "width": 460, "height": 18,
+      "text": "✓ ICPSR-style content: universe, skips, missing conventions",
+      "originalText": "✓ ICPSR-style content: universe, skips, missing conventions",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200017, "version": 1, "versionNonce": 200018, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "a_con1", "x": 70, "y": 780, "width": 460, "height": 18,
+      "text": "○ a project format — not an archive standard by itself",
+      "originalText": "○ a project format — not an archive standard by itself",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200019, "version": 1, "versionNonce": 200020, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    }
+,
+    {
+      "type": "rectangle", "id": "b_head", "x": 590, "y": 340, "width": 480, "height": 48,
+      "strokeColor": "#1e3a5f", "backgroundColor": "#60a5fa", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300001, "version": 1, "versionNonce": 300002, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "b_head_t", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "b_head_t", "x": 600, "y": 352, "width": 460, "height": 25,
+      "text": "OPTION B — DDI-Codebook 2.5 (Metadata Editor → PSADA)",
+      "originalText": "OPTION B — DDI-Codebook 2.5 (Metadata Editor → PSADA)",
+      "fontSize": 15, "fontFamily": 3, "textAlign": "center", "verticalAlign": "middle",
+      "strokeColor": "#ffffff", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300003, "version": 1, "versionNonce": 300004, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "b_head", "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "b_xml", "x": 590, "y": 408, "width": 480, "height": 150,
+      "strokeColor": "#1e3a5f", "backgroundColor": "#1e293b", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300005, "version": 1, "versionNonce": 300006, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "b_xml_t", "x": 606, "y": 420, "width": 450, "height": 126,
+      "text": "<var name=\"breakoff\">\n  <labl>Result of visit</labl>\n  <catgry><catValu>1</catValu>\n    <labl>Continue interview</labl></catgry>\n  <universe>Consented facility heads</universe>\n  <qstn>RESULT OF VISIT (Q0.7)</qstn> ...",
+      "originalText": "<var name=\"breakoff\">\n  <labl>Result of visit</labl>\n  <catgry><catValu>1</catValu>\n    <labl>Continue interview</labl></catgry>\n  <universe>Consented facility heads</universe>\n  <qstn>RESULT OF VISIT (Q0.7)</qstn> ...",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#22c55e", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300007, "version": 1, "versionNonce": 300008, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "b_card", "x": 590, "y": 574, "width": 480, "height": 102,
+      "strokeColor": "#1e3a5f", "backgroundColor": "#dbeafe", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300009, "version": 1, "versionNonce": 300010, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "b_card_t", "x": 606, "y": 586, "width": 450, "height": 80,
+      "text": "PSADA — psada.psa.gov.ph (runs NADA, DDI-compliant)\n─────────────────────────────────────\nUHC Survey Year 2 — F1 Facility Head (v1.1.4)\nDDI 2.5 XML · PDF codebook · Public / Licensed access",
+      "originalText": "PSADA — psada.psa.gov.ph (runs NADA, DDI-compliant)\n─────────────────────────────────────\nUHC Survey Year 2 — F1 Facility Head (v1.1.4)\nDDI 2.5 XML · PDF codebook · Public / Licensed access",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300011, "version": 1, "versionNonce": 300012, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "b_pro1", "x": 600, "y": 696, "width": 460, "height": 18,
+      "text": "✓ THE international survey metadata standard (DDI 2.5)",
+      "originalText": "✓ THE international survey metadata standard (DDI 2.5)",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300013, "version": 1, "versionNonce": 300014, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "b_pro2", "x": 600, "y": 724, "width": 460, "height": 18,
+      "text": "✓ PSA's own archive ingests it — deposit-ready + citable",
+      "originalText": "✓ PSA's own archive ingests it — deposit-ready + citable",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300015, "version": 1, "versionNonce": 300016, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "b_con1", "x": 600, "y": 752, "width": 460, "height": 18,
+      "text": "✗ study-level metadata is manual (sampling, weights, universe)",
+      "originalText": "✗ study-level metadata is manual (sampling, weights, universe)",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#dc2626", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300017, "version": 1, "versionNonce": 300018, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "b_con2", "x": 600, "y": 780, "width": 470, "height": 18,
+      "text": "✗ ceremony now, payoff only at dissemination · imports our .dta",
+      "originalText": "✗ ceremony now, payoff only at dissemination · imports our .dta",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#dc2626", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300019, "version": 1, "versionNonce": 300020, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "c_head", "x": 1120, "y": 340, "width": 480, "height": 48,
+      "strokeColor": "#b45309", "backgroundColor": "#fef3c7", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400001, "version": 1, "versionNonce": 400002, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "c_head_t", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "c_head_t", "x": 1130, "y": 352, "width": 460, "height": 25,
+      "text": "OPTION C — DHS-style Recode Standard",
+      "originalText": "OPTION C — DHS-style Recode Standard",
+      "fontSize": 15, "fontFamily": 3, "textAlign": "center", "verticalAlign": "middle",
+      "strokeColor": "#b45309", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400003, "version": 1, "versionNonce": 400004, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "c_head", "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "c_mock", "x": 1120, "y": 408, "width": 480, "height": 268,
+      "strokeColor": "#b45309", "backgroundColor": "#ffffff", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400005, "version": 1, "versionNonce": 400006, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "c_mock_body", "x": 1136, "y": 420, "width": 450, "height": 240,
+      "text": "UHC-Y2 Recode Manual (DHS7-style)\n──────────────────────────────────\nnative (.dcf)            recode\nbreakoff             →   fh107  Result of visit\nq18_income           →   fh018  Monthly income\nq177_..._total_php   →   fh177  Health exp 12m\n\nstandard codes on EVERY variable:\n  8 / 98 / 998 = Don't know\n  9 / 99 / 999 = Missing/Refused\n  96 = Other · 97 = Inconsistent\n\n+ flat recode datasets (FHFL, PTFL ...)\n+ printed Recode Manual (variable map)",
+      "originalText": "UHC-Y2 Recode Manual (DHS7-style)\n──────────────────────────────────\nnative (.dcf)            recode\nbreakoff             →   fh107  Result of visit\nq18_income           →   fh018  Monthly income\nq177_..._total_php   →   fh177  Health exp 12m\n\nstandard codes on EVERY variable:\n  8 / 98 / 998 = Don't know\n  9 / 99 / 999 = Missing/Refused\n  96 = Other · 97 = Inconsistent\n\n+ flat recode datasets (FHFL, PTFL ...)\n+ printed Recode Manual (variable map)",
+      "fontSize": 12, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#374151", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400007, "version": 1, "versionNonce": 400008, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "c_pro1", "x": 1130, "y": 696, "width": 460, "height": 18,
+      "text": "✓ instantly familiar to DHS-trained analysts",
+      "originalText": "✓ instantly familiar to DHS-trained analysts",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400009, "version": 1, "versionNonce": 400010, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "c_pro2", "x": 1130, "y": 724, "width": 460, "height": 18,
+      "text": "✓ its conventions are already seeping in (#743 sentinels)",
+      "originalText": "✓ its conventions are already seeping in (#743 sentinels)",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400011, "version": 1, "versionNonce": 400012, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "c_con1", "x": 1130, "y": 748, "width": 470, "height": 36,
+      "text": "✗ renames EVERY variable mid-fieldwork — breaks\n  dashboards, specs, joins · weeks of mapping",
+      "originalText": "✗ renames EVERY variable mid-fieldwork — breaks\n  dashboards, specs, joins · weeks of mapping",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#dc2626", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400013, "version": 1, "versionNonce": 400014, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "c_con2", "x": 1130, "y": 794, "width": 470, "height": 18,
+      "text": "✗ collides with the design freeze",
+      "originalText": "✗ collides with the design freeze",
+      "fontSize": 14, "fontFamily": 3, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#dc2626", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 400015, "version": 1, "versionNonce": 400016, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    }
+,
+    {
+      "type": "line", "id": "divider2", "x": 60, "y": 820, "width": 1540, "height": 0,
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "dashed", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500001, "version": 1, "versionNonce": 500002, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [1540, 0]]
+    },
+    {
+      "type": "rectangle", "id": "reco", "x": 60, "y": 848, "width": 1540, "height": 84,
+      "strokeColor": "#047857", "backgroundColor": "#a7f3d0", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500003, "version": 1, "versionNonce": 500004, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "reco_t", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "reco_t", "x": 80, "y": 862, "width": 1500, "height": 56,
+      "text": "RECOMMEND: A now, B at dissemination. Generate the official codebook from the .dcf (its labeled .dta output imports straight into the DDI Metadata Editor later),\nadopt DHS coding conventions where cheap (missing-value codes — already underway via #743), and skip the full recode.",
+      "originalText": "RECOMMEND: A now, B at dissemination. Generate the official codebook from the .dcf (its labeled .dta output imports straight into the DDI Metadata Editor later),\nadopt DHS coding conventions where cheap (missing-value codes — already underway via #743), and skip the full recode.",
+      "fontSize": 15, "fontFamily": 3, "textAlign": "center", "verticalAlign": "middle",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 500005, "version": 1, "versionNonce": 500006, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "reco", "lineHeight": 1.25
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "gridSize": 20
+  },
+  "files": {}
+}

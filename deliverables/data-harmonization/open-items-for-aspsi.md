@@ -36,11 +36,24 @@ For each item I've named a **recommended option** so the discussion has a defaul
 
 ---
 
-## 2. F2 PWA — should we capture explicit consent as a data field?
+## 2. ~~F2 PWA — should we capture explicit consent as a data field?~~ — CLOSED 2026-07-14
 
-**Context:** F1, F3, F4 all capture `CONSENT_GIVEN` in their FIELD_CONTROL block (numeric 1=Yes/2=No). If a respondent refuses, the row is created with `CONSENT_GIVEN=2` and the interview ends — providing an audit trail of explicit refusals. **F2 PWA does not capture consent as a data field.** A respondent who declines simply never reaches the form; no row is created, so refusals are indistinguishable from non-contacts in the data.
+> [!warning] This item was built on a false premise and is now closed. Do not action it.
+> It claimed that **F1/F3/F4 capture `CONSENT_GIVEN`** and that **F2 was the gap**. Both halves
+> were wrong, and in fact the situation was the exact reverse:
+>
+> - `CONSENT_GIVEN` **was removed from F1/F3/F4 on 2026-06-12.** They never captured it after that
+>   date. Consent is read aloud from the printed SJREB sheet; there is no consent field.
+> - **F2 was already the only instrument recording an explicit refusal** (`status='refusal'`, #825).
+>
+> The real gap was in the CAPI instruments, and it is **now closed** (2026-07-14): a refusal is
+> recorded on the Interview status control (`BREAKOFF = 5`, *Not interviewed — refused*), which
+> sets Result-of-Visit = *Replaced*, ends the case, and syncs. F1/F3/F4 and F2 now both capture
+> an explicit refusal, so there is nothing to decide here.
 
-**Decision needed:** add explicit consent capture to F2 PWA?
+**Original context (retained for the record, and incorrect):** ~~F1, F3, F4 all capture `CONSENT_GIVEN` in their FIELD_CONTROL block (numeric 1=Yes/2=No)... F2 PWA does not capture consent as a data field.~~
+
+**Decision needed:** ~~add explicit consent capture to F2 PWA?~~ — none; superseded.
 
 **Options:**
 1. **Add a `consent_given` checkbox + payload field to F2.** Captures explicit refusal; stores `consent_given=No` rows for audit purposes (no questionnaire data, just the refusal record). Small UI + Apps Script change.

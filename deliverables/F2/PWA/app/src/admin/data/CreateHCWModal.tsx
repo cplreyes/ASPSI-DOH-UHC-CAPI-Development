@@ -129,7 +129,7 @@ export function CreateHCWModal({ apiBaseUrl, fetchImpl, onClose, onCreated }: Cr
             />
           </Field>
 
-          <Field label="Facility ID" hint="From FacilityMasterList. 1–32 chars [A-Za-z0-9_-]">
+          <Field label="Facility ID" hint="Use the 9-digit PSGC facility code (auto-assigns the 12-digit QN); legacy slugs allowed. 1–32 chars [A-Za-z0-9_-]">
             <input
               type="text"
               required

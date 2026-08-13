@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <meta http-equiv="refresh" content="0; url=https://uhc-hcw.asiansocial.org/" />
+  <title>Moved — UHC Survey Y2 HCW</title>
+  <style>
+    body{font-family:system-ui,sans-serif;background:#f2f5ee;color:#1c2b25;display:grid;place-items:center;min-height:100vh;margin:0}
+    .card{background:#fff;border:1px solid #dfe7e2;border-radius:12px;padding:2rem 2.5rem;max-width:26rem;text-align:center}
+    a{color:#006b3f;font-weight:600}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>This address has moved</h1>
+    <p>The Healthcare Worker survey now lives at<br />
+      <a href="https://uhc-hcw.asiansocial.org/">uhc-hcw.asiansocial.org</a></p>
+    <p>Nothing submitted here can sync. You will be redirected automatically.</p>
+  </div>
+  <script>
+    // Belt-and-braces: the _redirects 301 handles network hits; this covers any
+    // path that still reaches the page. Old enrollment tokens are dead (new key),
+    // so path/query preservation matters only for /admin.
+    location.replace('https://uhc-hcw.asiansocial.org' + location.pathname + location.search);
+  </script>
+</body>
+</html>

@@ -53,6 +53,23 @@ def load_lookup(path):
     return m
 
 
+def build_f1_from_lookup(lookup_path):
+    """REAL F1 denominator: one facility-head interview per sampled facility, taken
+    straight from the DOH facility masterlist (`facility_lookup.dat`). Needs no
+    EA-assignment plan — every sampled facility is exactly one F1 target. Keyed by the
+    9-digit facility code, target=1, so the province choropleth sums to facilities/province."""
+    lk = load_lookup(lookup_path)
+    out = {}
+    for code, info in lk.items():
+        out[code] = {
+            "name": info.get("name", ""),
+            "region": info.get("region", ""),
+            "province": info.get("province", ""),
+            "target": 1,
+        }
+    return out
+
+
 def build(assignments_path, lookup_path):
     lk = load_lookup(lookup_path)
     targets = {"f1": {}, "f3": {}, "f4": {}}
@@ -71,8 +88,10 @@ def build(assignments_path, lookup_path):
             info = lk.get(code, {})
             rec = targets[inst].setdefault(code, {
                 "name": info.get("name") or (row.get("ea_name") or "").strip(),
-                "region": info.get("region", ""),
-                "province": info.get("province", ""),
+                # masterlist is authoritative; the CSV's own region/province are the
+                # fallback for codes it cannot know (household EAs, off-sample pretest sites)
+                "region": info.get("region") or (row.get("region") or "").strip(),
+                "province": info.get("province") or (row.get("province") or "").strip(),
                 "target": 0,
             })
             rec["target"] += tgt          # sum if a facility has multiple assignment rows
@@ -93,14 +112,30 @@ def main():
     # says otherwise — never the reverse.
     ap.add_argument("--final", action="store_true",
                     help="declare this ASPSI's real EA plan (removes the PROVISIONAL warning)")
+    ap.add_argument("--f1-from-facilities", action="store_true",
+                    help="F1 target = sampled facilities/province from facility_lookup.dat (the REAL "
+                         "F1 denominator); marks F1 non-provisional while F3/F4 stay provisional")
     a = ap.parse_args()
     targets, n = build(a.assignments, a.lookup)
+    if a.f1_from_facilities:
+        targets["f1"] = build_f1_from_lookup(a.lookup)
+        if not targets["f1"]:
+            raise SystemExit("--f1-from-facilities: no facilities read from %s (is facility_lookup.dat "
+                             "present? it is gitignored — run where the F1 build exists)" % a.lookup)
     facilities = {k: len(v) for k, v in targets.items()}
+    # provisional is per-instrument when F1 is facility-derived: F1 reads real, F3/F4 stay
+    # provisional until ASPSI's patient/household quotas land. Plain bool otherwise (back-compat).
+    if a.f1_from_facilities:
+        provisional = {"f1": False, "f3": not a.final, "f4": not a.final}
+    else:
+        provisional = not a.final
     payload = {
         "generated": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         "plan": {
             "label": a.plan_label,
-            "provisional": not a.final,
+            "provisional": provisional,
+            "f1_source": "facility_lookup.dat (1 per sampled facility)" if a.f1_from_facilities
+                         else Path(a.assignments).name,
             "source": Path(a.assignments).name,
             "assignments": n,
             "facilities": facilities,
@@ -109,10 +144,11 @@ def main():
     }
     Path(a.out).write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
     enriched = any(r["province"] for inst in targets.values() for r in inst.values())
+    prov_desc = ("f1=REAL, f3/f4=%s" % ("FINAL" if a.final else "PROVISIONAL")) if a.f1_from_facilities \
+        else ("FINAL" if a.final else "PROVISIONAL — " + a.plan_label)
     print("wrote %s | rows=%d facilities: f1=%d f3=%d f4=%d | province-enriched=%s | plan=%s"
           % (a.out, n, facilities["f1"], facilities["f3"], facilities["f4"],
-             "yes (facility_lookup.dat)" if enriched else "no (runtime case-derived)",
-             "FINAL" if a.final else "PROVISIONAL — " + a.plan_label))
+             "yes (facility_lookup.dat)" if enriched else "no (runtime case-derived)", prov_desc))
 
 
 if __name__ == "__main__":

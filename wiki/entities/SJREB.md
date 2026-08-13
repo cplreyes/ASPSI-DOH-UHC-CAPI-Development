@@ -1,7 +1,7 @@
 ---
 type: entity
 tags: [organization, ethics-review, regulator, blocker]
-source_count: 2
+source_count: 3
 ---
 
 # SJREB — Single Joint Research Ethics Board
@@ -41,3 +41,4 @@ Because pre-tested tools are part of [[1_Projects/ASPSI-DOH-CAPI-CSPro-Developme
 - (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - Project Intelligence Brief]])
 - (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - DOH TOR UHC Survey Year 2]]) — TOR requires ethics clearance in Months 1–3
 - (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - ASPSI Proposal Approach and Methodology]]) — proposal commits to SJREB submission per PHREB National Ethical Guidelines (2022) + DPA (RA 10173)
+- (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - PSA Survey Clearance 26SS02-481 (2026-07-23)]]) — the **Form 8 Notice of Initial Approval** itself, filed alongside the PSA clearance in Deliverable No. 2: approval date **7 July 2026**, protocol **SJREB-2026-31**, coordinating PI Paulyn Jean A. Claro; approved protocol V2 (06242026) and consent forms Ver2 (06232026) in **English and Tagalog only**, with CHD site RECs providing regional oversight.

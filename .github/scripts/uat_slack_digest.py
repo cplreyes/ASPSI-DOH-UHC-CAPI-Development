@@ -28,8 +28,9 @@ from typing import Any
 
 
 PROJECT_URL = "https://github.com/users/cplreyes/projects/7"
-STAGING_URL = "https://5466a539.f2-pwa-staging.pages.dev"
-PROD_URL = "https://f2-pwa.pages.dev"
+# Single origin since the serving migration (P4, 2026-07-09) — CF Pages retired at P6.
+STAGING_URL = "https://uhc-hcw.asiansocial.org"
+PROD_URL = "https://uhc-hcw.asiansocial.org"
 
 
 def _run(cmd: list[str]) -> str:
@@ -248,7 +249,7 @@ def build_blocks(milestones: list[dict], issues: list[dict]) -> list[dict]:
             {"type": "button", "text": {"type": "plain_text", "text": "Project board"}, "url": PROJECT_URL},
             {"type": "button", "text": {"type": "plain_text", "text": "Open issues"}, "url": f"https://github.com/{os.environ['GH_REPO']}/issues"},
             {"type": "button", "text": {"type": "plain_text", "text": "File a bug"}, "url": f"https://github.com/{os.environ['GH_REPO']}/issues/new/choose"},
-            {"type": "button", "text": {"type": "plain_text", "text": "Staging"}, "url": STAGING_URL},
+            {"type": "button", "text": {"type": "plain_text", "text": "App"}, "url": STAGING_URL},
         ],
     })
 

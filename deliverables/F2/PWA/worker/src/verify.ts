@@ -34,6 +34,8 @@ export async function handleVerifyToken(req: Request, env: Env): Promise<Respons
       facility_id: result.claims.facility_id,
       exp: result.claims.exp,
       tablet_id: result.claims.tablet_id,
+      // Enrollment-assigned 12-digit Questionnaire Number; '' for pre-qn tokens.
+      qn: result.claims.qn ?? '',
     },
   });
 }

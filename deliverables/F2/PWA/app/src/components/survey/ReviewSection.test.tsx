@@ -112,4 +112,69 @@ describe('<ReviewSection>', () => {
     const fives = screen.getAllByText('5');
     expect(fives.length).toBeGreaterThan(0);
   });
+
+  // #838 — tool-usability feedback before submission (Shan, pretest 2026-07).
+  describe('tool feedback (#838)', () => {
+    it('asks the HCW whether the tool was easy to use, before Submit', () => {
+      renderWithProviders(
+        <ReviewSection
+          values={baseValues}
+          onEdit={vi.fn()}
+          onSubmit={vi.fn()}
+          feedback={{ why: '' }}
+          onFeedbackChange={vi.fn()}
+        />,
+      );
+      expect(
+        screen.getByText(/Did you find the survey tool easy to use and navigate/i),
+      ).toBeInTheDocument();
+      expect(screen.getByLabelText(/Why or why not/i)).toBeInTheDocument();
+    });
+
+    it('does NOT block submission when feedback is left blank (survey data must never be lost)', () => {
+      const onSubmit = vi.fn();
+      renderWithProviders(
+        <ReviewSection
+          values={baseValues}
+          onEdit={vi.fn()}
+          onSubmit={onSubmit}
+          feedback={{ why: '' }}
+          onFeedbackChange={vi.fn()}
+        />,
+      );
+      expect(screen.getByRole('button', { name: /Submit/i })).toBeEnabled();
+    });
+
+    it('reports Yes/No selections back to the caller', async () => {
+      const onFeedbackChange = vi.fn();
+      renderWithProviders(
+        <ReviewSection
+          values={baseValues}
+          onEdit={vi.fn()}
+          onSubmit={vi.fn()}
+          feedback={{ why: '' }}
+          onFeedbackChange={onFeedbackChange}
+        />,
+      );
+      await userEvent.click(screen.getByRole('button', { name: /^Yes$/i }));
+      expect(onFeedbackChange).toHaveBeenCalledWith(expect.objectContaining({ easy: 1 }));
+    });
+
+    it('is hidden on the paper-encoder path (the encoder never uses this UI)', () => {
+      renderWithProviders(
+        <ReviewSection
+          values={baseValues}
+          onEdit={vi.fn()}
+          onSubmit={vi.fn()}
+          mode="encoded"
+          feedback={{ why: '' }}
+          onFeedbackChange={vi.fn()}
+        />,
+      );
+      expect(
+        screen.queryByText(/Did you find the survey tool easy to use and navigate/i),
+      ).not.toBeInTheDocument();
+    });
+  });
+
 });

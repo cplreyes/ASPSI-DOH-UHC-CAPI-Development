@@ -1,0 +1,9 @@
+# MenuApp is a SEPARATE application - LoginApp compiling proves nothing about it.
+# My setfile(ASSIGNMENT_DICT, "AS_<opid>.dat") lives in MENUAPP_LEVEL preproc, which
+# only compiles when MenuApp itself loads. Launch it directly.
+launch ../supervisor-hub/MenuApp.pff
+wait 3
+note EXPECT: the role menu (or a blank session) - NOT "Compile Failed"
+shot 01_menuapp_should_compile
+wait 1
+shot 02_confirm

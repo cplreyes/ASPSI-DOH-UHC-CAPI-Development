@@ -3,15 +3,19 @@
  *
  * Plan: docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md (Task 2.16)
  *
- * Read-only audit list. Filters by event_type, hcw_id, actor_username, q,
- * date range. event_payload_json is rendered as a tiny mono preview when
- * present so admins can scan event details without expanding each row.
+ * Read-only audit list. Filter bar (2026-07-17): date range, event-type
+ * dropdown (distinct values from /dashboards/data/audit-event-types),
+ * actor, search, Clear filters; filters live in the URL. event_payload_json
+ * is rendered as a tiny mono preview when present so admins can scan event
+ * details without expanding each row.
  */
 import { useEffect, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
+import { ClearFiltersButton, FilterDate, FilterSelect, FilterText } from './filter-controls';
+import { useAuditEventTypes, useStringSelectOptions } from './filter-hooks';
 
 interface AuditRow {
   audit_id: string;
@@ -59,6 +63,18 @@ function readFiltersFromUrl(): UiFilters {
   };
 }
 
+function buildQuery(f: UiFilters): string {
+  const p = new URLSearchParams();
+  // Preserve dashboard tab so refresh stays on Audit.
+  p.set('tab', 'audit');
+  if (f.from) p.set('from', f.from);
+  if (f.to) p.set('to', f.to);
+  if (f.event_type) p.set('event_type', f.event_type);
+  if (f.actor_username) p.set('actor_username', f.actor_username);
+  if (f.q) p.set('q', f.q);
+  return p.toString();
+}
+
 function buildApiQuery(f: UiFilters): string {
   const p = new URLSearchParams();
   if (f.from) p.set('from', f.from);
@@ -81,6 +97,18 @@ export function AuditTab({ apiBaseUrl, fetchImpl }: AuditTabProps): JSX.Element 
   >({ kind: 'loading' });
 
   const apiQuery = useMemo(() => buildApiQuery(filters), [filters]);
+  const uiQuery = useMemo(() => buildQuery(filters), [filters]);
+  const eventTypes = useAuditEventTypes(apiBaseUrl, token, fetchImpl);
+  const eventTypeOptions = useStringSelectOptions(eventTypes, filters.event_type, 'All events');
+
+  // Shareable URLs: write the active filters back (same idiom as Responses).
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const cur = window.location.search.replace(/^\?/, '');
+    if (cur !== uiQuery) {
+      window.history.replaceState({}, '', `${window.location.pathname}?${uiQuery}`);
+    }
+  }, [uiQuery]);
 
   useEffect(() => {
     let cancelled = false;
@@ -121,11 +149,11 @@ export function AuditTab({ apiBaseUrl, fetchImpl }: AuditTabProps): JSX.Element 
           value={filters.to}
           onChange={(v) => setFilters({ ...filters, to: v })}
         />
-        <FilterText
+        <FilterSelect
           label="Event type"
           value={filters.event_type}
+          options={eventTypeOptions}
           onChange={(v) => setFilters({ ...filters, event_type: v })}
-          placeholder="admin_login"
         />
         <FilterText
           label="Actor"
@@ -137,6 +165,13 @@ export function AuditTab({ apiBaseUrl, fetchImpl }: AuditTabProps): JSX.Element 
           value={filters.q}
           onChange={(v) => setFilters({ ...filters, q: v })}
         />
+        {filters.from || filters.to || filters.event_type || filters.actor_username || filters.q ? (
+          <ClearFiltersButton
+            onClick={() =>
+              setFilters({ from: '', to: '', event_type: '', actor_username: '', q: '' })
+            }
+          />
+        ) : null}
       </div>
 
       {state.kind === 'loading' ? (
@@ -155,72 +190,6 @@ export function AuditTab({ apiBaseUrl, fetchImpl }: AuditTabProps): JSX.Element 
         </>
       ) : null}
     </div>
-  );
-}
-
-// FX-014 (2026-05-03): inputs derive `name` from the label so Chrome's
-// "form field should have an id or name" issue panel stays clean.
-function slugifyLabel(label: string): string {
-  return (
-    label
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-|-$/g, '') || 'field'
-  );
-}
-
-function FilterDate({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-}): JSX.Element {
-  const name = slugifyLabel(label);
-  return (
-    <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-        {label}
-      </span>
-      <input
-        type="date"
-        name={name}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
-      />
-    </label>
-  );
-}
-
-function FilterText({
-  label,
-  value,
-  onChange,
-  placeholder,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  placeholder?: string;
-}): JSX.Element {
-  const name = slugifyLabel(label);
-  return (
-    <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-        {label}
-      </span>
-      <input
-        type="text"
-        name={name}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
-      />
-    </label>
   );
 }
 

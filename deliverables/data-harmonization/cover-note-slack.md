@@ -21,7 +21,7 @@ The six items, by urgency:
 
 **Worth resolving in the next 1–2 weeks (touches instrument design still in flight):**
 1. F4 respondent sex allows 'Other' — how do we encode that across instruments?
-2. F2 PWA — should we capture explicit consent as a data field? (F1/F3/F4 already do via `CONSENT_GIVEN`)
+2. ~~F2 PWA — should we capture explicit consent as a data field? (F1/F3/F4 already do via `CONSENT_GIVEN`)~~ — **withdrawn 2026-07-14: the premise was false.** `CONSENT_GIVEN` was removed from F1/F3/F4 on 2026-06-12; F2 was in fact the *only* instrument recording an explicit refusal. The CAPI gap is now closed via `BREAKOFF = 5` (*Not interviewed — refused*). Nothing to decide.
 3. Add `LANGUAGE_USED` to FIELD_CONTROL across F1/F3/F4? (F2 already has the locale at runtime.)
 
 **Operational, can be answered any time before main fieldwork:**

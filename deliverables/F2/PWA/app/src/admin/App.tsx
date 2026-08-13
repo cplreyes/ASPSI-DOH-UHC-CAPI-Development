@@ -18,6 +18,7 @@ import { Layout } from './Layout';
 import { EncodeQueue } from './encode/EncodeQueue';
 import { EncodePage } from './encode/EncodePage';
 import { DataDashboard } from './data/DataDashboard';
+import { FacilitiesPage } from './facilities/FacilitiesPage';
 import { ResponseDetail } from './data/ResponseDetail';
 import { ReportDashboard } from './report/ReportDashboard';
 import { UsersDashboard } from './users/UsersDashboard';
@@ -60,8 +61,14 @@ const PAGES: PageRoute[] = [
   // /admin/me/change-password also dispatched directly (needs apiBaseUrl).
 ];
 
+const CHANGE_PASSWORD_PATH = '/admin/me/change-password';
+
+function isChangePasswordPath(pathname: string): boolean {
+  return pathname === CHANGE_PASSWORD_PATH || pathname === `${CHANGE_PASSWORD_PATH}/`;
+}
+
 function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
-  const { isAuthenticated } = useAdminAuth();
+  const { isAuthenticated, passwordMustChange } = useAdminAuth();
   const { pathname, navigate } = useRouter();
 
   // Default landing: /admin or /admin/ → /admin/data (or /admin/login if no token).
@@ -94,6 +101,17 @@ function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
     }
   }, [isAuthenticated, pathname, navigate]);
 
+  // A session restored from sessionStorage (2026-07-24) can land on any deep
+  // link, including one belonging to a user who still owes a first-login
+  // password rotation. Before persistence that was unreachable — the login
+  // flow always routed them straight to the change-password page. Keep the URL
+  // honest; the render guard below is what actually holds them there.
+  useEffect(() => {
+    if (isAuthenticated && passwordMustChange && !isChangePasswordPath(pathname)) {
+      navigate(CHANGE_PASSWORD_PATH);
+    }
+  }, [isAuthenticated, passwordMustChange, pathname, navigate]);
+
   // Help is intentionally available without auth — first-time operators
   // who haven't logged in yet should still be able to read the operator
   // guide. Render Help BEFORE the auth gate so unauthenticated visits to
@@ -124,11 +142,30 @@ function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
     return <Login apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />;
   }
 
+  // Change-password sits OUTSIDE the Layout chrome — same shape as Login,
+  // since the user is mid-rotation (often on first login under
+  // password_must_change) and shouldn't be distracted by sidebar nav.
+  // Ordered ahead of every dashboard route and driven off state as well as
+  // the URL (same reasoning as FX-016): an owed rotation 403s every gated
+  // endpoint, so any other page would just flash chrome around a panel that
+  // can't load its own data.
+  if (isChangePasswordPath(pathname) || passwordMustChange) {
+    return <ChangePasswordPage apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />;
+  }
+
   // Data dashboard + drilled-in response detail.
   if (pathname === '/admin/data' || pathname === '/admin/data/') {
     return (
       <Layout>
         <DataDashboard apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
+      </Layout>
+    );
+  }
+  // Facilities page (spec F2-Facilities-Page-2026-07-16): master list + /f/ links.
+  if (pathname === '/admin/facilities' || pathname === '/admin/facilities/') {
+    return (
+      <Layout>
+        <FacilitiesPage apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
       </Layout>
     );
   }
@@ -160,12 +197,6 @@ function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
         <RolesDashboard apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
       </Layout>
     );
-  }
-  // Change-password sits OUTSIDE the Layout chrome — same shape as Login,
-  // since the user is mid-rotation (often on first login under
-  // password_must_change) and shouldn't be distracted by sidebar nav.
-  if (pathname === '/admin/me/change-password' || pathname === '/admin/me/change-password/') {
-    return <ChangePasswordPage apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />;
   }
   const responseDetailMatch = /^\/admin\/data\/responses\/([^/]+)\/?$/.exec(pathname);
   if (responseDetailMatch) {

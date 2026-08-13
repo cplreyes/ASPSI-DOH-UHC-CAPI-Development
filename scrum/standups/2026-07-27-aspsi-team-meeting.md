@@ -27,4 +27,8 @@ Note:
     - Translations pending.
 
 Meeting with Team:
--
+
+1. Convert the Manuals to Slide Dec - Carl, deadline today
+2. CAPI Manual, for checking - Aidan will coordinate
+3. Sample tabulations, reports, and visualizations
+4. What to do with PAPI verison

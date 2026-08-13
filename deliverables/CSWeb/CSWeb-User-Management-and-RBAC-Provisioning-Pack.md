@@ -57,7 +57,48 @@ Notes:
 ## 3. Account roster — username convention + headcount
 
 - **No shared logins** — one named account per person (Privacy Plan §6.3).
-- **Username = the field ID** captured in the instruments (`INTERVIEWER_ID` / supervisor ID), so CSWeb identity ↔ case provenance line up for audit. Convention:
+- **Username = the field ID.** The convention below is unchanged, but its stated basis was wrong.
+
+> [!warning] Corrected 2026-07-14 — the instruments contain NO field ID
+> This line used to read "the field ID **captured in the instruments** (`INTERVIEWER_ID` /
+> supervisor ID)". `INTERVIEWER_ID` was **deleted from F1/F3/F4 on 2026-06-12** — the paper Field
+> Control form has an *Enumerator's Name*, not an ID, and the instruments follow the paper form.
+>
+> What the instruments actually capture is `ENUMERATOR_S_NAME` / `SURVEY_TEAM_LEADER_S_NAME` —
+> **free text, 50 chars**. A name is not an identifier: two people can share one, and one person
+> can type theirs three ways. So CSWeb identity does **not** currently line up with case
+> provenance via any in-instrument key, and any audit or per-enumerator metric that joins on the
+> typed name is unreliable at scale.
+>
+> The `se-001` / `fs-01` usernames below remain the right convention — they are just **assigned by
+> CSWeb**, not read out of the questionnaire.
+>
+> **RESOLVED 2026-07-14 — provenance now works, with no instrument change.** CSWeb already records
+> the uploading account per case: `cspro_sync_history` is append-only (`revision` = AUTO_INCREMENT
+> PK) and every sync inserts a row with `username` + `device` + `dictionary_id` + `direction`. A
+> case's `last_modified_revision` **is** that revision, so:
+>
+> ```sql
+> SELECT sh.username
+>   FROM csweb_f3_breakout.cases c
+>   LEFT JOIN csweb_uhc_y2.cspro_sync_history sh
+>          ON sh.revision = c.last_modified_revision AND sh.direction = 'put'
+> ```
+>
+> names the account that uploaded the case. Verified against the pre-cleanup backup: F1 cases at
+> revision 111 → `aidan` (dict 4); F3 at 114 → `aidan` (dict 5); F3 at 118 → `alytest` (dict 5).
+> `dictionary_id`: **4 = F1, 5 = F3, 6 = F4**.
+>
+> The Sync Dashboard's productivity panel now **keys on this login**, not the typed name — so two
+> people sharing a name no longer merge, and one person typing theirs three ways no longer splits.
+>
+> **Limit, stated plainly:** this is who **uploaded**, not provably who interviewed. Under
+> one-account-and-one-tablet-per-person they are the same; they diverge if a case is
+> Bluetooth-transferred between devices or a supervisor uploads for someone. The panel therefore
+> keeps the typed name visible and **flags** any login that typed more than one name, rather than
+> hiding the disagreement.
+
+  Convention:
   - Enumerators: `se-001` … `se-NNN`
   - Field Supervisors: `fs-01` … `fs-NN`  · Cluster RAs: `ra-01` … `ra-NN`
   - Office: `dm-<surname>` (Data Manager), `adm-<surname>` (Account Admin), `root-<surname>` (Server Admin)

@@ -1,6 +1,17 @@
-040340001se-001              F1  1   Binan City Health Office                          04034     
-040340002se-002              F3  30  Binan RHU - Patient Survey                        04034     
-040340005se-003              F4  20  Binan Brgy Malaban - Household Survey             04034     
-040340011se-004              F1  1   Binan District Hospital - Facility Head           04034     
-040341002se-005              F3  30  Los Banos RHU - Patient Survey                    04034     
-040341005se-006              F4  20  Los Banos Brgy Mayondon - Household Survey        04034     
+040341101se-004              F4  3   Brgy. Mayondon - Household                        040341    
+040341101se-006              F4  3   Brgy. Mayondon - Household                        040341    
+040341101se-003              F4  3   Brgy. Mayondon - Household                        040341    
+040341101se-007              F4  3   Brgy. Mayondon - Household                        040341    
+040341101se-002              F4  3   Brgy. Mayondon - Household                        040341    
+040341101se-005              F4  3   Brgy. Mayondon - Household                        040341    
+040341101se-001              F4  2   Brgy. Mayondon - Household                        040341    
+040340210se-005              F1  1   LPH-Bay District Hospital                         040340    
+040340210se-003              F3  2   LPH-Bay District Hospital                         040340    
+040340210se-007              F3  1   LPH-Bay District Hospital                         040340    
+040340210se-004              F3  1   LPH-Bay District Hospital                         040340    
+040340210se-006              F3  1   LPH-Bay District Hospital                         040340    
+040341130se-002              F1  1   Los Banos RHU                                     040341    
+040341130se-006              F3  2   Los Banos RHU                                     040341    
+040341130se-003              F3  1   Los Banos RHU                                     040341    
+040341130se-007              F3  1   Los Banos RHU                                     040341    
+040341130se-001              F3  1   Los Banos RHU                                     040341    

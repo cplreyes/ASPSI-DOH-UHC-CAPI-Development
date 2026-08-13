@@ -6,8 +6,10 @@
  *
  * No card. Hairline border-bottom on inputs. Newsreader serif heading.
  * Signal-color CTA. Inline error banner using --error token. Disclosure
- * about session policy (in-memory token → reload re-prompts) at the
- * bottom in muted mono per the field-manual aesthetic.
+ * about session policy (per-tab session, survives reload — see
+ * lib/auth-storage.ts — and hands off to sibling tabs over BroadcastChannel
+ * per #1001, so it dies only when the last admin tab closes) at the bottom in
+ * muted mono per the field-manual aesthetic.
  */
 import { useState, type FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
@@ -142,8 +144,9 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
 
       <footer className="mt-16 border-t border-hairline pt-4">
         <p className="font-mono text-xs leading-relaxed text-muted-foreground">
-          Sessions last while your admin tabs stay open — new tabs and reloads keep you
-          signed in. Closing every tab or signing out ends the session everywhere.
+          Sessions last up to 4 hours. Reloading keeps you signed in, and new tabs pick up
+          the session while any admin tab is open. Closing every tab or signing out ends the
+          session everywhere.
         </p>
         {import.meta.env.DEV ? (
           <Button

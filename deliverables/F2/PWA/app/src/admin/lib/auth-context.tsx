@@ -1,25 +1,25 @@
 /**
- * F2 Admin Portal — auth context.
+ * F2 Admin Portal — auth context (admin JWT, per-tab session).
  *
  * Plan: docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md (Task 2.14)
- * Spec: docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md (§6.3, §10.4)
+ * Spec: docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md (§6.3, §6.3.1)
  *
  * Distinct from the existing PWA tablet auth (`src/lib/auth-context.tsx`,
- * Dexie-backed enrollment).
- *
- * Session continuity (#1001, UAT 2026-07-28): reviewers open responses in
- * several tabs at once, and the original in-memory-only token forced a fresh
- * login per tab. The token now lives in
+ * Dexie-backed enrollment). The token lives in
  *   1. React state (source of truth for the current tab), mirrored to
- *   2. sessionStorage — so an F5/soft reload of the SAME tab keeps the
- *      session. sessionStorage is per-tab and dies with it; and
- *   3. a BroadcastChannel handoff — a freshly opened tab asks its same-origin
- *      siblings for the session and adopts the first grant, so "Open link in
- *      new tab" works without re-login while any signed-in tab is open.
- * Spec §10.4's constraint is preserved: the token is never written to
- * localStorage or IndexedDB, so nothing survives once the admin's tabs are
- * closed. Signing out broadcasts a logout that clears EVERY tab, keeping the
- * walk-away story at least as safe as before.
+ *   2. sessionStorage via `auth-storage.ts` — so an F5/soft reload of the SAME
+ *      tab keeps the operator signed in (2026-07-24, spec §6.3.1);
+ *      sessionStorage is per-tab and dies with it; and
+ *   3. a BroadcastChannel handoff (#1001, UAT 2026-07-28) — reviewers open
+ *      responses in several tabs at once, and a freshly opened tab has empty
+ *      sessionStorage. It asks its same-origin siblings for the session and
+ *      adopts the first grant, so "Open link in new tab" works without
+ *      re-login while any signed-in tab is open.
+ * The token is still never written to localStorage or IndexedDB, so nothing
+ * survives once the admin's tabs are closed — the shared-machine constraint
+ * the original memory-only rule protected survives both revisions. Signing out
+ * broadcasts a logout that clears EVERY tab, keeping the walk-away story at
+ * least as safe as before.
  */
 import {
   createContext,
@@ -30,6 +30,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
+import { clearPersistedAuth, loadPersistedAuth, persistAuth } from './auth-storage';
 
 export interface AdminAuthState {
   token: string | null;
@@ -54,7 +55,6 @@ const INITIAL_STATE: AdminAuthState = {
   permissions: null,
 };
 
-const STORAGE_KEY = 'f2admin.session';
 const CHANNEL_NAME = 'f2admin.auth';
 
 /** expires_at arrives in epoch seconds (JWT convention; the dev-preview
@@ -66,8 +66,9 @@ function isExpired(expiresAt: number | null): boolean {
   return expMs <= Date.now();
 }
 
-/** Validate an untrusted candidate (sessionStorage or a channel grant) down
- * to a usable state, or null. Rejects missing/expired tokens. */
+/** Validate an untrusted candidate (a channel grant from a sibling tab) down
+ * to a usable state, or null. Rejects missing/expired tokens. The
+ * sessionStorage copy has its own, stricter gate in `auth-storage.ts`. */
 function sanitizeSession(candidate: unknown): AdminAuthState | null {
   if (!candidate || typeof candidate !== 'object') return null;
   const c = candidate as Partial<AdminAuthState>;
@@ -85,36 +86,6 @@ function sanitizeSession(candidate: unknown): AdminAuthState | null {
         ? (c.permissions as Record<string, boolean>)
         : null,
   };
-}
-
-function loadStoredSession(): AdminAuthState | null {
-  try {
-    const raw = sessionStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-    const session = sanitizeSession(JSON.parse(raw));
-    if (!session) sessionStorage.removeItem(STORAGE_KEY);
-    return session;
-  } catch {
-    /* Storage unavailable (private mode) or corrupted JSON — treat as no
-       session; the user simply logs in again. */
-    return null;
-  }
-}
-
-function storeSession(state: AdminAuthState): void {
-  try {
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch {
-    /* non-blocking — in-memory session still works for this tab */
-  }
-}
-
-function dropStoredSession(): void {
-  try {
-    sessionStorage.removeItem(STORAGE_KEY);
-  } catch {
-    /* ignore */
-  }
 }
 
 export interface AdminLoginResponse {
@@ -141,7 +112,10 @@ type ChannelMessage =
   | { type: 'logout' };
 
 export function AdminAuthProvider({ children }: { children: ReactNode }): JSX.Element {
-  const [state, setState] = useState<AdminAuthState>(() => loadStoredSession() ?? INITIAL_STATE);
+  // Lazy initializer, not an effect: hydration has to be synchronous with the
+  // first render or AdminRoot sees isAuthenticated=false and flashes the login
+  // screen (and navigates away from the deep link the user reloaded).
+  const [state, setState] = useState<AdminAuthState>(() => loadPersistedAuth() ?? INITIAL_STATE);
   // The channel handler needs the CURRENT state without re-subscribing on
   // every auth change; a ref sidesteps the stale-closure problem.
   const stateRef = useRef(state);
@@ -172,12 +146,12 @@ export function AdminAuthProvider({ children }: { children: ReactNode }): JSX.El
         if (!stateRef.current.token) {
           const session = sanitizeSession(msg.state);
           if (session) {
-            storeSession(session);
+            persistAuth(session);
             setState(session);
           }
         }
       } else if (msg.type === 'logout') {
-        dropStoredSession();
+        clearPersistedAuth();
         setState(INITIAL_STATE);
       }
     };
@@ -201,12 +175,14 @@ export function AdminAuthProvider({ children }: { children: ReactNode }): JSX.El
       passwordMustChange: resp.password_must_change,
       permissions: resp.permissions ?? null,
     };
-    storeSession(next);
+    persistAuth(next);
     setState(next);
   }, []);
 
   const clearAuth = useCallback(() => {
-    dropStoredSession();
+    // Order matters: the stored copy goes first so a reload racing a 401
+    // logout can never resurrect the dead token.
+    clearPersistedAuth();
     // Sign out EVERYWHERE — one logout click must not leave a live session
     // in a background tab on a shared machine.
     try {

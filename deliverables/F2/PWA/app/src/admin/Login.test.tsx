@@ -53,11 +53,22 @@ describe('<Login />', () => {
     expect(screen.getByRole('button', { name: /sign in/i })).toBeDisabled();
   });
 
-  it('shows the session-policy disclosure (#1001: tab-scoped, shared across tabs)', () => {
+  it('discloses the session policy (#1001: reload-safe, shared across open tabs)', () => {
     const fetchImpl = vi.fn() as unknown as typeof fetch;
     renderLogin(fetchImpl);
+    // Reworded twice: 2026-07-24 when sessions began surviving a reload, and
+    // again for #1001 when a new tab began adopting a sibling's session. Both
+    // older copies ("closing the tab or reloading signs you out", then
+    // "closing the tab signs you out") describe behaviour the portal no
+    // longer has — the session now ends when the LAST admin tab closes.
+    expect(screen.getByText(/sessions last up to 4 hours/i)).toBeInTheDocument();
     expect(
-      screen.getByText(/sessions last while your admin tabs stay open/i),
+      screen.getByText(
+        /reloading keeps you signed in, and new tabs pick up the session while any admin tab is open/i,
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/closing every tab or signing out ends the session everywhere/i),
     ).toBeInTheDocument();
   });
 

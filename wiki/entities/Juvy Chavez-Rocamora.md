@@ -1,7 +1,7 @@
 ---
 type: entity
 tags: [aspsi, project-coordinator, team, stakeholder, doh-routing]
-source_count: 3
+source_count: 4
 ---
 
 # Juvy Chavez-Rocamora
@@ -15,6 +15,7 @@ source_count: 3
 - **Logistics & coordination** — handles scheduling, file sharing with relevant subject lines, and cross-team sync.
 - **Submitted the Jan 30 Inception Report** with all annexes (A–J).
 - **Submitted the Apr 14 matrices + Word data collection tools** to PMSMD — the first formal Tranche 1 follow-up after the Apr 8 v5 bundle. PMSMD acknowledged and requested until **Apr 20** to return feedback.
+- **Administrative and financial matters at Field Supervisor training (August 2026)** — named **"JCRocamora"** (with JC Facturanan) for Module 16 on Day 5 of the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Field Supervisor Training Program (MESJ 2026-07-28 FINAL)|Field Supervisor Training Program]], covering the ASPSI forms, cash-advance liquidation and token distribution that supervisors administer in the field.
 
 ## Context
 

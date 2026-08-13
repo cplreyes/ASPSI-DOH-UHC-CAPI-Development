@@ -28,6 +28,10 @@ export interface JwtClaims {
   iat: number;
   /** Expiry, epoch seconds. */
   exp: number;
+  /** 12-digit Questionnaire Number (facility-9 + HCW-seq-3) assigned at HCW
+   *  enrollment. Optional: tokens minted before the qn rollout lack it, and
+   *  legacy/slug-facility HCWs have none — consumers must tolerate absence. */
+  qn?: string;
 }
 
 /** KV-stored audit metadata for an issued token. Key: `token:<jti>`. */

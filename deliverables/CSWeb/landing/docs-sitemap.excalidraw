@@ -86,8 +86,8 @@
     },
     {
       "type": "text", "id": "hcw_portal_t", "x": 836, "y": 268, "width": 200, "height": 54,
-      "text": "HCW Admin Portal\nf2-pwa.pages.dev/admin\nF2 · self-admin · external",
-      "originalText": "HCW Admin Portal\nf2-pwa.pages.dev/admin\nF2 · self-admin · external",
+      "text": "HCW Admin Portal\nuhc-hcw.asiansocial.org/admin\nF2 · self-admin · external",
+      "originalText": "HCW Admin Portal\nuhc-hcw.asiansocial.org/admin\nF2 · self-admin · external",
       "fontSize": 12, "fontFamily": 3, "textAlign": "center", "verticalAlign": "middle",
       "strokeColor": "#374151", "backgroundColor": "transparent", "fillStyle": "solid",
       "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
