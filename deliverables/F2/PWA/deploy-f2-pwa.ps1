@@ -47,9 +47,26 @@ $SiteUrl   = "https://uhc-hcw.asiansocial.org"
 $ProxyUrl  = "https://uhc-hcw.asiansocial.org"   # same origin; the worker serves both
 
 # The invariant. Add a line here whenever a feature must never silently vanish.
+#
+# The mid-section notes (#1041/#1042/#1043) belong here for the SAME reason the
+# Facilities tab does, and it is not hypothetical: as of 2026-08-13 the matrix
+# preamble RENDER exists only on worktree-f2-productivity-panel. origin/main's
+# MatrixQuestion.tsx contains no preamble block at all, while main's items.ts
+# DOES carry the note data -- so a build from main looks complete, ships the
+# notes as dead data, and silently reverts all three tickets. Testers have
+# re-filed this trio twice (#1179/#1180/#1181, then again 08-13) precisely
+# because each main-built deploy undoes it.
+#
+# `italic text-muted-foreground` is the class on MatrixQuestion's preamble <p>
+# and appears nowhere else in the app, so it is a true render-path probe rather
+# than a data probe -- the note text alone would pass even on a build that
+# never displays it.
 $RequiredMarkers = @(
-    @{ Name = "Facilities nav entry"; Pattern = 'label:"Facilities"';  Bundle = "admin" },
-    @{ Name = "Facilities API call";  Pattern = '/admin/api/facilities'; Bundle = "admin" }
+    @{ Name = "Facilities nav entry";      Pattern = 'label:"Facilities"';           Bundle = "admin" },
+    @{ Name = "Facilities API call";       Pattern = '/admin/api/facilities';        Bundle = "admin" },
+    @{ Name = "Matrix preamble render";    Pattern = 'italic text-muted-foreground'; Bundle = "admin" },
+    @{ Name = "Q63 fee note (#1041)";      Pattern = 'negotiable';                   Bundle = "admin" },
+    @{ Name = "Q98/Q114 instr (#1042/3)";  Pattern = 'past 6 months';                Bundle = "admin" }
 )
 
 function Say($msg, $color = "White") { Write-Host $msg -ForegroundColor $color }
