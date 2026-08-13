@@ -1185,20 +1185,24 @@ def build_section_g():
     # codes still ascend (#830). It is filtered out of the amount roster below — 'none'
     # never becomes an amount row. Deviation from the Apr-20 paper (p.15 lists no 'none'
     # on Q97.1) — flagged to ASPSI on the ticket.
+    # #1208 follow-up (ASPSI 2026-08-13): adding the 'none' escape changed the question,
+    # so ASPSI supplied a FINAL wording + option list for both Q97.1 and Q97.2. Two label
+    # changes: 'Consultation Fee' -> "Doctor's Professional Fee", and 'None of the above'
+    # -> 'None'. Colons on 'Non-medical expenses:' / 'Other expenses:' match their list.
     Q971_SOURCES = [
-        ("Consultation Fee",                          "01"),
+        ("Doctor's Professional Fee",                 "01"),
         ("Medical equipment or supplies",             "02"),
-        ("Non-medical expenses (e.g. Hygiene kit)",   "03"),
-        ("Other expenses",                            "04"),
-        ("None of the above",                         "90"),
+        ("Non-medical expenses: (e.g. Hygiene kit)",  "03"),
+        ("Other expenses:",                           "04"),
+        ("None",                                      "90"),
     ]
     Q972_EXPENSES = [
-        ("a) Consultation Fee",                             "1"),
+        ("a) Doctor's Professional Fee",                    "1"),
         ("b) Diagnostic or laboratory procedure",           "2"),
         ("c) Medical equipment or supplies",                "3"),
         ("d) Medicines or drugs",                           "4"),
         ("e) Non-medical expenses: travel",                 "5"),
-        ("f) Other expenses",                               "6"),
+        ("f) Other expenses:",                              "6"),
     ]
     Q98_SOURCES = [
         ("Salary/income",                                                      "01"),
@@ -1340,10 +1344,16 @@ def build_section_g():
     # SCREEN 2: Q971_ROSTER grid — one row per ticked category, all rows enterable for
     # amount (every category carries an amount, so no zeroing/gating per row).
     # SCREEN 3: Q971_OTHER_TXT gated on pos("04", Q971_SOURCES) (own screen after roster).
+    # #1208 follow-up (ASPSI 2026-08-13): final question wording. The enumerator directive
+    # ("If patient provides a receipt…") is NOT repeated here — it already emits as the blue
+    # instruction note via generate_qsf's _RECEIPT, keyed to 971. Splitting it that way also
+    # keeps this dcf label under the 255-char cap; ASPSI's full sentence runs 321 chars and
+    # would have been silently truncated (the #1182 class).
     items.extend(checkbox_multiselect(
         "Q971_SOURCES",
-        "97.1 Which other items were included in your outpatient bill? "
-        "(Select all that apply.)",
+        "97.1 Other than the expenses above (e.g. consultation, laboratory tests, "
+        "prescribed medicines, etc.), which of the following were also included in the "
+        "bill? How much were you charged or billed?",
         Q971_SOURCES, with_other_txt=False))   # OTHER_TXT emitted after roster split
     items.append(alpha("Q971_OTHER_TXT",
                        "97.1 Other expenses — specify text", length=120))
@@ -1357,11 +1367,14 @@ def build_section_g():
     # #1208: same 'none' escape as Q97.1, appended AFTER the paper's a)-f) items so the
     # codes still ascend (01..06, 90); filtered out of the amount roster below.
     Q972_SOURCES = ([(label, f"{int(code):02d}") for label, code in Q972_EXPENSES]
-                    + [("None of the above", "90")])
+                    + [("g) None", "90")])   # #1208 follow-up: ASPSI's spec letters it g), matching a)-f)
+    # #1208 follow-up (ASPSI 2026-08-13): final question wording, matching their screenshot.
+    # The italic "If yes, indicate the amount spent." emits as the blue instruction note via
+    # generate_qsf (_IF_YES_AMOUNT, keyed to 972), not as part of this label.
     items.extend(checkbox_multiselect(
         "Q972_SOURCES",
-        "97.2 Which other expenses did you have during the OPD visit that were NOT in the "
-        "bill? (Select all that apply.)",
+        "97.2 Did you pay for any other expenses during your OPD visit that were not "
+        "included in the outpatient bill?",
         Q972_SOURCES, with_other_txt=False))
     items.append(alpha("Q972_OTHER_TXT",
                        "97.2 Other expenses — specify text", length=120))

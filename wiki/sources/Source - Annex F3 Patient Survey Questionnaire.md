@@ -66,6 +66,8 @@ Driven by [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - An
 - Paired listing protocol: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F3b Patient Listing Protocol|F3b Patient Listing Protocol]]
 - Sibling instruments: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F1 Facility Head Survey Questionnaire|F1]], [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F2 Healthcare Worker Survey Questionnaire|F2]], [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F4 Household Survey Questionnaire|F4]]
 - Programme concept: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]]
+- Shared capture design: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/GPS and Photo Capture|GPS and Photo Capture]] — auto-GPS + verification-photo blocks used in the Geographic ID section
+- Built questionnaire change: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - PhilHealth Reinstatement Email (Kidd 2026-06-09)|PhilHealth reinstatement]] — F3 Q38.1/Q38.2 (Section D), built + deployed during UAT R5
 
 ## Sources
 

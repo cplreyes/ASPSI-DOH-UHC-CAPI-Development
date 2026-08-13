@@ -304,7 +304,7 @@ postproc
     #1208: 'None of the above' (90) is now a valid answer, so the message points at it
     instead of sending the enumerator back to Q97. }
   if length(strip(Q971_SOURCES)) = 0 then
-    errmsg("97.1 Tick at least one item included in the bill, or tick 'None of the above' if nothing else was billed.");
+    errmsg("97.1 Tick at least one item included in the bill, or tick 'None' if nothing else was billed.");
     reenter;
   endif;
   { #1208 exclusivity (HARD) — 'None of the above' (90) must stand alone. Same aligned
@@ -318,7 +318,7 @@ postproc
     if tonumber(Q971_SOURCES[xcP:2]) = 90 then xcHit = 1; endif;
   enddo;
   if xcHit = 1 and length(strip(Q971_SOURCES)) > 2 then
-    errmsg("97.1 'None of the above' must be the only choice — untick it or the other items before continuing.");
+    errmsg("97.1 'None' must be the only choice — untick it or the other items before continuing.");
     reenter;
   endif;
 
@@ -624,11 +624,11 @@ Q972_ROSTER_PROCS = build_roster_procs(
     # #1208: the roster is still driven by the paper's a)-f) items only — 'None of the
     # above' (90) lives in the CheckBox value set but is never a roster row, so this
     # population list is unchanged. Ticking only 90 leaves nsel=0 -> 0 rows.
-    "97.2 Tick at least one expense item, or tick 'None of the above' if there were no out-of-bill expenses.",
+    "97.2 Tick at least one expense item, or tick 'None' if there were no out-of-bill expenses.",
     gated_texts=[("06", "Q972_OTHER_TXT", "97.2 'Other expenses' was ticked — please specify.")],
     require_positive=True,   # #749: every ticked expense item must be > 0
     exclusive_code="90",     # #1208: 'None of the above' must stand alone
-    exclusive_msg="97.2 'None of the above' must be the only choice — untick it or the other expense items before continuing.")
+    exclusive_msg="97.2 'None' must be the only choice — untick it or the other expense items before continuing.")
 Q98_ROSTER_PROCS = build_roster_procs(
     98, "98", [(None, f"{n:02d}") for n in range(1, 16)],
     set(),   # all-amount

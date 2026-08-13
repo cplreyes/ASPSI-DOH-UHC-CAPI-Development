@@ -105,7 +105,7 @@ PROC BARANGAY          onfocus  FillBarangayValueSet(BARANGAY, CITY_MUNICIPALITY
 
 ## F2 parallel
 
-F2 is **not a CSPro instrument** — it is a PWA (HCW Survey + Admin Portal, production v2.0.0 since 2026-05-04; see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/gstack F2 PWA Workflow|gstack F2 PWA Workflow]] and [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Admin Portal|F2 Admin Portal]]), so it never asks the respondent for PSGC drop-downs. Instead the **F2 PWA prefills facility-linked metadata — including PSGC geography — from the facility token carried in each tokenized survey link**, issued at enrollment via the Admin Portal.
+F2 is **not a CSPro instrument** — it is a PWA (HCW Survey + Admin Portal, production v2.1.0, 7 languages; see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/gstack F2 PWA Workflow|gstack F2 PWA Workflow]] and [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Admin Portal|F2 Admin Portal]]), so it never asks the respondent for PSGC drop-downs. Instead the **F2 PWA prefills facility-linked metadata — including PSGC geography — from the facility token carried in each tokenized survey link**, issued at enrollment via the Admin Portal.
 
 The earlier design described in [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track|F2 Google Forms Track]] (a `FacilityMasterList` Sheet feeding per-facility prefilled Google Forms URLs) was retired 2026-04-17 and is kept for history only. The principle survives unchanged: the PSGC codes F2 populates should come from the same PSA source / CSVs documented here — keep one source of truth.
 

@@ -90,6 +90,8 @@ The 3-digit `CASE_SEQ` cleanly handles the manual's *"refused/cancelled cases ge
 - **Replacement range** — `700–899`, drawn from the alternative-respondent list per [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex D Replacement Protocol]].
 - **Refused / forfeited range** — `900–999` for attempts that did not produce data (recorded for response-rate accounting; the per-instrument `ENUM_RESULT_FINAL_VISIT` disposition captures the why — `AAPOR_DISPOSITION` was removed from all three dictionaries 2026-06-12).
 
+> [!note] As-built (2026-07-14): replacements are recorded via the case-start **BREAKOFF** field (values 5/6/7), uniform across F1/F3/F4, and counted on BREAKOFF — not via `CASE_SEQ` range partitioning. The `700–899` / `900–999` scheme above is the original design proposal, now superseded by the BREAKOFF implementation. The 12-digit case-ID convention itself is unchanged.
+
 ### Cross-instrument linkage
 
 - **F3 → F1** — derived structurally from the shared `REGION_CODE + PROVINCE_HUC_CODE + CITY_MUNICIPALITY_CODE + FACILITY_NO`. The current `F3_FACILITY_ID` (10-digit) data item becomes redundant and can be retired (or kept as a denormalized convenience field — leaning retire to avoid drift).

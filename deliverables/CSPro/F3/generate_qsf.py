@@ -194,9 +194,13 @@ _DNR_ALL = "DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY."
 _PWD_CARD = ("Enumerator Instruction (DO NOT READ ALOUD): If the PWD "
              "Identification Card is presented, record the type of disability "
              "as indicated on the card. Do not ask the respondent directly.")
+# #1208 follow-up (ASPSI 2026-08-13): the trailing "If yes, indicate the amount spent."
+# was split out — ASPSI's final Q97.1 wording ends at "Select all that apply.", and that
+# sentence is the italic line under Q97.2 in their spec. Keyed separately below.
 _RECEIPT = ("If patient provides a receipt, select all that apply. If no "
             "receipt was provided, read options out loud. Select all that "
-            "apply. If yes, indicate the amount spent.")
+            "apply.")
+_IF_YES_AMOUNT = "If yes, indicate the amount spent."
 _GAMOT_AREA = "Enumerator: Applicable only to respondents in areas with GAMOT."
 _SELECT_ALL = "SELECT ALL THAT APPLY."
 
@@ -216,6 +220,7 @@ INSTRUCTIONS = {
     153: _GAMOT_AREA + " " + _SELECT_ALL,   # #1055
     154: _GAMOT_AREA + " " + _SELECT_ALL,   # #1055
     971: _RECEIPT,  # #455: the receipt/"select all that apply" note belongs on Q97.1 (the Q971_* bill-items battery), NOT on Q97 (Q97_FINAL_AMOUNT, a single cash figure). Re-keyed 97 -> 971 so _QNUM attaches it to the Q971_* fields. (#559: also not on Q114, a reasons select-all.)
+    972: _IF_YES_AMOUNT,  # #1208 follow-up: the italic line under Q97.2 in ASPSI's final spec.
     **dict.fromkeys([14], _PWD_CARD),
     4: ("Note to enumerator [do not read]: This section is for the Patient "
         "Profile. Ask all questions in this section unless a skip rule applies."),

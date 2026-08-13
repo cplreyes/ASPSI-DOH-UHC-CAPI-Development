@@ -75,6 +75,8 @@ Driven by [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - An
 - Change-rationale map: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex G DOH Recommendations Matrix|Annex G DOH Recommendations Matrix]]
 - Sibling instruments: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F1 Facility Head Survey Questionnaire|F1]], [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F2 Healthcare Worker Survey Questionnaire|F2]], [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F3 Patient Survey Questionnaire|F3]]
 - Programme concept: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]]
+- Shared capture design: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/GPS and Photo Capture|GPS and Photo Capture]] — auto-GPS + verification-photo blocks used in the Geographic ID section
+- Built questionnaire change: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - PhilHealth Reinstatement Email (Kidd 2026-06-09)|PhilHealth reinstatement]] — F4 Q45.1/Q45.2 (after Q45), built + deployed during UAT R5
 
 ## Sources
 

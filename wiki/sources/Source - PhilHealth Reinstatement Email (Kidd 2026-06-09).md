@@ -9,6 +9,9 @@ tags: [capi, survey-design, philhealth, f3-patient, f4-household, reinstatement,
 
 **Email, ASPSI (Kidd, via `aspsi.doh.uhc.survey2@gmail.com`) → Carl (`clreyes6@up.edu.ph`), 2026-06-09 07:41 UTC.** Subject: *"Questions for the Patient and Household Survey."* cc: `spprt.aspsi.doh.uhc.survey2@gmail.com`, `cjrocamora@gmail.com` (Juvy). Fetched 2026-06-28 via the UP-account Gmail connector. This is the authoritative instruction to **reinstate two PhilHealth-registration sub-questions** on the **Patient (F3)** and **Household (F4)** instruments. Tracked in scrum as **E2-F3-PHILHEALTH / E2-F4-PHILHEALTH**.
 
+> [!success] STATUS (corrected 2026-06-29): DONE — built + deployed during UAT R5
+> Both sub-questions are **built and live**: F3 Q38.1/Q38.2 (GH #764); F4 Q45.1 (#794) / Q45.2 (#795); deployed to CSWeb 2026-06-25/27; confirmed in the live DCFs. ASPSI supplied the value sets **via the tickets**, so this never actually waited on the email's PNGs — the "NOT YET CAPTURED / ~3h once value sets land" notes below are **historical**. As-built quirks (optional ASPSI confirm): F3 Q38.2 tick-all vs F4 Q45.2 single; "I don't know" = −98 (locked std), not the paper's −55.
+
 ## The decision / backstory
 
 While organizing files, ASPSI reviewed a recording of a previous DOH meeting and realized the team had **agreed to reinstate additional PhilHealth-registration questions that were previously omitted following comments from OAAED**. DOH wanted these items included given their **intended use of the information**, and their importance was emphasized by **Sir LJ** (LJ Villarante, DOH). The questions were **not reinserted into the survey instruments as agreed** — ASPSI flagged this as their oversight and apologized. Both questions are **conditional** and can be incorporated "with minimal disruption."

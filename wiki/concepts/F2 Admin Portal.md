@@ -56,6 +56,8 @@ The F2 Admin Portal is the **operations console** for the F2 PWA stack — admin
 
 ## Build state (2026-05-04 — v2.0.0 live in prod)
 
+> [!note] Version currency: v2.0.0 was the initial prod cut (2026-05-04). **Production is now F2 PWA v2.1.0 (7 languages).** The sprint/release records below document the historical v2.0.0 build.
+
 Sprints AP1–AP4 **functionally complete, end-to-end verified on staging, and cut to production 2026-05-04 evening** (PR #54 merged 15:49 PHT; v2.0.0 cutover same evening, 7-day soak explicitly waived). UAT Round 2 reopened against v2.0.0 to Shan + Kidd with embedded prod-signed enrollment URLs and per-tester admin credentials (UAT Rounds 1–2 originally closed before the 2026-04-25 v1.1.1 production cut — see the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track]] banner; this is a reopen against the new version, not a new round). ~60 commits, ~19k LOC across the merged branch.
 
 ```

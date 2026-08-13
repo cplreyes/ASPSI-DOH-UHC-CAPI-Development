@@ -10,6 +10,9 @@ tags: [questionnaire, healthcare-worker, f2, survey-instrument, ingest-batch-apr
 
 Healthcare Worker Survey Questionnaire for [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]], **125 numbered slots, 124 actual items** (last is Q125; Q108 is a PDF numbering gap — Section J's grid lift jumps Q107 → Q109; earlier grids reuse sub-item numbering).
 
+> [!warning] Build/administration model superseded — 2026-04-17
+> The capture-path text below describes the **retired Google Forms** track. F2 is now the **HCW Survey PWA** (`deliverables/F2/PWA/app/`) — **production v2.1.0, 7 languages**, with the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Admin Portal|Admin Portal]]. The **questionnaire content, structure, skip logic, and Annex-G changes on this page remain valid** — only the build/administration model is historical. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track|F2 Google Forms Track]] for the retired-track record.
+
 **Field-work administration model:**
 - **Primary: self-administered** by the HCW within a **3-day window** via the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track|F2 Google Forms Track]].
 - **Fallback: guided / interviewer-administered** only if the respondent needs assistance (e.g., low digital literacy, connectivity issues). In those cases enumerator walks the HCW through the same Form; paper → Form encoding also remains available as a low-connectivity path.
@@ -50,7 +53,7 @@ Driven by [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - An
 - **Burnout block retained** (Q114–122): Despite Annex G #23 suggesting burnout emphasis be "reduced or possibly removed altogether", the Apr 20 version **still carries the burnout scale items**. Candidates for removal before CAPI build if Dr. Claro confirms. Retention/leaving items Q123–125 remain.
 - **Satisfaction items** (Section J): Annex G #8 + #16 suggest dropping some HCW satisfaction questions — net effect in Apr 20 appears to be **reorganization not deletion**. Item count is flat-to-slight-growth at 125 items.
 
-## Build Decision (unchanged from 2026-04-15)
+## Build Decision (historical — superseded 2026-04-17 by the F2 PWA)
 
 F2 is officially a **special case** with three capture paths — see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track|F2 Google Forms Track]]:
 

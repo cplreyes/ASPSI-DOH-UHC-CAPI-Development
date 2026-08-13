@@ -166,6 +166,8 @@ The user has committed to a 1:1 mirror (Question 1, option a). The honest interp
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro Documentation|Source - CSPro Documentation]] — index page that omits the CSWeb help URL
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro 8.0 Complete Users Guide|Source - CSPro 8.0 Complete Users Guide]] — punts to "CSWeb help documentation" without including it
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/US Census Bureau|US Census Bureau]] — author/maintainer
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Admin Portal|F2 Admin Portal]] — the F2 PWA permission model mirrors CSWeb's two built-in roles + per-dictionary access
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/GPS and Photo Capture|GPS and Photo Capture]] — supplies the case `latitude`/`longitude` the Map Report requires (cases without GPS are silently omitted)
 
 > [!note] Source format
 > The clipped HTML files are the verbatim authoritative source. The summary above is faithful but condensed; for any constraint that needs a literal quote, refer back to the corresponding `.html` file under `raw/Documentations/CSWeb-help/`.

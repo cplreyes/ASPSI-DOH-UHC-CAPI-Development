@@ -22,7 +22,7 @@ ASPSI Research Assistant formally introduced at the [[1_Projects/ASPSI-DOH-CAPI-
 
 The April scope above describes the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track|F2 Google Forms track]], which was retired on 2026-04-17 in favor of the F2 PWA. Shan's current roles:
 
-- **F2 PWA UAT tester** — tests the production PWA (v2.0.0, HCW Survey + Admin Portal).
+- **F2 PWA UAT tester** — tests the production PWA (v2.1.0, 7 languages; HCW Survey + Admin Portal).
 - **CAPI UAT Round 4 primary enumerator** (round open 2026-06-12 → 2026-06-15) for the F1/F3/F4 CSEntry instruments, and **CSWeb Administrator** — per-tester CSWeb user `shan` on `csweb.asiansocial.org`.
 - **Comms** now run through Slack (`#f1-uat` / `#f3-uat` / `#f4-uat`) and the GitHub UAT feedback forms, superseding the earlier Viber + project-mailbox flow.
 

@@ -131,6 +131,7 @@ GPS capture is correctly mentioned in Step 12 ("Make sure the **GPS location** i
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track]] — historical track context for the HCW protocol
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Admin Portal]] — current F2 PWA admin/encoder build
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/GPS and Photo Capture]] — capture spec referenced in Step 12
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/Questionnaire Numbering Convention]] — the adopted **12-digit** case ID (2026-05-05) supersedes this manual's older 9-digit §5.1 scheme
 
 **Entities**
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/ASPSI]] — manual author

@@ -55,7 +55,7 @@ Field-operations protocol for listing and selecting patient respondents for the 
 ## Cross-references
 
 - Paired interview: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F3 Patient Survey Questionnaire|F3 Patient Survey]]
-- Replacement rules: Annex D — Draft Replacement Protocol (pending ingest)
+- Replacement rules: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex D Replacement Protocol|Annex D — Replacement Protocol]]
 - Change-rationale map: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex G DOH Recommendations Matrix|Annex G DOH Recommendations Matrix]]
 - Programme concept: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]]
 
