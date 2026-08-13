@@ -252,8 +252,8 @@ preproc
   protect(Q92_PAY_SRC, true);
   { #835-class polarity (2026-07-09): match non-money codes POSITIVELY - the <> chain
     also matched the resume-replay/buffered notappl and zeroed money rows on-screen. }
-  if Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8 then
-    Q92_PAY_AMT = 0;   { #781: non-money source -> default 0. In-kind(7) is a money source for Q92 per ASPSI (2026-06-25). Still enterable so the row stops. }
+  if Q92_PAY_SRC in 4:8 then
+    Q92_PAY_AMT = 0;   { #1151: after the June-5 renumber the money sources are 1-3 (OOP/Donation/In kind, #781) and every non-money source is 4-8. Still enterable so the row stops. }
   endif;
   Q92_PAY_LINE = curocc();
   noinput;
@@ -263,7 +263,7 @@ preproc
   { #1064 class (2026-08-04): non-money row -> amount is display-only 0 (noinput);
     the grid no longer offers an amount box for sources with no cost. Positive
     polarity per #835. Desk-test gate: all-non-money selection must advance. }
-  if Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8 then
+  if Q92_PAY_SRC in 4:8 then
     Q92_PAY_AMT = 0;
     noinput;
   endif;
@@ -272,11 +272,11 @@ postproc
     errmsg("92. Amount cannot be negative.");
     reenter;
   endif;
-  if (Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8) and Q92_PAY_AMT <> 0 then
+  if (Q92_PAY_SRC in 4:8) and Q92_PAY_AMT <> 0 then
     errmsg("92. This source has no out-of-pocket cost — amount reset to 0.");
     Q92_PAY_AMT = 0;
   endif;
-  if (Q92_PAY_SRC = 1 or Q92_PAY_SRC = 2 or Q92_PAY_SRC = 7) and Q92_PAY_AMT = 0 then
+  if (Q92_PAY_SRC in 1:3) and Q92_PAY_AMT = 0 then
     errmsg("92. Please enter an amount greater than 0 — you selected this as a paid source (in-kind valued in pesos).");
     reenter;
   endif;
@@ -604,15 +604,17 @@ postproc
   endif;
 """
 Q96_ROSTER_PROCS = build_roster_procs(
-    96, "96", [("Out-of-pocket", "01"), ("Free/no cost", "02"),
-               ("Free, charge to PhilHealth", "03"), ("Free, charge to Private Insurance", "04"),
-               ("Free, charge to HMO", "05"), ("In kind", "06"), ("Donation", "07"),
-               ("Don't know", "08")],
-    # #779 (ASPSI clarification 2026-06-25): In-kind (06) is NOT a peso-amount source for Q96
-    # — per-question rule, not blanket. Dropped from amt_codes so In-kind becomes a non-money
-    # row (amount auto-0, stays enterable but no specify/positive requirement). OOP(01) +
-    # Donation(07) still carry a real amount.
-    {"01", "07"},
+    # #1152 (2026-08-13): renumbered to the June-5 order (Donation 07 -> 02). Keep this list
+    # byte-identical to Q96_MEDS_PAY in generate_dcf.py — the roster row numbering is the
+    # value-set order.
+    96, "96", [("Out-of-pocket", "01"), ("Donation", "02"),
+               ("Free/no cost", "03"), ("Free, charge to PhilHealth", "04"),
+               ("Free, charge to Private Insurance", "05"), ("Free, charge to HMO", "06"),
+               ("In kind", "07"), ("Don't know", "08")],
+    # #779 (ASPSI clarification 2026-06-25): In-kind is NOT a peso-amount source for Q96
+    # — per-question rule, not blanket. Kept out of amt_codes so In-kind stays a non-money
+    # row (amount auto-0). June-5 agrees: Q96's amount boxes are Out-of-pocket + Donation.
+    {"01", "02"},
     "96. Tick at least one payment source for the prescribed medicines before continuing.",
     require_positive=True)   # #749/#779: OOP + donation rows must be > 0 (in-kind no longer required)
 Q972_ROSTER_PROCS = build_roster_procs(
@@ -638,30 +640,37 @@ Q98_ROSTER_PROCS = build_roster_procs(
     require_positive=True)   # #749: every ticked money source must be > 0
 
 # The four NEW Section H roster conversions (#691/#692/#693). Amount boxes follow the
-# Apr-20 paper per question (#1198/#1199/#1200): Q107 = OOP/Donation/In-kind; Q109/Q112 =
-# Out-of-pocket only; all other rows are non-money (auto-0 + noinput, #1064 pattern).
+# JUNE-5 tool per question (#1156/#1158, superseding the Apr-20 reading in #1198/#1199):
+# Q107 = OOP/Donation/In-kind (codes 01/02/03 after the renumber); Q109 = the same three,
+# because June-5 ADDED Donation to Q109; Q112 = Out-of-pocket only and keeps the Apr-20
+# order untouched. All other rows are non-money (auto-0 + noinput, #1064 pattern).
 # (The amount length lives in the dcf roster field; the apc logic is length-agnostic.)
 # The Q113 PhilHealth-availed gate (Q114 skip) is re-pointed to pos("08", Q113_SOURCES)
 # in CHECKBOX_CONVERT below; the Q110=No skip target is re-pointed to Q113_SOURCES.
 Q107_ROSTER_PROCS = build_roster_procs(
     107, "107", [(None, f"{n:02d}") for n in range(1, 11)],
-    {"01", "07", "08"},   # #1198 (Apr-20 paper p.17): only Out-of-pocket(01), Donation(07), In kind(08) carry an amount box — Free/charged-to-X (02-06), DK (09), Other (10) are non-money (auto-0)
+    {"01", "02", "03"},   # #1156 (June-5 p.13): only Out-of-pocket(01), Donation(02), In kind(03) carry an amount box — Free/charged-to-X (04-08), DK (09), Other (10) are non-money (auto-0). Same three sources as #1198, renumbered by the reorder.
     "107. Tick at least one payment source for the total bill before continuing.",
     gated_texts=[("10", "Q107_PAY_OTHER_TXT", "107. 'Other' was ticked — please specify.")],
     require_positive=True,   # #757: every ticked payment source must be > 0
     exclusive_code="09",     # #1157: 09 "Don't know" must stand alone
     exclusive_msg="107. 'Don't know' must be the only payment source — untick it or the other sources before continuing.")
 Q109_ROSTER_PROCS = build_roster_procs(
-    109, "109", [(None, f"{n:02d}") for n in range(1, 10)],
-    {"01"},   # #1199/#1200 (Apr-20 paper p.17): amount box ONLY on Out-of-pocket — Free/charged (02-06), In kind (07), DK (08), Other (09) are non-money (auto-0)
+    # #1158 (2026-08-13): 9 -> 10 codes. June-5 (p.14) ADDED "Donation" to Q109 and gave it,
+    # Out-of-pocket and In kind an amount box each — the Apr-20 reading behind #1199/#1200
+    # (Out-of-pocket only) is superseded. DK moved 08 -> 09 and Other 09 -> 10, so both gates
+    # below moved with them. Reaching 10 codes also flips build_roster_procs into its
+    # aligned 2-char chunk scan automatically (two_digit), which is required here.
+    109, "109", [(None, f"{n:02d}") for n in range(1, 11)],
+    {"01", "02", "03"},   # #1158 (June-5 p.14): Out-of-pocket(01), Donation(02), In kind(03) carry an amount box — Free/charged-to-X (04-08), DK (09), Other (10) are non-money (auto-0)
     "109. Tick at least one payment source for the medicines bought outside before continuing.",
-    gated_texts=[("09", "Q109_PAY_OTHER_TXT", "109. 'Other' was ticked — please specify.")],
+    gated_texts=[("10", "Q109_PAY_OTHER_TXT", "109. 'Other' was ticked — please specify.")],
     require_positive=True,   # #757: every ticked payment source must be > 0
-    exclusive_code="08",     # #1197: 08 "Don't know" must stand alone (same decision as #1157/Q107)
+    exclusive_code="09",     # #1197: "Don't know" must stand alone (same decision as #1157/Q107); renumbered 08 -> 09 by #1158
     exclusive_msg="109. 'Don't know' must be the only payment source — untick it or the other sources before continuing.")
 Q112_ROSTER_PROCS = build_roster_procs(
     112, "112", [(None, f"{n:02d}") for n in range(1, 10)],
-    {"01"},   # #1200 (Apr-20 paper Q111): 'Amount in Pesos' ONLY on Out-of-pocket — 02-07 (Free*/In kind), 08 DK, 09 Other are non-money (auto-0)
+    {"01"},   # #1200: 'Amount in Pesos' ONLY on Out-of-pocket — 02-07 (Free*/In kind), 08 DK, 09 Other are non-money (auto-0). UNCHANGED by #1158 on purpose: June-5 (p.14) left Q112 in the Apr-20 order with a single amount box, so Q112 must NOT be renumbered alongside Q109.
     "112. Tick at least one payment source for the services done outside before continuing.",
     gated_texts=[("09", "Q112_PAY_OTHER_TXT", "112. 'Other' was ticked — please specify.")],
     require_positive=True)   # #757: every ticked payment source must be > 0

@@ -1119,14 +1119,20 @@ def build_section_g():
         ("No need/regular check-up only",                   "6"),
         ("Other (specify)",                                 "7"),
     ]
+    # #1151 (2026-08-13): reordered to the JUNE-5 tool (Deliverable 2 "Data collection
+    # tools", English_F3 p.10), which hoists the three amount-bearing sources to the top.
+    # The Apr-20 order (In-kind at 07) is superseded — June-5 is what the pretest testers
+    # hold and what all 7 translations were built from. Codes RENUMBER with the display
+    # order (in CSPro the value-set order IS the display order and codes must ascend), so a
+    # stored 02 changes meaning — see the round-close remap note in F3-Skip-Logic.
     Q92_PAYMENT_SRC = [
         ("Out-of-pocket",                        "01"),
         ("Donation",                             "02"),
-        ("Free/no cost",                         "03"),
-        ("Free, charge to PhilHealth",           "04"),
-        ("Free, charge to Private Insurance",    "05"),
-        ("Free, charge to HMO",                  "06"),
-        ("In kind",                              "07"),
+        ("In kind",                              "03"),
+        ("Free/no cost",                         "04"),
+        ("Free, charge to PhilHealth",           "05"),
+        ("Free, charge to Private Insurance",    "06"),
+        ("Free, charge to HMO",                  "07"),
         ("Don't know",                           "08"),
     ]
     Q93_LABS = [
@@ -1148,14 +1154,18 @@ def build_section_g():
         ("None",                      "17"),  # proceed to Q95
         ("Other, specify:",           "16"),
     ]
+    # #1152 (2026-08-13): reordered to the JUNE-5 tool (English_F3 p.12). Donation moves to
+    # 02; In kind stays a NON-money row (June-5 gives Q96 an amount box on Out-of-pocket and
+    # Donation only, which matches ASPSI's #779 per-question clarification). Codes renumber
+    # with the display order — see the Q92 note above.
     Q96_MEDS_PAY = [
         ("Out-of-pocket",                        "01"),
-        ("Free/no cost",                         "02"),
-        ("Free, charge to PhilHealth",           "03"),
-        ("Free, charge to Private Insurance",    "04"),
-        ("Free, charge to HMO",                  "05"),
-        ("In kind",                              "06"),
-        ("Donation",                             "07"),
+        ("Donation",                             "02"),
+        ("Free/no cost",                         "03"),
+        ("Free, charge to PhilHealth",           "04"),
+        ("Free, charge to Private Insurance",    "05"),
+        ("Free, charge to HMO",                  "06"),
+        ("In kind",                              "07"),
         ("Don't know",                           "08"),
     ]
     # Q97.1 — Option B (2-form flat) pilot (2026-06-19). WAS a per-option Yes/No +
@@ -1263,9 +1273,12 @@ def build_section_g():
     # carry an amount; the roster's apc preproc protects+zeroes the amount for every
     # other source code. The roster record is spliced into the dictionary record list
     # right after this (split) record — see the return below.
-    # #781 (ASPSI 2026-06-25): In-kind(07) is a peso-amount source for Q92 — added to the
-    # money set (apc Q92_PAY_AMT gate owns the logic; this set is documentation-only).
-    Q92_AMT_CODES = {"01", "02", "07"}
+    # #781 (ASPSI 2026-06-25): In-kind is a peso-amount source for Q92 — in the money set
+    # (apc Q92_PAY_AMT gate owns the logic; this set is documentation-only).
+    # #1151 (2026-08-13): renumbered with the June-5 order — the money sources are now the
+    # first three codes (Out-of-pocket 01, Donation 02, In kind 03), which is exactly what
+    # the June-5 layout groups at the top.
+    Q92_AMT_CODES = {"01", "02", "03"}
     items.extend(checkbox_multiselect(
         "Q92_SOURCES",
         "92. Which of the following did you use to pay for the cost of consultation? "
@@ -1310,7 +1323,9 @@ def build_section_g():
     # (Q92 pattern), every other row defaults 0 but stays enterable. #779 (2026-06-25):
     # In-kind(06) dropped from the amount set per ASPSI's per-question clarification — the
     # apc (build_roster_procs amt_codes) owns the gate; this set is documentation-only.
-    Q96_AMT_CODES = {"01", "07"}
+    # #1152 (2026-08-13): renumbered with the June-5 order — Donation moved 07 -> 02. The
+    # money set is still exactly {Out-of-pocket, Donation} (In kind stays non-money, #779).
+    Q96_AMT_CODES = {"01", "02"}
     items.extend(checkbox_multiselect(
         "Q96_SOURCES",
         "96. Which of the following did you use to pay for the prescribed medicines? "
@@ -1457,19 +1472,43 @@ def build_section_h():
         ("Executive check-up",   "4"),
         ("Other (specify)",      "5"),
     ]
+    # #1156 (2026-08-13): reordered to the JUNE-5 tool (English_F3 p.13). Donation(02) and
+    # In kind(03) hoist above the Free-charged-to-X block; "Don't know"(09) and "Other
+    # (specify)"(10) keep their codes, so the #1157 exclusivity gate and the Other-specify
+    # gate are both unaffected. Codes renumber with the display order — see the Q92 note.
     Q107_PAYMENT = [
         ("Out-of-pocket",                      "01"),
-        ("Free/no cost",                       "02"),
-        ("Free, charge to PhilHealth",         "03"),
-        ("Free, charge to Private Insurance",  "04"),
-        ("Free, charge to HMO",                "05"),
-        ("Free, charge to MAIFIP",             "06"),
-        ("Donation",                           "07"),
-        ("In kind",                            "08"),
+        ("Donation",                           "02"),
+        ("In kind",                            "03"),
+        ("Free/no cost",                       "04"),
+        ("Free, charge to PhilHealth",         "05"),
+        ("Free, charge to Private Insurance",  "06"),
+        ("Free, charge to HMO",                "07"),
+        ("Free, charge to MAIFIP",             "08"),
         ("Don't know",                         "09"),
-        ("Other (specify)",                    "10"),   # #1067: paper label; explicit code — gate reads pos("10"), unchanged
+        ("Other (specify)",                    "10"),   # #1067: paper label; explicit code — gate reads code "10", unchanged
     ]
+    # #1158 (2026-08-13): Q109 GAINS "Donation" in the June-5 tool (English_F3 p.14) — the
+    # Apr-20 list had no Donation at all — and hoists the three amount-bearing sources. The
+    # list therefore grows 9 -> 10 and NO LONGER matches Q112, which June-5 left in the
+    # Apr-20 order; Q112 now has its own Q112_PAYMENT below. "Don't know" moves 08 -> 09 and
+    # "Other (specify)" 09 -> 10, so the apc exclusive_code / gated_texts move with them.
     Q109_PAYMENT = [
+        ("Out-of-pocket",                      "01"),
+        ("Donation",                           "02"),
+        ("In kind",                            "03"),
+        ("Free/no cost",                       "04"),
+        ("Free, charge to PhilHealth",         "05"),
+        ("Free, charge to Private Insurance",  "06"),
+        ("Free, charge to HMO",                "07"),
+        ("Free, charge to MAIFIP",             "08"),
+        ("Don't know",                         "09"),
+        ("Other (specify)",                    "10"),
+    ]
+    # Q112 keeps the Apr-20 order — June-5 (English_F3 p.14) did NOT reorder Q112 and gives
+    # it an amount box on Out-of-pocket only. It used to share Q109_PAYMENT; #1158 forced
+    # the split, so this list is now Q112's own and must not be re-merged with Q109's.
+    Q112_PAYMENT = [
         ("Out-of-pocket",                      "01"),
         ("Free/no cost",                       "02"),
         ("Free, charge to PhilHealth",         "03"),
@@ -1478,7 +1517,7 @@ def build_section_h():
         ("Free, charge to MAIFIP",             "06"),
         ("In kind",                            "07"),
         ("Don't know",                         "08"),
-        ("Other (specify)",                    "09"),   # #1067: paper label for Q109 AND Q112 (shared list); code unchanged
+        ("Other (specify)",                    "09"),   # #1067: paper label; code unchanged
     ]
     Q113_SOURCES = [
         ("Salary/income",                                                  "01"),
@@ -1566,14 +1605,15 @@ def build_section_h():
     items.append(alpha("Q111_SERVICES_OUTSIDE",
                        "111. If yes, what are those services?", length=240))
     # Q112 services outside — Option B ROSTER fan-out (#693, 2026-06-19). WAS a flat
-    # 9-source Yes/No + per-source _AMT matrix (same Q109_PAYMENT codes). NOW a CheckBox
-    # (Q112_SOURCES) feeding a roster (Q112_PAY_ROSTER); ALL-amount (Q971 pattern, length-9).
-    # 'Other' (09) gates Q112_PAY_OTHER_TXT. >=1 source = the CheckBox's own gate (#557).
+    # 9-source Yes/No + per-source _AMT matrix. NOW a CheckBox (Q112_SOURCES) feeding a
+    # roster (Q112_PAY_ROSTER). 'Other' (09) gates Q112_PAY_OTHER_TXT. >=1 source = the
+    # CheckBox's own gate (#557). #1158 (2026-08-13): this used to reuse Q109_PAYMENT; it
+    # now uses its own Q112_PAYMENT because June-5 reordered Q109 but NOT Q112.
     items.extend(checkbox_multiselect(
         "Q112_SOURCES",
         "112. Which of the following did you use to pay for the services done outside the "
         "hospital? (Select all that apply.)",
-        Q109_PAYMENT, with_other_txt=False))
+        Q112_PAYMENT, with_other_txt=False))
     items.append(alpha("Q112_PAY_OTHER_TXT",
                        "112. Services outside — Other, specify text", length=120))
     # Q113 hospital bill — Option B ROSTER fan-out (#693, 2026-06-19). WAS a flat 13-source
