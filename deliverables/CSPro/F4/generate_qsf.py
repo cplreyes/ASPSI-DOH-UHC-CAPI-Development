@@ -176,7 +176,11 @@ INSTRUCTIONS = {
     # #1069/#1070 (pretest 2026-08-05): bare "SELECT ALL THAT APPLY." on the
     # multi-selects the paper marks but that carried no note (all 9 verified
     # checkbox_multiselect in generate_dcf). Mirrors F3's #1055.
-    **dict.fromkeys([66, 70, 71, 74, 77, 78, 106, 107, 202], _SELECT_ALL),
+    # #1206 (2026-08-12): Q65 and Q84 join the sweep. Both are genuine
+    # checkbox_multiselect captures, but the Apr-20 paper prints no grid for
+    # either (Q65 is a bare "CODING FOR QUESTION 65" block; Q84's options were
+    # added under #814), so neither was caught by the #1069/#1070 pass.
+    **dict.fromkeys([65, 66, 70, 71, 74, 77, 78, 84, 106, 107, 202], _SELECT_ALL),
     **dict.fromkeys([4, 5, 6, 110, 111, 118, 125], _READ_ONE),
     # #1068 (pretest 2026-08-05): Q17 carries the paper's decision-maker definition
     # ahead of the standard read-instruction (same definition F3's Q34 got in #1051).
@@ -200,8 +204,9 @@ INSTRUCTIONS = {
          "looking for work”. " + _READ_ONE),
     13: _READ_ONE + " IF MORE THAN ONE, ASK FOR THE MAIN SOURCE.",
     15: _DNR_ONE,   # #791: removed the custom "A list will be provided…" enumerator note per tester; standard read-instruction kept
-    18: ("Enumerator note: Tick the income category that corresponds to the "
-         "respondent’s approximate household income."),
+    # #1202: the Q18 notes moved to INSTRUCTIONS_BY_NAME below. Q18 is two fields on one
+    # paper number, so a number key sprayed the bracket's note onto the amount box too
+    # (the same spray F3 fixed in #1048).
     19: ("Please count yourself and all the people who usually live with you. "
          "Please include those who are not living here now but will be back "
          "within six months, BUT do not include OFWs."),
@@ -291,6 +296,20 @@ INSTRUCTIONS = {
           "waited until the symptoms were more serious because you were "
           "worried about the cost of the consultation or treatment, the "
           "travel to the facility, or the time off work."),
+}
+
+# Item-NAME-keyed instructions — for notes belonging to ONE component of a multi-field
+# question, where the paper-number key would spray the note across every Q<n>_* field.
+# Wins over the number-keyed map above. Mirrors F3's map (#1048).
+INSTRUCTIONS_BY_NAME = {
+    # #1202: Q18 renders as the paper's two parts. The amount box gets the missing-value
+    # note (the -98/-99 sentinels the apc already accepts); the dropdown gets the category
+    # note. Both used to sit inside the dictionary labels, so they rendered as question text.
+    "Q18_INCOME_AMOUNT": ("Enumerator note: Ensure that the respondent will provide a valid "
+                          "response. In case the respondent fails to provide one, input -98 "
+                          "for “I don’t know” and -99 for “Refuse to Answer”."),
+    "Q18_INCOME_BRACKET": ("Enumerator note: Select the income category that corresponds to "
+                           "the respondent’s approximate household income."),
 }
 
 SECTION_INTROS = {
@@ -454,10 +473,14 @@ def question_extras(nm, intro_used):
             pre = f"<p>{_esc(SECTION_INTROS[tgt])}</p>"
             intro_used.add(tgt)
             break
-    instr = INSTRUCTIONS.get(q)
+    # #1202: an explicit item-name key wins over the paper-number map (F3 #1048 pattern).
+    # A name key is deliberate, so it is exempt from the #667 _TXT/_SUBQ suppression.
+    instr = INSTRUCTIONS_BY_NAME.get(nm)
     # #667: suppress the parent question's instruction note on decimal sub-questions
     # (Q<n>_<m>_…, e.g. Q141_1_NO_RECEIPT_AMT_PHP) and on free-text *_TXT capture fields.
-    if instr and not nm.endswith("_TXT") and not _SUBQ.match(nm):
+    if instr is None and not nm.endswith("_TXT") and not _SUBQ.match(nm):
+        instr = INSTRUCTIONS.get(q)
+    if instr:
         post = f'<p class="instruction">{_esc(instr)}</p>'
     return pre, post
 

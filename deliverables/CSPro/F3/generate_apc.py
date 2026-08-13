@@ -298,10 +298,27 @@ Q971_ROSTER_PROCS = """\
 { ---- Q97.1 other-items-in-bill — CheckBox + roster (Option B Shape B) ---- }
 PROC Q971_SOURCES
 postproc
+  numeric xcN; numeric xcK; numeric xcP; numeric xcHit;
   { Require >=1 item ticked. The roster proc (Q971_PAY_LINE preproc, a visited field)
-    handles population — gating here covers the >=1 requirement before the grid opens. }
+    handles population — gating here covers the >=1 requirement before the grid opens.
+    #1208: 'None of the above' (90) is now a valid answer, so the message points at it
+    instead of sending the enumerator back to Q97. }
   if length(strip(Q971_SOURCES)) = 0 then
-    errmsg("97.1 Tick at least one item included in the bill (or correct Q97 if none).");
+    errmsg("97.1 Tick at least one item included in the bill, or tick 'None of the above' if nothing else was billed.");
+    reenter;
+  endif;
+  { #1208 exclusivity (HARD) — 'None of the above' (90) must stand alone. Same aligned
+    2-char chunk scan as the #1157/#1197 Q107/Q109 exclusivity, never a raw pos() on a
+    2-digit code. Ticking only 90 then leaves nsel=0 in the population loop below, so
+    the grid endgroups with 0 rows and Q971_OTHER_TXT stays gated off on pos("04",...). }
+  xcHit = 0;
+  xcN = length(strip(Q971_SOURCES)) / 2;
+  do xcK = 1 while xcK <= xcN
+    xcP = (xcK - 1) * 2 + 1;
+    if tonumber(Q971_SOURCES[xcP:2]) = 90 then xcHit = 1; endif;
+  enddo;
+  if xcHit = 1 and length(strip(Q971_SOURCES)) > 2 then
+    errmsg("97.1 'None of the above' must be the only choice — untick it or the other items before continuing.");
     reenter;
   endif;
 
@@ -602,9 +619,14 @@ Q972_ROSTER_PROCS = build_roster_procs(
     972, "97.2", [(None, "01"), (None, "02"), (None, "03"),
                   (None, "04"), (None, "05"), (None, "06")],
     set(),   # all-amount
-    "97.2 Tick at least one expense item before continuing (or correct Q97 if none).",
+    # #1208: the roster is still driven by the paper's a)-f) items only — 'None of the
+    # above' (90) lives in the CheckBox value set but is never a roster row, so this
+    # population list is unchanged. Ticking only 90 leaves nsel=0 -> 0 rows.
+    "97.2 Tick at least one expense item, or tick 'None of the above' if there were no out-of-bill expenses.",
     gated_texts=[("06", "Q972_OTHER_TXT", "97.2 'Other expenses' was ticked — please specify.")],
-    require_positive=True)   # #749: every ticked expense item must be > 0
+    require_positive=True,   # #749: every ticked expense item must be > 0
+    exclusive_code="90",     # #1208: 'None of the above' must stand alone
+    exclusive_msg="97.2 'None of the above' must be the only choice — untick it or the other expense items before continuing.")
 Q98_ROSTER_PROCS = build_roster_procs(
     98, "98", [(None, f"{n:02d}") for n in range(1, 16)],
     set(),   # all-amount
@@ -1576,8 +1598,21 @@ postproc
     2026-06-21). Codes 1/2/4/5 fall through to the photo as before (this matches the
     CAPTURE_VERIFICATION_PHOTO gate exactly). }
   if not (ENUM_RESULT_FINAL_VISIT in 1, 2, 4, 5) then
+    { #1209: this disposition ends the case HERE, so neither GPS form is reached and
+      the ReleaseGPS() in the P_HOME block never runs. gpsRadioOpen is a PROC GLOBAL
+      that outlives the case, so leaking it "open" on this path is what made every
+      LATER case in the same CSEntry session skip gps(open) and report "No GPS fix".
+      Hand the radio back before leaving. }
+    ReleaseGPS();
     endlevel;   { statement form (no parens) — strict packager rejects endlevel() }
   endif;
+  { #1209: F3's two GPS forms are the LAST thing in the case (after the photo), so
+    re-assert the radio here — it then converges during the photo step instead of
+    cold-starting at the capture field. This is also the ONLY warm-up a RESUMED
+    partial case ever gets: CSEntry re-enters a partial case at its stored resume
+    position, so the WarmUpGPS() in the QUESTIONNAIRE_NUMBER preproc (the case-key
+    field, never re-entered on resume) does not fire. }
+  WarmUpGPS();
 """
 
 

@@ -395,6 +395,13 @@ def _date_fmt(mmddyyyy):
     adding the conversion postproc would have enumerators typing MMDDYYYY into a field
     stored raw as YYYYMMDD, silently corrupting every date. Only flip it together with
     that PROC.
+
+    ALSO re-key the translations whenever this suffix changes (#1099, 2026-08-12).
+    apply_translations() below matches on the FULL English label text and falls back to
+    English SILENTLY on a miss, so a relabel orphans every translations/<loc>.json key for
+    the affected items and the row quietly reverts to English with no warning — F4's Waray
+    visit-date labels sat broken this way for six days. Move the keys, copy the values
+    verbatim, and never author translated text as part of a relabel.
     """
     return "MMDDYYYY" if mmddyyyy else "YYYYMMDD"
 
@@ -1003,6 +1010,15 @@ def apply_translations(dictionary, translations_dir, languages=TRANSLATION_LANGU
         matched, total = counts[code]
         pct = (100 * matched // total) if total else 0
         print(f"    {code}: {matched}/{total} labels translated ({pct}%)")
+
+    # #1099 note: a reworded English label silently orphans its translation keys and the
+    # row reverts to English with no warning (F4's Waray visit dates sat broken this way
+    # for six days). An automatic detector was prototyped and NOT kept: the locale files
+    # are shared across instruments, so ~1,700 keys legitimately belong to other
+    # dictionaries, and even a near-miss heuristic still flagged 163-232 false positives
+    # per instrument — noise at that level just trains people to ignore it. Until the
+    # locale files are split per instrument, the guard is procedural: re-key on every
+    # relabel (see _date_fmt's docstring), values verbatim.
     return dictionary
 
 

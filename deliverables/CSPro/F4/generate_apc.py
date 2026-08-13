@@ -1718,8 +1718,17 @@ postproc
     whose trigger field would otherwise loop on an out-of-range stop. Codes 1/3 fall
     through to the photo as before (this matches the CAPTURE_VERIFICATION_PHOTO gate). }
   if not (ENUM_RESULT_FINAL_VISIT in 1, 3) then
+    { #1209 (mirrors F3/F1): this early exit never reaches the end-of-case GPS form, so
+      the ReleaseGPS() there never runs. gpsRadioOpen is a session-lived PROC GLOBAL, so
+      leaking it "open" here suppressed gps(open) for every later case in the same
+      CSEntry session. Hand the radio back. }
+    ReleaseGPS();
     endlevel;
   endif;
+  { #1209: re-assert the radio for the end-of-case GPS form so it converges during the
+    photo step; also the only warm-up a RESUMED partial case gets (the case-key preproc's
+    WarmUpGPS() does not re-fire when CSEntry resumes mid-case). }
+  WarmUpGPS();
 """
 
 
@@ -1765,7 +1774,10 @@ def main():
                "Q135_ZBB_OOP",  # EXTRA_PROCS (#664 DOH-retained gate)
                "Q76_BRAND_OR_GEN", "Q79_REG_SOURCE",  # EXTRA_PROCS (Q78_WHY_BRANDED now a Check Box base, covered via CHECKBOX_COVERED)
                "Q112_VISITED",  # EXTRA_PROCS (#590-593 Q112 referral-visit multi-branch)
-               "Q117_SPECIALIST_FOLLOWUP",  # EXTRA_PROCS (#816 Q112=Yes gate + spec §K Q117=No -> Q119)
+               # EXTRA_PROCS: both carry the paper's shared "[Answer only 'yes' in Q112]"
+               # filter (#816 gate; #1207 dropped the unsupported Q117=No -> Q119 skip and
+               # gave Q118 its own Q112 gate).
+               "Q117_SPECIALIST_FOLLOWUP", "Q118_SAT_REFERRAL_PROCESS",
                "Q194_OTHER_SOURCE",  # EXTRA_PROCS (#684 >=1 funding-source aggregate check)
                "Q2_BIRTH_MONTH", "Q2_BIRTH_YEAR", "Q2_1_AGE", "Q19_HH_SIZE_TOTAL",
                "Q20_HH_CHILDREN", "Q21_HH_SENIORS", "Q32_AGE", "Q39_CIVIL_STATUS",

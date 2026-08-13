@@ -349,11 +349,18 @@ def build_section_b():
                    Q17_DECISION_MAKER, length=2),
         alpha("Q17_DECISION_MAKER_OTHER_TXT",
               "17. Decision-maker — Other (specify) text", length=120),
+        # #1202 (tester mock 2026-08-12): Q18 is the paper's TWO parts — the free peso
+        # amount, then the bracket dropdown. Both stems now carry ONLY the question; the
+        # enumerator guidance (-98/-99 sentinels, "select the category") moves to the blue
+        # INSTRUCTIONS_BY_NAME notes in generate_qsf.py. Guidance baked into a dict label
+        # renders as part of the question stem, which is what the tester flagged (the same
+        # thing F3 fixed in #1136/#1137). The amount stem is also the key the fil/bis/ceb/war
+        # maps were harvested on — the old inline tail had orphaned it to English.
         numeric("Q18_INCOME_AMOUNT",
-                "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer — do not read these codes aloud.)",
+                "18. In the past 6 months, what is your average monthly household income? Please specify in Philippine pesos.",
                 length=9),
         select_one("Q18_INCOME_BRACKET",
-                   "18. Income bracket — tick the category that corresponds to the approximate household income.",
+                   "18. Income bracket",
                    Q18_BRACKET, length=1),
         numeric("Q19_HH_SIZE_TOTAL",
                 "19. How many total individuals (including children) live in your house now?",
@@ -475,6 +482,15 @@ def build_section_c():
         ("Master Level Education or Equivalent",                                                                              "08"),
         ("Doctoral Level Education or Equivalent",                                                                            "09"),
         ("No schooling",                                                                                                      "10"),
+        # #1204 (tester 2026-08-12): Q40 is the ROSTER TWIN of Q11 — the Apr-20 paper's own
+        # Section C table marks roster line 1 "Do not ask; see answer to Q11" — so Q40 now
+        # carries Q11's SAME missing-value + other-specify tail, same codes (98 IDK / 99 NA /
+        # 11 Other) and same #1071 display order. Paper Q40 (Annex F4 p.8 CODES) lists only
+        # 1-10; a value Q11 can hold therefore had no landing slot in Q40. Deliberate CAPI
+        # consistency addition, flagged to ASPSI. Supersedes self-closed #1203 (NA only).
+        ("I don't know",                                                                                                      "98"),
+        ("Not applicable",                                                                                                    "99"),
+        ("Other (specify)",                                                                                                   "11"),
     ]
     Q41_EMPLOYMENT = [
         ("Has a permanent job/ own business",                  "1"),
@@ -594,6 +610,13 @@ def build_section_c():
         select_one("Q40_EDUCATION",
                    "40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)",  # #608: 'attended/reached', not 'completed' (ASPSI go/no-go via Carl 2026-06-21)
                    Q40_EDUCATION, length=2),
+        # #1204: 'Other (specify)' free text for Q40, mirroring Q11_EDUCATION_OTHER_TXT and
+        # this roster's own Q38_DISABILITY_OTHER_TXT. No generate_apc edit needed — the gate
+        # is auto-derived from the dcf by other_specify_procs (preproc clear + noinput when
+        # Q40_EDUCATION <> 11; postproc 'please specify' + reenter), and the roster
+        # occurrence bound is prepended the same way Q38_DISABILITY_OTHER_TXT already gets.
+        alpha("Q40_EDUCATION_OTHER_TXT",
+              "40. Education — Other (specify) text", length=120),
         select_one("Q41_EMPLOYMENT",
                    "41. Employment Status", Q41_EMPLOYMENT, length=1),
         # C4. Household Characteristics — social insurance (Q42-Q44)
@@ -949,7 +972,12 @@ def build_section_g():
                    "63. Was the most recent medicine purchased prescribed by a doctor or over-the-counter (OTC) medicine (no need for a prescription)?",
                    Q63_PRESCRIPTION, length=1),
         alpha("Q64_MEDICATIONS_LIST",
-              "64. What are the medications that you or any member of your household usually take? (List all medicines taken for the health condition.)",
+              # #1205: dropped the trailing "(List all medicines taken for the health
+              # condition.)" — a paraphrase of the paper's enumerator note, which already
+              # renders once as the blue INSTRUCTIONS[64] line. The one dcf label feeds BOTH
+              # the .qsf question bar and the .fmf field text, so the parenthetical was
+              # showing twice on top of the blue line. Now verbatim per Annex F4 (Apr-20).
+              "64. What are the medications that you or any member of your household usually take?",
               length=500),
         *checkbox_multiselect("Q65_CONDITIONS",
                     "65. What are the medical conditions that you/your household member/s take the medicine/s for?",

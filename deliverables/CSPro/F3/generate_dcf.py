@@ -1168,11 +1168,19 @@ def build_section_g():
     # 'Other expenses' specify text (Q971_OTHER_TXT) is gated on pos("04",...) by a
     # bespoke apc PROC and emitted AFTER the amounts so the four amounts stay a strictly
     # consecutive run that the Q971_AMOUNTS named block can match.
+    # #1208 (pretest recommendation, 2026-08-12): 'None of the above' (90) is the explicit
+    # no-extra-items escape. The apc HARD-requires >=1 tick, so a bill with no extra line
+    # items previously had NO valid answer (the old errmsg's "or correct Q97 if none" was
+    # the tell). 90 = the F3 standalone/exclusive convention, and LAST so the CheckBox
+    # codes still ascend (#830). It is filtered out of the amount roster below — 'none'
+    # never becomes an amount row. Deviation from the Apr-20 paper (p.15 lists no 'none'
+    # on Q97.1) — flagged to ASPSI on the ticket.
     Q971_SOURCES = [
         ("Consultation Fee",                          "01"),
         ("Medical equipment or supplies",             "02"),
         ("Non-medical expenses (e.g. Hygiene kit)",   "03"),
         ("Other expenses",                            "04"),
+        ("None of the above",                         "90"),
     ]
     Q972_EXPENSES = [
         ("a) Consultation Fee",                             "1"),
@@ -1331,7 +1339,10 @@ def build_section_g():
     # the roster's pos("0n", …) membership idiom lines up (the proven Q92/Q971 convention).
     # 'f) Other expenses' (06) gates Q972_OTHER_TXT after the grid (own screen), mirroring
     # Q971_OTHER_TXT on code 04.
-    Q972_SOURCES = [(label, f"{int(code):02d}") for label, code in Q972_EXPENSES]
+    # #1208: same 'none' escape as Q97.1, appended AFTER the paper's a)-f) items so the
+    # codes still ascend (01..06, 90); filtered out of the amount roster below.
+    Q972_SOURCES = ([(label, f"{int(code):02d}") for label, code in Q972_EXPENSES]
+                    + [("None of the above", "90")])
     items.extend(checkbox_multiselect(
         "Q972_SOURCES",
         "97.2 Which other expenses did you have during the OPD visit that were NOT in the "
@@ -1405,13 +1416,19 @@ def build_section_g():
             "96. Amount spent for the prescribed medicines, by source (Pesos)"),
         "Q971_SOURCES": _build_payment_roster(
             "Q971_ROSTER", "G. Other items in outpatient bill — amount by category", 971,
-            Q971_SOURCES, set(),   # amt_codes=empty: every category carries an amount
+            # #1208: 'None of the above' (90) is a CheckBox-only escape — filtered out of
+            # the roster's value set AND its max_occurs so it can never become an amount
+            # row. Ticking only 90 leaves nsel=0, the roster endgroups at occurrence 1,
+            # and the record (required=False) legally holds 0 rows.
+            [(lbl, c) for lbl, c in Q971_SOURCES if c != "90"], set(),
             "Q",
             "97.1 Category (auto-filled from the ticked items)",
             "97.1 Amount charged for this item (Pesos)", display_no="97.1"),
         "Q972_SOURCES": _build_payment_roster(
             "Q972_PAY_ROSTER", "G. Other expenses not in bill — amount by item", 972,
-            Q972_SOURCES, set(),   # all-amount: every ticked item carries an amount
+            # #1208: 'None of the above' (90) never becomes a roster row — same filter
+            # as Q97.1 above.
+            [(lbl, c) for lbl, c in Q972_SOURCES if c != "90"], set(),
             "U",
             "97.2 Expense item (auto-filled from the ticked items)",
             "97.2 Amount for this expense (Pesos)", display_no="97.2"),

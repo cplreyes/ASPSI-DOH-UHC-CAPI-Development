@@ -1154,8 +1154,18 @@ postproc
     would otherwise loop on an out-of-range stop; F3/F4 device-confirmed 2026-06-21). Codes
     1/4 fall through to the photo, matching the CAPTURE_VERIFICATION_PHOTO gate (in 1, 4). }
   if not (ENUM_RESULT_FINAL_VISIT in 1, 4) then
+    { #1209 (mirrors F3): F1's Facility GPS form is dead last, after the photo, so this
+      early exit never reaches it and ReleaseGPS() never runs. gpsRadioOpen is a
+      session-lived PROC GLOBAL, so leaking it "open" here suppressed gps(open) for
+      every later case in the same CSEntry session. Hand the radio back. }
+    ReleaseGPS();
     endlevel;   { statement form (no parens) - strict packager rejects endlevel() }
-  endif;""",
+  endif;
+  { #1209 (mirrors F3): re-assert the radio for the end-of-case Facility GPS form so it
+    converges during the photo step. Also the only warm-up a RESUMED partial case gets -
+    the QUESTIONNAIRE_NUMBER preproc WarmUpGPS() does not fire when CSEntry resumes at a
+    mid-case field. }
+  WarmUpGPS();""",
 }
 BESPOKE_PROCS.update(DISPOSITION_PROCS)
 

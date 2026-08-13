@@ -185,7 +185,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 | Q112 VISITED | = Yes | **Q114** (skip Q113 why-not) |
 | Q112 VISITED | = No, not planning **or** Not yet, planning | Q113 asked; after Q113 → **Q114** |
 | Q112 VISITED | ≠ Yes | **Q117 + Q118 skipped** — both asked only when Q112 = Yes; after Q116 → **Q119** (#816) |
-| Q117 SPECIALIST_FOLLOWUP | = No | **Q119** (skip Q118 sat-referral-process) |
+| Q117 SPECIALIST_FOLLOWUP | any answer | **Q118 always follows** — the paper (Annex F4 p.18) filters Q118 on Q112 = Yes only, not on Q117 (#1207 removed the earlier Q117 = No → Q119 skip) |
 | Q119 PCF_REFERRAL | = Yes | **Q120** PCP-knows, then Q122 discussed-places (skip Q121 why-hospital) |
 | Q119 PCF_REFERRAL | = No | **Q121** (skip Q120 — not PCP referral → why-hospital asked) |
 | Q124 PCP_WROTE_INFO | completed | **Q125** (close Section K) |
@@ -361,6 +361,7 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | `Q39_CIVIL_STATUS` | Required, ∈ value set | HARD |
 | Q39 vs Q32 | If `Q32_AGE < 15` and `Q39 ≠ Single`, SOFT warn (plausibility) | SOFT |
 | `Q40_EDUCATION` | Required, ∈ value set | HARD |
+| `Q40_EDUCATION = 11` (Other) | `Q40_EDUCATION_OTHER_TXT` required | HARD (#1204) |
 | `Q41_EMPLOYMENT` | Required, ∈ value set | HARD |
 | `Q42_GSIS`, `Q43_SSS`, `Q44_PAGIBIG` | Required, ∈ {Yes, No, Don't know} | HARD |
 | `Q45_PHILHEALTH_REG` | Required, ∈ value set | HARD |
@@ -509,7 +510,7 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | `Q114_DISCUSSED_PLACES`, `Q115_HELPED_APPT`, `Q116_WROTE_INFO` | Required when enabled, ∈ {Yes, No} | HARD |
 | `Q117_SPECIALIST_FOLLOWUP` | Required when enabled, ∈ {Yes, No} | HARD |
 | Q117 enabled | `Q112 = Yes` | GATE (#816) |
-| Q118 enabled | `Q117 = Yes` | GATE |
+| Q118 enabled | `Q112 = Yes` | GATE (#1207 — same filter as Q117 per Annex F4 p.18; was wrongly `Q117 = Yes`) |
 | `Q118_SAT_REFERRAL_PROCESS` | Required when enabled, ∈ satisfaction codes | HARD |
 | `Q119_PCF_REFERRAL` | Required when enabled, ∈ {Yes, No} | HARD |
 | Q120, Q122, Q123, Q124 enabled | `Q119 = Yes` | GATE |
