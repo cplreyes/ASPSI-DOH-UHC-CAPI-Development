@@ -2936,17 +2936,17 @@ questions:
           FIL: |
             <p>57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?</p><p class="instruction">Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.</p>
           BCL: |
-            <p>57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?</p><p class="instruction">Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.</p>
+            <p>Base sa saimong kaaraman, ano an capitation amount kan YAKAP/Konsulta package?</p><p class="instruction">Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.</p>
           BIS: |
-            <p>57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?</p><p class="instruction">Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.</p>
+            <p>Base sa imohang kahibalo, pila ang capitation amount sa YAKAP/Konsulta nga package services?</p><p class="instruction">Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.</p>
           CEB: |
-            <p>57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?</p><p class="instruction">Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.</p>
+            <p>Base sa imong kaugalingon nga kahibalo, unsa ang capitation amount sa YAKAP/Konsulta package</p><p class="instruction">Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.</p>
           WAR: |
-            <p>57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?</p><p class="instruction">Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.</p>
+            <p>Base han imo nahibabaroan, ano an capitation amount han putos han YAKAP/Konsulta?</p><p class="instruction">Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.</p>
           HIL: |
-            <p>57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?</p><p class="instruction">Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.</p>
+            <p>Base sa imo ihibalo, pila ang capitation amount sang YAKAP/Konsulta package?</p><p class="instruction">Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.</p>
           ILO: |
-            <p>57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?</p><p class="instruction">Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.</p>
+            <p>Maibatay iti ammom, ania ti capitation amount ti YAKAP/Konsulta package?</p><p class="instruction">Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.</p>
   - name: FACILITYHEADSURVEY_DICT.Q58_PERF_INDICATORS
     conditions:
       - questionText:

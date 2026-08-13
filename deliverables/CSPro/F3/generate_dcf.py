@@ -1678,7 +1678,13 @@ def build_section_h():
             "109. Amount paid for medicines outside, by source (Pesos)", amt_length=9),
         "Q112_SOURCES": _build_payment_roster(
             "Q112_PAY_ROSTER", "H. Services done outside — amount by source", 112,
-            Q109_PAYMENT, set(), "g",
+            # #1212: was Q109_PAYMENT. The #1158 split reached the checkbox above but
+            # not this roster, so the amount grid rendered Q109's 10-code June-5 list
+            # against Q112's codes — 8 of 9 source labels wrong, and max_occurs 10
+            # instead of 9. payment_src drives BOTH the Q112_PAY_SRC value set and
+            # max_occurs, so passing the wrong list mis-attributes recorded amounts
+            # (tick "Free/no cost", get asked the amount under "Donation").
+            Q112_PAYMENT, set(), "g",
             "112. Payment source (auto-filled from the ticked sources)",
             "112. Amount paid for services outside, by source (Pesos)", amt_length=9),
         "Q113_SOURCES": _build_payment_roster(
