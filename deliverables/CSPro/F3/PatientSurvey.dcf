@@ -45826,7 +45826,7 @@
           "recordType": "g",
           "occurrences": {
             "required": false,
-            "maximum": 10
+            "maximum": 9
           },
           "items": [
             {
@@ -45990,88 +45990,6 @@
                     {
                       "labels": [
                         {
-                          "text": "Donation",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "02"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "In kind",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "03"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
                           "text": "Free/no cost",
                           "language": "EN"
                         },
@@ -46106,7 +46024,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "04"
+                          "value": "02"
                         }
                       ]
                     },
@@ -46147,7 +46065,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "05"
+                          "value": "03"
                         }
                       ]
                     },
@@ -46188,7 +46106,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "06"
+                          "value": "04"
                         }
                       ]
                     },
@@ -46229,7 +46147,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "07"
+                          "value": "05"
                         }
                       ]
                     },
@@ -46270,7 +46188,48 @@
                       ],
                       "pairs": [
                         {
-                          "value": "08"
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "In kind",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
                         }
                       ]
                     },
@@ -46311,7 +46270,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "09"
+                          "value": "08"
                         }
                       ]
                     },
@@ -46352,7 +46311,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "10"
+                          "value": "09"
                         }
                       ]
                     }
