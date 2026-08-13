@@ -135,14 +135,20 @@ if (-not (Test-Path (Join-Path $AppDir "package.json"))) {
     Fail "cannot find the app at $AppDir - run this script from its home in the repo (deliverables/F2/PWA/)"
 }
 Push-Location $RepoRoot
+# Same PS 5.1 native-stderr trap as the build block: git writing ANY progress or
+# warning to stderr would become a terminating error and abort the deploy before
+# the guards ever ran. Gate on $LASTEXITCODE instead.
+$prevEAP = $ErrorActionPreference
+$ErrorActionPreference = "Continue"
 try {
-    git rev-parse --is-inside-work-tree 2>&1 | Out-Null
-    if ($LASTEXITCODE -ne 0) { Fail "$RepoRoot is not a git repository - cannot verify the checkout matches origin/main" }
-    git fetch origin main --quiet 2>&1 | Out-Null
-    $head   = (git rev-parse HEAD 2>$null).Trim()
-    $origin = (git rev-parse origin/main 2>$null).Trim()
-    $branch = (git rev-parse --abbrev-ref HEAD 2>$null).Trim()
-} finally { Pop-Location }
+    git rev-parse --is-inside-work-tree | Out-Null
+    if ($LASTEXITCODE -ne 0) { $ErrorActionPreference = $prevEAP; Pop-Location; Fail "$RepoRoot is not a git repository - cannot verify the checkout matches origin/main" }
+    git fetch origin main --quiet | Out-Null
+    if ($LASTEXITCODE -ne 0) { Say "  warn  could not fetch origin/main; comparing against the last-known ref" "Yellow" }
+    $head   = (git rev-parse HEAD).Trim()
+    $origin = (git rev-parse origin/main).Trim()
+    $branch = (git rev-parse --abbrev-ref HEAD).Trim()
+} finally { $ErrorActionPreference = $prevEAP; Pop-Location }
 if (-not $head -or -not $origin) { Fail "could not resolve HEAD / origin/main - refusing to build blind" }
 
 Say "        HEAD       $($head.Substring(0,8))  ($branch)"
@@ -171,10 +177,21 @@ Pass "facilities source module present"
 Say "`n== Building ==" "Cyan"
 Push-Location $AppDir
 try {
-    npm ci 2>&1 | Out-Null
-    $env:VITE_F2_PROXY_URL = $ProxyUrl
-    npm run build 2>&1 | Select-Object -Last 3
-    if ($LASTEXITCODE -ne 0) { Fail "npm run build failed" }
+    # Windows PowerShell 5.1 turns a native exe's STDERR into NativeCommandError
+    # ErrorRecords, and with $ErrorActionPreference='Stop' that makes npm's
+    # ordinary deprecation warnings fatal. This bit the script on its first run
+    # from a FRESH worktree -- the exact case it exists for, since an existing
+    # node_modules makes `npm ci` quiet enough to hide the bug. Drop the stderr
+    # redirect and gate on $LASTEXITCODE, which is the real success signal.
+    $prevEAP = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    try {
+        npm ci | Out-Null
+        if ($LASTEXITCODE -ne 0) { $ErrorActionPreference = $prevEAP; Fail "npm ci failed (exit $LASTEXITCODE)" }
+        $env:VITE_F2_PROXY_URL = $ProxyUrl
+        npm run build | Select-Object -Last 3
+        if ($LASTEXITCODE -ne 0) { $ErrorActionPreference = $prevEAP; Fail "npm run build failed (exit $LASTEXITCODE)" }
+    } finally { $ErrorActionPreference = $prevEAP }
 } finally { Pop-Location }
 Pass "build completed"
 
