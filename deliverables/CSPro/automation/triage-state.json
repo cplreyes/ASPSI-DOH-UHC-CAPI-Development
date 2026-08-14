@@ -775,16 +775,45 @@
     1178,
     1179,
     1180,
-    1181
+    1181,
+    1182,
+    1184,
+    1185,
+    1187,
+    1188,
+    1189,
+    1190,
+    1191,
+    1192,
+    1193,
+    1194,
+    1195,
+    1196,
+    1197,
+    1198,
+    1199,
+    1200,
+    1201,
+    1202,
+    1203,
+    1204,
+    1205,
+    1206,
+    1207,
+    1208,
+    1209,
+    1212,
+    1213,
+    1215
   ],
   "_note_641_open": "#641 (F4 Q57-Q61 BUCAS-area gate) triaged+flagged status:blocked, left OPEN (ASPSI spec decision, same as F3 #464/#495).",
   "_wave_643_663_handled": "2026-06-17 21-issue F4 wave (Marriz/mmgarciano full walkthrough). FIXED+DEPLOYED: #654 (removed wrong Q97=No->Q100 skip; Q98/Q99 independent of Q97), #656 (Q113 'Other' specify box never showed - unconditional postproc skip jumped past it; fixed _gen_checkbox_proc to guard the tail on pos('99')=0 + append tail to OTHER_TXT box - same class as F1 #630). STALE-closed (Marriz tested 06-16 pre-deploy): #653(Q93=#624), #660(Q129=#625/626), #662(Q132=#627). CODE-FIX QUEUED (flagged open, NOT yet done): #645 Q74 + #655 Q107 + #647/#648 NA-exclusivity (need per-question 90-code to avoid collision with existing IDK=90); #649 Q79-88 gate on roster Q45 (needs ASPSI member/condition); #652 Q90 routing (spec-ambiguous, tester unsure - flagged for ASPSI); #661 Q131 gate on Q130 hospital-type + form separation. ASPSI content/design/spec-gap (status:blocked): #643(GAMOT-area gate), #644(Q73 required?), #646(Q76 don't-know-diff contradicts Q75), #650(Q89 IDK option), #651/#657(delete DOH notes), #658(Q118/Q114-118 vs Q122-125 flow - Marriz consulting Merlyne), #659/#663(Q128/Q134 option reorder).",
   "_queue_664_plus": "NEXT CRON: #664-675 (and growing) UNPROCESSED - continuous F3+F4 re-test sweep. #669-675 = F3 'Question Formatting' = more select_all->checkbox conversions (Q59/61/70/73, Q75/82/85/86/87, Q90, Q91/92, Q93, Q94, Q96) - same proven pattern as #635/#639/#640. #664-668 = F4 (Q135 appearance, Q136 skip, Q138 other-specify, Q141.1, Q202). Also revisit the queued code-fixes from the 643-663 wave.",
   "slack_ts": {
-    "C0ASSTPLX9A": "1786289001.847203",
-    "C0B5TL0BT37": "1786289001.847203",
-    "C0B5X1ZPYHY": "1786289001.847203",
-    "C0B60KYFBKN": "1786289001.847203",
+    "C0ASSTPLX9A": "1786585746.370579",
+    "C0B5TL0BT37": "1786527010.589909",
+    "C0B5X1ZPYHY": "1786526993.421819",
+    "C0B60KYFBKN": "1786526970.655099",
     "C0AV19GB05P": "1785970996.288121",
     "C0BENS7D4E4": "1783732282.930159"
   },
@@ -857,7 +886,7 @@
   },
   "deploy_2026-06-21_F3_cluster5_breakoff_disposition": "Cluster 5 (#515 mid-interview withdrawal + #561 partial visibility) BUILT + DEPLOYED to CSWeb on F3 (pilot). Added BREAKOFF (case-start control on the PATIENT_TYPE screen; postproc sets ENUM_RESULT_FINAL_VISIT + skip to closing Result-of-Visit = the proven Q162 jump) and CASE_DISPOSITION (off-form sentinel: 0 In Progress at case open via QUESTIONNAIRE_NUMBER postproc, 1 Completed when ENUM_RESULT_FINAL_VISIT finalizes to 1/2/5, 2 Partial otherwise). Files: F3 generate_dcf (2 FC fields), generate_fmf (FIELD_CONTROL_CASE_START+=BREAKOFF, _OFF_FORM_ITEMS+=CASE_DISPOSITION), generate_apc (sentinel in QUESTIONNAIRE_NUMBER postproc + DISPOSITION_PROCS: PROC BREAKOFF + PROC ENUM_RESULT_FINAL_VISIT; +covered), automation/verify_questions (KNOWN_OFFFORM+=CASE_DISPOSITION). GATES: verify_questions F3 PASS 363/363, facility fills intact 42 (no #714 regress), Designer compile Successful, strict Publish packager PASSED (deploy dialog opened), auto_deploy F3 success (hwnd 2819144, verified PatientSurvey). NOT YET: device-test of the break-off jump + F4 fan-out + GH close of #515/#561. DUPLICATE deploy dialog parked from the fresh publish: old F3 2950692 (Q98 build) alongside fresh 2819144 - needs Carl auth to close (auto_deploy locks fresh by pkg name, unaffected). Supervisor App spec at docs/superpowers/specs/2026-06-20-supervisor-app-design.md reads CASE_DISPOSITION.",
   "cluster5_2026-06-21_COMPLETE": "Cluster 5 (#515 break-off + #561 disposition) DONE on F3 + F4, device-confirmed on the itel. DEVICE FINDING + FIX: a Withdraw/Postponed break-off jumped to the closing Result-of-Visit fine, but then the Verification Photo trigger LOOPED on an out-of-range stop (the photo gate's noinput clears the filename but the onfocus still fired / the trigger field had no valid value). FIX: in PROC ENUM_RESULT_FINAL_VISIT postproc, `endlevel;` (statement form - the strict Publish packager REJECTS endlevel() with parens: 'Expecting ; or operator') for dispositions NOT in the photo set, so postponed/withdraw end cleanly at 'Accept this case?' with no photo. F3 photo set = (1,2,4,5) -> endlevel for 3,6. F4 photo set = (1,3) -> endlevel for 2,4. BREAKOFF->ENUM_RESULT map differs per instrument (F3: 2->6 withdraw,3->3,4->4; F4: 2->4 withdraw,3->2,4->3). F4 has no Patient-Type screen so BREAKOFF got its OWN first form 'Interview status' (FIELD_CONTROL_CASE_START + FORM_PLAN[0]). Both device-confirmed: BREAKOFF on case-start, withdraw jumps past all sections to closing, records Withdraw, endlevel skips photo, clean Accept prompt. CASE_DISPOSITION off-form sentinel 0/1/2 deployed both. #515/#561 CLOSED completed. Many duplicate deploy dialogs accumulated from the repeated publishes (F3 x4, F4 x2+) - need Carl auth to close. Next: Supervisor App implementation plan.",
-  "last_comment_at": "2026-08-07T02:33:13Z",
+  "last_comment_at": "2026-08-13T07:00:00Z",
   "deploy_2026-06-18_batch664_688": "Cron run on the continued F3+F4 sweep (#664-688, 25 issues). FIXED+DEPLOYED+CLOSED: #668 F4 Q202 select_all->Check Box; #669/670/671/673 F3 (11 questions: Q59/61/70/73, Q75/82/85/86/87, Q90, Q93) select_all->Check Box (SUBAGENT a1fd97af, gates repointed Q60/Q62/Q77/Q93/Q85, independently re-verified F3 555/555 + capture types = CheckBox). CRITICAL CAPTURE-TYPE REGRESSION FOUND+FIXED: my earlier F4 Q196(#638)/Q202(#668) AND F3 Q42/Q50/Q52(#635/639/640) checkbox conversions were missing from the fmf _CHECKBOX_FIELDS + optimize_capture_types CHECKBOX lists, so they shipped as single-select DropDown/RadioButton (multi-select DATA LOSS). Added all to F4 generate_fmf._CHECKBOX_FIELDS + F3 generate_fmf._CHECKBOX_FIELDS + optimize CHECKBOX; rebuilt+redeployed BOTH F4 (Q196/Q202 now CheckBox, compile 01:34) and F3 (compile 01:44). LESSON: an F-instrument select_all->checkbox conversion needs FOUR lists not two: generate_dcf(checkbox_multiselect) + generate_apc(CHECKBOX_BASES+CHECKBOX_CONVERT) + generate_fmf(_CHECKBOX_FIELDS) + optimize_capture_types(CHECKBOX). Also subagent fixed a _cb_codes 'Other' mis-coding (Q85 'Other infection' colliding w/ specify on 99). STALE-closed: #665 part1 (Q136=#628). FLAGGED open: #664/#661(Q130 hospital-type gate cluster), #672/674/675(F3 Q92/94/96 amount-matrix redesign - blocked), #688(Q89 routing-reversal, ASPSI), #677(Section N consumed-amount validation - queued + 'don't know' value ASPSI), #685(Section Q Q200/Q201 end-skips + form sep - sequence after #622), #666/667/676/678/679/680/681/682/683/684/686/687(DOH content/wording/script-placement - status:blocked). UNCOMMITTED: F3 generate_dcf/apc/fmf + optimize_capture_types; F4 generate_dcf/apc/fmf + optimize; all regen artifacts.",
   "deploy47_52_2026-06-17": "Loop continued (active tester sweep). #634 F4 Section O preamble before Q186 missing -> added generate_qsf SECTION_INTROS[186] (deploy #9, display-only). Then a 5-issue batch: #637 F4 Q195<>None skip to Q197 (was falling to Q196; already documented in generate_dcf) + #638 F4 Q196_FOREGONE select_all->Check Box (deploy #12, F4 372/372). #635 F3 Q42_DIFFICULTY + #639 F3 Q50_DIFFICULTY_PAYING select_all->Check Box (deploy #11, F3 664/664; both has_other+IDK-exclusive, not skip-targets). #636 F1 Q34_DATA_REPORTS_USED select_all->Check Box via SUBAGENT a1b23651 (5 F1 sync lists: generate_dcf/apc+fmf_checkbox_convert+inject_blocks+optimize; Q32-No-submit gate preserved; deploy #10, F1 313/313). Re-verified subagent work independently (verify PASS + 0 stale Q34 O-fields) per the deploy33 subagent-stale lesson before compiling. All 5 closed+#368/369/370 notes+#f1/f3/f4-uat patches. UNCOMMITTED: F1 generate_dcf/apc+fmf_checkbox_convert+inject_blocks+optimize_capture_types; F3 generate_dcf/apc; F4 generate_dcf/apc/qsf + all regen artifacts.",
   "deploy46_2026-06-17": "Loop resume run: 1 new issue #633 F4 Section N Q177 subtotal range (High). Q177 (12-month health subtotal) was summing Q173-Q176 (SUBTOTAL_PANELS=(173,176)), wrongly including Q173 Health-insurance + Q174 Other-insurance. ROOT: spec doc line 550 said Q173-Q176 but Q177's OWN rendered question text = 'Total value of 175 and 176 (health, 12-month)' + tester both say Q175+Q176 only. Aligned to the rendered text/tester (authoritative over the internal spec doc). FIX: SUBTOTAL_PANELS Q177 -> (175,176); #617 init/compute re-derives (init at Q175_INPATIENT_CONSUMED, real sum Q175+Q176 at Q178 follower which also inits Q182). Q173/Q174 insurance are standalone (no subtotal). verify F4 PASS(379/379)+Compile 12:41:49. DEPLOY: reused parked HouseholdSurvey dialog 339106; upload outran the 24s driver window (false 'no popup') -> confirmed 'Application Deployed Successfully' via win32 enumerate of owned #32770 popup (hwnd 1246826) + clicked OK + re-minimized dialog. Closed #633 + #370 note + #f4-uat patch (ts 1781671642.355949). Committed+pushed prior batch (#627-632) as 7e4922f before this run, but THIS #633 fix is UNCOMMITTED: F4 generate_apc.py + dcf/apc/fmf/ent.",
@@ -1275,21 +1304,15 @@
   "_run_2026-06-27_urgent_802_805_806": "Carl-invoked triage (clear+fix directive, no per-issue permission). 3 NEW urgent: #802 (F1 partial-save Q144/Q160 data loss), #806 (F3 partial-save Q92 roster data loss), #805 (F4 Section N wont-proceed). No new tester COMMENTS since last_comment_at; no reopens; Slack #f1/#f3 empty, #f4 only own column-wise note, #capi-scrum only GH notifs. Viewed media: #805 img (Section N Q144 Cereals + the #677 at-least-one-amount popup), #806 video (Q92 amount entry 100/500 -> Partial Save go-to-last-position prompt -> returns to Q92 blank). ROOT CAUSE (all 3): NO generator defect. verify F1/F3/F4 all PASS; logic provably correct. #802/#806 = documented CSEntry partial-save DATA-STATE pattern (go-to-last-position only restores the SAME saved case; deleted/synced/stale case or stale build -> blanks); partial save proven working on-device, #735 retested PASS on clean build. Q144/Q160(F1) are plain checkboxes w/ no clearing preproc; Q92(F3) roster device-confirmed. #805 = #677 validation blocks ONLY consumed=1 AND purchased=0 AND inkind=0; entering either proceeds -> the both-entered-still-blocks report = stale build (echoes #743/#755 over-block-then-fixed history; -98/-99 whitelist now live). CSWeb currency confirmed: F1 build 06-23 deployed 06-23, F3 byte-identical to 06-26 deploy, F4 21:09 = column-wise live. So remove+re-add already delivers correct builds -> NO redeploy owed. ACTION: full root-cause comments + CLOSED all 3 completed (reopen if persists on clean install + fresh case); retest notes to #f1-uat(p1782492794)/#f3-uat(p1782492798)/#f4-uat(p1782492807) w/ remove+re-add + resume-SAME-case (partial save) + dont-partial-save-mid-roster (Q92). Bot auto-posted Resolved for all 3. NOTE for Carl: #802/#806 are the SAME class Carl reopened before (#733/#735) for closing-without-verified-fix; closed here per the proven clean-build resolution + explicit clear directive, but if a clean-install+fresh-case retest still fails, they need on-device .csdb repro (no adb/device available this session).",
   "_run_2026-06-27_clear_backlog": "Carl directive: clear gh issues + fix, no permission, do what testers ask. CLEARED ENTIRE in-scope F1/F3/F4 backlog (19 issues) in one pass. BUILT+DEPLOYED F3 (Compile 01:26:29, Publish strict-gate PASSED, auto_deploy PatientSurvey Deployed Successfully): #764/#765 NEW Q38 reroute (added Q38_1_PIN_WHEN select-one Yes-only gate + Q38_2_WHY_NOT_REG tick-all CheckBox No-only via CHECKBOX_CONVERT gate+skip-to-Q43; Q38=Yes skips Q43/Q44 to Q45 via Q41=2->Q45 + Q42 postextra skip; SKIP_RULE Q38 in2,3 -> Q38=3 only; CAUGHT+FIXED strict-publish error: skip-to-next illegal outside roster -> skip to Q38_2 explicit), #777 (Q94 how-much label), #782 (removed Q97/Q115 +-10% SOFT_CROSS warnings). DEPLOYED already-built-pending: #760/#763/#781/#784/#786. BUILT+DEPLOYED F4 (Compile 01:22:31, deployed): #796/#797 (AREA_HAS_BUCAS/GAMOT auto-answer=1+noinput in EXTRA_PROCS+covered, removed the =2 gating SKIP_RULES -> blocks asked of everyone, proceed to Q57/Q69). RESOLUTION-CLOSED (no build; verified addressed/superseded/data-state): #772 (F4 Q88 already multi=stale build; F3 Q88 single per spec), #773/#780 (money-amount policy live #779/#781; non-money 0-cell cosmetic hide = roster-structure change needs device-test, deferred, data correct), #778 (#450 per-lab roster labels each row), #788 (reschedule-date enhancement queued), F4 #733 (partial-save data-state like #806), #743 (-98/-99 standard supersedes -55/-999), #755 (0-prefill + either-value-proceeds live). verify F1/F3(370/370)/F4 all PASS. Patch notes #f3-uat p1782495076 + #f4-uat p1782495080; trackers #719/#720/#721 closeout. NO DEVICE this session (adb absent) -> roster-recode items (#773/#780) responsibly deferred not blind-shipped. Board now: only F2-PWA(#774/#768/#524 out-of-scope)+infra #725+R5 trackers #719-724 open.",
   "field_ready": {
-    "last_verdict": "NOT-READY",
-    "last_evaluated_at": "2026-08-09T17:02:06+00:00",
-    "open_actionable": 1,
-    "last_finding_at": "2026-08-07T02:15:43+00:00",
-    "days_since_finding": 2.6,
+    "last_verdict": "CLEAR-PENDING",
+    "last_evaluated_at": "2026-08-13T08:05:26+00:00",
+    "open_actionable": 0,
+    "last_finding_at": "2026-08-13T06:59:36+00:00",
+    "days_since_finding": 0.0,
     "quiet_days": 2.0,
     "consecutive_clear_evals": 0,
     "error": null,
     "history": [
-      {
-        "at": "2026-08-06T08:50:04+00:00",
-        "verdict": "NOT-READY",
-        "open_actionable": 74,
-        "days_since_finding": 0.0
-      },
       {
         "at": "2026-08-06T09:55:08+00:00",
         "verdict": "NOT-READY",
@@ -1309,40 +1332,46 @@
         "days_since_finding": 1.2
       },
       {
-        "at": "2026-08-09T04:15:25+00:00",
-        "verdict": "NOT-READY",
-        "open_actionable": 14,
-        "days_since_finding": 0.0
+        "at": "2026-08-10T23:37:20+00:00",
+        "verdict": "FIELD-READY",
+        "open_actionable": 0,
+        "days_since_finding": 3.9
       },
       {
-        "at": "2026-08-09T06:36:37+00:00",
-        "verdict": "NOT-READY",
-        "open_actionable": 14,
+        "at": "2026-08-12T01:29:49+00:00",
+        "verdict": "CLEAR-PENDING",
+        "open_actionable": 0,
+        "days_since_finding": 0.8
+      },
+      {
+        "at": "2026-08-12T07:24:38+00:00",
+        "verdict": "CLEAR-PENDING",
+        "open_actionable": 0,
+        "days_since_finding": 1.0
+      },
+      {
+        "at": "2026-08-12T09:43:14+00:00",
+        "verdict": "CLEAR-PENDING",
+        "open_actionable": 0,
         "days_since_finding": 0.1
       },
       {
-        "at": "2026-08-09T11:38:43+00:00",
-        "verdict": "NOT-READY",
-        "open_actionable": 7,
-        "days_since_finding": 2.4
+        "at": "2026-08-13T02:08:01+00:00",
+        "verdict": "CLEAR-PENDING",
+        "open_actionable": 0,
+        "days_since_finding": 0.8
       },
       {
-        "at": "2026-08-09T12:07:27+00:00",
-        "verdict": "NOT-READY",
-        "open_actionable": 5,
-        "days_since_finding": 2.4
+        "at": "2026-08-13T03:59:34+00:00",
+        "verdict": "CLEAR-PENDING",
+        "open_actionable": 0,
+        "days_since_finding": 0.9
       },
       {
-        "at": "2026-08-09T15:19:00+00:00",
-        "verdict": "NOT-READY",
-        "open_actionable": 5,
-        "days_since_finding": 2.5
-      },
-      {
-        "at": "2026-08-09T17:02:06+00:00",
-        "verdict": "NOT-READY",
-        "open_actionable": 1,
-        "days_since_finding": 2.6
+        "at": "2026-08-13T08:05:26+00:00",
+        "verdict": "CLEAR-PENDING",
+        "open_actionable": 0,
+        "days_since_finding": 0.0
       }
     ],
     "_doc": "Auto-written by automation/check_field_ready.py (E0-UAT-REFRAME stop-condition gate). FIELD-READY = capi-uat-triage may stop."
@@ -2091,5 +2120,47 @@
       "parked_for_round_close": "#1151 #1152 #1156 #1158 (payment renumber), #1176 (income brackets), #1182 (F3 Q45 condense + the DK_RF_STATUS-gated F4 labels).",
       "F4_dates": "F4 still prompts YYYYMMDD - deliberately not flipped (no ticket); flipping the prompt without the conversion PROC would silently corrupt dates. Offered to ASPSI."
     }
+  },
+  "_run_2026-08-13a_quiet": {
+    "at": "2026-08-13T02:08Z",
+    "signals": "0 new GH issues, 0 new tester comments (newest tester comment still 2026-08-12T05:23:03Z on #1099), 0 messages in #f1/#f3/#f4-uat since last run; #capi-scrum carried only automation echoes (commit feed + standup digest + my own resolve/reopen notices).",
+    "action": "no-op run; watermarks advanced",
+    "gate": "CLEAR-PENDING (0 open actionable; newest finding 0.8d old, quiet window 2.0d)",
+    "board": "8 open = 7 ASPSI-blocked/design-decision (#1190 #1182 #1176 #1158 #1156 #1152 #1151) + #1102 (round-close sweep)"
+  },
+  "_run_2026-08-13b_roundclose": {
+    "at": "2026-08-13T04:00Z",
+    "builds": "F1 v1.3.9 / F3 v2.0.0 (MAJOR - value-set renumber) / F4 v1.5.15",
+    "closed": [
+      1151,
+      1152,
+      1156,
+      1158,
+      1102
+    ],
+    "reorder": "F3 Q92/Q96/Q107/Q109 realigned to the JUNE-5 tool (Deliverable 2), superseding the Apr-20 baseline. Q109 gained Donation (9->10) and split from Q112; Q112 deliberately unchanged. Codes renumber with display order -> codebook regenerated; PSA tabulation plan + pretest data need a remap.",
+    "1102": "TRUE class = 1 field (F1 Q2_OTHER_TXT), not 218. The 218 figure came from a same-FORM proxy; the defect is same-DisplayTogether-BLOCK. F3/F4 already correct by construction. Fixed via inject_blocks.py re-run; 7 of 304 fields changed grouping.",
+    "translations": "REPAIRED 16 locale entries damaged by the 2026-08-12 #1182 re-key (longest-value-wins picked spilled-English/foreign-question values). 6 stripped, 10 dropped to English fallback.",
+    "verify": "verify_questions PASS x3 (F1 317/317, F3 370/370, F4 300/300) - Designer compile Successful x3 - deployed packages byte-verified 14/14"
+  },
+  "_run_2026-08-13c_1208_followup": {
+    "at": "2026-08-13T07:30Z",
+    "build": "F3 v2.1.0 (MINOR - changed question wording + option labels)",
+    "trigger": "Aly (chat) -> two comments on the CLOSED #1208 carrying the FINAL Q97.1 wording (text) and Q97.2 spec (image).",
+    "changes": "Q97.1/Q97.2: Consultation Fee -> Doctors Professional Fee; None of the above -> None (Q97.2 lettered g) None); colons per their list; both question stems replaced with ASPSIs final wording.",
+    "label_cap": "ASPSIs full Q97.1 sentence = 321 chars vs the 255 dcf cap -> question in the stem, the receipt directive as the qsf instruction note (_RECEIPT), and If yes indicate the amount spent split to a new _IF_YES_AMOUNT keyed to 972.",
+    "translations": "Dropped 8 MORE spilled-English values the morning repair missed (it only scanned re-keyed entries): 7x F3 Other expenses = \"during your OPD visit that were not included in the\", 1x F4 hil Medicine = \"s for? CODING FOR QUESTION 65 01\". F4 fix is IN SOURCE but NOT deployed (held to avoid a second re-add for one label).",
+    "verify": "verify_questions F3 PASS 370/370 - Designer compile Successful - deployed pen byte-verified 12/12 (the one apparent FAIL was Q163_CARE_TYPE legitimately keeping None of the above)"
+  },
+  "_run_2026-08-13d_ticket_sweep": {
+    "at": "2026-08-13T08:05Z",
+    "builds": "F3 v2.1.1 / F1 v1.3.10",
+    "handled": {
+      "1212": "REGRESSION I shipped - Q112 roster still passed Q109_PAYMENT; 8/9 source labels wrong. Fixed + audited all 8 sibling call sites.",
+      "1213": "F1 Q57 English in all 7 locales - re-keyed 6 verbatim, dropped 1 spilled fragment (fil).",
+      "1215": "NOT a defect - stale worktree .fmf (Aug 11, pre-#1204). Refreshed worktree built artifacts from main; closed not-planned."
+    },
+    "aly_open_items": "Repeating questions (#888, 574+ labels) / Codes for Visits (needs hide-from-picklist design) / Expenditure Format (#910, wants a diagram) / ICF BLOCKED - Shan format not in Slack, Drive or repo",
+    "verify": "verify_questions PASS x3 - compile Successful x2 - deployed byte-verified 5/5"
   }
 }

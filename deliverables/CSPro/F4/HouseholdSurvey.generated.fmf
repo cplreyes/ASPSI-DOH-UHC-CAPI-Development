@@ -21,16 +21,6 @@ Item=QUESTIONNAIRE_NUMBER
   
 [Form]
 Name=FORM001
-Label=A. Informed Consent (Q1 gate)
-Level=1
-Size=806,300
-  
-Item=Q1_IS_HH_HEAD
-  
-[EndForm]
-  
-[Form]
-Name=FORM002
 Label=Interview status
 Level=1
 Size=806,300
@@ -40,7 +30,7 @@ Item=BREAKOFF
 [EndForm]
   
 [Form]
-Name=FORM003
+Name=FORM002
 Label=FC Geographic ID
 Level=1
 Size=806,300
@@ -51,6 +41,18 @@ Item=CITY_NAME
 Item=CLASSIFICATION
 Item=BARANGAY
 Item=HH_ADDRESS
+  
+[EndForm]
+  
+[Form]
+Name=FORM003
+Label=A. Informed Consent (Q1 gate)
+Level=1
+Size=806,300
+  
+Item=ICF_PART1
+Item=ICF_PART2
+Item=Q1_IS_HH_HEAD
   
 [EndForm]
   
@@ -869,37 +871,9 @@ Text=Questionnaire Number (12-digit: RR-PP-MMM-FF-CCC)
   
 [Group]
 Required=Yes
-Name=A_INFORMED_CONSENT_FORM
-Label=A. Informed Consent (Q1 gate)
-Form=2
-Max=1
-  
-[Field]
-Name=Q1_IS_HH_HEAD
-Position=350,27,365,47
-Item=Q1_IS_HH_HEAD,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=2
-  
-[Text]
-Position=50,30,330,46
-Text=1. Before we begin, to confirm, are you the household head?
- 
-  
-[Block]
-Name=DG_BLK_0
-Label=Q1
-DisplayTogether=Yes
-Position=0
-Length=1
-  
-[EndGroup]
-  
-[Group]
-Required=Yes
 Name=FIELD_CONTROL_FORM
 Label=Interview status
-Form=3
+Form=2
 Max=1
   
 [Field]
@@ -907,7 +881,7 @@ Name=BREAKOFF
 Position=350,27,365,47
 Item=BREAKOFF,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=3
+Form=2
   
 [Text]
 Position=50,30,330,46
@@ -920,7 +894,7 @@ Text=Interview status (leave as Continue unless ending the interview early)
 Required=Yes
 Name=FIELD_CONTROL_FORM_2
 Label=FC Geographic ID
-Form=4
+Form=3
 Max=1
   
 [Field]
@@ -929,7 +903,7 @@ Position=350,27,760,47
 Item=REGION_NAME,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=4
+Form=3
   
 [Text]
 Position=50,30,330,46
@@ -942,7 +916,7 @@ Position=350,57,760,77
 Item=PROVINCE_NAME,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=4
+Form=3
   
 [Text]
 Position=50,60,330,76
@@ -955,7 +929,7 @@ Position=350,87,760,107
 Item=CITY_NAME,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=4
+Form=3
   
 [Text]
 Position=50,90,330,106
@@ -967,7 +941,7 @@ Name=CLASSIFICATION
 Position=350,117,365,137
 Item=CLASSIFICATION,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=4
+Form=3
   
 [Text]
 Position=50,120,330,136
@@ -979,7 +953,7 @@ Name=BARANGAY
 Position=350,147,365,167
 Item=BARANGAY,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=4
+Form=3
   
 [Text]
 Position=50,150,330,166
@@ -992,12 +966,78 @@ Position=350,177,760,197
 Item=HH_ADDRESS,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=4
+Form=3
   
 [Text]
 Position=50,180,330,196
 Text=Household Address
  
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=A_INFORMED_CONSENT_FORM
+Label=A. Informed Consent (Q1 gate)
+Form=4
+Max=1
+  
+[Field]
+Name=ICF_PART1
+Position=350,27,365,47
+Item=ICF_PART1,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=4
+  
+[Text]
+Position=50,30,330,46
+Text=Informed Consent — read-aloud, screen 1 of 2 (study, coverage, the ask)
+ 
+  
+[Field]
+Name=ICF_PART2
+Position=350,57,365,77
+Item=ICF_PART2,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=4
+  
+[Text]
+Position=50,60,330,76
+Text=Informed Consent — read-aloud, screen 2 of 2 (privacy, risks, voluntariness)
+ 
+  
+[Field]
+Name=Q1_IS_HH_HEAD
+Position=350,87,365,107
+Item=Q1_IS_HH_HEAD,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=4
+  
+[Text]
+Position=50,90,330,106
+Text=1. Before we begin, to confirm, are you the household head?
+ 
+  
+[Block]
+Name=DG_BLK_0
+Label=ICF_PART1
+DisplayTogether=Yes
+Position=0
+Length=1
+  
+[Block]
+Name=DG_BLK_1
+Label=ICF_PART2
+DisplayTogether=Yes
+Position=2
+Length=1
+  
+[Block]
+Name=DG_BLK_2
+Label=Q1
+DisplayTogether=Yes
+Position=4
+Length=1
   
 [EndGroup]
   
@@ -1460,140 +1500,140 @@ Text=29. How would the socioeconomic class of your household be classified?
  
   
 [Block]
-Name=DG_BLK_1
+Name=DG_BLK_3
 Label=Q2-Q3
 DisplayTogether=Yes
 Position=0
 Length=5
   
 [Block]
-Name=DG_BLK_2
+Name=DG_BLK_4
 Label=Q4
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_3
+Name=DG_BLK_5
 Label=Q5
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_4
+Name=DG_BLK_6
 Label=Q5
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_5
+Name=DG_BLK_7
 Label=Q6-Q7
 DisplayTogether=Yes
 Position=12
 Length=2
   
 [Block]
-Name=DG_BLK_6
+Name=DG_BLK_8
 Label=Q8
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_BLK_7
+Name=DG_BLK_9
 Label=Q9
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_BLK_8
+Name=DG_BLK_10
 Label=Q10
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_BLK_9
+Name=DG_BLK_11
 Label=Q10
 DisplayTogether=Yes
 Position=21
 Length=1
   
 [Block]
-Name=DG_BLK_10
+Name=DG_BLK_12
 Label=Q11
 DisplayTogether=Yes
 Position=23
 Length=1
   
 [Block]
-Name=DG_BLK_11
+Name=DG_BLK_13
 Label=Q11
 DisplayTogether=Yes
 Position=25
 Length=1
   
 [Block]
-Name=DG_BLK_12
+Name=DG_BLK_14
 Label=Q12-Q14
 DisplayTogether=Yes
 Position=27
 Length=3
   
 [Block]
-Name=DG_BLK_13
+Name=DG_BLK_15
 Label=Q15
 DisplayTogether=Yes
 Position=31
 Length=1
   
 [Block]
-Name=DG_BLK_14
+Name=DG_BLK_16
 Label=Q16-Q17
 DisplayTogether=Yes
 Position=33
 Length=2
   
 [Block]
-Name=DG_BLK_15
+Name=DG_BLK_17
 Label=Q17
 DisplayTogether=Yes
 Position=36
 Length=1
   
 [Block]
-Name=DG_BLK_16
+Name=DG_BLK_18
 Label=Q18-Q21
 DisplayTogether=Yes
 Position=38
 Length=5
   
 [Block]
-Name=DG_BLK_17
+Name=DG_BLK_19
 Label=Q22-Q23
 DisplayTogether=Yes
 Position=44
 Length=2
   
 [Block]
-Name=DG_BLK_18
+Name=DG_BLK_20
 Label=Q23
 DisplayTogether=Yes
 Position=47
 Length=1
   
 [Block]
-Name=DG_BLK_19
+Name=DG_BLK_21
 Label=Q24-Q28
 DisplayTogether=Yes
 Position=49
 Length=5
   
 [Block]
-Name=DG_BLK_20
+Name=DG_BLK_22
 Label=Q29
 DisplayTogether=Yes
 Position=55
@@ -2156,7 +2196,7 @@ Text=47. Do you or other members of your HH have private insurance?
  
   
 [Block]
-Name=DG_BLK_21
+Name=DG_BLK_23
 Label=Q47
 DisplayTogether=Yes
 Position=0
@@ -2294,35 +2334,35 @@ Text=53. What is your understanding about UHC? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_22
+Name=DG_BLK_24
 Label=Q51
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_23
+Name=DG_BLK_25
 Label=Q52
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_24
+Name=DG_BLK_26
 Label=Q52
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_25
+Name=DG_BLK_27
 Label=Q53
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_26
+Name=DG_BLK_28
 Label=Q53
 DisplayTogether=Yes
 Position=8
@@ -2400,35 +2440,35 @@ Text=56. What is your understanding about the YAKAP/Konsulta package? — Other 
  
   
 [Block]
-Name=DG_BLK_27
+Name=DG_BLK_29
 Label=Q54
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_28
+Name=DG_BLK_30
 Label=Q55
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_29
+Name=DG_BLK_31
 Label=Q55
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_30
+Name=DG_BLK_32
 Label=Q56
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_31
+Name=DG_BLK_33
 Label=Q56
 DisplayTogether=Yes
 Position=8
@@ -2555,63 +2595,63 @@ Text=61. If yes, which of the services did you avail? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_32
+Name=DG_BLK_34
 Label=AREA_HAS_BUCAS
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_33
+Name=DG_BLK_35
 Label=Q57
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_34
+Name=DG_BLK_36
 Label=Q58
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_35
+Name=DG_BLK_37
 Label=Q58
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_36
+Name=DG_BLK_38
 Label=Q59
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_37
+Name=DG_BLK_39
 Label=Q59
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_38
+Name=DG_BLK_40
 Label=Q60
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_39
+Name=DG_BLK_41
 Label=Q61
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_BLK_40
+Name=DG_BLK_42
 Label=Q61
 DisplayTogether=Yes
 Position=16
@@ -2948,154 +2988,154 @@ Text=78. If branded, why did you buy branded medicine? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_41
+Name=DG_BLK_43
 Label=Q62
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_42
+Name=DG_BLK_44
 Label=Q63-Q64
 DisplayTogether=Yes
 Position=2
 Length=2
   
 [Block]
-Name=DG_BLK_43
+Name=DG_BLK_45
 Label=Q65
 DisplayTogether=Yes
 Position=5
 Length=1
   
 [Block]
-Name=DG_BLK_44
+Name=DG_BLK_46
 Label=Q65
 DisplayTogether=Yes
 Position=7
 Length=1
   
 [Block]
-Name=DG_BLK_45
+Name=DG_BLK_47
 Label=Q66
 DisplayTogether=Yes
 Position=9
 Length=1
   
 [Block]
-Name=DG_BLK_46
+Name=DG_BLK_48
 Label=Q66
 DisplayTogether=Yes
 Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_47
+Name=DG_BLK_49
 Label=Q67-Q68
 DisplayTogether=Yes
 Position=13
 Length=3
   
 [Block]
-Name=DG_BLK_48
+Name=DG_BLK_50
 Label=AREA_HAS_GAMOT
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_BLK_49
+Name=DG_BLK_51
 Label=Q69
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_BLK_50
+Name=DG_BLK_52
 Label=Q70
 DisplayTogether=Yes
 Position=21
 Length=1
   
 [Block]
-Name=DG_BLK_51
+Name=DG_BLK_53
 Label=Q70
 DisplayTogether=Yes
 Position=23
 Length=1
   
 [Block]
-Name=DG_BLK_52
+Name=DG_BLK_54
 Label=Q71
 DisplayTogether=Yes
 Position=25
 Length=1
   
 [Block]
-Name=DG_BLK_53
+Name=DG_BLK_55
 Label=Q71
 DisplayTogether=Yes
 Position=27
 Length=1
   
 [Block]
-Name=DG_BLK_54
+Name=DG_BLK_56
 Label=Q72
 DisplayTogether=Yes
 Position=29
 Length=1
   
 [Block]
-Name=DG_BLK_55
+Name=DG_BLK_57
 Label=Q73
 DisplayTogether=Yes
 Position=31
 Length=1
   
 [Block]
-Name=DG_BLK_56
+Name=DG_BLK_58
 Label=Q74
 DisplayTogether=Yes
 Position=33
 Length=1
   
 [Block]
-Name=DG_BLK_57
+Name=DG_BLK_59
 Label=Q74
 DisplayTogether=Yes
 Position=35
 Length=1
   
 [Block]
-Name=DG_BLK_58
+Name=DG_BLK_60
 Label=Q75-Q76
 DisplayTogether=Yes
 Position=37
 Length=2
   
 [Block]
-Name=DG_BLK_59
+Name=DG_BLK_61
 Label=Q77
 DisplayTogether=Yes
 Position=40
 Length=1
   
 [Block]
-Name=DG_BLK_60
+Name=DG_BLK_62
 Label=Q77
 DisplayTogether=Yes
 Position=42
 Length=1
   
 [Block]
-Name=DG_BLK_61
+Name=DG_BLK_63
 Label=Q78
 DisplayTogether=Yes
 Position=44
 Length=1
   
 [Block]
-Name=DG_BLK_62
+Name=DG_BLK_64
 Label=Q78
 DisplayTogether=Yes
 Position=46
@@ -3309,112 +3349,112 @@ Text=88. Why did you find it difficult? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_63
+Name=DG_BLK_65
 Label=Q79
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_64
+Name=DG_BLK_66
 Label=Q79
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_65
+Name=DG_BLK_67
 Label=Q80
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_66
+Name=DG_BLK_68
 Label=Q80
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_67
+Name=DG_BLK_69
 Label=Q81
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_68
+Name=DG_BLK_70
 Label=Q82
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_69
+Name=DG_BLK_71
 Label=Q82
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_70
+Name=DG_BLK_72
 Label=Q83
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_BLK_71
+Name=DG_BLK_73
 Label=Q84
 DisplayTogether=Yes
 Position=16
 Length=1
   
 [Block]
-Name=DG_BLK_72
+Name=DG_BLK_74
 Label=Q84
 DisplayTogether=Yes
 Position=18
 Length=1
   
 [Block]
-Name=DG_BLK_73
+Name=DG_BLK_75
 Label=Q85
 DisplayTogether=Yes
 Position=20
 Length=1
   
 [Block]
-Name=DG_BLK_74
+Name=DG_BLK_76
 Label=Q85
 DisplayTogether=Yes
 Position=22
 Length=1
   
 [Block]
-Name=DG_BLK_75
+Name=DG_BLK_77
 Label=Q86
 DisplayTogether=Yes
 Position=24
 Length=1
   
 [Block]
-Name=DG_BLK_76
+Name=DG_BLK_78
 Label=Q87
 DisplayTogether=Yes
 Position=26
 Length=1
   
 [Block]
-Name=DG_BLK_77
+Name=DG_BLK_79
 Label=Q88
 DisplayTogether=Yes
 Position=28
 Length=1
   
 [Block]
-Name=DG_BLK_78
+Name=DG_BLK_80
 Label=Q88
 DisplayTogether=Yes
 Position=30
@@ -3639,84 +3679,84 @@ Text=100. When you have to visit your primary care facility, do you have to take
  
   
 [Block]
-Name=DG_BLK_79
+Name=DG_BLK_81
 Label=Q89
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_80
+Name=DG_BLK_82
 Label=Q89-Q90
 DisplayTogether=Yes
 Position=2
 Length=2
   
 [Block]
-Name=DG_BLK_81
+Name=DG_BLK_83
 Label=Q91
 DisplayTogether=Yes
 Position=5
 Length=1
   
 [Block]
-Name=DG_BLK_82
+Name=DG_BLK_84
 Label=Q91
 DisplayTogether=Yes
 Position=7
 Length=1
   
 [Block]
-Name=DG_BLK_83
+Name=DG_BLK_85
 Label=Q92
 DisplayTogether=Yes
 Position=9
 Length=1
   
 [Block]
-Name=DG_BLK_84
+Name=DG_BLK_86
 Label=Q92
 DisplayTogether=Yes
 Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_85
+Name=DG_BLK_87
 Label=Q93
 DisplayTogether=Yes
 Position=13
 Length=1
   
 [Block]
-Name=DG_BLK_86
+Name=DG_BLK_88
 Label=Q93
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_BLK_87
+Name=DG_BLK_89
 Label=Q94
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_BLK_88
+Name=DG_BLK_90
 Label=Q94
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_BLK_89
+Name=DG_BLK_91
 Label=Q95-Q99
 DisplayTogether=Yes
 Position=21
 Length=5
   
 [Block]
-Name=DG_BLK_90
+Name=DG_BLK_92
 Label=Q100
 DisplayTogether=Yes
 Position=27
@@ -3881,77 +3921,77 @@ Text=107. Did you or your household members do any other actions to improve your
  
   
 [Block]
-Name=DG_BLK_91
+Name=DG_BLK_93
 Label=Q101
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_92
+Name=DG_BLK_94
 Label=Q101
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_93
+Name=DG_BLK_95
 Label=Q102
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_94
+Name=DG_BLK_96
 Label=Q102
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_95
+Name=DG_BLK_97
 Label=Q103
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_96
+Name=DG_BLK_98
 Label=Q103
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_97
+Name=DG_BLK_99
 Label=Q104-Q105
 DisplayTogether=Yes
 Position=12
 Length=2
   
 [Block]
-Name=DG_BLK_98
+Name=DG_BLK_100
 Label=Q106
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_BLK_99
+Name=DG_BLK_101
 Label=Q106
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_BLK_100
+Name=DG_BLK_102
 Label=Q107
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_BLK_101
+Name=DG_BLK_103
 Label=Q107
 DisplayTogether=Yes
 Position=21
@@ -4248,119 +4288,119 @@ Text=125. Overall, how would you rate your experience with the referral process?
  
   
 [Block]
-Name=DG_BLK_102
+Name=DG_BLK_104
 Label=Q108
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_103
+Name=DG_BLK_105
 Label=Q109
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_104
+Name=DG_BLK_106
 Label=Q109
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_105
+Name=DG_BLK_107
 Label=Q110
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_106
+Name=DG_BLK_108
 Label=Q110
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_107
+Name=DG_BLK_109
 Label=Q111
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_108
+Name=DG_BLK_110
 Label=Q111
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_109
+Name=DG_BLK_111
 Label=Q112
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_BLK_110
+Name=DG_BLK_112
 Label=Q113
 DisplayTogether=Yes
 Position=16
 Length=1
   
 [Block]
-Name=DG_BLK_111
+Name=DG_BLK_113
 Label=Q113
 DisplayTogether=Yes
 Position=18
 Length=1
   
 [Block]
-Name=DG_BLK_112
+Name=DG_BLK_114
 Label=Q114-Q117
 DisplayTogether=Yes
 Position=20
 Length=4
   
 [Block]
-Name=DG_BLK_113
+Name=DG_BLK_115
 Label=Q118
 DisplayTogether=Yes
 Position=25
 Length=1
   
 [Block]
-Name=DG_BLK_114
+Name=DG_BLK_116
 Label=Q119
 DisplayTogether=Yes
 Position=27
 Length=1
   
 [Block]
-Name=DG_BLK_115
+Name=DG_BLK_117
 Label=Q120
 DisplayTogether=Yes
 Position=29
 Length=1
   
 [Block]
-Name=DG_BLK_116
+Name=DG_BLK_118
 Label=Q121
 DisplayTogether=Yes
 Position=31
 Length=1
   
 [Block]
-Name=DG_BLK_117
+Name=DG_BLK_119
 Label=Q121
 DisplayTogether=Yes
 Position=33
 Length=1
   
 [Block]
-Name=DG_BLK_118
+Name=DG_BLK_120
 Label=Q122-Q125
 DisplayTogether=Yes
 Position=35
@@ -4474,56 +4514,56 @@ Text=131. During your hospitalization in a DOH-retained hospital, did you or you
  
   
 [Block]
-Name=DG_BLK_119
+Name=DG_BLK_121
 Label=Q126
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_120
+Name=DG_BLK_122
 Label=Q127
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_121
+Name=DG_BLK_123
 Label=Q127
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_122
+Name=DG_BLK_124
 Label=Q128
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_123
+Name=DG_BLK_125
 Label=Q128
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_124
+Name=DG_BLK_126
 Label=Q129
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_125
+Name=DG_BLK_127
 Label=Q130
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_126
+Name=DG_BLK_128
 Label=Q131
 DisplayTogether=Yes
 Position=14
@@ -4773,126 +4813,126 @@ Text=143. From your most recent visit, how did you pay? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_127
+Name=DG_BLK_129
 Label=Q132
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_128
+Name=DG_BLK_130
 Label=Q133
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_129
+Name=DG_BLK_131
 Label=Q133
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_130
+Name=DG_BLK_132
 Label=Q134
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_131
+Name=DG_BLK_133
 Label=Q134
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_132
+Name=DG_BLK_134
 Label=Q135
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_133
+Name=DG_BLK_135
 Label=Q136
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_134
+Name=DG_BLK_136
 Label=Q137
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_BLK_135
+Name=DG_BLK_137
 Label=Q137
 DisplayTogether=Yes
 Position=16
 Length=1
   
 [Block]
-Name=DG_BLK_136
+Name=DG_BLK_138
 Label=Q138
 DisplayTogether=Yes
 Position=18
 Length=1
   
 [Block]
-Name=DG_BLK_137
+Name=DG_BLK_139
 Label=Q138
 DisplayTogether=Yes
 Position=20
 Length=1
   
 [Block]
-Name=DG_BLK_138
+Name=DG_BLK_140
 Label=Q139-Q140
 DisplayTogether=Yes
 Position=22
 Length=2
   
 [Block]
-Name=DG_BLK_139
+Name=DG_BLK_141
 Label=Q141
 DisplayTogether=Yes
 Position=25
 Length=1
   
 [Block]
-Name=DG_BLK_140
+Name=DG_BLK_142
 Label=Q141
 DisplayTogether=Yes
 Position=27
 Length=1
   
 [Block]
-Name=DG_BLK_141
+Name=DG_BLK_143
 Label=Q141
 DisplayTogether=Yes
 Position=29
 Length=1
   
 [Block]
-Name=DG_BLK_142
+Name=DG_BLK_144
 Label=Q142
 DisplayTogether=Yes
 Position=31
 Length=1
   
 [Block]
-Name=DG_BLK_143
+Name=DG_BLK_145
 Label=Q143
 DisplayTogether=Yes
 Position=33
 Length=1
   
 [Block]
-Name=DG_BLK_144
+Name=DG_BLK_146
 Label=Q143
 DisplayTogether=Yes
 Position=35
@@ -5630,42 +5670,42 @@ Text=196. If your household chooses not to spend on health care for financial re
  
   
 [Block]
-Name=DG_BLK_145
+Name=DG_BLK_147
 Label=Q186-Q190
 DisplayTogether=Yes
 Position=0
 Length=5
   
 [Block]
-Name=DG_BLK_146
+Name=DG_BLK_148
 Label=Q191-Q194
 DisplayTogether=Yes
 Position=6
 Length=4
   
 [Block]
-Name=DG_BLK_147
+Name=DG_BLK_149
 Label=Q194
 DisplayTogether=Yes
 Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_148
+Name=DG_BLK_150
 Label=Q195
 DisplayTogether=Yes
 Position=13
 Length=1
   
 [Block]
-Name=DG_BLK_149
+Name=DG_BLK_151
 Label=Q196
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_BLK_150
+Name=DG_BLK_152
 Label=Q196
 DisplayTogether=Yes
 Position=17
@@ -5730,14 +5770,14 @@ Text=199. Other (Specify) — text
  
   
 [Block]
-Name=DG_BLK_151
+Name=DG_BLK_153
 Label=Q197-Q199
 DisplayTogether=Yes
 Position=0
 Length=3
   
 [Block]
-Name=DG_BLK_152
+Name=DG_BLK_154
 Label=Q199
 DisplayTogether=Yes
 Position=4
@@ -5802,28 +5842,28 @@ Text=202. Do any of the following reasons describe why you are worried about you
  
   
 [Block]
-Name=DG_BLK_153
+Name=DG_BLK_155
 Label=Q200
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_154
+Name=DG_BLK_156
 Label=Q201
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_155
+Name=DG_BLK_157
 Label=Q202
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_156
+Name=DG_BLK_158
 Label=Q202
 DisplayTogether=Yes
 Position=6

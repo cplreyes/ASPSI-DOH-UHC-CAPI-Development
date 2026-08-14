@@ -1,6 +1,6 @@
 {
   "_note": "Machine-managed by cspro_helpers.numberize_errmsgs() — do not hand-edit. Maps each errmsg text to its permanent message number; numbers are never reused or renumbered.",
-  "next": 1269,
+  "next": 1279,
   "messages": {
     "PSGC region lookup failed — verify psgc_region.dat is deployed": 1001,
     "GPS hardware unavailable — check tablet location permission.": 1002,
@@ -269,6 +269,16 @@
     "Q90: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.": 1265,
     "Q93: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.": 1266,
     "107. 'Don't know' must be the only payment source — untick it or the other sources before continuing.": 1267,
-    "Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.": 1268
+    "Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.": 1268,
+    "109. 'Don't know' must be the only payment source — untick it or the other sources before continuing.": 1269,
+    "No GPS fix after %d s. Move outdoors or beside a window, then re-enter this field to retry — each retry searches longer. You may also leave GPS blank and finish the case.": 1270,
+    "97.1 Tick at least one item included in the bill, or tick 'None of the above' if nothing else was billed.": 1271,
+    "97.1 'None of the above' must be the only choice — untick it or the other items before continuing.": 1272,
+    "97.2 Tick at least one expense item, or tick 'None of the above' if there were no out-of-bill expenses.": 1273,
+    "97.2 'None of the above' must be the only choice — untick it or the other expense items before continuing.": 1274,
+    "97.1 Tick at least one item included in the bill, or tick 'None' if nothing else was billed.": 1275,
+    "97.1 'None' must be the only choice — untick it or the other items before continuing.": 1276,
+    "97.2 Tick at least one expense item, or tick 'None' if there were no out-of-bill expenses.": 1277,
+    "97.2 'None' must be the only choice — untick it or the other expense items before continuing.": 1278
   }
 }

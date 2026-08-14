@@ -3203,6 +3203,294 @@
           ]
         },
         {
+          "name": "A_INFORMED_CONSENT",
+          "labels": [
+            {
+              "text": "Introduction and Informed Consent",
+              "language": "EN"
+            },
+            {
+              "text": "Introduction and Informed Consent",
+              "language": "FIL"
+            },
+            {
+              "text": "Introduction and Informed Consent",
+              "language": "BCL"
+            },
+            {
+              "text": "Introduction and Informed Consent",
+              "language": "BIS"
+            },
+            {
+              "text": "Introduction and Informed Consent",
+              "language": "CEB"
+            },
+            {
+              "text": "Introduction and Informed Consent",
+              "language": "WAR"
+            },
+            {
+              "text": "Introduction and Informed Consent",
+              "language": "HIL"
+            },
+            {
+              "text": "Introduction and Informed Consent",
+              "language": "ILO"
+            }
+          ],
+          "recordType": "C",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "ICF_PART1",
+              "labels": [
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                  "language": "EN"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                  "language": "FIL"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                  "language": "WAR"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                  "language": "HIL"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                  "language": "ILO"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "ICF_PART1_VS1",
+                  "labels": [
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                      "language": "WAR"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                      "language": "HIL"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                      "language": "ILO"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Continue",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ICF_PART2",
+              "labels": [
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                  "language": "EN"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                  "language": "FIL"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                  "language": "WAR"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                  "language": "HIL"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                  "language": "ILO"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "ICF_PART2_VS1",
+                  "labels": [
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                      "language": "WAR"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                      "language": "HIL"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                      "language": "ILO"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Continue",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
           "name": "A_FACILITY_HEAD_PROFILE",
           "labels": [
             {

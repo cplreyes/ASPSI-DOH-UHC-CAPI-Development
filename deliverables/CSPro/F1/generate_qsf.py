@@ -29,11 +29,12 @@ OUT = HERE / "FacilityHeadSurvey.ent.qsf"
 # can sit at case-end on the form (v1.0.1). Same string in every language — UI chrome, not
 # questionnaire text.
 _BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F1"]
-BUILD_FOOTER = f'<p class="instruction">Build: F1 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
-# #1191 (PSA/SJREB, 2026-08-11): survey-tool details required on the CAPI tool.
-BUILD_FOOTER += ('<p class="instruction">PSA SSRCS Clearance No. DOH-2651-01 '
-                 '&middot; issued July 2026 &middot; valid until 31 July 2027<br/>'
-                 'SJREB: ICF ver. 07/25/2026 &middot; Translated Questionnaire ver. 06/05/2026</p>')
+# #1191 (PSA/SJREB, 2026-08-11): survey-tool details required on the CAPI tool. The
+# clearance block is defined once in ../icf_content.py — the ICF screens carry the
+# same block, and two copies of a cleared reference number would eventually diverge.
+import sys as _sys
+_sys.path.insert(0, str(HERE.parent))
+import icf_content as _icf
 # #1190: DOH Seal / ASPSI / Bagong Pilipinas / Bawat Buhay Mahalaga on the first
 # page — ASPSI sits second, in the "attached agency" slot, per ASPSI's reference
 # image on #1190 (Shan, 2026-08-11). Data-URI so the image travels inside the qsf
@@ -41,8 +42,11 @@ BUILD_FOOTER += ('<p class="instruction">PSA SSRCS Clearance No. DOH-2651-01 '
 # shared asset (built by ../compose_cover_logos.py).
 import base64 as _b64
 _LOGO_B64 = _b64.b64encode((HERE.parent / "cover_logos.png").read_bytes()).decode()
-BUILD_FOOTER = (f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
-                + BUILD_FOOTER)
+_LOGO_HTML = f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
+
+BUILD_FOOTER = (_LOGO_HTML
+                + f'<p class="instruction">Build: F1 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+                + _icf.clearance_html("F1"))
 
 STYLES = """styles:
   - name: Normal
@@ -208,10 +212,15 @@ CONSENT_HTML = "".join([
 # Item-name → question-text HTML. Overrides win over the dcf-label default
 # and are emitted identically for every declared language (English fallback
 # until SJREB-approved ICF translations arrive).
-# CONSENT_GIVEN removed 2026-06-12 — consent script is read from the printed
-# sheet (off the CAPI), so no question-text override. (CONSENT_HTML above is
-# kept as reference only; nothing emits it.)
-OVERRIDES = {}
+# CONSENT_GIVEN removed 2026-06-12 — no consent DECISION is captured on the CAPI, and
+# that has not changed. What DID change (2026-08-13): ASPSI sent "Suggested Layout
+# (CSEntry).docx", putting the consent SCRIPT back on the device as two read-aloud
+# screens with the clearance block. Its wording supersedes CONSENT_HTML above (which
+# remains unemitted, kept only as the Annex H reference). Text: ../icf_content.py.
+OVERRIDES = {
+    "ICF_PART1": _icf.build_screen_html("F1", 1, _LOGO_HTML),
+    "ICF_PART2": _icf.build_screen_html("F1", 2, _LOGO_HTML),
+}
 
 
 # ------------------------------------------------------------------

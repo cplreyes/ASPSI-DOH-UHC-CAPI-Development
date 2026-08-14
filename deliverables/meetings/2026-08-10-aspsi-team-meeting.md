@@ -69,6 +69,9 @@ August 10, 2026 Monday — ASPSI Team Meeting
           everyone.
 
 Notes
+    - CAPI SHOULD BE PREPARED BY FRIDAY Later in the afternoon
+    - How do we do performance matrix almost realtime?
+    - 
 
 Carry-over from Aug 3
     - Roster and training dates were raised last week; both still open.

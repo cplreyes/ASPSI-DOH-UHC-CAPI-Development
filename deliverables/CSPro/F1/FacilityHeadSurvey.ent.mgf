@@ -183,7 +183,6 @@ Language = EN
 1198 An 'other' option was selected for Q15. Please specify.
 1199 An 'other' option was selected for Q18. Please specify.
 1200 An 'other' option was selected for Q33. Please specify.
-1201 No GPS fix after %d s — move near a window or doorway and re-enter this field to retry.
 1202 An 'other' option was selected for Q2. Please specify.
 1203 Q103: 'Other (specify)' was selected. Please specify.
 1204 Q110: 'Other (specify)' was selected. Please specify.
@@ -209,3 +208,4 @@ Language = EN
 1224 Q99: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
 1225 Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.
 1226 Q58: 'No requirements' must be the only choice — untick it or the other options before continuing.
+1227 No GPS fix after %d s. Move outdoors or beside a window, then re-enter this field to retry — each retry searches longer. You may also leave GPS blank and finish the case.

@@ -4462,6 +4462,250 @@
           },
           "items": [
             {
+              "name": "ICF_PART1",
+              "labels": [
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                  "language": "EN"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                  "language": "FIL"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                  "language": "WAR"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                  "language": "HIL"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                  "language": "ILO"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "ICF_PART1_VS1",
+                  "labels": [
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                      "language": "WAR"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                      "language": "HIL"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 1 of 2 (study, coverage, the ask)",
+                      "language": "ILO"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Continue",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ICF_PART2",
+              "labels": [
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                  "language": "EN"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                  "language": "FIL"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                  "language": "WAR"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                  "language": "HIL"
+                },
+                {
+                  "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                  "language": "ILO"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "ICF_PART2_VS1",
+                  "labels": [
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                      "language": "WAR"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                      "language": "HIL"
+                    },
+                    {
+                      "text": "Informed Consent \u2014 read-aloud, screen 2 of 2 (privacy, risks, voluntariness)",
+                      "language": "ILO"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Continue",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Continue",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "name": "Q1_IS_PATIENT",
               "labels": [
                 {
@@ -36843,35 +37087,35 @@
               "name": "Q971_SOURCES",
               "labels": [
                 {
-                  "text": "97.1 Which other items were included in your outpatient bill? (Select all that apply.)",
+                  "text": "97.1 Other than the expenses above (e.g. consultation, laboratory tests, prescribed medicines, etc.), which of the following were also included in the bill? How much were you charged or billed?",
                   "language": "EN"
                 },
                 {
-                  "text": "97.1 Which other items were included in your outpatient bill? (Select all that apply.)",
+                  "text": "97.1 Other than the expenses above (e.g. consultation, laboratory tests, prescribed medicines, etc.), which of the following were also included in the bill? How much were you charged or billed?",
                   "language": "FIL"
                 },
                 {
-                  "text": "97.1 Which other items were included in your outpatient bill? (Select all that apply.)",
+                  "text": "97.1 Other than the expenses above (e.g. consultation, laboratory tests, prescribed medicines, etc.), which of the following were also included in the bill? How much were you charged or billed?",
                   "language": "BCL"
                 },
                 {
-                  "text": "97.1 Which other items were included in your outpatient bill? (Select all that apply.)",
+                  "text": "97.1 Other than the expenses above (e.g. consultation, laboratory tests, prescribed medicines, etc.), which of the following were also included in the bill? How much were you charged or billed?",
                   "language": "BIS"
                 },
                 {
-                  "text": "97.1 Which other items were included in your outpatient bill? (Select all that apply.)",
+                  "text": "97.1 Other than the expenses above (e.g. consultation, laboratory tests, prescribed medicines, etc.), which of the following were also included in the bill? How much were you charged or billed?",
                   "language": "CEB"
                 },
                 {
-                  "text": "97.1 Which other items were included in your outpatient bill? (Select all that apply.)",
+                  "text": "97.1 Other than the expenses above (e.g. consultation, laboratory tests, prescribed medicines, etc.), which of the following were also included in the bill? How much were you charged or billed?",
                   "language": "WAR"
                 },
                 {
-                  "text": "97.1 Which other items were included in your outpatient bill? (Select all that apply.)",
+                  "text": "97.1 Other than the expenses above (e.g. consultation, laboratory tests, prescribed medicines, etc.), which of the following were also included in the bill? How much were you charged or billed?",
                   "language": "HIL"
                 },
                 {
-                  "text": "97.1 Which other items were included in your outpatient bill? (Select all that apply.)",
+                  "text": "97.1 Other than the expenses above (e.g. consultation, laboratory tests, prescribed medicines, etc.), which of the following were also included in the bill? How much were you charged or billed?",
                   "language": "ILO"
                 }
               ],
@@ -36882,35 +37126,35 @@
                   "name": "Q971_SOURCES_VS1",
                   "labels": [
                     {
-                      "text": "97.1 Which other items were included in your outpatient bill? (Select all that apply.)",
+                      "text": "97.1 Other than the expenses above (e.g. consultation, laboratory tests, prescribed medicines, etc.), which of the following were also included in the bill? How much were you charged or billed?",
                       "language": "EN"
                     },
                     {
-                      "text": "97.1 Which other items were included in your outpatient bill? (Select all that apply.)",
+                      "text": "97.1 Other than the expenses above (e.g. consultation, laboratory tests, prescribed medicines, etc.), which of the following were also included in the bill? How much were you charged or billed?",
                       "language": "FIL"
                     },
                     {
-                      "text": "97.1 Which other items were included in your outpatient bill? (Select all that apply.)",
+                      "text": "97.1 Other than the expenses above (e.g. consultation, laboratory tests, prescribed medicines, etc.), which of the following were also included in the bill? How much were you charged or billed?",
                       "language": "BCL"
                     },
                     {
-                      "text": "97.1 Which other items were included in your outpatient bill? (Select all that apply.)",
+                      "text": "97.1 Other than the expenses above (e.g. consultation, laboratory tests, prescribed medicines, etc.), which of the following were also included in the bill? How much were you charged or billed?",
                       "language": "BIS"
                     },
                     {
-                      "text": "97.1 Which other items were included in your outpatient bill? (Select all that apply.)",
+                      "text": "97.1 Other than the expenses above (e.g. consultation, laboratory tests, prescribed medicines, etc.), which of the following were also included in the bill? How much were you charged or billed?",
                       "language": "CEB"
                     },
                     {
-                      "text": "97.1 Which other items were included in your outpatient bill? (Select all that apply.)",
+                      "text": "97.1 Other than the expenses above (e.g. consultation, laboratory tests, prescribed medicines, etc.), which of the following were also included in the bill? How much were you charged or billed?",
                       "language": "WAR"
                     },
                     {
-                      "text": "97.1 Which other items were included in your outpatient bill? (Select all that apply.)",
+                      "text": "97.1 Other than the expenses above (e.g. consultation, laboratory tests, prescribed medicines, etc.), which of the following were also included in the bill? How much were you charged or billed?",
                       "language": "HIL"
                     },
                     {
-                      "text": "97.1 Which other items were included in your outpatient bill? (Select all that apply.)",
+                      "text": "97.1 Other than the expenses above (e.g. consultation, laboratory tests, prescribed medicines, etc.), which of the following were also included in the bill? How much were you charged or billed?",
                       "language": "ILO"
                     }
                   ],
@@ -36918,35 +37162,35 @@
                     {
                       "labels": [
                         {
-                          "text": "Consultation Fee",
+                          "text": "Doctor's Professional Fee",
                           "language": "EN"
                         },
                         {
-                          "text": "Consultation Fee",
+                          "text": "Doctor's Professional Fee",
                           "language": "FIL"
                         },
                         {
-                          "text": "Consultation Fee",
+                          "text": "Doctor's Professional Fee",
                           "language": "BCL"
                         },
                         {
-                          "text": "Consultation Fee",
+                          "text": "Doctor's Professional Fee",
                           "language": "BIS"
                         },
                         {
-                          "text": "Consultation Fee",
+                          "text": "Doctor's Professional Fee",
                           "language": "CEB"
                         },
                         {
-                          "text": "Consultation Fee",
+                          "text": "Doctor's Professional Fee",
                           "language": "WAR"
                         },
                         {
-                          "text": "Consultation Fee",
+                          "text": "Doctor's Professional Fee",
                           "language": "HIL"
                         },
                         {
-                          "text": "Consultation Fee",
+                          "text": "Doctor's Professional Fee",
                           "language": "ILO"
                         }
                       ],
@@ -37000,35 +37244,35 @@
                     {
                       "labels": [
                         {
-                          "text": "Non-medical expenses (e.g. Hygiene kit)",
+                          "text": "Non-medical expenses: (e.g. Hygiene kit)",
                           "language": "EN"
                         },
                         {
-                          "text": "Non-medical expenses (e.g. Hygiene kit)",
+                          "text": "Non-medical expenses: (e.g. Hygiene kit)",
                           "language": "FIL"
                         },
                         {
-                          "text": "Non-medical expenses (e.g. Hygiene kit)",
+                          "text": "Non-medical expenses: (e.g. Hygiene kit)",
                           "language": "BCL"
                         },
                         {
-                          "text": "Non-medical expenses (e.g. Hygiene kit)",
+                          "text": "Non-medical expenses: (e.g. Hygiene kit)",
                           "language": "BIS"
                         },
                         {
-                          "text": "Non-medical expenses (e.g. Hygiene kit)",
+                          "text": "Non-medical expenses: (e.g. Hygiene kit)",
                           "language": "CEB"
                         },
                         {
-                          "text": "Non-medical expenses (e.g. Hygiene kit)",
+                          "text": "Non-medical expenses: (e.g. Hygiene kit)",
                           "language": "WAR"
                         },
                         {
-                          "text": "Non-medical expenses (e.g. Hygiene kit)",
+                          "text": "Non-medical expenses: (e.g. Hygiene kit)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Non-medical expenses (e.g. Hygiene kit)",
+                          "text": "Non-medical expenses: (e.g. Hygiene kit)",
                           "language": "ILO"
                         }
                       ],
@@ -37041,35 +37285,35 @@
                     {
                       "labels": [
                         {
-                          "text": "Other expenses",
+                          "text": "Other expenses:",
                           "language": "EN"
                         },
                         {
-                          "text": "during your OPD visit that were not included in the",
+                          "text": "Other expenses:",
                           "language": "FIL"
                         },
                         {
-                          "text": "during your OPD visit that were not included in the",
+                          "text": "Other expenses:",
                           "language": "BCL"
                         },
                         {
-                          "text": "during your OPD visit that were not included in the",
+                          "text": "Other expenses:",
                           "language": "BIS"
                         },
                         {
-                          "text": "during your OPD visit that were not included in the",
+                          "text": "Other expenses:",
                           "language": "CEB"
                         },
                         {
-                          "text": "during your OPD visit that were not included in the",
+                          "text": "Other expenses:",
                           "language": "WAR"
                         },
                         {
-                          "text": "during your OPD visit that were not included in the",
+                          "text": "Other expenses:",
                           "language": "HIL"
                         },
                         {
-                          "text": "during your OPD visit that were not included in the",
+                          "text": "Other expenses:",
                           "language": "ILO"
                         }
                       ],
@@ -37082,35 +37326,35 @@
                     {
                       "labels": [
                         {
-                          "text": "None of the above",
+                          "text": "None",
                           "language": "EN"
                         },
                         {
-                          "text": "Wala sa mga nabanggit",
+                          "text": "Wala",
                           "language": "FIL"
                         },
                         {
-                          "text": "Wara sa nasa itaas",
+                          "text": "Wara",
                           "language": "BCL"
                         },
                         {
-                          "text": "Wala sa mga nahisgutan",
+                          "text": "Wala",
                           "language": "BIS"
                         },
                         {
-                          "text": "Wala sa ibabaw",
+                          "text": "Wala",
                           "language": "CEB"
                         },
                         {
-                          "text": "Waray ha mga nayakan",
+                          "text": "Waray",
                           "language": "WAR"
                         },
                         {
-                          "text": "Wala sang mga nabanggit",
+                          "text": "None",
                           "language": "HIL"
                         },
                         {
-                          "text": "Awan kadagiti nadakamat",
+                          "text": "None",
                           "language": "ILO"
                         }
                       ],
@@ -37288,35 +37532,35 @@
                     {
                       "labels": [
                         {
-                          "text": "Consultation Fee",
+                          "text": "Doctor's Professional Fee",
                           "language": "EN"
                         },
                         {
-                          "text": "Consultation Fee",
+                          "text": "Doctor's Professional Fee",
                           "language": "FIL"
                         },
                         {
-                          "text": "Consultation Fee",
+                          "text": "Doctor's Professional Fee",
                           "language": "BCL"
                         },
                         {
-                          "text": "Consultation Fee",
+                          "text": "Doctor's Professional Fee",
                           "language": "BIS"
                         },
                         {
-                          "text": "Consultation Fee",
+                          "text": "Doctor's Professional Fee",
                           "language": "CEB"
                         },
                         {
-                          "text": "Consultation Fee",
+                          "text": "Doctor's Professional Fee",
                           "language": "WAR"
                         },
                         {
-                          "text": "Consultation Fee",
+                          "text": "Doctor's Professional Fee",
                           "language": "HIL"
                         },
                         {
-                          "text": "Consultation Fee",
+                          "text": "Doctor's Professional Fee",
                           "language": "ILO"
                         }
                       ],
@@ -37370,35 +37614,35 @@
                     {
                       "labels": [
                         {
-                          "text": "Non-medical expenses (e.g. Hygiene kit)",
+                          "text": "Non-medical expenses: (e.g. Hygiene kit)",
                           "language": "EN"
                         },
                         {
-                          "text": "Non-medical expenses (e.g. Hygiene kit)",
+                          "text": "Non-medical expenses: (e.g. Hygiene kit)",
                           "language": "FIL"
                         },
                         {
-                          "text": "Non-medical expenses (e.g. Hygiene kit)",
+                          "text": "Non-medical expenses: (e.g. Hygiene kit)",
                           "language": "BCL"
                         },
                         {
-                          "text": "Non-medical expenses (e.g. Hygiene kit)",
+                          "text": "Non-medical expenses: (e.g. Hygiene kit)",
                           "language": "BIS"
                         },
                         {
-                          "text": "Non-medical expenses (e.g. Hygiene kit)",
+                          "text": "Non-medical expenses: (e.g. Hygiene kit)",
                           "language": "CEB"
                         },
                         {
-                          "text": "Non-medical expenses (e.g. Hygiene kit)",
+                          "text": "Non-medical expenses: (e.g. Hygiene kit)",
                           "language": "WAR"
                         },
                         {
-                          "text": "Non-medical expenses (e.g. Hygiene kit)",
+                          "text": "Non-medical expenses: (e.g. Hygiene kit)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Non-medical expenses (e.g. Hygiene kit)",
+                          "text": "Non-medical expenses: (e.g. Hygiene kit)",
                           "language": "ILO"
                         }
                       ],
@@ -37411,35 +37655,35 @@
                     {
                       "labels": [
                         {
-                          "text": "Other expenses",
+                          "text": "Other expenses:",
                           "language": "EN"
                         },
                         {
-                          "text": "during your OPD visit that were not included in the",
+                          "text": "Other expenses:",
                           "language": "FIL"
                         },
                         {
-                          "text": "during your OPD visit that were not included in the",
+                          "text": "Other expenses:",
                           "language": "BCL"
                         },
                         {
-                          "text": "during your OPD visit that were not included in the",
+                          "text": "Other expenses:",
                           "language": "BIS"
                         },
                         {
-                          "text": "during your OPD visit that were not included in the",
+                          "text": "Other expenses:",
                           "language": "CEB"
                         },
                         {
-                          "text": "during your OPD visit that were not included in the",
+                          "text": "Other expenses:",
                           "language": "WAR"
                         },
                         {
-                          "text": "during your OPD visit that were not included in the",
+                          "text": "Other expenses:",
                           "language": "HIL"
                         },
                         {
-                          "text": "during your OPD visit that were not included in the",
+                          "text": "Other expenses:",
                           "language": "ILO"
                         }
                       ],
@@ -37580,35 +37824,35 @@
               "name": "Q972_SOURCES",
               "labels": [
                 {
-                  "text": "97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Select all that apply.)",
+                  "text": "97.2 Did you pay for any other expenses during your OPD visit that were not included in the outpatient bill?",
                   "language": "EN"
                 },
                 {
-                  "text": "97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Select all that apply.)",
+                  "text": "97.2 Did you pay for any other expenses during your OPD visit that were not included in the outpatient bill?",
                   "language": "FIL"
                 },
                 {
-                  "text": "97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Select all that apply.)",
+                  "text": "97.2 Did you pay for any other expenses during your OPD visit that were not included in the outpatient bill?",
                   "language": "BCL"
                 },
                 {
-                  "text": "97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Select all that apply.)",
+                  "text": "97.2 Did you pay for any other expenses during your OPD visit that were not included in the outpatient bill?",
                   "language": "BIS"
                 },
                 {
-                  "text": "97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Select all that apply.)",
+                  "text": "97.2 Did you pay for any other expenses during your OPD visit that were not included in the outpatient bill?",
                   "language": "CEB"
                 },
                 {
-                  "text": "97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Select all that apply.)",
+                  "text": "97.2 Did you pay for any other expenses during your OPD visit that were not included in the outpatient bill?",
                   "language": "WAR"
                 },
                 {
-                  "text": "97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Select all that apply.)",
+                  "text": "97.2 Did you pay for any other expenses during your OPD visit that were not included in the outpatient bill?",
                   "language": "HIL"
                 },
                 {
-                  "text": "97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Select all that apply.)",
+                  "text": "97.2 Did you pay for any other expenses during your OPD visit that were not included in the outpatient bill?",
                   "language": "ILO"
                 }
               ],
@@ -37619,35 +37863,35 @@
                   "name": "Q972_SOURCES_VS1",
                   "labels": [
                     {
-                      "text": "97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Select all that apply.)",
+                      "text": "97.2 Did you pay for any other expenses during your OPD visit that were not included in the outpatient bill?",
                       "language": "EN"
                     },
                     {
-                      "text": "97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Select all that apply.)",
+                      "text": "97.2 Did you pay for any other expenses during your OPD visit that were not included in the outpatient bill?",
                       "language": "FIL"
                     },
                     {
-                      "text": "97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Select all that apply.)",
+                      "text": "97.2 Did you pay for any other expenses during your OPD visit that were not included in the outpatient bill?",
                       "language": "BCL"
                     },
                     {
-                      "text": "97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Select all that apply.)",
+                      "text": "97.2 Did you pay for any other expenses during your OPD visit that were not included in the outpatient bill?",
                       "language": "BIS"
                     },
                     {
-                      "text": "97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Select all that apply.)",
+                      "text": "97.2 Did you pay for any other expenses during your OPD visit that were not included in the outpatient bill?",
                       "language": "CEB"
                     },
                     {
-                      "text": "97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Select all that apply.)",
+                      "text": "97.2 Did you pay for any other expenses during your OPD visit that were not included in the outpatient bill?",
                       "language": "WAR"
                     },
                     {
-                      "text": "97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Select all that apply.)",
+                      "text": "97.2 Did you pay for any other expenses during your OPD visit that were not included in the outpatient bill?",
                       "language": "HIL"
                     },
                     {
-                      "text": "97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Select all that apply.)",
+                      "text": "97.2 Did you pay for any other expenses during your OPD visit that were not included in the outpatient bill?",
                       "language": "ILO"
                     }
                   ],
@@ -37655,35 +37899,35 @@
                     {
                       "labels": [
                         {
-                          "text": "a) Consultation Fee",
+                          "text": "a) Doctor's Professional Fee",
                           "language": "EN"
                         },
                         {
-                          "text": "a) Consultation Fee",
+                          "text": "a) Doctor's Professional Fee",
                           "language": "FIL"
                         },
                         {
-                          "text": "a) Consultation Fee",
+                          "text": "a) Doctor's Professional Fee",
                           "language": "BCL"
                         },
                         {
-                          "text": "a) Consultation Fee",
+                          "text": "a) Doctor's Professional Fee",
                           "language": "BIS"
                         },
                         {
-                          "text": "a) Consultation Fee",
+                          "text": "a) Doctor's Professional Fee",
                           "language": "CEB"
                         },
                         {
-                          "text": "a) Consultation Fee",
+                          "text": "a) Doctor's Professional Fee",
                           "language": "WAR"
                         },
                         {
-                          "text": "a) Consultation Fee",
+                          "text": "a) Doctor's Professional Fee",
                           "language": "HIL"
                         },
                         {
-                          "text": "a) Consultation Fee",
+                          "text": "a) Doctor's Professional Fee",
                           "language": "ILO"
                         }
                       ],
@@ -37860,35 +38104,35 @@
                     {
                       "labels": [
                         {
-                          "text": "f) Other expenses",
+                          "text": "f) Other expenses:",
                           "language": "EN"
                         },
                         {
-                          "text": "f) Other expenses",
+                          "text": "f) Other expenses:",
                           "language": "FIL"
                         },
                         {
-                          "text": "f) Other expenses",
+                          "text": "f) Other expenses:",
                           "language": "BCL"
                         },
                         {
-                          "text": "f) Other expenses",
+                          "text": "f) Other expenses:",
                           "language": "BIS"
                         },
                         {
-                          "text": "f) Other expenses",
+                          "text": "f) Other expenses:",
                           "language": "CEB"
                         },
                         {
-                          "text": "f) Other expenses",
+                          "text": "f) Other expenses:",
                           "language": "WAR"
                         },
                         {
-                          "text": "f) Other expenses",
+                          "text": "f) Other expenses:",
                           "language": "HIL"
                         },
                         {
-                          "text": "f) Other expenses",
+                          "text": "f) Other expenses:",
                           "language": "ILO"
                         }
                       ],
@@ -37901,35 +38145,35 @@
                     {
                       "labels": [
                         {
-                          "text": "None of the above",
+                          "text": "g) None",
                           "language": "EN"
                         },
                         {
-                          "text": "Wala sa mga nabanggit",
+                          "text": "g) None",
                           "language": "FIL"
                         },
                         {
-                          "text": "Wara sa nasa itaas",
+                          "text": "g) None",
                           "language": "BCL"
                         },
                         {
-                          "text": "Wala sa mga nahisgutan",
+                          "text": "g) None",
                           "language": "BIS"
                         },
                         {
-                          "text": "Wala sa ibabaw",
+                          "text": "g) None",
                           "language": "CEB"
                         },
                         {
-                          "text": "Waray ha mga nayakan",
+                          "text": "g) None",
                           "language": "WAR"
                         },
                         {
-                          "text": "Wala sang mga nabanggit",
+                          "text": "g) None",
                           "language": "HIL"
                         },
                         {
-                          "text": "Awan kadagiti nadakamat",
+                          "text": "g) None",
                           "language": "ILO"
                         }
                       ],
@@ -38107,35 +38351,35 @@
                     {
                       "labels": [
                         {
-                          "text": "a) Consultation Fee",
+                          "text": "a) Doctor's Professional Fee",
                           "language": "EN"
                         },
                         {
-                          "text": "a) Consultation Fee",
+                          "text": "a) Doctor's Professional Fee",
                           "language": "FIL"
                         },
                         {
-                          "text": "a) Consultation Fee",
+                          "text": "a) Doctor's Professional Fee",
                           "language": "BCL"
                         },
                         {
-                          "text": "a) Consultation Fee",
+                          "text": "a) Doctor's Professional Fee",
                           "language": "BIS"
                         },
                         {
-                          "text": "a) Consultation Fee",
+                          "text": "a) Doctor's Professional Fee",
                           "language": "CEB"
                         },
                         {
-                          "text": "a) Consultation Fee",
+                          "text": "a) Doctor's Professional Fee",
                           "language": "WAR"
                         },
                         {
-                          "text": "a) Consultation Fee",
+                          "text": "a) Doctor's Professional Fee",
                           "language": "HIL"
                         },
                         {
-                          "text": "a) Consultation Fee",
+                          "text": "a) Doctor's Professional Fee",
                           "language": "ILO"
                         }
                       ],
@@ -38312,35 +38556,35 @@
                     {
                       "labels": [
                         {
-                          "text": "f) Other expenses",
+                          "text": "f) Other expenses:",
                           "language": "EN"
                         },
                         {
-                          "text": "f) Other expenses",
+                          "text": "f) Other expenses:",
                           "language": "FIL"
                         },
                         {
-                          "text": "f) Other expenses",
+                          "text": "f) Other expenses:",
                           "language": "BCL"
                         },
                         {
-                          "text": "f) Other expenses",
+                          "text": "f) Other expenses:",
                           "language": "BIS"
                         },
                         {
-                          "text": "f) Other expenses",
+                          "text": "f) Other expenses:",
                           "language": "CEB"
                         },
                         {
-                          "text": "f) Other expenses",
+                          "text": "f) Other expenses:",
                           "language": "WAR"
                         },
                         {
-                          "text": "f) Other expenses",
+                          "text": "f) Other expenses:",
                           "language": "HIL"
                         },
                         {
-                          "text": "f) Other expenses",
+                          "text": "f) Other expenses:",
                           "language": "ILO"
                         }
                       ],

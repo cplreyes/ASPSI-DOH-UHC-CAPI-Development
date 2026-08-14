@@ -30,17 +30,22 @@ OUT = HERE / "PatientSurvey.ent.qsf"
 # dict-first placement was wrong (v1.0.1). Same string in every language — UI chrome, not
 # questionnaire text.
 _BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F3"]
-BUILD_FOOTER = f'<p class="instruction">Build: F3 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
 # #1191 (PSA/SJREB, 2026-08-11): survey-tool details required on the CAPI tool.
-# -03 = "In-Patient and Out-Patient Survey Questionnaire" in the PSA table.
-BUILD_FOOTER += ('<p class="instruction">PSA SSRCS Clearance No. DOH-2651-03 '
-                 '&middot; issued July 2026 &middot; valid until 31 July 2027<br/>'
-                 'SJREB: ICF ver. 07/25/2026 &middot; Translated Questionnaire ver. 06/05/2026</p>')
+# -03 = "In-Patient and Out-Patient Survey Questionnaire" in the PSA table. The
+# clearance block is defined once in ../icf_content.py — the ICF screens carry the
+# same block, and two copies of a cleared reference number would eventually diverge.
+import sys as _sys
+_sys.path.insert(0, str(HERE.parent))
+import icf_content as _icf
+
 # #1190: brand-book main logo sequence on the first page — see F1/generate_qsf.py.
 import base64 as _b64
 _LOGO_B64 = _b64.b64encode((HERE.parent / "cover_logos.png").read_bytes()).decode()
-BUILD_FOOTER = (f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
-                + BUILD_FOOTER)
+_LOGO_HTML = f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
+
+BUILD_FOOTER = (_LOGO_HTML
+                + f'<p class="instruction">Build: F3 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+                + _icf.clearance_html("F3"))
 
 STYLES = """styles:
   - name: Normal
@@ -173,10 +178,15 @@ CONSENT_HTML = "".join([
 # Item-name → question-text HTML. Overrides win over the dcf-label default
 # and are emitted identically for every declared language (English fallback
 # until SJREB-approved ICF translations arrive).
-# CONSENT_GIVEN removed 2026-06-12 — consent script is read from the printed
-# sheet (off the CAPI), so no question-text override. (CONSENT_HTML above is
-# kept as reference only; nothing emits it.)
-OVERRIDES = {}
+# CONSENT_GIVEN removed 2026-06-12 — no consent DECISION is captured on the CAPI, and
+# that has not changed. What DID change (2026-08-13): ASPSI sent "Suggested Layout
+# (CSEntry).docx", putting the consent SCRIPT back on the device as two read-aloud
+# screens with the clearance block. Its wording supersedes CONSENT_HTML above (which
+# remains unemitted, kept only as the Annex H reference). Text: ../icf_content.py.
+OVERRIDES = {
+    "ICF_PART1": _icf.build_screen_html("F3", 1, _LOGO_HTML),
+    "ICF_PART2": _icf.build_screen_html("F3", 2, _LOGO_HTML),
+}
 
 
 # ------------------------------------------------------------------
@@ -194,9 +204,13 @@ _DNR_ALL = "DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY."
 _PWD_CARD = ("Enumerator Instruction (DO NOT READ ALOUD): If the PWD "
              "Identification Card is presented, record the type of disability "
              "as indicated on the card. Do not ask the respondent directly.")
+# #1208 follow-up (ASPSI 2026-08-13): the trailing "If yes, indicate the amount spent."
+# was split out — ASPSI's final Q97.1 wording ends at "Select all that apply.", and that
+# sentence is the italic line under Q97.2 in their spec. Keyed separately below.
 _RECEIPT = ("If patient provides a receipt, select all that apply. If no "
             "receipt was provided, read options out loud. Select all that "
-            "apply. If yes, indicate the amount spent.")
+            "apply.")
+_IF_YES_AMOUNT = "If yes, indicate the amount spent."
 _GAMOT_AREA = "Enumerator: Applicable only to respondents in areas with GAMOT."
 _SELECT_ALL = "SELECT ALL THAT APPLY."
 
@@ -216,6 +230,7 @@ INSTRUCTIONS = {
     153: _GAMOT_AREA + " " + _SELECT_ALL,   # #1055
     154: _GAMOT_AREA + " " + _SELECT_ALL,   # #1055
     971: _RECEIPT,  # #455: the receipt/"select all that apply" note belongs on Q97.1 (the Q971_* bill-items battery), NOT on Q97 (Q97_FINAL_AMOUNT, a single cash figure). Re-keyed 97 -> 971 so _QNUM attaches it to the Q971_* fields. (#559: also not on Q114, a reasons select-all.)
+    972: _IF_YES_AMOUNT,  # #1208 follow-up: the italic line under Q97.2 in ASPSI's final spec.
     **dict.fromkeys([14], _PWD_CARD),
     4: ("Note to enumerator [do not read]: This section is for the Patient "
         "Profile. Ask all questions in this section unless a skip rule applies."),

@@ -32,6 +32,10 @@ from pathlib import Path
 
 # Import shared helpers
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from icf_content import (
+    ITEM_LABELS as ICF_ITEM_LABELS,
+    CONTINUE_OPTIONS as ICF_CONTINUE_OPTIONS,
+)
 from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, UHC9_OPTIONS, FREQUENCY, WHY_DIFF_OPTIONS,
     _value_set, numeric, alpha, yes_no, yes_no_dk, yes_no_na,
@@ -165,6 +169,24 @@ def build_field_control():
     #   CITY_MUNICIPALITY_CODE/FACILITY_NO/CASE_SEQ (derived from QUESTIONNAIRE_NUMBER)
     #   + REGION_NAME/PROVINCE_NAME/CITY_NAME (read-only PSGC names) live here now.
     return record("FIELD_CONTROL", "Field Control", "A", items)
+
+
+# ============================================================
+# 4b. RECORD BUILDER — Informed Consent read-aloud (no paper question number)
+# ============================================================
+# Shan's "Suggested Layout (CSEntry)" (2026-08-13) puts the consent script back on the
+# device as two read-aloud screens, each acknowledged with a single "Continue". F1 had
+# no consent record at all — F3/F4 already had A_INFORMED_CONSENT for their Q1 gate —
+# so this record is new here; record type "C" was the next free letter (A/B/Z/2-9 taken).
+# No consent DECISION is captured: the layout shows no Yes/No control and CONSENT_GIVEN
+# stays removed (2026-06-12). Text lives in ../icf_content.py.
+
+def build_section_icf():
+    return record(
+        "A_INFORMED_CONSENT", "Introduction and Informed Consent", "C",
+        [select_one(nm, ICF_ITEM_LABELS[nm], ICF_CONTINUE_OPTIONS, length=1)
+         for nm in ("ICF_PART1", "ICF_PART2")],
+    )
 
 
 # ============================================================
@@ -1256,6 +1278,7 @@ def build_dictionary():
         # PSGC-Cascade.apc functions compile unchanged.
         build_geo_id("facility"),
         build_capture_record(),
+        build_section_icf(),
         build_section_a(),
         build_section_b(),
         build_section_c(),
