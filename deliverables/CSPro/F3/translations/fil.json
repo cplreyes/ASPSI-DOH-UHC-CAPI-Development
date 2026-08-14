@@ -657,8 +657,8 @@
  "Completed": "Natapos",
  "Consultation for new health problem": "Konsultasyon para sa bagong problema sa kalusugan",
  "Consultation to follow-up an ongoing health problem": "Konsultasyon para sa follow-up ng kasalukuyang problema sa kalusugan",
- "Date First Visited the Patient (YYYYMMDD)": "Petsa ng Unang Pagbisita sa Pasyente",
- "Date of Final Visit to the Patient (YYYYMMDD)": "Petsa ng Huling Pagbisita sa Pasyente",
+ "Date First Visited the Patient (MMDDYYYY)": "Petsa ng Unang Pagbisita sa Pasyente",
+ "Date of Final Visit to the Patient (MMDDYYYY)": "Petsa ng Huling Pagbisita sa Pasyente",
  "Daughter": "Anak na babae",
  "Daughter-in-law": "Manugang na babae",
  "Dental": "Problema sa ngipin",
@@ -713,7 +713,6 @@
  "Kidney problem /Dialysis": "Problema sa bato / Dialysis",
  "LGU": "Lokal na pamahalaan",
  "LGU hospital": "Ospital ng lokal na pamahalaan",
- "Lifetime member (i.e., individuals aged 60 years and above, uniformed personnel aged 56 years and above, and SSS underground miner-retirees aged 55 years and above and paid at least 120 monthly contributions with PhilHealth and the former Medicare...": "Lifetime member (hal., mga indibidwal na edad 60 pataas, mga uniformed personnel na edad 56 pataas, at SSS underground miner-retirees na edad 55 pataas at nakapagbayad ng hindi bababa sa 120 buwang kontribusyon sa PhilHealth at sa dating Medicare Programs ng SSS at GSIS)",
  "Lower Secondary Education (Grade 7 to 10)": "Mababang Sekondarya (Grade 7 hanggang 10)",
  "Male": "Lalaki",
  "Married": "Kasal",
@@ -790,7 +789,6 @@
  "Respondent refused to present card": "Tumanggi ang respondent na ipakita ang kard",
  "Retired": "Nagretiro",
  "Satisfied": "Nasiyahan",
- "Senior citizen (i.e., residents of the Philippines, aged sixty (60) years or above and are not currently covered by any membership category of PhilHealth and qualified dependents of senior citizen members who are also senior citizen themselves or...": "Senior citizen (hal., mga residente ng Pilipinas na edad 60 pataas at hindi kasalukuyang sakop ng anumang kategorya ng PhilHealth, pati na rin ang kanilang kwalipikadong dependents na senior citizen din o kabilang sa ibang kategorya ng miyembro, may o walang coverage)",
  "Separated": "Hiwalay",
  "Short-Cycle Tertiary Education or Equivalent (including Technical and Vocational degrees with a diploma)": "Maikling Tersyarya o Katumbas (kabilang ang Technical/Vocational na may diploma)",
  "Sick": "May sakit",
@@ -1029,7 +1027,6 @@
  "Free, charge to Private Insurance": "[Libre, sagot ng pribadong insurance]",
  "93. Did you have any of the following laboratory tests done during your outpatient care?": "Check all that apply. Mayroon ka bang alinman sa mga sumusunod na",
  "Creatinine": "None 94. How much was the cost of [",
- "Other expenses": "during your OPD visit that were not included in the",
  "100. If yes, what are your sources of information about this BUCAS center?": "Ano ang inyong mga pinagkukunan ng impormasyon tungkol sa BUCAS center? News [Balita]",
  "101. What is your understanding about a BUCAS center?": "Ano ang iyong pagkaunawa tungkol sa BUCAS? DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. HUWAG BASAHIN NANG MALAKAS ANG MGA PAMIMILIAN. PILIIN ANG LAHAT NA NAAANGKOP",
  "Provides urgent care for non-life-threatening/serious conditions": "Nagbibigay ng agarang pangangalaga para sa hindi malubhang kondisyon o hindi banta sa buhay",
@@ -1109,5 +1106,7 @@
  "Facility offers subsidized or free health services": "Nagbibigay ang pasilidad ng murang o libreng serbisyong pangkalusugan",
  "Facility is usual source of care": "Karaniwang pinupuntahan para sa pangangalaga",
  "Facility is the only place that can perform a certain test": "Tanging pasilidad na kayang gawin ang isang partikular na pagsusuri",
- "Referred by BHW/nurse/midwife/other community health professional": "Inirekomenda ng BHW/nurse/komadrona/ibang propesyonal sa kalusugan ng komunidad"
+ "Referred by BHW/nurse/midwife/other community health professional": "Inirekomenda ng BHW/nurse/komadrona/ibang propesyonal sa kalusugan ng komunidad",
+ "Lifetime member (i.e., individuals aged 60+, uniformed personnel aged 56+, and SSS underground miner-retirees aged 55+ who paid at least 120 monthly contributions with PhilHealth and the former Medicare Programs of SSS and GSIS)": "Lifetime member (hal., mga indibidwal na edad 60 pataas, mga uniformed personnel na edad 56 pataas, at SSS underground miner-retirees na edad 55 pataas at nakapagbayad ng hindi bababa sa 120 buwang kontribusyon sa PhilHealth at sa dating Medicare Programs ng SSS at GSIS)",
+ "Senior citizen (i.e., residents of the Philippines aged sixty (60) years or above not currently covered by any PhilHealth membership category, and qualified dependents of senior citizen members who are themselves senior citizens)": "Senior citizen (hal., mga residente ng Pilipinas na edad 60 pataas at hindi kasalukuyang sakop ng anumang kategorya ng PhilHealth, pati na rin ang kanilang kwalipikadong dependents na senior citizen din o kabilang sa ibang kategorya ng miyembro, may o walang coverage)"
 }

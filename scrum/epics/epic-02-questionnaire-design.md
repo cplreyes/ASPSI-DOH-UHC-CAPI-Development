@@ -153,9 +153,9 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 - [x] **E2-PLF-001** PLF form PDF ingested `status::done` `priority::medium`
 - [x] **E2-PLF-002** PLF wiki source page `status::done` `priority::medium`
 - [x] **E2-PLF-003** Implementation decision: lightweight CAPI vs paper-only `status::done` `priority::medium` `estimate::2h` ✅ *(swept 2026-06-13 @ S009 close: decided + executed: lightweight CAPI listing apps built 5/12)*
-- [ ] **E2-PLF-004** If CAPI: `generate_dcf.py` + DCF v1 (minimal, single-record) `status::todo` `priority::medium` `estimate::4h`
-- [ ] **E2-PLF-005** If CAPI: minimal skip logic + validation rules `status::todo` `priority::medium` `estimate::2h`
-- [ ] **E2-PLF-006** If CAPI: Designer validation + sign-off `status::todo` `priority::medium` `estimate::1h`
+- [ ] **E2-PLF-004** ~~If CAPI: build from zero~~ Fold the BUILT listing apps into the shipping architecture `status::todo` `priority::medium` `estimate::4h` *(reframed 2026-08-12: per the 2026-06-03 PLF decision memo the listing apps are "active, substantially built" — random-interval `PickPatient()` + EXTERNAL-dict feed — but live in the retired Plan-2 `uhc-survey-system-build` worktree, not `deliverables/CSPro/`. Remaining work = architecture reconciliation, not fresh build)*
+- [ ] **E2-PLF-005** If CAPI: minimal skip logic + validation rules `status::todo` `priority::medium` `estimate::2h` *(rides E2-PLF-004 — the built apps carry their logic; verify on fold-in)*
+- [ ] **E2-PLF-006** If CAPI: Designer validation + sign-off `status::todo` `priority::medium` `estimate::1h` *(rides E2-PLF-004 — publish gate after reconciliation)*
 
 ## Notes
 

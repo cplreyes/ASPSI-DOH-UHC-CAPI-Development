@@ -438,7 +438,6 @@
  "Intellectual disability": "Intelektwal nga kapansanan (Intellectual disability)",
  "It helped lessen some costs, but I still incurred Out-of-Pocket (OOP) expenses": "Nakatabang kini sa pagpakunhod sa pipila ka gasto, apan adunay gihapon koy Out-of-Pocket (OOP) nga mga bayronon",
  "Lesbian": "Tomboy",
- "Lifetime member (i.e., individuals aged 60 years and above, uniformed personnel aged 56 years and above, and SSS underground miner-retirees aged 55 years and above and paid at least 120 monthly contributions with PhilHealth and the former Medicare Programs of SSS and GSIS)": "Lifetime member (mga indibidwal nga 60 anyos pataas, uniformed personnel nga 56 anyos pataas, ug SSS underground miner-retirees nga 55 anyos pataas ug nakabayad og labing menos 120 ka monthly contributions sa PhilHealth ug sa naunang Medicare Programs sa SSS ug GSIS)",
  "Lower Secondary Education (Grade 7 to 10)": "Grade 7 hangtod 10",
  "Male": "Lalake",
  "Married": "Kasado",
@@ -499,7 +498,6 @@
  "Retired": "Retirado",
  "Satisfied": "Giganahan",
  "Self-employed without any paid employee": "Self-employed nga walay binayrang empleyado",
- "Senior citizen (i.e., residents of the Philippines, aged sixty (60) years or above and are not currently covered by any membership category of PhilHealth and qualified dependents of senior citizen members who are also senior citizen themselves or belonging to other membership categories, with or without coverage who are senior citizens themselves)": "Senior citizen (mga residente sa Pilipinas nga 60 anyos pataas ug dili pa sakop sa ubang membership category sa PhilHealth, ug mga qualified dependents sa senior citizen members nga senior citizens usab o sakop sa ubang membership categories)",
  "Separated": "Separada/Separado",
  "Short-Cycle Tertiary Education or Equivalent (including Technical and Vocational degrees with a diploma)": "apil ang Technical ug Vocational nga adunay diploma",
  "Sick": "Masakiton",
@@ -590,8 +588,6 @@
  "Did not know the required documents to register": "Wala kabalo unsang mga dokumento ang kinahanglan para magparehistro",
  "Did not know where to ask for help": "Wala kabalo asa mangayo og tabang",
  "Had to travel a long way": "Kinahanglan mobiyahe og layo",
- "Lifetime member (i.e., individuals aged 60 years and above, uniformed personnel aged 56 years and above, and SSS underground miner-retirees aged 55 years and above and paid at least 120 monthly contributions with PhilHealth and the former Medicare...": "Programs of SSS and GSIS) Lifetime member (mga indibidwal nga 60 anyos pataas, uniformed personnel nga 56 anyos pataas, ug SSS underground miner-retirees nga 55 anyos pataas ug nakabayad og labing menos 120 ka",
- "Senior citizen (i.e., residents of the Philippines, aged sixty (60) years or above and are not currently covered by any membership category of PhilHealth and qualified dependents of senior citizen members who are also senior citizen themselves or...": "belonging to other membership categories, with or without coverage who are senior citizens themselves) Senior citizen (mga residente sa Pilipinas nga 60 anyos pataas ug dili pa sakop sa ubang membership category sa",
  "46. What are some of the benefits that come with being a PhilHealth member?": "Unsa ang pipila sa mga benepisyo sa pagiging miyembro sa",
  "No balance billing for basic ward accommodation": "Walay balance billing para sa basic ward",
  "There are no benefits to being a member": "Walay benepisyo ang pagiging miyembro",
@@ -689,7 +685,6 @@
  "93. Did you have any of the following laboratory tests done during your outpatient care?": "Aduna ba kay bisan unsa sa mosunod nga",
  "Creatinine": "None Wala 94. How much was the cost of [",
  "95. Were you prescribed medicine/s after your check-up?": "Giresetahan ba ka og tambal human sa imong check-up? Yes Oo No Wala 96. How much was spent for (NAME IN ___)’s prescribed medicines? Pila ang nagasto para sa giresetang tambal ni (NAME IN ___)?",
- "Other expenses": "during your OPD visit that were not included in the",
  "b) Diagnostic or laboratory procedure": "Diagnostic o",
  "100. If yes, what are your sources of information about this BUCAS center?": "Kung oo, unsa ang imong mga tinubdan sa impormasyon bahin niini nga BUCAS center? News Balita",
  "101. What is your understanding about a BUCAS center?": "Unsa ang imong pagsabot bahin sa usa ka BUCAS center? DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILI ANG TANANG PWEDE",
@@ -776,5 +771,7 @@
  "Nearest facility to house": "Pinakaduol nga pasilidad sa balay",
  "Facility offers subsidized or free health services": "Ang pasilidad naghatag og subsidized o libre nga serbisyo sa panglawas",
  "Facility is usual source of care": "Kasagarang gigikanan sa pag-atiman sa panglawas ang pasilidad",
- "Facility is the only place that can perform a certain test": "Ang pasilidad ra ang makapahimo sa usa ka espesipikong test"
+ "Facility is the only place that can perform a certain test": "Ang pasilidad ra ang makapahimo sa usa ka espesipikong test",
+ "Lifetime member (i.e., individuals aged 60+, uniformed personnel aged 56+, and SSS underground miner-retirees aged 55+ who paid at least 120 monthly contributions with PhilHealth and the former Medicare Programs of SSS and GSIS)": "Lifetime member (mga indibidwal nga 60 anyos pataas, uniformed personnel nga 56 anyos pataas, ug SSS underground miner-retirees nga 55 anyos pataas ug nakabayad og labing menos 120 ka monthly contributions sa PhilHealth ug sa naunang Medicare Programs sa SSS ug GSIS)",
+ "Senior citizen (i.e., residents of the Philippines aged sixty (60) years or above not currently covered by any PhilHealth membership category, and qualified dependents of senior citizen members who are themselves senior citizens)": "Senior citizen (mga residente sa Pilipinas nga 60 anyos pataas ug dili pa sakop sa ubang membership category sa PhilHealth, ug mga qualified dependents sa senior citizen members nga senior citizens usab o sakop sa ubang membership categories)"
 }

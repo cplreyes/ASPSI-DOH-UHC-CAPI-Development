@@ -32,6 +32,10 @@ from pathlib import Path
 
 # Import shared helpers
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from icf_content import (
+    ITEM_LABELS as ICF_ITEM_LABELS,
+    CONTINUE_OPTIONS as ICF_CONTINUE_OPTIONS,
+)
 from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, UHC9_OPTIONS, FREQUENCY, WHY_DIFF_OPTIONS,
     _value_set, numeric, alpha, yes_no, yes_no_dk, yes_no_na,
@@ -113,10 +117,20 @@ def build_field_control():
         alpha("ENUMERATOR_S_NAME",              "Enumerator's Name",                            length=50),
         alpha("FIELD_VALIDATED_BY",             "Field Validated by",                           length=50),
         alpha("FIELD_EDITED_BY",                "Field Edited by",                              length=50),
+        # #1132 (ASPSI 2026-08-06, Carl 2026-08-09): the ENUMERATOR now types MMDDYYYY,
+        # matching the paper. STORAGE is still YYYYMMDD — generate_apc's postproc converts
+        # on exit — so dates stay sortable, the final<first check keeps working, and the
+        # Supervisor App / F3 / F4 stored composition is unchanged. Only the typed order
+        # and this prompt moved; nothing downstream sees a different value.
         numeric("DATE_FIRST_VISITED_THE_FACILITY",
-                "Date First Visited the Facility (YYYYMMDD)", length=8),
+                "Date First Visited the Facility (MMDDYYYY)", length=8),
+        # #1132 retest (2026-08-10): the #1099 MM/DD/YYYY echo fields are REMOVED
+        # at ASPSI's explicit request — the reviewer circled both on-device as
+        # confusing (four date rows for two dates). The paper has no echo; the
+        # misparse guard the echo provided is partly covered by the impossible-
+        # date block in the entry postproc. Do not re-add without a new ticket.
         numeric("DATE_OF_FINAL_VISIT_TO_THE_FACILITY",
-                "Date of Final Visit to the Facility (YYYYMMDD)", length=8),
+                "Date of Final Visit to the Facility (MMDDYYYY)", length=8),
         numeric("TOTAL_NUMBER_OF_VISITS",       "Total Number of Visits",                       length=3),
         # Result-of-Visit codes come from cspro_helpers (ENUM_RESULT_OPTIONS_F1) so F1 cannot
         # drift from F3/F4 — "Replaced" (5) was added there 2026-07-14 and lands here for free.
@@ -155,6 +169,24 @@ def build_field_control():
     #   CITY_MUNICIPALITY_CODE/FACILITY_NO/CASE_SEQ (derived from QUESTIONNAIRE_NUMBER)
     #   + REGION_NAME/PROVINCE_NAME/CITY_NAME (read-only PSGC names) live here now.
     return record("FIELD_CONTROL", "Field Control", "A", items)
+
+
+# ============================================================
+# 4b. RECORD BUILDER — Informed Consent read-aloud (no paper question number)
+# ============================================================
+# Shan's "Suggested Layout (CSEntry)" (2026-08-13) puts the consent script back on the
+# device as two read-aloud screens, each acknowledged with a single "Continue". F1 had
+# no consent record at all — F3/F4 already had A_INFORMED_CONSENT for their Q1 gate —
+# so this record is new here; record type "C" was the next free letter (A/B/Z/2-9 taken).
+# No consent DECISION is captured: the layout shows no Yes/No control and CONSENT_GIVEN
+# stays removed (2026-06-12). Text lives in ../icf_content.py.
+
+def build_section_icf():
+    return record(
+        "A_INFORMED_CONSENT", "Introduction and Informed Consent", "C",
+        [select_one(nm, ICF_ITEM_LABELS[nm], ICF_CONTINUE_OPTIONS, length=1)
+         for nm in ("ICF_PART1", "ICF_PART2")],
+    )
 
 
 # ============================================================
@@ -524,8 +556,11 @@ def build_section_d():
         ("Other (specify)", "6"),
     ]
     Q95_RECEIVED = [
-        ("Yes, we have received all expected payments <proceed to Q97>",         "1"),
-        ("Yes, we have received some but not all expected payments yet <proceed to Q97>",     "2"),
+        # #1113: the paper's "<proceed to Q97>" navigation note removed - CAPI
+        # automates the routing, so printing it in an answer option is paper-only
+        # furniture. The Q95 -> Q97 skip itself is unchanged (see generate_apc).
+        ("Yes, we have received all expected payments",         "1"),
+        ("Yes, we have received some but not all expected payments yet",     "2"),
         ("No, we have not received any expected payments yet", "3"),
         ("No, we have not expected any payments yet",      "4"),
     ]
@@ -547,8 +582,10 @@ def build_section_d():
         ("Other (specify)", "6"),
     ]
     Q99_EXPAND = [
-        ("Current list of medicines and drugs", "1"),
-        ("Current laboratory/diagnostic services", "2"),
+        # #1116: PAPI wording ("The current ... offered"). Wording only - no
+        # option is missing or added; codes unchanged.
+        ("The current list of medicines and drugs offered", "1"),
+        ("The current laboratory/diagnostic services offered", "2"),
         ("Additional features", "3"),
         ("I don't know", "4"),
         ("Other (specify)", "5"),
@@ -569,7 +606,9 @@ def build_section_d():
     items.append(yes_no_dk("Q56_YK_REG_BOTH",
                            "56. Is it only possible to register both individual patients and their family members together to YAKAP/Konsulta at this facility?"))
     items.append(numeric("Q57_CAPITATION_AMT",
-                         "57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package? (Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.)",
+                         # #1011: the "(Capitation is ...)" definition is the paper's italic
+                         # enumerator note — testers want it OFF the CAPI question text.
+                         "57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?",
                          length=6))
     # Q58 — TRUE Check Box multi-select (GH #377/#378/#379). Mirrors F3 Q148.
     items.extend(checkbox_multiselect("Q58_PERF_INDICATORS",
@@ -597,15 +636,17 @@ def build_section_d():
                             _cb_codes(Q65_DIFFICULT), with_other_txt=False))
     # Q66-Q74 = nine "why difficult" select-alls, gated on Q65 in PROC.
     Q66_74_TOPICS = [
-        ("Q66_WHY_DIFF_PREVENTIVE",  "66. Why was it difficult to comply with the following? Ability to conduct preventive/screening services and health education"),
-        ("Q67_WHY_DIFF_LAB",         "67. Why was it difficult to comply with the following? Capability to provide services for required laboratory and radiologic services"),
-        ("Q68_WHY_DIFF_MEDS",        "68. Why was it difficult to comply with the following? Capability to dispense required medicines"),
-        ("Q69_WHY_DIFF_INFRA",       "69. Why was it difficult to comply with the following? General Infrastructure"),
-        ("Q70_WHY_DIFF_EQUIPMENT",   "70. Why was it difficult to comply with the following? Equipment and Supplies"),
-        ("Q71_WHY_DIFF_HR",          "71. Why was it difficult to comply with the following? Human resource"),
-        ("Q72_WHY_DIFF_HIS",         "72. Why was it difficult to comply with the following? Functional Health Information System"),
-        ("Q73_WHY_DIFF_DOCS",        "73. Why was it difficult to comply with the following? Documentary requirements"),
-        ("Q74_WHY_DIFF_DOH_LIC",     "74. Why was it difficult to comply with the following? DOH Licensing requirements"),
+        # #1015: paper/sample format — short stem "comply with:" + the one component
+        # (the "the following?" phrasing read as redundant with a single component).
+        ("Q66_WHY_DIFF_PREVENTIVE",  "66. Why was it difficult to comply with: Ability to conduct preventive/screening services and health education?"),
+        ("Q67_WHY_DIFF_LAB",         "67. Why was it difficult to comply with: Capability to provide services for required laboratory and radiologic services?"),
+        ("Q68_WHY_DIFF_MEDS",        "68. Why was it difficult to comply with: Capability to dispense required medicines?"),
+        ("Q69_WHY_DIFF_INFRA",       "69. Why was it difficult to comply with: General Infrastructure?"),
+        ("Q70_WHY_DIFF_EQUIPMENT",   "70. Why was it difficult to comply with: Equipment and Supplies?"),
+        ("Q71_WHY_DIFF_HR",          "71. Why was it difficult to comply with: Human resource?"),
+        ("Q72_WHY_DIFF_HIS",         "72. Why was it difficult to comply with: Functional Health Information System?"),
+        ("Q73_WHY_DIFF_DOCS",        "73. Why was it difficult to comply with: Documentary requirements?"),
+        ("Q74_WHY_DIFF_DOH_LIC",     "74. Why was it difficult to comply with: DOH Licensing requirements?"),
     ]
     for prefix, label in Q66_74_TOPICS:
         items.extend(checkbox_multiselect(prefix, label, _cb_codes(WHY_DIFF_OPTIONS[:6] + [WHY_DIFF_OPTIONS[8]])))
@@ -643,8 +684,11 @@ def build_section_d():
                          "87. How many eligible patients in your catchment area are already registered to this YAKAP/Konsulta provider?",
                          length=7))
     # Q88 — verbatim text is 448 chars, well over CSPro's 255-char label limit.
-    # Compressed the PhilHealth tranche-mechanics middle into a parenthetical;
-    # question stem and Php 1,700 anchor preserved verbatim.
+    # #1189 round 2: the v1.3.2 attempt put the full stem HERE and the Designer
+    # round-trip hard-cut it at 255 chars (no warning — F1 writes its dcf raw).
+    # The #1019/#1074 architecture is the right one: label stays CONDENSED
+    # (<=255, matches the 5 locale translation keys verbatim); the FULL paper
+    # stem renders from generate_qsf's Q88 branch in the uncapped question area.
     items.append(yes_no_dk("Q88_IS_1700_ENOUGH",
                            "88. The maximum per capita rate for YAKAP/Konsulta is Php 1,700 across private and public facilities (40% after first patient encounter, 60% based on registered catchment population by December). Based on your practice, is this enough?"))
     items.append(yes_no_dk("Q89_COSTING_DONE",
@@ -829,10 +873,14 @@ def build_section_f():
         ("Improving performance",                                   "7"),
         ("Physical plant",                                          "8"),
         ("Equipment and instruments",                               "9"),
-        ("National laws and DOH issuances (hospitals only)",       "10"),
+        # #1117: full PAPI wording restored (was abbreviated for tablet width).
+        # Kept the parenthetical style of options 11/12 rather than the paper's
+        # <angle brackets>, so the qualifier reads consistently across the list.
+        ("National laws and DOH issuances implemented in hospitals and other health facilities (hospitals only)", "10"),
         ("Emergency cart contents (hospitals only)",               "11"),
         ("Add-on services (hospitals only)",                       "12"),
-        ("Public access to price information (PCF only)",          "13"),
+        # #1117: full PAPI wording restored; "PCF" spelled out.
+        ("Public access to price information (primary care facilities only)", "13"),
         ("None of the above",                                      "14"),
     ]
 
@@ -873,22 +921,36 @@ def build_section_f():
         [(t, c) for t, c in _q121_coded if c not in Q121_PCF_ONLY]))
     # Q122-Q134 = thirteen "why difficult for X" Check Box multi-selects, gated on Q121.
     Q122_134_TOPICS = [
-        ("Q122_WHY_DIFF_PT_RIGHTS",  "122. Why was it difficult to comply with the following? Patient rights and organization ethics"),
-        ("Q123_WHY_DIFF_PT_CARE",    "123. Why was it difficult to comply with the following? Patient care"),
-        ("Q124_WHY_DIFF_LEADERSHIP", "124. Why was it difficult to comply with the following? Leadership and management"),
-        ("Q125_WHY_DIFF_HRM",        "125. Why was it difficult to comply with the following? Human resource management"),
-        ("Q126_WHY_DIFF_INFO_MGMT",  "126. Why was it difficult to comply with the following? Information management"),
-        ("Q127_WHY_DIFF_SAFE",       "127. Why was it difficult to comply with the following? Safe practice and environment"),
-        ("Q128_WHY_DIFF_PERF",       "128. Why was it difficult to comply with the following? Improving performance"),
-        ("Q129_WHY_DIFF_PHYS_PLANT", "129. Why was it difficult to comply with the following? Physical plant"),
-        ("Q130_WHY_DIFF_PRICE_INFO", "130. Why was it difficult to comply with the following? Public access to price information"),
-        ("Q131_WHY_DIFF_EQUIPMENT",  "131. Why was it difficult to comply with the following? Equipment and instruments"),
-        ("Q132_WHY_DIFF_NAT_LAWS",   "132. Why was it difficult to comply with the following? National laws and DOH issuances implemented in hospitals and other health facilities"),
-        ("Q133_WHY_DIFF_EMERG_CART", "133. Why was it difficult to comply with the following? Emergency Cart Contents"),
-        ("Q134_WHY_DIFF_ADDONS",     "134. Why was it difficult to comply with the following? Add-on services"),
+        # #1016: same short-stem format as Q66-74 (#1015).
+        ("Q122_WHY_DIFF_PT_RIGHTS",  "122. Why was it difficult to comply with: Patient rights and organization ethics?"),
+        ("Q123_WHY_DIFF_PT_CARE",    "123. Why was it difficult to comply with: Patient care?"),
+        ("Q124_WHY_DIFF_LEADERSHIP", "124. Why was it difficult to comply with: Leadership and management?"),
+        ("Q125_WHY_DIFF_HRM",        "125. Why was it difficult to comply with: Human resource management?"),
+        ("Q126_WHY_DIFF_INFO_MGMT",  "126. Why was it difficult to comply with: Information management?"),
+        ("Q127_WHY_DIFF_SAFE",       "127. Why was it difficult to comply with: Safe practice and environment?"),
+        ("Q128_WHY_DIFF_PERF",       "128. Why was it difficult to comply with: Improving performance?"),
+        ("Q129_WHY_DIFF_PHYS_PLANT", "129. Why was it difficult to comply with: Physical plant?"),
+        ("Q130_WHY_DIFF_PRICE_INFO", "130. Why was it difficult to comply with: Public access to price information?"),
+        ("Q131_WHY_DIFF_EQUIPMENT",  "131. Why was it difficult to comply with: Equipment and instruments?"),
+        ("Q132_WHY_DIFF_NAT_LAWS",   "132. Why was it difficult to comply with: National laws and DOH issuances implemented in hospitals and other health facilities?"),
+        ("Q133_WHY_DIFF_EMERG_CART", "133. Why was it difficult to comply with: Emergency Cart Contents?"),
+        ("Q134_WHY_DIFF_ADDONS",     "134. Why was it difficult to comply with: Add-on services?"),
     ]
+    # #1192/#1193: the paper's option lists are NOT identical across Q122-134 —
+    # Q124 and Q125 carry extra options the shared list lacks. Appended AFTER
+    # "Lack of space" so they take the next sequential codes (09/10) and land
+    # before Other(99): ascending codes preserved (checkbox rule, #830), and no
+    # existing code moves mid-round.
+    Q124_EXTRAS = [("Frequent changes to guidelines and policies", "x"),
+                   ("Resistance to change of staff", "x")]
+    Q125_EXTRAS = [("Staff are resistant to change", "x")]
     for prefix, label in Q122_134_TOPICS:
-        items.extend(checkbox_multiselect(prefix, label, _cb_codes(WHY_DIFF_OPTIONS)))
+        opts = list(WHY_DIFF_OPTIONS)
+        extras = {"Q124_WHY_DIFF_LEADERSHIP": Q124_EXTRAS,
+                  "Q125_WHY_DIFF_HRM": Q125_EXTRAS}.get(prefix, [])
+        if extras:
+            opts = opts[:-1] + extras + opts[-1:]   # keep Other (specify) last
+        items.extend(checkbox_multiselect(prefix, label, _cb_codes(opts)))
     return record("F_DOH_LICENSING", "F. DOH Licensing: Status and Barriers", "7", items)
 
 
@@ -901,8 +963,11 @@ def build_section_g():
         ("Complying with the no fees for basic or ward accommodation",        "1"),
         ("Complying the prescribed ratio of allocation of basic and non-basic accommodation", "2"),
         ("Patients do not go through the process of availing it",      "3"),
+        # #1026/#1027 kept the paper's trailing "and/or" here verbatim. #1121
+        # (ASPSI 2026-08-06) lists the option WITHOUT it, so the dangling
+        # conjunction goes. Shared list -> applies to Q137 (NBB) and Q140 (ZBB).
         ("Insufficient PhilHealth support value",                      "4"),
-        ("Insufficient other sources (MAIFIP, DSWD, PCSO)",            "5"),
+        ("Insufficient other sources (e.g. MAIFIP, DSWD, PCSO) (late payments applicable for MAIFIP)", "5"),
         ("PhilHealth delayed payment",                                 "6"),
         ("None of the above",                                          "7"),
         ("Other (specify)",                                            "8"),
@@ -1002,16 +1067,19 @@ def build_section_g():
     Q160_EXTERNAL = [
         ("External laboratory",     "01"),
         ("Other private facility",  "02"),
-        ("Other public facility",   "03"),
+        ("Other public facility (e.g., urban/rural health centers, barangay health centers, city/municipal health offices)", "03"),   # #1034 verbatim
         ("I don't know",            "90"),
         ("Other (specify)",         "99"),
     ]
     Q161_SATISFACTION = [
-        ("Very Satisfied",  "1"),
-        ("Satisfied",       "2"),
-        ("Neither",         "3"),
-        ("Dissatisfied",    "4"),
-        ("Very Dissatisfied","5"),
+        # #1035: paper-verbatim rating descriptions (codes unchanged).
+        # (paper's inner double quotes swapped to singles — embedded " in a value-set
+        #  label crashed the CSDeploy pen packager: "fatal error ... could not recover")
+        ("Very Satisfied: No improvements needed, 'patients are always referred appropriately'", "1"),
+        ("Satisfied: Minor improvements needed, patients are generally referred appropriately",    "2"),
+        ("Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional",      "3"),
+        ("Dissatisfied: Moderate improvements needed, a number of patients are referred to the wrong specialists or do not receive appropriate follow-up care", "4"),
+        ("Very Dissatisfied: Major improvements needed, many patients are referred to the wrong specialists or do not receive appropriate follow-up care",      "5"),
     ]
     Q162_NOT_SAT = [
         ("Facilities are overcrowded/overcapacity and do not accept our patient referrals", "1"),
@@ -1110,21 +1178,31 @@ def build_section_g():
 
 def build_section_h():
     Q163_CHALL = [
-        ("Understaffing",              "1"),
+        # #1037: code 3 was a copy-paste DUP of code 2 (should be Retention — live
+        # regression in v1.2.3); "Multi-tasking" was missing entirely; paper order
+        # puts Other before I-don't-know. Codes 1-3 + Other(5) unchanged;
+        # Multi-tasking takes 4 and I-don't-know moves 4 -> 6 (noted in codebook).
+        ("Understaffing",                    "1"),
         ("Skills mismatch / lack of skills", "2"),
-        ("Skills mismatch / lack of skills", "3"),
-        ("I don't know",               "4"),
-        ("Other (specify)",            "5"),
+        ("Retention / high staff turnover",  "3"),
+        ("Multi-tasking",                    "4"),
+        # #1126: ASPSI's list puts "I don't know" BEFORE "Other (specify)".
+        # Only the display ORDER swaps - _cb_codes still maps Other->99 and
+        # I-don't-know->90, so no captured value changes meaning. Bonus: the
+        # emitted value set is now in ASCENDING code order (...90, 99) instead
+        # of 99 then 90 - the non-ascending state behind the #830 data-loss bug.
+        ("I don't know",                     "5"),
+        ("Other (specify)",                  "6"),
     ]
     PD_DOCTORS = [
         ("Clinical audits",                                          "1"),
         ("Surgical audits",                                          "2"),
         ("Quality assurance meetings",                               "3"),
         ("Seminars, conferences, workshops",                         "4"),
-        ("Independent professional development: scholarships",       "5"),
-        ("Independent professional development: research grants",    "6"),
+        ("Support for independent professional development: scholarships",    "5"),   # #1038 verbatim
+        ("Support for independent professional development: research grants", "6"),   # #1038 verbatim
         ("LGU/DOH led workshops/initiatives",                        "7"),
-        ("No forms of professional development are provided",        "8"),
+        ("No forms of professional development are provided to our doctors",  "8"),   # #1038 verbatim
         ("Other (specify)",                                          "9"),
     ]
     # Q166 — PENDING DESIGN: nurse list omits audits per printed text. Default
@@ -1135,10 +1213,10 @@ def build_section_h():
         PD_NURSES = [
             ("Quality assurance meetings",                               "1"),
             ("Seminars, conferences, workshops",                         "2"),
-            ("Independent professional development: scholarships",       "3"),
-            ("Independent professional development: research grants",    "4"),
+            ("Support for independent professional development: scholarships",    "3"),   # #1039 verbatim
+            ("Support for independent professional development: research grants", "4"),   # #1039 verbatim
             ("LGU/DOH led workshops/initiatives",                        "5"),
-            ("No forms of professional development are provided",        "6"),
+            ("No forms of professional development are provided to our nurses",   "6"),   # #1039 verbatim
             ("Other (specify)",                                          "7"),
         ]
 
@@ -1200,6 +1278,7 @@ def build_dictionary():
         # PSGC-Cascade.apc functions compile unchanged.
         build_geo_id("facility"),
         build_capture_record(),
+        build_section_icf(),
         build_section_a(),
         build_section_b(),
         build_section_c(),

@@ -595,7 +595,6 @@
  "LGU": "/ Barangay",
  "LGU hospital": "LGU nga ospital",
  "Lesbian": "Tomboy",
- "Lifetime member (i.e., individuals aged 60 years and above, uniformed personnel aged 56 years and above, and SSS underground miner-retirees aged 55 years and above and paid at least 120 monthly contributions with PhilHealth and the former Medicare Programs of SSS and GSIS)": "Miyembro ha bug-os nga kinabuhi (i.e., mga indibidwal nga nag-eedad hin 60 anyos tipaigbaw, mga unipormado nga mga tawohan nga nag-eedad hin 56 anyos tipaigbaw, ngan SSS underground miner-retirees nga nag-eedad hin 55 anyos tipaigbaw ngan nagbayad hin diri maubos hin 120 kada bulan nga kontribusyon ha PhilHealth ngan han anay Medicare Programs han SSS ngan GSIS)",
  "Lower Secondary Education (Grade 7 to 10)": "Lower Secondary nga Edukasyon (Grade 7 ngadto ha 10)",
  "Male": "Lalaki",
  "Married": "Minyo",
@@ -666,7 +665,6 @@
  "Rural Health Unit / Urban Health Center": "Yunit han Panlawas ha Baryo / Sentro han Panlawas ha Syudad",
  "Satisfied": "Kuntento",
  "Self-employed without any paid employee": "Nagtatrabaho ha kalugaringon nga waray bisan hin-o nga sweldado nga empleyado",
- "Senior citizen (i.e., residents of the Philippines, aged sixty (60) years or above and are not currently covered by any membership category of PhilHealth and qualified dependents of senior citizen members who are also senior citizen themselves or belonging to other membership categories, with or without coverage who are senior citizens themselves)": "(i.e., mga residente ha Pilipinas, nag- edad saysenta (60)anyos o ihbaw pa ngab dire sakop ha bisan ano nga kategorya nga sakop han Philhealth ngan kwalipikado nga dependent han miyembro nga senior citizen o nga sakop han iba nga mga kategorya han mga miyembro, nga mayda o waray sakop nga mga senior citizen mismo)",
  "Separated": "Nagbulag",
  "Short-Cycle Tertiary Education or Equivalent (including Technical and Vocational degrees with a diploma)": "Short-Cycle Tertiary nga Edukasyon o Kapareho (lakip an Teknikal ug Bokasyonal nga mga degree nga may diploma)",
  "Sick": "Masakit",
@@ -765,8 +763,6 @@
  "Took a long time": "Nag-iha hin panahon",
  "Did not know the required documents to register": "Waray maaram han mga kinahanglanon nga dokumento para magparehistro",
  "Did not know where to ask for help": "Diri maaram kun diin mangangaro hin bulig",
- "Lifetime member (i.e., individuals aged 60 years and above, uniformed personnel aged 56 years and above, and SSS underground miner-retirees aged 55 years and above and paid at least 120 monthly contributions with PhilHealth and the former Medicare...": "Programs of SSS and GSIS) Miyembro ha bug-os nga kinabuhi (i.e., mga indibidwal nga nag-eedad hin 60 anyos tipaigbaw, mga unipormado nga mga tawohan nga nag-eedad hin 56 anyos tipaigbaw, ngan SSS underground miner-retirees nga nag-eedad hin 55 anyos tipaigbaw ngan nagbayad hin diri maubos hin 120 kada bulan nga kontribusyon ha",
- "Senior citizen (i.e., residents of the Philippines, aged sixty (60) years or above and are not currently covered by any membership category of PhilHealth and qualified dependents of senior citizen members who are also senior citizen themselves or...": "belonging to other membership categories, with or without coverage who are senior citizens themselves) (i.e., mga residente ha Pilipinas, nag- edad saysenta (60)anyos o ihbaw pa ngab dire sakop ha bisan ano nga kategorya nga sakop han",
  "46. What are some of the benefits that come with being a PhilHealth member?": "Ano an pipira nga mga benepisyo nga naabot ha pagigin miyembro han",
  "No balance billing for basic ward accommodation": "Waray balanse nga pagsukot para han panguna nga akomodasyon ha ward",
  "There are no benefits to being a member": "Waray mga benepisyo an pagin miyembro",
@@ -868,7 +864,6 @@
  "Free, charge to Private Insurance": "Libre, babaydan hit Pribado nga Insurance",
  "93. Did you have any of the following laboratory tests done during your outpatient care?": "Check all that apply. Mayda ka ba ginbuhat nga mga test ha laboratoryo durante han imo pag-ataman ha gawas? Tseke an ngatanan nga aplikado",
  "Creatinine": "None Waray 94. How much was the cost of [",
- "Other expenses": "during your OPD visit that were not included in the",
  "100. If yes, what are your sources of information about this BUCAS center?": "Kun oo, ano an iyo mga pinagkukuhaan hin impormasyon mahitungod hini nga sentro han BUCAS? News Balita",
  "101. What is your understanding about a BUCAS center?": "Ano an iyo pag-intindi han usa nga sentro han BUCAS? DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. AYAW BASAHA HA DAKU NGA TINGOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO",
  "Provides urgent care for non-life-threatening/serious conditions": "Naghahatag hin apurado nga pag-ataman para han diri-makamatay/grabe nga mga kahimtang",
@@ -958,5 +953,7 @@
  "Facility is usual source of care": "An pasilidad amo an kasagaran nga surok han pag- ataman",
  "ZBB eligibility": "Pagkakwalipikado ha ZBB",
  "Facility is the only place that can perform a certain test": "An pasilidad amo la an lugar nga makakahimo hin usa nga pagtesting",
- "Referred by BHW/nurse/midwife/other community health professional": "Ginrefer han BHW/nurse/midwife/iba pa nga propesyonal ha panlawas han komunidad"
+ "Referred by BHW/nurse/midwife/other community health professional": "Ginrefer han BHW/nurse/midwife/iba pa nga propesyonal ha panlawas han komunidad",
+ "Lifetime member (i.e., individuals aged 60+, uniformed personnel aged 56+, and SSS underground miner-retirees aged 55+ who paid at least 120 monthly contributions with PhilHealth and the former Medicare Programs of SSS and GSIS)": "Miyembro ha bug-os nga kinabuhi (i.e., mga indibidwal nga nag-eedad hin 60 anyos tipaigbaw, mga unipormado nga mga tawohan nga nag-eedad hin 56 anyos tipaigbaw, ngan SSS underground miner-retirees nga nag-eedad hin 55 anyos tipaigbaw ngan nagbayad hin diri maubos hin 120 kada bulan nga kontribusyon ha PhilHealth ngan han anay Medicare Programs han SSS ngan GSIS)",
+ "Senior citizen (i.e., residents of the Philippines aged sixty (60) years or above not currently covered by any PhilHealth membership category, and qualified dependents of senior citizen members who are themselves senior citizens)": "(i.e., mga residente ha Pilipinas, nag- edad saysenta (60)anyos o ihbaw pa ngab dire sakop ha bisan ano nga kategorya nga sakop han Philhealth ngan kwalipikado nga dependent han miyembro nga senior citizen o nga sakop han iba nga mga kategorya han mga miyembro, nga mayda o waray sakop nga mga senior citizen mismo)"
 }

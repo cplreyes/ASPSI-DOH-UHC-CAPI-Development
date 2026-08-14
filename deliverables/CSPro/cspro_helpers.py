@@ -283,7 +283,11 @@ def select_all(prefix, label, options, with_other_txt=None):
             value_set_options=YES_NO,
         ))
     if with_other_txt is None:
-        with_other_txt = bool(options) and "specify" in options[-1][0].lower()
+        # #1037 (F1 Q163): detect the specify option ANYWHERE in the list, not just
+        # last — paper option order can put an exclusive (e.g. "I don't know") after
+        # "Other (specify)". Last-only detection silently dropped the _OTHER_TXT dict
+        # item while the apc still emitted its PROC -> Publish "PROC invalid" error.
+        with_other_txt = any("specify" in text.lower() for text, _ in options)
     if with_other_txt:
         items.append(alpha(f"{prefix}_OTHER_TXT",
                            f"{label} — Other (specify) text",
@@ -310,7 +314,11 @@ def checkbox_multiselect(prefix, label, options, with_other_txt=None):
     }
     items = [item]
     if with_other_txt is None:
-        with_other_txt = bool(options) and "specify" in options[-1][0].lower()
+        # #1037 (F1 Q163): detect the specify option ANYWHERE in the list, not just
+        # last — paper option order can put an exclusive (e.g. "I don't know") after
+        # "Other (specify)". Last-only detection silently dropped the _OTHER_TXT dict
+        # item while the apc still emitted its PROC -> Publish "PROC invalid" error.
+        with_other_txt = any("specify" in text.lower() for text, _ in options)
     if with_other_txt:
         items.append(alpha(f"{prefix}_OTHER_TXT",
                            f"{label} — Other (specify) text", length=120))
@@ -374,8 +382,32 @@ def _case_control_items(survey_code):
     return []
 
 
+def _date_fmt(mmddyyyy):
+    """Prompt suffix for the two visit-date fields.
+
+    #1132/#1174 (ASPSI 2026-08-06): the paper asks the enumerator for MMDDYYYY, the CAPI
+    asked for YYYYMMDD. Opting an instrument in flips only the PROMPT — the value is
+    converted back to YYYYMMDD in that instrument's date postproc, so STORAGE never
+    changes and every downstream consumer (final<first check, MM/DD/YYYY echo, Supervisor
+    App, cross-instrument parsers) is untouched.
+
+    Opt-in per instrument ON PURPOSE, and it is not cosmetic: flipping this without also
+    adding the conversion postproc would have enumerators typing MMDDYYYY into a field
+    stored raw as YYYYMMDD, silently corrupting every date. Only flip it together with
+    that PROC.
+
+    ALSO re-key the translations whenever this suffix changes (#1099, 2026-08-12).
+    apply_translations() below matches on the FULL English label text and falls back to
+    English SILENTLY on a miss, so a relabel orphans every translations/<loc>.json key for
+    the affected items and the row quietly reverts to English with no warning — F4's Waray
+    visit-date labels sat broken this way for six days. Move the keys, copy the values
+    verbatim, and never author translated text as part of a relabel.
+    """
+    return "MMDDYYYY" if mmddyyyy else "YYYYMMDD"
+
+
 def build_field_control(survey_code, extra_items=None, date_label_entity="the Facility",
-                        result_options=None):
+                        result_options=None, date_display=False, date_mmddyyyy=False):
     """Build a FIELD_CONTROL record (record type "A").
 
     Parameters
@@ -411,9 +443,18 @@ def build_field_control(survey_code, extra_items=None, date_label_entity="the Fa
         alpha("FIELD_VALIDATED_BY",        "Field Validated by",          length=50),
         alpha("FIELD_EDITED_BY",           "Field Edited by",             length=50),
         numeric("DATE_FIRST_VISITED",
-                f"Date First Visited {date_label_entity} (YYYYMMDD)", length=8),
+                f"Date First Visited {date_label_entity} ({_date_fmt(date_mmddyyyy)})", length=8),
+        # #1099 (F4 pretest): optional read-only MM/DD/YYYY echo under each date.
+        # The STORED composition is always YYYYMMDD (Supervisor App + cross-instrument
+        # parsers depend on it). Under #1132/#1174 the TYPED order may now differ from
+        # the stored one — see date_mmddyyyy — which makes this echo the enumerator's
+        # confirmation that their entry parsed correctly. Opt-in (date_display=True).
+        *([alpha("DATE_FIRST_VISITED_DISP",
+                 "Date First Visited (MM/DD/YYYY)", length=10)] if date_display else []),
         numeric("DATE_FINAL_VISIT",
-                f"Date of Final Visit to {date_label_entity} (YYYYMMDD)", length=8),
+                f"Date of Final Visit to {date_label_entity} ({_date_fmt(date_mmddyyyy)})", length=8),
+        *([alpha("DATE_FINAL_VISIT_DISP",
+                 "Date of Final Visit (MM/DD/YYYY)", length=10)] if date_display else []),
         numeric("TOTAL_NUMBER_OF_VISITS",  "Total Number of Visits",      length=3),
         numeric("ENUM_RESULT_FIRST_VISIT", "Result of First Visit",       length=1,
                 value_set_options=results),
@@ -794,12 +835,29 @@ def build_dictionary(dict_name, dict_label, records=None,
 CSPRO_LABEL_MAX = 255  # CSPro hard limit on any label (item/value/value-set/record).
 
 
-def _truncate_long_labels(node, max_len=CSPRO_LABEL_MAX):
+def _truncate_long_labels(node, max_len=CSPRO_LABEL_MAX, hits=None):
     """Recursively cap every labels[].text at CSPro's max_len, truncating at a word
     boundary + '...'. CSPro rejects a dictionary outright if any label exceeds 255
     chars; long verbatim option/category descriptions from the questionnaire trip this.
-    Returns the count truncated. The full text remains in the questionnaire source."""
-    n = 0
+    Returns a list of (language, original_length, truncated_text) for everything capped.
+
+    This is a LAST-RESORT safety net, not a feature. A capped label is a real defect on
+    two counts, which is why write_dcf now NAMES every label it cuts instead of printing
+    a bare count (#1177, 2026-08-09 — the bare count is why the two below went unnoticed
+    through several deployed builds):
+
+      1. The enumerator reads a definition that stops mid-sentence.
+      2. It silently breaks translation lookup. apply_translations() keys off the FULL
+         English source text, but a translation map extracted from an already-truncated
+         .dcf carries the TRUNCATED string as its key. Those never match, so the label
+         falls back to English in precisely the languages that had a translation.
+         F3 Q45 'Lifetime member' / 'Senior citizen' shipped English in FIL/HIL/ILO
+         for exactly this reason.
+
+    The fix for a capped label is always to shorten it AT SOURCE and re-key its
+    translation entries — never to let this function silently absorb it."""
+    if hits is None:
+        hits = []
     if isinstance(node, dict):
         labs = node.get("labels")
         if isinstance(labs, list):
@@ -811,13 +869,13 @@ def _truncate_long_labels(node, max_len=CSPRO_LABEL_MAX):
                     if sp > max_len * 0.6:
                         cut = cut[:sp]
                     lab["text"] = cut.rstrip(" ,;:-") + "..."
-                    n += 1
+                    hits.append((lab.get("language", "?"), len(t), lab["text"]))
         for k, v in node.items():
-            n += _truncate_long_labels(v, max_len)
+            _truncate_long_labels(v, max_len, hits)
     elif isinstance(node, list):
         for x in node:
-            n += _truncate_long_labels(x, max_len)
-    return n
+            _truncate_long_labels(x, max_len, hits)
+    return hits
 
 
 def write_dcf(dictionary, out_path):
@@ -836,9 +894,31 @@ def write_dcf(dictionary, out_path):
           Items:   <n>  (sum across all records)
     """
     out_path = Path(out_path)
-    n_truncated = _truncate_long_labels(dictionary)
-    if n_truncated:
-        print(f"  Capped {n_truncated} label(s) at {CSPRO_LABEL_MAX} chars (CSPro max)")
+    capped = _truncate_long_labels(dictionary)
+    if capped:
+        # An EN cap and a translation cap are NOT the same severity, so report them apart
+        # (#1177). EN is the authored source AND the key apply_translations() looks up:
+        # capping it truncates the text *and* silently drops that label's translation in
+        # every locale. Those are named individually - they are always a bug to fix at
+        # source. A capped translation only truncates that one locale's display, so those
+        # are summarised per language and belong in the next translation pass.
+        en = [c for c in capped if c[0] == "EN"]
+        other = [c for c in capped if c[0] != "EN"]
+        if en:
+            print(f"  !! {len(en)} ENGLISH label(s) exceed {CSPRO_LABEL_MAX} chars and were cut. "
+                  f"Fix AT SOURCE - a capped EN label also breaks its translation lookup:")
+            for _lang, orig_len, text in en:
+                # ASCII-safe: build logs run on a cp1252 console and questionnaire text
+                # carries non-breaking hyphens, curly quotes and other non-cp1252 chars.
+                safe = text[:80].encode("ascii", "replace").decode("ascii")
+                print(f"       {orig_len} chars -> {safe}...")
+        if other:
+            by_lang = {}
+            for lang, _orig_len, _text in other:
+                by_lang[lang] = by_lang.get(lang, 0) + 1
+            summary = ", ".join(f"{k}:{v}" for k, v in sorted(by_lang.items()))
+            print(f"  -- {len(other)} translated label(s) cut at {CSPRO_LABEL_MAX} chars "
+                  f"({summary}) - for the next translation pass, display only")
     out_path.write_text(json.dumps(dictionary, indent=2), encoding="utf-8")
 
     record_list = dictionary["levels"][0]["records"]
@@ -930,6 +1010,15 @@ def apply_translations(dictionary, translations_dir, languages=TRANSLATION_LANGU
         matched, total = counts[code]
         pct = (100 * matched // total) if total else 0
         print(f"    {code}: {matched}/{total} labels translated ({pct}%)")
+
+    # #1099 note: a reworded English label silently orphans its translation keys and the
+    # row reverts to English with no warning (F4's Waray visit dates sat broken this way
+    # for six days). An automatic detector was prototyped and NOT kept: the locale files
+    # are shared across instruments, so ~1,700 keys legitimately belong to other
+    # dictionaries, and even a near-miss heuristic still flagged 163-232 false positives
+    # per instrument — noise at that level just trains people to ignore it. Until the
+    # locale files are split per instrument, the guard is procedural: re-key on every
+    # relabel (see _date_fmt's docstring), values verbatim.
     return dictionary
 
 

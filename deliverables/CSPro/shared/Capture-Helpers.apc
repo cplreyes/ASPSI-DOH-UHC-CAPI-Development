@@ -59,12 +59,13 @@ PROC GLOBAL
   never a cached gps(readlast) — so a fix can never leak across facilities. }
 
 numeric gpsRadioOpen = 0;   { 1 while this session holds the radio open }
+numeric gpsFailedTries = 0; { consecutive failed reads — drives the #1209 retry escalation }
 
 
 function WarmUpGPS()
     { Open the GPS radio early so acquisition runs in the background.
-      Non-blocking (no progress dialog) and flag-guarded, so it is safe to
-      call from a field preproc that re-fires on partial-save resume. }
+      Non-blocking (no progress dialog), so it is safe to call from a field
+      preproc that re-fires on partial-save resume. }
 
     { Windows desktop (getos 10..19) has no GPS radio — desk-test no-op. }
     if getos() in 10:19 then
@@ -72,13 +73,23 @@ function WarmUpGPS()
         exit;
     endif;
 
-    if gpsRadioOpen = 0 then
-        if gps(open) then
-            gpsRadioOpen = 1;
-        endif;
-        { no errmsg on failure here — this is a background warm-up; the
-          capture-time read reports hardware problems to the enumerator }
+    { #1209: re-assert the radio UNCONDITIONALLY instead of trusting the flag.
+      gpsRadioOpen is a PROC GLOBAL, so it outlives the case — but the radio does
+      not. A case that ends via endlevel (F3 Postponed / Withdraw, F1 Postponed /
+      Refused) never reaches the ReleaseGPS() in its last GPS block, so the flag
+      leaked "open" into every later case of the same CSEntry session, and the old
+      flag-guard then suppressed gps(open) for the rest of that session — every
+      later read failed with "No GPS fix" and the enumerator never even saw the
+      hardware/permission message. gps(open) on an already-open radio is a cheap
+      no-op, so re-asserting costs nothing on the normal path and self-heals. }
+    if gps(open) then
+        gpsRadioOpen = 1;
+    else
+        gpsRadioOpen = 0;
     endif;
+    gpsFailedTries = 0;   { fresh warm-up -> the next read gets the short budget }
+    { no errmsg on failure here — this is a background warm-up; the
+      capture-time read reports hardware problems to the enumerator }
 
     WarmUpGPS = gpsRadioOpen;
 end;
@@ -110,15 +121,36 @@ function ReadGPSReading(numeric maxTimeSec, numeric desiredAccuracyM)
         gpsRadioOpen = 1;
     endif;
 
-    numeric result = gps(read, maxTimeSec, desiredAccuracyM);
+    { #1209 escalating budget. The FIRST attempt at a field stays short so nobody
+      is parked on a dead field, but re-entering the field is an explicit "try
+      harder" from the enumerator, so each CONSECUTIVE FAILED read buys a longer
+      window (15 -> 30 -> 45 s, capped at 60). A cold receiver needs 30-120 s for
+      a first fix, so a flat 15 s could never reach a fix it was seconds away
+      from — the retry the message advertises used to be a no-op. Reset on
+      success and by WarmUpGPS() at case start. }
+    numeric budgetSec = maxTimeSec * (gpsFailedTries + 1);
+    if budgetSec > 60 then
+        budgetSec = 60;
+    endif;
+
+    numeric result = gps(read, budgetSec, desiredAccuracyM);
     { radio deliberately NOT closed — kept warm for retries / later GPS blocks }
 
     if result <> 1 then
-        errmsg("No GPS fix after %d s — move near a window or doorway and re-enter this field to retry.",
-               maxTimeSec);
+        gpsFailedTries = gpsFailedTries + 1;
+        { Clear the flag but do NOT gps(close): closing discards the acquisition
+          progress and makes every retry cold-start (the bug fixed 2026-07-19).
+          Clearing alone makes the next call re-issue gps(open) — a no-op when the
+          radio really is open, and the recovery path when the flag had gone stale
+          because an earlier case exited before ReleaseGPS(). }
+        gpsRadioOpen = 0;
+        errmsg("No GPS fix after %d s. Move outdoors or beside a window, then re-enter this field to retry — each retry searches longer. You may also leave GPS blank and finish the case.",
+               budgetSec);
         ReadGPSReading = 0;
         exit;
     endif;
+
+    gpsFailedTries = 0;   { a good read resets the escalation }
 
     if gps(accuracy) > desiredAccuracyM then
         errmsg("GPS accuracy %d m exceeds target %d m — consider a retry outdoors.",

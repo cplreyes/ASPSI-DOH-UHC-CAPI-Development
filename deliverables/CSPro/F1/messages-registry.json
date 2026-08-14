@@ -1,6 +1,6 @@
 {
   "_note": "Machine-managed by cspro_helpers.numberize_errmsgs() — do not hand-edit. Maps each errmsg text to its permanent message number; numbers are never reused or renumbered.",
-  "next": 1205,
+  "next": 1228,
   "messages": {
     "PSGC region lookup failed — verify psgc_region.dat is deployed": 1001,
     "GPS hardware unavailable — check tablet location permission.": 1002,
@@ -205,6 +205,29 @@
     "No GPS fix after %d s — move near a window or doorway and re-enter this field to retry.": 1201,
     "An 'other' option was selected for Q2. Please specify.": 1202,
     "Q103: 'Other (specify)' was selected. Please specify.": 1203,
-    "Q110: 'Other (specify)' was selected. Please specify.": 1204
+    "Q110: 'Other (specify)' was selected. Please specify.": 1204,
+    "Q121: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1205,
+    "Q137: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1206,
+    "Q140: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1207,
+    "Q151: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1208,
+    "Q156: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1209,
+    "Q160: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1210,
+    "Q163: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1211,
+    "Q165: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1212,
+    "Q166: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1213,
+    "Q49: 'I don't know' must be the only choice — untick it or the other options before continuing.": 1214,
+    "Q50: 'I don't know' must be the only choice — untick it or the other options before continuing.": 1215,
+    "Q53: 'I don't know' must be the only choice — untick it or the other options before continuing.": 1216,
+    "Q53: 'All of the above' must be the only choice — untick it or the other options before continuing.": 1217,
+    "Q58: 'I don't know' must be the only choice — untick it or the other options before continuing.": 1218,
+    "Q65: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1219,
+    "Q75: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1220,
+    "Q76: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1221,
+    "Q96: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1222,
+    "Q98: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1223,
+    "Q99: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1224,
+    "Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.": 1225,
+    "Q58: 'No requirements' must be the only choice — untick it or the other options before continuing.": 1226,
+    "No GPS fix after %d s. Move outdoors or beside a window, then re-enter this field to retry — each retry searches longer. You may also leave GPS blank and finish the case.": 1227
   }
 }

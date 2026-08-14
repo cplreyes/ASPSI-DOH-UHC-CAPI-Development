@@ -31,7 +31,21 @@ OUT = HERE / "HouseholdSurvey.ent.qsf"
 # can sit at case-end on the form (v1.0.1). Same string in every language — UI chrome, not
 # questionnaire text.
 _BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F4"]
-BUILD_FOOTER = f'<p class="instruction">Build: F4 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+# #1191 (PSA/SJREB, 2026-08-11): survey-tool details required on the CAPI tool. The
+# clearance block is defined once in ../icf_content.py — the ICF screens carry the
+# same block, and two copies of a cleared reference number would eventually diverge.
+import sys as _sys
+_sys.path.insert(0, str(HERE.parent))
+import icf_content as _icf
+
+# #1190: brand-book main logo sequence on the first page — see F1/generate_qsf.py.
+import base64 as _b64
+_LOGO_B64 = _b64.b64encode((HERE.parent / "cover_logos.png").read_bytes()).decode()
+_LOGO_HTML = f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
+
+BUILD_FOOTER = (_LOGO_HTML
+                + f'<p class="instruction">Build: F4 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+                + _icf.clearance_html("F4"))
 
 STYLES = """styles:
   - name: Normal
@@ -139,10 +153,15 @@ CONSENT_HTML = "".join([
 # Item-name → question-text HTML. Overrides win over the dcf-label default
 # and are emitted identically for every declared language (English fallback
 # until SJREB-approved ICF translations arrive).
-# CONSENT_GIVEN removed 2026-06-12 — consent script is read from the printed
-# sheet (off the CAPI), so no question-text override. (CONSENT_HTML above is
-# kept as reference only; nothing emits it.)
-OVERRIDES = {}
+# CONSENT_GIVEN removed 2026-06-12 — no consent DECISION is captured on the CAPI, and
+# that has not changed. What DID change (2026-08-13): ASPSI sent "Suggested Layout
+# (CSEntry).docx", putting the consent SCRIPT back on the device as two read-aloud
+# screens with the clearance block. Its wording supersedes CONSENT_HTML above (which
+# remains unemitted, kept only as the Annex H reference). Text: ../icf_content.py.
+OVERRIDES = {
+    "ICF_PART1": _icf.build_screen_html("F4", 1, _LOGO_HTML),
+    "ICF_PART2": _icf.build_screen_html("F4", 2, _LOGO_HTML),
+}
 
 
 # ------------------------------------------------------------------
@@ -161,15 +180,33 @@ _PWD_CARD = ("Enumerator Instruction (DO NOT READ ALOUD): If the PWD "
              "Identification Card is presented, record the type of disability "
              "as indicated on the card. Do not ask the respondent directly.")
 _GAMOT_FAC = "Enumerator: Applicable only to respondents in areas with GAMOT facility."
+_SELECT_ALL = "SELECT ALL THAT APPLY."
 
 INSTRUCTIONS = {
-    **dict.fromkeys([4, 5, 6, 17, 110, 111, 118, 125], _READ_ONE),
+    # #1069/#1070 (pretest 2026-08-05): bare "SELECT ALL THAT APPLY." on the
+    # multi-selects the paper marks but that carried no note (all 9 verified
+    # checkbox_multiselect in generate_dcf). Mirrors F3's #1055.
+    # #1206 (2026-08-12): Q65 and Q84 join the sweep. Both are genuine
+    # checkbox_multiselect captures, but the Apr-20 paper prints no grid for
+    # either (Q65 is a bare "CODING FOR QUESTION 65" block; Q84's options were
+    # added under #814), so neither was caught by the #1069/#1070 pass.
+    **dict.fromkeys([65, 66, 70, 71, 74, 77, 78, 84, 106, 107, 202], _SELECT_ALL),
+    **dict.fromkeys([4, 5, 6, 110, 111, 118, 125], _READ_ONE),
+    # #1068 (pretest 2026-08-05): Q17 carries the paper's decision-maker definition
+    # ahead of the standard read-instruction (same definition F3's Q34 got in #1051).
+    17: ("This is the person who makes decisions on health in the family: for "
+         "example, yearly immunizations, manages hospital finances, etc. "
+         + _READ_ONE),
     **dict.fromkeys([7, 11, 80, 81, 112], _DNR_ONE),
     **dict.fromkeys([82, 88, 102, 103, 109, 143], _READ_ALL),
     **dict.fromkeys([52, 53, 55, 56, 58, 59, 85, 91, 93, 94, 113, 121, 127,
                      128, 133, 134, 137], _DNR_ALL),
     **dict.fromkeys([10, 38], _PWD_CARD),
     **dict.fromkeys([70, 71, 72], _GAMOT_FAC),
+    # #1070: Q70/Q71 sit in the GAMOT-area list above (last-key-wins), so their
+    # select-all note must be APPENDED, not merged from the fromkeys block.
+    70: _GAMOT_FAC + " " + _SELECT_ALL,
+    71: _GAMOT_FAC + " " + _SELECT_ALL,
     1: ("Note to enumerator [do not read]: This section is for the Respondent "
         "Profile. The respondent should be the main-decision maker of the "
         "household. Ask all questions in this section unless a skip rule applies."),
@@ -177,12 +214,21 @@ INSTRUCTIONS = {
          "looking for work”. " + _READ_ONE),
     13: _READ_ONE + " IF MORE THAN ONE, ASK FOR THE MAIN SOURCE.",
     15: _DNR_ONE,   # #791: removed the custom "A list will be provided…" enumerator note per tester; standard read-instruction kept
-    18: ("Enumerator note: Tick the income category that corresponds to the "
-         "respondent’s approximate household income."),
+    # #1202: the Q18 notes moved to INSTRUCTIONS_BY_NAME below. Q18 is two fields on one
+    # paper number, so a number key sprayed the bracket's note onto the amount box too
+    # (the same spray F3 fixed in #1048).
     19: ("Please count yourself and all the people who usually live with you. "
          "Please include those who are not living here now but will be back "
          "within six months, BUT do not include OFWs."),
     29: "Please choose one from the options I will mention.",
+    # #1074 put the PhilHealth membership-category definitions here, in a note above the
+    # question, because the two longest blow CSPro's 255-char label cap.
+    # #1177 (ASPSI, 2026-08-06) asked for them BESIDE each option instead: reading a wall
+    # of ten definitions before the options, then the bare options, made the enumerator
+    # hold all ten in their head. The definitions now live in the Q46 value-set labels
+    # (generate_dcf.py), so this note is deleted rather than duplicated — otherwise the
+    # enumerator reads every definition twice. The cap is handled there by condensing the
+    # two long ones; see the comment on Q46_MEMBER_CATEGORY.
     30: ("Note to enumerator [do not read]: This section is for the "
          "characteristics of the Household. The respondent can answer on behalf "
          "of the household member. However, if the household member is present "
@@ -260,6 +306,20 @@ INSTRUCTIONS = {
           "waited until the symptoms were more serious because you were "
           "worried about the cost of the consultation or treatment, the "
           "travel to the facility, or the time off work."),
+}
+
+# Item-NAME-keyed instructions — for notes belonging to ONE component of a multi-field
+# question, where the paper-number key would spray the note across every Q<n>_* field.
+# Wins over the number-keyed map above. Mirrors F3's map (#1048).
+INSTRUCTIONS_BY_NAME = {
+    # #1202: Q18 renders as the paper's two parts. The amount box gets the missing-value
+    # note (the -98/-99 sentinels the apc already accepts); the dropdown gets the category
+    # note. Both used to sit inside the dictionary labels, so they rendered as question text.
+    "Q18_INCOME_AMOUNT": ("Enumerator note: Ensure that the respondent will provide a valid "
+                          "response. In case the respondent fails to provide one, input -98 "
+                          "for “I don’t know” and -99 for “Refuse to Answer”."),
+    "Q18_INCOME_BRACKET": ("Enumerator note: Select the income category that corresponds to "
+                           "the respondent’s approximate household income."),
 }
 
 SECTION_INTROS = {
@@ -423,10 +483,14 @@ def question_extras(nm, intro_used):
             pre = f"<p>{_esc(SECTION_INTROS[tgt])}</p>"
             intro_used.add(tgt)
             break
-    instr = INSTRUCTIONS.get(q)
+    # #1202: an explicit item-name key wins over the paper-number map (F3 #1048 pattern).
+    # A name key is deliberate, so it is exempt from the #667 _TXT/_SUBQ suppression.
+    instr = INSTRUCTIONS_BY_NAME.get(nm)
     # #667: suppress the parent question's instruction note on decimal sub-questions
     # (Q<n>_<m>_…, e.g. Q141_1_NO_RECEIPT_AMT_PHP) and on free-text *_TXT capture fields.
-    if instr and not nm.endswith("_TXT") and not _SUBQ.match(nm):
+    if instr is None and not nm.endswith("_TXT") and not _SUBQ.match(nm):
+        instr = INSTRUCTIONS.get(q)
+    if instr:
         post = f'<p class="instruction">{_esc(instr)}</p>'
     return pre, post
 

@@ -151,10 +151,13 @@ def ideal(name, meta):
         return "DropDown"
     if m.get("vs", 0) >= DROPDOWN_MIN:
         return "DropDown"
-    # Calendar picker for interviewer-entered YYYYMMDD dates (kills format typos;
-    # the apc range checks stay as the backstop).
+    # Calendar picker for interviewer-entered dates (kills format typos; the apc
+    # range checks stay as the backstop). #1174: the F3 labels now read (MMDDYYYY)
+    # — match either spelling, but KEEP the stored composition YYYYMMDD (a
+    # MMDDYYYY-format picker would mis-parse stored 20YY... values on revisit).
     if (m.get("type") == "numeric" and m.get("len") == 8 and not m.get("vs")
-            and "YYYYMMDD" in (m.get("label") or "").upper()):
+            and any(t in (m.get("label") or "").upper()
+                    for t in ("YYYYMMDD", "MMDDYYYY"))):
         return "Date,YYYYMMDD"
     return None   # leave whatever it is
 

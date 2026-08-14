@@ -20,12 +20,9 @@ Language = EN
 1016 Select at least one option for Q117 before continuing.
 1017 "'Other (specify)' was ticked for Q117 - please specify."
 1018 Select at least one option for Q121 before continuing.
-1019 Q121: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.
 1020 Select at least one option for Q137 before continuing.
-1021 Q137: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.
 1022 "'Other (specify)' was ticked for Q137 - please specify."
 1023 Select at least one option for Q140 before continuing.
-1024 Q140: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.
 1025 "'Other (specify)' was ticked for Q140 - please specify."
 1026 Select at least one option for Q144 before continuing.
 1027 "'Other (specify)' was ticked for Q144 - please specify."
@@ -36,7 +33,6 @@ Language = EN
 1032 Select at least one option for Q149 before continuing.
 1033 "'Other (specify)' was ticked for Q149 - please specify."
 1034 Select at least one option for Q151 before continuing.
-1035 Q151: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.
 1036 "'Other (specify)' was ticked for Q151 - please specify."
 1037 Select at least one option for Q155 before continuing.
 1038 "'Other (specify)' was ticked for Q155 - please specify."
@@ -45,11 +41,9 @@ Language = EN
 1041 Select at least one option for Q159 before continuing.
 1042 "'Other (specify)' was ticked for Q159 - please specify."
 1043 Select at least one option for Q160 before continuing.
-1044 Q160: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.
 1045 Select at least one option for Q162 before continuing.
 1046 "'Other (specify)' was ticked for Q162 - please specify."
 1047 Select at least one option for Q163 before continuing.
-1048 Q163: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.
 1049 "'Other (specify)' was ticked for Q163 - please specify."
 1050 Select at least one option for Q165 before continuing.
 1051 "'Other (specify)' was ticked for Q165 - please specify."
@@ -60,35 +54,27 @@ Language = EN
 1056 Age (%d) is below 18 - a facility head must be an adult. Please re-enter.
 1057 Age (%d) is unusually high for a facility head - please confirm.
 1058 Select at least one option for Q49 before continuing.
-1059 Q49: 'I don't know' is usually the only choice — please review the options ticked.
 1060 "'Other (specify)' was ticked for Q49 — please specify."
 1061 Select at least one option for Q50 before continuing.
-1062 Q50: 'I don't know' is usually the only choice — please review the options ticked.
 1063 "'Other (specify)' was ticked for Q50 — please specify."
 1064 Month must be 1-12.
 1065 Accreditation date is in the future. Reenter.
 1066 YAKAP accreditation year must be between 2019 and %d.
 1067 Select at least one option for Q53 before continuing.
-1068 Q53: 'I don't know' is usually the only choice — please review the options ticked.
-1069 Q53: 'All of the above' was ticked with other option(s) — it should be the only choice. Please review.
 1070 "'Other (specify)' was ticked for Q53 — please specify."
 1071 Capitation %d PHP is implausibly high. Reenter or confirm.
 1072 Select at least one option for Q58 before continuing.
-1073 Q58: 'I don't know' is usually the only choice — please review the options ticked.
 1074 "'Other (specify)' was ticked for Q58 — please specify."
 1075 Respondent must have >= 6 months in current position. End interview and code as Refused/Incomplete.
 1076 Years at facility (%d) exceeds working-age years available (%d). Reenter.
 1077 Select at least one option for Q64 before continuing.
 1078 "'Other (specify)' was ticked for Q64 — please specify."
 1079 Select at least one option for Q65 before continuing.
-1080 Q65: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.
 1081 Years in any health-related role (%d mos) cannot be less than years at this facility (%d mos).
 1082 Years in health (%d) exceeds working-age years available (%d).
 1083 Select at least one option for Q75 before continuing.
-1084 Q75: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.
 1085 "'Other (specify)' was ticked for Q75 - please specify."
 1086 Select at least one option for Q76 before continuing.
-1087 Q76: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.
 1088 "'Other (specify)' was ticked for Q76 - please specify."
 1089 Select at least one option for Q78 before continuing.
 1090 "'Other (specify)' was ticked for Q78 - please specify."
@@ -99,13 +85,10 @@ Language = EN
 1095 Select at least one option for Q94 before continuing.
 1096 "'Other (specify)' was ticked for Q94 - please specify."
 1097 Select at least one option for Q96 before continuing.
-1098 Q96: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.
 1099 "'Other (specify)' was ticked for Q96 - please specify."
 1100 Select at least one option for Q98 before continuing.
-1101 Q98: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.
 1102 "'Other (specify)' was ticked for Q98 - please specify."
 1103 Select at least one option for Q99 before continuing.
-1104 Q99: an exclusive option (None / No initiatives / Do not know) should be the only choice - please review the options ticked.
 1105 "'Other (specify)' was ticked for Q99 - please specify."
 1106 Select at least one option for Q122 before continuing.
 1107 "'Other (specify)' was ticked for Q122 - please specify."
@@ -200,7 +183,29 @@ Language = EN
 1198 An 'other' option was selected for Q15. Please specify.
 1199 An 'other' option was selected for Q18. Please specify.
 1200 An 'other' option was selected for Q33. Please specify.
-1201 No GPS fix after %d s — move near a window or doorway and re-enter this field to retry.
 1202 An 'other' option was selected for Q2. Please specify.
 1203 Q103: 'Other (specify)' was selected. Please specify.
 1204 Q110: 'Other (specify)' was selected. Please specify.
+1205 Q121: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1206 Q137: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1207 Q140: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1208 Q151: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1209 Q156: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1210 Q160: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1211 Q163: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1212 Q165: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1213 Q166: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1214 Q49: 'I don't know' must be the only choice — untick it or the other options before continuing.
+1215 Q50: 'I don't know' must be the only choice — untick it or the other options before continuing.
+1216 Q53: 'I don't know' must be the only choice — untick it or the other options before continuing.
+1217 Q53: 'All of the above' must be the only choice — untick it or the other options before continuing.
+1218 Q58: 'I don't know' must be the only choice — untick it or the other options before continuing.
+1219 Q65: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1220 Q75: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1221 Q76: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1222 Q96: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1223 Q98: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1224 Q99: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1225 Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.
+1226 Q58: 'No requirements' must be the only choice — untick it or the other options before continuing.
+1227 No GPS fix after %d s. Move outdoors or beside a window, then re-enter this field to retry — each retry searches longer. You may also leave GPS blank and finish the case.

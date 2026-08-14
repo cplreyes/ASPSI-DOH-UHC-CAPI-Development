@@ -50,6 +50,8 @@ Label=A. Informed Consent (Q1 gate)
 Level=1
 Size=806,300
   
+Item=ICF_PART1
+Item=ICF_PART2
 Item=Q1_IS_HH_HEAD
   
 [EndForm]
@@ -225,6 +227,17 @@ Item=Q40_EDUCATION
   
 [Form]
 Name=FORM016
+Label=C. 40. Education — Other (specify) text (REPEATING)
+Level=1
+Repeat=C_HOUSEHOLD_ROSTER
+Size=806,300
+  
+Item=Q40_EDUCATION_OTHER_TXT
+  
+[EndForm]
+  
+[Form]
+Name=FORM017
 Label=C. 41. Employment Status (REPEATING)
 Level=1
 Repeat=C_HOUSEHOLD_ROSTER
@@ -235,7 +248,7 @@ Item=Q41_EMPLOYMENT
 [EndForm]
   
 [Form]
-Name=FORM017
+Name=FORM018
 Label=C. 42. Is (NAME) covered by GSIS either as a member or dependen (REPEATING)
 Level=1
 Repeat=C_HOUSEHOLD_ROSTER
@@ -246,7 +259,7 @@ Item=Q42_GSIS
 [EndForm]
   
 [Form]
-Name=FORM018
+Name=FORM019
 Label=C. 43. Is (NAME) covered by SSS either as a member or dependent (REPEATING)
 Level=1
 Repeat=C_HOUSEHOLD_ROSTER
@@ -257,7 +270,7 @@ Item=Q43_SSS
 [EndForm]
   
 [Form]
-Name=FORM019
+Name=FORM020
 Label=C. 44. Is (NAME) covered by Pag-ibig either as a member or depe (REPEATING)
 Level=1
 Repeat=C_HOUSEHOLD_ROSTER
@@ -268,7 +281,7 @@ Item=Q44_PAGIBIG
 [EndForm]
   
 [Form]
-Name=FORM020
+Name=FORM021
 Label=C. 45. Currently registered with PhilHealth? (REPEATING)
 Level=1
 Repeat=C_HOUSEHOLD_ROSTER
@@ -279,8 +292,8 @@ Item=Q45_PHILHEALTH_REG
 [EndForm]
   
 [Form]
-Name=FORM021
-Label=C. 45.1 When did you register and receive your PhilHealth PIN?  (REPEATING)
+Name=FORM022
+Label=C. 45.1 When did you register and receive your PhilHealth PIN? (REPEATING)
 Level=1
 Repeat=C_HOUSEHOLD_ROSTER
 Size=806,300
@@ -290,7 +303,7 @@ Item=Q45_1_PIN_REG_WHEN
 [EndForm]
   
 [Form]
-Name=FORM022
+Name=FORM023
 Label=C. 46. What is his/her membership category? (REPEATING)
 Level=1
 Repeat=C_HOUSEHOLD_ROSTER
@@ -301,7 +314,7 @@ Item=Q46_MEMBER_CATEGORY
 [EndForm]
   
 [Form]
-Name=FORM023
+Name=FORM024
 Label=C. 46. Member category — Other (specify) text (REPEATING)
 Level=1
 Repeat=C_HOUSEHOLD_ROSTER
@@ -312,8 +325,8 @@ Item=Q46_MEMBER_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM024
-Label=C. 45.2 Why are you not registered? (Only answer if 'No' in Q45 (REPEATING)
+Name=FORM025
+Label=C. 45.2 Why are you not registered? (REPEATING)
 Level=1
 Repeat=C_HOUSEHOLD_ROSTER
 Size=806,300
@@ -323,7 +336,7 @@ Item=Q45_2_WHY_NOT_REG
 [EndForm]
   
 [Form]
-Name=FORM025
+Name=FORM026
 Label=C. 45.2 Why not registered — Other (specify) text (REPEATING)
 Level=1
 Repeat=C_HOUSEHOLD_ROSTER
@@ -334,7 +347,7 @@ Item=Q45_2_WHY_NOT_REG_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM026
+Name=FORM027
 Label=C. HH Private Insurance Gate (Q47)
 Level=1
 Size=806,300
@@ -344,7 +357,7 @@ Item=Q47_HH_HAS_PRIVATE_INS
 [EndForm]
   
 [Form]
-Name=FORM027
+Name=FORM028
 Label=C. Private Insurance Q48-Q50 - REPEATING (Q47=Yes; piped names)
 Level=1
 Repeat=C_PRIVATE_INS_ROSTER
@@ -358,7 +371,7 @@ Item=Q50_PRIVATE_INS_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM028
+Name=FORM029
 Label=D. UHC Awareness
 Level=1
 Size=806,300
@@ -372,7 +385,7 @@ Item=Q53_UHC_UNDERSTAND_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM029
+Name=FORM030
 Label=E. YAKAP / Konsulta
 Level=1
 Size=806,300
@@ -386,7 +399,7 @@ Item=Q56_YAKAP_UNDERSTAND_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM030
+Name=FORM031
 Label=F. BUCAS Awareness
 Level=1
 Size=806,337
@@ -404,7 +417,7 @@ Item=Q61_BUCAS_SERVICES_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM031
+Name=FORM032
 Label=G. Access to Medicines
 Level=1
 Size=806,847
@@ -439,7 +452,7 @@ Item=Q78_WHY_BRANDED_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM032
+Name=FORM033
 Label=H. PhilHealth Registration
 Level=1
 Size=806,547
@@ -464,7 +477,7 @@ Item=Q88_DIFF_PAYING_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM033
+Name=FORM034
 Label=I. Primary Care
 Level=1
 Size=806,577
@@ -490,7 +503,7 @@ Item=Q100_LEAVE_WORK_SCHOOL
 [EndForm]
   
 [Form]
-Name=FORM034
+Name=FORM035
 Label=J. Health Seeking
 Level=1
 Size=806,427
@@ -511,7 +524,7 @@ Item=Q107_OTHER_ACTIONS_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM035
+Name=FORM036
 Label=K. Referrals
 Level=1
 Size=806,757
@@ -543,7 +556,7 @@ Item=Q125_SAT_REFERRAL_EXP
 [EndForm]
   
 [Form]
-Name=FORM036
+Name=FORM037
 Label=L. NBB Awareness
 Level=1
 Size=806,307
@@ -560,7 +573,7 @@ Item=Q131_NBB_OOP
 [EndForm]
   
 [Form]
-Name=FORM037
+Name=FORM038
 Label=M. ZBB / MAIFIP / Bill-Recall
 Level=1
 Size=806,637
@@ -588,7 +601,7 @@ Item=Q143_HOW_PAID_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM038
+Name=FORM039
 Label=N. Food consumed last week (Q144-156) - one row per item
 Level=1
 Repeat=N_FOOD_ROSTER
@@ -602,7 +615,7 @@ Item=N_FOOD_INKIND_PHP
 [EndForm]
   
 [Form]
-Name=FORM039
+Name=FORM040
 Label=N. Household Expenditures (Q157)
 Level=1
 Size=806,300
@@ -612,7 +625,7 @@ Item=Q157_FOOD_SUBTOTAL_TOTAL_PHP
 [EndForm]
   
 [Form]
-Name=FORM040
+Name=FORM041
 Label=N. Restaurant + tobacco, last week (Q158-159) - one row per item
 Level=1
 Repeat=N_WKOTH_ROSTER
@@ -626,7 +639,7 @@ Item=N_WKOTH_INKIND_PHP
 [EndForm]
   
 [Form]
-Name=FORM041
+Name=FORM042
 Label=N. Non-food, last month (Q160-167) - one row per item
 Level=1
 Repeat=N_NF1M_ROSTER
@@ -640,7 +653,7 @@ Item=N_NF1M_INKIND_PHP
 [EndForm]
   
 [Form]
-Name=FORM042
+Name=FORM043
 Label=N. Non-food, last 6 months (Q168-169) - one row per item
 Level=1
 Repeat=N_NF6M_ROSTER
@@ -654,7 +667,7 @@ Item=N_NF6M_INKIND_PHP
 [EndForm]
   
 [Form]
-Name=FORM043
+Name=FORM044
 Label=N. Non-food, last 12 months (Q170-174) - one row per item
 Level=1
 Repeat=N_NF12M_ROSTER
@@ -668,7 +681,7 @@ Item=N_NF12M_INKIND_PHP
 [EndForm]
   
 [Form]
-Name=FORM044
+Name=FORM045
 Label=N. Health, last 12 months (Q175-176) - one row per item
 Level=1
 Repeat=N_H12M_ROSTER
@@ -682,7 +695,7 @@ Item=N_H12M_INKIND_PHP
 [EndForm]
   
 [Form]
-Name=FORM045
+Name=FORM046
 Label=N. Health 12-month subtotal (Q177)
 Level=1
 Size=806,300
@@ -692,7 +705,7 @@ Item=Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP
 [EndForm]
   
 [Form]
-Name=FORM046
+Name=FORM047
 Label=N. Health, last 6 months (Q178-181) - one row per item
 Level=1
 Repeat=N_H6M_ROSTER
@@ -706,7 +719,7 @@ Item=N_H6M_INKIND_PHP
 [EndForm]
   
 [Form]
-Name=FORM047
+Name=FORM048
 Label=N. Health 6-month subtotal (Q182)
 Level=1
 Size=806,300
@@ -716,7 +729,7 @@ Item=Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP
 [EndForm]
   
 [Form]
-Name=FORM048
+Name=FORM049
 Label=N. Health, last month (Q183-184) - one row per item
 Level=1
 Repeat=N_H1M_ROSTER
@@ -730,7 +743,7 @@ Item=N_H1M_INKIND_PHP
 [EndForm]
   
 [Form]
-Name=FORM049
+Name=FORM050
 Label=N. Health 1-month subtotal (Q185)
 Level=1
 Size=806,300
@@ -740,7 +753,7 @@ Item=Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP
 [EndForm]
   
 [Form]
-Name=FORM050
+Name=FORM051
 Label=O. Sources of Funds for Health
 Level=1
 Size=806,457
@@ -762,7 +775,7 @@ Item=Q196_FOREGONE_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM051
+Name=FORM052
 Label=P. Financial Risk
 Level=1
 Size=806,300
@@ -775,7 +788,7 @@ Item=Q199_WTP_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM052
+Name=FORM053
 Label=Q. Financial Anxiety
 Level=1
 Size=806,300
@@ -788,7 +801,7 @@ Item=Q202_WORRY_REASONS_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM053
+Name=FORM054
 Label=Closing - case end
 Level=1
 Size=806,337
@@ -806,7 +819,7 @@ Item=ENUM_RESULT_FINAL_VISIT
 [EndForm]
   
 [Form]
-Name=FORM054
+Name=FORM055
 Label=Case Verification Photo
 Level=1
 Size=806,300
@@ -817,7 +830,7 @@ Item=CAPTURE_VERIFICATION_PHOTO
 [EndForm]
   
 [Form]
-Name=FORM055
+Name=FORM056
 Label=FC HH GPS Capture
 Level=1
 Size=806,300
@@ -970,22 +983,60 @@ Form=4
 Max=1
   
 [Field]
-Name=Q1_IS_HH_HEAD
+Name=ICF_PART1
 Position=350,27,365,47
-Item=Q1_IS_HH_HEAD,HOUSEHOLDSURVEY_DICT
+Item=ICF_PART1,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=4
   
 [Text]
 Position=50,30,330,46
+Text=Informed Consent — read-aloud, screen 1 of 2 (study, coverage, the ask)
+ 
+  
+[Field]
+Name=ICF_PART2
+Position=350,57,365,77
+Item=ICF_PART2,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=4
+  
+[Text]
+Position=50,60,330,76
+Text=Informed Consent — read-aloud, screen 2 of 2 (privacy, risks, voluntariness)
+ 
+  
+[Field]
+Name=Q1_IS_HH_HEAD
+Position=350,87,365,107
+Item=Q1_IS_HH_HEAD,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=4
+  
+[Text]
+Position=50,90,330,106
 Text=1. Before we begin, to confirm, are you the household head?
  
   
 [Block]
 Name=DG_BLK_0
-Label=Q1
+Label=ICF_PART1
 DisplayTogether=Yes
 Position=0
+Length=1
+  
+[Block]
+Name=DG_BLK_1
+Label=ICF_PART2
+DisplayTogether=Yes
+Position=2
+Length=1
+  
+[Block]
+Name=DG_BLK_2
+Label=Q1
+DisplayTogether=Yes
+Position=4
 Length=1
   
 [EndGroup]
@@ -1288,7 +1339,7 @@ Form=5
   
 [Text]
 Position=50,720,330,736
-Text=18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer — do not read these codes aloud.)
+Text=18. In the past 6 months, what is your average monthly household income? Please specify in Philippine pesos.
  
   
 [Field]
@@ -1300,7 +1351,7 @@ Form=5
   
 [Text]
 Position=50,750,330,766
-Text=18. Income bracket — tick the category that corresponds to the approximate household income.
+Text=18. Income bracket
  
   
 [Field]
@@ -1348,7 +1399,7 @@ Form=5
   
 [Text]
 Position=50,870,330,886
-Text=22. Do you have electricity in your household?
+Text=22. Do you have electricity in your house?
  
   
 [Field]
@@ -1449,140 +1500,140 @@ Text=29. How would the socioeconomic class of your household be classified?
  
   
 [Block]
-Name=DG_BLK_1
+Name=DG_BLK_3
 Label=Q2-Q3
 DisplayTogether=Yes
 Position=0
 Length=5
   
 [Block]
-Name=DG_BLK_2
+Name=DG_BLK_4
 Label=Q4
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_3
+Name=DG_BLK_5
 Label=Q5
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_4
+Name=DG_BLK_6
 Label=Q5
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_5
+Name=DG_BLK_7
 Label=Q6-Q7
 DisplayTogether=Yes
 Position=12
 Length=2
   
 [Block]
-Name=DG_BLK_6
+Name=DG_BLK_8
 Label=Q8
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_BLK_7
+Name=DG_BLK_9
 Label=Q9
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_BLK_8
+Name=DG_BLK_10
 Label=Q10
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_BLK_9
+Name=DG_BLK_11
 Label=Q10
 DisplayTogether=Yes
 Position=21
 Length=1
   
 [Block]
-Name=DG_BLK_10
+Name=DG_BLK_12
 Label=Q11
 DisplayTogether=Yes
 Position=23
 Length=1
   
 [Block]
-Name=DG_BLK_11
+Name=DG_BLK_13
 Label=Q11
 DisplayTogether=Yes
 Position=25
 Length=1
   
 [Block]
-Name=DG_BLK_12
+Name=DG_BLK_14
 Label=Q12-Q14
 DisplayTogether=Yes
 Position=27
 Length=3
   
 [Block]
-Name=DG_BLK_13
+Name=DG_BLK_15
 Label=Q15
 DisplayTogether=Yes
 Position=31
 Length=1
   
 [Block]
-Name=DG_BLK_14
+Name=DG_BLK_16
 Label=Q16-Q17
 DisplayTogether=Yes
 Position=33
 Length=2
   
 [Block]
-Name=DG_BLK_15
+Name=DG_BLK_17
 Label=Q17
 DisplayTogether=Yes
 Position=36
 Length=1
   
 [Block]
-Name=DG_BLK_16
+Name=DG_BLK_18
 Label=Q18-Q21
 DisplayTogether=Yes
 Position=38
 Length=5
   
 [Block]
-Name=DG_BLK_17
+Name=DG_BLK_19
 Label=Q22-Q23
 DisplayTogether=Yes
 Position=44
 Length=2
   
 [Block]
-Name=DG_BLK_18
+Name=DG_BLK_20
 Label=Q23
 DisplayTogether=Yes
 Position=47
 Length=1
   
 [Block]
-Name=DG_BLK_19
+Name=DG_BLK_21
 Label=Q24-Q28
 DisplayTogether=Yes
 Position=49
 Length=5
   
 [Block]
-Name=DG_BLK_20
+Name=DG_BLK_22
 Label=Q29
 DisplayTogether=Yes
 Position=55
@@ -1872,8 +1923,32 @@ Text=40. Highest level of education attended (the highest level the person reach
 [Group]
 Required=Yes
 Name=C_HOUSEHOLD_ROSTER_FORM_12
-Label=C. 41. Employment Status (REPEATING)
+Label=C. 40. Education — Other (specify) text (REPEATING)
 Form=17
+Type=Record
+TypeName=C_HOUSEHOLD_ROSTER
+Max=20
+  
+[Field]
+Name=Q40_EDUCATION_OTHER_TXT
+Position=350,27,760,47
+Item=Q40_EDUCATION_OTHER_TXT,HOUSEHOLDSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=17
+  
+[Text]
+Position=50,30,330,46
+Text=40. Education — Other (specify) text
+ 
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=C_HOUSEHOLD_ROSTER_FORM_13
+Label=C. 41. Employment Status (REPEATING)
+Form=18
 Type=Record
 TypeName=C_HOUSEHOLD_ROSTER
 Max=20
@@ -1883,7 +1958,7 @@ Name=Q41_EMPLOYMENT
 Position=350,27,365,47
 Item=Q41_EMPLOYMENT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=17
+Form=18
   
 [Text]
 Position=50,30,330,46
@@ -1894,9 +1969,9 @@ Text=41. Employment Status
   
 [Group]
 Required=Yes
-Name=C_HOUSEHOLD_ROSTER_FORM_13
+Name=C_HOUSEHOLD_ROSTER_FORM_14
 Label=C. 42. Is (NAME) covered by GSIS either as a member or dependen (REPEATING)
-Form=18
+Form=19
 Type=Record
 TypeName=C_HOUSEHOLD_ROSTER
 Max=20
@@ -1906,7 +1981,7 @@ Name=Q42_GSIS
 Position=350,27,365,47
 Item=Q42_GSIS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=18
+Form=19
   
 [Text]
 Position=50,30,330,46
@@ -1917,9 +1992,9 @@ Text=42. Is (NAME) covered by GSIS either as a member or dependent?
   
 [Group]
 Required=Yes
-Name=C_HOUSEHOLD_ROSTER_FORM_14
+Name=C_HOUSEHOLD_ROSTER_FORM_15
 Label=C. 43. Is (NAME) covered by SSS either as a member or dependent (REPEATING)
-Form=19
+Form=20
 Type=Record
 TypeName=C_HOUSEHOLD_ROSTER
 Max=20
@@ -1929,7 +2004,7 @@ Name=Q43_SSS
 Position=350,27,365,47
 Item=Q43_SSS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=19
+Form=20
   
 [Text]
 Position=50,30,330,46
@@ -1940,9 +2015,9 @@ Text=43. Is (NAME) covered by SSS either as a member or dependent?
   
 [Group]
 Required=Yes
-Name=C_HOUSEHOLD_ROSTER_FORM_15
+Name=C_HOUSEHOLD_ROSTER_FORM_16
 Label=C. 44. Is (NAME) covered by Pag-ibig either as a member or depe (REPEATING)
-Form=20
+Form=21
 Type=Record
 TypeName=C_HOUSEHOLD_ROSTER
 Max=20
@@ -1952,7 +2027,7 @@ Name=Q44_PAGIBIG
 Position=350,27,365,47
 Item=Q44_PAGIBIG,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=20
+Form=21
   
 [Text]
 Position=50,30,330,46
@@ -1963,9 +2038,9 @@ Text=44. Is (NAME) covered by Pag-ibig either as a member or dependent?
   
 [Group]
 Required=Yes
-Name=C_HOUSEHOLD_ROSTER_FORM_16
+Name=C_HOUSEHOLD_ROSTER_FORM_17
 Label=C. 45. Currently registered with PhilHealth? (REPEATING)
-Form=21
+Form=22
 Type=Record
 TypeName=C_HOUSEHOLD_ROSTER
 Max=20
@@ -1975,7 +2050,7 @@ Name=Q45_PHILHEALTH_REG
 Position=350,27,365,47
 Item=Q45_PHILHEALTH_REG,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=21
+Form=22
   
 [Text]
 Position=50,30,330,46
@@ -1986,9 +2061,9 @@ Text=45. Currently registered with PhilHealth?
   
 [Group]
 Required=Yes
-Name=C_HOUSEHOLD_ROSTER_FORM_17
-Label=C. 45.1 When did you register and receive your PhilHealth PIN?  (REPEATING)
-Form=22
+Name=C_HOUSEHOLD_ROSTER_FORM_18
+Label=C. 45.1 When did you register and receive your PhilHealth PIN? (REPEATING)
+Form=23
 Type=Record
 TypeName=C_HOUSEHOLD_ROSTER
 Max=20
@@ -1998,20 +2073,20 @@ Name=Q45_1_PIN_REG_WHEN
 Position=350,27,365,47
 Item=Q45_1_PIN_REG_WHEN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=22
+Form=23
   
 [Text]
 Position=50,30,330,46
-Text=45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)
+Text=45.1 When did you register and receive your PhilHealth PIN?
  
   
 [EndGroup]
   
 [Group]
 Required=Yes
-Name=C_HOUSEHOLD_ROSTER_FORM_18
+Name=C_HOUSEHOLD_ROSTER_FORM_19
 Label=C. 46. What is his/her membership category? (REPEATING)
-Form=23
+Form=24
 Type=Record
 TypeName=C_HOUSEHOLD_ROSTER
 Max=20
@@ -2021,7 +2096,7 @@ Name=Q46_MEMBER_CATEGORY
 Position=350,27,365,47
 Item=Q46_MEMBER_CATEGORY,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=23
+Form=24
   
 [Text]
 Position=50,30,330,46
@@ -2032,9 +2107,9 @@ Text=46. What is his/her membership category?
   
 [Group]
 Required=Yes
-Name=C_HOUSEHOLD_ROSTER_FORM_19
+Name=C_HOUSEHOLD_ROSTER_FORM_20
 Label=C. 46. Member category — Other (specify) text (REPEATING)
-Form=24
+Form=25
 Type=Record
 TypeName=C_HOUSEHOLD_ROSTER
 Max=20
@@ -2045,7 +2120,7 @@ Position=350,27,760,47
 Item=Q46_MEMBER_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=24
+Form=25
   
 [Text]
 Position=50,30,330,46
@@ -2056,9 +2131,9 @@ Text=46. Member category — Other (specify) text
   
 [Group]
 Required=Yes
-Name=C_HOUSEHOLD_ROSTER_FORM_20
-Label=C. 45.2 Why are you not registered? (Only answer if 'No' in Q45 (REPEATING)
-Form=25
+Name=C_HOUSEHOLD_ROSTER_FORM_21
+Label=C. 45.2 Why are you not registered? (REPEATING)
+Form=26
 Type=Record
 TypeName=C_HOUSEHOLD_ROSTER
 Max=20
@@ -2068,20 +2143,20 @@ Name=Q45_2_WHY_NOT_REG
 Position=350,27,365,47
 Item=Q45_2_WHY_NOT_REG,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=25
+Form=26
   
 [Text]
 Position=50,30,330,46
-Text=45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)
+Text=45.2 Why are you not registered?
  
   
 [EndGroup]
   
 [Group]
 Required=Yes
-Name=C_HOUSEHOLD_ROSTER_FORM_21
+Name=C_HOUSEHOLD_ROSTER_FORM_22
 Label=C. 45.2 Why not registered — Other (specify) text (REPEATING)
-Form=26
+Form=27
 Type=Record
 TypeName=C_HOUSEHOLD_ROSTER
 Max=20
@@ -2092,7 +2167,7 @@ Position=350,27,760,47
 Item=Q45_2_WHY_NOT_REG_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=26
+Form=27
   
 [Text]
 Position=50,30,330,46
@@ -2105,7 +2180,7 @@ Text=45.2 Why not registered — Other (specify) text
 Required=Yes
 Name=C_HH_PRIVATE_INS_GATE_FORM
 Label=C. HH Private Insurance Gate (Q47)
-Form=27
+Form=28
 Max=1
   
 [Field]
@@ -2113,7 +2188,7 @@ Name=Q47_HH_HAS_PRIVATE_INS
 Position=350,27,365,47
 Item=Q47_HH_HAS_PRIVATE_INS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=27
+Form=28
   
 [Text]
 Position=50,30,330,46
@@ -2121,7 +2196,7 @@ Text=47. Do you or other members of your HH have private insurance?
  
   
 [Block]
-Name=DG_BLK_21
+Name=DG_BLK_23
 Label=Q47
 DisplayTogether=Yes
 Position=0
@@ -2133,7 +2208,7 @@ Length=1
 Required=Yes
 Name=C_PRIVATE_INS_ROSTER_FORM
 Label=C. Private Insurance Q48-Q50 - REPEATING (Q47=Yes; piped names)
-Form=28
+Form=29
 Type=Record
 TypeName=C_PRIVATE_INS_ROSTER
 Max=20
@@ -2143,7 +2218,7 @@ Name=PRIV_MEMBER_LINE_NO
 Position=350,27,760,47
 Item=PRIV_MEMBER_LINE_NO,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=28
+Form=29
   
 [Text]
 Position=50,30,330,46
@@ -2155,7 +2230,7 @@ Name=Q48_OTHER_INS_REG
 Position=350,57,365,77
 Item=Q48_OTHER_INS_REG,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=28
+Form=29
   
 [Text]
 Position=50,60,330,76
@@ -2167,7 +2242,7 @@ Name=Q49_PRIVATE_INS
 Position=350,87,365,107
 Item=Q49_PRIVATE_INS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=28
+Form=29
   
 [Text]
 Position=50,90,330,106
@@ -2180,7 +2255,7 @@ Position=350,117,760,137
 Item=Q50_PRIVATE_INS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=28
+Form=29
   
 [Text]
 Position=50,120,330,136
@@ -2193,7 +2268,7 @@ Text=50. Others (Specify)
 Required=Yes
 Name=D_UHC_AWARENESS_FORM
 Label=D. UHC Awareness
-Form=29
+Form=30
 Max=1
   
 [Field]
@@ -2201,7 +2276,7 @@ Name=Q51_UHC_HEARD
 Position=350,27,365,47
 Item=Q51_UHC_HEARD,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=29
+Form=30
   
 [Text]
 Position=50,30,330,46
@@ -2213,7 +2288,7 @@ Name=Q52_UHC_SOURCE
 Position=350,57,365,77
 Item=Q52_UHC_SOURCE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=29
+Form=30
   
 [Text]
 Position=50,60,330,76
@@ -2226,7 +2301,7 @@ Position=350,87,760,107
 Item=Q52_UHC_SOURCE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=29
+Form=30
   
 [Text]
 Position=50,90,330,106
@@ -2238,7 +2313,7 @@ Name=Q53_UHC_UNDERSTAND
 Position=350,117,365,137
 Item=Q53_UHC_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=29
+Form=30
   
 [Text]
 Position=50,120,330,136
@@ -2251,7 +2326,7 @@ Position=350,147,760,167
 Item=Q53_UHC_UNDERSTAND_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=29
+Form=30
   
 [Text]
 Position=50,150,330,166
@@ -2259,35 +2334,35 @@ Text=53. What is your understanding about UHC? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_22
+Name=DG_BLK_24
 Label=Q51
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_23
+Name=DG_BLK_25
 Label=Q52
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_24
+Name=DG_BLK_26
 Label=Q52
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_25
+Name=DG_BLK_27
 Label=Q53
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_26
+Name=DG_BLK_28
 Label=Q53
 DisplayTogether=Yes
 Position=8
@@ -2299,7 +2374,7 @@ Length=1
 Required=Yes
 Name=E_YAKAP_KONSULTA_FORM
 Label=E. YAKAP / Konsulta
-Form=30
+Form=31
 Max=1
   
 [Field]
@@ -2307,7 +2382,7 @@ Name=Q54_YAKAP_HEARD
 Position=350,27,365,47
 Item=Q54_YAKAP_HEARD,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=30
+Form=31
   
 [Text]
 Position=50,30,330,46
@@ -2319,7 +2394,7 @@ Name=Q55_YAKAP_SOURCE
 Position=350,57,365,77
 Item=Q55_YAKAP_SOURCE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=30
+Form=31
   
 [Text]
 Position=50,60,330,76
@@ -2332,7 +2407,7 @@ Position=350,87,760,107
 Item=Q55_YAKAP_SOURCE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=30
+Form=31
   
 [Text]
 Position=50,90,330,106
@@ -2344,7 +2419,7 @@ Name=Q56_YAKAP_UNDERSTAND
 Position=350,117,365,137
 Item=Q56_YAKAP_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=30
+Form=31
   
 [Text]
 Position=50,120,330,136
@@ -2357,7 +2432,7 @@ Position=350,147,760,167
 Item=Q56_YAKAP_UNDERSTAND_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=30
+Form=31
   
 [Text]
 Position=50,150,330,166
@@ -2365,35 +2440,35 @@ Text=56. What is your understanding about the YAKAP/Konsulta package? — Other 
  
   
 [Block]
-Name=DG_BLK_27
+Name=DG_BLK_29
 Label=Q54
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_28
+Name=DG_BLK_30
 Label=Q55
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_29
+Name=DG_BLK_31
 Label=Q55
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_30
+Name=DG_BLK_32
 Label=Q56
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_31
+Name=DG_BLK_33
 Label=Q56
 DisplayTogether=Yes
 Position=8
@@ -2405,7 +2480,7 @@ Length=1
 Required=Yes
 Name=F_BUCAS_AWARENESS_FORM
 Label=F. BUCAS Awareness
-Form=31
+Form=32
 Max=1
   
 [Field]
@@ -2413,7 +2488,7 @@ Name=AREA_HAS_BUCAS
 Position=350,27,365,47
 Item=AREA_HAS_BUCAS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=31
+Form=32
   
 [Text]
 Position=50,30,330,46
@@ -2425,7 +2500,7 @@ Name=Q57_BUCAS_HEARD
 Position=350,57,365,77
 Item=Q57_BUCAS_HEARD,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=31
+Form=32
   
 [Text]
 Position=50,60,330,76
@@ -2437,7 +2512,7 @@ Name=Q58_BUCAS_SOURCE
 Position=350,87,365,107
 Item=Q58_BUCAS_SOURCE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=31
+Form=32
   
 [Text]
 Position=50,90,330,106
@@ -2450,7 +2525,7 @@ Position=350,117,760,137
 Item=Q58_BUCAS_SOURCE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=31
+Form=32
   
 [Text]
 Position=50,120,330,136
@@ -2462,7 +2537,7 @@ Name=Q59_BUCAS_UNDERSTAND
 Position=350,147,365,167
 Item=Q59_BUCAS_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=31
+Form=32
   
 [Text]
 Position=50,150,330,166
@@ -2475,7 +2550,7 @@ Position=350,177,760,197
 Item=Q59_BUCAS_UNDERSTAND_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=31
+Form=32
   
 [Text]
 Position=50,180,330,196
@@ -2487,7 +2562,7 @@ Name=Q60_BUCAS_ACCESSED
 Position=350,207,365,227
 Item=Q60_BUCAS_ACCESSED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=31
+Form=32
   
 [Text]
 Position=50,210,330,226
@@ -2499,7 +2574,7 @@ Name=Q61_BUCAS_SERVICES
 Position=350,237,365,257
 Item=Q61_BUCAS_SERVICES,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=31
+Form=32
   
 [Text]
 Position=50,240,330,256
@@ -2512,7 +2587,7 @@ Position=350,267,760,287
 Item=Q61_BUCAS_SERVICES_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=31
+Form=32
   
 [Text]
 Position=50,270,330,286
@@ -2520,63 +2595,63 @@ Text=61. If yes, which of the services did you avail? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_32
+Name=DG_BLK_34
 Label=AREA_HAS_BUCAS
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_33
+Name=DG_BLK_35
 Label=Q57
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_34
+Name=DG_BLK_36
 Label=Q58
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_35
+Name=DG_BLK_37
 Label=Q58
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_36
+Name=DG_BLK_38
 Label=Q59
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_37
+Name=DG_BLK_39
 Label=Q59
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_38
+Name=DG_BLK_40
 Label=Q60
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_39
+Name=DG_BLK_41
 Label=Q61
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_BLK_40
+Name=DG_BLK_42
 Label=Q61
 DisplayTogether=Yes
 Position=16
@@ -2588,7 +2663,7 @@ Length=1
 Required=Yes
 Name=G_ACCESS_MEDICINES_FORM
 Label=G. Access to Medicines
-Form=32
+Form=33
 Max=1
   
 [Field]
@@ -2596,7 +2671,7 @@ Name=Q62_PURCHASE_FREQ
 Position=350,27,365,47
 Item=Q62_PURCHASE_FREQ,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=32
+Form=33
   
 [Text]
 Position=50,30,330,46
@@ -2608,7 +2683,7 @@ Name=Q63_PRESCRIPTION_TYPE
 Position=350,57,365,77
 Item=Q63_PRESCRIPTION_TYPE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=32
+Form=33
   
 [Text]
 Position=50,60,330,76
@@ -2621,11 +2696,11 @@ Position=350,87,760,107
 Item=Q64_MEDICATIONS_LIST,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=32
+Form=33
   
 [Text]
 Position=50,90,330,106
-Text=64. What are the medications that you or any member of your household usually take? (List all medicines taken for the health condition.)
+Text=64. What are the medications that you or any member of your household usually take?
  
   
 [Field]
@@ -2633,7 +2708,7 @@ Name=Q65_CONDITIONS
 Position=350,117,365,137
 Item=Q65_CONDITIONS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=32
+Form=33
   
 [Text]
 Position=50,120,330,136
@@ -2646,7 +2721,7 @@ Position=350,147,760,167
 Item=Q65_CONDITIONS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=32
+Form=33
   
 [Text]
 Position=50,150,330,166
@@ -2658,7 +2733,7 @@ Name=Q66_WHERE_BUY
 Position=350,177,365,197
 Item=Q66_WHERE_BUY,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=32
+Form=33
   
 [Text]
 Position=50,180,330,196
@@ -2671,7 +2746,7 @@ Position=350,207,760,227
 Item=Q66_WHERE_BUY_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=32
+Form=33
   
 [Text]
 Position=50,210,330,226
@@ -2683,7 +2758,7 @@ Name=Q67_TRAVEL_HH
 Position=350,237,760,257
 Item=Q67_TRAVEL_HH,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=32
+Form=33
   
 [Text]
 Position=50,240,330,256
@@ -2695,11 +2770,11 @@ Name=Q67_TRAVEL_MM
 Position=350,267,760,287
 Item=Q67_TRAVEL_MM,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=32
+Form=33
   
 [Text]
 Position=50,270,330,286
-Text=67. How much time does it take to reach the nearest pharmacy from your home? — Minutes
+Text=67. Travel time to nearest pharmacy — Minutes
  
   
 [Field]
@@ -2707,7 +2782,7 @@ Name=Q68_PHARMACY_ACCESS
 Position=350,297,365,317
 Item=Q68_PHARMACY_ACCESS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=32
+Form=33
   
 [Text]
 Position=50,300,330,316
@@ -2719,7 +2794,7 @@ Name=AREA_HAS_GAMOT
 Position=350,327,365,347
 Item=AREA_HAS_GAMOT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=32
+Form=33
   
 [Text]
 Position=50,330,330,346
@@ -2731,7 +2806,7 @@ Name=Q69_GAMOT_HEARD
 Position=350,357,365,377
 Item=Q69_GAMOT_HEARD,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=32
+Form=33
   
 [Text]
 Position=50,360,330,376
@@ -2743,7 +2818,7 @@ Name=Q70_GAMOT_SOURCE
 Position=350,387,365,407
 Item=Q70_GAMOT_SOURCE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=32
+Form=33
   
 [Text]
 Position=50,390,330,406
@@ -2756,7 +2831,7 @@ Position=350,417,760,437
 Item=Q70_GAMOT_SOURCE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=32
+Form=33
   
 [Text]
 Position=50,420,330,436
@@ -2768,7 +2843,7 @@ Name=Q71_GAMOT_UNDERSTAND
 Position=350,447,365,467
 Item=Q71_GAMOT_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=32
+Form=33
   
 [Text]
 Position=50,450,330,466
@@ -2781,7 +2856,7 @@ Position=350,477,760,497
 Item=Q71_GAMOT_UNDERSTAND_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=32
+Form=33
   
 [Text]
 Position=50,480,330,496
@@ -2793,7 +2868,7 @@ Name=Q72_GAMOT_OBTAINED
 Position=350,507,365,527
 Item=Q72_GAMOT_OBTAINED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=32
+Form=33
   
 [Text]
 Position=50,510,330,526
@@ -2806,7 +2881,7 @@ Position=350,537,760,557
 Item=Q73_GAMOT_MEDS_LIST,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=32
+Form=33
   
 [Text]
 Position=50,540,330,556
@@ -2818,7 +2893,7 @@ Name=Q74_WHERE_REST
 Position=350,567,365,587
 Item=Q74_WHERE_REST,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=32
+Form=33
   
 [Text]
 Position=50,570,330,586
@@ -2831,7 +2906,7 @@ Position=350,597,760,617
 Item=Q74_WHERE_REST_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=32
+Form=33
   
 [Text]
 Position=50,600,330,616
@@ -2843,7 +2918,7 @@ Name=Q75_BRAND_GEN_KNOWS
 Position=350,627,365,647
 Item=Q75_BRAND_GEN_KNOWS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=32
+Form=33
   
 [Text]
 Position=50,630,330,646
@@ -2855,7 +2930,7 @@ Name=Q76_BRAND_OR_GEN
 Position=350,657,365,677
 Item=Q76_BRAND_OR_GEN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=32
+Form=33
   
 [Text]
 Position=50,660,330,676
@@ -2867,7 +2942,7 @@ Name=Q77_WHY_GENERIC
 Position=350,687,365,707
 Item=Q77_WHY_GENERIC,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=32
+Form=33
   
 [Text]
 Position=50,690,330,706
@@ -2880,7 +2955,7 @@ Position=350,717,760,737
 Item=Q77_WHY_GENERIC_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=32
+Form=33
   
 [Text]
 Position=50,720,330,736
@@ -2892,7 +2967,7 @@ Name=Q78_WHY_BRANDED
 Position=350,747,365,767
 Item=Q78_WHY_BRANDED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=32
+Form=33
   
 [Text]
 Position=50,750,330,766
@@ -2905,7 +2980,7 @@ Position=350,777,760,797
 Item=Q78_WHY_BRANDED_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=32
+Form=33
   
 [Text]
 Position=50,780,330,796
@@ -2913,154 +2988,154 @@ Text=78. If branded, why did you buy branded medicine? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_41
+Name=DG_BLK_43
 Label=Q62
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_42
+Name=DG_BLK_44
 Label=Q63-Q64
 DisplayTogether=Yes
 Position=2
 Length=2
   
 [Block]
-Name=DG_BLK_43
+Name=DG_BLK_45
 Label=Q65
 DisplayTogether=Yes
 Position=5
 Length=1
   
 [Block]
-Name=DG_BLK_44
+Name=DG_BLK_46
 Label=Q65
 DisplayTogether=Yes
 Position=7
 Length=1
   
 [Block]
-Name=DG_BLK_45
+Name=DG_BLK_47
 Label=Q66
 DisplayTogether=Yes
 Position=9
 Length=1
   
 [Block]
-Name=DG_BLK_46
+Name=DG_BLK_48
 Label=Q66
 DisplayTogether=Yes
 Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_47
+Name=DG_BLK_49
 Label=Q67-Q68
 DisplayTogether=Yes
 Position=13
 Length=3
   
 [Block]
-Name=DG_BLK_48
+Name=DG_BLK_50
 Label=AREA_HAS_GAMOT
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_BLK_49
+Name=DG_BLK_51
 Label=Q69
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_BLK_50
+Name=DG_BLK_52
 Label=Q70
 DisplayTogether=Yes
 Position=21
 Length=1
   
 [Block]
-Name=DG_BLK_51
+Name=DG_BLK_53
 Label=Q70
 DisplayTogether=Yes
 Position=23
 Length=1
   
 [Block]
-Name=DG_BLK_52
+Name=DG_BLK_54
 Label=Q71
 DisplayTogether=Yes
 Position=25
 Length=1
   
 [Block]
-Name=DG_BLK_53
+Name=DG_BLK_55
 Label=Q71
 DisplayTogether=Yes
 Position=27
 Length=1
   
 [Block]
-Name=DG_BLK_54
+Name=DG_BLK_56
 Label=Q72
 DisplayTogether=Yes
 Position=29
 Length=1
   
 [Block]
-Name=DG_BLK_55
+Name=DG_BLK_57
 Label=Q73
 DisplayTogether=Yes
 Position=31
 Length=1
   
 [Block]
-Name=DG_BLK_56
+Name=DG_BLK_58
 Label=Q74
 DisplayTogether=Yes
 Position=33
 Length=1
   
 [Block]
-Name=DG_BLK_57
+Name=DG_BLK_59
 Label=Q74
 DisplayTogether=Yes
 Position=35
 Length=1
   
 [Block]
-Name=DG_BLK_58
+Name=DG_BLK_60
 Label=Q75-Q76
 DisplayTogether=Yes
 Position=37
 Length=2
   
 [Block]
-Name=DG_BLK_59
+Name=DG_BLK_61
 Label=Q77
 DisplayTogether=Yes
 Position=40
 Length=1
   
 [Block]
-Name=DG_BLK_60
+Name=DG_BLK_62
 Label=Q77
 DisplayTogether=Yes
 Position=42
 Length=1
   
 [Block]
-Name=DG_BLK_61
+Name=DG_BLK_63
 Label=Q78
 DisplayTogether=Yes
 Position=44
 Length=1
   
 [Block]
-Name=DG_BLK_62
+Name=DG_BLK_64
 Label=Q78
 DisplayTogether=Yes
 Position=46
@@ -3072,7 +3147,7 @@ Length=1
 Required=Yes
 Name=H_PHILHEALTH_REG_FORM
 Label=H. PhilHealth Registration
-Form=33
+Form=34
 Max=1
   
 [Field]
@@ -3080,7 +3155,7 @@ Name=Q79_REG_SOURCE
 Position=350,27,365,47
 Item=Q79_REG_SOURCE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=34
   
 [Text]
 Position=50,30,330,46
@@ -3093,7 +3168,7 @@ Position=350,57,760,77
 Item=Q79_REG_SOURCE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=33
+Form=34
   
 [Text]
 Position=50,60,330,76
@@ -3105,7 +3180,7 @@ Name=Q80_ASSIST
 Position=350,87,365,107
 Item=Q80_ASSIST,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=34
   
 [Text]
 Position=50,90,330,106
@@ -3118,7 +3193,7 @@ Position=350,117,760,137
 Item=Q80_ASSIST_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=33
+Form=34
   
 [Text]
 Position=50,120,330,136
@@ -3130,7 +3205,7 @@ Name=Q81_REG_DIFFICULTY
 Position=350,147,365,167
 Item=Q81_REG_DIFFICULTY,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=34
   
 [Text]
 Position=50,150,330,166
@@ -3142,7 +3217,7 @@ Name=Q82_DIFFICULTY_REASONS
 Position=350,177,365,197
 Item=Q82_DIFFICULTY_REASONS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=33
+Form=34
   
 [Text]
 Position=50,180,330,196
@@ -3155,7 +3230,7 @@ Position=350,207,760,227
 Item=Q82_DIFFICULTY_REASONS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=33
+Form=34
   
 [Text]
 Position=50,210,330,226
@@ -3167,7 +3242,7 @@ Name=Q83_KNOWS_ASSIST
 Position=350,237,365,257
 Item=Q83_KNOWS_ASSIST,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=34
   
 [Text]
 Position=50,240,330,256
@@ -3179,7 +3254,7 @@ Name=Q84_WHERE_ASSIST
 Position=350,267,365,287
 Item=Q84_WHERE_ASSIST,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=33
+Form=34
   
 [Text]
 Position=50,270,330,286
@@ -3192,7 +3267,7 @@ Position=350,297,760,317
 Item=Q84_WHERE_ASSIST_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=33
+Form=34
   
 [Text]
 Position=50,300,330,316
@@ -3204,7 +3279,7 @@ Name=Q85_BENEFITS
 Position=350,327,365,347
 Item=Q85_BENEFITS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=33
+Form=34
   
 [Text]
 Position=50,330,330,346
@@ -3217,7 +3292,7 @@ Position=350,357,760,377
 Item=Q85_BENEFITS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=33
+Form=34
   
 [Text]
 Position=50,360,330,376
@@ -3229,7 +3304,7 @@ Name=Q86_PREMIUM_PAY
 Position=350,387,365,407
 Item=Q86_PREMIUM_PAY,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=34
   
 [Text]
 Position=50,390,330,406
@@ -3241,7 +3316,7 @@ Name=Q87_PREMIUM_DIFFICULT
 Position=350,417,365,437
 Item=Q87_PREMIUM_DIFFICULT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=33
+Form=34
   
 [Text]
 Position=50,420,330,436
@@ -3253,7 +3328,7 @@ Name=Q88_DIFF_PAYING
 Position=350,447,365,467
 Item=Q88_DIFF_PAYING,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=33
+Form=34
   
 [Text]
 Position=50,450,330,466
@@ -3266,7 +3341,7 @@ Position=350,477,760,497
 Item=Q88_DIFF_PAYING_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=33
+Form=34
   
 [Text]
 Position=50,480,330,496
@@ -3274,112 +3349,112 @@ Text=88. Why did you find it difficult? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_63
+Name=DG_BLK_65
 Label=Q79
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_64
+Name=DG_BLK_66
 Label=Q79
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_65
+Name=DG_BLK_67
 Label=Q80
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_66
+Name=DG_BLK_68
 Label=Q80
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_67
+Name=DG_BLK_69
 Label=Q81
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_68
+Name=DG_BLK_70
 Label=Q82
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_69
+Name=DG_BLK_71
 Label=Q82
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_70
+Name=DG_BLK_72
 Label=Q83
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_BLK_71
+Name=DG_BLK_73
 Label=Q84
 DisplayTogether=Yes
 Position=16
 Length=1
   
 [Block]
-Name=DG_BLK_72
+Name=DG_BLK_74
 Label=Q84
 DisplayTogether=Yes
 Position=18
 Length=1
   
 [Block]
-Name=DG_BLK_73
+Name=DG_BLK_75
 Label=Q85
 DisplayTogether=Yes
 Position=20
 Length=1
   
 [Block]
-Name=DG_BLK_74
+Name=DG_BLK_76
 Label=Q85
 DisplayTogether=Yes
 Position=22
 Length=1
   
 [Block]
-Name=DG_BLK_75
+Name=DG_BLK_77
 Label=Q86
 DisplayTogether=Yes
 Position=24
 Length=1
   
 [Block]
-Name=DG_BLK_76
+Name=DG_BLK_78
 Label=Q87
 DisplayTogether=Yes
 Position=26
 Length=1
   
 [Block]
-Name=DG_BLK_77
+Name=DG_BLK_79
 Label=Q88
 DisplayTogether=Yes
 Position=28
 Length=1
   
 [Block]
-Name=DG_BLK_78
+Name=DG_BLK_80
 Label=Q88
 DisplayTogether=Yes
 Position=30
@@ -3391,7 +3466,7 @@ Length=1
 Required=Yes
 Name=I_PRIMARY_CARE_FORM
 Label=I. Primary Care
-Form=34
+Form=35
 Max=1
   
 [Field]
@@ -3399,7 +3474,7 @@ Name=Q89_HAS_USUAL_FACILITY
 Position=350,27,365,47
 Item=Q89_HAS_USUAL_FACILITY,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=34
+Form=35
   
 [Text]
 Position=50,30,330,46
@@ -3412,7 +3487,7 @@ Position=350,57,760,77
 Item=Q89_1_FACILITY_NAME,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=34
+Form=35
   
 [Text]
 Position=50,60,330,76
@@ -3424,7 +3499,7 @@ Name=Q90_IS_USUAL_FOR_GENERAL
 Position=350,87,365,107
 Item=Q90_IS_USUAL_FOR_GENERAL,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=34
+Form=35
   
 [Text]
 Position=50,90,330,106
@@ -3436,7 +3511,7 @@ Name=Q91_WHY_WENT
 Position=350,117,365,137
 Item=Q91_WHY_WENT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=34
+Form=35
   
 [Text]
 Position=50,120,330,136
@@ -3449,7 +3524,7 @@ Position=350,147,760,167
 Item=Q91_WHY_WENT_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=34
+Form=35
   
 [Text]
 Position=50,150,330,166
@@ -3461,7 +3536,7 @@ Name=Q92_FACILITY_TYPE
 Position=350,177,365,197
 Item=Q92_FACILITY_TYPE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=34
+Form=35
   
 [Text]
 Position=50,180,330,196
@@ -3474,7 +3549,7 @@ Position=350,207,760,227
 Item=Q92_FACILITY_TYPE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=34
+Form=35
   
 [Text]
 Position=50,210,330,226
@@ -3486,7 +3561,7 @@ Name=Q93_WHY_NOT
 Position=350,237,365,257
 Item=Q93_WHY_NOT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=34
+Form=35
   
 [Text]
 Position=50,240,330,256
@@ -3499,7 +3574,7 @@ Position=350,267,760,287
 Item=Q93_WHY_NOT_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=34
+Form=35
   
 [Text]
 Position=50,270,330,286
@@ -3511,7 +3586,7 @@ Name=Q94_TRANSPORT
 Position=350,297,365,317
 Item=Q94_TRANSPORT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=34
+Form=35
   
 [Text]
 Position=50,300,330,316
@@ -3524,7 +3599,7 @@ Position=350,327,760,347
 Item=Q94_TRANSPORT_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=34
+Form=35
   
 [Text]
 Position=50,330,330,346
@@ -3536,7 +3611,7 @@ Name=Q95_TRAVEL_TIME_MIN
 Position=350,357,760,377
 Item=Q95_TRAVEL_TIME_MIN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=34
+Form=35
   
 [Text]
 Position=50,360,330,376
@@ -3548,7 +3623,7 @@ Name=Q96_TRAVEL_COST_PHP
 Position=350,387,760,407
 Item=Q96_TRAVEL_COST_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=34
+Form=35
   
 [Text]
 Position=50,390,330,406
@@ -3560,7 +3635,7 @@ Name=Q97_KNOWS_BOOKING
 Position=350,417,365,437
 Item=Q97_KNOWS_BOOKING,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=34
+Form=35
   
 [Text]
 Position=50,420,330,436
@@ -3572,7 +3647,7 @@ Name=Q98_PHONE_ADVICE_OPEN
 Position=350,447,365,467
 Item=Q98_PHONE_ADVICE_OPEN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=34
+Form=35
   
 [Text]
 Position=50,450,330,466
@@ -3584,7 +3659,7 @@ Name=Q99_PHONE_ADVICE_CLOSED
 Position=350,477,365,497
 Item=Q99_PHONE_ADVICE_CLOSED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=34
+Form=35
   
 [Text]
 Position=50,480,330,496
@@ -3596,7 +3671,7 @@ Name=Q100_LEAVE_WORK_SCHOOL
 Position=350,507,365,527
 Item=Q100_LEAVE_WORK_SCHOOL,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=34
+Form=35
   
 [Text]
 Position=50,510,330,526
@@ -3604,84 +3679,84 @@ Text=100. When you have to visit your primary care facility, do you have to take
  
   
 [Block]
-Name=DG_BLK_79
+Name=DG_BLK_81
 Label=Q89
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_80
+Name=DG_BLK_82
 Label=Q89-Q90
 DisplayTogether=Yes
 Position=2
 Length=2
   
 [Block]
-Name=DG_BLK_81
+Name=DG_BLK_83
 Label=Q91
 DisplayTogether=Yes
 Position=5
 Length=1
   
 [Block]
-Name=DG_BLK_82
+Name=DG_BLK_84
 Label=Q91
 DisplayTogether=Yes
 Position=7
 Length=1
   
 [Block]
-Name=DG_BLK_83
+Name=DG_BLK_85
 Label=Q92
 DisplayTogether=Yes
 Position=9
 Length=1
   
 [Block]
-Name=DG_BLK_84
+Name=DG_BLK_86
 Label=Q92
 DisplayTogether=Yes
 Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_85
+Name=DG_BLK_87
 Label=Q93
 DisplayTogether=Yes
 Position=13
 Length=1
   
 [Block]
-Name=DG_BLK_86
+Name=DG_BLK_88
 Label=Q93
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_BLK_87
+Name=DG_BLK_89
 Label=Q94
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_BLK_88
+Name=DG_BLK_90
 Label=Q94
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_BLK_89
+Name=DG_BLK_91
 Label=Q95-Q99
 DisplayTogether=Yes
 Position=21
 Length=5
   
 [Block]
-Name=DG_BLK_90
+Name=DG_BLK_92
 Label=Q100
 DisplayTogether=Yes
 Position=27
@@ -3693,7 +3768,7 @@ Length=1
 Required=Yes
 Name=J_HEALTH_SEEKING_FORM
 Label=J. Health Seeking
-Form=35
+Form=36
 Max=1
   
 [Field]
@@ -3701,7 +3776,7 @@ Name=Q101_CHECKUP_FREQ
 Position=350,27,365,47
 Item=Q101_CHECKUP_FREQ,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=35
+Form=36
   
 [Text]
 Position=50,30,330,46
@@ -3714,7 +3789,7 @@ Position=350,57,760,77
 Item=Q101_CHECKUP_FREQ_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=35
+Form=36
   
 [Text]
 Position=50,60,330,76
@@ -3726,7 +3801,7 @@ Name=Q102_VISIT_REASON
 Position=350,87,365,107
 Item=Q102_VISIT_REASON,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=35
+Form=36
   
 [Text]
 Position=50,90,330,106
@@ -3739,7 +3814,7 @@ Position=350,117,760,137
 Item=Q102_VISIT_REASON_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=35
+Form=36
   
 [Text]
 Position=50,120,330,136
@@ -3751,7 +3826,7 @@ Name=Q103_CARE_TYPE
 Position=350,147,365,167
 Item=Q103_CARE_TYPE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=35
+Form=36
   
 [Text]
 Position=50,150,330,166
@@ -3764,7 +3839,7 @@ Position=350,177,760,197
 Item=Q103_CARE_TYPE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=35
+Form=36
   
 [Text]
 Position=50,180,330,196
@@ -3776,7 +3851,7 @@ Name=Q104_PREVENTIVE
 Position=350,207,365,227
 Item=Q104_PREVENTIVE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=35
+Form=36
   
 [Text]
 Position=50,210,330,226
@@ -3788,7 +3863,7 @@ Name=Q105_FORGONE_CARE
 Position=350,237,365,257
 Item=Q105_FORGONE_CARE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=35
+Form=36
   
 [Text]
 Position=50,240,330,256
@@ -3800,7 +3875,7 @@ Name=Q106_FORGONE_WHY
 Position=350,267,365,287
 Item=Q106_FORGONE_WHY,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=35
+Form=36
   
 [Text]
 Position=50,270,330,286
@@ -3813,7 +3888,7 @@ Position=350,297,760,317
 Item=Q106_FORGONE_WHY_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=35
+Form=36
   
 [Text]
 Position=50,300,330,316
@@ -3825,7 +3900,7 @@ Name=Q107_OTHER_ACTIONS
 Position=350,327,365,347
 Item=Q107_OTHER_ACTIONS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=35
+Form=36
   
 [Text]
 Position=50,330,330,346
@@ -3838,7 +3913,7 @@ Position=350,357,760,377
 Item=Q107_OTHER_ACTIONS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=35
+Form=36
   
 [Text]
 Position=50,360,330,376
@@ -3846,77 +3921,77 @@ Text=107. Did you or your household members do any other actions to improve your
  
   
 [Block]
-Name=DG_BLK_91
+Name=DG_BLK_93
 Label=Q101
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_92
+Name=DG_BLK_94
 Label=Q101
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_93
+Name=DG_BLK_95
 Label=Q102
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_94
+Name=DG_BLK_96
 Label=Q102
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_95
+Name=DG_BLK_97
 Label=Q103
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_96
+Name=DG_BLK_98
 Label=Q103
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_97
+Name=DG_BLK_99
 Label=Q104-Q105
 DisplayTogether=Yes
 Position=12
 Length=2
   
 [Block]
-Name=DG_BLK_98
+Name=DG_BLK_100
 Label=Q106
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_BLK_99
+Name=DG_BLK_101
 Label=Q106
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_BLK_100
+Name=DG_BLK_102
 Label=Q107
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_BLK_101
+Name=DG_BLK_103
 Label=Q107
 DisplayTogether=Yes
 Position=21
@@ -3928,7 +4003,7 @@ Length=1
 Required=Yes
 Name=K_REFERRALS_FORM
 Label=K. Referrals
-Form=36
+Form=37
 Max=1
   
 [Field]
@@ -3936,7 +4011,7 @@ Name=Q108_REFERRED
 Position=350,27,365,47
 Item=Q108_REFERRED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=37
   
 [Text]
 Position=50,30,330,46
@@ -3948,7 +4023,7 @@ Name=Q109_TYPE
 Position=350,57,365,77
 Item=Q109_TYPE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=36
+Form=37
   
 [Text]
 Position=50,60,330,76
@@ -3961,7 +4036,7 @@ Position=350,87,760,107
 Item=Q109_TYPE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=36
+Form=37
   
 [Text]
 Position=50,90,330,106
@@ -3973,7 +4048,7 @@ Name=Q110_SPECIALIST
 Position=350,117,365,137
 Item=Q110_SPECIALIST,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=37
   
 [Text]
 Position=50,120,330,136
@@ -3986,7 +4061,7 @@ Position=350,147,760,167
 Item=Q110_SPECIALIST_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=36
+Form=37
   
 [Text]
 Position=50,150,330,166
@@ -3998,7 +4073,7 @@ Name=Q111_METHOD
 Position=350,177,365,197
 Item=Q111_METHOD,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=37
   
 [Text]
 Position=50,180,330,196
@@ -4011,7 +4086,7 @@ Position=350,207,760,227
 Item=Q111_METHOD_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=36
+Form=37
   
 [Text]
 Position=50,210,330,226
@@ -4023,7 +4098,7 @@ Name=Q112_VISITED
 Position=350,237,365,257
 Item=Q112_VISITED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=37
   
 [Text]
 Position=50,240,330,256
@@ -4035,7 +4110,7 @@ Name=Q113_WHY_NOT
 Position=350,267,365,287
 Item=Q113_WHY_NOT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=36
+Form=37
   
 [Text]
 Position=50,270,330,286
@@ -4048,7 +4123,7 @@ Position=350,297,760,317
 Item=Q113_WHY_NOT_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=36
+Form=37
   
 [Text]
 Position=50,300,330,316
@@ -4060,7 +4135,7 @@ Name=Q114_DISCUSSED_PLACES
 Position=350,327,365,347
 Item=Q114_DISCUSSED_PLACES,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=37
   
 [Text]
 Position=50,330,330,346
@@ -4072,7 +4147,7 @@ Name=Q115_HELPED_APPT
 Position=350,357,365,377
 Item=Q115_HELPED_APPT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=37
   
 [Text]
 Position=50,360,330,376
@@ -4084,7 +4159,7 @@ Name=Q116_WROTE_INFO
 Position=350,387,365,407
 Item=Q116_WROTE_INFO,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=37
   
 [Text]
 Position=50,390,330,406
@@ -4096,11 +4171,11 @@ Name=Q117_SPECIALIST_FOLLOWUP
 Position=350,417,365,437
 Item=Q117_SPECIALIST_FOLLOWUP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=37
   
 [Text]
 Position=50,420,330,436
-Text=117. After you went to the specialist or special service, did they follow up with you about what happened at the visit? (Only if Q112=Yes)
+Text=117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?
  
   
 [Field]
@@ -4108,7 +4183,7 @@ Name=Q118_SAT_REFERRAL_PROCESS
 Position=350,447,365,467
 Item=Q118_SAT_REFERRAL_PROCESS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=37
   
 [Text]
 Position=50,450,330,466
@@ -4120,7 +4195,7 @@ Name=Q119_PCF_REFERRAL
 Position=350,477,365,497
 Item=Q119_PCF_REFERRAL,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=37
   
 [Text]
 Position=50,480,330,496
@@ -4132,7 +4207,7 @@ Name=Q120_PCP_KNOWS
 Position=350,507,365,527
 Item=Q120_PCP_KNOWS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=37
   
 [Text]
 Position=50,510,330,526
@@ -4144,7 +4219,7 @@ Name=Q121_WHY_HOSPITAL
 Position=350,537,365,557
 Item=Q121_WHY_HOSPITAL,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=36
+Form=37
   
 [Text]
 Position=50,540,330,556
@@ -4157,7 +4232,7 @@ Position=350,567,760,587
 Item=Q121_WHY_HOSPITAL_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=36
+Form=37
   
 [Text]
 Position=50,570,330,586
@@ -4169,7 +4244,7 @@ Name=Q122_PCP_DISCUSSED_PLACES
 Position=350,597,365,617
 Item=Q122_PCP_DISCUSSED_PLACES,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=37
   
 [Text]
 Position=50,600,330,616
@@ -4181,7 +4256,7 @@ Name=Q123_PCP_HELPED_APPT
 Position=350,627,365,647
 Item=Q123_PCP_HELPED_APPT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=37
   
 [Text]
 Position=50,630,330,646
@@ -4193,7 +4268,7 @@ Name=Q124_PCP_WROTE_INFO
 Position=350,657,365,677
 Item=Q124_PCP_WROTE_INFO,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=37
   
 [Text]
 Position=50,660,330,676
@@ -4205,7 +4280,7 @@ Name=Q125_SAT_REFERRAL_EXP
 Position=350,687,365,707
 Item=Q125_SAT_REFERRAL_EXP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=36
+Form=37
   
 [Text]
 Position=50,690,330,706
@@ -4213,119 +4288,119 @@ Text=125. Overall, how would you rate your experience with the referral process?
  
   
 [Block]
-Name=DG_BLK_102
+Name=DG_BLK_104
 Label=Q108
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_103
+Name=DG_BLK_105
 Label=Q109
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_104
+Name=DG_BLK_106
 Label=Q109
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_105
+Name=DG_BLK_107
 Label=Q110
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_106
+Name=DG_BLK_108
 Label=Q110
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_107
+Name=DG_BLK_109
 Label=Q111
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_108
+Name=DG_BLK_110
 Label=Q111
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_109
+Name=DG_BLK_111
 Label=Q112
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_BLK_110
+Name=DG_BLK_112
 Label=Q113
 DisplayTogether=Yes
 Position=16
 Length=1
   
 [Block]
-Name=DG_BLK_111
+Name=DG_BLK_113
 Label=Q113
 DisplayTogether=Yes
 Position=18
 Length=1
   
 [Block]
-Name=DG_BLK_112
+Name=DG_BLK_114
 Label=Q114-Q117
 DisplayTogether=Yes
 Position=20
 Length=4
   
 [Block]
-Name=DG_BLK_113
+Name=DG_BLK_115
 Label=Q118
 DisplayTogether=Yes
 Position=25
 Length=1
   
 [Block]
-Name=DG_BLK_114
+Name=DG_BLK_116
 Label=Q119
 DisplayTogether=Yes
 Position=27
 Length=1
   
 [Block]
-Name=DG_BLK_115
+Name=DG_BLK_117
 Label=Q120
 DisplayTogether=Yes
 Position=29
 Length=1
   
 [Block]
-Name=DG_BLK_116
+Name=DG_BLK_118
 Label=Q121
 DisplayTogether=Yes
 Position=31
 Length=1
   
 [Block]
-Name=DG_BLK_117
+Name=DG_BLK_119
 Label=Q121
 DisplayTogether=Yes
 Position=33
 Length=1
   
 [Block]
-Name=DG_BLK_118
+Name=DG_BLK_120
 Label=Q122-Q125
 DisplayTogether=Yes
 Position=35
@@ -4337,7 +4412,7 @@ Length=4
 Required=Yes
 Name=L_NBB_AWARENESS_FORM
 Label=L. NBB Awareness
-Form=37
+Form=38
 Max=1
   
 [Field]
@@ -4345,7 +4420,7 @@ Name=Q126_NBB_HEARD
 Position=350,27,365,47
 Item=Q126_NBB_HEARD,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=38
   
 [Text]
 Position=50,30,330,46
@@ -4357,7 +4432,7 @@ Name=Q127_NBB_SOURCE
 Position=350,57,365,77
 Item=Q127_NBB_SOURCE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=37
+Form=38
   
 [Text]
 Position=50,60,330,76
@@ -4370,7 +4445,7 @@ Position=350,87,760,107
 Item=Q127_NBB_SOURCE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=37
+Form=38
   
 [Text]
 Position=50,90,330,106
@@ -4382,7 +4457,7 @@ Name=Q128_NBB_UNDERSTAND
 Position=350,117,365,137
 Item=Q128_NBB_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=37
+Form=38
   
 [Text]
 Position=50,120,330,136
@@ -4395,7 +4470,7 @@ Position=350,147,760,167
 Item=Q128_NBB_UNDERSTAND_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=37
+Form=38
   
 [Text]
 Position=50,150,330,166
@@ -4407,7 +4482,7 @@ Name=Q129_HH_CONFINED
 Position=350,177,365,197
 Item=Q129_HH_CONFINED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=38
   
 [Text]
 Position=50,180,330,196
@@ -4419,7 +4494,7 @@ Name=Q130_HOSPITAL_TYPE
 Position=350,207,365,227
 Item=Q130_HOSPITAL_TYPE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=38
   
 [Text]
 Position=50,210,330,226
@@ -4431,7 +4506,7 @@ Name=Q131_NBB_OOP
 Position=350,237,365,257
 Item=Q131_NBB_OOP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=37
+Form=38
   
 [Text]
 Position=50,240,330,256
@@ -4439,56 +4514,56 @@ Text=131. During your hospitalization in a DOH-retained hospital, did you or you
  
   
 [Block]
-Name=DG_BLK_119
+Name=DG_BLK_121
 Label=Q126
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_120
+Name=DG_BLK_122
 Label=Q127
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_121
+Name=DG_BLK_123
 Label=Q127
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_122
+Name=DG_BLK_124
 Label=Q128
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_123
+Name=DG_BLK_125
 Label=Q128
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_124
+Name=DG_BLK_126
 Label=Q129
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_125
+Name=DG_BLK_127
 Label=Q130
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_126
+Name=DG_BLK_128
 Label=Q131
 DisplayTogether=Yes
 Position=14
@@ -4500,7 +4575,7 @@ Length=1
 Required=Yes
 Name=M_ZBB_MAIFIP_BILL_FORM
 Label=M. ZBB / MAIFIP / Bill-Recall
-Form=38
+Form=39
 Max=1
   
 [Field]
@@ -4508,7 +4583,7 @@ Name=Q132_ZBB_HEARD
 Position=350,27,365,47
 Item=Q132_ZBB_HEARD,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=38
+Form=39
   
 [Text]
 Position=50,30,330,46
@@ -4520,7 +4595,7 @@ Name=Q133_ZBB_SOURCE
 Position=350,57,365,77
 Item=Q133_ZBB_SOURCE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=38
+Form=39
   
 [Text]
 Position=50,60,330,76
@@ -4533,7 +4608,7 @@ Position=350,87,760,107
 Item=Q133_ZBB_SOURCE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=38
+Form=39
   
 [Text]
 Position=50,90,330,106
@@ -4545,7 +4620,7 @@ Name=Q134_ZBB_UNDERSTAND
 Position=350,117,365,137
 Item=Q134_ZBB_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=38
+Form=39
   
 [Text]
 Position=50,120,330,136
@@ -4558,7 +4633,7 @@ Position=350,147,760,167
 Item=Q134_ZBB_UNDERSTAND_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=38
+Form=39
   
 [Text]
 Position=50,150,330,166
@@ -4570,7 +4645,7 @@ Name=Q135_ZBB_OOP
 Position=350,177,365,197
 Item=Q135_ZBB_OOP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=38
+Form=39
   
 [Text]
 Position=50,180,330,196
@@ -4582,7 +4657,7 @@ Name=Q136_MAIFIP_HEARD
 Position=350,207,365,227
 Item=Q136_MAIFIP_HEARD,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=38
+Form=39
   
 [Text]
 Position=50,210,330,226
@@ -4594,7 +4669,7 @@ Name=Q137_MAIFIP_SOURCE
 Position=350,237,365,257
 Item=Q137_MAIFIP_SOURCE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=38
+Form=39
   
 [Text]
 Position=50,240,330,256
@@ -4607,7 +4682,7 @@ Position=350,267,760,287
 Item=Q137_MAIFIP_SOURCE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=38
+Form=39
   
 [Text]
 Position=50,270,330,286
@@ -4619,7 +4694,7 @@ Name=Q138_MOST_EXPENSIVE
 Position=350,297,365,317
 Item=Q138_MOST_EXPENSIVE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=38
+Form=39
   
 [Text]
 Position=50,300,330,316
@@ -4632,7 +4707,7 @@ Position=350,327,760,347
 Item=Q138_MOST_EXPENSIVE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=38
+Form=39
   
 [Text]
 Position=50,330,330,346
@@ -4644,7 +4719,7 @@ Name=Q139_FINAL_AMOUNT_PHP
 Position=350,357,760,377
 Item=Q139_FINAL_AMOUNT_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=38
+Form=39
   
 [Text]
 Position=50,360,330,376
@@ -4656,7 +4731,7 @@ Name=Q140_RECALL_BREAKDOWN
 Position=350,387,365,407
 Item=Q140_RECALL_BREAKDOWN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=38
+Form=39
   
 [Text]
 Position=50,390,330,406
@@ -4668,7 +4743,7 @@ Name=Q141_BILL_ITEMS
 Position=350,417,365,437
 Item=Q141_BILL_ITEMS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=38
+Form=39
   
 [Text]
 Position=50,420,330,436
@@ -4681,7 +4756,7 @@ Position=350,447,760,467
 Item=Q141_BILL_ITEMS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=38
+Form=39
   
 [Text]
 Position=50,450,330,466
@@ -4693,7 +4768,7 @@ Name=Q141_1_NO_RECEIPT_AMT_PHP
 Position=350,477,760,497
 Item=Q141_1_NO_RECEIPT_AMT_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=38
+Form=39
   
 [Text]
 Position=50,480,330,496
@@ -4705,7 +4780,7 @@ Name=Q142_RECALL_PAYMENT
 Position=350,507,365,527
 Item=Q142_RECALL_PAYMENT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=38
+Form=39
   
 [Text]
 Position=50,510,330,526
@@ -4717,7 +4792,7 @@ Name=Q143_HOW_PAID
 Position=350,537,365,557
 Item=Q143_HOW_PAID,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=38
+Form=39
   
 [Text]
 Position=50,540,330,556
@@ -4730,7 +4805,7 @@ Position=350,567,760,587
 Item=Q143_HOW_PAID_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=38
+Form=39
   
 [Text]
 Position=50,570,330,586
@@ -4738,126 +4813,126 @@ Text=143. From your most recent visit, how did you pay? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_127
+Name=DG_BLK_129
 Label=Q132
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_128
+Name=DG_BLK_130
 Label=Q133
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_129
+Name=DG_BLK_131
 Label=Q133
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_130
+Name=DG_BLK_132
 Label=Q134
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_131
+Name=DG_BLK_133
 Label=Q134
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_132
+Name=DG_BLK_134
 Label=Q135
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_133
+Name=DG_BLK_135
 Label=Q136
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_134
+Name=DG_BLK_136
 Label=Q137
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_BLK_135
+Name=DG_BLK_137
 Label=Q137
 DisplayTogether=Yes
 Position=16
 Length=1
   
 [Block]
-Name=DG_BLK_136
+Name=DG_BLK_138
 Label=Q138
 DisplayTogether=Yes
 Position=18
 Length=1
   
 [Block]
-Name=DG_BLK_137
+Name=DG_BLK_139
 Label=Q138
 DisplayTogether=Yes
 Position=20
 Length=1
   
 [Block]
-Name=DG_BLK_138
+Name=DG_BLK_140
 Label=Q139-Q140
 DisplayTogether=Yes
 Position=22
 Length=2
   
 [Block]
-Name=DG_BLK_139
+Name=DG_BLK_141
 Label=Q141
 DisplayTogether=Yes
 Position=25
 Length=1
   
 [Block]
-Name=DG_BLK_140
+Name=DG_BLK_142
 Label=Q141
 DisplayTogether=Yes
 Position=27
 Length=1
   
 [Block]
-Name=DG_BLK_141
+Name=DG_BLK_143
 Label=Q141
 DisplayTogether=Yes
 Position=29
 Length=1
   
 [Block]
-Name=DG_BLK_142
+Name=DG_BLK_144
 Label=Q142
 DisplayTogether=Yes
 Position=31
 Length=1
   
 [Block]
-Name=DG_BLK_143
+Name=DG_BLK_145
 Label=Q143
 DisplayTogether=Yes
 Position=33
 Length=1
   
 [Block]
-Name=DG_BLK_144
+Name=DG_BLK_146
 Label=Q143
 DisplayTogether=Yes
 Position=35
@@ -4869,7 +4944,7 @@ Length=1
 Required=Yes
 Name=N_FOOD_ROSTER_FORM
 Label=N. Food consumed last week (Q144-156) - one row per item
-Form=39
+Form=40
 Type=Record
 TypeName=N_FOOD_ROSTER
 Max=13
@@ -4880,7 +4955,7 @@ Position=350,27,760,47
 Item=N_FOOD_ITEM,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=39
+Form=40
   
 [Text]
 Position=50,30,330,46
@@ -4892,7 +4967,7 @@ Name=N_FOOD_CONSUMED
 Position=350,57,365,77
 Item=N_FOOD_CONSUMED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=39
+Form=40
   
 [Text]
 Position=50,60,330,76
@@ -4904,7 +4979,7 @@ Name=N_FOOD_PURCHASED_PHP
 Position=350,87,760,107
 Item=N_FOOD_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=39
+Form=40
   
 [Text]
 Position=50,90,330,106
@@ -4916,7 +4991,7 @@ Name=N_FOOD_INKIND_PHP
 Position=350,117,760,137
 Item=N_FOOD_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=39
+Form=40
   
 [Text]
 Position=50,120,330,136
@@ -4929,7 +5004,7 @@ Text=Food item - During the last week, what was the total estimated value of thi
 Required=Yes
 Name=N_HOUSEHOLD_EXPENDITURES_FORM
 Label=N. Household Expenditures (Q157)
-Form=40
+Form=41
 Max=1
   
 [Field]
@@ -4937,7 +5012,7 @@ Name=Q157_FOOD_SUBTOTAL_TOTAL_PHP
 Position=350,27,760,47
 Item=Q157_FOOD_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=40
+Form=41
   
 [Text]
 Position=50,30,330,46
@@ -4950,7 +5025,7 @@ Text=157. Sub-total (food, last week) — Auto-computed total (PHP, [DO NOT ASK]
 Required=Yes
 Name=N_WKOTH_ROSTER_FORM
 Label=N. Restaurant + tobacco, last week (Q158-159) - one row per item
-Form=41
+Form=42
 Type=Record
 TypeName=N_WKOTH_ROSTER
 Max=2
@@ -4961,7 +5036,7 @@ Position=350,27,760,47
 Item=N_WKOTH_ITEM,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=41
+Form=42
   
 [Text]
 Position=50,30,330,46
@@ -4973,7 +5048,7 @@ Name=N_WKOTH_CONSUMED
 Position=350,57,365,77
 Item=N_WKOTH_CONSUMED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=41
+Form=42
   
 [Text]
 Position=50,60,330,76
@@ -4985,7 +5060,7 @@ Name=N_WKOTH_PURCHASED_PHP
 Position=350,87,760,107
 Item=N_WKOTH_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=41
+Form=42
   
 [Text]
 Position=50,90,330,106
@@ -4997,7 +5072,7 @@ Name=N_WKOTH_INKIND_PHP
 Position=350,117,760,137
 Item=N_WKOTH_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=41
+Form=42
   
 [Text]
 Position=50,120,330,136
@@ -5010,7 +5085,7 @@ Text=Expenditure item - During the last week, what was the total estimated value
 Required=Yes
 Name=N_NF1M_ROSTER_FORM
 Label=N. Non-food, last month (Q160-167) - one row per item
-Form=42
+Form=43
 Type=Record
 TypeName=N_NF1M_ROSTER
 Max=8
@@ -5021,7 +5096,7 @@ Position=350,27,760,47
 Item=N_NF1M_ITEM,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=42
+Form=43
   
 [Text]
 Position=50,30,330,46
@@ -5033,7 +5108,7 @@ Name=N_NF1M_CONSUMED
 Position=350,57,365,77
 Item=N_NF1M_CONSUMED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=42
+Form=43
   
 [Text]
 Position=50,60,330,76
@@ -5045,7 +5120,7 @@ Name=N_NF1M_PURCHASED_PHP
 Position=350,87,760,107
 Item=N_NF1M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=42
+Form=43
   
 [Text]
 Position=50,90,330,106
@@ -5057,7 +5132,7 @@ Name=N_NF1M_INKIND_PHP
 Position=350,117,760,137
 Item=N_NF1M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=42
+Form=43
   
 [Text]
 Position=50,120,330,136
@@ -5070,7 +5145,7 @@ Text=Non-food item - During the last month, what was the total estimated value o
 Required=Yes
 Name=N_NF6M_ROSTER_FORM
 Label=N. Non-food, last 6 months (Q168-169) - one row per item
-Form=43
+Form=44
 Type=Record
 TypeName=N_NF6M_ROSTER
 Max=2
@@ -5081,7 +5156,7 @@ Position=350,27,760,47
 Item=N_NF6M_ITEM,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=43
+Form=44
   
 [Text]
 Position=50,30,330,46
@@ -5093,7 +5168,7 @@ Name=N_NF6M_CONSUMED
 Position=350,57,365,77
 Item=N_NF6M_CONSUMED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=43
+Form=44
   
 [Text]
 Position=50,60,330,76
@@ -5105,7 +5180,7 @@ Name=N_NF6M_PURCHASED_PHP
 Position=350,87,760,107
 Item=N_NF6M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=43
+Form=44
   
 [Text]
 Position=50,90,330,106
@@ -5117,7 +5192,7 @@ Name=N_NF6M_INKIND_PHP
 Position=350,117,760,137
 Item=N_NF6M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=43
+Form=44
   
 [Text]
 Position=50,120,330,136
@@ -5130,7 +5205,7 @@ Text=Non-food item - During the last 6 months, what was the total estimated valu
 Required=Yes
 Name=N_NF12M_ROSTER_FORM
 Label=N. Non-food, last 12 months (Q170-174) - one row per item
-Form=44
+Form=45
 Type=Record
 TypeName=N_NF12M_ROSTER
 Max=5
@@ -5141,7 +5216,7 @@ Position=350,27,760,47
 Item=N_NF12M_ITEM,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=44
+Form=45
   
 [Text]
 Position=50,30,330,46
@@ -5153,7 +5228,7 @@ Name=N_NF12M_CONSUMED
 Position=350,57,365,77
 Item=N_NF12M_CONSUMED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=44
+Form=45
   
 [Text]
 Position=50,60,330,76
@@ -5165,7 +5240,7 @@ Name=N_NF12M_PURCHASED_PHP
 Position=350,87,760,107
 Item=N_NF12M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=44
+Form=45
   
 [Text]
 Position=50,90,330,106
@@ -5177,7 +5252,7 @@ Name=N_NF12M_INKIND_PHP
 Position=350,117,760,137
 Item=N_NF12M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=44
+Form=45
   
 [Text]
 Position=50,120,330,136
@@ -5190,7 +5265,7 @@ Text=Non-food item - During the last 12 months, what was the total estimated val
 Required=Yes
 Name=N_H12M_ROSTER_FORM
 Label=N. Health, last 12 months (Q175-176) - one row per item
-Form=45
+Form=46
 Type=Record
 TypeName=N_H12M_ROSTER
 Max=2
@@ -5201,7 +5276,7 @@ Position=350,27,760,47
 Item=N_H12M_ITEM,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=45
+Form=46
   
 [Text]
 Position=50,30,330,46
@@ -5213,7 +5288,7 @@ Name=N_H12M_CONSUMED
 Position=350,57,365,77
 Item=N_H12M_CONSUMED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=45
+Form=46
   
 [Text]
 Position=50,60,330,76
@@ -5225,7 +5300,7 @@ Name=N_H12M_PURCHASED_PHP
 Position=350,87,760,107
 Item=N_H12M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=45
+Form=46
   
 [Text]
 Position=50,90,330,106
@@ -5237,7 +5312,7 @@ Name=N_H12M_INKIND_PHP
 Position=350,117,760,137
 Item=N_H12M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=45
+Form=46
   
 [Text]
 Position=50,120,330,136
@@ -5250,7 +5325,7 @@ Text=Health product or service - During the last 12 months, what was the total e
 Required=Yes
 Name=N_H12M_TOTAL_FORM
 Label=N. Health 12-month subtotal (Q177)
-Form=46
+Form=47
 Max=1
   
 [Field]
@@ -5258,7 +5333,7 @@ Name=Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP
 Position=350,27,760,47
 Item=Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=46
+Form=47
   
 [Text]
 Position=50,30,330,46
@@ -5271,7 +5346,7 @@ Text=177. Total value of 175 and 176 (health, 12-month) — Auto-computed total 
 Required=Yes
 Name=N_H6M_ROSTER_FORM
 Label=N. Health, last 6 months (Q178-181) - one row per item
-Form=47
+Form=48
 Type=Record
 TypeName=N_H6M_ROSTER
 Max=4
@@ -5282,7 +5357,7 @@ Position=350,27,760,47
 Item=N_H6M_ITEM,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=47
+Form=48
   
 [Text]
 Position=50,30,330,46
@@ -5294,7 +5369,7 @@ Name=N_H6M_CONSUMED
 Position=350,57,365,77
 Item=N_H6M_CONSUMED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=47
+Form=48
   
 [Text]
 Position=50,60,330,76
@@ -5306,7 +5381,7 @@ Name=N_H6M_PURCHASED_PHP
 Position=350,87,760,107
 Item=N_H6M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=47
+Form=48
   
 [Text]
 Position=50,90,330,106
@@ -5318,7 +5393,7 @@ Name=N_H6M_INKIND_PHP
 Position=350,117,760,137
 Item=N_H6M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=47
+Form=48
   
 [Text]
 Position=50,120,330,136
@@ -5331,7 +5406,7 @@ Text=Health product or service - During the last 6 months, what was the total es
 Required=Yes
 Name=N_H6M_TOTAL_FORM
 Label=N. Health 6-month subtotal (Q182)
-Form=48
+Form=49
 Max=1
   
 [Field]
@@ -5339,7 +5414,7 @@ Name=Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP
 Position=350,27,760,47
 Item=Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=48
+Form=49
   
 [Text]
 Position=50,30,330,46
@@ -5352,7 +5427,7 @@ Text=182. Total value of 178 to 181 (health, 6-month) — Auto-computed total (P
 Required=Yes
 Name=N_H1M_ROSTER_FORM
 Label=N. Health, last month (Q183-184) - one row per item
-Form=49
+Form=50
 Type=Record
 TypeName=N_H1M_ROSTER
 Max=2
@@ -5363,7 +5438,7 @@ Position=350,27,760,47
 Item=N_H1M_ITEM,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=49
+Form=50
   
 [Text]
 Position=50,30,330,46
@@ -5375,7 +5450,7 @@ Name=N_H1M_CONSUMED
 Position=350,57,365,77
 Item=N_H1M_CONSUMED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=49
+Form=50
   
 [Text]
 Position=50,60,330,76
@@ -5387,7 +5462,7 @@ Name=N_H1M_PURCHASED_PHP
 Position=350,87,760,107
 Item=N_H1M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=49
+Form=50
   
 [Text]
 Position=50,90,330,106
@@ -5399,7 +5474,7 @@ Name=N_H1M_INKIND_PHP
 Position=350,117,760,137
 Item=N_H1M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=49
+Form=50
   
 [Text]
 Position=50,120,330,136
@@ -5412,7 +5487,7 @@ Text=Health product or service - During the last month, what was the total estim
 Required=Yes
 Name=N_H1M_TOTAL_FORM
 Label=N. Health 1-month subtotal (Q185)
-Form=50
+Form=51
 Max=1
   
 [Field]
@@ -5420,7 +5495,7 @@ Name=Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP
 Position=350,27,760,47
 Item=Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=50
+Form=51
   
 [Text]
 Position=50,30,330,46
@@ -5433,7 +5508,7 @@ Text=185. Total value of 183 and 184 (health, 1-month) — Auto-computed total (
 Required=Yes
 Name=O_SOURCES_OF_FUNDS_FORM
 Label=O. Sources of Funds for Health
-Form=51
+Form=52
 Max=1
   
 [Field]
@@ -5441,7 +5516,7 @@ Name=Q186_CURRENT_INCOME
 Position=350,27,365,47
 Item=Q186_CURRENT_INCOME,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=51
+Form=52
   
 [Text]
 Position=50,30,330,46
@@ -5453,7 +5528,7 @@ Name=Q187_SAVINGS
 Position=350,57,365,77
 Item=Q187_SAVINGS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=51
+Form=52
   
 [Text]
 Position=50,60,330,76
@@ -5465,7 +5540,7 @@ Name=Q188_SOLD_ASSETS
 Position=350,87,365,107
 Item=Q188_SOLD_ASSETS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=51
+Form=52
   
 [Text]
 Position=50,90,330,106
@@ -5477,7 +5552,7 @@ Name=Q189_BORROW_FAMILY
 Position=350,117,365,137
 Item=Q189_BORROW_FAMILY,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=51
+Form=52
   
 [Text]
 Position=50,120,330,136
@@ -5489,7 +5564,7 @@ Name=Q190_BORROW_INST
 Position=350,147,365,167
 Item=Q190_BORROW_INST,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=51
+Form=52
   
 [Text]
 Position=50,150,330,166
@@ -5501,7 +5576,7 @@ Name=Q191_REMITTANCE
 Position=350,177,365,197
 Item=Q191_REMITTANCE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=51
+Form=52
   
 [Text]
 Position=50,180,330,196
@@ -5513,7 +5588,7 @@ Name=Q192_GOVT_ASSIST
 Position=350,207,365,227
 Item=Q192_GOVT_ASSIST,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=51
+Form=52
   
 [Text]
 Position=50,210,330,226
@@ -5525,7 +5600,7 @@ Name=Q193_LGU_DONATION
 Position=350,237,365,257
 Item=Q193_LGU_DONATION,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=51
+Form=52
   
 [Text]
 Position=50,240,330,256
@@ -5537,7 +5612,7 @@ Name=Q194_OTHER_SOURCE
 Position=350,267,365,287
 Item=Q194_OTHER_SOURCE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=51
+Form=52
   
 [Text]
 Position=50,270,330,286
@@ -5550,7 +5625,7 @@ Position=350,297,760,317
 Item=Q194_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=51
+Form=52
   
 [Text]
 Position=50,300,330,316
@@ -5562,7 +5637,7 @@ Name=Q195_INCOME_PCT
 Position=350,327,365,347
 Item=Q195_INCOME_PCT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=51
+Form=52
   
 [Text]
 Position=50,330,330,346
@@ -5574,7 +5649,7 @@ Name=Q196_FOREGONE
 Position=350,357,365,377
 Item=Q196_FOREGONE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=51
+Form=52
   
 [Text]
 Position=50,360,330,376
@@ -5587,7 +5662,7 @@ Position=350,387,760,407
 Item=Q196_FOREGONE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=51
+Form=52
   
 [Text]
 Position=50,390,330,406
@@ -5595,42 +5670,42 @@ Text=196. If your household chooses not to spend on health care for financial re
  
   
 [Block]
-Name=DG_BLK_145
+Name=DG_BLK_147
 Label=Q186-Q190
 DisplayTogether=Yes
 Position=0
 Length=5
   
 [Block]
-Name=DG_BLK_146
+Name=DG_BLK_148
 Label=Q191-Q194
 DisplayTogether=Yes
 Position=6
 Length=4
   
 [Block]
-Name=DG_BLK_147
+Name=DG_BLK_149
 Label=Q194
 DisplayTogether=Yes
 Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_148
+Name=DG_BLK_150
 Label=Q195
 DisplayTogether=Yes
 Position=13
 Length=1
   
 [Block]
-Name=DG_BLK_149
+Name=DG_BLK_151
 Label=Q196
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_BLK_150
+Name=DG_BLK_152
 Label=Q196
 DisplayTogether=Yes
 Position=17
@@ -5642,7 +5717,7 @@ Length=1
 Required=Yes
 Name=P_FINANCIAL_RISK_FORM
 Label=P. Financial Risk
-Form=52
+Form=53
 Max=1
   
 [Field]
@@ -5650,7 +5725,7 @@ Name=Q197_DELAYED_CARE
 Position=350,27,365,47
 Item=Q197_DELAYED_CARE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=52
+Form=53
   
 [Text]
 Position=50,30,330,46
@@ -5662,7 +5737,7 @@ Name=Q198_NOT_FOLLOWED
 Position=350,57,365,77
 Item=Q198_NOT_FOLLOWED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=52
+Form=53
   
 [Text]
 Position=50,60,330,76
@@ -5674,7 +5749,7 @@ Name=Q199_WTP_CONSULT
 Position=350,87,365,107
 Item=Q199_WTP_CONSULT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=52
+Form=53
   
 [Text]
 Position=50,90,330,106
@@ -5687,7 +5762,7 @@ Position=350,117,760,137
 Item=Q199_WTP_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=52
+Form=53
   
 [Text]
 Position=50,120,330,136
@@ -5695,14 +5770,14 @@ Text=199. Other (Specify) — text
  
   
 [Block]
-Name=DG_BLK_151
+Name=DG_BLK_153
 Label=Q197-Q199
 DisplayTogether=Yes
 Position=0
 Length=3
   
 [Block]
-Name=DG_BLK_152
+Name=DG_BLK_154
 Label=Q199
 DisplayTogether=Yes
 Position=4
@@ -5714,7 +5789,7 @@ Length=1
 Required=Yes
 Name=Q_FINANCIAL_ANXIETY_FORM
 Label=Q. Financial Anxiety
-Form=53
+Form=54
 Max=1
   
 [Field]
@@ -5722,7 +5797,7 @@ Name=Q200_REDUCED_SPEND
 Position=350,27,365,47
 Item=Q200_REDUCED_SPEND,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=53
+Form=54
   
 [Text]
 Position=50,30,330,46
@@ -5734,7 +5809,7 @@ Name=Q201_WORRIED
 Position=350,57,365,77
 Item=Q201_WORRIED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=53
+Form=54
   
 [Text]
 Position=50,60,330,76
@@ -5746,7 +5821,7 @@ Name=Q202_WORRY_REASONS
 Position=350,87,365,107
 Item=Q202_WORRY_REASONS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
-Form=53
+Form=54
   
 [Text]
 Position=50,90,330,106
@@ -5759,7 +5834,7 @@ Position=350,117,760,137
 Item=Q202_WORRY_REASONS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=53
+Form=54
   
 [Text]
 Position=50,120,330,136
@@ -5767,28 +5842,28 @@ Text=202. Do any of the following reasons describe why you are worried about you
  
   
 [Block]
-Name=DG_BLK_153
+Name=DG_BLK_155
 Label=Q200
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_154
+Name=DG_BLK_156
 Label=Q201
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_155
+Name=DG_BLK_157
 Label=Q202
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_156
+Name=DG_BLK_158
 Label=Q202
 DisplayTogether=Yes
 Position=6
@@ -5800,7 +5875,7 @@ Length=1
 Required=Yes
 Name=FIELD_CONTROL_FORM_3
 Label=Closing - case end
-Form=54
+Form=55
 Max=1
   
 [Field]
@@ -5809,7 +5884,7 @@ Position=350,27,760,47
 Item=SURVEY_TEAM_LEADER_S_NAME,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=54
+Form=55
   
 [Text]
 Position=50,30,330,46
@@ -5822,7 +5897,7 @@ Position=350,57,760,77
 Item=ENUMERATOR_S_NAME,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=54
+Form=55
   
 [Text]
 Position=50,60,330,76
@@ -5835,7 +5910,7 @@ Position=350,87,760,107
 Item=FIELD_VALIDATED_BY,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=54
+Form=55
   
 [Text]
 Position=50,90,330,106
@@ -5848,7 +5923,7 @@ Position=350,117,760,137
 Item=FIELD_EDITED_BY,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=54
+Form=55
   
 [Text]
 Position=50,120,330,136
@@ -5860,11 +5935,11 @@ Name=DATE_FIRST_VISITED
 Position=350,147,760,167
 Item=DATE_FIRST_VISITED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=54
+Form=55
   
 [Text]
 Position=50,150,330,166
-Text=Date First Visited the Household (YYYYMMDD)
+Text=Date First Visited the Household (MMDDYYYY)
  
   
 [Field]
@@ -5872,11 +5947,11 @@ Name=DATE_FINAL_VISIT
 Position=350,177,760,197
 Item=DATE_FINAL_VISIT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=54
+Form=55
   
 [Text]
 Position=50,180,330,196
-Text=Date of Final Visit to the Household (YYYYMMDD)
+Text=Date of Final Visit to the Household (MMDDYYYY)
  
   
 [Field]
@@ -5884,7 +5959,7 @@ Name=TOTAL_NUMBER_OF_VISITS
 Position=350,207,760,227
 Item=TOTAL_NUMBER_OF_VISITS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=54
+Form=55
   
 [Text]
 Position=50,210,330,226
@@ -5896,7 +5971,7 @@ Name=ENUM_RESULT_FIRST_VISIT
 Position=350,237,365,257
 Item=ENUM_RESULT_FIRST_VISIT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=54
+Form=55
   
 [Text]
 Position=50,240,330,256
@@ -5908,7 +5983,7 @@ Name=ENUM_RESULT_FINAL_VISIT
 Position=350,267,365,287
 Item=ENUM_RESULT_FINAL_VISIT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=54
+Form=55
   
 [Text]
 Position=50,270,330,286
@@ -5935,7 +6010,7 @@ Length=5
 Required=Yes
 Name=REC_CASE_VERIFICATION_FORM
 Label=Case Verification Photo
-Form=55
+Form=56
 Max=1
   
 [Field]
@@ -5944,7 +6019,7 @@ Position=350,27,760,47
 Item=VERIFICATION_PHOTO_FILENAME,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=55
+Form=56
   
 [Text]
 Position=50,30,330,46
@@ -5956,7 +6031,7 @@ Name=CAPTURE_VERIFICATION_PHOTO
 Position=350,57,365,77
 Item=CAPTURE_VERIFICATION_PHOTO,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=55
+Form=56
   
 [Text]
 Position=50,60,330,76
@@ -5969,7 +6044,7 @@ Text=Take Verification Photo
 Required=Yes
 Name=HOUSEHOLD_GEO_ID_FORM
 Label=FC HH GPS Capture
-Form=56
+Form=57
 Max=1
   
 [Field]
@@ -5978,7 +6053,7 @@ Position=350,27,760,47
 Item=LATITUDE,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=56
+Form=57
   
 [Text]
 Position=50,30,330,46
@@ -5991,7 +6066,7 @@ Position=350,57,760,77
 Item=LONGITUDE,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=56
+Form=57
   
 [Text]
 Position=50,60,330,76
@@ -6004,7 +6079,7 @@ Position=350,87,760,107
 Item=HH_GPS_ALTITUDE,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=56
+Form=57
   
 [Text]
 Position=50,90,330,106
@@ -6016,7 +6091,7 @@ Name=HH_GPS_ACCURACY
 Position=350,117,760,137
 Item=HH_GPS_ACCURACY,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=56
+Form=57
   
 [Text]
 Position=50,120,330,136
@@ -6028,7 +6103,7 @@ Name=HH_GPS_SATELLITES
 Position=350,147,760,167
 Item=HH_GPS_SATELLITES,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
-Form=56
+Form=57
   
 [Text]
 Position=50,150,330,166
@@ -6041,7 +6116,7 @@ Position=350,177,760,197
 Item=HH_GPS_READTIME,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=56
+Form=57
   
 [Text]
 Position=50,180,330,196
