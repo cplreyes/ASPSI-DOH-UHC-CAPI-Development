@@ -13,6 +13,13 @@ export const hil: EnBundle = {
     syncView: 'Sync',
     thankYouHeading: 'Thank you',
     thankYouBody: 'Your response is saved on this device and will sync when the app is online.',
+    // Sync-on-submit delivery gate (design F2-Facility-Slug-Links-2026-07-16) —
+    // English until the ASPSI translation pass delivers dialect wording.
+    delivering: 'Submitting…',
+    deliveredBody: 'Submitted ✓ — your response is in. You can close this page.',
+    deliveryOffline: 'Saved on this phone — it will send automatically when you are back online.',
+    deliveryFailed:
+      'Your response is saved on this device but could not be sent automatically. Please show this screen to ASPSI staff.',
     startNewSurvey: 'Start new survey',
     submitFailedHeading: 'Submission failed',
     submitFailedBody:
@@ -61,6 +68,40 @@ export const hil: EnBundle = {
     tokenOffline: "You're offline. Check your connection and retry.",
     identityStep: 'Step 2: Identify yourself',
     tokenAccepted: 'Token accepted for facility {{facility}}. Pick yourself from the roster below.',
+    // Model C — open self-register (English pending translation).
+    selfRegisterIntro: "Tap Start to begin. You'll be given a number, then answer the survey on this phone.",
+    selfRegisterStart: "Start — I'm a healthcare worker here",
+    selfRegisterBusy: 'Assigning your number…',
+    selfRegisterReceiptHeading: 'You are enrolled',
+    selfRegisterReceipt: 'You are respondent {{qn}}. Tap Continue to begin the survey.',
+    selfRegisterContinue: 'Continue',
+    selfRegisterFailed: 'Could not register right now. Check your connection and try again.',
+  },
+  claim: {
+    heading: 'Opening your survey…',
+    claiming: 'Setting up your questionnaire — one moment.',
+    invalidLink: 'This link is invalid or has expired. Please ask ASPSI ops for a new one.',
+    alreadyDone: 'This survey has already been completed. Thank you.',
+    offline: "You're offline. Check your connection and tap Retry.",
+    unavailable: 'The survey is temporarily unavailable. Please try again shortly.',
+    retry: 'Retry',
+  },
+  // Facility slug links (design F2-Facility-Slug-Links-2026-07-16) — English
+  // until the ASPSI translation pass delivers dialect wording.
+  facilityStart: {
+    resolvingHeading: 'Opening the survey…',
+    resolving: 'Checking this link — one moment.',
+    heading: '{{facility}} — HCW Survey',
+    intro: 'Your answers are voluntary and anonymous. Tap Start to begin on this phone.',
+    start: 'Start the survey',
+    starting: 'Setting up your questionnaire…',
+    inactive: "This survey link isn't active. Please check with ASPSI ops.",
+    offline: "You're offline. Check your connection and tap Retry.",
+    unavailable: 'The survey is temporarily unavailable. Please try again shortly.',
+    retry: 'Retry',
+    noLinkHeading: 'Open your facility survey link',
+    noLinkBody:
+      'This survey opens from a facility link that looks like uhc-hcw.asiansocial.org/f/your-facility. Ask ASPSI staff for your facility link.',
   },
   navigator: {
     // #809 — English until the ASPSI translation pass delivers dialect wording.
@@ -95,6 +136,17 @@ export const hil: EnBundle = {
     submit: 'Submit',
     blockingError: 'Please resolve the highlighted issue above before submitting.',
   },
+  // #838 — tool-usability feedback (pretest). English pending ASPSI translation;
+  // wording is ASPSI's call, so it is NOT localized here.
+  feedback: {
+    heading: 'Before you submit',
+    note: 'This is about the survey tool itself, not your answers. It helps us improve it.',
+    easeQuestion: 'Did you find the survey tool easy to use and navigate?',
+    yes: 'Yes',
+    no: 'No',
+    whyLabel: 'Why or why not?',
+    whyPlaceholder: 'Optional — tell us anything that was confusing or worked well.',
+  },
   consent: {
     // #808 consent gate — English until the ASPSI translation pass delivers dialect wording.
     heading: 'Informed Consent — Please Read Carefully',
@@ -120,6 +172,17 @@ export const hil: EnBundle = {
       'I have read and understood the information above. I voluntarily agree to participate in this survey.',
     declineOption: 'I do not wish to participate.',
     continueButton: 'Continue',
+    // #1002 raffle-phone strings — EN pending the next translation re-key batch.
+    rafflePhoneHeading: 'Raffle contact number (optional)',
+    rafflePhoneNote:
+      'If you would like to join the raffle, you may enter a phone number below. It will only be used to contact you if you win the raffle. A GCash number is preferred, as it will be used both for contacting you and for sending your prize.',
+    rafflePhoneLabel: 'Phone number',
+    rafflePhonePlaceholder: 'e.g. 09XX XXX XXXX (GCash preferred)',
+    rafflePhoneConfirmHeading: 'No contact number provided',
+    rafflePhoneConfirmBody:
+      'You have not provided a contact number. Without a contact number, you will not be eligible to receive the raffle prize if selected as a winner. Do you want to proceed?',
+    rafflePhoneConfirmBack: 'Go back',
+    rafflePhoneConfirmProceed: 'Proceed without a number',
     declinedHeading: 'Thank you for your time',
     declinedBody:
       'You chose not to participate in this survey. No survey questions will be shown and no response has been recorded on this device. If this was a mistake, you can start over below.',

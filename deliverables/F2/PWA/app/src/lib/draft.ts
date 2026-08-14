@@ -11,11 +11,17 @@ export const COMPLETED_CSID_KEY = 'f2_completed_csid';
 // lexicographically later than '2026-04-17-m1' so post-split submissions are
 // demarcated by spec_version. Do NOT raise the backend's
 // min_accepted_spec_version until the offline queue drains.
-export const LOCAL_SPEC_VERSION = '2026-07-02-r6';
+// r7 (2026-07-14): enrollment `qn` + submit-time `gps_status` join the payload.
+// r8 (2026-08-05, #1003/#1004): Section K questionnaire-feedback items
+// FB1–FB5 + optional consent-page raffle_phone (#1002) join the values
+// payload — post-r8 submissions carry them, earlier ones don't.
+export const LOCAL_SPEC_VERSION = '2026-08-05-r8';
 
 export interface EnrollmentInfo {
   hcw_id: string;
   facility_id: string;
+  /** 12-digit Questionnaire Number from the enrollment record; absent pre-qn. */
+  qn?: string;
   /**
    * Optional — see EnrollmentRow comment in db.ts. Submissions made before
    * the facilities cache populates carry an empty `facility_type`; backend
@@ -82,10 +88,21 @@ export interface SubmitCoords {
   lng: number;
 }
 
+/** GPS capture outcome recorded alongside the coords (audit P1-4). 'not_requested'
+ *  covers paths that never ask — consent refusals (#825). */
+export type SubmitGpsStatus =
+  | 'granted'
+  | 'denied'
+  | 'timeout'
+  | 'unavailable'
+  | 'unsupported'
+  | 'not_requested';
+
 export async function submitDraft(
   id: string,
   enrollment: EnrollmentInfo,
   coords: SubmitCoords | null = null,
+  gpsStatus: SubmitGpsStatus = 'not_requested',
 ): Promise<SubmissionRow> {
   return db.transaction('rw', db.drafts, db.submissions, async () => {
     const draft = await db.drafts.get(id);
@@ -97,6 +114,7 @@ export async function submitDraft(
       facility_type: enrollment.facility_type ?? '',
       submission_lat: coords ? coords.lat : null,
       submission_lng: coords ? coords.lng : null,
+      gps_status: gpsStatus,
     };
 
     const submission: SubmissionRow = {
@@ -111,6 +129,7 @@ export async function submitDraft(
       // findExisting useful as belt-and-suspenders.
       client_submission_id: id,
       hcw_id: enrollment.hcw_id,
+      ...(enrollment.qn ? { qn: enrollment.qn } : {}),
       status: 'pending_sync',
       synced_at: null,
       submitted_at: Date.now(),

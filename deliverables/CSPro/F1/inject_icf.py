@@ -14,10 +14,22 @@ WHAT IT DOES
 ------------
 1. Removes any previously injected ICF [Form] and [Group] (so re-running is safe and
    always rebuilds from the current dictionary rather than layering edits).
-2. Inserts the ICF [Form] as the THIRD form — after FORM000 (case key) and FORM001
-   (facility + geographic ID), before "A. Facility Head Profile". This matches F3/F4,
-   where A_INFORMED_CONSENT sits after the geo form and before the first content
-   section.
+2. Inserts the ICF [Form] as the SECOND form — immediately after FORM000 (the case
+   key / QUESTIONNAIRE_NUMBER), before FORM001 (facility + geographic ID). Aly asked
+   on 2026-08-14 for the ICF to sit directly after the Questionnaire Number, and
+   F3/F4 were moved to the same slot in the same pass (their generate_fmf.py FORM_PLAN
+   now lists A. Informed Consent first, and automation/reorder_icf_form.py moves it in
+   their live .fmf). This SUPERSEDES Shan's 2026-08-13 "Suggested Layout (CSEntry)",
+   which put consent after the geo form — both are ASPSI, so confirm with them before
+   moving it again.
+
+   KNOWN AND ACCEPTED CONSEQUENCE: FORM001 carries BREAKOFF, and PROC BREAKOFF does
+   `skip to ENUM_RESULT_FINAL_VISIT` for codes 5/6/7 (refused at door / not found /
+   ineligible). With consent now AHEAD of that control, the enumerator walks both
+   read-aloud consent screens before they can close out a case that never started.
+   Carl was shown a rendered comparison of the alternatives
+   (deliverables/CSPro/decisions/2026-08-14-icf-placement.png) and chose this over the
+   variant that preserved the break-off escape. Do not revert without asking ASPSI.
 3. Inserts the matching [Group] at the same ordinal position.
 4. Renumbers EVERY `Form=` in the file. A [Group]'s (and its [Field]s') `Form=N` is the
    1-BASED ORDINAL of the form section, not an id — inserting a form mid-list silently
@@ -56,7 +68,7 @@ GROUP_NAME = "A_INFORMED_CONSENT_FORM"
 FORM_NAME = "FORM_ICF"
 FORM_LABEL = "Introduction and Informed Consent"
 ICF_FIELDS = ("ICF_PART1", "ICF_PART2")
-INSERT_AT = 2          # 0-based: third form, after the case-key and geo forms
+INSERT_AT = 1          # 0-based: second form, immediately after the case key / QN
 
 # On-form field captions. The read-aloud script itself is question text (.qsf), not a
 # form caption — these just name the screen. ASCII only: the .fmf is UTF-8 with a BOM

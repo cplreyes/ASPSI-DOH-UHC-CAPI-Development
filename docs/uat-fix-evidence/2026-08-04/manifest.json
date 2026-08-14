@@ -1,0 +1,222 @@
+{
+ "f3-1048": {
+  "issue": 1048,
+  "file": "f3-1048.html",
+  "title": "#1048 \u2014 Q18 income: note on bracket only + DK/RF options"
+ },
+ "f3-1049": {
+  "issue": 1049,
+  "file": "f3-1049.html",
+  "title": "#1049 \u2014 Q19 household-count note restored"
+ },
+ "f3-1050": {
+  "issue": 1050,
+  "file": "f3-1050.html",
+  "title": "#1050 \u2014 Q33 decision-maker definition restored"
+ },
+ "f3-1051": {
+  "issue": 1051,
+  "file": "f3-1051.html",
+  "title": "#1051 \u2014 Q34 definition restored"
+ },
+ "f3-1052": {
+  "issue": 1052,
+  "file": "f3-1052.html",
+  "title": "#1052 \u2014 Q86 option definitions restored"
+ },
+ "f3-1053": {
+  "issue": 1053,
+  "file": "f3-1053.html",
+  "title": "#1053 \u2014 Q92 'Select all that apply'"
+ },
+ "f3-1054": {
+  "issue": 1054,
+  "file": "f3-1054.html",
+  "title": "#1054 \u2014 Tick\u2192Select sweep (Q96 + Q113 shown)"
+ },
+ "f3-1055": {
+  "issue": 1055,
+  "file": "f3-1055.html",
+  "title": "#1055 \u2014 SELECT ALL THAT APPLY notes (Q59, Q148, Q153 shown)"
+ },
+ "f3-1056": {
+  "issue": 1056,
+  "file": "f3-1056.html",
+  "title": "#1056 \u2014 Q5 question once + short Year prompt"
+ },
+ "f3-1057": {
+  "issue": 1057,
+  "file": "f3-1057.html",
+  "title": "#1057 \u2014 Q15 paper option order (codes unchanged)"
+ },
+ "f3-1058": {
+  "issue": 1058,
+  "file": "f3-1058.html",
+  "title": "#1058 \u2014 Q22 'house' per paper"
+ },
+ "f3-1059": {
+  "issue": 1059,
+  "file": "f3-1059.html",
+  "title": "#1059 \u2014 Q47 per-package respondent-facing questions"
+ },
+ "f3-1060": {
+  "issue": 1060,
+  "file": "f3-1060.html",
+  "title": "#1060 \u2014 Q58 question once + short Minutes prompt"
+ },
+ "f3-1061": {
+  "issue": 1061,
+  "file": "f3-1061.html",
+  "title": "#1061 \u2014 Q131-134 per-amenity questions"
+ },
+ "f3-1062": {
+  "issue": 1062,
+  "file": "f3-1062.html",
+  "title": "#1062 \u2014 Q150 respondent-facing + short Minutes"
+ },
+ "f3-1063": {
+  "issue": 1063,
+  "file": "f3-1063.html",
+  "title": "#1063 \u2014 Q178 'Not applicable' restored (code 6)"
+ },
+ "f3-1065": {
+  "issue": 1065,
+  "file": "f3-1065.html",
+  "title": "#1065 \u2014 Q104 'Other (specify)' (code 6 unchanged)"
+ },
+ "f3-1066": {
+  "issue": 1066,
+  "file": "f3-1066.html",
+  "title": "#1066 \u2014 Q106 question once + short Days prompt"
+ },
+ "f3-1067": {
+  "issue": 1067,
+  "file": "f3-1067.html",
+  "title": "#1067 \u2014 Q107/Q109/Q112 'Other (specify)'"
+ },
+ "f1-1005": {
+  "issue": 1005,
+  "file": "f1-1005.html",
+  "title": "#1005 \u2014 Q2 designation \u2014 13 options incl. Rural Health Physician + Other (specify)"
+ },
+ "f1-1023": {
+  "issue": 1023,
+  "file": "f1-1023.html",
+  "title": "#1023 \u2014 Q103 \u2014 paper option order + working Other(specify) gate"
+ },
+ "f1-1024": {
+  "issue": 1024,
+  "file": "f1-1024.html",
+  "title": "#1024 \u2014 Q110 \u2014 paper option order + working Other(specify) gate"
+ },
+ "f1-1007": {
+  "issue": 1007,
+  "file": "f1-1007.html",
+  "title": "#1007 \u2014 Q18 \u2014 verbatim paper option text"
+ },
+ "f1-1009": {
+  "issue": 1009,
+  "file": "f1-1009.html",
+  "title": "#1009 \u2014 Q49 \u2014 verbatim paper option text"
+ },
+ "f1-1012": {
+  "issue": 1012,
+  "file": "f1-1012.html",
+  "title": "#1012 \u2014 Q58 \u2014 verbatim paper option text"
+ },
+ "f1-1013": {
+  "issue": 1013,
+  "file": "f1-1013.html",
+  "title": "#1013 \u2014 Q64 \u2014 verbatim paper option text"
+ },
+ "f1-1017": {
+  "issue": 1017,
+  "file": "f1-1017.html",
+  "title": "#1017 \u2014 Q76 \u2014 verbatim paper option text"
+ },
+ "f1-1020": {
+  "issue": 1020,
+  "file": "f1-1020.html",
+  "title": "#1020 \u2014 Q94 \u2014 verbatim paper option text"
+ },
+ "f1-1021": {
+  "issue": 1021,
+  "file": "f1-1021.html",
+  "title": "#1021 \u2014 Q96 \u2014 verbatim paper option text"
+ },
+ "f1-1022": {
+  "issue": 1022,
+  "file": "f1-1022.html",
+  "title": "#1022 \u2014 Q95 \u2014 verbatim paper option text"
+ },
+ "f1-1025": {
+  "issue": 1025,
+  "file": "f1-1025.html",
+  "title": "#1025 \u2014 Q120 \u2014 '30 days and less' per paper"
+ },
+ "f1-1028": {
+  "issue": 1028,
+  "file": "f1-1028.html",
+  "title": "#1028 \u2014 Q143 \u2014 verbatim paper option text"
+ },
+ "f1-1029": {
+  "issue": 1029,
+  "file": "f1-1029.html",
+  "title": "#1029 \u2014 Q144 \u2014 verbatim paper option text"
+ },
+ "f1-1030": {
+  "issue": 1030,
+  "file": "f1-1030.html",
+  "title": "#1030 \u2014 Q146 \u2014 verbatim paper option text"
+ },
+ "f1-1032": {
+  "issue": 1032,
+  "file": "f1-1032.html",
+  "title": "#1032 \u2014 Q151 \u2014 verbatim paper option text"
+ },
+ "f1-1033": {
+  "issue": 1033,
+  "file": "f1-1033.html",
+  "title": "#1033 \u2014 Q158 \u2014 verbatim paper option text"
+ },
+ "f2-1040": {
+  "issue": 1040,
+  "file": "f2-1040.html",
+  "title": "#1040 \u2014 E1/E2 sub-headers render above their blocks"
+ },
+ "f2-1041": {
+  "issue": 1041,
+  "file": "f2-1041.html",
+  "title": "#1041 \u2014 doctor's-fee definition renders above its question"
+ },
+ "f2-1043": {
+  "issue": 1043,
+  "file": "f2-1043.html",
+  "title": "#1043 \u2014 instruction renders above Q114 (paper Q113 battery)"
+ },
+ "f2-1044": {
+  "issue": 1044,
+  "file": "f2-1044.html",
+  "title": "#1044 \u2014 employment-type definitions under Q2 (since R6)"
+ },
+ "f2-1045": {
+  "issue": 1045,
+  "file": "f2-1045.html",
+  "title": "#1045 \u2014 component bolded in Q13/Q15/Q17-Q24 (Q13+Q18 shown)"
+ },
+ "f2-1046": {
+  "issue": 1046,
+  "file": "f2-1046.html",
+  "title": "#1046 \u2014 Q10 input label 'Number of days'"
+ },
+ "f2-1047": {
+  "issue": 1047,
+  "file": "f2-1047.html",
+  "title": "#1047 \u2014 Q11 input label 'Number of hours' + DOLE note kept"
+ },
+ "f2-1042": {
+  "issue": 1042,
+  "file": "f2-1042.html",
+  "title": "#1042 \u2014 instruction renders above Q98 (paper battery intro)"
+ }
+}

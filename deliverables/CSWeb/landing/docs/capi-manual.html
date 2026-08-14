@@ -1238,30 +1238,38 @@ Supervisor Hub · CSWeb</p>
           <strong>Location</strong> is <strong>on</strong>
           (<strong>§II·D</strong>) and you're <strong>outdoors / near a
           window</strong> with a clear sky view.</li>
-          <li>Let it <strong>capture</strong> — wait for it to get a fix
-          before advancing.</li>
+          <li>Let it <strong>capture</strong> — the coordinates usually
+          appear in <strong>a second or two</strong> (the tool starts
+          searching for satellites as soon as you open the case). If it
+          cannot get a fix, it stops after <strong>15 seconds</strong>
+          with a message — move near a window or doorway and
+          <strong>re-enter the GPS field</strong>; the retry is
+          instant.</li>
           </ol>
           <p><strong>Expected result:</strong> coordinates are stored
           with the case and sync to the server.</p>
           <blockquote>
-          <p>⚠️ <strong>Wait for a real fix.</strong> If you advance too
-          fast or Location is off, the case can save <strong>0
-          satellites / no location</strong>, which shows as "unreported"
-          on the map. Give it a few seconds with a clear sky view.</p>
+          <p>⚠️ <strong>Don't advance past a blank GPS.</strong> If
+          Location is off or there is no signal, the case can save
+          <strong>0 satellites / no location</strong>, which shows as
+          "unreported" on the map. The tool stops searching after
+          <strong>15 seconds</strong> — retry near a window or doorway
+          before moving on.</p>
           </blockquote>
           <p><img src="/docs/img/capi-manual/08-gps-values.png"
           alt="Case tree showing the captured Facility GPS — Latitude 14.305988, Longitude 121.113382, Altitude 55.4 m, Accuracy 19 m, Satellites 0" />
           <em>GPS is captured <strong>automatically</strong> when you
           reach the facility / patient-home location section — there is
           no button to press. The captured coordinates appear in the
-          case tree. If <strong>Accuracy</strong> is poor or
-          <strong>Satellites</strong> shows 0, step outdoors with
-          <strong>Location</strong> on and the section
-          re-reads.</em></p>
+          case tree. If the GPS fields are still <strong>blank</strong>
+          (no fix), step outdoors with <strong>Location</strong> on and
+          re-enter the section — the retry is instant. Once a fix is
+          stored, the fields lock read-only.</em></p>
           <p><strong>Common problem:</strong> GPS won't get a fix
           indoors. <strong>What to do:</strong> step outside or to a
-          window; turn Location on; wait. Note it in a comment if a fix
-          is truly impossible.</p>
+          window; turn Location on; tap back into the GPS field — the
+          retry is instant. Note it in a comment if a fix is truly
+          impossible.</p>
           <hr />
           <h3 id="82-verifying-youre-at-the-right-site">8.2 Verifying
           you're at the right site</h3>

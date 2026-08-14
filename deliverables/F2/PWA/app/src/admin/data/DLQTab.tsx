@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
+import { ClearFiltersButton, FilterDate, FilterText } from './filter-controls';
 
 interface DlqRow {
   dlq_id: string;
@@ -51,6 +52,16 @@ function readFiltersFromUrl(): UiFilters {
   };
 }
 
+function buildQuery(f: UiFilters): string {
+  const p = new URLSearchParams();
+  // Preserve dashboard tab so refresh stays on DLQ.
+  p.set('tab', 'dlq');
+  if (f.from) p.set('from', f.from);
+  if (f.to) p.set('to', f.to);
+  if (f.q) p.set('q', f.q);
+  return p.toString();
+}
+
 function buildApiQuery(f: UiFilters): string {
   const p = new URLSearchParams();
   if (f.from) p.set('from', f.from);
@@ -71,8 +82,18 @@ export function DLQTab({ apiBaseUrl, fetchImpl }: DLQTabProps): JSX.Element {
   >({ kind: 'loading' });
 
   const apiQuery = useMemo(() => buildApiQuery(filters), [filters]);
+  const uiQuery = useMemo(() => buildQuery(filters), [filters]);
   // R2-#84: bump on successful replay/delete to refetch the list.
   const [refreshKey, setRefreshKey] = useState(0);
+
+  // Shareable URLs: write the active filters back (same idiom as Responses).
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const cur = window.location.search.replace(/^\?/, '');
+    if (cur !== uiQuery) {
+      window.history.replaceState({}, '', `${window.location.pathname}?${uiQuery}`);
+    }
+  }, [uiQuery]);
   const [actionMsg, setActionMsg] = useState<{ kind: 'ok' | 'err'; text: string } | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
 
@@ -167,6 +188,9 @@ export function DLQTab({ apiBaseUrl, fetchImpl }: DLQTabProps): JSX.Element {
         <FilterDate label="From" value={filters.from} onChange={(v) => setFilters({ ...filters, from: v })} />
         <FilterDate label="To" value={filters.to} onChange={(v) => setFilters({ ...filters, to: v })} />
         <FilterText label="Search" value={filters.q} onChange={(v) => setFilters({ ...filters, q: v })} />
+        {filters.from || filters.to || filters.q ? (
+          <ClearFiltersButton onClick={() => setFilters({ from: '', to: '', q: '' })} />
+        ) : null}
       </div>
 
       {state.kind === 'loading' ? (
@@ -193,34 +217,6 @@ export function DLQTab({ apiBaseUrl, fetchImpl }: DLQTabProps): JSX.Element {
         </>
       ) : null}
     </div>
-  );
-}
-
-function FilterDate({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }): JSX.Element {
-  return (
-    <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
-      <input
-        type="date"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
-      />
-    </label>
-  );
-}
-
-function FilterText({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }): JSX.Element {
-  return (
-    <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
-      />
-    </label>
   );
 }
 

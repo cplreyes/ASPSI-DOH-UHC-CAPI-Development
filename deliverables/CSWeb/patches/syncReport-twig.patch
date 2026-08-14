@@ -1,0 +1,53 @@
+Patch #7 (ASPSI 2026-07-17) — Sync Report deep-link for the Sync Dashboard Case list
+File: templates/syncReport.twig  (host path /opt/app/lamp/www/csweb/templates/syncReport.twig)
+Marker: ASPSI 2026-07-17 (patch #7)
+Applied by: apply-csweb-patches.py (idempotent, marker-based). Backup: .orig-preapply
+
+Why: docs/dashboard.html's Case list links each F1/F3/F4 case to
+  /csweb/sync-report?dict=<DICT_NAME>&case=<QN>
+so monitors get the FULL question-by-question responses in one click. Stock CSWeb has
+no deep link — the View case modal only opens from a rendered report row. This hook
+reuses the exact endpoint the UI already calls (report-view-case-json, ids[0] = the
+raw stored case key), so authentication and permissions are untouched: the page still
+requires the CSWeb login, and the modal renders the same record tables.
+
+Notes:
+- Single-ID dictionaries only (ours are: QUESTIONNAIRE_NUMBER is the sole ID item).
+- `case` must be the RAW stored key (legacy region-01..09 keys are 11-digit unpadded).
+- Waits up to 30 s for the async dictionary sidebar to build, then gives up silently.
+- Twig template: re-apply requires clearing the Twig cache (the apply script does).
+
+--- a/templates/syncReport.twig
++++ b/templates/syncReport.twig
+@@ showModal(data) end @@
+             $("#pointInfoModal").modal("show");
+         }
++
++        /* ASPSI 2026-07-17 (patch #7): dashboard deep-link - ?dict=<DICT_NAME>&case=<QN>
++           opens the View case modal directly. Used by the Sync Dashboard's Case list
++           (docs/dashboard.html); single-ID dictionaries only (ids[0] = the case key). */
++        function deepLinkViewCase() {
++            var qp = new URLSearchParams(window.location.search);
++            var dlDict = qp.get('dict'), dlCase = qp.get('case');
++            if (!dlDict || !dlCase) return;
++            var tries = 0;
++            var timer = setInterval(function () {
++                var el = document.getElementById(dlDict);
++                if (el) {
++                    clearInterval(timer);
++                    if (!el.className.includes('active')) ui.changeDictionary(dlDict);
++                    var params = new URLSearchParams();
++                    params.append('dictionary', dlDict);
++                    params.append('ids[0]', dlCase);
++                    $("body").addClass("loading");
++                    $.ajax({
++                        type: "GET",
++                        url: "{{ url('report-view-case-json') }}",
++                        data: params.toString()
++                    }).done(showModal).always(function () { $("body").removeClass("loading"); });
++                } else if (++tries > 150) {
++                    clearInterval(timer);
++                }
++            }, 200);
++        }
++        $(document).ready(deepLinkViewCase);

@@ -42,6 +42,30 @@ Item=QUESTIONNAIRE_NUMBER
 
 [Form]
 
+Name=FORM003
+
+Label=A. Informed Consent (Q1 gate)
+
+Level=1
+
+Size=806,300
+
+  
+
+Item=ICF_PART1
+
+Item=ICF_PART2
+
+Item=Q1_IS_HH_HEAD
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
 Name=FORM001
 
 Label=Interview status
@@ -83,30 +107,6 @@ Item=CLASSIFICATION
 Item=BARANGAY
 
 Item=HH_ADDRESS
-
-  
-
-[EndForm]
-
-  
-
-[Form]
-
-Name=FORM003
-
-Label=A. Informed Consent (Q1 gate)
-
-Level=1
-
-Size=806,300
-
-  
-
-Item=ICF_PART1
-
-Item=ICF_PART2
-
-Item=Q1_IS_HH_HEAD
 
   
 
@@ -1744,223 +1744,11 @@ Text=Questionnaire Number (12-digit: RR-PP-MMM-FF-CCC)
 
 Required=Yes
 
-Name=FIELD_CONTROL_FORM
-
-Label=Interview status
-
-Form=2
-
-Max=1
-
-  
-
-[Field]
-
-Name=BREAKOFF
-
-Position=350,27,365,47
-
-Item=BREAKOFF,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=DropDown
-
-Form=2
-
-  
-
-[Text]
-
-Position=50,30,330,46
-
-Text=Interview status (leave as Continue unless ending the interview early)
-
- 
-
-  
-
-[EndGroup]
-
-  
-
-[Group]
-
-Required=Yes
-
-Name=FIELD_CONTROL_FORM_2
-
-Label=FC Geographic ID
-
-Form=3
-
-Max=1
-
-  
-
-[Field]
-
-Name=REGION_NAME
-
-Position=350,27,760,47
-
-Item=REGION_NAME,HOUSEHOLDSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,30,330,46
-
-Text=Region (from PSGC)
-
- 
-
-  
-
-[Field]
-
-Name=PROVINCE_NAME
-
-Position=350,57,760,77
-
-Item=PROVINCE_NAME,HOUSEHOLDSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,60,330,76
-
-Text=Province / HUC (from PSGC)
-
- 
-
-  
-
-[Field]
-
-Name=CITY_NAME
-
-Position=350,87,760,107
-
-Item=CITY_NAME,HOUSEHOLDSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,90,330,106
-
-Text=City / Municipality (from PSGC)
-
- 
-
-  
-
-[Field]
-
-Name=CLASSIFICATION
-
-Position=350,117,365,137
-
-Item=CLASSIFICATION,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,120,330,136
-
-Text=Classification
-
- 
-
-  
-
-[Field]
-
-Name=BARANGAY
-
-Position=350,147,365,167
-
-Item=BARANGAY,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=DropDown
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,150,330,166
-
-Text=Barangay
-
- 
-
-  
-
-[Field]
-
-Name=HH_ADDRESS
-
-Position=350,177,760,197
-
-Item=HH_ADDRESS,HOUSEHOLDSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,180,330,196
-
-Text=Household Address
-
- 
-
-  
-
-[EndGroup]
-
-  
-
-[Group]
-
-Required=Yes
-
 Name=A_INFORMED_CONSENT_FORM
 
 Label=A. Informed Consent (Q1 gate)
 
-Form=4
+Form=2
 
 Max=1
 
@@ -1976,7 +1764,7 @@ Item=ICF_PART1,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=4
+Form=2
 
   
 
@@ -2000,7 +1788,7 @@ Item=ICF_PART2,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=4
+Form=2
 
   
 
@@ -2024,7 +1812,7 @@ Item=Q1_IS_HH_HEAD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=4
+Form=2
 
   
 
@@ -2077,6 +1865,218 @@ DisplayTogether=Yes
 Position=4
 
 Length=1
+
+  
+
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=FIELD_CONTROL_FORM
+
+Label=Interview status
+
+Form=3
+
+Max=1
+
+  
+
+[Field]
+
+Name=BREAKOFF
+
+Position=350,27,365,47
+
+Item=BREAKOFF,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=DropDown
+
+Form=3
+
+  
+
+[Text]
+
+Position=50,30,330,46
+
+Text=Interview status (leave as Continue unless ending the interview early)
+
+ 
+
+  
+
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=FIELD_CONTROL_FORM_2
+
+Label=FC Geographic ID
+
+Form=4
+
+Max=1
+
+  
+
+[Field]
+
+Name=REGION_NAME
+
+Position=350,27,760,47
+
+Item=REGION_NAME,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=4
+
+  
+
+[Text]
+
+Position=50,30,330,46
+
+Text=Region (from PSGC)
+
+ 
+
+  
+
+[Field]
+
+Name=PROVINCE_NAME
+
+Position=350,57,760,77
+
+Item=PROVINCE_NAME,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=4
+
+  
+
+[Text]
+
+Position=50,60,330,76
+
+Text=Province / HUC (from PSGC)
+
+ 
+
+  
+
+[Field]
+
+Name=CITY_NAME
+
+Position=350,87,760,107
+
+Item=CITY_NAME,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=4
+
+  
+
+[Text]
+
+Position=50,90,330,106
+
+Text=City / Municipality (from PSGC)
+
+ 
+
+  
+
+[Field]
+
+Name=CLASSIFICATION
+
+Position=350,117,365,137
+
+Item=CLASSIFICATION,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=4
+
+  
+
+[Text]
+
+Position=50,120,330,136
+
+Text=Classification
+
+ 
+
+  
+
+[Field]
+
+Name=BARANGAY
+
+Position=350,147,365,167
+
+Item=BARANGAY,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=DropDown
+
+Form=4
+
+  
+
+[Text]
+
+Position=50,150,330,166
+
+Text=Barangay
+
+ 
+
+  
+
+[Field]
+
+Name=HH_ADDRESS
+
+Position=350,177,760,197
+
+Item=HH_ADDRESS,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=4
+
+  
+
+[Text]
+
+Position=50,180,330,196
+
+Text=Household Address
+
+ 
 
   
 

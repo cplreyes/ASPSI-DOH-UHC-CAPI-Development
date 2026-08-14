@@ -80,6 +80,18 @@ FIELD_CONTROL_CASE_END = {
 
 
 FORM_PLAN = [
+    # ICF FIRST, immediately after the case-key/QN form (Aly, 2026-08-14). This
+    # supersedes Shan's 2026-08-13 Suggested Layout, which put consent after the
+    # geo form.
+    #
+    # KNOWN AND ACCEPTED CONSEQUENCE: PROC BREAKOFF does `skip to
+    # ENUM_RESULT_FINAL_VISIT` for codes 5/6/7 (refused at door / not found /
+    # ineligible), so with consent AHEAD of the break-off control the enumerator
+    # now walks both read-aloud consent screens before they can close out a case
+    # that never started. Carl chose this over placing the ICF after BREAKOFF.
+    # Do not "fix" it back without checking with ASPSI first.
+    ("A. Informed Consent (Q1 gate)",
+     [("A_INFORMED_CONSENT", None)]),
     ("Patient Type (Outpatient / Inpatient)",
      [("FIELD_CONTROL", {"names": FIELD_CONTROL_CASE_START})]),
     ("FC Geographic ID + F1 linkage",
@@ -88,8 +100,6 @@ FORM_PLAN = [
      # names + keep the barangay picker. Patient-home P_* cascade stays manual.
      [("FIELD_CONTROL", {"names": ["REGION_NAME", "PROVINCE_NAME", "CITY_NAME"]}),
       ("PATIENT_GEO_ID", {"exclude": ["REGION", "PROVINCE_HUC", "CITY_MUNICIPALITY"]})]),
-    ("A. Informed Consent (Q1 gate)",
-     [("A_INFORMED_CONSENT", None)]),
     ("B. Patient Profile",
      [("B_PATIENT_PROFILE", None)]),
     ("C. UHC Awareness",

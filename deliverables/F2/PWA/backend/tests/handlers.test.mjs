@@ -121,6 +121,30 @@ describe('handleSubmit', () => {
     expect(ctx._appended[0].submission_lng).toBe(67.89);
   });
 
+  it('carries a top-level qn into the response row (enrollment-assigned 12-digit QN)', () => {
+    const ctx = makeCtx();
+    handleSubmit(
+      { client_submission_id: 'c-qn-1', spec_version: '2026-04-17-m1', hcw_id: 'hcw-1',
+        facility_id: '040340002', qn: '040340002047', values: { q1: 1 } },
+      ctx,
+    );
+    expect(ctx._appended[0].qn).toBe('040340002047');
+  });
+
+  it('falls back to values.qn, and to empty for legacy payloads with no qn anywhere', () => {
+    const ctx = makeCtx();
+    handleSubmit(
+      { client_submission_id: 'c-qn-2', spec_version: '2026-04-17-m1', values: { qn: '040340002001' } },
+      ctx,
+    );
+    handleSubmit(
+      { client_submission_id: 'c-qn-3', spec_version: '2026-04-17-m1', values: {} },
+      ctx,
+    );
+    expect(ctx._appended[0].qn).toBe('040340002001');
+    expect(ctx._appended[1].qn).toBe('');
+  });
+
   it('returns duplicate status for a repeated client_submission_id', () => {
     const ctx = makeCtx({
       responses: {

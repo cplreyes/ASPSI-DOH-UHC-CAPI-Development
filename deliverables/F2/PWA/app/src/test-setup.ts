@@ -19,6 +19,10 @@ afterEach(async () => {
     ),
   );
   localStorage.clear();
+  // The admin portal keeps its session here (src/admin/lib/auth-storage.ts);
+  // without this, one test's login leaks into the next test's "starts logged
+  // out" assumption.
+  sessionStorage.clear();
 });
 
 import '@/i18n';

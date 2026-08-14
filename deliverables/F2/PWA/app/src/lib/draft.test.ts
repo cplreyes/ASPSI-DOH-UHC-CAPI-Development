@@ -4,6 +4,7 @@ import {
   loadDraft,
   saveDraft,
   submitDraft,
+  LOCAL_SPEC_VERSION,
   type EnrollmentInfo,
 } from './draft';
 import { db } from './db';
@@ -82,7 +83,9 @@ describe('submitDraft', () => {
       facility_type: 'Hospital',
     });
     expect(submission.client_submission_id).toBe('draft-1');
-    expect(submission.spec_version).toBe('2026-07-02-r6');
+    // assert against the constant, not a copy of it — a literal here just
+    // re-breaks on every spec bump without testing anything real.
+    expect(submission.spec_version).toBe(LOCAL_SPEC_VERSION);
 
     expect(await loadDraft('draft-1')).toBeUndefined();
     expect(localStorage.getItem('f2_current_draft_id')).toBeNull();
@@ -95,25 +98,28 @@ describe('submitDraft', () => {
     await expect(submitDraft('nope', ENROLLMENT)).rejects.toThrow(/not found/i);
   });
 
-  it('records null submission_lat/submission_lng when no coords are provided', async () => {
+  it('records null coords + not_requested status when no coords are provided', async () => {
     await saveDraft('draft-2', { Q3: 'Female' }, ENROLLMENT);
     const submission = await submitDraft('draft-2', ENROLLMENT);
     expect(submission.values.submission_lat).toBeNull();
     expect(submission.values.submission_lng).toBeNull();
+    expect(submission.values.gps_status).toBe('not_requested');
   });
 
-  it('records submission_lat/submission_lng when coords are provided', async () => {
+  it('records coords + granted status when coords are provided', async () => {
     await saveDraft('draft-3', { Q3: 'Female' }, ENROLLMENT);
-    const submission = await submitDraft('draft-3', ENROLLMENT, { lat: 14.5995, lng: 120.9842 });
+    const submission = await submitDraft('draft-3', ENROLLMENT, { lat: 14.5995, lng: 120.9842 }, 'granted');
     expect(submission.values.submission_lat).toBe(14.5995);
     expect(submission.values.submission_lng).toBe(120.9842);
+    expect(submission.values.gps_status).toBe('granted');
   });
 
-  it('records null when coords are explicitly null (geolocation declined)', async () => {
+  it('records the named failure when geolocation was declined (audit P1-4)', async () => {
     await saveDraft('draft-4', { Q3: 'Male' }, ENROLLMENT);
-    const submission = await submitDraft('draft-4', ENROLLMENT, null);
+    const submission = await submitDraft('draft-4', ENROLLMENT, null, 'denied');
     expect(submission.values.submission_lat).toBeNull();
     expect(submission.values.submission_lng).toBeNull();
+    expect(submission.values.gps_status).toBe('denied');
   });
 
   // R2-#122: client_submission_id must derive from the draft id, not a fresh

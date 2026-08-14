@@ -156,7 +156,9 @@ describe('runSync — transport failures trigger retry_scheduled with backoff', 
     expect(row?.last_error?.code).toBe('E_NETWORK');
   });
 
-  it('backend-level non-transport failure (ok=false, transport=false) flips rows to rejected', async () => {
+  it('E_KILL_SWITCH (temporary admin pause) schedules a retry — never terminal rejection', async () => {
+    // A kill-switch flip mid-queue must not destroy valid submissions: the
+    // pause is temporary, so rows go retry_scheduled and drain once lifted.
     await db.submissions.put(mkSubmission({ client_submission_id: 'a' }));
     const deps = baseDeps({
       postBatchSubmit: vi.fn().mockResolvedValue({
@@ -167,8 +169,24 @@ describe('runSync — transport failures trigger retry_scheduled with backoff', 
     });
     await runSync(deps);
     const row = await db.submissions.get('a');
-    expect(row?.status).toBe('rejected');
+    expect(row?.status).toBe('retry_scheduled');
+    expect(row?.retry_count).toBe(1);
     expect(row?.last_error?.code).toBe('E_KILL_SWITCH');
+  });
+
+  it('other backend-level non-transport failures flip rows to rejected', async () => {
+    await db.submissions.put(mkSubmission({ client_submission_id: 'a' }));
+    const deps = baseDeps({
+      postBatchSubmit: vi.fn().mockResolvedValue({
+        ok: false,
+        transport: false,
+        error: { code: 'E_BAD_REQUEST', message: 'malformed' },
+      }),
+    });
+    await runSync(deps);
+    const row = await db.submissions.get('a');
+    expect(row?.status).toBe('rejected');
+    expect(row?.last_error?.code).toBe('E_BAD_REQUEST');
   });
 });
 

@@ -50,11 +50,14 @@ async function seedEnrollment() {
 
 /**
  * #808: the per-case ConsentScreen now gates Section A. Click through it —
- * agree + continue — the way a consenting respondent would.
+ * agree + continue — the way a consenting respondent would. #1002: the agree
+ * path now shows an optional raffle phone field; fill it so Continue advances
+ * without the blank-number confirm (which has its own dedicated test).
  */
 async function passConsent(user: ReturnType<typeof userEvent.setup>) {
   await screen.findByTestId('consent-agree');
   await user.click(screen.getByTestId('consent-agree'));
+  await user.type(screen.getByTestId('consent-raffle-phone'), '09171234567');
   await user.click(screen.getByTestId('consent-continue'));
 }
 
@@ -69,6 +72,9 @@ describe('<App>', () => {
     // #825: refusal tests assert the submissions queue — start empty.
     await db.submissions.clear();
     localStorage.clear();
+    // Routing (F2-Facility-Slug-Links): the path decides the unenrolled screen,
+    // so pin every test to the root unless it sets its own URL.
+    window.history.replaceState({}, '', '/');
   });
 
   it('renders Section A heading after loading (post-consent — #808)', async () => {
@@ -79,6 +85,29 @@ describe('<App>', () => {
       await screen.findByRole('heading', {
         name: /Section A — Healthcare Worker Profile/,
       }),
+    ).toBeInTheDocument();
+  });
+
+  it('#1002: agreeing with a blank raffle phone asks for confirmation, then proceeds', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByTestId('consent-agree');
+    await user.click(screen.getByTestId('consent-agree'));
+    // Phone field is optional but blank → Continue opens the confirm panel
+    // instead of advancing.
+    await user.click(screen.getByTestId('consent-continue'));
+    expect(await screen.findByTestId('consent-blank-phone-confirm')).toBeInTheDocument();
+    expect(
+      screen.queryByRole('heading', { name: /Section A — Healthcare Worker Profile/ }),
+    ).not.toBeInTheDocument();
+    // "Go back" returns to the form without advancing.
+    await user.click(screen.getByTestId('consent-blank-phone-back'));
+    expect(screen.queryByTestId('consent-blank-phone-confirm')).not.toBeInTheDocument();
+    // Re-confirm and proceed without a number.
+    await user.click(screen.getByTestId('consent-continue'));
+    await user.click(screen.getByTestId('consent-blank-phone-proceed'));
+    expect(
+      await screen.findByRole('heading', { name: /Section A — Healthcare Worker Profile/ }),
     ).toBeInTheDocument();
   });
 
@@ -170,12 +199,54 @@ describe('<App>', () => {
     });
   });
 
-  it('renders the EnrollmentScreen when no enrollment row exists', async () => {
+  // F2-Facility-Slug-Links: the token-paste EnrollmentScreen moved behind
+  // /enroll (enumerator-assisted use); /f/<slug> is the primary way in and the
+  // bare root shows a "get your facility link" pointer instead of a form.
+  it('renders the EnrollmentScreen at /enroll when no enrollment row exists', async () => {
     await db.enrollment.clear();
+    window.history.replaceState({}, '', '/enroll');
     render(<App />);
     await waitFor(() =>
       expect(screen.getByRole('heading', { name: /enrol|enroll/i })).toBeInTheDocument(),
     );
+  });
+
+  it('renders the FacilityStartScreen at /f/<slug> when unenrolled', async () => {
+    await db.enrollment.clear();
+    window.history.replaceState({}, '', '/f/lphbay');
+    render(<App />);
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: /opening the survey/i })).toBeInTheDocument(),
+    );
+  });
+
+  it('on a /f/<slug> device, "Start new survey" unenrolls back to the facility start screen (fresh QN per respondent)', async () => {
+    // The enrollment token is bound to respondent A's QN; respondent B reusing
+    // it would put two people's answers under one 12-digit case key. The
+    // thank-you button must route B through a fresh self-register instead.
+    window.history.replaceState({}, '', '/f/lphbay');
+    localStorage.setItem('f2_completed_csid', 'srv-csid-test');
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByRole('button', { name: /start new survey/i });
+    await user.click(screen.getByRole('button', { name: /start new survey/i }));
+    // Unenrolled + /f/<slug> → FacilityStartScreen (its resolve begins).
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: /opening the survey/i })).toBeInTheDocument(),
+    );
+    expect(await db.enrollment.get('singleton')).toBeUndefined();
+    expect(localStorage.getItem('f2_completed_csid')).toBeNull();
+  });
+
+  it('renders the facility-link pointer (no enrollment form) at the bare root when unenrolled', async () => {
+    await db.enrollment.clear();
+    render(<App />);
+    await waitFor(() =>
+      expect(
+        screen.getByRole('heading', { name: /open your facility survey link/i }),
+      ).toBeInTheDocument(),
+    );
+    expect(screen.queryByRole('heading', { name: /enrol|enroll/i })).not.toBeInTheDocument();
   });
 
   it('R2-#120 S.A2: persists submitted state across refresh via COMPLETED_CSID_KEY', async () => {

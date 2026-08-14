@@ -15,6 +15,7 @@ import { db } from '@/lib/db';
 import { EnrollmentScreen } from './EnrollmentScreen';
 import * as verifyClient from '@/lib/verify-token-client';
 import * as facilitiesClient from '@/lib/facilities-client';
+import * as selfRegisterClient from '@/lib/self-register-client';
 
 const FAKE_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJ0In0.fake-sig';
 
@@ -224,5 +225,46 @@ describe('<EnrollmentScreen>', () => {
     await user.click(screen.getByRole('button', { name: /verify token/i }));
     await waitFor(() => expect(getFacilitiesSpy).toHaveBeenCalledTimes(1));
     expect(getFacilitiesSpy.mock.calls[0]?.[0]?.deviceToken).toBe(FAKE_TOKEN);
+  });
+
+  it('Model C: a facility QR token shows self-register — Start assigns a QN, Continue enrols device-bound', async () => {
+    // A facility QR token carries the self-register sentinel tablet_id, so the
+    // HCW-ID picker is replaced by Start → receipt → Continue.
+    vi.spyOn(verifyClient, 'verifyDeviceToken').mockResolvedValue({
+      ok: true,
+      claims: {
+        facility_id: '040340210',
+        exp: Math.floor(Date.now() / 1000) + 86400,
+        tablet_id: '__self_register__',
+      },
+    });
+    const srSpy = vi.spyOn(selfRegisterClient, 'selfRegister').mockResolvedValue({
+      ok: true,
+      hcw_id: 'sr-abc',
+      qn: '040340210101',
+      facility_id: '040340210',
+    });
+    const user = userEvent.setup();
+    setup();
+    await user.type(screen.getByTestId('enrollment-token-input'), FAKE_TOKEN);
+    await user.click(screen.getByRole('button', { name: /verify token/i }));
+    // Self-register path, NOT the HCW-ID picker.
+    await waitFor(() => screen.getByTestId('self-register-start'));
+    expect(screen.queryByLabelText(/HCW ID/i)).not.toBeInTheDocument();
+    // Start → the server assigns a QN and the receipt shows it.
+    await user.click(screen.getByTestId('self-register-start'));
+    await waitFor(() => screen.getByTestId('self-register-receipt'));
+    expect(srSpy).toHaveBeenCalledTimes(1);
+    expect(srSpy.mock.calls[0]?.[0]?.deviceToken).toBe(FAKE_TOKEN);
+    expect(screen.getByTestId('self-register-receipt').textContent).toMatch(/040340210101/);
+    // Continue → device enrols bound to the assigned case (incl. the qn).
+    await user.click(screen.getByTestId('self-register-continue'));
+    await waitFor(async () => {
+      const row = await db.enrollment.get('singleton');
+      expect(row?.hcw_id).toBe('sr-abc');
+      expect(row?.facility_id).toBe('040340210');
+      expect(row?.qn).toBe('040340210101');
+      expect(row?.device_token).toBe(FAKE_TOKEN);
+    });
   });
 });
