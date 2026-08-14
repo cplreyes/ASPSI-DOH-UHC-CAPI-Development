@@ -21,7 +21,15 @@ from pathlib import Path
 import win32gui, win32con
 from pywinauto import Desktop, keyboard
 
-ROOT = Path(r"C:\Users\analy\Documents\analytiflow\1_Projects\ASPSI-DOH-CAPI-CSPro-Development\deliverables\CSPro")
+# Resolve from THIS FILE, never a hardcoded checkout path (2026-08-14). The old
+# absolute constant pointed at the main checkout, so a deploy driven from any other
+# tree (a worktree, a release clone) pulled the .pen/.pff from that tree while these
+# PSGC files still came from the main checkout. CSPro then makes every path relative
+# to the two roots' COMMON ANCESTOR, and the package ships NESTED:
+#     aspsi-reconcile-wt/deliverables/CSPro/F3/PatientSurvey.pen
+#     ASPSI-DOH-CAPI-CSPro-Development/deliverables/CSPro/F3/psgc_region.dat
+# instead of the flat layout CSEntry expects. Caught on the 2026-08-14 ICF deploy.
+ROOT = Path(__file__).resolve().parent.parent      # .../deliverables/CSPro
 INSTRUMENTS = {
     "F1": "FacilityHeadSurvey",
     "F3": "PatientSurvey",
