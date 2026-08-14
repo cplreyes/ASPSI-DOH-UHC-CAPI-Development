@@ -105,6 +105,16 @@ def find_translation(hay_lines, english):
     after = blob[pos + used:].lstrip(" .:-)")
     if not after:
         return ""
+    # An enumerator directive is printed immediately above its OPTION LIST, so the text
+    # after it runs straight into the ballot boxes. 18 of 368 notes shipped carrying
+    # option text ("MASUNOD NA PLION SANA AN SIMBAG [] Health promotion and education
+    # ..."), which reads worse on screen than plain English. Everything from the first
+    # ballot glyph on belongs to the options, never to the note.
+    box = re.search(r"[☐☑☒□]", after)
+    if box:
+        after = after[:box.start()].rstrip()
+        if len(after) < 10:
+            return ""
     # A translated note is one sentence and runs to roughly the length of its English.
     # Hunting for "where English resumes" over-captured (it ran past the note into the
     # next block), so cut deterministically: first sentence terminator at least 15 chars

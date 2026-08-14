@@ -1,7 +1,7 @@
 ﻿[Run Information]
 Version=CSPro 8.0
 AppType=Entry
-Description=Patient Survey (F3) - v3.0.0 (2026-08-13)
+Description=Patient Survey (F3) - v3.1.2 (2026-08-14)
 
 [Files]
 Application=.\PatientSurvey.ent

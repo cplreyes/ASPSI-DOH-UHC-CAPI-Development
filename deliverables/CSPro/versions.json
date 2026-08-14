@@ -16,18 +16,18 @@
   ],
   "F1": {
     "app": "Facility Head Survey",
-    "version": "2.0.0",
-    "date": "2026-08-13"
+    "version": "2.1.2",
+    "date": "2026-08-14"
   },
   "F3": {
     "app": "Patient Survey",
-    "version": "3.0.0",
-    "date": "2026-08-13"
+    "version": "3.1.2",
+    "date": "2026-08-14"
   },
   "F4": {
     "app": "Household Survey",
-    "version": "2.0.0",
-    "date": "2026-08-13"
+    "version": "2.1.2",
+    "date": "2026-08-14"
   },
   "HUB": {
     "app": "Supervisor Hub",

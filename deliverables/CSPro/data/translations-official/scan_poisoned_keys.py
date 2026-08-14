@@ -33,12 +33,26 @@ def norm(s):
 
 
 def doubled(v):
-    """'NBB compliance NBB compliance' -> True. Also catches 'x y x y'."""
+    """Any adjacent repeated run of words, anywhere in the value.
+
+    The first version only tested whether the WHOLE value was one phrase repeated, so it
+    caught "NBB compliance NBB compliance" but missed
+    "Publikong bus Taxi Taxi" - a real Cebuano translation with a doubled foreign fragment
+    welded on. That one survived the first sweep and shipped, and was only caught by
+    byte-verifying the deployed package. Scan every window instead.
+    """
     w = norm(v).split()
     n = len(w)
-    if n < 2 or n % 2:
+    if n < 2:
         return False
-    return w[: n // 2] == w[n // 2:]
+    if n % 2 == 0 and w[: n // 2] == w[n // 2:]:
+        return True
+    for size in range(1, n // 2 + 1):          # adjacent repeat of `size` words
+        for i in range(n - 2 * size + 1):
+            a, b = w[i:i + size], w[i + size:i + 2 * size]
+            if a == b and sum(len(x) for x in a) >= 4:
+                return True
+    return False
 
 
 def main():
