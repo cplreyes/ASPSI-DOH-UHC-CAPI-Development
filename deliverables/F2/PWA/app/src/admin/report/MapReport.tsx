@@ -48,6 +48,16 @@ interface MarkerData {
 interface MapReportData {
   markers: MarkerData[];
   no_gps_count: number;
+  /** Why the no-GPS rows lack coordinates (audit P1-4 instrumentation). */
+  no_gps_breakdown: Record<string, number>;
+}
+
+/** " — denied 2 · timeout 1" (counts desc); '' when the breakdown is empty. */
+function breakdownText(b: Record<string, number>): string {
+  const parts = Object.entries(b)
+    .sort((x, y) => y[1] - x[1])
+    .map(([why, n]) => `${why.replace('_', ' ')} ${n}`);
+  return parts.length ? ` — ${parts.join(' · ')}` : '';
 }
 
 export interface MapReportProps {
@@ -217,9 +227,12 @@ export function MapReport({ apiBaseUrl, fetchImpl }: MapReportProps): JSX.Elemen
                 // previous Link pointed at `?q=submission_lat` which actually
                 // searched for that literal text in HCW IDs). Render as plain
                 // text until a real filter ships. Tracked as a v2.0.2 follow-up.
-                <span className="text-muted-foreground">
+                // P1-4 instrumentation: the breakdown names WHY GPS is missing
+                // ("unknown" = rows ingested before gps_status existed).
+                <span className="text-muted-foreground" data-testid="map-no-gps">
                   {' · '}
                   {state.data.no_gps_count} without GPS
+                  {breakdownText(state.data.no_gps_breakdown ?? {})}
                 </span>
               ) : null}
             </p>

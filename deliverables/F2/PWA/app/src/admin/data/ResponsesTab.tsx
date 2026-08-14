@@ -4,9 +4,11 @@
  * Plan: docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md (Task 2.15)
  * Spec: docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md (§7.1)
  *
- * Reads filters from URL query params so the view is shareable; defaults
- * to last-24h when no `from` is specified. Fetches GET /admin/api/dashboards/
- * data/responses on mount and on filter change. Renders a hairline-divided
+ * Reads filters from URL query params so the view is shareable. Fetches
+ * GET /admin/api/dashboards/data/responses on mount and on filter change.
+ * Filter bar (2026-07-17): facility dropdown (by name, options from
+ * /dashboards/data/facility-options), status dropdown, date range, search,
+ * source pills incl. CAPI, Clear filters. Renders a hairline-divided
  * Verde Manual table — no card chrome, mono for IDs, monospace for ISO
  * timestamps, signal color reserved for the source-path pills.
  *
@@ -16,10 +18,17 @@
  * justify a react-window dep. Revisit if scale outgrows this.
  */
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
-import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { Link, useRouter } from '../lib/pages-router';
+import {
+  ClearFiltersButton,
+  FilterDate,
+  FilterSelect,
+  FilterText,
+  PillToggle,
+} from './filter-controls';
+import { useFacilityOptions, useFacilitySelectOptions } from './filter-hooks';
 
 interface ResponseRow {
   submission_id: string;
@@ -30,6 +39,8 @@ interface ResponseRow {
   status: string;
   source_path: string;
   encoded_by?: string;
+  /** 12-digit Questionnaire Number; '' / absent for pre-qn rows. */
+  qn?: string;
 }
 
 interface ListResponsesData {
@@ -37,6 +48,15 @@ interface ListResponsesData {
   total: number;
   has_more: boolean;
 }
+
+/** Status values the dropdown offers — buildResponseRow writes stored|refusal;
+ *  rejected rows come from DLQ-replay failures surfaced in the list. */
+const STATUS_OPTIONS: Array<{ value: string; label: string }> = [
+  { value: '', label: 'All statuses' },
+  { value: 'stored', label: 'Stored' },
+  { value: 'refusal', label: 'Refusal' },
+  { value: 'rejected', label: 'Rejected' },
+];
 
 export interface ResponsesTabProps {
   apiBaseUrl: string;
@@ -49,6 +69,8 @@ interface UiFilters {
   facility_id: string;
   source_path: string; // '' | 'self_admin' | 'paper_encoded' | 'capi'
   errors_only: boolean;
+  /** Explicit status filter (e.g. 'refusal') — Facilities-page deep-links land here. */
+  status: string;
   q: string;
 }
 
@@ -64,6 +86,7 @@ function readFiltersFromUrl(): UiFilters {
       facility_id: '',
       source_path: '',
       errors_only: false,
+      status: '',
       q: '',
     };
   }
@@ -74,6 +97,7 @@ function readFiltersFromUrl(): UiFilters {
     facility_id: p.get('facility_id') ?? '',
     source_path: p.get('source_path') ?? '',
     errors_only: p.get('errors_only') === '1',
+    status: p.get('status') ?? '',
     q: p.get('q') ?? '',
   };
 }
@@ -87,6 +111,7 @@ function buildQuery(filters: UiFilters): string {
   if (filters.facility_id) p.set('facility_id', filters.facility_id);
   if (filters.source_path) p.set('source_path', filters.source_path);
   if (filters.errors_only) p.set('errors_only', '1');
+  if (filters.status) p.set('status', filters.status);
   if (filters.q) p.set('q', filters.q);
   return p.toString();
 }
@@ -97,7 +122,9 @@ function buildApiQuery(filters: UiFilters): string {
   if (filters.to) p.set('to', filters.to);
   if (filters.facility_id) p.set('facility_id', filters.facility_id);
   if (filters.source_path) p.set('source_path', filters.source_path);
+  // errors_only keeps precedence over an explicit ?status= deep-link param.
   if (filters.errors_only) p.set('status', 'rejected');
+  else if (filters.status) p.set('status', filters.status);
   if (filters.q) p.set('q', filters.q);
   p.set('limit', '200');
   return p.toString();
@@ -107,6 +134,7 @@ export function ResponsesTab({ apiBaseUrl, fetchImpl }: ResponsesTabProps): JSX.
   const { token, clearAuth } = useAdminAuth();
   const { navigate } = useRouter();
   const [filters, setFilters] = useState<UiFilters>(() => readFiltersFromUrl());
+  const facilityOptions = useFacilityOptions(apiBaseUrl, token, fetchImpl);
   const [state, setState] = useState<
     | { kind: 'idle' }
     | { kind: 'loading' }
@@ -160,6 +188,17 @@ export function ResponsesTab({ apiBaseUrl, fetchImpl }: ResponsesTabProps): JSX.
     setFilters((prev) => ({ ...prev, [key]: prev[key] === value ? ('' as UiFilters[K]) : value }));
   };
 
+  const facilitySelectOptions = useFacilitySelectOptions(facilityOptions, filters.facility_id);
+
+  const anyFilterActive =
+    filters.from !== '' ||
+    filters.to !== '' ||
+    filters.facility_id !== '' ||
+    filters.source_path !== '' ||
+    filters.errors_only ||
+    filters.status !== '' ||
+    filters.q !== '';
+
   return (
     <div className="flex flex-col gap-4">
       <form
@@ -176,10 +215,19 @@ export function ResponsesTab({ apiBaseUrl, fetchImpl }: ResponsesTabProps): JSX.
           value={filters.to}
           onChange={(v) => setFilters({ ...filters, to: v })}
         />
-        <FilterText
-          label="Facility ID"
+        <FilterSelect
+          label="Facility"
           value={filters.facility_id}
+          options={facilitySelectOptions}
           onChange={(v) => setFilters({ ...filters, facility_id: v })}
+        />
+        <FilterSelect
+          label="Status"
+          value={filters.status}
+          options={STATUS_OPTIONS}
+          // Status and the Errors-only pill both drive the same API param —
+          // picking one clears the other so the list never lies about which won.
+          onChange={(v) => setFilters({ ...filters, status: v, errors_only: false })}
         />
         <FilterText
           label="Search"
@@ -200,12 +248,35 @@ export function ResponsesTab({ apiBaseUrl, fetchImpl }: ResponsesTabProps): JSX.
             Paper-encoded
           </PillToggle>
           <PillToggle
+            active={filters.source_path === 'capi'}
+            onClick={() => togglePill('source_path', 'capi')}
+          >
+            CAPI
+          </PillToggle>
+          <PillToggle
             active={filters.errors_only}
-            onClick={() => setFilters({ ...filters, errors_only: !filters.errors_only })}
+            onClick={() =>
+              setFilters({ ...filters, errors_only: !filters.errors_only, status: '' })
+            }
           >
             Errors only
           </PillToggle>
         </div>
+        {anyFilterActive ? (
+          <ClearFiltersButton
+            onClick={() =>
+              setFilters({
+                from: '',
+                to: '',
+                facility_id: '',
+                source_path: '',
+                errors_only: false,
+                status: '',
+                q: '',
+              })
+            }
+          />
+        ) : null}
       </form>
 
       {state.kind === 'loading' ? (
@@ -227,95 +298,6 @@ export function ResponsesTab({ apiBaseUrl, fetchImpl }: ResponsesTabProps): JSX.
   );
 }
 
-// FX-014 (2026-05-03): inputs derive `name` from the label so Chrome's
-// "form field should have an id or name" issue panel stays clean and so
-// browser autofill / password managers have something to key on.
-function slugifyLabel(label: string): string {
-  return (
-    label
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-|-$/g, '') || 'field'
-  );
-}
-
-function FilterDate({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-}): JSX.Element {
-  const name = slugifyLabel(label);
-  return (
-    <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-        {label}
-      </span>
-      <input
-        type="date"
-        name={name}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
-      />
-    </label>
-  );
-}
-
-function FilterText({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-}): JSX.Element {
-  const name = slugifyLabel(label);
-  return (
-    <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-        {label}
-      </span>
-      <input
-        type="text"
-        name={name}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
-      />
-    </label>
-  );
-}
-
-function PillToggle({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}): JSX.Element {
-  return (
-    <Button
-      type="button"
-      variant="outline"
-      onClick={onClick}
-      className={
-        active
-          ? 'h-auto rounded-sm border-signal bg-signal-bg px-3 py-1 text-xs text-signal hover:bg-signal-bg'
-          : 'h-auto rounded-sm border-hairline bg-transparent px-3 py-1 text-xs text-muted-foreground hover:bg-transparent hover:text-ink'
-      }
-    >
-      {children}
-    </Button>
-  );
-}
-
 function ResponsesTable({ rows }: { rows: ResponseRow[] }): JSX.Element {
   return (
     <div className="overflow-x-auto">
@@ -324,6 +306,7 @@ function ResponsesTable({ rows }: { rows: ResponseRow[] }): JSX.Element {
           <tr>
             <Th>Submitted</Th>
             <Th>HCW</Th>
+            <Th>QN</Th>
             <Th>Facility</Th>
             <Th>Source</Th>
             <Th>Status</Th>
@@ -336,7 +319,18 @@ function ResponsesTable({ rows }: { rows: ResponseRow[] }): JSX.Element {
           {rows.map((r) => (
             <tr key={r.submission_id}>
               <Td mono>{formatTs(r.submitted_at_server)}</Td>
-              <Td mono>{r.hcw_id}</Td>
+              <Td mono>
+                {r.hcw_id.startsWith('sr-') ? (
+                  // Slug-model cases carry an anonymous sr- UUID; the QN column
+                  // is their meaningful identity (full id in the detail view).
+                  <span className="italic text-muted-foreground" title={r.hcw_id}>
+                    self-registered
+                  </span>
+                ) : (
+                  r.hcw_id
+                )}
+              </Td>
+              <Td mono>{r.qn || '—'}</Td>
               <Td>{r.facility_id}</Td>
               <Td>
                 <SourcePill value={r.source_path} />

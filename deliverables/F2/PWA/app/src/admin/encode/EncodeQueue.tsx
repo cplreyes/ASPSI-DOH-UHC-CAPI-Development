@@ -13,15 +13,24 @@
 import { useState, type FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { useRouter } from '../lib/pages-router';
+import { validateHcwId } from './hcw-id-validation';
 
 export function EncodeQueue(): JSX.Element {
   const { navigate } = useRouter();
   const [hcwId, setHcwId] = useState('');
+  // #847: inline rejection of enrollment-token pastes (and malformed IDs)
+  // before anything reaches the encode form or the backend.
+  const [idError, setIdError] = useState<'token' | 'format' | null>(null);
 
   const onJump = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const trimmed = hcwId.trim();
     if (!trimmed) return;
+    const check = validateHcwId(trimmed);
+    if (!check.ok) {
+      setIdError(check.reason);
+      return;
+    }
     navigate(`/admin/encode/${encodeURIComponent(trimmed)}`);
   };
 
@@ -46,7 +55,10 @@ export function EncodeQueue(): JSX.Element {
           <input
             type="text"
             value={hcwId}
-            onChange={(e) => setHcwId(e.target.value)}
+            onChange={(e) => {
+              setHcwId(e.target.value);
+              setIdError(null);
+            }}
             autoCapitalize="none"
             autoCorrect="off"
             spellCheck={false}
@@ -54,6 +66,15 @@ export function EncodeQueue(): JSX.Element {
             placeholder="e.g. hcw-001"
           />
         </label>
+        {idError ? (
+          <div role="alert" className="border-l-2 border-error pl-3 py-2" data-testid="hcw-id-error">
+            <p className="text-sm text-error">
+              {idError === 'token'
+                ? 'That looks like an enrollment token or link key, not an HCW ID. Find the HCW’s ID in Data → HCWs (short codes like hcw-001).'
+                : 'Not a valid HCW ID — IDs are short codes like hcw-001 (letters, digits and dashes only).'}
+            </p>
+          </div>
+        ) : null}
         <div>
           <Button type="submit" disabled={!hcwId.trim()}>
             Open encoder

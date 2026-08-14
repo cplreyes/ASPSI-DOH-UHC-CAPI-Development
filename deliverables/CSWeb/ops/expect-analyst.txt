@@ -1,0 +1,12 @@
+# analyst: case.view + data.export + monitoring.view + tabulations.view
+/projects/uhc-y2/monitoring/                   200
+/projects/uhc-y2/monitoring/map/               200
+/projects/uhc-y2/data/                         200
+/docs/data/f1_responses.csv                    200
+/docs/data/f1-cases-spss.zip                   200
+/docs/data/tabulations-preview.json            200
+# the bare directory redirects (anchored — files above prove the anchor held)
+/docs/data/                                    301
+# no admin.system
+/projects/uhc-y2/admin/                        403
+/docs/admin/                                   301

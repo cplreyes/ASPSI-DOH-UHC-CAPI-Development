@@ -4,10 +4,11 @@
  * Plan: docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md (Task 3.6)
  * Spec: docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md (§9.4)
  *
- * Top: PWA + Worker build identifiers (worker reads from env at deploy
- * time). Below: form_revisions table aggregating F2_Responses by
- * spec_version so admins can see how many submissions land on each
- * questionnaire revision and when the most recent one arrived.
+ * Top: PWA + API build identifiers (f2-api reads them from container env
+ * vars stamped by deploy_model_c_full.sh). Below: form_revisions table
+ * aggregating F2_Responses by spec_version so admins can see how many
+ * responses land on each questionnaire revision and when the most recent
+ * one arrived.
  */
 import { useEffect, useState } from 'react';
 import { adminFetch, type ApiError } from '../lib/api-client';
@@ -23,10 +24,10 @@ interface FormRevision {
 interface VersionData {
   pwa_version: string;
   pwa_build_sha: string;
-  worker_version: string;
+  api_version: string;
   form_revisions: FormRevision[];
   total_submissions: number;
-  last_pages_deploy_at: string | null;
+  api_deployed_at: string | null;
 }
 
 export interface VersioningProps {
@@ -74,8 +75,8 @@ export function Versioning({ apiBaseUrl, fetchImpl }: VersioningProps): JSX.Elem
       <header className="flex flex-col">
         <h3 className="font-serif text-lg font-medium tracking-tight">Versioning</h3>
         <p className="text-xs text-muted-foreground">
-          Live build identifiers (PWA bundle + SHA, Worker, last Pages deploy) and per-spec
-          submission counts. First place to look during incident triage — answers “what version is
+          Live build identifiers (PWA bundle + SHA, API version, last deploy) and per-spec
+          response counts. First place to look during incident triage — answers “what version is
           in front of users right now?”
         </p>
       </header>
@@ -103,11 +104,11 @@ function BuildIdentifiers({ data }: { data: VersionData }): JSX.Element {
       <Field label="PWA build SHA" mono>
         {shortSha(data.pwa_build_sha)}
       </Field>
-      <Field label="Worker version" mono>
-        {data.worker_version}
+      <Field label="API version" mono>
+        {data.api_version}
       </Field>
-      <Field label="Last Pages deploy" mono>
-        {data.last_pages_deploy_at ?? '—'}
+      <Field label="Last API deploy" mono>
+        {data.api_deployed_at ? formatTs(data.api_deployed_at) : '—'}
       </Field>
     </dl>
   );
@@ -118,7 +119,7 @@ function RevisionsTable({ rows, total }: { rows: FormRevision[]; total: number }
     return (
       <div className="border border-hairline bg-secondary/20 px-4 py-4">
         <p className="text-sm text-muted-foreground">
-          No submissions on record yet. Once F2 responses start landing, this table groups them by
+          No responses on record yet. Once F2 responses start landing, this table groups them by
           questionnaire <code className="font-mono text-xs">spec_version</code>.
         </p>
       </div>
@@ -126,15 +127,17 @@ function RevisionsTable({ rows, total }: { rows: FormRevision[]; total: number }
   }
   return (
     <div className="overflow-x-auto">
+      {/* "Responses", not "submissions" — this count includes refusals, unlike
+          the Coverage report's submitted column (audit P3-2). */}
       <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-        {total} submission{total === 1 ? '' : 's'} across {rows.length} revision
+        {total} response{total === 1 ? '' : 's'} (incl. refusals) across {rows.length} revision
         {rows.length === 1 ? '' : 's'}
       </p>
       <table className="mt-2 w-full text-sm">
         <thead className="border-b border-hairline text-left">
           <tr>
             <Th>Spec version</Th>
-            <Th>Submissions</Th>
+            <Th>Responses</Th>
             <Th>Last seen</Th>
           </tr>
         </thead>
@@ -209,7 +212,7 @@ function ErrorBanner({ error }: { error: ApiError }): JSX.Element {
         {error.code === 'E_PERM_DENIED'
           ? 'Your role lacks dash_apps. Contact an Administrator.'
           : error.code === 'E_BACKEND'
-            ? 'Backend unavailable — Apps Script staging may not be reachable yet.'
+            ? 'Backend unavailable — the API may be restarting. Try again shortly.'
             : error.code === 'E_NETWORK'
               ? 'Network unavailable. Reload to retry.'
               : (error.message ?? 'Failed to load versioning info.')}

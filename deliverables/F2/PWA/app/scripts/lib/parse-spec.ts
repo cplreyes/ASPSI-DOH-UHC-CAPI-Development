@@ -188,7 +188,9 @@ export function parseTableRows(body: string): RowFields[] {
 
     while (i < lines.length && TABLE_HEADER.test(lines[i])) {
       const cells = splitCells(lines[i]);
-      if (cells[0] && /^Q\d+/.test(cells[0])) {
+      // FB\d+ = app-only items (Section K questionnaire feedback, #1003/#1004)
+      // that deliberately live outside the paper's Q1–Q125 codebook namespace.
+      if (cells[0] && /^(?:Q|FB)\d+/.test(cells[0])) {
         const row: RowFields = {};
         header.forEach((col, idx) => {
           row[normalizeHeader(col)] = cells[idx] ?? '';

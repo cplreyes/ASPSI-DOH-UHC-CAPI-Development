@@ -2,6 +2,8 @@ export interface BatchSubmitItem {
   client_submission_id: string;
   hcw_id: string;
   facility_id: string;
+  /** 12-digit Questionnaire Number; '' for pre-qn/legacy enrollments. */
+  qn: string;
   spec_version: string;
   app_version: string;
   submitted_at_client: number;

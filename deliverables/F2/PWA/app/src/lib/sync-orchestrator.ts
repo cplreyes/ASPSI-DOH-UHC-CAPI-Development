@@ -72,6 +72,7 @@ function toBatchItem(row: SubmissionRow, deps: OrchestratorDeps): BatchSubmitIte
   return {
     client_submission_id: row.client_submission_id,
     hcw_id: row.hcw_id,
+    qn: row.qn ?? '',
     facility_id: (row.values['facility_id'] as string | undefined) ?? '',
     spec_version: row.spec_version || deps.specVersion,
     app_version: deps.appVersion,
@@ -91,7 +92,13 @@ async function applyResponse(
   let failed = 0;
   let retryScheduled = 0;
 
-  if (!response.ok && response.transport) {
+  // Transport failures retry; so does E_KILL_SWITCH — the admin pause is
+  // temporary by definition (HTTP 200 + error envelope), and terminally
+  // rejecting queued rows here would strand fully-answered surveys on a
+  // device forever after the switch is lifted.
+  const retryable =
+    !response.ok && (response.transport || response.error.code === 'E_KILL_SWITCH');
+  if (!response.ok && retryable) {
     for (const row of rows) {
       const nextCount = row.retry_count + 1;
       await db.submissions.update(row.client_submission_id, {

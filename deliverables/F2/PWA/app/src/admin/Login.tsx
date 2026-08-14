@@ -6,14 +6,17 @@
  *
  * No card. Hairline border-bottom on inputs. Newsreader serif heading.
  * Signal-color CTA. Inline error banner using --error token. Disclosure
- * about session policy (in-memory token → reload re-prompts) at the
- * bottom in muted mono per the field-manual aesthetic.
+ * about session policy (per-tab session, survives reload — see
+ * lib/auth-storage.ts — and hands off to sibling tabs over BroadcastChannel
+ * per #1001, so it dies only when the last admin tab closes) at the bottom in
+ * muted mono per the field-manual aesthetic.
  */
 import { useState, type FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAdminAuth, type AdminLoginResponse } from './lib/auth-context';
 import { adminFetch, type ApiError } from './lib/api-client';
 import { useRouter } from './lib/pages-router';
+import { takeReturnTo } from './return-to';
 
 export interface LoginProps {
   apiBaseUrl: string;
@@ -34,7 +37,7 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
   // If already authenticated (e.g., user navigated to /admin/login by
   // accident with an active session), bounce to the operations dashboard.
   if (isAuthenticated) {
-    navigate('/admin/data');
+    navigate(takeReturnTo());
   }
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -62,7 +65,7 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
     if (r.data.password_must_change) {
       navigate('/admin/me/change-password');
     } else {
-      navigate('/admin/data');
+      navigate(takeReturnTo());
     }
   };
 
@@ -141,7 +144,9 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
 
       <footer className="mt-16 border-t border-hairline pt-4">
         <p className="font-mono text-xs leading-relaxed text-muted-foreground">
-          Sessions are held in memory. Closing the tab or reloading signs you out.
+          Sessions last up to 4 hours. Reloading keeps you signed in, and new tabs pick up
+          the session while any admin tab is open. Closing every tab or signing out ends the
+          session everywhere.
         </p>
         {import.meta.env.DEV ? (
           <Button

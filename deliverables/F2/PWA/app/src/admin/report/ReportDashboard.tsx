@@ -7,19 +7,19 @@
 import { useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { useRouter } from '../lib/pages-router';
-import { SyncReport } from './SyncReport';
+import { CoverageReport } from './CoverageReport';
 import { MapReport } from './MapReport';
 
-type TabKey = 'sync' | 'map';
+type TabKey = 'coverage' | 'map';
 
 // `description` renders as the native browser tooltip + screen-reader aria-label.
 // Same pattern as DataDashboard.tsx tabs.
 const TABS: Array<{ key: TabKey; label: string; description: string }> = [
   {
-    key: 'sync',
-    label: 'Sync Report',
+    key: 'coverage',
+    label: 'Coverage',
     description:
-      'Submission counts aggregated by region / province / facility. Snapshot view of fieldwork coverage.',
+      'Fieldwork progress vs facility targets by region / province / facility. Counts match the Facilities page.',
   },
   {
     key: 'map',
@@ -39,7 +39,8 @@ export function ReportDashboard({ apiBaseUrl, fetchImpl }: ReportDashboardProps)
   const activeTab = useMemo<TabKey>(() => {
     const params = new URLSearchParams(search);
     const t = params.get('tab');
-    return TABS.some((x) => x.key === t) ? (t as TabKey) : 'sync';
+    // Legacy ?tab=sync bookmarks fall through to the default (Coverage).
+    return TABS.some((x) => x.key === t) ? (t as TabKey) : 'coverage';
   }, [search]);
 
   const switchTab = (key: TabKey) => {
@@ -78,8 +79,8 @@ export function ReportDashboard({ apiBaseUrl, fetchImpl }: ReportDashboardProps)
       </nav>
 
       <div className="pt-2">
-        {activeTab === 'sync' ? (
-          <SyncReport apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
+        {activeTab === 'coverage' ? (
+          <CoverageReport apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
         ) : (
           <MapReport apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
         )}

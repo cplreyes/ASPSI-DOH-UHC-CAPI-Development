@@ -22,6 +22,12 @@ export interface LastError {
 export interface SubmissionRow {
   client_submission_id: string;
   hcw_id: string;
+  /**
+   * 12-digit Questionnaire Number (facility-9 + HCW-seq-3) from the device's
+   * enrollment record. Optional: rows created before the qn rollout, and
+   * legacy/slug-facility enrollments, have none. Wire encoding is ''.
+   */
+  qn?: string;
   status: SubmissionStatus;
   synced_at: number | null;
   submitted_at: number;
@@ -66,6 +72,12 @@ export interface EnrollmentRow {
    */
   facility_type?: string;
   enrolled_at: number;
+  /**
+   * 12-digit Questionnaire Number assigned at HCW enrollment (AdminHCWs),
+   * learned from the /verify-token claims. Optional: pre-qn tokens and
+   * legacy/slug facilities have none.
+   */
+  qn?: string;
   /**
    * Per-tablet JWT issued by the Cloudflare Worker (spec §5).
    * Optional in the type for v4-era rows; runtime-required for sync.

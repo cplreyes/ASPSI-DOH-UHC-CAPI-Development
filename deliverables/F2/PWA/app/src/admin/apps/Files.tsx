@@ -4,9 +4,9 @@
  * Plan: docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md (Task 3.7)
  * Spec: docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md (sec 7.9)
  *
- * Lists non-deleted F2_FileMeta rows with size + uploader; lets Admins
+ * Lists non-deleted f2_files rows with size + uploader; lets Admins
  * upload via file picker (multipart), download (always-attachment), and
- * soft-delete. Allowlist + size cap mirror the worker; we re-validate
+ * soft-delete. Allowlist + size cap mirror the server; we re-validate
  * client-side to give immediate feedback before paying the round trip.
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -26,9 +26,13 @@ const ALLOWED_MIME = new Set([
 
 const MAX_FILE_BYTES = 100 * 1024 * 1024;
 
-// #174: folder-name charset — MUST mirror the worker apps.ts FOLDER_NAME_RE
-// and the AS AdminFiles.js validator. ASCII letters/digits/space/. _ -, no
-// '..', length 1–128.
+// Audit P3-1: octet-stream is allowed as a MIME (browsers report it for
+// anything they can't type), so the extension list is the real policy gate —
+// mirrors the server's ALLOWED_FILE_EXTENSIONS in admin/routes.ts.
+const ALLOWED_EXTENSIONS = ['pdf', 'zip', 'png', 'jpg', 'jpeg', 'gif'];
+
+// #174: folder-name charset — MUST mirror the server's FOLDER_NAME_RE.
+// ASCII letters/digits/space/. _ -, no '..', length 1–128.
 const FOLDER_NAME_RE = /^(?!.*\.\.)[A-Za-z0-9 _\-.]{1,128}$/;
 
 interface FileRow {
@@ -123,6 +127,11 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
     const mime = file.type || 'application/octet-stream';
     if (!ALLOWED_MIME.has(mime)) {
       setUploadError(`MIME type ${mime} not allowed. Allowed: PDF, ZIP, PNG, JPEG, GIF.`);
+      return;
+    }
+    const ext = file.name.slice(file.name.lastIndexOf('.') + 1).toLowerCase();
+    if (!file.name.includes('.') || !ALLOWED_EXTENSIONS.includes(ext)) {
+      setUploadError(`File extension .${ext || '?'} not allowed. Allowed: ${ALLOWED_EXTENSIONS.join(', ')}.`);
       return;
     }
 
@@ -240,7 +249,7 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
   }
 
   // #315: the file download MUST be an authenticated fetch, not a plain
-  // <a href> navigation. The admin JWT lives in memory only and is sent
+  // <a href> navigation. The admin JWT is not a cookie — it is sent
   // exclusively via the Authorization header; a bare anchor click carries no
   // header, so the worker rejected every download with 401 and the error JSON
   // ("access denied") was what got saved as the "file". Fetch the bytes with
@@ -445,7 +454,7 @@ function FolderForm({
 }
 
 // FX-009 (2026-05-03): keep this allowlist in sync with ALLOWED_MIME above
-// and the worker's apps.ts ALLOWED_MIME. Browsers honor `accept` as a hint
+// and the server's admin/routes.ts ALLOWED_MIME. Browsers honor `accept` as a hint
 // (filters the OS picker by default) so it doesn't replace server-side
 // validation but does close the UX gap where users could pick anything.
 const ACCEPT_ATTR =
@@ -640,7 +649,7 @@ function FilesTable({
                 ) : (
                   <>
                     {/* #315: download goes through handleDownload (authenticated
-                        blob fetch). A plain <a href> cannot send the in-memory
+                        blob fetch). A plain <a href> cannot send the bearer
                         admin JWT, so the bare GET 401'd and the error JSON was
                         saved as the "file". This button is the action trigger. */}
                     <button
@@ -699,7 +708,7 @@ function EmptyState({ atRoot }: { atRoot: boolean }): JSX.Element {
     <div className="border border-hairline bg-secondary/20 px-4 py-4">
       <p className="text-sm text-muted-foreground">
         {atRoot
-          ? 'No files uploaded yet. Reference documents (PDF protocols, training packets, ZIP exports) live here. Uploads are streamed to R2 with the original filename preserved on download.'
+          ? 'No files uploaded yet. Reference documents (PDF protocols, training packets, ZIP exports) live here. Uploads are stored on the survey server with the original filename preserved on download.'
           : 'This folder is empty. Drop a file above to add it here.'}
       </p>
     </div>
@@ -743,9 +752,9 @@ function friendlyError(err: ApiError, fallback: string): string {
   if (err.code === 'E_PERM_DENIED') return 'Your role lacks dash_apps. Contact an Administrator.';
   if (err.code === 'E_NETWORK') return 'Network unavailable. Try again.';
   if (err.code === 'E_BACKEND')
-    return 'Backend unavailable - Apps Script staging may be unreachable.';
+    return 'Backend unavailable — the API may be restarting. Try again shortly.';
   if (err.code === 'E_NOT_CONFIGURED')
-    return 'File storage is not configured for this environment. Files require R2 to be enabled.';
+    return 'File storage is not configured for this environment.';
   if (err.code === 'E_CONFLICT') return err.message || 'A folder with that name already exists.';
   return err.message || fallback;
 }

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Case detail — UHC Survey Year 2</title>
+<!--
+  F1/F3/F4 case detail, served from the CAPI console so it needs only the console
+  login — the same single sign-in as the F2 viewer, which was the whole point of
+  making these uniform.
+
+  Data: /docs/cases/<inst>/<qn>.json plus a per-instrument /docs/cases/<inst>/_labels.json,
+  both written on the box by csweb-cases-gen.py from the SAME data-room CSVs the
+  SPSS/Stata/R exports use — so this page can never disagree with them. Labels are
+  fetched separately so the browser caches them once while you move between cases.
+  No database credential exists in this page.
+-->
+<style>
+:root{--g:#046a38;--gold:#e5b23b;--red:#d32f2f;--ink:#12171a;
+  --muted:#5a6a7a;--line:#d8dee7;--paper:#eef1f5;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:15px/1.55 system-ui,Segoe UI,Roboto,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:22px 20px 60px}
+a{color:var(--g)}
+.back{display:inline-block;font-size:13px;font-weight:600;text-decoration:none;margin-bottom:14px}
+.back:hover{text-decoration:underline}
+h1{font-size:22px;margin:0 0 4px}
+h2{font-size:15px;margin:0 0 10px;color:var(--g)}
+.sub{color:var(--muted);font-size:13px;margin:0 0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;
+  padding:16px 18px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,32,64,.06)}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px 20px}
+.k{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.v{font-weight:600;word-break:break-word}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{position:sticky;top:0;background:#f4f6f9;font-size:11px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--muted);box-shadow:inset 0 -1px 0 var(--line)}
+td.code,th.code{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;color:var(--muted);white-space:nowrap}
+td.q{width:44%}
+td.a{font-weight:600}
+td.a .lab{font-weight:400;color:var(--muted)}
+td.a.blank{font-weight:400;color:var(--muted)}
+.tools{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
+.tools input[type=search]{flex:1;min-width:200px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;font:inherit}
+.tools input[type=checkbox]{flex:none;margin:0}
+.tools label{font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.count{font-size:12.5px;color:var(--muted)}
+.err{background:#fdecea;border-left:4px solid var(--red);padding:12px 14px;border-radius:0 6px 6px 0}
+.note{color:var(--muted);font-size:12.5px;font-style:italic;margin-top:12px}
+.rwrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:#fff}
+.rwrap table{margin:0}
+.rwrap th{white-space:nowrap}
+/* Wide content scrolls inside its own panel; the document itself must never
+   scroll sideways. Same rule the dashboard and data room now follow. */
+@media (max-width:620px){
+  .wrap{padding:16px 12px 48px}
+  table.qa{display:block;overflow-x:auto}
+  table.qa thead,table.qa tbody{display:table;width:100%;min-width:520px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/docs/dashboard.html#b-cases">&larr; Back to the Sync Dashboard case list</a>
+  <div id="out"><p class="sub">Loading&hellip;</p></div>
+</div>
+<script>
+var NAMES = {f1:'Facility Head', f3:'Patient', f4:'Household'};
+// Anchor both inputs: they become URL path segments, so a crafted value must not
+// be able to walk out of /docs/cases/.
+var INST_RE = /^f[134]$/, QN_RE = /^[0-9]{6,14}$/;
+var out = document.getElementById('out');
+function esc(s){ var d=document.createElement('div'); d.textContent=(s==null?'':s); return d.innerHTML; }
+function fail(m,d){ out.innerHTML='<h1>Case detail</h1><div class="err"><b>'+esc(m)+'</b>'
+  + (d?'<div class="note">'+esc(d)+'</div>':'') + '</div>'; }
+
+var p = new URLSearchParams(location.search);
+var inst = (p.get('inst')||'').toLowerCase(), qn = (p.get('qn')||'').trim();
+if (!INST_RE.test(inst) || !QN_RE.test(qn)) {
+  fail('No valid instrument and questionnaire number in the link.',
+       'Open this page from the Sync Dashboard case list rather than by typing the address.');
+} else {
+  var base = '/docs/cases/' + inst + '/';
+  Promise.all([
+    fetch(base + '_labels.json', {cache:'default'}).then(chk),
+    fetch(base + encodeURIComponent(qn) + '.json', {cache:'no-store'}).then(chk)
+  ]).then(function(r){ render(r[0], r[1]); }).catch(onErr);
+}
+function chk(r){
+  if (r.status === 404) throw new Error('notfound');
+  if (r.status === 401 || r.status === 403) throw new Error('auth');
+  if (!r.ok) throw new Error('http ' + r.status);
+  return r.json();
+}
+function onErr(e){
+  if (e.message === 'notfound')
+    fail('This case has no detail file yet.',
+         'Detail files are rebuilt every 2 minutes; a case that synced moments ago may not be there yet. Reload shortly.');
+  else if (e.message === 'auth') fail('Your session expired.', 'Reload the page to sign in again.');
+  else fail('Could not load this case.', String(e.message || e));
+}
+
+function label(L, c){ return (L.var && L.var[c]) || c; }
+function valueCell(L, c, v){
+  if (!v) return '<td class="a blank">—</td>';
+  var vl = L.val && L.val[c] && L.val[c][v];
+  // The raw code is always shown: the CSV/SPSS/Stata/R exports deliberately keep
+  // raw codes, so relabelling silently here would make the console disagree with
+  // every other artefact. The label is an annotation, not a replacement.
+  return '<td class="a">' + esc(v) + (vl ? ' <span class="lab">— ' + esc(vl) + '</span>' : '') + '</td>';
+}
+
+function render(L, d){
+  var head = '<h1>' + esc(d.inst.toUpperCase()) + ' &middot; ' + esc(NAMES[d.inst] || '') + ' case</h1>'
+    + '<p class="sub">Questionnaire ' + esc(d.qn) + '</p>'
+    + '<div class="card"><div class="meta">'
+    + cell('Questionnaire no.', d.qn) + cell('Instrument', d.inst.toUpperCase() + ' · ' + (NAMES[d.inst]||''))
+    + cell('Phase', d.phase) + cell('Activity', d.activity)
+    + cell('Answered', d.answered + ' of ' + d.answers.length)
+    + cell('Roster records', d.rosters.length ? String(d.rosters.length) : 'none')
+    + '</div></div>';
+
+  var rows = d.answers.map(function(a){
+    var lab = label(L, a.c), vl = (L.val && L.val[a.c] && L.val[a.c][a.v]) || '';
+    return '<tr data-hay="' + esc((a.c + ' ' + lab + ' ' + a.v + ' ' + vl).toLowerCase()) + '"'
+      + (a.v ? '' : ' data-blank="1"') + '>'
+      + '<td class="code">' + esc(a.c) + '</td>'
+      + '<td class="q">' + esc(lab) + '</td>' + valueCell(L, a.c, a.v) + '</tr>';
+  }).join('');
+
+  var rosters = d.rosters.map(function(r){
+    var cols = Object.keys(r.rows[0].cells);
+    var thead = '<tr><th class="code">occ</th>' + cols.map(function(c){
+      return '<th title="' + esc(c) + '">' + esc(label(L, c)) + '</th>'; }).join('') + '</tr>';
+    var body = r.rows.map(function(row){
+      return '<tr><td class="code">' + esc(row.occ) + '</td>' + cols.map(function(c){
+        return valueCell(L, c, (row.cells[c]||'').trim()); }).join('') + '</tr>'; }).join('');
+    return '<div class="card"><h2>' + esc(r.record) + ' &middot; ' + r.rows.length
+      + ' row' + (r.rows.length===1?'':'s') + '</h2>'
+      + '<div class="rwrap"><table><thead>' + thead + '</thead><tbody>' + body + '</tbody></table></div></div>';
+  }).join('');
+
+  out.innerHTML = head
+    + '<div class="card">'
+    + '<div class="tools"><input type="search" id="q" placeholder="Search item, question, answer…">'
+    + '<label><input type="checkbox" id="hide"> Hide unanswered</label>'
+    + '<span class="count" id="cnt"></span></div>'
+    + '<table class="qa"><thead><tr><th>Item</th><th>Question</th><th>Answer</th></tr></thead>'
+    + '<tbody id="tb">' + rows + '</tbody></table>'
+    + '<p class="note">Answers are shown as stored, with the codebook label alongside any coded value.'
+    + ' Same extraction as the CSV / SPSS / Stata / R exports. Regenerated ' + esc(d.generated) + '.</p></div>'
+    + rosters;
+
+  var q=document.getElementById('q'), hide=document.getElementById('hide'),
+      cnt=document.getElementById('cnt'), tb=document.getElementById('tb');
+  function filter(){
+    var t=(q.value||'').trim().toLowerCase(), hb=hide.checked, n=0;
+    Array.prototype.forEach.call(tb.rows, function(tr){
+      var ok = (!t || tr.getAttribute('data-hay').indexOf(t)>=0)
+            && (!hb || !tr.getAttribute('data-blank'));
+      tr.style.display = ok?'':'none'; if(ok) n++;
+    });
+    cnt.textContent = n + ' of ' + tb.rows.length + ' items';
+  }
+  q.oninput=filter; hide.onchange=filter; filter();
+}
+function cell(k,v){ return '<div><div class="k">'+esc(k)+'</div><div class="v">'+esc(v||'—')+'</div></div>'; }
+</script>
+</body></html>

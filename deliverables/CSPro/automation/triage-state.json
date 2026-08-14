@@ -1973,6 +1973,154 @@
     "remaining_16": "13 CSEntry blocked on ASPSI/Carl decisions or a device check + 3 F2 PWA (other queue). None blocked on build work.",
     "gate": "NOT-READY (correct - 13 open actionable findings remain)."
   },
+  "_cycle_2026-08-09_q46": {
+    "signal": "ONE new signal in 200 comments + 4 Slack channels: ASPSI ops answered #1177 on 2026-08-07 with the confirmed final Q46 option list. That answered the exact question my earlier triage comment had asked (keep or drop code 09 'Dependent'), so #1177 moved from ASPSI-blocked to actionable. No new issues, no reopens, no retest failures, no tester chatter.",
+    "1177_fix": {
+      "what": "F4 Q46 PhilHealth membership category: definitions moved INLINE into each option label; the separate note above the question deleted so nothing is read twice; option 09 'Dependent' removed per ops' confirmed list.",
+      "codes": "UNCHANGED (01-08, 55, 88). No codebook/tabulation impact. 09 had no logic ref and no translation.",
+      "why_it_was_a_note": "CSPro hard-caps labels at 255 chars; two definitions are 273 and 349.",
+      "condensed": "05 Lifetime member -> 246 chars, 06 Senior citizen -> 250. Eight of ten stay verbatim. Flagged in the issue for ASPSI sign-off; only hard requirement is <=255.",
+      "real_finding": "EN was the ONLY language without inline definitions - FIL/BCL/BIS option labels already carried them. So this was an EN/translation inconsistency, not just a layout preference.",
+      "translation_trap": "apply_translations keys off the FULL English label text. Changing EN would have silently dropped all 7 locales on Q46. Re-keyed all 7 maps in the same change (additive: new key added, old key left in place, since a short label may key another item elsewhere). Verified Q46 still translated per locale.",
+      "files": [
+        "F4/generate_dcf.py",
+        "F4/generate_qsf.py",
+        "F4/translations/*.json (7)",
+        "cspro_helpers.py",
+        "+ regenerated HouseholdSurvey.dcf / .ent.qsf"
+      ]
+    },
+    "guard_added": "cspro_helpers.write_dcf now NAMES capped labels instead of printing a bare count, and splits severity: capped ENGLISH labels are listed individually (they break translation lookup) while capped translations are summarised per language (display only). Also made ASCII-safe - the first version crashed on cp1252 consoles printing non-breaking hyphens.",
+    "new_issue_1182": "Filed: 10 English labels exceed the 255 cap in the DEPLOYED dictionaries (F3 x2 = Q45 Lifetime member/Senior citizen; F4 x8 = consumption/expenditure roster item labels; F1 clean). Every one is cut mid-sentence AND has 0/7 locales translated - hard-verified. F3 Q45 ships English in FIL/HIL/ILO today. The 8 F4 roster labels are still outstanding. Deliberately NOT added to processed_issues so the next cycle picks them up as work.",
+    "BLOCKED_deploy": {
+      "what": "#1177 is fixed and its dictionary output is verified, but NOT deployed.",
+      "why": "This session is sandboxed to the f2-productivity-panel worktree; the harness refuses Edit and git in the shared checkout. The CAPI build chain (Designer compile -> Publish -> auto_deploy) runs against the MAIN checkout, and main holds uncommitted generator edits from the 2026-08-08 batch that the worktree does not have (F1/generate_apc.py and F3/generate_dcf.py differ). Building from the worktree would have regressed the 64 deployed fixes.",
+      "safe_because": "Every file the Q46 fix touches was byte-identical (md5) between main and worktree before editing - F4/generate_dcf.py, F4/generate_qsf.py, cspro_helpers.py and all 7 F4 translation JSONs. So the edits are exactly what they would have been in main; they just need copying across.",
+      "verify_note": "verify_questions in the worktree FAILS F4 on 6 unreachable items (DATE_*_DISP, N_WKOTH_*) - that is stale worktree artifacts, NOT this change. Proven: the same gate run against main passes F1/F3/F4 301/301.",
+      "next": "Copy the 12 changed files from the worktree to main, run generate_dcf + generate_qsf, verify_questions (expect PASS), Designer compile, Publish, auto_deploy F4 -> v1.5.9, then tablet evidence + close #1177 + patch note to #f4-uat."
+    },
+    "gate": "NOT-READY - 14 open actionable (was 13 + the new #1182). Loop continues."
+  },
+  "_cycle_2026-08-09b": {
+    "signals": "NO new tester activity - no new issues, no new comments, no reopens, all 4 Slack channels silent.",
+    "carl_commit": "1974fc9 (Carl's session-end auto-commit, 06:06Z) committed my 12 Q46 files + triage-state + the standup to branch worktree-f2-productivity-panel. Working tree now clean. NOTE: that is the WORKTREE branch - it does NOT put the fix in main's working tree, which is where the build chain runs. #1177 deploy is still blocked on the same thing.",
+    "diff_gate_1177": "Ran the diff-verification I owed. Semantic compare of the regenerated F4 dcf vs main's deployed one: items 168->168, item-label changes 0, one code removed (Q46 '09'), 7 Q46 option labels rewritten, nothing else. VERDICT CLEAN - only Q46_MEMBER_CATEGORY changed.",
+    "1182_CORRECTED": {
+      "what_i_got_wrong": [
+        "Attributed the 8 F4 roster labels' 0/7 translation coverage to the truncated-key mismatch. Wrong - those strings have NO key in any of the 7 maps, full or truncated. They were never translated. Re-keying would fix nothing; they need translating.",
+        "Claimed F3 Q45 was fixed as part of #1177. It was not - only F4 Q46 was. F3 Q45 is untouched and still ships truncated with English in FIL/HIL/ILO."
+      ],
+      "severity_downgraded": "Checked exactly which characters are lost on the F4 8: only the tail of the parenthetical enumerator code-hint (' answer - do not read these codes aloud)'). The respondent-facing question is fully intact in all 8. Low, not medium. Issue retitled + relabelled severity:low.",
+      "why_not_fixed": "Two blockers, both deliberate. (a) The .qsf question text is DERIVED FROM the .dcf item label - same string - so shortening the label also shortens what is read aloud. That is a questionnaire wording change, not mine to make. (b) The clean fix already exists and is ASPSI-gated: generate_dcf.py line 1638 DK_RF_STATUS=False; flipping it True collapses _php_tail() from 107 chars to ' (PHP)', dropping all 8 to ~150 chars with NO wording change. Do not flip it - it moves DK/RF to AMT_STATUS and needs ASPSI's blessing.",
+      "remaining_real_work": "F3 Q45 only - same condense + re-key pattern already proven on F4 Q46.",
+      "F3_not_touched_on_purpose": "F3/generate_dcf.py in the worktree is STALE vs main (main holds Friday's uncommitted F3 fixes). Editing the worktree copy risks someone copying it back over main and regressing those. F3 Q45 must be fixed IN main."
+    },
+    "gate": "NOT-READY - 14 open actionable. Loop continues.",
+    "still_blocked": "#1177 fixed+verified but NOT deployed; #1182 F3 Q45 not started. Both need the main checkout: this session is sandboxed to the worktree and the harness refuses Edit and git there."
+  },
+  "_cycle_2026-08-09c_1109": {
+    "fixed": "#1109 F1 Q57 - capitation definition restored as a blue note. Added INSTRUCTIONS[57] in F1/generate_qsf.py; renders via <p class=\"instruction\">, the same class as Q43/Q58/Q65/Q88.",
+    "root_cause": "#1011 DELETED the definition off the Q57 question text and nothing re-homed it, so the enumerator had no definition at all. My 2026-08-07 'cannot reproduce' comment observed the absence correctly but drew the wrong conclusion - the absence WAS the bug. Corrected on the issue.",
+    "wording": "Verbatim from raw/Project-Deliverable-1/F1.txt: 'Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.' Only the outer parentheses dropped (house style - every other F1 blue note is a plain sentence). Flagged on the issue for objection.",
+    "verified": "verify_questions F1 PASS 319/319, F3 PASS 370/370, F4 PASS 301/301 - matches main's baseline exactly. qsf diff vs previous build = 8 lines, one per language, all Q57.",
+    "WORKTREE_NOW_MIRRORS_MAIN": "IMPORTANT for the copy-back. The worktree F1 and F4 folders were STALE (F1 was missing Friday's emphasis pass entirely - _emphasize count 0 vs main's 2 - and regenerating against that stale base would have regressed deployed v1.3.0 work, plus it re-stamped the build footer v1.3.0 -> v1.1.0 off a stale versions.json). Fixed by mirroring main -> worktree for the whole F1 and F4 folders and versions.json, preserving only my edited files. The worktree is now main + exactly 3 changes.",
+    "the_three_changes": [
+      "F4 Q46 (#1177) - generate_dcf.py, generate_qsf.py, translations/*.json (7), regenerated dcf+qsf",
+      "F1 Q57 (#1109) - generate_qsf.py, regenerated qsf",
+      "cspro_helpers.py - the capped-label diagnostic (names EN caps, summarises translation caps)"
+    ],
+    "version_policy_note": "Did NOT bump versions.json. Per its own readme the bump is atomic with the deploy: 'py automation/stamp_version.py bump F1' updates the file, re-stamps the .pff and regenerates the .qsf in one step. F1 -> v1.3.1 and F4 -> v1.5.9 belong to whoever runs the deploy.",
+    "still_blocked": "Both #1177 and #1109 are fixed+verified but NOT deployed - needs the main checkout.",
+    "slack_now_stale": "The #f1-uat patch note and the #capi-scrum round summary both say Q57 is 'waiting on ASPSI' / 'cannot be reproduced'. That is now wrong. Worth a short correction to #f1-uat so ASPSI does not spend time answering a non-question."
+  },
+  "_decisions_2026-08-09": {
+    "carl_said": "all recommended",
+    "ACTIONED": {
+      "1b payment-source order (#1151,#1152,#1156,#1158)": "Deferred to round close. Commented with the renumber consequences (codebook, PSA tabulations, un-poolable pretest data; no display-only option in CSPro). Labelled status:blocked + design-decision. Left OPEN.",
+      "4a F4 Q18 income brackets (#1176)": "Deferred to round close. 7 vs 13 brackets are different schemes, every boundary moves. Labelled status:blocked + design-decision. Left OPEN.",
+      "5a F1 Q5/Q6 Option B (#1103)": "DECLINED and CLOSED (not planned). Cites the 2026-08-03 mid-pretest decision and that the same split-component shape is used by F3 Q58/Q69/Q72/Q106. Told them to reopen at round close if they want it for rollout.",
+      "6a DK_RF_STATUS (#1182 F4 half)": "Commented asking ASPSI to settle the -98/-99 gate; flag True collapses _php_tail 107 -> 6 chars and fixes all 8 labels with no wording change. Labelled status:blocked."
+    },
+    "HELD_BACK_option_a_does_not_hold": {
+      "2 Result-of-Visit (#1133 F1, #1175 F3)": "My option (a) was 'hide from the enumerator picker, keep the codes for logic'. Inspection says that is UNSAFE as stated. ENUM_RESULT_FINAL_VISIT is BOTH on a form AND logic-assigned, and FacilityHeadSurvey.ent.apc line 494 does 'skip to ENUM_RESULT_FINAL_VISIT;' right after BREAKOFF 5/6/7 sets it to 5 - i.e. the enumerator is deliberately NAVIGATED ONTO the field holding the value. Remove 5 from the displayed value set and they land on an out-of-set value and must pick a wrong code, destroying replacement tracking. The apc comment at line 478 warns about exactly this class of bug ('anything outside it is silently reset ... would have erased every replacement the moment the field was revisited'). A conditional-noinput + reduced value-set variant is POSSIBLE but is real logic work on a live instrument, and F3 also asks to remove 'Completed', which is the normal-path answer.",
+      "3 Date of Visit (#1132 F1, #1174 F3)": "My option (a) was 'display + instruction text only'. That is WRONG and would corrupt data. The prompt reads '(YYYYMMDD)' because that is what the enumerator TYPES into the stored field. Changing only the text to MMDDYYYY makes them type 08092026 for 9 Aug 2026, which stores as year 0809 month 20 day 26. Making the entry format MMDDYYYY needs a real conversion + validation in logic, not a text edit. NOTE the DATE_*_DISP mirror already shows MM/DD/YYYY back to the enumerator after entry."
+    },
+    "gate": "NOT-READY, open actionable 14 -> 7 (#1102 device check, #1109 + #1177 fixed-pending-deploy, #1132/#1133/#1174/#1175 = decisions 2 and 3 back with Carl).",
+    "ROUND2": {
+      "2b Result-of-Visit (#1133 F1, #1175 F3)": "DECLINED + CLOSED with the mechanism written out. F3 was the decisive one: line 822 'ENUM_RESULT_FINAL_VISIT = 1; { default Completed; enumerator confirms it on the closing form }' - removing 'Completed' would strand the enumerator on an out-of-list value on EVERY normally-finished interview, and CASE_DISPOSITION derives from it. Both notes offer the safe round-close build (reduced list + conditional noinput).",
+      "3 Date of Visit - Carl chose BUILD REAL MMDDYYYY ENTRY": {
+        "shipped": "F1 (#1132) and F3 (#1174): enumerator types MMDDYYYY like the paper; postproc converts to YYYYMMDD on exit so STORAGE is unchanged. #1099's MM/DD/YYYY echo KEPT deliberately - it is now the parse confirmation.",
+        "idempotence": "The double-conversion hazard is closed BY CONSTRUCTION, not by a flag: a stored YYYYMMDD value starts with the century (20) and 20 is not a valid month, so the conversion branch cannot fire twice. Unit-tested in python before generating: typed dates, revisits, and garbage all behave.",
+        "files": [
+          "F1/generate_dcf.py (label)",
+          "F1/generate_apc.py (2 conversion postprocs)",
+          "F3/generate_dcf.py (date_mmddyyyy=True)",
+          "F3/generate_apc.py (2 conversion postprocs)",
+          "cspro_helpers.py (_date_fmt + date_mmddyyyy param on build_field_control)"
+        ],
+        "F4_deliberately_untouched": "F4 shares the label via build_field_control and has the same two fields, but no ticket. Left on YYYYMMDD ON PURPOSE - flipping the prompt WITHOUT the conversion PROC would have enumerators typing MMDDYYYY into a raw-stored field and silently corrupt every date. _date_fmt's docstring says so. Offered to ASPSI on both issues.",
+        "bonus_fix": "F3's final-vs-first-visit check had NO blank-date guards, unlike F1's - 'if DATE_FINAL_VISIT < DATE_FIRST_VISITED then' false-fires on a single-visit case with an empty final date. Guarded both sides. Unreported, found in passing."
+      },
+      "verification": "verify_questions F1 319/319, F3 372/372, F4 301/301 all PASS; preflight_validate ALL CLEAN (PROC targets, arity, dict refs, every errmsg number present in the .mgf).",
+      "board": "open actionable 14 -> 5. Remaining: #1102 (device check) + #1109/#1132/#1174/#1177 (fixed, pending deploy).",
+      "worktree_note": "git status in the worktree shows more F3 files changed than I edited - those are the main->worktree SYNC (27 files; the worktree F3 was stale). The worktree is main + my changes, not a divergent branch."
+    }
+  },
+  "_cycle_2026-08-09d_1102": {
+    "signals": "No new tester activity - no new issues, no comments, no reopens, all 4 channels silent.",
+    "1102_CONFIRMED_ON_DEVICE": {
+      "verdict": "Tester is RIGHT. CSEntry DOES paint the Q2 'Other (specify) text' box, with a visible empty input, before any answer is given. My earlier triage could not settle this from source; now settled empirically.",
+      "how": "Tier-2: capi_tablet emulator; pulled the DEPLOYED FacilityHeadSurvey.zip off CSWeb by scp and adb-pushed it to the scoped-storage csentry folder under a loud 'ZZ Q2 CHECK - do not use for fieldwork' pff. No credentials typed anywhere. Cover footer read 'Build: F1 v1.3.0 (2026-08-08)' so it was the deployed build on a fresh case. Case key 138010001001 (region 13 / province 80 / municipality 100 = City of Caloocan) cleared the PSGC gate.",
+      "ROOT_CAUSE": "NOT the skip logic - PROC Q2_OTHER_TXT's noinput gate works and the box cannot capture text. The field is a member of form block DG_A_FACILITY_HEAD_PROFILE_FORM_1 (Label=Q2-Q5) which is DisplayTogether=Yes. A DisplayTogether block PAINTS EVERY MEMBER AT ONCE, and noinput governs enterability, not visibility. So the gate can stop typing but cannot hide the box. Form-layout consequence, not a logic fault - which is why it looks broken but tests clean on data.",
+      "evidence": "docs/uat-fix-evidence/2026-08-09/f1-q2-other-specify-painted.png, committed aa6ea68ccc17b3ed9ef84e55f6da059bddfd53c7 and pushed; SHA-pinned raw URL verified HTTP 200 and embedded on the issue.",
+      "options_offered": [
+        "1 split Q2_OTHER_TXT out of the block (costs one extra screen in Section A)",
+        "2 leave it (cosmetic only, no data risk)",
+        "3 sweep the whole class at round close - RECOMMENDED; same pattern applies to every gated other-specify/follow-up inside a DisplayTogether block (same class as F3 Q148)"
+      ],
+      "status": "OPEN pending Carl/ASPSI's pick. Not a build blocker."
+    },
+    "gate": "NOT-READY, 5 open actionable: #1102 (awaiting the option pick) + #1109/#1132/#1174/#1177 (all fixed and verified, blocked only on main-checkout deploy).",
+    "note": "This cycle produced no new fixes because there was no new tester activity - it converted the last un-diagnosed item into a diagnosed one with device evidence."
+  },
+  "_DEPLOYED_2026-08-10": {
+    "carl_authorised": "'go, proceed' - copy the 15 sources into main and run the full chain.",
+    "unblocked_how": "The blocker was never the fix - it was that auto_deploy.py line 24 hardcodes ROOT to the MAIN checkout (no override flag), while my fixes lived in the worktree. Copied 15 generator/translation sources worktree -> main (hash-verified 15/15), then regenerated IN main so no artifacts were copied.",
+    "builds": {
+      "F1": "v1.3.1 (2026-08-10)",
+      "F3": "v1.4.1 (2026-08-10)",
+      "F4": "v1.5.9 (2026-08-10)"
+    },
+    "chain_run": [
+      "copy 15 sources -> main, md5-verified",
+      "regenerate dcf/apc/qsf in main for F1, F3, F4",
+      "verify_questions: F1 319/319, F3 372/372, F4 301/301 PASS",
+      "preflight_validate: ALL CLEAN",
+      "stamp_version.py bump F1/F3/F4 (atomic: versions.json + pff + qsf)",
+      "Designer compile per instrument - title bar verified each time ([FacilityHeadSurvey] 00:12:32, [PatientSurvey] 00:42:17, [HouseholdSurvey] 00:46:59)",
+      "Publish and Deploy -> auto_deploy F1/F3/F4 --deploy, all 'deploy succeeded', dialogs parked",
+      "server-side re-read of all three packages: pff Descriptions confirm the new versions"
+    ],
+    "compile_trap_handled": "Closed CSPro between instruments with PS Stop-Process. The driver attaches to a RUNNING CSPro instead of opening the requested .ent - that is how F3 once silently recompiled F1. Verified each compile screenshot's title bar.",
+    "closed": [
+      "#1109 F1 Q57 capitation blue note",
+      "#1132 F1 MMDDYYYY dates",
+      "#1174 F3 MMDDYYYY dates + blank-date guard fix",
+      "#1177 F4 Q46 inline definitions"
+    ],
+    "evidence": "docs/uat-fix-evidence/2026-08-09/csentry-applist-v1.3.1-v1.4.1-v1.5.9.png + f3-build-footer-v1.4.1.png, commit a358cafbb26ab8aaa64619fe0a80e29892383284, pushed. BUILD-IDENTITY tier, stated as such on every issue: both visit-date fields sit in the Field Control block at the very end of the instrument and Q57/Q46 are deep in their sections, so per-question capture would have needed a pilot-jump build per question.",
+    "notified": [
+      "#f1-uat v1.3.1",
+      "#f3-uat v1.4.1",
+      "#f4-uat v1.5.9"
+    ],
+    "gate": "NOT-READY but only 1 open actionable: #1102, awaiting Carl's pick of the three options.",
+    "REMAINING": {
+      "#1102": "Awaiting option pick (split the block / leave it / sweep the class at round close).",
+      "parked_for_round_close": "#1151 #1152 #1156 #1158 (payment renumber), #1176 (income brackets), #1182 (F3 Q45 condense + the DK_RF_STATUS-gated F4 labels).",
+      "F4_dates": "F4 still prompts YYYYMMDD - deliberately not flipped (no ticket); flipping the prompt without the conversion PROC would silently corrupt dates. Offered to ASPSI."
+    }
+  },
   "_run_2026-08-13a_quiet": {
     "at": "2026-08-13T02:08Z",
     "signals": "0 new GH issues, 0 new tester comments (newest tester comment still 2026-08-12T05:23:03Z on #1099), 0 messages in #f1/#f3/#f4-uat since last run; #capi-scrum carried only automation echoes (commit feed + standup digest + my own resolve/reopen notices).",

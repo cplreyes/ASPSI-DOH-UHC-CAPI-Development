@@ -1,0 +1,36 @@
+
+=== HouseholdSurvey — DEPLOYED package ===
+    Description=Household Survey (F4) - v1.5.14 (2026-08-12)
+    pen 3,816,533 bytes decompressed
+    OK   PRESENT [expect present]  #1202 Q18 amount stem (paper wording)
+    OK   PRESENT [expect present]  #1202 Q18 amount note (blue)
+    OK   PRESENT [expect present]  #1202 Q18 bracket note (blue)
+    OK   ABSENT  [expect absent]  #1202 old guidance inside the stem
+    OK   PRESENT [expect present]  #1204 Q40 'I don't know'
+    OK   PRESENT [expect present]  #1204 Q40 other-specify item
+    OK   ABSENT  [expect absent]  #1205 Q64 duplicated parenthetical
+    OK   PRESENT [expect present]  #1205 Q64 blue instruction retained
+    OK   PRESENT [expect present]  #1206 select-all note
+    OK   PRESENT [expect present]  #1099 date hint MMDDYYYY
+    OK   ABSENT  [expect absent]  #1099 old YYYYMMDD hint
+    OK   PRESENT [expect present]  #1207 Q118 field present
+    OK   PRESENT [expect present]  #1209 GPS helper compiled in
+    OK   PRESENT [expect present]  #1209 escalating retry message
+
+=== PatientSurvey — DEPLOYED package ===
+    Description=Patient Survey (F3) - v1.4.8 (2026-08-12)
+    pen 3,877,254 bytes decompressed
+    OK   PRESENT [expect present]  #1208 Q97 'None of the above' (EN)
+    OK   PRESENT [expect present]  #1208 Q97 none — Filipino
+    OK   PRESENT [expect present]  #1208 Q97.1 exclusivity message
+    OK   PRESENT [expect present]  #1208 Q97.2 exclusivity message
+    OK   ABSENT  [expect absent]  #1208 old dead-end wording
+    OK   PRESENT [expect present]  #1209 escalating retry message
+
+=== FacilityHeadSurvey — DEPLOYED package ===
+    Description=Facility Head Survey (F1) - v1.3.8 (2026-08-12)
+    pen 3,827,477 bytes decompressed
+    OK   PRESENT [expect present]  #1209 escalating retry message
+    OK   ABSENT  [expect absent]  #1209 old flat-15s message
+
+ALL CHECKS PASSED

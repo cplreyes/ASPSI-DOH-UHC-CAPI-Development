@@ -168,6 +168,12 @@ wiki/analyses/Analysis - Pretest Findings vs the CAPI Build.md
 # June-5 translated questionnaires, so the raw extraction output stays local.
 deliverables/CSPro/translations-paper-extract/
 
+# capi-portal: build output and the workstation-only source tree (ported pages,
+# 113 crosswalk screenshots, manuals, questionnaires). The build is derived;
+# src/ lives in the main checkout and reaches worktrees via junction.
+deliverables/CSWeb/capi-portal/build/
+deliverables/CSWeb/capi-portal/src/
+
 # HCW enrollment sheets embed live /enroll?token= JWTs (the token IS the
 # credential — same policy as the lph-bay-hcw-links files above).
 /deliverables/F2/pretest-2026-07-16/lph-bay-hcw-enrollment-sheets.html
@@ -175,3 +181,6 @@ deliverables/CSPro/translations-paper-extract/
 # Auth-lab E2E script embeds a working labuser password for the live server.
 # Sanitize (env-var the password) before ever tracking it.
 /deliverables/CSWeb/auth/labtest.sh
+
+# f2-api server compiled output — rebuildable from src via tsc; never commit.
+/deliverables/F2/PWA/server/dist/

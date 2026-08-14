@@ -50,6 +50,45 @@ describe('handleCreateHcw — R2-#58', () => {
     expect(arg.status).toBe('pending');
   });
 
+  it('forwards a valid pre-assigned qn to AS and echoes the AS-assigned qn back (qn rollout)', async () => {
+    const asCall = vi.fn<CreateHcwAsCallable>().mockResolvedValue({
+      ok: true,
+      data: { hcw_id: 'hcw-001', qn: '040340002001' },
+    });
+    const r = await handleCreateHcw(
+      { hcw_id: 'hcw-001', facility_id: '040340002', qn: '040340002001' },
+      asCall,
+    );
+    expect(r.status).toBe(201);
+    expect(asCall).toHaveBeenCalledWith(
+      expect.objectContaining({ qn: '040340002001', facility_id: '040340002' }),
+    );
+    const body = (await r.json()) as { qn: string };
+    expect(body.qn).toBe('040340002001');
+  });
+
+  it('rejects 400 E_VALIDATION on a non-12-digit qn, without calling AS', async () => {
+    const asCall = vi.fn<CreateHcwAsCallable>();
+    const r = await handleCreateHcw(
+      { hcw_id: 'hcw-001', facility_id: '040340002', qn: '0403400' },
+      asCall,
+    );
+    expect(r.status).toBe(400);
+    expect(asCall).not.toHaveBeenCalled();
+  });
+
+  it('omits qn from the AS payload when absent and returns qn:"" (legacy path)', async () => {
+    const asCall = vi.fn<CreateHcwAsCallable>().mockResolvedValue({
+      ok: true,
+      data: { hcw_id: 'hcw-001' },
+    });
+    const r = await handleCreateHcw({ hcw_id: 'hcw-001', facility_id: 'fac-1' }, asCall);
+    expect(r.status).toBe(201);
+    expect(asCall.mock.calls[0][0]).not.toHaveProperty('qn');
+    const body = (await r.json()) as { qn: string };
+    expect(body.qn).toBe('');
+  });
+
   it('surfaces AS E_CONFLICT (duplicate hcw_id) as HTTP 409', async () => {
     const asCall = vi.fn<CreateHcwAsCallable>().mockResolvedValue({
       ok: false,

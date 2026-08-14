@@ -35,10 +35,10 @@ export function HelpPage(): JSX.Element {
 
       <Article id="quick-start" title="Quick Start" eyebrow="Welcome">
         <p>
-          The F2 Admin Portal is the operations console for the F2 Healthcare Worker survey. It
-          mirrors the role-based dashboard pattern ASPSI uses with CSWeb on the CSPro instruments —
-          five dashboards, role-aware navigation, per-instrument permission flags. If you&rsquo;ve
-          used CSWeb, the shape will feel familiar.
+          The HCW Survey Console (formerly &ldquo;F2 PWA Portal&rdquo;) is the operations console
+          for the F2 Healthcare Worker survey. It mirrors the role-based dashboard pattern ASPSI
+          uses with CSWeb on the CSPro instruments — role-aware navigation, per-instrument
+          permission flags. If you&rsquo;ve used CSWeb, the shape will feel familiar.
         </p>
         <ol className="mt-3 list-decimal space-y-1 pl-5 text-sm">
           <li>
@@ -46,12 +46,17 @@ export function HelpPage(): JSX.Element {
             submitted, who&rsquo;s enrolled, audit trail, and parked failures.
           </li>
           <li>
+            <strong>Facilities</strong> — the facility master list and each facility&rsquo;s public{' '}
+            <code>/f/</code> survey link. Add or import facilities, create the one link each
+            facility distributes, and watch its live counts.
+          </li>
+          <li>
             <strong>Reports</strong> aggregates the same data into coverage reports + a geographic
             map.
           </li>
           <li>
-            <strong>Configuration</strong> (dropdown) — Apps &amp; Settings (versioning, files,
-            scheduled exports, quota), Users, Roles. Configuration changes affect the system; treat
+            <strong>Configure</strong> (sidebar group) — Apps &amp; Settings (survey controls,
+            versioning, files), Users, Roles. Configuration changes affect the system; treat
             them with the same care you&rsquo;d treat a CSWeb admin action.
           </li>
           <li>
@@ -59,6 +64,13 @@ export function HelpPage(): JSX.Element {
             ops user is transcribing it into the system after the fact.
           </li>
         </ol>
+        <p className="mt-3">
+          <strong>Your session</strong> lasts up to 4 hours. Refreshing the page keeps you signed
+          in where you were, and new tabs pick up the session while any admin tab is still open.
+          Closing every admin tab — or signing out — ends the session everywhere, so on a shared
+          laptop sign out rather than relying on closing one tab. Signing out, an expired session,
+          or an admin revoking your access all return you to the sign-in screen.
+        </p>
       </Article>
 
       <Article id="dashboards" title="Dashboard guide" eyebrow="What's where">
@@ -72,13 +84,13 @@ export function HelpPage(): JSX.Element {
               tab: 'Responses',
               what: 'All HCW survey submissions',
               detail:
-                'Filter by date range, facility ID, source path (self-admin vs paper-encoded), errors. Click a row to open ResponseDetail with the full answer set, the device fingerprint that submitted, and the audit trail.',
+                'Filter by date range, facility (dropdown by name), status (stored / refusal / rejected), free-text search, and source pills (Self-admin / Paper-encoded / CAPI / Errors only) — "Clear filters" resets the lot. The QN column carries the 12-digit case key; HCWs who enrolled via a facility /f/ link display as "self-registered". Click a row to open ResponseDetail with the full answer set, the device fingerprint that submitted, and the audit trail.',
             },
             {
               tab: 'Audit',
               what: 'Forensic event log',
               detail:
-                'Every admin action and every HCW submission writes a row here. Columns: when / event / actor / resource / detail. Use the actor and event-type filters when investigating an incident.',
+                'Every admin action and every HCW submission writes a row here. Columns: when / event / actor / resource / detail. Filter by date range, event type (dropdown of the values actually logged), actor, or free-text search when investigating an incident.',
             },
             {
               tab: 'DLQ',
@@ -90,7 +102,52 @@ export function HelpPage(): JSX.Element {
               tab: 'HCWs',
               what: 'Healthcare worker registry',
               detail:
-                'One row per enrolled HCW. Token state, submission status, facility. Reissue an enrollment token here when an HCW loses their device; re-encode a paper response by clicking through to the encoder; revoke active sessions if needed.',
+                'One row per enrolled HCW. Token state, submission status, facility. Filter by created-date range, facility (dropdown by name), status pills, or search. Reissue an enrollment token here when an HCW loses their device; re-encode a paper response by clicking through to the encoder; revoke active sessions if needed.',
+            },
+          ]}
+        />
+      </Article>
+
+      <Article id="facilities" title="Facilities page" eyebrow="Feature guide">
+        <p className="text-sm">
+          Operate &rarr; Facilities manages the facility master and each facility&rsquo;s public
+          survey link. One clean link per facility —{' '}
+          <code>uhc-hcw.asiansocial.org/f/&lt;slug&gt;</code> — is the primary way HCWs reach the
+          questionnaire: they open it, tap Start, and the system self-registers them with their own
+          QN. Requires the <code>dash_users</code> permission.
+        </p>
+        <SubtabTable
+          firstCol="Area"
+          rows={[
+            {
+              tab: 'Facility list',
+              what: 'One row per facility',
+              detail:
+                'Name, type, region/province, link status (slug + Active chip + QR), and live counts of Submitted / Refusals / In-progress. Filter by region, province, or "no link yet"; toggle "Show archived" to reveal archived rows (muted, ARCHIVED chip).',
+            },
+            {
+              tab: 'Survey link',
+              what: 'The public /f/<slug> link',
+              detail:
+                'Create one link per facility. The dialog pre-fills a suggested slug from the facility name; edit it before saving — short, lowercase, memorable. Activate/Deactivate on the row controls whether the public link resolves; deactivating is the per-facility kill switch.',
+            },
+            {
+              tab: 'Add / Edit / Archive',
+              what: 'Facility master CRUD',
+              detail:
+                'The 9-digit facility ID is permanent once created (QNs embed it). Region and province autocomplete against the canonical PSGC lists; a non-matching name saves with a visible warning, never a block. Facilities are archived, never deleted — archiving hides the row and the PWA dropdown entry but keeps all data, and the /f/ link stays LIVE until deactivated on its row.',
+            },
+            {
+              tab: 'Import CSV',
+              what: 'Batch add/update for a wave',
+              detail:
+                'Download the 7-column template, fill one row per facility, paste or pick the file, run Dry run to see per-row verdicts (create / update / unchanged / error, plus geo warnings), then Apply. Bad rows never block good ones; imports never archive anything. Max 2000 rows per file.',
+            },
+            {
+              tab: 'Counts',
+              what: 'Deep links into Data',
+              detail:
+                'Click a non-zero Submitted / Refusals / In-progress count to open the matching Data tab pre-filtered to that facility (Refusals adds the refusal status filter; In-progress shows unfinished self-registrations). Zero counts stay plain text.',
             },
           ]}
         />
@@ -100,10 +157,10 @@ export function HelpPage(): JSX.Element {
         <SubtabTable
           rows={[
             {
-              tab: 'Sync Report',
-              what: 'Coverage by region / province / facility',
+              tab: 'Coverage',
+              what: 'Fieldwork progress vs targets',
               detail:
-                'Aggregated counts of HCWs enrolled vs submitted vs pending. Snapshot view; refresh to recompute. Use during fieldwork weekly check-ins to identify under-performing facilities.',
+                'Per region / province / facility: facilities, active links, target, started, submitted, refusals (+rate), coverage %, paper-encoded, last activity. Counts use the SAME definitions as the Facilities page. Targets come from the facility master (Edit dialog or the CSV import’s target_hcws column). A "(not in master)" row surfaces responses whose facility is missing from the master. Dates are Manila days (the To day is included); rows drill into the Data/Facilities pages; Export CSV downloads the table.',
             },
             {
               tab: 'Map Report',
@@ -119,28 +176,22 @@ export function HelpPage(): JSX.Element {
         <SubtabTable
           rows={[
             {
-              tab: 'Versioning',
-              what: 'Live build identifiers + per-spec submission counts',
+              tab: 'Controls',
+              what: 'Global kill switch + broadcast message',
               detail:
-                'PWA version + bundle SHA, Worker version, last Pages deploy timestamp, and a form_revisions table aggregating F2_Responses by spec_version (count + last_seen_at + total). First place to look during incident triage — answers "what version is in front of users?" and "how many submissions are still on an outdated spec?".',
+                'The kill switch immediately blocks every new submission and Start attempt server-side (each request checks it); respondent devices show a "temporarily paused" banner within ~5 minutes on their next config refresh. The broadcast message is a banner shown to every respondent in the PWA — use it for deadlines or field announcements; leave empty to hide. Both changes take one click, so confirm before toggling the kill switch.',
+            },
+            {
+              tab: 'Versioning',
+              what: 'Live build identifiers + per-spec response counts',
+              detail:
+                'PWA version + bundle SHA, API version, last API deploy timestamp, and a form_revisions table aggregating F2_Responses by spec_version (count incl. refusals + last_seen_at). First place to look during incident triage — answers "what version is in front of users?" and "how many responses are still on an outdated spec?".',
             },
             {
               tab: 'Files',
               what: 'Operator file uploads',
               detail:
-                'Training plans, facility rosters, fieldwork checklists. Stored in Cloudflare R2 (not in Sheets). PDF / ZIP / PNG / JPEG / GIF, up to 100 MB. Visible to operators with dash_apps permission; never exposed to HCWs.',
-            },
-            {
-              tab: 'Data Settings',
-              what: 'Scheduled break-out exports',
-              detail:
-                'Cron-fired CSV exports of F2_Responses to R2 — per facility, per region, etc. Worker cron fires every 5 minutes and runs settings whose next_run_at has elapsed. Use "Run now" to trigger out-of-band.',
-            },
-            {
-              tab: 'Apps Script Quota',
-              what: 'Daily AS execution count',
-              detail:
-                'Apps Script has a 20,000-call/day hard ceiling. When this hits 100% the backend rejects writes until UTC midnight rollover. Watch this during enumerator surge windows; if approaching 80%+, start triaging non-essential scheduled jobs.',
+                'Training plans, facility rosters, fieldwork checklists. Stored on the survey server. PDF / ZIP / PNG / JPEG / GIF (extension enforced), up to 100 MB. Visible to operators with dash_apps permission; never exposed to HCWs.',
             },
           ]}
         />
@@ -149,6 +200,32 @@ export function HelpPage(): JSX.Element {
       <Article id="workflows" title="Common workflows" eyebrow="How to">
         <Workflow
           number={1}
+          title="Publish a facility's survey link"
+          when="A facility is onboarding — HCWs need the one link they'll use to self-register and take the survey."
+          steps={[
+            'Facilities → find the facility row (filter by region/province if the list is long). If the facility is not on the list yet, add or import it first (Workflow 2).',
+            'Click "Create link". The dialog pre-fills a suggested slug from the facility name; edit it to taste — short, lowercase, memorable (e.g. lphbay).',
+            'Save. The row now shows /f/<slug> with an Active chip and a QR code you can print or screenshot.',
+            'Distribute ONE artifact to the facility: the URL or the QR. Every HCW there uses the same link; each person gets their own case and QN when they tap Start.',
+          ]}
+          gotcha="The link is deliberately public — no secret in the URL. Integrity comes from the Start-tap gate, admin dedup, and the per-slug Active toggle. Deactivate the link on its row when the facility is done and it stops resolving immediately."
+        />
+
+        <Workflow
+          number={2}
+          title="Onboard a facility wave (CSV import)"
+          when="A new batch of facilities enters the sample — add them all at once instead of one-by-one."
+          steps={[
+            'Facilities → Import CSV → "Download template" for the 7-column header (facility_id, facility_name, facility_type, region, province, city_mun, barangay).',
+            'Fill one row per facility. facility_id must be the 9-digit code — it is permanent once created.',
+            'Paste the CSV (or pick the file) and click "Dry run". Review the per-row verdicts: create / update / unchanged / error, plus any geo warnings.',
+            'Click Apply. Errored rows are skipped and reported; everything else lands. Then create each facility’s /f/ link from its row (Workflow 1).',
+          ]}
+          gotcha="Region names are checked against the canonical PSGC region list BY NAME — a misspelled region still imports (warn, not block) but will not roll up correctly on the unified dashboard. Fix warned rows promptly via Edit."
+        />
+
+        <Workflow
+          number={3}
           title="Reissue an enrollment token"
           when="HCW lost their device, broke their tablet, or the original token has been revoked."
           steps={[
@@ -162,7 +239,7 @@ export function HelpPage(): JSX.Element {
         />
 
         <Workflow
-          number={2}
+          number={4}
           title="Triage a DLQ entry"
           when="A submission appears in Data → DLQ — backend rejected it for some reason."
           steps={[
@@ -175,7 +252,7 @@ export function HelpPage(): JSX.Element {
         />
 
         <Workflow
-          number={3}
+          number={5}
           title="Encode a paper response"
           when="HCW completed the questionnaire on paper (no tablet available, internet outage, etc.) and an ops user is transcribing into the system."
           steps={[
@@ -184,11 +261,11 @@ export function HelpPage(): JSX.Element {
             'Fill the form section-by-section, matching the paper questionnaire. Autosaves between sections (IndexedDB locally; persists to F2_Responses on submit).',
             'On submit, the response lands in F2_Responses with source_path="paper_encoded" and encoded_by=<your username>.',
           ]}
-          gotcha='Paper-encoded responses are visually distinct in the Responses tab (filter chip "Paper-encoded"). They count toward Sync Report totals but are NOT included in self-admin-only analyses by default — check the source_path filter in any downstream pipeline.'
+          gotcha='Paper-encoded responses are visually distinct in the Responses tab (filter chip "Paper-encoded"). They count toward Coverage totals (with their own Paper column) but are NOT included in self-admin-only analyses by default — check the source_path filter in any downstream pipeline.'
         />
 
         <Workflow
-          number={4}
+          number={6}
           title="Bulk import users"
           when="Adding a new cohort of ASPSI ops staff at once (typically at the start of a fieldwork wave)."
           steps={[
@@ -198,23 +275,20 @@ export function HelpPage(): JSX.Element {
             'Paste your CSV. The preview validates each row — duplicates flagged, role lookups confirmed, password rules checked.',
             'Click Import. New users get password_must_change=true; first-login forces them to rotate.',
           ]}
-          gotcha="Maximum 100 rows per import call (Worker validation: E_VALIDATION). For larger cohorts, split into batches. The import is transactional within a batch — if one row fails validation, the whole batch is rejected with a list of issues."
+          gotcha="Maximum 100 rows per import call (server validation: E_VALIDATION). For larger cohorts, split into batches. The import is transactional within a batch — if one row fails validation, the whole batch is rejected with a list of issues."
         />
 
         <Workflow
-          number={5}
-          title="Run a scheduled break-out manually"
-          when={
-            'You need a fresh CSV export now (e.g., for a stakeholder request) instead of waiting for the next cron tick.'
-          }
+          number={7}
+          title="Pause and resume data collection (kill switch)"
+          when="A maintenance window, a data-integrity incident, or any situation where new submissions must stop NOW."
           steps={[
-            'Configuration → Apps & Settings → Data Settings.',
-            'Find the setting (e.g., "F2 daily break-out per region"). Click "Run now".',
-            'The Worker invokes the break-out immediately; last_run_at updates to now.',
-            "Output lands at the configured output_path_template in R2 (e.g., 'exports/2026-05-04/f2-daily.csv').",
-            'Download from the Files tab or via wrangler r2 object get.',
+            'Configuration → Apps & Settings → Controls.',
+            'Kill switch → "Turn ON" → confirm. The server starts rejecting every new submission and Start attempt immediately.',
+            'Optionally set a Broadcast message on the same tab (e.g., "Maintenance until 3 PM — your saved answers are safe.") so respondents see why.',
+            'When the situation is resolved: "Turn OFF" → confirm, and clear the broadcast message.',
           ]}
-          gotcha="Run now does not change the cron schedule. The next regularly-scheduled run still happens at next_run_at; running manually is additive. If you want to advance the schedule, edit the setting's next_run_at directly."
+          gotcha="Blocking is immediate on the server, but the banner on respondent devices lags by up to ~5 minutes (their next config refresh). In-progress answers are never lost — drafts stay on the device and submit once the switch is off. Both toggles are audit-logged with your username."
         />
       </Article>
 
@@ -265,6 +339,41 @@ export function HelpPage(): JSX.Element {
             Healthcare Worker. The respondent population for the F2 questionnaire — physicians,
             nurses, midwives, lab techs, BHWs, etc.
           </Term>
+          <Term word="/f/ link">
+            The public per-facility survey URL —{' '}
+            <code>uhc-hcw.asiansocial.org/f/&lt;slug&gt;</code>. One per facility; the only artifact
+            distributed in the field. The Active toggle on the Facilities page is its kill switch.
+          </Term>
+          <Term word="slug">
+            The short lowercase name inside a /f/ link (e.g. <code>lphbay</code>). Auto-suggested
+            from the facility name when creating a link; editable before saving. Permanent-ish —
+            repointing a live slug would hijack another facility&rsquo;s link, so the portal guards
+            against reusing one.
+          </Term>
+          <Term word="QN">
+            Questionnaire number — the 12-digit case key: 9-digit facility ID + 3-digit sequence,
+            assigned automatically at self-registration. The human-facing identifier for
+            self-registered responses.
+          </Term>
+          <Term word="self-registered">
+            An HCW who enrolled themselves by opening a facility /f/ link and tapping Start. Their
+            internal id starts with <code>sr-</code>; the Responses tab renders them as
+            &ldquo;self-registered&rdquo; with the QN as the identifier.
+          </Term>
+          <Term word="archived (facility)">
+            Hidden from the default Facilities view and the PWA&rsquo;s facility dropdown, but all
+            data, links, and counts stay intact. Facilities are never hard-deleted, and a facility
+            ID is never edited or reused.
+          </Term>
+          <Term word="target_hcws">
+            The per-facility HCW quota on the facility master (set via Edit or the CSV
+            import&rsquo;s optional 8th column). The Coverage report&rsquo;s denominator. Blank =
+            no target yet; the report shows &ldquo;&mdash;&rdquo; until one is set.
+          </Term>
+          <Term word="coverage %">
+            Submitted &divide; target on the Coverage report, rolled up per region / province /
+            facility. Submitted excludes refusals — the same count the Facilities page shows.
+          </Term>
           <Term word="DLQ">
             Dead-Letter Queue. Storage for submissions that failed processing. Operators triage them
             here instead of losing the data.
@@ -289,18 +398,19 @@ export function HelpPage(): JSX.Element {
             Counter on each role; bumps every time the role&rsquo;s permissions change. Used to
             invalidate old JWTs after a permission revocation.
           </Term>
-          <Term word="break-out">
-            Scheduled CSV export of F2_Responses to Cloudflare R2 — sliced by facility, region, etc.
-            Configured in Data Settings.
+          <Term word="kill switch (global)">
+            The Controls-tab toggle that immediately blocks all new submissions server-side —
+            portal-wide, every facility. Distinct from a link&rsquo;s Active toggle, which only
+            stops one facility&rsquo;s /f/ link from resolving.
+          </Term>
+          <Term word="broadcast message">
+            A banner shown to every respondent in the HCW PWA, set on the Controls tab. Devices
+            pick it up within ~5 minutes on their next config refresh. Empty = no banner.
           </Term>
           <Term word="CAS">
             Compare-And-Swap. The concurrency-safety pattern used for token reissue: the operation
             only succeeds if the current state matches what the operator saw. Two admins can&rsquo;t
             silently overwrite each other.
-          </Term>
-          <Term word="cron tick">
-            The Worker&rsquo;s scheduled wake-up — fires every 5 minutes. Reads Data Settings rows
-            whose <code>next_run_at</code> has elapsed and runs their break-outs.
           </Term>
         </dl>
       </Article>
@@ -367,14 +477,19 @@ function DashboardTable(): JSX.Element {
       gist: 'Submissions, audit log, DLQ, HCWs registry. Day-to-day operations live here.',
     },
     {
+      name: 'Facilities',
+      permFlag: 'dash_users',
+      gist: 'Facility master list + per-facility /f/ survey links + live counts. Add, edit, archive facilities; batch CSV import; counts deep-link into Data.',
+    },
+    {
       name: 'Reports',
       permFlag: 'dash_report',
-      gist: 'Aggregated coverage reports + geographic map. Read-only summary views.',
+      gist: 'Coverage vs facility targets (region/province/facility) + geographic map. Read-only summary views.',
     },
     {
       name: 'Apps & Settings',
       permFlag: 'dash_apps',
-      gist: 'Build versions, file uploads, scheduled break-out exports, quota usage. Operations bookkeeping.',
+      gist: 'Survey controls (kill switch, broadcast), build versions, file uploads.',
     },
     {
       name: 'Users',
@@ -425,14 +540,16 @@ function DashboardTable(): JSX.Element {
 
 function SubtabTable({
   rows,
+  firstCol = 'Tab',
 }: {
   rows: Array<{ tab: string; what: string; detail: string }>;
+  firstCol?: string;
 }): JSX.Element {
   return (
     <table className="w-full table-auto text-sm">
       <thead className="border-b border-hairline">
         <tr className="text-left">
-          <Th>Tab</Th>
+          <Th>{firstCol}</Th>
           <Th>What</Th>
           <Th>Detail</Th>
         </tr>

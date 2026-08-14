@@ -22,9 +22,9 @@ Two kinds of page:
             a slim portal bar is injected and every internal link is rewritten to its
             new home, which is what makes the site feel like ONE site.
 
-Monitoring and the data room deliberately still live on csweb.asiansocial.org and are
-linked absolutely: they are generated every 2 minutes by the on-box generators, and
-moving their output path is step 3 of the migration, done in its own window.
+Step 3 of the migration is DONE (2026-07-28): the whole /docs console (dashboard, map,
+data room, admin, sign-in) is now served from capi.asiansocial.org — csweb keeps only
+the CSWeb app + CSEntry sync. All /docs links here point at CONSOLE.
 NOTHING here touches /csweb/ or the tablet SyncUrl — pretest is running (Carl, 2026-07-22).
 
 Usage:
@@ -32,6 +32,14 @@ Usage:
   python build_portal.py --deploy             # + rsync to the capi-www docroot
 """
 import argparse, os, re, shutil, subprocess, sys, datetime
+
+# The shared chrome lives one directory up, beside the on-box generators that
+# also import it. Inserting the parent on sys.path keeps ONE copy of the module
+# rather than a build-time duplicate — a duplicate is how portal.css drifted
+# between 2026-07-28 and 2026-08-09 (the portal copy missed the mobile topbar
+# fix and every /projects/ page scrolled sideways on a phone).
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import portal_shell as PS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, "src")
@@ -41,14 +49,18 @@ DEPLOY_HOST = "root@207.148.65.115"
 DEPLOY_PATH = "/opt/app/capi-www/"
 KEY = os.path.expanduser("~/.ssh/aspsi-csweb")
 
-CSWEB = "https://csweb.asiansocial.org"
+CSWEB = "https://csweb.asiansocial.org"      # the CSWeb app + CSEntry sync ONLY
+CONSOLE = "https://capi.asiansocial.org"     # the console: /docs dashboards, data room, admin
 P = "/projects/uhc-y2"
 
 # old csweb URL -> new portal path (order matters: longest first)
 LINKMAP = [
-    ("/docs/data/", CSWEB + "/docs/data/"),
-    ("/docs/dashboard.html", CSWEB + "/docs/dashboard.html"),
-    ("/docs/map.html", CSWEB + "/docs/map.html"),
+    ("https://csweb.asiansocial.org/docs/data/", CONSOLE + "/docs/data/"),
+    ("https://csweb.asiansocial.org/docs/dashboard.html", CONSOLE + P + "/monitoring/"),
+    ("https://csweb.asiansocial.org/docs/map.html", CONSOLE + P + "/monitoring/map/"),
+    ("/docs/data/", CONSOLE + "/docs/data/"),
+    ("/docs/dashboard.html", CONSOLE + P + "/monitoring/"),
+    ("/docs/map.html", CONSOLE + P + "/monitoring/map/"),
     ("/docs/capi-manual.html", P + "/archive/capi-manual-2026-07/"),
     ("/docs/enumerator-guide.html", P + "/guides/enumerator/"),
     ("/docs/hub-guide.html", P + "/guides/supervisor/"),
@@ -101,37 +113,9 @@ PORTAL_BAR = (
 
 
 # ---------------------------------------------------------------- authored pages
-def shell(title, desc, body, crumb="", active=""):
-    nav = "".join(
-        '<a class="link%s" href="%s">%s</a>' % (" on" if active == k else "", u, t)
-        for k, u, t in (("proj", P + "/", "UHC Survey Y2"),
-                        ("platform", "/platform/", "What we build"),
-                        ("about", "/about/", "About")))
-    return """<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex">
-<title>%s</title>
-<meta name="description" content="%s">
-<link rel="stylesheet" href="/portal.css">
-<link rel="icon" href="data:image/svg+xml,%%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%%3E%%3Crect width='40' height='40' rx='8' fill='%%23046a38'/%%3E%%3Cpath d='M20 9l9 5v12l-9 5-9-5V14z' fill='%%23e5b23b'/%%3E%%3C/svg%%3E">
-</head>
-<body>
-<header><nav class="nav">
-<a class="brand" href="/">ASPSI CAPI<small>capi.asiansocial.org</small></a>%s
-</nav></header>
-%s
-<footer><div class="foot">
-<span>&copy; 2026 Asian Social Project Services, Inc. (ASPSI)</span>
-<span><a href="/">Portal home</a> &middot; <a href="%s/">UHC Survey Y2</a> &middot; <a href="https://asiansocial.org">asiansocial.org</a></span>
-</div></footer>
-</body>
-</html>
-""" % (title, desc, nav, body, P)
-
-
+# (The pre-2026-07-22 "document-site" shell that used to sit here was dead code
+# from the day the admin-portal shell below shadowed it. Deleted 2026-08-09 —
+# a resurrectable third chrome is exactly what the unification removes.)
 def hero(crumb, h1, lead):
     return ('<div class="hero"><div class="hero-inner"><div class="crumb">%s</div>'
             '<h1>%s</h1><p class="lead">%s</p></div></div>' % (crumb, h1, lead))
@@ -165,13 +149,13 @@ ROLES = [
      [("How to complete the survey", P + "/guides/healthcare-worker/", "what it asks, how long it takes, your privacy"),
       ("Open the survey app", "https://uhc-hcw.asiansocial.org", "works offline; submits when you have a signal")], ""),
     ("I'm supervising fieldwork", "ASPSI and DOH staff tracking collection as it happens.",
-     [("Sync Dashboard", CSWEB + "/docs/dashboard.html", "cases in, completed vs partial, coverage against plan, data quality"),
-      ("Map Report", CSWEB + "/docs/map.html", "where cases were collected, GPS quality flags"),
-      ("Monitoring overview", P + "/monitoring/", "what each view answers")], "login"),
+     [("Sync Dashboard", P + "/monitoring/", "cases in, completed vs partial, coverage against plan, data quality"),
+      ("Map Report", P + "/monitoring/map/", "where cases were collected, GPS quality flags"),
+      ("Monitoring overview", P + "/monitoring/", "what each view answers")], ""),
     ("I'm working with the data", "Analysts and data users.",
      [("Data room", P + "/data/", "CSV, SPSS, Stata and R exports, refreshed every ~2 minutes"),
       ("Codebooks", P + "/instruments/", "every variable: label, question, universe, codes, validation"),
-      ("Instruments", P + "/instruments/", "questionnaires, dictionaries, runnable CSPro packages")], "login"),
+      ("Instruments", P + "/instruments/", "questionnaires, dictionaries, runnable CSPro packages")], ""),
 ]
 
 
@@ -180,7 +164,11 @@ def project_home():
     for title, sub, links, gate in ROLES:
         ls = "".join(
             '<li><a href="%s">%s</a> — <span>%s</span></li>' % (u, t, d) for t, u, d in links)
-        badge = '<span class="badge soon">login needed</span>' if gate else ""
+        # "separate login" is the only badge left: after 2026-07-28 the whole
+        # portal sits behind ONE sign-in, so "login needed" said nothing. What a
+        # reader must actually be warned about is a SECOND credential (F2 admin,
+        # CSWeb) -- and only those cards carry the badge now.
+        badge = '<span class="badge soon">separate login</span>' if gate else ""
         rows.append('<div class="rolerow"><div class="roletitle"><h3>%s</h3>%s</div>'
                     '<p class="rolesub">%s</p><ul class="rolelinks">%s</ul></div>'
                     % (title, badge, sub, ls))
@@ -273,14 +261,14 @@ def instruments_index():
             '<div class="card"><h3>Codebooks</h3><p>Variable, label, the literal question, universe '
             '(who was asked), value codes, special codes and the validation rules the tablet enforces '
             '— documented to the DDI-Codebook 2.5 element set that the PSA Data Archive uses.</p>'
-            '<a class="go" href="' + CSWEB + '/docs/data/">Download (login)</a></div>'
+            '<a class="go" href="' + CONSOLE + '/docs/data/">Download (login)</a></div>'
             '<div class="card"><h3>Data dictionaries</h3><p>The CSPro <code>.dcf</code> dictionaries '
             'themselves — the machine-readable definition every export is derived from.</p>'
-            '<a class="go" href="' + CSWEB + '/docs/data/uhc-year2-cspro-dictionaries.zip">Download (login)</a></div>'
+            '<a class="go" href="' + CONSOLE + '/docs/data/uhc-year2-cspro-dictionaries.zip">Download (login)</a></div>'
             '<div class="card"><h3>Run the instruments yourself</h3><p>Complete CSPro application '
             'packages — compiled app, Designer source and lookup files. Extract, double-click the '
             '<code>.pff</code>, and it opens with an empty local case file.</p>'
-            '<a class="go" href="' + CSWEB + '/docs/data/">Download (login)</a></div>'
+            '<a class="go" href="' + CONSOLE + '/docs/data/">Download (login)</a></div>'
             '</div></section></main>')
     return shell("Instruments — UHC Survey Y2",
                  "The four UHC Survey Year 2 instruments: crosswalks, codebooks, dictionaries and "
@@ -291,11 +279,11 @@ def instrument_page(i):
     k = i["k"]
     dl = []
     if i["ver"]:
-        dl.append(('CSPro application package', CSWEB + '/docs/data/%s-cspro-app.zip' % k,
+        dl.append(('CSPro application package', CONSOLE + '/docs/data/%s-cspro-app.zip' % k,
                    'compiled app + Designer source + lookups — runs locally with an empty case file'))
-    dl.append(('Codebook (Excel)', CSWEB + '/docs/data/', 'every variable, label, question, universe, codes, validation'))
-    dl.append(('Codebook (PDF)', CSWEB + '/docs/data/', 'the same, printable'))
-    dl.append(('Case exports', CSWEB + '/docs/data/', 'CSV, SPSS .sav, Stata .dta and R .rds, refreshed every ~2 min'))
+    dl.append(('Codebook (Excel)', CONSOLE + '/docs/data/', 'every variable, label, question, universe, codes, validation'))
+    dl.append(('Codebook (PDF)', CONSOLE + '/docs/data/', 'the same, printable'))
+    dl.append(('Case exports', CONSOLE + '/docs/data/', 'CSV, SPSS .sav, Stata .dta and R .rds, refreshed every ~2 min'))
     items = "".join('<li><a href="%s">%s</a> — <span>%s</span></li>' % (u, t, d) for t, u, d in dl)
     cross = ('<div class="card"><h3>Paper ↔ CAPI comparison</h3><p>Side-by-side: every printed '
              'question and how it appears on the device, so reviewers can confirm nothing changed '
@@ -320,86 +308,16 @@ def instrument_page(i):
                  body, active=P + "/instruments/")
 
 
-def monitoring_index():
-    body = (hero("UHC Survey Y2", "Monitoring",
-                 "Live views of fieldwork — rebuilt from the database every two minutes — "
-                 "plus the two consoles that operate it. Everything here requires the survey login.")
-            + '<main><section><div class="grid">'
-              '<div class="card project"><span class="badge soon">login needed</span>'
-              '<h3>Sync Dashboard</h3><p>Cases collected, completed vs partial, visited today, '
-              'coverage against the assignment plan (region → province → facility), enumerator '
-              'productivity, data-quality alerts, a searchable case list, and every data download.</p>'
-              '<a class="go" href="' + CSWEB + '/docs/dashboard.html">Open the dashboard</a></div>'
-              '<div class="card project"><span class="badge soon">login needed</span>'
-              '<h3>Map Report</h3><p>Where cases were actually collected: a pin per case coloured by '
-              'status, clustering, coverage choropleth by province, and flags for weak GPS fixes or '
-              'cases far from their assigned facility.</p>'
-              '<a class="go" href="' + CSWEB + '/docs/map.html">Open the map</a></div>'
-              '</div></section>'
-              # Carl, 2026-07-27: the two working consoles moved in from the old
-              # csweb front door, so Monitoring is the single operational hub.
-              '<section><h2>Operate</h2>'
-              '<p class="sub">The working consoles behind the views — for administering '
-              'collection, not just watching it.</p>'
-              '<div class="grid">'
-              '<div class="card project"><span class="badge soon">login needed</span>'
-              '<h3>F2 Admin Portal</h3><p>Runs the healthcare-worker web survey: facility '
-              'links and QR codes, reminder waves, submission review, the coverage report, '
-              'and app settings.</p>'
-              '<a class="go" href="https://uhc-hcw.asiansocial.org/admin">Open the F2 admin portal</a></div>'
-              '<div class="card project"><span class="badge soon">login needed</span>'
-              '<h3>CSWeb</h3><p>The CSPro sync server itself — the system of record the '
-              'tablets sync into: raw case data per instrument, user accounts and roles, '
-              'and the sync report.</p>'
-              '<a class="go" href="' + CSWEB + '/csweb/">Open CSWeb</a></div>'
-
-              '</div></section>'
-              '<section><h2>How to read them</h2>'
-              '<p class="sub">Three things that surprise people the first time.</p>'
-              '<ul class="rolelinks">'
-              '<li><b>The filter bar drives everything below it</b> — <span>set instrument, region, '
-              'supervisor, enumerator, status or visit dates once and the whole page follows. '
-              'Coverage-vs-plan deliberately ignores the enumerator filter, because the plan assigns '
-              'facilities, not people.</span></li>'
-              '<li><b>&ldquo;Today&rdquo; is Manila time</b> — <span>and F2 is self-administered, so it never '
-              'counts as missing GPS and is always recorded as completed.</span></li>'
-              '<li><b>Counts follow your filters</b> — <span>so they can differ from the raw case count '
-              'in CSWeb\'s own Data tab. Both are correct; they answer different questions.</span></li>'
-              '</ul></section></main>')
-    return shell("Monitoring — UHC Survey Y2",
-                 "Live fieldwork monitoring for UHC Survey Year 2: sync dashboard and map report.",
-                 body, active=P + "/monitoring/")
+# monitoring_index() deleted 2026-08-09 (unification Slice 3): the page at
+# /projects/uhc-y2/monitoring/ is now the LIVE Sync Dashboard, written by
+# csweb-dashboard-gen.py on its 2-minute cron. A static signpost here would
+# clobber it on every deploy. Same pattern as tabulations (2026-07-28).
 
 
-def data_index():
-    body = (hero("UHC Survey Y2", "Data",
-                 "Analysis-ready exports of everything collected so far, rebuilt from the database "
-                 "every two minutes and documented variable by variable.")
-            + '<main><section><div class="grid">'
-              '<div class="card project"><span class="badge soon">login needed</span>'
-              '<h3>Data room</h3><p>Wide and roster CSVs per instrument, labelled SPSS '
-              '<code>.sav</code>, Stata <code>.dta</code> and R <code>.rds</code> exports, the '
-              'codebooks, the CSPro dictionaries and the application packages — with a preview of '
-              'each table in the browser.</p>'
-              '<a class="go" href="' + CSWEB + '/docs/data/">Open the data room</a></div>'
-              '<div class="card"><h3>Codebook</h3><p>What every variable means: label, the literal '
-              'question, universe (who was asked it), value codes, Don\'t-know / Refused codes, and '
-              'the validation rules enforced during the interview. Excel and PDF.</p>'
-              '<a class="go" href="%s/instruments/">Per instrument</a></div>'
-              '</div></section>'
-              '<section><h2>Before you analyse</h2><ul class="rolelinks">'
-              '<li><b>Values are raw stored codes</b> — <span>1 / 2, not Male / Female. The SPSS and '
-              'Stata files carry the labels embedded; the R files ship with a codebook CSV.</span></li>'
-              '<li><b>Missing values are coded, not blank</b> — <span>categorical items use 8 / 98 for '
-              'Don\'t know and 9 / 99 for Refused; amount fields use −98 and −99 so no real amount is '
-              'ever confused with a refusal.</span></li>'
-              '<li><b>The questionnaire number is a 12-digit string</b> — <span>keep it as text; Excel '
-              'will otherwise render it as 1.02E+11.</span></li>'
-              '<li><b>Everything is a snapshot of live fieldwork</b> — <span>counts move as tablets '
-              'sync. Each file carries the timestamp it was generated.</span></li>'
-              '</ul></section></main>' % P)
-    return shell("Data — UHC Survey Y2",
-                 "Analysis-ready exports and codebooks for UHC Survey Year 2.", body, active=P + "/data/")
+# data_index() deleted 2026-08-09 (unification Slice 4): the page at
+# /projects/uhc-y2/data/ is now the LIVE data-room index, written by
+# csweb-responses-gen.py --index-out on its 2-minute cron. Same rule as
+# monitoring/ and tabulations/: generator-owned, never written here.
 
 
 def platform_page():
@@ -489,6 +407,8 @@ def port(name, out_rel):
     s = open(src, encoding="utf-8").read()
     for old, new in LINKMAP:
         s = s.replace('href="%s"' % old, 'href="%s"' % new)
+    # bare-text URL mentions (link labels showing the address) follow the console move too
+    s = s.replace("csweb.asiansocial.org/docs/", "capi.asiansocial.org/docs/")
     s = s.replace("Back to help", "Back to project home")
     i = s.lower().find("<body")
     j = s.find(">", i)
@@ -596,13 +516,31 @@ def official_manual_index():
 def main():
     ap = argparse.ArgumentParser(description="Build the capi.asiansocial.org portal.")
     ap.add_argument("--deploy", action="store_true", help="rsync build/ to the capi-www docroot")
+    ap.add_argument("--check", action="store_true",
+                    help="assert the shared chrome is in use, then exit")
     a = ap.parse_args()
+    if a.check:
+        # The regression this guards against is the one that produced five
+        # chromes in the first place: someone pasting the nav back in "just for
+        # one page". ops/verify-chrome.sh runs the same grep from the outside.
+        import inspect
+        src = inspect.getsource(sys.modules[__name__])
+        bad = [n for n in ("\n_NAV = [", "\ndef _sidebar(", "\n_PILL_LOCK") if n in src]
+        if bad:
+            print("FAIL: build_portal.py has regrown its own chrome: %s" % ", ".join(bad))
+            sys.exit(1)
+        print("ok: chrome comes from portal_shell (%s)" % PS.__file__)
+        sys.exit(0)
     if os.path.isdir(BUILD):
         shutil.rmtree(BUILD)
     os.makedirs(BUILD)
 
-    # styles: existing sheet + portal additions
-    shutil.copyfile(os.path.join(HERE, "portal.css"), os.path.join(BUILD, "portal.css"))
+    # capi-www serves /portal.css. It must be the SAME file the on-box
+    # generators inline, or the two halves of the site drift — which is exactly
+    # what happened between 2026-07-28 and 2026-08-09 (the portal copy missed
+    # the mobile topbar fix). The canonical sheet lives beside portal_shell.py.
+    shutil.copyfile(os.path.join(os.path.dirname(PS.__file__), "portal.css"),
+                    os.path.join(BUILD, "portal.css"))
 
     # assets the ported pages depend on — copied so the portal is self-contained
     # (docs.css / crosswalk.css + the 113 crosswalk screenshots). Paths are kept
@@ -624,9 +562,13 @@ def main():
     write("projects/uhc-y2/instruments/index.html", instruments_index())
     for i in INSTRUMENTS:
         write("projects/uhc-y2/instruments/%s/index.html" % i["k"], instrument_page(i))
-    write("projects/uhc-y2/monitoring/index.html", monitoring_index())
-    write("projects/uhc-y2/tabulations/index.html", tabulations_index())
-    write("projects/uhc-y2/data/index.html", data_index())
+    # monitoring/: OWNED by csweb-dashboard-gen.py since 2026-08-09 —
+    # never write it here (see the deleted monitoring_index above).
+    # tabulations/index.html is OWNED by csweb-tabulations-gen.py since 2026-07-28
+    # (hourly cron bakes fresh preview counts; a static build here would go stale
+    # and clobber it). tabulations_index() kept for reference only.
+    # write("projects/uhc-y2/tabulations/index.html", tabulations_index())
+    # data/: OWNED by csweb-responses-gen.py since 2026-08-09.
 
     # ported content pages
     port("enumerator-guide.html", "projects/uhc-y2/guides/enumerator/index.html")
@@ -680,56 +622,18 @@ def main():
 # ============================================================================
 
 
-def _ico(d):
-    return ('<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
-            'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" '
-            'aria-hidden="true">%s</svg>' % d)
+# The chrome — sidebar, topbar, head, pills — comes from portal_shell, the
+# same module the on-box generators import. These aliases exist because the
+# ported-page injection (port(), below) and the home page reference the old
+# private names; they are the shared functions, not copies.
+_sidebar = PS.sidebar
+_crumbs_html = PS.crumbs_html
+_PILL_LIVE = PS.PILL_LIVE
 
 
-_NAV = [
-    ("Project", [
-        ("Overview", P + "/", _ico('<path d="M3 10.5 12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'), ""),
-        ("Guides", P + "/guides/", _ico('<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h7M8 11h7"/>'), ""),
-        ("Instruments", P + "/instruments/", _ico('<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'), ""),
-        ("Manual", P + "/manual/", _ico('<path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v6h6"/>'), ""),
-    ]),
-    ("Operations", [
-        ("Monitoring", P + "/monitoring/", _ico('<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'), "lock"),
-        ("Data &amp; exports", P + "/data/", _ico('<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>'), "lock"),
-        ("Tabulations", P + "/tabulations/", _ico('<path d="M3 5h18v14H3z"/><path d="M3 10h18M9 5v14M15 5v14"/>'), ""),
-        ("Archive", P + "/archive/pretest-2026-07-15/", _ico('<rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><path d="M10 12h4"/>'), ""),
-    ]),
-    # No Administration group here on purpose. This portal is public and
-    # unauthenticated, so an admin-console entry would point anonymous visitors
-    # straight at the auth endpoint for no benefit. The gated surfaces (dashboard,
-    # map) DO carry it - see the Administration block in portal_shell.py, which
-    # only the on-box generators import.
-    ("Platform", [
-        ("All projects", "/projects/", _ico('<path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/>'), ""),
-        ("What we build", "/platform/", _ico('<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>'), ""),
-        ("About", "/about/", _ico('<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>'), ""),
-    ]),
-]
-
-
-def _sidebar(active):
-    o = ['<aside class="sidebar">',
-         '<a class="sb-brand" href="/"><span class="sb-mark">A</span><span><b>ASPSI CAPI</b>'
-         '<span>capi.asiansocial.org</span></span></a>',
-         '<div class="sb-proj"><a class="sb-proj-card" href="%s/"><div class="k">Active project</div>'
-         '<div class="v">UHC Survey Year 2</div></a></div>' % P, '<nav class="sb-nav">']
-    for sec, items in _NAV:
-        o.append('<div class="sb-sec">%s</div>' % sec)
-        for label, href, icon, lock in items:
-            lk = '<span class="lk">&#128274;</span>' if lock else ""
-            o.append('<a class="%s" href="%s">%s<span>%s</span>%s</a>'
-                     % ("on" if href == active else "", href, icon, label, lk))
-    o.append('</nav><div class="sb-foot">Asian Social Project Services, Inc.<br>'
-             '<a href="https://asiansocial.org">asiansocial.org</a>'
-             '<div class="sb-powered">Powered by Analytiflow.</div></div></aside>')
-    return "".join(o)
-
-
+# Crumb trails for the authored pages. The shell itself comes from portal_shell.
+# The monitoring/ and data/ keys die with their signpost pages in unification
+# Slices 3 and 4 — the live generators own those URLs from then on.
 _CRUMBS = {
     "/": [("Console", None)],
     "/projects/": [("Projects", None)],
@@ -745,20 +649,6 @@ _CRUMBS = {
 }
 
 
-def _crumbs_html(crumbs):
-    c = []
-    for i, (label, href) in enumerate(crumbs):
-        if i:
-            c.append('<span class="sep">/</span>')
-        c.append('<a href="%s">%s</a>' % (href, label) if href
-                 else '<span class="cur">%s</span>' % label)
-    return "".join(c)
-
-
-_PILL_LIVE = '<span class="pill live"><span class="dot"></span>Fieldwork live</span>'
-_PILL_LOCK = '<span class="pill lock">&#128274; Sign-in required</span>'
-
-
 def tiles(items):
     return '<div class="tiles">%s</div>' % "".join(
         '<div class="tile"><div class="k">%s</div><div class="v">%s</div><div class="s">%s</div></div>'
@@ -766,33 +656,21 @@ def tiles(items):
 
 
 def shell(title, desc, body, crumb="", active=""):
-    """App shell: sidebar + sticky topbar + canvas."""
-    crumbs = _CRUMBS.get(active) or [("ASPSI CAPI", None)]
-    pill = _PILL_LOCK if active in (P + "/monitoring/", P + "/data/") else _PILL_LIVE
-    return """<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
-<title>%s</title>
-<meta name="description" content="%s">
-<link rel="stylesheet" href="/portal.css">
-<link rel="icon" href="data:image/svg+xml,%%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%%3E%%3Crect width='40' height='40' rx='9' fill='%%23046a38'/%%3E%%3Cpath d='M20 9l9 5v12l-9 5-9-5V14z' fill='%%23e5b23b'/%%3E%%3C/svg%%3E">
-</head>
-<body>
-<div class="app">
-%s
-<div class="main">
-<div class="topbar"><div class="crumbs">%s</div><div class="tb-right">%s</div></div>
-<div class="canvas">
-%s
-</div>
-</div>
-</div>
-</body>
-</html>
-""" % (title, desc, _sidebar(active), _crumbs_html(crumbs), pill, body)
+    """App shell. Markup and CSS both come from portal_shell; this function is
+    now only a crumb lookup and a css-mode choice.
+
+    css="link" because these pages are static files served by capi-www and a
+    shared stylesheet is cached once for the whole site. The on-box generators
+    keep css="inline" — see portal_shell.head(). The pill is always PILL_LIVE:
+    the lock pill it used to show on two pages was a lie by omission once the
+    whole portal became sign-in-gated (2026-07-28)."""
+    return (PS.open_shell(title, desc,
+                          active=active,
+                          crumbs=_CRUMBS.get(active) or [("ASPSI CAPI", None)],
+                          tb_right=PS.PILL_LIVE,
+                          css="link")
+            + body
+            + PS.close_shell())
 
 
 _TOTAL_VARS = sum(i["vars"] for i in INSTRUMENTS)
@@ -909,6 +787,8 @@ def port(name, out_rel):
     s = open(os.path.join(CSWEB_SRC, name), encoding="utf-8").read()
     for old, new in LINKMAP:
         s = s.replace('href="%s"' % old, 'href="%s"' % new)
+    # bare-text URL mentions (link labels showing the address) follow the console move too
+    s = s.replace("csweb.asiansocial.org/docs/", "capi.asiansocial.org/docs/")
     s = s.replace("Back to help", "Back to project home")
     crumbs, active = _PORT_META.get(name, ([("UHC Survey Year 2", P + "/")], P + "/"))
     h = s.lower().find("</head>")
@@ -1019,14 +899,26 @@ def instruments_index():
 # ============================================================================
 
 OV_STATUS_URL = "https://capi.asiansocial.org/projects/uhc-y2/status.json"
-OV_DASH = "https://csweb.asiansocial.org/docs/dashboard.html"
-OV_MAP = "https://csweb.asiansocial.org/docs/map.html"
+OV_DASH = P + "/monitoring/"
+OV_MAP = P + "/monitoring/map/"
 OV_F2_APP = "https://uhc-hcw.asiansocial.org"
 
 
 def _ov_fetch_status():
     """Build-time bake of the live figures; None (em-dash page) if unreachable."""
     import urllib.request, json, time as _t
+    # The whole portal is sign-in-gated (2026-07-28), so an anonymous HTTP fetch
+    # now gets the login redirect. Prefer a fresh local copy (scp status.json to
+    # src/ before building); the HTTP path remains as a fallback.
+    local = os.path.join(SRC, "status.json")
+    if os.path.exists(local):
+        try:
+            st = json.load(open(local, encoding="utf-8"))
+            if isinstance(st, dict) and {"total", "completed", "alerts",
+                                         "instruments", "daily"} <= set(st):
+                return st
+        except Exception as e:
+            print("NOTE: local status.json unreadable (%s), trying HTTP" % str(e)[:60])
     try:
         with urllib.request.urlopen(OV_STATUS_URL + "?_=%d" % _t.time(), timeout=8) as r:
             st = json.loads(r.read().decode("utf-8"))
@@ -1502,7 +1394,7 @@ def tabulations_index():
         body += ('<div class="card"><span class="tag lock">sign-in</span><h3>%s (%s)</h3>'
                  '<p>Preview workbook - one sheet per table, TOC, n and %%.</p>'
                  '<a class="go" href="%s/docs/data/tabulations/UHC-Y2-Tabulations-%s-preview.xlsx">'
-                 'Download .xlsx</a></div>' % (nm, k, CSWEB, k))
+                 'Download .xlsx</a></div>' % (nm, k, CONSOLE, k))
     body += ('<div class="card ghost"><h3>Health Care Worker (F2)</h3>'
              '<p>Preview pending - F2 answers need the item-label explode before '
              'tabulation.</p></div></div></div>')

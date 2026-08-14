@@ -19,6 +19,17 @@ Item=QUESTIONNAIRE_NUMBER
   
 [EndForm]
 [Form]
+Name=FORM_ICF
+Label=Introduction and Informed Consent
+Level=1
+Size=806,300
+  
+Item=ICF_PART1
+Item=ICF_PART2
+  
+[EndForm]
+  
+[Form]
 Name=FORM001
 Label=Health Facility and Geographic Identification
 Level=1
@@ -32,17 +43,6 @@ Item=BARANGAY
 Item=BREAKOFF
   
 [EndForm]
-[Form]
-Name=FORM_ICF
-Label=Introduction and Informed Consent
-Level=1
-Size=806,300
-  
-Item=ICF_PART1
-Item=ICF_PART2
-  
-[EndForm]
-  
 [Form]
 Name=FORM002
 Label=A. Facility Head Profile
@@ -454,91 +454,9 @@ Text=Questionnaire Number (12-digit: RR-PP-MMM-FF-CCC)
 [EndGroup]
 [Group]
 Required=Yes
-Name=HEALTH_FACILITY_AND_GEOGRAPHIC_IDENTIFICATION_FORM
-Label=Health Facility and Geographic Identification
-Form=2
-Max=1
-  
-[Field]
-Name=CLASSIFICATION
-Position=177,27,192,47
-Item=CLASSIFICATION,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=2
-  
-[Text]
-Position=50,30,134,46
-Text=Classification
- 
-  
-[Field]
-Name=REGION_NAME
-Position=177,57,700,77
-Item=REGION_NAME,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=2
-  
-[Text]
-Position=50,60,95,76
-Text=Region
- 
-  
-[Field]
-Name=PROVINCE_NAME
-Position=177,87,700,107
-Item=PROVINCE_NAME,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=2
-  
-[Text]
-Position=50,90,145,106
-Text=Province / HUC
- 
-  
-[Field]
-Name=CITY_NAME
-Position=177,117,700,137
-Item=CITY_NAME,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=2
-  
-[Text]
-Position=50,120,163,136
-Text=City / Municipality
- 
-  
-[Field]
-Name=BARANGAY
-Position=177,147,318,167
-Item=BARANGAY,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=2
-  
-[Text]
-Position=50,150,111,166
-Text=Barangay
- 
-  
-[Field]
-Name=BREAKOFF
-Position=177,177,192,197
-Item=BREAKOFF,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=2
-  
-[Text]
-Position=50,180,149,196
-Text=Interview status
- 
-[EndGroup]
-[Group]
-Required=Yes
 Name=A_INFORMED_CONSENT_FORM
 Label=Introduction and Informed Consent
-Form=3
+Form=2
 Max=1
   
   
@@ -547,7 +465,7 @@ Name=ICF_PART1
 Position=354,27,369,47
 Item=ICF_PART1,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=3
+Form=2
   
 [Text]
 Position=50,30,317,46
@@ -559,7 +477,7 @@ Name=ICF_PART2
 Position=354,57,369,77
 Item=ICF_PART2,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=3
+Form=2
   
 [Text]
 Position=50,60,317,76
@@ -582,6 +500,88 @@ Length=1
   
 [EndGroup]
   
+[Group]
+Required=Yes
+Name=HEALTH_FACILITY_AND_GEOGRAPHIC_IDENTIFICATION_FORM
+Label=Health Facility and Geographic Identification
+Form=3
+Max=1
+  
+[Field]
+Name=CLASSIFICATION
+Position=177,27,192,47
+Item=CLASSIFICATION,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=3
+  
+[Text]
+Position=50,30,134,46
+Text=Classification
+ 
+  
+[Field]
+Name=REGION_NAME
+Position=177,57,700,77
+Item=REGION_NAME,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=3
+  
+[Text]
+Position=50,60,95,76
+Text=Region
+ 
+  
+[Field]
+Name=PROVINCE_NAME
+Position=177,87,700,107
+Item=PROVINCE_NAME,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=3
+  
+[Text]
+Position=50,90,145,106
+Text=Province / HUC
+ 
+  
+[Field]
+Name=CITY_NAME
+Position=177,117,700,137
+Item=CITY_NAME,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=3
+  
+[Text]
+Position=50,120,163,136
+Text=City / Municipality
+ 
+  
+[Field]
+Name=BARANGAY
+Position=177,147,318,167
+Item=BARANGAY,FACILITYHEADSURVEY_DICT
+DataCaptureType=DropDown
+Form=3
+  
+[Text]
+Position=50,150,111,166
+Text=Barangay
+ 
+  
+[Field]
+Name=BREAKOFF
+Position=177,177,192,197
+Item=BREAKOFF,FACILITYHEADSURVEY_DICT
+DataCaptureType=DropDown
+Form=3
+  
+[Text]
+Position=50,180,149,196
+Text=Interview status
+ 
+[EndGroup]
 [Group]
 Required=Yes
 Name=A_FACILITY_HEAD_PROFILE_FORM

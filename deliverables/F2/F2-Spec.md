@@ -62,6 +62,7 @@ flowchart LR
 Captured by the rewritten cover block (see `F2-Cover-Block-Rewrite-Draft.md`). Not part of the body spec below:
 
 - Facility ID (pre-filled per unique link)
+- Questionnaire Number `qn` — 12 digits = 9-digit PSGC facility code + 3-digit HCW sequence, aligning F2 with the F1/F3/F4 QN scheme (realizes the parked `RR-PP-…` numbering design). Assigned at admin HCW enrollment (auto next-free per facility, or pre-assigned from the frame), bound into the device token's claims, learned by the PWA at /verify-token, and recorded on every response row. Blank for legacy/slug-facility enrollments — additive, never required. (2026-07-08)
 - Region / Province / City-Municipality / Barangay (pre-filled)
 - GPS lat/long (absorbed into facility master list; not asked)
 - `response_source` (auto-set: `self`, `staff_encoded`, `paper_mirror`)
@@ -353,6 +354,20 @@ The Apr 20 PDF still uses interviewer-style cover blocks (consent-read-aloud, fi
 | Q125 | Q114 | multi + specify | conditional | What are you planning to do after leaving this facility? | Transfer to a new facility with the same role · Change training/specialization within healthcare · Change profession · Take an extended leave from work · Take a position as a health worker in another country · Retire · Other (specify) | only if Q123 = any Yes | OK · R3 #312: "Retire" is standalone (auto-clears the other plan options) per Myra 2026-05-21. (Pending sub-item: new option "Transfer to a new facility (in the Philippines) with the same role" awaits the 7-language translation queue before 2026-06-12 PSA submission — not in this change.) |
 
 > **END OF SURVEY**
+
+## Section K — Questionnaire Feedback
+
+> *Preamble (verbatim):* "Thank you for completing the survey! Before you submit, please answer a few short questions about the questionnaire itself. Your feedback will help us improve it."
+
+> **App-only section (pretest).** Added per UAT #1003 (Shan, 2026-07-28); not in the Apr 20 paper PDF, so there are no legacy ids. All five items are required per #1004 — the Section-K Next gate blocks Review/Submit until they are answered. FB5 is a textbox (not a 3-option single) exactly as the ticket specifies.
+
+| pdf_q | legacy_q | type | required | label (verbatim) | choices / notes | gf_risk |
+|---|---|---|---|---|---|---|
+| FB1 | — | single | Y | Was the questionnaire comprehensive? | Yes · No | OK |
+| FB2 | — | single | Y | Did we adequately cover the topic? | Yes · No | OK |
+| FB3 | — | long-text | Y | Are there any questions you expected that we would ask and that we didn't? | — | OK |
+| FB4 | — | long-text | Y | Are there any questions you feel may be too sensitive or that may affect the response rate that we should consider deleting? | — | OK |
+| FB5 | — | long-text | Y | Was the questionnaire too long, too short, or about right? | — | OK |
 
 ---
 

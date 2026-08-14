@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import type { EnrollmentRow } from './db';
+import { db, type EnrollmentRow } from './db';
+import { COMPLETED_CSID_KEY, DRAFT_ID_KEY } from './draft';
 import {
   clearEnrollment,
   getEnrollment,
@@ -52,6 +53,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const enroll = async (input: SetEnrollmentInput) => {
+    // A fresh enrollment is a fresh respondent. Drop the PREVIOUS case's local
+    // state, which otherwise survives unenroll/token-expiry on a shared phone:
+    // a stale COMPLETED_CSID_KEY would bounce the new respondent straight to
+    // the thank-you screen ("Submitted ✓" for a case they never answered), and
+    // a stale DRAFT_ID_KEY + draft row would resume the previous respondent's
+    // answers AND skip the consent gate (consent_given===1 belongs to them),
+    // submitting cross-contaminated data under the new hcw_id/qn.
+    try {
+      localStorage.removeItem(DRAFT_ID_KEY);
+      localStorage.removeItem(COMPLETED_CSID_KEY);
+    } catch {
+      /* private-mode Safari etc. — non-blocking */
+    }
+    await db.drafts.clear().catch(() => undefined);
     const row = await setEnrollment(input);
     setEnrollmentState(row);
     setStatus('enrolled');

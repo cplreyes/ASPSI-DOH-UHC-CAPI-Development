@@ -23049,7 +23049,7 @@
                   "language": "FIL"
                 },
                 {
-                  "text": "Base sa saimong kaaraman, ano an capitation amount kan YAKAP/Konsulta package? (Capitation ini an amount kada taon para sa pag rehistro kan pasyente para sa YAKAP/Konsulta package na mga serbisyo)",
+                  "text": "Base sa saimong kaaraman, ano an capitation amount kan YAKAP/Konsulta package?",
                   "language": "BCL"
                 },
                 {
@@ -23057,19 +23057,19 @@
                   "language": "BIS"
                 },
                 {
-                  "text": "Base sa imong kaugalingon nga kahibalo, unsa ang capitation amount sa YAKAP/Konsulta package (Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.) (Capitation mao ang kantidad kada tuig kada pasyente alang sa paghatag sa mga serbisyo sa YAKAP/Konsulta package)",
+                  "text": "Base sa imong kaugalingon nga kahibalo, unsa ang capitation amount sa YAKAP/Konsulta package",
                   "language": "CEB"
                 },
                 {
-                  "text": "Base han imo nahibabaroan, ano an capitation amount han putos han YAKAP/Konsulta? (An capitasyon amo an kantidad kada tuig kada rehistrado nga pasyente para han paghatag han YAKAP/Konsulta package services.)",
+                  "text": "Base han imo nahibabaroan, ano an capitation amount han putos han YAKAP/Konsulta?",
                   "language": "WAR"
                 },
                 {
-                  "text": "Base sa imo ihibalo, pila ang capitation amount sang YAKAP/Konsulta package? (Ang capitation amo ang kantidad nga ginahatag kada tuig para sa kada narehistro nga pasyente agud mahatagan sang YAKAP/Konsulta nga serbisyo.)",
+                  "text": "Base sa imo ihibalo, pila ang capitation amount sang YAKAP/Konsulta package?",
                   "language": "HIL"
                 },
                 {
-                  "text": "(Maibatay iti ammom, ania ti capitation amount ti YAKAP/Konsulta package? (Ti kapitasion ket ti gatad iti kada tawen iti tunggal nairehistro a pasiente para iti panangipaay kadagiti serbisio ti pakete ti YAKAP/Konsulta.)",
+                  "text": "Maibatay iti ammom, ania ti capitation amount ti YAKAP/Konsulta package?",
                   "language": "ILO"
                 }
               ],

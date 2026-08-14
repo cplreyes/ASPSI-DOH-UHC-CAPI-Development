@@ -1,0 +1,522 @@
+{
+ "Q1": {
+  "label": "What is your name?",
+  "type": "multi-field"
+ },
+ "Q1_1": {
+  "label": "Last Name",
+  "type": ""
+ },
+ "Q1_2": {
+  "label": "First Name",
+  "type": ""
+ },
+ "Q1_3": {
+  "label": "Middle Initial",
+  "type": ""
+ },
+ "Q2": {
+  "label": "What type of employment do you have at this health facility?",
+  "type": "single"
+ },
+ "Q3": {
+  "label": "What is your sex at birth?",
+  "type": "single"
+ },
+ "Q4": {
+  "label": "How old are you as of your last birthday (in years)?",
+  "type": "number"
+ },
+ "Q5": {
+  "label": "What is your role at this health facility?",
+  "type": "single"
+ },
+ "Q6": {
+  "label": "What is your specialty, if any?",
+  "type": "single"
+ },
+ "Q7": {
+  "label": "Do you practice at any private facility/ clinic?",
+  "type": "single"
+ },
+ "Q8": {
+  "label": "How do you divide your time between public and private practice?",
+  "type": "single"
+ },
+ "Q9": {
+  "label": "In your current position, how many (months/years) have you worked at this health facility?",
+  "type": "multi-field"
+ },
+ "Q9_1": {
+  "label": "Year(s)",
+  "type": ""
+ },
+ "Q9_2": {
+  "label": "Month(s)",
+  "type": ""
+ },
+ "Q10": {
+  "label": "How many days in a week do you work at this health facility?",
+  "type": "number"
+ },
+ "Q11": {
+  "label": "On average, how many hours do you work per day?",
+  "type": "number"
+ },
+ "Q12": {
+  "label": "Have you heard about Universal Health Care (UHC) prior to this survey?",
+  "type": "single"
+ },
+ "Q13": {
+  "label": "Has the increase in equipment been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "type": "single"
+ },
+ "Q14": {
+  "label": "What are these pieces of equipment?",
+  "type": "long-text"
+ },
+ "Q15": {
+  "label": "Has the increase in supplies been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "type": "single"
+ },
+ "Q16": {
+  "label": "What are these supplies?",
+  "type": "long-text"
+ },
+ "Q17": {
+  "label": "Has the use of electronic medical records at the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "type": "single"
+ },
+ "Q18": {
+  "label": "Have the changes to the referral system (inbound or outbound) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "type": "single"
+ },
+ "Q19": {
+  "label": "Have the changes in staffing been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "type": "single"
+ },
+ "Q20": {
+  "label": "Have the improved clinical practice guidelines been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "type": "single"
+ },
+ "Q21": {
+  "label": "Have the DOH licensing standards been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "type": "single"
+ },
+ "Q22": {
+  "label": "Have the PhilHealth accreditation requirements been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "type": "single"
+ },
+ "Q23": {
+  "label": "Have the service delivery protocols been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "type": "single"
+ },
+ "Q24": {
+  "label": "Have the primary care quality measures been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "type": "single"
+ },
+ "Q25": {
+  "label": "Which of the following do you expect to change in your personal work as a health worker under UHC?",
+  "type": "multi"
+ },
+ "Q26": {
+  "label": "How do you expect the following to change: Salary?",
+  "type": "single"
+ },
+ "Q27": {
+  "label": "How do you expect the following to change: Number of patients?",
+  "type": "single"
+ },
+ "Q28": {
+  "label": "How do you expect the following to change: Working hours?",
+  "type": "single"
+ },
+ "Q29": {
+  "label": "How do you expect the following to change: Standards to follow?",
+  "type": "single"
+ },
+ "Q30": {
+  "label": "How do you expect the following to change: Preventive healthcare?",
+  "type": "single"
+ },
+ "Q31": {
+  "label": "Have you heard of the PhilHealth YAKAP/Konsulta package?",
+  "type": "single"
+ },
+ "Q32": {
+  "label": "Which of the following are included in the YAKAP/Konsulta package?",
+  "type": "multi"
+ },
+ "Q33": {
+  "label": "Which of the following statements is true with regard to registering patients to YAKAP/Konsulta?",
+  "type": "single"
+ },
+ "Q34": {
+  "label": "Are you part of a health facility that is an accredited PhilHealth YAKAP/ Konsulta provider?",
+  "type": "single"
+ },
+ "Q35": {
+  "label": "Since when?",
+  "type": "partial-date"
+ },
+ "Q36": {
+  "label": "Why is your facility applying to become an accredited YAKAP/Konsulta provider?",
+  "type": "multi"
+ },
+ "Q37": {
+  "label": "Why is your facility not accredited?",
+  "type": "multi"
+ },
+ "Q38": {
+  "label": "Under UHC, there is a thrust towards primary health care. Part of this is the implementation of the YAKAP/Konsulta or primary care package. Would your facility consider becoming accredited as a YAKAP/Konsulta or primary care provider?",
+  "type": "single"
+ },
+ "Q39": {
+  "label": "Why would your facility consider it?",
+  "type": "multi"
+ },
+ "Q40": {
+  "label": "What might convince your facility to become a primary care provider?",
+  "type": "long-text"
+ },
+ "Q41": {
+  "label": "Have you heard about the No Balance Billing (NBB)?",
+  "type": "single"
+ },
+ "Q42": {
+  "label": "What are your sources of information about NBB?",
+  "type": "multi"
+ },
+ "Q43": {
+  "label": "What is your understanding about the No Balance Billing (NBB)?",
+  "type": "multi"
+ },
+ "Q44": {
+  "label": "Have you heard about the Zero Balance Billing (ZBB)?",
+  "type": "single"
+ },
+ "Q45": {
+  "label": "What are your sources of information about ZBB?",
+  "type": "multi"
+ },
+ "Q46": {
+  "label": "What is your understanding about the Zero Balance Billing (ZBB)?",
+  "type": "multi"
+ },
+ "Q47": {
+  "label": "What challenges do you commonly encounter for patients covered by ZBB?",
+  "type": "multi"
+ },
+ "Q48": {
+  "label": "Have you heard about the Bagong Urgent Care and Ambulatory Service (BUCAS) center?",
+  "type": "single"
+ },
+ "Q49": {
+  "label": "Do you have a BUCAS Center?",
+  "type": "single"
+ },
+ "Q50": {
+  "label": "In your assessment, what are the main factors affecting the utilization of BUCAS in your facility?",
+  "type": "multi"
+ },
+ "Q51": {
+  "label": "Do you feel BUCAS improves patient management efficiently?",
+  "type": "single"
+ },
+ "Q52": {
+  "label": "In your opinion, BUCAS Centers have:",
+  "type": "multi"
+ },
+ "Q53": {
+  "label": "Have you heard about the Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) package?",
+  "type": "single"
+ },
+ "Q54": {
+  "label": "Is your facility an accredited GAMOT provider?",
+  "type": "single"
+ },
+ "Q55": {
+  "label": "In your assessment, what are the main factors affecting the utilization of the GAMOT package in your facility?",
+  "type": "multi"
+ },
+ "Q56": {
+  "label": "What is/are the most common way/s you send referrals to higher level facilities?",
+  "type": "multi"
+ },
+ "Q57": {
+  "label": "What type of referral form do you use to send to higher level facilities?",
+  "type": "single"
+ },
+ "Q58": {
+  "label": "Do you have a network of specialist providers to refer patients to, if needed?",
+  "type": "single"
+ },
+ "Q59": {
+  "label": "Considering all patients who come to this facility for the past 6 months, what proportion of patients coming to this facility are referred from another facility compared to walk-ins?",
+  "type": "single"
+ },
+ "Q60": {
+  "label": "Of those referred, what is/are the most common way/s you receive referrals from lower-level facilities?",
+  "type": "multi"
+ },
+ "Q61": {
+  "label": "How would you rate your satisfaction with your current referral system?",
+  "type": "single"
+ },
+ "Q62": {
+  "label": "Why are you not satisfied with the current referral system?",
+  "type": "multi"
+ },
+ "Q63": {
+  "label": "Are you aware of the facility-level professional fee policies in setting your professional fees?",
+  "type": "single"
+ },
+ "Q64": {
+  "label": "If yes, do you consider them in setting your professional fees?",
+  "type": "single"
+ },
+ "Q65": {
+  "label": "If no, why not?",
+  "type": "long-text"
+ },
+ "Q66": {
+  "label": "Are you aware of the PhilHealth coverage rules in setting your professional fees?",
+  "type": "single"
+ },
+ "Q67": {
+  "label": "Do you consider these in setting professional fees?",
+  "type": "single"
+ },
+ "Q68": {
+  "label": "If no, why not?",
+  "type": "long-text"
+ },
+ "Q69": {
+  "label": "Do you know the implications of the ZBB policy for professional fee charging?",
+  "type": "single"
+ },
+ "Q70": {
+  "label": "Do you know the implications of the NBB policy for professional fee charging?",
+  "type": "single"
+ },
+ "Q71a": {
+  "label": "If yes, what are the implications?",
+  "type": "long-text"
+ },
+ "Q71b": {
+  "label": "If yes, what are the implications?",
+  "type": "long-text"
+ },
+ "Q72": {
+  "label": "Are you familiar with the Relative Value Unit (RVU)-based pricing?",
+  "type": "single"
+ },
+ "Q73": {
+  "label": "If no, why not?",
+  "type": "long-text"
+ },
+ "Q74": {
+  "label": "Aside from above policies, what other factors do you consider in setting your professional fee?",
+  "type": "long-text"
+ },
+ "Q75": {
+  "label": "On a scale of 1-5 with 5 as highest, how fair is your professional fee reimbursement compared to colleagues in other specialties with similar years of training who practice in facilities which are not ZBB accredited?",
+  "type": "single"
+ },
+ "Q76": {
+  "label": "On a scale of 1-5 with 5 as highest, how fair is your professional fee reimbursement compared to colleagues in other specialties with similar years of training who practice in facilities which are not NBB accredited?",
+  "type": "single"
+ },
+ "Q77": {
+  "label": "On a scale of 1-5 with 5 as highest, how adequate is your professional fee given your specialization and expertise?",
+  "type": "single"
+ },
+ "Q78": {
+  "label": "On a scale of 1-5 with 5 as highest, do you agree that the current reimbursement rates accurately reflect the complexity and cognitive effort required for your most frequent procedures?",
+  "type": "single"
+ },
+ "Q79": {
+  "label": "On a scale of 1-5 with 5 as highest, does your professional fee compensate for the medico-legal risks associated with your specific field?",
+  "type": "single"
+ },
+ "Q80": {
+  "label": "On a scale of 1-5 with 5 as highest, do reimbursement rates influence your practice's pricing strategy?",
+  "type": "single"
+ },
+ "Q81": {
+  "label": "On a scale of 1-5 with 5 as highest, how acceptable is the professional fee regulation or standardization under UHC?",
+  "type": "single"
+ },
+ "Q82": {
+  "label": "What is your opinion on the policy of charging different professional fees based on the patient's ability to pay?",
+  "type": "long-text"
+ },
+ "Q83": {
+  "label": "How often do you charge your patients?",
+  "type": "single"
+ },
+ "Q84": {
+  "label": "How often do you waive your professional fee?",
+  "type": "single"
+ },
+ "Q85": {
+  "label": "How often do you give discounts/adjustments on your professional fee?",
+  "type": "single"
+ },
+ "Q86": {
+  "label": "What coping strategies have you adapted when reimbursement is perceived as insufficient?",
+  "type": "long-text"
+ },
+ "Q87": {
+  "label": "Have you experienced professional fee balance billing despite the insurance/ZBB?",
+  "type": "single"
+ },
+ "Q88": {
+  "label": "Have you experienced professional fee balance billing despite the insurance/NBB?",
+  "type": "single"
+ },
+ "Q89": {
+  "label": "If yes, what are those situations?",
+  "type": "long-text"
+ },
+ "Q90": {
+  "label": "What challenges do you face in maintaining fair and sustainable professional fees?",
+  "type": "long-text"
+ },
+ "Q91": {
+  "label": "In your day-to-day work, how often do you have to perform tasks that should be performed by a different role?",
+  "type": "single"
+ },
+ "Q92": {
+  "label": "When this happens, which of the following best applies to you?",
+  "type": "single"
+ },
+ "Q93": {
+  "label": "What are the most common tasks you do in your daily work that you could delegate to a more junior staff or different staff member?",
+  "type": "multi"
+ },
+ "Q94": {
+  "label": "Which best explains why you take on these tasks?",
+  "type": "single"
+ },
+ "Q95": {
+  "label": "Do you agree or disagree with this statement: I think it's okay that health workers share tasks across roles even if they are beyond their job description.",
+  "type": "single"
+ },
+ "Q96": {
+  "label": "Are you satisfied with the support you receive from your facility to implement UHC reforms?",
+  "type": "single"
+ },
+ "Q97": {
+  "label": "Why not?",
+  "type": "multi"
+ },
+ "Q98": {
+  "label": "I am compensated fairly.",
+  "type": "single"
+ },
+ "Q99": {
+  "label": "All of my salary payments have arrived on time.",
+  "type": "single"
+ },
+ "Q100": {
+  "label": "All of my salary payments have arrived in the correct amount.",
+  "type": "single"
+ },
+ "Q101": {
+  "label": "The working environment is a fully supportive one.",
+  "type": "single"
+ },
+ "Q102": {
+  "label": "I am treated fairly at the workplace.",
+  "type": "single"
+ },
+ "Q103": {
+  "label": "My colleagues treat me with respect.",
+  "type": "single"
+ },
+ "Q104": {
+  "label": "My department/unit/practice provides a supportive environment for everyone regardless of background, beliefs, or identity.",
+  "type": "single"
+ },
+ "Q105": {
+  "label": "I have access to the resources I need to do my job well.",
+  "type": "single"
+ },
+ "Q106": {
+  "label": "In this post, I am given opportunities to develop my leadership skills relevant for my stage of training.",
+  "type": "single"
+ },
+ "Q107": {
+  "label": "I am satisfied with the professional development opportunities I have in my job.",
+  "type": "single"
+ },
+ "Q109": {
+  "label": "In addition to your salary, what other benefits as an accredited healthcare provider do you receive?",
+  "type": "long-text"
+ },
+ "Q110": {
+  "label": "What additional resources do you need to perform well in this job?",
+  "type": "multi"
+ },
+ "Q111": {
+  "label": "What opportunities to develop leadership skill/s would be useful to you?",
+  "type": "multi"
+ },
+ "Q112": {
+  "label": "Which of the following professional development opportunity/ies is/are currently provided to you by your facility? Check all that apply",
+  "type": "multi"
+ },
+ "Q113": {
+  "label": "Which of the following professional development opportunity/ies would be most useful to you?",
+  "type": "multi"
+ },
+ "Q114": {
+  "label": "In the past month, I have worked beyond my scheduled hours.",
+  "type": "single"
+ },
+ "Q115": {
+  "label": "I have been compensated for working overtime.",
+  "type": "single"
+ },
+ "Q116": {
+  "label": "My work is emotionally exhausting.",
+  "type": "single"
+ },
+ "Q117": {
+  "label": "My work frustrates me.",
+  "type": "single"
+ },
+ "Q118": {
+  "label": "I feel worn out at the end of a working day.",
+  "type": "single"
+ },
+ "Q119": {
+  "label": "I feel exhausted every morning at the thought of another day at work.",
+  "type": "single"
+ },
+ "Q120": {
+  "label": "I feel that every working hour is tiring for me.",
+  "type": "single"
+ },
+ "Q121": {
+  "label": "I have enough energy for family and friends during leisure time.",
+  "type": "single"
+ },
+ "Q122": {
+  "label": "I have worked overtime for:",
+  "type": "single"
+ },
+ "Q123": {
+  "label": "Have you considered leaving this facility?",
+  "type": "single"
+ },
+ "Q124": {
+  "label": "Why are you planning on leaving this facility?",
+  "type": "multi"
+ },
+ "Q125": {
+  "label": "What are you planning to do after leaving this facility?",
+  "type": "multi"
+ }
+}
