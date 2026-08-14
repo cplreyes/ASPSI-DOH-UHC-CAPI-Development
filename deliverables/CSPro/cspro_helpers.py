@@ -835,6 +835,21 @@ def build_dictionary(dict_name, dict_label, records=None,
 CSPRO_LABEL_MAX = 255  # CSPro hard limit on any label (item/value/value-set/record).
 
 
+def _cap_text(t, max_len=CSPRO_LABEL_MAX):
+    """The exact string _truncate_long_labels would store for `t`.
+
+    Factored out so apply_translations can look a translation up under the capped key as
+    well as the full one - the two must stay in step, or #1182 comes back.
+    """
+    if not isinstance(t, str) or len(t) <= max_len:
+        return t
+    cut = t[:max_len - 3]
+    sp = cut.rfind(" ")
+    if sp > max_len * 0.6:
+        cut = cut[:sp]
+    return cut.rstrip(" ,;:-") + "..."
+
+
 def _truncate_long_labels(node, max_len=CSPRO_LABEL_MAX, hits=None):
     """Recursively cap every labels[].text at CSPro's max_len, truncating at a word
     boundary + '...'. CSPro rejects a dictionary outright if any label exceeds 255
@@ -864,11 +879,7 @@ def _truncate_long_labels(node, max_len=CSPRO_LABEL_MAX, hits=None):
             for lab in labs:
                 t = lab.get("text")
                 if isinstance(t, str) and len(t) > max_len:
-                    cut = t[:max_len - 3]
-                    sp = cut.rfind(" ")
-                    if sp > max_len * 0.6:
-                        cut = cut[:sp]
-                    lab["text"] = cut.rstrip(" ,;:-") + "..."
+                    lab["text"] = _cap_text(t, max_len)
                     hits.append((lab.get("language", "?"), len(t), lab["text"]))
         for k, v in node.items():
             _truncate_long_labels(v, max_len, hits)
@@ -987,6 +998,15 @@ def apply_translations(dictionary, translations_dir, languages=TRANSLATION_LANGU
                     if code in maps:
                         counts[code][1] += 1
                         tr = maps[code].get(en_text)
+                        if tr is None:
+                            # #1182: a label over CSPro's 255-char limit is capped by
+                            # _truncate_long_labels, and a map extracted from an already-
+                            # capped .dcf carries the CAPPED string as its key. Looking up
+                            # the full source text then misses and the label silently falls
+                            # back to English in exactly the locales that HAD a translation.
+                            # Try the capped form before giving up. Five Filipino keys are
+                            # stored this way today.
+                            tr = maps[code].get(_cap_text(en_text))
                         if tr is not None:
                             counts[code][0] += 1
                         else:
