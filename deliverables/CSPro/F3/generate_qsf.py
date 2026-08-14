@@ -30,7 +30,23 @@ OUT = HERE / "PatientSurvey.ent.qsf"
 # dict-first placement was wrong (v1.0.1). Same string in every language — UI chrome, not
 # questionnaire text.
 _BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F3"]
-BUILD_FOOTER = f'<p class="instruction">Build: F3 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+# #1191 (PSA/SJREB, 2026-08-11): survey-tool details required on the CAPI tool.
+# -03 = "In-Patient and Out-Patient Survey Questionnaire" in the PSA table. The
+# clearance block is defined once in ../icf_content.py — the ICF screens carry the
+# same block, and two copies of a cleared reference number would eventually diverge.
+import sys as _sys
+_sys.path.insert(0, str(HERE.parent))
+import icf_content as _icf
+from notes_lookup import translate_note
+
+# #1190: brand-book main logo sequence on the first page — see F1/generate_qsf.py.
+import base64 as _b64
+_LOGO_B64 = _b64.b64encode((HERE.parent / "cover_logos.png").read_bytes()).decode()
+_LOGO_HTML = f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
+
+BUILD_FOOTER = (_LOGO_HTML
+                + f'<p class="instruction">Build: F3 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+                + _icf.clearance_html("F3"))
 
 STYLES = """styles:
   - name: Normal
@@ -53,6 +69,31 @@ STYLES = """styles:
     className: heading3
     css: |
       font-family: Arial;font-size: 18px;"""
+
+
+# #1142/#1144/#1145/#1155 — split-component questions whose two items share one
+# DisplayTogether screen. The dict label carries a component suffix ("... — Hours")
+# so the two variables stay distinguishable in the exported data and the codebook,
+# but on screen that suffix labels the BLOCK, not one box, and the on-form labels
+# ("Number of Hour(s)" / "Number of Minute(s)", set in generate_fmf.py) already say
+# which is which. Strip it from the question bar so the stem reads once, cleanly.
+_COMPONENT_SUFFIX_ITEMS = {
+    "Q58_WAIT_DAYS", "Q58_WAIT_MINUTES",
+    "Q69_USUAL_TRAVEL_HH", "Q69_USUAL_TRAVEL_MM",
+    "Q72_NEAREST_TRAVEL_HH", "Q72_NEAREST_TRAVEL_MM",
+    "Q106_NIGHTS", "Q106_DAYS",
+    "Q150_TRAVEL_HH", "Q150_TRAVEL_MM",   # #1201: Q69/Q72 parity for the pharmacy travel time
+}
+_COMPONENT_SUFFIX_RE = re.compile(
+    r"\s*[\u2014\u2013-]\s*(?:Hours?|Minutes?|Nights?|Days?)\s*$", re.I)
+
+
+def _strip_component_suffix(nm, text):
+    """Drop a trailing '— Hours' / '— Minutes' / '— Nights' / '— Days' from the
+    question-bar text of a split-component item. Dict labels are untouched."""
+    if nm in _COMPONENT_SUFFIX_ITEMS:
+        return _COMPONENT_SUFFIX_RE.sub("", text or "")
+    return text
 
 
 def _html(text):
@@ -138,10 +179,15 @@ CONSENT_HTML = "".join([
 # Item-name → question-text HTML. Overrides win over the dcf-label default
 # and are emitted identically for every declared language (English fallback
 # until SJREB-approved ICF translations arrive).
-# CONSENT_GIVEN removed 2026-06-12 — consent script is read from the printed
-# sheet (off the CAPI), so no question-text override. (CONSENT_HTML above is
-# kept as reference only; nothing emits it.)
-OVERRIDES = {}
+# CONSENT_GIVEN removed 2026-06-12 — no consent DECISION is captured on the CAPI, and
+# that has not changed. What DID change (2026-08-13): ASPSI sent "Suggested Layout
+# (CSEntry).docx", putting the consent SCRIPT back on the device as two read-aloud
+# screens with the clearance block. Its wording supersedes CONSENT_HTML above (which
+# remains unemitted, kept only as the Annex H reference). Text: ../icf_content.py.
+OVERRIDES = {
+    "ICF_PART1": _icf.build_screen_html("F3", 1, _LOGO_HTML),
+    "ICF_PART2": _icf.build_screen_html("F3", 2, _LOGO_HTML),
+}
 
 
 # ------------------------------------------------------------------
@@ -159,9 +205,13 @@ _DNR_ALL = "DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY."
 _PWD_CARD = ("Enumerator Instruction (DO NOT READ ALOUD): If the PWD "
              "Identification Card is presented, record the type of disability "
              "as indicated on the card. Do not ask the respondent directly.")
+# #1208 follow-up (ASPSI 2026-08-13): the trailing "If yes, indicate the amount spent."
+# was split out — ASPSI's final Q97.1 wording ends at "Select all that apply.", and that
+# sentence is the italic line under Q97.2 in their spec. Keyed separately below.
 _RECEIPT = ("If patient provides a receipt, select all that apply. If no "
             "receipt was provided, read options out loud. Select all that "
-            "apply. If yes, indicate the amount spent.")
+            "apply.")
+_IF_YES_AMOUNT = "If yes, indicate the amount spent."
 _GAMOT_AREA = "Enumerator: Applicable only to respondents in areas with GAMOT."
 _SELECT_ALL = "SELECT ALL THAT APPLY."
 
@@ -181,6 +231,7 @@ INSTRUCTIONS = {
     153: _GAMOT_AREA + " " + _SELECT_ALL,   # #1055
     154: _GAMOT_AREA + " " + _SELECT_ALL,   # #1055
     971: _RECEIPT,  # #455: the receipt/"select all that apply" note belongs on Q97.1 (the Q971_* bill-items battery), NOT on Q97 (Q97_FINAL_AMOUNT, a single cash figure). Re-keyed 97 -> 971 so _QNUM attaches it to the Q971_* fields. (#559: also not on Q114, a reasons select-all.)
+    972: _IF_YES_AMOUNT,  # #1208 follow-up: the italic line under Q97.2 in ASPSI's final spec.
     **dict.fromkeys([14], _PWD_CARD),
     4: ("Note to enumerator [do not read]: This section is for the Patient "
         "Profile. Ask all questions in this section unless a skip rule applies."),
@@ -235,6 +286,12 @@ INSTRUCTIONS = {
 # multi-field question, where the paper-number key would spray the note across
 # every Q<n>_* field (#1048 Q18, #1062 Q150). Wins over the number-keyed map.
 INSTRUCTIONS_BY_NAME = {
+    # #1136/#1137 (ASPSI 2026-08-06): these enumerator instructions used to sit
+    # INSIDE the dictionary label, so they rendered as part of the question stem.
+    # Moved here so they emit as <p class="instruction"> (the blue note), matching
+    # how Q36 and the rest of the instrument already do it.
+    "Q38_1_PIN_WHEN": "SELECT ONE ANSWER ONLY.",
+    "Q38_2_WHY_NOT_REG": "READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
     "Q18_INCOME_BRACKET": ("Enumerator note: Select the income category that "
                            "corresponds to the respondent’s approximate household "
                            "income."),   # #1048: bracket only + "tick" -> "Select"
@@ -398,20 +455,31 @@ def question_extras(nm, intro_used):
 
 
 def build_extras(intro_q, instr, intro_here, lnm):
-    """Per-language (pre, post): section read-aloud script in the CURRENT language (FIL
-    translated #407/#410/#411/#433, other dialects EN fallback); the do-not-read enumerator
-    note stays English. At a section start, script + note form one block BEFORE the question."""
+    """Per-language (pre, post): section read-aloud script and enumerator note.
+
+    Previously only Filipino had translated intros (a hand-built SECTION_INTROS_FIL from
+    #407/#410/#411/#433); every other dialect fell back to English, and the enumerator note
+    was English for all eight languages by design. That left 100 F3 question screens showing
+    English regardless of locale - the defect behind #1216/#1219/#1220/#1223/#1224/#1225.
+
+    Both now resolve through translate_note(), which serves the DOH-cleared June-5 wording
+    and returns the English unchanged when no cleared translation exists. The hand-built
+    Filipino map still wins where it has an entry, since it was reviewed against tickets.
+    """
     pre = post = ""
     if intro_q is not None:
         script = (SECTION_INTROS_FIL.get(intro_q) if lnm == "FIL" else None) or SECTION_INTROS[intro_q]
         # a tuple = multiple read-aloud paragraphs (e.g. Q131: section preamble + #486 battery stem)
         paras = script if isinstance(script, tuple) else (script,)
+        if not (lnm == "FIL" and SECTION_INTROS_FIL.get(intro_q)):
+            paras = tuple(translate_note(p, lnm) for p in paras)
         pre = "".join(f"<p>{_esc(p)}</p>" for p in paras)
     if instr:
+        note = f'<p class="instruction">{_esc(translate_note(instr, lnm))}</p>'
         if intro_here:
-            pre += f'<p class="instruction">{_esc(instr)}</p>'
+            pre += note
         else:
-            post = f'<p class="instruction">{_esc(instr)}</p>'
+            post = note
     return pre, post
 
 
@@ -460,7 +528,8 @@ def main():
                         body = ov
                     else:
                         pre, post = build_extras(*extras, lnm)
-                        body = pre + _html(labmap.get(lnm) or en) + post
+                        body = pre + _html(_strip_component_suffix(
+                            nm, labmap.get(lnm) or en)) + post
                     body = _pipe_fills(body)
                     body = _pay_amt_source_context(nm) + body   # #750 source/item context
                     lines += [f"          {lnm}: |", f"            {body}"]

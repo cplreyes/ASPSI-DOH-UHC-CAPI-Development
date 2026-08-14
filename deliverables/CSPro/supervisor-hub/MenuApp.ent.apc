@@ -155,7 +155,8 @@ function relay_to_csweb()
     Shape = syncconnect tested in an if, syncdata as statements (the C2/Khurshid-proven form).
     DEVICE-UNCONFIRMED: syncconnect(CSWeb)-from-logic + the supervisor-qa credential prompt on OUR server. }
   string csweb_url;
-  csweb_url = "https://csweb.asiansocial.org/csweb/api";
+  { 2026-08-08 migration: csweb.asiansocial.org is being retired; capi is canonical. }
+  csweb_url = "https://capi.asiansocial.org/csweb/api";
   if syncconnect(CSWeb, csweb_url) then
     syncdata(PUT, FACILITYHEADSURVEY_DICT);
     syncdata(PUT, PATIENTSURVEY_DICT);
@@ -269,10 +270,10 @@ preproc
   string dopt;
   dopt = '{"width":380,"height":600,"resizable":false,"keyboard":0}';
   if strip(m_role) = "supervisor" then
-    menuJson = concat('{"title":"', strip(m_op), ' - Supervisor","ver":"Hub v1.1.4 (2026-07-15)","groups":[{"header":"ASSIGNMENTS","items":[{"label":"Assign Enumeration Area","action":"assign"}]},{"header":"COLLECT & RELAY","items', '":[{"label":"Collect Interviews from Enumerators","action":"collect"},{"label":"Relay Collected Interviews to CSWeb","action":"relay"}]},{"header":"REVIEW & REPORTS","items":[{"lab', 'el":"Survey Interview - view report","action":"report_sup"},{"label":"View EA on Map","action":"map"},{"label":"Conduct/Open F1 - Facility Head","action":"open_f1"},{"label":"Condu', 'ct/Open F3 - Patient","action":"open_f3"},{"label":"Conduct/Open F4 - Household","action":"open_f4"}]},{"header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
+    menuJson = concat('{"title":"', strip(m_op), ' - Supervisor","ver":"Hub v1.1.5 (2026-08-08)","groups":[{"header":"ASSIGNMENTS","items":[{"label":"Assign Enumeration Area","action":"assign"}]},{"header":"COLLECT & RELAY","items', '":[{"label":"Collect Interviews from Enumerators","action":"collect"},{"label":"Relay Collected Interviews to CSWeb","action":"relay"}]},{"header":"REVIEW & REPORTS","items":[{"lab', 'el":"Survey Interview - view report","action":"report_sup"},{"label":"View EA on Map","action":"map"},{"label":"Conduct/Open Supervisor App - Courtesy Call","action":"open_sv"},{"l', 'abel":"Conduct/Open F1 - Facility Head","action":"open_f1"},{"label":"Conduct/Open F3 - Patient","action":"open_f3"},{"label":"Conduct/Open F4 - Household","action":"open_f4"}]},{"', 'header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
     res = htmldialog("menu.html", inputData := menuJson, displayOptions := dopt);
   elseif strip(m_role) = "enumerator" then
-    menuJson = concat('{"title":"', strip(m_op), ' - Enumerator","ver":"Hub v1.1.4 (2026-07-15)","groups":[{"header":"ASSIGNMENT","items":[{"label":"Receive Assigned Data","action":"receive"}]},{"header":"INTERVIEWS","items":[{"la', 'bel":"Conduct F1 - Facility Head Interview","action":"open_f1"},{"label":"Conduct F3 - Patient Interview","action":"open_f3"},{"label":"Conduct F4 - Household Interview","action":"', 'open_f4"},{"label":"Send My Interviews to Supervisor","action":"send"}]},{"header":"REPORTS","items":[{"label":"View EA on Map","action":"map"},{"label":"View my report","action":"', 'report_enum"}]},{"header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
+    menuJson = concat('{"title":"', strip(m_op), ' - Enumerator","ver":"Hub v1.1.5 (2026-08-08)","groups":[{"header":"ASSIGNMENT","items":[{"label":"Receive Assigned Data","action":"receive"}]},{"header":"INTERVIEWS","items":[{"la', 'bel":"Conduct F1 - Facility Head Interview","action":"open_f1"},{"label":"Conduct F3 - Patient Interview","action":"open_f3"},{"label":"Conduct F4 - Household Interview","action":"', 'open_f4"},{"label":"Send My Interviews to Supervisor","action":"send"}]},{"header":"REPORTS","items":[{"label":"View EA on Map","action":"map"},{"label":"View my report","action":"', 'report_enum"}]},{"header":"SESSION","items":[{"label":"Log out","action":"logout"}]}]}');
     res = htmldialog("menu.html", inputData := menuJson, displayOptions := dopt);
   else
     errmsg(1015);
@@ -302,6 +303,8 @@ preproc
   elseif pos("<<report_enum>>", res) > 0 then
     show_coverage_report("MY INTERVIEW COVERAGE");
     move to MENU_SESSION;
+  elseif pos("<<open_sv>>", res) > 0 then
+    launch_instrument("../SupervisorApp/SupervisorApp.pff");
   elseif pos("<<open_f1>>", res) > 0 then
     launch_instrument("../FacilityHeadSurvey/FacilityHeadSurvey.pff");
   elseif pos("<<open_f3>>", res) > 0 then

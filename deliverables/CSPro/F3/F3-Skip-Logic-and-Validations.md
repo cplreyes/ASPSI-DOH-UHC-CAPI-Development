@@ -558,8 +558,10 @@ No explicit skip rules in Section F. Q84 `SERVICE_TYPE` is advisory for Section 
 | Q97 vs. Q92/Q94/Q96 | `Q97_FINAL_AMOUNT` should be ≈ sum of all Out-of-pocket (`_PAY_01`) lines across Q92/Q94/Q96 ± 10%; warn otherwise | SOFT |
 | Q97.1 select matrix (`Q971_{1-4}`) | For each ticked, `_AMT > 0`; sum of Q971 amounts must also appear in Q97_FINAL_AMOUNT | HARD + SOFT |
 | `Q971_4 = Yes` (Other expenses) | `Q971_OTHER_TXT` required | HARD |
+| `Q971_SOURCES` "None of the above" (90) | Cannot be combined with any other item; produces 0 roster rows | HARD (#1208) |
 | Q97.2 select matrix (`Q972_{1-6}`) | For each ticked, `_AMT > 0`; NOT summed into Q97 (these are out-of-bill) | HARD |
 | `Q972_6 = Yes` (Other expenses) | `Q972_OTHER_TXT` required | HARD |
+| `Q972_SOURCES` "None of the above" (90) | Cannot be combined with any other item; produces 0 roster rows | HARD (#1208) |
 
 **Payment sources (Q98) — 15-row matrix**
 

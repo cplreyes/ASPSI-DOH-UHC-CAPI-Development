@@ -73,7 +73,8 @@ FIELD_CONTROL_CASE_START = {
 FIELD_CONTROL_CASE_END = {
     "SURVEY_TEAM_LEADER_S_NAME", "ENUMERATOR_S_NAME",
     "FIELD_VALIDATED_BY", "FIELD_EDITED_BY",
-    "DATE_FIRST_VISITED", "DATE_FINAL_VISIT", "TOTAL_NUMBER_OF_VISITS",
+    "DATE_FIRST_VISITED",   # #1132: echo fields removed at ASPSI's request
+    "DATE_FINAL_VISIT", "TOTAL_NUMBER_OF_VISITS",
     "ENUM_RESULT_FIRST_VISIT", "ENUM_RESULT_FINAL_VISIT",
 }
 
@@ -216,6 +217,34 @@ def _form_height(n_items):
     return max(300, TOP_Y + n_items * ROW_H + 40)
 
 
+# ------------------------------------------------------------------
+# #1142/#1144/#1145/#1155 — short ON-FORM labels for split components.
+# ------------------------------------------------------------------
+# Each of these questions is ONE question split into two dictionary items, and
+# each item's label carries the full question stem. That label is used twice per
+# screen (question bar + on-form label), so the stem printed twice — the same
+# defect F1 fixed as pretest #1006 / DOH #888.
+#
+# Option A (F1's shipped choice, 2026-08-03): shorten the ON-FORM label to the
+# component name only and leave the full stem in the question bar above it.
+#
+# The DICTIONARY labels are deliberately left long — they are the variable labels
+# in the exported data and the published codebook, and shortening them would leave
+# Q69 and Q72 both carrying a bare "Number of Minute(s)" in the dataset.
+SHORT_FORM_LABELS = {
+    "Q58_WAIT_DAYS":         "Number of Day(s)",
+    "Q58_WAIT_MINUTES":      "Number of Minute(s)",
+    "Q69_USUAL_TRAVEL_HH":   "Number of Hour(s)",
+    "Q69_USUAL_TRAVEL_MM":   "Number of Minute(s)",
+    "Q72_NEAREST_TRAVEL_HH": "Number of Hour(s)",
+    "Q72_NEAREST_TRAVEL_MM": "Number of Minute(s)",
+    "Q106_NIGHTS":           "Number of Night(s)",
+    "Q106_DAYS":             "Number of Day(s)",
+    "Q150_TRAVEL_HH":        "Number of Hour(s)",     # #1201: Q69/Q72 parity
+    "Q150_TRAVEL_MM":        "Number of Minute(s)",   # #1201
+}
+
+
 def _emit_form(lines, form_num, label, item_names, height, roster=None):
     lines.append("[Form]")
     lines.append(f"Name=FORM{form_num:03d}")
@@ -264,7 +293,10 @@ def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name, r
         if it["name"] in _CHECKBOX_FIELDS:   # alpha + value set rendered as a tick-list
             capture = "CheckBox"
             field_x2 = FIELD_RADIO_X2
-        text = (it["labels"][0]["text"] if it.get("labels") else it["name"]).replace("\n", " ").replace("\r", " ")
+        # #1142/#1144/#1145/#1155: component fields use a SHORT on-form label so the
+        # question stem appears once per screen (in the question bar), not twice.
+        text = (SHORT_FORM_LABELS.get(it["name"])
+                or (it["labels"][0]["text"] if it.get("labels") else it["name"])).replace("\n", " ").replace("\r", " ")
         # [Field]
         lines.append("[Field]")
         lines.append(f"Name={it['name']}")
@@ -300,7 +332,8 @@ NAMED_BLOCKS = [
      ["SURVEY_TEAM_LEADER_S_NAME", "ENUMERATOR_S_NAME",
       "FIELD_VALIDATED_BY", "FIELD_EDITED_BY"]),
     ("VISIT_RECORD_BLOCK", "Visit Record",
-     ["DATE_FIRST_VISITED", "DATE_FINAL_VISIT", "TOTAL_NUMBER_OF_VISITS",
+     ["DATE_FIRST_VISITED",   # #1132: echo fields removed at ASPSI's request
+      "DATE_FINAL_VISIT", "TOTAL_NUMBER_OF_VISITS",
       "ENUM_RESULT_FIRST_VISIT", "ENUM_RESULT_FINAL_VISIT"]),
 ]
 
@@ -358,6 +391,11 @@ _CHECKBOX_FIELDS = {
     "Q107_SOURCES", "Q109_SOURCES", "Q112_SOURCES", "Q113_SOURCES",     # Section H
 }
 _CHECKBOX_TRAILERS = ("_OTHER_TXT", "_MEDICINES_TXT")  # gated texts that share the checkbox screen
+# Fields that must OWN their screen for reasons other than capture type. The ICF
+# read-aloud parts are one screen each by spec (Shan's layout, 2026-08-13); without
+# this they would fall into the ordinary MAX_CHUNK run and share a DisplayTogether
+# screen with Q1/Q2/Q3, collapsing the two consent screens into one.
+_OWN_SCREEN_FIELDS = {"ICF_PART1", "ICF_PART2"}
 MAX_CHUNK = 5                       # cap simple-question runs at ~5 per screen
 _ACTIVE_BLOCK_PLAN = []            # set per-build by build_fmf()
 
@@ -435,7 +473,8 @@ def derive_block_plan(dictionary, sources=frozenset(), targets=frozenset(),
         while i < len(items):
             nm = items[i]["name"]
             ms = _MULTISELECT_RE.match(nm)
-            if _is_gated_text(nm, gated) or nm in _CHECKBOX_FIELDS:   # gated specify text / Check Box -> OWN screen
+            if (_is_gated_text(nm, gated) or nm in _CHECKBOX_FIELDS
+                    or nm in _OWN_SCREEN_FIELDS):   # gated specify text / Check Box / ICF -> OWN screen
                 plan.append((f"DG_BLK_{n}", (_qnum(items[i]) and f"Q{_qnum(items[i])}") or nm, [nm])); n += 1; i += 1
             elif ms:                                       # multi-select OPTION run -> one screen
                 base = ms.group(1)                          # (its trailing _OTHER_TXT is gated -> caught by
@@ -452,8 +491,9 @@ def derive_block_plan(dictionary, sources=frozenset(), targets=frozenset(),
                 chunk = []
                 while i < len(items) and len(chunk) < MAX_CHUNK:
                     nn = items[i]["name"]
-                    if _MULTISELECT_RE.match(nn) or nn in _CHECKBOX_FIELDS or _is_gated_text(nn, gated):
-                        break                               # stop before multi-select / checkbox / gated text
+                    if (_MULTISELECT_RE.match(nn) or nn in _CHECKBOX_FIELDS
+                            or nn in _OWN_SCREEN_FIELDS or _is_gated_text(nn, gated)):
+                        break                               # stop before multi-select / checkbox / ICF / gated text
                     if chunk and nn in targets:
                         break                               # skip TARGET starts a new screen
                     chunk.append(items[i]); i += 1

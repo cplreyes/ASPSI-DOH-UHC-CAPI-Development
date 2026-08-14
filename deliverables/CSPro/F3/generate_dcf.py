@@ -17,6 +17,10 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from icf_content import (
+    ITEM_LABELS as ICF_ITEM_LABELS,
+    CONTINUE_OPTIONS as ICF_CONTINUE_OPTIONS,
+)
 from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, UHC9_OPTIONS, SATISFACTION_5PT,
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
@@ -194,7 +198,12 @@ def build_f3_field_control():
                     ("Partial / not completed", "2"),
                 ]),
     ]
-    return build_field_control(survey_code="F3", extra_items=extra + derived_geo_code_items(),
+    # date_mmddyyyy: #1174 — enumerator types the paper's MMDDYYYY; storage stays YYYYMMDD
+    # (converted in generate_apc's DATE_FIRST_VISITED / DATE_FINAL_VISIT postprocs). Never
+    # flip this flag without that PROC — see cspro_helpers._date_fmt.
+    return build_field_control(survey_code="F3", date_display=False,  # #1132 F1-parity: echoes removed at ASPSI's request
+                               date_mmddyyyy=True,
+                               extra_items=extra + derived_geo_code_items(),
                                date_label_entity="the Patient",
                                result_options=ENUM_RESULT_OPTIONS_F3)
 
@@ -242,6 +251,14 @@ def build_section_a():
         yes_no("Q3_SAME_HOUSE",
                "3. Do you live in the same house as the patient?"),
     ]
+    # ICF read-aloud screens (Shan's "Suggested Layout (CSEntry)", 2026-08-13) lead the
+    # section: two screens of consent script, each acknowledged with a single "Continue".
+    # No consent decision is captured here — the layout shows no Yes/No control, and
+    # CONSENT_GIVEN stays removed (2026-06-12). Text lives in ../icf_content.py.
+    items = [
+        select_one(nm, ICF_ITEM_LABELS[nm], ICF_CONTINUE_OPTIONS, length=1)
+        for nm in ("ICF_PART1", "ICF_PART2")
+    ] + items
     return record("A_INFORMED_CONSENT",
                   "A. Introduction and Informed Consent", "C", items)
 
@@ -416,11 +433,11 @@ def build_section_b():
         alpha("Q4_NAME",
               "4. Patient's Name (Last Name, First Name, MI, Extension)", length=120),
         numeric("Q5_BIRTH_MONTH",
-                "5. In what month and year was the patient born? — Month", length=2),
+                # #1195 (supersedes #1056's reading): F4's month/year pattern is TWO
+                # self-contained short questions, per the tester's mockup.
+                "5. In what month was the patient born?", length=2),
         numeric("Q5_BIRTH_YEAR",
-                # #1056: second component shows a short prompt (F4's month/year pattern) —
-                # the full question reads once, on the Month component.
-                "5. Year of birth", length=4),
+                "5. In what year was the patient born?", length=4),
         numeric("Q6_AGE",
                 "6. Just to confirm, how old is the patient as of his/her last birthday? (in years)",
                 length=3),
@@ -622,15 +639,18 @@ def build_section_d():
         ("Sponsored (i.e., members whose contributions are being paid for by another "
          "individual, government agencies, or private entities. Includes some low-income "
          "citizens that are not indigent e.g. BHWs, PWDs)", "04"),
-        ("Lifetime member (i.e., individuals aged 60 years and above, uniformed personnel "
-         "aged 56 years and above, and SSS underground miner-retirees aged 55 years and "
-         "above and paid at least 120 monthly contributions with PhilHealth and the former "
-         "Medicare Programs of SSS and GSIS)", "05"),
-        ("Senior citizen (i.e., residents of the Philippines, aged sixty (60) years or above "
-         "and are not currently covered by any membership category of PhilHealth and "
-         "qualified dependents of senior citizen members who are also senior citizen "
-         "themselves or belonging to other membership categories, with or without coverage "
-         "who are senior citizens themselves)", "06"),
+        # #1182: both definitions condensed under CSPro's hard 255-char label cap —
+        # the paper's full text (273/349 chars) was being silently hard-cut mid-sentence
+        # AND broke the translation lookup in every locale keyed to the full string.
+        # Substance preserved; translations re-keyed to these exact strings.
+        ("Lifetime member (i.e., individuals aged 60+, uniformed personnel aged 56+, "
+         "and SSS underground miner-retirees aged 55+ who paid at least 120 monthly "
+         "contributions with PhilHealth and the former Medicare Programs of SSS and "
+         "GSIS)", "05"),
+        ("Senior citizen (i.e., residents of the Philippines aged sixty (60) years or "
+         "above not currently covered by any PhilHealth membership category, and "
+         "qualified dependents of senior citizen members who are themselves senior "
+         "citizens)", "06"),
         ("Overseas Filipino Worker (OFW)", "07"),
         ("Qualified dependents (i.e., those whose contributions are declared and covered by "
          "a principal member)", "08"),
@@ -684,14 +704,18 @@ def build_section_d():
         # #764: Q38.1 asked ONLY when Q38 = Yes (apc preproc gate skips it otherwise);
         # after it, flow falls through to Q39. SELECT ONE ANSWER ONLY.
         select_one("Q38_1_PIN_WHEN",
-                   "38.1. When did you register and receive your PhilHealth PIN? "
-                   "(Only answer if 'Yes' in Q38.) SELECT ONE ANSWER ONLY.",
+                   # #1136: "(Only answer if 'Yes' in Q38.)" was CAPI-programming
+                   # guidance leaking into the question - the gate is automated in
+                   # PROC Q38_1_PIN_WHEN, so it is deleted. "SELECT ONE ANSWER ONLY."
+                   # moves to INSTRUCTIONS_BY_NAME (blue note), not lost.
+                   "38.1. When did you register and receive your PhilHealth PIN?",
                    Q38_1_WHEN, length=1),
         # #764: Q38.2 asked ONLY when Q38 = No (CHECKBOX_CONVERT gate); after it, skip to Q43.
         # READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.
         *checkbox_multiselect("Q38_2_WHY_NOT_REG",
-                    "38.2. Why are you not registered? READ OPTIONS OUT LOUD. "
-                    "SELECT ALL THAT APPLY.",
+                    # #1137: the read-aloud instruction moved to INSTRUCTIONS_BY_NAME so it
+                    # renders as a blue note instead of part of the question stem.
+                    "38.2. Why are you not registered?",
                     _cb_codes(Q38_2_WHY_NOT), with_other_txt=True),
         select_one("Q39_HOW_FIND_OUT",
                    "39. How did you find out about how to register for PhilHealth?",
@@ -1107,14 +1131,20 @@ def build_section_g():
         ("No need/regular check-up only",                   "6"),
         ("Other (specify)",                                 "7"),
     ]
+    # #1151 (2026-08-13): reordered to the JUNE-5 tool (Deliverable 2 "Data collection
+    # tools", English_F3 p.10), which hoists the three amount-bearing sources to the top.
+    # The Apr-20 order (In-kind at 07) is superseded — June-5 is what the pretest testers
+    # hold and what all 7 translations were built from. Codes RENUMBER with the display
+    # order (in CSPro the value-set order IS the display order and codes must ascend), so a
+    # stored 02 changes meaning — see the round-close remap note in F3-Skip-Logic.
     Q92_PAYMENT_SRC = [
         ("Out-of-pocket",                        "01"),
         ("Donation",                             "02"),
-        ("Free/no cost",                         "03"),
-        ("Free, charge to PhilHealth",           "04"),
-        ("Free, charge to Private Insurance",    "05"),
-        ("Free, charge to HMO",                  "06"),
-        ("In kind",                              "07"),
+        ("In kind",                              "03"),
+        ("Free/no cost",                         "04"),
+        ("Free, charge to PhilHealth",           "05"),
+        ("Free, charge to Private Insurance",    "06"),
+        ("Free, charge to HMO",                  "07"),
         ("Don't know",                           "08"),
     ]
     Q93_LABS = [
@@ -1136,14 +1166,18 @@ def build_section_g():
         ("None",                      "17"),  # proceed to Q95
         ("Other, specify:",           "16"),
     ]
+    # #1152 (2026-08-13): reordered to the JUNE-5 tool (English_F3 p.12). Donation moves to
+    # 02; In kind stays a NON-money row (June-5 gives Q96 an amount box on Out-of-pocket and
+    # Donation only, which matches ASPSI's #779 per-question clarification). Codes renumber
+    # with the display order — see the Q92 note above.
     Q96_MEDS_PAY = [
         ("Out-of-pocket",                        "01"),
-        ("Free/no cost",                         "02"),
-        ("Free, charge to PhilHealth",           "03"),
-        ("Free, charge to Private Insurance",    "04"),
-        ("Free, charge to HMO",                  "05"),
-        ("In kind",                              "06"),
-        ("Donation",                             "07"),
+        ("Donation",                             "02"),
+        ("Free/no cost",                         "03"),
+        ("Free, charge to PhilHealth",           "04"),
+        ("Free, charge to Private Insurance",    "05"),
+        ("Free, charge to HMO",                  "06"),
+        ("In kind",                              "07"),
         ("Don't know",                           "08"),
     ]
     # Q97.1 — Option B (2-form flat) pilot (2026-06-19). WAS a per-option Yes/No +
@@ -1156,19 +1190,31 @@ def build_section_g():
     # 'Other expenses' specify text (Q971_OTHER_TXT) is gated on pos("04",...) by a
     # bespoke apc PROC and emitted AFTER the amounts so the four amounts stay a strictly
     # consecutive run that the Q971_AMOUNTS named block can match.
+    # #1208 (pretest recommendation, 2026-08-12): 'None of the above' (90) is the explicit
+    # no-extra-items escape. The apc HARD-requires >=1 tick, so a bill with no extra line
+    # items previously had NO valid answer (the old errmsg's "or correct Q97 if none" was
+    # the tell). 90 = the F3 standalone/exclusive convention, and LAST so the CheckBox
+    # codes still ascend (#830). It is filtered out of the amount roster below — 'none'
+    # never becomes an amount row. Deviation from the Apr-20 paper (p.15 lists no 'none'
+    # on Q97.1) — flagged to ASPSI on the ticket.
+    # #1208 follow-up (ASPSI 2026-08-13): adding the 'none' escape changed the question,
+    # so ASPSI supplied a FINAL wording + option list for both Q97.1 and Q97.2. Two label
+    # changes: 'Consultation Fee' -> "Doctor's Professional Fee", and 'None of the above'
+    # -> 'None'. Colons on 'Non-medical expenses:' / 'Other expenses:' match their list.
     Q971_SOURCES = [
-        ("Consultation Fee",                          "01"),
+        ("Doctor's Professional Fee",                 "01"),
         ("Medical equipment or supplies",             "02"),
-        ("Non-medical expenses (e.g. Hygiene kit)",   "03"),
-        ("Other expenses",                            "04"),
+        ("Non-medical expenses: (e.g. Hygiene kit)",  "03"),
+        ("Other expenses:",                           "04"),
+        ("None",                                      "90"),
     ]
     Q972_EXPENSES = [
-        ("a) Consultation Fee",                             "1"),
+        ("a) Doctor's Professional Fee",                    "1"),
         ("b) Diagnostic or laboratory procedure",           "2"),
         ("c) Medical equipment or supplies",                "3"),
         ("d) Medicines or drugs",                           "4"),
         ("e) Non-medical expenses: travel",                 "5"),
-        ("f) Other expenses",                               "6"),
+        ("f) Other expenses:",                              "6"),
     ]
     Q98_SOURCES = [
         ("Salary/income",                                                      "01"),
@@ -1243,9 +1289,12 @@ def build_section_g():
     # carry an amount; the roster's apc preproc protects+zeroes the amount for every
     # other source code. The roster record is spliced into the dictionary record list
     # right after this (split) record — see the return below.
-    # #781 (ASPSI 2026-06-25): In-kind(07) is a peso-amount source for Q92 — added to the
-    # money set (apc Q92_PAY_AMT gate owns the logic; this set is documentation-only).
-    Q92_AMT_CODES = {"01", "02", "07"}
+    # #781 (ASPSI 2026-06-25): In-kind is a peso-amount source for Q92 — in the money set
+    # (apc Q92_PAY_AMT gate owns the logic; this set is documentation-only).
+    # #1151 (2026-08-13): renumbered with the June-5 order — the money sources are now the
+    # first three codes (Out-of-pocket 01, Donation 02, In kind 03), which is exactly what
+    # the June-5 layout groups at the top.
+    Q92_AMT_CODES = {"01", "02", "03"}
     items.extend(checkbox_multiselect(
         "Q92_SOURCES",
         "92. Which of the following did you use to pay for the cost of consultation? "
@@ -1290,7 +1339,9 @@ def build_section_g():
     # (Q92 pattern), every other row defaults 0 but stays enterable. #779 (2026-06-25):
     # In-kind(06) dropped from the amount set per ASPSI's per-question clarification — the
     # apc (build_roster_procs amt_codes) owns the gate; this set is documentation-only.
-    Q96_AMT_CODES = {"01", "07"}
+    # #1152 (2026-08-13): renumbered with the June-5 order — Donation moved 07 -> 02. The
+    # money set is still exactly {Out-of-pocket, Donation} (In kind stays non-money, #779).
+    Q96_AMT_CODES = {"01", "02"}
     items.extend(checkbox_multiselect(
         "Q96_SOURCES",
         "96. Which of the following did you use to pay for the prescribed medicines? "
@@ -1305,10 +1356,16 @@ def build_section_g():
     # SCREEN 2: Q971_ROSTER grid — one row per ticked category, all rows enterable for
     # amount (every category carries an amount, so no zeroing/gating per row).
     # SCREEN 3: Q971_OTHER_TXT gated on pos("04", Q971_SOURCES) (own screen after roster).
+    # #1208 follow-up (ASPSI 2026-08-13): final question wording. The enumerator directive
+    # ("If patient provides a receipt…") is NOT repeated here — it already emits as the blue
+    # instruction note via generate_qsf's _RECEIPT, keyed to 971. Splitting it that way also
+    # keeps this dcf label under the 255-char cap; ASPSI's full sentence runs 321 chars and
+    # would have been silently truncated (the #1182 class).
     items.extend(checkbox_multiselect(
         "Q971_SOURCES",
-        "97.1 Which other items were included in your outpatient bill? "
-        "(Select all that apply.)",
+        "97.1 Other than the expenses above (e.g. consultation, laboratory tests, "
+        "prescribed medicines, etc.), which of the following were also included in the "
+        "bill? How much were you charged or billed?",
         Q971_SOURCES, with_other_txt=False))   # OTHER_TXT emitted after roster split
     items.append(alpha("Q971_OTHER_TXT",
                        "97.1 Other expenses — specify text", length=120))
@@ -1319,11 +1376,17 @@ def build_section_g():
     # the roster's pos("0n", …) membership idiom lines up (the proven Q92/Q971 convention).
     # 'f) Other expenses' (06) gates Q972_OTHER_TXT after the grid (own screen), mirroring
     # Q971_OTHER_TXT on code 04.
-    Q972_SOURCES = [(label, f"{int(code):02d}") for label, code in Q972_EXPENSES]
+    # #1208: same 'none' escape as Q97.1, appended AFTER the paper's a)-f) items so the
+    # codes still ascend (01..06, 90); filtered out of the amount roster below.
+    Q972_SOURCES = ([(label, f"{int(code):02d}") for label, code in Q972_EXPENSES]
+                    + [("g) None", "90")])   # #1208 follow-up: ASPSI's spec letters it g), matching a)-f)
+    # #1208 follow-up (ASPSI 2026-08-13): final question wording, matching their screenshot.
+    # The italic "If yes, indicate the amount spent." emits as the blue instruction note via
+    # generate_qsf (_IF_YES_AMOUNT, keyed to 972), not as part of this label.
     items.extend(checkbox_multiselect(
         "Q972_SOURCES",
-        "97.2 Which other expenses did you have during the OPD visit that were NOT in the "
-        "bill? (Select all that apply.)",
+        "97.2 Did you pay for any other expenses during your OPD visit that were not "
+        "included in the outpatient bill?",
         Q972_SOURCES, with_other_txt=False))
     items.append(alpha("Q972_OTHER_TXT",
                        "97.2 Other expenses — specify text", length=120))
@@ -1393,13 +1456,19 @@ def build_section_g():
             "96. Amount spent for the prescribed medicines, by source (Pesos)"),
         "Q971_SOURCES": _build_payment_roster(
             "Q971_ROSTER", "G. Other items in outpatient bill — amount by category", 971,
-            Q971_SOURCES, set(),   # amt_codes=empty: every category carries an amount
+            # #1208: 'None of the above' (90) is a CheckBox-only escape — filtered out of
+            # the roster's value set AND its max_occurs so it can never become an amount
+            # row. Ticking only 90 leaves nsel=0, the roster endgroups at occurrence 1,
+            # and the record (required=False) legally holds 0 rows.
+            [(lbl, c) for lbl, c in Q971_SOURCES if c != "90"], set(),
             "Q",
             "97.1 Category (auto-filled from the ticked items)",
             "97.1 Amount charged for this item (Pesos)", display_no="97.1"),
         "Q972_SOURCES": _build_payment_roster(
             "Q972_PAY_ROSTER", "G. Other expenses not in bill — amount by item", 972,
-            Q972_SOURCES, set(),   # all-amount: every ticked item carries an amount
+            # #1208: 'None of the above' (90) never becomes a roster row — same filter
+            # as Q97.1 above.
+            [(lbl, c) for lbl, c in Q972_SOURCES if c != "90"], set(),
             "U",
             "97.2 Expense item (auto-filled from the ticked items)",
             "97.2 Amount for this expense (Pesos)", display_no="97.2"),
@@ -1428,19 +1497,43 @@ def build_section_h():
         ("Executive check-up",   "4"),
         ("Other (specify)",      "5"),
     ]
+    # #1156 (2026-08-13): reordered to the JUNE-5 tool (English_F3 p.13). Donation(02) and
+    # In kind(03) hoist above the Free-charged-to-X block; "Don't know"(09) and "Other
+    # (specify)"(10) keep their codes, so the #1157 exclusivity gate and the Other-specify
+    # gate are both unaffected. Codes renumber with the display order — see the Q92 note.
     Q107_PAYMENT = [
         ("Out-of-pocket",                      "01"),
-        ("Free/no cost",                       "02"),
-        ("Free, charge to PhilHealth",         "03"),
-        ("Free, charge to Private Insurance",  "04"),
-        ("Free, charge to HMO",                "05"),
-        ("Free, charge to MAIFIP",             "06"),
-        ("Donation",                           "07"),
-        ("In kind",                            "08"),
+        ("Donation",                           "02"),
+        ("In kind",                            "03"),
+        ("Free/no cost",                       "04"),
+        ("Free, charge to PhilHealth",         "05"),
+        ("Free, charge to Private Insurance",  "06"),
+        ("Free, charge to HMO",                "07"),
+        ("Free, charge to MAIFIP",             "08"),
         ("Don't know",                         "09"),
-        ("Other (specify)",                    "10"),   # #1067: paper label; explicit code — gate reads pos("10"), unchanged
+        ("Other (specify)",                    "10"),   # #1067: paper label; explicit code — gate reads code "10", unchanged
     ]
+    # #1158 (2026-08-13): Q109 GAINS "Donation" in the June-5 tool (English_F3 p.14) — the
+    # Apr-20 list had no Donation at all — and hoists the three amount-bearing sources. The
+    # list therefore grows 9 -> 10 and NO LONGER matches Q112, which June-5 left in the
+    # Apr-20 order; Q112 now has its own Q112_PAYMENT below. "Don't know" moves 08 -> 09 and
+    # "Other (specify)" 09 -> 10, so the apc exclusive_code / gated_texts move with them.
     Q109_PAYMENT = [
+        ("Out-of-pocket",                      "01"),
+        ("Donation",                           "02"),
+        ("In kind",                            "03"),
+        ("Free/no cost",                       "04"),
+        ("Free, charge to PhilHealth",         "05"),
+        ("Free, charge to Private Insurance",  "06"),
+        ("Free, charge to HMO",                "07"),
+        ("Free, charge to MAIFIP",             "08"),
+        ("Don't know",                         "09"),
+        ("Other (specify)",                    "10"),
+    ]
+    # Q112 keeps the Apr-20 order — June-5 (English_F3 p.14) did NOT reorder Q112 and gives
+    # it an amount box on Out-of-pocket only. It used to share Q109_PAYMENT; #1158 forced
+    # the split, so this list is now Q112's own and must not be re-merged with Q109's.
+    Q112_PAYMENT = [
         ("Out-of-pocket",                      "01"),
         ("Free/no cost",                       "02"),
         ("Free, charge to PhilHealth",         "03"),
@@ -1449,7 +1542,7 @@ def build_section_h():
         ("Free, charge to MAIFIP",             "06"),
         ("In kind",                            "07"),
         ("Don't know",                         "08"),
-        ("Other (specify)",                    "09"),   # #1067: paper label for Q109 AND Q112 (shared list); code unchanged
+        ("Other (specify)",                    "09"),   # #1067: paper label; code unchanged
     ]
     Q113_SOURCES = [
         ("Salary/income",                                                  "01"),
@@ -1501,9 +1594,10 @@ def build_section_h():
         numeric("Q106_NIGHTS",
                 "106. How long were you confined? — Nights", length=3),
         numeric("Q106_DAYS",
-                # #1066: second component shows a short prompt — the full question reads
-                # once (on Nights) per the paper's grouped Nights/Days presentation.
-                "106. Length of confinement — Days", length=3),
+                # #1196 (supersedes #1066): both components carry the paper stem — the
+                # qsf strips "— Days" so both question bars read the identical stem
+                # (Q69/Q72 convention); the on-form label comes from SHORT_FORM_LABELS.
+                "106. How long were you confined? — Days", length=3),
     ]
     # Q107 total bill — Option B ROSTER fan-out (#691, 2026-06-19). WAS a flat 10-source
     # Yes/No + per-source _AMT matrix (every source carried an amount). NOW a CheckBox
@@ -1536,14 +1630,15 @@ def build_section_h():
     items.append(alpha("Q111_SERVICES_OUTSIDE",
                        "111. If yes, what are those services?", length=240))
     # Q112 services outside — Option B ROSTER fan-out (#693, 2026-06-19). WAS a flat
-    # 9-source Yes/No + per-source _AMT matrix (same Q109_PAYMENT codes). NOW a CheckBox
-    # (Q112_SOURCES) feeding a roster (Q112_PAY_ROSTER); ALL-amount (Q971 pattern, length-9).
-    # 'Other' (09) gates Q112_PAY_OTHER_TXT. >=1 source = the CheckBox's own gate (#557).
+    # 9-source Yes/No + per-source _AMT matrix. NOW a CheckBox (Q112_SOURCES) feeding a
+    # roster (Q112_PAY_ROSTER). 'Other' (09) gates Q112_PAY_OTHER_TXT. >=1 source = the
+    # CheckBox's own gate (#557). #1158 (2026-08-13): this used to reuse Q109_PAYMENT; it
+    # now uses its own Q112_PAYMENT because June-5 reordered Q109 but NOT Q112.
     items.extend(checkbox_multiselect(
         "Q112_SOURCES",
         "112. Which of the following did you use to pay for the services done outside the "
         "hospital? (Select all that apply.)",
-        Q109_PAYMENT, with_other_txt=False))
+        Q112_PAYMENT, with_other_txt=False))
     items.append(alpha("Q112_PAY_OTHER_TXT",
                        "112. Services outside — Other, specify text", length=120))
     # Q113 hospital bill — Option B ROSTER fan-out (#693, 2026-06-19). WAS a flat 13-source
@@ -1561,7 +1656,9 @@ def build_section_h():
                        "113. Hospital bill payment — Other specify text", length=120))
     items.extend([
         *checkbox_multiselect("Q114_NO_PH",   # #694: select_all -> Check Box (tick-all)
-                    "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113)",
+                    # #1159: "(If PhilHealth was not availed in 113)" was CAPI-
+                    # programming guidance; the gate lives in the Q114 checkbox PROC.
+                    "114. Why did you not avail of PhilHealth benefits?",
                     _cb_codes(Q114_NO_PH), with_other_txt=True),
     ])
     # Q115 final cash first, then the 115.1/115.2 breakdowns sit UNDER it (#517 — mirrors
@@ -1606,7 +1703,11 @@ def build_section_h():
             "109. Amount paid for medicines outside, by source (Pesos)", amt_length=9),
         "Q112_SOURCES": _build_payment_roster(
             "Q112_PAY_ROSTER", "H. Services done outside — amount by source", 112,
-            Q109_PAYMENT, set(), "g",
+            # #1212: MUST be Q112_PAYMENT, not Q109_PAYMENT. The #1158 split was applied to
+            # the checkbox above but missed here, so the roster's source column rendered
+            # Q109's June-5 labels against Q112's Apr-20 codes — 8 of 9 rows mislabelled
+            # (only 01 Out-of-pocket coincided), and max_occurs came out 10 instead of 9.
+            Q112_PAYMENT, set(), "g",
             "112. Payment source (auto-filled from the ticked sources)",
             "112. Amount paid for services outside, by source (Pesos)", amt_length=9),
         "Q113_SOURCES": _build_payment_roster(
@@ -1955,12 +2056,15 @@ def build_section_k():
                     "149. Where do you usually buy or receive your medicines? "
                     "Select all that apply.", _cb_codes(Q149_WHERE_BUY), with_other_txt=True),
         numeric("Q150_TRAVEL_HH",
-                # #1062: respondent-facing question reads once (here); the MM component
-                # keeps a short prompt. Pharmacy definition rides only this field (qsf).
+                # #1201 (supersedes #1062's split): full Q69/Q72 parity — both components
+                # carry the paper stem; the qsf strips the "— Hours/— Minutes" suffix so
+                # both question bars read the identical stem, and the on-form labels come
+                # from SHORT_FORM_LABELS. Pharmacy definition still rides HH only (qsf).
                 "150. How much time does it take for you to reach the nearest pharmacy "
-                "from your home? — Hours (HH)", length=2),
+                "from your home? — Hours", length=2),
         numeric("Q150_TRAVEL_MM",
-                "150. Travel time to nearest pharmacy — Minutes (MM)", length=2),
+                "150. How much time does it take for you to reach the nearest pharmacy "
+                "from your home? — Minutes", length=2),
         select_one("Q151_PHARM_EASE",
                    "151. How easy is it for you to access a pharmacy or drugstore?",
                    Q151_EASE, length=1),

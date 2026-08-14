@@ -46,9 +46,19 @@ from cspro_helpers import (             # noqa: E402
 DATA_DIR = HERE.parent / "data"
 
 
-def _load_csv_rows(csv_path, n_cols, what):
-    """Load an n-column CSV (header row required) into a list of str tuples,
-    preserving file order. Hard-stop with a helpful message if missing."""
+def _load_csv_rows(csv_path, columns, what):
+    """Load the named columns out of a header-bearing CSV into str tuples, in the
+    order requested, preserving file order.
+
+    Selects BY HEADER NAME, not by position/count. These CSVs gain columns over time
+    (assignments-source.csv picked up region+province for the coverage work), and the
+    old count check turned every such addition into a build break. Worse, the
+    assignment record is FIXED-WIDTH — zip(row, _ASSIGNMENT_WIDTHS) silently tolerated
+    extra trailing columns, but a REORDERED or renamed column would have shifted every
+    field into the wrong width and written a corrupt .dat that still looked valid.
+    Matching on names makes additions a no-op and makes a rename/removal a hard stop.
+
+    Hard-stops with a helpful message if the file or a required column is missing."""
     import csv as _csv
     if not csv_path.exists():
         sys.exit(
@@ -56,14 +66,32 @@ def _load_csv_rows(csv_path, n_cols, what):
             f"  (gitignored data source — copy the *.template.csv alongside it to "
             f"{csv_path.name} and fill in real rows)")
     with csv_path.open(encoding="utf-8-sig", newline="") as fh:
-        rows = [tuple((v or "").strip() for v in r) for r in _csv.reader(fh)]
-    header, rows = rows[0], rows[1:]
-    if len(header) != n_cols:
-        sys.exit(f"{csv_path}: expected {n_cols} columns, found {len(header)} ({header})")
-    bad = [r for r in rows if len(r) != n_cols]
+        raw = [tuple((v or "").strip() for v in r) for r in _csv.reader(fh)]
+    if not raw:
+        sys.exit(f"{csv_path}: file is empty (need a header row)")
+    header, raw = [h.lower() for h in raw[0]], raw[1:]
+    idx = {}
+    missing = []
+    for name in columns:
+        if name.lower() in header:
+            idx[name] = header.index(name.lower())
+        else:
+            missing.append(name)
+    if missing:
+        sys.exit(f"{csv_path}: missing required column(s) {missing}; header is {header}")
+    out, bad = [], []
+    for r in raw:
+        if not any(v for v in r):
+            continue                      # tolerate trailing blank lines
+        if len(r) <= max(idx.values()):
+            bad.append(r); continue
+        out.append(tuple(r[idx[name]] for name in columns))
     if bad:
-        sys.exit(f"{csv_path}: rows with wrong column count: {bad[:3]}")
-    return rows
+        sys.exit(f"{csv_path}: {len(bad)} row(s) shorter than the header: {bad[:3]}")
+    extra = [h for h in header if h not in [c.lower() for c in columns]]
+    if extra:
+        print(f"  {what}: ignoring extra column(s) {extra}")
+    return out
 
 
 # Login roster — (username, password, role, operator_id, cluster, supervisor_id).
@@ -76,7 +104,9 @@ def _load_csv_rows(csv_path, n_cols, what):
 # pw), see config/UAT-R6-tester-credentials.md + config/uat-r6-csweb-users.csv.
 # Source of truth: ../data/roster/roster-source.csv (GITIGNORED — carries credentials;
 # currently the UAT Round 6 tester roster, 2 teams covering F1/F3/F4).
-ROSTER_ROWS = _load_csv_rows(DATA_DIR / "roster" / "roster-source.csv", 6, "roster")
+ROSTER_COLUMNS = ["username", "password", "role", "operator_id", "cluster", "supervisor_id"]
+ROSTER_ROWS = _load_csv_rows(DATA_DIR / "roster" / "roster-source.csv",
+                             ROSTER_COLUMNS, "roster")
 
 # C3a — GROUPED field-ops menus, Khurshid 101-apps "accept()" interface (replaced the flat
 # value-set radio field 2026-06-27). Each role = [(SECTION_HEADER, [(item_label, action_key), ...])].
@@ -96,6 +126,10 @@ SUPERVISOR_MENU_GROUPED = [
     ("REVIEW & REPORTS", [
         ("Survey Interview - view report", "report_sup"),
         ("View EA on Map", "map"),
+        # Supervisor-only: the courtesy-call / facility-setup instrument. Listed before
+        # the F1/F3/F4 items because the courtesy call precedes the interviews in the
+        # field workflow. Not in ENUMERATOR_MENU_GROUPED - it is a supervisor task.
+        ("Conduct/Open Supervisor App - Courtesy Call", "open_sv"),
         ("Conduct/Open F1 - Facility Head", "open_f1"),
         ("Conduct/Open F3 - Patient", "open_f3"),
         ("Conduct/Open F4 - Household", "open_f4"),
@@ -137,6 +171,11 @@ MENU_ACTIONS = {
                     '\n      move to MENU_SESSION;'),
     "report_enum": ('show_coverage_report("MY INTERVIEW COVERAGE");'
                     '\n      move to MENU_SESSION;'),
+    # CSEntry installs each app as a sibling .../csentry/<App>/, and the package name is
+    # SupervisorApp, so this resolves the same way the instrument launches do. If the
+    # supervisor has not added SupervisorApp from CSWeb yet, launch_instrument()'s
+    # .load() guard reports that clearly instead of CSEntry's bare "Pff does not exist".
+    "open_sv": 'launch_instrument("../SupervisorApp/SupervisorApp.pff");',
     "open_f1": 'launch_instrument("../FacilityHeadSurvey/FacilityHeadSurvey.pff");',
     "open_f3": 'launch_instrument("../PatientSurvey/PatientSurvey.pff");',
     "open_f4": 'launch_instrument("../HouseholdSurvey/HouseholdSurvey.pff");',
@@ -148,7 +187,13 @@ MENU_ACTIONS = {
 # Columns: (ea_facility_code(9), enumerator_id, instrument, target_count, ea_name, cluster).
 # Source of truth: ../data/assignments/assignments-source.csv (tracked — R6 fixtures today;
 # ASPSI's real EA plan replaces the rows there, this build stays the writer).
-ASSIGNMENT_ROWS = _load_csv_rows(DATA_DIR / "assignments" / "assignments-source.csv", 6, "assignments")
+# The six fields the fixed-width AS_* record carries, in record order (see
+# _ASSIGNMENT_WIDTHS). assignments-source.csv also carries region/province for the
+# coverage work — not part of this record, so they are ignored by name selection.
+ASSIGNMENT_COLUMNS = ["ea_facility_code", "enumerator_id", "instrument",
+                      "target_count", "ea_name", "cluster"]
+ASSIGNMENT_ROWS = _load_csv_rows(DATA_DIR / "assignments" / "assignments-source.csv",
+                                 ASSIGNMENT_COLUMNS, "assignments")
 
 # B6/B7 — the F1/F3/F4 instrument dicts are declared EXTERNAL in MenuApp so the Bluetooth case
 # exchange (syncdata) can move PRIMARY case data device-to-device (the C2-DEVICE-PROVEN path).
@@ -721,7 +766,8 @@ function relay_to_csweb()
     Shape = syncconnect tested in an if, syncdata as statements (the C2/Khurshid-proven form).
     DEVICE-UNCONFIRMED: syncconnect(CSWeb)-from-logic + the supervisor-qa credential prompt on OUR server. }
   string csweb_url;
-  csweb_url = "https://csweb.asiansocial.org/csweb/api";
+  { 2026-08-08 migration: csweb.asiansocial.org is being retired; capi is canonical. }
+  csweb_url = "https://capi.asiansocial.org/csweb/api";
   if syncconnect(CSWeb, csweb_url) then
     syncdata(PUT, FACILITYHEADSURVEY_DICT);
     syncdata(PUT, PATIENTSURVEY_DICT);

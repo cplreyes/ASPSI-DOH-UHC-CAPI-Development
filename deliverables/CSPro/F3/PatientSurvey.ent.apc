@@ -211,12 +211,13 @@ end;
   never a cached gps(readlast) — so a fix can never leak across facilities. }
 
 numeric gpsRadioOpen = 0;   { 1 while this session holds the radio open }
+numeric gpsFailedTries = 0; { consecutive failed reads — drives the #1209 retry escalation }
 
 
 function WarmUpGPS()
     { Open the GPS radio early so acquisition runs in the background.
-      Non-blocking (no progress dialog) and flag-guarded, so it is safe to
-      call from a field preproc that re-fires on partial-save resume. }
+      Non-blocking (no progress dialog), so it is safe to call from a field
+      preproc that re-fires on partial-save resume. }
 
     { Windows desktop (getos 10..19) has no GPS radio — desk-test no-op. }
     if getos() in 10:19 then
@@ -224,13 +225,23 @@ function WarmUpGPS()
         exit;
     endif;
 
-    if gpsRadioOpen = 0 then
-        if gps(open) then
-            gpsRadioOpen = 1;
-        endif;
-        { no errmsg on failure here — this is a background warm-up; the
-          capture-time read reports hardware problems to the enumerator }
+    { #1209: re-assert the radio UNCONDITIONALLY instead of trusting the flag.
+      gpsRadioOpen is a PROC GLOBAL, so it outlives the case — but the radio does
+      not. A case that ends via endlevel (F3 Postponed / Withdraw, F1 Postponed /
+      Refused) never reaches the ReleaseGPS() in its last GPS block, so the flag
+      leaked "open" into every later case of the same CSEntry session, and the old
+      flag-guard then suppressed gps(open) for the rest of that session — every
+      later read failed with "No GPS fix" and the enumerator never even saw the
+      hardware/permission message. gps(open) on an already-open radio is a cheap
+      no-op, so re-asserting costs nothing on the normal path and self-heals. }
+    if gps(open) then
+        gpsRadioOpen = 1;
+    else
+        gpsRadioOpen = 0;
     endif;
+    gpsFailedTries = 0;   { fresh warm-up -> the next read gets the short budget }
+    { no errmsg on failure here — this is a background warm-up; the
+      capture-time read reports hardware problems to the enumerator }
 
     WarmUpGPS = gpsRadioOpen;
 end;
@@ -262,15 +273,36 @@ function ReadGPSReading(numeric maxTimeSec, numeric desiredAccuracyM)
         gpsRadioOpen = 1;
     endif;
 
-    numeric result = gps(read, maxTimeSec, desiredAccuracyM);
+    { #1209 escalating budget. The FIRST attempt at a field stays short so nobody
+      is parked on a dead field, but re-entering the field is an explicit "try
+      harder" from the enumerator, so each CONSECUTIVE FAILED read buys a longer
+      window (15 -> 30 -> 45 s, capped at 60). A cold receiver needs 30-120 s for
+      a first fix, so a flat 15 s could never reach a fix it was seconds away
+      from — the retry the message advertises used to be a no-op. Reset on
+      success and by WarmUpGPS() at case start. }
+    numeric budgetSec = maxTimeSec * (gpsFailedTries + 1);
+    if budgetSec > 60 then
+        budgetSec = 60;
+    endif;
+
+    numeric result = gps(read, budgetSec, desiredAccuracyM);
     { radio deliberately NOT closed — kept warm for retries / later GPS blocks }
 
     if result <> 1 then
-        errmsg(1237,
-               maxTimeSec);
+        gpsFailedTries = gpsFailedTries + 1;
+        { Clear the flag but do NOT gps(close): closing discards the acquisition
+          progress and makes every retry cold-start (the bug fixed 2026-07-19).
+          Clearing alone makes the next call re-issue gps(open) — a no-op when the
+          radio really is open, and the recovery path when the flag had gone stale
+          because an earlier case exited before ReleaseGPS(). }
+        gpsRadioOpen = 0;
+        errmsg(1270,
+               budgetSec);
         ReadGPSReading = 0;
         exit;
     endif;
+
+    gpsFailedTries = 0;   { a good read resets the escalation }
 
     if gps(accuracy) > desiredAccuracyM then
         errmsg(1004,
@@ -664,8 +696,21 @@ postproc
     2026-06-21). Codes 1/2/4/5 fall through to the photo as before (this matches the
     CAPTURE_VERIFICATION_PHOTO gate exactly). }
   if not (ENUM_RESULT_FINAL_VISIT in 1, 2, 4, 5) then
+    { #1209: this disposition ends the case HERE, so neither GPS form is reached and
+      the ReleaseGPS() in the P_HOME block never runs. gpsRadioOpen is a PROC GLOBAL
+      that outlives the case, so leaking it "open" on this path is what made every
+      LATER case in the same CSEntry session skip gps(open) and report "No GPS fix".
+      Hand the radio back before leaving. }
+    ReleaseGPS();
     endlevel;   { statement form (no parens) — strict packager rejects endlevel() }
   endif;
+  { #1209: F3's two GPS forms are the LAST thing in the case (after the photo), so
+    re-assert the radio here — it then converges during the photo step instead of
+    cold-starting at the capture field. This is also the ONLY warm-up a RESUMED
+    partial case ever gets: CSEntry re-enters a partial case at its stored resume
+    position, so the WarmUpGPS() in the QUESTIONNAIRE_NUMBER preproc (the case-key
+    field, never re-entered on resume) does not fire. }
+  WarmUpGPS();
 
 
 { ---- #164 Outpatient vs Inpatient branching ---- }
@@ -889,7 +934,8 @@ postproc
     errmsg(1011);
     reenter;
   endif;
-  { exclusivity (soft warn): 'No condition - Regular check-up only' (19) should stand alone }
+  { exclusivity (HARD — #1166): 'No condition - Regular check-up only' (19) must stand alone.
+    Aligned 2-char chunk scan, NOT pos(): codes 01 + 99 pack to "0199", which contains "19". }
   qcHit19 = 0;
   qcN = length(strip(Q148_CONDITIONS)) / 2;
   do qcK = 1 while qcK <= qcN
@@ -897,7 +943,8 @@ postproc
     if tonumber(Q148_CONDITIONS[qcP:2]) = 19 then qcHit19 = 1; endif;
   enddo;
   if qcHit19 = 1 and length(strip(Q148_CONDITIONS)) > 2 then
-    errmsg(1012);
+    errmsg(1264);
+    reenter;
   endif;
 
 PROC Q148_CONDITIONS_OTHER_TXT
@@ -920,7 +967,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q100_BUCAS_SOURCE) > 0 and length(strip(Q100_BUCAS_SOURCE)) > 2 then
-    errmsg(1015);
+    errmsg(1239);
+    reenter;
   endif;
 
 PROC Q100_BUCAS_SOURCE_OTHER_TXT
@@ -989,7 +1037,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q103_BUCAS_SERVICES) > 0 and length(strip(Q103_BUCAS_SERVICES)) > 2 then
-    errmsg(1020);
+    errmsg(1240);
+    reenter;
   endif;
 
 PROC Q103_BUCAS_SERVICES_OTHER_TXT
@@ -1064,7 +1113,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q117_NBB_SOURCE) > 0 and length(strip(Q117_NBB_SOURCE)) > 2 then
-    errmsg(1025);
+    errmsg(1241);
+    reenter;
   endif;
 
 PROC Q117_NBB_SOURCE_OTHER_TXT
@@ -1100,7 +1150,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q118_NBB_UNDERSTAND) > 0 and length(strip(Q118_NBB_UNDERSTAND)) > 2 then
-    errmsg(1028);
+    errmsg(1242);
+    reenter;
   endif;
 
 PROC Q118_NBB_UNDERSTAND_OTHER_TXT
@@ -1136,7 +1187,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q120_ZBB_SOURCE) > 0 and length(strip(Q120_ZBB_SOURCE)) > 2 then
-    errmsg(1031);
+    errmsg(1243);
+    reenter;
   endif;
 
 PROC Q120_ZBB_SOURCE_OTHER_TXT
@@ -1172,7 +1224,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q121_ZBB_UNDERSTAND) > 0 and length(strip(Q121_ZBB_UNDERSTAND)) > 2 then
-    errmsg(1034);
+    errmsg(1244);
+    reenter;
   endif;
 
 PROC Q121_ZBB_UNDERSTAND_OTHER_TXT
@@ -1208,7 +1261,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q125_MAIFIP_SOURCE) > 0 and length(strip(Q125_MAIFIP_SOURCE)) > 2 then
-    errmsg(1037);
+    errmsg(1245);
+    reenter;
   endif;
 
 PROC Q125_MAIFIP_SOURCE_OTHER_TXT
@@ -1244,7 +1298,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q128_MAIFIP_OOP_ITEMS) > 0 and length(strip(Q128_MAIFIP_OOP_ITEMS)) > 2 then
-    errmsg(1040);
+    errmsg(1246);
+    reenter;
   endif;
 
 PROC Q128_MAIFIP_OOP_ITEMS_OTHER_TXT
@@ -1351,7 +1406,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q153_GAMOT_SOURCE) > 0 and length(strip(Q153_GAMOT_SOURCE)) > 2 then
-    errmsg(1047);
+    errmsg(1247);
+    reenter;
   endif;
 
 PROC Q153_GAMOT_SOURCE_OTHER_TXT
@@ -1387,7 +1443,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q154_GAMOT_UNDERSTAND) > 0 and length(strip(Q154_GAMOT_UNDERSTAND)) > 2 then
-    errmsg(1050);
+    errmsg(1248);
+    reenter;
   endif;
 
 PROC Q154_GAMOT_UNDERSTAND_OTHER_TXT
@@ -1423,7 +1480,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q157_WHERE_REST) > 0 and length(strip(Q157_WHERE_REST)) > 2 then
-    errmsg(1053);
+    errmsg(1249);
+    reenter;
   endif;
 
 PROC Q157_WHERE_REST_OTHER_TXT
@@ -1459,7 +1517,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q160_WHY_GENERIC) > 0 and length(strip(Q160_WHY_GENERIC)) > 2 then
-    errmsg(1056);
+    errmsg(1250);
+    reenter;
   endif;
 
 PROC Q160_WHY_GENERIC_OTHER_TXT
@@ -1500,7 +1559,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q161_WHY_BRANDED) > 0 and length(strip(Q161_WHY_BRANDED)) > 2 then
-    errmsg(1059);
+    errmsg(1251);
+    reenter;
   endif;
 
 PROC Q161_WHY_BRANDED_OTHER_TXT
@@ -1536,7 +1596,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q163_CARE_TYPE) > 0 and length(strip(Q163_CARE_TYPE)) > 2 then
-    errmsg(1062);
+    errmsg(1252);
+    reenter;
   endif;
 
 PROC Q163_CARE_TYPE_OTHER_TXT
@@ -1609,7 +1670,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q177_WHY_HOSPITAL) > 0 and length(strip(Q177_WHY_HOSPITAL)) > 2 then
-    errmsg(1067);
+    errmsg(1253);
+    reenter;
   endif;
 
 PROC Q177_WHY_HOSPITAL_OTHER_TXT
@@ -1645,7 +1707,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q36_UHC_SOURCE) > 0 and length(strip(Q36_UHC_SOURCE)) > 2 then
-    errmsg(1070);
+    errmsg(1254);
+    reenter;
   endif;
 
 PROC Q36_UHC_SOURCE_OTHER_TXT
@@ -1681,7 +1744,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q37_UHC_UNDERSTAND) > 0 and length(strip(Q37_UHC_UNDERSTAND)) > 2 then
-    errmsg(1073);
+    errmsg(1255);
+    reenter;
   endif;
 
 PROC Q37_UHC_UNDERSTAND_OTHER_TXT
@@ -1755,7 +1819,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q42_DIFFICULTY) > 0 and length(strip(Q42_DIFFICULTY)) > 2 then
-    errmsg(1078);
+    errmsg(1256);
+    reenter;
   endif;
   skip to Q45_CATEGORY;   { #765: registered (Q38=Yes) path skips Q43/Q44 after the difficulty detail }
 
@@ -1795,8 +1860,13 @@ postproc
     errmsg(1080);
     reenter;
   endif;
+  if pos("04", Q46_BENEFITS) > 0 and length(strip(Q46_BENEFITS)) > 2 then
+    errmsg(1257);
+    reenter;
+  endif;
   if pos("90", Q46_BENEFITS) > 0 and length(strip(Q46_BENEFITS)) > 2 then
-    errmsg(1081);
+    errmsg(1257);
+    reenter;
   endif;
 
 PROC Q46_BENEFITS_OTHER_TXT
@@ -1832,7 +1902,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q50_DIFFICULTY_PAYING) > 0 and length(strip(Q50_DIFFICULTY_PAYING)) > 2 then
-    errmsg(1084);
+    errmsg(1258);
+    reenter;
   endif;
 
 PROC Q50_DIFFICULTY_PAYING_OTHER_TXT
@@ -1868,7 +1939,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q52_PLANS) > 0 and length(strip(Q52_PLANS)) > 2 then
-    errmsg(1087);
+    errmsg(1259);
+    reenter;
   endif;
 
 PROC Q52_PLANS_OTHER_TXT
@@ -1918,7 +1990,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q65_WHY_NO_USUAL) > 0 and length(strip(Q65_WHY_NO_USUAL)) > 2 then
-    errmsg(1092);
+    errmsg(1260);
+    reenter;
   endif;
 
 PROC Q65_WHY_NO_USUAL_OTHER_TXT
@@ -2053,7 +2126,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q75_KON_SOURCE) > 0 and length(strip(Q75_KON_SOURCE)) > 2 then
-    errmsg(1101);
+    errmsg(1261);
+    reenter;
   endif;
 
 PROC Q75_KON_SOURCE_OTHER_TXT
@@ -2089,7 +2163,12 @@ postproc
     reenter;
   endif;
   if pos("90", Q76_KON_UNDERSTAND) > 0 and length(strip(Q76_KON_UNDERSTAND)) > 2 then
-    errmsg(1104);
+    errmsg(1262);
+    reenter;
+  endif;
+  if pos("05", Q76_KON_UNDERSTAND) > 0 and length(strip(Q76_KON_UNDERSTAND)) > 2 then
+    errmsg(1262);
+    reenter;
   endif;
 
 PROC Q76_KON_UNDERSTAND_OTHER_TXT
@@ -2130,7 +2209,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q82_KON_WHY_NOT_REG) > 0 and length(strip(Q82_KON_WHY_NOT_REG)) > 2 then
-    errmsg(1107);
+    errmsg(1263);
+    reenter;
   endif;
 
 PROC Q82_KON_WHY_NOT_REG_OTHER_TXT
@@ -2179,7 +2259,8 @@ postproc
     errmsg(1110);
   endif;
   if q85Hit19 = 1 and length(strip(Q85_CONDITIONS)) > 2 then
-    errmsg(1111);
+    errmsg(1264);
+    reenter;
   endif;
 
 PROC Q85_CONDITIONS_OTHER_TXT
@@ -2284,6 +2365,10 @@ postproc
     errmsg(1118);
     reenter;
   endif;
+  if pos("06", Q90_NOT_CONFINED) > 0 and length(strip(Q90_NOT_CONFINED)) > 2 then
+    errmsg(1265);
+    reenter;
+  endif;
 
 PROC Q90_NOT_CONFINED_OTHER_TXT
 preproc
@@ -2318,7 +2403,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q93_LABS) > 0 and length(strip(Q93_LABS)) > 2 then
-    errmsg(1121);
+    errmsg(1266);
+    reenter;
   endif;
   if pos("90", Q93_LABS) > 0 then   { #448/#673: 'None' -> skip Q94 lab-cost matrix }
     skip to Q95_PRESCRIBED;
@@ -2491,8 +2577,8 @@ preproc
   protect(Q92_PAY_SRC, true);
   { #835-class polarity (2026-07-09): match non-money codes POSITIVELY - the <> chain
     also matched the resume-replay/buffered notappl and zeroed money rows on-screen. }
-  if Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8 then
-    Q92_PAY_AMT = 0;   { #781: non-money source -> default 0. In-kind(7) is a money source for Q92 per ASPSI (2026-06-25). Still enterable so the row stops. }
+  if Q92_PAY_SRC in 4:8 then
+    Q92_PAY_AMT = 0;   { #1151: after the June-5 renumber the money sources are 1-3 (OOP/Donation/In kind, #781) and every non-money source is 4-8. Still enterable so the row stops. }
   endif;
   Q92_PAY_LINE = curocc();
   noinput;
@@ -2502,7 +2588,7 @@ preproc
   { #1064 class (2026-08-04): non-money row -> amount is display-only 0 (noinput);
     the grid no longer offers an amount box for sources with no cost. Positive
     polarity per #835. Desk-test gate: all-non-money selection must advance. }
-  if Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8 then
+  if Q92_PAY_SRC in 4:8 then
     Q92_PAY_AMT = 0;
     noinput;
   endif;
@@ -2511,11 +2597,11 @@ postproc
     errmsg(1135);
     reenter;
   endif;
-  if (Q92_PAY_SRC in 3:6 or Q92_PAY_SRC = 8) and Q92_PAY_AMT <> 0 then
+  if (Q92_PAY_SRC in 4:8) and Q92_PAY_AMT <> 0 then
     errmsg(1136);
     Q92_PAY_AMT = 0;
   endif;
-  if (Q92_PAY_SRC = 1 or Q92_PAY_SRC = 2 or Q92_PAY_SRC = 7) and Q92_PAY_AMT = 0 then
+  if (Q92_PAY_SRC in 1:3) and Q92_PAY_AMT = 0 then
     errmsg(1137);
     reenter;
   endif;
@@ -2524,10 +2610,27 @@ postproc
 { ---- Q97.1 other-items-in-bill — CheckBox + roster (Option B Shape B) ---- }
 PROC Q971_SOURCES
 postproc
+  numeric xcN; numeric xcK; numeric xcP; numeric xcHit;
   { Require >=1 item ticked. The roster proc (Q971_PAY_LINE preproc, a visited field)
-    handles population — gating here covers the >=1 requirement before the grid opens. }
+    handles population — gating here covers the >=1 requirement before the grid opens.
+    #1208: 'None of the above' (90) is now a valid answer, so the message points at it
+    instead of sending the enumerator back to Q97. }
   if length(strip(Q971_SOURCES)) = 0 then
-    errmsg(1138);
+    errmsg(1275);
+    reenter;
+  endif;
+  { #1208 exclusivity (HARD) — 'None of the above' (90) must stand alone. Same aligned
+    2-char chunk scan as the #1157/#1197 Q107/Q109 exclusivity, never a raw pos() on a
+    2-digit code. Ticking only 90 then leaves nsel=0 in the population loop below, so
+    the grid endgroups with 0 rows and Q971_OTHER_TXT stays gated off on pos("04",...). }
+  xcHit = 0;
+  xcN = length(strip(Q971_SOURCES)) / 2;
+  do xcK = 1 while xcK <= xcN
+    xcP = (xcK - 1) * 2 + 1;
+    if tonumber(Q971_SOURCES[xcP:2]) = 90 then xcHit = 1; endif;
+  enddo;
+  if xcHit = 1 and length(strip(Q971_SOURCES)) > 2 then
+    errmsg(1276);
     reenter;
   endif;
 
@@ -2657,7 +2760,7 @@ preproc
   if pos("07", Q96_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q96_PAY_SRC = 7; endif; endif;
   if pos("08", Q96_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q96_PAY_SRC = 8; endif; endif;
   protect(Q96_PAY_SRC, true);
-  if Q96_PAY_SRC = 2 or Q96_PAY_SRC = 3 or Q96_PAY_SRC = 4 or Q96_PAY_SRC = 5 or Q96_PAY_SRC = 6 or Q96_PAY_SRC = 8 then
+  if Q96_PAY_SRC = 3 or Q96_PAY_SRC = 4 or Q96_PAY_SRC = 5 or Q96_PAY_SRC = 6 or Q96_PAY_SRC = 7 or Q96_PAY_SRC = 8 then
     Q96_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
   endif;
   Q96_PAY_LINE = curocc();
@@ -2665,7 +2768,7 @@ preproc
 
 PROC Q96_PAY_AMT
 preproc
-  if Q96_PAY_SRC = 2 or Q96_PAY_SRC = 3 or Q96_PAY_SRC = 4 or Q96_PAY_SRC = 5 or Q96_PAY_SRC = 6 or Q96_PAY_SRC = 8 then
+  if Q96_PAY_SRC = 3 or Q96_PAY_SRC = 4 or Q96_PAY_SRC = 5 or Q96_PAY_SRC = 6 or Q96_PAY_SRC = 7 or Q96_PAY_SRC = 8 then
     Q96_PAY_AMT = 0;   { non-money source -> no cost; display-only }
     noinput;
   endif;
@@ -2674,7 +2777,7 @@ postproc
     errmsg(1144);
     reenter;
   endif;
-  if (Q96_PAY_SRC = 2 or Q96_PAY_SRC = 3 or Q96_PAY_SRC = 4 or Q96_PAY_SRC = 5 or Q96_PAY_SRC = 6 or Q96_PAY_SRC = 8) and Q96_PAY_AMT <> 0 then
+  if (Q96_PAY_SRC = 3 or Q96_PAY_SRC = 4 or Q96_PAY_SRC = 5 or Q96_PAY_SRC = 6 or Q96_PAY_SRC = 7 or Q96_PAY_SRC = 8) and Q96_PAY_AMT <> 0 then
     errmsg(1145);
     Q96_PAY_AMT = 0;
   endif;
@@ -2683,9 +2786,22 @@ postproc
 { ---- Q972 payment roster (Option B fan-out) ---- }
 PROC Q972_SOURCES
 postproc
+  numeric xcN; numeric xcK; numeric xcP; numeric xcHit;
   { Require >=1 source ticked — the roster grid needs >=1 row. }
   if length(strip(Q972_SOURCES)) = 0 then
-    errmsg(1147);
+    errmsg(1277);
+    reenter;
+  endif;
+  { exclusivity (HARD — #1157): the standalone option must not be
+    combined with any other source. Aligned chunk scan, not pos(). }
+  xcHit = 0;
+  xcN = length(strip(Q972_SOURCES)) / 2;
+  do xcK = 1 while xcK <= xcN
+    xcP = (xcK - 1) * 2 + 1;
+    if tonumber(Q972_SOURCES[xcP:2]) = 90 then xcHit = 1; endif;
+  enddo;
+  if xcHit = 1 and length(strip(Q972_SOURCES)) > 2 then
+    errmsg(1278);
     reenter;
   endif;
 
@@ -2818,9 +2934,22 @@ postproc
 { ---- Q107 payment roster (Option B fan-out) ---- }
 PROC Q107_SOURCES
 postproc
+  numeric xcN; numeric xcK; numeric xcP; numeric xcHit;
   { Require >=1 source ticked — the roster grid needs >=1 row. }
   if length(strip(Q107_SOURCES)) = 0 then
     errmsg(1156);
+    reenter;
+  endif;
+  { exclusivity (HARD — #1157): the standalone option must not be
+    combined with any other source. Aligned chunk scan, not pos(). }
+  xcHit = 0;
+  xcN = length(strip(Q107_SOURCES)) / 2;
+  do xcK = 1 while xcK <= xcN
+    xcP = (xcK - 1) * 2 + 1;
+    if tonumber(Q107_SOURCES[xcP:2]) = 9 then xcHit = 1; endif;
+  enddo;
+  if xcHit = 1 and length(strip(Q107_SOURCES)) > 2 then
+    errmsg(1267);
     reenter;
   endif;
 
@@ -2836,7 +2965,7 @@ preproc
   pp = (curocc() - 1) * 2 + 1;
   Q107_PAY_SRC = tonumber(Q107_SOURCES[pp:2]);
   protect(Q107_PAY_SRC, true);
-  if Q107_PAY_SRC = 9 then
+  if Q107_PAY_SRC = 4 or Q107_PAY_SRC = 5 or Q107_PAY_SRC = 6 or Q107_PAY_SRC = 7 or Q107_PAY_SRC = 8 or Q107_PAY_SRC = 9 or Q107_PAY_SRC = 10 then
     Q107_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
   endif;
   Q107_PAY_LINE = curocc();
@@ -2844,7 +2973,7 @@ preproc
 
 PROC Q107_PAY_AMT
 preproc
-  if Q107_PAY_SRC = 9 then
+  if Q107_PAY_SRC = 4 or Q107_PAY_SRC = 5 or Q107_PAY_SRC = 6 or Q107_PAY_SRC = 7 or Q107_PAY_SRC = 8 or Q107_PAY_SRC = 9 or Q107_PAY_SRC = 10 then
     Q107_PAY_AMT = 0;   { non-money source -> no cost; display-only }
     noinput;
   endif;
@@ -2853,7 +2982,7 @@ postproc
     errmsg(1157);
     reenter;
   endif;
-  if (Q107_PAY_SRC = 9) and Q107_PAY_AMT <> 0 then
+  if (Q107_PAY_SRC = 4 or Q107_PAY_SRC = 5 or Q107_PAY_SRC = 6 or Q107_PAY_SRC = 7 or Q107_PAY_SRC = 8 or Q107_PAY_SRC = 9 or Q107_PAY_SRC = 10) and Q107_PAY_AMT <> 0 then
     errmsg(1158);
     Q107_PAY_AMT = 0;
   endif;
@@ -2886,9 +3015,22 @@ postproc
 { ---- Q109 payment roster (Option B fan-out) ---- }
 PROC Q109_SOURCES
 postproc
+  numeric xcN; numeric xcK; numeric xcP; numeric xcHit;
   { Require >=1 source ticked — the roster grid needs >=1 row. }
   if length(strip(Q109_SOURCES)) = 0 then
     errmsg(1161);
+    reenter;
+  endif;
+  { exclusivity (HARD — #1157): the standalone option must not be
+    combined with any other source. Aligned chunk scan, not pos(). }
+  xcHit = 0;
+  xcN = length(strip(Q109_SOURCES)) / 2;
+  do xcK = 1 while xcK <= xcN
+    xcP = (xcK - 1) * 2 + 1;
+    if tonumber(Q109_SOURCES[xcP:2]) = 9 then xcHit = 1; endif;
+  enddo;
+  if xcHit = 1 and length(strip(Q109_SOURCES)) > 2 then
+    errmsg(1269);
     reenter;
   endif;
 
@@ -2898,30 +3040,13 @@ preproc
     source -> Q109_PAY_SRC (auto + protected); end once past the last ticked source. Non-money rows
     default amount 0 but stay enterable.
     Re-runs on back-navigation. }
-  numeric nsel; numeric seen;
-  nsel = 0;
-  if pos("01", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("02", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("03", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("04", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("05", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("06", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("07", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("08", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("09", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
+  numeric nsel; numeric pp;
+  nsel = length(strip(Q109_SOURCES)) / 2;
   if curocc() > nsel then endgroup; endif;
-  seen = 0;
-  if pos("01", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 1; endif; endif;
-  if pos("02", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 2; endif; endif;
-  if pos("03", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 3; endif; endif;
-  if pos("04", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 4; endif; endif;
-  if pos("05", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 5; endif; endif;
-  if pos("06", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 6; endif; endif;
-  if pos("07", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 7; endif; endif;
-  if pos("08", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 8; endif; endif;
-  if pos("09", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 9; endif; endif;
+  pp = (curocc() - 1) * 2 + 1;
+  Q109_PAY_SRC = tonumber(Q109_SOURCES[pp:2]);
   protect(Q109_PAY_SRC, true);
-  if Q109_PAY_SRC = 8 then
+  if Q109_PAY_SRC = 4 or Q109_PAY_SRC = 5 or Q109_PAY_SRC = 6 or Q109_PAY_SRC = 7 or Q109_PAY_SRC = 8 or Q109_PAY_SRC = 9 or Q109_PAY_SRC = 10 then
     Q109_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
   endif;
   Q109_PAY_LINE = curocc();
@@ -2929,7 +3054,7 @@ preproc
 
 PROC Q109_PAY_AMT
 preproc
-  if Q109_PAY_SRC = 8 then
+  if Q109_PAY_SRC = 4 or Q109_PAY_SRC = 5 or Q109_PAY_SRC = 6 or Q109_PAY_SRC = 7 or Q109_PAY_SRC = 8 or Q109_PAY_SRC = 9 or Q109_PAY_SRC = 10 then
     Q109_PAY_AMT = 0;   { non-money source -> no cost; display-only }
     noinput;
   endif;
@@ -2938,19 +3063,31 @@ postproc
     errmsg(1162);
     reenter;
   endif;
-  if (Q109_PAY_SRC = 8) and Q109_PAY_AMT <> 0 then
+  if (Q109_PAY_SRC = 4 or Q109_PAY_SRC = 5 or Q109_PAY_SRC = 6 or Q109_PAY_SRC = 7 or Q109_PAY_SRC = 8 or Q109_PAY_SRC = 9 or Q109_PAY_SRC = 10) and Q109_PAY_AMT <> 0 then
     errmsg(1163);
     Q109_PAY_AMT = 0;
   endif;
 
 PROC Q109_PAY_OTHER_TXT
 preproc
-  if pos("09", Q109_SOURCES) = 0 then
+  numeric gk; numeric gn; numeric gp; numeric gt;
+  gt = 0; gn = length(strip(Q109_SOURCES)) / 2;
+  do gk = 1 while gk <= gn
+    gp = (gk - 1) * 2 + 1;
+    if Q109_SOURCES[gp:2] = "10" then gt = 1; endif;
+  enddo;
+  if gt = 0 then
     Q109_PAY_OTHER_TXT = "";   { not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("09", Q109_SOURCES) > 0 and length(strip(Q109_PAY_OTHER_TXT)) = 0 then
+  numeric hk; numeric hn; numeric hp; numeric ht;
+  ht = 0; hn = length(strip(Q109_SOURCES)) / 2;
+  do hk = 1 while hk <= hn
+    hp = (hk - 1) * 2 + 1;
+    if Q109_SOURCES[hp:2] = "10" then ht = 1; endif;
+  enddo;
+  if ht = 1 and length(strip(Q109_PAY_OTHER_TXT)) = 0 then
     errmsg(1165);
     reenter;
   endif;
@@ -2994,7 +3131,7 @@ preproc
   if pos("08", Q112_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q112_PAY_SRC = 8; endif; endif;
   if pos("09", Q112_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q112_PAY_SRC = 9; endif; endif;
   protect(Q112_PAY_SRC, true);
-  if Q112_PAY_SRC = 8 then
+  if Q112_PAY_SRC = 2 or Q112_PAY_SRC = 3 or Q112_PAY_SRC = 4 or Q112_PAY_SRC = 5 or Q112_PAY_SRC = 6 or Q112_PAY_SRC = 7 or Q112_PAY_SRC = 8 or Q112_PAY_SRC = 9 then
     Q112_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
   endif;
   Q112_PAY_LINE = curocc();
@@ -3002,7 +3139,7 @@ preproc
 
 PROC Q112_PAY_AMT
 preproc
-  if Q112_PAY_SRC = 8 then
+  if Q112_PAY_SRC = 2 or Q112_PAY_SRC = 3 or Q112_PAY_SRC = 4 or Q112_PAY_SRC = 5 or Q112_PAY_SRC = 6 or Q112_PAY_SRC = 7 or Q112_PAY_SRC = 8 or Q112_PAY_SRC = 9 then
     Q112_PAY_AMT = 0;   { non-money source -> no cost; display-only }
     noinput;
   endif;
@@ -3011,7 +3148,7 @@ postproc
     errmsg(1167);
     reenter;
   endif;
-  if (Q112_PAY_SRC = 8) and Q112_PAY_AMT <> 0 then
+  if (Q112_PAY_SRC = 2 or Q112_PAY_SRC = 3 or Q112_PAY_SRC = 4 or Q112_PAY_SRC = 5 or Q112_PAY_SRC = 6 or Q112_PAY_SRC = 7 or Q112_PAY_SRC = 8 or Q112_PAY_SRC = 9) and Q112_PAY_AMT <> 0 then
     errmsg(1168);
     Q112_PAY_AMT = 0;
   endif;
@@ -3814,9 +3951,52 @@ postproc
     reenter;
   endif;
 
+PROC DATE_FIRST_VISITED
+postproc
+  numeric fvMM; numeric fvDD; numeric fvYY; numeric fvHead;
+  if DATE_FIRST_VISITED <> notappl then
+    fvMM   = int(DATE_FIRST_VISITED / 1000000);
+    fvHead = int(DATE_FIRST_VISITED / 10000);
+    if fvMM >= 1 and fvMM <= 12 then
+      fvDD = fvHead - fvMM * 100;
+      fvYY = DATE_FIRST_VISITED - fvHead * 10000;
+      if fvDD < 1 or fvDD > 31 or fvYY < 2020 or fvYY > 2035 then
+        errmsg(1268);
+        reenter;
+      endif;
+      DATE_FIRST_VISITED = fvYY * 10000 + fvMM * 100 + fvDD;
+    else
+      if fvHead < 2020 or fvHead > 2035 then
+        errmsg(1268);
+        reenter;
+      endif;
+    endif;
+  endif;
+
 PROC DATE_FINAL_VISIT
 postproc
-  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then
+  numeric lvMM; numeric lvDD; numeric lvYY; numeric lvHead;
+  if DATE_FINAL_VISIT <> notappl then
+    lvMM   = int(DATE_FINAL_VISIT / 1000000);
+    lvHead = int(DATE_FINAL_VISIT / 10000);
+    if lvMM >= 1 and lvMM <= 12 then
+      lvDD = lvHead - lvMM * 100;
+      lvYY = DATE_FINAL_VISIT - lvHead * 10000;
+      if lvDD < 1 or lvDD > 31 or lvYY < 2020 or lvYY > 2035 then
+        errmsg(1268);
+        reenter;
+      endif;
+      DATE_FINAL_VISIT = lvYY * 10000 + lvMM * 100 + lvDD;
+    else
+      if lvHead < 2020 or lvHead > 2035 then
+        errmsg(1268);
+        reenter;
+      endif;
+    endif;
+  endif;
+  { conversion above runs FIRST so both sides below are YYYYMMDD. The notappl guards
+    match F1: without them a blank final date (single visit) false-fires this. }
+  if DATE_FINAL_VISIT <> notappl and DATE_FIRST_VISITED <> notappl and DATE_FINAL_VISIT < DATE_FIRST_VISITED then
     errmsg(1229);
     reenter;
   endif;

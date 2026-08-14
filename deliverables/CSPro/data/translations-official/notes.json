@@ -1,0 +1,563 @@
+{
+ "F1": {
+  "english": {
+   "intro:1": "We would like to ask some of your personal information relevant to the survey.",
+   "intro:7": "Next, we will be asking questions about this health facility.",
+   "intro:9": "We will now ask about your awareness of UHC, the changes that have been implemented in this facility since the UHC Act was passed in 2019 and if these changes were a result of the UHC Act.",
+   "intro:51": "The next questions we will ask relate to the YAKAP/Konsulta package. Please answer to the best of your knowledge. You may answer \"I don't know\" if you are unsure.",
+   "intro:101": "We will now ask questions related to BUCAS center and GAMOT package.",
+   "intro:118": "We will now ask you about your facility's experience with the licensing process.",
+   "intro:135": "The next set of questions covers the service delivery process. This section covers the implementation of NBB and ZBB, LGU support, and the Referral System.",
+   "intro:163": "We will now proceed to the last section of this survey, which focuses on human resources.",
+   "const:_READ_ONE": "READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.",
+   "const:_READ_ALL": "READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+   "const:_DNR_ALL": "DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+   "const:_DNR_UNPROMPTED": "DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.",
+   "const:_PROBE": "DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years?"
+  },
+  "translations": {
+   "intro:1": {
+    "FIL": "Nais kong tanungin ka ng ilan sa inyong personal na impormasyon na may kaugnayan sa survey",
+    "BCL": "An sunod na kahapotan ay base sa saimong personal na impormasyon na relevant sa survey",
+    "CEB": "A. Facility Head Profile",
+    "WAR": "Karuyag namon magpakiana hin pipira han iyo personal nga impormasyon nga may kalabotan ha surbey",
+    "HIL": "Mangayo kami sang imo personal nga impormasyon nga magamit sa ini nga pagtuon",
+    "ILO": "(Kayatmi a damagen ti sumagmamano kadagiti personal nga impormasionmo a mainaig iti surbey"
+   },
+   "intro:7": {
+    "FIL": "Susunod, kami ay magtatanong ng mga katanungan tungkol sa pasilidad ng kalusugan na ito",
+    "BCL": "Masunod mga kahapotan manungod sa health facility",
+    "BIS": "Kining sunod nakong ipangutana nimo, mga butang kabahin niining pasilidad nga imong gitrabahuan B",
+    "CEB": "Sunod, Mangutana kami bahin aning health facility ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 B",
+    "WAR": "Sunod, magpapakiana kami mahitungod hini nga pasilidad panlawas",
+    "HIL": "Sunod, mamangkot kami tuhoy sa sini nga health facility",
+    "ILO": "(Sumaruno, agsaludsodtayo maipapan iti daytoy a pasilidad ti salun-at.) B"
+   },
+   "intro:9": {
+    "FIL": "Tatanungin namin ngayon ang iyong kaalaman tungkol sa Universal Health Care (UHC), ang mga pagbabagong ipinatupad sa pasilidad na ito mula nang maipasa ang UHC Act noong 2019, at kung ang mga pagbabagong ito ay resulta ng UHC Act",
+    "BCL": "An sunod na parte maghahapot ako manungod awareness sa UHC, sa mga posibleng pagbabago na naipatupad digdi sa pasilidad poon na naipasa an UHC Act kan 2019 asin kun ini bunga kan UHC Act",
+    "BIS": "Karon, mangutana ko sa imong nahibaluan mahitungod sa UHC, mga pagba-o nga napatuman niining pasilidad sukad nga napasa ang UHC Act niadtong 2019, ug kon kining mga kabag-ohan ba resulta sa UHC Act",
+    "CEB": "Karon, mangutana ko bahin sa mga pagbag-o nga lagmit napatuman dinhi sa pasilidad sukad napasar ang UHC Act sa 2019, ug kung resulta ba kini sa UHC Act",
+    "WAR": "Magpapakiana kami yana mahitungod han iyo kahibaro han UHC, han mga pagbabag-o nga iginpatuman hini nga pasilidad tikang han pagpasa han UHC Act han 2019 ngan kun ini nga mga pagbabag-o in resulta han UHC Act",
+    "HIL": "Subong, mamangkot kami sang imo nahibal-an tuhoy sa UHC, ang mga pagbag-o nga ginpatuman sa sini nga pasilidad matapos ginpasar ang UHC Act sang 2019, kag kon ang mga pagbag-o nga ini resulta sang UHC Act",
+    "ILO": "(Saludsodenmi itan ti maipapan iti pannakaammoyo iti UHC, dagiti panagbalbaliw a naipatungpal iti daytoy a pasilidad sipud idi naipasa ti UHC Act idi 2019 ken no dagitoy a panagbalbaliw ket resulta ti UHC Act.) C"
+   },
+   "intro:51": {
+    "FIL": "Ang mga susunod na tanong na aming itatanong ay may kaugnayan sa YAKAP/Konsulta package",
+    "BCL": "An sunod na hapot ay manungod sa YAKAP/Konsulta package",
+    "BIS": "Ang mosunod nga mga pangutana may kalabotan sa YAKAP/Konsulta package",
+    "CEB": "Ang mo sunod nga mga pangutana magtuki mahitungod sa YAKAP/Konsulta package",
+    "WAR": "An sunod nga aton igpapakiana in may kalabutan han YAKAP/Konsulta package",
+    "HIL": "Ang masunod nga mga pamangkot nga aton ipangutana nagahisgot sa YAKAP/Konsulta nga package",
+    "ILO": "Dagiti sumaruno a saludsod nga isaludsodtayo ket mainaig iti pakete ti YAKAP/Konsulta"
+   },
+   "intro:101": {
+    "FIL": "Magtatanong na kami ngayon ng mga katanungan na may kaugnayan sa BUCAS center at GAMOT package",
+    "BCL": "An masunod na kahapotan ay relates sa BUCAS center asin GAMOT package",
+    "BIS": "Karon, ang akong mga ipangutana kabahin sa BUCAS center ug GAMOT package E",
+    "CEB": "Karon mangutana kami kabahin sa BUCAS center ug GAMOT package E",
+    "WAR": "Magpapakiana kita yana may kalabutan han BUCAS center ngan GAMOT package",
+    "HIL": "Mangayo kita subong sang mga pamangkot nga may kalabutan sa BUCAS center kag GAMOT package",
+    "ILO": "(Agsaludsodkami itan kadagiti saludsod mainaig iti BUCAS center ken GAMOT package.) E"
+   },
+   "intro:118": {
+    "FIL": "Magtatanong kami ngayon tungkol sa karanasan ng inyong pasilidad sa proseso ng pagkuha ng lisensya",
+    "BCL": "An sunod na mga kahapotan manungod sa naeksperyensya sa licensing process kan pasilidad na ini",
+    "BIS": "Karon mangutana mi bahin sa kasinatian sa inyong pasilidad sa proseso sa licensing",
+    "CEB": "Karon mangutana kami bahin sa inyong kasinatian sa pag proseso sa lisensya F",
+    "WAR": "Papakianhan ka namon yana mahitungod han iyo eksperyensya han pasilidad ha proseso han paglisensya",
+    "HIL": "Mamangkot kami subong sang impormasyon parte sa eksperyensya sang imo pasilidad sa proseso sang pagkuha lisensya",
+    "ILO": "(Saludsodenmi itan kadakayo ti maipapan iti kapadasan ti pasilidadyo iti proseso ti panaglisensia.) F"
+   },
+   "intro:135": {
+    "FIL": "Ang susunod na set ng mga tanong ay tumatalakay sa proseso ng paghahatid ng serbisyo",
+    "BCL": "Ngonyan, magpadagos kita sa proseso kan service delivery",
+    "BIS": "Ang mga musunod nga mga pangutana kabahin sa pagproseso sa pagdeliver/paghatag sa derbisyo",
+    "CEB": "Ang sunod nga hugpong sa mga pangutana naglangkob sa proseso sa paghatud sa serbisyo",
+    "WAR": "An sunod nga hugpo hin mga pakiana in nagkokobre han proseso han paghatag hin serbisyo",
+    "HIL": "Ang mga masunod nga mga pamangkot nagasakop sang proseso sang paghatag sang serbisyo",
+    "ILO": "(Saklawen ti sumaruno a grupo dagiti saludsod ti proseso ti panangipaay iti serbisio"
+   },
+   "intro:163": {
+    "FIL": "Magtutuloy na tayo sa huling bahagi ng survey na ito, na nakatuon sa mga yamang-tao (human resources)",
+    "BCL": "An masunod ay last na section kan survey na naga focus sa human resources H",
+    "BIS": "Mopadayon na kita sa katapusang bahin sa survey, nga magfocus sa human resources",
+    "CEB": "Mopadayon na kita sa kataposang bahin niini nga survey, nga nakapokus sa human resources H",
+    "WAR": "Mapadayon kita yana ha urhi nga seksyon hini nga surbey, nga nakasentro ha mga pinagkukuhaan pantawo",
+    "HIL": "Magapadayon kita subong sa katapusan nga bahin sang sini nga survey, nga nagatutok sa human resources",
+    "ILO": "(Ituloytayo itan ti maudi a benneg daytoy a surbey, a naipamaysa kadagiti rekurso ti tao.) H"
+   },
+   "const:_READ_ONE": {
+    "FIL": "NANG MALAKAS",
+    "BCL": "MASUNOD NA PLION SANA AN SIMBAG",
+    "CEB": "ANG MGA TUBAG",
+    "WAR": "AN MGA OPSYON",
+    "ILO": "ITI NAIPAAY"
+   },
+   "const:_READ_ALL": {
+    "FIL": "NANG MALAKAS",
+    "BCL": "AN MGA DAPAT",
+    "BIS": "OPSYON OG KUSOG",
+    "WAR": "AN MGA OPSYON",
+    "ILO": "ITI NAIPAAY"
+   },
+   "const:_DNR_ALL": {
+    "FIL": "MGA PAGPIPILIAN NANG MALAKAS",
+    "BCL": "Dae pagbasahon nin makusog",
+    "BIS": "MGA OPSYON",
+    "WAR": "MAKUSOG AN MGA OPSYON",
+    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+   },
+   "const:_DNR_UNPROMPTED": {
+    "FIL": "MALAKAS ANG MGA PAGPIPILIAN",
+    "BCL": "Dae pagbasahon ki makusog",
+    "CEB": "KUSOG ANG MGA TUBAG",
+    "WAR": "MAKUSOG AN MGA OPSYON",
+    "HIL": "MGA OPSYON SANG MATUNOG"
+   },
+   "const:_PROBE": {
+    "FIL": "MALAKAS ANG MGA PAGPIPILIAN",
+    "BCL": "Dai, pagbasahon ki makusog an mga pagpipilian, gamiton an minasunod na guide sa paghahapot para mag probe",
+    "BIS": "ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 <Question is applicable to all facilities with ‘No' response in Q10> AYAW BASAHA OG KUSOG",
+    "CEB": "KUSOG ANG MGA TUBAG",
+    "WAR": "MAKUSOG AN MGA OPSYON",
+    "HIL": "MATUNOG ANG OPSYON",
+    "ILO": "<Question is applicable to all facilities with ‘No' response in Q10> (SAAN A BASAEN TI OPTIONS ITI NAIPAAY"
+   }
+  }
+ },
+ "F3": {
+  "english": {
+   "intro:4": "Before proceeding to the survey proper, we would like to ask the patient about their personal information.",
+   "intro:35": "We will now ask about the patient's awareness of the Universal Health Care (UHC).",
+   "intro:38": "The next questions we will be asking are related to the patient's PhilHealth registration experience. We will also confirm their PhilHealth registration status and membership, and their registration to other health insurance.",
+   "intro:53": "We will now ask questions about the patient's access to a primary care provider.",
+   "intro:74": "We will now ask about the patient's awareness of the YAKAP/Konsulta package.",
+   "intro:83": "We will now be asking about the patient's actions taken for health concerns. This includes the type of services and facilities they access for their health and well-being.",
+   "intro:88": "For the following questions, we will ask about the patient's most current outpatient visit.",
+   "intro:98": "I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE IN ___).",
+   "intro:99": "We will now ask about the patient's awareness about BUCAS and the services they accessed in a BUCAS Center.",
+   "intro:105": "For the following questions, we will ask about the patient's most current inpatient visit.",
+   "intro:113": "I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE INPUT).",
+   "intro:116": "For this section, we will be asking about your awareness of NBB, ZBB, and MAIFIP.",
+   "intro:131": "The following questions relate to the patient's most recent experience with [facility_name_input] as an [inpatient] or [outpatient], where we invited you to participate in our survey on [date_formatted].",
+   "intro:145": "The next questions we will be asking are related to the patient's access to medicines. We would like to know how easy or difficult it is for them to purchase or receive medicines. We will also ask some questions about their views in buying generic or branded medicines.",
+   "intro:152": "We will now ask about the patient's awareness about the GAMOT package and the medicines they availed in a GAMOT pharmacy.",
+   "intro:162": "We will be asking about the patient's experience and satisfaction on referrals.",
+   "const:_READ_ONE": "READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.",
+   "const:_READ_ALL": "READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+   "const:_DNR_ONE": "DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.",
+   "const:_DNR_ALL": "DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+   "const:_PWD_CARD": "Enumerator Instruction (DO NOT READ ALOUD): If the PWD Identification Card is presented, record the type of disability as indicated on the card. Do not ask the respondent directly.",
+   "const:_RECEIPT": "If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply.",
+   "const:_IF_YES_AMOUNT": "If yes, indicate the amount spent.",
+   "const:_GAMOT_AREA": "Enumerator: Applicable only to respondents in areas with GAMOT.",
+   "const:_SELECT_ALL": "SELECT ALL THAT APPLY."
+  },
+  "translations": {
+   "intro:4": {
+    "FIL": "information Bago magpatuloy sa mismong sarbey, nais naming tanungin ang pasyente tungkol sa kanilang personal na impormasyon",
+    "BCL": "information Bako magpuon sa survey, mahapot kami sa pasyente manungod sa saiyang persona na impormasyon",
+    "BIS": "information Sa dili pa kita mopadayon sa aktuwal nga survey, gusto namo mangayo og impormasyon bahin sa personal nga datos sa pasyente",
+    "WAR": "information Antes magpakadto ini nga surbey, karuyag namon pakianhan an pasyente mahitungod han ira personal nga impormasyon",
+    "ILO": "information (Sakbay nga agtultuloykami iti surbey proper, kayatmi a damagen iti pasiente ti maipapan iti personal nga impormasionda) Note to enumerator [do not read]: This section is for th"
+   },
+   "intro:35": {
+    "FIL": "Magtatanong kami ngayon tungkol sa kaalaman ng pasyente sa Universal Health Care (UHC)",
+    "BIS": "Mangutana na usab kami bahin sa kahibalo sa pasyente sa Universal Health Care (UHC)",
+    "WAR": "Magpapakiana kita yana mahitungod han kahibaro han pasyente mahitungod han Universal Health Care (UHC)"
+   },
+   "intro:38": {
+    "FIL": "Ang mga susunod na tanong ay tungkol sa karanasan ng pasyente sa pagpaparehistro sa PhilHealth",
+    "BCL": "An masunod na kahapotan ay manungod sa pasyente na may Philhealth resigtration na saimong naeksperyensa",
+    "BIS": "Ang sunod nga mga pangutana kabahin sa kasinatian sa pasyente sa pagparehistro sa PhilHealth",
+    "WAR": "An sunod nga mga pakiana nga aton igpapakiana in may kalabutan han eksperyensya han pasyente ha pagparehistro ha PhilHealth",
+    "HIL": "Ang masunod nga mga pamangkot nga aton ipamangkot kalabot sa eksperyensya sang pasyente sa pagparehistro sa PhilHealth",
+    "ILO": "(Dagiti sumaruno a saludsod nga isaludsodmi ket mainaig iti padas ti pasiente iti panagrehistro iti PhilHealth"
+   },
+   "intro:53": {
+    "FIL": "provider Magtatanong kami ngayon tungkol sa access ng pasyente sa isang primary care provider",
+    "BCL": "provider Mahapot naman kami manungod sa access kan pasyente sa primary care",
+    "BIS": "provider Mangutana na usab kami bahin sa access sa pasyente sa usa ka primary care provider",
+    "WAR": "provider Magpapakiana kami yana mahitungod han pag-access han pasyente ha usa nga panguna nga parag-ataman",
+    "HIL": "Karun mangayo kita sang mga pamangkot parte sa pag-access sang pasyente sa primary care provider"
+   },
+   "intro:74": {
+    "FIL": "package Magtatanong kami ngayon tungkol sa kaalaman ng pasyente sa YAKAP/Konsulta package",
+    "BCL": "package Mahapot naman kami manungod sa kaaraman mo sa YAKAP/Konsulta pacage",
+    "BIS": "package Mangutana na usab kami bahin sa kahibalo sa pasyente sa YAKAP/Konsulta package",
+    "CEB": "package Mangutana na kami karon bahin sa kahibalo sa pasyente sa YAKAP/Konsulta package",
+    "WAR": "package Magpapakiana kami yana mahitungod han hibaro han pasyente han YAKAP/Konsulta package",
+    "HIL": "Mangpamangkot kita subong parte sa ihibalo sang pasyente sa YAKAP/Konsulta nga package",
+    "ILO": "package (Saludsodentayo itan ti maipapan iti pannakaammo ti pasiente iti pakete ti YAKAP/Konsulta)"
+   },
+   "intro:83": {
+    "FIL": "Magtatanong kami ngayon tungkol sa mga ginawa ng pasyente na pangkalusugan",
+    "BCL": "Mahapot naman kami manungod sa pasyente kun ano an saiyang ginibo manungod saiyang mga namamatian",
+    "BIS": "Mangutana na usab kami bahin sa mga lihok sa pasyente kung adunay concern sa panglawas",
+    "WAR": "Magpapakiana kami yana han mga aksyon nga ginbuhat han pasyente para han mga kabaraka ha panlawas",
+    "HIL": "Subong pamangkuton naton ang pasyente parte sa iya mga ginahimo para sa mga kahangawa sa iya panglawas",
+    "ILO": "(Saludsodentayo itan ti maipapan kadagiti tignay ti pasiente nga inaramid para kadagiti pakaseknan iti salun-at"
+   },
+   "intro:88": {
+    "FIL": "Para sa mga susunod na tanong, magtatanong kami tungkol sa pinakahuling outpatient visit ng pasyente",
+    "BCL": "Sa mga masunod na kahapotan, mahapot naman kita manungod sa pinakahuring outpatient na bisita kan pasyente",
+    "BIS": "Para sa mosunod nga mga pangutana, mangutana kami bahin sa pinakabag-o nga outpatient visit sa pasyente",
+    "CEB": "Para sa mosunod nga mga pangutana, mangutana kami bahin sa pinakabag-o nga pagbisita sa pasyente para sa outpatient",
+    "WAR": "Para han masunod nga mga pakiana, magpapakiana kita mahitungod han pinakabag-o nga pagbisita han pasyente ha gawas han pasyente",
+    "HIL": "Para sa masunod nga mga pamangkot, pamangkoton namon ang bahin sang pinakaulihi nga outpatient nga pagbisita sang pasyente",
+    "ILO": "(Para kadagiti sumaganad a saludsod, damagenmi ti maipapan iti kaudian a panagbisita ti pasiente iti outpatient.)"
+   },
+   "intro:98": {
+    "FIL": "___) Nais naming malaman kung saan nanggaling ang pera na ipinanambayad sa mga gastusing medikal (IN ___, at ___) sa (URI NG PASILIDAD SA ___)",
+    "BCL": "Gusto mi lang maaraman na kun sain ka nakakuha kan pambayad para saimong pagpabulong?",
+    "BIS": "___) Gusto nako mahibal-an asa ninyo nakuha ang kuwarta nga gigamit sa pagbayad sa medical costs nga nagasto (IN ___, ug ____) sa (FACILITY TYPE IN ___)",
+    "CEB": "___) Gusto ko mahibaloan kung asa nimo nakuha ang kwarta nga gibayad para sa mga galastohan sa medikal (SA _____, ug ____) sa (KLASE SA PASILIDAD SA _______)",
+    "WAR": "___) Karuyag ko unta mahibaro kun diin ka nakakuha hin kwarta nga igbabayad han mga gastos ha medisina nga nahimo (HA ___, ngan ____) ha (KLASE HAN PASILIDAD HA ___)",
+    "HIL": "___) Gusto ko mabalaan kun diin mo nakuha ang kwarta para bayaran ang mga gasto medikal nga nagwa (SA ___, kag ____) sa (KLASE SANG PASILIDAD SA ___)",
+    "ILO": "___) (Kayatko a maammuan no sadino ti nangalaam iti kuarta a pangbayad kadagiti gastos iti medisina a naaramid (IN ___, ken ____) iti (FACILITY TYPE IN ___)"
+   },
+   "intro:99": {
+    "FIL": "Magtatanong kami ngayon tungkol sa kaalaman ng pasyente sa BUCAS at sa mga serbisyong natanggap sa isang BUCAS Center",
+    "BCL": "Mahapot na kami manungod sa saimong kaaraman manungod sa BUCAS asin iba pang serbisyo na igwa kang access sa BUCAS Center Q99 to Q103 are applicable only to respondents in areas with BUCAS ce",
+    "BIS": "Mangutana na usab kami bahin sa kahibalo sa pasyente kabahin sa BUCAS ug sa mga serbisyo nga ilang nagamit sa usa ka BUCAS Center",
+    "CEB": "Mangutana na kami karon bahin sa kaamgohan sa pasyente mahitungod sa BUCAS ug sa mga serbisyo nga ilang nakuha sa usa ka BUCAS Center",
+    "WAR": "Magpapakiana kami yana mahitungod han hibaro han pasyente mahitungod han BUCAS ngan han mga serbisyo nga ira na-access ha usa nga BUCAS Center",
+    "HIL": "Mangabay kami subong parte sa pagkahibalo sang pasyente parte sa BUCAS kag ang mga serbisyo nga ila gin-access sa isa ka BUCAS Center"
+   },
+   "intro:105": {
+    "FIL": "Para sa mga susunod na tanong, magtatanong kami tungkol sa pinakahuling inpatient visit ng pasyente",
+    "BCL": "An masunod na mga kahapotan ay manungod sa pinakahuring pagpa-ospital kan pasyente",
+    "BIS": "Para sa mosunod nga mga pangutana, mangutana kami bahin sa pinakabag-o nga inpatient visit sa pasyente",
+    "CEB": "Para sa mosunod nga mga pangutana, mangutana kami bahin sa pinakabag-o nga pagbisita sa pasyente para sa inpatient",
+    "WAR": "Para han masunod nga mga pakiana, magpapakiana kita mahitungod han pinakabag-o nga pagbisita han pasyente ha ospital",
+    "HIL": "Para sa masunod nga mga pamangkot, pamangkuton namon ang pasyente parte sa iya pinakaulihi nga pagbisita sa ospital",
+    "ILO": "(Para kadagiti sumaganad a saludsod, damagenmi ti maipapan iti kaudian a panagbisita ti pasiente iti inpatient.)"
+   },
+   "intro:113": {
+    "FIL": "___) Nais naming malaman kung saan nanggaling ang pera na ipinanambayad sa mga gastusing medikal (IN ___, at ___) sa (URI NG PASILIDAD SA ___)",
+    "BCL": ") Gusto mi lang maaraman na kun sain ka nakakuha kan pambayad para saimong pagpabulong?",
+    "BIS": "___) Gusto nako mahibal-an asa ninyo nakuha ang kuwarta nga gigamit sa pagbayad sa medical costs nga nagasto (IN ___, ug ____) sa (FACILITY TYPE IN ___)",
+    "CEB": "___) Gusto ko mahibaloan kung asa nimo nakuha ang kwarta nga gibayad para sa mga galastohan sa medikal (SA _____, ug ____) sa (KLASE SA PASILIDAD SA _______)",
+    "WAR": "___) Karuyag ko unta mahibaro kun diin ka nakakuha hin kwarta nga igbabayad han mga gastos ha medisina nga nahimo (HA ___, ngan ____) ha (KLASE HAN PASILIDAD HA ___)",
+    "HIL": "___) Gusto ko mabalaan kun diin mo nakuha ang kwarta para bayaran ang mga gasto medikal nga nagwa (SA ___, kag ____) sa (KLASE SANG PASILIDAD SA ___)",
+    "ILO": "___) (Kayatko a maammuan no sadino ti nangalaam iti kuarta a pangbayad kadagiti gastos iti medisina a naaramid (IN ___, ken ____) iti (FACILITY TYPE IN ___)"
+   },
+   "intro:116": {
+    "FIL": "Para sa seksyon na ito, magtatanong kami tungkol sa kaalaman ninyo tungkol sa NBB, ZBB at MAIFIP",
+    "BCL": "Mahapot naman kami manungod sa kaaraman mo sa No Balance Billing NBB, ZBB asin MAIFIP",
+    "BIS": "Alang niini nga seksyon, mangutana kami bahin sa imong kahibalo sa NBB, ZBB, ug MAIFIP",
+    "CEB": "Para sa mosunod nga mga pangutana, mangutana kami bahin sa inyong kahibalo sa NBB, ZBB, ug MAIFIP",
+    "WAR": "Para hini nga seksyon, magpapakiana kami mahitungod han iyo kaaram han NBB, ZBB, ngan MAIFIP",
+    "HIL": "Para sa sini nga bahin, manginpamangkot kami parte sa imo kahibalo sa NBB, ZBB, kag MAIFIP",
+    "ILO": "(Para iti daytoy a benneg, damagenmi ti maipapan iti pannakaammom iti NBB, ZBB, ken MAIFIP)"
+   },
+   "intro:131": {
+    "FIL": "Ang mga sumusunod na tanong ay may kaugnayan sa pinakahuling karanasan ng pasyente sa [facility_name_input] bilang isang [inpatient] o [outpatient], kung saan inanyayahan kayong lumahok sa aming survey noong [date_formatted]",
+    "BCL": "An mga masunod na kahapotan may relasyon sa saimong pinakahuring karanasan sa [facility_name_input] bilang [inpatient] o [outpatient], kun sain kami nag-imbitar saimo na magpartisipar sa survey sa [date_formatted]",
+    "BIS": "Ang mosunod nga mga pangutana may kalabutan sa pinakabag-o nimong kasinatian sa [facility_name_input] isip usa ka [inpatient] o [outpatient], diin giimbitar ka namo nga moapil sa among survey niadtong [date_formatted]",
+    "CEB": "Ang mosunod nga mga pangutana naghisgot bahin sa pinakaulahing kasinatian sa pasyente sa [facility_name_input] isip usa ka [inpatient] o [outpatient], diin giimbitar ka namo nga moapil sa among survey niadtong [date_formatted]",
+    "HIL": "Ang masunod nga mga pamangkot nagahisgot sa pinakaulihi nga eksperyensya sang pasyente sa [facility_name_input] bilang [inpatient] ukon [outpatient], kun sa diin gin-imbitar ka nga magpartisipar sa amon survey sa [date_formatted]"
+   },
+   "intro:145": {
+    "FIL": "Ang mga susunod na tanong ay may kaugnayan sa access ng pasyente sa mga gamot",
+    "BCL": "An masunod na kahapotan ay manungod sa access mo sa medisina",
+    "BIS": "Ang sunod nga mga pangutana may kalabutan sa access sa pasyente sa tambal",
+    "CEB": "Ang sunod nga mga pangutana bahin sa kahimoan sa pasyente sa pagkuha og mga tambal",
+    "WAR": "An sunod nga mga pakiana nga igpapakiana in may kalabutan han pag-angkon han pasyente han mga medisina",
+    "HIL": "Ang masunod nga mga pamangkot nga aton pagahimoon may kaangtanan sa pag-access sang pasyente sa mga tambal",
+    "ILO": "(Dagiti sumaganad a saludsod nga isaludsodtayo ket mainaig iti pannakagun-od ti pasiente kadagiti agas"
+   },
+   "intro:152": {
+    "FIL": "Itatanong namin ngayon ang tungkol sa kaalaman ng pasyente sa GAMOT package at sa mga gamot na nakuha sa isang GAMOT pharmacy",
+    "BCL": "Mahapot naman kami manungod sa kaaraman kan pasyente kan GAMOT package asin medisina na tigkuha sa GAMOT pharmacy",
+    "BIS": "Mangutana na usab kami bahin sa kahibalo sa pasyente sa GAMOT Package ug sa mga tambal nga ilang nakuha gikan sa GAMOT pharmacy",
+    "CEB": "Mangutana na ta karon bahin sa kahibalo sa pasyente sa GAMOT package ug sa mga tambal nga ilang nakuha sa GAMOT nga botika",
+    "WAR": "Magpapakiana kami yana mahitungod han kahibaro han pasyente mahitungod han GAMOT package ngan han mga medisina nga ira gin-avail ha usa nga botika hin GAMOT",
+    "HIL": "Karun pamangkoton naton ang pasyente parte sa iya kahibalo sa GAMOT nga pakete kag sa mga bulong nga iya nakuha sa GAMOT nga botika Q144 to Q149, Q151 are applicable only to respondents in areas with GAMOT",
+    "ILO": "(Saludsodentayo itan ti maipapan iti pannakaammo ti pasiente maipapan iti pakete ti GAMOT ken dagiti agas nga inusarda iti maysa a botika ti GAMOT.) Q144 to Q149, Q151 are applicable only to respondents in areas"
+   },
+   "intro:162": {
+    "FIL": "Tatanungin namin ang karanasan at kasiyahan ng pasyente sa referral",
+    "BCL": "Mahapot kami manungod eksperyensa asin satisfaction kan pasyente sa referrals",
+    "BIS": "Mangutana kami bahin sa kasinatian ug katagbawan sa pasyente sa referrals",
+    "CEB": "Mangutana kami bahin sa kasinatian ug katagbawan sa pasyente sa mga referral",
+    "WAR": "Magpapakiana kami han eksperyensya ngan kakuntento han pasyente ha mga referral",
+    "HIL": "Mangpamangkot kami parte sa eksperyensya kag kasatisfaksyon sang pasyente sa mga referral",
+    "ILO": "(Saludsodenmi ti maipapan iti kapadasan ken pannakapnek ti pasiente kadagiti referral"
+   },
+   "const:_READ_ONE": {
+    "FIL": "ANG PAMIMILIAN",
+    "CEB": "Miyembro ba ang pasyente sa LGBTQIA+ community?",
+    "WAR": "NGA TINGOG AN MGA OPSYON",
+    "ILO": "ITI NAIPAAY"
+   },
+   "const:_READ_ALL": {
+    "FIL": "MALAKAS ANG MGA PAMIMILIAN",
+    "BIS": "MGA OPSYON OG KUSOG",
+    "CEB": "Unsa ang imong tinubdan sa impormasyon bahin sa UHC?",
+    "WAR": "DAKU NGA TINGOG AN MGA OPSYON",
+    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+   },
+   "const:_DNR_ONE": {
+    "FIL": "MALAKAS ANG MGA PAMIMILIAN",
+    "BIS": "MGA OPSYON OG KUSOG",
+    "CEB": "Unsa ang pinakataas nga ang-ang sa edukasyon nga nakab-ot sa pasyente?",
+    "WAR": "DAKU NGA TINGOG AN MGA OPSYON",
+    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+   },
+   "const:_DNR_ALL": {
+    "FIL": "MALAKAS ANG MGA PAMIMILIAN",
+    "BIS": "MGA OPSYON OG KUSOG",
+    "CEB": "Unsa ang imong tinubdan sa impormasyon bahin sa UHC?",
+    "WAR": "DAKU NGA TINGOG AN MGA OPSYON",
+    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+   },
+   "const:_RECEIPT": {
+    "FIL": "Kung ang pasyente ay nagbigay ng resibo, piliin ang lahat na naaangkop",
+    "BCL": "Kun an pasyente may resibo pilion an dapat",
+    "BIS": "Kung adunay resibo ang pasyente, pilia ang tanang pwede",
+    "CEB": "Gawas sa mga galastohan sa ibabaw (pananglitan, konsultasyon, laboratory test, gireseta nga mga tambal, ug uban pa), asa ani nga mga mosunod ang naapil usab sa bill?",
+    "WAR": "Kun an pasyente maghatag hin resibo, pilia an ngatanan nga aplikado",
+    "HIL": "Kon ang pasyente naghatag sang resibo, pili-a ang tanan nga angay",
+    "ILO": "(No mangipaay ti pasiente iti resibo, pilien amin nga agaplikar"
+   },
+   "const:_IF_YES_AMOUNT": {
+    "FIL": "spent Kung oo, ilagay ang halagang ginastos",
+    "BCL": "Kun iyo, pakikaag kan kantidad kun pira ini",
+    "BIS": "spent Kung oo, ispecify ang kantidad nga nagasto",
+    "WAR": "spent Kon oo, ipakita an kantidad nga gin-gasto a) Consultation Fee Bayad",
+    "HIL": "spent ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 Nabayar",
+    "ILO": "spent (No wen, ipamatmat ti gatad a nagastos) a) Consultation Fee (Bayad"
+   },
+   "const:_GAMOT_AREA": {
+    "FIL": "Enumerator: Itatanong lamang sa mga respondent na nasa mga lugar na may GAMOT",
+    "BCL": "ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 Enumerator: Aplikbale sana ini sa respondents na nasa",
+    "BIS": "Enumerator: Magamit lamang sa mga respondent nga naa sa lugar nga adunay GAMOT",
+    "CEB": "Kung oo, unsa ang imong mga tinubdan sa impormasyon bahin aning GAMOT Package?",
+    "WAR": "Enumerator: Applicable la ha mga respondente ha mga lugar nga mayda GAMOT",
+    "HIL": "Enumerator: Naga-angut lamang ini sa mga respondents sa mga lugar nga may GAMOT",
+    "ILO": "(Enumerator: Agaplikar laeng kadagiti respondents kadagiti lugar nga addaan iti GAMOT)"
+   },
+   "const:_SELECT_ALL": {
+    "FIL": "MALAKAS ANG MGA PAMIMILIAN",
+    "BIS": "MGA OPSYON OG KUSOG",
+    "CEB": "Unsa ang imong tinubdan sa impormasyon bahin sa UHC?",
+    "WAR": "DAKU NGA TINGOG AN MGA OPSYON",
+    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+   }
+  }
+ },
+ "F4": {
+  "english": {
+   "intro:1": "Before proceeding to the survey proper, we would like to ask you some personal information.",
+   "intro:30": "We will now ask for some personal information about your household members.",
+   "intro:51": "We will now ask about your awareness of the Universal Health Care (UHC).",
+   "intro:54": "We will now ask about your awareness of the YAKAP/Konsulta package.",
+   "intro:57": "We will now ask about your awareness of BUCAS and the services you have accessed in a BUCAS Center.",
+   "intro:62": "The next questions we will be asking are related to your access to medicines. We would like to know how easy or difficult it is for you and members of your household to purchase or receive medicines.",
+   "intro:69": "We will now ask about your awareness of the GAMOT package, and the medicines you availed in a GAMOT pharmacy. We will also ask some questions about your views in buying generic or branded medicines.",
+   "intro:79": "The next questions we will be asking are related your PhilHealth registration experience. We will also confirm your PhilHealth registration status and membership.",
+   "intro:89": "We will now ask questions about your access to a primary care provider.",
+   "intro:97": "In this section of the survey, I will now ask about how you access care in the last 6 months in a primary care facility. Examples of primary care facilities are RHUs, Health Center, and Barangay Health Station.",
+   "intro:101": "We will now be asking about you and your household members' actions taken for health concerns. This includes the type of services and facilities you access for your health and well-being.",
+   "intro:108": "We will be asking about your experiences and satisfaction on referrals.",
+   "intro:126": "We will now ask about your awareness of the No Balance Billing (NBB).",
+   "intro:132": "We will now ask about your awareness of the Zero Balance Billing (ZBB).",
+   "intro:144": "We are now on the last few sections of the survey questionnaire. In this section, I would like to ask you questions about your household consumption of various food, non-food, and health products and services. I will ask about what your household used or consumed. First, I will ask which items your household used, and if you bought them, how much you spent. Then, I will ask about items your household used but did not buy-such as those you produced yourselves, received as gifts, or got for free-and you can estimate their value. Please do not include items bought for business, resale, or for making other products. Let me start with questions about your household consumption of food and beverages over the past week. In this first part, I would like to ask you to exclude meals, snacks and beverages prepared by restaurants and the like, including take-aways.",
+   "intro:159": "The next questions will focus on your household's consumption of non-food and non-health expenses.",
+   "intro:175": "We will now move on to your household's consumption or use of health products and services in the past 12 months.",
+   "intro:186": "In the next section, we would like to know more about the funds that you use for health care. In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?",
+   "const:_READ_ONE": "READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.",
+   "const:_READ_ALL": "READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+   "const:_DNR_ONE": "DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.",
+   "const:_DNR_ALL": "DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+   "const:_PWD_CARD": "Enumerator Instruction (DO NOT READ ALOUD): If the PWD Identification Card is presented, record the type of disability as indicated on the card. Do not ask the respondent directly.",
+   "const:_GAMOT_FAC": "Enumerator: Applicable only to respondents in areas with GAMOT facility.",
+   "const:_SELECT_ALL": "SELECT ALL THAT APPLY.",
+   "const:_HH_NAME_FILL": "~~strip(Q30_NAME)~~",
+   "const:_PRIV_NAME_FILL": "~~strip(Q30_NAME(curocc()))~~"
+  },
+  "translations": {
+   "intro:1": {
+    "FIL": "information Bago magpatuloy sa mismong survey, nais naming humingi ng ilang personal na impormasyon mula sa iyo",
+    "BIS": "information Sa dili pa kita mopadayon sa aktuwal nga survey, gusto namo mangayo og pipila ka personal nga impormasyon",
+    "WAR": "information Antes magpadayon ha survey proper, karuyag namon magpakiana ha iyo hin pipira nga personal nga impormasyon",
+    "HIL": "Antes magpadayon sa husto nga survey, luyag namon nga mangayo sang pila ka personal nga impormasyon sa imo"
+   },
+   "intro:30": {
+    "FIL": "Magtatanong na kami ngayon ng ilang personal na impormasyon tungkol sa mga miyembro ng inyong sambahayan",
+    "BCL": "Mahapot kami ki pirang personal na impormasyon manungod kan mga miyembro kan saindong pamilya",
+    "BIS": "Mangutana na kami karon og pipila ka personal nga impormasyon bahin sa mga miyembro sa inyong panimalay",
+    "WAR": "Mangaro kami yana hin pipira nga personal nga impormasyon mahitungod han iyo mga kapamilya",
+    "HIL": "Magapamangkot kami subong sang pila ka personal nga impormasyon parte sa mga miembro sang inyo panimalay"
+   },
+   "intro:51": {
+    "FIL": "Magtatanong kami ngayon tungkol sa inyong kaalaman sa Universal Health Care (UHC)",
+    "BCL": "Mahapot na kami manungod sa saimong kaaraman sa Universal Health Crae (UHC) Note to enumerator [do not read]: This section is for",
+    "BIS": "Mangutana kami karon bahin sa imong kahibalo sa Universal Health Care (UHC) ICF ver.07/25/2026 | Translated Questionnaire ver.06/",
+    "HIL": "Karun pangayuon namon ang imo kahibalo parte sa Universal Health Care (UHC)",
+    "ILO": "(Saludsodenmi itan ti maipapan iti pannakaammoyo iti Universal Health Care (UHC)"
+   },
+   "intro:54": {
+    "FIL": "package Magtatanong kami ngayon tungkol sa inyong kaalaman sa YAKAP/Konsulta package",
+    "BCL": "package Mahapot na kami manungod sa saimong kaaraman mo sa YAKAP/Konsulta package Note to enumerator [do not read]: This sectio",
+    "BIS": "package Mangutana kami karon bahin sa imong kahibalo sa YAKAP/Konsulta package Note to enumerator [do not read]: This section",
+    "WAR": "package Magpapakiana kami yana mahitungod han iyo pagka-aram han YAKAP/Konsulta package Note to enumerator [do not read]: This",
+    "HIL": "package Pamangkoton namon subong ang imo kahibalo parte sa YAKAP/Konsulta package Note to enumerator [do not read]: This sectio",
+    "ILO": "package ((Saludsodenmi itan ti maipapan iti pannakaammoyo iti pakete ti YAKAP/Konsulta) Note to enumerator [do not read]: This"
+   },
+   "intro:57": {
+    "FIL": "Magtatanong kami ngayon tungkol sa inyong kaalaman sa BUCAS at sa mga serbisyong inyong nagamit sa isang BUCAS Center",
+    "BCL": "Mahapot na kami manungod sa saimong kaaraman mo sa BUCAS asin iba pang serbisyo na igwa kang access sa BUCAS Center Note to enumerator [do not read]: This section is for awarenes",
+    "BIS": "Mangutana kami karon bahin sa imong kahibalo sa BUCAS ug sa mga serbisyo nga imong nakuha sa usa ka BUCAS Center",
+    "WAR": "Magpapakiana kami yana parti han iyo pag-aram han BUCAS ngan han mga serbisyo nga iyo na-access ha usa nga BUCAS Center",
+    "HIL": "Pamangkoton namon subong ang imo kahibalo parte sa BUCAS kag ang mga serbisyo nga imo gin‑akses sa BUCAS Center"
+   },
+   "intro:62": {
+    "FIL": "Ang mga susunod na tanong ay may kaugnayan sa inyong access sa mga gamot",
+    "BCL": "An masunod na kahapotan ay manungod sa access sa medisina",
+    "BIS": "Ang sunod nga mga pangutana may kalabutan sa imong pag-access sa mga tambal",
+    "WAR": "An sunod nga amon igpapakiana in may kalabutan han iyo pag-access hin mga medisina",
+    "HIL": "Ang masunod nga mga pamangkot nga amon ipangayo may kaangtanan sa imo pag‑akses sang mga bulong",
+    "ILO": "(Dagiti sumaruno a saludsod nga isaludsodmi ket mainaig iti pannakagun-odmo kadagiti agas"
+   },
+   "intro:69": {
+    "FIL": "ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 Magtatanong kami ngayon tungkol sa inyong kaalaman sa GAMOT package, at sa mga gamot na inyong nakuha sa isang GAMOT pharmacy",
+    "BCL": "An masunod na kahapotan ay manungod sa GAMOT Package asin medisina na inavail mo sa GAMOT pharmacy",
+    "BIS": "ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 Mangutana kami karon bahin sa imong kahibalo sa GAMOT package, ug sa mga tambal nga imong nakuha sa GAMOT pharmacy",
+    "WAR": "Magpapakiana kami yana mahitungod han iyo pagka-aram han GAMOT package, ngan han mga medisina nga iyo gin-avail ha usa nga botika han GAMOT",
+    "HIL": "Subong, pamangkoton namon ikaw parte sa imo kahibalo sang GAMOT package kag ang mga bulong nga imo nakuha sa GAMOT nga botika",
+    "ILO": "(Saludsodenmi itan ti maipapan iti pannakaammoyo iti pakete ti GAMOT, ken dagiti agas nga in-avail-yo iti maysa a botika ti GAMOT"
+   },
+   "intro:79": {
+    "FIL": "Ang mga susunod na tanong ay may kaugnayan sa iyong karanasan sa pagpaparehistro sa PhilHealth",
+    "BCL": "An masunod na kahapotan manungod sa Philhealth registration na saimong naeksperyensyahan",
+    "BIS": "Ang sunod nga mga pangutana may kalabutan sa imong kasinatian sa pagparehistro sa PhilHealth",
+    "WAR": "An sunod nga mga pakiana nga amon igpapakiana in may kalabutan han iyo eksperyensya ha pagparehistro ha PhilHealth",
+    "HIL": "Ang masunod nga mga pamangkot nga among ipangayo may kaangtanan sa imo eksperyensya sa PhilHealth registration",
+    "ILO": "(Dagiti sumaruno a saludsod nga isaludsodmi ket mainaig iti padasmo iti panagrehistro iti PhilHealth"
+   },
+   "intro:89": {
+    "FIL": "provider Magtatanong kami ngayon tungkol sa inyong access sa isang primary care provider",
+    "BCL": "provider Mahapot naman kami sa kun may access ka sa primary care provider Note to enumerator [do not read]: This section is for Acces",
+    "BIS": "provider Mangutana kami karon bahin sa imong access sa usa ka primary care provider",
+    "CEB": "provider Note to enumerator [do not read]: This section is for Access to a primary care provider",
+    "WAR": "provider Magpapakiana kami yana mahitungod han imo pag-akses ha usa nga panguna nga parag- ataman Note to enumerator [do not read]",
+    "HIL": "provider Subong mamangkot kami parte sa imo access sa isa ka primary care provider Note to enumerator [do not read]: This section is",
+    "ILO": "provider (Agsaludsodkami itan maipapan iti pannakagun-odmo iti kangrunaan a mangipapaay iti panangaywan) Note to enumerator [do not"
+   },
+   "intro:97": {
+    "FIL": "Sa seksyong ito ng survey, magtatanong kami ngayon tungkol sa kung paano kayo nakakakuha ng serbisyong pangkalusugan sa nakalipas na 6 na buwan sa isang primary care facility",
+    "BCL": "Masunod na kahapotan ay manungod sa access care sa nakaaging 6 anom na bulan sa primary care facility",
+    "BIS": "Kining bahin sa survey, mangutana kami bahin sa imong pag-access sa serbisyo sa miaging 6 ka bulan sa usa ka primary care facility",
+    "CEB": "Note to enumerator [do not read]: This section is for Access to a primary care facility",
+    "WAR": "Hini nga seksyon han surbey, magpapakiana ako yana mahitungod han kun tipaunanho kamo nakakakuha hin pag-ataman han naglabay nga 6 ka bulan ha usa nga pasilidad hin panguna nga pag-ataman",
+    "HIL": "Sa sini nga seksyon sang survey, mangayo kami sang mga pamangkot parte sa imo pagkuha sang pag‑atipan sa sulod sang nagligad nga 6 ka bulan sa isa ka primary care facility",
+    "ILO": "(Iti daytoy a benneg ti surbey, damagenko itan no kasano a makagun-odka iti pannakaaywan iti napalabas nga 6 a bulan iti pasilidad ti kangrunaan a panangaywan"
+   },
+   "intro:101": {
+    "FIL": "Magtatanong kami ngayon tungkol sa mga ginagawa mo at ng mga miyembro ng iyong sambahayan para sa mga alalahanin sa kalusugan",
+    "BCL": "Mahapot naman kami saimo asin sa sa mga miyembro kan saimong pamilya manungod sa piggigibo nindo kun igwa kamong mga health concerns",
+    "BIS": "Mangutana kami karon bahin sa mga aksyon nga gihimo nimo ug sa imong mga miyembro sa panimalay alang sa mga problema sa panglawas",
+    "WAR": "well- being. Magpapakiana kami yana mahitungod ha iyo ngan han iyo mga miyembro han panimalay' mga aksyon nga ginhimo para han mga kabaraka ha panlawas",
+    "HIL": "Subong mamangkot ako saimo sang impormasyon ang bahin sa inyo kag sa mga miyembro sang inyo panimalay nga ginahimo para sa ikaayong lawas",
+    "ILO": "(Saludsodenmi itan ti maipapan kadakayo ken dagiti tignay dagiti kameng ti sangakabbalayanyo nga inaramid para kadagiti pakaseknan iti salun-at"
+   },
+   "intro:108": {
+    "FIL": "Magtatanong kami ngayon tungkol sa inyong karanasan at kasiyahan sa mga referral",
+    "BCL": "Mahapot naman kami manungod sa saimong naeksperyensa asin satisfaction kan mga referrals Note to enumerator [do not read]: This secti",
+    "BIS": "Karon, mangutana mi bahin sa imong kasinatian sa mga referral",
+    "WAR": "Magpapakiana kami han iyo mga eksperyensya ngan katagbaw ha mga referral",
+    "HIL": "Sunod, pamangkoton namon kamo bahin sa inyo eksperyensya kag kung paano kamo kuntento sa pag‑refer sang doktor ukon health provider"
+   },
+   "intro:126": {
+    "FIL": "Magtatanong kami ngayon tungkol sa inyong kaalaman sa No Balance Billing (NBB)",
+    "BCL": "Mahapot naman kami manungod sa kaaraman mo sa No Balance Billing (NBB) Note to enumerator [do not read]: This section is for",
+    "BIS": "Mangutana kami karon bahin sa imong kahibalo sa No Balance Billing (NBB)",
+    "CEB": "ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 Note to enumerator [do not read]: This section is for No Balanc",
+    "WAR": "Magpapakiana kami yana mahitungod han iyo pag-aram han No Balance Billing (NBB) Note to enumerator [do not read]: This secti",
+    "HIL": "Subong, pamangkuton namon ikaw parte sa imo kahibalo sang No Balance Billing (NBB) Note to enumerator [do not read]: This se",
+    "ILO": "(Saludsodenmi itan ti maipapan iti pannakaammoyo iti No Balance Billing (NBB)"
+   },
+   "intro:132": {
+    "FIL": "Magtatanong kami ngayon tungkol sa inyong kaalaman sa Zero Balance Billing (ZBB)",
+    "BCL": "Mahapot naman kami manungod sa kaaraman mo sa Zero Balance Billing (ZBB) Note to enumerator [do not read]: This section is for",
+    "BIS": "Mangutana kami karon bahin sa imong kahibalo sa Zero Balance Billing (ZBB)",
+    "WAR": "Magpapakiana kami yana mahitungod han iyo awareness han Zero Balance Billing (ZBB) Note toenumerator [do not read]: This sectio",
+    "HIL": "Subong, pamangkuton namon ikaw parte sa imo kahibalo sang Zero Balance Billing (ZBB)",
+    "ILO": "(Saludsodenmi itan ti maipapan iti pannakaammoyo iti Zero Balance Billing (ZBB)"
+   },
+   "intro:144": {
+    "FIL": "Nasa huling bahagi na tayo ng survey",
+    "BCL": "Digdi na kita sa pinakhuring parte kan survey",
+    "CEB": "Anaa na kita sa katapusang mga bahin sa survey questionnaire",
+    "WAR": "Aada na kita yana ha urhi nga pipira nga seksyon han pakiana han surbey",
+    "HIL": "Subong yara na kita sa ulihi nga mga bahin sang survey questionnaire"
+   },
+   "intro:159": {
+    "FIL": "Ang mga susunod na tanong ay nakatuon sa pagkonsumo ng inyong sambahayan sa mga gastusing hindi pagkain at hindi pangkalusugan",
+    "BCL": "An sunod na kahapotan ay mafocus sa household consumption ki mga non-food asin noh-health expenses",
+    "BIS": "Ang sunod nga mga pangutana ga-fucos sa konsumo sa inyong panimalay sa dili pagkaon ug dili panglawas nga mga gasto",
+    "CEB": "Ang sunod nga mga pangutana mag-focus sa konsumo sa inyong panimalay sa mga gasto nga dili pagkaon ug dili panglawas",
+    "WAR": "An sunod nga mga pakiana in magtututok ha konsumo han iyo panimalay hin diri pagkaon ngan diri panlawas nga mga gastos",
+    "HIL": "Ang masunod nga mga pamangkot magatutok sa inyo panimalay nga paggasto para sa mga butang nga indi pagkaon kag indi man para sa panglawas",
+    "ILO": "( Dagiti sumaganad a saludsod ket maipamaysa iti panagusar ti sangakabbalayanmo kadagiti gastos a saan a taraon ken saan a salun-at.) Items (Dagiti banag) In the last WEEK, did"
+   },
+   "intro:175": {
+    "FIL": "Magtutuloy tayo ngayon sa pagkonsumo o paggamit ng inyong sambahayan ng mga produktong pangkalusugan at serbisyong pangkalusugan sa nakalipas na 12 buwan",
+    "BCL": "An masunod ay para naman sa mga health products asin iba pang serbisyo sa nakaaging 12 doseng bulan",
+    "BIS": "Mangutana kami karon bahin sa konsumo o paggamit sa inyong panimalay sa mga produkto ug serbisyo sa panglawas sulod sa milabay nga 12 ka bulan",
+    "CEB": "Mopadayon na kita karon sa konsumo o paggamit sa inyong panimalay sa mga produkto ug serbisyo sa panglawas sulod sa miaging 12 ka bulan",
+    "WAR": "Mabalhin na kami yana ha pagkonsumo o paggamit han iyo panimalay hin mga produkto ngan serbisyo panlawas han naglabay nga 12 ka bulan",
+    "HIL": "Magapadayon kita subong sa pag‑pamangkot bahin sa konsumo ukon paggamit sang inyo panimalay sang mga produkto kag serbisyo para sa panlawas sa sulod sang nagligad nga 12 ka bulan"
+   },
+   "const:_READ_ONE": {
+    "FIL": "OPSYON NG MALINAW",
+    "CEB": "Miyembro ba ka sa LGBTQIA+ community?",
+    "WAR": "AN MGA OPSYON",
+    "ILO": "ITI NAIPAAY"
+   },
+   "const:_READ_ALL": {
+    "FIL": "MALAKAS ANG MGA OPSYON",
+    "BIS": "MGA OPSYON",
+    "CEB": "Unsa ang imong tinubdan sa impormasyon bahin sa UHC?",
+    "WAR": "MAKUSOG AN MGA OPSYON",
+    "HIL": "MGA OPSYON",
+    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+   },
+   "const:_DNR_ONE": {
+    "FIL": "MALAKAS ANG MGA OPSYON",
+    "BCL": "MAKUSOG PILION AN DAPAT NA KASIMBAGAN",
+    "CEB": "Nagpaila ba ka isip usa ka tawo nga adunay kapansanan/PWD?",
+    "WAR": "AN MGA OPSYON",
+    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+   },
+   "const:_DNR_ALL": {
+    "FIL": "MALAKAS ANG MGA OPSYON",
+    "BIS": "MGA OPSYON",
+    "CEB": "Unsa ang imong tinubdan sa impormasyon bahin sa UHC?",
+    "WAR": "MAKUSOG AN MGA OPSYON",
+    "HIL": "MGA OPSYON",
+    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+   },
+   "const:_GAMOT_FAC": {
+    "FIL": "facility Enumerator: Naaangkop lamang sa mga respondent sa mga lugar na may GAMOT facility",
+    "BCL": "facility Enumerator: Pwede sana ini sa respondents na nasa lugar na may GAMOT facility",
+    "BIS": "facility Enumerator: Magamit lamang kini sa mga respondents sa mga lugar nga naay GAMOT facility",
+    "CEB": "facility Kung oo, unsa ang imong mga tinubdan sa impormasyon bahin aning GAMOT Package?",
+    "WAR": "facility Enumerator: Aplikado la ha mga respondente nga aada ha mga lugar nga may pasilidad han GAMOT",
+    "HIL": "facility Naga-aplikar lamang sa mga respondent nga yara sa lugar nga may GAMOT nga pasilidad",
+    "ILO": "facility (Enumerator: Agaplikar laeng kadagiti respondents kadagiti lugar nga addaan iti pasilidad ti GAMOT)"
+   },
+   "const:_SELECT_ALL": {
+    "FIL": "MALAKAS ANG MGA OPSYON",
+    "BIS": "MGA OPSYON",
+    "CEB": "Unsa ang imong tinubdan sa impormasyon bahin sa UHC?",
+    "WAR": "MAKUSOG AN MGA OPSYON",
+    "HIL": "MGA OPSYON",
+    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+   }
+  }
+ }
+}

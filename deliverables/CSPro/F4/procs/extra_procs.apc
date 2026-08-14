@@ -106,15 +106,24 @@ postproc
   3 "Not yet, but I'm planning to" skip both to Q119. (Q117's question text carries "(Only if
   Q112=Yes)"; generate_dcf's Section K comment always intended this gate but it was never
   emitted.) `<> 1` is notappl-safe — special values compare greater than any number, so an
-  upstream-skipped Q112 also skips these. The postproc implements the adjacent spec rule
-  "Q117 = No -> Q119 (skip Q118)", previously also unimplemented. ---- }
+  upstream-skipped Q112 also skips these.
+
+  #1207 (2026-08-12): #816 ALSO added a "Q117 = No -> Q119 (skip Q118)" postproc, sourced
+  from a derived skip-logic note. The Apr-20 paper does not support it — Annex F4 p.18 tags
+  BOTH questions with the SAME filter, "[Answer only 'yes' in Q112]", and puts no Q117
+  condition on Q118. Satisfaction with the referral process is asked of everyone who made
+  the visit, whether or not the specialist followed up afterwards. The postproc is removed
+  and Q118 now carries its own explicit Q112 gate (so it holds on back-navigation too,
+  instead of depending on Q117's preproc jumping over it). ---- }
 PROC Q117_SPECIALIST_FOLLOWUP
 preproc
   if Q112_VISITED <> 1 then
     skip to Q119_PCF_REFERRAL;
   endif;
-postproc
-  if Q117_SPECIALIST_FOLLOWUP = 2 then
+
+PROC Q118_SAT_REFERRAL_PROCESS
+preproc
+  if Q112_VISITED <> 1 then
     skip to Q119_PCF_REFERRAL;
   endif;
 

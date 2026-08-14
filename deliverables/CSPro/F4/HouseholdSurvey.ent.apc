@@ -152,12 +152,13 @@ end;
   never a cached gps(readlast) — so a fix can never leak across facilities. }
 
 numeric gpsRadioOpen = 0;   { 1 while this session holds the radio open }
+numeric gpsFailedTries = 0; { consecutive failed reads — drives the #1209 retry escalation }
 
 
 function WarmUpGPS()
     { Open the GPS radio early so acquisition runs in the background.
-      Non-blocking (no progress dialog) and flag-guarded, so it is safe to
-      call from a field preproc that re-fires on partial-save resume. }
+      Non-blocking (no progress dialog), so it is safe to call from a field
+      preproc that re-fires on partial-save resume. }
 
     { Windows desktop (getos 10..19) has no GPS radio — desk-test no-op. }
     if getos() in 10:19 then
@@ -165,13 +166,23 @@ function WarmUpGPS()
         exit;
     endif;
 
-    if gpsRadioOpen = 0 then
-        if gps(open) then
-            gpsRadioOpen = 1;
-        endif;
-        { no errmsg on failure here — this is a background warm-up; the
-          capture-time read reports hardware problems to the enumerator }
+    { #1209: re-assert the radio UNCONDITIONALLY instead of trusting the flag.
+      gpsRadioOpen is a PROC GLOBAL, so it outlives the case — but the radio does
+      not. A case that ends via endlevel (F3 Postponed / Withdraw, F1 Postponed /
+      Refused) never reaches the ReleaseGPS() in its last GPS block, so the flag
+      leaked "open" into every later case of the same CSEntry session, and the old
+      flag-guard then suppressed gps(open) for the rest of that session — every
+      later read failed with "No GPS fix" and the enumerator never even saw the
+      hardware/permission message. gps(open) on an already-open radio is a cheap
+      no-op, so re-asserting costs nothing on the normal path and self-heals. }
+    if gps(open) then
+        gpsRadioOpen = 1;
+    else
+        gpsRadioOpen = 0;
     endif;
+    gpsFailedTries = 0;   { fresh warm-up -> the next read gets the short budget }
+    { no errmsg on failure here — this is a background warm-up; the
+      capture-time read reports hardware problems to the enumerator }
 
     WarmUpGPS = gpsRadioOpen;
 end;
@@ -203,15 +214,36 @@ function ReadGPSReading(numeric maxTimeSec, numeric desiredAccuracyM)
         gpsRadioOpen = 1;
     endif;
 
-    numeric result = gps(read, maxTimeSec, desiredAccuracyM);
+    { #1209 escalating budget. The FIRST attempt at a field stays short so nobody
+      is parked on a dead field, but re-entering the field is an explicit "try
+      harder" from the enumerator, so each CONSECUTIVE FAILED read buys a longer
+      window (15 -> 30 -> 45 s, capped at 60). A cold receiver needs 30-120 s for
+      a first fix, so a flat 15 s could never reach a fix it was seconds away
+      from — the retry the message advertises used to be a no-op. Reset on
+      success and by WarmUpGPS() at case start. }
+    numeric budgetSec = maxTimeSec * (gpsFailedTries + 1);
+    if budgetSec > 60 then
+        budgetSec = 60;
+    endif;
+
+    numeric result = gps(read, budgetSec, desiredAccuracyM);
     { radio deliberately NOT closed — kept warm for retries / later GPS blocks }
 
     if result <> 1 then
-        errmsg(1155,
-               maxTimeSec);
+        gpsFailedTries = gpsFailedTries + 1;
+        { Clear the flag but do NOT gps(close): closing discards the acquisition
+          progress and makes every retry cold-start (the bug fixed 2026-07-19).
+          Clearing alone makes the next call re-issue gps(open) — a no-op when the
+          radio really is open, and the recovery path when the flag had gone stale
+          because an earlier case exited before ReleaseGPS(). }
+        gpsRadioOpen = 0;
+        errmsg(1189,
+               budgetSec);
         ReadGPSReading = 0;
         exit;
     endif;
+
+    gpsFailedTries = 0;   { a good read resets the escalation }
 
     if gps(accuracy) > desiredAccuracyM then
         errmsg(1004,
@@ -490,8 +522,17 @@ postproc
     whose trigger field would otherwise loop on an out-of-range stop. Codes 1/3 fall
     through to the photo as before (this matches the CAPTURE_VERIFICATION_PHOTO gate). }
   if not (ENUM_RESULT_FINAL_VISIT in 1, 3) then
+    { #1209 (mirrors F3/F1): this early exit never reaches the end-of-case GPS form, so
+      the ReleaseGPS() there never runs. gpsRadioOpen is a session-lived PROC GLOBAL, so
+      leaking it "open" here suppressed gps(open) for every later case in the same
+      CSEntry session. Hand the radio back. }
+    ReleaseGPS();
     endlevel;
   endif;
+  { #1209: re-assert the radio for the end-of-case GPS form so it converges during the
+    photo step; also the only warm-up a RESUMED partial case gets (the case-key preproc's
+    WarmUpGPS() does not re-fire when CSEntry resumes mid-case). }
+  WarmUpGPS();
 
 
 { ---- Household roster loop (C_HOUSEHOLD_ROSTER, max 20) ---- }
@@ -1333,15 +1374,24 @@ postproc
   3 "Not yet, but I'm planning to" skip both to Q119. (Q117's question text carries "(Only if
   Q112=Yes)"; generate_dcf's Section K comment always intended this gate but it was never
   emitted.) `<> 1` is notappl-safe — special values compare greater than any number, so an
-  upstream-skipped Q112 also skips these. The postproc implements the adjacent spec rule
-  "Q117 = No -> Q119 (skip Q118)", previously also unimplemented. ---- }
+  upstream-skipped Q112 also skips these.
+
+  #1207 (2026-08-12): #816 ALSO added a "Q117 = No -> Q119 (skip Q118)" postproc, sourced
+  from a derived skip-logic note. The Apr-20 paper does not support it — Annex F4 p.18 tags
+  BOTH questions with the SAME filter, "[Answer only 'yes' in Q112]", and puts no Q117
+  condition on Q118. Satisfaction with the referral process is asked of everyone who made
+  the visit, whether or not the specialist followed up afterwards. The postproc is removed
+  and Q118 now carries its own explicit Q112 gate (so it holds on back-navigation too,
+  instead of depending on Q117's preproc jumping over it). ---- }
 PROC Q117_SPECIALIST_FOLLOWUP
 preproc
   if Q112_VISITED <> 1 then
     skip to Q119_PCF_REFERRAL;
   endif;
-postproc
-  if Q117_SPECIALIST_FOLLOWUP = 2 then
+
+PROC Q118_SAT_REFERRAL_PROCESS
+preproc
+  if Q112_VISITED <> 1 then
     skip to Q119_PCF_REFERRAL;
   endif;
 
@@ -1401,7 +1451,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q103_CARE_TYPE) > 0 and length(strip(Q103_CARE_TYPE)) > 2 then
-    errmsg(1019);
+    errmsg(1160);
+    reenter;
   endif;
 
 PROC Q103_CARE_TYPE_OTHER_TXT
@@ -1437,7 +1488,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q106_FORGONE_WHY) > 0 and length(strip(Q106_FORGONE_WHY)) > 2 then
-    errmsg(1022);
+    errmsg(1161);
+    reenter;
   endif;
 
 PROC Q106_FORGONE_WHY_OTHER_TXT
@@ -1473,7 +1525,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q107_OTHER_ACTIONS) > 0 and length(strip(Q107_OTHER_ACTIONS)) > 2 then
-    errmsg(1025);
+    errmsg(1162);
+    reenter;
   endif;
 
 PROC Q107_OTHER_ACTIONS_OTHER_TXT
@@ -1509,7 +1562,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q109_TYPE) > 0 and length(strip(Q109_TYPE)) > 2 then
-    errmsg(1028);
+    errmsg(1163);
+    reenter;
   endif;
 
 PROC Q109_TYPE_OTHER_TXT
@@ -1589,7 +1643,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q121_WHY_HOSPITAL) > 0 and length(strip(Q121_WHY_HOSPITAL)) > 2 then
-    errmsg(1033);
+    errmsg(1164);
+    reenter;
   endif;
 
 PROC Q121_WHY_HOSPITAL_OTHER_TXT
@@ -1625,7 +1680,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q127_NBB_SOURCE) > 0 and length(strip(Q127_NBB_SOURCE)) > 2 then
-    errmsg(1036);
+    errmsg(1165);
+    reenter;
   endif;
 
 PROC Q127_NBB_SOURCE_OTHER_TXT
@@ -1661,7 +1717,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q128_NBB_UNDERSTAND) > 0 and length(strip(Q128_NBB_UNDERSTAND)) > 2 then
-    errmsg(1039);
+    errmsg(1166);
+    reenter;
   endif;
 
 PROC Q128_NBB_UNDERSTAND_OTHER_TXT
@@ -1697,7 +1754,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q133_ZBB_SOURCE) > 0 and length(strip(Q133_ZBB_SOURCE)) > 2 then
-    errmsg(1042);
+    errmsg(1167);
+    reenter;
   endif;
 
 PROC Q133_ZBB_SOURCE_OTHER_TXT
@@ -1733,7 +1791,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q134_ZBB_UNDERSTAND) > 0 and length(strip(Q134_ZBB_UNDERSTAND)) > 2 then
-    errmsg(1045);
+    errmsg(1168);
+    reenter;
   endif;
 
 PROC Q134_ZBB_UNDERSTAND_OTHER_TXT
@@ -1769,7 +1828,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q137_MAIFIP_SOURCE) > 0 and length(strip(Q137_MAIFIP_SOURCE)) > 2 then
-    errmsg(1048);
+    errmsg(1169);
+    reenter;
   endif;
 
 PROC Q137_MAIFIP_SOURCE_OTHER_TXT
@@ -1802,6 +1862,32 @@ PROC Q141_BILL_ITEMS
 postproc
   if length(strip(Q141_BILL_ITEMS)) = 0 then
     errmsg(1050);
+    reenter;
+  endif;
+
+PROC Q141_BILL_ITEMS_OTHER_TXT
+preproc
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q141_BILL_ITEMS)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q141_BILL_ITEMS[otP:2]) = 7 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
+    Q141_BILL_ITEMS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q141_BILL_ITEMS)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q141_BILL_ITEMS[otP2:2]) = 7 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q141_BILL_ITEMS_OTHER_TXT)) = 0 then
+    errmsg(1186);
     reenter;
   endif;
 
@@ -1842,6 +1928,10 @@ PROC Q196_FOREGONE
 postproc
   if length(strip(Q196_FOREGONE)) = 0 then
     errmsg(1053);
+    reenter;
+  endif;
+  if pos("07", Q196_FOREGONE) > 0 and length(strip(Q196_FOREGONE)) > 2 then
+    errmsg(1187);
     reenter;
   endif;
 
@@ -1911,7 +2001,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q52_UHC_SOURCE) > 0 and length(strip(Q52_UHC_SOURCE)) > 2 then
-    errmsg(1058);
+    errmsg(1170);
+    reenter;
   endif;
 
 PROC Q52_UHC_SOURCE_OTHER_TXT
@@ -1947,7 +2038,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q53_UHC_UNDERSTAND) > 0 and length(strip(Q53_UHC_UNDERSTAND)) > 2 then
-    errmsg(1061);
+    errmsg(1171);
+    reenter;
   endif;
 
 PROC Q53_UHC_UNDERSTAND_OTHER_TXT
@@ -1983,7 +2075,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q55_YAKAP_SOURCE) > 0 and length(strip(Q55_YAKAP_SOURCE)) > 2 then
-    errmsg(1064);
+    errmsg(1172);
+    reenter;
   endif;
 
 PROC Q55_YAKAP_SOURCE_OTHER_TXT
@@ -2019,7 +2112,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q56_YAKAP_UNDERSTAND) > 0 and length(strip(Q56_YAKAP_UNDERSTAND)) > 2 then
-    errmsg(1067);
+    errmsg(1173);
+    reenter;
   endif;
   if pos("05", Q56_YAKAP_UNDERSTAND) > 0 and length(strip(Q56_YAKAP_UNDERSTAND)) > 2 then
     errmsg(1068);
@@ -2059,7 +2153,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q58_BUCAS_SOURCE) > 0 and length(strip(Q58_BUCAS_SOURCE)) > 2 then
-    errmsg(1071);
+    errmsg(1174);
+    reenter;
   endif;
 
 PROC Q58_BUCAS_SOURCE_OTHER_TXT
@@ -2128,7 +2223,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q61_BUCAS_SERVICES) > 0 and length(strip(Q61_BUCAS_SERVICES)) > 2 then
-    errmsg(1076);
+    errmsg(1175);
+    reenter;
   endif;
 
 PROC Q61_BUCAS_SERVICES_OTHER_TXT
@@ -2164,7 +2260,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q65_CONDITIONS) > 0 and length(strip(Q65_CONDITIONS)) > 2 then
-    errmsg(1079);
+    errmsg(1176);
+    reenter;
   endif;
 
 PROC Q65_CONDITIONS_OTHER_TXT
@@ -2233,7 +2330,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q70_GAMOT_SOURCE) > 0 and length(strip(Q70_GAMOT_SOURCE)) > 2 then
-    errmsg(1084);
+    errmsg(1177);
+    reenter;
   endif;
 
 PROC Q70_GAMOT_SOURCE_OTHER_TXT
@@ -2269,7 +2367,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q71_GAMOT_UNDERSTAND) > 0 and length(strip(Q71_GAMOT_UNDERSTAND)) > 2 then
-    errmsg(1087);
+    errmsg(1178);
+    reenter;
   endif;
 
 PROC Q71_GAMOT_UNDERSTAND_OTHER_TXT
@@ -2305,7 +2404,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q74_WHERE_REST) > 0 and length(strip(Q74_WHERE_REST)) > 2 then
-    errmsg(1090);
+    errmsg(1179);
+    reenter;
   endif;
 
 PROC Q74_WHERE_REST_OTHER_TXT
@@ -2341,7 +2441,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q77_WHY_GENERIC) > 0 and length(strip(Q77_WHY_GENERIC)) > 2 then
-    errmsg(1093);
+    errmsg(1180);
+    reenter;
   endif;
 
 PROC Q77_WHY_GENERIC_OTHER_TXT
@@ -2381,7 +2482,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q78_WHY_BRANDED) > 0 and length(strip(Q78_WHY_BRANDED)) > 2 then
-    errmsg(1096);
+    errmsg(1181);
+    reenter;
   endif;
 
 PROC Q78_WHY_BRANDED_OTHER_TXT
@@ -2417,7 +2519,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q82_DIFFICULTY_REASONS) > 0 and length(strip(Q82_DIFFICULTY_REASONS)) > 2 then
-    errmsg(1099);
+    errmsg(1182);
+    reenter;
   endif;
 
 PROC Q82_DIFFICULTY_REASONS_OTHER_TXT
@@ -2486,7 +2589,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q85_BENEFITS) > 0 and length(strip(Q85_BENEFITS)) > 2 then
-    errmsg(1104);
+    errmsg(1183);
+    reenter;
   endif;
   if pos("04", Q85_BENEFITS) > 0 and length(strip(Q85_BENEFITS)) > 2 then
     errmsg(1105);
@@ -2526,7 +2630,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q88_DIFF_PAYING) > 0 and length(strip(Q88_DIFF_PAYING)) > 2 then
-    errmsg(1108);
+    errmsg(1184);
+    reenter;
   endif;
 
 PROC Q88_DIFF_PAYING_OTHER_TXT
@@ -2602,7 +2707,8 @@ postproc
     reenter;
   endif;
   if pos("90", Q93_WHY_NOT) > 0 and length(strip(Q93_WHY_NOT)) > 2 then
-    errmsg(1113);
+    errmsg(1185);
+    reenter;
   endif;
 
 PROC Q93_WHY_NOT_OTHER_TXT
@@ -2960,7 +3066,7 @@ postproc
 { ---- Section N subtotals — auto-compute + protect at follower (#9/#617, spec §4.9) ---- }
 { ---- Section N flat items (Q158/Q159): roster-parity amount gate + #677 (#832/#833) ---- }
 { ---- 'Other (specify)' enforcement — UHC9 dual-other ---- }
-{ ---- 'Other (specify)' enforcement — single-choice + select-all (auto-derived from dcf: 53 items) ---- }
+{ ---- 'Other (specify)' enforcement — single-choice + select-all (auto-derived from dcf: 54 items) ---- }
 PROC Q101_CHECKUP_FREQ_OTHER_TXT
 preproc
   if Q101_CHECKUP_FREQ <> 7 then
@@ -3079,6 +3185,19 @@ preproc
 postproc
   if Q38_DISABILITY_TYPE = 8 and length(strip(Q38_DISABILITY_OTHER_TXT)) = 0 then
     errmsg(1140);
+    reenter;
+  endif;
+
+PROC Q40_EDUCATION_OTHER_TXT
+preproc
+  if curocc() > Q19_HH_SIZE_TOTAL then endgroup; endif;   { column-wise: auto-end this question at the Q19 member count }
+  if Q40_EDUCATION <> 11 then
+    Q40_EDUCATION_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
+postproc
+  if Q40_EDUCATION = 11 and length(strip(Q40_EDUCATION_OTHER_TXT)) = 0 then
+    errmsg(1190);
     reenter;
   endif;
 
@@ -3210,9 +3329,52 @@ postproc
     reenter;
   endif;
 
+PROC DATE_FIRST_VISITED
+postproc
+  numeric fvMM; numeric fvDD; numeric fvYY; numeric fvHead;
+  if DATE_FIRST_VISITED <> notappl then
+    fvMM   = int(DATE_FIRST_VISITED / 1000000);
+    fvHead = int(DATE_FIRST_VISITED / 10000);
+    if fvMM >= 1 and fvMM <= 12 then
+      fvDD = fvHead - fvMM * 100;
+      fvYY = DATE_FIRST_VISITED - fvHead * 10000;
+      if fvDD < 1 or fvDD > 31 or fvYY < 2020 or fvYY > 2035 then
+        errmsg(1188);
+        reenter;
+      endif;
+      DATE_FIRST_VISITED = fvYY * 10000 + fvMM * 100 + fvDD;
+    else
+      if fvHead < 2020 or fvHead > 2035 then
+        errmsg(1188);
+        reenter;
+      endif;
+    endif;
+  endif;
+
 PROC DATE_FINAL_VISIT
 postproc
-  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then
+  numeric lvMM; numeric lvDD; numeric lvYY; numeric lvHead;
+  if DATE_FINAL_VISIT <> notappl then
+    lvMM   = int(DATE_FINAL_VISIT / 1000000);
+    lvHead = int(DATE_FINAL_VISIT / 10000);
+    if lvMM >= 1 and lvMM <= 12 then
+      lvDD = lvHead - lvMM * 100;
+      lvYY = DATE_FINAL_VISIT - lvHead * 10000;
+      if lvDD < 1 or lvDD > 31 or lvYY < 2020 or lvYY > 2035 then
+        errmsg(1188);
+        reenter;
+      endif;
+      DATE_FINAL_VISIT = lvYY * 10000 + lvMM * 100 + lvDD;
+    else
+      if lvHead < 2020 or lvHead > 2035 then
+        errmsg(1188);
+        reenter;
+      endif;
+    endif;
+  endif;
+  { conversion above runs FIRST so both sides below are YYYYMMDD. The notappl guards
+    match F1/F3: without them a blank final date (single visit) false-fires this. }
+  if DATE_FINAL_VISIT <> notappl and DATE_FIRST_VISITED <> notappl and DATE_FINAL_VISIT < DATE_FIRST_VISITED then
     errmsg(1153);
     reenter;
   endif;

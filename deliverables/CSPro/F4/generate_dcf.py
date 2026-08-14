@@ -17,6 +17,10 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from icf_content import (
+    ITEM_LABELS as ICF_ITEM_LABELS,
+    CONTINUE_OPTIONS as ICF_CONTINUE_OPTIONS,
+)
 from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, SATISFACTION_5PT,
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
@@ -106,7 +110,9 @@ def build_f4_field_control():
                     ("Partial / not completed", "2"),
                 ]),
     ]
-    return build_field_control(survey_code="F4", extra_items=extra + derived_geo_code_items(),
+    return build_field_control(survey_code="F4", date_display=False,  # #1132 F1-parity: echoes removed at ASPSI's request
+                               date_mmddyyyy=True,   # #1132/#1174 parity: typed MMDDYYYY, stored YYYYMMDD
+                               extra_items=extra + derived_geo_code_items(),
                                date_label_entity="the Household",
                                result_options=ENUM_RESULT_OPTIONS_F4)
 
@@ -148,6 +154,14 @@ def build_section_a():
         yes_no("Q1_IS_HH_HEAD",
                "1. Before we begin, to confirm, are you the household head?"),
     ]
+    # ICF read-aloud screens (Shan's "Suggested Layout (CSEntry)", 2026-08-13) lead the
+    # section: two screens of consent script, each acknowledged with a single "Continue".
+    # No consent decision is captured here — the layout shows no Yes/No control, and
+    # CONSENT_GIVEN stays removed (2026-06-12). Text lives in ../icf_content.py.
+    items = [
+        select_one(nm, ICF_ITEM_LABELS[nm], ICF_CONTINUE_OPTIONS, length=1)
+        for nm in ("ICF_PART1", "ICF_PART2")
+    ] + items
     return record("A_INFORMED_CONSENT",
                   "A. Introduction and Informed Consent", "C", items)
 
@@ -218,9 +232,11 @@ def build_section_b():
         ("Master Level Education or Equivalent",                                                                                "08"),
         ("Doctoral Level Education or Equivalent",                                                                              "09"),
         ("No schooling",                                                                                                        "10"),
-        ("Other (specify)",                                                                                                     "11"),
+        # #1071 (pretest 2026-08-05): display order matches the paper — No schooling ->
+        # I don't know -> Not applicable -> Other (specify). Codes unchanged (F3 #1057 twin).
         ("I don't know",                                                                                                        "98"),
         ("Not applicable",                                                                                                      "99"),
+        ("Other (specify)",                                                                                                     "11"),
     ]
     Q12_EMPLOYMENT = [
         ("Has a permanent job/ own business",                  "1"),
@@ -345,11 +361,18 @@ def build_section_b():
                    Q17_DECISION_MAKER, length=2),
         alpha("Q17_DECISION_MAKER_OTHER_TXT",
               "17. Decision-maker — Other (specify) text", length=120),
+        # #1202 (tester mock 2026-08-12): Q18 is the paper's TWO parts — the free peso
+        # amount, then the bracket dropdown. Both stems now carry ONLY the question; the
+        # enumerator guidance (-98/-99 sentinels, "select the category") moves to the blue
+        # INSTRUCTIONS_BY_NAME notes in generate_qsf.py. Guidance baked into a dict label
+        # renders as part of the question stem, which is what the tester flagged (the same
+        # thing F3 fixed in #1136/#1137). The amount stem is also the key the fil/bis/ceb/war
+        # maps were harvested on — the old inline tail had orphaned it to English.
         numeric("Q18_INCOME_AMOUNT",
-                "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer — do not read these codes aloud.)",
+                "18. In the past 6 months, what is your average monthly household income? Please specify in Philippine pesos.",
                 length=9),
         select_one("Q18_INCOME_BRACKET",
-                   "18. Income bracket — tick the category that corresponds to the approximate household income.",
+                   "18. Income bracket",
                    Q18_BRACKET, length=1),
         numeric("Q19_HH_SIZE_TOTAL",
                 "19. How many total individuals (including children) live in your house now?",
@@ -361,7 +384,7 @@ def build_section_b():
                 "21. How many senior citizens live in your house now?",
                 length=3),
         yes_no("Q22_ELECTRICITY",
-               "22. Do you have electricity in your household?"),
+               "22. Do you have electricity in your house?"),   # #1072: paper says "house" (F3 #1058 twin)
         select_one("Q23_WATER_SOURCE",
                    "23. What is the family's main source of water supply for daily use?",
                    Q23_WATER, length=1),
@@ -471,6 +494,15 @@ def build_section_c():
         ("Master Level Education or Equivalent",                                                                              "08"),
         ("Doctoral Level Education or Equivalent",                                                                            "09"),
         ("No schooling",                                                                                                      "10"),
+        # #1204 (tester 2026-08-12): Q40 is the ROSTER TWIN of Q11 — the Apr-20 paper's own
+        # Section C table marks roster line 1 "Do not ask; see answer to Q11" — so Q40 now
+        # carries Q11's SAME missing-value + other-specify tail, same codes (98 IDK / 99 NA /
+        # 11 Other) and same #1071 display order. Paper Q40 (Annex F4 p.8 CODES) lists only
+        # 1-10; a value Q11 can hold therefore had no landing slot in Q40. Deliberate CAPI
+        # consistency addition, flagged to ASPSI. Supersedes self-closed #1203 (NA only).
+        ("I don't know",                                                                                                      "98"),
+        ("Not applicable",                                                                                                    "99"),
+        ("Other (specify)",                                                                                                   "11"),
     ]
     Q41_EMPLOYMENT = [
         ("Has a permanent job/ own business",                  "1"),
@@ -512,18 +544,49 @@ def build_section_c():
         ("No valid ID to register",                                  "08"),
         ("Other (specify)",                                          "88"),
     ]
+    # #1177 (ASPSI review 2026-08-06, list confirmed by ops 2026-08-07): each category's
+    # definition now sits INLINE in its own option label, beside the option, instead of
+    # being read out of a separate note above the question. The note at qsf index 46 is
+    # removed in the same change so the enumerator does not read the definitions twice.
+    #
+    # This also fixes an EN/translation mismatch that predates the ticket: the FIL/BCL/BIS
+    # option labels already carried their definitions inline, so English was the only
+    # language showing bare category names.
+    #
+    # Codes are UNCHANGED (01-08, 55, 88) — no codebook or tabulation impact. Option 09
+    # "Dependent" is REMOVED per ops' confirmed final list; it duplicated 08 "Qualified
+    # dependents", carried no translation in any locale, and is referenced by no logic
+    # (only 88 is, for the other-specify gate). Matches F3 Q45, which never had it.
+    #
+    # 05 and 06 are CONDENSED, not verbatim: at 273 and 349 chars the paper wording blows
+    # CSPro's hard 255-char label cap, and being auto-capped would both cut the sentence
+    # mid-word AND break their translation lookup (see cspro_helpers._truncate_long_labels).
+    # Every other option is verbatim. Longest here is 250.
     Q46_MEMBER_CATEGORY = [
-        ("Formal economy",                  "01"),
-        ("Informal economy",                "02"),
-        ("Indigent",                        "03"),
-        ("Sponsored",                       "04"),
-        ("Lifetime member",                 "05"),
-        ("Senior citizen",                  "06"),
-        ("Overseas Filipino Worker (OFW)",  "07"),
-        ("Qualified dependents",            "08"),
-        ("Dependent",                       "09"),
-        ("Other (Specify)",                 "88"),
+        ("Formal economy (i.e., individuals working in the government or private sector "
+         "based in the country)", "01"),
+        ("Informal economy (i.e., unemployed, self-employed, informal workers, Filipinos "
+         "with dual citizenship, naturalized Filipino citizens, citizens of other countries "
+         "working and/or residing in the Philippines)", "02"),
+        ("Indigent (i.e., individuals who have no visible means of income, or whose income "
+         "is insufficient for family subsistence based on DSWD's specific criteria)", "03"),
+        ("Sponsored (i.e., members whose contributions are being paid for by another "
+         "individual, government agencies, or private entities. Includes some low-income "
+         "citizens that are not indigent e.g. BHWs, PWDs)", "04"),
+        ("Lifetime member (i.e., individuals aged 60 and above, uniformed personnel aged 56 "
+         "and above, and SSS underground miner-retirees aged 55 and above, who paid at least "
+         "120 monthly contributions to PhilHealth or the former SSS/GSIS Medicare Programs)",
+         "05"),
+        ("Senior citizen (i.e., residents of the Philippines aged sixty (60) or above not "
+         "currently covered by any other PhilHealth category, and qualified dependents of "
+         "senior citizen members who are themselves senior citizens, with or without other "
+         "coverage)", "06"),
+        ("Overseas Filipino Worker (OFW)", "07"),
+        ("Qualified dependents (i.e., those whose contributions are declared and covered by "
+         "a principal member)", "08"),
+        # #1074 (pretest 2026-08-05): paper order — I don't know before Other (Specify).
         ("I don't know",                    "55"),
+        ("Other (Specify)",                 "88"),
     ]
     items = [
         numeric("MEMBER_LINE_NO", "Household Member Line Number", length=2, zero_fill=True),
@@ -559,6 +622,13 @@ def build_section_c():
         select_one("Q40_EDUCATION",
                    "40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)",  # #608: 'attended/reached', not 'completed' (ASPSI go/no-go via Carl 2026-06-21)
                    Q40_EDUCATION, length=2),
+        # #1204: 'Other (specify)' free text for Q40, mirroring Q11_EDUCATION_OTHER_TXT and
+        # this roster's own Q38_DISABILITY_OTHER_TXT. No generate_apc edit needed — the gate
+        # is auto-derived from the dcf by other_specify_procs (preproc clear + noinput when
+        # Q40_EDUCATION <> 11; postproc 'please specify' + reenter), and the roster
+        # occurrence bound is prepended the same way Q38_DISABILITY_OTHER_TXT already gets.
+        alpha("Q40_EDUCATION_OTHER_TXT",
+              "40. Education — Other (specify) text", length=120),
         select_one("Q41_EMPLOYMENT",
                    "41. Employment Status", Q41_EMPLOYMENT, length=1),
         # C4. Household Characteristics — social insurance (Q42-Q44)
@@ -582,8 +652,10 @@ def build_section_c():
         # respondent only). select_one(len 1, value-set) -> optimize gives a RadioButton,
         # not the old Date picker (date detection is numeric-len-8-no-vset).
         select_one("Q45_1_PIN_REG_WHEN",
-                   "45.1 When did you register and receive your PhilHealth PIN? "
-                   "(Only answer if 'Yes' in Q45 — to be answered by the main respondent only)",
+                   # #1100: the paper's "(Only answer if 'Yes' in Q45 ...)" note is
+                   # programming guidance — the Q45 roster-skip already enforces it;
+                   # dropped from the CAPI text per tester request.
+                   "45.1 When did you register and receive your PhilHealth PIN?",
                    Q45_1_WHEN, length=1),
         select_one("Q46_MEMBER_CATEGORY",
                    "46. What is his/her membership category?",
@@ -598,8 +670,8 @@ def build_section_c():
         # To be answered by the main respondent only. Other(88) -> Q45_2_..._OTHER_TXT
         # (gated by the auto-derived other-specify PROC, same as Q46_MEMBER_OTHER_TXT).
         select_one("Q45_2_WHY_NOT_REG",
-                   "45.2 Why are you not registered? "
-                   "(Only answer if 'No' in Q45 — to be answered by the main respondent only)",
+                   # #1100: paper note dropped (see Q45.1 above) — skip logic enforces it.
+                   "45.2 Why are you not registered?",
                    Q45_2_WHY_NOT, length=2),
         alpha("Q45_2_WHY_NOT_REG_OTHER_TXT",
               "45.2 Why not registered — Other (specify) text", length=120),
@@ -912,7 +984,12 @@ def build_section_g():
                    "63. Was the most recent medicine purchased prescribed by a doctor or over-the-counter (OTC) medicine (no need for a prescription)?",
                    Q63_PRESCRIPTION, length=1),
         alpha("Q64_MEDICATIONS_LIST",
-              "64. What are the medications that you or any member of your household usually take? (List all medicines taken for the health condition.)",
+              # #1205: dropped the trailing "(List all medicines taken for the health
+              # condition.)" — a paraphrase of the paper's enumerator note, which already
+              # renders once as the blue INSTRUCTIONS[64] line. The one dcf label feeds BOTH
+              # the .qsf question bar and the .fmf field text, so the parenthetical was
+              # showing twice on top of the blue line. Now verbatim per Annex F4 (Apr-20).
+              "64. What are the medications that you or any member of your household usually take?",
               length=500),
         *checkbox_multiselect("Q65_CONDITIONS",
                     "65. What are the medical conditions that you/your household member/s take the medicine/s for?",
@@ -924,7 +1001,9 @@ def build_section_g():
                 "67. How much time does it take to reach the nearest pharmacy from your home? — Hours",
                 length=2),
         numeric("Q67_TRAVEL_MM",
-                "67. How much time does it take to reach the nearest pharmacy from your home? — Minutes",
+                # #1073: second component shows a short prompt — the full question reads
+                # once, on Hours (F3 Q150 pattern).
+                "67. Travel time to nearest pharmacy — Minutes",
                 length=2),
         select_one("Q68_PHARMACY_ACCESS",
                    "68. How easy is it for you to access a pharmacy or drugstore?",
@@ -1385,7 +1464,9 @@ def build_section_k():
         yes_no("Q116_WROTE_INFO",
                "116. Did they write down any information for the specialist about the reason for that visit?"),
         yes_no("Q117_SPECIALIST_FOLLOWUP",
-               "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit? (Only if Q112=Yes)"),
+               # #1101: "(Only if Q112=Yes)" dropped — programming note only; the #816
+               # Q117 preproc already gates on Q112=Yes (same clean-up as Q118's #658).
+               "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?"),
         select_one("Q118_SAT_REFERRAL_PROCESS",
                    "118. Overall, how satisfied were you with the referral process — from being referred to the specialist or other facility through your visit there?",  # #658: name which referral (the Q109-Q112 referral journey); dropped the redundant "(Only if Q112=Yes)" — CAPI already gates Q118 on Q112=Yes
                    SATISFACTION_6PT_NA, length=1),
