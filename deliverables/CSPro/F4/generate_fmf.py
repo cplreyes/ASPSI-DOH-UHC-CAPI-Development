@@ -83,7 +83,19 @@ HH_GPS_ITEMS = [
 
 
 _FORM_PLAN_STATIC = [
-    ("Interview status",   # #515: break-off control, first form (case-tree reachable)
+    # ICF FIRST, immediately after the case-key/QN form (Aly, 2026-08-14). This
+    # supersedes Shan's 2026-08-13 Suggested Layout, which put consent after the
+    # geo form.
+    #
+    # KNOWN AND ACCEPTED CONSEQUENCE: PROC BREAKOFF does `skip to
+    # ENUM_RESULT_FINAL_VISIT` for codes 5/6/7 (refused at door / not found /
+    # ineligible), so with consent AHEAD of the break-off control the enumerator
+    # now walks both read-aloud consent screens before they can close out a case
+    # that never started. Carl chose this over placing the ICF after BREAKOFF.
+    # Do not "fix" it back without checking with ASPSI first.
+    ("A. Informed Consent (Q1 gate)",
+     [("A_INFORMED_CONSENT", None)]),
+    ("Interview status",   # #515: break-off control (case-tree reachable)
      [("FIELD_CONTROL", {"names": FIELD_CONTROL_CASE_START})]),
     ("FC Geographic ID",
      # Single-number redesign (2026-06-11): household region/province/city are
@@ -94,8 +106,6 @@ _FORM_PLAN_STATIC = [
      [("FIELD_CONTROL", {"names": ["REGION_NAME", "PROVINCE_NAME", "CITY_NAME"]}),
       ("HOUSEHOLD_GEO_ID",
        {"exclude": ["REGION", "PROVINCE_HUC", "CITY_MUNICIPALITY"] + HH_GPS_ITEMS})]),
-    ("A. Informed Consent (Q1 gate)",
-     [("A_INFORMED_CONSENT", None)]),
     ("B. Respondent Profile",
      [("B_RESPONDENT_PROFILE", None)]),
     ("C. Household Roster - REPEATING (one member per row)",

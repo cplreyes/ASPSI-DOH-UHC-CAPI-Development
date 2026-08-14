@@ -21,6 +21,19 @@ Item=QUESTIONNAIRE_NUMBER
   
 [Form]
 Name=FORM001
+Label=A. Informed Consent (Q1 gate)
+Level=1
+Size=806,300
+  
+Item=Q1_IS_PATIENT
+Item=Q2_RELATIONSHIP
+Item=Q2_RELATIONSHIP_OTHER_TXT
+Item=Q3_SAME_HOUSE
+  
+[EndForm]
+  
+[Form]
+Name=FORM002
 Label=Patient Type (Outpatient / Inpatient)
 Level=1
 Size=806,300
@@ -31,7 +44,7 @@ Item=BREAKOFF
 [EndForm]
   
 [Form]
-Name=FORM002
+Name=FORM003
 Label=FC Geographic ID + F1 linkage
 Level=1
 Size=806,457
@@ -49,19 +62,6 @@ Item=P_REGION
 Item=P_PROVINCE_HUC
 Item=P_CITY_MUNICIPALITY
 Item=P_BARANGAY
-  
-[EndForm]
-  
-[Form]
-Name=FORM003
-Label=A. Informed Consent (Q1 gate)
-Level=1
-Size=806,300
-  
-Item=Q1_IS_PATIENT
-Item=Q2_RELATIONSHIP
-Item=Q2_RELATIONSHIP_OTHER_TXT
-Item=Q3_SAME_HOUSE
   
 [EndForm]
   
@@ -756,214 +756,9 @@ Text=Questionnaire Number (12-digit: RR-PP-MMM-FF-CCC)
   
 [Group]
 Required=Yes
-Name=FIELD_CONTROL_FORM
-Label=Patient Type (Outpatient / Inpatient)
-Form=2
-Max=1
-  
-[Field]
-Name=PATIENT_TYPE
-Position=350,27,365,47
-Item=PATIENT_TYPE,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=2
-  
-[Text]
-Position=50,30,330,46
-Text=Type of Patient
- 
-  
-[Field]
-Name=BREAKOFF
-Position=350,57,365,77
-Item=BREAKOFF,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=2
-  
-[Text]
-Position=50,60,330,76
-Text=Interview status (leave as Continue unless ending the interview early)
- 
-  
-[EndGroup]
-  
-[Group]
-Required=Yes
-Name=FIELD_CONTROL_FORM_2
-Label=FC Geographic ID + F1 linkage
-Form=3
-Max=1
-  
-[Field]
-Name=REGION_NAME
-Position=350,27,760,47
-Item=REGION_NAME,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=3
-  
-[Text]
-Position=50,30,330,46
-Text=Region (from PSGC)
- 
-  
-[Field]
-Name=PROVINCE_NAME
-Position=350,57,760,77
-Item=PROVINCE_NAME,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=3
-  
-[Text]
-Position=50,60,330,76
-Text=Province / HUC (from PSGC)
- 
-  
-[Field]
-Name=CITY_NAME
-Position=350,87,760,107
-Item=CITY_NAME,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=3
-  
-[Text]
-Position=50,90,330,106
-Text=City / Municipality (from PSGC)
- 
-  
-[Field]
-Name=CLASSIFICATION
-Position=350,117,365,137
-Item=CLASSIFICATION,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=3
-  
-[Text]
-Position=50,120,330,136
-Text=Classification
- 
-  
-[Field]
-Name=BARANGAY
-Position=350,147,365,167
-Item=BARANGAY,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=3
-  
-[Text]
-Position=50,150,330,166
-Text=Barangay
- 
-  
-[Field]
-Name=FACILITY_NAME
-Position=350,177,760,197
-Item=FACILITY_NAME,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=3
-  
-[Text]
-Position=50,180,330,196
-Text=Facility Name
- 
-  
-[Field]
-Name=FACILITY_STREET
-Position=350,207,760,227
-Item=FACILITY_STREET,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=3
-  
-[Text]
-Position=50,210,330,226
-Text=Facility Address — Street Name / No.
- 
-  
-[Field]
-Name=BARANGAY_NAME
-Position=350,237,760,257
-Item=BARANGAY_NAME,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=3
-  
-[Text]
-Position=50,240,330,256
-Text=Barangay (from PSGC)
- 
-  
-[Field]
-Name=FACILITY_ADDRESS
-Position=350,267,760,287
-Item=FACILITY_ADDRESS,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=3
-  
-[Text]
-Position=50,270,330,286
-Text=Facility Address (Street, Barangay, Municipality)
- 
-  
-[Field]
-Name=P_REGION
-Position=350,297,365,317
-Item=P_REGION,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=3
-  
-[Text]
-Position=50,300,330,316
-Text=Patient Home Region
- 
-  
-[Field]
-Name=P_PROVINCE_HUC
-Position=350,327,365,347
-Item=P_PROVINCE_HUC,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=3
-  
-[Text]
-Position=50,330,330,346
-Text=Patient Home Province / HUC
- 
-  
-[Field]
-Name=P_CITY_MUNICIPALITY
-Position=350,357,365,377
-Item=P_CITY_MUNICIPALITY,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=3
-  
-[Text]
-Position=50,360,330,376
-Text=Patient Home City / Municipality
- 
-  
-[Field]
-Name=P_BARANGAY
-Position=350,387,365,407
-Item=P_BARANGAY,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=3
-  
-[Text]
-Position=50,390,330,406
-Text=Patient Home Barangay
- 
-  
-[EndGroup]
-  
-[Group]
-Required=Yes
 Name=A_INFORMED_CONSENT_FORM
 Label=A. Informed Consent (Q1 gate)
-Form=4
+Form=2
 Max=1
   
 [Field]
@@ -971,7 +766,7 @@ Name=Q1_IS_PATIENT
 Position=350,27,365,47
 Item=Q1_IS_PATIENT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=4
+Form=2
   
 [Text]
 Position=50,30,330,46
@@ -983,7 +778,7 @@ Name=Q2_RELATIONSHIP
 Position=350,57,365,77
 Item=Q2_RELATIONSHIP,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=4
+Form=2
   
 [Text]
 Position=50,60,330,76
@@ -996,7 +791,7 @@ Position=350,87,760,107
 Item=Q2_RELATIONSHIP_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=4
+Form=2
   
 [Text]
 Position=50,90,330,106
@@ -1008,7 +803,7 @@ Name=Q3_SAME_HOUSE
 Position=350,117,365,137
 Item=Q3_SAME_HOUSE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=4
+Form=2
   
 [Text]
 Position=50,120,330,136
@@ -1042,6 +837,211 @@ Label=Q3
 DisplayTogether=Yes
 Position=6
 Length=1
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=FIELD_CONTROL_FORM
+Label=Patient Type (Outpatient / Inpatient)
+Form=3
+Max=1
+  
+[Field]
+Name=PATIENT_TYPE
+Position=350,27,365,47
+Item=PATIENT_TYPE,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=3
+  
+[Text]
+Position=50,30,330,46
+Text=Type of Patient
+ 
+  
+[Field]
+Name=BREAKOFF
+Position=350,57,365,77
+Item=BREAKOFF,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=3
+  
+[Text]
+Position=50,60,330,76
+Text=Interview status (leave as Continue unless ending the interview early)
+ 
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=FIELD_CONTROL_FORM_2
+Label=FC Geographic ID + F1 linkage
+Form=4
+Max=1
+  
+[Field]
+Name=REGION_NAME
+Position=350,27,760,47
+Item=REGION_NAME,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=4
+  
+[Text]
+Position=50,30,330,46
+Text=Region (from PSGC)
+ 
+  
+[Field]
+Name=PROVINCE_NAME
+Position=350,57,760,77
+Item=PROVINCE_NAME,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=4
+  
+[Text]
+Position=50,60,330,76
+Text=Province / HUC (from PSGC)
+ 
+  
+[Field]
+Name=CITY_NAME
+Position=350,87,760,107
+Item=CITY_NAME,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=4
+  
+[Text]
+Position=50,90,330,106
+Text=City / Municipality (from PSGC)
+ 
+  
+[Field]
+Name=CLASSIFICATION
+Position=350,117,365,137
+Item=CLASSIFICATION,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=4
+  
+[Text]
+Position=50,120,330,136
+Text=Classification
+ 
+  
+[Field]
+Name=BARANGAY
+Position=350,147,365,167
+Item=BARANGAY,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=4
+  
+[Text]
+Position=50,150,330,166
+Text=Barangay
+ 
+  
+[Field]
+Name=FACILITY_NAME
+Position=350,177,760,197
+Item=FACILITY_NAME,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=4
+  
+[Text]
+Position=50,180,330,196
+Text=Facility Name
+ 
+  
+[Field]
+Name=FACILITY_STREET
+Position=350,207,760,227
+Item=FACILITY_STREET,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=4
+  
+[Text]
+Position=50,210,330,226
+Text=Facility Address — Street Name / No.
+ 
+  
+[Field]
+Name=BARANGAY_NAME
+Position=350,237,760,257
+Item=BARANGAY_NAME,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=4
+  
+[Text]
+Position=50,240,330,256
+Text=Barangay (from PSGC)
+ 
+  
+[Field]
+Name=FACILITY_ADDRESS
+Position=350,267,760,287
+Item=FACILITY_ADDRESS,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=4
+  
+[Text]
+Position=50,270,330,286
+Text=Facility Address (Street, Barangay, Municipality)
+ 
+  
+[Field]
+Name=P_REGION
+Position=350,297,365,317
+Item=P_REGION,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=4
+  
+[Text]
+Position=50,300,330,316
+Text=Patient Home Region
+ 
+  
+[Field]
+Name=P_PROVINCE_HUC
+Position=350,327,365,347
+Item=P_PROVINCE_HUC,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=4
+  
+[Text]
+Position=50,330,330,346
+Text=Patient Home Province / HUC
+ 
+  
+[Field]
+Name=P_CITY_MUNICIPALITY
+Position=350,357,365,377
+Item=P_CITY_MUNICIPALITY,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=4
+  
+[Text]
+Position=50,360,330,376
+Text=Patient Home City / Municipality
+ 
+  
+[Field]
+Name=P_BARANGAY
+Position=350,387,365,407
+Item=P_BARANGAY,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=4
+  
+[Text]
+Position=50,390,330,406
+Text=Patient Home Barangay
+ 
   
 [EndGroup]
   
@@ -4446,7 +4446,7 @@ Label=H. Medicines bought outside — amount by source
 Form=26
 Type=Record
 TypeName=Q109_PAY_ROSTER
-Max=9
+Max=10
   
 [Field]
 Name=Q109_PAY_LINE
