@@ -111,7 +111,6 @@ Language = EN
 1135 92. Amount cannot be negative.
 1136 92. This source has no out-of-pocket cost — amount reset to 0.
 1137 92. Please enter an amount greater than 0 — you selected this as a paid source (in-kind valued in pesos).
-1138 97.1 Tick at least one item included in the bill (or correct Q97 if none).
 1139 97.1 Amount cannot be negative.
 1140 97.1 'Other expenses' was ticked — please specify.
 1141 94. Amount cannot be negative.
@@ -119,7 +118,6 @@ Language = EN
 1143 96. Tick at least one payment source for the prescribed medicines before continuing.
 1144 96. Amount cannot be negative.
 1145 96. This source has no out-of-pocket cost — amount reset to 0.
-1147 97.2 Tick at least one expense item before continuing (or correct Q97 if none).
 1148 972. Amount cannot be negative.
 1150 97.2 'Other expenses' was ticked — please specify.
 1151 98. Tick at least one source of money used to pay for the medical costs before continuing.
@@ -203,7 +201,6 @@ Language = EN
 1234 Q16 = unemployed but Q17 reports a paid-work income source — confirm.
 1235 Q29 = socio-economic Class A/B but income is in the lowest bracket — confirm.
 1236 Q29 = socio-economic Class D/E but income is in a high bracket — confirm.
-1237 No GPS fix after %d s — move near a window or doorway and re-enter this field to retry.
 1238 Q18_INCOME_AMOUNT must be between 0 and 99999999 (or -98 don't-know / -99 refused).
 1239 Q100: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
 1240 Q103: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
@@ -236,3 +233,8 @@ Language = EN
 1267 107. 'Don't know' must be the only payment source — untick it or the other sources before continuing.
 1268 Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.
 1269 109. 'Don't know' must be the only payment source — untick it or the other sources before continuing.
+1270 No GPS fix after %d s. Move outdoors or beside a window, then re-enter this field to retry — each retry searches longer. You may also leave GPS blank and finish the case.
+1275 97.1 Tick at least one item included in the bill, or tick 'None' if nothing else was billed.
+1276 97.1 'None' must be the only choice — untick it or the other items before continuing.
+1277 97.2 Tick at least one expense item, or tick 'None' if there were no out-of-bill expenses.
+1278 97.2 'None' must be the only choice — untick it or the other expense items before continuing.

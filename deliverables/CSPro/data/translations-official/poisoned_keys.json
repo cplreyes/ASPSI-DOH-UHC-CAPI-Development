@@ -1,0 +1,275 @@
+[
+ {
+  "instrument": "F1",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "121. Which of the following requirements were difficult to comply with in the DOH licensing process? — Human resource management",
+  "value": "Human resource management"
+ },
+ {
+  "instrument": "F1",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "121. Which of the following requirements were difficult to comply with in the DOH licensing process? — Information management",
+  "value": "Information management"
+ },
+ {
+  "instrument": "F1",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "121. Which of the following requirements were difficult to comply with in the DOH licensing process? — Physical plant",
+  "value": "Physical Plant"
+ },
+ {
+  "instrument": "F1",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "155. What are the most common ways you send referrals to higher level facilities/specialists? — E-referral",
+  "value": "E-referral"
+ },
+ {
+  "instrument": "F1",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "159. Of those referred, which of the following are the most common ways you receive referrals from lower-level health facilities? — E-referral",
+  "value": "E-referral"
+ },
+ {
+  "instrument": "F1",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "34. Which of the submitted reports are actually used for decision-making? — YAKAP/Konsulta utilization reports",
+  "value": "YAKAP/Konsulta utilization reports"
+ },
+ {
+  "instrument": "F1",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Chest X-ray",
+  "value": "Chest X-ray"
+ },
+ {
+  "instrument": "F1",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Lipid profile",
+  "value": "Lipid profile"
+ },
+ {
+  "instrument": "F1",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "65. Which of the following requirements were difficult to comply with for accreditation? — DOH licensing requirements",
+  "value": "DOH licensing requirements"
+ },
+ {
+  "instrument": "F1",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "65. Which of the following requirements were difficult to comply with for accreditation? — Functional Health Information System",
+  "value": "Functional Health Information System"
+ },
+ {
+  "instrument": "F1",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "75. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta? — PhilHealth",
+  "value": "Philhealth"
+ },
+ {
+  "instrument": "F1",
+  "locale": "BCL",
+  "reason": "DOUBLED",
+  "key": "YAKAP/Konsulta utilization reports",
+  "value": "NBB compliance NBB compliance"
+ },
+ {
+  "instrument": "F1",
+  "locale": "CEB",
+  "reason": "IS_OTHER_KEY",
+  "key": "121. Which of the following requirements were difficult to comply with in the DOH licensing process? — Physical plant",
+  "value": "Physical Plant"
+ },
+ {
+  "instrument": "F1",
+  "locale": "CEB",
+  "reason": "IS_OTHER_KEY",
+  "key": "65. Which of the following requirements were difficult to comply with for accreditation? — DOH licensing requirements",
+  "value": "DOH licensing requirements"
+ },
+ {
+  "instrument": "F1",
+  "locale": "CEB",
+  "reason": "IS_OTHER_KEY",
+  "key": "65. Which of the following requirements were difficult to comply with for accreditation? — Documentary requirements",
+  "value": "Documentary requirements"
+ },
+ {
+  "instrument": "F1",
+  "locale": "CEB",
+  "reason": "IS_OTHER_KEY",
+  "key": "65. Which of the following requirements were difficult to comply with for accreditation? — General Infrastructure",
+  "value": "General Infrastructure"
+ },
+ {
+  "instrument": "F1",
+  "locale": "CEB",
+  "reason": "IS_OTHER_KEY",
+  "key": "65. Which of the following requirements were difficult to comply with for accreditation? — Human resource",
+  "value": "Human Resource"
+ },
+ {
+  "instrument": "F1",
+  "locale": "CEB",
+  "reason": "IS_OTHER_KEY",
+  "key": "75. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta? — PhilHealth",
+  "value": "PhilHealth"
+ },
+ {
+  "instrument": "F3",
+  "locale": "CEB",
+  "reason": "DOUBLED",
+  "key": "Pag-ibig",
+  "value": "SSS SSS"
+ },
+ {
+  "instrument": "F3",
+  "locale": "CEB",
+  "reason": "DOUBLED",
+  "key": "Face-to-face",
+  "value": "Cellphone Cellphone"
+ },
+ {
+  "instrument": "F3",
+  "locale": "CEB",
+  "reason": "DOUBLED",
+  "key": "Lipid profile",
+  "value": "HbA1c HbA1c"
+ },
+ {
+  "instrument": "F4",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "103. Have you accessed any of the following forms of care in the last 6 months? — Primary care consultation",
+  "value": "Primary care consultation"
+ },
+ {
+  "instrument": "F4",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "127. If yes, what are your sources of information about NBB? — Legislation",
+  "value": "Legislation"
+ },
+ {
+  "instrument": "F4",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "133. If yes, what are your sources of information about ZBB? — Legislation",
+  "value": "Legislation"
+ },
+ {
+  "instrument": "F4",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "137. What are your sources of information about MAIFIP? — Legislation",
+  "value": "Legislation"
+ },
+ {
+  "instrument": "F4",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "143. From your most recent visit, how did you pay? — PhilHealth",
+  "value": "PhilHealth"
+ },
+ {
+  "instrument": "F4",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "143. From your most recent visit, how did you pay? — Private insurance / HMO",
+  "value": "Private insurance / HMO"
+ },
+ {
+  "instrument": "F4",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "65. What are the medical conditions that you/your household member/s take the medicine/s for? — Diabetes",
+  "value": "Diabetes"
+ },
+ {
+  "instrument": "F4",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "65. What are the medical conditions that you/your household member/s take the medicine/s for? — Immunization",
+  "value": "Immunization"
+ },
+ {
+  "instrument": "F4",
+  "locale": "BCL",
+  "reason": "IS_OTHER_KEY",
+  "key": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Public Bus",
+  "value": "Public Bus"
+ },
+ {
+  "instrument": "F4",
+  "locale": "BCL",
+  "reason": "SELF_ECHO",
+  "key": "Laboratory Tests",
+  "value": "Laboratory tests"
+ },
+ {
+  "instrument": "F4",
+  "locale": "BCL",
+  "reason": "SELF_ECHO",
+  "key": "Medical Supplies",
+  "value": "Medical supplies"
+ },
+ {
+  "instrument": "F4",
+  "locale": "BCL",
+  "reason": "SELF_ECHO",
+  "key": "Non-UHC IS",
+  "value": "non-UHC IS"
+ },
+ {
+  "instrument": "F4",
+  "locale": "BCL",
+  "reason": "DOUBLED",
+  "key": "Public Bus",
+  "value": "Taxi Taxi"
+ },
+ {
+  "instrument": "F4",
+  "locale": "BIS",
+  "reason": "IS_OTHER_KEY",
+  "key": "65. What are the medical conditions that you/your household member/s take the medicine/s for? — Diabetes",
+  "value": "Diabetes"
+ },
+ {
+  "instrument": "F4",
+  "locale": "CEB",
+  "reason": "IS_OTHER_KEY",
+  "key": "143. From your most recent visit, how did you pay? — PhilHealth",
+  "value": "PhilHealth"
+ },
+ {
+  "instrument": "F4",
+  "locale": "CEB",
+  "reason": "IS_OTHER_KEY",
+  "key": "143. From your most recent visit, how did you pay? — Private insurance / HMO",
+  "value": "Private insurance / HMO"
+ },
+ {
+  "instrument": "F4",
+  "locale": "CEB",
+  "reason": "IS_OTHER_KEY",
+  "key": "65. What are the medical conditions that you/your household member/s take the medicine/s for? — Diabetes",
+  "value": "Diabetes"
+ },
+ {
+  "instrument": "F4",
+  "locale": "CEB",
+  "reason": "SELF_ECHO",
+  "key": "Non-UHC IS",
+  "value": "non-UHC IS"
+ }
+]

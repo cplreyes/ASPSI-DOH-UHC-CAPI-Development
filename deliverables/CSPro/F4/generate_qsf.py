@@ -31,16 +31,22 @@ OUT = HERE / "HouseholdSurvey.ent.qsf"
 # can sit at case-end on the form (v1.0.1). Same string in every language — UI chrome, not
 # questionnaire text.
 _BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F4"]
-BUILD_FOOTER = f'<p class="instruction">Build: F4 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
-# #1191 (PSA/SJREB, 2026-08-11): survey-tool details required on the CAPI tool.
-BUILD_FOOTER += ('<p class="instruction">PSA SSRCS Clearance No. DOH-2651-04 '
-                 '&middot; issued July 2026 &middot; valid until 31 July 2027<br/>'
-                 'SJREB: ICF ver. 07/25/2026 &middot; Translated Questionnaire ver. 06/05/2026</p>')
+# #1191 (PSA/SJREB, 2026-08-11): survey-tool details required on the CAPI tool. The
+# clearance block is defined once in ../icf_content.py — the ICF screens carry the
+# same block, and two copies of a cleared reference number would eventually diverge.
+import sys as _sys
+_sys.path.insert(0, str(HERE.parent))
+import icf_content as _icf
+from notes_lookup import translate_note
+
 # #1190: brand-book main logo sequence on the first page — see F1/generate_qsf.py.
 import base64 as _b64
 _LOGO_B64 = _b64.b64encode((HERE.parent / "cover_logos.png").read_bytes()).decode()
-BUILD_FOOTER = (f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
-                + BUILD_FOOTER)
+_LOGO_HTML = f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
+
+BUILD_FOOTER = (_LOGO_HTML
+                + f'<p class="instruction">Build: F4 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+                + _icf.clearance_html("F4"))
 
 STYLES = """styles:
   - name: Normal
@@ -148,10 +154,15 @@ CONSENT_HTML = "".join([
 # Item-name → question-text HTML. Overrides win over the dcf-label default
 # and are emitted identically for every declared language (English fallback
 # until SJREB-approved ICF translations arrive).
-# CONSENT_GIVEN removed 2026-06-12 — consent script is read from the printed
-# sheet (off the CAPI), so no question-text override. (CONSENT_HTML above is
-# kept as reference only; nothing emits it.)
-OVERRIDES = {}
+# CONSENT_GIVEN removed 2026-06-12 — no consent DECISION is captured on the CAPI, and
+# that has not changed. What DID change (2026-08-13): ASPSI sent "Suggested Layout
+# (CSEntry).docx", putting the consent SCRIPT back on the device as two read-aloud
+# screens with the clearance block. Its wording supersedes CONSENT_HTML above (which
+# remains unemitted, kept only as the Annex H reference). Text: ../icf_content.py.
+OVERRIDES = {
+    "ICF_PART1": _icf.build_screen_html("F4", 1, _LOGO_HTML),
+    "ICF_PART2": _icf.build_screen_html("F4", 2, _LOGO_HTML),
+}
 
 
 # ------------------------------------------------------------------
@@ -460,17 +471,24 @@ def _esc(t):
 
 
 def question_extras(nm, intro_used):
-    """(pre, post) HTML for an item: section intro + enumerator instruction."""
+    """(intro_english, instruction_english) for an item — TEXT, not HTML.
+
+    This returned finished HTML and main() called it once per ITEM, outside the
+    per-language loop, so the English note went into every locale - 108 F4 question
+    screens showed English whatever language was chosen (#1216/#1219/#1220/#1223/#1224/
+    #1225). Returning the English source lets the caller resolve it per language via
+    note_html(). The intro-consumed bookkeeping stays here so it still runs once per item.
+    """
     m = _QNUM.match(nm)
     if not m:
-        return "", ""
+        return None, None
     q = int(m.group(1))
-    pre = post = ""
+    intro = None
     # the intro attaches once, to the first item at/after its target question
     # (within +3 — some paper intros sit before unnumbered or merged fields)
     for tgt in SECTION_INTROS:
         if tgt not in intro_used and tgt <= q <= tgt + 3:
-            pre = f"<p>{_esc(SECTION_INTROS[tgt])}</p>"
+            intro = SECTION_INTROS[tgt]
             intro_used.add(tgt)
             break
     # #1202: an explicit item-name key wins over the paper-number map (F3 #1048 pattern).
@@ -480,8 +498,15 @@ def question_extras(nm, intro_used):
     # (Q<n>_<m>_…, e.g. Q141_1_NO_RECEIPT_AMT_PHP) and on free-text *_TXT capture fields.
     if instr is None and not nm.endswith("_TXT") and not _SUBQ.match(nm):
         instr = INSTRUCTIONS.get(q)
-    if instr:
-        post = f'<p class="instruction">{_esc(instr)}</p>'
+    return intro, instr
+
+
+def note_html(intro_en, instr_en, lang):
+    """Render the two notes in ONE language; missing translation keeps English, which is
+    what the tablet shows today, so a miss is never a regression."""
+    pre = f"<p>{_esc(translate_note(intro_en, lang))}</p>" if intro_en else ""
+    post = (f'<p class="instruction">{_esc(translate_note(instr_en, lang))}</p>'
+            if instr_en else "")
     return pre, post
 
 
@@ -525,20 +550,24 @@ def main():
                 labmap = {l.get("language"): l.get("text", "") for l in (it.get("labels") or [])}
                 en = labmap.get("EN") or nm
                 ov = OVERRIDES.get(nm)
-                pre, post = ("", "") if ov else question_extras(nm, intro_used)
+                intro_en, instr_en = ((None, None) if ov
+                                      else question_extras(nm, intro_used))
                 # Option C (2026-07-03): the Section N intro script reads ONCE — attached
                 # to the food grid's first row via a qsf condition (logic: curocc() = 1);
                 # the trailing logic-less condition is the default text for rows 2-13.
                 if nm in _ROSTER_INTROS:
                     _tgt = _ROSTER_INTROS[nm]
                     intro_used.add(_tgt)
-                    if _tgt in SECTION_INTROS:
-                        intro = f"<p>{_esc(SECTION_INTROS[_tgt])}</p>"
-                    else:   # period-reset note (INSTRUCTIONS) as the read-once row-1 intro
-                        intro = '<p class="instruction">' + _esc(INSTRUCTIONS[_tgt]) + "</p>"
+                    _is_intro = _tgt in SECTION_INTROS
+                    _src = SECTION_INTROS[_tgt] if _is_intro else INSTRUCTIONS[_tgt]
                     lines += [f"  - name: {dict_name}.{nm}", "    conditions:",
                               "      - logic: curocc() = 1", "        questionText:"]
                     for lnm, _ in langs:
+                        # per-language, like the main loop: this read-once roster intro was
+                        # emitting one English string into all eight locales
+                        _t = _esc(translate_note(_src, lnm))
+                        intro = (f"<p>{_t}</p>" if _is_intro
+                                 else f'<p class="instruction">{_t}</p>')
                         body = intro + _pipe_member_name(nm, _html(labmap.get(lnm) or en))
                         lines += [f"          {lnm}: |", f"            {body}"]
                     lines += ["      - questionText:"]
@@ -550,6 +579,7 @@ def main():
                 lines += [f"  - name: {dict_name}.{nm}", "    conditions:", "      - questionText:"]
                 cc = _ROSTER_CROSSCHECK.get(nm)   # #603/#606/#607/#609 line-1 cross-check note
                 for lnm, _ in langs:
+                    pre, post = note_html(intro_en, instr_en, lnm)   # per LANGUAGE
                     body = ov or (pre + _html(labmap.get(lnm) or en) + post)
                     body = _pipe_member_name(nm, body)   # Section C name/line piping
                     if cc:

@@ -30,17 +30,23 @@ OUT = HERE / "PatientSurvey.ent.qsf"
 # dict-first placement was wrong (v1.0.1). Same string in every language — UI chrome, not
 # questionnaire text.
 _BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F3"]
-BUILD_FOOTER = f'<p class="instruction">Build: F3 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
 # #1191 (PSA/SJREB, 2026-08-11): survey-tool details required on the CAPI tool.
-# -03 = "In-Patient and Out-Patient Survey Questionnaire" in the PSA table.
-BUILD_FOOTER += ('<p class="instruction">PSA SSRCS Clearance No. DOH-2651-03 '
-                 '&middot; issued July 2026 &middot; valid until 31 July 2027<br/>'
-                 'SJREB: ICF ver. 07/25/2026 &middot; Translated Questionnaire ver. 06/05/2026</p>')
+# -03 = "In-Patient and Out-Patient Survey Questionnaire" in the PSA table. The
+# clearance block is defined once in ../icf_content.py — the ICF screens carry the
+# same block, and two copies of a cleared reference number would eventually diverge.
+import sys as _sys
+_sys.path.insert(0, str(HERE.parent))
+import icf_content as _icf
+from notes_lookup import translate_note
+
 # #1190: brand-book main logo sequence on the first page — see F1/generate_qsf.py.
 import base64 as _b64
 _LOGO_B64 = _b64.b64encode((HERE.parent / "cover_logos.png").read_bytes()).decode()
-BUILD_FOOTER = (f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
-                + BUILD_FOOTER)
+_LOGO_HTML = f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
+
+BUILD_FOOTER = (_LOGO_HTML
+                + f'<p class="instruction">Build: F3 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+                + _icf.clearance_html("F3"))
 
 STYLES = """styles:
   - name: Normal
@@ -173,10 +179,15 @@ CONSENT_HTML = "".join([
 # Item-name → question-text HTML. Overrides win over the dcf-label default
 # and are emitted identically for every declared language (English fallback
 # until SJREB-approved ICF translations arrive).
-# CONSENT_GIVEN removed 2026-06-12 — consent script is read from the printed
-# sheet (off the CAPI), so no question-text override. (CONSENT_HTML above is
-# kept as reference only; nothing emits it.)
-OVERRIDES = {}
+# CONSENT_GIVEN removed 2026-06-12 — no consent DECISION is captured on the CAPI, and
+# that has not changed. What DID change (2026-08-13): ASPSI sent "Suggested Layout
+# (CSEntry).docx", putting the consent SCRIPT back on the device as two read-aloud
+# screens with the clearance block. Its wording supersedes CONSENT_HTML above (which
+# remains unemitted, kept only as the Annex H reference). Text: ../icf_content.py.
+OVERRIDES = {
+    "ICF_PART1": _icf.build_screen_html("F3", 1, _LOGO_HTML),
+    "ICF_PART2": _icf.build_screen_html("F3", 2, _LOGO_HTML),
+}
 
 
 # ------------------------------------------------------------------
@@ -444,20 +455,31 @@ def question_extras(nm, intro_used):
 
 
 def build_extras(intro_q, instr, intro_here, lnm):
-    """Per-language (pre, post): section read-aloud script in the CURRENT language (FIL
-    translated #407/#410/#411/#433, other dialects EN fallback); the do-not-read enumerator
-    note stays English. At a section start, script + note form one block BEFORE the question."""
+    """Per-language (pre, post): section read-aloud script and enumerator note.
+
+    Previously only Filipino had translated intros (a hand-built SECTION_INTROS_FIL from
+    #407/#410/#411/#433); every other dialect fell back to English, and the enumerator note
+    was English for all eight languages by design. That left 100 F3 question screens showing
+    English regardless of locale - the defect behind #1216/#1219/#1220/#1223/#1224/#1225.
+
+    Both now resolve through translate_note(), which serves the DOH-cleared June-5 wording
+    and returns the English unchanged when no cleared translation exists. The hand-built
+    Filipino map still wins where it has an entry, since it was reviewed against tickets.
+    """
     pre = post = ""
     if intro_q is not None:
         script = (SECTION_INTROS_FIL.get(intro_q) if lnm == "FIL" else None) or SECTION_INTROS[intro_q]
         # a tuple = multiple read-aloud paragraphs (e.g. Q131: section preamble + #486 battery stem)
         paras = script if isinstance(script, tuple) else (script,)
+        if not (lnm == "FIL" and SECTION_INTROS_FIL.get(intro_q)):
+            paras = tuple(translate_note(p, lnm) for p in paras)
         pre = "".join(f"<p>{_esc(p)}</p>" for p in paras)
     if instr:
+        note = f'<p class="instruction">{_esc(translate_note(instr, lnm))}</p>'
         if intro_here:
-            pre += f'<p class="instruction">{_esc(instr)}</p>'
+            pre += note
         else:
-            post = f'<p class="instruction">{_esc(instr)}</p>'
+            post = note
     return pre, post
 
 

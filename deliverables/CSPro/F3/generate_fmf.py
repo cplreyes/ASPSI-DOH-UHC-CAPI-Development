@@ -391,6 +391,11 @@ _CHECKBOX_FIELDS = {
     "Q107_SOURCES", "Q109_SOURCES", "Q112_SOURCES", "Q113_SOURCES",     # Section H
 }
 _CHECKBOX_TRAILERS = ("_OTHER_TXT", "_MEDICINES_TXT")  # gated texts that share the checkbox screen
+# Fields that must OWN their screen for reasons other than capture type. The ICF
+# read-aloud parts are one screen each by spec (Shan's layout, 2026-08-13); without
+# this they would fall into the ordinary MAX_CHUNK run and share a DisplayTogether
+# screen with Q1/Q2/Q3, collapsing the two consent screens into one.
+_OWN_SCREEN_FIELDS = {"ICF_PART1", "ICF_PART2"}
 MAX_CHUNK = 5                       # cap simple-question runs at ~5 per screen
 _ACTIVE_BLOCK_PLAN = []            # set per-build by build_fmf()
 
@@ -468,7 +473,8 @@ def derive_block_plan(dictionary, sources=frozenset(), targets=frozenset(),
         while i < len(items):
             nm = items[i]["name"]
             ms = _MULTISELECT_RE.match(nm)
-            if _is_gated_text(nm, gated) or nm in _CHECKBOX_FIELDS:   # gated specify text / Check Box -> OWN screen
+            if (_is_gated_text(nm, gated) or nm in _CHECKBOX_FIELDS
+                    or nm in _OWN_SCREEN_FIELDS):   # gated specify text / Check Box / ICF -> OWN screen
                 plan.append((f"DG_BLK_{n}", (_qnum(items[i]) and f"Q{_qnum(items[i])}") or nm, [nm])); n += 1; i += 1
             elif ms:                                       # multi-select OPTION run -> one screen
                 base = ms.group(1)                          # (its trailing _OTHER_TXT is gated -> caught by
@@ -485,8 +491,9 @@ def derive_block_plan(dictionary, sources=frozenset(), targets=frozenset(),
                 chunk = []
                 while i < len(items) and len(chunk) < MAX_CHUNK:
                     nn = items[i]["name"]
-                    if _MULTISELECT_RE.match(nn) or nn in _CHECKBOX_FIELDS or _is_gated_text(nn, gated):
-                        break                               # stop before multi-select / checkbox / gated text
+                    if (_MULTISELECT_RE.match(nn) or nn in _CHECKBOX_FIELDS
+                            or nn in _OWN_SCREEN_FIELDS or _is_gated_text(nn, gated)):
+                        break                               # stop before multi-select / checkbox / ICF / gated text
                     if chunk and nn in targets:
                         break                               # skip TARGET starts a new screen
                     chunk.append(items[i]); i += 1

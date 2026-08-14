@@ -751,5 +751,15 @@
   "Sponsored (i.e., members whose contributions are being paid for by another individual, government agencies, or private entities. Includes some low-income citizens that are not indigent e.g. BHWs, PWDs)": "Sponsored (hal., mga miyembrong ang kontribusyon ay binabayaran ng ibang indibidwal, ahensya ng gobyerno, o pribadong sektor; kabilang ang ilang mababang kita na hindi kabilang sa \"indigent,\" gaya ng BHWs at PWDs)",
   "Lifetime member (i.e., individuals aged 60 and above, uniformed personnel aged 56 and above, and SSS underground miner-retirees aged 55 and above, who paid at least 120 monthly contributions to PhilHealth or the former SSS/GSIS Medicare Programs)": "Lifetime member (hal., mga indibidwal na edad 60 pataas, mga uniformed personnel na edad 56 pataas, at SSS underground miner-retirees na edad 55 pataas at nakapagbayad ng hindi bababa sa 120 buwang kontribusyon sa PhilHealth at sa dating Medicare Programs ng SSS at GSIS)",
   "Senior citizen (i.e., residents of the Philippines aged sixty (60) or above not currently covered by any other PhilHealth category, and qualified dependents of senior citizen members who are themselves senior citizens, with or without other coverage)": "Senior citizen (hal., mga residente ng Pilipinas na edad 60 pataas at hindi kasalukuyang sakop ng anumang kategorya ng PhilHealth, pati na rin ang kanilang kwalipikadong dependents na senior citizen din o kabilang sa ibang kategorya ng miyembro, may o walang coverage)",
-  "Qualified dependents (i.e., those whose contributions are declared and covered by a principal member)": "Qualified dependents (hal., mga dependents na ang kontribusyon ay sakop ng pangunahing miyembro)"
+  "Qualified dependents (i.e., those whose contributions are declared and covered by a principal member)": "Qualified dependents (hal., mga dependents na ang kontribusyon ay sakop ng pangunahing miyembro)",
+  "22. Do you have electricity in your house?": "household? May kuryente po ba ang inyong sambahayan?",
+  "46. What is his/her membership category?": "Ano ang kanyang kategorya ng pagiging miyembro? (Only answer if 'Yes' in Q45) (Para lamang kung \"Oo\" sa Q45)",
+  "Primary care provider for every Filipino": "May primary care provider para sa bawat Filipino",
+  "News": "Balita",
+  "Free primary care consultation (with a registered YAKAP/Konsulta provider)": "Libreng primary care consultation (sa rehistradong YAKAP/Konsulta provider",
+  "77. If generic, why did you buy generic medicine?": "Kung generic, bakit ka bumili ng generic na gamot?",
+  "No time": "Walang oras",
+  "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?": "[Sagot lamang ng \"oo\" sa Q112] Pagkatapos mong pumunta sa espesyalista o espesyal na serbisyo, nag-follow up ba sila sa iyo tungkol sa nangyari sa iyong pagbisita?",
+  "Other expenses": "Iba pang gastos:",
+  "Loan": "Utang"
 }

@@ -1,0 +1,1611 @@
+{
+ "F1": {
+  "BCL": {
+   "writes": {
+    "Leading health education and awareness campaigns (e.g., raising awareness about public health initiatives of DOH, disseminating information about health)": "Nangengenot sa kampanya sa health education and awareness (hal. pagpopromote kan manlalain na awareness campaigns kan DOH, asin pagtao nin impormasyon manungod sa salud)",
+    "Advocacy and policy formation (e.g., research, campaigns, collaboration with policymakers)": "Adbokasiya asin pag-gibo nin mga polisiya",
+    "Limited resources (e.g., shortages in healthcare personnel/manpower, medical equipment, essential supplies, or funding)": "Limitadong na mga resources (kakulangan sa healthcare personnel/manpower, medical na mga gamit, essential asin supplies, o kaya pondo)",
+    "Challenging quality standards (e.g., high standards that are difficult to achieve)": "Dipisil na quality standards (halangkaw na standard dipisil makuha)",
+    "Certain healthcare decisions are made by local government units and not the health facility": "Mga desisyon ginigibo kan LGU bako kan pasilidad bako an nasa health facility",
+    "Lack of specific healthcare skills (i.e., Insufficient specialists, surgeons, or other healthcare professionals with specialized skills needed in the facility)": "Kulang sa specific healthcare skills ( I.e., Kakulangan ki mga espesyalista, surgeons, asin iba pang healthcare professionals na igwa ki specialized skills na kaipuhan kan pasalidad)",
+    "Inadequate training of healthcare workers (i.e., Healthcare workers needing additional training to meet the facility's quality standards)": "Daing sapat na training sa mga healthcare workers (I.e., healthcare workers kaipuhan ki dagdag na trasining para sa marhay na quality standards kan pasilidad)",
+    "Lack of patient awareness of the benefits of UHC (e.g., patients do not know they can avail of free consultations, and selected medicines and laboratory services)": "Kulang an kaaraman kan pasyente manungod sa benepisyo kan UHC (e.g., Warang kaaraman an pasyente na pwede palan magavail ki libreng konsultasyon asin mga selected na bulong asin mga iba laboratory services",
+    "Limited accessibility of public healthcare facilities (e.g., lack of transportation options, inconvenient location, or physical barriers hindering access for patients.)": "Limitadong access sa pasilidad kan public healthcare (e.g., kulang sa transportation options, incovenient location, asin physical barriers sagabal sa access sa pasyente.)",
+    "Infrastructure not conducive for patient care (e.g., no ground floor, shortage of rooms, inadequate sanitation facilities, lack of wheelchair accessibility, etc.)": "Imprastaktura kan pasilidad dae angay sa pagaalaga sa pasyente (e.g., wara ki ground flr, kakulangan kan mga kwarto, warang marhay na sanitation, kakulangan ki wheelchair, etc.)",
+    "Beneficiaries received antibiotics as prescribed by their primary care doctor": "Mga benepisyaryo na nakaresiba ki antiobitics na tigpreskriba kan saindang doktor.",
+    "Beneficiaries received noncommunicable disease (NCD) medicine as prescribed by their primary care doctor": "Mga benepisyaryo na nakaresiba ki noncommunicable disease (NCD) medicine na tigpreskriba kan saindang doktor.",
+    "Incentives (i.e., facility receives capitation/payment for registered patients)": "nsentibo (I.e., mga pasilidad na nakaresiba ki capitation o bayad sa mga rehistradong pasyente)",
+    "Aligns with facility's mission (i.e., goals of UHC are aligned with the facility)": "Nakalinyada sa misyon kan pasilidad (I.e., goal kan UHC buda kan pasilidad)",
+    "Capability to provide services for required laboratory and radiologic services": "Kakayahan sa pagprovide ki serbisyo sa laboratory asin radiologic services",
+    "On-site Enrollment (e.g., offering patient enrollment at the health facility)": "On-site Enrollment (e.g., pag enroll digdi mismo sa pasilidad)",
+    "LGU Outreach (e.g., involvement in LGU outreach activities, such as ongoing nutrition programs)": "LGU Outreach (e.g., mga aktibidad kan LGU sa komunidad asin ongoing nutrition programs.)",
+    "Facility Outreach (e.g., engaging in outreach efforts directly from the facility)": "Outreach kan pasilidad (e.g., mga outreach hali mismo sa pasilidad)",
+    "Barangay Health Workers (BHWs) Support (e.g., receiving support from local BHWs)": "Barangay Health Workers (BHWs) Support (e.g., nakakaresiba ki suportang lokal sa BHWs)",
+    "Information Campaigns (e.g., conducting information campaigns through various channels, including but not limited to online campaigns and house-to-house visits)": "Mga information campaigns (e.g., naga conduct ki lain lain na mga information campaigns sa iba iba channels, oonline campaigns asin mga house to house na pagbisita)",
+    "Local Health Insurance Offices (LHIO); assistance or partnerships with YAKAP/Konsulta caravans": "Local Health Inusurance Officer (LHIOs) (pagaassist asin partnership an YAKAP/Kosnulta caravans)",
+    "Coordination with other government agencies and the private sector": "Koordinasyon kan mga iba pang ahensya kan gobyerno asin mga pribadong sektor",
+    "Lack of patient awareness (i.e., patients are unaware of YAKAP/Konsulta, its benefits, and registration process)": "Kulang sa kaaraman an pasyente (I.e., ang pasyente ay daing aram manungod sa YAKAP/Konsulta asin mga benefits buda an registration process)",
+    "Lack of resources (e.g., not enough manpower to conduct information campaigns or outreaches to enroll patients to YAKAP/Konsulta)": "Kulang sa resources (e.g., warang sapat na manpower na ipagconduct an campaigns asin mga outreach para sa pagenroll kan pasyente para sa YAKAP/Konsulta)",
+    "Competition with other health facilities over patient registration": "Kompetensya manungos sa ibang health facility sagkod sa pagparehistro kan pasyente",
+    "Technical / system issues of PhilHealth (e.g., data loss, errors, or platform accessibility problems)": "Teknikal/System issues kan Philhealth (e.g., data loss, errors asin problema sa platfor acccessibility)",
+    "No time": "Wara ki oras",
+    "To cover expenses related to building maintenance, equipment, and non-clinical staff": "Para mabayadan an pagmanitinir kan building, mga gamit asin non-clinical staaff",
+    "A patient’s care costs exceed the predetermined fixed payment": "An pagaling sa pasyente minsan nglalagpas sa budget dapat may primerong fixed payment",
+    "Services excluded from capitation coverage": "An serbisyo ay naglagpas sa capitation coverage",
+    "Yes, we have received all expected payments": "Iyo, natanggap na an gabos na inaasahang bayad",
+    "Yes, we have received some but not all expected payments yet": "Iyo, may igwang natanggap pero bako pa gabos na inaasahang bayad",
+    "No, we have not received any expected payments yet": "Dai pa, wara pa kaming natatanggap",
+    "No, we have not expected any payments yet": "Dai, wara man kami pa na tigaasahan",
+    "Difficulties in verifying patient enrollment (PhilHealth)": "Pagka-antala sa tracking kan patient enrollment",
+    "Facility is not active in meeting criteria for payments (e.g., facility doesn't submit necessary requirements, facility doesn't enroll patients to YAKAP/Konsulta)": "An pasilidad dai nakakatugon sa criteria (e.g., dae ngsusumitir kan mga importantent requirements, as mismong pasilidad dai naeenroll an mga pasyente sa YAKAP/Konsulta)",
+    "The current list of medicines and drugs offered": "An kasalukuyang listahan nin medisina asin gamot na ino-offer",
+    "The current laboratory/diagnostic services offered": "An kasalukuyan listahan nin laboratory/diagnostic service na ino-offer",
+    "PhilHealth coverage and reimbursement": "Philhealth coverage asin reimbursement",
+    "PhilHealth eligibility and reimbursement processes": "Philhealth eligibilty asin reimbursement process",
+    "30 days and less": "30 adlaw pababa",
+    "Frequent changes to guidelines and policies": "Pagbabago sa mga guidelines asin polisiya",
+    "Resistance to change of staff": "Pagbago kan mga staff",
+    "Staff are resistant to change": "Pagbago kan mga staff",
+    "Complying with the no fees for basic or ward accommodation": "Pagsunod sa patakaran na dae pwedeng maningil para sa basic o ward accommodation",
+    "Complying the prescribed ratio of allocation of basic and non-basic accommodation": "Pagsunod sa itinakdang ratio kan basic asin non-basic accommodation",
+    "Insufficient other sources (e.g. MAIFIP, DSWD, PCSO) (late payments applicable for MAIFIP)": "Kulang an support value asin/o iba pang pinagkukunan (hal. MAIFIP, DSWD, PCSO) (late payments ay applicable sa MAIFIP)",
+    "144. Why is this difficult to implement?": "Ngata ta dipisil ini iimplementar?",
+    "The implementation of UHC benefits is heavily reliant on LGU decisions": "An pagimplementar kan UHC benefits ay narely sa LGU",
+    "Streamline access to medical and financial aid for indigent and financially incapacitated patients": "Streamline access sa medical asin tabang pinansyal para sa mga indigent asin financially incapacitated patients",
+    "High patient volume leading to service bottlenecks": "Paglangkaw kan patient volume leading to service bottlenecks",
+    "Support given is not aligned with the needs of the facility": "An suportang tinatao dae tugma sa pangangaipo kan pasilidad",
+    "The proportion of referrals is about equal to walk-ins": "Pareho lang an bilang kan referrals asin walk-ins",
+    "I am unsure about the typical ratio of referrals to walk-ins": "Dae ako sigurado sa karaniwang ratio kan referrals asin walk-ins",
+    "Other public facility (e.g., urban/rural health centers, barangay health centers, city/municipal health offices)": "Ibang public na pasilidad (e.g., urban/rural health centers, barangay health centers, city/municipal health offices)",
+    "Very Satisfied: No improvements needed, 'patients are always referred appropriately'": "Kontentong marhay: Wara nang kailangang parahayon, \"an mga pasyente pirming tama an referral\"",
+    "Satisfied: Minor improvements needed, patients are generally referred appropriately": "Kontento: May menor na mga kailangang parahayon, sa kabuuan tama an referrals",
+    "Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional": "Neutral: May kailangang mga parahayon pero gumagana pa man",
+    "Dissatisfied: Moderate improvements needed, a number of patients are referred to the wrong specialists or do not receive appropriate follow-up care": "Dae kontento: May katamtamang mga problema, may mga pasyenteng napupunta sa maling espesyalista o dae nakakakuha nin tamang follow-up care",
+    "Facilities are overcrowded/overcapacity and do not accept our patient referrals": "Siksikan na an mga pasilidad / sobra na sa kapasidad asin dae nag-aako kan referrals",
+    "There is poor coordination between our facility and referred facilities": "Maluya an koordinasyon kan saindong pasilidad asin kan mga gin-referan",
+    "Support for independent professional development: scholarships": "Suporta para sa independent professional development: scholarships",
+    "Support for independent professional development: research grants": "Suporta para sa independent professional development: research grants",
+    "No forms of professional development are provided to our doctors": "Wara nin anomang porma kan professional development para sa mga doktor",
+    "No forms of professional development are provided to our nurses": "Wara nin anomang porma kan professional development para sa mga doktor"
+   },
+   "skips": [],
+   "counts": {
+    "write": 65,
+    "skip": 0
+   }
+  },
+  "BIS": {
+   "writes": {
+    "Conducting and coordinating health screening and promotion activities (e.g., collaborating and implementing with other units and program coordinators to promote healthy lifestyles and preventive care)": "Pagdumala ug pagkoordinar sa health screening ug mga kalihokan sa promosyon sa maayong panglawas (pananglitan: pagtinabangay ug pagpatuman kauban sa ubang mga yunit ug program coordinators aron mapasiugda ang himsog nga estilo sa pagkinabuhi ug preventive care)",
+    "Advocacy and policy formation (e.g., research, campaigns, collaboration with policymakers)": "Adbokasiya ug paghimo sa mga polisiya (pananglitan: panukiduki, mga kampanya, pagtinabangay uban sa mga magbubuhat og polisiya)",
+    "Certain healthcare decisions are made by local government units and not the health facility": "Ang pipila ka mga desisyon sa panglawas gihimo sa lokal nga panggobyerno ug dili sa pasilidad sa panglawas",
+    "Lack of specific healthcare skills (i.e., Insufficient specialists, surgeons, or other healthcare professionals with specialized skills needed in the facility)": "Kakulangan sa specific healthcare skills o kahanas sa pag-atiman sa panglawas (pananglitan: kakulangan as espesyalista, surgeons ug uban pang mga propesyonal nga adunay kahanas nga gikinanhanglan sa pasilidad)",
+    "Lack of patient awareness of the benefits of UHC (e.g., patients do not know they can avail of free consultations, and selected medicines and laboratory services)": "Kulang sa kahibalo ang mga pasyente kabahin sa mga benepisyo sa UHC (sama sa: Ang mga pasyente wala makahibalo nga mahimo sila makagamit sa libre nga konsultasyon, ug sa pipila ka mga tambal ug serbisyo sa laboratory)",
+    "Limited accessibility of public healthcare facilities (e.g., lack of transportation options, inconvenient location, or physical barriers hindering access for patients.)": "Limitadong access sa mga pasilidad sa public healthcare (Pananglitan: walay kapasidad para sa transportasyon, layo nga mga lugar ug uban pang kakulian nga makalimit sa access sa pasyente)",
+    "Infrastructure not conducive for patient care (e.g., no ground floor, shortage of rooms, inadequate sanitation facilities, lack of wheelchair accessibility, etc.)": "Ang imprastraktura dili angay para sa pag-atiman sa pasyente (pananglitan walay ground floor, kulang og kwarto, dili igo ang sanitation facilities, walay access sa wheelchair ug uban pa)",
+    "Limited resources (e.g., shortages in healthcare personnel/manpower, medical equipment, essential supplies, or funding)": "Limitadong kakuhaan/resources (pananglitan; kakulangan sa health personnel/manpower, medical equipment, gapanguna nga mga supplies)",
+    "51. Are you currently an accredited YAKAP/Konsulta provider?": "Ang pasilidad ba karon accredited na isip YAKAP/Konsulta provider?",
+    "Beneficiaries received antibiotics as prescribed by their primary care doctor": "Ang mga benepisyaryo nakadawat og antibiotics sumala sa reseta sa ilang primary care nga doktor",
+    "Beneficiaries received noncommunicable disease (NCD) medicine as prescribed by their primary care doctor": "Ang mga benepisyaryo nakadawat og tambal para sa noncommunicable diseases (NCD) sumala sa reseta sa ilang primary care nga doktor",
+    "Incentives (i.e., facility receives capitation/payment for registered patients)": "Incentives (pananglitan, ang pasilidad makadawat og capitation o bayad para sa mga rehistradong pasyente)",
+    "Aligns with facility's mission (i.e., goals of UHC are aligned with the facility)": "Nahiuyon sa misyon sa pasilidad (pananglitan, ang mga tumong sa UHC nahiuyon sa pasilidad)",
+    "To improve the services of the facilities": "Para mapalamboa ng serbisyo sa pasilidad",
+    "Capability to provide services for required laboratory and radiologic services": "Kakayahan sa paghatag og serbisyo para sa gikinahanglang laboratoryo ug radiologic services",
+    "On-site Enrollment (e.g., offering patient enrollment at the health facility)": "On-site enrollment (pananglitan, pag-offer og enrollment sa pasyente sulod sa health facility)",
+    "LGU Outreach (e.g., involvement in LGU outreach activities, such as ongoing nutrition programs)": "LGU outreach (pananglitan, partisipasyon sa LGU outreach activities sama sa nutrition programs)",
+    "Facility Outreach (e.g., engaging in outreach efforts directly from the facility)": "Facility outreach (pananglitan, direkta nga outreach gikan sa pasilidad)",
+    "Barangay Health Workers (BHWs) Support (e.g., receiving support from local BHWs)": "Suporta sa Barangay Health Workers (BHWs)",
+    "Information Campaigns (e.g., conducting information campaigns through various channels, including but not limited to online campaigns and house-to-house visits)": "Information campaigns (pananglitan, mga kampanya pinaagi sa lain-laing paagi lakip na ang online ug house-to-house)",
+    "Local Health Insurance Offices (LHIO); assistance or partnerships with YAKAP/Konsulta caravans": "Local Health Insurance Offices (LHIO); tabang o pakigtambayayong sa YAKAP/Konsulta caravans",
+    "Coordination with other government agencies and the private sector": "Koordinasyon sa ubang ahensya sa gobyerno ug pribadong sektor",
+    "Lack of patient awareness (i.e., patients are unaware of YAKAP/Konsulta, its benefits, and registration process)": "Kakulang sa kahibalo sa pasyente (pananglitan, wala sila kahibalo sa YAKAP/Konsulta, sa mga benepisyo niini, ug sa proseso sa pagrehistro)",
+    "Lack of patient willingness (i.e., patient is hesitant to provide personal information or has concerns about data security)": "Kakulang sa kaandam sa pasyente (pananglitan, nagduha-duha ang pasyente sa paghatag og personal nga impormasyon o adunay kabalaka sa seguridad sa datos)",
+    "Lack of resources (e.g., not enough manpower to conduct information campaigns or outreaches to enroll patients to YAKAP/Konsulta)": "Kakulang sa mga kahinguhaan (pananglitan, kulang sa tauhan aron maghimo og information campaigns o outreach para sa enrollment)",
+    "Competition with other health facilities over patient registration": "Kompetisyon sa ubang mga pasilidad sa panglawas sa pagparehistro sa pasyente",
+    "Technical / system issues of PhilHealth (e.g., data loss, errors, or platform accessibility problems)": "Teknikal / sistema nga problema sa PhilHealth (pananglitan, pagkawala sa data, errors, o problema sa access sa platform)",
+    "No time": "Walay oras",
+    "To cover expenses related to building maintenance, equipment, and non-clinical staff": "Aron mabayaran/masakop ang mga gasto sa pagmentinar sa building, equipment ug mga non-clinical staff",
+    "A patient’s care costs exceed the predetermined fixed payment": "Kung ang gasto sa pag-atiman sa pasyente molapas sa gitakdang fixed nga bayad.",
+    "Services excluded from capitation coverage": "Mga serbisyo nga wala maapil sa capitation coverage",
+    "Provide preventive care that may not be adequately compensated under a basic capitation plan": "Paghatag og preventive care nga basin dili igo ang bayad ubos sa basic capitation plan",
+    "Yes, we have received all expected payments": "Oo, nadawat na namo ang tanang ginapaabot namong mga bayad",
+    "Yes, we have received some but not all expected payments yet": "Oo nadawat na namo ang pipila sa mga ginapaabot namong mga bayad",
+    "No, we have not received any expected payments yet": "Wala, wala pa mi nakadawat og bisan unsang gipaabot nga bayad",
+    "Difficulties in verifying patient enrollment (PhilHealth)": "kalibog sa pag-verify sa enrollment sa Philhealth",
+    "Facility is not active in meeting criteria for payments (e.g., facility doesn't submit necessary requirements, facility doesn't enroll patients to YAKAP/Konsulta)": "Ang pasilidad dili aktibo sa pagpatuman sa mga criteria para sa bayad (panaglitan wala na-submit sa kinahanglanon nga mga requirements, wala nag-enroll sa mga pasyente sa YAKAP/Konsulta)",
+    "The current list of medicines and drugs offered": "Ang kasamtangang lista sa mga tambal ug medisina nga gitanyag",
+    "The current laboratory/diagnostic services offered": "Ang kasamtangang laboratoryo/diagnostic nga mga serbisyo nga gitanyag",
+    "PhilHealth coverage and reimbursement": "PhilHealth coverage ug reimbursement",
+    "PhilHealth eligibility and reimbursement processes": "PhilHealth eligibility ug mga proseso sa reimbursement",
+    "30 days and less": "30 ka adlaw o pababa",
+    "Complying with the no fees for basic or ward accommodation": "Pagsulod sa walay bayad alang sa basic o ward accommodation",
+    "Complying the prescribed ratio of allocation of basic and non-basic accommodation": "Pagsunod sa takdang ratio sa alokasyon sa basic ug non-basic nga accommodation",
+    "Establishment of health care provider networks (HCPNs) (i.e., referral system)": "Pagtukod sa health care provider network (HCPNs) (pananglitan: referral system)",
+    "144. Why is this difficult to implement?": "Nganong lisod kini ipatuman?",
+    "The implementation of UHC benefits is heavily reliant on LGU decisions": "Ang implementasyon sa UHC nga mga benepisyo nagdepende pag-ayo sa mga desisyon sa LGU",
+    "Not enough funding/budget": "Kulang ang pondo/budget",
+    "Streamline access to medical and financial aid for indigent and financially incapacitated patients": "Pagpasayon sa pag-angkon sa serbisyong medikal ug financial nga tabang alang sa mga kabus ug pinansyal nga dili makaya sa pasyente",
+    "High patient volume leading to service bottlenecks": "Daghang pasyente nga gadala sa paghinay sa serbisyo",
+    "Support given is not aligned with the needs of the facility": "Ang suporta nga gihatag dili sebo sa panginahanglan sa pasildad.",
+    "Almost all patients are referred, very few walk-in/self-referred": "Halos tanang pasyente kay gi-refer, gamay lang ang walk-in/self-referred",
+    "Majority of patients are referred, some walk-in/self- referred": "Daghang pasyente kay gi-refer, pipila lang ang walk-in/self-referred",
+    "The proportion of referrals is about equal to walk-ins": "Patas lang ang proporsyon sa referral ug walk-in nga mga pasyente",
+    "Majority of patients walk-in/self-referred, some are referred": "Daghang tanang pasyente kay walk-in/self-referred, gamay lang ang gi-refer",
+    "Almost all patients walk-in/self-referred, very few are referred": "Halos tanang pasyente kay walk-in/self-referred, pipila lang ang gi-refer",
+    "I am unsure about the typical ratio of referrals to walk-ins": "Dili ako sigurado kung pila ang ratio sa referral og walk-in",
+    "Other public facility (e.g., urban/rural health centers, barangay health centers, city/municipal health offices)": "Uban nga laing pampublikong pasilidad (pananglitan: urban/rural health centers, barangay health centers, city/municipal health offices)",
+    "Very Satisfied: No improvements needed, 'patients are always referred appropriately'": "Satisfied kaayo: walay kinahanglan iimprove, kanunay insakto ang pag-refer sa pasyente",
+    "Satisfied: Minor improvements needed, patients are generally referred appropriately": "Satisfied: kinahanglan og gamay nga improvement, insakto ang pag-refer sa pasyente",
+    "Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional": "Wala nasatisfy ug wala pud nasuko: kinahanglan og improvement, peo gafunction ra man",
+    "Dissatisfied: Moderate improvements needed, a number of patients are referred to the wrong specialists or do not receive appropriate follow-up care": "Wala nasatisfied: Kinahangalan og improvement, may pipila ka mga pasyente ang narefer sa sayop nga mga espesyalita o wala nakadawat og maayong follow-up",
+    "Very Dissatisfied: Major improvements needed, many patients are referred to the wrong specialists or do not receive appropriate follow-up care": "Dili jud nasatisfy: nagkinahanglan og dakong improvement, daghan sa mga pasyente na refer sa sayop nga espesyalista o wala nakadawat og maayo nga follow up.",
+    "Facilities are overcrowded/overcapacity and do not accept our patient referrals": "Ang mga pasilidad naghuot na kaayo / sobra na sa kapasidad ug dili na modawat sa among mga pasyente nga gi-refer",
+    "The referral process is slow": "Hinay ang proseso sa pag-refer",
+    "There is poor coordination between our facility and referred facilities": "Kulang ang maayong koordinasyon tali sa among pasilidad ug sa mga pasilidad nga among gi-referan",
+    "Support for independent professional development: scholarships": "Suporta sa independent professional development: scholarship",
+    "Support for independent professional development: research grants": "Suporta sa independent professional development: research grants",
+    "No forms of professional development are provided to our doctors": "Walay gihatag nga professional development para sa among mga doktor"
+   },
+   "skips": [
+    {
+     "key": "Challenging quality standards (e.g., high standards that are difficult to achieve)",
+     "reason": "conflicting wording across 2 questions - needs per-question keys",
+     "values": [
+      "Mga hagit sa pamantayan sa kalidad (Pananglitan: taas nga pamantayan nga lisud makab-ot)",
+      "Mga hagit sa pamantayan sa kalidad (pananglitan taas nga pamantayan nga lisud makab-ot)"
+     ],
+     "questions": [
+      "49",
+      "50"
+     ]
+    },
+    {
+     "key": "Inadequate training of healthcare workers (i.e., Healthcare workers needing additional training to meet the facility's quality standards)",
+     "reason": "conflicting wording across 2 questions - needs per-question keys",
+     "values": [
+      "Dili igo nga pagbansay sa mga health workers (Pananglitan: mga healthworkers nga nanginahanglan ug dugang training para makab-ot ang pamatanyan sa kalidad sa pasilidad)",
+      "Dili igo nga pagbansay sa mga health workers (sama sa: healthworkers nga nanginahanglan ug dugang training para makab-ot ang pamatanyan sa kalidad sa pasilidad)"
+     ],
+     "questions": [
+      "49",
+      "50"
+     ]
+    }
+   ],
+   "counts": {
+    "write": 69,
+    "skip": 2
+   }
+  },
+  "CEB": {
+   "writes": {
+    "Leading health education and awareness campaigns (e.g., raising awareness about public health initiatives of DOH, disseminating information about health)": "Nanguna sa mga kampanya sa edukasyon ug kahibalo sa kahimsog (e.g. Pagpataas sa kahibalo bahin sa mga inisyatiba sa public health sa DOH, pagpakaylap sa impormasyon bahin sa kahimsog)",
+    "Advocacy and policy formation (e.g., research, campaigns, collaboration with policymakers)": "Adbokasiya ug paghimo ug mga polisiya (e.g. Panukiduki, kampanya, kolaborasyon sa mga tighimo ug polisiya)",
+    "Limited resources (e.g., shortages in healthcare personnel/manpower, medical equipment, essential supplies, or funding)": "Limitado ang resources (e.g. kulang sa health workers/tauhan, medical equipment, kinahanglanong mga supplies, o funding",
+    "Challenging quality standards (e.g., high standards that are difficult to achieve)": "Hagit sa quality standards (e.g. taas nga sumbanan nga lisud makab-ot)",
+    "Certain healthcare decisions are made by local government units and not the health facility": "Pipila ka mga desisyon sa healthcare gihimo sa lokal nga gobyerno ug dili sa health facility",
+    "Inadequate training of healthcare workers (i.e., Healthcare workers needing additional training to meet the facility's quality standards)": "Kakulangan ug training sa mga healthcare workers (I.e. kinahanglang ang mga dugang nga training para sa mga healthcare workers aron maka meet sa quality standard sa pasilidad)",
+    "Lack of patient awareness of the benefits of UHC (e.g., patients do not know they can avail of free consultations, and selected medicines and laboratory services)": "Kulang sa kahibalo ang mga pasyente bahin sa mga benepisyo sa UHC (e.g. mga pasyente wala kabalo nga pwede sila maka avail ug libre nga konsultasyon, mga pili nga tambal ug laboratory services)",
+    "Limited accessibility of public healthcare facilities (e.g., lack of transportation options, inconvenient location, or physical barriers hindering access for patients.)": "Limitado ang accessibility sa public healthcare facilities (e.g. kulang sa transportasyon, dili convenient ang lokasyon, o pisikal nga mga babag nga nag-pugong sa pag-access para sa pasyente",
+    "Infrastructure not conducive for patient care (e.g., no ground floor, shortage of rooms, inadequate sanitation facilities, lack of wheelchair accessibility, etc.)": "Ang imprastraktyur dili maayo alang sa patient care (e.g. walay ground floor, kulang sa mga rooms, dili igo ang sanitation facilities, kulang sa wheelchair accessibility, etc)",
+    "Lack of specific healthcare skills (i.e., Insufficient specialists, surgeons, or other healthcare professionals with specialized skills needed in the facility)": "Kakulangan sa specific healthcare skills (I.e. dili paigo ang espesyalista, surgeon, o uban pang healthcare professionals)",
+    "Beneficiaries received antibiotics as prescribed by their primary care doctor": "Ang beneficiaries nakadawat ug antibiotics nga gi resita sa ilang primary care doctor",
+    "Beneficiaries received noncommunicable disease (NCD) medicine as prescribed by their primary care doctor": "Ang mga beneficiaries nakadawat ug tambal sa noncommunicable disease (NCD) nga gi resita sa ilang primary care doctor",
+    "Incentives (i.e., facility receives capitation/payment for registered patients)": "Incentives (I.e. facilty makadawat ug capitation/payment para sa mga naka rehistro nga pasyente)",
+    "Aligns with facility's mission (i.e., goals of UHC are aligned with the facility)": "Aligns with facility's mission (I.e. mga tumong sa UHC nahiuyon sa facility)",
+    "To improve the services of the facilities": "Para mapalambo ang serbisyo sa pasilidad",
+    "Capability to provide services for required laboratory and radiologic services": "Kapabilidad sa paghatag ug mga serbisyo nga gikinahanglan sa laboratory ug radiologic services",
+    "On-site Enrollment (e.g., offering patient enrollment at the health facility)": "On-site enrollment (e.g. pagtanyag ug enrolment sa mga pasyente sa health facility)",
+    "LGU Outreach (e.g., involvement in LGU outreach activities, such as ongoing nutrition programs)": "LGU Outreach (e.g. pag-apil sa mga outreach activities sa LGU, sama sa nagpadayon nga nutrition programs)",
+    "Barangay Health Workers (BHWs) Support (e.g., receiving support from local BHWs)": "Barangay Health Workers (BHWs) Support (e.g., nakadawat ug suporta gikan sa local BHWs)",
+    "Information Campaigns (e.g., conducting information campaigns through various channels, including but not limited to online campaigns and house-to-house visits)": "Information Campaigns (e.g. pagpahigayon ug ug mga information campaigns pinaagi sa mga nagka lainlaing channels, lakip na apan dili limitado sa mga online campaigns ug pag bisita sa mga kabalayan)",
+    "Local Health Insurance Offices (LHIO); assistance or partnerships with YAKAP/Konsulta caravans": "Local Health Insurance Offices (LHIO's) (tabang o partnership uban sa YAKAP/Konsulta caravans",
+    "Coordination with other government agencies and the private sector": "Koordinasyon sa lain nga mga ahensya sa gobyerno ug pribado nga sektor",
+    "Lack of patient awareness (i.e., patients are unaware of YAKAP/Konsulta, its benefits, and registration process)": "Kulang sa kahibalo ang mga pasyente (I.e. wala kahibalo ang mga pasyente bahin sa YAKAP/Konsulta, ang mga benepisyo ug proseso sa pagpa rehistro)",
+    "Lack of patient willingness (i.e., patient is hesitant to provide personal information or has concerns about data security)": "Kulang sa pag-uyon sa pasyente (I.e. ang pasyente magduha-duha sa paghatag ug personal information o adunay kahadlok bahin sa data security)",
+    "Lack of resources (e.g., not enough manpower to conduct information campaigns or outreaches to enroll patients to YAKAP/Konsulta)": "Kulang sa resources (I.e. kulang sa manpower para maghimo ug information campaigns o outreach para mag enrol sa YAKAP/Konsulta",
+    "Competition with other health facilities over patient registration": "Kumpetisyon sa laing health facilities para sa patient registration",
+    "Technical / system issues of PhilHealth (e.g., data loss, errors, or platform accessibility problems)": "Technical/system issues sa PhilHealth (I.e. data loss errors, or platform accessibility problems)",
+    "No time": "Walay oras",
+    "To cover expenses related to building maintenance, equipment, and non-clinical staff": "Aron matabangan ang mga galastuhan nga may kalabutan sa pagmentina sa building, kagamitan, ug nonclinical staff",
+    "A patient’s care costs exceed the predetermined fixed payment": "Ang gasto sa pag-atiman sa pasyente labaw sa gitakdang bayad",
+    "Services excluded from capitation coverage": "Mga serbisyo nga dili sakop sa capitation",
+    "Provide preventive care that may not be adequately compensated under a basic capitation plan": "Maghatag ug preventive care nga dili igo ang bayad sa basic capitation plan",
+    "Yes, we have received all expected payments": "Oo, nakadawat na mi sa tanang bayad nga gilauman",
+    "Yes, we have received some but not all expected payments yet": "Oo, nadawat na namo ang uban pero kulang pa sa gilauman nga bayad",
+    "No, we have not received any expected payments yet": "Wala pa, wala mi makadawat bisan unsa nga bayad nga gilauman",
+    "No, we have not expected any payments yet": "Dili, wala pa mi magpaabot ug bisan unsa nga bayad",
+    "Difficulties in verifying patient enrollment (PhilHealth)": "Lisud i-verify ang enrollment sa pasyente sa PhilHealth",
+    "Facility is not active in meeting criteria for payments (e.g., facility doesn't submit necessary requirements, facility doesn't enroll patients to YAKAP/Konsulta)": "Ang pasilidad dili aktibo sa pagkab-ot sa kondisyon sa bayad (e.g. wala mag-submit sa mga kinahanglanon nga requirements, wala mag-enroll sa mga pasyente sa YAKAP/Konsulta)",
+    "The current list of medicines and drugs offered": "Ang mga tambal ug droga nga kasamtangan gitanyag",
+    "The current laboratory/diagnostic services offered": "Ang mga laboratory/diagnostic nga kasamtangan gitanyag",
+    "Frequent changes to guidelines and policies": "Kanunay nga pagbag-o sa mga giya ug polisiya",
+    "Resistance to change of staff": "Pagsupak sa kausaban sa mga kawani",
+    "Staff are resistant to change": "Pagsupak sa kausaban sa mga kawani",
+    "Complying the prescribed ratio of allocation of basic and non-basic accommodation": "Pagsunod sa gitakda nga ratio of allocation para sa basic ug non-basic nga accommodation",
+    "Insufficient other sources (e.g. MAIFIP, DSWD, PCSO) (late payments applicable for MAIFIP)": "kulang ang uban pang sources (e.g. MAIFIP, DSWD, PCSO)",
+    "Establishment of health care provider networks (HCPNs) (i.e., referral system)": "Pagtukod sa mga network sa mga health care providers (HCPNs) (o sistema sa referral)",
+    "144. Why is this difficult to implement?": "Ngano lisud man ipatuman?",
+    "The implementation of UHC benefits is heavily reliant on LGU decisions": "Ang pagpatuman sa mga benepisyo sa UHC nagsalig pag-ayo sa mga desisyon sa LGU",
+    "Not enough funding/budget": "Kulang sa pundo/budget",
+    "Streamline access to medical and financial aid for indigent and financially incapacitated patients": "Ipahapsay ang access sa medikal ug pinansyal nga tabang para sa mga indigent ug mga pasyente nga walay kapasidad sa pinansyal",
+    "Incomplete documentation from patients": "Dili kompleto nga dokumentasyon gikan sa mga pasyente",
+    "High patient volume leading to service bottlenecks": "Daghang mga pasyente nga miresulta sa paghuot sa serbisyo",
+    "Support given is not aligned with the needs of the facility": "Ang gihatag nga suporta dili nahan-ay sa mga panginahanglan sa pasilidad",
+    "Almost all patients are referred, very few walk-in/self-referred": "Halos tanan nga mga pasyente ang gi-refer, gamay ra ang walk-in/self-referred",
+    "Majority of patients are referred, some walk-in/self- referred": "Kadaghanan sa mga pasyente ang gi-refer, uban ang walk-in/self-referred",
+    "The proportion of referrals is about equal to walk-ins": "Ang proporsyon sa mga gi-refer pareho sa mga walk-in",
+    "Majority of patients walk-in/self-referred, some are referred": "Kadaghanan sa mga pasyente ang walk-in/self-referred, uban ang gi-refer",
+    "Almost all patients walk-in/self-referred, very few are referred": "Halos tanan nga mga pasyente ang walk-in/self-referred, gamay ra ang gi-refer",
+    "I am unsure about the typical ratio of referrals to walk-ins": "Dili ko sigurado sa kasagarang ratio sa mga gi-refer ug mga walk-in",
+    "Other public facility (e.g., urban/rural health centers, barangay health centers, city/municipal health offices)": "Laing pampublikong pasilidad (pananglitan, urban/rural health center, barangay health center, municipal health office)",
+    "Very Satisfied: No improvements needed, 'patients are always referred appropriately'": "Tagbaw kaayo: Wala nay kinahanglan nga paglambo, \"ang mga pasyente kanunay nga gi-refer sa ensakto\"",
+    "Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional": "Neither natagabaw o wala natagbaw: Paglambo gikinahnaglan, pero sa kinatibuk-an magamit",
+    "Dissatisfied: Moderate improvements needed, a number of patients are referred to the wrong specialists or do not receive appropriate follow-up care": "Wala natagbaw: Kasagaran nga paglambo gikinahanglan, pipila ka mga pasyente na refer sa mga sayop nga espesyalista",
+    "Very Dissatisfied: Major improvements needed, many patients are referred to the wrong specialists or do not receive appropriate follow-up care": "Wala gyud natagbaw: Dako nga paglambo ang gikinahanglan, daghang pasyente ang narefer sa mga sayop nga espesyalista o wala kadawat ug ensakto nga follow-up care",
+    "Facilities are overcrowded/overcapacity and do not accept our patient referrals": "Puno na ang mga pasilidad ug dili na modawat sa among mga gi-refer nga pasyente",
+    "The referral process is slow": "Hinay ang proseso sa referral",
+    "There is poor coordination between our facility and referred facilities": "Dili maayo ang koordinasyon tali sa among pasilidad ug sa mga gi-referan nga pasilidad"
+   },
+   "skips": [
+    {
+     "key": "Complying with the no fees for basic or ward accommodation",
+     "reason": "conflicting wording across 2 questions - needs per-question keys",
+     "values": [
+      "Pagsunod sa walay bayad para sa basic nga accommodation",
+      "Pagsunod sa walay bayad para sa basic o ward nga accommodation"
+     ],
+     "questions": [
+      "137",
+      "140"
+     ]
+    }
+   ],
+   "counts": {
+    "write": 67,
+    "skip": 1
+   }
+  },
+  "FIL": {
+   "writes": {
+    "Leading health education and awareness campaigns (e.g., raising awareness about public health initiatives of DOH, disseminating information about health)": "Nangunguna sa mga kampanya sa edukasyong pangkalusugan at pagpapataas ng kamalayan (hal. pagpapalaganap ng kaalaman tungkol sa mga pampublikong inisyatiba sa kalusugan ng DOH, pagpapakalat ng impormasyon tungkol sa kalusugan)",
+    "Advocacy and policy formation (e.g., research, campaigns, collaboration with policymakers)": "Adbokasiya at pagbuo ng polisiya (hal. pananaliksik, mga kampanya, pakikipagtulungan sa mga gumagawa ng polisiya)",
+    "Limited resources (e.g., shortages in healthcare personnel/manpower, medical equipment, essential supplies, or funding)": "Limitadong mapagkukunan (hal. kakulangan sa healthcare personnel/manpower, medikal na kagamitan, mahahalagang suplay, o pondo)",
+    "Challenging quality standards (e.g., high standards that are difficult to achieve)": "Hamon sa kalidad ng pamantayan (hal. mataas na pamantayan na mahirap maabot)",
+    "Certain healthcare decisions are made by local government units and not the health facility": "Ang ilang desisyon sa pangangalaga sa kalusugan ay ginagawa ng lokal na pamahalaan at hindi ng pasilidad",
+    "Lack of specific healthcare skills (i.e., Insufficient specialists, surgeons, or other healthcare professionals with specialized skills needed in the facility)": "Kakulangan sa partikular na kasanayan sa pangangalaga sa kalusugan (hal. kulang ang mga espesyalista, surgeon, o ibang propesyonal na may espesyal na kasanayan na kailangan sa pasilidad)",
+    "Inadequate training of healthcare workers (i.e., Healthcare workers needing additional training to meet the facility's quality standards)": "Hindi sapat na pagsasanay ng mga healthcare worker (hal. kailangan ng karagdagang training upang maabot ang kalidad ng pamantayan ng pasilidad)",
+    "Lack of patient awareness of the benefits of UHC (e.g., patients do not know they can avail of free consultations, and selected medicines and laboratory services)": "Kakulangan sa kamalayan ng pasyente tungkol sa benepisyo ng UHC (hal. hindi alam ng pasyente na maaari silang makinabang sa libreng konsultasyon, piling gamot, at serbisyo sa laboratoryo)",
+    "Limited accessibility of public healthcare facilities (e.g., lack of transportation options, inconvenient location, or physical barriers hindering access for patients.)": "Limitadong aksesibilidad ng mga pampublikong pasilidad sa kalusugan (hal. kakulangan sa transportasyon, hindi maginhawang lokasyon, o pisikal na hadlang na nagpapahirap sa pasyente)",
+    "Infrastructure not conducive for patient care (e.g., no ground floor, shortage of rooms, inadequate sanitation facilities, lack of wheelchair accessibility, etc.)": "Imprastraktura na hindi angkop para sa pangangalaga ng pasyente (hal. walang ground floor, kakulangan sa mga silid, hindi sapat na pasilidad sa kalinisan, kawalan ng accessibility para sa wheelchair, atbp.)",
+    "57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?": "Batay sa iyong kaalaman, Ano ang halaga ng capitation para sa YAKAP/Konsulta Package? (Ang capitation ay ang halagang natatanggap kada taon para sa bawat rehistradong pasyente para sa pagbibigay ng mga serbisyo ng YAKAP/Konsulta package.)",
+    "Beneficiaries received antibiotics as prescribed by their primary care doctor": "Ang mga benepisyaryo ay nakatanggap ng antibiotics ayon sa reseta ng kanilang primary care doctor",
+    "Beneficiaries received noncommunicable disease (NCD) medicine as prescribed by their primary care doctor": "Ang mga benepisyaryo ay nakatanggap ng antibiotics ayon sa reseta ng kanilang primary care doctor",
+    "Incentives (i.e., facility receives capitation/payment for registered patients)": "Mga insentibo (hal., tumatanggap ang pasilidad ng capitation/bayad para sa nakarehistrong pasyente)",
+    "Aligns with facility's mission (i.e., goals of UHC are aligned with the facility)": "Ayon sa misyon ng pasilidad (hal., naka-align ang mga layunin ng UHC sa pasilidad)",
+    "Mandated/required by DOH/UHC": "Ipinaguutos/kinakailangan ng DOH/UHC",
+    "To improve the services of the facilities": "Upang mapabuti ang mga serbisyo ng pasilidad",
+    "Capability to provide services for required laboratory and radiologic services": "Kakayahang magbigay ng kinakailangang laboratoryo at radiologic services",
+    "On-site Enrollment (e.g., offering patient enrollment at the health facility)": "On-site Enrollment (hal., pag-aalok ng enrollment ng pasyente mismo sa pasilidad pangkalusugan)",
+    "LGU Outreach (e.g., involvement in LGU outreach activities, such as ongoing nutrition programs)": "LGU Outreach (hal., pakikilahok sa mga outreach activity ng LGU tulad ng mga umiiral na programa sa nutrisyon)",
+    "Facility Outreach (e.g., engaging in outreach efforts directly from the facility)": "Facility Outreach (hal., pagsasagawa ng mga outreach activity na direktang pinamumunuan ng pasilidad)",
+    "Barangay Health Workers (BHWs) Support (e.g., receiving support from local BHWs)": "Suporta ng mga Barangay Health Worker (BHW) (hal., pagtanggap ng tulong mula sa mga lokal na BHW)",
+    "Information Campaigns (e.g., conducting information campaigns through various channels, including but not limited to online campaigns and house-to-house visits)": "Mga Information Campaign (hal., pagsasagawa ng mga information campaign sa iba't ibang paraan, kabilang ngunit hindi limitado sa online campaigns at house-to-house visits)",
+    "Local Health Insurance Offices (LHIO); assistance or partnerships with YAKAP/Konsulta caravans": "Local Health Insurance Offices (LHIOs) (hal., tulong o pakikipag-partner sa mga YAKAP/Konsulta caravans",
+    "Lack of patient awareness (i.e., patients are unaware of YAKAP/Konsulta, its benefits, and registration process)": "Kakulangan sa kaalaman ng mga pasyente (hal., hindi alam ng mga pasyente ang tungkol sa YAKAP/Konsulta, mga benepisyo nito, at ang proseso ng pagpaparehistro)",
+    "Lack of patient willingness (i.e., patient is hesitant to provide personal information or has concerns about data security)": "Kakulangan sa kagustuhan ng mga pasyente (hal., nag-aalangan ang pasyente na magbigay ng personal na impormasyon o may pangamba tungkol sa seguridad ng datos)",
+    "Lack of resources (e.g., not enough manpower to conduct information campaigns or outreaches to enroll patients to YAKAP/Konsulta)": "Kakulangan sa resources (hal., hindi sapat ang manpower upang magsagawa ng information campaigns o outreach para ma-enroll ang mga pasyente sa YAKAP/Konsulta)",
+    "Competition with other health facilities over patient registration": "Kumpetisyon sa ibang mga pasilidad pangkalusugan sa pagrerehistro ng mga pasyente",
+    "Technical / system issues of PhilHealth (e.g., data loss, errors, or platform accessibility problems)": "Mga teknikal o isyu sa sistema ng PhilHealth (hal., pagkawala ng datos, mga error, o problema sa access ng platform)",
+    "No time": "Walang Oras",
+    "To cover expenses related to building maintenance, equipment, and non-clinical staff": "Upang tustusan ang mga gastusin na may kaugnayan sa pagpapanatili ng gusali, kagamitan, at hindi-klinikal na staff",
+    "A patient’s care costs exceed the predetermined fixed payment": "Ang gastos sa pangangalaga ng pasyente ay lumalagpas sa itinakdang fixed payment",
+    "Services excluded from capitation coverage": "Mga serbisyo na hindi sakop ng capitation coverage",
+    "Provide preventive care that may not be adequately compensated under a basic capitation plan": "Magbigay ng preventive care na maaaring hindi sapat ang kompensasyon sa ilalim ng basic capitation plan",
+    "Yes, we have received some but not all expected payments yet": "Oo, natanggap na namin ang ilan ngunit hindi pa lahat ng inaasahang bayad",
+    "No, we have not received any expected payments yet": "Hindi, wala pa kaming natanggap na anumang inaasahang bayad",
+    "No, we have not expected any payments yet": "Hindi, wala pa kaming inaasahang bayad",
+    "Difficulties in verifying patient enrollment (PhilHealth)": "Kahirapan sa pag-verify ng enrollment ng pasyente (PhilHealth)",
+    "Facility is not active in meeting criteria for payments (e.g., facility doesn't submit necessary requirements, facility doesn't enroll patients to YAKAP/Konsulta)": "Ang pasilidad ay hindi aktibo sa pagtupad sa mga criteria para sa bayad (hal., hindi nagsusumite ng kinakailangang requirements, hindi nag-e-enroll ng mga pasyente sa YAKAP/Konsulta)",
+    "The current list of medicines and drugs offered": "Ang kasalukuyang listahan ng mga gamot at medisina na ibinibigay",
+    "The current laboratory/diagnostic services offered": "Ang kasalukuyang laboratoryo/diagnostic na serbisyo na ibinibigay",
+    "30 days and less": "30 araw pababa",
+    "Frequent changes to guidelines and policies": "Madalas na pagbabago sa mga alituntunin at patakaran",
+    "Resistance to change of staff": "Pagiging tutol o hindi pagsunod ng na tauhan sa pagbabago",
+    "Staff are resistant to change": "Ang mga kawani ay may pagtutol sa pagbabago.",
+    "Complying the prescribed ratio of allocation of basic and non-basic accommodation": "Pagsunod sa itinakdang ratio ng alokasyon para sa basic at non-basic accommodation",
+    "Insufficient other sources (e.g. MAIFIP, DSWD, PCSO) (late payments applicable for MAIFIP)": "Hindi sapat ang ibang pinagkukunan (hal., MAIFIP, DSWD, PCSO) (late payments para sa MAIFIP)",
+    "Establishment of health care provider networks (HCPNs) (i.e., referral system)": "Pagpapatatag ng health care provider networks (HCPNs) (hal., referral system)",
+    "144. Why is this difficult to implement?": "Bakit ito mahirap ipatupad?",
+    "The implementation of UHC benefits is heavily reliant on LGU decisions": "Ang pagpapatupad ng UHC benefits ay lubos na nakasalalay sa mga desisyon ng LGU",
+    "Technical/system issues of PhilHealth (e.g., data loss, errors, or platform accessibility problems)": "Mga teknikal/system issues ng PhilHealth (hal., pagkawala ng data, mga error, o problema sa accessibility ng platform)",
+    "Streamline access to medical and financial aid for indigent and financially incapacitated patients": "Pabilisin ang pag-access sa medikal at pinansyal na tulong para sa mga indigent at financially incapacitated na pasyente",
+    "Incomplete documentation from patients": "Kakulangan sa kumpletong dokumentasyon mula sa mga pasyente",
+    "High patient volume leading to service bottlenecks": "Mataas na dami ng pasyente na nagdudulot ng bottleneck sa serbisyo",
+    "Support given is not aligned with the needs of the facility": "Ang suporta ay hindi tumutugma sa pangangailangan ng pasilidad",
+    "Almost all patients are referred, very few walk-in/self-referred": "Halos lahat ng pasyente ay na-refer, kakaunti lamang ang walk-in/self-referred",
+    "Majority of patients are referred, some walk-in/self- referred": "Karamihan ng pasyente ay na-refer, may ilang walk-in/self-referred",
+    "The proportion of referrals is about equal to walk-ins": "Halos pantay ang bilang ng referrals at walk-in/self-referred",
+    "Majority of patients walk-in/self-referred, some are referred": "Karamihan ng pasyente ay walk-in/self-referred, may ilang na-refer",
+    "Almost all patients walk-in/self-referred, very few are referred": "Halos lahat ng pasyente ay walk-in/self-referred, kakaunti lamang ang na-refer",
+    "I am unsure about the typical ratio of referrals to walk-ins": "Hindi ako sigurado sa karaniwang ratio ng referrals at walk-in/self-referred",
+    "Other public facility (e.g., urban/rural health centers, barangay health centers, city/municipal health offices)": "Ibang pampublikong pasilidad (hal. urban/rural health centers, barangay health centers, city/municipal health offices)",
+    "Very Satisfied: No improvements needed, 'patients are always referred appropriately'": "Lubos na Nasiyahan: Walang kailangan baguhin, \"ang mga pasyente ay laging na-refer nang nararapat\"",
+    "Satisfied: Minor improvements needed, patients are generally referred appropriately": "Nasiyahan: Kailangan lamang ng maliliit na pagbabago, ang mga pasyente ay karaniwang na-refer nang nararapat",
+    "Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional": "Hindi Nasiyahan o Hinding Hindi Nasiyahan: Kailangan ng pagbabago, ngunit karaniwang gumagana",
+    "Dissatisfied: Moderate improvements needed, a number of patients are referred to the wrong specialists or do not receive appropriate follow-up care": "Hindi Nasiyahan: Kailangan ng katamtamang pagbabago, maraming pasyente ang na-refer sa maling espesyalista o hindi nakakatanggap ng tamang follow-up",
+    "Very Dissatisfied: Major improvements needed, many patients are referred to the wrong specialists or do not receive appropriate follow-up care": "Lubos na Hindi Nasiyahan: Kailangan ng malaking pagbabago, maraming pasyente ang narefer sa maling espesyalista o hindi nakakatanggap ng tamang follow-up care",
+    "Facilities are overcrowded/overcapacity and do not accept our patient referrals": "Masikip/puno ang mga pasilidad at hindi tinatanggap ang aming mga referral ng pasyente",
+    "The referral process is slow": "Mabagal ang proseso ng referral",
+    "There is poor coordination between our facility and referred facilities": "Mahina ang koordinasyon sa pagitan ng aming pasilidad at ng mga pinapadalang pasilidad",
+    "Multi-tasking": "Pagsasabay-sabay ng iba't ibang gawain",
+    "Support for independent professional development: scholarships": "Suporta para sa independent na propesyonal na pag-unlad: mga scholarship",
+    "Support for independent professional development: research grants": "Suporta para sa independent na propesyonal na pag-unlad: mga grant para sa pananaliksik",
+    "No forms of professional development are provided to our doctors": "Walang mga anyo ng propesyonal na pag-unlad na ibinibigay sa aming mga doktor",
+    "No forms of professional development are provided to our nurses": "Walang mga anyo ng propesyonal na pag-unlad na ibinibigay sa aming mga nars"
+   },
+   "skips": [
+    {
+     "key": "Complying with the no fees for basic or ward accommodation",
+     "reason": "conflicting wording across 2 questions - needs per-question keys",
+     "values": [
+      "Pagsunod sa batas na walang dagdag na bayad para sa basic o ward accommodation",
+      "Pagsunod sa prinsipyong walang dagdag na bayad para sa basic o ward accommodation"
+     ],
+     "questions": [
+      "137",
+      "140"
+     ]
+    }
+   ],
+   "counts": {
+    "write": 75,
+    "skip": 1
+   }
+  },
+  "HIL": {
+   "writes": {
+    "Leading health education and awareness campaigns (e.g., raising awareness about public health initiatives of DOH, disseminating information about health)": "Pagpanguna sa kampanya edukasyon sa ikaayong-lawas kag pagpamuklat (e.g. pagpataas sang kamuklatan tuhoy sa public health initiatives sang DOH, pagpalapnag sang impormasyon natuhoy sa ikaayong-lawas)",
+    "Conducting and coordinating health screening and promotion activities (e.g., collaborating and implementing with other units and program coordinators to promote healthy lifestyles and preventive care)": "Pagtigayon kag pagkoordinar sang mga aktibidad para sa health screening kag promosyon sang ikaayong-lawas (e.g. pagbinuligay kag pag-implementar kaupod sa iban pa nga unit kag program coordinators para ma-promote/lambo ang maayo nga pagginawi kag paglikaw sa mga masakit)",
+    "Advocacy and policy formation (e.g., research, campaigns, collaboration with policymakers)": "Adbokasya kag paghimo sang polisiya (e.g. research, kampanya, pagbinuligay upod sa mga policymakers)",
+    "Resource mobilization and fundraising (e.g., securing funding, grants)": "Pagmobilisa sang mga rekurso kag pagpangalap sang pondo (e.g. pagpangita kag pagsiguro sang pondo kag mga suporta)",
+    "Limited resources (e.g., shortages in healthcare personnel/manpower, medical equipment, essential supplies, or funding)": "Kulang sa resources/rekurso (e.g., kulang sa healthcare personnel/manpower, medical equipment, essential supplies, ukon pondo)",
+    "Challenging quality standards (e.g., high standards that are difficult to achieve)": "Mabudlay nga quality standards (e.g., mataas nga standards nga indi masarangan)",
+    "Certain healthcare decisions are made by local government units and not the health facility": "Ang pila ka healthcare decisions ginahimo sang local government units kag indi sang health facility",
+    "Lack of specific healthcare skills (i.e., Insufficient specialists, surgeons, or other healthcare professionals with specialized skills needed in the facility)": "Kulang sa specific healthcare skills (e.g., kulang sa specialists, surgeons, ukon iban nga professionals nga may espesyal nga abilidad nga kinahanglanon sang pasilidad)",
+    "Inadequate training of healthcare workers (i.e., Healthcare workers needing additional training to meet the facility's quality standards)": "Indi bastante/Kulang ang training sang healthcare workers (e.g., kinahanglan pa sang dugang nga training agud masunod ang quality standards sang pasilidad)",
+    "Lack of patient awareness of the benefits of UHC (e.g., patients do not know they can avail of free consultations, and selected medicines and laboratory services)": "Kulang ang ihibalo sang pasyente parte sa benepisyo sang UHC (e.g., indi kabalo nga pwede sila makakuha sang libre nga consultation, bulong, kag laboratory services)",
+    "Infrastructure not conducive for patient care (e.g., no ground floor, shortage of rooms, inadequate sanitation facilities, lack of wheelchair accessibility, etc.)": "Indi maayo ang infrastructure para sa pag-atipan sang pasyente (e.g., wala ground floor, kulang sang kuwarto, indi maayo ang sanitation facilities, kulang sa wheelchair accessibility, etc.)",
+    "Limited accessibility of public healthcare facilities (e.g., lack of transportation options, inconvenient location, or physical barriers hindering access for patients.)": "Limitado ang access sang public healthcare facilities (e.g., kulang sa transportasyon, indi maayo ang lokasyon, ukon may physical barriers nga naga-ulang sa pasyente)",
+    "Beneficiaries received antibiotics as prescribed by their primary care doctor": "Ang mga benepisyaryo nakabaton sang antibiotics nga ginreseta sang ila primary care doctor",
+    "Beneficiaries received noncommunicable disease (NCD) medicine as prescribed by their primary care doctor": "Ang mga benepisyaryo nakabaton sang noncommunicable disease (NCD) medicine nga ginreseta sang ila primary care doctor",
+    "Incentives (i.e., facility receives capitation/payment for registered patients)": "Insentibo (halimbawa, ang pasilidad nakabaton sang capitation/payment para sa mga narehistro nga pasyente)",
+    "Aligns with facility's mission (i.e., goals of UHC are aligned with the facility)": "Nag-aangot sa misyon sang pasilidad (halimbawa, ang mga tinutuyo sang UHC kaangay sa pasilidad)",
+    "Mandated/required by DOH/UHC": "Ginamando/kinahanglan sang DOH/UHC",
+    "To improve the services of the facilities": "Para mapaayo ang serbisyo sang pasilidad",
+    "Capability to provide services for required laboratory and radiologic services": "Kapasidad sa paghatag sang kinahanglan nga laboratory kag radiologic services",
+    "On-site Enrollment (e.g., offering patient enrollment at the health facility)": "pag-enroll sang pasyente direkta sa health facility",
+    "LGU Outreach (e.g., involvement in LGU outreach activities, such as ongoing nutrition programs)": "pag-lakip sa outreach sang LGU, pareho sang nutrition programs",
+    "Facility Outreach (e.g., engaging in outreach efforts directly from the facility)": "outreach nga ginahimo mismo sang pasilidad",
+    "Barangay Health Workers (BHWs) Support (e.g., receiving support from local BHWs)": "Suporta sang Barangay Health Workers (BHWs)",
+    "Local Health Insurance Offices (LHIO); assistance or partnerships with YAKAP/Konsulta caravans": "bulig ukon partner sa YAKAP/Konsulta caravans",
+    "Coordination with other government agencies and the private sector": "Koordinasyon sa iban nga ahensya sang gobyerno kag pribado nga sektor",
+    "Lack of patient awareness (i.e., patients are unaware of YAKAP/Konsulta, its benefits, and registration process)": "Kulang sang ihibalo sang pasyente (wala sila kabalo sa YAKAP/Konsulta, benepisyo, kag proseso sang pag-enroll)",
+    "Lack of patient willingness (i.e., patient is hesitant to provide personal information or has concerns about data security)": "Indi handa ang pasyente (nagapangduha-duha sa paghatag sang personal nga impormasyon ukon may kabalaka sa data security)",
+    "Lack of resources (e.g., not enough manpower to conduct information campaigns or outreaches to enroll patients to YAKAP/Konsulta)": "Kulang sang resources/rekurso (wala sang bastante nga tawo para sa kampanya sang impormasyon ukon outreach)",
+    "Competition with other health facilities over patient registration": "Kompetisyon sa iban nga health facility sa pag-enroll sang pasyente",
+    "Technical / system issues of PhilHealth (e.g., data loss, errors, or platform accessibility problems)": "Teknikal / system issues sang PhilHealth (data loss, errors, ukon problema sa accessibility sang platform)",
+    "No time": "Wala sang oras",
+    "To cover expenses related to building maintenance, equipment, and non-clinical staff": "Para matabunan ang gastos sa building maintenance, equipment, kag non-clinical staff",
+    "A patient’s care costs exceed the predetermined fixed payment": "Kung ang gastos sang pasyente masobra sa fixed payment nga ginhatag",
+    "Services excluded from capitation coverage": "Para sa mga serbisyo nga indi sakop sang capitation coverage",
+    "Provide preventive care that may not be adequately compensated under a basic capitation plan": "Para makahatag preventive care nga kulang ang bayad sa basic capitation plan",
+    "Yes, we have received all expected payments": "Oo, nabaton na ang tanan nga ginapaabot nga bayad",
+    "Yes, we have received some but not all expected payments yet": "Oo, nabaton na ang iban pero indi pa tanan nga ginapaabot nga bayad",
+    "No, we have not received any expected payments yet": "Indi, wala pa kami nakabaton sang ginapaabot nga bayad",
+    "No, we have not expected any payments yet": "Indi, wala pa kami may ginapaabot nga bayad",
+    "Difficulties in verifying patient enrollment (PhilHealth)": "May kabudlayan sa pag-verify sang enrollment sang pasyente (PhilHealth)",
+    "Facility is not active in meeting criteria for payments (e.g., facility doesn't submit necessary requirements, facility doesn't enroll patients to YAKAP/Konsulta)": "Indi aktibo ang pasilidad/ospital sa pagtigayon sang criteria para sa bayad (e.g., wala nag-submit sang requirements, wala nag-enroll sang pasyente sa YAKAP/Konsulta)",
+    "The current list of medicines and drugs offered": "Ang current list sang mga bulong kag medisina nga ginahatag",
+    "The current laboratory/diagnostic services offered": "Ang current laboratory/diagnostic services nga ginahatag",
+    "30 days and less": "30 ka adlaw kag kubos pa",
+    "Frequent changes to guidelines and policies": "Masami nga pagbag-o sa mga guidelines kag polisiya",
+    "Resistance to change of staff": "Ang staff indi gusto magbag-o",
+    "Staff are resistant to change": "Ang staff indi gusto magbag-o",
+    "Complying with the no fees for basic or ward accommodation": "Pagsunod sa wala sing bayad para sa basic ukon ward nga akomodasyon",
+    "Complying the prescribed ratio of allocation of basic and non-basic accommodation": "Pagsunod sa prescribed nga ratio sang allocation sang basic kag non-basic nga akomodasyon",
+    "Insufficient other sources (e.g. MAIFIP, DSWD, PCSO) (late payments applicable for MAIFIP)": "Kulang ang iban nga mga rekurso (halimbawa MAIFIP, DSWD, PCSO) (hinali nga bayad nag-aaplikar para sa MAIFIP)",
+    "Establishment of health care provider networks (HCPNs) (i.e., referral system)": "Pagtukod sang health care provider networks (HCPNs) (halimbawa, sistema sang referral)",
+    "144. Why is this difficult to implement?": "Ngaa mabudlay ipatuman?",
+    "The implementation of UHC benefits is heavily reliant on LGU decisions": "Ang pagpatuman sang UHC nga benepisyo nagasalig gid sa mga desisyon sang LGU",
+    "Streamline access to medical and financial aid for indigent and financially incapacitated patients": "Pahapuson ang pagkuha sang bulig medikal kag pinansyal para sa mga pasyente nga pigado kag wala sang kapasidad pinansyal",
+    "Incomplete documentation from patients": "Kulang nga dokumentasyon halin sa mga pasyente",
+    "High patient volume leading to service bottlenecks": "Sobra nga kadamuon sang mga pasyente nga nagatuga sang pagguot kag paghinay sang paghatag sang serbisyo.",
+    "Almost all patients are referred, very few walk-in/self-referred": "Halos tanan nga pasyente ginarefer, talagsa lang ang nagakadto kag nagaself-refer",
+    "Majority of patients are referred, some walk-in/self- referred": "Kadam-an sang pasyente ginarefer, may pila nga nagakadto/kag nagaself-refer",
+    "The proportion of referrals is about equal to walk-ins": "Ang proporsyon sang mga ginarefer halos pareho sa nagakadto/kag nagaself-refer",
+    "Majority of patients walk-in/self-referred, some are referred": "Kadam-an sang pasyente nagakadto/kag nagaself-refer, may pila nga ginarefer",
+    "Almost all patients walk-in/self-referred, very few are referred": "Halos tanan nga pasyente nagakadto/kag nagaself-refer, talagsa lang ang ginarefer",
+    "I am unsure about the typical ratio of referrals to walk-ins": "Indi ako sigurado sang tipikal nga proporsyon sang ginarefer ukon ang direkta lang nga nagkadto.",
+    "Other public facility (e.g., urban/rural health centers, barangay health centers, city/municipal health offices)": "Iban nga pampublikong pasilidad (e.g., health centers sa syudad/kabukiran, barangay health centers, city/municipal health offices)",
+    "Very Satisfied: No improvements needed, 'patients are always referred appropriately'": "Tuman ka satisfied - Wala na sang kinahanglan nga paayuhon; pirmi nga nagakabaton ang mga pasyente nga gina-refer namon",
+    "Satisfied: Minor improvements needed, patients are generally referred appropriately": "Satisfied - kinahanglan paayuhon lang gamay; kadam-an sang mga pasyente nga ginarefer namon mabaton man",
+    "Dissatisfied: Moderate improvements needed, a number of patients are referred to the wrong specialists or do not receive appropriate follow-up care": "Dissatisfied: May pila ka dapat paayuhon, may pila ka mga pasyente nga ginarefer sa sala nga espesyalista ukon wala nakabaton sang nagakaigo follow-up care.",
+    "Very Dissatisfied: Major improvements needed, many patients are referred to the wrong specialists or do not receive appropriate follow-up care": "Very Dissatisfied: Madamo sang dapat paayuhon, madamo nga mga pasyente ang ginarefer sa sala nga espesyalista ukon wala nakabaton sang nagakaigo follow-up care.",
+    "Facilities are overcrowded/overcapacity and do not accept our patient referrals": "Magutok ukon sobra sa kapasidad kag wala nagabaton sang gina-refer nga pasyente ang pasilidad.",
+    "The referral process is slow": "Mahinay ang proseso sang referral",
+    "There is poor coordination between our facility and referred facilities": "Indi maayo ang koordinasyon sa tunga sang pasilidad kag gina-referan nga pasilidad."
+   },
+   "skips": [],
+   "counts": {
+    "write": 70,
+    "skip": 0
+   }
+  },
+  "ILO": {
+   "writes": {
+    "Male": "Lalaki",
+    "Female": "Babae",
+    "Public": "Publiko",
+    "Private": "Pribado",
+    "10. Does the facility have primary care packages?": "Adda kadi ti pasilidad kadagiti kangrunaan a pakete ti panangaywan?",
+    "16. Do you have a health promotion unit at this facility?": "Adda kadi health promotion unit-yo iti daytoy a pasilidad?",
+    "17. If yes, has the creation of a health promotion unit at this facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?": "No wen, naipatungpal kadi ti pannakabukel ti health promotion unit iti daytoy a pasilidad sipud idi naipasa ti UHC Act idi 2019 ken resulta kadi dayta ti UHC Act?",
+    "Advocacy and policy formation (e.g., research, campaigns, collaboration with policymakers)": "(Adbokasia ken panagporma ti patakaran (e.g., panagsukisok, kampania, panagtitinnulong kadagiti agar-aramid ti patakaran).",
+    "Yes, to PhilHealth Dashboard only": "Wen, iti PhilHealth Dashboard laeng",
+    "Weekly": "Linawas",
+    "Monthly": "Binulan",
+    "PhilHealth claims and reimbursement reports": "PhilHealth claims ken report ti pannakaisubli ti kuarta",
+    "NBB compliance": "Panagtungpal iti NBB",
+    "35. Have there been changes in the facility staffing since 2019?": "Adda kadi panagbalbaliw ti staffing ti pasilidad sipud pay idi 2019?",
+    "37. Have there been changes in the referral system since 2019?": "Adda kadi panagbalbaliw ti sistema ti panangiturong sipud pay idi 2019?",
+    "Infrastructure not conducive for patient care (e.g., no ground floor, shortage of rooms, inadequate sanitation facilities, lack of wheelchair accessibility, etc.)": "(Saan a makatulong ti imprastruktura para iti panangaywan iti pasiente (e.g., awan ti ground floor, kinakurang dagiti kuarto, saan nga umdas a pasilidad ti sanitasion, kinakurang ti wheelchair accessibility, kdpy).",
+    "51. Are you currently an accredited YAKAP/Konsulta provider?": "Ti kadi pasilidad ket agdama nga akreditado a YAKAP/Konsulta provider?",
+    "52. If yes, since when? Month": "No wen, manipud kaano?) Month (Bulan ) Year (Taw en",
+    "Beneficiaries received antibiotics as prescribed by their primary care doctor": "Nakaawat dagiti benepisiario iti antibiotiko kas inreseta ti primary care doctor-da",
+    "Beneficiaries received noncommunicable disease (NCD) medicine as prescribed by their primary care doctor": "(Nakaawat dagiti benepisiario iti agas a noncommunicable disease (NCD) kas inreseta ti primary care doctor-da",
+    "61. Were there delays in receiving capitation tranches?": "Adda kadi pannakaat-atiddog ti pannakaawat kadagiti capitation tranches?",
+    "Incentives (i.e., facility receives capitation/payment for registered patients)": "( Insentibo (i.e., umawat ti pasilidad iti kapitasion/bayad para kadagiti nairehistro a pasiente).",
+    "Aligns with facility's mission (i.e., goals of UHC are aligned with the facility)": "(Maitunos iti mision ti pasilidad (i.e., dagiti kalat ti UHC ket maitunos iti pasilidad)",
+    "Mandated/required by DOH/UHC": "Mandated/kasapulan ti DOH/UHC",
+    "To improve the services of the facilities": "Tapno mapasayaat ti serbisio dagiti pasilidad",
+    "Capability to provide services for required laboratory and radiologic services": "Kabaelan ti mangipaay kadagiti serbisio para kadagiti kasapulan a serbisio ti laboratorio ken radiologic",
+    "On-site Enrollment (e.g., offering patient enrollment at the health facility)": "( On-site Enrollment (e.g., panangitukon iti panagpalista ti pasiente iti pasilidad ti salun-at).",
+    "LGU Outreach (e.g., involvement in LGU outreach activities, such as ongoing nutrition programs)": "(LGU Outreach (e.g., pannakipaset kadagiti aktibidad ti LGU outreach, kas kadagiti agtultuloy a programa ti nutrision).",
+    "Facility Outreach (e.g., engaging in outreach efforts directly from the facility)": "(Facility Outreach (e.g., pannakipaset kadagiti panagregget a mangdanon a direkta manipud iti pasilidad).",
+    "Barangay Health Workers (BHWs) Support (e.g., receiving support from local BHWs)": "Suporta dagiti Barangay Health Workers (BHWs) (e.g., panangawat iti suporta manipud kadagiti lokal a BHW).",
+    "Local Health Insurance Offices (LHIO); assistance or partnerships with YAKAP/Konsulta caravans": "Dagiti Lokal nga Opisina ti Seguro ti Salun-at (LHIO); tulong wenno panagkadua kadagiti karaban ti YAKAP/Konsulta",
+    "Coordination with other government agencies and the private sector": "Koordinasion kadagiti dadduma nga ahensia ti gobierno ken pribado a sektor",
+    "Lack of patient awareness (i.e., patients are unaware of YAKAP/Konsulta, its benefits, and registration process)": "( Kurang ti pannakaammo ti pasiente (i.e., saan nga ammo dagiti pasiente ti YAKAP/Konsulta, dagiti pagimbaganna, ken proseso ti panagrehistro).",
+    "Lack of resources (e.g., not enough manpower to conduct information campaigns or outreaches to enroll patients to YAKAP/Konsulta)": "Kurang dagiti rekurso (e.g., saan nga umdas a puersa ti tao a mangisayangkat kadagiti kampania ti impormasion wenno outreach tapno maipalista dagiti pasiente iti YAKAP/Konsulta).",
+    "Competition with other health facilities over patient registration": "Kompetision kadagiti dadduma a pasilidad ti salun-at maipapan iti panagrehistro ti pasiente",
+    "Technical / system issues of PhilHealth (e.g., data loss, errors, or platform accessibility problems)": "(Dagiti teknikal / sistema nga isyu ti PhilHealth (e.g., pannakapukaw ti datos, biddut, wenno dagiti parikut iti pannakagun-od ti plataporma).",
+    "No time": "Awan ti oras",
+    "93. Does your facility charge additional capitation fees?": "Mangsingir kadi ti pasilidadyo iti kanayonan a capitation fees?",
+    "Yes, we have received all expected payments": "Wen, naawatmi amin a manamnama a bayad",
+    "No, we have not received any expected payments yet": "Saan, awan pay ti naawatmi a manamnama a bayad",
+    "No, we have not expected any payments yet": "Saan, saanmi pay a ninamnama ti aniaman a bayad",
+    "Difficulties in verifying patient enrollment (PhilHealth)": "Dagiti pakarigatan iti panangpaneknek iti panagpalista ti pasiente (PhilHealth)",
+    "97. Did you face any challenges in getting these payments?": "Adda kadi naipasango kenka a karit iti pananggun-od kadagitoy a bayad?",
+    "The current list of medicines and drugs offered": "Ti agdama a listaan dagiti agas ken agas a maitukon) (",
+    "The current laboratory/diagnostic services offered": "Ti agdama a serbisio ti laboratorio/diagnostic a maitukon) (",
+    "102. Do you have a BUCAS Center?": "Adda kadi BUCAS Center-yo?",
+    "PhilHealth coverage and reimbursement": "PhilHealth coverage ken pannakaisubli ti kuarta",
+    "109. Is your facility an accredited GAMOT provider?": "Ti kadi pasilidadyo ket maysa nga akreditado a GAMOT provider?",
+    "Patient awareness of the program": "b(Pannakaammo ti pasiente iti programa)",
+    "PhilHealth eligibility and reimbursement processes": "PhilHealth eligibility ken proseso ti panagsubli ti kuarta",
+    "Frequent changes to guidelines and policies": "Masansan a panagbalbaliw kadagiti pagannurotan ken pagalagadan",
+    "Resistance to change of staff": "Resistance iti panagbalbaliw ti staff",
+    "Staff are resistant to change": "Naandur dagiti staff iti panagbalbaliw",
+    "136. Are you able to implement it for all patients, to the best of your knowledge, for the last 6 months?": "Kabaelam kadi nga ipatungpal dayta para kadagiti amin a pasiente, iti kasayaatan nga ammom, iti napalabas nga 6 a bulan?",
+    "Complying with the no fees for basic or ward accommodation": "Panagtungpal iti no fees para iti basic wenno ward accommodation",
+    "138. Do you currently implement the \"Zero Balance Billing\" policy for your patients?": "Agdama kadi nga ipatungpalmo ti patakaran a \"Zero Balance Billing\" para kadagiti pasientem?",
+    "Establishment of health care provider networks (HCPNs) (i.e., referral system)": "(Pannakaipasdek dagiti network ti mangipapaay ti panangtaripato ti salun-at (HCPN) (i.e., sistema ti panangiturong).",
+    "The implementation of UHC benefits is heavily reliant on LGU decisions": "Ti pannakaipatungpal dagiti benepisio ti UHC ket agpannuray unay kadagiti desision ti LGU",
+    "Not enough funding/budget": "Saan nga umdas ti pondo/badyet",
+    "Streamline access to medical and financial aid for indigent and financially incapacitated patients": "Pasayaaten ti pannakagun-od iti medikal ken pinansial a tulong para kadagiti napanglaw ken di makabael iti pinansial a pasiente",
+    "Incomplete documentation from patients": "Di kompleto a dokumentasion manipud kadagiti pasiente",
+    "High patient volume leading to service bottlenecks": "Nangato a volume ti pasiente nga agturong kadagiti service bottleneck",
+    "150. Are you satisfied with the support you receive from your LGU?": "Mapnekka kadi iti suporta a maawatmo manipud iti LGU-yo?",
+    "Support given is not aligned with the needs of the facility": "Ti suporta a naited ket saan a maitunos kadagiti kasapulan ti pasilidad\".",
+    "152. How clear are the protocols regarding which decisions require Provincial Health Office approval versus those you can decide at the facility level?": "Kasano ti kinalawag dagiti protocol maipapan no ania dagiti desision a kasapulan ti pananganamong ti Provincial Health Office kontra kadagiti mabalinmo nga ikeddeng iti lebel ti pasilidad?",
+    "Clear": "Nalawag",
+    "Neither": "Uray ania",
+    "Referring facility calls receiving facility": "Referring facility calls umaw-awat iti pasilidad",
+    "Almost all patients are referred, very few walk-in/self-referred": "(Dandani amin a pasiente ket maiturong, manmano unay ti walk-in/self-referred",
+    "Majority of patients are referred, some walk-in/self- referred": "Kaaduan kadagiti pasiente ti maiturong, dadduma ti walk-in/selfreferred",
+    "The proportion of referrals is about equal to walk-ins": "(Ti porsiento dagiti referral ket agarup kapada ti walk-ins",
+    "Majority of patients walk-in/self-referred, some are referred": "Kaaduan kadagiti pasiente ti walk-in/selfreferred, dadduma ti nairefer",
+    "Almost all patients walk-in/self-referred, very few are referred": "(Dandani amin a pasiente ket walkin/self-referred, manmano unay ti maiturong",
+    "I am unsure about the typical ratio of referrals to walk-ins": "(Diak masigurado ti gagangay a ratio dagiti referral kadagiti walk-in",
+    "Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional": "Saan a Kontento wenno Di Kontento: Kasapulan dagiti panagpasayaat, ngem sapasap nga agtignay",
+    "Facilities are overcrowded/overcapacity and do not accept our patient referrals": "Napusek/sobra ti kapasidad dagiti pasilidad ken dida awaten dagiti patient referral-mi",
+    "The referral process is slow": "Nabannayat ti proseso ti panangiturong",
+    "There is poor coordination between our facility and referred facilities": "Nakapuy ti koordinasion ti pasilidadmi ken dagiti naitudo a pasilidad",
+    "Skills mismatch / lack of skills": "Skills mismatch / kinakurang ti paglaingan",
+    "Multi-tasking": "Adu ti trabaho",
+    "Support for independent professional development: scholarships": "Suporta para iti agwaywayas a propesional a panagdur-as: dagiti eskolarsip",
+    "Support for independent professional development: research grants": "Suporta para iti agwaywayas a propesional a panagdur-as: dagiti grant ti panagsirarak",
+    "No forms of professional development are provided to our doctors": "(Awan dagiti porma ti propesional a panagdur-as a maited kadagiti doktortayo",
+    "No forms of professional development are provided to our nurses": "Awan dagiti porma ti propesional a panagdur-as a maited kadagiti narstayo"
+   },
+   "skips": [
+    {
+     "key": "Yes",
+     "reason": "conflicting wording across 36 questions - needs per-question keys",
+     "values": [
+      "(Wenl",
+      "Wen",
+      "wen"
+     ],
+     "questions": [
+      "10",
+      "101",
+      "102",
+      "107",
+      "108",
+      "109",
+      "112",
+      "116"
+     ]
+    },
+    {
+     "key": "No",
+     "reason": "conflicting wording across 35 questions - needs per-question keys",
+     "values": [
+      "(Saan?",
+      "Saan"
+     ],
+     "questions": [
+      "10",
+      "101",
+      "102",
+      "107",
+      "108",
+      "109",
+      "112",
+      "116"
+     ]
+    },
+    {
+     "key": "Limited resources (e.g., shortages in healthcare personnel/manpower, medical equipment, essential supplies, or funding)",
+     "reason": "conflicting wording across 2 questions - needs per-question keys",
+     "values": [
+      "( Limitado a rekurso (e.g., kinakurang dagiti healthcare personnel/manpower, medikal nga alikamen, nasken a suplay, wenno pondo)",
+      "(Limitado a rekurso (e.g., kinakurang dagiti healthcare personnel/manpower, medikal nga alikamen, nasken a suplay, wenno pondo)"
+     ],
+     "questions": [
+      "49",
+      "50"
+     ]
+    },
+    {
+     "key": "Lack of patient awareness of the benefits of UHC (e.g., patients do not know they can avail of free consultations, and selected medicines and laboratory services)",
+     "reason": "conflicting wording across 2 questions - needs per-question keys",
+     "values": [
+      "( Ti kinakurang ti pannakaammo ti pasiente kadagiti pagimbagan ti UHC (e.g., dagiti pasiente ket dida ammo a mabalinda ti ag-avail kadagiti libre a konsultasion, ken dagiti napili nga agas ken serbisio ti laboratorio)",
+      "(Ti kinakurang ti pannakaammo ti pasiente kadagiti pagimbagan ti UHC (e.g., dagiti pasiente ket dida ammo a mabalinda ti ag-avail kadagiti libre a konsultasion, ken dagiti napili nga agas ken serbisio ti laboratorio)."
+     ],
+     "questions": [
+      "49",
+      "50"
+     ]
+    }
+   ],
+   "counts": {
+    "write": 84,
+    "skip": 4
+   }
+  },
+  "WAR": {
+   "writes": {
+    "Leading health education and awareness campaigns (e.g., raising awareness about public health initiatives of DOH, disseminating information about health)": "Pagpanguna hin mga kampanya hin edukasyon ngan pagpahibaro parti panlawas (e.g., pagpahibaro mahitungod han mga inisyatibo parti panlawas han publiko han DOH, pagpasamwak hin impormasyon mahitungod han panlawas)",
+    "Advocacy and policy formation (e.g., research, campaigns, collaboration with policymakers)": "Adbokasiya ngan paghimo hin palisiya (pananglitan, pagsaliksik, kampanya, pakig-usa ha mga naghihimo hin palisiya)",
+    "Limited resources (e.g., shortages in healthcare personnel/manpower, medical equipment, essential supplies, or funding)": "Limitado nga mga kagamitan (pananglitan, kakulang hin mga tawohan/tawo ha pag-ataman han panlawas, mga gamit medikal, mga kinahanglanon nga mga suplay, o pondo)",
+    "Certain healthcare decisions are made by local government units and not the health facility": "An pipira nga mga desisyon ha pag-ataman han kahimsog ginhihimo han mga yunit han lokal nga gobyerno ngan diri han pasilidad ha kahimsog",
+    "Lack of specific healthcare skills (i.e., Insufficient specialists, surgeons, or other healthcare professionals with specialized skills needed in the facility)": "Kakulang hin partikular nga mga abilidad ha pag-ataman han panlawas (i.e., Kulang nga mga espesyalista, mga siruhano, o iba pa nga mga propesyonal ha pag-ataman han panlawas nga mayda mga espesyalista nga mga abilidad nga ginkikinahanglan ha pasilidad)",
+    "Lack of patient awareness of the benefits of UHC (e.g., patients do not know they can avail of free consultations, and selected medicines and laboratory services)": "Kakulang hin kaaram han pasyente han mga benepisyo han UHC (e.g., diri maaram an mga pasyente nga makakapahimulos hira hin libre nga konsultasyon, ngan pinili nga mga medisina ngan mga serbisyo ha laboratoryo)",
+    "Limited accessibility of public healthcare facilities (e.g., lack of transportation options, inconvenient location, or physical barriers hindering access for patients.)": "Limitado nga pag-agi han mga pasilidad han panlawas han pampubliko (pananglitan, kakulang hin mga kapilian hin transportasyon, diri kombenyente nga lokasyon, o pisikal nga mga ulang nga nakakaulang han pag-agi para han mga pasyente.)",
+    "Infrastructure not conducive for patient care (e.g., no ground floor, shortage of rooms, inadequate sanitation facilities, lack of wheelchair accessibility, etc.)": "Mga imprastraktura nga diri maupay para han pag-ataman han pasyente (e.g., waray salog ha ubos, kakulang hin mga kwarto, diri igo nga mga pasilidad ha kalimpyo, kakulang hin pag-agi han mga lingkuran nga de-kaliding, ngan iba pa)",
+    "Inadequate training of healthcare workers (i.e., Healthcare workers needing additional training to meet the facility's quality standards)": "Kulang nga pag-aramhan mga trabahador ha pag-ataman han panlawas (i.e., Mga trabahador ha pagataman han panlawas nga nagkikinahanglan hin kadugangan nga paghag-id para matuman an mga suruklan han kalidad han pasilidad)",
+    "Beneficiaries received antibiotics as prescribed by their primary care doctor": "An mga benepisyaryo nakarawat hin antibiotiks sugad han iginreseta han ira doktor nga nag-aataman han ira panguna nga panlawas.",
+    "Beneficiaries received noncommunicable disease (NCD) medicine as prescribed by their primary care doctor": "An mga benepisyaryo in nakarawat hin medisina para ha diri nakakatapon nga sakit sugad han iginreseta han ira panguna nga nag-aataman nga doktor",
+    "Incentives (i.e., facility receives capitation/payment for registered patients)": "Mga insentibo (i.e., an pasilidad nakarawat hin kapitasyon/bayad para han mga nahirehistro nga pasyente)",
+    "Aligns with facility's mission (i.e., goals of UHC are aligned with the facility)": "Nakalinya ha misyon han pasilidad (i.e., an mga panuyo han UHC nakalinya ha pasilidad)",
+    "Mandated/required by DOH/UHC": "Ginmando/ginkikinahanglan han DOH/UHC",
+    "To improve the services of the facilities": "Para mapaupay pa an serbisyo han mga pasilidad",
+    "Capability to provide services for required laboratory and radiologic services": "Kapasidad paghatag hin serbisyo para han ginkikinahanglan nga mga serbisyo ha laboratoryo ngan radiolohiya",
+    "On-site Enrollment (e.g., offering patient enrollment at the health facility)": "Pagpalista ha lugar (pananglitan, paghatag hin pagpalista hin pasyente ha pasilidad panlawas)",
+    "Facility Outreach (e.g., engaging in outreach efforts directly from the facility)": "Serbisyo gawas han Pasilidad (pananglitan, pag-api ha mga paningkamot hin pag-abot nga direkta tikang ha pasilidad)",
+    "Barangay Health Workers (BHWs) Support (e.g., receiving support from local BHWs)": "Suporta han Barangay Health Workers (BHWs) (e.g., pagkarawat hin suporta tikang ha lokal nga mga BHWs)",
+    "Information Campaigns (e.g., conducting information campaigns through various channels, including but not limited to online campaigns and house-to-house visits)": "Mga Kampanya ha Impormasyon (e.g., pagdumara hin mga kampanya ha impormasyon pinaagi hin iba-iba nga mga paagi, upod pero diri la an mga kampanya ha online ngan pagbisita ha balay-balay)",
+    "Local Health Insurance Offices (LHIO); assistance or partnerships with YAKAP/Konsulta caravans": "Local Health Insurance Offices (LHIO); bulig o pakigsosyo ha mga caravan/sasakyan han YAKAP/Konsulta",
+    "Coordination with other government agencies and the private sector": "Koordinasyon ha iba pa nga ahensya han gobyerno ngan ha pribado nga sektor",
+    "Lack of patient awareness (i.e., patients are unaware of YAKAP/Konsulta, its benefits, and registration process)": "Kakulang hin hibaro han mga pasyente (i.e., an mga pasyente diri maaram han YAKAP/Konsulta, mga benepisyo hini, ngan proseso han pagparehistro)",
+    "Lack of patient willingness (i.e., patient is hesitant to provide personal information or has concerns about data security)": "Kakulang hin kaandam han pasyente (i.e., an pasyente nag-aalang paghatag hin personal nga impormasyon o mayda mga kabaraka mahitungod han seguridad han datos)",
+    "Lack of resources (e.g., not enough manpower to conduct information campaigns or outreaches to enroll patients to YAKAP/Konsulta)": "Kakulangan hin mga kagamitan (e.g., waray igo nga kusog para magdumara hin mga kampanya hin impormasyon o serbisyo gawas han pasilidad para maenrol an mga pasyente ha YAKAP/Konsulta)",
+    "Competition with other health facilities over patient registration": "Pakigkompetensya ha iba nga mga pasilidad panlawas mahitungod han pagrehistro han mga pasyente",
+    "Technical / system issues of PhilHealth (e.g., data loss, errors, or platform accessibility problems)": "Teknikal / isyu ha sistem han PhilHealth (e.g., pagkawara han datos, mga kasaypanan, o mga problema han pag-aagi han plataporma)",
+    "No time": "Waray oras",
+    "To cover expenses related to building maintenance, equipment, and non-clinical staff": "Basi mataparan an mga gastos may kalabotan ha pagmintinar han tinukod, mga garamiton, ngan diri-klinikal nga mga empleyado",
+    "A patient’s care costs exceed the predetermined fixed payment": "An mga gastos ha pag-ataman han pasyente labaw han igintalaan nga daan nga bayad",
+    "Services excluded from capitation coverage": "Mga serbisyo nga diri upod han sakop han kapitasyon",
+    "Yes, we have received all expected payments": "Oo, nakarawat namon an ngatanan nga ginlalauman nga bayad",
+    "Yes, we have received some but not all expected payments yet": "Oo, mayda kami nakakarawat pero diri pa tanan nga ginlalauman nga bayad",
+    "No, we have not received any expected payments yet": "Waray, waray pa kami makakarawat hin ginlalauman nga bayad",
+    "No, we have not expected any payments yet": "Waray, waray pa kami ginlalauman nga bayad",
+    "The current list of medicines and drugs offered": "An yana nga listahan han mga medisina ngan mga medisina nga igintatanyag",
+    "The current laboratory/diagnostic services offered": "An yana nga mga serbisyo ha laboratoryo/pag-eksamin nga igintatanyag",
+    "Frequent changes to guidelines and policies": "Agsob nga pagbag-o han mga guidelines ngan palisiya",
+    "Resistance to change of staff": "Pag-ato ha pagbalyo hin mga empleyado",
+    "Staff are resistant to change": "An mga empleyado na diri hin bago",
+    "Complying with the no fees for basic or ward accommodation": "Pagsunod han waray bayad para han panguna o bulag nga kwarto nga pag-ukoy",
+    "Complying the prescribed ratio of allocation of basic and non-basic accommodation": "Pagsunod ha ginsusunod nga tiyak nga kantidad han pagbahin han pondo para ha basic ngan non-basic nga akomodasyon",
+    "Establishment of health care provider networks (HCPNs) (i.e., referral system)": "Pagtukod han Health Care Provider Networks (HCPNs) (pananglitan., systema han oag rekomenda)",
+    "144. Why is this difficult to implement?": "Kay ano nga makuri ini ipatuman?",
+    "Not enough funding/budget": "Waray igo nga pondo/badyet",
+    "Streamline access to medical and financial aid for indigent and financially incapacitated patients": "Pag-ayos han pag-angkon hin medikal ngan pinansyal nga bulig para han mga kablas ngan pinansyal nga mga pasyente",
+    "Incomplete documentation from patients": "Diri kumpleto nga dokumento tikang ha mga pasyente",
+    "High patient volume leading to service bottlenecks": "Hataas nga kadamo han pasyente nga nagdudurot hin mga pag-ulang ha serbisyo",
+    "The proportion of referrals is about equal to walk-ins": "An kadamu han mga ginrefer haros katugbang han mga walk-in",
+    "Almost all patients walk-in/self-referred, very few are referred": "Diri ako sigurado han kasagaran nga proporsyon han mga referral ngadto ha mga walk-in",
+    "I am unsure about the typical ratio of referrals to walk-ins": "Diri ako sigurado mahitungod han tipikal nga ratio han mga iginpapadara ngadto ha mga nakadto",
+    "Other public facility (e.g., urban/rural health centers, barangay health centers, city/municipal health offices)": "Iba pa nga pasilidad pampubliko (pananglitan, mga sentro panlawas ha syudad/kaumhan,mga sentro panlawas ha barangay, mga opisina panlawas ha syudad/munisipyo)",
+    "Very Satisfied: No improvements needed, 'patients are always referred appropriately'": "Duro nga Kuntento: Waray kinahanglan nga mga pag-uswag, \"an mga pasyente pirme ginrefer hin kaangayan\"",
+    "Satisfied: Minor improvements needed, patients are generally referred appropriately": "Kontento: Ginkikinahanglan an gudtiay nga mga pag-uswag, an mga pasyente kasagaran nga iginpapadara hin angayan",
+    "Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional": "Diri Kontento o Diri Kontento: Kinahanglan an mga pag-uswag, kondi ha kabug-osan nagios",
+    "Dissatisfied: Moderate improvements needed, a number of patients are referred to the wrong specialists or do not receive appropriate follow-up care": "Diri Kontento: Ginkikinahanglan an kasadangan nga mga pag-uswag, damu nga pasyente an iginpapadara ha sayop nga mga espesyalista o diri nakakakarawat hin angayan nga pag-ataman ha pagsunod.",
+    "Very Dissatisfied: Major improvements needed, many patients are referred to the wrong specialists or do not receive appropriate follow-up care": "Diri gud Kontento: Ginkikinahanglan an dagku nga mga pag-uswag, damu nga pasyente an iginpapadara ha sayop nga mga espesyalista o diri nakakakarawat hin angayan nga pag-ataman ha pagsunod.",
+    "Facilities are overcrowded/overcapacity and do not accept our patient referrals": "Sobra ka puno/sobra an kapasidad han mga pasilidad ngan diri nakarawat han amon mga pasyente nga ginrefer",
+    "There is poor coordination between our facility and referred facilities": "May maluya nga koordinasyon ha butnga han aton pasilidad ngan mga ginrefer nga mga pasilidad",
+    "Multi-tasking": "Damo nga buruhaton",
+    "Support for independent professional development: scholarships": "Pagsuporta para han lugaring nga pag-uswag han propesyon: mga iskolar",
+    "No forms of professional development are provided to our nurses": "Waray porma hin pag-uswag ha propesyon nga iginhahatag ha aton mga nars"
+   },
+   "skips": [
+    {
+     "key": "Challenging quality standards (e.g., high standards that are difficult to achieve)",
+     "reason": "conflicting wording across 2 questions - needs per-question keys",
+     "values": [
+      "Pag-ayat hin mga pamantayan han kalidad (pananglitan, hataas nga mga pamantayan nga makuri makahua)",
+      "Pag-ayat hin mga pamantayan han kalidad (pananglitan, hataas nga mga pamantayan nga makuri makuha)"
+     ],
+     "questions": [
+      "49",
+      "50"
+     ]
+    },
+    {
+     "key": "Insufficient other sources (e.g. MAIFIP, DSWD, PCSO) (late payments applicable for MAIFIP)",
+     "reason": "conflicting wording across 2 questions - needs per-question keys",
+     "values": [
+      "Kulang ha iba nga tinikangan (e.g. MAIFIP, DSWD, PCSO) (Urhi nga bayad nga aplikado haMAIFIP )",
+      "Kulang ha ibanga tinikangan (e.g. MAIFIP, DSWD, PCSO) (Urhi nga bayad nga aplikado haMAIFIP )"
+     ],
+     "questions": [
+      "137",
+      "140"
+     ]
+    },
+    {
+     "key": "Support for independent professional development: research grants",
+     "reason": "conflicting wording across 2 questions - needs per-question keys",
+     "values": [
+      "Suporta para han lugaring nga pag-uswag han propesyon: mga pinansyal na bulig han pag-aram",
+      "Suporta para han lugaring nga pag-uswag han propesyon: mga pinansyal na bulig para han pag-sram"
+     ],
+     "questions": [
+      "165",
+      "166"
+     ]
+    }
+   ],
+   "counts": {
+    "write": 62,
+    "skip": 3
+   }
+  }
+ },
+ "F3": {
+  "BCL": {
+   "writes": {
+    "Step-son": "Stepson",
+    "5. In what month was the patient born?": "Anong bulan asin taon inaki an pasyente? Month Bulan_________ Year_Taon_________",
+    "Health center/ facility": "Health center/pasilidad",
+    "38.1. When did you register and receive your PhilHealth PIN?": "Kan kasuarin ka nakapag parehistro asin nakaresibi kan saimong Philhealth pin?",
+    "38.2. Why are you not registered?": "Nata ta dai kapa nakapagrehistro?",
+    "47. Are you aware that there is/are PhilHealth package/s for physician check-up?": "Aware ka ba na may Philhealth packages na igwa kaini: Physician check-up",
+    "System of PhilHealth is unreliable/usually down": "Systema kan PhilHealth dai maasahan",
+    "Rural Health Unit / Urban Health Center": "Rural Health Unit / Health Center",
+    "Walk": "Lakaw",
+    "Boat": "Bangka",
+    "Free primary care consultation (with a registered YAKAP/Konsulta provider)": "Libre na primary care consultation (sa rehistradong YAKAP/Konsulta provider)",
+    "Already have a usual primary care provider that I go to": "May igwa na primary care provider",
+    "Don't have the required PhilHealth ID to register for YAKAP/Konsulta": "Daing PhilHealth ID para magrehistro sa YAKAP/Konsulta",
+    "Fever": "Kalintura",
+    "96. Amount spent for the prescribed medicines, by source (Pesos)": "Pira an saimong nagastos sa pagbakal ki bulong?",
+    "Outpatient or ambulatory care services": "Outpatient o ambulatory care services",
+    "106. How long were you confined? — Nights": "Gano ka kahaluy naconfine? Days Aldaw Nights Banggi",
+    "In kind": "Tabang",
+    "114. Why did you not avail of PhilHealth benefits?": "Ngata dai kamo nagkuha kan Philhealth benefits? (kun dai nagkuha kan Philhealth sa 113)",
+    "News": "Balita",
+    "129. Why did you not avail of MAIFIP during this last confinement?": "Ano an mga dai mo tigavail sa MAIFIP kan ika naconfine?",
+    "134. How would you rate the cleanliness and comfort of the rooms in this facility? (For inpatients only)": "Mga kwarto (para sana sa inpatients)",
+    "160. If generic, why did you buy generic medicine?": "Kun generic, ngata mas pinili mo ini bakalon?",
+    "Branded medicine is more effective than generic": "An branded na bulong ay mas effective kesa sa generic",
+    "Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)": "Dental care (Pag-aalaga medikal para sa ngipin, arog kan cleaning, filling, asin iba pa)",
+    "No time": "Wara ki oras"
+   },
+   "skips": [
+    {
+     "key": "I don't know [DO NOT READ OUT LOUD]",
+     "reason": "conflicting wording across 2 questions - needs per-question keys",
+     "values": [
+      "Dai aram",
+      "Dai ko aram"
+     ],
+     "questions": [
+      "29",
+      "38.1"
+     ]
+    },
+    {
+     "key": "Health center/facility",
+     "reason": "conflicting wording across 4 questions - needs per-question keys",
+     "values": [
+      "Health center/ pasilidad",
+      "Health center/pasilidad"
+     ],
+     "questions": [
+      "100",
+      "125",
+      "153",
+      "75"
+     ]
+    }
+   ],
+   "counts": {
+    "write": 26,
+    "skip": 2
+   }
+  },
+  "BIS": {
+   "writes": {
+    "5. In what month was the patient born?": "Unsang bulana ug tuig gipanganak ang pasyente? Month Bulan _________ Year Tuig__________",
+    "22. Does the patient have electricity in their house?": "Aduna bay kuryente sa panimalay sa pasyente?",
+    "News": "Balita",
+    "Primary care provider for every Filipino": "Primary care provider para sa matag Pilipino",
+    "38.1. When did you register and receive your PhilHealth PIN?": "Kanus-a ka nakaparehistro ug nakadawat sa imohang Philhealth pin?",
+    "38.2. Why are you not registered?": "Ngano wala ka nakaparehistro?",
+    "47. Are you aware that there is/are PhilHealth package/s for physician check-up?": "Nahibalo ba ka nga adunay PhilHealth packages para sa mosunod nga health services: Physician check-up",
+    "Walk": "Lakaw",
+    "Bike": "Biseklita",
+    "Boat": "Bangka",
+    "72. How long does it take you to travel from your house when going to the nearest primary care facility? — Minutes": "Unsa kadugay ang imong biyahe gikan sa inyong balay padulong sa pinakaduol nga primary care facility? Time Oras (HH:MM)",
+    "Free primary care consultation (with a registered YAKAP/Konsulta provider)": "Libre nga primary care consultation (uban sa rehistradong YAKAP/Konsulta provider)",
+    "Don't have the required PhilHealth ID to register for YAKAP/Konsulta": "Wala koy PhilHealth ID nga gikinahanglan para makaparehistro sa YAKAP/Konsulta",
+    "Flu": "Trangkaso",
+    "Fever": "Hilanat",
+    "Had any laboratory tests done (e.g. blood, urine sample)": "Nakaagi og laboratory tests (pananglitan: blood, urine sample)",
+    "96. Amount spent for the prescribed medicines, by source (Pesos)": "Pila ang nagasto para sa giresetang tambal ni (NAME IN ___)?",
+    "98. Which of the following did you use to pay for the medical costs? (Select all that apply.)": "Asa sa mga mosunod ang imong gikuhaan aron makabayad sa medical costs? (Pili-a tanang pwede.) 1) Salary/income Sweldo/kita",
+    "103. If yes, which service/s did you avail?": "Kung oo, unsang serbisyo/s ang imong nagamit? Pili-a ang tanang pwede.",
+    "Outpatient or ambulatory care services": "Outpatient o ambulatory care services",
+    "In kind": "Dili Kwarta",
+    "113. Which of the following did you use to pay for the hospital bill? (Select all that apply.)": "Asa sa mga mosunod ang imong gikuhaan aron makabayad sa medical costs? 1) Salary/income Sweldo/kita",
+    "114. Why did you not avail of PhilHealth benefits?": "Ngano nga wala ka naka-avail sa PhilHealth benefits? (Kung wala na-avail ang PhilHealth sa Q113)",
+    "Drugs": "Tambal",
+    "Accommodation": "Gitulgan",
+    "129. Why did you not avail of MAIFIP during this last confinement?": "Ngano nga wala ka naka-avail sa MAIFIP niining kataposang confinement?",
+    "134. How would you rate the cleanliness and comfort of the rooms in this facility? (For inpatients only)": "Mga Kwarto (Para sa inpatients lamang)",
+    "Health center/facility": "pasilidad",
+    "160. If generic, why did you buy generic medicine?": "Kung generic, nganong generic nga tambal man ang imong gipalit?",
+    "Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)": "Dental care (Pag-atiman sa ngipon sama sa cleaning, pasta/filling, ug uban pa)",
+    "No time": "Walay oras"
+   },
+   "skips": [
+    {
+     "key": "I don't know [DO NOT READ OUT LOUD]",
+     "reason": "conflicting wording across 2 questions - needs per-question keys",
+     "values": [
+      "Wala ko kabalo",
+      "Wala ko kahibalo"
+     ],
+     "questions": [
+      "29",
+      "38.1"
+     ]
+    }
+   ],
+   "counts": {
+    "write": 31,
+    "skip": 1
+   }
+  },
+  "CEB": {
+   "writes": {
+    "5. In what month was the patient born?": "Unsa nga buwan ug tuig gipanganak ang pasyente? Month _________ Year__________ Buwan Tuig",
+    "450,000 - 499,999": "Dili moubos sa 450,000 ug dili mulapas sa 499,999",
+    "22. Does the patient have electricity in their house?": "Aduna bay kuryente sa panimalay sa pasyente?",
+    "News": "Balita",
+    "Health center/ facility": "Health center/pasilidad",
+    "38.1. When did you register and receive your PhilHealth PIN?": "Kanus-a ka nagparehistro ug nakadawat sa imong PhilHealth pin?",
+    "I don't know [DO NOT READ OUT LOUD]": "Dili ko sigurado",
+    "38.2. Why are you not registered?": "Ngano wala ka nakaparehistro?",
+    "47. Are you aware that there is/are PhilHealth package/s for physician check-up?": "Nahibalo ba ka nga adunay mga PhilHealth package para sa mga nagsunod nga health services: Physician check-up Check-up sa doktor",
+    "69. How long does it take you to travel to the health facility you usually go to — Hours": "Unsa kadugay ang biyahe gikan sa imong balay paingon sa pasilidad sa panglawas nga kasagaran nimong adtoan? (BASE SA TUBAG SA Q64 (NGALAN SA PASILIDAD)); LAKTAWI KINI NGA PANGUTANA KUNG ANG TUBAG SA Q63 KAY WALA Time (HH:MM) Oras (HH:MM)",
+    "Walk": "Maglakaw",
+    "Bike": "Bisikleta",
+    "Jeepney": "Jeep",
+    "Boat": "Barko",
+    "Don't have the required PhilHealth ID to register for YAKAP/Konsulta": "Wala koy PhilHealth ID nga gikinahanglan para magparehistro sa YAKAP/Konsulta",
+    "Fever": "Hilanat",
+    "Dental": "Ngipon",
+    "96. Amount spent for the prescribed medicines, by source (Pesos)": "Pila ang nagasto para sa gireseta nga mga tambal ni (NAME IN _)?",
+    "Offers outpatient and ambulatory health services": "Naghatag og outpatient ug ambulatory nga serbisyo sa panglawas",
+    "114. Why did you not avail of PhilHealth benefits?": "Nganong wala ka ni-avail sa mga benepisyo sa PhilHealth? (kung wala gi-avail ang PhilHealth sa 113)",
+    "124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?": "Nakadungog na ba ka bahin sa Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)? (LAKTAWI KUNG NITUBAG OG MAIFIP SA Q113)",
+    "Drugs": "Tambal",
+    "129. Why did you not avail of MAIFIP during this last confinement?": "Nganong wala ka nigamit sa MAIFIP niining imong pinakabag-ong pagka-admit?",
+    "150. How much time does it take for you to reach the nearest pharmacy from your home? — Minutes": "Pila ka oras ang gikinahanglan nimo aron makaabot sa pinakaduol nga botika gikan sa inyong balay? Ang Botika usa ka ancillary nga pasilidad sa primary care nga adunay FDA LTO diin mapalit ang mga rehistradong tambal. Time (HH:MM) Oras (HH:MM)",
+    "160. If generic, why did you buy generic medicine?": "Kung generic, nganong generic nga tambal ang imong gipalit?",
+    "Branded medicine is more effective than generic": "Ang branded nga tambal mas epektibo kaysa sa generic",
+    "Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)": "Dental care (Medikal nga pag-atiman para sa imong ngipon, sama sa pagpanglimpyo, pagpa-pasta, ug uban pa)",
+    "No time": "Walay oras"
+   },
+   "skips": [],
+   "counts": {
+    "write": 28,
+    "skip": 0
+   }
+  },
+  "FIL": {
+   "writes": {
+    "5. In what month was the patient born?": "Sa anong buwan at taon ipinanganak ang pasyente? Month _________ Year__________",
+    "22. Does the patient have electricity in their house?": "May kuryente ba ang bahay ng pasyente?",
+    "I don't know [DO NOT READ OUT LOUD]": "Hindi ko alam",
+    "News": "Balita",
+    "38.1. When did you register and receive your PhilHealth PIN?": "\"Kailan ka nag-rehistro at natanggap ang iyong PhilHealth PIN?\"",
+    "38.2. Why are you not registered?": "Bakit hindi ka rehistrado?",
+    "47. Are you aware that there is/are PhilHealth package/s for physician check-up?": "Alam ba ninyo na may mga PhilHealth package para sa mga sumusunod na serbisyong pangkalusugan? Physician check-up Konsultasyon sa doktor",
+    "Walk": "Lakad",
+    "Bike": "Bisikleta",
+    "Jeepney": "Jeep",
+    "Boat": "Bangka",
+    "Saw a nurse/midwife": "Kumonsulta sa nurse/midwife",
+    "Visited other healthcare facility": "Bumisita sa ibang pasilidad pangkalusugan",
+    "Health facility is not PhilHealth accredited": "Hindi PhilHealth-accredited ang health facility",
+    "96. Amount spent for the prescribed medicines, by source (Pesos)": "Magkano ang nagastos para sa mga iniresetang gamot ni (NAME IN ___)?",
+    "98. Which of the following did you use to pay for the medical costs? (Select all that apply.)": "Gumamit ka ba ng alinman sa mga sumusunod para bayaran ang mga gastusing medikal? (piliin ang lahat na naaangkop) 1) Salary/income [Sahod/Kita]",
+    "LGU/Barangay": "Lokal na pamahalaan/Barangay",
+    "103. If yes, which service/s did you avail?": "Kung oo, aling mga serbisyo ang iyong nagamit? Piliin ang lahat na naaangkop.",
+    "106. How long were you confined? — Nights": "Gaano katagal ka naconfine sa ospital? Days Nights",
+    "113. Which of the following did you use to pay for the hospital bill? (Select all that apply.)": "Gumamit ka ba ng alinman sa mga sumusunod para bayaran ang gastusing medikal? (Piliin ang lahat na naaangkop) 1) Salary/income Sahod/Kita",
+    "114. Why did you not avail of PhilHealth benefits?": "Q113) Bakit hindi mo ginamit ang PhilHealth benefits? (Kung hindi ginamit ang PhilHealth sa tanong 113)",
+    "129. Why did you not avail of MAIFIP during this last confinement?": "Bakit hindi ka gumamit ng MAIFP sa huling confinement mo?",
+    "160. If generic, why did you buy generic medicine?": "Kung generic, bakit ka bumili ng generic na gamot?",
+    "161. If branded, why did you buy branded medicine?": "Kung branded, bakit ka bumili ng branded na gamot?",
+    "Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)": "Dental care (Medikal na pag-aalaga ng iyong ngipin, tulad ng paglilinis, pagpasta, atbp.)",
+    "No time": "Walang oras"
+   },
+   "skips": [],
+   "counts": {
+    "write": 26,
+    "skip": 0
+   }
+  },
+  "HIL": {
+   "writes": {
+    "3. Do you live in the same house as the patient?": "Nagapuyo ka bala sa amo man nga balay upod sang pasyente?",
+    "4. Patient's Name (Last Name, First Name, MI, Extension)": "Suffix) Ngalan sang Pasiente (Apelyido, Pangalang Una, MI, Dugang)",
+    "5. In what month was the patient born?": "were you born? Sa ano nga bulan kag tuig natawo ang pasiente? Month Bulan _________ Year Tuig__________",
+    "Male": "Lalaki",
+    "Female": "Babaye",
+    "Not Comfortable to Answer": "Indi Komportable sa pagsabat",
+    "Lesbian": "Tomboy",
+    "Gay": "Agi",
+    "Married": "Kasado",
+    "Widowed": "Balo",
+    "11. Does the patient identify as a person with a disability?": "Nakilala bala ang pasyente bilang isa ka tawo nga may disabilidad?",
+    "Psychosocial disability": "Psychosocial nga kapansanan",
+    "Retired": "Retiro na",
+    "Pension": "Pensyon",
+    "22. Does the patient have electricity in their house?": "household? May koryente bala ang pasyente sa ila panimalay?",
+    "Primary care provider for every Filipino": "Primary care provider para sa kada Filipino",
+    "38.1. When did you register and receive your PhilHealth PIN?": "San-o ka nagparehistro kag nakaangkon sang imo PhilHealth pin?",
+    "43. Would you know where to go to seek assistance during registration?": "Kabalo ka bala kun diin ka makapangayo bulig samtang nagaparegister?",
+    "47. Are you aware that there is/are PhilHealth package/s for physician check-up?": "Nakahibalo ka bala nga may ara sang PhilHealth packages para sa masunod nga mga serbisyo sa panglawas: Physician check-up",
+    "51. Are you registered with another health insurance plan?": "Narehistro ka bala sa iban nga plano sang insurance sa panglawas?",
+    "69. How long does it take you to travel to the health facility you usually go to — Hours": "Pila ka dugay ang imo ginakadtuan halin sa imo balay kon magakadto ka sa talagsaon mo nga health facility? Time (HH:MM)",
+    "72. How long does it take you to travel from your house when going to the nearest primary care facility? — Minutes": "Pila ka dugay ang ginakailangan mo sa pagbiyahe halin sa imo balay padulong sa pinakamalapit nga primary care facility? Time (HH:MM)",
+    "74. Have you heard of the term \"YAKAP/ Konsulta package\"?": "Nakabati ka na bala sang termino nga \"YAKAP/Konsulta package\"?",
+    "77. Are you registered with a YAKAP/Konsulta package provider?": "Rehistrado ka bala sa isa ka YAKAP/Konsulta nga provider sang package?",
+    "Had any laboratory tests done (e.g. blood, urine sample)": "Ginbuhat ang laboratory tests (e.g. dugo, sample sang ihi)",
+    "88. Why are you visiting this facility for consultation/advice or treatment?": "Ngaa nagabisita ka sa [FACILITY_NAME_INPUT] para sa konsultasyon/ tambag ukon pagpang-ayo?",
+    "Prenatal/Post-natal Check-up": "Prenatal/Post-natal nga Check-up",
+    "Dental check-up": "Dental nga check-up",
+    "NHTS/CCT/4Ps Requirement": "NHTS/CCT/4Ps nga Requirement",
+    "89. Were you advised for hospitalization / to be admitted in the hospital?": "Ginsugyot bala sa imo nga magpala-ospital / magpabilin sa ospital?",
+    "96. Amount spent for the prescribed medicines, by source (Pesos)": "Pila ang nagasto para sa ginpreskribir sang medisina ni (NAME IN ___)?",
+    "98. Which of the following did you use to pay for the medical costs? (Select all that apply.)": "Naggamit ka bala sang bisan ano sa masunod para bayaran ang gastuson sa medisina? (pili-a tanan nga nag-aangay) 1) Salary/income",
+    "102. Have you accessed the services in a BUCAS center?": "Naka-access ka na bala sang mga serbisyo sa BUCAS center?",
+    "103. If yes, which service/s did you avail?": "Kung oo, ano nga serbisyo ang imo gin-avail? Pumili sang tanan nga nagaangay.",
+    "Sick": "Masakit",
+    "Injured": "Nasamadan",
+    "Gave birth": "Nagbata",
+    "106. How long were you confined? — Nights": "Ano ka dugay ka ginconfine? Days(Inadlaw) Nights (Gab-i)",
+    "113. Which of the following did you use to pay for the hospital bill? (Select all that apply.)": "Ginhimo mo bala ang bisan ano sa masunod nga paagi sa pagbayad sang imo hospital nga bili? (pili-a ang tanan nga nagalapat) 1) Salary/income",
+    "114. Why did you not avail of PhilHealth benefits?": "Ngaa wala mo gin-avail ang PhilHealth nga mga benepisyo? (Kon wala gin-avail ang PhilHealth sa 113)",
+    "116. Have you heard of the No Balance Billing (NBB)?": "Nabatian mo na bala ang No Balance Billing (NBB)?",
+    "119. Have you heard of the Zero Balance Billing (ZBB)?": "Nakabati ka na bala sang Zero Balance Billing (ZBB)?",
+    "122. Were you informed about ZBB upon admission?": "Naibaloan ka bala parte sa ZBB sang ginpasulod ka?",
+    "129. Why did you not avail of MAIFIP during this last confinement?": "Ngaa wala mo ginpahimuslan ang MAIFP sa sini nga ulihing pagkabilin?",
+    "136. In most recent visit, how often did the staff treat you with courtesy and respect?": "Ginatamod ka bala nila nga may pagrespeto kag kalooy?",
+    "137. In most recent visit, how often did the staff listen carefully to what you say or ask?": "Ginapamati-an bala sang maayo ang imo ginahambal ukon ginapangayo?",
+    "138. In most recent visit, how often did the staff explain your condition and procedures in a way you can understand?": "Ginapasiplatan bala nila ang imo kondisyon kag ang mga proseso sa paagi nga imo masabtan?",
+    "139. In most recent visit, how often did the staff give you the chance to make decisions about your treatment?": "Ginatagaan ka bala sang kahigayunan nga magdesisyon parte sa imo pagbulongl?",
+    "140. In most recent visit, how often did the staff ask you for your consent before performing any treatments or tests?": "tests. Ginapangayo bala ang imo paguyon antes nila himuon ang bisan ano nga pagtambal ukon tests?",
+    "143. Overall, would you recommend this facility to a friend or relative?": "Sa kabug-usan, imo bala irekomendar ang [facility_name_input] sa imo abyan ukon paryente?",
+    "144. How would the patient rate the quality of care you received at this facility?": "Paano gin-ebalwasyon sang pasyente ang kalidad sang pag-atipan nga iya nabaton sa [facility_name_input]?",
+    "Easy": "Mahapos lang",
+    "160. If generic, why did you buy generic medicine?": "Kon generic, ngaa nagbakal ka sang generic nga bulong?",
+    "162. Based on your most recent visit/confinement at this facility, did a healthcare worker refer you to another facility or specialist for further care or specialized care?": "Base sa imo pinakaulihi nga pagbisita/pagpabili sa [facility_name_input], may healthcare worker bala nga nagrekomendar sa imo sa iban nga pasilidad ukon espesyalista para sa dugang nga pag-atipan ukon espesyalisado nga pag-atipan?",
+    "Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)": "Dental nga pag-atipan (Medikal nga pag-atipan para sa imo ngipon, pareho sang paglimpyo, fillings, etc.)",
+    "167. Did they help you make the appointment for that visit?": "Nabuligan ka nila sa pag-ayo sang appointment para sa amo nga bisita?",
+    "172. Was the visit to this facility a referral from your primary care facility?": "Ang pagbisita sa [facility_name_input] bala ginrekomendar sang imo primarya nga pasilidad pang-atipan?",
+    "174. Did your primary care provider discuss with you different places you could have gone to get help with your problem?": "Gindiscuss bala sang imo primary care provider sa imo ang lain-lain nga lugar nga mahimo mo kadtoan agud makakuha bulig sa imo problema?",
+    "175. Did your primary care provider (PCP) or someone working with your PCP help you make the appointment for that visit?": "Ang imo primary care provider (PCP) ukon may naga-trabaho kaupod sang imo PCP ang nagbulig sa imo sa pag-ubra sang appointment para sa amo nga pagbisita?",
+    "176. Did your primary care provider write down any information for the specialist about the reason for that visit?": "Nagsulat bala ang imo primary care provider sang ano man nga impormasyon para sa espesyalista parte sa rason sang amo nga bisita?"
+   },
+   "skips": [
+    {
+     "key": "Yes",
+     "reason": "conflicting wording across 60 questions - needs per-question keys",
+     "values": [
+      "Huo",
+      "Oo"
+     ],
+     "questions": [
+      "1",
+      "102",
+      "108",
+      "11",
+      "110",
+      "116",
+      "119",
+      "122"
+     ]
+    },
+    {
+     "key": "No",
+     "reason": "conflicting wording across 50 questions - needs per-question keys",
+     "values": [
+      "Indi",
+      "Wala",
+      "n Indi"
+     ],
+     "questions": [
+      "1",
+      "102",
+      "108",
+      "11",
+      "110",
+      "116",
+      "119",
+      "122"
+     ]
+    },
+    {
+     "key": "Other (specify)",
+     "reason": "conflicting wording across 13 questions - needs per-question keys",
+     "values": [
+      "Iban pa (Ispecify)",
+      "Iban pa (ispecify)",
+      "Iban pa (specify)",
+      "Iban pa -ispecify"
+     ],
+     "questions": [
+      "101",
+      "103",
+      "105",
+      "114",
+      "149",
+      "15",
+      "154",
+      "38.2"
+     ]
+    },
+    {
+     "key": "Not applicable",
+     "reason": "conflicting wording across 3 questions - needs per-question keys",
+     "values": [
+      "Indi Applicable",
+      "Indi applicable"
+     ],
+     "questions": [
+      "15",
+      "159",
+      "16"
+     ]
+    },
+    {
+     "key": "I don't know [DO NOT READ OUT LOUD]",
+     "reason": "conflicting wording across 2 questions - needs per-question keys",
+     "values": [
+      "Wala ko Kabalo",
+      "Wala ko kabalo"
+     ],
+     "questions": [
+      "29",
+      "38.1"
+     ]
+    },
+    {
+     "key": "Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)",
+     "reason": "conflicting wording across 2 questions - needs per-question keys",
+     "values": [
+      "Outpatient nga pag-atipan (Konsultasyon, prosedura, o pagbulong nga ang pasyente nagabisita kag nagahalin sa amo man nga adlaw)",
+      "Outpatient nga pag-atipan (Konsultasyon, prosedura, ukon pagtambal nga ginabisita kag ginapapaw nga pasyente sa pareho nga adlaw)"
+     ],
+     "questions": [
+      "163",
+      "84"
+     ]
+    },
+    {
+     "key": "Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)",
+     "reason": "conflicting wording across 2 questions - needs per-question keys",
+     "values": [
+      "Inpatient nga pag-atipan (Pag-atipan nga ginahatag sa ospital o iban pa nga pasilidad nga ang pasyente gin-admit sa labing menos isa ka gab-i)",
+      "Inpatient nga pag-atipan (Pag-atipan nga ginahatag sa ospital ukon iban nga pasilidad nga ang pasyente ginapaospital sang isa ka gab-i ukon labaw pa)"
+     ],
+     "questions": [
+      "163",
+      "84"
+     ]
+    },
+    {
+     "key": "Don't know",
+     "reason": "conflicting wording across 9 questions - needs per-question keys",
+     "values": [
+      "Wala kabalo",
+      "Wala ko kabalo",
+      "Wala ko kabao"
+     ],
+     "questions": [
+      "107",
+      "109",
+      "130",
+      "92",
+      "96"
+     ]
+    }
+   ],
+   "counts": {
+    "write": 60,
+    "skip": 8
+   }
+  },
+  "ILO": {
+   "writes": {
+    "1. Before we begin, to confirm, are you the patient?": "Sakbay a mangrugitayo, tapno mapasingkedan, sika kadi ti pasiente?",
+    "Yes": "Wen",
+    "Spouse": "Asawa",
+    "Father": "Tatang",
+    "Mother": "Nanang",
+    "Brother": "Manong",
+    "Sister": "Manang",
+    "3. Do you live in the same house as the patient?": "Agnanaedka kadi iti maymaysa a balay a kaduam ti pasiente?",
+    "Male": "Lalaki",
+    "Female": "Babae",
+    "Lesbian": "Tomboy",
+    "Gay": "Bakla",
+    "Married": "Naasawaan",
+    "Widowed": "Nabalo",
+    "11. Does the patient identify as a person with a disability?": "Mailasin kadi ti pasiente kas maysa a tao nga addaan iti depekto?",
+    "Primary Education (Grade 1 to 6)": "( Primary Education (Grade 1 agingga iti 6).",
+    "Lower Secondary Education (Grade 7 to 10)": "(Lower Secondary Education (Grade 7 agingga iti 10)",
+    "Not applicable": "Saan nga agaplikar",
+    "Retired": "Naginana ti tarabahon",
+    "22. Does the patient have electricity in their house?": "household? (Adda kadi koriente ti pasiente iti pagtaenganda?)",
+    "News": "Dagiti damag",
+    "38.1. When did you register and receive your PhilHealth PIN?": "Kaano ti panagrehistro ken inawatmo ti PhilHealth pin-mo?",
+    "Health center/facility": "Sentro/pasilidad ti salunat",
+    "43. Would you know where to go to seek assistance during registration?": "Ammom kadi no sadino ti papanam tapno agpatulong bayat ti panagrehistro?",
+    "47. Are you aware that there is/are PhilHealth package/s for physician check-up?": "Ammom kadi nga adda dagiti pakete ti PhilHealth para kadagiti sumaganad a serbisio ti salun-at:) Physician check-up (Panag-check-up ti mangngagas",
+    "51. Are you registered with another health insurance plan?": "Nairehistroka kadi iti sabali a plano ti health insurance?",
+    "54. Who is your main primary care provider?": "Siasino ti kangrunaan a kangrunaan a mangipapaay iti panangaywanmo?",
+    "Both": "Dua",
+    "None": "Awan",
+    "Walk": "Magna",
+    "Bike": "Bisikleta",
+    "Boat": "Bangka",
+    "74. Have you heard of the term \"YAKAP/ Konsulta package\"?": "Nangngegyo kadin ti termino a \"YAKAP/ Konsulta package\"?",
+    "77. Are you registered with a YAKAP/Konsulta package provider?": "Nairehistroka kadi iti maysa a mangipapaay ti pakete ti YAKAP/Konsulta?",
+    "Flu": "Trangkaso",
+    "Fever": "Gurigor",
+    "88. Why are you visiting this facility for consultation/advice or treatment?": "Apay a sumarungkarka iti [FACILITY_NAME_INPUT] para iti konsultasion/balakad wenno panangagas?",
+    "89. Were you advised for hospitalization / to be admitted in the hospital?": "Nabalakadan ka kadi para iti hospitalization / nga admit iti ospital?",
+    "Don't know": "Dimo ammo",
+    "96. Amount spent for the prescribed medicines, by source (Pesos)": "Mano ti nagastos para kadagiti naireseta nga agas ni (NAME IN ___)?",
+    "98. Which of the following did you use to pay for the medical costs? (Select all that apply.)": "Inusarmo kadi ti aniaman kadagiti sumaganad a pangbayad kadagiti medikal a gastos? (pilien amin nga agaplikar) 1) Salary/income (Sueldo/mangged",
+    "102. Have you accessed the services in a BUCAS center?": "Nagun-odmo kadin dagiti serbisio iti maysa a sentro ti BUCAS?",
+    "103. If yes, which service/s did you avail?": "No wen, ania a serbisio/dagiti na-avail-mo? Pilien amin nga agaplikar.",
+    "Sick": "Masakit",
+    "Injured": "Nadunor",
+    "Gave birth": "Nagpasngay",
+    "106. How long were you confined? — Nights": "Kasano kabayag ti pannakaiospital mo) Days (Aldaw) Nights (Rabii",
+    "110. Other than the laboratory service/s indicated in the hospital bill, did the patient pay for other service/s outside the hospital?": "Malaksid iti laboratory service/s a naiparang iti hospital bill, nagbayad kadi ti pasiente iti dadduma pay a service/s iti ruar ti ospital?",
+    "In kind": "Iti kita",
+    "113. Which of the following did you use to pay for the hospital bill? (Select all that apply.)": "Inusarmo kadi ti aniaman kadagiti sumaganad a pangbayad iti bayadam iti ospital? (pilien amin nga agaplikar) 1) Salary/income (Sueldo/mangged",
+    "PhilHealth member but not eligible for benefits": "PhilHealth member ngem saan a maikari iti benepisio",
+    "116. Have you heard of the No Balance Billing (NBB)?": "Nangngegyo kadin ti No Balance Billing (NBB)?",
+    "119. Have you heard of the Zero Balance Billing (ZBB)?": "Nangngegyo kadin ti Zero Balance Billing (ZBB)?",
+    "122. Were you informed about ZBB upon admission?": "Naipakaammo kadi kadakayo ti maipapan iti ZBB idi admission?",
+    "Drugs": "Droga",
+    "Accommodation": "Akomodasion",
+    "129. Why did you not avail of MAIFIP during this last confinement?": "Apay a dikay naavail ti MAIFP bayat daytoy naudi a pannakakulong?",
+    "133. How would you rate the cleanliness and comfort of the consultation rooms in this facility?": "Dagiti Kuarto ti Konsultasion",
+    "136. In most recent visit, how often did the staff treat you with courtesy and respect?": "tratuendakayo buyogen ti kinamanagpadagus ken panagraem?",
+    "137. In most recent visit, how often did the staff listen carefully to what you say or ask?": "dumngegka a naimbag iti ibagam wenno saludsodem?",
+    "138. In most recent visit, how often did the staff explain your condition and procedures in a way you can understand?": "ilawlawagmo ti kasasaad ken pamay-am iti wagas a maawatanmo?",
+    "139. In most recent visit, how often did the staff give you the chance to make decisions about your treatment?": "ikkannaka iti gundaway nga agdesision maipapan iti panangagasmo?",
+    "140. In most recent visit, how often did the staff ask you for your consent before performing any treatments or tests?": "dumawat kenka iti pammalubosmo sakbay nga aramiden ti aniaman a panangagas wenno panagsukimat?",
+    "143. Overall, would you recommend this facility to a friend or relative?": "Iti pakabuklan, irekomendarmo kadi ti [facility_name_input] iti maysa a gayyem wenno kabagian?",
+    "144. How would the patient rate the quality of care you received at this facility?": "Kasano nga i-rate ti pasiente ti kalidad ti pannakaaywan a naawatmo iti [facility_name_input]?",
+    "Weekly": "Linawas",
+    "Monthly": "Binulan",
+    "Rarely": "Manmano",
+    "Easy": "Nalaka",
+    "160. If generic, why did you buy generic medicine?": "No generic, apay a gimmatangka iti generic nga agas?",
+    "Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)": "Dental care (Medical care kadagiti ngipenmo, kas iti panagdalus, panagpunno, kdpy.)",
+    "No time": "Awan ti oras",
+    "172. Was the visit to this facility a referral from your primary care facility?": "Ti kadi panagbisita iti [facility_name_input] ket maysa a panangiturong manipud iti pasilidadmo iti kangrunaan a panangtaripato?"
+   },
+   "skips": [
+    {
+     "key": "No",
+     "reason": "conflicting wording across 55 questions - needs per-question keys",
+     "values": [
+      "(Saan",
+      "Saan"
+     ],
+     "questions": [
+      "1",
+      "102",
+      "108",
+      "11",
+      "110",
+      "116",
+      "119",
+      "122"
+     ]
+    },
+    {
+     "key": "Other (specify)",
+     "reason": "conflicting wording across 16 questions - needs per-question keys",
+     "values": [
+      "(Dadduma pay (ibaga)",
+      "(Dadduma pay (ibaga).",
+      "Dadduma pay (ibaga)",
+      "Dadduma pay (ibaga)."
+     ],
+     "questions": [
+      "101",
+      "103",
+      "105",
+      "114",
+      "149",
+      "15",
+      "154",
+      "2"
+     ]
+    },
+    {
+     "key": "I don't know [DO NOT READ OUT LOUD]",
+     "reason": "conflicting wording across 2 questions - needs per-question keys",
+     "values": [
+      "Diak ammo",
+      "Saan ko nga ammo"
+     ],
+     "questions": [
+      "29",
+      "38.1"
+     ]
+    },
+    {
+     "key": "Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)",
+     "reason": "conflicting wording across 2 questions - needs per-question keys",
+     "values": [
+      "(Outpatient care (Konsultasion, pamay-an, wenno panangagas a sadiay ti pasiente ket sumarungkar ken pumanaw iti uneg ti isu met laeng nga aldaw).",
+      "Outpatient care (Konsultasion, pamay-an, wenno panangagas a sadiay ti pasiente ket sumarungkar ken pumanaw iti uneg ti isu met laeng nga aldaw)"
+     ],
+     "questions": [
+      "163",
+      "84"
+     ]
+    }
+   ],
+   "counts": {
+    "write": 73,
+    "skip": 4
+   }
+  },
+  "WAR": {
+   "writes": {
+    "5. In what month was the patient born?": "Ano nga bulan ngan tuig natawo an pasyente? Month _________ Year__________ Bulan __________ Tuig __________",
+    "450,000 - 499,999": "450,000 ngadto ha 499, 999",
+    "22. Does the patient have electricity in their house?": "Mayda ba kuryente an pasyente ha ira panimalay?",
+    "I don't know [DO NOT READ OUT LOUD]": "Dire ako maaram",
+    "38.1. When did you register and receive your PhilHealth PIN?": "Kakan-o ka nagparehistro ngan nakakarawat han imo pin han kanan PhilHealth?",
+    "38.2. Why are you not registered?": "Kay ano waray ka pa karehistro?",
+    "47. Are you aware that there is/are PhilHealth package/s for physician check-up?": "Maaram ka ba nga mayda mga PhilHealth package para han mga masunod nga serbisyo panlawas: Physician check-up Pag-eksamin han doktor",
+    "69. How long does it take you to travel to the health facility you usually go to — Hours": "Mationan-o kaiha an imo pagbiyahe tikang ha iyo balay kon makadto ha pasilidad han panlawas nga kasagaran mo ginkakadtoan? (BASE HAN BATON HA Q64 (NGARAN HAN PASILIDAD)); LAKTAWAN INI NGA PAKIANA KON AN BATON HA Q63 DIRI Time (HH:MM) Panahon (Oras: Minuto)",
+    "Walk": "Naglalakat",
+    "Jeepney": "Dyip",
+    "Boat": "Baluto",
+    "Taxi": "Taksi",
+    "Pedicab": "Pedikab",
+    "News": "Balita",
+    "Flu": "Trangkaso",
+    "Fever": "Hiranat",
+    "96. Amount spent for the prescribed medicines, by source (Pesos)": "Pira an nagasto para han mga ginreseta nga medisina ni (NGARAN HA ___)?",
+    "103. If yes, which service/s did you avail?": "Kon oo, ano nga serbisyo/ mga serbisyo an imo gin-avail",
+    "In kind": "Mga Butang",
+    "113. Which of the following did you use to pay for the hospital bill? (Select all that apply.)": "Gingamit mo ba an bisan hain hini nga mga masunod ha pagbayad han imo baraydan ha ospital? (pilia an ngatanan nga aplikado) 1) Salary/income Sweldo/Kita",
+    "114. Why did you not avail of PhilHealth benefits?": "Kay ano nga waray ka maka avail han benepisyo han PhilHealth? (Kun waray pa maka avail han PhilHealth ha 113)",
+    "Drugs": "Mga medisina",
+    "Laboratory": "Laboratoryo",
+    "Accommodation": "Akomodasyon",
+    "140. In most recent visit, how often did the staff ask you for your consent before performing any treatments or tests?": "Nangangaro haimo han imo pagtugot antes magbuhat hin bisan ano nga mga pagtambal o mga pag-eksamin?",
+    "Rural Health Unit or City Health Office": "Rural Health Unit o Opisina han City Health",
+    "160. If generic, why did you buy generic medicine?": "Kon generic, kay ano nga pumalit ka hin generic nga medisina?",
+    "No time": "Waray Oras"
+   },
+   "skips": [
+    {
+     "key": "Bike",
+     "reason": "conflicting wording across 2 questions - needs per-question keys",
+     "values": [
+      "Bisekleta",
+      "Bisikleta"
+     ],
+     "questions": [
+      "70",
+      "73"
+     ]
+    },
+    {
+     "key": "83. What best describes why the patient visited a health facility (e.g. RHU, health center, clinic, hospital)?",
+     "reason": "map already holds a translation",
+     "current": "READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.",
+     "proposed": "BASAHA HA DAKU NGA TINGOG AN MGA OPSYON. PILI MAUSA LA NGA BATON."
+    }
+   ],
+   "counts": {
+    "write": 28,
+    "skip": 2
+   }
+  }
+ },
+ "F4": {
+  "BCL": {
+   "writes": {
+    "2. In what month were you born?": "Anong bulan asin taon ka pinangaki? Month _________ Year____________ Bulan Taon",
+    "Other (specify)": "Iba pa (ispecify)",
+    "21. How many senior citizens live in your house now?": "Pira an senior citizen na nakaistar ngonyan sa saimong harong?",
+    "22. Do you have electricity in your house?": "May igwa ba kamong kuryente?",
+    "Walk": "Lakaw",
+    "Bike": "Bisekleta",
+    "Boat": "Sakayan",
+    "Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)": "Dental care (Pag-ataman medikal para sa ngipon, arog kan cleaning, filling, asin iba pa)",
+    "No time": "Wara ki oras",
+    "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?": "[Kun an simbag ay \"iyo\" sa Q112] Pagkatapos mong magbisita sa espesyalista o espesyal na serbisyo, nag-follow up ba sinda saimo kun nano an nangyari sa pagbisita?",
+    "News": "Balita",
+    "Other expenses": "Ibang gastos",
+    "Loan": "Utang",
+    "194. Other specify": "Iba pa (ispecify)"
+   },
+   "skips": [],
+   "counts": {
+    "write": 14,
+    "skip": 0
+   }
+  },
+  "BIS": {
+   "writes": {
+    "2. In what month were you born?": "Unsang bulana ug tuiga ka gipanganak? Month _________ Year____________ Bulan Tuig",
+    "22. Do you have electricity in your house?": "Aduna ba moy kuryente sa inyong panimalay?",
+    "46. What is his/her membership category?": "Pangalan Unang Pangalan lamang",
+    "News": "Balita",
+    "Primary care provider for every Filipino": "Primary care provider para sa tanang Pilipino",
+    "Weekly": "Kada Semana",
+    "77. If generic, why did you buy generic medicine?": "Kung generic, nganong generic nga tambal man ang imong gipalit?",
+    "Walk": "Maglakaw",
+    "Bike": "Bisikleta",
+    "Boat": "Bangka",
+    "For immunizations/vaccinations": "Para sa immunization / bakuna",
+    "Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)": "Dental care (medikal nga pag-atiman sa ngipon sama sa cleaning, pasta, ug uban pa)",
+    "No time": "Walay oras",
+    "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?": "[Tubaga lamang kung \"Oo\" sa Q112] Human nimo pag-adto sa espesyalista o espesyal nga serbisyo, nag-follow up ba sila kanimo bahin sa nahitabo sa pagbisita?",
+    "PhilHealth will cover cost of treatment": "Ang PhilHealth maoy mo-cover sa gasto sa pagtambal",
+    "Other expenses": "Uban pang gasto:",
+    "National Government Agencies (DSWD, etc.)": "National Government Agencies (DSWD, ug uban pa)"
+   },
+   "skips": [
+    {
+     "key": "Other (specify)",
+     "reason": "conflicting wording across 7 questions - needs per-question keys",
+     "values": [
+      "Uban (I-specify)",
+      "Uban pa (I-specify)",
+      "Uban pa (Ispecify)"
+     ],
+     "questions": [
+      "11",
+      "17",
+      "23",
+      "5",
+      "59",
+      "66",
+      "71"
+     ]
+    }
+   ],
+   "counts": {
+    "write": 17,
+    "skip": 1
+   }
+  },
+  "CEB": {
+   "writes": {
+    "Retired": "Retirado",
+    "22. Do you have electricity in your house?": "Aduna bay kuryente sa inyong panimalay?",
+    "News": "Balita",
+    "77. If generic, why did you buy generic medicine?": "Kung generic, nganong generic nga tambal ang imong gipalit?",
+    "Branded medicine is more effective than generic": "Ang branded nga tambal mas epektibo kaysa sa generic",
+    "Walk": "Maglakaw",
+    "Bike": "Bisikleta",
+    "Jeepney": "Jeep",
+    "Boat": "Barko",
+    "Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)": "Dental care (Medikal nga pag-atiman para sa imong ngipon, sama sa pagpanglimpyo, pagpa-pasta, ug uban pa)",
+    "No time": "Walay oras",
+    "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?": "[Tubag \"oo\" sa Q112] Human sa imong pag-adto sa espesyalista/special service, gifollow up ka ba nila bahin sa nahitabo sa pagbisita?",
+    "PhilHealth will cover cost of treatment": "Ang PhilHealth ang mobayad sa gasto sa pagtambal",
+    "Rooms <for inpatients only>": "Kwarto",
+    "Other expenses": "Uban pang galastohan:"
+   },
+   "skips": [],
+   "counts": {
+    "write": 15,
+    "skip": 0
+   }
+  },
+  "FIL": {
+   "writes": {
+    "22. Do you have electricity in your house?": "household? May kuryente po ba ang inyong sambahayan?",
+    "46. What is his/her membership category?": "Ano ang kanyang kategorya ng pagiging miyembro? (Only answer if 'Yes' in Q45) (Para lamang kung \"Oo\" sa Q45)",
+    "Primary care provider for every Filipino": "May primary care provider para sa bawat Filipino",
+    "News": "Balita",
+    "Free primary care consultation (with a registered YAKAP/Konsulta provider)": "Libreng primary care consultation (sa rehistradong YAKAP/Konsulta provider",
+    "77. If generic, why did you buy generic medicine?": "Kung generic, bakit ka bumili ng generic na gamot?",
+    "No time": "Walang oras",
+    "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?": "[Sagot lamang ng \"oo\" sa Q112] Pagkatapos mong pumunta sa espesyalista o espesyal na serbisyo, nag-follow up ba sila sa iyo tungkol sa nangyari sa iyong pagbisita?",
+    "Other expenses": "Iba pang gastos:",
+    "Loan": "Utang"
+   },
+   "skips": [],
+   "counts": {
+    "write": 10,
+    "skip": 0
+   }
+  },
+  "HIL": {
+   "writes": {
+    "1. Before we begin, to confirm, are you the household head?": "Antes kita magsugod, agud makumpirmar, ikaw bala ang ulo sang panimalay?",
+    "2. In what month were you born?": "Sa ano nga bulan kag tuig natawo ang pasiente? Month Bulan ____ Year Tuig_____",
+    "Male": "Lalaki",
+    "Female": "Babaye",
+    "8. Would you like to specify the type of disability?": "Gusto mo bala nga ispecify ang tipo sang imo kapansanan?",
+    "Retired": "Retiro na",
+    "Pension": "Pensyon",
+    "Me (respondent)": "Ako",
+    "My grandfather": "Lolo",
+    "My grandmother": "Lola",
+    "My uncle": "Tiyo",
+    "My aunt": "Tiya",
+    "21. How many senior citizens live in your house now?": "Pila ka senior citizen (edad 60 pataas) ang nagapuyo sa inyo balay subong?",
+    "22. Do you have electricity in your house?": "household? May kuryente bala sa inyo panimalay?",
+    "36. Would you like to specify the type of disability?": "Gusto bala sang pasyente nga ispesipikar ang klase sang disabilidad? 0-No 1-Yes 0Indi 1-Oo",
+    "47. Do you or other members of your HH have private insurance?": "Ikaw ukon ang iban pa nga miembro sang imo panimalay may pribado nga insurance?",
+    "51. Have you heard about Universal Health Care (UHC) prior to this survey?": "Nakabati ka na bala sang Universal Health Care (UHC antes sini nga survey)?",
+    "Primary care provider for every Filipino": "Primary care provider para sa tagsa ka Pilipino",
+    "54. Have you heard of the term \"YAKAP/Konsulta package\"?": "Nakabati ka na bala sang termino nga 'YAKAP/Konsulta package'?",
+    "Weekly": "Kada Semana",
+    "Monthly": "Kada bulan",
+    "Never": "Wala gd",
+    "Easy": "Hapos",
+    "77. If generic, why did you buy generic medicine?": "Kon generic, ngaa ginbakal mo ang generic nga bulong?",
+    "Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)": "Dental care (pag‑atipan sang ngipon: pagtinlo, pagpabutang sang pasta, kag iban pa)",
+    "No time": "Wala sang oras",
+    "116. Did they write down any information for the specialist about the reason for that visit?": "Ginsulat bala nila ang impormasyon para sa espesyalista bahin sa rason sang imo pagkadto?",
+    "122. Did your primary care provider discuss with you different places you could have gone to get help with your problem?": "Gin‑istoryahan bala sang imo primary care provider ikaw parte sa lain‑lain nga lugar nga mahimo mo makadtoan agud makabaton sang bulig para sa imo problema?",
+    "126. Have you heard of the No Balance Billing (NBB)?": "Nakabati ka na bala sang No Balance Billing (NBB)?",
+    "PhilHealth will cover cost of treatment": "Ang PhilHealth ang magabayad sang gasto sang pagpabulong",
+    "Public": "Pambuliko",
+    "Private": "Pribado",
+    "131. During your hospitalization in a DOH-retained hospital, did you or your family pay anything out-of-pocket before being discharged that should have been covered under NBB?": "[Pamangkuta kon nagkadto sila sa DOH‑retained hospital] Sa tion sang imo pagpaconfine sa DOH‑retained hospital, ikaw ukon ang imo pamilya nagbayad bala sang bisan ano nga gasto halin sa bulsa antes mag‑discharge, nga dapat gin‑cover sang NBB?",
+    "132. Have you heard of the Zero Balance Billing (ZBB)?": "Nakabati ka na bala sang Zero Balance Billing (ZBB)?",
+    "135. During your hospitalization in a DOH-retained hospital, did you or your family pay anything out-of-pocket before being discharged that should have been covered under ZBB?": "[Pamangkuta kon nagkadto sila sa DOH‑retained hospital] Sa tion sang imo pagpaconfine sa DOH‑retained hospital, ikaw ukon ang imo pamilya nagbayad bala sang bisan ano nga gasto halin sa bulsa antes mag‑discharge, nga dapat gin‑cover sang ZBB?",
+    "Medicine": "Bulong",
+    "Medical Supplies": "Mga medical supplies",
+    "139. From your most recent visit, what was the final amount you paid in cash at the hospital cashier upon discharge? (PHP)": "Sa imo ulihi‑o nga pagbisita, pila ang sumatotal nga kantidad nga ginbayad mo sang cash sa hospital cashier sang pag‑discharge?",
+    "Other expenses": "Iban nga gasto",
+    "141.1. From your recent visit, how much was charged for services with no receipts provided (i.e. Professional fees)? (PHP)": "Sa imo ulihi nga pagbisita, pila ang gin‑charge para sa mga serbisyo nga wala ginhatagan sang resibo, pareho sang professional fees? Amount:",
+    "Loan": "Utang",
+    "186. Current income of any household members": "Kaugalingon nga income sang bisan sin‑o nga miyembro sang panimalay",
+    "189. Borrowing from friends or relatives outside the household": "Pag‑utang halin sa abyan ukon paryente nga wala naga‑upod sa panimalay",
+    "190. Borrowing from institutions (e.g., financial, microfinance arrangements)": "Pag‑utang halin sa institusyon (halimbawa: financial ukon microfinance)",
+    "191. Remittance or money gift": "Remittance ukon regalo nga kwarta",
+    "192. Government assistance (DSWD, local, etc.)": "Bulig halin sa gobyerno (DSWD, lokal, kag iban pa)",
+    "193. Donation from LGUs": "Donasyon halin sa LGU",
+    "194. Other specify": "Iban pa (ispecify)",
+    "None": "Wala",
+    "Less than 1%": "Nubo sa 1%",
+    "Don't know": "Wala kabalo"
+   },
+   "skips": [
+    {
+     "key": "Yes",
+     "reason": "conflicting wording across 47 questions - needs per-question keys",
+     "values": [
+      "Huo",
+      "Oo"
+     ],
+     "questions": [
+      "1",
+      "100",
+      "104",
+      "105",
+      "108",
+      "112",
+      "114",
+      "115"
+     ]
+    },
+    {
+     "key": "No",
+     "reason": "conflicting wording across 44 questions - needs per-question keys",
+     "values": [
+      "Indi",
+      "Wala"
+     ],
+     "questions": [
+      "100",
+      "104",
+      "105",
+      "108",
+      "114",
+      "115",
+      "116",
+      "117"
+     ]
+    },
+    {
+     "key": "Other (specify)",
+     "reason": "conflicting wording across 6 questions - needs per-question keys",
+     "values": [
+      "Iban pa (Specify)",
+      "Iban pa (specify)",
+      "Iban pa specify",
+      "Iban pa(specify)"
+     ],
+     "questions": [
+      "11",
+      "17",
+      "23",
+      "59",
+      "66",
+      "71"
+     ]
+    }
+   ],
+   "counts": {
+    "write": 51,
+    "skip": 3
+   }
+  },
+  "ILO": {
+   "writes": {
+    "1. Before we begin, to confirm, are you the household head?": "Sakbay a mangrugitayo, tapno mapasingkedan, sika kadi ti ulo ti sangakabbalayan?",
+    "Yes": "Wen",
+    "Male": "Lalaki",
+    "Female": "Babae",
+    "4. Are you part of the LGBTQIA+ community? (e.g., gay, lesbian, bisexual, etc.). It is fine if you are not comfortable answering.": "etc.).(Paset ka kadi ti komunidad ti LGBTQIA+? (e.g., bakla, tomboy, biseksual, kdpy.).",
+    "No": "Saan",
+    "21. How many senior citizens live in your house now?": "Mano a senior citizen ti agnanaed ita iti balayyo?",
+    "22. Do you have electricity in your house?": "household? (Adda kadi koriente iti pagtaenganyo?)",
+    "36. Would you like to specify the type of disability?": "Kayat kadi nga ibaga ti pasiente ti kita ti baldado?) 0-No (Saan) 1-Yes (Wen",
+    "47. Do you or other members of your HH have private insurance?": "Adda kadi pribado nga insurance-yo wenno dagiti dadduma a kameng ti HH-yo?",
+    "News": "Dagiti damag",
+    "Primary care provider for every Filipino": "Primary care provider para iti tunggal Filipino",
+    "54. Have you heard of the term \"YAKAP/Konsulta package\"?": "Nangngegyo kadin ti termino a \"YAKAP/Konsulta package\"?",
+    "Weekly": "Linawas",
+    "Monthly": "Binulan",
+    "Rarely": "Manmano",
+    "Easy": "Nalaka",
+    "77. If generic, why did you buy generic medicine?": "No generic, apay a gimmatangka iti generic nga agas?",
+    "83. Would you know where to go to seek assistance in registration?": "Ammom kadi no sadino ti papanam tapno agpatulongka iti panagrehistro?",
+    "System of PhilHealth is unreliable/usually down": "Sistema ti PhilHealth ket saan a mapagtalkan/kadawyan a down",
+    "Walk": "Magna",
+    "Bike": "Bisikleta",
+    "Boat": "Bangka",
+    "Taxi": "Taksi",
+    "Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)": "(Dental care (Medical care kadagiti ngipenmo, kas iti panagdalus, panagpunno, kdpy.)",
+    "No time": "Awan ti oras",
+    "116. Did they write down any information for the specialist about the reason for that visit?": "Insuratda kadi ti aniaman nga impormasion para iti espesialista maipapan iti makagapu iti dayta a panagbisita?",
+    "126. Have you heard of the No Balance Billing (NBB)?": "Nangngegyo kadin ti No Balance Billing (NBB)?",
+    "Public": "Publiko",
+    "Private": "Pribado",
+    "132. Have you heard of the Zero Balance Billing (ZBB)?": "Nangngegyo kadin ti Zero Balance Billing (ZBB)?",
+    "140. From your most recent visit, do you recall the breakdown of the bill?": "Manipud iti kaudian a panagbisita, malagipmo kadi ti pannakadadael ti bill?",
+    "Rooms <for inpatients only>": "Kuarto",
+    "Loan": "Pautang",
+    "186. Current income of any household members": "Agdama a kita ti aniaman a kameng ti sangakabbalayan",
+    "189. Borrowing from friends or relatives outside the household": "Panagbulod kadagiti gagayyem wenno kakabagian iti ruar ti sangakabbalayan",
+    "191. Remittance or money gift": "Remittance wenno sagut ti kuarta",
+    "192. Government assistance (DSWD, local, etc.)": "(Tulong ti gobierno (DSWD, lokal, kdpy.)",
+    "193. Donation from LGUs": "Donasion manipud kadagiti LGU",
+    "194. Other specify": "Dadduma ti mangibaga",
+    "None": "Awan",
+    "Don't know": "Dimo ammo"
+   },
+   "skips": [
+    {
+     "key": "Other (specify)",
+     "reason": "conflicting wording across 4 questions - needs per-question keys",
+     "values": [
+      "(Dadduma pay (ibaga)",
+      "Dadduma pay (ibaga)"
+     ],
+     "questions": [
+      "23",
+      "59",
+      "66",
+      "71"
+     ]
+    }
+   ],
+   "counts": {
+    "write": 42,
+    "skip": 1
+   }
+  },
+  "WAR": {
+   "writes": {
+    "Retired": "Retired Nagretiro",
+    "22. Do you have electricity in your house?": "Mayda ba kamo kuryente ha iyo panimalay?",
+    "Automatic enrollment into PhilHealth": "Pag-kakuha hin maupay nga kalidad ngan barato nga mga papliton ngan serbisyo ha pag-ataman han panlawas.",
+    "Minor procedures or treatments": "Minor procedires or treatments Mga gudtiay nga pamaagi o pagtambal",
+    "74. Where did you get the rest of the medicines?": "Diin mo ginkuha an iba pa nga mga medisina? Pilia an ngatanan nga aplikado.",
+    "77. If generic, why did you buy generic medicine?": "Kun generic, kay ano nga pumalit ka hin generic nga medisina?",
+    "Primary care provider": "Barangay Health Worker",
+    "Barangay Health Worker": "LGU",
+    "Walk": "Walk Baktas",
+    "Boat": "Boat Barko",
+    "No, I haven't accessed any form of medical care": "Other (Specify) Iba pa (ispecify)",
+    "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?": "[Kun an baton la hin \"oo\" ha Q112] Kahuman mo kumadto ha espesyalista o espesyal nga serbisyo, ginsundan ka ba nira mahitungod han nahitabo ha pagbisita?",
+    "Diagnostic or laboratory procedure": "Diagnostic or laboratory procedire Pamaagi han pag-eksamin o laboratoryo",
+    "Other expenses": "Other expenses: Iba pa nga gastos:",
+    "Loan": "Loan Utang",
+    "1-3%": "1-3% 1-3%",
+    "4-6%": "4-6% 4-6%"
+   },
+   "skips": [],
+   "counts": {
+    "write": 17,
+    "skip": 0
+   }
+  }
+ }
+}

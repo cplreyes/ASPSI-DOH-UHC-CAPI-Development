@@ -1,0 +1,4502 @@
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+Universal Health Care (UHC) Survey – Year 2 
+Facility Head Survey Questionnaire 
+Informed Consent Form Porma hin may Impormasyon nga Pagtugot 
+This informed consent form must be obtained before conducting the interview. You are required to read this entire consent form 
+aloud exactly as written. After reading this form to the respondent, you must complete and sign the verification consent form. 
+Kinahanglan makuha ini nga porma han pagtugot nga may-ada impormasyon antes magdumara han interbyu. Kinahanglan nimo 
+basahon ha daku nga tingog ini nga bug-os nga porma han pagtugot sugad gud han nakasurat. Kahuman basahon ini nga porma 
+ngadto han respondiente, kinahanglan mo kumpletuhon ngan pirmahan an porma han pagtugot han pag-verify. 
+ 
+PART I: Information about the study Bahin I: Impormasyon mahitungod han Pag-aram. 
+Hello, my name is    (data collector name) 
+. I work for Asian Social Project Services, Inc. (ASPSI).  I am here to invite you to 
+participate in a study about the Universal Health Care (UHC) and packages of programs like Yaman ng Kalusugan Program 
+(YAKAP), No Balance Billing (NBB), Zero Balance Billing (ZBB), Bagong Urgent Care and Ambulatory Services (BUCAS), and 
+Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT). The Department of Health funded this study. Please 
+let me tell you more about the study.  
+Kumusta, an akon ngaran amo hi (ngaran han parakolekta hin datos). Nagtatrabaho ako para han Asian Social Project Services, 
+Inc.(ASPSI). Aadi ako para mag-imbitar ha imo nga umapi hin pag-aram mahitungod han Universal Health Care (UHC) ngan mga 
+package hin mga programa sugad han Yaman ng Kalusugan Program (YAKAP), No Balance Billing (NBB), Zero Balance Billing 
+(ZBB), Bagong Urgent Health Care and Ambulatory Services (BUCAS), ngan Guaranteed and Accessible Medication for Outpatient 
+Treatment (GAMOT). Alayon tuguti ako pagsumat ha imo hin dugang nga impormasyon mahitungod hini nga pag-aram. 
+ 
+This study aims to generate evidence on the overall experience of the general public to support continuous monitoring, evaluation, and 
+learning of the implementation of the UHC Act and its Implementing Rules and Regulations (IRR). The questions for this survey 
+cover facility/facility head profile, UHC implementation changes since 2019, specialized programs (YAKAP/Konsulta, NBB/ZBB, 
+BUCAS, GAMOT), DOH licensing, PhilHealth accreditation, NBB/ZBB policies, referral systems, human resource challenges, and 
+secondary data such as hospital census and staffing statistics. 
+Ini nga pag-aram in may panuyo nga makahimo hin ebidensya ha kabug-usan nga eksperyensa han katawhan para suportahan an 
+padayon nga pagbantay, pag-ebalwar, ngan pag-aram han pagpatuman han UHC Act ngan han mga Implementing Rules and 
+Regulations (IRR) hini. An mga pakiana para hini nga surbey naglalakip han profile han lider han pasilidad, mga pagbag-o ha 
+implementasyon han UHC tikang han 2019, mga espesyalista nga mga programa (YAKAP/Konsulta, NBB/ZBB, BUCAS, GAMOT) 
+paglisensya han DOH, akreditasyon han Philhealth, mga palisiya han NBB/ZBB, mga sistema han pag-refer, mga ayat ha tawhanon 
+nga rekurso ngan ikaduha nga datos sugad hin hospital census ngan mga estadistika han mga empleyado. 
+ 
+Would you like to participate as a respondent in the study? The interview may last for more or less than an hour. 
+Karuyag mo ba umapi komo usa nga respondiente ha pag-aram? An interbyu mahimo umabot hin sobra o kulang hin usa kaoras. 
+ 
+We are committed to protecting your privacy. If you choose to participate, we will never include your name in information shared 
+with the government or in any reports. Your name will be kept separately from your answers in a private, secure location. For this 
+interview, it is also important to respect other people’s privacy and not tell anyone else what we talked about today. With all research, 
+there’s a small chance that someone else might get to see your data. We try our best to prevent that, but if it happens, we’ll tell you as 
+soon as possible.  
+Komitido kami nga panalipdan an imo pribado nga kinabuhi. Kon pilion mo nga umapi, diri gud namon ig-uupod an imo ngaran ha 
+impormasyon nga iginpapaangbit ha gobyerno o ha bisan ano nga report. An imo ngaran igtitipig nga bulag tikang ha imo mga baton 
+ha pribado ngan talwas nga lugar. Para hini nga interview, importante liwat nga respetuhon an privacy han iba nga tawo ngan diri 
+igsumat ha iba an aton gin-istoryahan yana nga adlaw. Ha ngatanan nga pagsaliksik, gutiay la an tsansa nga bangin may iba nga 
+makakita han imo mga datos. Gintatalinguha namon nga malikyan ito, pero kon mahitabo ito, susumatan ka namon ha 
+pinakamadagmit nga panahon. 
+ 
+Aside from this, there are no other risks to you if you take part in this study. As a benefit of the research, the knowledge gained may 
+help the government and DOH better support your healthcare needs. You are free to decline participation or to stop at any time. 
+Choosing not to participate will not result in any penalty, and you will not have to pay anything to take part in this study. 
+Labot la hini, waray iba nga risgo ha imo kun makikigbahin ka hini nga pag-aram. Komo kaupayan han pagsaliksik, an hibaro nga 
+makuha in bangin makabulig ha gobyerno ngan DOH nga mas masuportaran an iyo mga panginahanglan ha pag-ataman han 
+panlawas. May kagawasan ka nga magdumiri ha pag-api o umundang ha ano man nga oras. An pagpili nga diri umapi diri 
+magriresulta hin bisan ano nga sirot, ngan diri ka magbabayad hin bisan ano basi umapi hini nga pag-aram. 
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+Do you have any questions about the study or about what I have told you?  
+ 
+May’da ka ba mga pakiana mahitungod han pag-aram o mahitungod han akon iginsumat ha imo? 
+If you have concerns or questions about your rights as a participant, you can contact:  
+Kun may’da ka mga kabaraka o pakiana mahitungod han imo mga katungod komo usa nga partisipante, puyde ka makipagsumpayan 
+ha: 
+ 
+Single Joint Research Ethics Board (SJREB) at the Philippines Department of Health 
+Email: sjreb@doh.gov.ph 
+National Tel: (02) 651-7800 local 1328 
+Tel: +63 936 992 5513 
+ 
+Department of Health 
+Name: Lindsley Jeremiah D. Villarante 
+Email:  ldvillarante@doh.gov.ph 
+Tel: +63 (02) 8651-7800 local 1432 
+ 
+Asian Social Project Services, Inc. 
+Name: Paulyn Jean A. Claro  
+Email: inquiry.aspsi.doh.uhc.survey2@gmail.com  
+Tel: + 63 917 819 6884 
+ 
+ 
+ 
+ 
+PART II: Certificate of Consent Bahin II: Sertipiko han Pagtugot 
+ 
+ 
+If you have understood the information above, please give your permission to be interviewed by signing this form. 
+Kun naintindihan nimo an impormasyon ha igbaw, alayon paghatag han imo pagtugot nga mainterbyu pinaagi hin pagpirma hini nga 
+porma. 
+ 
+_____________________________ 
+ Name and Signature of Respondent 
+Ngaran ngan Pirma han Respondiente 
+ 
+ 
+______________________________________________      _______________________       _______________________ 
+                             Position, Office                                                       Email address  
+                 Mobile Number 
+                           Posisyon, Opisina                                                                                                    Numero han Telepono 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+Questionnaire No:  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+FIELD CONTROL 
+PAGKONTROL HAN LUGAR 
+Survey Team Leader’s Name 
+Ngaran han Lider han group nga 
+na Surbey 
+ 
+Date First Visited the Facility 
+Petsa han siyahan na pag bisita 
+han Lugar 
+(Month, Day, Year) 
+(Bulan, Adlaw, Tuig) 
+Enumerator’s Name 
+Ngaran han Enumerator 
+ 
+Resulta 
+Resulta 
+ 
+Field Validated by 
+Ginberipikar han lugar ni 
+ 
+Date of Final Visit to the Facility 
+Petsa han Katapusan nga 
+pagbisita ha Pasilidad 
+(Month, Day, Year) 
+(Bulan, Adlaw, Tuig) 
+ 
+Field Edited by 
+Gin-edit ha Lugar ni 
+ 
+ 
+ 
+Resulta 
+Resulta 
+ 
+aCodes: 
+1. Completed 
+1. Kumpleto 
+2. Postponed 
+2. Gin-usod 
+3. Refused 
+3. Dumire 
+4. Incomplete 
+4. Dire kumpleto 
+ 
+Total number of visits: 
+Kabugusan 
+nga 
+numero han pagbisita: 
+ 
+ 
+HEALTH FACILITY AND GEOGRAPHIC IDENTIFICATION 
+PASILIDAD PANLAWAD NGAN HEYOGRAPIKO NGA PAGKILALA 
+Classification 
+Klasipikasyon 
+☐ UHC IS 
+☐ Non-UHC IS 
+Region 
+Rehiyon 
+ 
+Province/HUC 
+Probinsya/HUc 
+ 
+City/Municipality 
+Syudad/Munisipyo 
+ 
+Barangay 
+ 
+Location 
+Lokasyon 
+Latitude 
+ 
+Longitude 
+ 
+ 
+ 
+We would like to ask some of your personal information relevant to the survey. Karuyag namon magpakiana hin 
+pipira han iyo personal nga impormasyon nga may kalabotan ha surbey. 
+ 
+A. Facility Head Profile 
+ 
+1. What is your name? (Last Name, First Name, Middle Initial, Ext)  
+Ano it imo ngaran? (Apelyido, Siyahan nga ngaran, Butnga, Dugang ha ngaran) 
+ 
+2. What is your official designation at this health facility?  
+Ano an imo opisyal nga designasyon hini nga pasilidad panlawas? 
+ 
+☐ Rural Health Unit/ Health Center 
+Head 
+☐ Hospital Administrator  
+☐ Administrative Officer/ Assistant  
+ 
+☐ Physician 
+☐ Nurse 
+☐ Midwife  
+ 
+☐ Chief of Hospital 
+☐ Municipal / City Health Officer  
+☐ Health Promotion / Nutrition Officer 
+ 
+☐ Medical Director  
+☐ Medical Officer/  
+☐ Rural Health Physician 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+3. How old are you (in years), as of your last birthday? 
+Pir an an imo edad tikang han imo urhi nga kaadlawa? (ha mga tuig) 
+ 
+4. What is your sex assigned at birth? Ano an imo sekso han imo pagkatawo? 
+ 
+☐ Male Lalaki 
+ 
+☐ Female Babaye 
+ 
+5. In your current position, how many months/years have you worked at this health facility?  
+Haimo posisyon yana, pira na ka bulan/tuig nga nagtrabaho hini nga pasilidad han panlawas? 
+ 
+Number of Years  
+Kadamo han Tuig 
+ 
+Number of Months 
+Kadamo han mga 
+Bulan 
+ 
+6. How many years haveyou worked in health-related position? 
+    Pira ka tuig ka na nagtratrabaho ha trabaho mga may kalabutan ha panlawas? 
+ 
+Number of Years  
+Kadamo han Tuig 
+ 
+ 
+Number of Months 
+Kadamo han mga 
+Bulan 
+ 
+ 
+Next, we will be asking questions about this health facility. Sunod, magpapakiana kami mahitungod hini nga 
+pasilidad panlawas. 
+ 
+B. Facility Profile Profil han Pasilidad 
+ 
+7. What type of ownership is this hospital? 
+  Ano nga klase hin tag-iya ini nga ospital? 
+ 
+☐ Public Pampubliko 
+ 
+☐ Private Pribado 
+ 
+8. What is the facility’s service capacity level? 
+    Ano an lebel han serbisyo nga kapasidad hini nga pasilidad? 
+ 
+☐ Primary Care Facility Pasilidad han Panguna nga Pag-ataman 
+ 
+☐ Level 1 Hospital Ika-1 nga Lebel nga Ospital 
+ 
+☐ Level 2 Hospital Ika-2 nga Lebel nga Ospital 
+ 
+☐ Level 3 Hospital Ika-3 nga Lebel nga Ospital 
+We will now ask about your awareness of UHC, the changes that have been implemented in this facility since the 
+UHC Act was passed in 2019 and if these changes were a result of the UHC Act. 
+Magpapakiana kami yana mahitungod han iyo kahibaro han UHC, han mga pagbabag-o nga iginpatuman hini nga 
+pasilidad tikang han pagpasa han UHC Act han 2019 ngan kun ini nga mga pagbabag-o in resulta han UHC Act. 
+ 
+C. Universal Health Care (UHC) Implementation Universal Health Care (UHC) Implementation 
+ 
+9. Have you heard about Universal Health Care (UHC) prior to this survey? 
+ Nabatian mo na ba an mahitungod han Universal Health Care (UHC) bago hini nga surbey? 
+ 
+☐ Yes Oo 
+ 
+☐ No Diri 
+ 
+10. Does the facility have primary care packages? Mayda ba an pasilidad hin mga primary care package or 
+mga serbisyo para han panguna nga pag-ataman? 
+ 
+☐ Yes Oo 
+ 
+☐ No <proceed to Q12> Waray <pakadto ha Q12> 
+ 
+11. If yes, specify its implementation status relative to the UHC Act. 
+Kun oo, igtudlok an kahimtang han pagpatuman hini may kalabutan han Balaud han UHC. 
+ 
+☐ Implemented as a direct result of the UHC Act (i.e. YAKAP/Konsulta) 
+☐ Ginpatuman komo direkta nga resulta han Balaod han UHC (i.e. YAKAP/Konsulta) 
+ 
+☐ Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act 
+☐ Mayda n aini nates han UHC pero kasunod ginpauswag o ginpahaluag tungod han UHC Act 2019. 
+ 
+☐ Newly implemented or improved independent of UHC Act 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+☐ Bag-o nga iginpatuman o ginpauswag nga bulag ha UHC Act  
+ 
+☐ Not yet implemented but planned within the next 1–2 years 
+☐ Waray pa maipatuman pero ginplano ha sakob han masunod nga 1–2 ka tuig 
+ 
+☐ Other (specify) 
+Iba pa (ispecify) 
+ 
+☐ I don’t know 
+Dire ako maaram 
+ 
+☐ Not applicable 
+Dire aplikado  
+ 
+12. Has the facility applied for DOH primary care licensing since the UHC Act was passed in 2019 and was 
+it a result of the UHC Act? 
+Nag-apply na ba an pasilidad hin DOH primary care licensing tikang han pagpasa han UHC Act hadton 
+2019 ngan resulta ba ini han UHC Act? 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA PARA MAKAG-GIYA HA PAG-USISA. Naipatuman na 
+ba ini? / Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 
+1-2 ka tuig? 
+<Question is applicable to all facilities with ‘No’ response in Q10> <An pakiana in aplikado ha ngatanan nga pasilidad nga mayda 'Waray' nga baton ha Q10> 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig  
+ 
+☐ No, and we have no plans to do this in the next 1-2 years 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig  
+ 
+☐ No, other reason (specify) Diri, iba nga rason (ispecify) 
+ 
+☐ I don't know Diri ako maaram  
+ 
+☐ Not applicable Diri aplikado 
+ 
+13. Do you have a public health unit at this facility? Mayda ba kamo public health unit hini nga pasilidad? 
+ 
+☐ Yes 
+Oo 
+ 
+☐ No <proceed to Q16> 
+Waray<pakadto ha Q16> 
+ 
+☐ Not applicable <proceed to Q16> 
+ 
+Diri aplikado<pakadto ha Q16> 
+ 
+ 
+14. If yes, has the creation of a public health unit at this facility been implemented since the UHC Act was 
+passed in 2019 and was it a result of the UHC Act? 
+Kun oo, naimplementar na ba an paghimo hin public health unit hini nga pasilidad tikang han pagpasa 
+han UHC Act hadton 2019 ngan resulta ba ini han UHC Act? 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka 
+tuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+☐ Yes, other reason (specify) 
+Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q16>  
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig<pakadto ha Q16> 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q16> 
+ 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig<pakadto ha Q16> 
+ 
+☐ No, other reason (specify) <proceed to Q16>  
+Diri, iba nga rason (ispecify)<pakadto ha Q16> 
+ 
+☐ I don't know <proceed to Q16> 
+ 
+Diri ako maaram 
+<pakadto ha Q16> 
+ 
+☐ Not applicable <proceed to Q16> 
+Diri aplikado<pakadto ha Q16>  
+15. What is the main role of the public health unit? 
+Ano an pinakaimportante nga buruhaton han pampunliko nga health unit? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILI MA USA LA NGA BATON. 
+ 
+☐ Health promotion and education 
+Promosyon han kahimsog ngan edukasyon 
+ 
+☐ Disease surveillance report 
+Report han pagbantay han sakit 
+ 
+☐ Referral and patient navigation 
+Pag-refer ngan paggiya ha pasyente 
+ 
+☐ Alignment with national public health programs 
+Pag-align ha nasudnon nga mga programa ha panlawas han publiko  
+ 
+☐ Other (specify) 
+Iba pa (ispecify) 
+ 
+☐ I don't know 
+Dire ako maaram 
+ 
+☐ Not applicable 
+Dire aplikado 
+ 
+16. Do you have a health promotion unit at this facility? 
+Mayda ba kamo health promotion unit hini nga pasilidad? 
+ 
+☐ Yes Oo 
+ 
+☐ No <proceed to Q19> Waray <pakadto ha Q19> 
+ 
+☐ Not applicable <proceed to Q19> Dir aplikado <pakadto ha Q19> 
+ 
+ 
+17. If yes, has the creation of health promotion unit at this facility been implemented since the UHC Act 
+was passed in 2019 and was it a result of the UHC Act? 
+Kun oo, naimplementar na ba an paghimo hin health promotion unit hini nga pasilidad tikang han pagpasa han 
+UHC Act hadton 2019 ngan resulta ba ini han UHC Act? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) 
+Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q19> 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig<pakadto ha Q19> 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q19> 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig<pakadto ha Q19> 
+ 
+☐ No, other reason (specify) <proceed to Q19> 
+Diri, iba nga rason (ispecify)<pakadto ha Q19> 
+ 
+☐ I don't know <proceed to Q19> 
+ 
+Diri ako maaram 
+<pakadto ha Q19> 
+ 
+ 
+☐ Not applicable <proceed to Q19> 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+Diri aplikado<pakadto ha Q19>  
+ 
+18. What is the main role of the health promotion unit? 
+Ano an pinakaimportante nga buruhaton han health promotion unit? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILI MA USA LA NGA BATON. 
+ 
+☐ Leading health education and awareness campaigns (e.g., raising awareness about public health 
+initiatives of DOH, disseminating information about health) 
+Pagpanguna hin mga kampanya hin edukasyon ngan pagpahibaro parti panlawas (e.g., pagpahibaro 
+mahitungod han mga inisyatibo parti panlawas han publiko han DOH, pagpasamwak hin impormasyon 
+mahitungod han panlawas) 
+ 
+☐ Conducting and coordinating health screening and promotionactivities (e.g., collaboratingand 
+implementing with otherunits and programcoordinators to promotehealthy lifestyles andpreventive care) 
+Pagdumara ngan pagkoordinar han mga health screening ngan health promotion nga mga buruhaton 
+(pananglitan, pakig-usa ngan pagpatuman kaupod an iba nga mga yunit ngan mga koordinator han 
+programa ha pagpadukwag han mahimsog nga mga estilo han pagkinabuhi ngan pag-ataman ha 
+pagpugong) 
+ 
+☐ Advocacy and policy formation (e.g., research, campaigns, collaboration with policymakers) 
+Adbokasiya ngan paghimo hin palisiya (pananglitan, pagsaliksik, kampanya, pakig-usa ha mga naghihimo 
+hin palisiya) 
+ 
+☐ Resource mobilization andfundraising (e.g., securing funding, grants) 
+Pagtirok hin mga pinagkukuhaan ngan pagtirok hin pondo (pananglitan, pagkuha hin pondo, mga grant) 
+ 
+☐ Other (specify) 
+Iba pa (ispecify) 
+ 
+☐ I don't know 
+Dire ako maaram 
+ 
+19. Has the establishment of new roles in the facility been implemented since the UHC Act was passed in 
+2019 and was it a result of the UHC Act? 
+Naimplementar ba an pagbutang hin bag- nga mga posisyon o responsiblidad ha pasilidad tikang han 
+pagpasa han UHC Act dida han 2019 ngan resulta ba ini han UHC Act? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) 
+Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q21> 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig<pakadto ha Q21> 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q21> 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig<pakadto ha Q21> 
+ 
+☐ No, other reason (specify) <proceed to Q21> 
+Diri, iba nga rason (ispecify)<pakadto ha Q21> 
+ 
+☐ I don't know <proceed to Q21> 
+Diri ako maaram 
+<pakadto ha Q21> 
+ 
+ 
+ 
+☐ Not applicable <proceed to Q21> 
+Diri aplikado<pakadto ha Q21>  
+ 
+20. What is/are the new role/s established in this facility? 
+Ano an mga bag-o nga posisyon nga gintukod hini nga pasilidad? 
+ 
+ 
+21. Has the establishment of new departments in the facility been implemented since the UHC Act was 
+passed in 2019 and was it a result of the UHC Act? 
+Naimplementar na ba an pagtukod hin mga bag-o nga departamento ha pasilidad tikang han pagpasa han 
+UHC Act hadton 2019 ngan resulta ba ini han UHC Act? 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-uswag gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) 
+Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q23> 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig<pakadto ha Q23> 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q23> 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig<pakadto ha Q23> 
+ 
+☐ No, other reason (specify) <proceed to Q23> 
+Diri, iba nga rason (ispecify)<pakadto ha Q23> 
+ 
+☐ I don't know <proceed to Q23> 
+ 
+Diri ako maaram 
+<pakadto ha Q23> 
+ 
+ 
+☐ Not applicable <proceed to Q23> 
+Diri aplikado<pakadto ha Q23>  
+ 
+22. What is/are the new department/s established in this facility? 
+Ano an/ano an mga bag-o nga departamento/s nga gintukod hini nga pasilidad? 
+ 
+ 
+23. Has the construction of new building/s in this health facility been implemented since the UHC Act was 
+passed in 2019 and was it a result of the UHC Act? 
+Naimplementar na ba an pagtindog hin bag-o nga building/s hini nga pasilidad panlawas tikang han 
+pagpasa han UHC Act hadton 2019 ngan resulta ba ini han UHC Act? 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka 
+tuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) 
+Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q25> 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig<pakadto ha Q25> 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q25> 
+ 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig<pakadto ha Q25> 
+ 
+ 
+☐ No, other reason (specify) <proceed to Q25>  
+Diri, iba nga rason (ispecify)<pakadto ha Q25> 
+ 
+☐ I don't know <proceed to Q25> 
+Diri ako maaram 
+<pakadto ha Q25> 
+ 
+ 
+ 
+ 
+☐ Not applicable <proceed to Q25> 
+ 
+Diri aplikado<pakadto ha Q25>  
+ 
+24. What is/are the building/s being used for? Para ha ano/ano an ginagamit han/mga tinukod? 
+ 
+ 
+25. Has the construction of new rooms in this health facility been implemented since the UHC Act was 
+passed in 2019 and was it a result of the UHC Act?  
+Naimplementar na ba an pagtindog hin mga bag-o nga kwarto hini nga pasilidad panlawas tikang han 
+pagpasa han UHC Act hadton 2019 ngan resulta ba ini han UHC Act? 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka 
+tuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) 
+Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q27>  
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig<pakadto ha Q27> 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q27> 
+ 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig<pakadto ha Q27> 
+ 
+☐ No, other reason (specify) <proceed to Q27>  
+Diri, iba nga rason (ispecify)<pakadto ha Q27> 
+ 
+☐ I don't know <proceed to Q27> 
+ 
+Diri ako maaram 
+<pakadto ha Q27> 
+ 
+☐ Not applicable <proceed to Q27> 
+Diri aplikado<pakadto ha Q27>  
+ 
+26. What are the rooms being used for? Para ha ano ginagamit an mga kwarto? 
+ 
+ 
+27. Has the increase in equipment been implemented since the UHC Act was passed in 2019 and was it a 
+result of the UHC Act? Naimplementar na ba an pagdugang han mga kagamitan tikang han pagpasa 
+han UHC Act hadton 2019 ngan resulta ba ini han UHCAct? 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka 
+tuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) 
+Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q29> 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig<pakadto ha Q29> 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q29> 
+ 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig<pakadto ha Q29> 
+ 
+☐ No, other reason (specify) <proceed to Q29> 
+Diri, iba nga rason (ispecify)<pakadto ha Q29> 
+ 
+☐ I don't know <proceed to Q29> 
+ 
+Diri ako maaram 
+<pakadto ha Q29> 
+ 
+☐ Not applicable <proceed to Q29> 
+Diri aplikado<pakadto ha Q29>  
+ 
+28. If there was an increase in equipment, what are these pieces of equipment? 
+Kun mayda pagdugang han mga gamit, ano ini nga mga piraso han mga gamit? 
+ 
+ 
+29. Has the increase in supplies been implemented since the UHC Act was passed in 2019 and was it a 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+result of the UHC Act? 
+Naimplementar ba an paghitaas han suplay tikang han pagpasa han UHC Act hadton 2019 ngan 
+resulta ba ini han UHC Act? 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka 
+tuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) 
+Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q31>  
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig<pakadto ha Q31> 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q31> 
+ 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig<pakadto ha Q3Q315> 
+ 
+☐ No, other reason (specify) <proceed to Q31>  
+Diri, iba nga rason (ispecify)<pakadto ha Q31> 
+ 
+☐ I don't know <proceed to Q31> 
+ 
+Diri ako maaram 
+<pakadto ha Q31> 
+ 
+☐ Not applicable <proceed to Q31> 
+Diri aplikado<pakadto ha Q16>  
+ 
+30. If there was an increase in supplies, what are these? 
+Kun mayda pag-hitaas han mga suplay, ano ini? 
+ 
+ 
+31. Has the use of electronic medical records at the facility been implemented since the UHC Act was 
+passed in 2019 and was it a result of the UHC Act? 
+Naimplementar na ba an paggamit han elektronik nga mga medikal nga rekord ha pasilidad tikang han 
+iginpasa an UHC Act dida han 2019 ngan resulta ba ini han UHC Act? 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka 
+tuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) 
+Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q35> 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig<pakadto ha Q35> 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q35> 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig<pakadto ha Q35> 
+ 
+☐ No, other reason (specify) <proceed to Q35> 
+Diri, iba nga rason (ispecify)<pakadto ha Q35> 
+ 
+☐ I don't know <proceed to Q35> 
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+Diri ako maaram 
+<pakadto ha Q35> 
+ 
+☐ Not applicable 
+Diri aplikado<pakadto ha Q35>  
+ 
+32. Does your facility currently submit health and financial data to the DOH Information System and/or the 
+PhilHealth Dashboard? 
+An iyo ba pasilidad in nagpapasa yana hin datos parti panlawas ngan panalapi ha DOH Information System 
+ngan/o ha PhilHealth Dashboard? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILI MA USA LA NGA BATON. 
+ 
+☐ Yes, to DOH Information System only 
+Oo, ngadto la han systema hin impormasyon ha DOH la 
+ 
+☐ Yes, to PhilHealth Dashboard only 
+Oo, ha PhilHealth Dashboard la 
+ 
+☐ Yes, to both DOH Information System and PhilHealth Dashboard 
+Oo, ha systema hin impormasyon ha DOH  ngan PhilHealth Dashboard 
+ 
+☐ No, we are not submitting these data <proceed to Q35> 
+Diri, diri kami nagpapasa hini nga mga datos<pakadto ha Q35> 
+ 
+33. If yes, how frequent has your facility submit these data? 
+Kun oo, mationan-o kadamo an iyo pasilidad nga nagsumiter hini nga mga datos? 
+ 
+☐ Weekly 
+Kada semana 
+ 
+☐ Monthly 
+Kada bulan 
+ 
+☐ Quarterly 
+Kada tulo ka bulan 
+ 
+☐ Semi-annually 
+Katunga hit tuig 
+ 
+☐ Annually 
+Kada tuig 
+ 
+☐ Other (specify) 
+ 
+34. Which of the submitted reports are actually used for decision-making? 
+Hain ha mga iginpasa nga report an aktuwal nga ginagamit ha paghimo hin desisyon? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ OPD/IPD census and morbidity reports 
+ 
+☐ Maternal, newborn, child, and adolescent health (MNCAH) reports 
+ 
+☐ Notifiable diseases / surveillance reports 
+ 
+☐ Expenditure and budget utilization reports 
+ 
+☐ PhilHealth claims and reimbursement reports 
+ 
+☐ YAKAP/Konsulta utilization reports 
+ 
+☐ NBB compliance 
+ 
+☐ ZBB compliance / monitoring reports 
+ 
+☐ HRH staffing and deployment reports 
+ 
+☐ Medicines availability and stock status reports 
+ 
+☐ Facility performance scorecards / quality reports 
+ 
+☐ Other (specify) 
+Iba pa (ispecify) 
+ 
+35. Have there been changes in the facility staffing since 2019? 
+Mayda ba mga pagbabag-o ha staff han pasilidad tikang han 2019? 
+ 
+☐ Yes 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+Oo 
+ 
+☐ No <proceed to Q37> 
+Waray<pakadto ha Q37> 
+ 
+36. Have the changes in staffing been implemented since the UHC Act was passed in 2019 and was it a 
+result of the UHC Act? 
+Naimplementar na ba an mga pagbabag-o han pag-emplayado tikang han pagpasa han UHC Act dida 
+han 2019 ngan resulta ba ini han UHC Act? 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 
+katuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) 
+Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig 
+ 
+☐ No, other reason (specify) 
+Diri, iba nga rason (ispecify) 
+ 
+☐ I don't know  
+Diri ako maaram 
+ 
+☐ Not applicable 
+Diri aplikado 
+ 
+37. Have there been changes in the referral system since 2019? 
+Mayda ba pagbabago han systema han pag rekomenda tikang han 2019? 
+ 
+☐ Yes Oo 
+ 
+☐ No <proceed to Q39> Waray<pakadto ha Q39> 
+ 
+38. Have the changes to the referral system (inbound or outbound) been implemented since the UHC Act 
+was passed in 2019 and was it a result of the UHC Act? 
+Naimplementar na ba an mga pagbabag-o han systema han pag rekomenda (pangawas o pansulod) 
+tikang han pagpasa han UHC Act hadton 2019 ngan resulta ba ini han UHC Act? 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka 
+tuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) 
+Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig 
+ 
+☐ No, other reason (specify) Diri, iba nga rason (ispecify) 
+ 
+☐ I don't know Diri ako maaram 
+ 
+☐ Not applicable Diri aplikado 
+ 
+39. Has the Memorandum of Understanding (MoU) / Agreement (MoA) with other health facilities as part of 
+the healthcare provider network been implemented since the UHC Act was passed in 2019 and was it a 
+result of the UHC Act? 
+Naimplementar na ba an Memorandum of Understanding (MoU) / Agreement (MoA) ha iba pa nga mga 
+pasilidad panlawas komo kaparte han healthcare provider network tikang han pagpasa han UHC Act 
+hadton 2019 ngan resulta ba ini han UHC Act? 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan toimplement it in the next 1-2 years? 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka 
+tuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) 
+Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig 
+ 
+☐ No, other reason (specify) 
+Diri, iba nga rason (ispecify) 
+ 
+☐ I don't know  
+Diri ako maaram 
+ 
+☐ Not applicable 
+Diri aplikado 
+ 
+40. Has the no balance billing (NBB) been implemented since the UHC Act was passed in 2019 and was it 
+a result of the UHC Act? 
+Naimplementar na ba an no balance billing (NBB) tikang han pagpasa han UHC Act hadton 2019 ngan 
+resulta ba ini han UHC Act? 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka 
+tuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig 
+ 
+☐ No, other reason (specify) 
+Diri, iba nga rason (ispecify) 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+☐ I don't know Diri ako maaram 
+ 
+☐ Not applicable Diri aplikado 
+ 
+41. Has the zero balance billing (ZBB) been implemented since the UHC Act was passed in 2019 and was it 
+a result of the UHC Act? 
+Naimplementar na ba an zero balance billing (ZBB) tikang han pagpasa han UHC Act hadton 2019 
+ngan resulta ba ini han UHC Act? 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka 
+tuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) 
+Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig 
+ 
+☐ No, other reason (specify) 
+Diri, iba nga rason (ispecify) 
+ 
+☐ I don't know  
+Diri ako maaram 
+ 
+☐ Not applicable 
+Diri aplikado 
+ 
+42. Has the no co-payment policy been implemented since the UHC Act was passed in 2019 and was it a 
+result of the UHC Act? 
+Naipatuman na ba an polisiya nga waray kooperasyon han pagbayad tikang han naipasa an UHC Act 
+han 2019, ngan resulta ba ini han UHC Act? 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka 
+tuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) 
+Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig 
+ 
+☐ No, other reason (specify) 
+Diri, iba nga rason (ispecify) 
+ 
+☐ I don't know  
+Diri ako maaram 
+ 
+☐ Not applicable 
+Diri aplikado 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+43. Has the health facility been implementing ward accommodation allocation since the UHC Act was 
+passed in 2019 and was it a result of the UHC Act? (Under UHC, basic ward allocation are as follows:  
+90% for government general hospitals; 70% for government specialty hospitals, and 10% for private 
+hospitals.) 
+Nagpapatuman na ba an pasilidad panlawas hin pag-alotaga hin akomodasyon ha kwarto han pasyente 
+tikang han pagpasa han UHC Act hadton 2019 ngan resulta ba ini han UHC Act? (Ha ilarum han UHC, an 
+basik nga alokasyon han kwarto han pasyente amo an masunod: 90% para han mga pankabug-osan nga 
+ospital han gobyerno; 70% para han mga espesyal nga ospital han gobyerno, ngan 10% para han mga 
+pribado nga ospital.) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka 
+tuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) 
+Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig 
+ 
+☐ No, other reason (specify) 
+Diri, iba nga rason (ispecify) 
+ 
+☐ I don't know  
+Diri ako maaram 
+ 
+☐ Not applicable 
+Diri aplikado 
+ 
+44. Have the improved clinical practice guidelines been implemented since the UHC Act was passed in 
+2019 and was it a result of the UHC Act? 
+Ginpatuman ba an ginpaupay nga mga praktis ha klinikal nga mga giya tikang han pagpasa han UHC 
+Act han 2019 ngan resulta ba ini han UHC Act? 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka 
+tuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years 
+Waray, nganwaray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig 
+ 
+☐ No, other reason (specify) Diri, iba nga rason (ispecify) 
+ 
+☐ I don't know Diri ako maaram 
+ 
+☐ Not applicable Diri aplikado 
+ 
+45. Have the DOH licensing standards been implemented since the UHC Act was passed in 2019 and was 
+it a result of the UHC Act? 
+Naimplementar na ba an DOH pamantayan han lisensya tikang han pagpasa han UHC Act hadton 2019 ngan 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+resulta ba ini han UHC Act? 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka 
+tuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act  
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Ac 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) 
+Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig 
+ 
+☐ No, other reason (specify) Diri, iba nga rason (ispecify) 
+ 
+☐ I don't know Diri ako maaram 
+ 
+☐ Not applicable Diri aplikado 
+ 
+46. Have the PhilHealth accreditation requirements been implemented since the UHC Act was passed in 
+2019 and was it a result of the UHC Act? 
+Naimplementar na ba an mga kinahanglanon han akreditasyon han PhilHealth tikang han pagpasa han UHC 
+Act hadton 2019 ngan resulta ba ini han UHC Act? 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka 
+tuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 year 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig 
+ 
+☐ No, other reason (specify) Diri, iba nga rason (ispecify) 
+ 
+☐ I don't know Diri ako maaram 
+ 
+☐ Not applicable Diri aplikado 
+ 
+47. Have the service delivery protocols been implemented since the UHC Act was passed in 2019 and was 
+it a result of the UHC Act? 
+Naimplementar na ba an paghatag hin serbisyo ha mga protokol tikang han pagpasa han UHC Act hadton 
+2019 ngan resulta ba ini han UHC Act? 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka 
+tuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) Oo, ibanga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Diri, waray pa ini maipatuman, pero plano namonnga ha masunod nga 1-2 ka tuig 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig 
+ 
+☐ No, other reason (specify) Diri, iba nga rason (ispecify) 
+ 
+☐ I don't know Diri ako maaram 
+ 
+☐ Not applicable Diri aplikado 
+ 
+48. Have the primary care quality measures been implemented since the UHC Act was passed in 2019 and 
+was it a result of the UHC Act? 
+Naipatuman ba an mga primaryo ha kalidad han panguna nga pag-ataman tikang han pagpasa han Balaud 
+han UHC dida han 2019 ngan resulta ba ini han Balaud han UHC? 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this 
+implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / 
+Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka 
+tuig? 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, ini in iginpatuman komo direkta nga resulta han UHC Act  
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act  
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, ini in iginpatuman o ginpaupay ha diri pa la maiha, pero diri tungod han UHC Act  
+ 
+☐ Yes, other reason (specify) Oo, iba nga rason (ispecify) 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Diri, waray pa ini maipatuman, pero plano namon nga ha masunod nga 1-2 ka tuig 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years 
+Waray, ngan waray kami plano nga buhaton ini ha masunod nga 1-2 ka tuig 
+ 
+☐ No, other reason (specify) Diri, iba nga rason (ispecify) 
+ 
+☐ I don't know Diri ako maaram 
+ 
+☐ Not applicable Diri aplikado 
+ 
+49. What are the major challenges to improving the quality of patient care in your local area?  
+Ano an mga dagko nga problema ha pagpauswag han kalidad han pag-ataman han pasyente ha iyo 
+lugar? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA OPSYON HAN BATON NGA IGINHAHATAG HAN NAGBATON NGA WARAY 
+PAG-AGHAT. 
+ 
+☐ Limited resources (e.g., shortages in healthcare personnel/manpower, medical equipment, essential 
+supplies, or funding) 
+Limitado nga mga kagamitan (pananglitan, kakulang hin mga tawohan/tawo ha pag-ataman han panlawas, 
+mga gamit medikal, mga kinahanglanon nga mga suplay, o pondo) 
+ 
+☐ Challenging quality standards (e.g., high standards that are difficult to achieve) 
+Pag-ayat hin mga pamantayan han kalidad (pananglitan, hataas nga mga pamantayan nga makuri makuha) 
+ 
+☐ Certain healthcare decisions are made by local government units and not the health facility 
+An pipira nga mga desisyon ha pag-ataman han kahimsog ginhihimo han mga yunit han lokal nga gobyerno 
+ngan diri han pasilidad ha kahimsog  
+ 
+☐ Lack of specific healthcare skills (i.e., Insufficient specialists, surgeons, or other healthcare professionals 
+with specialized skills needed in the facility) 
+Kakulang hin partikular nga mga abilidad ha pag-ataman han panlawas (i.e., Kulang nga mga espesyalista, 
+mga siruhano, o iba pa nga mga propesyonal ha pag-ataman han panlawas nga mayda mga espesyalista 
+nga mga abilidad nga ginkikinahanglan ha pasilidad) 
+ 
+☐ Inadequate training of healthcare workers (i.e., Healthcare workers needing additional training to meet the 
+facility's quality standards) 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+Kulang nga pag-aram han mga trabahador ha pag-ataman han panlawas (i.e., Mga trabahador ha pag-
+ataman han panlawas nga nagkikinahanglan hin kadugangan nga paghag-id para matuman an mga suruklan 
+han kalidad han pasilidad) 
+ 
+☐ Lack of patient awareness of the benefits of UHC (e.g., patients do not know they can avail of free 
+consultations, and selected medicines and laboratory services) 
+Kakulang hin kaaram han pasyente han mga benepisyo han UHC (e.g., diri maaram an mga pasyente nga 
+makakapahimulos hira hin libre nga konsultasyon, ngan pinili nga mga medisina ngan mga serbisyo ha 
+laboratoryo) 
+ 
+☐ Limited accessibility of public healthcare facilities (e.g., lack of transportation options, inconvenient 
+location, or physical barriers hindering access for patients.) 
+Limitado nga pag-agi han mga pasilidad han panlawas han pampubliko (pananglitan, kakulang hin mga 
+kapilian hin transportasyon, diri kombenyente nga lokasyon, o pisikal nga mga ulang nga nakakaulang han 
+pag-agi para han mga pasyente.) 
+ 
+☐ Infrastructure not conducive for patient care (e.g., no ground floor, shortage of rooms, inadequate 
+sanitation facilities, lack of wheelchair accessibility, etc.)  
+Mga imprastraktura nga diri maupay para han pag-ataman han pasyente (e.g., waray salog ha ubos, 
+kakulang hin mga kwarto, diri igo nga mga pasilidad ha kalimpyo, kakulang hin pag-agi han mga lingkuran 
+nga de-kaliding, ngan iba pa) 
+ 
+☐ I don't know Dire ako maaram 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+50. What are the major challenges to improving the accessibility of patient care in your local area? 
+Ano an mga dagko nga problema ha pagpa-uswag han pag-access han pag-ataman han pasyente ha iyo 
+lokal nga lugar? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA OPSYON HAN BATON NGA IGINHAHATAG HAN NAGBATON NGA WARAY 
+PAG-AGHAT. 
+ 
+☐ Limited resources (e.g., shortages in healthcare personnel/manpower, medical equipment, essential 
+supplies, or funding) 
+Limitado nga mga kagamitan (pananglitan, kakulang hin mga tawohan/tawo ha pag-ataman han panlawas, 
+mga gamit medikal, mga kinahanglanon nga mga suplay, o pondo) 
+ 
+☐ Challenging quality standards (e.g., high standards that are difficult to achieve) 
+Pag-ayat hin mga pamantayan han kalidad (pananglitan, hataas nga mga pamantayan nga makuri makahua) 
+ 
+☐ Certain healthcare decisions are made by local government units and not the health facility 
+An pipira nga mga desisyon ha pag-ataman han kahimsog ginhihimo han mga yunit han lokal nga gobyerno 
+ngan diri han pasilidad ha kahimsog  
+ 
+☐ Lack of specific healthcare skills (i.e., Insufficient specialists, surgeons, or other healthcare professionals 
+with specialized skills needed in the facility) 
+Kakulang hin partikular nga mga abilidad ha pag-ataman han panlawas (i.e., Kulang nga mga espesyalista, 
+mga siruhano, o iba pa nga mga propesyonal ha pag-ataman han panlawas nga mayda mga espesyalista 
+nga mga abilidad nga ginkikinahanglan ha pasilidad) 
+ 
+☐ Inadequate training of healthcare workers (i.e., Healthcare workers needing additional training to meet the 
+facility's quality standards) 
+Kulang nga pag-aramhan mga trabahador ha pag-ataman han panlawas (i.e., Mga trabahador ha pag-
+ataman han panlawas nga nagkikinahanglan hin kadugangan nga paghag-id para matuman an mga suruklan 
+han kalidad han pasilidad) 
+ 
+☐ Lack of patient awareness of the benefits of UHC (e.g., patients do not know they can avail of free 
+consultations, and selected medicines and laboratory services) 
+Kakulang hin kaaram han pasyente han mga benepisyo han UHC (e.g., diri maaram an mga pasyente nga 
+makakapahimulos hira hin libre nga konsultasyon, ngan pinili nga mga medisina ngan mga serbisyo ha 
+laboratoryo) 
+ 
+☐ Limited accessibility of public healthcare facilities (e.g., lack of transportation options, inconvenient 
+location, or physical barriers hindering access for patients.) 
+Limitado nga pag-agi han mga pasilidad han panlawas han pampubliko (pananglitan, kakulang hin mga 
+kapilian hin transportasyon, diri kombenyente nga lokasyon, o pisikal nga mga ulang nga nakakaulang han 
+pag-agi para han mga pasyente.) 
+ 
+☐ Infrastructure not conducive for patient care (e.g., no ground floor, shortage of rooms, inadequate 
+sanitation facilities, lack of wheelchair accessibility, etc)  
+Mga imprastraktura nga diri maupay para han pag-ataman han pasyente (e.g., waray salog ha ubos, 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+kakulang hin mga kwarto, diri igo nga mga pasilidad ha kalimpyo, kakulang hin pag-agi han mga lingkuran 
+nga de-kaliding, ngan iba pa) 
+ 
+☐ I don't know Dire ako maaram 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+The next questions we will ask relate to the YAKAP/Konsulta package. Please answer to the best of your 
+knowledge. You may answer “I don't know” if you are unsure. 
+An sunod nga aton igpapakiana in may kalabutan han YAKAP/Konsulta package. Alayon pagbaton kutob han 
+imo nahibabaroan. Mahimo ka bumaton hin " Diri ako maaram" kun diri ka sigurado. 
+ 
+D. YAKAP/Konsulta Package  
+ 
+51. Is the facility currently an accredited YAKAP/Konsulta provider? 
+An pasilidad ba ha pagkayana usa nga akreditado nga YAKAP/Konsulta provider? 
+ 
+☐ Yes Oo 
+ 
+☐ No <proceed to Q79> Dire<Pakadto ha Q79> 
+ 
+52. If yes, since when? Kun oo, tikang ka kan-o? 
+ 
+Month 
+Bulan 
+Year 
+Tuig 
+ 
+53. If accredited, which of the following are included in the YAKAP/Konsulta package?  
+Kon akreditado, hain hini nga mga mosunod an sakop han YAKAP/Konsulta package? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Pap smear 
+ 
+☐ Mammogram 
+ 
+☐ Lipid profile 
+ 
+☐ Thyroid function test 
+ 
+☐ Chest X-ray 
+ 
+☐ Low-dose CT scan 
+ 
+☐ Dental services 
+ 
+☐ All of the above Tanan na nayakan 
+ 
+☐ I don't know Dire ako maaram 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+54. Is it possible to register individual patients to YAKAP/Konsulta at this facility?  
+Posible ba an pagrehistro hin tagsa nga pasyente ha YAKAP/Konsulta ha ini nga pasilidad? 
+ 
+☐ Yes Oo 
+ 
+☐ No Dire 
+ 
+☐ I don't know Dire ako maaram 
+ 
+55. Is it possible to register whole families to YAKAP/Konsulta at this facility? 
+Pwede ba magparehistro hin bug-os nga pamilya ha YAKAP/Konsulta dinhi hini nga pasilidad? 
+ 
+☐ Yes OO 
+ 
+☐ No Dire 
+ 
+☐ I don't know Dire ako maaram 
+ 
+56. Is it possible to register both individual patients and their family members together to 
+YAKAP/Konsulta at this facility? 
+Pwede ba pareho magrehistro an tagsa-tagsa nga pasyente ngan an ira kapamilya ha YAKAP/Konsulta dinhi 
+hini nga pasilidad? 
+ 
+☐ Yes Oo 
+ 
+☐ No Dire 
+ 
+☐ I don't know Dire ako maaram 
+ 
+57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package? (Capitation 
+is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.) 
+Base han imo nahibabaroan, ano an capitation amount han putos han YAKAP/Konsulta? (An capitasyon amo 
+an kantidad kada tuig kada rehistrado nga pasyente para han paghatag han YAKAP/Konsulta package 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+services.) 
+ 
+ 
+58. What are the performance indicators you need to meet to receive the second tranche payment? 
+Ano an mga tigaman han pagbuhat nga kinahanglan mo matuman para makarawat an ikaduha nga porsyon 
+nga bayad? 
+Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled 
+patientto receive the full capitation payment. 
+An mga tigaman han pagbuhat amo an gintagan hin kahulogan nga hugpo han mga papliton ngan serbisyo 
+panlawas nga ighahatag para han kada nakalista nga pasyentenga makarawat an bug-os nga bayad ha 
+kapitasyon. 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA OPSYON HAN BATON NGA IGINHAHATAG HAN NAGBATON NGA WARAY 
+PAG-AGHAT. 
+RESPONDENT IS NOT ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION. IGINDIDIRI HAN RESPONDENTE AN 
+PAMILING HIN REPERENSA ANTES BATONAN INI NGA PAKIANA . 
+ 
+☐ Beneficiaries consulted a primary care doctor An mga benepisyaryo nagkonsulta ha doktor nga mñnag-
+aataman ha siyahan nga mga tawo  
+ 
+☐ Utilization of laboratory services Paggamit han mga gamit ha laboratoryo 
+ 
+ 
+ 
+☐ Beneficiaries received antibiotics as prescribed by their primary care doctor An mga benepisyaryo 
+nakarawat hin antibiotiks sugad han iginreseta han ira doktor nga nag-aataman han ira panguna nga 
+panlawas. 
+ 
+☐ Beneficiaries received noncommunicable disease (NCD) medicine as prescribed by their primary care 
+doctor An mga benepisyaryo in nakarawat hin medisina para ha diri nakakatapon nga sakit sugad han 
+iginreseta han ira panguna nga nag-aataman nga doktor 
+ 
+ 
+ 
+☐ No requirements Waray mga kinahanglanon  
+ 
+☐ 1st patient encounter Una nga pakigkita han pasyente 
+ 
+☐ I don't know Dire ako maaram 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+59. Do you know how often you can expect to receive payments from PhilHealth for the delivery of the 
+YAKAP/Konsulta package? 
+59. Maaram ba kamo kun pira ka beses kamo malalauman nga makakarawat hin bayad tikang ha 
+PhilHealth para han pagdeliver han putos han YAKAP/Konsulta? 
+ 
+☐ Yes Oo 
+ 
+☐ No <proceed to 61> Dire<pakadto ha 61> 
+ 
+60. How often should you be receiving payments? 
+Mationan-o kaagsob ka angay kumarawat hin mga bayad? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Monthly  
+Kada bulan 
+ 
+☐ Quarterly 
+Kada tulo ka bulan 
+ 
+☐ Semi-annually  
+Kada unom na bulan/tunga han tuig 
+ 
+☐ Annually 
+Kada tuig 
+ 
+61. Were there delays in receiving capitation tranches? 
+Mayda ba mga paglangan ha pagkarawat han mga bahin han kapitasyon? 
+ 
+☐ Yes Oo 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+☐ No <proceed to 62> Waray <pakadto ha 62> 
+ 
+61.1. If yes, what was/were the reasons for the delay? Kun oo, ano an mga rason han pagkaiha? 
+ 
+ 
+62. On average, how long is the typical time interval between tranches releases to the facility? 
+Ha aberids, gaano kaiha an tipikal nga lat-ang han oras ha butnga han mga bahin nga iginpapagawas 
+ngadto ha pasilidad? 
+ 
+☐ less than a month waray pa mag usa ka bulan  
+ 
+☐ 1-2 months 1-2 ka bulan 
+ 
+☐ 3-4 months 3-4 ka bulan 
+ 
+☐ 5-6 months 5-6 ka bulan 
+ 
+☐ More than six months Sobra ha unom ka bulan  
+ 
+63. How many month/s did you wait from application submission to accreditation approval?  
+Pira ka bulan/mga bulan an imo ginhulat tikang han pagsumiter han aplikasyon ngadto han pag-aprobar han 
+akreditasyon? 
+ 
+☐ less than a month waray pa mag usa ka bulan 
+ 
+☐ 1-2 months 1-2 ka bulan 
+ 
+☐ 3-4 months 3-4 ka bulan 
+ 
+☐ 5-6 months 5-6 ka bulan 
+ 
+☐ More than six months Sobra ha unom ka bulan 
+ 
+64. Why did you apply to become a YAKAP/Konsulta provider? 
+Kay ano nga nag-apply ka nga magin YAKAP/Konsulta probider? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Incentives (i.e., facility receives capitation/payment for registered patients) 
+ 
+Mga insentibo (i.e., an pasilidad nakarawat hin kapitasyon/bayad para han mga nahirehistro nga pasyente)
+ 
+ 
+☐ Aligns with facility's mission (i.e., goals of UHC are aligned with the facility) 
+Nakalinya ha misyon han pasilidad (i.e., an mga panuyo han UHC nakalinya ha pasilidad) 
+ 
+ 
+☐ Encouraged by LGU  
+Gin-anghat han LGU 
+ 
+ 
+☐ Mandated/required by DOH/UHC 
+Ginmando/ginkikinahanglan han DOH/UHC 
+ 
+☐ To improve the services of the facilities 
+ 
+ 
+Para mapaupay pa an serbisyo han mga pasilidad  
+ 
+☐ Other (specify) 
+Iba pa (ispecify) 
+ 
+65. Which of the following requirements were difficult to comply with for accreditation? 
+Hain ha masunod nga mga kinahanglanon an makuri sundon para han akreditasyon? 
+These are the requirements for YAKAP/Konsulta accreditation outlined by DOH.  
+Amo ini an mga kinahanglon para han YAKAP/Konsulta akreditasyon nga iginpahamtang han DOH. 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Ability to conduct preventive/screening services and health education  
+ 
+Kapasidad pagdumara hin mga serbisyo ha pagpugong/pag-eksamin ngan edukasyon ha panlawas  
+ 
+☐ Capability to provide services for required laboratory and radiologic services 
+ 
+Kapasidad paghatag hin serbisyo para han ginkikinahanglan nga mga serbisyo ha laboratoryo ngan 
+radiolohiya  
+ 
+ 
+☐ Capability to dispense required medicines 
+Kapasidad paghatag han ginkikinahanglan nga mga medisina  
+ 
+ 
+ 
+☐ General Infrastructure 
+ 
+Kabug-usan nga Imprastraktura  
+ 
+☐ Equipment and Supplies 
+ 
+Mga Kagamitan ngan Suplay  
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+☐ Human resource 
+ 
+Mga empleyado/staff 
+ 
+☐ Functional Health Information System 
+Sistema han Impormasyon ha Panlawas 
+ 
+☐ Documentary requirements 
+ 
+Mga kinahanglanon ha dokumento  
+ 
+ 
+☐ DOH licensing requirements  
+Mga kinahanglanon ha paglisensya han DOH 
+ 
+☐ None of the above <proceed to 75> 
+Waray ha nayakan <pakadto ha 75> 
+ 
+66. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+Ability to conduct preventive/screening services and health education   
+Kapasidad pagdumara hin mga serbisyo ha pagpugong/pag-eksamin ngan edukasyon ha panlawas  
+<only for those who answered “Ability to conduct preventive/screening services and health education”in Q65> 
+<para la han bumaton nga"Kapasidad pagdumara hin mga serbisyo ha pagpugong/pag-eksamin ngan 
+edukasyon ha panlawas" ha Q65> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+☐ Limited human resources Limitado nga mga empleyado/staff   
+ 
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+ 
+☐ Stringent standards Stricto nga mga suruklan 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+67. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+Capability to provide services for required laboratory and radiologic services   
+Kapasidad paghatag hin serbisyo para han ginkikinahanglan nga mga serbisyo ha laboratoryo ngan 
+radiolohiya  
+<only for those who answered “Capability to provide services for required laboratory and radiologic services” 
+in Q65> 
+<para ka han bumaton nga"Kapasidad paghatag hin serbisyo para han ginkikinahanglan nga mga serbisyo ha 
+laboratoryo ngan radiolohiya" ha Q65> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+☐ Limited human resources Limitado nga mga empleyado/staff   
+ 
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+ 
+☐ Stringent standards Stricto nga mga suruklan 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+68. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+Capability to dispense required medicines   
+Kapasidad paghatag han ginkikinahanglan nga mga medisina   
+ 
+<only for those who answered “Capability to dispense required medicines” in Q65>  
+<para la han bumaton nga "Kapasidad paghatag han ginkikinahanglan nga mga medisina" ha Q65> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+☐ Limited human resources Limitado nga mga empleyado/staff   
+ 
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+ 
+☐ Stringent standards Stricto nga mga suruklan 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+69. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+General Infrastructure    
+Kabug-usan nga Imprastraktura  
+<only for those who answered “General Infrastructure” on Q57> 
+<para la han bumaton han "Kabug-usan nga Imprastraktura" Q65> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOGnga AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+☐ Limited human resources Limitado nga mga empleyado/staff   
+ 
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+ 
+☐ Stringent standards Stricto nga mga suruklan 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+70. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+Equipment and Supplies   
+Mga Kagamitan ngan Suplay  
+<only for those who answered “Equipment and Supplies” in Q65> 
+<para la han bumaton nga "Mga Kagamitan ngan Suplay" ha Q65> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THATAPPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+☐ Limited human resources Limitado nga mga empleyado/staff   
+ 
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+ 
+☐ Stringent standards Stricto nga mga suruklan 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+71. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+Human resource 
+Mga empleyado/staff 
+  <only for those who answered “Human resource” inQ65> 
+<para la han bumaton nga "Mga empleyado/staff" ha Q65> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+☐ Limited human resources Limitado nga mga empleyado/staff   
+ 
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+ 
+☐ Stringent standards Stricto nga mga suruklan 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+72. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+Functional Health Information System  
+Sistema han Impormasyon ha Panlawas 
+ <only for those who answered “Functional Health Information System” in Q65> 
+<para la han bumaton nga "Sistema han Impormasyon ha Panlawas" ha Q65> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+☐ Limited human resources Limitado nga mga empleyado/staff   
+ 
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+ 
+☐ Stringent standards Stricto nga mga suruklan 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+73. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+Documentary requirements   
+Mga kinahanglanon ha dokumento  
+<only for those who answered “Documentary requirements” in Q65> 
+<para la han bumaton nga "Mga kinahanglanon ha dokumento" ha Q65> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+☐ Limited human resources Limitado nga mga empleyado/staff   
+ 
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+ 
+☐ Stringent standards Stricto nga mga suruklan 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+74. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+DOH Licensing requirements  
+Mga kinahanglanon ha paglisensya han DOH 
+<only for those who answered “DOH Licensing requirements” in Q65> 
+<para la han bumaton nga "Mga kinahanglanon ha paglisensya han DOH" ha Q65> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+☐ Limited human resources Limitado nga mga empleyado/staff   
+ 
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+ 
+☐ Stringent standards Stricto nga mga suruklan 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+75. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta? 
+75. Base han iyo pag-intindi, kan kanay responsibilidad an pagpaenrol han mga pasyente ha YAKAP/Konsulta? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Patients' own initiative kalugaringon nga inisyatibo han pasyente 
+ 
+ 
+☐ Facility Pasilidad  
+ 
+ 
+ 
+☐ LGU  
+ 
+ 
+☐ Someone else Iba na tawo 
+ 
+☐ PhilHealth 
+ 
+ 
+ 
+☐ I don't know Dire ako maaram  
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+76. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta? 
+Hain ha masunod nga mga inisyatibo an iyo ginbubuhat para maenrol an mga pasyente hini nga pasilidad ha 
+YAKAP/Konsulta? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ On-site Enrollment (e.g., offering patient enrollment at the health facility) 
+ 
+Pagpalista ha lugar (pananglitan, paghatag hin pagpalista hin pasyente ha pasilidad panlawas) 
+ 
+☐ LGU Outreach (e.g., involvement in LGU outreach activities, such as ongoing nutrition programs) 
+☐ Serbisyo gawas ha LGU (e.g., pag-api ha mga buruhaton han serbisyo gawas ha LGU, sugad han 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+nagpapadayon nga mga programa ha nutrisyon) 
+ 
+☐ Facility Outreach (e.g., engaging in outreach efforts directly from the facility) 
+ 
+Serbisyo gawas han Pasilidad (pananglitan, pag-api ha mga paningkamot hin pag-abot nga direkta tikang ha 
+pasilidad) 
+ 
+☐ Barangay Health Workers (BHWs) Support (e.g., receiving support from local BHWs) 
+Suporta han Barangay Health Workers (BHWs) (e.g., pagkarawat hin suporta tikang ha lokal nga mga 
+BHWs) 
+ 
+☐ Information Campaigns (e.g., conducting information campaigns through various channels, including but 
+not limited to online campaigns and house-to-house visits) 
+Mga Kampanya ha Impormasyon (e.g., pagdumara hin mga kampanya ha impormasyon pinaagi hin iba-iba 
+nga mga paagi, upod pero diri la an mga kampanya ha online ngan pagbisita ha balay-balay) 
+ 
+☐ Local Health Insurance Offices (LHIO); assistance or partnerships with YAKAP/Konsulta caravans 
+ 
+Local Health Insurance Offices (LHIO); bulig o pakigsosyo ha mga caravan/sasakyan han YAKAP/Konsulta 
+ 
+☐ Coordination with other government agencies and the private sector  
+Koordinasyon ha iba pa nga ahensya han gobyerno ngan ha pribado nga sektor  
+ 
+☐ No initiatives  
+Waray mga inisyatibo   
+ 
+☐ Other (specify) 
+Iba pa (ispecify) 
+ 
+77. Did you experience any challenges in enrolling patients to YAKAP/Konsulta? 
+Mayda ba kamo naeksperyensyahan nga problema han pagpaenrol han mga pasyente ha 
+YAKAP/Konsulta? 
+ 
+☐ Yes Oo 
+ 
+☐ No <proceed to 85> Waray <pakadto ha 85> 
+ 
+78. What are the challenges you have faced? Ano an mga problema nga imo gin-atubang? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Lack of patient awareness (i.e., patients are unaware of YAKAP/Konsulta, its benefits, and registration process) 
+Kakulang hin hibaro han mga pasyente (i.e., an mga pasyente diri maaram han YAKAP/Konsulta, mga benepisyo hini, ngan proseso 
+han pagparehistro) 
+ 
+☐ Lack of patient willingness (i.e., patient is hesitant to provide personal information or has concerns about data security) 
+Kakulang hin kaandam han pasyente (i.e., an pasyente nag-aalang paghatag hin personal nga impormasyon o mayda mga kabaraka 
+mahitungod han seguridad han datos) 
+ 
+☐ Lack of resources (e.g., not enough manpower to conduct information campaigns or outreaches to enroll patients to 
+YAKAP/Konsulta) 
+Kakulangan hin mga kagamitan (e.g., waray igo nga kusog para magdumara hin mga kampanya hin impormasyon o serbisyo gawas 
+han pasilidad para maenrol an mga pasyente ha YAKAP/Konsulta) 
+ 
+☐ Competition with other health facilities over patient registration 
+Pakigkompetensya ha iba nga mga pasilidad panlawas mahitungod han pagrehistro han mga pasyente  
+ 
+☐ Technical / system issues of PhilHealth (e.g., data loss, errors, or platform accessibility problems) 
+Teknikal / isyu ha sistem han PhilHealth (e.g., pagkawara han datos, mga kasaypanan, o mga problema han pag-aagi han plataporma) 
+ 
+☐ Other (specify) 
+Iba pa (ispecify) 
+ 
+ 
+<Q79 to Q84 are only relevant to facilities who are not YAKAP-accredited> 
+<An Q79 ngadto ha Q84 may kalabutan la han mga pasilidad nga diri akreditado han YAKAP> 
+ 
+79. If not YAKAP/ KONSULTA accredited, why are you not accredited? 
+Kun diri YAKAP/ KONSULTA akretditado , kay ano diri ka akreditado ? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Difficult process Makuri nga proseso 
+ 
+☐ No time Waray oras 
+ 
+☐ Ongoing application Padayon nga aplikasyon 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+80. Are you intending to become a YAKAP/Konsulta provider?  
+Mayda ka ba tuyo nga magin YAKAP/Konsulta probider? 
+ 
+☐ Yes, already in process <proceed to 84> 
+Oo, aada na ha proseso<padayon ha 84> 
+ 
+☐ Yes, not yet in process <proceed to 84> 
+Oo, diri pa ha proseso<padayon ha 84> 
+ 
+☐ No, decided not to <proceed to 82> 
+Diri, nagdesisyon nga dumiri <padayon ha 82> 
+ 
+☐ No, tried and failed <proceed to 83> 
+Diri, ginsarihan ngan waray maglampos <padayon ha 83> 
+ 
+☐ No, haven’t thought about it yet <proceed to 81> 
+Waray, waray pa ini hunahunaa<padayon ha 81> 
+ 
+☐ I don’t know  <proceedto 85> 
+Dire ako maaram<pakadto ha 85> 
+ 
+81. If you decide to apply today, would you know how to start the process? 
+Kun magdesisyon ka nga mag-apply yana nga adlaw, maaram ka ba kun paano titikangan an proseso? 
+<only for those who answered “No, haven’t thought about it yet” in Q80> 
+<para la han mga bumaton hin “Diri, waray pa ini hunahunaa” ha Q80> 
+ 
+☐ Yes 
+ 
+☐ No 
+ 
+82. What was the deciding factor not to apply?  
+Ano an nagdesisyon nga diri mag-aplay? 
+<only for those who answered “No, decided not to” in Q80> 
+<para la han mga bumaton hin “Diri, nagdesisyon nga diri” ha Q80> 
+ 
+ 
+83. What went wrong with the application?  
+Ano an nagsayop han aplikasyon? 
+<only for those who answered “No, tried and failed” in Q80> 
+<para la han mga bumaton hin “Diri, nagsari ngan waray” ha Q80> 
+ 
+ 
+84. What are some challenges in the process, if any?  
+Ano an pipira nga mga problema ha proseso, kun mayda man? 
+<only for those who answered ‘Yes’ in Q80> 
+<para la han bumaton nga 'Oo' ha Q80> 
+ 
+ 
+ 
+<Q85 to Q91; Q93 to Q100 are only relevant to facilities who are YAKAP-accredited, otherwise proceed to 
+Q101> <Q92 is only relevant to facilities who are not YAKAP-accredited> 
+<Q85 ngadto ha Q91; Q93 ngadto ha Q100 may kalabutan la ha mga pasilidad nga akreditado han YAKAP, 
+kun diri padayon ha Q101> <an Q92 may kalabutan la ha mga pasilidad nga dire akreditado han YAKAP> 
+ 
+85. What areas do you consider as the facility’s catchment area/s? 
+Ano nga mga lugar an iyo ginhuhunahuna nga lugar/mga lugar nga sakop han serbisyo han pasilidad?
+ 
+ 
+86. Howmany patients in your catchment area are eligible to register to this YAKAP/Konsulta provider? 
+Pira nga mga pasyente ha iyo catchment area an kwalipikado magpalista hininga YAKAP/Konsulta provider 
+ 
+87. How many eligible patients in your catchment area are already registered to this YAKAP/Konsulta 
+provider? 
+Pira na an mga kwalipikado nga pasyente ha iyo catchment area an nakarehistro na hini nga YAKAP/Konsulta 
+provider? 
+ 
+88. The maximum per capita rate amount for YAKAP/Konsulta is at Php 1,700 across private and public facilities. 
+According to PhilHealth, 40% of the capitation amount will be released as the first tranche after the first patient 
+encounter. The remaining 60% will be released based on the size of the registered catchment population by 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+December and performance targets that year. Based on your practice, is this enough? 
+An pinakadako nga per capita rate nga kantidad para han YAKAP/Konsulta in aada ha Php 1,700 ha bug-os 
+nga mga pribado ngan pampubliko nga mga pasilidad. Sumala han PhilHealth, 40% han kantidad nga bayad 
+kada rehistrado nga pasyente an igpapagawas komo syahan nga bahin kahuman han syahan nga pasyente 
+nga pagkita. An nahibibilin nga 60% in igpapagawas base han kadako han rehistrado ha populasyon nga 
+sakop han lugar pag-abot han Disyembre ngan mga target han pagbuhat hito nga tuig. Base han iyo praktis, 
+igo na ba ini? 
+ 
+☐ Yes Oo 
+ 
+☐ No Dire 
+ 
+☐ I don’t know Dire ako maaram 
+ 
+89. Did you go through a costing exercise to figure out if this was viable for your facility? 
+Nag-agi ka ba hin ehersisyo ha paggastos para mahibaroan kun ini in praktikal para han iyo pasilidad? 
+ 
+☐ Yes Oo 
+ 
+☐ No <proceed to Q91> Waray<pakadto ha Q91> 
+ 
+☐ I don’t know Dire ako maaram 
+ 
+90. Did the costing exercise show that Php 1,700 was viable for your facility? 
+Nagpakita ba an pag-ehersisyo han paggastos nga kaya it Php 1700 para han iyo pasilidad? 
+ 
+☐ Yes <proceed to Q91, if YAKAP/Konsulta accredited>  
+Oo <pakadto ha Q91, kun YAKANP/Konsulta akreditado> 
+ 
+☐ No <proceed to Q92, if not YAKAP/Konsulta accredited> 
+☐ Waray<padayon ha Q92, kun diri YAKAP/Konsulta akreditado > 
+ 
+☐ I don’t know <proceed to Q93> 
+Dire ako maaram <pakadto ha Q93> 
+ 
+91. What would be the minimum acceptable capitation value per patient per year for you as a YAKAP/ 
+Konsulta provider? 
+Ano unta an pinakaguti/minimu nga kinakarawat nga kantidad han kapitasyon kada pasyente kada tuig para 
+ha imo komo tagahatag han YAKAP/ Konsulta? 
+ 
+ 
+92. What would be the minimum acceptable capitation value per patient per year for you to consider being 
+a YAKAP/Konsulta provider? <Only relevant to facilities who are not YAKAP-accredited; otherwise proceed 
+to Q93> 
+Ano daw la an pinakaguti/minimum nga kinakarawat nga kantidad han kapitasyon kada pasyente kada tuig 
+para ha imo paghunahunaon nga magin tagahatag hin YAKAP/Konsulta? 
+<May kalabutan la ha mga pasilidad nga dire YAKAP-accredited; kun diri paladto ha Q93> 
+ 
+ 
+93. Does your facility charge additional capitation fees? 
+An iyo ba pasilidad in nagsusukot hin kadugangan nga bayad ha kapitasyon? 
+ 
+☐ Yes Oo 
+ 
+☐ No <proceed to 95> Dire <pakadto ha 95> 
+ 
+94. What is/are the reason/s for the facility to charge additional capitation fees? 
+Ano an/mga rason para han pasilidad nga magsukot hin kadugangan nga bayad ha kapitasyon? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ To cover expenses related to building maintenance, equipment, and non-clinical staff 
+Basi mataparan an mga gastos may kalabotan ha pagmintinar han tinukod, mga garamiton, ngan diri-klinikal 
+nga mga empleyado  
+ 
+☐ A patient’s care costs exceed the predetermined fixed payment 
+An mga gastos ha pag-ataman han pasyente labaw han igintalaan nga daan nga bayad  
+ 
+☐ Services excluded from capitation coverage 
+Mga serbisyo nga diri upod han sakop han kapitasyon  
+ 
+☐ Provide preventive care that may not be adequately compensated under a basic capitation plan 
+Maghatag hin pag-ataman ha pagpugong nga bangin diri igo nga bayad ha ilarom han batakan nga plano 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+han kapitasyon  
+ 
+☐ Offset losses 
+Pagkompensa han mga kawad-an 
+ 
+☐ Other (Specify) 
+Iba pa (ispecify) 
+ 
+95. Have you already received payments for patients enrolled? 
+Nakarawat na ba kamo hin bayad para han mga pasyente nga nakapalista? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.  
+BASAHA HA MAKUSOG AN MGA OPSYON. PILI MA USA LA NA BATON. 
+ 
+☐ Yes, we have received all expected payments <proceed to Q97> 
+Oo, nakarawat namon an ngatanan nga ginlalauman nga bayad<palkadto  ha Q97> 
+ 
+☐ Yes, we have received some but not all expected payments yet <proceed to Q97> 
+ 
+Oo, mayda kami nakakarawat pero diri pa tanan nga ginlalauman nga bayad<pakadto ha Q97>  
+ 
+☐ No, we have not received any expected payments yet  
+ 
+Waray, waray pa kami makakarawat hin ginlalauman nga bayad 
+ 
+☐ No, we have not expected any payments yet  
+ 
+Waray, waray pa kami ginlalauman nga bayad 
+ 
+96. Why not? Kayano dire? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Delays in PhilHealth processing 
+ 
+Mga pag-iha han pagproseso han PhilHealth 
+ 
+ 
+☐ Delays in facility's tracking of patient enrollment 
+ 
+ 
+Mga pag-iha han pagsubay han pasilidad han pagpalista han mga pasyente 
+ 
+☐ Difficulties in verifying patient enrollment (PhilHealth)  
+☐ Kakurian pag-verify han pagpalista han mga pasyente (PhilHealth) 
+ 
+ 
+☐ Facility is not active in meeting criteria for payments (e.g., facility doesn't submit necessary requirements, 
+facility doesn't enroll patients to YAKAP/Konsulta) 
+ 
+☐ Diri aktibo an pasilidad ha pagtuman han mga suruklan para han pagbayad (e.g., an pasilidad diri 
+nagpapasa han mga kinahanglanon nga mga kinahanglanon, an pasilidad diri nagpapalista hin mga 
+pasyente ha YAKAP/Konsulta)  
+ 
+☐ Criteria for payments is unclear 
+ 
+Diri klaro an mga suruklan para han pagbayad . 
+ 
+☐ I don’t know Dire maaram 
+ 
+☐ Other (specify) 
+Iba pa (ispecify) 
+ 
+97. Did you face any challenges in getting these payments? 
+Mayda ba kamo gin-atubang nga mga problema ha pagkuha hini nga mga bayad? 
+ 
+☐ Yes Oo 
+ 
+☐ No <proceed to Q99> Waray <plale cor heatbseenadto ha 899> 
+ 
+98. What were these challenges? Ano an mga problema?  
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Delayed payment process  
+Urhi nga proseso han pagbayad 
+ 
+☐ Unclear criteria for capitation 
+Diri klaro nga suruklan para han kapitasyon . 
+ 
+☐ Difficult to meet criteria for capitation  
+Makuri matuman an mga suruklan para han kapitasyon . 
+ 
+☐ Philhealth process to apply for payments is difficult/unclear 
+ 
+Makuri/diri klaro an proseso han Philhealth pag-apply han mga bayad 
+ 
+ 
+☐ I don't know  
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+Dire ako maaram 
+ 
+☐ Other (specify) 
+Iba pa (ispecify) 
+ 
+99. If you were to expand the YAKAP/Konsulta package, what would you expand next? 
+Kun imo papahaluagon an package han YAKAP/Konsulta, ano an imo sunod nga papahaluagon? 
+<Only relevant to facilities who are YAKAP-accredited; otherwise proceed to Q101> 
+Para la ini ha mga pasilidad nga akreditado ha YAKAP; kun diri, pakadto ngadto ha Q101> 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ The current list of medicines and drugs offered <proceed to Q101> 
+ 
+An yana nga listahan han mga medisina ngan mga medisina nga igintatanyag <pakadto ha Q101> 
+ 
+ 
+☐ The current laboratory/diagnostic services offered <proceed to Q101>  
+An yana nga mga serbisyo ha laboratoryo/pag-eksamin nga igintatanyag <pakadto ha Q101> 
+ 
+☐ Additional features <proceed to Q100> 
+ 
+Dugang nga mga habin <pakadto ha Q100> 
+ 
+☐ I don't know <proceed to Q101> Dire ako maaram <pakadto ha Q101> 
+ 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+100. What additional features would you add? Ano pa nga mga bahin an imo igdudugtong? 
+<Only relevant to facilities who are YAKAP-accredited and answered "Additional features in Q99; otherwise 
+proceed to Q101> 
+Para la ini ha mga pasilidad nga akreditado ha YAKAP; kun diri, pakadto ngadto ha Q101> 
+ 
+We will now ask questions related to BUCAS center and GAMOT package. 
+Magpapakiana kita yana may kalabutan han BUCAS center ngan GAMOT package. 
+ 
+E.   Awareness on Expanded Health Programs (BUCAS and GAMOT) 
+E. Pag-abat han Ginpahaluag nga mga Programa ha Panlawas (BUCAS ngan GAMOT) 
+ 
+<To be asked only for facilities with BUCAS centers and GAMOT packages> 
+<Igpapakiana la han mga pasilidad nga mayda BUCAS centers ngan GAMOT packages> 
+ 
+101. Have you heard about the Bagong Urgent Care and Ambulatory Service (BUCAS)? 
+Nakabati ka na ba han Bagong Urgent Care and Ambulatory Service (BUCAS)? 
+ 
+☐ Yes Oo 
+ 
+☐ No <proceed to Q108> Waray<pakadto ha Q108> 
+ 
+102. Do you have a BUCAS Center? Mayda ka ba Centro han BUCAS? 
+ 
+☐ Yes <proceed to Q104> Oo<pakadto ha Q104> 
+ 
+ 
+☐ No <proceed to Q103> Waray<pakadto ha Q103> 
+ 
+☐ I don’t know Dire ako maaram 
+ 
+103. If none, what is the primary reason? <proceed to Q108> 
+ Kun waray, ano an panguna nga rason?<pakadto ha Q108> 
+READ OPTIONS OUTLOUD. SELECT ONE ANSWER ONLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Proposal not yet submitted 
+ 
+Waray pa kapasa an proposisyon  
+☐ Limited information on establishment process 
+Limitado nga impormasyon ha proseso han pagtukod  
+ 
+☐ Did not meet standard requirements 
+Diri nakatuman han lebel na kantidad nga mga 
+kinahanglanon 
+☐ Not applicabl 
+Dire aplikado 
+ 
+☐ Awaiting assessment or approval 
+Naghuhulat hin pag-usisa o pag-uyon  
+☐ Others (specify) 
+Iba pa (ispecify) 
+ 
+104. What are the available services offered by your BUCAS Center? 
+Ano an mga available nga serbisyo nga igintatanyag han iyo BUCAS Center? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Urgent care and consultation 
+Apurado nga pag-ataman ngan konsultasyon  
+ 
+☐ Minor surgical proceDires 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+Mga gudtiay nga pamaagi ha pag-opera  
+ 
+☐ Diagnostic and laboratory services 
+Mga serbisyo ha pag-eksamin ngan ha laboratoryo  
+ 
+☐ Reproductive and special health services 
+Mga serbisyo ha pag-anak ngan espesyal nga panlawas  
+ 
+☐ Other (specify) 
+Iba pa (ispecify) 
+ 
+105. In your assessment, what are the main factors affecting the utilization of BUCAS in your facility? 
+Ha iyo assessment, ano an mga panguna nga nakakaapekto han paggamit han BUCAS ha iyo 
+pasilidad? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Patient awareness 
+Kahibaro han pasyente  
+☐ Facility location and accessibility 
+Lokasyon han pasilidad ngan pag-aagian  
+ 
+☐ Referral patterns 
+Mga surubdan han pagrekomenda 
+☐ PhilHealth coverage and reimbursement 
+Sakop ngan pagbayad han PhilHealth 
+ 
+☐ Availability of staff/services 
+Pagkaada hin mga empleyado/serbisyo 
+☐ Others (specify) 
+Iba pa (ispecify) 
+ 
+106. What are the resources you need to support/sustain the BUCAS center? 
+Ano an mga kagamitan nga iyo kinahanglan para masuportahan/masustener an sentro han BUCAS? 
+ 
+ 
+107. Based on your experience, does the BUCAS Center decongest your health facility of patients?  
+Base han iyo eksperyensya, naibanan ba han BUCAS Center an iyo health facility han mga pasyente? 
+<Question relevant to facilities located in areas with a BUCAS Center> 
+<Pakiana may kalabutan han mga pasilidad nga nahimumutang ha mga lugar nga mayda BUCAS Center> 
+ 
+☐ Yes Oo 
+ 
+☐ No Waray 
+ 
+108. Have you heard about the Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) 
+package? 
+Nabatian mo na ba an mahitungod han Garantisado ngan Maabot nga mga Medisina para han 
+Pagtambal ha Gawas (GAMOT) nga putos? 
+ 
+☐ Yes Oo 
+ 
+ 
+ 
+☐ No <proceed to Q112> Waray<pakadto ha Q112> 
+ 
+109. Is your facility an accredited GAMOT provider? 
+An iyo ba pasilidad usa nga akreditado nga tagahatag han GAMOT? 
+ 
+☐ Yes <proceed to Q111> Oo<pakadto ha Q111> 
+ 
+ 
+ 
+☐ No  Dire 
+ 
+110. If no, what is the primary reason? <After responding, proceed to Q112> 
+Kun dire, ano an pinaka rason?<katapos bumaton, pakadto ha Q163> 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Application not yet submitted 
+Waray pa kapasa an aplikasyon  
+☐ Limited information on accreditation process 
+Limitado nga impormasyon ha proseso han pag-
+akreditasyon 
+ 
+☐ Did not meet accreditation requirements 
+Waray makab-ot an mga kinahanglanon ha 
+akreditasyon 
+☐ Not applicable 
+Dire aplikado 
+ 
+☐ Awaiting assessment or approval 
+Naghuhulat hin pag-usisa o pag-aprobar . 
+☐ Others (specify) 
+Iba pa (ispecify) 
+ 
+111. In your assessment, what are the main factors affecting the utilization of the GAMOT Program in your 
+facility?  
+Ha iyo pag-usisa, ano an mga panguna nga nakakaapekto han paggamit han GAMOT Program ha iyo 
+pasilidad? 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Availability of GAMOT medicines 
+Pagkaada hin mga medisina han GAMOT  
+☐ Pharmacy capacity 
+Kapasidad han botika . 
+ 
+☐ Patient awareness of the program 
+Pag-abat han pasyente han programa  
+☐ PhilHealth eligibility and reimbursement processes 
+Mga proseso han kwalipikado ngan pagbayad han PhilHealth 
+ 
+☐ Prescribing practices of physicians 
+☐ Others (specify) 
+Iba pa (ispecify) 
+ 
+112. In the past 3 months, has this facility experienced a stock-out (zero supply) of any tracer essential 
+medicines? 
+Ha naglabay nga 3 ka bulan, nakaeksperyensya ba ini nga pasilidad hin stock-out (waray na suplay) hin bisan 
+ano nga tracer essential na nga medisana? 
+ 
+☐ Yes Oo 
+ 
+ 
+ 
+☐ No <proceed to Q118> Waray<pakadto ha Q118> 
+ 
+113. What specific medicines? (antihypertensives, antibiotics, etc.) 
+Ano nga espisipiko nga mga medisina? (antihypertensive, antibayotiko, ug uban pa) 
+ 
+ 
+114. How many days did the stock-out last? 
+Pira ka adlaw an pagka-ubos han supaky nag-iha? 
+ 
+☐ Less than 30 days Waray pa 30 ka adlaw  
+ 
+☐ 31–60 days 31-60 ka adlaw 
+ 
+☐ More than 60 days Sobra 60 ka adlaw  
+ 
+115. On average, how many months do these stock-outs last? 
+Ha aberids, pira ka bulan nagtatagal ini nga mga pagkauboshan suplay? 
+ 
+☐ less than a month Waray pa mag bulan 
+ 
+☐ 1-2 months 1-2 ka bulan 
+ 
+☐ 3-4 months 3-4 ka bulan 
+ 
+☐ 5-6 months 5-6 ka bulan 
+ 
+☐ more than 6 months Sobra 6 ka bulan 
+ 
+116. Did you do anything to address the medicine stock-outs in the GAMOT Package? 
+Mayda ba kamo ginbuhat para mabaton an pag-ubos han mga medisina ha GAMOT Package? 
+<Question relevant if both “Yes” in Q108 and Q109; otherwise proceed to Q118> 
+<An pakiana may kalabutan kun pareho “Oo” ha Q108 ngan Q109; kun diri padayon ha Q118> 
+ 
+☐ Yes Oo 
+ 
+ 
+ 
+☐ No <proceed to Q118> Waray<pakadto ha Q118> 
+ 
+☐ Did not experience stock outs of medicines under the GAMOT package <proceed to Q118> 
+Waray makaeksperyensya hin pag-ubos han mga medisina ha ilarum han GAMOT nga package<pakadto ha 
+Q118> 
+ 
+117. If yes, what did you do to address the medicine stock-outs in the GAMOT Package? 
+Kun oo, ano an iyo ginbuhat para mabaton an pag-ubos han medisina ha GAMOT Package? 
+<Question relevant if both “Yes” in Q108 and Q109; otherwise proceed to Q118> 
+<An pakiana may kalabutan kun pareho “Oo” ha Q108 ngan Q109; kun diri padayon ha Q118> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Resorted to alternative procurement Gingamit an alternatibo nga pamalit  
+ 
+☐ Active inventory monitoring Aktibo nga pagbantay han imbentaryo 
+ 
+☐ Improve forecasting and quantification Pagpauswag han pagtagna ngan pag-ihap  
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+We will now ask you about your facility’s experience with the licensing process. 
+Papakianhan ka namon yana mahitungod han iyo eksperyensya han pasilidad ha proseso han paglisensya. 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+F. DOH Licensing: Status and Barriers to Licensing 
+F. Paglisensya han DOH: Kahimtang ngan mga Ulang ha Paglisensya  
+ 
+118. Is this facility DOH licensed? Lisensyado ba ini nga pasilidad han DOH? 
+ 
+☐ Yes Oo 
+ 
+ 
+☐ No <proceed to Q135> Dire<pakadto ha Q135> 
+ 
+ 
+☐ No, but have submitted requirements and waiting for license <proceed to Q135> 
+ 
+Diri, pero nag pasa na han mga kinahanglanon ngan naghuhulat hin lisensya<pakadto ha Q135> 
+ 
+☐ I don't know what DOH licensing is <proceed to Q135> 
+Diri ako maaram kun ano it paglisensya han DOH<pakadto ha Q135> 
+ 
+119. When did you receive your DOH license from your most recent application? 
+Kakan-o ka nakakarawat han imo lisensya han DOH tikang han imo pinakabag-o nga aplikasyon? 
+ 
+☐ Within the last 1 to 3 months  
+ 
+Ha sakob han naglabay nga 1 ngadto ha 3 ka bulan  
+ 
+☐ Within the last 4 to 6 months  
+ 
+Ha sakob han naglabay nga 4 ngadto ha 6 ka bulan  
+ 
+☐ Over 6 months but within 1 year 
+Sobra 6 ka bulan pero ha sakob hin 1 ka tuig  
+ 
+ 
+☐ More than 1 year ago  
+ 
+Sobra 1 ka tuig na an nakalabay  
+ 
+☐ I don’t know  
+Diri ako maaram 
+ 
+ 
+120. How many days did it take you to receive the license?  
+Pira ka adlaw an imo gin-agian para makarawat an lisensya? 
+ 
+☐ 30 days and less 
+30 ka adlaw o pababa 
+ 
+☐ 31-60 days 
+31-60 ka adlaw 
+ 
+☐ More than 60 days 
+Sobra ha 60 ka adlaw 
+ 
+121. Which of the following requirements were difficult to comply with in the DOH licensing process? 
+Hain ha mga masunod nga mga kinahanglanon an makuri sundon dida han proseso han paglisensya han DO 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGAOPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Patient rights and organization ethics  
+ 
+ 
+☐ Patient care  
+ 
+☐ Leadership and management  
+ 
+ 
+☐ Human resource management 
+ 
+ 
+ 
+☐ Information management 
+ 
+ 
+ 
+☐ Safe practice and environment 
+ 
+ 
+☐ Improving performance 
+ 
+ 
+ 
+☐ Physical plant 
+ 
+ 
+ 
+☐ Equipment and instruments 
+ 
+ 
+ 
+☐ National laws and DOH issuances implemented in hospitals and other health facilities  
+<This is a licensing requirement only for hospitals. Not applicable to primary care facilities> 
+<Ini in kinahanglanon hin lisensya para la ha mga ospital. Diri aplikado ha mga pasilidad han panguna nga 
+pag-ataman> 
+ 
+☐ Emergency cart contents 
+<This is a licensing requirement only for hospitals. Not applicable to primary care facilities> 
+<Ini in kinahanglanon hin lisensya para la ha mga ospital. Diri aplikado ha mga pasilidad han panguna nga 
+pag-ataman> 
+ 
+☐ Add-on services 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+<This is a licensing requirement only for hospitals. Not applicable to primary care facilities> 
+<Ini in kinahanglanon hin lisensya para la ha mga ospital. Diri aplikado ha mga pasilidad han panguna nga 
+pag-ataman> 
+ 
+☐ Public access to price information 
+<This is a licensing requirement only for primary care facilities. Not applicable to hospitals> 
+ 
+<Ini in usa nga kinahanglanon hin lisensya para la han mga pasilidad hin panguna nga pag-ataman. Diri 
+aplikado ha mga ospital> 
+ 
+ 
+☐ None of the above Waray ha nayakan 
+<proceed to Q135> <pakadto ha Q135> 
+ 
+122. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+Patient rights and organization ethics  
+<Only for those who answered “Patient rights and organization ethics” on Q121> 
+<para la ha mga ospital><Para la han mga bumaton hin "Patient rights and organization ethics" ha Q121> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+ 
+☐ Limited human resources Limitado nga tawhanon nga mga pinagkukuhaan  
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+☐ Compiling documentary requirements Pagtirok han mga kinahanglanon ha dokumento  
+ 
+☐ Stringent standards Mahugot nga mga suruklan  
+ 
+☐ Lack of training Kakulang hin pag-aram 
+ 
+☐ Lack of space Kakulang hin espasyo   
+ 
+☐ Other (specify) Iba pa (ispecify)Kakulang hin espasyo  
+ 
+123. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+Patient care  
+<Only for those who answered “Patient care” on Q121> 
+<para la ha mga ospital><Para la han mga bumaton hin "Patient care" ha Q121> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive 
+ 
+Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming 
+Nakakaubos hin oras  
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+ 
+Limitado nga tawhanon nga mga pinagkukuhaan  
+ 
+ 
+ 
+☐ Legal processes 
+ 
+Mga proseso han balaud 
+ 
+ 
+☐ Compiling documentary requirements  
+ 
+Pagtirok han mga kinahanglanon ha dokumento  
+ 
+☐ Stringent standards 
+Mahugot nga mga suruklan  
+ 
+☐ Lack of training 
+ 
+Kakulang hin pag-aram  
+ 
+☐ Lack of space 
+ 
+ 
+Kakulang hin espasyo  
+ 
+☐ Other (specify) 
+Iba pa (ispecify) 
+ 
+ 
+124. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+Leadership and management  
+<Only for those who answered “Leadership and management” on Q121> 
+<para la ha mga ospital><Para la han mga bumaton hin "Leadership and management" ha Q121> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO.. 
+ 
+ 
+☐ Not enough budget / too expensive 
+ 
+Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming 
+ 
+Nakakaubos hin oras  
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+ 
+Limitado nga tawhanon nga mga pinagkukuhaan  
+ 
+ 
+ 
+☐ Legal processes 
+Mga proseso han balaud 
+ 
+ 
+ 
+☐ Compiling documentary requirements  
+ 
+Pagtirok han mga kinahanglanon ha dokumento  
+ 
+☐ Stringent standards 
+Mahugot nga mga suruklan  
+ 
+☐ Lack of training 
+ 
+Kakulang hin pag-aram  
+ 
+☐ Lack of space 
+ 
+ 
+Kakulang hin espasyo  
+ 
+☐ Frequent changes to guidelines and policies 
+Agsob nga pagbag-o han mga guidelines ngan palisiya  
+ 
+☐ Resistance to change of staff  
+Pag-ato ha pagbalyo hin mga empleyado  
+ 
+ 
+☐ Other (specify) 
+Iba pa (ispecify) 
+ 
+ 
+125. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+Human resource management  
+<Only for those who answered “Human resource management” on Q121> 
+<para la ha mga ospital><Parala han mga bumaton hin "Human resource management" ha Q121> 
+DO NOT READ OPTIONS OUT LOUD.SELECT ALL THAT APPLY. 
+ 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+ 
+☐ Limited human resources Limitado nga tawhanon nga mga pinagkukuhaan  
+ 
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+☐ Compiling documentary requirements Pagtirok han mga kinahanglanon ha dokumento  
+ 
+ 
+☐ Stringent standards Mahugot nga mga suruklan  
+ 
+☐ Lack of training Kakulang hin pag-aram 
+ 
+ 
+☐ Lack of space Lack of space  
+ 
+ 
+☐ Staff are resistant to change An mga empleyado na diri hin bago 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+ 
+126. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+Information management  
+<Only for those who answered “Information management” on Q121>  
+<para la ha mgaospital><Para la han mga bumaton hin "Information management" ha Q121> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+ 
+☐ Limited human resources Limitado nga tawhanon nga mga pinagkukuhaan  
+ 
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+☐ Compiling documentary requirements Pagtirok han mga kinahanglanon ha dokumento  
+ 
+☐ Stringent standards Mahugot nga mga suruklan  
+ 
+☐ Lack of training Kakulang hin pag-aram 
+ 
+ 
+☐ Lack of space Kakulang hin espasyo   
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+ 
+127. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+Safe practice and environment   
+<Only for those who answered “Safe practice and environment” on Q121> 
+<para la ha mga ospital><Para la han mga bumaton hin "Safe practice and environment" ha Q121> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+ 
+☐ Limited human resources Limitado nga tawhanon nga mga pinagkukuhaan  
+ 
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+☐ Compiling documentary requirements Pagtirok han mga kinahanglanon ha dokumento  
+ 
+☐ Stringent standards Mahugot nga mga suruklan  
+ 
+☐ Lack of training Kakulang hin pag-aram 
+ 
+ 
+ 
+☐ Lack of space Kakulang hin espasyo   
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+ 
+128. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han:  
+ 
+Improving performance  
+<Only for those who answered “Improving performance” on Q121> 
+<para la ha mga ospital><Para la han mga bumaton hin "Improving performance" ha Q121> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+ 
+☐ Limited human resources Limitado nga tawhanon nga mga pinagkukuhaan  
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+☐ Compiling documentary requirements Pagtirok han mga kinahanglanon ha dokumento  
+ 
+ 
+☐ Stringent standards Mahugot nga mga suruklan  
+ 
+☐ Lack of training Kakulang hin pag-aram 
+ 
+ 
+☐ Lack of space Kakulang hin espasyo   
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+129. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+Physical plant   
+<Only for those who answered “Physical plant” on Q121> 
+<para la ha mga ospital><Para la han mga bumaton hin "Physical plant" ha Q121> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+☐ Limited human resources Limitado nga tawhanon nga mga pinagkukuhaan  
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+☐ Compiling documentary requirements Pagtirok han mga kinahanglanon ha dokumento  
+ 
+ 
+☐ Stringent standards Mahugot nga mga suruklan  
+ 
+☐ Lack of training Kakulang hin pag-aram 
+ 
+ 
+☐ Lack of space Kakulang hin espasyo  
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+130. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+Public access to price information   
+<Only for those who answered “Public access to price information” on Q121> 
+<para la ha mga ospital><Para la han mga bumaton hin "Public access to price information" ha Q121> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGAAPLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+☐ Limited human resources Limitado nga tawhanon nga mga pinagkukuhaan  
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+☐ Compiling documentary requirements Pagtirok han mga kinahanglanon ha dokumento  
+ 
+ 
+☐ Stringent standards Mahugot nga mga suruklan  
+ 
+☐ Lack of training Kakulang hin pag-aram 
+ 
+ 
+☐ Lack of space Kakulang hin espasyo  
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+131. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+Equipment and instruments   
+<Only for those who answered “Equipment and instruments” on Q121> 
+<para la ha mgaospital><Para la han mga bumaton hin "Equipment and instruments" ha Q121> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA ANTANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+☐ Limited human resources Limitado nga tawhanon nga mga pinagkukuhaan  
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+☐ Compiling documentary requirements Pagtirok han mga kinahanglanon ha dokumento  
+ 
+ 
+☐ Stringent standards Mahugot nga mga suruklan  
+ 
+☐ Lack of training Kakulang hin pag-aram 
+ 
+ 
+☐ Lack of space Kakulang hin espasyo  
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+132. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+National laws and DOH issuances implemented in hospitals and other health facilities   
+<for hospitals only> <Only for those who answered “National laws and DOH issuances implemented in 
+hospitals and other health facilities” on Q121>  
+<para la ha mga ospital><Para la han mga bumaton hin "National laws and DOH issuances implemented in 
+hospitals and other health facilities” ha Q121> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGAOPSYON. PILIA ANTANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+☐ Limited human resources Limitado nga tawhanon nga mga pinagkukuhaan  
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+☐ Compiling documentary requirements Pagtirok han mga kinahanglanon ha dokumento  
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+☐ Stringent standards Mahugot nga mga suruklan  
+ 
+☐ Lack of training Kakulang hin pag-aram 
+ 
+ 
+☐ Lack of space Kakulang hin espasyo  
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+133. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han:  
+ 
+Emergency Cart Contents   
+<for hospitals only> <Only for those who answered “Emergency Cart Contents” on Q121>  
+<para la ha mga ospital><Para la han mga bumaton hin "Emergency Cart Contents  ” ha Q121> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+☐ Limited human resources Limitado nga tawhanon nga mga pinagkukuhaan  
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+☐ Compiling documentary requirements Pagtirok han mga kinahanglanon ha dokumento  
+ 
+ 
+☐ Stringent standards Mahugot nga mga suruklan  
+ 
+☐ Lack of training Kakulang hin pag-aram 
+ 
+ 
+☐ Lack of space Kakulang hin espasyo  
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+134. Why was it difficult to comply with: Kay ano nga makuri an pagsunod han: 
+ 
+Add-on services   
+<for hospitals only> <Only for those who answered “Add-on services” on Q121>  
+<para la ha mga ospital> <Para la han mga bumaton hin ""Add-on services  ” ha Q121> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Not enough budget / too expensive Diri igo nga badyet / sobra ka mahal  
+ 
+ 
+☐ Time-consuming Nakakaubos hin oras  
+ 
+ 
+☐ Limited human resources Limitado nga tawhanon nga mga pinagkukuhaan  
+ 
+ 
+☐ Legal processes Mga proseso han balaud 
+ 
+ 
+☐ Compiling documentary requirements Pagtirok han mga kinahanglanon ha dokumento  
+ 
+ 
+☐ Stringent standards Mahugot nga mga suruklan  
+ 
+☐ Lack of training Kakulang hin pag-aram 
+ 
+ 
+☐ Lack of space Kakulang hin espasyo  
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+The next set of questions covers the service delivery process. This section covers the implementation of NBB 
+and ZBB, LGU support, and the Referral System. 
+An sunod nga hugpo hin mga pakiana in nagkokobre han proseso han paghatag hin serbisyo. Ini nga seksyon in 
+nagsasakop han implementasyon han NBB ngan ZBB, suporta han LGU, ngan han Systema han pag Rekomenda.
+ 
+G. Service Delivery Process PROSESO HAN PAG HATAG HIN SERBISYO 
+ 
+No Balance Billing (NBB) 
+ 
+135. Do you currently implement the"no balance billing” policy for your patients? 
+Ginpapatuman ba niyo yana an palisiya nga "no balance billing” para han iyo mga pasyente? 
+ 
+☐ Yes Oo 
+ 
+☐ No <proceed to Q138> Dire<pakadto ha Q138> 
+ 
+136. Are you able to implement it for all patients, to the best of your knowledge, for the last 6 months? 
+Nakakahimo ba kamo hini nga ipatuman para han ngatanan nga pasyente, ha iyo nahibabaroan, han 
+naglabay nga 6 ka bulan? 
+ 
+☐ Yes  
+Oo 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+☐ No 
+Dire 
+ 
+137. In your view, what are some of the barriers to implementing the no balance billing (NBB) policy? 
+Ha imo pagkita, ano an pipira nga mga ulang ha pagpatuman han palisiya han no balance billing 
+(NBB)? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Complying with the no fees for basic or ward accommodation  
+Pagsunod han waray bayad para han panguna o bulag nga kwarto nga pag-ukoy  
+ 
+☐ Complying the prescribed ratio of allocation of basic and non-basic accommodation 
+Pagsunod ha ginsusunod nga tiyak nga kantidad han pagbahin han pondo para ha basic ngan non-basic 
+nga akomodasyon 
+ 
+ 
+ 
+☐ Patients do not go through the process of availing it 
+ 
+An mga pasyente diri nakadto ha proseso han pag-avail hini  
+ 
+ 
+☐ Insufficient PhilHealth support value and/or 
+Kulang nga kantidad han suporta han PhilHealth ngan/o  
+☐ Insufficient other sources (e.g. MAIFIP, DSWD, PCSO)<specify other sources> 
+(late payments applicable for MAIFIP) 
+Kulang ha ibanga tinikangan (e.g. MAIFIP, DSWD, PCSO)<ispecify an iba pa nga mga tinikangan>(Urhi nga 
+bayad nga aplikado haMAIFIP ) 
+☐ PhilHealth delayed payment  
+Urhi nga pag bayad han PhilHealth  
+ 
+☐ None of the above 
+ 
+Waray ha nayakan 
+ 
+ 
+☐ Other (specify) 
+Iba pa (ispecify)  
+ 
+Zero Balance Billing (ZBB) Implementation  
+ 
+138. Do you currently implement the “Zero Balance Billing” policy for your patients? 
+Ginpapatuman ba niyo yana an palisiya nga “Zero Balance Billing” para han iyomga pasyente? 
+ 
+☐ Yes Oo 
+ 
+☐ No <proceed to Q141> Dire<pakadto ha Q141> 
+ 
+139. If currently implementing ZBB, are you able to implement it for all patients, to the best of your 
+knowledge, for the last six months? 
+Kun yana nagpapatuman hin ZBB, kaya mo ba ini ipatuman para han ngatanan nga pasyente, ha iyo 
+nahibabaroan, ha sakob han naglabay nga unom ka bulan? 
+ 
+☐ Yes Oo 
+ 
+☐ No Dire 
+ 
+140. In your view, what are some of the barriers to implementingthe “zero balance billing” policy? 
+Ha imo pagkita, ano an pipira nga mga ulang ha pagpatuman han “zero balance billing” nga palisiya? 
+READ OPTIONS OUT LOUD, SELECT ALL THAT APPLY 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Complying with the no fees for basic or ward accommodation 
+Pagsunod han waray bayad para han panguna o bulag nga kwarto nga pag-ukoy  
+ 
+☐ Complying the prescribed ratio of allocation of basic and non-basic accommodation 
+Pagsunod ha ginsusunod nga tiyak nga kantidad han pagbahin han pondo para ha basic ngan non-basic 
+nga akomodasyon 
+ 
+☐ Patients do not go to the process of availing it 
+An mga pasyente diri nakadto ha proseso han pag-avail hini . 
+ 
+☐ Insufficient PhilHealth support value and/or insufficient other sources ( e.g., MAIFIP, DSWD, PCSO) 
+Kulang nga kantidad ha suporta ha PhilHealth ngan/o kulang ha iba nga pinagkukuhaan  ( e.g., MAIFIP, 
+DSWD, PCSO) 
+ 
+☐ Insufficient PhilHealth support value and/or  
+Kulang nga kantidad han suporta han PhilHealth ngan/o  
+☐ insufficient other sources (e.g. MAIFIP, DSWD, PCSO) <specify other sources> 
+(late payments applicable for MAIFIP) 
+Kulang ha iba nga tinikangan (e.g. MAIFIP, DSWD, PCSO)<ispecify an iba pa nga mga tinikangan>(Urhi nga 
+bayad nga aplikado haMAIFIP ) 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+☐ PhilHealth delayed payment 
+Urhi nga pag bayad han PhilHealth  
+ 
+☐ None of the above 
+Waray ha nayakan 
+ 
+☐ Other (specify) 
+Iba pa (ispecify) 
+ 
+141. Does the facility allow out-of-pocket (OOP) expenses for basic accommodation? 
+Gintutugutan ba han pasilidad an mga gastos nga tikang ha bulsa (OOP) para han panguna nga urukyan? 
+ 
+☐ Yes Oo 
+ 
+☐ No <proceed to Q143> Dire<pakadto ha Q143> 
+ 
+142. Why does the facility allow OOP expenses for basic accommodation? Specify your reason. 
+Kay ano nga gintutugutan han pasilidad an mga gastos han OOP para han panguna nga akomodasyon? 
+ispecify an imo hinungdan 
+ 
+ 
+ 
+143. Which of the UHC benefits do you find most difficult to implement? 
+Hain ha mga benepisyo han UHC an imo nakukurian ipatuman? 
+ 
+☐ PhilHealth/financial protection benefits 
+Mga benepisyo han PhilHealth/pinansyal nga panalipod 
+ 
+☐ Establishment of health care provider networks (HCPNs) (i.e., referral system) 
+Pagtukod han Health Care Provider Networks (HCPNs) (pananglitan., systema han oag rekomenda) 
+ 
+☐ Human resources for health reforms 
+Mga pinagkukuhaan han tawo para han mga reporma ha panlawas  
+ 
+☐ Other (specify) 
+Iba pa (ispecify) 
+ 
+144. Why is this difficult to implement? Kay ano nga makuri ini ipatuman?  
+ 
+☐ The implementation of UHC benefits is heavily reliant on LGU decisions 
+An pagpatuman han mga benepisyo han UHC in dako an pagdepende ha mga desisyon han LGU . 
+ 
+☐ Not enough funding/budget 
+Waray igo nga pondo/badyet 
+ 
+☐ Technical/system issues of {hilHealth (e.g., data loss, errors, or platorm accessibility problems) 
+Mga isyu ha teknikal/sistema han {hilHealth (pananglitan, pagkawara han datos, mga kasaypanan, o mga 
+problema ha pag-aagi han platorm) 
+ 
+☐ Other (specify) 
+Iba pa (ispecify) 
+ 
+145. Has the facility been providing medical social welfare or assistance (e.g., through Malasakit Centers, 
+MAIFIP)? 
+Naghatag ba an pasilidad hin medikal nga sosyal nga bulig o ayuda (e.g., pinaagi hanMalasakit Centers, 
+MAIFIP)? 
+ 
+☐ Yes Oo 
+ 
+☐ No <proceed to Q147> Dire<pakadto ha Q147> 
+ 
+146.  Why is the facility providing medical social welfare or assistance through Malasakit Centers or 
+MAIFIP? <Proceed to Q148> 
+Kay ano nga an pasilidad naghahatag hin medikal nga sosyal nga bulig o ayuda pinaagi han Malasakit 
+Centers o MAIFIP? <pakadto ha Q148> 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.  
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Streamline access to medical and financial aid for indigent and financially incapacitated patients 
+Pag-ayos han pag-angkon hin medikal ngan pinansyal nga bulig para han mga kablas ngan pinansyal nga 
+mga pasyente  
+ 
+☐ Reduce out-of-pocket expenses.  
+Ibanan an mga gastos ha gawas han bulsa 
+ 
+☐ Eliminate the need to travel to multiple government agencies 
+Tanggalon an panginahanglan nga magbiyahe ngadto hin damo nga mga ahensya han gobyerno  
+ 
+☐ Foster a more compassionate approach to healthcare 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+Pag-aghat hin mas mapinairon nga paagi ha pag-ataman han kahimsog  
+ 
+☐ Other (specify) 
+Iba pa (ispecify) 
+ 
+147.  Why is the facility not providing medical social welfare or assistance through Malasakit Centers or 
+MAIFIP) 
+Kay ano nga an pasilidad diri naghahatag hin medikal nga sosyal nga bulig o ayuda pinaagi han 
+Malasakit Centers o MAIFIP? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY 
+      BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Limited budget Limitado nga budyet 
+ 
+☐ Stringent eligibility requirements Mahugot nga mga kinahanglanon ha pagkakwalipikado . 
+ 
+☐ Incomplete documentation from patients Diri kumpleto nga dokumento tikang ha mga pasyente 
+ 
+☐ High patient volume leading to service bottlenecks Hataas nga kadamo han pasyente nga nagdudurot hin 
+mga pag-ulang ha serbisyo 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+LGU Support 
+Supporta han LGU 
+ 
+148. Do you receive any support from your LGU to implement UHC reforms? 
+148. Mayda ba kamo nakakarawat nga suporta tikang ha iyo LGU para maipatuman an mga reporma ha UHC? 
+ 
+☐ Yes Oo 
+ 
+☐ No <proceed to Q152> Waray<pakadto ha Q152> 
+ 
+149. What forms of support do you receive? Ano nga mga porma hin suporta an iyo nakarawat? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Financial assistance Pinansyal na bulig 
+ 
+ 
+☐ Technical assistance Teknikal nga bulig 
+ 
+ 
+☐ Medical supplies and equipment Mga gamit ngan mga gamit ha medisina  
+ 
+ 
+ 
+☐ Manpower support Suporta han kusog han tawo  
+ 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+ 
+150. Are you satisfied with the support you receive from your LGU? 
+Kuntento ka ba han suporta nga imo nakarawat tikang ha imo LGU? 
+ 
+☐ Yes <proceed to Q154> Oo <pakadto ha Q154> 
+ 
+☐ No Dire 
+ 
+151. Why not? Kayano dire? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Insufficient Kulang 
+ 
+ 
+ 
+☐ Hard to coordinate Makuri magkoordinar  
+ 
+ 
+☐ Support given is not aligned with the needs of the facility 
+An suporta nga iginhatag in diri nakalinya han mga panginahanglan han pasilidad 
+ 
+ 
+ 
+☐ I don't know Dire ako maaram 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+152. How clear are the protocols regarding which decisions require Provincial Health Office approval 
+versus those you can decide at the facility level? <only for respondents from public hospitals> 
+Mationan-o ka klaro an mga protocol bahin han kun ano nga mga desisyon an kinahanglan han pag-aprobar 
+han Opisina han Panglawas han Probinsya kumpara han mga pwede niyo desisyonan ha lebel han pasilidad? 
+<para la han mga respondente tikang ha mga pampubliko nga ospital> 
+ 
+☐ Very Clear Dire ka klarado 
+ 
+ 
+☐ Clear Klarado 
+ 
+☐ Neither Waray ha duha 
+ 
+☐ Unclear Dire klarado 
+ 
+☐ Very unclear Duro ka dire klarado 
+ 
+153.  Which specific protocol that you consider as unclear? 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+Ano nga partikular nga protokol an iyo ginhuhunahuna nga diriklaro? 
+ 
+ 
+Outbound-Inbound Referral Process and Satisfaction 
+Proseso han Paggawas-Pasulod nga Pagrefer ngan Katagbaw 
+ 
+154. In the past 6 months, how many patients were referred to a higher-level facility within the 
+referralnetwork? 
+Ha naglabay nga 6 ka bulan, pira nga pasyente an igintugon ha mas hitaas nga pasilidad ha sakob han 
+network han pagrefer? 
+ 
+ 
+155. What are the most common ways you send referrals to higher level facilities/specialists? 
+Ano an mga komon nga paagi nga iyo ginpapadara hin mga pagtugon ngadto hin mas hitaas nga lebel nga 
+mga pasilidad/espesyalista? 
+Our focus is specifically on referrals external to the facility, excluding internal referrals. 
+An amon pokus in partikular ha mga pagrefer ha gawas han pasilidad, diri upod an mga pagrefer ha sakob. 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Physical referral slip Pisikal nga slip han pagrefer 
+ 
+☐ E-referral Online nga pagrefer 
+ 
+☐ Referring facility calls receiving facility Pagrefer han pasilidad nga tawag han pagkarawat han pasilidad  
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+ 
+156. What type of referral formdoyou use to send to higher level facilities? 
+Ano nga klase hin porma hanreferral an imo ginagamit para ipadara ha mas hitaas nga lebel nga mga 
+pasilidad? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ DOH standard referral form DOHnga pamantayan nga porma han pagrefer 
+ 
+☐ Facility's standard referral form An surundon nga porma han pagrefer han pasilidad  
+ 
+☐ Province's standard referral form Surundon nga porma han pagrefer han probinsya 
+ 
+☐ City / LGU standard referral form Syudad / LGU pamantayan nga porma han pagrefer 
+ 
+☐ No standard referral form Waray surundon nga porma han pagrefer  
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+ 
+ 
+ 
+157. Do you have a network of specialist providers to refer patients to, if needed? 
+Mayda ba kamo network hin mga espesyalista nga mga tagahatag nga igrerefer an mga pasyente, kun 
+kinahanglanon? 
+ 
+☐ Yes Oo 
+ 
+☐ No Waray  
+ 
+☐ I've never heard of it Waray pa ako bati hito  
+ 
+☐ I don't know Dire ako maaram 
+ 
+158. Considering all patients who come to your facility for the past 6 months, what is the proportion of 
+patients referred by another facility compared to those who self-refer/walk-in? 
+Kun huhunahunaon an tanan nga pasyente nga nakanhi ha iyo pasilidad han nakalabay nga 6 ka bulan, ano 
+an proporsyon han mga pasyente nga ginrefer han iba nga pasilidad kumpara han mga self-refer/walk-in? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Almost all patients are referred, very few walk-in/self-referred 
+ 
+Haros ngatanan nga pasyente in ginrirefer, gutiay la an nag-walk-in/nag-refer ha kalugaringon  
+ 
+☐ Majority of patients are referred, some walk-in/self- referred  
+Kadam-an han mga pasyente in ginrirefer, mayda mga walk-in/nagpaparefer ha kalugaringon 
+ 
+☐ The proportion of referrals is about equal to walk-ins  
+An kadamu han mga ginrefer haros katugbang han mga walk-in  
+ 
+ 
+☐ Majority of patients walk-in/self-referred, some are referred 
+Kadam-an han mga pasyente nag-walk-in/nag-refer ha kalugaringon, an iba in ginrefer 
+ 
+☐ Almost all patients walk-in/self-referred, very few are referred 
+ 
+Diri ako sigurado han kasagaran nga proporsyon han mga referral ngadto ha mga walk-in 
+ 
+ 
+☐ I am unsure about the typical ratio of referrals to walk-ins 
+Diri ako sigurado mahitungod han tipikal nga ratio han mga iginpapadara ngadto ha mga nakadto  
+ 
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+159. Of those referred, which of the following are the most common ways you receive referrals from lower-
+level health facilities? 
+Ha mga ginrefer, hain ha masunod an pinaka-komon nga paagi nga iyo nakakarawat hin mga refer tikang ha 
+mas ubos nga lebel nga mga pasilidad panlawas? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Physical referral slip 
+ 
+ 
+Pisikal nga slip han pagrefer 
+☐ E-referral 
+ 
+Online nga pagrefer 
+ 
+☐ Referring facility calls receiving facility 
+ 
+Pagrefer han pasilidad nga tawag han pagkarawat han pasilidad  
+ 
+ 
+☐ Other (specify) 
+Iba pa (ispecify) 
+ 
+160. Where do your patients go to get the services not available at this facility? 
+Diin nakadto an iyo mga pasyente para makuha an mga serbisyo nga waray hini nga pasilidad? 
+ 
+☐ External laboratory Gawas nga laboratoryo 
+ 
+☐ Other private facility Iba pa nga pribado nga pasilidad  
+ 
+☐ Other public facility (e.g., urban/rural health centers, barangay health centers, city/municipal health 
+offices) 
+Iba pa nga pasilidad pampubliko (pananglitan, mga sentro panlawas ha syudad/kaumhan,mga sentro 
+panlawas ha barangay, mga opisina panlawas ha syudad/munisipyo) 
+ 
+☐ Other, (specify) Iba pa (ispecify) 
+ 
+☐ I don’t know Dire ako maaram 
+ 
+161. How would you rate your satisfaction with your current referral system? 
+Ano an imo paghatag hin grado han imo katagbaw ha imo yana nga sistema han pagrefer? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHAHA MAKUSOGAN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Very Satisfied: No improvements needed, "patients are always referred appropriately"   
+Duro nga Kuntento: Waray kinahanglan nga mga pag-uswag, "an mga pasyente pirme ginrefer hin 
+kaangayan" 
+<proceed to Q163> 
+<pakadto ha Q163> 
+ 
+☐ Satisfied: Minor improvements needed, patients are generally referred appropriately   
+Kontento: Ginkikinahanglan an gudtiay nga mga pag-uswag, an mga pasyente kasagaran nga 
+iginpapadara hin angayan  
+<proceed to Q163> 
+<pakadto ha Q163> 
+ 
+☐ Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional 
+ 
+Diri Kontento o Diri Kontento: Kinahanglan an mga pag-uswag, kondi ha kabug-osan nagios  
+ 
+☐ Dissatisfied: Moderate improvements needed, a number of patients are referred to the wrong specialists 
+or do not receive appropriate follow-up care 
+ 
+Diri Kontento: Ginkikinahanglan an kasadangan nga mga pag-uswag, damu nga pasyente an iginpapadara 
+ha sayop nga mga espesyalista o diri nakakakarawat hin angayan nga pag-ataman ha pagsunod . 
+ 
+ 
+☐ Very Dissatisfied: Major improvements needed, many patients are referred to the wrong specialists or do 
+not receive appropriate follow-up care  
+Diri gud Kontento: Ginkikinahanglan an dagku nga mga pag-uswag, damu nga pasyente an iginpapadara 
+ha sayop nga mga espesyalista o diri nakakakarawat hin angayan nga pag-ataman ha pagsunod . 
+ 
+ 
+162.  Why are you not satisfied with the current referral system? 
+Kay ano ngadiri ka kontento han yana nga sistema han pagrefer? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Facilities are overcrowded/overcapacity and do not accept our patient referrals 
+Sobra ka puno/sobra an kapasidad han mga pasilidad ngan diri nakarawat han amon mga pasyente nga 
+ginrefer 
+ 
+☐ The referral process is slow Mahinay an proseso han pagrefer  
+ 
+☐ There is poor coordination between our facility and referred facilities  
+May maluya nga koordinasyon ha butnga han aton pasilidad ngan mga ginrefer nga mga pasilidad  
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+We will now proceed to the last section of this survey, which focuses on human resources. 
+Mapadayon kita yana ha urhi nga seksyon hini nga surbey, nga nakasentro ha mga pinagkukuhaan pantawo. 
+ 
+H. Human Resources for Health Pinagkukuhaan han tawhanon para han Pag-antam 
+ 
+163.  What challenges in human resources do you have 
+Ano nga mga kakurian ha tawhanon nga pinagkukuhaan an iyo gin-aatubang 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Understaffing Kulang hin mga empleyado 
+ 
+☐ Skills mismatch / lack of skills Mga abilidad nga dire magkatugbang/ kakulang hin abilidad 
+ 
+☐ Retention / high staff turnover Pagtipig/ hitaas nga pagbalhin han mga empleyado 
+ 
+ 
+☐ Multi-tasking Damo nga buruhaton 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+ 
+ 
+☐ I don't know Dire ako maaram 
+ 
+164.  What area do you find the most room for improvement in your staff 
+Ano nga lugar an imo nakikita nga pinakadamo an lugar para hin pag-uswag ha imo mga staff? 
+ 
+ 
+165.  What forms of professional development do you provide to your doctors 
+Ano nga mga porma hin pag-uswag ha propesyon an iyo iginhahatag ha iyo mga doktor?  
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Clinical audits Mga awdit han klinikal 
+ 
+ 
+☐ Surgical audits Mga awdit han operasyon 
+ 
+ 
+☐ Quality assurance meetings Mga katitirok han oag siguto han kalidad 
+ 
+☐ Seminars, conferences, workshops Mga seminars, komprensya, workshop 
+ 
+☐ Support for independent professional development: scholarships 
+Pagsuporta para han lugaring nga pag-uswag han propesyon: mga iskolar 
+ 
+ 
+☐ Support for independent professional development: research grants  
+Suporta para han lugaring nga pag-uswag han propesyon: mga pinansyal na bulig para han pag-sram 
+ 
+☐ LGU/DOH led workshops/initiatives Mga workshop/inisyatiba nga pinangungunahan han LGU/DOG 
+ 
+☐ No forms of professional development are provide 
+Waray porma hin pag-uswag ha propesyon nga iginhahatag ha aton mga nars   
+ 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+ 
+ 
+166. What forms of professional development do you provide to your nurses? 
+Ano nga mga porma hin pag-uswag ha propesyon an iyo iginhahatag ha iyo mga nars?  
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO. 
+ 
+☐ Quality assurance meetings Mga katitirok han pagsiguto han kalidad  
+ 
+☐ Seminars, conferences, workshops Mga seminar, Komprensya,workshop 
+ 
+ 
+☐ Support for independent professional development: scholarships 
+Pagsuporta para han lugaring nga pag-uswag han propesyon: mga iskolar 
+ 
+☐ Support for independent professional development:  research grants  
+ 
+Suporta para han lugaring nga pag-uswag han propesyon: mga pinansyal na bulig han pag-aram 
+ 
+☐ LGU/DOH led workshops/initiatives 
+Mga workshop/inisyatiba nga pinangungunahan han LGU/DOG 
+ 
+☐ No forms of professional development are provided to our nurses 
+Waray porma hin pag-uswag ha propesyon nga iginhahatag ha aton mga nars   
+ 
+ 
+☐ Other (specify) Iba pa (ispecify) 
+ 
+ 
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+END OF SURVEY 
+TAPOS NA AN SURBEY 
+ 
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+SECONDARY DATA TO BE REQUESTED FROM HEALTH FACILITIES 
+The UHC Survey Year 2 primarily aims to generate evidence on the overall experience of the general public to support continuous monitoring, 
+evaluation, and learning of the implementation of the UHC Act and its Implementing Rules and Regulations (IRR). In part of this endeavor, we are 
+kindly requesting for your cooperation on providing specific information from your facility to ensure the accuracy and robustness of data relevant to 
+the analytical process of the study. The information needed are the following: 
+An UHC SurveyYear 2 in panguna nga panuyo nga makahimo hin mga ebidensya ha kabug-usan nga eksperyensya han kabug-usan nga publiko 
+para suportahan an padayon nga pagbantay, pag-ebalwar, ngan pag-aram han pagpatuman han UHC Act ngan han Implementing Rules and 
+Regulations (IRR) hini. Ha kaparte hini nga paningkamot, gin-aaro namon an iyo kooperasyon ha paghatag hin partikular nga impormasyon tikang 
+ha iyo pasilidad para maseguro an katukma ngan karig-on han mga datos nga may kalabutan ha proseso han pag-analisar han pag-aram. An mga 
+impormasyon nga ginkikinahanglan amo an masunod: 
+ 
+I.Latest Annual Hospital/Rural Health Unit Statistical Reports submitted to DOH 
+Pinakabag-o nga Tinuig nga Estadistikal nga mga Report han Ospital/Rural Health Unit nga iginpasa haDOH 
+ 
+1. 
+Human Resources 
+Mga pinagkukuhaan han tawo 
+ 
+A. Hospital Census for the past 6 months (for hospitals) 
+Kadamo han pasyente han nag labay na 6 ka bulan (para han mga hospital) 
+ 
+A1. Outpatient Census 
+Hospital Census per day for the past 6 months 
+Number 
+NBB 
+ZBB 
+Other Patients 
+Month 1 
+ 
+ 
+ 
+Month 2 
+ 
+ 
+ 
+Month 3 
+ 
+ 
+ 
+Month 4 
+ 
+ 
+ 
+Month 5 
+ 
+ 
+ 
+Month 6 
+ 
+ 
+ 
+ 
+A2. Inpatient Census 
+Hospital Census per day for the past 6 months 
+Number 
+NBB 
+ZBB 
+Other Patients 
+Month 1 
+ 
+ 
+ 
+Month 2 
+ 
+ 
+ 
+Month 3 
+ 
+ 
+ 
+Month 4 
+ 
+ 
+ 
+Month 5 
+ 
+ 
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+Month 6 
+ 
+ 
+ 
+ 
+ 
+ 
+B. Patient Load for the past 6 months (for RHUs, PCFs) 
+Kadamo han pasyente han naglabay na 6 ka bulan (para RHUs, PCFs) 
+Number of consultations per day  
+Kadamo han mga konsultant kada adlaw 
+Number 
+Numero 
+NBB 
+ZBB 
+Other Patients 
+Iba pa nga Pasyente 
+Month 1 
+Bulan 1 
+ 
+ 
+ 
+Month 2 
+Bulan 2 
+ 
+ 
+ 
+Month 3 
+Bulan 3 
+ 
+ 
+ 
+Month 4 
+Bulan 4 
+ 
+ 
+ 
+Month 5 
+Bulan 5 
+ 
+ 
+ 
+Month 6 
+Bulan 6 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+2. 
+Human Resources 
+Mga pinagkukuhaan han tawo 
+ 
+A.  Number of full-time and part-time healthcare workers employed in the RHUs 
+ 
+Ihap han mga bug-os-an oras  ngan diri bug-os an oras nga mga trabahador ha  RHUs 
+Cadre 
+Number of healthcare workers by type 
+Kadamo han mga trabahador ha pag-antam  han panlawas pinaagi hin klase 
+Number staff to 
+fulfill minimum 
+requirements 
+Numero han 
+mga empleyado 
+para matuman 
+an minimum 
+nga mga 
+kinahanglanon 
+Full-time 
+Bugos na Oras 
+ 
+Part-time 
+Trabaho nga 
+diri bug-os 
+an oras 
+ 
+Regular 
+Probationary 
+Probasyon 
+Project-based/ 
+Contractual 
+Nakabase ha 
+proyekto/kontrata 
+Casual 
+Kasuwal 
+COS/ 
+Job Order 
+COS/Kontratana 
+trabaho 
+Doctors 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Midwives 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Public Health Nurses 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Pharmacists/Pharmacist Technicians 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Technologists (e.g., medical/ 
+radiology/ respiratory) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Laboratory technicians 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Health promotion officers 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Nutritionists 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Physiotherapy officers 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Nursing assistants 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Dentists 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Dental Aide 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Data encoders 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Nurses (Deployed in Rural Health 
+Centers) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Midwives (Deployed in Rural Health 
+Centers) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Pharmacist (Deployed in Rural Health 
+Centers) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Technologists (Deployed in Rural 
+Health Centers) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Other (specify) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+B.  Number of full-time and part-time healthcare workers employed in the hospitals 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+Ihap han mga bug-os-an oras  ngan diri bug-os an oras nga mga trabahador ha pag-ataman han panlawas nga nagtatrabaho ha mga ospital 
+Cadre 
+Number of healthcare workers by type 
+Kadamo han mga trabahador ha pag-ataman han panlawas pinaagi han klase 
+Number staff to 
+fulfill minimum 
+requirements 
+Numero han 
+mga empleyado 
+para matuman 
+an minimum nga 
+mga 
+kinahanglanon 
+Full-time 
+Bugos na Oras 
+ 
+ 
+Part-time 
+Trabaho nga 
+diri bug-os 
+an oras 
+Regular 
+Probationary 
+Probasyon 
+Project-based/ 
+Contractual 
+Nakabase ha 
+proyekto/kontrata 
+Casual 
+Kasuwal 
+COS/ 
+Job Order 
+COS/Kontrata 
+nga Trabaho 
+Doctors 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Midwives 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Nurses 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Pharmacists/Pharmacist Technicians 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Technologists (e.g., medical/ 
+radiology/ respiratory) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Laboratory technicians 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Health promotion officers 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Nutritionists 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Physiotherapy officers 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Nursing assistants 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Dentists 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Dental Aide 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Data encoders 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Other (specify) 
+Iba pa (ispecify) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+C.  Number of full-time staff who have left the facility Direng thepast six months?___________________ 
+Kadamo han mga full-time staff nga binaya han pasilidad ha sakob han naglabay nga unom ka bulan?_________________ 
+ 
+D. Number of contractual healthcare workers who were not renewed in the facility? _________________ 
+D. Kadamo han mga kontraktwal nga mga trabahador ha panlawas nga waray ig-renew ha pasilidad? ______________ 
+ 
+ 
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+4. 
+YAKAP/Konsulta Package Services 
+ 
+A.  Which of the YAKAP/Konsulta Package services are available in this health facility?  Please check which services are available. 
+Hain han mga serbisyo han YAKAP/Konsulta Package an makukuha dinhi hini nga pasilidad panlawas? Alayon pagkita kun ano nga mga serbisyo an 
+mayda. 
+ 
+ 
+Service 
+Serbisyo 
+Yes 
+Oo 
+No 
+Waray 
+CBC with platelet count 
+ 
+ 
+Urinalysis 
+ 
+ 
+Fecalysis 
+ 
+ 
+Sputum Microscopy 
+ 
+ 
+Fecal Occult Blood 
+ 
+ 
+Pap smear 
+ 
+ 
+Lipid profile 
+ 
+ 
+FBS 
+ 
+ 
+OGTT (Oral glucose tolerance tests) 
+ 
+ 
+ECG 
+ 
+ 
+Chest X-Ray 
+ 
+ 
+Creatinine 
+ 
+ 
+HbA1c 
+ 
+ 
+Abdominal ultrasound 
+ 
+ 
+Dental Services 
+ 
+ 
+ 
+B.  For the following diagnostic exams, what is your procurement cost, and what is the standard price charged to patients in your facility? (Note:  Specify in 
+Philippine pesos) 
+Para han mga masunod nga diagnostic exams, ano an iyo gastos ha pagpalit, ngan ano an standard nga presyo nga ginsusukot ha mga pasyente ha iyo 
+pasilidad? (Tigamni: Itudlok ha Pilipinas nga pesos) 
+Service 
+Serbisyo 
+Procurement Cost 
+(in Philippine Peso) 
+Kabag-usan na gastos 
+(ha Philippine Peso) 
+Standard Price Charged to Patients 
+(in Philippine Peso) 
+Surundon nga presyo nga ginsusukot ha mga 
+pasyente 
+(ha Philippine peso) 
+CBC with platelet count 
+ 
+ 
+Urinalysis 
+ 
+ 
+Fecalysis 
+ 
+ 
+Sputum Microscopy 
+ 
+ 
+Fecal Occult Blood 
+ 
+ 
+Pap smear 
+ 
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+Lipid profile 
+ 
+ 
+FBS 
+ 
+ 
+OGTT (Oral glucose tolerance tests) 
+ 
+ 
+ECG 
+ 
+ 
+Chest X-Ray 
+ 
+ 
+Creatinine 
+ 
+ 
+HbA1c 
+ 
+ 
+Abdominal ultrasound 
+ 
+ 
+ 
+ 
+C.  For the following services, what is the standard cost, and what is the standard price charged to patients in your facility? (Note:  Specify in Philippine 
+pesos.) 
+Para han masunod nga mga serbisyo, ano an surundon nga gastos, ngan ano an surundon nga presyo nga ginsusukot ha mga pasyente ha iyo pasilidad? 
+(Tigamni: Ispecify, ha Pilipinas nga pesos.) 
+Service 
+SERBISYO 
+Procurement Cost 
+(in Philippine Peso) 
+Kabag-usan na gastos  
+(ha Philippine Peso) 
+Standard Price Charged to Patients 
+(in Philippine Peso) 
+Surundon nga presyo nga ginsusukot ha mga 
+pasyente 
+(ha Philippine peso)) 
+Physician's consultation (general practitioner) 
+Konsultasyon han Physician (pankabug-usan nga doktor) 
+ 
+ 
+Physician's consultation (specialist) 
+Konsultasyon han Physician (espesyalista) 
+ 
+ 
+Private room and board (per night) 
+Pribado nga kwarto ngan pagkaon (kada gab-i) 
+ 
+ 
+Shared room and board (per night) 
+Gin-aambit nga kwarto ngan pagkaon (kada gab-i) 
+ 
+ 
+ 
+ 
+D. Is there a standard markup for all the laboratory services offered at this facility?   ___ Yes   ____ No 
+ 
+4d1.  If yes, what is the standard markup applied to all laboratory services provided at this facility? 
+D. Mayda ba estandar na marka para han ngatanan nga serbisyo ha laboratoryo nga igintatanyag hini nga pasilidad? ___ Oo ____ Diri 
+ 4d1. Kun oo, ano an estabdar nga marka nga igin-aaplikar ha ngatanan nga serbisyo ha laboratoryo nga iginhahatag hini nga pasilidad? 
+ 
+5. 
+OTHER RELEVANT DOCUMENTS/FILES (We will ask the facility head if there are other document 
+5. IBA PA NGA MGA KALABUTAN NGA DOKUMENTO/FILES (Pakianhan namon an facility head kun mayda pa iba nga dokumento 

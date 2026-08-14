@@ -793,5 +793,22 @@
   "Sponsored (i.e., members whose contributions are being paid for by another individual, government agencies, or private entities. Includes some low-income citizens that are not indigent e.g. BHWs, PWDs)": "Sponsored (mga miyembro nga ang kontribusyon bayran sa lain nga indibidwal, gobyerno, o pribadong entidad; apil ang ubang low-income nga dili indigent sama sa BHWs ug PWDs)",
   "Lifetime member (i.e., individuals aged 60 and above, uniformed personnel aged 56 and above, and SSS underground miner-retirees aged 55 and above, who paid at least 120 monthly contributions to PhilHealth or the former SSS/GSIS Medicare Programs)": "Lifetime member (edad 60 pataas, uniformed personnel 56 pataas, ug uban pa nga nakakompleto og 120 monthly contributions sa PhilHealth ug Medicare programs)",
   "Senior citizen (i.e., residents of the Philippines aged sixty (60) or above not currently covered by any other PhilHealth category, and qualified dependents of senior citizen members who are themselves senior citizens, with or without other coverage)": "Senior citizen (residente sa Pilipinas, 60 anyos pataas, dili sakop sa laing PhilHealth category ug uban pang kwalipikado nga dependents)",
-  "Qualified dependents (i.e., those whose contributions are declared and covered by a principal member)": "Qualified dependents (mga dependente nga sakop sa principal member)"
+  "Qualified dependents (i.e., those whose contributions are declared and covered by a principal member)": "Qualified dependents (mga dependente nga sakop sa principal member)",
+  "2. In what month were you born?": "Unsang bulana ug tuiga ka gipanganak? Month _________ Year____________ Bulan Tuig",
+  "22. Do you have electricity in your house?": "Aduna ba moy kuryente sa inyong panimalay?",
+  "46. What is his/her membership category?": "Pangalan Unang Pangalan lamang",
+  "News": "Balita",
+  "Primary care provider for every Filipino": "Primary care provider para sa tanang Pilipino",
+  "Weekly": "Kada Semana",
+  "77. If generic, why did you buy generic medicine?": "Kung generic, nganong generic nga tambal man ang imong gipalit?",
+  "Walk": "Maglakaw",
+  "Bike": "Bisikleta",
+  "Boat": "Bangka",
+  "For immunizations/vaccinations": "Para sa immunization / bakuna",
+  "Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)": "Dental care (medikal nga pag-atiman sa ngipon sama sa cleaning, pasta, ug uban pa)",
+  "No time": "Walay oras",
+  "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?": "[Tubaga lamang kung \"Oo\" sa Q112] Human nimo pag-adto sa espesyalista o espesyal nga serbisyo, nag-follow up ba sila kanimo bahin sa nahitabo sa pagbisita?",
+  "PhilHealth will cover cost of treatment": "Ang PhilHealth maoy mo-cover sa gasto sa pagtambal",
+  "Other expenses": "Uban pang gasto:",
+  "National Government Agencies (DSWD, etc.)": "National Government Agencies (DSWD, ug uban pa)"
 }

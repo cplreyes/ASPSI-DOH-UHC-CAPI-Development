@@ -1,0 +1,5851 @@
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Universal Health Care (UHC) Survey – Year 2 
+Facility Head Survey Questionnaire 
+(Kuestionario ti Surbey ti Facility Head) 
+Informed Consent Form (Pormas ti Naipakaammo a Pammalubos) 
+This informed consent form must be obtained before conducting the interview. You are required to read this entire consent form 
+aloud exactly as written. After reading this form to the respondent, you must complete and sign the verification consent form. 
+(Masapul a maala daytoy a porma ti naipakaammo a pammalubos sakbay a maaramid ti interbiu. Masapul a basaem daytoy intero 
+a porma ti pammalubos iti napigsa nga eksakto a kas iti naisurat. Kalpasan a mabasa daytoy a porma iti respondent, masapul a 
+kompletuen ken pirmaam ti porma ti pammalubos ti panangpaneknek.) 
+ 
+PART I: Information about the study  (Impormasion maipapan iti panagadal) 
+Hello, my name is    (data collector name) 
+. I work for Asian Social Project Services, Inc. (ASPSI).  I am here to invite you to 
+participate in a study about the Universal Health Care (UHC) and packages of programs like Yaman ng Kalusugan Program (YAKAP), 
+No Balance Billing (NBB), Zero Balance Billing (ZBB), Bagong Urgent Care and Ambulatory Services (BUCAS), and Guaranteed 
+and Accessible Medications for Outpatient Treatment (GAMOT). The Department of Health funded this study. Please let me tell you 
+more about the study. 
+(Hello, ti naganko ket (nagan ti kolektor ti datos) . Agtartrabahoak iti Asian Social Project Services, Inc. (ASPSI). Addaak ditoy tapno 
+awisenkayo a makipaset iti panagadal maipanggep iti Universal Health Care (UHC) ken dagiti pakete dagiti programa a kas iti Yaman 
+ng Kalusugan Program (YAKAP), No Balance Billing (NBB), Zero Balance Billing (ZBB), Bagong Urgent Care and Ambulatory 
+Services (BUCAS), ken Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT). Ti Department of Health ti 
+nangpondo iti daytoy a panagadal. Pangngaasiyo ta bay-anyo nga ibagak kadakayo ti ad-adu pay maipapan iti panagadal.) 
+  
+This study aims to generate evidence on the overall experience of the general public to support continuous monitoring, evaluation, and 
+learning of the implementation of the UHC Act and its Implementing Rules and Regulations (IRR). The questions for this survey cover 
+facility/facility head profile, UHC implementation changes since 2019, specialized programs (YAKAP/Konsulta, NBB/ZBB, BUCAS, 
+GAMOT), DOH licensing, PhilHealth accreditation, NBB/ZBB policies, referral systems, human resource challenges, and secondary 
+data such as hospital census and staffing statistics. 
+(Panggep daytoy a panagadal ti mangpataud iti ebidensia iti pakabuklan a padas ti sapasap a publiko tapno suportaran ti agtultuloy a 
+panangmonitor, panangtingiting, ken panagsursuro iti pannakaipatungpal ti UHC Act ken dagiti Implementing Rules and Regulations 
+(IRR)-na.) Dagiti saludsod para iti daytoy a surbey ket saklawen ti facility/facility head profile, panagbalbaliw ti pannakaipatungpal ti 
+UHC manipud idi 2019, dagiti espesial a programa (YAKAP/Konsulta, NBB/ZBB, BUCAS, GAMOT), DOH licensing, PhilHealth 
+accreditation, NBB/ZBB policies, referral systems, human resource challenges, ken segundario a datos kas iti sensus ti ospital ken 
+staffing statistics. 
+ 
+Would you like to participate as a respondent in the study? The interview may last for more or less than an hour. 
+(Kayatmo kadi ti makipaset kas respondent iti panagadal? Mabalin nga agpaut ti interbiu iti nasurok wenno kurang nga oras) 
+ 
+We are committed to protecting your privacy. If you choose to participate, we will never include your name in information shared with 
+the government or in any reports. Your name will be kept separately from your answers in a private, secure location. For this interview, 
+it is also important to respect other people’s privacy and not tell anyone else what we talked about today. With all research, there’s a 
+small chance that someone else might get to see your data. We try our best to prevent that, but if it happens, we’ll tell you as soon as 
+possible.  
+(Nakumikomkami a mangsalaknib iti kinapribado. No piliem ti makipaset, pulos a dimi iraman ti naganmo iti impormasion a 
+maibinglay iti gobierno wenno iti aniaman a report. Maidulin ti naganmo a naisina kadagiti sungbatmo iti pribado, natalged a lugar. 
+Para iti daytoy nga interbiu, napateg met a raemen ti kinapribado ti dadduma ken saan nga ibaga iti sabali ti pagsasaritaantayo ita 
+nga aldaw. Iti amin a panagsirarak, adda bassit a tsansa a mabalin a makakita ti sabali iti datam. Ikagkagumaanmi a lapdan dayta, 
+ngem no mapasamak dayta, ibagami kadakayo iti kabiitan a panawen.) 
+ 
+Aside from this, there are no other risks to you if you take part in this study. As a benefit of the research, the knowledge gained may 
+help the government and DOH better support your healthcare needs. You are free to decline participation or to stop at any time. Choosing 
+not to participate will not result in any penalty, and you will not have to pay anything to take part in this study. 
+(Malaksid iti daytoy, awanen ti sabali pay a peggad kenka no makipasetka iti daytoy a panagadal. Kas pagimbagan ti panagsirarak, ti 
+pannakaammo a nagun-od ket mabalin a makatulong iti gobierno ken DOH a nasaysayaat a mangsuporta kadagiti kasapulam iti 
+panangtaripato iti salun-at. Nawayakayo nga agkedked a makipaset wenno agsardeng iti aniaman nga oras. Ti panangpili a saan a 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+makipaset ket saan nga agresulta iti aniaman a dusa, ken saanmo a kasapulan ti agbayad iti aniaman tapno makipasetka iti daytoy a 
+panagadal.) 
+ 
+Do you have any questions about the study or about what I have told you?  
+(Adda kadi saludsodyo maipapan iti panagadal wenno maipapan iti imbagak kadakayo?) 
+ 
+If you have concerns or questions about your rights as a participant, you can contact:  
+(No adda pakaseknan wenno saludsodmo maipapan kadagiti karbengam kas maysa a makipaset, mabalinmo a kontaken:) 
+ 
+Single Joint Research Ethics Board (SJREB) at the Philippines Department of Health 
+Email: sjreb@doh.gov.ph  
+National Tel: (02) 651-7800 local 1328 
+Tel: +63 936 992 5513 
+ 
+Department of Health 
+Name: Lindsley Jeremiah D. Villarante 
+Email:  ldvillarante@doh.gov.ph 
+Tel: +63 (02) 8651-7800 local 1432 
+ 
+Asian Social Project Services, Inc. 
+Name: Paulyn Jean A. Claro  
+Email: inquiry.aspsi.doh.uhc.survey2@gmail.com 
+Tel: + 63 917 819 6884 
+ 
+PART II: Certificate of Consent  (Sertipiko ti Pammalubos) 
+ 
+If you have understood the information above, please give your permission to be interviewed by signing this form. 
+(No naawatanyo ti impormasion iti ngato, pangngaasiyo ta itedyo ti pammalubosyo a mainterbiu babaen ti panangpirmayo iti daytoy 
+a porma.) 
+ 
+_____________________________ 
+ Name and Signature of Respondent 
+(Nagan ken Pirma ti Respondent) 
+ 
+ 
+______________________________________________      _______________________       _______________________ 
+                             Position, Office  
+     
+                        Email address  
+                 Mobile Number 
+                    (Posision, Opisina).        
+ 
+ 
+       (Address ti email).                (Numero ti Mobile) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Questionnaire No:  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+FIELD CONTROL 
+Survey Team Leader’s Name 
+(Nagan ti Lider ti Team ti Surbey 
+ 
+Date First Visited the Facility 
+(Month, Day, Year) 
+Enumerator’s Name 
+(Nagan ti Enumerator) 
+ 
+Resulta 
+ 
+Field Validated by 
+(Pinasingkedan ni) 
+ 
+Date of Final Visit to the Facility 
+(Month, Day, Year) 
+Field Edited by ( Inurnos ni) 
+ 
+Resulta 
+ 
+aCodes: 
+1. Completed 
+2. Postponed 
+3. Refused 
+4. Incomplete 
+ 
+Total number of visits: 
+ 
+ 
+HEALTH FACILITY AND GEOGRAPHIC IDENTIFICATION 
+Classification 
+☐ UHC IS 
+☐ Non-UHC IS 
+Region 
+ 
+Province/HUC 
+ 
+City/Municipality 
+ 
+Barangay 
+ 
+Location 
+Latitude 
+ 
+Longitude 
+ 
+ 
+ 
+We would like to ask some of your personal information relevant to the survey. (Kayatmi a damagen ti 
+sumagmamano kadagiti personal nga impormasionmo a mainaig iti surbey. 
+ 
+A. Facility Head Profile Profile ti Ulo ti Pasilidad 
+ 
+1. What is your name? (Last Name, First Name, Middle Initial, Ext) (Ania ti naganmo? (Apellido, Umuna a 
+Nagan, Tengnga nga Inisial, Ext) 
+ 
+2. What is your official designation at this health facility? (Ania ti opisial a pannakaitudingmo iti daytoy 
+a pasilidad ti salun-at?) 
+ 
+ 
+ 
+☐ Rural Health Unit/ Health Center 
+Head 
+☐ Hospital Administrator  
+☐ Administrative Officer/ Assistant  
+ 
+ 
+ 
+☐ Physician 
+☐ Nurse 
+☐ Midwife  
+ 
+ 
+ 
+☐ Chief of Hospital 
+☐ Municipal / City Health Officer  
+☐ Health Promotion / Nutrition Officer 
+ 
+ 
+ 
+☐ Medical Director  
+☐ Medical Officer 
+☐ Rural Health Physician 
+ 
+3. How old are you (in years), as of your last birthday? (Mano ti tawenmo (iti tawen), manipud iti naudi a 
+kasangaymo?) 
+ 
+4. What is your sex assigned at birth? (Ania ti naituding a seksom iti pannakayanakmo?) 
+ 
+ 
+ 
+☐ Male (Lalaki) 
+ 
+ 
+ 
+☐ Female (Babae) 
+ 
+5. In your current position, how many months/years have you worked at this health facility? (Iti agdama 
+a posisionmo, mano a bulan/tawen ti panagtrabahom iti daytoy a pasilidad ti salun-at?) 
+ 
+Number of Years  
+(Bilang ti Tawen) 
+ 
+ 
+ 
+ 
+Number of Months 
+(Bilang ti Bulan) 
+ 
+ 
+ 
+ 
+6. How many years have you worked in health-related position? (Mano a tawen a nagtrabahoka iti 
+posision a mainaig iti salun-at?) 
+ 
+Number of Years  
+(Bilang ti Tawen) 
+ 
+  
+ 
+Number of Months 
+(Bilang ti Bulan) 
+ 
+  
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Next, we will be asking questions about this health facility. (Sumaruno, agsaludsodtayo maipapan iti daytoy a 
+pasilidad ti salun-at.) 
+ 
+B. Facility Profile  Profile ti Pasilidad) 
+ 
+7. What type of ownership is this hospital? (Ania a kita ti panagtagikua daytoy nga ospital?) 
+ 
+ 
+ 
+☐ Public (Publiko) 
+ 
+ 
+ 
+☐ Private (Pribado) 
+ 
+8. What is the facility’s service capacity level? (Ania ti lebel ti kapasidad ti serbisio ti pasilidad? 
+ 
+ 
+ 
+☐ Primary Care Facility (Pasilidad ti Primary Care) 
+ 
+ 
+ 
+☐ Level 1 Hospital (Level 1 nga Ospital) 
+ 
+ 
+ 
+☐ Level 2 Hospital (Level  2 nga Ospital) 
+ 
+ 
+ 
+☐ Level 3 Hospital (Level 1 nga Ospital) 
+We will now ask about your awareness of UHC, the changes that have been implemented in this facility since 
+the UHC Act was passed in 2019 and if these changes were a result of the UHC Act. (Saludsodenmi itan ti 
+maipapan iti pannakaammoyo iti UHC, dagiti panagbalbaliw a naipatungpal iti daytoy a pasilidad sipud idi 
+naipasa ti UHC Act idi 2019 ken no dagitoy a panagbalbaliw ket resulta ti UHC Act.) 
+ 
+C. Universal Health Care (UHC) Implementation  
+Implementasion ti Sapasap a Panagtaripato ti Salun-at (UHC) 
+ 
+9. Have you heard about Universal Health Care (UHC) prior to this survey? (Nangngegyo kadin ti 
+maipapan iti Universal Health Care (UHC) sakbay daytoy a surbey?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No (Saan) 
+ 
+10. Does the facility have primary care packages? (Adda kadi ti pasilidad kadagiti kangrunaan a pakete 
+ti panangaywan?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No <proceed to Q12> (Saan <ituloy ti Q12>) 
+ 
+11. If yes, specify its implementation status relative to the UHC Act. (No wen, ibaga ti kasasaad ti 
+pannakaipatungpalna a mainaig iti UHC Act.) 
+ 
+ 
+ 
+☐ Implemented as a direct result of the UHC Act (i.e. YAKAP/Konsulta) (Naipatungpal a kas direkta a 
+resulta ti UHC Act (i.e. YAKAP/Consultation)  
+ 
+ 
+ 
+☐ Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act ( Pre-existing 
+sakbay ti UHC ngem kalpasanna napasayaat wenno napalawa gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Newly implemented or improved independent of UHC Act (Baro a naipatungpal wenno napasayaat nga 
+agwaywayas iti UHC Act) 
+ 
+ 
+ 
+☐ Not yet implemented but planned within the next 1–2 years ( Saan pay a naipatungpal ngem naiplano iti 
+uneg ti sumaruno a 1–2 a tawen) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga) . 
+ 
+ 
+ 
+ 
+☐ I don’t know (San a amo) 
+ 
+ 
+ 
+☐ Not applicable (Saan nga agaplikar) 
+ 
+12. Has the facility applied for DOH primary care licensing since the UHC Act was passed in 2019 and 
+was it a result of the UHC Act? (Nagaplikar kadi ti pasilidad para iti DOH primary care licensing 
+sipud idi naipasa ti UHC Act idi 2019 ken resulta kadi dayta ti UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? 
+<Question is applicable to all facilities with ‘No’ response in Q10>  (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA 
+A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? 
+Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 1-2 a tawen? 
+<Ti saludsod ket agaplikar kadagiti amin a pasilidad nga addaan iti ‘Saan’ a sungbat iti Q10> 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act (Wen, daytoy ket dati 
+nga adda, ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, daytoy ket 
+naipatungpal wenno napasayaat iti nabiit pay, ngem saan a gapu iti UHC Act) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga)  
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years (Saan, saan pay a 
+naipatungpal daytoy, ngem planomi nga aramiden dayta iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years (Saan, ken awan ti planomi nga aramiden 
+daytoy iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, other reason (specify) (Saan, sabali a rason (ibaga) . 
+ 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Not applicable (Saan nga agaplikar) 
+ 
+13. Saan nga agaplikar you have a public health unit at this facility? (Sadino ti pagaplayam adda kadi 
+public health unit iti daytoy a pasilidad?) 
+ 
+ 
+ 
+☐ Yes  (wen) 
+ 
+ 
+ 
+☐ No <proceed to Q16> (Saan <ituloy ti Q16>) 
+ 
+ 
+ 
+☐ Not applicable <proceed to Q16> 
+(Saan nga agaplikar <ituloy ti Q16>) 
+ 
+14. If yes, has the creation of a public health unit at this facility been implemented since the UHC Act 
+was passed in 2019 and was it a result of the UHC Act? (No wen, naipatungpal kadi ti pannakabukel 
+ti public health unit iti daytoy a pasilidad sipud idi naipasa ti UHC Act idi 2019 ken resulta kadi dayta 
+ti UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? (SAAN A BASAEN TI 
+OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? 
+Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 
+1-2 a tawen?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act (Wen, daytoy ket dati 
+nga adda, ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, daytoy ket 
+naipatungpal wenno napasayaat iti nabiit pay, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify)(Wen, sabali a rason (ibaga)) 
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q16> ( Saan, 
+saan pay a naipatungpal daytoy, ngem planomi nga iti sumaruno a 1-2 a tawen <agtultuloy iti Q16>) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q16> 
+( Saan, ken awan ti 
+planomi nga aramiden daytoy iti sumaruno a 1-2 a tawen <proceed to Q16>) 
+ 
+ 
+ 
+☐ No, other reason (specify) <proceed to Q16> (Saan, sabali a rason (ibaga) <ituloy iti Q16>) 
+ 
+ 
+ 
+ 
+☐ I don't know <proceed to Q16>  
+(Diak ammo <ituloy ti Q16>) 
+ 
+ 
+ 
+ 
+☐ Not applicable <proceed to Q16> 
+(Saan nga agaplikar <ituloy ti Q16>) 
+ 
+15. What is the main role of the public health unit? (Ania ti kangrunaan nga akem ti public health unit?) 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.) 
+ 
+ 
+ 
+☐ Health promotion and education (Panangitandudo iti salun-at ken edukasion) 
+ 
+ 
+ 
+☐ Disease surveillance report (Report ti panagsiput iti sakit) 
+ 
+ 
+ 
+☐ Referral and patient navigation (Referral ken nabigasion ti pasiente) 
+ 
+ 
+ 
+☐ Alignment with national public health programs ( Panagtunos kadagiti nailian a programa ti salun-at ti 
+publiko) 
+ 
+ 
+ 
+☐ Other (specify)(Dadduma pay (ibaga) .) 
+ 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Not applicable (Saan nga agaplikar) 
+ 
+16. Do you have a health promotion unit at this facility? (Adda kadi health promotion unit-yo iti daytoy a 
+pasilidad?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ No <proceed to Q19> (Saan <ituloy ti Q19>) 
+ 
+ 
+ 
+☐ Not applicable <proceed to Q19> 
+(Saan nga agaplikar <ituloy ti Q19>) 
+ 
+17. If yes, has the creation of health promotion unit at this facility been implemented since the UHC Act 
+was passed in 2019 and was it a result of the UHC Act? (No wen, naipatungpal kadi ti pannakabukel 
+ti health promotion unit iti daytoy a pasilidad sipud idi naipasa ti UHC Act idi 2019 ken resulta kadi 
+dayta ti UHC Act?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act ( Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act ( Wen, daytoy ket dati 
+nga adda, ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, naipatungpal 
+wenno napasayaat daytoy itay nabiit, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga) . 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q19> (Saan, 
+saan pay a naipatungpal daytoy, ngem planomi nga iti sumaruno a 1-2 a tawen <agtultuloy iti Q19>) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q19> (Saan, ken awan ti planomi 
+nga aramiden daytoy iti sumaruno a 1-2 a tawen <proceed to Q19>) 
+ 
+ 
+ 
+☐ No, other reason (specify) <proceed to Q19> (Saan, sabali a rason (ibaga) <ituloy iti Q19>) 
+ 
+ 
+ 
+ 
+☐ I don't know <proceed to Q19> (Diak ammo <ituloy ti Q19>) 
+ 
+ 
+ 
+☐ Not applicable <proceed to Q19> (Saan nga agaplikar <ituloy ti Q19>) 
+ 
+18. What is the main role of the health promotion unit? (Ania ti kangrunaan nga akem ti health 
+promotion unit?) 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.) 
+ 
+ 
+ 
+☐ Leading health education and awareness campaigns (e.g., raising awareness about public health 
+initiatives of DOH, disseminating information about health) (Panangidadaulo kadagiti kampania ti 
+edukasion ken pannakaammo iti salun-at (e.g., panangipangato iti pannakaammo maipapan kadagiti 
+gannuat ti salun-at ti publiko ti DOH, panangiwaras iti impormasion maipapan iti salun-at) . 
+ 
+ 
+ 
+☐ Conducting and coordinating health screening and promotionactivities (e.g., collaboratingand 
+implementing with otherunits and programcoordinators to promotehealthy lifestyles andpreventive care) (☐ 
+Panangisayangkat ken panangkoordinar kadagiti aktibidad ti health screening ken promotion (e.g., 
+panagtitinnulong ken panangipatungpal kadagiti dadduma a unit ken program coordinators tapno 
+maitandudo ti nasalun-at nga estilo ti panagbiag ken preventive care) . 
+ 
+ 
+ 
+☐ Advocacy and policy formation (e.g., research, campaigns, collaboration with policymakers) (Adbokasia 
+ken panagporma ti patakaran (e.g., panagsukisok, kampania, panagtitinnulong kadagiti agar-aramid ti 
+patakaran) . 
+ 
+ 
+ 
+☐ Resource mobilization andfundraising (e.g., securing funding, grants) (Panagtignay ti rekurso ken 
+panagurnong ti pondo (e.g., panangseguro ti pondo, grant) . 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga) ) 
+ 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+19. Has the establishment of new roles in the facility been implemented since the UHC Act was passed 
+in 2019 and was it a result of the UHC Act? (Naipatungpal kadin ti pannakaipasdek dagiti baro nga 
+akem iti pasilidad sipud idi naipasa ti UHC Act idi 2019 ken resulta kadi dayta ti UHC Act?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act (☐ Wen, daytoy ket dati 
+nga adda, ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (☐ Wen, daytoy ket 
+naipatungpal wenno napasayaat iti nabiit pay, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga) . 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q21> (Saan, 
+saan pay a naipatungpal daytoy, ngem planomi nga iti sumaruno a 1-2 a tawen <agtultuloy iti Q21>) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q21> (☐Saan, ken awan ti 
+planomi nga aramiden daytoy iti sumaruno a 1-2 a tawen <proceed to Q21>) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ No, other reason (specify) <proceed to Q21> (Saan, sabali a rason (ibaga) <ituloy iti Q21>) 
+ 
+ 
+ 
+ 
+☐ I don't know <proceed to Q21> (Diak ammo <ituloy ti Q21>) 
+ 
+ 
+ 
+☐ Not applicable <proceed to Q21> (Saan nga agaplikar <ituloy ti Q21>) 
+ 
+20. What is/are the new role/s established in this facility? (Ania/dagiti baro nga akem/dagiti naipasdek iti 
+daytoy a pasilidad?) 
+ 
+ 
+ 
+ 
+ 
+21. Has the establishment of new departments in the facility been implemented since the UHC Act was 
+passed in 2019 and was it a result of the UHC Act? (Naipatungpal kadin ti pannakaipasdek dagiti 
+baro a departamento iti pasilidad sipud idi naipasa ti UHC Act idi 2019 ken resulta kadi dayta ti UHC 
+Act?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act ( Wen, daytoy ket dati 
+nga adda, ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, naipatungpal 
+wenno napasayaat daytoy itay nabiit, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga) . 
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q23> (Saan, 
+saan pay a naipatungpal daytoy, ngem planomi nga iti sumaruno a 1-2 a tawen <agtultuloy iti Q23>) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q23> ( Saan, ken awan ti 
+planomi nga aramiden daytoy iti sumaruno a 1-2 a tawen <proceed to Q23>) 
+ 
+ 
+ 
+☐ No, other reason (specify) <proceed to Q23> (Saan, sabali a rason (ibaga) <ituloy iti Q23>) 
+ 
+ 
+ 
+ 
+☐ I don't know <proceed to Q23> 
+(Diak ammo <ituloy ti Q23>) 
+ 
+ 
+ 
+ 
+☐ Not applicable <proceed to Q23> (Saan nga agaplikar <ituloy ti Q23>) 
+ 
+22. What is/are the new department/s established in this facility? (Ania/dagiti baro a departamento/dagiti 
+naipasdek iti daytoy a pasilidad?) 
+ 
+ 
+ 
+ 
+ 
+23. Has the construction of new building/s in this health facility been implemented since the UHC Act 
+was passed in 2019 and was it a result of the UHC Act? (Naipatungpal kadin ti pannakaibangon ti 
+baro a pasdek/dagiti pasdek iti daytoy a pasilidad ti salun-at sipud idi naipasa ti UHC Act idi 2019 
+ken resulta kadi dayta ti UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? (SAAN A BASAEN TI 
+OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? 
+Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 
+1-2 a tawen?l 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act ( Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act (Wen, addan daytoy, 
+ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, naipatungpal 
+wenno napasayaat daytoy itay nabiit, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga) . 
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q25> (Saan, 
+saan pay a naipatungpal daytoy, ngem planomi nga iti sumaruno a 1-2 a tawen <agtultuloy iti Q25>) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q25> 
+(Saan, ken awan ti 
+planomi nga aramiden daytoy iti sumaruno a 1-2 a tawen <proceed to Q25>) 
+ 
+ 
+ 
+ 
+☐ No, other reason (specify) <proceed to Q25> (Saan, sabali a rason (ibaga) <ituloy iti Q25>) 
+ 
+ 
+ 
+ 
+☐ I don't know <proceed to Q25> ( Diak ammo <ituloy ti Q25>)  
+ 
+ 
+ 
+☐ Not applicable <proceed to Q25> (Saan nga agaplikar <ituloy ti Q25>) 
+ 
+24. What is/are the building/s being used for? (Ania ti pakausaran/dagiti/dagiti pasdek?) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+ 
+ 
+25. Has the construction of new rooms in this health facility been implemented since the UHC Act was 
+passed in 2019 and was it a result of the UHC Act? (Naipatungpal kadin ti pannakaibangon dagiti 
+baro a kuarto iti daytoy a pasilidad ti salun-at sipud idi naipasa ti UHC Act idi 2019 ken resulta kadi 
+dayta ti UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? (SAAN A BASAEN TI 
+OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? 
+Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 
+1-2 a tawen?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act ( Wen, daytoy ket dati 
+nga adda, ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, daytoy ket 
+naipatungpal wenno napasayaat iti nabiit pay, ngem saan a gapu iti UHC Act 
+ 
+ 
+ 
+☐ Yes, other reason (specify)(Wen, sabali a rason (ibaga) . 
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q27> ( Saan, 
+saan pay a naipatungpal daytoy, ngem planomi nga iti sumaruno a 1-2 a tawen <agtultuloy iti Q27>) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q27> ( Saan, ken awan ti 
+planomi nga aramiden daytoy iti sumaruno a 1-2 a tawen <proceed to Q27>) 
+ 
+ 
+ 
+☐ No, other reason (specify) <proceed to Q27> (Saan, sabali a rason (ibaga) <ituloy iti Q27>) 
+ 
+ 
+ 
+ 
+☐ I don't know <proceed to Q27> (Diak ammo <ituloy ti Q27>) 
+ 
+ 
+ 
+☐ Not applicable <proceed to Q27> (Saan nga agaplikar <ituloy ti Q27>) 
+ 
+26. What are the rooms being used for? (Ania ti pakausaran dagiti kuarto?) 
+ 
+ 
+ 
+ 
+ 
+27. Has the increase in equipment been implemented since the UHC Act was passed in 2019 and was it 
+a result of the UHC Act? (Naipatungpal kadin ti panagadu ti alikamen manipud idi naipasa ti UHC 
+Act idi 2019 ken resulta kadi dayta ti UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? (SAAN A BASAEN TI 
+OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? 
+Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 
+1-2 a tawen?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act (Wen, daytoy ket dati 
+nga adda, ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, naipatungpal 
+wenno napasayaat daytoy itay nabiit, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga) . 
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q29> (Saan, 
+saan pay a naipatungpal daytoy, ngem planomi nga iti sumaruno a 1-2 a tawen <agtultuloy iti Q29>) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q29> 
+(Saan, ken awan ti 
+planomi nga aramiden daytoy iti sumaruno a 1-2 a tawen <proceed to Q29>) 
+ 
+ 
+ 
+☐ No, other reason (specify) <proceed to Q29> (Saan, sabali a rason (ibaga) <ituloy iti Q29>) 
+ 
+ 
+ 
+ 
+☐ I don't know <proceed to Q29> (Diak ammo <ituloy ti Q29>) 
+ 
+ 
+ 
+☐ Not applicable <proceed to Q29> (Saan nga agaplikar <ituloy ti Q29>) 
+ 
+28. If there was an increase in equipment, what are these pieces of equipment? (No immadu ti alikamen, 
+ania dagitoy a pedaso ti alikamen?) 
+ 
+ 
+ 
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+29. Has the increase in supplies been implemented since the UHC Act was passed in 2019 and was it a 
+result of the UHC Act? (Naipatungpal kadin ti panagngato ti suplay manipud idi naipasa ti UHC Act 
+idi 2019 ken resulta kadi daytoy ti UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? (SAAN A BASAEN TI 
+OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? 
+Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 
+1-2 a tawen?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act (Wen, addan daytoy, 
+ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, naipatungpal 
+wenno napasayaat daytoy itay nabiit, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga)  
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q31> (Saan, 
+saan pay a naipatungpal daytoy, ngem planomi nga iti sumaruno a 1-2 a tawen <agtultuloy iti Q31>) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q31> (Saan, ken awan ti planomi 
+nga aramiden daytoy iti sumaruno a 1-2 a tawen <proceed to Q31>) 
+ 
+ 
+ 
+☐ No, other reason (specify) <proceed to Q31> (Saan, sabali a rason (ibaga) <ituloy iti Q31>) 
+ 
+ 
+ 
+☐ I don't know <proceed to Q31> (Diak ammo <ituloy ti Q31>) 
+ 
+ 
+ 
+☐ Not applicable <proceed to Q31> (Saan nga agaplikar <ituloy ti Q31>) 
+ 
+30. If there was an increase in supplies, what are these? (No immadu ti suplay, ania dagitoy?) 
+ 
+ 
+ 
+ 
+ 
+31. Has the use of electronic medical records at the facility been implemented since the UHC Act was 
+passed in 2019 and was it a result of the UHC Act? (Naipatungpal kadin ti pannakausar dagiti 
+electronic medical records iti pasilidad sipud idi naipasa ti UHC Act idi 2019 ken resulta kadi dayta ti 
+UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? (SAAN A BASAEN TI 
+OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? 
+Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 
+1-2 a tawen?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act (Wen, daytoy ket dati 
+nga adda, ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, naipatungpal 
+wenno napasayaat daytoy itay nabiit, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga) . 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years <proceed to Q35> (Saan, 
+saan pay a naipatungpal daytoy, ngem planomi nga iti sumaruno a 1-2 a tawen <agtultuloy iti Q35>) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years <proceed to Q35> (Saan, ken awan ti planomi 
+nga aramiden daytoy iti sumaruno a 1-2 a tawen <proceed to Q35>) 
+ 
+ 
+ 
+☐ No, other reason (specify) <proceed to Q35> (Saan, sabali a rason (ibaga) <ituloy iti Q35>) 
+ 
+ 
+ 
+ 
+☐ I don't know <proceed to Q35> (Diak ammo <ituloy ti Q35>) 
+ 
+ 
+ 
+☐ Not applicable (Saan nga agaplikar) 
+ 
+32. Does your facility currently submit health and financial data to the DOH Information System and/or 
+the PhilHealth Dashboard? (Agdama kadi nga agisubmitir ti pasilidadyo iti datos ti salun-at ken 
+pinansial iti DOH Information System ken/wenno iti PhilHealth Dashboard?) 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.) 
+ 
+ 
+ 
+☐ Yes, to DOH Information System only (Wen, iti DOH Information System laeng) 
+ 
+ 
+ 
+☐ Yes, to PhilHealth Dashboard only (Wen, iti PhilHealth Dashboard laeng) 
+ 
+ 
+ 
+☐ Yes, to both DOH Information System and PhilHealth Dashboard (Wen, agpada iti DOH Information 
+System ken PhilHealth Dashboard) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ No, we are not submitting these data <proceed to Q35> (Saan, saanmi nga isubmitir dagitoy a datos 
+<ituloy iti Q35>) 
+ 
+33. If yes, how frequent has your facility submit these data? (No wen, kasano kasansan nga isubmitir ti 
+pasilidadyo dagitoy a datos?) 
+ 
+☐ Weekly (Linawas) 
+ 
+☐ Monthly (Binulan) 
+ 
+☐ Quarterly (Iti tunggal tallo a bulan) 
+ 
+☐ Semi-annually (Semi-tinawen) 
+ 
+☐ Annually (Tinawen) 
+ 
+☐ Other (specify) (Dadduma pay (ibaga) . 
+ 
+ 
+34. Which of the submitted reports are actually used for decision-making? (Ania kadagiti naisubmitir a 
+report ti aktual a maus-usar para iti panagdesision?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+☐ OPD/IPD census and morbidity reports (Dagiti report ti sensus ken morbidity ti OPD/IPD) 
+ 
+☐ Maternal, newborn, child, and adolescent health (MNCAH) reports (Ipadamag ti salun-at ti ina, 
+kappasngay, ubing, ken agtutubo (MNCAH). 
+ 
+☐ Notifiable diseases / surveillance reports (Maipakaammo a sakit / report ti panagsiput) 
+ 
+☐ Expenditure and budget utilization reports (Report ti gastos ken pannakausar ti badyet) 
+ 
+☐ PhilHealth claims and reimbursement reports (PhilHealth claims ken report ti pannakaisubli ti kuarta) 
+ 
+☐ YAKAP/Konsulta utilization reports (HUG/Agkonsulta kadagiti report ti pannakausarl 
+ 
+☐ NBB compliance (Panagtungpal iti NBB) 
+ 
+☐ ZBB compliance / monitoring reports (Dagiti report ti panagtungpal / panangmonitor iti ZBB) 
+ 
+☐ HRH staffing and deployment reports (Dagiti report ti HRH staffing ken deployment) 
+ 
+☐ Medicines availability and stock status reports (Dagiti report ti kaadda dagiti agas ken kasasaad ti stock) 
+ 
+☐ Facility performance scorecards / quality reports (Dagiti scorecard ti panagaramid ti pasilidad / report ti 
+kalidad) 
+ 
+☐ Other (specify) (Dadduma pay (ibaga) . 
+ 
+ 
+35. Have there been changes in the facility staffing since 2019? (Adda kadi panagbalbaliw ti staffing ti 
+pasilidad sipud pay idi 2019?) 
+ 
+☐ Yes (Wen) 
+ 
+☐ No <proceed to Q37> (Saan <ituloy ti Q37>) 
+ 
+36. Have the changes in staffing been implemented since the UHC Act was passed in 2019 and was it a 
+result of the UHC Act? (Naipatungpal kadin dagiti panagbalbaliw iti staffing sipud idi naipasa ti UHC 
+Act idi 2019 ken resulta kadi dayta ti UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? (SAAN A BASAEN TI 
+OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? 
+Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 
+1-2 a tawen?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act (☐Wen, daytoy ket dati 
+nga adda, ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act ( Wen, daytoy ket 
+naipatungpal wenno napasayaat iti nabiit pay, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga)  
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years (Saan, saan pay a 
+naipatungpal daytoy, ngem planomi nga aramiden dayta iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years (Saan, ken awan ti planomi nga aramiden 
+daytoy iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, other reason (specify) (Saan, sabali a rason (ibaga)  
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ I don't know (Diak ammo) 
+ 
+ 
+ 
+☐ Not applicable (Saan nga agaplikar) 
+ 
+37. Have there been changes in the referral system since 2019? (Adda kadi panagbalbaliw ti sistema ti 
+panangiturong sipud pay idi 2019?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No <proceed to Q39> (Saan <ituloy ti Q39>) 
+ 
+38. Have the changes to the referral system (inbound or outbound) been implemented since the UHC 
+Act was passed in 2019 and was it a result of the UHC Act? (Naipatungpal kadin dagiti 
+panagbalbaliw iti referral system (inbound wenno outbound) sipud idi naipasa ti UHC Act idi 2019 
+ken resulta kadi dayta ti UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? (SAAN A BASAEN TI 
+OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? 
+Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 
+1-2 a tawen?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act ( Wen, daytoy ket dati 
+nga adda, ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, daytoy ket 
+naipatungpal wenno napasayaat iti nabiit pay, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga) . 
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years ( Saan, saan pay a 
+naipatungpal daytoy, ngem planomi nga aramiden dayta iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years (Saan, ken awan ti planomi nga aramiden 
+daytoy iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, other reason (specify)(Saan, sabali a rason (ibaga) . 
+ 
+ 
+ 
+ 
+☐ I don't know ( Diak ammo) 
+ 
+ 
+ 
+☐ Not applicable (Saan nga agaplikar) 
+ 
+39. Has the Memorandum of Understanding (MoU) / Agreement (MoA) with other health facilities as part 
+of the healthcare provider network been implemented since the UHC Act was passed in 2019 and 
+was it a result of the UHC Act? (Naipatungpal kadi ti Memorandum of Understanding (MoU) / 
+Agreement (MoA) kadagiti dadduma a pasilidad ti salun-at kas paset ti healthcare provider network 
+sipud idi naipasa ti UHC Act idi 2019 ken resulta kadi dayta ti UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? (SAAN A BASAEN TI 
+OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? 
+Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 
+1-2 a tawen?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act (Wen, daytoy ket dati 
+nga adda, ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, naipatungpal 
+wenno napasayaat daytoy itay nabiit, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga) ) 
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years (Saan, saan pay a 
+naipatungpal daytoy, ngem planomi nga aramiden dayta iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years (Saan, ken awan ti planomi nga aramiden 
+daytoy iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, other reason (specify) (Saan, sabali a rason (ibaga)  
+ 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Not applicable (Saan nga agaplikar) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+40. Has the no balance billing (NBB) been implemented since the UHC Act was passed in 2019 and was 
+it a result of the UHC Act? (Naipatungpal kadin ti no balance billing (NBB) sipud idi naipasa ti UHC 
+Act idi 2019 ken resulta kadi daytoy ti UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? (SAAN A BASAEN TI 
+OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? 
+Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 
+1-2 a tawen?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act (Wen, addan daytoy, 
+ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, naipatungpal 
+wenno napasayaat daytoy itay nabiit, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga)  
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years (Saan, saan pay a 
+naipatungpal daytoy, ngem planomi nga aramiden dayta iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years (Saan, ken awan ti planomi nga aramiden 
+daytoy iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, other reason (specify) (Saan, sabali a rason (ibaga)  
+ 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Not applicable (Saan nga agaplikar) 
+ 
+41. Has the zero balance billing (ZBB) been implemented since the UHC Act was passed in 2019 and 
+was it a result of the UHC Act? (Naipatungpal kadin ti zero balance billing (ZBB) sipud idi naipasa ti 
+UHC Act idi 2019 ken resulta kadi daytoy ti UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? (SAAN A BASAEN TI 
+OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? 
+Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 
+1-2 a tawen?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act (Wen, addan daytoy, 
+ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, naipatungpal 
+wenno napasayaat daytoy itay nabiit, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga) .) 
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years (Saan, saan pay a 
+naipatungpal daytoy, ngem planomi nga aramiden dayta iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years (Saan, ken awan ti planomi nga aramiden 
+daytoy iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, other reason (specify) (Saan, sabali a rason (ibaga) .) 
+ 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Not applicable (Saan nga agaplikar) 
+ 
+42. Has the no co-payment policy been implemented since the UHC Act was passed in 2019 and was it a 
+result of the UHC Act? (Naipatungpal kadi ti no co-payment policy sipud idi naipasa ti UHC Act idi 
+2019 ken resulta kadi daytoy ti UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? (SAAN A BASAEN TI 
+OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? 
+Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 
+1-2 a tawen?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act ( Wen, daytoy ket dati 
+nga adda, ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act ( Wen, daytoy ket 
+naipatungpal wenno napasayaat iti nabiit pay, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga) . 
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years (Saan, saan pay a 
+naipatungpal daytoy, ngem planomi nga aramiden dayta iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years ( Saan, ken awan ti planomi nga aramiden 
+daytoy iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, other reason (specify) (Saan, sabali a rason (ibaga) . 
+ 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Not applicable (Saan nga agaplikar) 
+ 
+43. Has the health facility been implementing ward accommodation allocation since the UHC Act was 
+passed  in 2019 and was it a result of the UHC Act? (Ipatpatungpal kadi ti health facility ti ward 
+accommodation allocation sipud idi naipasa ti UHC Act idi 2019 ken resulta kadi daytoy ti UHC Act? ) 
+(Under UHC, basic ward allocation are as follows:  90% for government general hospitals; 70% for 
+government specialty hospitals, and 10% for private hospitals.) ((Iti sidong ti UHC, ti kangrunaan a 
+pannakabingbingay ti ward ket kastoy: 90% para kadagiti sapasap nga ospital ti gobierno; 70% para 
+kadagiti espesialidad nga ospital ti gobierno, ken 10% para kadagiti pribado nga ospital.) 
+ 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? (SAAN A 
+BASAEN TI OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. 
+Naipatungpal kadin daytoy? / Adda kadi daytoy? Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? 
+Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 1-2 a tawen?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act ( Wen, daytoy ket dati 
+nga adda, ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, daytoy ket 
+naipatungpal wenno napasayaat iti nabiit pay, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga)  
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years ( Saan, saan pay a 
+naipatungpal daytoy, ngem planomi nga aramiden dayta iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years (Saan, ken awan ti planomi nga aramiden 
+daytoy iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, other reason (specify) (Saan, sabali a rason (ibaga) . 
+ 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Not applicable (Saan nga agaplikar) 
+ 
+44. Have the improved clinical practice guidelines been implemented since the UHC Act was passed in 
+2019 and was it a result of the UHC Act? (Naipatungpal kadi dagiti napasayaat a clinical practice 
+guidelines sipud idi naipasa ti UHC Act idi 2019 ken resulta kadi dayta ti UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? (SAAN A BASAEN TI 
+OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? 
+Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 
+1-2 a tawen?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act (Wen, addan daytoy, 
+ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, naipatungpal 
+wenno napasayaat daytoy itay nabiit, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga) .) 
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years (Saan, saan pay a 
+naipatungpal daytoy, ngem planomi nga aramiden dayta iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years (Saan, ken awan ti planomi nga aramiden 
+daytoy iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, other reason (specify) (Saan, sabali a rason (ibaga)  
+ 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Not applicable (Saan nga agaplikar) 
+ 
+45. Have the DOH licensing standards been implemented since the UHC Act was passed in 2019 and 
+was it a result of the UHC Act? (Naipatungpal kadin ti DOH licensing standards sipud idi naipasa ti 
+UHC Act idi 2019 ken resulta kadi dayta ti UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? ( 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (SAAN A BASAEN TI OPTIONS ITI 
+NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal 
+kadin daytoy? / Adda kadi daytoy? Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? 
+Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 1-2 a 
+tawen?) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act (Wen, addan daytoy, 
+ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, naipatungpal 
+wenno napasayaat daytoy itay nabiit, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga) . 
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years (Saan, saan pay a 
+naipatungpal daytoy, ngem planomi nga aramiden dayta iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years (Saan, ken awan ti planomi nga aramiden 
+daytoy iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, other reason (specify) (Saan, sabali a rason (ibaga) . 
+ 
+ 
+ 
+ 
+☐ I don't know  (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Not applicable (Saan nga agaplikar) 
+ 
+46. Have the PhilHealth accreditation requirements been implemented since the UHC Act was passed in 
+2019 and was it a result of the UHC Act? (Naipatungpal kadin ti PhilHealth accreditation 
+requirements sipud idi naipasa ti UHC Act idi 2019 ken resulta kadi dayta ti UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? (SAAN A BASAEN TI 
+OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? 
+Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 
+1-2 a tawen?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act (Wen, addan daytoy, 
+ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, naipatungpal 
+wenno napasayaat daytoy itay nabiit, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) (Wen, sabali a rason (ibaga) . 
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years (Saan, saan pay a 
+naipatungpal daytoy, ngem planomi nga aramiden dayta iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years (Saan, ken awan ti planomi nga aramiden 
+daytoy iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, other reason (specify) (Saan, sabali a rason (ibaga) . 
+ 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Not applicable (Saan nga agaplikar) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+47. Have the service delivery protocols been implemented since the UHC Act was passed in 2019 and 
+was it a result of the UHC Act? (Naipatungpal kadin dagiti service delivery protocols sipud idi 
+naipasa ti UHC Act idi 2019 ken resulta kadi dayta ti UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years? (SAAN A BASAEN TI 
+OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? 
+Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 
+1-2 a tawen?) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act (Wen, addan daytoy, 
+ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, naipatungpal 
+wenno napasayaat daytoy itay nabiit, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify)(Wen, sabali a rason (ibaga)  
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years (Saan, saan pay a 
+naipatungpal daytoy, ngem planomi nga aramiden dayta iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years (Saan, ken awan ti planomi nga aramiden 
+daytoy iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, other reason (specify) (Saan, sabali a rason (ibaga)  
+ 
+ 
+ 
+ 
+☐ I don't know (Diak ammo) 
+ 
+ 
+ 
+☐ Not applicable (Saan nga agaplikar) 
+ 
+48. Have the primary care quality measures been implemented since the UHC Act was passed in 2019 
+and was it a result of the UHC Act? (Naipatungpal kadin dagiti primary care quality measures sipud 
+idi naipasa ti UHC Act idi 2019 ken resulta kadi dayta ti UHC Act?) 
+DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was 
+this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years (SAAN A BASAEN TI 
+OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? 
+Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 
+1-2 a tawen) 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act (Wen, naipatungpal daytoy kas direkta a 
+resulta ti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act ( Wen, daytoy ket dati 
+nga adda, ngem dakkel ti simmayaatanna gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act (Wen, daytoy ket 
+naipatungpal wenno napasayaat iti nabiit pay, ngem saan a gapu iti UHC Act) 
+ 
+ 
+ 
+☐ Yes, other reason (specify) ( Wen, sabali a rason (ibaga) . 
+ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years ( Saan, saan pay a 
+naipatungpal daytoy, ngem planomi nga aramiden dayta iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years (Saan, ken awan ti planomi nga aramiden 
+daytoy iti sumaruno a 1-2 a tawen) 
+ 
+ 
+ 
+☐ No, other reason (specify) (Saan, sabali a rason (ibaga) 
+ 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Not applicable (Saan nga agaplikar) 
+ 
+49. What are the major challenges to improving the quality of patient care in your local area? (Ania 
+dagiti kangrunaan a karit iti panangpasayaat iti kalidad ti panangaywan iti pasiente iti lokal a 
+lugaryo?) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. 
+ 
+ 
+ 
+☐ Limited resources (e.g., shortages in healthcare personnel/manpower, medical equipment, essential 
+supplies, or funding) (Limitado a rekurso (e.g., kinakurang dagiti healthcare personnel/manpower, medikal 
+nga alikamen, nasken a suplay, wenno pondo)  
+ 
+ 
+ 
+☐ Challenging quality standards (e.g., high standards that are difficult to achieve) (Makakarit a 
+pagalagadan ti kalidad (e.g., nangato a pagalagadan a narigat a maragpat)  
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Certain healthcare decisions are made by local government units and not the health facility (Dadduma a 
+pangngeddeng iti panangtaripato iti salun-at ket aramiden dagiti yunit ti lokal a gobierno ken saan a ti 
+pasilidad ti salun-at) 
+ 
+ 
+ 
+☐ Lack of specific healthcare skills (i.e., Insufficient specialists, surgeons, or other healthcare 
+professionals with specialized skills needed in the facility) ( Awan ti espesipiko a paglaingan iti 
+panangtaripato iti salun-at (i.e., Di umdas nga espesialista, siruhano, wenno dadduma pay a propesional 
+iti panangtaripato iti salun-at nga addaan kadagiti espesial a paglaingan a kasapulan iti pasilidad)  
+ 
+ 
+ 
+☐ Inadequate training of healthcare workers (i.e., Healthcare workers needing additional training to meet 
+the facility's quality standards)( Saan nga umdas a panagsanay dagiti trabahador iti panangtaripato iti 
+salun-at (i.e., dagiti trabahador iti panangtaripato iti salun-at a kasapulan ti kanayonan a panagsanay 
+tapno makasangpet kadagiti pagalagadan ti kalidad ti pasilidad) 
+ 
+ 
+ 
+☐ Lack of patient awareness of the benefits of UHC (e.g., patients do not know they can avail of free 
+consultations, and selected medicines and laboratory services) ( Ti kinakurang ti pannakaammo ti 
+pasiente kadagiti pagimbagan ti UHC (e.g., dagiti pasiente ket dida ammo a mabalinda ti ag-avail kadagiti 
+libre a konsultasion, ken dagiti napili nga agas ken serbisio ti laboratorio)  
+ 
+ 
+ 
+☐ Limited accessibility of public healthcare facilities (e.g., lack of transportation options, inconvenient 
+location, or physical barriers hindering access for patients.) (Limitado a pannakagun-od dagiti pasilidad ti 
+panangtaripato ti salun-at ti publiko (e.g., kaawan dagiti pagpilian iti transportasion, saan a kombeniente a 
+lokasion, wenno pisikal a lapped a manglapped iti pannakagun-od para kadagiti pasiente.) 
+ 
+ 
+ 
+☐ Infrastructure not conducive for patient care (e.g., no ground floor, shortage of rooms, inadequate 
+sanitation facilities, lack of wheelchair accessibility, etc.) (Imprastruktura a saan a makatulong para iti 
+panangaywan iti pasiente (e.g., awan ti ground floor, kinakurang dagiti kuarto, saan nga umdas a pasilidad 
+ti sanitasion, kinakurang ti wheelchair accessibility, kdpy.) 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Saan ko nga ammo (Sadino ti pakaalaak iti ammo?) 
+ 
+ 
+50. What are the major challenges to improving the accessibility of patient care in your local area? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.(Ania 
+dagiti kangrunaan a karit iti panangpasayaat iti pannakagun-od iti pannakaaywan ti pasiente iti lokal a lugaryo? 
+SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA OPSION TI SUNGBAT NGA ITED TI RESPONDENT 
+NGA AWAN TI PANANGSUNGBAT.) 
+ 
+ 
+ 
+☐ Limited resources (e.g., shortages in healthcare personnel/manpower, medical equipment, essential 
+supplies, or funding) ( Limitado a rekurso (e.g., kinakurang dagiti healthcare personnel/manpower, medikal 
+nga alikamen, nasken a suplay, wenno pondo)  
+ 
+ 
+ 
+☐ Challenging quality standards (e.g., high standards that are difficult to achieve) (Makakarit a 
+pagalagadan ti kalidad (e.g., nangato a pagalagadan a narigat a maragpat)  
+ 
+ 
+ 
+☐ Certain healthcare decisions are made by local government units and not the health facility (☐ 
+Dadduma a pangngeddeng iti panangtaripato iti salun-at ket aramiden dagiti yunit ti lokal a gobierno ken 
+saan a ti pasilidad ti salun-at) 
+ 
+ 
+ 
+☐ Lack of specific healthcare skills (i.e., Insufficient specialists, surgeons, or other healthcare 
+professionals with specialized skills needed in the facility)(Awan ti espesipiko a paglaingan iti 
+panangtaripato iti salun-at (i.e., Saan nga umdas dagiti espesialista, siruhano, wenno dadduma pay a 
+propesional iti panangtaripato iti salun-at nga addaan kadagiti espesial a paglaingan a kasapulan iti 
+pasilidad) . 
+ 
+ 
+ 
+☐ Inadequate training of healthcare workers (i.e., Healthcare workers needing additional training to meet 
+the facility's quality standards)(Di umdas a panagsanay dagiti trabahador iti panangtaripato iti salun-at 
+(i.e., dagiti trabahador iti panangtaripato iti salun-at a kasapulan ti kanayonan a panagsanay tapno 
+maragpat dagiti pagalagadan ti kalidad ti pasilidad) . 
+ 
+ 
+ 
+☐ Lack of patient awareness of the benefits of UHC (e.g., patients do not know they can avail of free 
+consultations, and selected medicines and laboratory services)(Ti kinakurang ti pannakaammo ti pasiente 
+kadagiti pagimbagan ti UHC (e.g., dagiti pasiente ket dida ammo a mabalinda ti ag-avail kadagiti libre a 
+konsultasion, ken dagiti napili nga agas ken serbisio ti laboratorio) . 
+ 
+ 
+ 
+☐ Limited accessibility of public healthcare facilities (e.g., lack of transportation options, inconvenient 
+location, or physical barriers hindering access for patients.) (Limitado a pannakagun-od dagiti pasilidad ti 
+panangtaripato ti salun-at ti publiko (e.g., kaawan dagiti pagpilian iti transportasion, saan a kombeniente a 
+lokasion, wenno pisikal a lapped a manglapped iti pannakagun-od para kadagiti pasiente.) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Infrastructure not conducive for patient care (e.g., no ground floor, shortage of rooms, inadequate 
+sanitation facilities, lack of wheelchair accessibility, etc) (Saan a makatulong ti imprastruktura para iti 
+panangaywan iti pasiente (e.g., awan ti ground floor, kinakurang dagiti kuarto, saan nga umdas a pasilidad 
+ti sanitasion, kinakurang ti wheelchair accessibility, kdpy) . 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga) . 
+ 
+ 
+The next questions we will ask relate to the YAKAP/Konsulta package. Please answer to the best of 
+your knowledge. You may answer “I don’t know” if you are unsure. 
+Dagiti sumaruno a saludsod nga isaludsodtayo ket mainaig iti pakete ti YAKAP/Konsulta. Pangngaasiyo ta 
+sumungbatkayo iti kasayaatan a pannakaammoyo. Mabalin a sungbatam a “Diak ammo” no dika masigurado. 
+ 
+D. YAKAP/Konsulta Package 
+ 
+51. Is the facility currently an accredited YAKAP/Konsulta provider? (Ti kadi pasilidad ket agdama nga 
+akreditado a YAKAP/Konsulta provider?)  
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No <proceed to Q79> (Saan <ituloy ti Q79>) 
+ 
+52. If yes, since when? (No wen, manipud kaano?) 
+ 
+ 
+ 
+Month 
+(Bulan
+) 
+ 
+ 
+ 
+ 
+Year 
+(Taw
+en) 
+ 
+ 
+ 
+ 
+53. If accredited, which of the following are included in the YAKAP/Konsulta package? (No akreditado, 
+ania kadagiti sumaganad ti nairaman iti pakete ti YAKAP/Konsulta?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Pap smear 
+ 
+ 
+ 
+☐ Mammogram 
+ 
+ 
+ 
+☐ Lipid profile 
+ 
+ 
+ 
+☐ Thyroid function test 
+ 
+ 
+ 
+☐ Chest X-ray 
+ 
+ 
+ 
+☐ Low-dose CT scan 
+ 
+ 
+ 
+☐ Dental services 
+ 
+ 
+ 
+☐ All of the above (Amin dagiti nadakamat) 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga) . 
+ 
+ 
+54. Is it possible to register individual patients to YAKAP/Konsulta at this facility?(Posible kadi nga 
+irehistro dagiti indibidual a pasiente iti YAKAP/Konsulta iti daytoy a pasilidad?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No  
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+55. Is it possible to register whole families to YAKAP/Konsulta at this facility? (Posible kadi nga 
+irehistro dagiti sibubukel a pamilia iti YAKAP/Konsulta iti daytoy a pasilidad?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No (Saan) 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+56. Is it possible to register both individual patients and their family members together to 
+YAKAP/Konsulta at this facility? (Posible kadi nga agpada nga irehistro dagiti indibidual a pasiente 
+ken dagiti kameng ti pamiliada a sangsangkamaysa iti YAKAP/Konsulta iti daytoy a pasilidad?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No (Saan) 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package? 
+(Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+services.) (Maibatay iti ammom, ania ti capitation amount ti YAKAP/Konsulta package? (Ti 
+kapitasion ket ti gatad iti kada tawen iti tunggal nairehistro a pasiente para iti panangipaay kadagiti 
+serbisio ti pakete ti YAKAP/Konsulta.) 
+ 
+ 
+  
+ 
+58. What are the performance indicators you need to meet to receive the second tranche payment? 
+(Ania dagiti performance indicators a kasapulam a matungpal tapno maawatmo ti maikadua a 
+tranche payment?) 
+Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled 
+patient to receive the full capitation payment. (Dagiti mangipakita ti panagaramid ket isu ti naikeddeng a grupo 
+dagiti tagilako ken serbisio ti panangtaripato ti salun-at a maited para iti tunggal nailista a pasiente tapno 
+makaawat ti naan-anay a bayad ti kapitasion.) 
+ 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. (SAAN A 
+BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA OPSION TI SUNGBAT NGA ITED TI RESPONDENT NGA AWAN TI PANANGSUNGBAT.) 
+RESPONDENT IS NOT ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION. 
+SAAN A MApalubosan ti RESPONDENT A AGSARITA ITI REPERENSIA SAKBAY A SUNGBATAN DAYTOY A SALUDSOD.) 
+ 
+ 
+ 
+☐ Beneficiaries consulted a primary care doctor (Nagkonsulta dagiti benepisiario iti primary care doctor)  
+ 
+ 
+ 
+☐ Utilization of laboratory services (Panagusar kadagiti serbisio ti laboratorio) 
+ 
+ 
+ 
+ 
+☐ Beneficiaries received antibiotics as prescribed by their primary care doctor (Nakaawat dagiti 
+benepisiario iti antibiotiko kas inreseta ti primary care doctor-da) 
+ 
+ 
+ 
+☐ Beneficiaries received noncommunicable disease (NCD) medicine as prescribed by their primary care 
+doctor (Nakaawat dagiti benepisiario iti agas a noncommunicable disease (NCD) kas inreseta ti 
+primary care doctor-da 
+ 
+ 
+ 
+ 
+ 
+☐ No requirements (Awan dagiti kasapulan) 
+ 
+ 
+ 
+ 
+☐ 1st patient encounter (1st nga enkuentro ti pasiente) 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga) ) 
+ 
+ 
+59. Do you know how often you can expect to receive payments from PhilHealth for the delivery of the 
+YAKAP/Konsulta package? (Ammom kadi no kasano kasansan a namnamaem nga umawatka 
+kadagiti bayad manipud iti PhilHealth para iti pannakaited ti pakete ti YAKAP/Konsulta?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No <proceed to 61> (Saan <ituloy ti 61>) 
+ 
+60. How often should you be receiving payments? (Kasano kasansan a rumbeng nga umaw-awatka 
+kadagiti bayad?) 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.) 
+ 
+ 
+ 
+☐ Monthly (Binulan) 
+ 
+ 
+ 
+☐ Quarterly (Iti tunggal tallo a bulan) 
+ 
+ 
+ 
+☐ Semi-annually (Semi-tinawen) 
+ 
+ 
+ 
+☐ Annually (Tinawen) 
+ 
+61. Were there delays in receiving capitation tranches? (Adda kadi pannakaat-atiddog ti pannakaawat 
+kadagiti capitation tranches?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No <proceed to 62> (Saan <ituloy ti 62>) 
+ 
+61.1. If yes, what was/were the reasons for the delay? (No wen, ania/dagiti rason ti pannakataktak?) 
+ 
+ 
+ 
+ 
+ 
+62. On average, how long is the typical time interval between tranches releases to the facility? (Iti 
+promedio, kasano kabayag ti gagangay a nagbaetan ti pannakairuar dagiti tranche iti pasilidad?) 
+ 
+ 
+ 
+☐ less than a month (kurang a makabulan) 
+ 
+ 
+ 
+☐ 1-2 months (1-2 a bulan) 
+ 
+ 
+ 
+☐ 3-4 months  (3-4 a bulan) 
+ 
+ 
+ 
+☐ 5-6 months (5-6 a bulan) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ More than six months (Nasurok nga innem a bulan) 
+ 
+63. How many month/s did you wait from application submission to accreditation approval? (Mano a 
+bulan/kabulan ti inur-uraymo manipud iti pannakaipatulod ti aplikasion agingga iti pannakaanamong ti 
+akreditasion?) 
+ 
+ 
+ 
+☐ less than a month  (kurang a makabulan) 
+ 
+ 
+ 
+☐ 1-2 months  (kurang a makabulan) 
+ 
+ 
+ 
+☐ 3-4 months (3-4 a bulan) 
+ 
+ 
+ 
+☐ 5-6 months (5-6 a bulan) 
+ 
+ 
+ 
+☐ More than six months (Nasurok nga innem a bulan) 
+ 
+64. Why did you apply to become a YAKAP/Konsulta provider? (Apay nga nagaplay ka nga agbalin nga 
+YAKAP/Konsulta provider?) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Incentives (i.e., facility receives capitation/payment for registered patients) ( 
+Insentibo (i.e., umawat ti 
+pasilidad iti kapitasion/bayad para kadagiti nairehistro a pasiente) . 
+ 
+ 
+ 
+☐ Aligns with facility's mission (i.e., goals of UHC are aligned with the facility) (Maitunos iti mision ti 
+pasilidad (i.e., dagiti kalat ti UHC ket maitunos iti pasilidad) 
+ 
+ 
+ 
+☐ Encouraged by LGU (Pinaregta ti LGU) 
+ 
+ 
+ 
+☐ Mandated/required by DOH/UHC (Mandated/kasapulan ti DOH/UHC) 
+ 
+ 
+ 
+☐ To improve the services of the facilities (Tapno mapasayaat ti serbisio dagiti pasilidad)  
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+65. Which of the following requirements were difficult to comply with for accreditation? (Ania kadagiti 
+sumaganad a kasapulan ti narigat a tungpalen para iti akreditasion?) 
+These are the requirements for YAKAP/Konsulta accreditation outlined by DOH.  (Dagitoy dagiti kasapulan para iti YAKAP/Konsulta accreditation nga 
+inbalabala ti DOH.) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Ability to conduct preventive/screening services and health education (Kabaelan ti mangisayangkat 
+kadagiti serbisio ti preventive/screening ken edukasion iti salun-at) 
+ 
+ 
+ 
+ 
+☐ Capability to provide services for required laboratory and radiologic services 
+(Kabaelan ti mangipaay 
+kadagiti serbisio para kadagiti kasapulan a serbisio ti laboratorio ken radiologic)  
+ 
+ 
+ 
+☐ Capability to dispense required medicines 
+(Kabaelan ti mangidispensar kadagiti kasapulan nga 
+agas)  
+ 
+ 
+ 
+☐ General Infrastructure 
+ (Sapasap nga Imprastruktura) 
+ 
+ 
+ 
+☐ Equipment and Supplies (Alikamen ken Suplay) 
+ 
+ 
+ 
+☐ Human resource (Rekurso ti tao) 
+ 
+ 
+ 
+☐ Functional Health Information System (Sistema ti Impormasion ti Salun-at nga Agtigtignay) 
+ 
+ 
+ 
+☐ Documentary requirements 
+(Dagiti kasapulan iti dokumentario) 
+ 
+ 
+ 
+ 
+☐ DOH licensing requirements (Dagiti kasapulan iti lisensia ti DOH) 
+ 
+ 
+ 
+☐ None of the above <proceed to 75> (Awan kadagiti nadakamat <ituloy ti 75>) 
+ 
+66. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:)  
+ 
+Ability to conduct preventive/screening services and health education? (Kabaelan ti 
+mangisayangkat kadagiti serbisio ti preventive/screening ken edukasion iti salun-at?) 
+<only for those who answered “Ability to conduct preventive/screening services and health education” in 
+Q65> (<para laeng kadagidiay simmungbat iti “Kabaelan a mangisayangkat kadagiti serbisio ti 
+preventive/screening ken edukasion iti salun-at” iti Q65> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN 
+AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+ 
+☐ Not enough budget / too expensive ( Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+☐ Time-consuming (Makabusbos iti panawen) 
+ 
+ 
+ 
+☐ Limited human resources (Limited human resources)  
+ 
+ 
+ 
+☐ Legal processes (Dagiti legal a proseso) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Stringent standards ( Nainget a pagalagadan) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+67. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+Capability to provide services for required laboratory and radiologic services? (Kabaelan ti 
+mangipaay kadagiti serbisio para kadagiti kasapulan a serbisio ti laboratorio ken radiologic?) 
+<only for those who answered “Capability to provide services for required laboratory and radiologic 
+services” in Q65> (<para laeng kadagidiay simmungbat iti “Kabaelan a mangipaay kadagiti serbisio para 
+kadagiti kasapulan a serbisio ti laboratorio ken radiologic” iti Q65>) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+☐ Time-consuming 
+ (Makabusbos iti panawen) 
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+ (Limited human resources) 
+ 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+☐ Stringent standards (Nainget a pagalagadan) 
+ 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+ 
+68. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+Capability to dispense required medicines? (Kabaelan ti mangidispensar kadagiti kasapulan nga 
+agas?) 
+<only for those who answered “Capability to dispense required medicines” in Q65> (<para laeng 
+kadagidiay simmungbat iti “Capability to dispense required medicines” iti Q65>) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+ 
+☐ Time-consuming 
+ 
+ (Makabusbos iti panawen) 
+ 
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+ 
+ (Limited human resources) 
+ 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+ 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+☐ Stringent standards (Nainget a pagalagadan) 
+ 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+ 
+69. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+General Infrastructure? (Sapasap nga Imprastruktura?) 
+<only for those who answered “General Infrastructure” on Q57> (<para laeng kadagidiay simmungbat iti 
+“General Infrastructure” iti Q57>)  
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+☐ Time-consuming 
+ (Makabusbos iti panawen) 
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+ (Limited human resources) 
+ 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+ 
+☐ Stringent standards (Nainget a pagalagadan) 
+ 
+ 
+ 
+ 
+☐ Other (specify)  (Dadduma pay (ibaga)  
+ 
+ 
+ 
+70. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+Equipment and Supplies? (Alikamen ken Suplay?) 
+<only for those who answered “Equipment and Supplies” in Q65> (<para laeng kadagidiay simmungbat iti 
+“Equipment and Supplies” iti Q65>) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+ 
+☐ Time-consuming 
+(Makabusbos iti panawen) 
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+ (Limited human resources) 
+ 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+ 
+☐ Stringent standards (Nainget a pagalagadan) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+ 
+71. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+Human resource? <only for those who answered “Human resource” in Q65> (Human resource <para 
+laeng kadagidiay simmungbat iti “Human resource” iti Q65>) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar)
+ 
+ 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+ 
+ 
+☐ Time-consuming 
+(Makabusbos iti panawen) 
+ 
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+(Limited human resources) 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+ 
+☐ Stringent standards (Nainget a pagalagadan) 
+ 
+ 
+ 
+☐ Other (specify)  (Dadduma pay (ibaga)  
+ 
+ 
+ 
+72. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti sumaganad?) 
+ 
+Functional Health Information System? <only for those who answered “Functional Health Information 
+System” in Q65> (Functional Health Information System <para laeng kadagidiay simmungbat iti “Functional 
+Health Information System” iti Q65>) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+ 
+ 
+☐ Time-consuming 
+(Makabusbos iti panawen) 
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+(Limited human resources) 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+ 
+☐ Stringent standards (Nainget a pagalagadan) 
+ 
+ 
+ 
+ 
+☐ Other (specify)   (Dadduma pay (ibaga)  
+ 
+ 
+ 
+73. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+Documentary requirements? (Dagiti kasapulan iti dokumentario?) 
+<only for those who answered “Documentary requirements” in Q65> (<para laeng kadagidiay simmungbat 
+iti “Documentary requirements” iti Q65>) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.  (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+☐ Time-consuming 
+(Makabusbos iti panawen) 
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+(Limited human resources) 
+ 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+ 
+☐ Stringent standards (Nainget a pagalagadan) 
+ 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+ 
+74. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+DOH Licensing requirements? (Dagiti kasapulan iti Lisensia ti DOH?) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+<only for those who answered “DOH Licensing requirements” in Q65> (<para laeng kadagidiay 
+simmungbat iti “DOH Licensing requirements” iti Q65>) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.   (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+ 
+☐ Time-consuming 
+(Makabusbos iti panawen) 
+ 
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+(Limited human resources) 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+ 
+ 
+☐ Stringent standards (Nainget a pagalagadan) 
+ 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+ 
+75. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta? 
+(Maibatay iti pannakaawatmo, siasino ti responsibilidad ti mangipalista kadagiti pasiente iti 
+YAKAP/Konsulta?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.    (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Patients' own initiative (Bukod nga inisiatiba dagiti pasiente) 
+ 
+ 
+ 
+☐ Facility 
+(Dagiti pasilidad ) 
+ 
+ 
+ 
+☐ LGU  
+ 
+ 
+ 
+ 
+☐ Someone else (Sabali pay) 
+ 
+ 
+ 
+☐ PhilHealth 
+ 
+ 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Other (specify)(Dadduma pay (ibaga) . 
+ 
+76. Which of the following initiatives are you doing to enroll patients in this facility to 
+YAKAP/Konsulta? (Ania kadagiti sumaganad nga aramid ti ar-aramidem tapno maipalista dagiti 
+pasiente iti daytoy a pasilidad iti YAKAP/Konsulta?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ On-site Enrollment (e.g., offering patient enrollment at the health facility) ( On-site Enrollment (e.g., 
+panangitukon iti panagpalista ti pasiente iti pasilidad ti salun-at) . 
+ 
+ 
+ 
+☐ LGU Outreach (e.g., involvement in LGU outreach activities, such as ongoing nutrition programs) (LGU 
+Outreach (e.g., pannakipaset kadagiti aktibidad ti LGU outreach, kas kadagiti agtultuloy a programa ti 
+nutrision) . 
+ 
+ 
+ 
+☐ Facility Outreach (e.g., engaging in outreach efforts directly from the facility) 
+(Facility Outreach (e.g., 
+pannakipaset kadagiti panagregget a mangdanon a direkta manipud iti pasilidad) . 
+ 
+ 
+ 
+☐ Barangay Health Workers (BHWs) Support (e.g., receiving support from local BHWs) (Suporta dagiti 
+Barangay Health Workers (BHWs) (e.g., panangawat iti suporta manipud kadagiti lokal a BHW) .) 
+ 
+ 
+ 
+☐ Information Campaigns (e.g., conducting information campaigns through various channels, including but 
+not limited to online campaigns and house-to-house visits) (Dagiti Kampania ti Impormasion (e.g., 
+panangisayangkat kadagiti kampania ti impormasion babaen kadagiti nadumaduma a kanal, agraman 
+ngem saan a limitado kadagiti online a kampania ken panagbisita iti binalaybalay) . 
+ 
+ 
+ 
+☐ Local Health Insurance Offices (LHIO); assistance or partnerships with YAKAP/Konsulta caravans 
+(Dagiti Lokal nga Opisina ti Seguro ti Salun-at (LHIO); tulong wenno panagkadua kadagiti karaban ti 
+YAKAP/Konsulta) 
+ 
+ 
+ 
+ 
+☐ Coordination with other government agencies and the private sector (Koordinasion kadagiti dadduma 
+nga ahensia ti gobierno ken pribado a sektor) 
+ 
+ 
+ 
+☐ No initiatives (Awan dagiti gannuat) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga) . 
+ 
+ 
+77. Did you experience any challenges in enrolling patients to YAKAP/Konsulta? (Napadasam kadi ti 
+aniaman a karit iti panangipalista kadagiti pasiente iti YAKAP/Konsulta?) 
+ 
+ 
+ 
+☐ Yes  (Wenl 
+ 
+ 
+ 
+☐ No <proceed to 85> (Saan <ituloy ti 85>) 
+ 
+78. What are the challenges you have faced? (Ania dagiti karit a naipasango kenka?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Lack of patient awareness (i.e., patients are unaware of YAKAP/Konsulta, its benefits, and registration process) ( Kurang ti 
+pannakaammo ti pasiente (i.e., saan nga ammo dagiti pasiente ti YAKAP/Konsulta, dagiti pagimbaganna, ken proseso ti 
+panagrehistro) . 
+ 
+ 
+ 
+☐ Lack of patient willingness (i.e., patient is hesitant to provide personal information or has concerns about data security) (☐ 
+Awan ti kinatulok ti pasiente (i.e., agduadua ti pasiente a mangipaay iti personal nga impormasion wenno addaan kadagiti 
+pakaseknan maipapan iti seguridad ti datos) . 
+ 
+ 
+ 
+☐ Lack of resources (e.g., not enough manpower to conduct information campaigns or outreaches to enroll patients to 
+YAKAP/Konsulta) (Kurang dagiti rekurso (e.g., saan nga umdas a puersa ti tao a mangisayangkat kadagiti kampania ti impormasion 
+wenno outreach tapno maipalista dagiti pasiente iti YAKAP/Konsulta) .) 
+ 
+ 
+ 
+☐ Competition with other health facilities over patient registration (Kompetision kadagiti dadduma a 
+pasilidad ti salun-at maipapan iti panagrehistro ti pasiente) 
+ 
+ 
+ 
+☐ Technical / system issues of PhilHealth (e.g., data loss, errors, or platform accessibility problems) (Dagiti teknikal / 
+sistema nga isyu ti PhilHealth (e.g., pannakapukaw ti datos, biddut, wenno dagiti parikut iti pannakagun-od ti plataporma) . 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+ 
+<Q79 to Q84 are only relevant to facilities who are not YAKAP-accredited> (<Q79 agingga iti Q84 ket mainaig 
+laeng kadagiti pasilidad a saan a YAKAP-accredited>) 
+ 
+79. If not YAKAP/ KONSULTA accredited, why are you not accredited? (No saan nga YAKAP/ 
+KONSULTA accredited, apay nga saan ka nga accredited?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Difficult process (Narigat a proseso) 
+ 
+ 
+ 
+☐ No time (Awan ti oras) 
+ 
+ 
+ 
+☐ Ongoing application (Agtultuloy nga aplikasion) 
+ 
+ 
+ 
+☐ Other (specify)(Dadduma pay (ibaga)  
+ 
+ 
+80. Are you intending to become a YAKAP/Konsulta provider? (Panggepmo kadi ti agbalin a 
+YAKAP/Konsulta provider?) 
+ 
+ 
+ 
+☐ Yes, already in process <proceed to 84> (Wen, addan iti proseso <ituloy iti 84>) 
+ 
+ 
+ 
+☐ Yes, not yet in process <proceed to 84> (Wen, saan pay nga adda iti proseso <ituloy iti 84>) 
+ 
+ 
+ 
+☐ No, decided not to <proceed to 82> (Saan, inkeddengna a saan a <ituloy iti 82>) 
+ 
+ 
+ 
+☐ No, tried and failed <proceed to 83> (Saan, pinadas ken napaay <ituloy iti 83>) 
+ 
+ 
+ 
+☐ No, haven’t thought about it yet <proceed to 81> (Saan, diak pay napanunot dayta <proceed to 81>) 
+ 
+ 
+ 
+☐ I don’t know  <proceed to 85> (Diak ammo <proceed to 85>) 
+ 
+81. If you decide to apply today, would you know how to start the process? (No ikeddengmo ti agaplay 
+ita nga aldaw, ammom kadi no kasano a rugian ti proseso?) 
+<only for those who answered “No, haven’t thought about it yet” in Q80> (<para laeng kadagidiay 
+simmungbat iti "Saan, diak pay napanunot" iti Q80) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No (Saan) 
+ 
+82. What was the deciding factor not to apply? (Ania ti nangikeddeng a saan nga agaplikar?) 
+<only for those who answered “No, decided not to” in Q80> (<para laeng kadagidiay simmungbat iti “Saan, 
+inkeddengda a saan” iti Q80>) 
+ 
+ 
+ 
+ 
+ 
+83. What went wrong with the application? (Ania ti nagbiddut iti aplikasion?) 
+<only for those who answered “No, tried and failed” in Q80> (<para laeng kadagidiay simmungbat iti "Saan, 
+pinadas ken napaay" iti Q80>) 
+ 
+ 
+ 
+ 
+ 
+84. What are some challenges in the process, if any? (Ania ti sumagmamano a karit iti proseso, no adda 
+man?) 
+<only for those who answered ‘Yes’ in Q80> (<para laeng kadagidiay simmungbat iti 'Wen' iti Q80) 
+ 
+ 
+ 
+ 
+ 
+ 
+<Q85 to Q91; Q93 to Q100 are only relevant to facilities who are YAKAP-accredited, otherwise proceed to 
+Q101> <Q92 is only relevant to facilities who are not YAKAP-accredited> 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+<Q85 agingga iti Q91; Ti Q93 agingga iti Q100 ket mainaig laeng kadagiti pasilidad nga akreditado iti YAKAP, 
+no saan, ituloy ti Q101> <Ti Q92 ket mainaig laeng kadagiti pasilidad a saan nga akreditado iti YAKAP>) 
+ 
+85. What areas do you consider as the facility’s catchment area/s? (Ania dagiti lugar nga ibilangyo a 
+catchment area/s ti pasilidad?) 
+ 
+ 
+ 
+ 
+ 
+86. How many patients in your catchment area are eligible to register to this YAKAP/Konsulta provider? 
+(Mano a pasiente iti catchment area-yo ti maikari nga agparehistro iti daytoy a YAKAP/Konsulta 
+provider?) 
+ 
+87. How many eligible patients in your catchment area are already registered to this YAKAP/Konsulta 
+provider? (How many eligible patients in your catchment area are already registered to this 
+YAKAP/Konsulta provider? 
+ 
+88. The maximum per capita rate amount for YAKAP/Konsulta is at Php 1,700 across private and public 
+facilities. According to PhilHealth, 40% of the capitation amount will be released as the first tranche after the 
+first patient encounter. The remaining 60% will be released based on the size of the registered catchment 
+population by December and performance targets that year. Based on your practice, is this enough? (Ti 
+maximum per capita rate amount para iti YAKAP/Konsulta ket Php 1,700 iti ballasiw dagiti pribado 
+ken publiko a pasilidad. Segun iti PhilHealth, 40% ti capitation amount ti mairuar kas umuna a 
+tranche kalpasan ti umuna a patient encounter. Ti nabati nga 60% ket mairuar a maibatay iti 
+kadakkel ti nairehistro a catchment population inton Disiembre ken dagiti target ti panagaramid iti 
+dayta a tawen. Maibatay iti praktismo, umdasen kadi daytoy?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No  (Saan? 
+ 
+ 
+ 
+☐ I don’t know (Saan ko nga ammo) 
+ 
+89. Did you go through a costing exercise to figure out if this was viable for your facility? 
+(Naglabaskayo kadi iti costing exercise tapno maammuanyo no daytoy ket maitutop para iti 
+pasilidadyo?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No <proceed to Q91>  (Saan <ituloy ti Q91>) 
+ 
+ 
+ 
+☐ I don’t know (Saan ko nga ammo) 
+ 
+90. Did the costing exercise show that Php 1,700 was viable for your facility? (Impakita kadi ti costing 
+exercise nga Php 1,700 ti viable para iti pasilidadyo?) 
+ 
+ 
+ 
+☐ Yes <proceed to Q93> (Wen <ituloy ti Q93>) 
+ 
+ 
+ 
+☐ No <proceed to Q91>  (Saan <ituloy ti Q92>) 
+ 
+ 
+ 
+☐ I don’t know <proceed to Q93> (Diak ammo <ituloy ti Q93>) 
+ 
+91. What would be the minimum acceptable capitation value per patient per year for you as a YAKAP/ 
+Konsulta provider? (Ania ngata ti kababaan a maawat a pateg ti kapitasion iti tunggal pasiente iti 
+kada tawen para kenka kas maysa a mangipapaay ti YAKAP/ Konsulta?) 
+ 
+ 
+ 
+ 
+ 
+92. What would be the minimum acceptable capitation value per patient per year for you to consider 
+being a YAKAP/Konsulta provider? <Only relevant to facilities who are not YAKAP-accredited; otherwise 
+proceed to Q93> (Ania ngata ti kabassitan a maawat a pateg ti kapitasion iti tunggal pasiente iti kada 
+tawen para kenka nga ibilangmo nga agbalin a mangipapaay ti YAKAP/Konsulta? <Mainaig laeng 
+kadagiti pasilidad a saan nga akreditado iti YAKAP; no saan, ituloy ti Q93>) 
+ 
+ 
+ 
+ 
+ 
+93. Does your facility charge additional capitation fees? (Mangsingir kadi ti pasilidadyo iti kanayonan a 
+capitation fees?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No <proceed to 95> (Saan <ituloy ti Q95>) 
+ 
+94. What is/are the reason/s for the facility to charge additional capitation fees? (Ania/dagiti rason/dagiti 
+rason ti pasilidad a mangsingir iti kanayonan a capitation fees?) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar) 
+ 
+ 
+ 
+☐ To cover expenses related to building maintenance, equipment, and non-clinical staff (Tapno 
+masakupan dagiti gastos a mainaig iti pannakamantener ti pasdek, alikamen, ken saan a klinikal a staff) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ A patient’s care costs exceed the predetermined fixed payment (Ti gastos iti panangaywan ti pasiente 
+ket nalablabes ngem iti nasakbay a naikeddeng a naikeddeng a bayad) 
+ 
+ 
+ 
+☐ Services excluded from capitation coverage (Serbisyo a nailaksid iti capitation coverage) 
+ 
+ 
+ 
+☐ Provide preventive care that may not be adequately compensated under a basic capitation plan 
+(Mangipaay iti preventive care a mabalin a saan nga umdas ti mabayadan iti sidong ti kangrunaan a plano 
+ti kapitasion) 
+ 
+ 
+ 
+☐ Offset losses (I-offset dagiti lugi) 
+ 
+ 
+ 
+☐ Other (Specify) (Dadduma pay (Ibaga) .) 
+ 
+ 
+95. Have you already received payments for patients enrolled? (Nakaawatkayo kadin kadagiti bayad 
+para kadagiti pasiente a nakaenrol?) 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT) 
+ 
+ 
+ 
+☐ Yes, we have received all expected payments <proceed to Q97> ( Wen, naawatmi amin a manamnama 
+a bayad <ituloy iti Q97>) 
+ 
+ 
+ 
+☐ Yes, we have received some but not all expected payments yet <proceed to Q97> (Yes, we have 
+received some but not all expected payments yet <proceed to Q97>) 
+ 
+ 
+ 
+☐ No, we have not received any expected payments yet (Saan, awan pay ti naawatmi a manamnama a 
+bayad)  
+ 
+ 
+ 
+☐ No, we have not expected any payments yet (Saan, saanmi pay a ninamnama ti aniaman a bayad) 
+ 
+96. Why not? (Apay saan?) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar) 
+ 
+ 
+ 
+☐ Delays in PhilHealth processing (Panagtaktak ti panagproseso ti PhilHealth) 
+ 
+ 
+ 
+☐ Delays in facility's tracking of patient enrollment (Panagtaktak ti panangsurot ti pasilidad iti panagpalista 
+ti pasiente) 
+ 
+ 
+ 
+☐ Difficulties in verifying patient enrollment (PhilHealth) (Dagiti pakarigatan iti panangpaneknek iti 
+panagpalista ti pasiente (PhilHealth)) 
+ 
+ 
+ 
+ 
+☐ Facility is not active in meeting criteria for payments (e.g., facility doesn't submit necessary 
+requirements, facility doesn't enroll patients to YAKAP/Konsulta) (Facility is not active in meeting criteria 
+for payments (e.g., facility doesn't submit necessary requirements, facility doesn't enroll patients to 
+YAKAP/Konsulta) 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Criteria for payments is unclear (Saan a nalawag dagiti pagalagadan kadagiti panagbayad) 
+ 
+ 
+ 
+☐ I don’t know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Other (specify)(Dadduma pay (ibaga) ) 
+ 
+ 
+97. Did you face any challenges in getting these payments? (Adda kadi naipasango kenka a karit iti 
+pananggun-od kadagitoy a bayad?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No <proceed to Q99> (Saan <ituloy ti Q99>) 
+ 
+98. What were these challenges? (Ania dagitoy a karit?) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Delayed payment process (Nataktak ti proseso ti panagbayad) 
+ 
+ 
+ 
+☐ Unclear criteria for capitation (Di nalawag a pagalagadan iti kapitasion) 
+ 
+ 
+ 
+☐ Difficult to meet criteria for capitation (Narigat a matungpal dagiti pagalagadan para iti kapitasion) 
+ 
+ 
+ 
+☐ Philhealth process to apply for payments is difficult/unclear (Narigat/saan a nalawag ti proseso ti 
+Philhealth nga agaplikar kadagiti bayad) 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Other (specify)(Dadduma pay (ibaga)) 
+ 
+ 
+99. If you were to expand the YAKAP/Konsulta package, what would you expand next? (No palawaem ti 
+pakete ti YAKAP/Konsulta, ania ti sumaruno a palawaem?) 
+<Only relevant to facilities who are YAKAP-accredited; otherwise proceed to Q101> (<Mainaig laeng 
+kadagiti pasilidad nga akreditado iti YAKAP; no saan, ituloy ti Q101>) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ The current list of medicines and drugs offered <proceed to Q101> (Ti agdama a listaan dagiti agas ken 
+agas a maitukon) (<ituloy ti Q101>) 
+ 
+ 
+ 
+☐ The current laboratory/diagnostic services offered <proceed to Q101> (Ti agdama a serbisio ti 
+laboratorio/diagnostic a maitukon) (<ituloy ti Q101>) 
+ 
+ 
+ 
+☐ Additional features <proceed to Q100> (Kanayonan a tampok) (<ituloy ti Q100>) 
+ 
+ 
+ 
+☐ I don't know <proceed to Q101> (Saan ko nga ammo) (<ituloy ti Q101>) 
+ 
+ 
+ 
+☐ Other (specify)(Dadduma pay (ibaga) ) 
+ 
+ 
+100. What additional features would you add? (Ania dagiti kanayonan a features nga inayonmo?) 
+<Only relevant to facilities who are YAKAP-accredited and answered "Additional features in Q99; otherwise 
+proceed to Q101> (<Mainaig laeng kadagiti pasilidad nga akreditado iti YAKAP ken nasungbatan "Dagiti 
+kanayonan a tampok iti Q99; no saan ket agtultuloy iti Q101>) 
+ 
+We will now ask questions related to BUCAS center and GAMOT package. (Agsaludsodkami itan kadagiti 
+saludsod mainaig iti BUCAS center ken GAMOT package.) 
+ 
+E.   Awareness on Expanded Health Programs (BUCAS and GAMOT) (Pannakaammo kadagiti 
+Napalawa a Programa ti Salun-at (BUCAS ken GAMOT) .) 
+ 
+<To be asked only for facilities with BUCAS centers and GAMOT packages>  
+(<Makiddaw laeng kadagiti pasilidad nga addaan iti BUCAS centers ken GAMOT packages>) 
+ 
+101. Have you heard about the Bagong Urgent Care and Ambulatory Service (BUCAS)? (Nangngegyo 
+kadin ti maipapan iti Bagong Urgent Care and Ambulatory Service (BUCAS)? 
+ 
+ 
+ 
+☐ Yes (Wen)  
+ 
+ 
+ 
+☐ No <proceed to Q108> (Saan <ituloy ti Q108>) 
+ 
+102. Do you have a BUCAS Center? (Adda kadi BUCAS Center-yo?) 
+ 
+ 
+ 
+☐ Yes <proceed to Q104> (Wen <ituloy ti Q104>) 
+ 
+ 
+ 
+☐ No <proceed to Q103> (Saan <ituloy ti Q103>) 
+ 
+ 
+ 
+☐ I don’t know (Saan ko nga ammo) 
+ 
+103. If none, what is the primary reason? <proceed to Q108> (No awan, ania ti kangrunaan a makagapu? 
+<ituloy ti Q108>) 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT) 
+ 
+ 
+ 
+☐ Proposal not yet submitted (Saan pay a 
+naisubmitir ti singasing) 
+☐ Limited information on establishment process 
+(Limitado nga impormasion maipapan iti proseso ti 
+pannakaipasdek) 
+ 
+ 
+ 
+☐ Did not meet standard requirements (Saan a 
+nakaragpat kadagiti pagalagadan a kasapulan) 
+☐ Not applicable (Saan nga agaplikar) 
+ 
+ 
+ 
+☐ Awaiting assessment or approval ( Agur-uray iti 
+assessment wenno approval) 
+☐ Others (specify) (Dadduma (ibaga)  
+ 
+104.  What are the available services offered by your BUCAS Center? (What are the available services 
+offered by your BUCAS Center?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Urgent care and consultation (Naganat a panangaywan ken konsultasion) 
+ 
+ 
+ 
+☐ Minor surgical procedures (Dagiti babassit a pamay-an ti panagopera) 
+ 
+ 
+ 
+☐ Diagnostic and laboratory services (Serbisio ti diagnostic ken laboratorio) 
+ 
+ 
+ 
+☐ Reproductive and special health services (Serbisio ti panagpaadu ken espesial a salun-at) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga) .) 
+ 
+105. In your assessment, what are the main factors affecting the utilization of BUCAS in your facility? 
+(Iti panangtingitingyo, ania dagiti kangrunaan a makaapektar iti pannakausar ti BUCAS iti 
+pasilidadyo?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Patient awareness ( Pannakaammo ti pasiente) 
+☐ Facility location and accessibility (Lokasion ti 
+pasilidad ken accessibility) 
+ 
+ 
+ 
+☐ Referral patterns (Dagiti padron ti panangiturong) 
+☐ PhilHealth coverage and reimbursement 
+(PhilHealth coverage ken pannakaisubli ti kuarta) 
+ 
+ 
+ 
+☐ Availability of staff/services (Kaadda dagiti 
+staff/services) 
+☐ Others (specify) (Dadduma (ibaga) ) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+106. What are the resources you need to support/sustain the BUCAS center? (Ania dagiti resources a 
+kasapulam tapno suportaran/masustiner ti BUCAS center?) 
+ 
+ 
+ 
+ 
+ 
+107. Based on your experience, does the BUCAS Center decongest your health facility of patients? 
+(Maibatay iti kapadasam, ti kadi BUCAS Center ket mang-decongest iti pasilidad ti salun-atmo kadagiti 
+pasiente?) 
+<Question relevant to facilities located in areas with a BUCAS Center> (<Saludsod a mainaig kadagiti 
+pasilidad a masarakan kadagiti lugar nga addaan iti BUCAS Center>) 
+ 
+ 
+ 
+☐ Yes (wen) 
+ 
+ 
+ 
+☐ No (Saan) 
+ 
+108. Have you heard about the Guaranteed and Accessible Medications for Outpatient Treatment 
+(GAMOT) package? (Nangngegyo kadin ti maipapan iti pakete ti Guaranteed and Accessible 
+Medications for Outpatient Treatment (GAMOT)?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No <proceed to Q112> (Saan <ituloy ti Q112>) 
+109. Is your facility an accredited GAMOT provider? (Ti kadi pasilidadyo ket maysa nga akreditado a 
+GAMOT provider?) 
+ 
+ 
+ 
+ 
+☐ Yes <proceed to Q111> (Wen <ituloy ti Q111>) 
+ 
+ 
+ 
+ 
+ 
+☐ No (Saan) 
+ 
+110. If no, what is the primary reason? <After responding, proceed to Q112> (No saan, ania ti kangrunaan a 
+makagapu? <Kalpasan ti panagsungbat, ituloy ti Q112>) 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.) 
+ 
+ 
+ 
+☐ Application not yet submitted (Saan pay a 
+naisubmitir ti aplikasion) 
+ 
+☐ Limited information on accreditation process 
+(Limitado nga impormasion maipapan iti proseso ti 
+akreditasion) 
+ 
+ 
+ 
+☐ Did not meet accreditation requirements 
+(Saan a nakaragpat kadagiti kasapulan iti 
+akreditasion) 
+☐ Not applicable (Saan nga agaplikar) 
+ 
+ 
+ 
+☐ Awaiting assessment or approval ( Agur-uray 
+iti assessment wenno approval) 
+☐ Others (specify) (Dadduma (ibaga) . 
+ 
+111. In your assessment, what are the main factoros affecting the utilization of the GAMOT Program in 
+your facility? (Iti assessment-yo, ania dagiti kangrunaan a makaapektar iti pannakausar ti GAMOT 
+Program iti pasilidadyo?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Availability of GAMOT medicines 
+(Kaadda dagiti agas ti GAMOT) 
+☐ Pharmacy capacity (Kapasidad ti parmasia) 
+ 
+ 
+ 
+☐ Patient awareness of the 
+programb(Pannakaammo ti pasiente iti 
+programa) 
+☐ PhilHealth eligibility and reimbursement processes 
+(PhilHealth eligibility ken proseso ti panagsubli ti kuarta) 
+ 
+ 
+ 
+☐ Prescribing practices of physicians 
+(Panangreseta kadagiti aramid dagiti 
+mangngagas) 
+☐ Others (specify)(Dadduma (ibaga)  
+ 
+112. In the past 3 months, has this facility experienced a stock-out (zero supply) of any tracer essential 
+medicines? (Iti napalabas a 3 a bulan, napadasan kadi daytoy a pasilidad ti stock-out (zero supply) 
+ti aniaman a tracer essential medicines?l 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+ 
+ 
+☐ No <proceed to Q118> (Saan <ituloy ti Q118>) 
+ 
+113. What specific medicines? (antihypertensives, antibiotics, etc.) (Ania dagiti espesipiko nga agas? 
+(antihypertensive, antibiotiko, kdpy.) ) 
+ 
+ 
+ 
+ 
+ 
+114. How many days did the stock-out last? (Mano nga aldaw ti nagpaut ti stock-out?) 
+ 
+ 
+ 
+☐ Less than 30 days (Kurang a 30 nga aldaw) 
+ 
+ 
+ 
+☐ 31–60 days (31–60 nga aldaw) 
+ 
+ 
+ 
+☐ More than 60 days (Nasurok nga 60 nga aldaw) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+115. On average, how many months do these stock-outs last? (Iti promedio, mano a bulan ti agpaut 
+dagitoy nga stock-out?) 
+ 
+ 
+ 
+☐ less than a month (kurang a makabulan) 
+ 
+ 
+ 
+☐ 1-2 months (1-2 a bulan) 
+ 
+ 
+ 
+☐ 3-4 months  (3-4 a bulan) 
+ 
+ 
+ 
+☐ 5-6 months   (5-6 a bulan) 
+ 
+ 
+ 
+☐ more than 6 months (nasurok nga 6 a bulan) 
+ 
+116. Did you do anything to address the medicine stock-outs in the GAMOT Package? (Adda kadi 
+inaramidyo a mangtaming kadagiti stock-out ti agas iti GAMOT Package?) 
+<Question relevant if both “Yes” in Q108 and Q109; otherwise proceed to Q118> (<Saludsod a mainaig no 
+agpada a “Wen” iti Q108 ken Q109; no saan ituloy ti Q118>) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+ 
+ 
+☐ No <proceed to Q118> (Saan <ituloy ti Q118>) 
+ 
+ 
+ 
+☐ Did not experience stock outs of medicines under the GAMOT package <proceed to Q118> (Saan a 
+napadasan ti stock outs dagiti agas iti sidong ti GAMOT package <proceed to Q118>) 
+ 
+117. If yes, what did you do to address the medicine stock-outs in the GAMOT Package? (No wen, ania 
+ti inaramidmo tapno mataming dagiti stock-out ti agas iti GAMOT Package?) 
+<Question relevant if both “Yes” in Q108 and Q109; otherwise proceed to Q118> (<Saludsod a mainaig no 
+agpada a “Wen” iti Q108 ken Q109; no saan ituloy ti Q118>) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar) 
+ 
+ 
+ 
+☐ Resorted to alternative procurement (Nagpatulong iti alternatibo a panaggatang) 
+ 
+ 
+ 
+☐ Active inventory monitoring (Aktibo a panangmonitor iti imbentaryo) 
+ 
+ 
+ 
+☐ Improve forecasting and quantification (Pasayaaten ti panagpakpakauna ken panagkuantipika) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)) 
+ 
+ 
+We will now ask you about your facility’s experience with the licensing process. (Saludsodenmi itan kadakayo 
+ti maipapan iti kapadasan ti pasilidadyo iti proseso ti panaglisensia.) 
+ 
+F. DOH Licensing: Status and Barriers to Licensing (DOH Licensing: Kasasaad ken Lapdan iti 
+Lisensia) 
+ 
+118. Is this facility DOH licensed? (Lisensiado kadi daytoy a pasilidad DOH?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No <proceed to Q135> (Saan <ituloy ti Q135>) 
+ 
+ 
+ 
+☐ No, but have submitted requirements and waiting for license <proceed to Q135> (Saan, ngem 
+nangisubmitir kadagiti kasapulan ken agur-uray iti lisensia <ituloy iti Q135>) 
+ 
+ 
+ 
+☐ I don't know what DOH licensing is <proceed to Q135> (Diak ammo no ania ti DOH licensing <proceed 
+to Q135> 
+ 
+119. When did you receive your DOH license from your most recent application?(Kaano a naawatmo ti 
+lisensiam iti DOH manipud iti kaudian nga aplikasionmo?) 
+ 
+ 
+ 
+☐ Within the last 1 to 3 months (Iti uneg ti naudi a 1 agingga iti 3 a bulan) 
+ 
+ 
+ 
+ 
+☐ Within the last 4 to 6 months (Iti uneg ti naudi nga 4 agingga iti 6 a bulan) 
+ 
+ 
+ 
+☐ Over 6 months but within 1 year (Nasurok nga 6 a bulan ngem iti uneg ti 1 a tawen) 
+ 
+ 
+ 
+☐ More than 1 year ago (Nasurok a 1 a tawenen ti napalabas) 
+ 
+ 
+ 
+ 
+☐ I don’t know (Saan ko nga ammo) 
+ 
+120. How many days did it take you to receive the license? (Mano nga aldaw ti kasapulan tapno 
+maawatmo ti lisensia?) 
+ 
+ 
+ 
+☐ less than 30 days (kurang a 30 nga aldaw) 
+ 
+ 
+ 
+☐ 31-60 days (31-60 nga aldaw) 
+ 
+ 
+ 
+☐ More than 60 days (More than 60 days) 
+ 
+121. Which of the following requirements were difficult to comply with in the DOH licensing process? 
+(Ania kadagiti sumaganad a kasapulan ti narigat a tungpalen iti proseso ti panaglisensia ti DOH?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Patient rights and organization ethics  (Karbengan ti pasiente ken etika ti organisasion) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Patient care (Panangtaripato iti pasiente) 
+ 
+ 
+ 
+☐ Leadership and management (Panangidadaulo ken panangtarawidwid) 
+ 
+ 
+ 
+☐ Human resource management (Panagmanehar ti rekurso ti tao) 
+ 
+ 
+ 
+ 
+☐ Information management 
+(Panagmanehar ti impormasion)  
+ 
+ 
+ 
+☐ Safe practice and environment (Natalged nga aramid ken aglawlaw) 
+ 
+ 
+ 
+ 
+☐ Improving performance (Panagpasayaat ti panagaramid) 
+ 
+ 
+ 
+ 
+ 
+☐ Physical plant (Pisikal a mula) 
+ 
+ 
+ 
+ 
+ 
+☐ Equipment and instruments (Alikamen ken instrumento) 
+ 
+ 
+ 
+ 
+☐ National laws and DOH issuances implemented in hospitals and other health facilities (National laws 
+ken DOH issuances a naipatungpal kadagiti ospital ken dadduma pay a pasilidad ti salun-at) 
+<This is a licensing requirement only for hospitals. Not applicable to primary care facilities> (<Daytoy ket 
+kasapulan ti lisensia para laeng kadagiti ospital. Saan nga agaplikar kadagiti pasilidad ti primary care>) 
+ 
+ 
+ 
+☐ Emergency cart contents (Linaon ti kariton ti emerhensia) 
+<This is a licensing requirement only for hospitals. Not applicable to primary care facilities> ( (<Daytoy ket 
+kasapulan ti lisensia para laeng kadagiti ospital. Saan nga agaplikar kadagiti pasilidad ti primary care>) 
+ 
+ 
+ 
+☐ Add-on services (Dagiti serbisio nga add-on) 
+<This is a licensing requirement only for hospitals. Not applicable to primary care facilities> ( (<Daytoy ket 
+kasapulan ti lisensia para laeng kadagiti ospital. Saan nga agaplikar kadagiti pasilidad ti primary care>) 
+ 
+ 
+ 
+☐ Public access to price information (Ti pannakagun-od ti publiko iti impormasion ti presio) 
+<This is a licensing requirement only for primary care facilities. Not applicable to hospitals> ( (<Daytoy ket 
+kasapulan ti lisensia para laeng kadagiti ospital. Saan nga agaplikar kadagiti pasilidad ti primary care>) 
+ 
+ 
+ 
+☐ None of the above (Awan kadagiti nadakamat) 
+<proceed to Q135>  (<ituloy ti Q135>) 
+<proceed to Q135> (<ituloy ti Q135>) 
+ 
+ 
+ 
+122. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+Patient rights and organization ethics? (Karbengan ti pasiente ken etika ti organisasion?) 
+<Only for those who answered “Patient rights and organization ethics” on Q121> (<Para laeng kadagidiay 
+simmungbat iti “Patient rights and organization ethics” iti Q121>) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Not enough budget / too expensive (Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+☐ Time-consuming (Makabusbos iti panawen) 
+ 
+ 
+ 
+☐ Limited human resources (Limitado a rekurso ti tao) 
+ 
+ 
+ 
+☐ Legal processes (Dagiti legal a proseso) 
+ 
+ 
+ 
+☐ Compiling documentary requirements (Panangurnong kadagiti kasapulan iti dokumentario) 
+ 
+ 
+ 
+☐ Stringent standards (Nainget a pagalagadan) 
+ 
+ 
+ 
+☐ Lack of training (Kurang ti panagsanay) 
+ 
+ 
+ 
+☐ Lack of space ( Kurang ti espasio) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga) 
+ 
+ 
+ 
+123. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+Patient care? (Panangtaripato iti pasiente?) 
+<Only for those who answered “Patient care” on Q121> (<Para laeng kadagiti simmungbat iti “Patient care” 
+iti Q121>) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+ 
+☐ Time-consuming 
+(Makabusbos iti panawen) 
+ 
+ 
+ 
+☐ Limited human resources 
+(Limitado a rekurso ti tao) 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Compiling documentary requirements (Panangurnong kadagiti kasapulan iti dokumentario) 
+ 
+ 
+ 
+☐ Stringent standards (Nainget a pagalagadan) 
+ 
+ 
+ 
+☐ Lack of training  
+ (Kurang ti panagsanay) 
+ 
+ 
+ 
+☐ Lack of space  
+ ( Kurang ti espasio) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga) 
+ 
+ 
+ 
+124. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+Leadership and management? (Panangidadaulo ken panangtarawidwid?) 
+<Only for those who answered “Leadership and management” on Q121> (<Para laeng kadagiti simmungbat 
+iti “Leadership and management” iti Q121>) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+ 
+☐ Time-consuming 
+(Makabusbos iti panawen) 
+ 
+ 
+ 
+☐ Limited human resources 
+(Limitado a rekurso ti tao) 
+ 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+ 
+☐ Compiling documentary requirements (Panangurnong kadagiti kasapulan iti dokumentario) 
+ 
+ 
+ 
+☐ Stringent standards (Nainget a pagalagadan) 
+ 
+ 
+ 
+☐ Lack of training  
+(Kurang ti panagsanay) 
+ 
+ 
+ 
+☐ Lack of space  
+( Kurang ti espasio) 
+ 
+ 
+ 
+☐ Frequent changes to guidelines and policies (Masansan a panagbalbaliw kadagiti pagannurotan ken 
+pagalagadan) 
+ 
+ 
+ 
+☐ Resistance to change of staff (Resistance iti panagbalbaliw ti staff) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+ 
+125. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+Human resource management? (Panagmanehar ti rekurso ti tao?) 
+<Only for those who answered “Human resource management” on Q121> (<Para laeng kadagidiay 
+simmungbat iti “Human resource management” iti Q121> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.)
+ 
+ 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+ 
+☐ Time-consuming 
+(Makabusbos iti panawen) 
+ 
+ 
+ 
+☐ Limited human resources 
+(Limitado a rekurso ti tao) 
+ 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+ 
+ 
+☐ Compiling documentary requirements  (Panangurnong kadagiti kasapulan iti dokumentario) 
+ 
+ 
+ 
+☐ Stringent standards  (Nainget a pagalagadan) 
+ 
+ 
+ 
+☐ Lack of training 
+(Kurang ti panagsanay)  
+ 
+ 
+ 
+☐ Lack of space 
+( Kurang ti espasio) 
+ 
+ 
+ 
+ 
+☐ Staff are resistant to change (Naandur dagiti staff iti panagbalbaliw) 
+ 
+ 
+ 
+☐ Other (specify)  (Dadduma pay (ibaga)  
+ 
+ 
+ 
+126. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+  
+Information management? (Panagmanehar ti impormasion?) 
+<Only for those who answered “Information management” on Q121> (<Para laeng kadagiti simmungbat 
+iti “Information management” iti Q121>) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+☐ Time-consuming 
+(Makabusbos iti panawen) 
+ 
+ 
+ 
+☐ Limited human resources 
+(Limitado a rekurso ti tao) 
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+ 
+☐ Compiling documentary requirements  (Panangurnong kadagiti kasapulan iti dokumentario) 
+ 
+ 
+ 
+☐ Stringent standards (Nainget a pagalagadan) 
+ 
+ 
+ 
+☐ Lack of training 
+(Kurang ti panagsanay)  
+ 
+ 
+ 
+☐ Lack of space 
+( Kurang ti espasio) 
+ 
+ 
+ 
+ 
+ 
+☐ Other (specify)   (Dadduma pay (ibaga)  
+ 
+ 
+ 
+ 
+127. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+Safe practice and environment? (Natalged nga aramid ken aglawlaw?) 
+<Only for those who answered “Safe practice and environment” on Q121> (<Para laeng kadagidiay 
+simmungbat iti “Safe practice and environment” iti Q121>) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+ 
+☐ Not enough budget / too expensive (Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+☐ Time-consuming 
+(Makabusbos iti panawen) 
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+(Limitado a rekurso ti tao) 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+ 
+☐ Compiling documentary requirements  (Panangurnong kadagiti kasapulan iti dokumentario) 
+ 
+ 
+ 
+☐ Stringent standards (Nainget a pagalagadan) 
+ 
+ 
+ 
+☐ Lack of training 
+( Kurang ti pagsasanay)  
+ 
+ 
+ 
+ 
+☐ Lack of space  
+( Kurang ti espasio) 
+ 
+ 
+ 
+ 
+☐ Other (specify)    (Dadduma pay (ibaga)  
+ 
+ 
+ 
+ 
+128. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+Improving performance? (Panagpasayaat ti panagaramid?) 
+<Only for those who answered “Improving performance” on Q121> (<Para laeng kadagidiay simmungbat iti 
+“Improving performance” iti Q121> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+☐ Time-consuming 
+(Makabusbos iti panawen) 
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+(Limitado a rekurso ti tao) 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+ 
+☐ Compiling documentary requirements  
+ (Panangurnong kadagiti kasapulan iti dokumentario) 
+ 
+ 
+ 
+☐ Stringent standards (Nainget a pagalagadan) 
+ 
+ 
+ 
+☐ Lack of training 
+(Kurang ti pagsasanay) 
+ 
+ 
+ 
+☐ Lack of space 
+( Kurang ti espasio) 
+ 
+ 
+ 
+ 
+ 
+☐ Other (specify) 
+    (Dadduma pay (ibaga)  
+ 
+ 
+129. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+Physical plant ?  
+<Only for those who answered “Physical plant” on Q121> (<Para laeng kadagidiay simmungbat iti “Physical 
+plant ” iti Q121> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.  (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+☐ Time-consuming 
+(Makabusbos iti panawen) 
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+(Limitado a rekurso ti tao) 
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+ 
+☐ Compiling documentary requirements  (Panangurnong kadagiti kasapulan iti dokumentario) 
+ 
+ 
+ 
+☐ Stringent standards (Nainget a pagalagadan) 
+ 
+ 
+ 
+☐ Lack of training 
+(Kurang ti pagsasanay)  
+ 
+ 
+ 
+☐ Lack of space 
+( Kurang ti espasio) 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+ 
+ 
+130. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+Public access to price information?  (Ti pannakagun-od ti publiko iti impormasion ti presio?) 
+<Only for those who answered “Public access to price information” on Q121> <Para laeng kadagidiay 
+simmungbat iti “Public access to price information ” iti Q121> 
+ DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. ((SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+ 
+☐ Time-consuming 
+(Makabusbos iti panawen) 
+ 
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+(Limitado a rekurso ti tao) 
+ 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+☐ Compiling documentary requirements  (Panangurnong kadagiti kasapulan iti dokumentario) 
+ 
+ 
+ 
+☐ Stringent standards  (Nainget a pagalagadan) 
+ 
+ 
+ 
+☐ Lack of training 
+(Kurang ti pagsasanay)  
+ 
+ 
+ 
+ 
+☐ Lack of space 
+( Kurang ti espasio) 
+ 
+ 
+ 
+ 
+ 
+☐ Other (specify) 
+(Dadduma pay (ibaga)  
+ 
+ 
+ 
+131. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+Equipment and instruments?  
+<Only for those who answered “Equipment and instruments” on Q121> (<Para laeng kadagiti simmungbat 
+iti “Equipment and instruments” iti Q121>) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.  ((SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+ 
+ 
+☐ Time-consuming 
+(Makabusbos iti panawen) 
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+(Limitado a rekurso ti tao) 
+ 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+☐ Compiling documentary requirements  (Panangurnong kadagiti kasapulan iti dokumentario) 
+ 
+ 
+ 
+☐ Stringent standards  (Nainget a pagalagadan) 
+ 
+ 
+ 
+☐ Lack of training 
+(Kurang ti pagsasanay)  
+ 
+ 
+ 
+ 
+☐ Lack of space 
+( Kurang ti espasio) 
+ 
+ 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+ 
+ 
+132. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+National laws and DOH issuances implemented in hospitals and other health facilities?  
+<for hospitals only> <Only for those who answered “National laws and DOH issuances implemented in 
+hospitals and other health facilities” on Q121>  (<para laeng kadagiti ospital> <Para laeng kadagiti 
+simmungbat iti “Nasional a linteg ken DOH issuances a naipatungpal kadagiti ospital ken dadduma pay a 
+pasilidad ti salun-at” iti Q121>) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+ 
+☐ Time-consuming 
+(Makabusbos iti panawen) 
+ 
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+(Limitado a rekurso ti tao) 
+ 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+☐ Compiling documentary requirements  (Panangurnong kadagiti kasapulan iti dokumentario) 
+ 
+ 
+ 
+☐ Stringent standards  (Nainget a pagalagadan) 
+ 
+ 
+ 
+☐ Lack of training 
+(Kurang ti pagsasanay)  
+ 
+ 
+ 
+ 
+☐ Lack of space 
+( Kurang ti espasio) 
+ 
+ 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+133. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+Emergency Cart Contents? (Linaon ti Kariton ti Emergency?) 
+<for hospitals only> <Only for those who answered “Emergency Cart Contents” on Q121>  (<para laeng 
+kadagiti ospital> <Para laeng kadagidiay simmungbat iti “Emergency Cart Contents” iti Q121>) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. ((SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+ 
+☐ Time-consuming 
+(Makabusbos iti panawen) 
+ 
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+(Limitado a rekurso ti tao) 
+ 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+☐ Compiling documentary requirements (Panangurnong kadagiti kasapulan iti dokumentario) 
+ 
+ 
+ 
+☐ Stringent standards  (Nainget a pagalagadan) 
+ 
+ 
+ 
+☐ Lack of training 
+(Kurang ti pagsasanay)  
+ 
+ 
+ 
+ 
+☐ Lack of space 
+( Kurang ti espasio) 
+ 
+ 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+134. Why was it difficult to comply with: (Apay a narigat ti agtungpal kadagiti:) 
+ 
+Add-on services? (Dagiti serbisio nga add-on?) 
+<for hospitals only> <Only for those who answered “Add-on services” on Q121>  
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+ 
+☐ Not enough budget / too expensive 
+(Saan nga umdas ti badyet / nangina unay) 
+ 
+ 
+ 
+☐ Time-consuming 
+(Makabusbos iti panawen) 
+ 
+ 
+ 
+ 
+ 
+☐ Limited human resources 
+(Limitado a rekurso ti tao) 
+ 
+ 
+ 
+ 
+ 
+☐ Legal processes 
+(Dagiti legal a proseso)  
+ 
+ 
+ 
+ 
+☐ Compiling documentary requirements   (Panangurnong kadagiti kasapulan iti dokumentario) 
+ 
+ 
+ 
+☐ Stringent standards  (Nainget a pagalagadan) 
+ 
+ 
+ 
+☐ Lack of training 
+( Kurang ti pagsasanay)  
+ 
+ 
+ 
+ 
+☐ Lack of space 
+( Kurang ti espasio) 
+ 
+ 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+ 
+ 
+The next set of questions covers the service delivery process. This section covers the implementation of NBB 
+and ZBB, LGU support, and the Referral System. (Saklawen ti sumaruno a grupo dagiti saludsod ti proseso ti 
+panangipaay iti serbisio. Saklawen daytoy a benneg ti pannakaipatungpal ti NBB ken ZBB, suporta ti LGU, ken 
+ti Referral System.) 
+ 
+G. Service Delivery Process (Proseso ti Panangipaay ti Serbisio) 
+ 
+No Balance Billing (NBB) (Awan ti Balance Billing (NBB) . 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+135. Do you currently implement the "no balance billing” for your patients? (Agdama kadi nga 
+ipatungpalmo ti "no balance billing" para kadagiti pasientem?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No <proceed to Q138> (Saan <ituloy ti Q138>) 
+ 
+136. Are you able to implement it for all patients, to the best of your knowledge, for the last 6 months? 
+(Kabaelam kadi nga ipatungpal dayta para kadagiti amin a pasiente, iti kasayaatan nga ammom, iti 
+napalabas nga 6 a bulan?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No (Saan) 
+ 
+137. In your view, what are some of the barriers to implementing the no balance billing (NBB)? (Iti 
+panagkitam, ania dagiti sumagmamano a lapped iti pannakaipatungpal ti no balance billing (NBB)?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+ 
+☐ Complying with the no fees for basic or ward accommodation  (Panagtungpal iti no fees para iti basic 
+wenno ward accommodation) 
+ 
+ 
+ 
+☐ Complying the prescribed ratio of allocation of basic and non-basic accommodation 
+(Panangtungpal 
+iti naikeddeng a ratio ti pannakabingbingay ti kangrunaan ken saan a kangrunaan a pagdagusan) 
+ 
+ 
+ 
+☐ Patients do not go through the process of availing it 
+(Saan a lumasat dagiti pasiente iti proseso ti 
+panangaprobetsar iti dayta) 
+ 
+ 
+ 
+☐ Insufficient PhilHealth support value and/or (Saan nga umdas ti pateg ti suporta ti PhilHealth 
+ken/wenno) 
+☐ Insufficient other sources (e.g. MAIFIP, DSWD, PCSO)  (Saan nga umdas dagiti sabali a taudan (e.g. 
+MAIFIP, DSWD, PCSO)  
+<specify other sources><ibaga dagiti sabali a taudan>) 
+(late payments applicable for MAIFIP) ((dagiti naladaw a panagbayad ket agaplikar para iti MAIFIP) 
+☐ PhilHealth delayed payment (Nataktak ti PhilHealth ti panagbayad) 
+ 
+ 
+ 
+☐ None of the above 
+(Awan kadagiti nadakamat) 
+ 
+ 
+ 
+☐ Other (specify)(Dadduma pay (ibaga) .) 
+ 
+ 
+ 
+ 
+Zero Balance Billing (ZBB) Implementation  (Pannakaipatungpal ti Zero Balance Billing (ZBB).) 
+ 
+138. Do you currently implement the “Zero Balance Billing” for your patients? (Agdama kadi nga 
+ipatungpalmo ti patakaran a “Zero Balance Billing” para kadagiti pasientem?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No <proceed to Q141> (Saan <ituloy ti Q141>) 
+ 
+139. If currently implementing ZBB, are you able to implement it for all patients, to the best of your 
+knowledge, for the last six months? (No agdama nga implementaren ti ZBB, kabaelam kadi nga 
+implementaren dayta para kadagiti amin a pasiente, iti kasayaatan nga ammom, iti napalabas nga 
+innem a bulan?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No (Saan) 
+ 
+140. In your view, what are some of the barriers to implementing the “zero balance billing”? (Iti 
+panagkitam, ania dagiti sumagmamano a lapped iti pannakaipatungpal ti “zero balance billing”?) 
+READ OPTIONS OUT LOUD, SELECT ALL THAT APPLY (BASAEN TI OPTIONS OUT LOUD, PILIEN AMIN NGA AGaplikar) 
+ 
+ 
+ 
+☐ Complying with the no fees for basic or ward accommodation (Panagtungpal iti no fees para iti basic 
+wenno ward accommodation) 
+ 
+ 
+ 
+☐ Complying the prescribed ratio of allocation of basic and non-basic accommodation ( (Panangtungpal 
+iti naikeddeng a ratio ti pannakabingbingay ti kangrunaan ken saan a kangrunaan a pagdagusan) 
+ 
+ 
+ 
+☐ Patients do not go to the process of availing it (Saan a lumasat dagiti pasiente iti proseso ti 
+panangaprobetsar iti dayta) 
+ 
+ 
+ 
+☐ Insufficient PhilHealth support value and/or insufficient other sources ( e.g., MAIFIP, DSWD, PCSO) 
+(Saan nga umdas a pateg ti suporta ti PhilHealth ken/wenno saan nga umdas a dadduma pay a gubuayan 
+( e.g., MAIFIP, DSWD, PCSO) . 
+ 
+ 
+ 
+☐ Insufficient PhilHealth support value and/or  (Saan nga umdas ti pateg ti suporta ti PhilHealth 
+ken/wenno) 
+☐ insufficient other sources (e.g. MAIFIP, DSWD, PCSO) <specify other sources> 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+(late payments applicable for MAIFIP) saan nga umdas dagiti sabali a taudan (e.g. MAIFIP, DSWD, 
+PCSO) <ibaga dagiti sabali a taudan> 
+(dagiti naladaw a panagbayad ket agaplikar para iti MAIFIP) 
+☐ PhilHealth delayed payment (Nataktak ti PhilHealth ti panagbayad) 
+ 
+ 
+ 
+☐ None of the above (Awan kadagiti nadakamat) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+141. Does the facility allow out-of-pocket (OOP) expenses for basic accommodation? (Ipalubos kadi ti 
+pasilidad dagiti gastos nga out-of-pocket (OOP) para iti kangrunaan a pagdagusan?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No <proceed to Q143> (Saan <ituloy ti Q143>) 
+ 
+142. Why does the facility allow OOP expenses for basic accommodation? Specify your reason. (Apay 
+nga ipalubos ti pasilidad dagiti gastos ti OOP para iti kangrunaan a pagdagusan? Ibagam ti 
+rasonmo.) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+143. Which of the UHC benefits do you find most difficult to implement? (Ania kadagiti benepisio ti UHC 
+ti marigatanka nga ipatungpal?) 
+ 
+ 
+ 
+☐ PhilHealth/financial protection benefits (PhilHealth/benepisio ti pinansial a proteksion) 
+ 
+ 
+ 
+☐ Establishment of health care provider networks (HCPNs) (i.e., referral system) (Pannakaipasdek dagiti 
+network ti mangipapaay ti panangtaripato ti salun-at (HCPN) (i.e., sistema ti panangiturong) . 
+ 
+ 
+ 
+☐ Human resources for health reforms (Rekurso ti tao para kadagiti reporma iti salun-at) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+144. Why is this difficult to implement? (Apay a narigat nga ipatungpal daytoy?) 
+ 
+ 
+ 
+☐ The implementation of UHC benefits is heavily reliant on LGU decisions ( Ti pannakaipatungpal dagiti 
+benepisio ti UHC ket agpannuray unay kadagiti desision ti LGU) 
+ 
+ 
+ 
+☐ Not enough funding/budget (Saan nga umdas ti pondo/badyet) 
+ 
+ 
+ 
+☐ Technical/system issues of {hilHealth (e.g., data loss, errors, or platorm accessibility problems) (Dagiti 
+teknikal/sistema nga isyu ti {philHealth (e.g., pannakapukaw ti datos, biddut, wenno dagiti parikut ti 
+pannakagun-od ti plataporma) . 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga) 
+ 
+ 
+145. Has the facility been providing medical social welfare or assistance (e.g., through Malasakit 
+Centers, MAIFIP)? (Ti kadi pasilidad ket mangipapaay iti medikal a sosial a pagimbagan wenno 
+tulong (e.g., babaen kadagiti Malasakit Centers, MAIFIP)? 
+ 
+ 
+ 
+☐ Yes  (Wen) 
+ 
+ 
+ 
+☐ No <proceed to Q147> (Saan <ituloy ti Q147>) 
+ 
+146.  Why is the facility providing medical social welfare or assistance through Malasakit Centers or 
+MAIFIP?(Apay nga ipapaay ti pasilidad ti medical social welfare wenno tulong babaen kadagiti 
+Malasakit Centers wenno MAIFIP?) <Proceed to Q148> (<Ituloy ti Q148>) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.  (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Streamline access to medical and financial aid for indigent and financially incapacitated patients 
+(Pasayaaten ti pannakagun-od iti medikal ken pinansial a tulong para kadagiti napanglaw ken di makabael 
+iti pinansial a pasiente) 
+ 
+ 
+ 
+☐ Reduce out-of-pocket expenses. (Kissayan dagiti gastos a rummuar iti bulsa.) 
+ 
+ 
+ 
+☐ Eliminate the need to travel to multiple government agencies (Ikkaten ti kasapulan nga agbiahe iti adu 
+nga ahensia ti gobierno) 
+ 
+ 
+ 
+☐ Foster a more compassionate approach to healthcare (Itandudo ti ad-adda a naasi a pamay-an iti 
+panangtaripato iti salun-at) 
+ 
+ 
+ 
+☐ Other (specify)(Dadduma pay (ibaga) .) 
+ 
+ 
+147.  Why is the facility not providing medical social welfare or assistance through Malasakit Centers or 
+MAIFIP) (Apay a saan a mangipapaay ti pasilidad iti medical social welfare wenno tulong babaen 
+kadagiti Malasakit Centers wenno MAIFIP) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+BASAEN TI OPT (BASAEN TI OPT) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar) 
+ 
+ 
+ 
+☐ Limited budget (Limitado ti badyet) 
+ 
+ 
+ 
+☐ Stringent eligibility requirements (Nainget a kasapulan iti pannakakualipika) 
+ 
+ 
+ 
+☐ Incomplete documentation from patients (Di kompleto a dokumentasion manipud kadagiti pasiente) 
+ 
+ 
+ 
+☐ High patient volume leading to service bottlenecks (Nangato a volume ti pasiente nga agturong kadagiti 
+service bottleneck) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga) . 
+ 
+ 
+LGU Support (Suporta ti LGU) 
+ 
+148. Do you receive any support from your LGU to implement UHC reforms? (Adda kadi maawatyo a 
+suporta manipud iti LGUyo tapno maipatungpal dagiti reporma ti UHC?) 
+ 
+ 
+ 
+☐ Yes (Wen) 
+ 
+ 
+ 
+☐ No <proceed to Q152> (Saan <ituloy ti Q152>) 
+ 
+149. What forms of support do you receive? (Ania dagiti kita ti suporta a maawatmo?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Financial assistance (Pinansyal a tulong) 
+ 
+ 
+ 
+☐ Technical assistance (Teknikal a tulong) 
+ 
+ 
+ 
+☐ Medical supplies and equipment (Dagiti medikal a suplay ken alikamen) 
+ 
+ 
+ 
+☐ Manpower support 
+(Suporta ti manpower) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga) ) 
+ 
+ 
+ 
+150. Are you satisfied with the support you receive from your LGU? (Mapnekka kadi iti suporta a 
+maawatmo manipud iti LGU-yo?) 
+ 
+ 
+ 
+☐ Yes <proceed to Q154> (Wen <ituloy ti Q154>) 
+ 
+ 
+ 
+☐ No (Saan) 
+ 
+151. Why not? (Apay saan?) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Insufficient 
+(Saan nga umdas) 
+ 
+ 
+ 
+☐ Hard to coordinate 
+(Narigat ti agkoordinar) 
+ 
+ 
+ 
+☐ Support given is not aligned with the needs of the facility" (Ti suporta a naited ket saan a maitunos 
+kadagiti kasapulan ti pasilidad".) 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+ 
+ 
+☐ Other (specify)(Dadduma pay (ibaga)) 
+ 
+ 
+152. How clear are the protocols regarding which decisions require Provincial Health Office approval 
+versus those you can decide at the facility level? <only for respondents from public hospitals> (Kasano 
+ti kinalawag dagiti protocol maipapan no ania dagiti desision a kasapulan ti pananganamong ti 
+Provincial Health Office kontra kadagiti mabalinmo nga ikeddeng iti lebel ti pasilidad? <para laeng 
+kadagiti respondents manipud kadagiti ospital publiko>) 
+ 
+ 
+ 
+☐ Very Clear (Nalawag unay) 
+ 
+ 
+ 
+☐ Clear (Nalawag) 
+ 
+ 
+ 
+☐ Neither (Uray ania) 
+ 
+ 
+ 
+☐ Unclear (Saan a nalawag) 
+ 
+ 
+ 
+☐ Very unclear (Saan unay a nalawag) 
+ 
+153.  Which specific protocol that you consider as unclear? (Ania nga espesipiko a protocol nga 
+ibilangmo a di nalawag?) 
+ 
+ 
+ 
+ 
+ 
+Outbound-Inbound Referral Process and Satisfaction (Proseso ti Panagrefer ken Pannakapnek 
+iti Outbound-Inbound) 
+ 
+154. In the past 6 months, how many patients were referred to a higher-level facility within the referral 
+network? (Iti napalabas nga 6 a bulan, mano a pasiente ti naiturong iti nangatngato nga antas a 
+pasilidad iti uneg ti referral network?) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+ 
+ 
+155. What are the most common ways you send referrals to higher level facilities/specialists? (Ania 
+dagiti kadawyan a wagas a panangipatulodmo kadagiti referral kadagiti nangatngato a lebel a 
+pasilidad/espesial?) 
+Our focus is specifically on referrals external to the facility, excluding internal referrals. (Espesipiko ti pokusmi kadagiti referral iti ruar ti pasilidad, malaksid 
+kadagiti internal referral.) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar. 
+ 
+ 
+ 
+☐ Physical referral slip (Pisikal a slip ti referral) 
+ 
+ 
+ 
+☐ E-referral 
+(E-referral ) 
+ 
+ 
+ 
+☐ Referring facility calls receiving facility (Referring facility calls umaw-awat iti pasilidad) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+ 
+156. What type of referral form do you use to send to higher level facilities? (Ania a kita ti referral form ti 
+usarem a mangipatulod kadagiti nangatngato a lebel a pasilidad?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.Ania a kita ti referral form ti usarem a mangipatulod kadagiti nangatngato a lebel a pasilidad? 
+(BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI AMIN NGA AGaplikar.Ania a kita ti porma ti referral ti usarem a mangipatulod kadagiti maysa a lebel a 
+pasilidad?) 
+ 
+ 
+ 
+☐ DOH standard referral form 
+(DOH standard a porma ti panangiturong) 
+ 
+ 
+ 
+☐ Facility's standard referral form (Ti gagangay a porma ti panangiturong ti pasilidad) 
+ 
+ 
+ 
+☐ Province's standard referral form (Ti gagangay a porma ti panangiturong ti probinsia) 
+ 
+ 
+ 
+☐ City / LGU standard referral form (Siudad / LGU standard a porma ti panangiturong) 
+ 
+ 
+ 
+☐ No standard referral form 
+(Awan ti gagangay a porma ti panangiturong) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+ 
+ 
+157. Do you have a network of specialist providers to refer patients to, if needed? (Adda kadi network 
+dagiti espesialista a mangipapaay a pangiturongam kadagiti pasiente, no kasapulan? 
+ 
+ 
+ 
+☐ Yes  (Wen)  
+ 
+ 
+ 
+☐ No 
+(Saan)  
+ 
+ 
+ 
+☐ I've never heard of it (Diak pay pulos nangngeg dayta) 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+158. Considering all patients who come to your facility for the past 6 months, what is the proportion of 
+patients referred by another facility compared to those who self-refer/walk-in? (No panunoten amin 
+a pasiente nga umay iti pasilidadyo iti napalabas nga 6 a bulan, ania ti proporsion dagiti pasiente 
+nga inrefer ti sabali a pasilidad no idilig kadagidiay self-refer/walk-in?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Almost all patients are referred, very few walk-in/self-referred (Dandani amin a pasiente ket maiturong, 
+manmano unay ti walk-in/self-referred 
+ 
+ 
+ 
+☐ Majority of patients are referred, some walk-in/self- referred 
+(Kaaduan kadagiti pasiente ti maiturong, 
+dadduma ti walk-in/self- referred) 
+ 
+ 
+ 
+☐ The proportion of referrals is about equal to walk-ins (Ti porsiento dagiti referral ket agarup kapada ti 
+walk-ins 
+ 
+ 
+ 
+☐ Majority of patients walk-in/self-referred, some are referred (Kaaduan kadagiti pasiente ti walk-in/self-
+referred, dadduma ti nairefer) 
+ 
+ 
+ 
+☐ Almost all patients walk-in/self-referred, very few are referred (Dandani amin a pasiente ket walk-
+in/self-referred, manmano unay ti maiturong 
+ 
+ 
+ 
+☐ I am unsure about the typical ratio of referrals to walk-ins (Diak masigurado ti gagangay a ratio dagiti 
+referral kadagiti walk-in 
+ 
+159. Of those referred, which of the following are the most common ways you receive referrals from lower-
+level health facilities? (Kadagidiay nairefer, ania kadagiti sumaganad ti kadawyan a pamay-an nga 
+umawatka kadagiti naiturong manipud kadagiti nababbaba a lebel ti pasilidad ti salun-at?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Physical referral slip (Pisikal a slip ti referral)  
+ 
+ 
+ 
+☐ E-referral 
+ 
+ 
+ 
+ 
+ 
+☐ Referring facility calls receiving facility (Referring facility calls umaw-awat iti pasilidad) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Other (specify)(Dadduma pay (ibaga)  
+ 
+ 
+ 
+160. Where do your patients go to get the services not available at this facility? (Sadino ti papanan 
+dagiti pasienteyo tapno alaenda dagiti serbisio a saan a magun-odan iti daytoy a pasilidad?) 
+ 
+ 
+ 
+ 
+☐ External laboratory (Laboratorio iti ruar) 
+ 
+ 
+ 
+☐ Other private facility (Sabali pay a pribado a pasilidad) 
+ 
+ 
+ 
+☐ Other public facility (e.g., urban/rural health centers, barangay health centers, city/municipal health 
+offices) (Dadduma pay a pasilidad ti publiko (e.g., sentro ti salun-at iti siudad/away, sentro ti salun-at ti 
+barangay, opisina ti salun-at ti siudad/munisipio)  
+ 
+ 
+ 
+☐ Other, (specify) (Sabali, (ibaga) ) 
+ 
+ 
+ 
+ 
+☐ I don’t know (Saan ko nga ammo) 
+ 
+161. How would you rate your satisfaction with your current referral system? (Kasano ti 
+panangtingitingmo iti pannakapnekmo iti agdama a sistema ti panangiturongmo?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Very Satisfied: No improvements needed, "patients are always referred appropriately"  (Napnek unay: 
+Awan ti kasapulan a panagpasayaat, "kanayon a maitutop a maiturong dagiti pasiente".) 
+<proceed to Q163> (<ituloy ti Q163>) 
+ 
+ 
+ 
+☐ Satisfied: Minor improvements needed, patients are generally referred appropriately  (Kontento: 
+Kasapulan dagiti babassit a panagrang-ay, dagiti pasiente ket sapasap a maitutop a maiturong) 
+<proceed to Q163>  (<ituloy ti Q163>) 
+ 
+ 
+ 
+☐ Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional (Saan a Kontento 
+wenno Di Kontento: Kasapulan dagiti panagpasayaat, ngem sapasap nga agtignay) 
+ 
+ 
+ 
+☐ Dissatisfied: Moderate impro vements needed, a number of patients are referred to the wrong 
+specialists or do not receive appropriate follow-up care ( Saan a mapnek: Kasapulan ti kalkalainganna a 
+panagrang-ay, sumagmamano a pasiente ti maiturong kadagiti di umiso nga espesialista wenno saan nga 
+umawat iti maitutop a panangsurot a panangaywan) 
+ 
+ 
+ 
+☐ Very Dissatisfied: Major improvements needed, many patients are referred to the wrong specialists or 
+do not receive appropriate follow-up care (Saan unay a Kontento: Kasapulan dagiti dadakkel a panagrang-
+ay, adu a pasiente ti maiturong kadagiti di umiso nga espesialista wenno saan nga umawat iti maitutop a 
+panangsurot a panangaywan) 
+ 
+162.  Why are you not satisfied with the current referral system? (Apay a dika mapnek iti agdama a 
+sistema ti panangiturong?) 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN 
+NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Facilities are overcrowded/overcapacity and do not accept our patient referrals (Napusek/sobra ti 
+kapasidad dagiti pasilidad ken dida awaten dagiti patient referral-mi) 
+ 
+ 
+ 
+☐ The referral process is slow (Nabannayat ti proseso ti panangiturong) 
+ 
+ 
+ 
+☐ There is poor coordination between our facility and referred facilities 
+(Nakapuy ti koordinasion ti 
+pasilidadmi ken dagiti naitudo a pasilidad) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+ 
+We will now proceed to the last section of this survey, which focuses on human resources. (Ituloytayo itan ti 
+maudi a benneg daytoy a surbey, a naipamaysa kadagiti rekurso ti tao.) 
+ 
+H. Human Resources for Health (Rekurso ti Tao para iti Salun-at) 
+ 
+163.  What challenges in human resources do you have? (Ania dagiti karit iti human resources nga adda 
+kenka?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Understaffing  (Kurang ti staffing) 
+ 
+ 
+ 
+☐ Skills mismatch / lack of skills (Skills mismatch / kinakurang ti paglaingan) 
+ 
+ 
+ 
+☐ Retention / high staff turnover (Panagtalinaed / nangato a panagbalbaliw ti staff) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Multi-tasking (Adu ti trabaho) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga) . 
+ 
+ 
+ 
+ 
+ 
+☐ I don't know (Saan ko nga ammo) 
+ 
+164.  What area do you find the most room for improvement in your staff? (Ania a benneg ti masarakam a 
+kaaduan a lugar a pagpasayaatan dagiti staff-mo?) 
+ 
+ 
+ 
+ 
+ 
+165.  What forms of professional development do you provide to your doctors? (Ania dagiti kita ti propesional a 
+panagdur-as nga ipaaymo kadagiti doktormo?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Clinical audits (Dagiti klinikal nga audit) 
+ 
+ 
+ 
+☐ Surgical audits (Dagiti panag-audit ti operasion) 
+ 
+ 
+ 
+☐ Quality assurance meetings (Dagiti miting ti panangsigurado iti kalidad) 
+ 
+ 
+ 
+☐ Seminars, conferences, workshops (Seminar, komperensia, workshop) 
+ 
+ 
+ 
+☐ Support for independent professional development: scholarships (Suporta para iti agwaywayas a 
+propesional a panagdur-as: dagiti eskolarsip) 
+ 
+ 
+ 
+☐ Support for independent professional development: research grants ( Suporta para iti agwaywayas a 
+propesional a panagdur-as: dagiti grant ti panagsirarak) 
+ 
+ 
+ 
+☐ LGU/DOH led workshops/initiatives (Dagiti workshop/initiatives nga indauluan ti LGU/DOH) 
+ 
+ 
+ 
+☐ No forms of professional development are provided to our doctors (Awan dagiti porma ti propesional a 
+panagdur-as a maited kadagiti doktortayo 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga) . 
+ 
+ 
+ 
+166. What forms of professional development do you provide to your nurses? (Ania dagiti kita ti propesional a 
+panagdur-as nga ipaaymo kadagiti narsmo?) 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. (BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.) 
+ 
+ 
+ 
+☐ Quality assurance meetings (Dagiti miting ti panangsigurado iti kalidad) 
+ 
+ 
+ 
+☐ Seminars, conferences, workshops 
+(Seminar, komperensia, workshop) 
+ 
+ 
+ 
+☐ Support for independent professional development: scholarships (Suporta para iti agwaywayas a 
+propesional a panagdur-as: dagiti eskolarsip) 
+ 
+ 
+ 
+☐ Support for independent professional development: research grants (Suporta para iti agwaywayas a 
+propesional a panagdur-as: dagiti grant ti panagsirarak) 
+ 
+ 
+ 
+☐ LGU/DOH led workshops/initiatives (Dagiti workshop/initiatives nga indauluan ti LGU/DOH) 
+ 
+ 
+ 
+☐ No forms of professional development are provided to our nurses (Awan dagiti porma ti propesional a 
+panagdur-as a maited kadagiti narstayo) 
+ 
+ 
+ 
+☐ Other (specify) (Dadduma pay (ibaga)  
+ 
+ 
+ 
+END OF SURVEY (PANAGNGUDONA TI SURBEY) 
+ 
+ 
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+SECONDARY DATA TO BE REQUESTED FROM HEALTH FACILITIES (SECONDARY DATA A MAIKAWLAW MANIPUD ITI HEALTH 
+FACILITIES) 
+The UHC Survey Year 2 primarily aims to generate evidence on the overall experience of the general public to support continuous monitoring, evaluation, and 
+learning of the implementation of the UHC Act and its Implementing Rules and Regulations (IRR). In part of this endeavor, we are kindly requesting for your 
+cooperation on providing specific information from your facility to ensure the accuracy and robustness of data relevant to the analytical process of the study. The 
+information needed are the following: (Ti UHC Survey Year 2 ket kangrunaan a panggepna ti mangpataud iti ebidensia iti pakabuklan a padas ti sapasap a publiko 
+tapno suportaran ti agtultuloy a panangmonitor, panangtingiting, ken panagsursuro iti pannakaipatungpal ti UHC Act ken dagiti Implementing Rules and Regulations 
+(IRR) na. Iti paset daytoy a panagregget, siaasi a kidkiddawenmi ti panagtitinnulongyo iti panangipaay iti espesipiko nga impormasion manipud iti pasilidadyo tapno 
+masigurado ti kinaumiso ken kinatibker ti datos a mainaig iti analitikal a proseso ti panagadal. Dagiti impormasion a kasapulan ket dagiti sumaganad:) 
+ 
+I. 
+Latest Annual Hospital/Rural Health Unit Statistical Reports submitted to DOH (Kaudian a Tinawen nga Estadistikal a Report ti 
+Hospital/Rural Health Unit a naisubmitir iti DOH) 
+ 
+1. 
+Human Resources (Rekurso ti Tao) 
+ 
+A. Hospital Census for the past 6 months (for hospitals) (Senso ti Ospital para iti napalabas nga 6 a bulan (para kadagiti ospital) . 
+ 
+A1. Outpatient Census Senso ti Outpatient 
+Hospital Census per day for the past 6 months 
+(Hospital Census iti kada aldaw iti napalabas nga 6 a bulan) 
+Number 
+NBB 
+ZBB 
+Other Patients (Dadduma 
+Pay a Pasiente) 
+Month 1 
+ 
+ 
+ 
+Month 2 
+ 
+ 
+ 
+Month 3 
+ 
+ 
+ 
+Month 4 
+ 
+ 
+ 
+Month 5 
+ 
+ 
+ 
+Month 6 
+ 
+ 
+ 
+ 
+A2. Inpatient Census Senso ti Inpatient 
+Hospital Census per day for the past 6 months 
+(Hospital Census iti kada aldaw iti napalabas nga 6 a bulan) 
+Number 
+NBB 
+ZBB 
+Other Patients 
+Month 1 
+ 
+ 
+ 
+Month 2 
+ 
+ 
+ 
+Month 3 
+ 
+ 
+ 
+Month 4 
+ 
+ 
+ 
+Month 5 
+ 
+ 
+ 
+Month 6 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+B. Patient Load for the past 6 months (for RHUs, PCFs) (Patient Load iti napalabas nga 6 a bulan (para kadagiti RHU, PCF) . 
+Number of consultations per day  (Bilang dagiti konsultasion iti kada 
+aldaw) 
+Number (Bilang) 
+NBB 
+ZBB 
+Other Patients(Dadduma Pay 
+a Pasiente 
+Month 1 (Bulan 1) 
+ 
+ 
+ 
+Month 2 (Bulan 2) 
+ 
+ 
+ 
+Month 3 (Bulan 3) 
+ 
+ 
+ 
+Month 4 (Bulan 4) 
+ 
+ 
+ 
+Month 5 (Bulan 5) 
+ 
+ 
+ 
+Month 6 (Bulan 6) 
+ 
+ 
+ 
+ 
+ 
+2. 
+Human Resources 
+ 
+A.  Number of full-time and part-time healthcare workers employed in the RHUs 
+(Bilang dagiti full-time ken part-time healthcare workers nga 
+agtartrabaho kadagiti RHU) 
+Cadre 
+Number of healthcare workers by type (Bilang dagiti healthcare workers sigun iti kita) 
+Number staff to 
+fulfill minimum 
+requirements 
+(Numero dagiti 
+staff tapno 
+matungpal dagiti 
+minimum 
+requirements) 
+Full-time (Amin-tiempo) 
+ 
+Part-time 
+(Paset-tiempo) 
+Regular 
+(Regular) 
+Probationary 
+(Probasionario ) 
+Project-based/ 
+Contractual 
+(Naibasar iti 
+proyekto/ . 
+Kontrata nga 
+addaan iti 
+kontrata) 
+Casual 
+COS/ 
+Job Order 
+Doctors 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Midwives 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Public Health Nurses 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Pharmacists/Pharmacist Technicians 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Technologists (e.g., medical/ 
+radiology/ respiratory) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Laboratory technicians 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Health promotion officers 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Nutritionists 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Physiotherapy officers 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Nursing assistants 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Dentists 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Dental Aide 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Data encoders 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Nurses (Deployed in Rural Health 
+Centers) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Midwives (Deployed in Rural Health 
+Centers) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Pharmacist (Deployed in Rural Health 
+Centers) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Technologists (Deployed in Rural 
+Health Centers) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Other (specify) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+B.  Number of full-time and part-time healthcare workers employed in the hospitals (Bilang dagiti full-time ken part-time healthcare workers nga agtartrabaho 
+kadagiti ospital) 
+Cadre 
+Number of healthcare workers by type (Bilang dagiti healthcare workers sigun iti kita) 
+Number staff to 
+fulfill minimum 
+requirements 
+(Numero dagiti 
+staff tapno 
+matungpal 
+dagiti minimum 
+requirements) 
+Full-time (Amin-tiempo) 
+ 
+Part-time 
+(Paset-
+tiempo) 
+Regular 
+Probationary  
+(Probasionario 
+) 
+Project-based/ 
+Contractual 
+(Naibasar iti 
+proyekto/ . 
+Kontrata nga 
+addaan iti 
+kontrata) 
+Casual 
+(Saan a 
+patinayon) 
+COS/ 
+Job Order 
+Doctors 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Midwives 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Nurses 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Pharmacists/Pharmacist Technicians 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Technologists (e.g., medical/ 
+radiology/ respiratory) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Laboratory technicians 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Health promotion officers 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Nutritionists 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Physiotherapy officers 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Nursing assistants 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Dentists 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Dental Aide 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Data encoders 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Other (specify) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+C.  Number of full-time staff who have left the facility during the past six months?___________________ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+(Bilang dagiti full-time staff a pimmanaw iti pasilidad bayat ti napalabas nga innem a bulan?___________________ 
+ 
+D. Number of contractual healthcare workers who were not renewed in the facility? _________________ 
+(Bilang dagiti contractual healthcare workers a saan a napabaro iti pasilidad? _________________  
+ 
+ 
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+4. 
+YAKAP/Konsulta Package Services (Serbisyo ti Pakete ti YAKAP/Konsulta) 
+ 
+A.  Which of the YAKAP/Konsulta Package services are available in this health facility?  Please check which services are available. (Ania kadagiti serbisio 
+ti YAKAP/Konsulta Package ti magun-od iti daytoy a pasilidad ti salun-at? Pangngaasiyo ta kitaenyo no ania dagiti serbisio a magun-odan.) 
+ 
+Service (Serbisio) 
+Yes (Wen) 
+No  (Saan) 
+CBC with platelet count 
+ 
+ 
+Urinalysis 
+ 
+ 
+Fecalysis 
+ 
+ 
+Sputum Microscopy 
+ 
+ 
+Fecal Occult Blood 
+ 
+ 
+Pap smear 
+ 
+ 
+Lipid profile 
+ 
+ 
+FBS 
+ 
+ 
+OGTT (Oral glucose tolerance tests) 
+ 
+ 
+ECG 
+ 
+ 
+Chest X-Ray 
+ 
+ 
+Creatinine 
+ 
+ 
+HbA1c 
+ 
+ 
+Abdominal ultrasound 
+ 
+ 
+Dental Services 
+ 
+ 
+ 
+B.  For the following diagnostic exams, what is your procurement cost, and what is the standard price charged to patients in your facility? (Note:  Specify in 
+Philippine pesos)(Para kadagiti sumaganad a diagnostic exams, ania ti gastosmo iti panaggatang, ken ania ti standard price a masingil kadagiti 
+pasiente iti pasilidadmo? (Palagip: Ibaga iti pisos ti Filipinas) 
+Service (Serbisio) 
+Procurement Cost 
+(in Philippine Peso) (Gastos iti 
+Panaggatang 
+(iti Peso Filipinas) . 
+Standard Price Charged to Patients 
+(in Philippine Peso)(Standard Price a 
+Nasingir Kadagiti Pasiente 
+(iti Peso Filipinas)  
+CBC with platelet count 
+ 
+ 
+Urinalysis 
+ 
+ 
+Fecalysis 
+ 
+ 
+Sputum Microscopy 
+ 
+ 
+Fecal Occult Blood 
+ 
+ 
+Pap smear 
+ 
+ 
+Lipid profile 
+ 
+ 
+FBS 
+ 
+ 
+OGTT (Oral glucose tolerance tests) 
+ 
+ 
+ECG 
+ 
+ 
+Chest X-Ray 
+ 
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Creatinine 
+ 
+ 
+HbA1c 
+ 
+ 
+Abdominal ultrasound 
+ 
+ 
+ 
+ 
+C.  For the following services, what is the standard cost, and what is the standard price charged to patients in your facility? (Note:  Specify in Philippine 
+pesos.) (Para kadagiti sumaganad a serbisio, ania ti gagangay a gastos, ken ania ti gagangay a presio a masingil kadagiti pasiente iti pasilidadyo? 
+(Palagip: Ibaga iti pisos ti Filipinas.) 
+Service (Serbisio) 
+Procurement Cost 
+(in Philippine Peso) (Gastos iti 
+Panaggatang 
+(iti Peso  ti Filipinas) . 
+Standard Price Charged to Patients 
+(in Philippine Peso) (Standard Price a 
+Nasingir Kadagiti Pasiente 
+(iti Peso ti Filipinas) . 
+Physician's consultation (general practitioner) (Konsultasyon ti mangngagas (general 
+practitioner) . 
+ 
+ 
+Physician's consultation (specialist) (Konsultasyon ti mangngagas (espesyalista)  
+ 
+ 
+Private room and board (per night) (Pribado a kuarto ken taraon (kada rabii)  
+ 
+ 
+Shared room and board (per night) (Shared room ken board (kada rabii) 
+ 
+ 
+ 
+ 
+D. Is there a standard markup for all the laboratory services offered at this facility?   ___ Yes   ____ No (Adda kadi standard markup para iti amin a serbisio ti 
+laboratorio a maitukon iti daytoy a pasilidad? ___ Wen ____ Saan  
+ 
+3d1.  If yes, what is the standard markup applied to all laboratory services provided at this facility? 
+(3d1. No wen, ania ti standard markup a mayaplikar iti amin a serbisio ti laboratorio a maited iti daytoy a pasilidad?) 
+ 
+ 
+5. 
+OTHER RELEVANT DOCUMENTS/FILES (We will ask the facility head if there are other documents/files that he/she can share 
+which are relevant for the survey.) (SABALI A MAIPAPAN A DOCUMENTO/FILES (Saludsodenmi iti facility head no adda pay dadduma a 
+dokumento/files a mabalinna nga ibinglay a mainaig iti surbey.) 
+ 

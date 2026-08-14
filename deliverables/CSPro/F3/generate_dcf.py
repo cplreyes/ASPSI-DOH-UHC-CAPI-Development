@@ -17,6 +17,10 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from icf_content import (
+    ITEM_LABELS as ICF_ITEM_LABELS,
+    CONTINUE_OPTIONS as ICF_CONTINUE_OPTIONS,
+)
 from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, UHC9_OPTIONS, SATISFACTION_5PT,
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
@@ -247,6 +251,14 @@ def build_section_a():
         yes_no("Q3_SAME_HOUSE",
                "3. Do you live in the same house as the patient?"),
     ]
+    # ICF read-aloud screens (Shan's "Suggested Layout (CSEntry)", 2026-08-13) lead the
+    # section: two screens of consent script, each acknowledged with a single "Continue".
+    # No consent decision is captured here — the layout shows no Yes/No control, and
+    # CONSENT_GIVEN stays removed (2026-06-12). Text lives in ../icf_content.py.
+    items = [
+        select_one(nm, ICF_ITEM_LABELS[nm], ICF_CONTINUE_OPTIONS, length=1)
+        for nm in ("ICF_PART1", "ICF_PART2")
+    ] + items
     return record("A_INFORMED_CONSENT",
                   "A. Introduction and Informed Consent", "C", items)
 
@@ -1691,7 +1703,11 @@ def build_section_h():
             "109. Amount paid for medicines outside, by source (Pesos)", amt_length=9),
         "Q112_SOURCES": _build_payment_roster(
             "Q112_PAY_ROSTER", "H. Services done outside — amount by source", 112,
-            Q109_PAYMENT, set(), "g",
+            # #1212: MUST be Q112_PAYMENT, not Q109_PAYMENT. The #1158 split was applied to
+            # the checkbox above but missed here, so the roster's source column rendered
+            # Q109's June-5 labels against Q112's Apr-20 codes — 8 of 9 rows mislabelled
+            # (only 01 Out-of-pocket coincided), and max_occurs came out 10 instead of 9.
+            Q112_PAYMENT, set(), "g",
             "112. Payment source (auto-filled from the ticked sources)",
             "112. Amount paid for services outside, by source (Pesos)", amt_length=9),
         "Q113_SOURCES": _build_payment_roster(

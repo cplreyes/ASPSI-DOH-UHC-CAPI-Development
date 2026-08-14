@@ -29,11 +29,13 @@ OUT = HERE / "FacilityHeadSurvey.ent.qsf"
 # can sit at case-end on the form (v1.0.1). Same string in every language — UI chrome, not
 # questionnaire text.
 _BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F1"]
-BUILD_FOOTER = f'<p class="instruction">Build: F1 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
-# #1191 (PSA/SJREB, 2026-08-11): survey-tool details required on the CAPI tool.
-BUILD_FOOTER += ('<p class="instruction">PSA SSRCS Clearance No. DOH-2651-01 '
-                 '&middot; issued July 2026 &middot; valid until 31 July 2027<br/>'
-                 'SJREB: ICF ver. 07/25/2026 &middot; Translated Questionnaire ver. 06/05/2026</p>')
+# #1191 (PSA/SJREB, 2026-08-11): survey-tool details required on the CAPI tool. The
+# clearance block is defined once in ../icf_content.py — the ICF screens carry the
+# same block, and two copies of a cleared reference number would eventually diverge.
+import sys as _sys
+_sys.path.insert(0, str(HERE.parent))
+import icf_content as _icf
+from notes_lookup import translate_note
 # #1190: DOH Seal / ASPSI / Bagong Pilipinas / Bawat Buhay Mahalaga on the first
 # page — ASPSI sits second, in the "attached agency" slot, per ASPSI's reference
 # image on #1190 (Shan, 2026-08-11). Data-URI so the image travels inside the qsf
@@ -41,8 +43,11 @@ BUILD_FOOTER += ('<p class="instruction">PSA SSRCS Clearance No. DOH-2651-01 '
 # shared asset (built by ../compose_cover_logos.py).
 import base64 as _b64
 _LOGO_B64 = _b64.b64encode((HERE.parent / "cover_logos.png").read_bytes()).decode()
-BUILD_FOOTER = (f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
-                + BUILD_FOOTER)
+_LOGO_HTML = f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
+
+BUILD_FOOTER = (_LOGO_HTML
+                + f'<p class="instruction">Build: F1 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+                + _icf.clearance_html("F1"))
 
 STYLES = """styles:
   - name: Normal
@@ -208,10 +213,15 @@ CONSENT_HTML = "".join([
 # Item-name → question-text HTML. Overrides win over the dcf-label default
 # and are emitted identically for every declared language (English fallback
 # until SJREB-approved ICF translations arrive).
-# CONSENT_GIVEN removed 2026-06-12 — consent script is read from the printed
-# sheet (off the CAPI), so no question-text override. (CONSENT_HTML above is
-# kept as reference only; nothing emits it.)
-OVERRIDES = {}
+# CONSENT_GIVEN removed 2026-06-12 — no consent DECISION is captured on the CAPI, and
+# that has not changed. What DID change (2026-08-13): ASPSI sent "Suggested Layout
+# (CSEntry).docx", putting the consent SCRIPT back on the device as two read-aloud
+# screens with the clearance block. Its wording supersedes CONSENT_HTML above (which
+# remains unemitted, kept only as the Annex H reference). Text: ../icf_content.py.
+OVERRIDES = {
+    "ICF_PART1": _icf.build_screen_html("F1", 1, _LOGO_HTML),
+    "ICF_PART2": _icf.build_screen_html("F1", 2, _LOGO_HTML),
+}
 
 
 # ------------------------------------------------------------------
@@ -295,22 +305,38 @@ def _esc(t):
 
 
 def question_extras(nm, intro_used):
-    """(pre, post) HTML for an item: section intro + enumerator instruction."""
+    """(intro_english, instruction_english) for an item — TEXT, not HTML.
+
+    This used to return finished HTML, and main() called it once per ITEM, outside the
+    per-language loop. The English note was therefore pasted into every locale (#1216,
+    #1219, #1220, #1223, #1224, #1225). Returning the English source text lets the caller
+    resolve it per language via note_html(); the intro-consumed bookkeeping still happens
+    exactly once per item, which is why that stays here.
+    """
     m = _QNUM.match(nm)
     if not m:
-        return "", ""
+        return None, None
     q = int(m.group(1))
-    pre = post = ""
+    intro = None
     # the intro attaches once, to the first item at/after its target question
     # (within +3 — some paper intros sit before unnumbered or merged fields)
     for tgt in SECTION_INTROS:
         if tgt not in intro_used and tgt <= q <= tgt + 3:
-            pre = f"<p>{_esc(SECTION_INTROS[tgt])}</p>"
+            intro = SECTION_INTROS[tgt]
             intro_used.add(tgt)
             break
     instr = INSTRUCTIONS.get(q)
-    if instr and not nm.endswith("_TXT"):
-        post = f'<p class="instruction">{_esc(instr)}</p>'
+    if not instr or nm.endswith("_TXT"):
+        instr = None
+    return intro, instr
+
+
+def note_html(intro_en, instr_en, lang):
+    """Render the two notes in ONE language. Missing translation -> English, which is
+    what the tablet shows today, so a miss is never a regression."""
+    pre = f"<p>{_esc(translate_note(intro_en, lang))}</p>" if intro_en else ""
+    post = (f'<p class="instruction">{_esc(translate_note(instr_en, lang))}</p>'
+            if instr_en else "")
     return pre, post
 
 
@@ -346,7 +372,8 @@ def main():
                 labmap = {l.get("language"): l.get("text", "") for l in (it.get("labels") or [])}
                 en = labmap.get("EN") or nm
                 ov = OVERRIDES.get(nm)
-                pre, post = ("", "") if ov else question_extras(nm, intro_used)
+                intro_en, instr_en = ((None, None) if ov
+                                      else question_extras(nm, intro_used))
                 lines += [f"  - name: {dict_name}.{nm}", "    conditions:", "      - questionText:"]
                 for lnm, _ in langs:
                     raw = labmap.get(lnm) or en
@@ -356,6 +383,8 @@ def main():
                     # the emphasis belongs on the question, not its follow-up specify field.
                     if raw == en and not nm.endswith("_TXT"):
                         txt = _emphasize(txt)
+                    # resolved PER LANGUAGE - see note_html()
+                    pre, post = note_html(intro_en, instr_en, lnm)
                     body = ov or (pre + txt + post)
                     lines += [f"          {lnm}: |", f"            {body}"]
                 n += 1

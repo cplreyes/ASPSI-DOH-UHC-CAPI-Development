@@ -674,7 +674,6 @@
   "I can treat myself": "Kaya ko an sadiri ko",
   "94. What mode/s of transportation do you use when travelling to the nearest primary care facility?": "Anong klaseng transportasyon an tigagamit mo para magduman sa pasilidad? DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. DAE PAGBASAHON NIN MAKSUOG. PILION AN DAPAT NA KASIMBAGAN. Walk Lakaw",
   "Motorcycle": "Motor Bike Bisekleta Boat Sakayan",
-  "Public Bus": "Taxi Taxi",
   "Car (including private taxi/cab)": "Car (sabay an",
   "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)?": "Ano an pinaka-rason kung ngata ka o miembro kan saimong pamilya nagduduman sa health facility (hal. RHU, health center, clinic asin hospital)? READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. BASAHON ASIN PILION AN MGA DAPAT NA KASIMBAGAN",
   "Consultation for new health problem": "Consultation para sa bagong health problem",
@@ -785,5 +784,19 @@
   "Sponsored (i.e., members whose contributions are being paid for by another individual, government agencies, or private entities. Includes some low-income citizens that are not indigent e.g. BHWs, PWDs)": "Sponsored (e.g., mga miembro na binabayaran nin iba, gobyerno, o pribadong entidad. Kaibahan an iba pang low-income citizens na bakong indigent e.g. BHWs, PWDs)",
   "Lifetime member (i.e., individuals aged 60 and above, uniformed personnel aged 56 and above, and SSS underground miner-retirees aged 55 and above, who paid at least 120 monthly contributions to PhilHealth or the former SSS/GSIS Medicare Programs)": "Lifetime member (e.g., mga tawo 60 taon pataas, uniformed personnel 56 taon pataas, asin SSS underground miner-retirees 55 taon pataas na nagbayad nin 120 contributions)",
   "Senior citizen (i.e., residents of the Philippines aged sixty (60) or above not currently covered by any other PhilHealth category, and qualified dependents of senior citizen members who are themselves senior citizens, with or without other coverage)": "Senior citizen (e.g., residente sa Pilipinas 60 taon pataas, na dai sakop nin ano mang membership category kan PhilHealth, asin qualified dependents kan senior citizen)",
-  "Qualified dependents (i.e., those whose contributions are declared and covered by a principal member)": "Qualified dependents (e.g., an contributions sakop nin principal member)"
+  "Qualified dependents (i.e., those whose contributions are declared and covered by a principal member)": "Qualified dependents (e.g., an contributions sakop nin principal member)",
+  "2. In what month were you born?": "Anong bulan asin taon ka pinangaki? Month _________ Year____________ Bulan Taon",
+  "Other (specify)": "Iba pa (ispecify)",
+  "21. How many senior citizens live in your house now?": "Pira an senior citizen na nakaistar ngonyan sa saimong harong?",
+  "22. Do you have electricity in your house?": "May igwa ba kamong kuryente?",
+  "Walk": "Lakaw",
+  "Bike": "Bisekleta",
+  "Boat": "Sakayan",
+  "Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)": "Dental care (Pag-ataman medikal para sa ngipon, arog kan cleaning, filling, asin iba pa)",
+  "No time": "Wara ki oras",
+  "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?": "[Kun an simbag ay \"iyo\" sa Q112] Pagkatapos mong magbisita sa espesyalista o espesyal na serbisyo, nag-follow up ba sinda saimo kun nano an nangyari sa pagbisita?",
+  "News": "Balita",
+  "Other expenses": "Ibang gastos",
+  "Loan": "Utang",
+  "194. Other specify": "Iba pa (ispecify)"
 }

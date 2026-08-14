@@ -17,6 +17,10 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from icf_content import (
+    ITEM_LABELS as ICF_ITEM_LABELS,
+    CONTINUE_OPTIONS as ICF_CONTINUE_OPTIONS,
+)
 from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, SATISFACTION_5PT,
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
@@ -150,6 +154,14 @@ def build_section_a():
         yes_no("Q1_IS_HH_HEAD",
                "1. Before we begin, to confirm, are you the household head?"),
     ]
+    # ICF read-aloud screens (Shan's "Suggested Layout (CSEntry)", 2026-08-13) lead the
+    # section: two screens of consent script, each acknowledged with a single "Continue".
+    # No consent decision is captured here — the layout shows no Yes/No control, and
+    # CONSENT_GIVEN stays removed (2026-06-12). Text lives in ../icf_content.py.
+    items = [
+        select_one(nm, ICF_ITEM_LABELS[nm], ICF_CONTINUE_OPTIONS, length=1)
+        for nm in ("ICF_PART1", "ICF_PART2")
+    ] + items
     return record("A_INFORMED_CONSENT",
                   "A. Introduction and Informed Consent", "C", items)
 

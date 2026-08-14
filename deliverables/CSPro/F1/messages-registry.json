@@ -1,6 +1,6 @@
 {
   "_note": "Machine-managed by cspro_helpers.numberize_errmsgs() — do not hand-edit. Maps each errmsg text to its permanent message number; numbers are never reused or renumbered.",
-  "next": 1226,
+  "next": 1228,
   "messages": {
     "PSGC region lookup failed — verify psgc_region.dat is deployed": 1001,
     "GPS hardware unavailable — check tablet location permission.": 1002,
@@ -226,6 +226,8 @@
     "Q96: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1222,
     "Q98: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1223,
     "Q99: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.": 1224,
-    "Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.": 1225
+    "Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.": 1225,
+    "No GPS fix after %d s. Move outdoors or beside a window, then re-enter this field to retry — each retry searches longer. You may also leave GPS blank and finish the case.": 1226,
+    "Q58: 'No requirements' must be the only choice — untick it or the other options before continuing.": 1227
   }
 }

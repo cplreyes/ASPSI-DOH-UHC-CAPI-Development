@@ -852,5 +852,20 @@
   "Indigent (i.e., individuals who have no visible means of income, or whose income is insufficient for family subsistence based on DSWD's specific criteria)": "Mga kablas",
   "Sponsored (i.e., members whose contributions are being paid for by another individual, government agencies, or private entities. Includes some low-income citizens that are not indigent e.g. BHWs, PWDs)": "Gin-sponsoran",
   "Lifetime member (i.e., individuals aged 60 and above, uniformed personnel aged 56 and above, and SSS underground miner-retirees aged 55 and above, who paid at least 120 monthly contributions to PhilHealth or the former SSS/GSIS Medicare Programs)": "Miyembro ha bug-os nga kinabuhi",
-  "Qualified dependents (i.e., those whose contributions are declared and covered by a principal member)": "Mga kwalipikado nga mga nasarig"
+  "Qualified dependents (i.e., those whose contributions are declared and covered by a principal member)": "Mga kwalipikado nga mga nasarig",
+  "Retired": "Retired Nagretiro",
+  "22. Do you have electricity in your house?": "Mayda ba kamo kuryente ha iyo panimalay?",
+  "Automatic enrollment into PhilHealth": "Pag-kakuha hin maupay nga kalidad ngan barato nga mga papliton ngan serbisyo ha pag-ataman han panlawas.",
+  "Minor procedures or treatments": "Minor procedires or treatments Mga gudtiay nga pamaagi o pagtambal",
+  "74. Where did you get the rest of the medicines?": "Diin mo ginkuha an iba pa nga mga medisina? Pilia an ngatanan nga aplikado.",
+  "77. If generic, why did you buy generic medicine?": "Kun generic, kay ano nga pumalit ka hin generic nga medisina?",
+  "Primary care provider": "Barangay Health Worker",
+  "Barangay Health Worker": "LGU",
+  "Walk": "Walk Baktas",
+  "Boat": "Boat Barko",
+  "No, I haven't accessed any form of medical care": "Other (Specify) Iba pa (ispecify)",
+  "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit?": "[Kun an baton la hin \"oo\" ha Q112] Kahuman mo kumadto ha espesyalista o espesyal nga serbisyo, ginsundan ka ba nira mahitungod han nahitabo ha pagbisita?",
+  "Diagnostic or laboratory procedure": "Diagnostic or laboratory procedire Pamaagi han pag-eksamin o laboratoryo",
+  "Other expenses": "Other expenses: Iba pa nga gastos:",
+  "Loan": "Loan Utang"
 }

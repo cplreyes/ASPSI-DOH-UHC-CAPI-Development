@@ -418,6 +418,11 @@ def _expenditure_triplet(items, i):
     return [items[i], items[i + 1], items[i + 2]]
 
 
+# Fields that must OWN their screen for reasons other than capture type. The ICF
+# read-aloud parts are one screen each by spec (Shan's layout, 2026-08-13); without
+# this they would fall into the ordinary MAX_CHUNK run and share a DisplayTogether
+# screen with Q1, collapsing the two consent screens into one.
+_OWN_SCREEN_FIELDS = {"ICF_PART1", "ICF_PART2"}
 MAX_CHUNK = 5
 _RUN_BLOCK_CAP = 22     # a real multi-select up to ~22 options is one checklist screen;
                         # an amount matrix (run has _AMT siblings) or a longer run is chunked.
@@ -530,9 +535,10 @@ def derive_block_plan(dictionary, sources=frozenset(), targets=frozenset(), gate
                 i += 3
                 continue
             ms = _MULTISELECT_RE.match(nm)
-            if _is_gated_text(nm, gated) or nm in _CHECKBOX_FIELDS:
+            if (_is_gated_text(nm, gated) or nm in _CHECKBOX_FIELDS
+                    or nm in _OWN_SCREEN_FIELDS):
                 # gated specify text / Check Box (#529) -> its OWN screen so the noinput gate
-                # hides it when not applicable.
+                # hides it when not applicable. ICF parts -> one read-aloud screen each.
                 emit([items[i]], (_qnum(items[i]) and f"Q{_qnum(items[i])}") or nm)
                 i += 1
             elif ms and not nm.endswith("_TXT"):              # multi-select OPTION run (matrix-aware)
@@ -553,8 +559,8 @@ def derive_block_plan(dictionary, sources=frozenset(), targets=frozenset(), gate
                     nn = items[i]["name"]
                     mm = _MULTISELECT_RE.match(nn)
                     if (mm and not nn.endswith("_TXT")) or nn in _CHECKBOX_FIELDS or _is_gated_text(nn, gated) \
-                            or nn.endswith("_SUBTOTAL_TOTAL_PHP"):
-                        break                                  # stop before multi-select / checkbox (#529) / gated text / #617 subtotal
+                            or nn in _OWN_SCREEN_FIELDS or nn.endswith("_SUBTOTAL_TOTAL_PHP"):
+                        break                                  # stop before multi-select / checkbox (#529) / gated text / ICF / #617 subtotal
                     if chunk and nn in targets:
                         break                                  # skip TARGET starts a fresh screen
                     chunk.append(items[i]); i += 1

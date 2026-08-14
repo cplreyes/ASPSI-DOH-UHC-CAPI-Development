@@ -1,0 +1,3028 @@
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+Universal Health Care (UHC) Survey – Year 2 
+Healthcare Worker Survey Questionnaire 
+ 
+Consent Form for Healthcare Workers  
+This informed consent form must be obtained before conducting the interview. You are required to read this entire consent form 
+aloud exactly as written. After reading this form to the respondent, you must complete and sign the verification consent form. 
+ 
+PART I: Information about the study 
+The Asian Social Project Services, Inc. (ASPSI) requests your participation in a study on Universal Health Care (UHC). This study aims 
+to generate evidence on the overall experience of the healthcare service providers and the general public to support continuous 
+monitoring, evaluation, and learning of the implementation of the UHC Act, its Implementing Rules and Regulations (IRR), and 
+packages of programs like Yaman ng Kalusugan Program (YAKAP), No Balance Billing (NBB), Zero Balance Billing (ZBB), Bagong 
+Urgent Care and Ambulatory Services (BUCAS) centers, and Guaranteed and Accessible Medications for Outpatient Treatment 
+(GAMOT). The Department of Health funded this study. The interview may last for more or less than an hour. The questions will cover 
+your professional profile, UHC awareness, changes in facility operations since 2019, specialized programs (YAKAP/Konsulta, 
+NBB/ZBB, BUCAS, GAMOT), referral systems, professional fee charging, task sharing, and your overall job satisfaction, including 
+compensation, work environment, and professional development opportunities. 
+Ang Asian Social Project Services, Inc. (ASPSI) naghangyo sa imong partisipasyon sa usa ka pagtuon mahitungod sa Universal 
+Health Care (UHC). Kini nga pagtuon nagtumong sa pagkuha ug ebidensya sa kinatibuk-ang kasinatian sa mga naghatag ug serbisyo 
+sa panglawas ug sa kinatibuk-ang publiko aron suportahan ang padayon nga pagmonitor, ebaluwasyon, ug pagkat-on sa pagpatuman 
+sa UHC Act, ang Implementing Rules and Regulations (IRR), ug mga pakete sa mga programa sama sa Yaman ng Kalusugan 
+Program (YAKAP), No Balance Billing (NBB), Zero Balance Billing (ZBB), Bagong Urgent Care and Ambulatory Services (BUCAS), 
+ug Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT). Ang Department of Health ang nagpondo niini nga 
+pagtuon. Ang interbyo magdugay sobra o kulang sa usa ka oras. Ang mga pangutana maglangkob sa inyong propesyonal nga profile, 
+kahibalo bahin sa UHC, mga pagbag-o sa operasyon sa pasilidad sukad 2019, mga espesyal nga programa (YAKAP/Konsulta, 
+NBB/ZBB, BUCAS, GAMOT), ng sistema sa referral, ang pamaagi sa pagsingil sa propesyonal nga bayronon (professional fee), ang 
+pagbahinbahin sa mga buluhaton (task sharing), ug ang inyong kinatibuk-ang katagbawan sa trabaho, lakip ang sweldo ug mga 
+benepisyo, palibot sa trabaho, ug mga kahigayonan alang sa propesyonal nga paglambo. 
+ 
+We are committed to protecting your privacy. If you choose to participate, we will never share your information outside of the study 
+team. We will never include your name in information shared with the government or in any reports. Your name will be kept separately 
+from your answers in a private, secure location. For this interview, it is also important to respect other people’s privacy and not tell 
+anyone else what we talked about today. With all research, there’s a small chance that someone else might get to see your data. We try 
+our best to prevent that, but if it happens, we’ll tell you as soon as possible.  
+Paningkamutan namo nga masiguro ang imong pagkapribado sa pagka-taw. Kung mosugot ka, dili namo ipahibalo sa bisan kinsa ang 
+imong mga impormasyon gawas sa among grupo. Ang imong pangan ibuwag sa imong mga tubag ug tipigan sa luwas nga lugar. 
+Importante usab nga dili nimo isulti sa uban ang atong pag-istoryahanay karong adlawa. Sa panukiduki, adunay gamay nga posibilidad 
+nga adunay laing tawo nga makakita sa imong datos, apan kung mahitabo kana, pahibaloon ka namo dayon. 
+ 
+Aside from this, there are no other risks to you if you take part in this study. As a benefit of the research, the knowledge gained may 
+help the government and DOH better support your healthcare needs. The interview may last for more or less than an hour and 
+participating in this survey will also enter you into a raffle, giving you a chance to win PhP1,000 as a way of thanking you for the time 
+you’ve shared with us. 
+Gawas niini, wala nay laing risgo kung moapil ka. Ang makuha nimong benepisyo mao ang imong mahatag nga kontribusyon aron 
+mas mapaayo sa gobyerno ug DOH ang pag-atiman sa panglawas.  Ang interbyo mahimong moabot sa kapin o kulang sa usa ka oras 
+ug ang pag-apil niini nga survey magsulod usab kanimo sa usa ka raffle [ magpabunot ] , nga maghatag kanimo ug tsansa nga 
+makadaug ug PhP1,000 isip paagi sa pagpasalamat sa oras nga imong gipaambit kanamo. 
+ 
+You are free to decline participation or to stop at any time. Choosing not to participate will not result in any penalty, and you will not 
+have to pay anything to take part in this study. 
+Pwede ka mobalibad o mohunong bisan kanus-a sa interbyo. Wala kay bayad ug wala usab listang pagbalibad. 
+ 
+If you have concerns or questions about your rights as a participant, you can contact:  
+Kung adunay mga kabalaka o pangutana bahin sa imong mga katungod isip partisipante, mahimo kang mokontak sa: 
+ 
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+Single Joint Research Ethics Board (SJREB) at the Philippines Department of Health 
+Email: sjreb@doh.gov.ph 
+National Tel: (02) 651-7800 local 1328 
+Tel: +63 936 992 5513 
+ 
+Department of Health 
+Name: Lindsley Jeremiah D. Villarante 
+Email:  ldvillarante@doh.gov.ph 
+Tel: +63 (02) 8651-7800 local 1432 
+ 
+Asian Social Project Services, Inc. 
+Name: Paulyn Jean A. Claro  
+Email: inquiry.aspsi.doh.uhc.survey2@gmail.com  
+Tel: + 63 917 819 6884 
+ 
+ 
+PART II: Certificate of Consent  
+If you have understood the information above, please give your permission to answer the survey questionnaire by signing this 
+form.  Please email this consent form to:   ______________________________________ 
+Kung nasabtan nimo ang impormasyon sa ibabaw, palihug pirmahan kini nga porma ingon nga timaan sa imong pagtugot sa 
+pagtubag niini nga survey. Palihug ipadala pinaagi sa email kini nga porma sa: 
+ 
+______________________________                   ________________________  
+____________________ 
+ Name and Signature of Respondent 
+ 
+       Email Address 
+ 
+ 
+   Mobile Number 
+ 
+_____________________________ 
+             Position, Office 
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+Questionnaire No:  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+FIELD CONTROL (to be filled in by the Enumerator) 
+Survey Team Leader’s 
+Name 
+ 
+Date First Visited 
+the Facility 
+(Month, Day, Year) 
+Enumerator’s Name 
+ 
+Resulta 
+ 
+Field Validated by 
+ 
+Date of Final Visit to 
+the Facility 
+(Month, Day, Year) 
+Field Edited by 
+ 
+Resulta 
+ 
+aCodes: 
+ 
+ 
+1 - Completed 
+2 - Postponed 
+3 - Refused 
+4 - Incomplete 
+ 
+Total number of visits: 
+ 
+ 
+HEALTH FACILITY AND GEOGRAPHIC IDENTIFICATION (to be filled in by the Enumerator) 
+Area Classification 
+☐ UHC IS 
+☐ non-UHC IS 
+Name of Health Facility 
+ 
+Facility type of ownership 
+☐ Public 
+☐ DOH-retained Hospital 
+☐ Private 
+Facility’s capital service level 
+☐Primary Care Facility 
+☐ Level 1 Hospital 
+☐ Level 2 Hospital 
+☐ Level 3 Hospital 
+Region 
+ 
+Province/HUC 
+ 
+City/Municipality 
+ 
+Barangay 
+ 
+GPS Coordinates 
+Latitude 
+ 
+Longitude 
+ 
+ 
+The following questions ask about your profile. Please put your answer/s in the space provided or check the 
+box of your answer. 
+Ang mosunod nga mga pangutana nagtuki bahin sa imong profile. Palihug ibutang ang imong tubag sa gihatag nga 
+luna o i-check ang kahon sa imong tubag 
+ 
+A. Healthcare Worker Profile 
+ 
+1. What is your name?  
+Unsa ang imong 
+pangalan? 
+ 
+ 
+        Last Name 
+Apelyido 
+ 
+First Name 
+Pangalan 
+Middle Initial 
+Middle Initial 
+ 
+2. What type of employment do you have at this health facility? 
+Unsa ang klase sa imong trabaho niini nga pasilidad? 
+ 
+ 
+ 
+☐ Regular 
+Regular 
+☐ Casual 
+Kaswal 
+☐ Seasonal 
+Seasonal 
+ 
+ 
+☐ Probationary 
+Probationary 
+☐ Project 
+Project 
+☐ Fixed-term 
+Fixed-term 
+ 
+ 
+☐ Other, specify 
+Uban pa (Isulti) 
+ 
+ 
+ 
+Note: 
+1. Regular Employment: Employees perform tasks necessary or desirable to the employer’s main business, usually after a probationary period. They enjoy full security of tenure. 
+Regular nga Trabaho: Ang mga empleyado naghimo og mga buluhaton nga gikinahanglan o mapuslanon sa pangunang negosyo sa amo, kasagaran human sa usa ka probationary period. 
+Sila makatagamtam og tibuok nga seguridad sa katungdanan 
+2. Probationary Employment: A trial period (maximum of 6 months) to determine if the employee meets the standards for regularization. 
+Probationary Employment: Usa ka panahon sa pagsulay (maximum nga 6 ka bulan) aron matino kung ang empleyado nakatuman sa mga sukdanan alang sa paghimo nga regular. 
+3. Casual Employment: Work is not essential to the main business and is usually for a short period. If a casual employee works for at least one year, they may become regular.  
+Trabaho nga Kaswal: Ang trabaho dili kinahanglan sa pangunang negosyo ug kasagaran mubo lang ang gidugayon. Kung ang usa ka kaswal nga empleyado magtrabaho sulod sa labing 
+menos usa ka tuig, mahimong ma-regular sila. 
+4. Project Employment: Employment is fixed for a specific project or undertaking, with the end date determined by the completion of that project. 
+Trabaho sa Proyekto: Ang trabaho gitakda alang sa usa ka specific nga proyekto o buluhaton, nga ang katapusan nga petsa gitino sa pagkompleto sa maong proyekto. 
+5. Seasonal Employment: Work is only performed during specific, recurring times of the year, such as holidays or harvest seasons. 
+Seasonal Employment: Ang trabaho gihimo lamang sa specific ug balik-balik nga mga panahon sa tuig, sama sa mga holiday o panahon sa ting-ani. 
+6. Fixed-Term Employment: The contract specifies a set duration for the employment, agreed upon by both parties.  
+Fixed-Term Employment: Ang kontrata naglatid sa usa ka specific nga gidugayon sa trabaho, nga gipagkasabot sa duha ka partido. 
+7. Other (Job Order: worker is classified as a contractual worker or contract of service personnel, hired for a short-term, specific piece of work.) 
+Uban pa (Job Order: Ang trabahador gi classify isip trabahador nga kontraktwal o personnel sa kontrata sa serbisyo, gisuholan alang sa mubo nga panahon, may specific nga buluhaton. 
+ 
+3. What is your sex at birth? 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+Unsa ang imong sex nga natala sa pagkahimugso nimo? 
+ 
+ 
+ 
+ 
+☐ Male 
+Lalaki 
+ 
+ 
+ 
+☐ Female 
+Babae 
+ 
+4. How old are you as of your last birthday (in years)? Pila na imong edad base sa imong miaging birthday 
+(tuig)?  
+ 
+ 
+5. What is your role at this health facility? Unsa imong papel dinhi sa health facility? 
+ 
+ 
+ 
+ 
+☐ Administrator 
+☐ Midwife 
+☐ Dentist 
+ 
+ 
+ 
+☐ Physician/Doctor 
+☐ Laboratory technician 
+☐ Dentist aide 
+ 
+ 
+ 
+☐ Physician assistant 
+☐ Medical/ radiologic technologist 
+☐ Barangay Health Worker 
+ 
+ 
+ 
+☐ Nurse 
+☐ Health promotion officer 
+☐ Other (specify) 
+ 
+ 
+ 
+☐ Nursing assistant 
+☐ Nutrition action officer/ coordinator  
+ 
+ 
+ 
+☐ Pharmacist/Dispenser 
+☐ Physical Therapist 
+ 
+ 
+6. What is your specialty, if any? Unsa ang imong specialty, kung adunay? 
+ 
+ 
+ 
+ 
+☐ No specialty 
+☐ Nuclear Medicine 
+☐ Physical and Rehabilitation Medicine 
+ 
+ 
+ 
+☐ Anesthesia 
+☐ Obstetrics and Gynecology 
+☐ Psychiatry 
+ 
+ 
+ 
+☐ Dermatology 
+☐ Occupational Medicine 
+☐ Public health 
+ 
+ 
+ 
+☐ Emergency Medicine 
+☐ Ophthalmology 
+☐ Radiology 
+ 
+ 
+ 
+☐ Family Medicine 
+☐ Orthopedics 
+☐ Research 
+ 
+ 
+ 
+☐ General Surgery 
+☐ Otorhinolaryngology (ENT) 
+☐ Others (specify) 
+ 
+ 
+ 
+☐ Internal Medicine 
+☐ Pathology 
+ 
+ 
+ 
+ 
+☐ Neurology 
+☐ Pediatrics 
+ 
+ 
+7. Do you practice at any private facility/ clinic? 
+Nagpraktis ba ka sa bisan unsang pribadong pasilidad/klinika? 
+ 
+ 
+ 
+☐ Yes 
+Oo 
+ 
+ 
+ 
+☐ No <proceed to Q9> 
+Wala <padayon sa Q9> 
+ 
+8. How do you divide your time between public and private practice? 
+Unsaon nimo pagbahin sa imong oras tali sa publiko ug pribado nga praktis? 
+ 
+<only for respondents from public facilities> 
+<alang lamang sa mga respondents gikan sa publikong pasilidad> 
+ 
+ 
+ 
+☐ I spend all of my time in private practice 
+Gigugol nako ang tanan nga oras sa pribado nga praktis 
+ 
+ 
+ 
+☐ I spend over half, but not all of my time in private practice 
+Gigugol nako labaw sa katunga , pero dili tanan nga oras sa pribado nga praktis 
+ 
+ 
+ 
+☐ I spend my time equally in private and public practice 
+Gigugol nako akong oras parehas sa pribado ug publiko nga praktis 
+ 
+ 
+ 
+☐ I spend over half, but not all of my time in public practice 
+Gigugol nako labaw sa katunga, pero dili tanan nga oras sa publiko nga praktis 
+ 
+ 
+ 
+☐ I spend all of my time in public practice 
+Gigugol nako ang tanan nga oras sa publiko nga praktis 
+ 
+ 
+ 
+☐ I don't know 
+Wala ko kahibalo 
+ 
+9. In your current position, how many (months/years) have you worked at this health facility? 
+Sa imong kasamtangan nga posisyon, pila ka buwan/tuig ka na nga nagtrabaho niini nga health facility? 
+ 
+ 
+ 
+ 
+Year(s) 
+ 
+ 
+Month(s) 
+ 
+ 
+ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+10. How many days in a week do you work at this health facility? 
+Pila ka adlaw sa usa ka semana ka motrabaho niini nga health facility? 
+ 
+ 
+ 
+ 
+Number of days 
+ 
+ 
+ 
+ 
+11. On average, how many hours do you work per day? 
+Kasagaran, pila ka oras ka motrabaho sa usa ka adlaw? 
+ 
+Note: According to DOLE, typically full-time is 8 hours per day, part-time is less than that. 
+Pahinumdom: Sumala sa DOLE, ang full-time kasagaran 8 ka oras kada adlaw, ang part-time ubos niana 
+ 
+ 
+ 
+Number of hours 
+ 
+ 
+ 
+ 
+ 
+The following questions ask about your awareness of UHC and the changes which may have occurred due to its 
+implementation. Please check the box/es of your answer. 
+Ang mosunod nga mga pangutana nagtuki sa inyong kahibalo mahitungod sa UHC ug sa mga kausaban nga mahimong 
+nahitabo tungod sa pagpatuman niini. Palihug i-check ang kahon/mga kahon sa inyong tubag. 
+ 
+B. Universal Health Care (UHC) Awareness 
+ 
+12. Have you heard about Universal Health Care (UHC) prior to this survey? 
+Nakadungog ka na ba bahin sa Universal Health Care (UHC) sa wala pa kining surbey? 
+ 
+ 
+ 
+☐ Yes 
+Oo 
+ 
+ 
+ 
+☐ No <proceed to Q31> 
+Wala <padayon sa Q31> 
+ 
+13. Has the increase in equipment been implemented since the UHC Act was passed in 2019 and was it a 
+result of the UHC Act? 
+Napatuman ba ang pagdugang ug mga ekipo sukad napasar ang UHC Act sa 2019 ug resulta ba kini sa UHC 
+Act? 
+SELECT ONE ANSWER ONLY. 
+PILI UG USA KA TUBAG LAMANG 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, gipatuman kini isip direkta nga resulta sa UHC 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, kini anaa na, pero niuswag pag-ayo tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, gipatuman na o niuswag, pero dili tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, specify other reason __________________________________________ 
+Oo, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Dili, wala kini napatuman pa, pero aduna kami plano sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years 
+Dili, ug wala kami plano nga buhaton kini sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, specify other reason ___________________________________________ 
+Wala, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ I don't know  
+Wala ko kahibalo 
+ 
+ 
+14. What are these pieces of equipment? 
+Unsa kini nga mga ekipo? 
+ 
+ 
+ 
+(Specify the equipment) 
+(Isulti kini nga mga ekipo) 
+ 
+ 
+15. Has the increase in supplies been implemented since the UHC Act was passed in 2019 and was it a 
+result of the UHC Act? 
+Napatuman ba ang pagdugang ug mga suplays sukad napasar ang UHC Act sa 2019 ug resulta ba kini sa UHC 
+Act? 
+      SELECT ONE ANSWER ONLY. 
+        PILI UG USA KA TUBAG LAMANG 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC? 
+Oo, gipatuman kini isip direkta nga resulta sa UHC 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, kini anaa na, pero niuswag pag-ayo tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, gipatuman na o niuswag, pero dili tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, specify other reason __________________________________________ 
+Oo, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Dili, wala kini napatuman pa, pero aduna kami plano sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years 
+Dili, ug wala kami plano nga buhaton kini sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, specify other reason ___________________________________________ 
+Wala, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ I don't know 
+Wala ko kahibalo 
+ 
+16. What are these supplies? 
+Unsa kini nga mga suplays? 
+ 
+ 
+ 
+(Specify the supplies) 
+(Isulti kini nga mga 
+suplays) 
+ 
+ 
+17. Has the use of electronic medical records at the facility been implemented since the UHC Act was 
+passed in 2019 and was it a result of the UHC Act? 
+Napatuman ba ang paggamit ug electronic medical records sa pasilidad sukad napasar ang UHC Act sa 2019 
+ug resulta ba kini sa UHC Act? 
+SELECT ONE ANSWER ONLY. PILI UG USA KA TUBAG LAMANG 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, gipatuman kini isip direkta nga resulta sa UHC 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, kini anaa na, pero niuswag pag-ayo tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, gipatuman na o niuswag, pero dili tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, specify other reason __________________________________________ 
+Oo, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years  
+Dili, wala kini napatuman pa, pero aduna kami plano sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years  
+Dili, ug wala kami plano nga buhaton kini sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, specify other reason ___________________________________________ 
+Wala, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ I don't know  
+Wala ko kahibalo 
+ 
+18. Have the changes to the referral system (inbound or outbound) been implemented since the UHC Act 
+was passed in 2019 and was it a result of the UHC Act? 
+Nahimo na ba ug napatuman na kausaban sa referral system (inbound o outbound) sukad napasar ang UHC 
+Act sa 2019 ug resulta ba kini sa UHC Act? 
+ 
+SELECT ONE ANSWER ONLY. 
+         PILI UG USA KA TUBAG LAMANG 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, gipatuman kini isip direkta nga resulta sa UHC 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, kini anaa na, pero niuswag pag-ayo tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, gipatuman na o niuswag, pero dili tungod sa UHC Act 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+ 
+☐ Yes, specify other reason __________________________________________ 
+Oo, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Dili, wala kini napatuman pa, pero aduna kami plano sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years 
+Dili, ug wala kami plano nga buhaton kini sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, specify other reason ___________________________________________ 
+Wala, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ I don't know  
+ 
+Wala ko kahibalo 
+ 
+19. Have the changes in staffing been implemented since the UHC Act was passed in 2019 and was it a 
+result of the UHC Act? 
+Napatuman ba ang pagbag-o sa mga kawani sukad napasar ang UHC Act sa 2019 ug resulta ba kini sa UHC 
+Act? 
+       SELECT ONE ANSWER ONLY. PILI UG USA KA TUBAG LAMANG 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, gipatuman kini isip direkta nga resulta sa UHC 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, kini anaa na, pero niuswag pag-ayo tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, gipatuman na o niuswag, pero dili tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, specify other reason __________________________________________ 
+Oo, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Dili, wala kini napatuman pa, pero aduna kami plano sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years 
+Dili, ug wala kami plano nga buhaton kini sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, specify other reason ___________________________________________ 
+Wala, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ I don't know  
+ 
+Wala ko kahibalo 
+ 
+20. Have the improved clinical practice guidelines been implemented since the UHC Act was passed in 
+2019 and was it a result of the UHC Act? Napatuman ba ang improved clinical practice guidelines sukad 
+gipasar ang UHC Act sa 2019 ug tungod ba kini sa UHC Act? 
+SELECT ONE ANSWER ONLY. PILI UG USA KA TUBAG LAMANG 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, gipatuman kini isip direkta nga resulta sa UHC 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, kini anaa na, pero niuswag pag-ayo tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, kini anaa na, pero niuswag pag-ayo tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, specify other reason __________________________________________ 
+Oo, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Dili, wala kini napatuman pa, pero aduna kami plano sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years  
+Dili, ug wala kami plano nga buhaton kini sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, specify other reason ___________________________________________ 
+Wala, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ I don't know  
+Wala ko kahibalo 
+ 
+21. Have the DOH licensing standards been implemented since the UHC Act was passed in 2019 and was 
+it a result of the UHC Act? Gipatuman ba ang DOH licensing standards sukad gipasar ang UHC Act sa 
+2019 ug tungod ba kini sa UHC Act? SELECT ONE ANSWER ONLY. PILI UG USA KA TUBAG LAMANG 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+Oo, gipatuman kini isip direkta nga resulta sa UHC 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, kini anaa na, pero niuswag pag-ayo tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, kini anaa na, pero niuswag pag-ayo tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, specify other reason __________________________________________ 
+Oo, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Dili, wala kini napatuman pa, pero aduna kami plano sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years  
+Dili, ug wala kami plano nga buhaton kini sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, specify other reason ___________________________________________ 
+Wala, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ I don't know  
+Wala ko kahibalo 
+ 
+22. Have the PhilHealth accreditation requirements been implemented since the UHC Act was passed in 
+2019 and was it a result of the UHC Act? Gipatuman ba ang PhilHealth accreditation requirements sukad 
+gipasar ang UHC Act sa 2019 ug tungod ba kini sa UHC Act?  
+SELECT ONE ANSWER ONLY. PILI UG USA KA TUBAG LAMANG 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, gipatuman kini isip direkta nga resulta sa UHC 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, kini anaa na, pero niuswag pag-ayo tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, kini anaa na, pero niuswag pag-ayo tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, specify other reason __________________________________________ 
+Oo, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Dili, wala kini napatuman pa, pero aduna kami plano sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years  
+Dili, ug wala kami plano nga buhaton kini sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, specify other reason ___________________________________________ 
+Wala, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ I don't know  
+Wala ko kahibalo 
+ 
+23. Have the service delivery protocols been implemented since the UHC Act was passed in 2019 and was 
+it a result of the UHC Act? Gipatuman ba ang service delivery protocols sukad gipasar ang UHC Act sa 
+2019 ug tungod ba kini sa UHC Act? SELECT ONE ANSWER ONLY. PILI UG USA KA TUBAG LAMANG 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, gipatuman kini isip direkta nga resulta sa UHC 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, kini anaa na, pero niuswag pag-ayo tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, kini anaa na, pero niuswag pag-ayo tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, specify other reason __________________________________________ 
+Oo, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Dili, wala kini napatuman pa, pero aduna kami plano sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years  
+Dili, ug wala kami plano nga buhaton kini sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, specify other reason ___________________________________________ 
+Wala, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ I don't know  
+Wala ko kahibalo 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+24. Have the primary care quality measures been implemented since the UHC Act was passed in 2019 and 
+was it a result of the UHC Act? Gipatuman ba ang primary care quality measures sukad gipasar ang 
+UHC Act sa 2019 ug tungod ba kini sa UHC Act? SELECT ONE ANSWER ONLY. PILI UG USA KA TUBAG LAMANG 
+ 
+ 
+ 
+☐ Yes, this was implemented as a direct result of the UHC Act 
+Oo, gipatuman kini isip direkta nga resulta sa UHC 
+ 
+ 
+ 
+☐ Yes, this was pre-existing, but it has significantly improved due to the UHC Act 
+Oo, kini anaa na, pero niuswag pag-ayo tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, this has been implemented or improved recently, but not due to the UHC Act 
+Oo, kini anaa na, pero niuswag pag-ayo tungod sa UHC Act 
+ 
+ 
+ 
+☐ Yes, specify other reason __________________________________________ 
+Oo, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ No, this has not been implemented yet, but we plan to in the next 1-2 years 
+Dili, wala kini napatuman pa, pero aduna kami plano sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, and we have no plans to do this in the next 1-2 years  
+Dili, ug wala kami plano nga buhaton kini sa sunod 1-2 ka tuig 
+ 
+ 
+ 
+☐ No, specify other reason ___________________________________________ 
+Wala, isulti ang ubang rason _____________________ 
+ 
+ 
+ 
+☐ I don't know  
+Wala ko kahibalo 
+ 
+25. Which of the following do you expect to change in your personal work as a health worker under UHC?  
+Hain sa mosunod ang imong gipaabot nga mausab sa imong personal nga trabaho isip health worker ubos sa 
+UHC? 
+SELECT ALL THAT APPLY. PILIA ANG TANAN NGA MO APPLY 
+ 
+ 
+ 
+☐ Salary 
+Sweldo 
+☐ Standards to follow 
+Sumbanan nga sundon 
+☐ I don't know 
+Wala ko kahibalo 
+ 
+ 
+ 
+☐ Number of patients 
+Gidaghanon sa pasyente 
+☐ Preventative health care 
+Preventative health care 
+☐ Other (specify) 
+Uban pa (Isulti) 
+ 
+ 
+ 
+☐ Working hours 
+Oras sa trabaho 
+☐ Patients seek healthcare in different ways 
+Ang mga pasyente mangita og pag-atiman sa 
+panglawas sa lain-laing paagi 
+ 
+ 
+ 
+26. How do you expect the following to change: Salary? <only for those who answered “Salary” on Q25> 
+Sa imong tan-aw, unsaon pag-usab ang mosunod: Sweldo?  
+<alang lamang sa mga mitubag og “Sweldo” sa Q25> 
+ 
+ 
+ 
+☐ Higher Mas taas 
+ 
+ 
+ 
+☐ Lower Mas ubos 
+ 
+ 
+ 
+☐ I don’t know Wala ko kahibalo 
+ 
+27. How do you expect the following to change: Number of patients? <only for those who answered “Number 
+of patients” on Q25> 
+Sa imong tan-aw, unsaon pag-usab ang mosunod: Gidaghanon sa mga pasyente? 
+<alang lamang sa mga mitubag og “Gidaghanon sa mga pasyente” sa Q25> 
+ 
+ 
+ 
+☐ Higher Mas taas 
+ 
+ 
+ 
+☐ Lower Mas ubos 
+ 
+ 
+ 
+☐ I don’t know Wala ko kahibalo 
+ 
+28. How do you expect the following to change: Working hours? <only for those who answered “Working 
+hours” on Q25> 
+Sa imong tan-aw, unsaon pag-usab ang mosunod: Oras sa trabaho? 
+<alang lamang sa mga mitubag og “Oras sa trabaho” sa Q25> 
+ 
+ 
+ 
+☐ Longer Mas dugay 
+ 
+ 
+ 
+☐ Shorter Mas mubo 
+ 
+ 
+ 
+☐ I don’t know Wala ko kahibalo 
+ 
+29. How do you expect the following to change: Standards to follow? <only for those who answered 
+“Standards to follow” on Q25> 
+Sa imong tan-aw, unsaon pag-usab ang mosunod: Mga sumbanan nga sundon? 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+<alang lamang sa mga mitubag og “Mga sumbanan nga sundon” sa Q25> 
+ 
+ 
+ 
+☐ More stringent Mas higpit 
+ 
+ 
+ 
+☐ Less stringent Dili kaayo higpit 
+ 
+ 
+ 
+☐ I don’t know Wala ko kahibalo 
+ 
+30. How do you expect the following to change: Preventive healthcare? <only for those who answered 
+“Preventive healthcare” on Q25> 
+Sa imong tan-aw, unsaon pag-usab ang mosunod: Preventive healthcare? 
+<alang lamang sa mga mitubag og “Preventive healthcare” sa Q25> 
+ 
+ 
+ 
+☐ More Mas daghan 
+ 
+ 
+ 
+☐ Less Mas gamay 
+ 
+ 
+ 
+☐ I don’t know Wala ko kahibalo 
+ 
+ 
+The following questions ask about your awareness of the YAKAP/Konsulta package of Philhealth. Please 
+check the box/es of your answer. 
+Ang mosunod nga mga pangutana nagtuki sa inyong kahibalo mahitungod sa YAKAP/Konsulta package sa 
+PhilHealth. Palihug i-check ang kahon/mga kahon sa inyong tubag. 
+ 
+C. YAKAP/Konsulta Package 
+ 
+<Section C to be answered by administrators, doctors, nurses, midwives, dentists, nutritionists-dieticians only. For pharmacists/dispenser 
+and assistant pharmacist, proceed to Section E2. Otherwise, proceed to Section F – Question 56> 
+ 
+<Ang Seksyon C pagasulatan lamang sa mga administrador, doktor, nars, midwife, dentista, nutritionists-dieticians. Alang sa 
+pharmacist/dispenser ug assistant pharmacist, adto sa Seksyon E2. Kon lain, adto sa Seksyon F – Pangutana 56> 
+ 
+31. Have you heard of the PhilHealth YAKAP/Konsulta package? 
+Nakadungog ka ba sa YAKAP/Konsulta package sa PhilHealth? 
+ 
+ 
+ 
+☐ Yes  
+Oo 
+ 
+ 
+ 
+☐ No <proceed to Q41> 
+Wala <padayon sa Q41> 
+ 
+32. Which of the following are included in the YAKAP/Konsulta package?  
+Hain sa mosunod ang gilakip sa YAKAP/Konsulta package? 
+SELECT ALL THAT APPLY. 
+PILIA ANG TANAN NGA MO APPLY 
+ 
+ 
+ 
+☐ Pap smear 
+☐ Chest X-ray 
+☐ I don't know 
+Wala ko kahibalo 
+ 
+ 
+ 
+☐ Mammogram 
+☐ Low-dose Chest CT scan 
+ 
+ 
+ 
+ 
+☐ Lipid profile 
+☐ Dental services 
+ 
+ 
+ 
+ 
+☐ Thyroid function test 
+☐ All of the above 
+Tanan sa ibabaw 
+ 
+ 
+33. Which of the following statements is true with regard to registering patients to YAKAP/Konsulta? 
+Hain sa mosunod nga mga pahayag ang tinuod mahitungod sa pagparehistro sa mga pasyente sa 
+YAKAP/Konsulta? 
+SELECT ONE ANSWER ONLY. PILI UG USA KA TUBAG LAMANG 
+ 
+ 
+ 
+☐ It is possible to register individual patients to YAKAP/Konsulta  
+Posible nga marehistro ang tagsa-tagsa ka mga pasyente sa YAKAP/Konsulta 
+ 
+ 
+ 
+ 
+☐ It is possible to register whole families to YAKAP/Konsulta 
+Posible nga marehistro ang tibuok pamilya sa YAKAP/Konsulta  
+ 
+ 
+ 
+☐ It is possible to register both individual patients and their family members together to YAKAP/Konsulta 
+Posible nga marehistro pareho ang tagsa-tagsa ka pasyente ug ang ilang mga miyembro sa pamilya sa 
+YAKAP/Konsulta 
+ 
+ 
+ 
+☐ None of the above are true 
+ 
+Walay tinuod sa mga nahisgutan sa ibabaw 
+ 
+ 
+ 
+ 
+☐ I don't know  
+Wala ko kahibalo 
+ 
+ 
+34. Are you part of a health facility that is an accredited PhilHealth YAKAP/ Konsulta provider? 
+Miyembro ka ba sa usa ka health facility nga accredited nga PhilHealth YAKAP/Konsulta provider? 
+SELECT ONE ANSWER ONLY. 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+PILI UG USA KA TUBAG LAMANG 
+ 
+ 
+ 
+☐ Yes  
+Oo 
+ 
+ 
+ 
+☐ No <proceed to Q37> 
+Dili <padayon sa Q37> 
+ 
+ 
+ 
+☐ I don't know what PhilHealth YAKAP/Konsulta package accreditation is <proceed to Q37> 
+Wala ko kahibalo unsa ang accreditation sa PhilHealth YAKAP/Konsulta package <padayon sa Q37> 
+  
+ 
+ 
+ 
+☐ Other (specify) 
+Uban pa (Isulti) 
+ 
+35. Since when? Sukad kanus-a? 
+ 
+ 
+ 
+Month 
+ 
+ 
+Day 
+ 
+ 
+Year 
+ 
+ 
+ 
+ 
+ 
+ 
+36. Why is your facility applying to become an accredited YAKAP/Konsulta provider? 
+Nganong nag-apply ang inyong pasilidad para ma-akreditado isip YAKAP/Konsulta provider? 
+ 
+ 
+ 
+☐ Predictable revenue due to capitation <proceed to Q41> 
+Matag-an nga kita tungod sa capitation <padayon sa Q41> 
+ 
+ 
+ 
+☐ YAKAP is more comprehensive <proceed to Q41> 
+Mas komprehensibo ang YAKAP <padayon sa Q41> 
+ 
+ 
+ 
+☐ High volume of patients <proceed to Q41> 
+Daghang volume sa mga pasyente <padayon sa Q41> 
+ 
+ 
+ 
+☐ Other (specify) <proceed to Q41> 
+Uban pa (Isulti) <padayon sa Q41> 
+ 
+ 
+37. Why is your facility not accredited? SELECT ALL THAT APPLY 
+Nganong dili akreditado ang inyong pasilidad? PILIA ANG TANAN NGA MO APPLY 
+ 
+ 
+ 
+☐ No time 
+Walay oras/panahon 
+ 
+ 
+ 
+☐ Ongoing application 
+Nagpadayon nga application 
+ 
+ 
+ 
+☐ Other (specify)  
+Uban pa (Isulti) 
+ 
+38. Under UHC, there is a thrust towards primary health care. Part of this is the implementation of the 
+YAKAP/Konsulta or primary care package. Would your facility consider becoming accredited as a 
+YAKAP/Konsulta or primary care provider?  
+Ubos sa UHC, adunay paghatag og gibug-aton sa primary health care. Usa ka bahin niini mao ang pagpatuman 
+sa YAKAP/Konsulta o primary care package. Gikonsiderar ba sa inyong pasilidad nga magpa-accredit isip 
+YAKAP/Konsulta o primary care provider? 
+ 
+ 
+ 
+☐ Yes <Proceed to Q39, then skip to Q41> 
+ 
+Oo <Padayon sa Q39, dayon laktaw ngadto sa Q41> 
+ 
+ 
+ 
+☐ No <Proceed to Q40> 
+ 
+Wala <padayon sa Q40> 
+ 
+ 
+ 
+ 
+☐ Not a physician/dentist <Proceed to Q41> 
+Dili doctor/dentista <padayon sa Q41> 
+ 
+39. Why would your facility consider it? Nganong gikonsiderar sa inyong pasilidad kini? 
+ 
+ 
+ 
+☐ Predictable revenue due to capitation 
+Matag-an nga kita tungod sa capitation  
+ 
+ 
+ 
+☐ YAKAP is more comprehensive 
+Mas komprehensibo ang YAKAP 
+ 
+ 
+ 
+☐ High volume of patients 
+Daghang volume sa mga pasyente 
+ 
+ 
+ 
+☐ Other, specify 
+Uban pa (Isulti) 
+ 
+ 
+ 
+☐ Not a physician/dentist 
+Dili doctor/dentista 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+40. What might convince your facility to become a primary care provider? 
+Unsa kaha ang makakumbinsi sa inyong pasilidad nga mahimong primary care provider? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+The following questions ask about No Balance Billing (NBB) and Zero Balance Billing (ZBB). Please check the 
+box/es of your answer. 
+Ang mosunod nga mga pangutana nagtuki bahin sa No Balance Billing (NBB) ug Zero Balance Billing (ZBB). Palihug i-
+check ang kahon sa imong tubag. 
+ 
+D. Awareness on No Balance Billing (NBB) and Zero Balance Billing (ZBB) 
+ 
+<Section D to be answered by administrators, doctors, nurses, midwives, dentists, nutritionists-dieticians only. For pharmacists/dispenser 
+and assistant pharmacist, proceed to Section E2 – Question 53. Otherwise, proceed to Section F – Question 56> 
+<Ang Seksyon D pagatubagon lamang sa mga administrador, doktor, nars, midwife, dentista, nutritionists-dieticians. Alang sa 
+pharmacist/dispenser ug assistant pharmacist, adto sa Seksyon E2- Pangutana 53.  Kon lain, adto sa Seksyon F – Pangutana 56 
+ 
+41. Have you heard about the No Balance Billing (NBB)? 
+Nakadungog ka na ba sa No Balance Billing (NBB)? 
+ 
+ 
+ 
+☐ Yes  
+ 
+Oo 
+ 
+ 
+ 
+☐ No <proceed to Q44> 
+Wala <padayon sa Q44> 
+ 
+42. What are your sources of information about NBB? 
+Unsa ang imong tinubdan sa impormasyon bahin sa NBB? 
+SELECT ALL THAT APPLY. PILIA ANG TANAN NGA MO APPLY 
+ 
+ 
+ 
+☐ News 
+Balita 
+☐ Health center/facility 
+Health center/facility 
+ 
+ 
+ 
+☐ Legislation   
+Balaod 
+☐ LGU/Barangay 
+LGU/Barangay 
+ 
+ 
+ 
+☐ Social Media 
+Social Media 
+☐ I don’t know 
+Wala ko kahibalo 
+ 
+ 
+ 
+☐ Friends/Family  
+Higala/Pamilya 
+☐ Other (specify) 
+Uban pa (Isulti) 
+ 
+43. What is your understanding about the No Balance Billing (NBB)? 
+Unsa ang imong nasabtan bahin sa No Balance Billing (NBB)? 
+SELECT ALL THAT APPLY. PILIA ANG TANAN NGA MO APPLY 
+ 
+ 
+ 
+☐ Patient does not pay any hospital bill 
+Ang pasyente dili mobayad ug bisan unsa nga 
+bayronon sa ospital 
+☐ Patients should not be charged extra fees 
+Dili dapat i charge ug dugang bayad ang mga 
+pasyente 
+ 
+ 
+ 
+☐ PhilHealth will cover cost of treatment 
+Bayaran sa PhilHealth ang gasto sa pagpatambal 
+☐ Applies only to PhilHealth members and any 
+public hospital 
+Magamit lamang sa mga miyembro sa PhilHealth ug 
+bisan unsang publikong ospital 
+ 
+ 
+ 
+☐ Medicine and service are already included 
+Ang tambal ug serbisyo gilakip na 
+☐ Applies only to PhilHealth members and any 
+public and private hospital 
+Magamit lamang sa mga miyembro sa PhilHealth ug 
+bisan unsang publikong ug pribadong ospital 
+ 
+ 
+ 
+ 
+☐ No cash payment required upon discharge 
+☐ I don’t know 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+Dili kinahanglan bayaran sa cash sa pag-discharge 
+Wala ko kahibalo 
+ 
+ 
+ 
+ 
+☐ Applies only to PhilHealth members and DOH-run 
+hospitals 
+Magamit lamang sa mga miyembro sa PhilHealth ug 
+mga ospital nga gipadagan sa DOH 
+☐ Other (Specify) 
+Uban pa (Isulti) 
+ 
+ 
+ 
+☐ Bills are settled between the hospital and 
+PhilHealth 
+Ang mga bayronon gisulbad na tali sa ospital ug 
+PhilHealth 
+ 
+ 
+44. Have you heard about the Zero Balance Billing (ZBB)? 
+Nakadungog ka na ba bahin sa Zero Balance Billing (ZBB)? 
+ 
+ 
+ 
+☐ Yes  
+ 
+Oo 
+ 
+ 
+ 
+☐ No <proceed to Q48> 
+Wala <padayon sa Q48> 
+ 
+45. What are your sources of information about ZBB? 
+Unsa ang imong tinubdan sa impormasyon bahin sa ZBB? 
+SELECT ALL THAT APPLY. PILIA ANG TANAN NGA MO APPLY 
+ 
+ 
+ 
+☐ News 
+Balita 
+☐ Health center/facility 
+Health center/facility 
+ 
+ 
+ 
+☐ Legislation   
+Balaod 
+☐ LGU/Barangay 
+LGU/Barangay 
+ 
+ 
+ 
+☐ Social Media 
+Social Media 
+☐ I don’t know 
+Wala ko kahibalo 
+ 
+ 
+ 
+☐ Friends/Family  
+Higala/Pamilya 
+☐ Other (specify) 
+Uban pa (Isulti) 
+ 
+46. What is your understanding about the Zero Balance Billing (ZBB)? 
+Unsa ang imong nasabtan bahin sa Zero Balance Billing (ZBB)? 
+SELECT ALL THAT APPLY. PILIA ANG TANAN NGA MO APPLY 
+ 
+ 
+ 
+☐ Patient does not pay any hospital bill 
+Ang pasyente dili mobayad ug bisan unsa nga 
+bayronon sa ospital 
+☐ Patients should not be charged extra fees 
+Dili dapat i charge ug dugang bayad ang mga 
+pasyente 
+ 
+ 
+ 
+☐ PhilHealth will cover cost of treatment 
+Bayaran sa PhilHealth ang gasto sa pagtambal 
+☐ Applies only to PhilHealth members and any 
+public hospital 
+Magamit lamang sa mga miyembro sa PhilHealth ug 
+bisan unsang publikong ospital 
+ 
+ 
+ 
+☐ Medicine and service are already included 
+Ang tambal ug serbisyo gilakip na 
+ 
+☐ Applies only to PhilHealth members and any 
+public and private hospital 
+Magamit lamang sa mga miyembro sa PhilHealth ug 
+bisan unsang publikong ug pribadong ospital 
+ 
+ 
+ 
+☐ No cash payment required upon discharge 
+Dili kinahanglan bayaran sa cash sa pagpagawas 
+☐ I don’t know 
+Wala ko kahibalo 
+ 
+ 
+ 
+☐ Applies only to PhilHealth members and DOH-run 
+hospitals 
+Magamit lamang sa mga miyembro sa PhilHealth ug 
+mga ospital nga gipadagan sa DOH 
+☐ Other (Specify) 
+Uban pa (Isulti) 
+ 
+ 
+ 
+ 
+☐ Bills are settled between the hospital and 
+PhilHealth 
+Ang mga bayronon gisulbad na tali sa ospital ug 
+PhilHealth 
+ 
+ 
+47. What challenges do you commonly encounter for patients covered by ZBB? SELECT ALL THAT APPLY. 
+Unsa nga mga hagit ang kasagaran ninyong masugatan para sa mga pasyente nga sakop sa ZBB? PILIA 
+ANG TANAN NGA MO APPLY. 
+ 
+ 
+ 
+☐ Lack/Insufficient medicines/supplies Kulang/dili igo nga mga tambal/supplies 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+ 
+☐ Limited diagnostic services Limitado nga serbisyo nga diagnostic 
+ 
+ 
+ 
+☐ High patient volume/workload Daghan nga pasyente/bug-at nga trabaho 
+ 
+ 
+ 
+☐ Documentation/compliance issues Mga isyu sa dokumentasyon/pagsunod sa patakaran 
+ 
+ 
+ 
+☐ ICT/system limitations Limitasyon sa ICT/system 
+ 
+ 
+ 
+☐ Patient-related concerns Mga kabalaka nga may kalabotan sa pasyente 
+ 
+ 
+ 
+☐ Other (specify): ____________ Uban pa (isulti): ____________ 
+ 
+The following questions ask about awareness of BUCAS center and GAMOT package. Please check the box/es 
+of your answer. 
+Ang mosunod nga mga pangutana nagtuki bahin sa BUCAS center ug GAMOT package. Palihug i-check ang kahon sa 
+imong tubag. 
+ 
+E. Awareness on Expanded Health Programs (BUCAS and GAMOT) 
+ 
+E1. Awareness of BUCAS 
+<Questions 48 to 52 are to be answered only by administrators, doctors, nurses, midwives, dentists, nutritionists-dieticians in facilities with 
+BUCAS centers. For pharmacists/dispenser and assistant pharmacists, proceed to Section E2 - Question 53. Otherwise, proceed to Section 
+F – Question 56> 
+<Ang mga Pangutana 48 hangtod 52 kinahanglan tubagon lamang sa mga administrador, doktor, nars, midwife, dentista, nutritionists-
+dietitians sa mga pasilidad nga adunay mga sentro sa BUCAS. Para sa mga pharmacists/dispenser ug assistant pharmacists, adto sa 
+Seksyon E2 - Pangutana 53. Kon dili, adto sa Seksyon F – Pangutana 56> 
+ 
+48. Have you heard about the Bagong Urgent Care and Ambulatory Service (BUCAS) center? 
+Nakadungog ka na ba bahin sa Bagong Urgent Care and Ambulatory Service (BUCAS) center? 
+ 
+ 
+ 
+☐ Yes 
+Oo 
+ 
+ 
+ 
+☐ No <proceed to Q53> 
+Wala <padayon sa Q53> 
+ 
+49. Do you have a BUCAS Center? 
+Aduna ba moy BUCAS Center? 
+ 
+ 
+ 
+☐ Yes 
+Oo 
+ 
+ 
+ 
+ 
+ 
+☐ No <proceed to Q46> 
+Wala <padayon sa Q46> 
+ 
+ 
+ 
+☐ I don’t know <proceed to Q46> 
+Wala ko kahibalo <padayon sa Q46> 
+ 
+50. In your assessment, what are the main factors affecting the utilization of BUCAS in your facility? 
+Sa imong pagtimbang, unsa ang mga hinungdan nga nakaapekto sa paggamit sa BUCAS sa inyong 
+pasilidad? 
+ 
+SELECT ALL THAT APPLY. 
+PILIA ANG TANAN NGA MO APPLY 
+ 
+ 
+ 
+☐ Patient awareness 
+Kahibalo sa pasyente 
+☐ Facility location and accessibility 
+Lokasyon ug accessibility sa pasilidad 
+ 
+ 
+ 
+☐ Referral patterns 
+Mga pamaagi sa referral 
+☐ PhilHealth coverage and reimbursement 
+Sakop sa PhilHealth ug reimbursement 
+ 
+ 
+ 
+☐ Availability of staff/services 
+Anaa nga mga kawani/serbisyo 
+☐ Other (specify) 
+Uban pa (isulti) 
+ 
+51. Do you feel BUCAS improves patient management efficiently? Gibati ba nimo nga ang BUCAS 
+makapauswag sa patient management sa episyenteng paagi? 
+ 
+ 
+ 
+☐ Yes Oo 
+ 
+ 
+ 
+ 
+ 
+☐ No Dili 
+ 
+52. In your opinion, BUCAS Centers have: SELECT ALL THAT APPLY 
+Sa imong opinyon, ang mga BUCAS Center adunay: PILIA ANG TANAN NGA MO APPLY 
+ 
+ 
+ 
+☐ Improved access to care Nauswag nga access sa pag-atiman 
+ 
+ 
+ 
+☐ Improved quality of care Nauswag nga kalidad sa pag-atiman 
+ 
+ 
+ 
+☐ Reduced patient congestion Napakunhod nga paghuot sa pasyente 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+ 
+☐ No significant impact Walay dakong epekto 
+ 
+ 
+ 
+☐ Other (specify): _____ Uban pa (isulti): _____ 
+ 
+ 
+E2. Awareness of GAMOT Package 
+<Questions 53 to 55 are to be answered only by administrators, doctors, nurses, midwives, dentists, pharmacists/dispenser, and assistant 
+pharmacists in facilities with GAMOT pharmacy. Otherwise, proceed to Question 56> 
+<Ang mga Pangutana 53 hangtod 55 kinahanglan tubagon lamang sa mga administrador, doktor, nars, midwife, dentista, 
+pharmacists/dispenser, ug assistant pharmacists sa mga pasilidad nga adunay botika nga GAMOT. Kon dili, adto sa Pangutana 56> 
+ 
+53. Have you heard about the Guaranteed and Accessible Medications for Outpatient Treatment 
+(GAMOT) package? Nakadungog ka na ba bahin sa Guaranteed and Accessible Medications for 
+Outpatient Treatment (GAMOT) package? 
+ 
+ 
+ 
+☐ Yes 
+Oo 
+ 
+ 
+ 
+ 
+ 
+☐ No <proceed to Q56> 
+Wala <padayon sa Q56> 
+ 
+54. Is your facility an accredited GAMOT provider? 
+Ang inyong pasilidad ba usa ka akreditado nga GAMOT provider? 
+ 
+ 
+ 
+☐ Yes 
+Oo 
+ 
+ 
+ 
+ 
+ 
+☐ No <proceed to Q56> 
+Dili <padayon sa Q49> 
+ 
+55. In your assessment, what are the main factors affecting the utilization of the GAMOT package in 
+your facility? Sa imong pagtimbang, unsa ang mga hinungdan nga nakaapekto sa paggamit sa 
+GAMOT package sa inyong pasilidad? 
+ 
+SELECT ALL THAT APPLY. PILIA ANG TANAN NGA MO APPLY. 
+ 
+ 
+ 
+☐ Availability of GAMOT medicines 
+Anaa nga GAMOT nga mga tambal 
+☐ Pharmacy capacity 
+Kapasidad sa pharmacy 
+ 
+ 
+ 
+☐ Patient awareness of the program 
+Kahibalo sa pasyente sa programa 
+☐ PhilHealth eligibility and reimbursement processes 
+Ang pagka-eligible sa PhilHealth ug mga proseso sa 
+reimbursement 
+ 
+ 
+ 
+☐ Prescribing practices of physicians 
+Mga pamaagi sa pagreseta sa mga doktor 
+☐ Other (specify) 
+Uban pa (isulti) 
+ 
+The following questions will ask about your outbound and inbound referrals as well as your satisfaction with 
+the referral system. Please check the box/es of your answer. 
+Ang mosunod nga mga pangutana nagtuki bahin sa inyong mga outbound ug inbound nga referral ug sa inyong 
+katagbawan sa sistema sa referral. Palihug i-check ang kahon sa imong tubag. 
+ 
+F. Outbound & Inbound Referrals and Satisfaction 
+ 
+56. What is/are the most common way/s you send referrals to higher level facilities? 
+Unsa ang kasagaran nga inyong mga pamaagi sa pagpadala og mga referral sa mga pasilidad nga mas 
+taas ang lebel? 
+SELECT ALL THAT APPLY. 
+PILIA ANG TANAN NGA MO APPLY. 
+ 
+ 
+ 
+☐ Physical referral slip 
+Pisikal nga referral slip 
+☐ Referring facility calls receiving facility 
+Ang nag-refer nga pasilidad motawag sa modawat nga pasilidad 
+ 
+ 
+ 
+☐ E-referral 
+E-referral 
+☐ Other (specify) 
+Uban pa (isulti) 
+ 
+57. What type of referral form do you use to send to higher level facilities? 
+Unsa nga klase sa referral form ang inyong gigamit sa pagpadala sa mga pasilidad nga mas taas ang 
+lebel? 
+ 
+ 
+ 
+☐ DOH standard referral form 
+Standard referral form sa DOH 
+☐ City / LGU standard referral form 
+Standard referral form sa siyudad / LGU 
+ 
+ 
+ 
+☐ Facility's standard referral form 
+☐ No standard referral form 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+Standard referral form sa pasilidad 
+Walay standard referral form 
+ 
+ 
+ 
+☐ Province's standard referral form 
+Standard referral form sa probinsya 
+☐ Other (specify) 
+Uban pa (isulti) 
+ 
+58. Do you have a network of specialist providers to refer patients to, if needed? 
+Aduna ba kamoy network sa mga espesyalista aron i-refer ang mga pasyente, kung gikinahanglan? 
+ 
+ 
+ 
+☐ Yes 
+Aduna 
+☐ I've never heard of it 
+Wala ko kadungog ana 
+ 
+ 
+ 
+☐ No 
+Wala 
+☐ I don't know 
+Wala ko kahibalo 
+ 
+59. Considering all patients who come to this facility for the past 6 months, what proportion of patients 
+coming to this facility are referred from another facility compared to walk-ins? 
+Sa pagkonsiderar sa tanan nga mga pasyente nga miabot niining pasilidad sa miaging 6 ka bulan, unsa 
+nga proporsyon sa mga pasyente nga miabot niining pasilidad ang gi-refer gikan sa laing pasilidad kon 
+itandi sa mga walk-in? 
+ 
+ 
+ 
+☐ Almost all patients are referred, very few walk-in/self-referred 
+Halos tanan nga mga pasyente gi-refer, diyutay ra ang walk-in/self-referred 
+ 
+ 
+ 
+☐ Majority of patients are referred, some walk-in/self-referred 
+Kadaghanan sa mga pasyente gi-refer, pipila ang walk-in/self-referred 
+ 
+ 
+ 
+☐ The proportion of referrals is about equal to walk-ins 
+Ang proporsyon sa mga referral halos pareho sa mga walk-in 
+ 
+ 
+ 
+☐ Majority of patients walk- in/self-referred, some are referred 
+Kadaghanan sa mga pasyente walk-in/self-referred, pipila ang gi-refer 
+ 
+ 
+ 
+☐ Almost all patients walk- in/self-referred, very few are referred 
+Hapit tanan nga mga pasyente walk-in/self-referred, diyutay ra ang gi-refer 
+ 
+ 
+ 
+☐ I am unsure about the typical ratio of referrals to walk-ins 
+Dili ko sigurado sa tipikal nga ratio sa mga referral sa walk-in 
+ 
+60. Of those referred, what is/are the most common way/s you receive referrals from lower-level 
+facilities? 
+Sa mga gi-refer, unsa ang kasagaran nga mga pamaagi nga inyong nadawat ang mga referral gikan sa 
+mga pasilidad nga ubos ang lebel? 
+SELECT ALL THAT APPLY 
+PILIA ANG TANAN NGA MO APPLY. 
+ 
+ 
+ 
+☐ Physical referral slip 
+Pisikal nga referral slip 
+☐ Referring facility calls receiving facility 
+Ang nag-refer nga pasilidad motawag sa modawat nga pasilidad 
+ 
+ 
+ 
+☐ E-referral 
+E-referral 
+☐ Other (specify) 
+Uban pa (isulti) 
+ 
+61. How would you rate your satisfaction with your current referral system? 
+Unsaon nimo pag-rate ang imong katagbawan sa inyong kasamtangan nga sistema sa referral? 
+ 
+ 
+ 
+☐ Very Satisfied: Minor improvements needed, patients are always referred appropriately 
+Natagbaw Kaayo: Walay improvement nga kinahanglan, ang mga pasyente kanunay nga gi-refer sa 
+angay 
+<proceed to Q63 if doctor/ dentist, otherwise, proceed to Q91> 
+<padayon sa Q63 kung doktor/dentista, kung dili, padayon sa Q91> 
+ 
+ 
+ 
+☐ Satisfied: Some improvements needed, patients are generally referred appropriately 
+Natagbaw: Gamay nga improvement gikinahanglan, ang mga pasyente sa kasagaran gi-refer sa angay 
+<proceed to Q63 if doctor/ dentist, otherwise, proceed to Q91> 
+<padayon sa Q63 kung doktor/dentista, kung dili, padayon sa Q91> 
+ 
+ 
+ 
+☐ Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional   
+Ni Natagbaw ni Wala Natagbaw: Kinahanglan og improvement, apan sa kasagaran maayo ang paglihok 
+<proceed to Q63 if doctor/ dentist, otherwise, proceed to Q91> 
+<padayon sa Q63 kung doktor/dentista, kung dili, padayon sa Q91> 
+ 
+ 
+ 
+☐ Dissatisfied: Moderate improvements needed, a number of patients are referred to the wrong 
+specialists or do not receive appropriate follow-up care 
+Wala Matagbaw: Kasarangan nga improvement ang gikinahanglan, adunay mga pasyente na refer sa 
+sayop nga espesyalista 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+<proceed to Q62 if doctor/ dentist, otherwise, proceed to Q91> 
+<padayon sa Q62 kung doktor/dentista, kung dili, padayon sa Q91> 
+ 
+ 
+ 
+☐ Very Dissatisfied: Major improvements needed, many patients are referred to the wrong specialists or 
+do not receive appropriate follow-up care 
+Wala Gyud Natagbaw: Dako nga improvement ang gikinahanglan, daghang pasyente ang na refer sa mga 
+sayop nga espesyalista o wala makadawat og follow-up care 
+<proceed to Q62 if doctor/ dentist, otherwise, proceed Q91> 
+<padayon sa Q62 kung doktor/dentista, kung dili, padayon sa Q91> 
+ 
+62. Why are you not satisfied with the current referral system? 
+Nganong wala ka matagbaw sa kasamtangan nga sistema sa referral? 
+ 
+ 
+ 
+☐ Facilities are overcrowded or operating beyond capacity and do not accept the health care provider’s 
+patient referrals   
+Ang mga pasilidad nag-operate labaw sa kapasidad ug dili modawat sa mga referral sa pasyente sa health 
+care provider 
+<proceed to Q63 if doctor/ dentist, otherwise, proceed to Q91> 
+<padayon sa Q63 kung doktor/dentista, kung dili, padayon sa Q91> 
+ 
+ 
+ 
+☐ The referral process is slow   
+Hinay ang proseso sa referral 
+<proceed to Q63 if doctor/ dentist, otherwise, proceed to Q91> 
+<padayon sa Q63 kung doktor/dentista, kung dili, padayon sa Q91> 
+ 
+ 
+ 
+☐ There is poor coordination between our facility and referred facilities (e.g. We do not get information 
+back from the facility about the patients we referred to them.)  
+Dili maayo ang koordinasyon tali sa among pasilidad ug sa gi-refer nga mga pasilidad (pananglitan: Dili 
+kami makadawat og impormasyon gikan sa pasilidad mahitungod sa mga pasyente nga among gi-refer 
+kanila.) 
+<proceed to Q63 if doctor/ dentist, otherwise, proceed to Q91> 
+<padayon sa Q63 kung doktor/dentista, kung dili, padayon sa Q91> 
+ 
+ 
+ 
+☐ Other (specify)  
+Uban pa (isulti) 
+<proceed to Q63 if doctor/ dentist, otherwise, proceed to Q91> 
+<padayon sa Q63 kung doktor/dentista, kung dili, padayon sa Q91> 
+ 
+This section contains questions about your knowledge, attitudes, and practices on professional setting, 
+charging, and reimbursements. Please put your answer in the space provided or check the box/es of your 
+answer.  
+Kini nga seksyon adunay mga pangutana mahitungod sa imong kahibalo, mga kinaiya, ug mga pamaagi sa 
+propesyonal nga kahimtang, pag-charge, ug mga reimbursement. Palihug ibutang ang imong tubag sa luna nga 
+gihatag o i-check ang kahon sa imong tubag. 
+ 
+G. Knowledge, Attitude, And Practices (KAP) on Professional Setting, Charging, And Reimbursement 
+ 
+A doctor's professional fee is a, negotiable, and personalized fee that takes into account both the difficulty of the case and the patient's 
+capacity to pay, while adhering to ethical standards. To be asked from physicians, and dentists. 
+Ang propesyonal nga bayad sa doktor usa ka nag-usab ug personal nga bayad nga nagkonsidera sa kalisud sa kaso ug sa katakos sa 
+pasyente sa pagbayad, samtang nagsunod sa mga sumbanan sa pamatasan. Para ipangutana sa mga doktor ug dentista. 
+ 
+63. Are you aware of the facility-level professional fee policies in setting your professional fees? 
+Nahibalo ka ba sa mga polisiya sa facility-level professional fee sa pagtakda sa imong propesyonal nga 
+bayad? 
+ 
+ 
+ 
+☐ Yes 
+Oo 
+ 
+ 
+ 
+☐ No <proceed to Q66>  
+Wala <padayon sa Q66>  
+ 
+64. If yes, do you consider them in setting your professional fees? 
+Kung nahibalo, gikonsiderar mo ba kini sa pagtakda sa imong propesyonal nga bayad? 
+ 
+ 
+ 
+☐ Yes <proceed to Q66> 
+Oo <padayon sa Q66> 
+ 
+ 
+ 
+☐ No 
+Wala  
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+65. If no, why not? 
+Kung wala, ngano? 
+ 
+ 
+ 
+66. Are you aware of the PhilHealth coverage rules in setting your professional fees? 
+Nahibalo ka ba sa mga lagda sa sakop sa PhilHealth sa pagtakda sa imong propesyonal nga bayad? 
+ 
+ 
+ 
+☐ Yes <proceed to Q67> 
+Oo <padayon sa Q67> 
+ 
+ 
+ 
+☐ No <proceed to Q69> 
+Wala <padayon sa Q69> 
+ 
+67. Do you consider these in setting professional fees? 
+Gikonsiderar mo ba kini sa pagtakda sa imong propesyonal nga bayad? 
+ 
+ 
+ 
+☐ Yes <proceed to Q69> 
+Oo <padayon sa Q69> 
+ 
+ 
+ 
+☐ No 
+Wala 
+ 
+68. If no, why not? 
+Kon wala, ngano? 
+ 
+ 
+ 
+ 
+ 
+69. Do you know the implications of the ZBB policy for professional fee charging? 
+Nahibalo ka ba sa implikasyon sa ZBB policy sa pag-charge sa propesyonal nga bayad? 
+<only for respondents from DOH-retained hospitals> 
+<alang lamang sa respondents gikan sa DOH-retained nga ospital> 
+ 
+ 
+ 
+☐ Yes 
+Oo 
+ 
+ 
+ 
+☐ No <proceed to Q72> 
+Wala <padayon sa Q72> 
+ 
+70. Do you know the implications of the NBB policy for professional fee charging? 
+       Nahibalo ka ba sa implikasyon sa NBB policy sa pag-charge sa propesyonal nga bayad? 
+<only for respondents from public hospitals, including those from DOH-retained hospitals> 
+<alang lamang sa respondents gikan sa publiko nga ospital, apil ang gikan sa DOH-retained nga ospital> 
+ 
+ 
+ 
+☐ Yes 
+Oo 
+ 
+ 
+ 
+☐ No <proceed to Q72> 
+Wala <padayon sa Q72> 
+ 
+71. If yes, what are the implications? 
+Kung oo, unsa ang mga implikasyon? 
+ 
+ 
+ 
+63a. <For those who answered ‘Yes’ in Q69>  
+<Alang sa mga nitubag og ‘Oo’ sa Q69> 
+  
+ 
+ 
+ 
+63b. <For those who answered ‘Yes’ in Q70> 
+<Alang sa mga nitubag og ‘Oo’ sa Q70> 
+  
+ 
+72. Are you familiar with the Relative Value Unit (RVU)-based pricing? 
+Pamilyar ka ba sa presyo nga gibase sa Relative Value Unit (RVU)? 
+ 
+ 
+ 
+☐ Yes <proceed to Q74> 
+Oo <padayon sa Q74> 
+ 
+ 
+ 
+☐ No 
+Wala 
+ 
+73. If no, why not? 
+Kon wala, ngano? 
+ 
+ 
+ 
+ 
+ 
+74. Aside from above policies, what other factors do you consider in setting your professional fee? 
+Gawas sa mga polisiya sa ibabaw, unsa pa nga ubang mga hinungdan ang imong gikonsiderar sa 
+pagtakda sa imong propesyonal nga bayad? 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+75. On a scale of 1-5 with 5 as highest, how fair is your professional fee reimbursement compared to 
+colleagues in other specialties with similar years of training who practice in facilities which are not 
+ZBB accredited? <only for respondents from DOH-retained hospitals> 
+Sa sukdanan nga 1-5 nga ang 5 mao ang pinakataas, unsa ka patas ang imong pag-reimburse sa 
+propesyonal nga bayad kumpara sa imong mga kaubang doktor sa ubang mga espesyalidad nga 
+adunay parehas nga tuig sa bansay nga pagpraktis sa mga pasilidad nga dili akreditado sa ZBB? 
+<alang lamang sa respondents gikan sa DOH-retained nga ospital> 
+ 
+☐ 1 
+☐ 2 
+☐ 3 
+☐ 4 
+☐ 5 
+ 
+76. On a scale of 1-5 with 5 as highest, how fair is your professional fee reimbursement compared to 
+colleagues in other specialties with similar years of training who practice in facilities which are 
+not NBB accredited? <only for respondents from public hospitals, including those from DOH-retained 
+hospitals>  
+Sa sukdanan nga 1-5 nga ang 5 mao ang pinakataas, unsa ka patas ang imong pag-reimburse sa 
+propesyonal nga bayad kumpara sa imong mga kaubang doktor sa ubang mga espesyalidad nga 
+adunay parehas nga tuig sa bansay nga pagpraktis sa mga pasilidad nga dili akreditado sa NBB? 
+<alang lamang sa respondents gikan sa publiko nga ospital, apil ang gikan sa DOH-retained nga 
+ospital> 
+ 
+☐ 1 
+☐ 2 
+☐ 3 
+☐ 4 
+☐ 5 
+ 
+77. On a scale of 1-5 with 5 as highest, how adequate is your professional fee given your specialization 
+and expertise? 
+Sa sukdanan nga 1-5 nga ang 5 mao ang pinakataas, unsa ka igo ang imong propesyonal nga bayad 
+base sa imong espesyalisasyon ug kahanas? 
+ 
+☐ 1 
+☐ 2 
+☐ 3 
+☐ 4 
+☐ 5 
+ 
+78. On a scale of 1-5 with 5 as highest, do you agree that the current reimbursement rates accurately 
+reflect the complexity and cognitive effort required for your most frequent procedures? 
+Sa sukdanan nga 1-5 nga ang 5 mao ang pinakataas, uyon ka ba nga ang kasamtangang rates sa pag-
+reimburse tukma nga nagpakita sa kakomplikado ug sa paningkamot nga gikinahanglan para sa imong 
+labing kasagaran nga mga procedures? 
+ 
+☐ 1 
+☐ 2 
+☐ 3 
+☐ 4 
+☐ 5 
+ 
+79. On a scale of 1-5 with 5 as highest, does your professional fee compensate for the medico-legal 
+risks associated with your specific field? 
+Sa sukdanan nga 1-5 nga ang 5 mao ang pinakataas, nakabayad ba ang imong propesyonal nga bayad 
+alang sa mga mediko-legal nga risgo nga nalangkit sa imong natad? 
+ 
+80. On a scale of 1-5 with 5 as highest, do reimbursement rates influence your practice’s pricing 
+strategy? 
+Sa sukdanan nga 1-5 nga ang 5 mao ang pinakataas, naka-impluwensiya ba ang rates sa pag-
+reimburse sa estratehiya sa pagpresyo sa imong praktis? 
+ 
+☐ 1 
+☐ 2 
+☐ 3 
+☐ 4 
+☐ 5 
+ 
+81. On a scale of 1-5 with 5 as highest, how acceptable is the professional fee regulation or 
+standardization under UHC? 
+Sa sukdanan nga 1-5 nga ang 5 mao ang pinakataas, unsa ka dalawaton ang regulasyon o 
+standardisasyon sa propesyonal nga bayad ubos sa UHC? 
+ 
+☐ 1 
+☐ 2 
+☐ 3 
+☐ 4 
+☐ 5 
+ 
+82. What is your opinion on the policy of charging different professional fees based on the patient’s 
+ability to pay? 
+Unsa ang imong opinyon sa polisiya sa pagpabayad og lahi-lahi nga propesyonal nga bayad base sa 
+abilidad sa pasyente nga makabayad? 
+ 
+ 
+ 
+ 
+Never 
+Wala gayud 
+Rarely 
+Panagsa ra 
+Sometimes 
+Usahay 
+Often 
+Kasagaran 
+Always 
+Sa kanunay 
+83. How often do you charge your patients? 
+Unsa ka subsob ka maningil sa imong mga 
+pasyente? 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+84. How often do you waive your professional 
+fee? 
+Unsa ka subsob nimo i-waive ang imong 
+propesyonal nga bayad? 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+85. How often do you give 
+discounts/adjustments on your professional 
+fee? 
+Unsa ka subsob ka mohatag og 
+diskwento/adjustment sa imong propesyonal 
+nga bayad? 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+86. What coping strategies have you adapted when reimbursement is perceived as insufficient? 
+Unsa nga mga estratehiya sa pagsagubang ang imong gihimo kung ang pag-reimburse giisip nga dili 
+igo? 
+ 
+ 
+ 
+87. Have you experienced professional fee balance billing despite the insurance/ZBB? 
+<only for respondents from DOH-retained hospitals> 
+Nakasinati ka na ba og professional fee balance billing bisan pa sa insurance/ZBB? 
+<alang lamang sa respondents gikan sa DOH-retained nga ospital> 
+ 
+☐ Yes 
+Oo 
+ 
+☐ No <proceed to Q90> 
+Wala <padayon sa Q90> 
+ 
+88. Have you experienced professional fee balance billing despite the insurance/NBB? 
+<only for respondents from public hospitals, including those from DOH-retained hospitals> 
+Nakasinati ka na ba og professional fee balance billing bisan pa sa insurance/NBB? 
+<alang lamang sa respondents gikan sa publiko nga ospital, apil ang gikan sa DOH-retained nga ospital> 
+ 
+☐ Yes 
+Oo  
+ 
+☐ No <proceed to Q90> 
+Wala <padayon sa Q90> 
+ 
+89. If yes, what are those situations? 
+Kon oo, unsa man kadtong mga sitwasyon? 
+ 
+ 
+ 
+90. What challenges do you face in maintaining fair and sustainable professional fees? 
+Unsa nga mga hagit ang imong giatubang sa pagpadayon sa patas ug malahutayong propesyonal nga 
+bayad? 
+ 
+ 
+ 
+ 
+We understand that in a health facility, it's often necessary to perform tasks outside of your job description to 
+ensure that high quality patient care is maintained. These questions ask about instances when this happens in 
+your day-to-day work. All information here will be kept confidential and anonymous. Please check the box of 
+your answer. 
+Nasabtan namo nga sa usa ka pasilidad sa panglawas, kasagaran gikinahanglan ang paghimo og mga buluhaton 
+gawas sa imong job description aron masiguro nga mamentinar ang dekalidad nga pag-atiman sa pasyente. Kini nga 
+mga pangutana naghisgot sa mga higayon kung kanus-a kini mahitabo sa imong adlaw-adlaw nga trabaho. Ang tanang 
+impormasyon dinhi magpabiling kompidensyal ug anonymous. Paki check ang kahon sa imong tubag. 
+ 
+H. Task Sharing 
+ 
+91. In your day-to-day work, how often do you have to perform tasks that should be performed by a 
+different role? Sa imong inadlaw nga trabaho, unsa ka sagad kinahanglan ka mobuhat og mga 
+buluhaton nga dapat buhaton sa laing katungdanan? 
+ 
+ 
+ 
+☐ Everyday 
+Adlaw-adlaw 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+ 
+☐ More than once a week, but not everyday 
+Labaw sa kausa sa usa ka semana, pero dili adlaw-adlaw 
+ 
+ 
+ 
+☐ Around once a week 
+Mga kausa sa usa ka semana 
+ 
+ 
+ 
+☐ Less than once a week, but at least once a month 
+Wala pay kausa sa usa ka semana, apan labing menos kausa sa usa ka buwan 
+ 
+ 
+ 
+☐ Very rarely (can think of a few times only) 
+Panagsa ra kaayo (makahunahuna sa pipila ka mga higayon lamang) 
+ 
+ 
+ 
+☐ This has never happened to me 
+ 
+92. When this happens, which of the following best applies to you? 
+Kung kini mahitabo, asa sa mosunod ang labing angay kanimo? 
+ 
+ 
+ 
+☐ I typically have to take on tasks that should be performed by only staff / more junior health care providers 
+to me 
+Kasagaran kinahanglan nako nga kuhaon ang mga buluhaton nga dapat ra buhaton sa mga staff / mas 
+junior nga mga healthcare provider kaysa nako. 
+ 
+ 
+ 
+☐ I typically have to take on tasks that should be performed only by staff / more senior health care 
+providers to me 
+Kasagaran kinahanglan nako nga kuhaon ang mga buluhaton nga dapat ra buhaton sa mga staff / mas 
+senior nga mga healthcare provider kaysa nako. 
+ 
+ 
+ 
+☐ I have to take on tasks that should be performed by staff that are not health workers (e.g., cleaners, 
+drivers, IT) 
+Kinahanglan nako nga kuhaon ang mga buluhaton nga dapat buhaton sa mga staff nga dili health workers 
+(pananglitan: mga tiglimpyo, drayber, IT). 
+ 
+ 
+ 
+☐ Other (specify): 
+Uban pa (isulti): 
+ 
+  
+93. What are the most common tasks you do in your daily work that you could delegate to a more junior 
+staff or different staff member? 
+Unsa ang kasagarang mga buluhaton nga imong gibuhat sa imong adlaw-adlaw nga trabaho nga 
+mahimo nimong i-delegate sa mas junior nga staff o laing miyembro sa staff? 
+ 
+ 
+ 
+☐ Patient assessments 
+Pag-assess sa pasyente 
+ 
+ 
+ 
+☐ Clinical tasks (e.g. taking vital signs, drawing blood, hanging medicines) 
+Mga clinical nga buluhaton (pananglitan: pagkuha sa vital signs, pagkuha og dugo, pag-taod og tambal) 
+ 
+ 
+ 
+☐ Patient self-care support (e.g., cleaning patients, assisting with toilet) 
+Pagsuporta sa self-care sa pasyente (pananglitan: paglimpyo sa pasyente, pagtabang sa kasilyas) 
+ 
+ 
+ 
+☐ Explaining treatment plans to patients and relatives 
+Pagpasabot sa treatment plan ngadto sa mga pasyente ug mga paryente 
+ 
+ 
+ 
+☐ Administrative tasks (e.g. writing notes, requesting tests, encoding) 
+Mga administrative nga buluhaton (pananglitan: pagsulat og notes, pag-request og tests, pag-encode) 
+ 
+ 
+ 
+☐ Other (specify) 
+Uban pa (isulti) 
+ 
+ 
+94. Which best explains why you take on these tasks? 
+Hain sa mosunod ang labing nagpatin-aw nganong imong gikuha kining mga buluhaton? 
+ 
+ 
+ 
+☐ We are short staffed, so I have to Kulang mi og tawo, mao nga kinahanglan nako 
+ 
+ 
+ 
+☐ I am capable of the task, I just haven't completed official certification yet Kaya nako ang buluhaton, wala 
+pa lang ko nakahuman sa opisyal nga certification 
+ 
+ 
+ 
+☐ I think that someone of my role should be responsible for these tasks Sa akong hunahuna, ang usa ka 
+tawo sa akong posisyon ang angay nga responsable niini nga mga buluhaton 
+ 
+ 
+ 
+☐ Other (specify) Uban pa (isulti) 
+ 
+95. Do you agree or disagree with this statement:  
+I think it's okay that health workers share tasks across roles even if they are beyond their job description. 
+Uyon ka ba o dili uyon niini nga pamahayag: 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+Nagtuo ko nga okay ra nga ang mga health worker magpaambit og mga buluhaton tabok sa mga role bisan 
+kung kini lapas na sa ilang job description. 
+ 
+ 
+ 
+☐ Agree but for medical tasks only 
+Uyon apan para sa medikal nga mga 
+buluhaton lamang 
+☐ Agree for both medical and clerical tasks 
+Uyon para sa medikal ug clerical nga mga buluhaton 
+ 
+ 
+ 
+☐ Agree but for clerical tasks only 
+Uyon apan para sa clerical nga mga 
+buluhaton lamang 
+☐ Disagree for both medical and clerical tasks 
+Dili uyon para sa medikal ug clerical nga mga buluhaton 
+ 
+These questions ask about your satisfaction with the support you receive from your facility. Please place your 
+answer in the space provided or check the box of your answer. 
+Ang mosunod nga mga pangutana nagtuki bahin sa inyong katagbawan sa suporta nga inyong nadawat gikan sa 
+inyong pasilidad. Palihug ibutang ang imong tubag sa luna nga gihatag o i-check ang kahon sa imong tubag. 
+ 
+I. Facility Support 
+ 
+96. Are you satisfied with the support you receive from your facility to implement UHC reforms? 
+Kontento ba ka sa suporta nga imong nadawat gikan sa inyong pasilidad sa pagpatuman sa mga 
+reporma sa UHC? 
+ 
+ 
+ 
+☐ Yes <proceed to Q98>     
+Oo <padayon sa Q98> 
+ 
+ 
+ 
+☐ No  
+Wala 
+ 
+97. Why not? Nganong wala? 
+ 
+ 
+ 
+☐ Insufficient support given 
+Dili igo ang suporta nga gihatag 
+☐ Support is not targeted 
+Ang suporta dili tukma 
+ 
+ 
+ 
+☐ Hard to coordinate 
+Lisod mag-koordinar 
+☐ Other (specify) 
+Uban pa (isulti) 
+ 
+ 
+ 
+ 
+ 
+J. Job Satisfaction 
+ 
+The final section focuses on your satisfaction about your compensation, working environment, and professional 
+development. Please check the box of your answer. Ang katapusang bahin nagpokus sa imong katagbawan 
+bahin sa imong kompensasyon, palibot sa trabaho, ug propesyonal nga kalamboan. Palihug i-check ang kahon 
+sa imong tubag. 
+ 
+Please think about your experience in this post for the past 6 months, and respond if you agree or 
+disagree with the following statements: 
+Palihug hunahunaa ang imong kasinatian niining imong pwesto sulod sa miaging 6 ka bulan, ug tubaga kung 
+miuyon ka o dili miuyon sa mosunod nga mga pamahayag: 
+ 
+ 
+Strongly 
+Agree 
+Uyon Kaayo 
+Agree 
+Uyon 
+Neither 
+Agree nor 
+Disagree 
+Ni Uyon ni 
+Wala 
+Miuyon 
+Disagree 
+Wala 
+Miuyon 
+Strongly 
+Disagree 
+Wala Gayud 
+Miuyon 
+ 
+98. I am compensated fairly. 
+Patas ang akong kompensasyon. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+99. All of my salary payments have arrived on 
+time. 
+Tanan nako nga suweldo niabot sa 
+saktong oras. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+100. All of my salary payments have arrived in 
+the correct amount. 
+Tanan nako nga suweldo niabot sa 
+saktong kantidad. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+101. The working environment is a fully 
+supportive one. 
+Ang palibot sa trabaho bug-os nga 
+matinabangon. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+102. I am treated fairly at the workplace. 
+Patas ang pagtrato kanako sa 
+trabahoan. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+103. My colleagues treat me with respect. 
+Gitrato ko og may pagrespeto sa akong 
+mga kauban. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+104. My department/unit/practice provides a 
+supportive environment for everyone 
+regardless of background, beliefs, or 
+identity. 
+Ang akong departamento/unit/practice 
+naghatag og matinabangong palibot 
+para sa tanan bisan unsa pa ang 
+kagikan, pagtuo, o identidad. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+105. I have access to the resources I need to do 
+my job well. 
+Aduna koy access sa mga kahinguhaan 
+nga akong gikinahanglan aron mabuhat 
+og maayo ang akong trabaho. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+106. In this post, I am given opportunities to 
+develop my leadership skills relevant for 
+my stage of training. 
+Niining pwestoha, gihatagan ko og 
+oportunidad nga mapalambo ang akong 
+mga kahanas sa pagpangulo nga angay 
+sa akong lebel sa training. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+107. I am satisfied with the professional 
+development opportunities I have in my job. 
+Kontento ko sa mga oportunidad sa 
+propesyonal nga kalamboan nga naa 
+nako sa akong trabaho. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+ 
+ 
+108. In addition to your salary, what other benefits as an accredited healthcare provider do you receive? 
+Gawas sa imong suweldo, unsa pa nga mga benepisyo isip usa ka accredited nga healthcare provider 
+ang imong nadawat? 
+ 
+ 
+ 
+ 
+ 
+ 
+109. What additional resources do you need to perform well in this job? 
+Unsa pa nga mga dugang nga kahinguhaan ang imong gikinahanglan aron mahimo og maayo kining 
+trabaho? 
+ 
+ 
+ 
+☐ Professional development opportunities 
+Oportunidad sa propesyonal nga kalamboan 
+ 
+ 
+ 
+☐ Better compensation policies 
+Mas maayo nga mga polisiya sa kompensasyon 
+ 
+ 
+ 
+☐ Better equipment / facilities 
+Mas maayo nga mga equipment / pasilidad 
+ 
+ 
+ 
+☐ Other (specify) 
+Uban pa (isulti) 
+ 
+110. What opportunities to develop leadership skill/s would be useful to you? 
+Unsa nga mga oportunidad sa pagpalambo sa kahanas sa pagpangulo ang mapuslanon para nimo? 
+ 
+ 
+ 
+☐ Seminars, conferences, workshops 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+Mga seminar, conference, ug workshop 
+ 
+ 
+ 
+☐ Supervisory trainings 
+Mga training sa pagdumala 
+ 
+ 
+ 
+☐ More training related to my job post 
+Dugang nga training nga may kalabutan sa akong pwesto sa trabaho 
+ 
+ 
+ 
+☐ Other (specify) 
+Uban pa (isulti) 
+ 
+111. Which of the following professional development opportunity/ies is/are currently provided to you 
+by your facility? Check all that apply 
+Hain sa mosunod nga mga oportunidad sa propesyonal nga kalamboan ang kasamtangang gihatag 
+kanimo sa imong pasilidad? Paki check ang tanan nga mo apply 
+ 
+ 
+ 
+☐ Clinical audits 
+Mga clinical nga audit 
+ 
+ 
+ 
+☐ Surgical audits 
+Mga surgical nga audit 
+ 
+ 
+ 
+☐ Quality assurance meetings 
+Mga meeting sa quality assurance 
+ 
+ 
+ 
+☐ Seminars, conferences, workshops 
+Mga seminar, conference, ug workshop 
+ 
+ 
+ 
+☐ Support for independent professional development: scholarships 
+Suporta para sa independent nga propesyonal nga kalamboan: mga scholarship 
+ 
+ 
+ 
+☐ Support for independent professional development: research grants 
+Suporta para sa independent nga propesyonal nga kalamboan: mga research grant 
+ 
+ 
+ 
+☐ None 
+Wala 
+ 
+112. Which of the following professional development opportunity/ies would be most useful to you? 
+Hain sa mosunod nga mga oportunidad sa propesyonal nga kalamboan ang labing mapuslanon para 
+nimo? 
+ 
+ 
+ 
+☐ Clinical audits 
+Mga clinical nga audit 
+ 
+ 
+ 
+☐ Surgical audits 
+Mga surgical nga audit 
+ 
+ 
+ 
+☐ Quality assurance meetings 
+Mga meeting sa quality assurance 
+ 
+ 
+ 
+☐ Seminars, conferences, workshops 
+Mga seminar, conference, ug workshop 
+ 
+ 
+ 
+☐ Support for independent professional development: scholarships 
+Suporta para sa independent nga propesyonal nga kalamboan: mga scholarship 
+ 
+ 
+ 
+☐ Support for independent professional development: research grants 
+Suporta para sa independent nga propesyonal nga kalamboan: mga research grant 
+ 
+ 
+ 
+☐ Other (specify) 
+Uban pa (isulti) 
+ 
+ 
+ 
+Please think about your experience in this post for the past 6 months, and respond if you agree or 
+disagree with the following statements: 
+Palihug hunahunaa ang imong kasinatian niining imong pwesto sulod sa miaging 6 ka bulan, ug tubaga kung 
+miuyon ka o dili miuyon sa mosunod nga mga pamahayag: 
+ 
+ 
+Always 
+Sa kanunay 
+Often 
+Kasagaran 
+Sometimes 
+Usahay 
+Seldom 
+Panagsa ra 
+Never 
+Wala gayud 
+ 
+113. In the past month, I have worked 
+beyond my scheduled hours. 
+Sa miaging bulan, nakatrabaho ko 
+lapas sa akong gieskedyul nga oras. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+114. I have been compensated for working 
+overtime. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+Nabayran ko sa akong pag-
+overtime. 
+ 
+115. My work is emotionally exhausting. 
+Makakapoy sa emosyon ang akong 
+trabaho. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+116. My work frustrates me. 
+Makalagot kanako ang akong 
+trabaho. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+117. I feel worn out at the end of a working 
+day. 
+Gibati nako nga luya kaayo ko sa 
+pagkahuman sa adlaw sa trabaho. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+118. I feel exhausted every morning at the 
+thought of another day at work. 
+Gibati nako nga kapoy na daan kada 
+buntag sa paghunahuna pa lang og 
+lain na usab nga adlaw sa trabaho. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+119. I feel that every working hour is tiring 
+for me. 
+Gibati nako nga ang matag oras sa 
+trabaho makakapoy para nako. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+ 
+120. I have enough energy for family and 
+friends during leisure time. 
+Aduna pa koy igong kusog para sa 
+pamilya ug mga higala panahon sa 
+akong libre nga oras. 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+121. I have worked overtime for: 
+<Skip if you have answered ‘Never’ in Q113> 
+Naka-overtime ko para sa: 
+<Laktawi kung ‘Wala gayud’ ang imong tubag sa Q113> 
+ 
+ 
+ 
+☐ Once or twice in the past month 
+Kausa o kaduha sa miaging bulan 
+ 
+ 
+ 
+☐ Once or twice a week 
+Kausa o kaduha sa usa ka semana 
+ 
+ 
+ 
+☐ Three or four days every week 
+Tulo o upat ka adlaw kada semana 
+ 
+ 
+ 
+☐ Almost everyday 
+Halos adlaw-adlaw 
+ 
+ 
+ 
+☐ Everyday 
+Adlaw-adlaw 
+ 
+122. Have you considered leaving this facility? 
+Nakahunahuna na ba ka sa pagbiya niining pasilidad? 
+ 
+ 
+ 
+☐ Yes, I've thought about it and have definite plans to leave 
+Oo, nakahunahuna ko sa pagbiya ug naay tino nga plano nga mobiya 
+ 
+ 
+ 
+☐ Yes, I've thought about it and am actively exploring other opportunities, but no firm plans yet 
+Oo, nakahunahuna ko sa pagbiya ug aktibo kong nagsusi og ubang mga oportunidad, apan wala pay klaro 
+nga plano 
+ 
+ 
+ 
+☐ Yes, I've thought about it, but I'm not actively exploring nor have I made any firm plans yet 
+Oo, nakahunahuna ko sa pagbiya, apan wala pa ko aktibo nga nagsusi og ubang mga oportunidad ug wala 
+pa usab koy klaro nga plano 
+ 
+ 
+ 
+☐ No, I haven't thought about it <end of survey> 
+Wala ko nakahunahuna sa pagbiya <katapusan sa survey> 
+ 
+123. Why are you planning on leaving this facility? 
+Nganong nagplano ka sa pagbiya niining pasilidad? 
+ 
+ 
+ 
+☐ Poor compensation 
+☐ Moving to another part of the country 
+
+ 
+ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 
+ 
+Gamay nga kompensasyon 
+Mobalhin sa laing parte sa nasud 
+ 
+ 
+ 
+☐ Lack of opportunities 
+Kakulangan sa oportunidad 
+☐ Moving to another country 
+Mobalhin sa laing nasud 
+ 
+ 
+ 
+☐ Burnt out 
+Burnt out 
+☐ Other (specify) 
+Uban pa (isulti) 
+ 
+124. What are you planning to do after leaving this facility? 
+Unsa ang imong plano nga buhaton human mobiya niining pasilidad? 
+ 
+ 
+ 
+☐ Transfer to a new facility with the same role 
+Mobalhin sa bago nga pasilidad  
+ 
+ 
+ 
+☐ Change training/specialization within healthcare 
+Mag-ilis og training/spesyalisasyon sulod sa healthcare 
+ 
+ 
+ 
+☐ Change profession 
+Mag-ilis og propesyon 
+ 
+ 
+ 
+☐ Take an extended leave from work 
+Mokuha og taas nga leave sa trabaho 
+ 
+ 
+ 
+☐ Take a position as a health worker in another country 
+Modawat og posisyon isip health worker sa laing nasud 
+ 
+ 
+ 
+☐ Retire 
+Moretiro 
+ 
+ 
+ 
+☐ Other (specify) 
+Uban pa (isulti) 
+  
+END OF SURVEY 
+KATAPUSAN SA SURVEY 

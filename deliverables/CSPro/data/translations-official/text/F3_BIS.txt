@@ -1,0 +1,5662 @@
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Universal Health Care (UHC) Survey – Year 2 
+In-Patient and Out-Patient Survey Questionnaire 
+ 
+ 
+Informed Consent Form  
+This informed consent form is to be obtained before conducting the interview. You must read this entire 
+consent form aloud exactly as written. After you have read this form to the respondent, you must complete 
+and sign the verification consent form. 
+Kining Porma sa Pagtugot kinahanglan iadministrar usa ipahigayon ang interbyu. Imo kining basahon tanan 
+sa klaro ug igong kusog nga tingog aron madungog sa partisipante. Pagkahuman ug basa, kuhaa ang 
+boluntaryong pagtugot pinaagi sa pagpapirma sa verification consent form. 
+ 
+PART I: Information about the Study 
+Hello, my name is    (data collector’s name) . I work for Asian Social Project Services, Inc. (ASPSI).  I am here 
+to ask you to participate in a study about the Universal Health Care (UHC) and packages of programs like Yaman 
+ng Kalusugan Program (YAKAP), No Balance Billing (NBB), Zero Balance Billing (ZBB), Bagong Urgent Care 
+and Ambulatory Services (BUCAS) centers, and Guaranteed and Accessible Medications for Outpatient 
+Treatment (GAMOT). The Department of Health (DOH) funded this study. Please let me tell you more about the 
+study.  
+Maayong adlaw, ang akong ngalan kay ( data collector’s name). Nagtatrabaho ko sa Asian Social Project Services, 
+Inc. (ASPSI). Ania ko karon aron hangyoon ka nga moapil sa usa ka pagtuon bahin sa Universal Health Care 
+(UHC) ug mga packages niini nga programa sama sa Yaman ng Kalusugan Program (YAKAP), No Balance 
+Billing (NBB), Zero Balance Billing (ZBB), Bagong Urgent Care and Ambulatory Services (BUCAS) nga mga 
+sentro, ug Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT). Ang Department of 
+Health (DOH) maoy nagpondo niini nga pagtuon. Palihug tugoti ko nga ipasabot pa kanimo ang dugang bahin 
+niini nga pagtuon. 
+ 
+This study aims to generate evidence on the overall experience of the general public to support continuous 
+monitoring, evaluation, and learning of the implementation of the UHC Act and its Implementing Rules and 
+Regulations (IRR). The questions will cover your Patient Profile, awareness of UHC and PhilHealth registration, 
+primary care usage, health-seeking behaviors, specific experiences during your visit, medical costs and payment 
+sources, specialized programs (YAKAP/Konsulta, BUCAS, GAMOT, NBB, ZBB, and MAIFIP), access to 
+medicines, and the referral experiences. 
+Ang maong pagtuon nagtumong sa paghatag og ebidensya bahin sa kinatibuk-ang kasinatian sa kadaghanang 
+publiko aron masuportahan ang padayon nga pagmonitor, ebalwasyon, ug pagkat-on sa implementasyon sa UHC 
+Act ug sa iyang Implementing Rules and Regulations (IRR). Ang mga pangutana kabahinsa profile sa pasyente, 
+kahibalo sa UHC ug pagparehistro sa Philhealth, paggamit sa primary care, mga kina-iya sa pagpatambal, mga 
+konkretong ekperyensya/kasinatian sa pagbisita, mga gasto sa pagpatambal ug mga gigikanan sa pangbayad, mga 
+espesyal nga mga programa (YAKAP/Konsulta, BUCAS, GAMOT, NBB, ZBB, and MAIFIP),access sa mga 
+tambal/medisina, ug mga kasinatian sa referral. 
+ 
+Would you like to participate as a respondent in the study? The interview may last for more or less than an hour. 
+Buot ba nimong moapil isip respondent niini nga pagtuon? Ang interbyu mahimong molungtad og kapin o kulang 
+sa usa ka oras. 
+ 
+We are committed to protecting your privacy. If you choose to participate, we will never share your family’s or 
+other household members’ personal information outside of the study team. We will never include your name in 
+information shared with the government or in any reports. Your name will be kept separately from your answers 
+in a private, secure location. For this interview, it is also important to respect other people’s privacy and not tell 
+anyone else what we talked about today. With all research, there’s a small chance that someone else might get to 
+see your data. We try our best to prevent that, but if it happens, we’ll tell you as soon as possible.  
+Kami komitado sa pagpanalipod sa imong pribasiya. Kung mopili ka nga moapil, dili gyud namo ipaambit sa 
+gawas sa study team ang personal nga impormasyon sa imong pamilya o uban pang miyembro sa panimalay. Dili 
+usab namo iapil ang imong ngalan sa bisan unsang impormasyon nga ipaambit sa gobyerno o sa bisan unsang 
+report. Ang imong ngalan ibulag gikan sa imong mga tubag ug tipigan sa usa ka pribado ug seguradong lugar. 
+Alang niini nga interbyu, importante usab nga respetuhon ang pribasiya sa uban ug dili isulti sa lain ang atong 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+gihisgutan karong adlawa. Sama sa tanang research, adunay gamay nga posibilidad nga adunay laing tawo nga 
+makakita sa imong datos. Paningkamotan gyud namo nga malikayan kana, apan kung mahitabo man, pahibaw-on 
+dayon ka namo sa labing dali nga panahon. 
+ 
+Aside from this, there are no other risks to you if you take part in this study. As a benefit of the research, the 
+knowledge gained may help the government and DOH better support your healthcare needs. We shall also provide 
+Php 100 as a token of appreciation for the time you’ve shared with us. 
+Gawas niini, wala nay laing risgo para kanimo kung moapil ka niini nga pagtuon. Isip kaayohan sa research o 
+pagtuon, ang kahibalo nga makuha mahimong makatabang sa gobyerno ug sa DOH aron mas masuportahan ang 
+imong mga panginahanglanon sa healthcare. Maghatag usab kami og Php 100 isip pasalamat sa oras nga imong 
+gihatag kanamo. 
+ 
+Nothing bad will happen if you do not want to be in this study. You can decide to stop being in the study at any 
+time. You will never have to pay anything to be in the study.  
+Walay dautang mahitabo kung dili ka gusto nga moapil niini nga pagtuon. Mahimo kang mohunong sa pag-apil 
+bisan unsang orasa. Dili ka gayud kinahanglan mobayad aron makaapil sa pagtuon. 
+ 
+Do you have any questions about the study or about what I have told you?  
+If you have concerns or questions about your rights as a participant, you can contact:  
+Aduna ba kay mga pangutana bahin sa pagtuon o sa akong gisulti kanimo? 
+Kung aduna kay kabalaka o pangutana bahin sa imong mga katungod isip partisipante, mahimo kang mokontak 
+sa: 
+ 
+Single Joint Research Ethics Board (SJREB) at the Philippines Department of Health 
+● 
+Email: sjreb@doh.gov.ph 
+● 
+National Tel: (02) 651-7800 local 1328 
+● 
+Tel: +63 936 992 5513 
+Department of Health 
+● 
+Name: Lindsley Jeremiah D. Villarante 
+● 
+Email:  ldvillarante@doh.gov.ph 
+● 
+Tel: +63 (02) 8651-7800 local 1432 
+ 
+Asian Social Project Services, Inc. 
+● 
+Name: Paulyn Jean A. Claro  
+● 
+Email: inquiry.aspsi.doh.uhc.survey2@gmail.com  
+● 
+Tel: + 63 917 819 6884 
+ 
+PART II: Certificate of Consent  
+If you have understood the information above, please say “yes” or “no” for each of my questions. May I please 
+have your permission to be interviewed by signing this form? 
+Kung nasabtan nimo ang impormasyon sa taas, palihug tubaga og “oo” o “dili” ang matag usa sa akong mga 
+pangutana. Mahimo ba nakong makuha ang imong pagtugot nga ma-interbyu pinaagi sa pagpirma niini nga 
+porma? 
+ 
+_____________________________      ___________________________________________    
+ Name and Signature of Respondent.       Address (No., Street, Barangay, Municipality/City, Province)               
+ 
+ 
+____________________    
+Tel/Mobile Phone 
+ 
+ 
+If the Respondent cannot sign this form, an adult household member can sign this consent form as a witness. 
+Kung dili makapirma ang respondent niini nga porma, mahimong mopirma ang usa ka hamtong nga miyembro 
+sa panimalay isip saksi niini nga consent form. 
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+_____________________________      ___________________________________________      
+ Name and Signature of Witness              Address (No., Street, Barangay, Municipality/City, Province)              
+ 
+ 
+____________________   
+Tel/Mobile Phone 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Questionnaire No:  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+FIELD CONTROL 
+Survey Team Leader’s 
+Name 
+ 
+Date First Visited the 
+Patient 
+(Month, Day, Year) 
+Enumerator’s Name 
+ 
+Resulta 
+ 
+Field Validated by 
+ 
+Date of Final Visit to the 
+Patient 
+(Month, Day, Year) 
+Field Edited by 
+ 
+Resulta 
+ 
+aCodes: 
+1. Completed     
+4. Incomplete     
+2. Completed at the Hospital     
+5. Completed at Home     
+3. Postponed      
+6. Withdraw Participation/Consent 
+   
+Total number of visits: 
+ 
+HEALTH FACILITY AND GEOGRAPHIC IDENTIFICATION 
+Name of Health Facility (should match inpatient and 
+outpatient mentioned facility) 
+ 
+Classification 
+☐ UHC IS 
+☐ Non-UHC IS 
+Region 
+ 
+Province/HUC 
+ 
+City/Municipality 
+ 
+Barangay 
+ 
+GPS Coordinates 
+Latitude 
+ 
+Longitude  
+Date of Visit 
+ 
+ 
+PATIENT ADDRESS AND GEOGRAPHIC IDENTIFICATION 
+City/Municipality 
+ 
+Barangay 
+ 
+GPS Coordinates* 
+Latitude  
+Longitude  
+Type of Patient 
+☐ Outpatient 
+ 
+☐ Inpatient 
+*for patients interviewed in their homes 
+ 
+ 
+A. Introduction and Informed Consent  
+ 
+1. Before we begin, to confirm, are you the patient?   Sa dili pa kita magsugod, aron 
+makumpirma, ikaw ba ang pasyente? 
+ 
+ 
+ 
+☐ Yes <proceed to Q4>  Oo <padayon sa Q4> 
+ 
+ 
+ 
+☐ No    Dili 
+ 
+2. What is your relationship to the patient?   Unsa ang imong relasyon sa pasyente? 
+ 
+ 
+ 
+☐ Spouse   
+Asawa 
+☐ Grandson 
+Apo nga lalake 
+☐ Aunt 
+Iyaan/Tiya 
+ 
+ 
+ 
+☐ Son  
+ Anak nga lalake 
+☐ Granddaughter 
+Apo nga babaye 
+☐ Nephew 
+Pag-umangkon nga lalaki 
+ 
+ 
+ 
+☐ Daughter 
+Anak nga babaye 
+☐ Father 
+Amahan 
+☐ Niece 
+Pag-umangkon nga babaye 
+ 
+ 
+ 
+☐ Step-son 
+Anak nga lalake sa 
+asawa/bana 
+☐ Mother 
+Inahan 
+☐ Neighbor 
+Silingan 
+ 
+ 
+ 
+☐ Step-daughter 
+Anak nga babaye 
+sa asawa/bana 
+☐ Brother 
+Igsoon nga lalake 
+☐ Other (specify)  
+Uban pa (I-specify) 
+ 
+ 
+ 
+☐ Son-in-law 
+Umagad / Bana sa 
+anak nga babaye 
+☐ Sister 
+Igsoon nga babaye 
+ 
+ 
+ 
+☐ Daughter-in-law 
+☐ Uncle 
+☐ Refuse to answer (DO NOT READ OUT LOUD) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Umagad / Bana sa 
+anak nga Lalake 
+Uyuon/Tiyo 
+ 
+ 
+3. Do you live in the same house as the patient? 
+Nagpuyo ba ka sa parehas nga balay uban sa pasyente? 
+ 
+ 
+ 
+ 
+☐ Yes    Oo 
+ 
+ 
+ 
+☐ No      Dili 
+ 
+Before proceeding to the survey proper, we would like to ask the patient about their 
+personal information 
+Sa dili pa kita mopadayon sa aktuwal nga survey, gusto namo mangayo og impormasyon 
+bahin sa personal nga datos sa pasyente. 
+Note to enumerator [do not read]:  This section is for the Patient Profile. Ask all questions in this section unless a skip rule 
+applies. 
+Note sa enumerator [ayaw basaha]: Kini nga seksyon para sa Patient Profile. Pangutan-a ang tanang pangutana sa kini nga 
+seksyon gawas kung adunay skip rule nga magamit. 
+ 
+ 
+B. Patient Profile   Profile sa Pasyente 
+ 
+4. Patient’s Name (Last Name, First Name, MI, Extension) 
+Ngalan sa Pasyente (Apelyido, Ngalan, Middle Initial, Extension) 
+ 
+ 
+5. In what month and year was the patient born?  
+Unsang bulana ug tuig gipanganak ang pasyente? 
+ 
+Month   Bulan _________  
+ 
+Year     Tuig__________ 
+ 
+6. Just to confirm, how old is the patient as of his/her last birthday? (in years) 
+Aron makumpirma, pila ang edad sa pasyente base sa iyang pinakaulahi nga adlawng 
+natawhan? (sa tuig) 
+ 
+ 
+ 
+ 
+7. What is the patient’s sex at birth?  Unsa ang sex sa pasyente sa pagkatawo? 
+ 
+ 
+ 
+☐ Male    Lalake 
+☐ Female      Babaye 
+ 
+8. Is the patient part of the LGBTQIA+ community? (e.g., gay, lesbian, bisexual, etc.). 
+It is fine if not comfortable answering. 
+Miyembro ba ang pasyente sa LGBTQIA+ nga komunidad? (pananglitan: gay, 
+lesbian, bisexual, ug uban pa). 
+OK ra kung dili komportable sa pagtubag. 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.     BASAHA ANG MGA PILIANAN. PILI LANG OG USA KA 
+TUBAG. 
+ 
+☐ Yes    Oo 
+☐ Don’t Know     Wala kahibalo 
+ 
+☐ No      Dili 
+☐ Refused to answer   Wala nitubag 
+ 
+☐ Not Comfortable to Answer 
+  
+ 
+9. Which group does the patient identify with? 
+It is fine if not comfortable answering. 
+Unsang grupo ang giila sa pasyente? OK ra kung dili komportable sa pagtubag. 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.     BASAHA ANG MGA PILIANAN. PILI LANG OG USA KA 
+TUBAG. 
+ 
+ 
+ 
+☐ Lesbian   Tomboy 
+☐ Queer 
+ 
+ 
+ 
+☐ Gay          Bayot 
+☐ Intersex 
+ 
+ 
+ 
+☐ Bisexual 
+☐ Asexual 
+ 
+ 
+ 
+☐ Transgender 
+☐ Other (specify)  Uban (I-specify) 
+ 
+10. What is the patient’s civil status?       Unsa ang sibil nga status sa pasyente? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.   BASAHA ANG MGA PILIANAN. PILI LANG OG USA KA 
+TUBAG. 
+ 
+ 
+ 
+☐ Single / Never Married   
+ Wala nakaagi og kaminyo 
+☐ Divorced      Legal nga bulag 
+ 
+ 
+ 
+☐ Married    Kasado 
+☐ Separated    Separada/Separado 
+ 
+ 
+ 
+☐ Common law / Live-in      
+Ga-ipon pero dili kasado 
+☐ Annulled 
+ 
+ 
+ 
+☐ Widowed      Balo 
+☐ Not reported   Wala nitubag 
+ 
+11. Does the patient identify as a person with a disability? 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Ang pasyente ba giila nga siya usa ka tawo nga adunay kapansanan? 
+ 
+ 
+ 
+☐ Yes    Oo 
+ 
+ 
+ 
+☐ No  <proceed to Q15>   Dili <padayon sa Q15> 
+ 
+12. Would the patient like to specify the type of disability? 
+Okay lang ba sa pasyente nga hisgutan o i-specify ang klase sa iyang kapansanan? 
+ 
+ 
+ 
+☐ Yes    Oo 
+ 
+ 
+ 
+☐ No  <proceed to Q15>   Dili <padayon sa Q15> 
+ 
+13. May we view the patient’s PWD Identification Card? 
+Pwede ba namo makita ang  PWD ID sa pasyente? 
+ 
+ 
+ 
+☐ Yes (card was presented and verified)   Oo (gipakita ug napamatud-an ang card) 
+ 
+ 
+ 
+☐ No (card not available at the time of interview)   Dili (wala ang card sa panahon sa 
+interbyu) 
+ 
+ 
+ 
+☐ Respondent refused to present card   Midumili ang respondent sa pagpakita sa card 
+ 
+14. Based on the presented PWD Identification Card, what type of disability is 
+indicated? 
+Base sa gipresentar nga PWD Identification Card, unsa nga klase sa kapansanan ang 
+gipakita? 
+Enumerator Instruction (DO NOT READ ALOUD) 
+If the PWD Identification Card is presented, record the type of disability as indicated on the card. Do not ask the respondent 
+directly. 
+Instruksyon sa Enumerator (AYAW BASAHA OG DUM-AY): 
+Kung gipakita ang PWD Identification Card, irekord ang klase sa kapansanan sumala sa nakasulat sa card. 
+Ayaw pangutan-a direkta ang respondent. 
+ 
+ 
+ 
+☐ Physical disability (Orthopedic)      Pisikal nga kapansanan (Orthopedic) 
+ 
+ 
+ 
+☐ Visual disability     Kapansanan sa panan-aw (Visual disability) 
+ 
+ 
+ 
+☐ Hearing disability    Kapansanan sa pandungog (Hearing disability) 
+ 
+ 
+ 
+☐ Speech impairment     Kalisud sa pagsulti (Speech impairment) 
+ 
+ 
+ 
+☐ Intellectual disability    Intelektwal nga kapansanan (Intellectual disability) 
+ 
+ 
+ 
+☐ Psychosocial disability    Sikososyal nga kapansanan (Psychosocial disability) 
+ 
+ 
+ 
+☐ Multiple disabilities     Daghang klase sa kapansanan (Multiple disabilities) 
+ 
+ 
+ 
+☐ Other disability (specify)     Uban pang kapansanan (i-specify) 
+ 
+ 
+15. What is the highest level of education the patient has attained? 
+Unsa ang pinakataas nga lebel sa edukasyon nga nahuman sa pasyente? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILI  OG  USA KA TUBAG LAMANG. 
+ 
+ 
+ 
+☐ Early Childhood Education (Pre-school) 
+☐ Master Level Education or Equivalent 
+ 
+ 
+ 
+☐ Primary Education (Grade 1 to 6) 
+Elementary  (Grade 1 hangtod 6) 
+☐ Doctoral Level Education or 
+Equivalent 
+ 
+ 
+ 
+☐ Lower Secondary Education (Grade 7 to 
+10)  (Grade 7 hangtod 10) 
+☐ No schooling   Wala naka eskwela 
+ 
+ 
+ 
+☐ Upper Secondary Education (Grade 11 to 
+12) 
+Senior High School (Grade 11 hangtod 12) 
+☐ I don't know    Wala ko kahibalo 
+ 
+ 
+ 
+☐ Post-Secondary Non-Tertiary Education 
+(including Technical and Vocational degrees with a certificate) 
+(apil ang Technical ug Vocational nga adunay certificate) 
+☐ Not applicable  Dili applicable 
+ 
+ 
+ 
+☐ Short-Cycle Tertiary Education or 
+Equivalent (including Technical and Vocational degrees with 
+a diploma)  (apil ang Technical ug Vocational nga adunay 
+diploma) 
+☐ Other (specify)    Uban pa (I-specify) 
+ 
+ 
+ 
+☐ Bachelor Level Education or Equivalent 
+ 
+ 
+16. What is the patient's employment status?   
+Unsa ang employment status sa pasyente? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+BASAHA ANG MGA OPSYON OG KUSOG. PILI UG USA KA TUBAG LAMANG. 
+ 
+ 
+ 
+☐ Has a permanent job/ own business 
+Adunay permanenteng trabaho / 
+kaugalingong negosyo 
+☐ Studying   Naga-eskwela 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Has a short-term, seasonal, casual 
+job/business 
+Adunay short-term, seasonal, o casual nga 
+trabaho/negosyo 
+☐ Retired  Retirado 
+ 
+ 
+ 
+☐ Worked on different jobs day to day per 
+week 
+Nagtrabaho sa lain-laing trabaho kada adlaw 
+matag semana 
+☐ I don't know    Wala ko kahibalo 
+ 
+ 
+ 
+☐ Unemployed and looking for work 
+Walay trabaho ug nangita og trabaho 
+☐ Not applicable  Dili applicable 
+ 
+ 
+ 
+☐ Unemployed and not looking for work 
+Walay trabaho ug wala nangita og trabaho 
+ 
+ 
+17. What is the patient’s main source of income? 
+Unsa ang pangunahing tinubdan sa kita sa pasyente? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. IF MORE THAN ONE, ASK FOR THE MAIN SOURCE. 
+BASAA ANG MGA OPSYON OG KUSOG. PILI UG USA KA TUBAG LAMANG. KUNG LABAW SA USA, PANGAYOA ANG 
+PANGUNAHING TINUBDAN/GIGIKANAN. 
+ 
+ 
+ 
+☐ Working for private company 
+Nagtrabaho sa pribadong kompanya 
+☐ Worked without pay in own family 
+business or farm 
+Nagtrabaho nga walay bayad sa 
+kaugalingong negosyo o umahan sa 
+pamilya 
+ 
+ 
+ 
+☐ Working for private household 
+Nagtrabaho sa pribadong panimalay 
+☐ Pension  Pensyon 
+ 
+ 
+ 
+☐ Working for government 
+Nagtrabaho sa gobyerno 
+☐ Unemployed and looking for work 
+Walay trabaho ug nangita og trabaho 
+ 
+ 
+ 
+☐ Worked with pay in own family business or farm 
+Nagtrabaho nga naay bayad sa 
+kaugalingong negosyo o umahan sa pamilya 
+☐ Unemployed and not looking for work 
+Walay trabaho ug wala nangita og 
+trabaho 
+ 
+ 
+ 
+☐ Self-employed without any paid employee 
+Self-employed nga walay binayrang 
+empleyado 
+☐ I don't know     Wala ko kahibalo 
+ 
+18. In the past 6 months, what is the patient’s average monthly household income? 
+Please specify in Philippine pesos. 
+Sa milabay nga 6 ka bulan, pila ang kasagarang binuwan nga kita sa panimalay sa 
+pasyente? Palihug ispecify sa Philippine pesos. 
+ 
+Approximate amount       Gibanabana nga kantidad:  
+ 
+ 
+ 
+ 
+Enumerator note: Tick the income category that corresponds to the respondent’s 
+approximate household income. 
+Enumerator note:I-check ang income category nga katumbas sa gibanabana nga kita sa 
+panimalay sa respondent. 
+ 
+ 
+ 
+☐ Under 50,000 Ubos sa 50,000 
+ 
+ 
+ 
+☐ 50,000 - 99,999 
+ 
+ 
+ 
+☐ 100,000 - 149,999 
+ 
+ 
+ 
+☐ 150,000 - 199,999 
+ 
+ 
+ 
+☐ 200,000 - 249,999 
+ 
+ 
+ 
+☐ 250,000 - 299,999 
+ 
+ 
+ 
+☐ 300,000 - 349,999 
+ 
+ 
+ 
+☐ 350,000 - 399,999 
+ 
+ 
+ 
+☐ 400,000 - 449,999 
+ 
+ 
+ 
+☐ 450,000 - 499,999 
+ 
+ 
+ 
+☐ 500,000 and over 500,000 pataas 
+ 
+19. How many total individuals (including children) live in the patient's house now?  
+Pila tanan ang nagpuyo kauban ang mga bata sa balay sa pasyente? 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Please count the patient and all the people who usually live with the patient. Please include those who are not living 
+here now but will be back within six months, BUT do not include OFWs. 
+Palihug iapil ang pasyente ug tanang tawo nga kasagarang nagpuyo uban kaniya. Iapil usab ang mga wala karon dinhi apan mobalik 
+sulod sa unom ka bulan, APAN ayaw iapil ang mga OFW. 
+ 
+ 
+ 
+ 
+ 
+20. How many non-working age children (i.e., below the age of 18) live in the patient’s 
+house now? 
+Pila ka mga bata nga wala pa sa working age (ubos sa 18 anyos) ang nagpuyo karon sa 
+balay sa pasyente? 
+ 
+ 
+ 
+ 
+ 
+21. How many senior citizens live in the patient’s house now? 
+Pila ka senior citizens ang nagpuyo karon sa balay sa pasyente? 
+ 
+ 
+ 
+ 
+ 
+22. Does the patient have electricity in their house? 
+Aduna bay kuryente sa panimalay sa pasyente? 
+ 
+ 
+ 
+☐ Yes Oo 
+ 
+☐ No  Wala 
+ 
+23. What is the patient's family’s main source of water supply for daily use? 
+Unsa ang pangunahing gikuhaan sa tubig nga gigamit adlaw-adlaw sa pamilya sa 
+pasyente? 
+ 
+ 
+ 
+☐ Faucet inside the house    
+Gripo sulod sa balay 
+☐ Dug well 
+Atabay (dug well) 
+ 
+ 
+ 
+☐ Tubed/piped well 
+Tubed/piped well 
+☐ Other (specify)  Uban pa (I-specify) 
+ 
+24. Does the patient have their own faucet, or do they share with their community? 
+Aduna bay kaugalingong gripo ang pasyente/pamilya, o gina-share kini sa komunidad? 
+ 
+ 
+ 
+☐ I/we have our own  
+Aduna mi kaugalingong gripo 
+☐ I/we share with our community 
+Ginashare namo sa komunidad 
+ 
+25. Does the patient have their own tube/pipe, or do they share with their community? 
+Aduna bay kaugalingong tubo/pipe ang pasyente/pamilya, o gina-share kini sa 
+komunidad? 
+ 
+ 
+ 
+☐ I/we have our own 
+ 
+Aduna mi kaugalingong tubo/pipe 
+ 
+☐ I/we share with our community 
+Ginashare namo sa komunidad 
+ 
+26. Does the patient’s family own a refrigerator/freezer? 
+Aduna bay refrigerator/freezer ang pamilya sa pasyente? 
+ 
+ 
+ 
+☐ Yes, I/ we have   Oo, aduna mi 
+ 
+☐ No, I/we don't have  Wala, wala mi 
+ 
+27. Does the patient’s family own a television set?  Aduna bay tv ang pamilya sa 
+pasyente? 
+ 
+ 
+ 
+☐ Yes, I/ we have 
+ Oo, aduna mi  
+☐ No, I/we don't have  Wala, wala mi 
+ 
+28. Does the patient’s family own a washing machine?  Aduna bay washing machine 
+ang pamilya sa pasyente? 
+ 
+ 
+ 
+☐ Yes, I/ we have 
+ Oo, aduna mi  
+☐ No, I/we don't have  Wala, wala mi 
+ 
+29. How would the socioeconomic class of the patient’s household be classified? 
+Unsay socioeconomic class sa panimalay sa pasyente? 
+Please choose one from the options I will mention. 
+ 
+ 
+ 
+☐ Class A or B (working professionals or with a business with several assets) 
+Class A o B (mga working professionals o adunay negosyo nga daghang assets) 
+ 
+ 
+ 
+☐ Class C (working professionals with permanent or semi-permanent income and some assets) 
+Class C (mga working professionals nga adunay permanente o semi-permanente nga kita ug 
+pipila ka assets) 
+ 
+ 
+ 
+☐ Class D or E (semi-permanent workers or informal sector workers with little to no assets) 
+Class D o E (mga semi-permanent workers o informal sector workers nga gamay o 
+walay assets) 
+ 
+ 
+ 
+☐ I don't know      Wala ko kabalo 
+ 
+30. Is the patient member of Indigenous People (IP) community, like the Igorot, Lumad, 
+Mangyans, etc.? 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Miyembro ba ang pasyente sa Indigenous People (IP) community sama sa Igorot, Lumad, 
+Mangyan, ug uban pa? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILI OG USA KA TUBAG LAMANG. 
+ 
+ 
+ 
+☐ Yes  Oo 
+ 
+ 
+ 
+☐ No <proceed to Q32>   Dili >padayon sa Q32> 
+ 
+31. If yes, which group?  Kung oo, unsa nga grupo? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILI OG USA KA TUBAG LAMANG. 
+For enumerator: A list will be provided to ensure accurate details. 
+Para sa enumerator: Hatagan og listahan aron maseguro ang hustong detalye. 
+ 
+ 
+ 
+Specify 
+I-specify 
+ 
+ 
+32. Is the patient’s household a beneficiary of the Pantawid Pamilyang Pilipino 
+Program (4Ps)? 
+Benepisyaryo ba ang panimalay sa pasyente sa Pantawid Pamilyang Pilipino Program 
+(4Ps)? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No     Dili 
+ 
+33. Is the patient the main decision-maker on health care in your household? 
+Ang pasyente ba ang pangunahing tigdesisyon bahin sa health care sa inyong 
+panimalay? 
+The decision-maker is the person that takes responsibility on decisions regarding health in the family: for example, 
+yearly immunizations, hospital finances, etc. 
+Ang tigdesisyon mao ang tawo nga responsable sa mga desisyon kabahin sa panglawas sa pamilya, sama sa yearly 
+immunizations, gasto sa ospital, ug uban pa. 
+ 
+ 
+ 
+☐ Yes (the Patient is the main decision maker) <proceed to Q35> 
+Oo (ang pasyente ang pangunahing tigdesisyon) <padayon sa Q35> 
+ 
+ 
+ 
+☐ No    Dili 
+ 
+ 
+ 
+☐ The Companion answering the survey is the main decision maker <proceed to Q35> 
+Ang kauban nga nagtubag sa survey mao ang pangunahing tigdesisyon <padayon sa 
+Q35> 
+ 
+34. Who takes the most responsibility for making the decisions regarding healthcare 
+in the patient’s household?  
+Kinsa ang adunay pinakadakong responsibilidad sa paghimo og mga desisyon 
+kabahin sa health care sa panimalay sa pasyente? 
+This is the person who makes decisions on health in the family: for example, yearly immunizations, manages hospital 
+finances, etc. 
+Kini mao ang tawo nga naghimo og mga desisyon kabahin sa panglawas sa pamilya, sama sa yearly immunizations, 
+pagdumala sa gasto sa ospital, ug uban pa. 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.      BASAHA ANG MGA OPSYON OG KUSOG. PILI OG USA 
+KA TUBAG LAMANG. 
+ 
+ 
+ 
+☐ Patient’s father   Amahan sa pasyente 
+☐ Patient’s sibling  Igsoon sa pasyente 
+ 
+ 
+ 
+☐ Patient’s mother   Inahan sa pasyente 
+☐ Patient’s grandfather   Apohan/Lolo 
+sa pasyente 
+ 
+ 
+ 
+☐ Patient’s parents  Ginikanan sa pasyente 
+☐ Patient’s grandmother  Apohan/Lola 
+sa pasyente 
+ 
+ 
+ 
+☐ Patient’s spouse/partner    
+Asawa/partner sa pasyente 
+☐ Patient’s uncle   
+Iyaan/Tiya sa pasyente 
+ 
+ 
+ 
+☐ Both patient and spouse 
+Ang pasyente ug ang asawa 
+☐ Patient’s aunt   
+Oyaan/Tiyo sa pasyente 
+ 
+ 
+ 
+ 
+☐ Other (specify)   Uban pa (I-specify) 
+ 
+ 
+ 
+C. Awareness on Universal Health Care (UHC) 
+Kahibalo bahin sa Universal Health Care (UHC) 
+ 
+We will now ask about the patient’s awareness of the Universal Health Care (UHC) 
+Mangutana na usab kami bahin sa kahibalo sa pasyente sa Universal Health Care (UHC). 
+ 
+This section is for the Patient’s awareness on Universal Health Care.   Ask all questions in this section unless a skip rule 
+applies. 
+Kini nga seksyon para sa kahibalo sa pasyente bahin sa Universal Health Care. Pangutan-a ang tanang pangutana niini nga seksyon 
+gawas kung adunay skip rule. 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+35. Have you heard about Universal Health Care (UHC) prior to this survey? 
+Nakadungog na ba ka bahin sa Universal Health Care (UHC) sa wala pa kini nga 
+survey? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No <proceed to Q38>   Wala <padayon sa Q38> 
+ 
+36. What is your source of information about UHC? 
+Asa nimo nakuha ang impormasyon bahin sa UHC? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILI ANG TANANG ANGAY. 
+ 
+ 
+ 
+☐ News    Balita 
+☐ Health center/ facility 
+ 
+ 
+ 
+☐ Legislation    Balaod/Legislation 
+☐ LGU/ Barangay 
+ 
+ 
+ 
+☐ Social Media 
+☐ I don't know  Wala ko kabalo 
+ 
+ 
+ 
+☐ Friends / Family   Higala / Pamilya 
+☐ Other (Specify)  Uban pa (I-specify) 
+ 
+37. What is your understanding about UHC? 
+Unsa ang imong pagsabot bahin sa UHC? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILI ANG TANANG ANGAY. 
+ 
+ 
+ 
+☐ Protection from financial risk/decreased out-of-pocket spending 
+Proteksyon batok sa financial risk/pagkunhod sa out-of-pocket nga gasto 
+ 
+ 
+ 
+☐ Access to quality and affordable health care goods and services 
+Access sa kalidad ug abot-kayang health care goods ug services 
+ 
+ 
+ 
+☐ Automatic enrollment into PhilHealth  Automatic enrollment sa PhilHealth 
+ 
+ 
+ 
+☐ Primary care provider for every Filipino  Primary care provider para sa matag Pilipino 
+ 
+ 
+ 
+☐ I don't know  Wala ko kabalo 
+ 
+ 
+ 
+☐ Other (Specify)  Uban pa (I-specify) 
+ 
+ 
+D. PhilHealth Registration and Health Insurance 
+PhilHealth Registration ug Health Insurance 
+ 
+The next questions we will be asking are related to the patient’s PhilHealth registration 
+experience. We will also confirm their PhilHealth registration status and membership, and 
+their registration to other health insurance. 
+Ang sunod nga mga pangutana kabahin sa kasinatian sa pasyente sa pagparehistro sa 
+PhilHealth. Atong kumpirmahon usab ang ilang registration status ug membership sa 
+PhilHealth, ug ang ilang registration sa ubang health insurance. 
+ 
+This section is for the Patient’s PhilHealth Registration and Health Insurance.   Ask all questions in this section unless a 
+skip rule applies. 
+Kini nga seksyon para sa PhilHealth Registration ug Health Insurance sa pasyente. Pangutan-a ang tanang pangutana niini nga 
+seksyon gawas kung adunay skip rule. 
+ 
+38. Are you currently registered with PhilHealth? 
+Karon ba, rehistrado ka sa PhilHealth? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No <proceed to Q43>    Dili <padayon sa Q43> 
+ 
+ 
+ 
+☐ I don’t know <proceed to Q43>   Wala kabalo  <padayon sa Q43> 
+ 
+38.1. When did you register and receive your PhilHealth pin? 
+Kanus-a ka nakaparehistro ug nakadawat sa imohang Philhealth pin? 
+ 
+ 
+ 
+☐ Within the past year 
+Sulod sa miaging tuig 
+ 
+ 
+ 
+☐ Within the last 2-3 years 
+Sulod sa miaging 2 hangtod 3 ka tuig 
+ 
+ 
+ 
+☐ Within the last 4-5 years 
+Sulod sa miaging 4 hangtod 5 ka tuig 
+ 
+ 
+ 
+☐ Over 5 years 
+Sobra sa 5 ka tuig 
+ 
+ 
+ 
+☐ I don’t know 
+Wala ko kahibalo 
+ 
+38.2. Why are you not registered? 
+Ngano wala ka nakaparehistro? 
+ 
+ 
+ 
+☐ Difficult to register 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Lisod magparehistro 
+ 
+ 
+ 
+☐ Don't see value in registering 
+wala ko kakita og bili/kaayuhan sa pagparehistro 
+ 
+ 
+ 
+☐ Don't know how to register 
+Dili ko kabalo unsaon pagparehistro 
+ 
+ 
+ 
+☐ Don't know what PhilHealth is 
+Wala ko kahibalo unsa na ang Philhealth 
+ 
+ 
+ 
+☐ A family member is currently registered with PhilHealth 
+Aduna nay myembro sa pamilya nga nakarehistro sa Philhealth 
+ 
+ 
+ 
+☐ Currently unemployed 
+Walay trabaho sa pagka karon 
+ 
+ 
+ 
+☐ No time to register 
+Walay panahon sa pagparehistro 
+ 
+ 
+ 
+☐ No valid ID to register 
+Walay valid nga ID para magparehistro 
+ 
+ 
+ 
+☐ Other (specify) 
+Uban pa (i-specify) 
+ 
+39. How did you find out about how to register for PhilHealth? 
+Giunsa nimo pagkahibalo kung unsaon pagparehistro sa PhilHealth? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILI OG USA KA TUBAG LAMANG 
+ 
+ 
+ 
+☐ PhilHealth representative 
+Representante sa PhilHealth 
+☐ No one / self-registered 
+Walay nitabang / nagparehistro sa kaugalingon 
+ 
+ 
+ 
+☐ LGU 
+☐ Barangay Health Worker 
+ 
+ 
+ 
+☐ Primary care provider 
+☐ Friends / Family    Higala / Pamilya 
+ 
+ 
+ 
+☐ Other health care provider 
+Uban nga health care provider 
+☐ Health center/facility 
+ 
+ 
+ 
+☐ Employer 
+☐ Other (Specify)    Uban pa (ispecify) 
+ 
+40. Who assisted you in the registration process? 
+Kinsa ang nitabang nimo sa proseso sa pagparehistro? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILI OG USA KA TUBAG LAMANG 
+ 
+ 
+ 
+☐ PhilHealth representative 
+Representante sa PhilHealth 
+☐ No one / self-registered 
+Walay nitabang / nagparehistro sa kaugalingon 
+ 
+ 
+ 
+☐ LGU 
+☐ Barangay Health Worker 
+ 
+ 
+ 
+☐ Primary care provider 
+☐ Friends / Family    Higala / Pamilya 
+ 
+ 
+ 
+☐ Other health care provider 
+Uban nga health care provider 
+☐ Health center/facility 
+ 
+ 
+ 
+☐ Employer 
+☐ Other (Specify)    Uban pa (ispecify) 
+ 
+41. Did you have any difficulties in the registration process? 
+Nakasinati ba ka og bisan unsang kalisod sa proseso sa pagparehistro? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILI OG USA KA TUBAG LAMANG 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No <proceed to Q45>    Dili <padayon sa Q45> 
+ 
+42. What did you find difficult about the process? 
+Unsay imong nakita nga lisod bahin sa proseso? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ Unclear process     
+Dili klaro ang proseso 
+☐ No valid ID 
+Walay valid ID 
+ 
+ 
+ 
+☐ Took a long time      
+Dugay kaayo ang proseso 
+☐ Did not know the required documents to 
+register 
+Wala kabalo unsang mga dokumento ang 
+kinahanglan para magparehistro 
+ 
+ 
+ 
+☐ Did not know where to ask for help 
+Wala kabalo asa mangayo og tabang 
+☐ I don’t know    Wala kabalo 
+ 
+ 
+ 
+☐ Had to travel a long way 
+Kinahanglan mobiyahe og layo 
+☐ Other (Specify)    Uban pa (I-specify) 
+ 
+ 
+43. Would you know where to go to seek assistance during registration?  
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Kabalo ba ka asa moadto aron mangayo og tabang panahon sa pagparehistro? 
+ 
+ 
+ 
+☐ Yes    Oo 
+ 
+ 
+ 
+☐ No  <proceed to Q51>    Dili <padayon sa Q51> 
+ 
+44. Where would you go to seek assistance?  
+Asa ka moadto aron mangayo og tabang? 
+ 
+ 
+ 
+☐ PhilHealth representative 
+Representante sa PhilHealth 
+☐ No one / self-registered 
+Walay nitabang / nagparehistro sa kaugalingon 
+ 
+ 
+ 
+☐ LGU 
+☐ Barangay Health Worker 
+ 
+ 
+ 
+☐ Primary care provider 
+☐ Friends / Family    Higala / Pamilya 
+ 
+ 
+ 
+☐ Other health care provider 
+Uban nga health care provider 
+☐ Health center/facility 
+ 
+ 
+ 
+☐ Employer 
+☐ Other (Specify)    Uban pa (ispecify) 
+ 
+ 
+ 
+☐ PhilHealth representative 
+Representante sa PhilHealth 
+☐ No one / self-registered 
+Walay nitabang / nagparehistro sa kaugalingon 
+ 
+45. What category of member are you? 
+Unsang kategorya sa miyembro ka? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. ASKED ONLY FOR PHILHEALTH MEMBERS. SKIP TO 51 
+FOR NON-MEMBERS 
+BASAA ANG MGA OPSYON OG KUSOG. PILI UG USA KA TUBAG LAMANG. PARA LAMANG SA MGA MIYEMBRO SA 
+PHILHEALTH. ADTO SA Q51 PARA SA DILI MIYEMBRO. 
+ 
+ 
+ 
+☐ Formal economy (i.e., individuals working in the government or private sector based 
+in the country) 
+Formal economy (pananglitan: mga nagtrabaho sa gobyerno o pribadong sektor sulod 
+sa nasud) 
+ 
+ 
+ 
+☐ Informal economy (i.e., unemployed, self-employed, informal workers, Filipinos with 
+dual citizenship, naturalized Filipino citizens, citizens of other countries working and/or 
+residing in the Philippines) 
+Informal economy (pananglitan: walay trabaho, self-employed, informal workers, mga 
+Pilipinong adunay dual citizenship, naturalized Filipino citizens, ug mga citizen sa 
+ubang nasud nga nagtrabaho ug/o nagpuyo sa Pilipinas) 
+ 
+ 
+ 
+☐ Indigent (i.e., individuals who have no visible means of income, or whose income is 
+insufficient for family subsistence based on DSWD's specific criteria) 
+Indigent (mga indibidwal nga walay klarong tinubdan sa kita o kulang ang kita alang sa 
+panginabuhi sa pamilya base sa criteria sa DSWD) 
+ 
+ 
+ 
+☐ Sponsored (i.e., members whose contributions are being paid for by another 
+individual, government agencies, or private entities. Includes some low-income citizens 
+that are not indigent e.g. BHWs, PWDs) 
+Sponsored (mga miyembro nga ang kontribusyon gibayran sa laing indibidwal, 
+government agencies, o private entities. Apil ang pipila ka low-income citizens nga dili 
+indigent sama sa BHWs ug PWDs) 
+ 
+ 
+ 
+☐ Lifetime member (i.e., individuals aged 60 years and above, uniformed personnel 
+aged 56 years and above, and SSS underground miner-retirees aged 55 years and 
+above and paid at least 120 monthly contributions with PhilHealth and the former 
+Medicare Programs of SSS and GSIS) 
+Lifetime member (mga indibidwal nga 60 anyos pataas, uniformed personnel nga 56 
+anyos pataas, ug SSS underground miner-retirees nga 55 anyos pataas ug nakabayad 
+og labing menos 120 ka monthly contributions sa PhilHealth ug sa naunang Medicare 
+Programs sa SSS ug GSIS) 
+ 
+ 
+ 
+☐ Senior citizen (i.e., residents of the Philippines, aged sixty (60) years or above and 
+are not currently covered by any membership category of PhilHealth and qualified 
+dependents of senior citizen members who are also senior citizen themselves or 
+belonging to other membership categories, with or without coverage who are senior 
+citizens themselves) 
+Senior citizen (mga residente sa Pilipinas nga 60 anyos pataas ug dili pa sakop sa 
+ubang membership category sa PhilHealth, ug mga qualified dependents sa senior 
+citizen members nga senior citizens usab o sakop sa ubang membership categories) 
+ 
+ 
+ 
+☐ Overseas Filipino Worker (OFW) 
+ 
+ 
+ 
+☐ Qualified dependents (i.e., those whose contributions are declared and covered by a 
+principal member) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Qualified dependents (kadtong ang kontribusyon gi-declare ug covered sa principal 
+member) 
+ 
+ 
+ 
+☐ I don’t know   Wala kabalo 
+ 
+ 
+ 
+☐ Other (Specify)    Uban pa (I-specify) 
+ 
+46. What are some of the benefits that come with being a PhilHealth member? 
+Unsa ang pipila sa mga benepisyo sa pagiging miyembro sa PhilHealth? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILI ANG TANANG PWEDE. 
+ 
+ 
+ 
+☐ No balance billing for basic ward 
+accommodation 
+Walay balance billing para sa basic 
+ward accommodation 
+☐ There are no benefits to being a member 
+Walay benepisyo ang pagiging miyembro 
+ 
+ 
+ 
+☐ Subsidized inpatient services 
+☐ I don’t know   Wala kabalo 
+ 
+ 
+ 
+☐ Subsidized outpatient services 
+☐ Other (Specify)    Uban pa (I-specify) 
+ 
+ 
+47. Are you aware that there are PhilHealth packages for the following health 
+services: 
+Nahibalo ba ka nga adunay PhilHealth packages para sa mosunod nga health 
+services: 
+ 
+ 
+ 
+Physician check-up 
+ 
+ 
+ 
+☐ Yes   
+Oo 
+☐ No  Dili 
+ 
+ 
+ 
+Diagnostic tests (e.g. laboratory tests and imaging) 
+Diagnostic tests (pananglitan: laboratory tests ug imaging) 
+ 
+ 
+ 
+☐ Yes   
+Oo 
+☐ No  Dili 
+ 
+ 
+ 
+Hospital confinement 
+ 
+ 
+ 
+☐ Yes   
+Oo 
+☐ No  Dili 
+ 
+ 
+ 
+Outpatient drugs 
+ 
+ 
+ 
+☐ Yes   
+Oo 
+☐ No  Dili 
+ 
+ 
+48. Do you pay PhilHealth premiums every month? 
+Nagbayad ba ka og PhilHealth premiums kada bulan? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+BASAA ANG MGA OPSYON OG KUSOG. PILI UG USA KA TUBAG LAMANG. 
+ 
+ 
+ 
+☐ Yes, I pay directly     Oo, ako mismo ang nagbayad direkta 
+ 
+ 
+ 
+☐ Yes, my employer pays    Oo, akong employer ang nagbayad 
+ 
+ 
+ 
+☐ No, I do not pay premiums <proceed to Q51>    
+Dili, wala ko nagbayad og premiums <padayon sa Q51> 
+ 
+49. Do you find it difficult to pay your PhilHealth premium every month? 
+Lisod ba para nimo ang pagbayad sa imong PhilHealth premium kada bulan? 
+ 
+ 
+ 
+☐ Yes    Oo 
+ 
+ 
+ 
+☐ No <proceed to Q51>   Dili <padayon sa Q51> 
+ 
+50. Why did you find it difficult?    Ngano nga lisod man kini para nimo? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.  
+BASAHA ANG MGA OPSYON OG KUSOG. PILI ANG TANANG PWEDE. 
+ 
+ 
+ 
+☐ Cannot afford the premium 
+Dili kaya ang premium 
+☐ System of PhilHealth is unreliable/usually 
+down 
+Dili kasaligan/perming down ang sistema sa 
+PhilHealth 
+ 
+ 
+ 
+☐ Payment options are inconvenient 
+Dili convenient ang mga paagi sa 
+pagbayad 
+☐ I don’t know   Wala kabalo 
+ 
+ 
+ 
+☐ No time to pay 
+Walay oras para mobayad 
+☐ Other (Specify)    Uban pa (I-specify) 
+ 
+ 
+ 
+☐ Don't see value in paying 
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Wala koy nakita nga bili sa pagbayad 
+ 
+51. Are you registered with another health insurance plan? 
+Rehistrado ba ka sa laing health insurance plan? 
+ 
+ 
+ 
+☐ Yes    Oo 
+ 
+ 
+ 
+☐ No <proceed to Q53>   Dili <padayon sa Q53> 
+ 
+52. Which health insurance plan/s are you enrolled in? 
+Unsang health insurance plan/s ka naka-enroll? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.   
+BASAHA ANG MGA OPSYON OG KUSOG. PILI ANG TANANG PWEDE. 
+ 
+ 
+ 
+☐ GSIS 
+☐ Pag-ibig 
+ 
+ 
+ 
+☐ SSS 
+☐ I don’t know   Wala kabalo 
+ 
+ 
+ 
+☐ Private Insurance  
+☐ Other (Specify)    Uban pa (I-specify) 
+ 
+ 
+ 
+☐ HMO 
+ 
+ 
+ 
+E. Primary Care Utilization  
+Paggamit sa Primary Care 
+ 
+We will now ask questions about the patient’s access to a primary care provider 
+Mangutana na usab kami bahin sa access sa pasyente sa usa ka primary care provider. 
+ 
+This section is about the Patient’s Primary Care Utilization.   Ask all questions in this section unless a skip rule applies. 
+Kini nga seksyon kabahin sa paggamit sa Primary Care sa pasyente. Pangutan-a ang tanang pangutana niini nga seksyon gawas 
+kung adunay skip rule. 
+ 
+53. Do you have a primary care provider?   Aduna ba kay primary care provider? 
+A primary care provider is your first contact healthcare provider (i.e., general practitioner doctor) for an undiagnosed concern or 
+continuing care of varied medical conditions.   
+Ang primary care provider mao ang imong unang duolan nga healthcare provider (pananglitan: general practitioner doctor) alang sa 
+wala pa ma-diagnose nga concern o padayon nga pag-atiman sa nagkalain-laing medical conditions. 
+ 
+ 
+ 
+☐ Yes    Oo 
+ 
+ 
+ 
+☐ No <proceed to Q63>   Dili <padayon sa Q63> 
+ 
+54. Who is your main primary care provider? 
+Kinsa ang imong pangunahing primary care provider? 
+ 
+ 
+ 
+☐ General practitioner 
+ 
+ 
+ 
+☐ Specialty Care Provider/ Specialist 
+ 
+ 
+ 
+☐ Both    Pareho 
+ 
+ 
+ 
+☐ Other (specify)   Uban pa (I-specify) 
+ 
+ 
+ 
+☐ None    Wala 
+ 
+55. Is the location of your main primary care provider convenient for you? 
+Convenient ba para nimo ang lokasyon sa imong nangunang primary care provider? 
+ 
+ 
+ 
+☐ Yes    Oo 
+ 
+ 
+ 
+☐ No  Dili  
+ 
+56. Is your main primary care provider’s clinic hours (time that your provider/s is/are 
+open for medical appointments) convenient for you? 
+Convenient ba para nimo ang clinic hours sa imong nangunang primary care provider 
+(oras nga bukas sila para sa medical appointments)? 
+ 
+ 
+ 
+☐ Yes    Oo 
+ 
+ 
+ 
+☐ No  Dili  
+ 
+57. Is the usual wait for setting an appointment with your main primary care provider 
+convenient for you? 
+Convenient ba para nimo ang kasagarang hulat sa pag-set og appointment sa imong 
+nangunang primary care provider? 
+ 
+ 
+ 
+☐ Yes    Oo 
+ 
+ 
+ 
+☐ No  Dili  
+ 
+ 
+ 
+58. What is your waiting time, in days and/or minutes to set an appointment with your 
+main primary care provider? (FACILITY_NAME_INPUT)? 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Pila ka adlaw ug/o minuto ang imong kasagarang hulat aron makaset og appointment 
+sa imong nangunang primary care provider? (FACILITY_NAME_INPUT) 
+ 
+ 
+ 
+Days    
+Adlaw 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Minutes 
+Minutos 
+ 
+ 
+ 
+ 
+ 
+59. What mode/s of communication was/were available to you when scheduling a 
+consultation with your main primary care provider? SELECT ALL THAT APPLY. 
+Unsang paagi/pamaagi sa komunikasyon ang available para nimo sa pag-schedule og 
+konsultasyon sa imong pangunahing primary care provider? 
+PILI ANG TANANG ANGAY. 
+ 
+ 
+ 
+☐ Face-to-face 
+ 
+☐ Cellphone 
+ 
+ 
+ 
+☐ Teleconsultation Landline 
+Teleconsultation pinaagi sa landline 
+☐ Video Conference 
+ 
+60. If teleconsultation was available, did you succeed in using the teleconsult? 
+Kung available ang teleconsultation, nagmalampuson ba ka sa paggamit niini? 
+ 
+ 
+ 
+☐ Yes    Oo 
+ 
+ 
+ 
+☐ No  Dili  
+ 
+61. What mode/s of communication was/were available to you when consulting with 
+your main primary care provider? SELECT ALL THAT APPLY. 
+Unsang paagi/pamaagi sa komunikasyon ang available para nimo sa pagkonsulta sa imong 
+pangunahing primary care provider? 
+PILI ANG TANANG ANGAY. 
+ 
+ 
+ 
+☐ Face-to-face 
+☐ Cellphone 
+ 
+ 
+ 
+☐ Teleconsultation Landline 
+☐ Teleconsultation Landline 
+Teleconsultation pinaagi sa landline 
+☐ Video Conference 
+ 
+62. If teleconsultation was available, did you succeed in using the teleconsult? 
+Kung available ang teleconsultation, nagmalampuson ba ka sa paggamit niini? 
+ 
+ 
+ 
+☐ Yes    Oo 
+ 
+ 
+ 
+☐ No  Dili  
+ 
+ 
+63. In the past 12 months, do you have a clinic, or health center that you usually go 
+to? 
+Sa milabay nga 12 ka bulan, aduna ba kay klinika o health center nga imong 
+kasagarang adtoan? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No <proceed to Q65>   Dili <padayon sa Q65> 
+ 
+64.  What is the name of the facility? 
+Unsay ngalan sa pasilidad? 
+<proceed to Q66>  <padayon sa Q65> 
+ 
+ 
+65. If none, why do you not have a usual clinic, or health center that you usually go 
+to? 
+Kung wala, nganong wala man kay kasagarang klinika o health center nga imong 
+adtoan? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.   AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILI 
+ANG TANANG ANGAY. 
+ 
+ 
+ 
+☐ I don't get sick   
+ Dili man ko masakiton 
+☐ I don’t know where to go for care 
+Wala ko kabalo asa moadto para magpa-
+atiman 
+ 
+ 
+ 
+☐ I recently moved into the area 
+Bag-o lang ko nibalhin dinhi nga lugar 
+☐ I don’t know   Wala kabalo 
+ 
+ 
+ 
+☐ It's expensive   Mahal 
+☐ Other (Specify)    Uban pa (I-specify) 
+ 
+ 
+ 
+☐ I can treat myself    
+Kaya ra nako tambalan ang akong 
+kaugalingon 
+ 
+ 
+66. Is [facility_name_input] the facility you usually go to for general health concerns? 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Ang [facility_name_input] ba mao ang pasilidad nga imong kasagarang adtoan para sa 
+general health concerns? 
+ 
+ 
+ 
+☐ Yes <proceed to Q68>  Oo <padayon sa Q68> 
+ 
+ 
+ 
+☐ No    Dili 
+ 
+67. Why did you go to this facility instead of your usual facility? 
+Ngano nga niadto ka niini nga pasilidad imbes sa imong kasagarang pasilidad? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILI ANG TANANG ANGAY. 
+ 
+ 
+ 
+☐ This facility is more accessible than my usual facility (i.e., nearer, has more 
+transportation options to get to, and cheaper to travel to) 
+Mas accessible kini nga pasilidad kaysa sa akong kasagarang pasilidad (pananglitan: 
+mas duol, mas daghang sakyanan padulong didto, ug mas barato ang plete) 
+ 
+ 
+ 
+☐ Needed a service/specialist not available at my usual facility 
+Nanginahanglan og serbisyo/specialist nga wala sa akong kasagarang pasilidad 
+ 
+ 
+ 
+☐ Recommended by friends/family  Girekomenda sa higala/pamilya 
+ 
+ 
+ 
+☐ Wanted to try another facility than my usual    
+Gusto mosulay og lain nga pasilidad gawas sa akong kasagaran 
+ 
+ 
+ 
+☐ Prefer this facility than my usual   Mas ganahan ko ani nga pasilidad kaysa sa akong 
+kasagaran 
+ 
+ 
+ 
+☐ This was referred to me by my usual facility     
+Girefer ko dinhi sa akong kasagarang pasilidad 
+ 
+ 
+ 
+☐ Usual facility is closed for today    
+Sirado ang akong kasagarang pasilidad karon nga adlaw 
+ 
+ 
+ 
+☐ Other (Specify)    Uban pa (I-specify) 
+ 
+68. What is the type of health facility that you usually go to? 
+Unsang klase nga pasilidad ang kasagaran nimo ginaadtuan? 
+ 
+ 
+ 
+☐ YAKAP/Konsulta or primary care provider 
+YAKAP/Konsulta o primary care provider 
+☐ Private Clinic 
+ 
+ 
+ 
+☐ Barangay Health Center/ Barangay Health 
+Station 
+☐ Traditional Healer or Manghihilot/ 
+Albularyo 
+Traditional Healer o Manghihilot / 
+Albularyo 
+ 
+ 
+ 
+☐ Rural Health Unit / Urban Health Center 
+☐ I don’t know   Wala kabalo 
+ 
+ 
+ 
+☐ Public Hospital 
+☐ Other (specify)   Uban pa (I-specify) 
+ 
+ 
+ 
+☐ Private Hospital 
+ 
+ 
+ 
+69. How long does it take you to travel from your house when going to the health 
+facility that you usually go to? 
+Unsa kadugay ang imong biyahe gikan sa inyong balay padulong sa health facility nga 
+imong kasagarang adtoan? (BASED ON THE ANSWER ON Q64 (NAME OF FACILITY)); SKIP THIS QUESTION 
+WHEN ANSWER IN Q63 IS NO (BASE SA TUBAG SA Q64 – NGALAN SA PASILIDAD) 
+ I-SKIP KINI NGA PANGUTANA KUNG “DILI” ANG TUBAG SA Q63 
+ 
+ 
+ 
+Time      
+Oras 
+(HH:MM) 
+ 
+ 
+ 
+70. What mode/s of transportation do you use when travelling to the health facility that you 
+usually go to? Check all that apply.  
+Unsang paagi/pamaagi sa transportasyon ang imong gigamit kung mobiyahe paingon sa 
+health facility nga imong kasagarang adtoan? 
+SKIP THIS QUESTION WHEN ANSWER IN Q63 IS NO   I-SKIP KINI NGA PANGUTANA KUNG “DILI” ANG TUBAG SA Q63 
+ 
+ 
+ 
+☐ Walk  Lakaw 
+☐ Motorcycle    Motorsiklo 
+ 
+ 
+ 
+☐ Bike    Biseklita 
+☐ Boat   Bangka 
+ 
+ 
+ 
+☐ Public Bus 
+☐ Taxi 
+ 
+ 
+ 
+☐ Jeepney 
+☐ Pedicab 
+ 
+ 
+ 
+☐ Tricycle 
+☐ E-bike 
+ 
+ 
+ 
+☐ Car (including private taxi/cab) 
+Sakyanan (apil ang pribadong taxi/cab) 
+☐ Other (Specify)   Uban pa (I-specify) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+71. What is the type of the primary care facility nearest to your house? 
+Unsang klase sa primary care facility ang pinakaduol sa inyong balay? 
+An institution that primarily delivers primary care services or the initial-contact facility for 
+coordinated care (e.g.,RHU, health center, general practitioner clinic) 
+Usa ka institusyon nga pangunahing naghatag og primary care services o unang duolan nga 
+pasilidad para sa coordinated care (pananglitan: RHU, health center, general practitioner 
+clinic). 
+ 
+ 
+ 
+☐ Barangay Health Center/ Barangay 
+Health Station 
+☐ Traditional Healer or Manghihilot/ 
+Albularyo 
+Traditional Healer o Manghihilot / 
+Albularyo 
+ 
+ 
+ 
+☐ Rural Health Unit / Urban Health Center 
+☐ I don’t know   Wala kabalo 
+ 
+ 
+ 
+☐ Public Hospital 
+☐ Other (specify)   Uban pa (I-specify) 
+ 
+ 
+ 
+☐ Private Hospital 
+ 
+ 
+ 
+ 
+☐ Private Clinic 
+ 
+ 
+72. How long does it take you to travel from your house when going to the nearest 
+primary care facility? 
+Unsa kadugay ang imong biyahe gikan sa inyong balay padulong sa pinakaduol nga 
+primary care facility? 
+ 
+ 
+ 
+Time Oras 
+(HH:MM) 
+ 
+ 
+73. What mode/s of transportation do you use when travelling to the nearest primary care 
+facility? Check all that apply.  
+Unsang paagi/pamaagi sa transportasyon ang imong gigamit kung mobiyahe paingon sa 
+health facility nga imong kasagarang adtoan? I-check ang tannag puwed 
+ 
+ 
+ 
+☐ Walk  Lakaw 
+☐ Motorcycle    Motorsiklo 
+ 
+ 
+ 
+☐ Bike    
+Biseklita 
+☐ Boat   Bangka 
+ 
+ 
+ 
+☐ Public Bus 
+☐ Taxi 
+ 
+ 
+ 
+☐ Jeepney 
+☐ Pedicab 
+ 
+ 
+ 
+☐ Tricycle 
+☐ E-bike 
+ 
+ 
+ 
+☐ Car 
+(including 
+private 
+taxi/cab) 
+Sakyanan 
+(apil ang 
+pribadong 
+taxi/cab) 
+☐ Other (Specify)   Uban pa (I-specify) 
+ 
+ 
+We will now ask about the patient’s awareness of the YAKAP/Konsulta package 
+Mangutana na usab kami bahin sa kahibalo sa pasyente sa YAKAP/Konsulta package. 
+ 
+74. Have you heard of the term "YAKAP/ Konsulta package"? 
+Nakadungog na ba ka sa termino nga “YAKAP/Konsulta package”? 
+ 
+ 
+ 
+☐ Yes  Oo 
+ 
+ 
+ 
+☐ No <proceed to Q83>   Dili < padayon sa Q83> 
+ 
+75. What are your sources of information about the YAKAP/Konsulta package? 
+Unsa ang imong mga source, gigikanan sa impormasyon bahin sa YAKAP/Konsulta 
+package?  
+ 
+ 
+ 
+☐ News   Balita 
+☐ Health center/facility 
+ 
+ 
+ 
+☐ Legislation  Balaod 
+☐ LGU/Barangay 
+ 
+ 
+ 
+☐ Social Media 
+☐ I don't know  Wala kabalo 
+ 
+ 
+ 
+☐ Friends / Family   Higala / 
+Pamilya 
+☐ Other (Specify)  Uban pa (I-specify) 
+ 
+76. What is your understanding about the YAKAP/Konsulta package? 
+Unsa ang imong pagsabot bahin sa YAKAP/Konsulta package? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY   
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILI ANG TANANG PWEDE. 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Free primary care consultation (with a registered YAKAP/Konsulta provider) 
+Libre nga primary care consultation (uban sa rehistradong YAKAP/Konsulta provider) 
+ 
+ 
+ 
+☐ Free health risk screening and assessment (with a registered YAKAP/Konsulta 
+provider) 
+Libre nga health risk screening ug assessment (uban sa rehistradong YAKAP/Konsulta 
+provider) 
+ 
+ 
+ 
+☐ Free selected laboratory / diagnostics examination 
+Libre nga piniling laboratory/diagnostic examinations 
+ 
+ 
+ 
+☐ Free selected drugs and medicines      Libre nga piniling tambal ug medisina 
+ 
+ 
+ 
+☐ There are no benefits of the package  Walay benepisyo ang package 
+ 
+ 
+ 
+☐ I don't know  Wala kabalo 
+ 
+ 
+ 
+☐ Other (Specify)  Uban pa (I-specify) 
+ 
+77. Are you registered with a YAKAP/Konsulta package provider? 
+Rehistrado ba ka sa usa ka YAKAP/Konsulta package provider? 
+ 
+ 
+ 
+☐ Yes  Oo 
+ 
+ 
+ 
+☐ No <proceed to Q82>   Dili < padayon sa Q82> 
+ 
+ 
+ 
+☐ I’ve never heard of it <proceed to Q83>    
+ Wala pa gyud ko kadungog ani <padayon sa Q83> 
+ 
+ 
+ 
+☐ I don’t know <proceed to Q83>    Wala ko kabalo <padayon sa Q83> 
+ 
+78. When did you register with a YAKAP/Konsulta package provider? 
+Kanus-a ka nagparehistro sa YAKAP/Konsulta package provider? 
+ 
+☐ Within the past six (6) months     Sulod sa milabay/niaging nga unom (6) ka bulan 
+ 
+☐ More than six (6) months but less than one (1) year ago 
+Labaw sa unom (6) ka bulan apan ubos sa usa (1) ka tuig ang milabay/niagi 
+ 
+☐ One (1) year but less than two (2) years ago    
+Labaw sa (1) ka tuig apan ubos sa usa (2) ka tuig ang milabay/niagi 
+ 
+☐ Two (2) years ago or more  Duha (2) ka tuig o labaw pa ang milabay/niagi 
+ 
+79. Since registering, have you had an appointment with your YAKAP/Konsulta 
+package provider? 
+Sukad sa imong pagparehistro, naka-appointment na ba ka sa imong YAKAP/Konsulta 
+package provider? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No    Wala 
+ 
+80. When you have a health problem, do you know how to book an appointment at your 
+YAKAP/Konsulta package provider? 
+Kung aduna kay problema sa panglawas, kabalo ba ka unsaon pagpa appointment sa 
+YAKAP/Kosulta package provider? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No     Dili 
+ 
+81. Was that appointment for a general check-up (i.e. not related to an illness or 
+injury)? 
+Kadtong appointment ba para sa general check-up (pananglitan: dili related sa sakit o 
+injury)? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No     Dili 
+ 
+82. Why are you NOT registered with a YAKAP/Konsulta package provider? 
+Ngano nga WALA ka narehistro sa usa ka YAKAP/Konsulta package provider? 
+ 
+ 
+ 
+☐ Don't know what a YAKAP/Konsulta provider is   Wala kabalo unsa ang YAKAP/Konsulta 
+provider 
+ 
+ 
+ 
+☐ Don't trust PhilHealth  Wala mosalig sa PhilHealth 
+ 
+ 
+ 
+☐ Don't know how to register     Wala kabalo unsaon pagparehistro 
+ 
+ 
+ 
+☐ Registration is confusing/time-consuming/inconvenient    
+Libog / dugay / dili convenient ang registration 
+ 
+ 
+ 
+☐ Intend to register but do not have found a time to do it.   
+Plano magparehistro apan wala pa’y oras para buhaton kini 
+ 
+ 
+ 
+☐ YAKAP/Konsulta is not available in my local area  Walay YAKAP/Konsulta sa among lugar 
+ 
+ 
+ 
+☐ Already have a usual primary care provider that I go to    
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Aduna na koy kasagarang primary care provider nga akong adtoan 
+ 
+ 
+ 
+☐ Don't have the required PhilHealth ID to register for YAKAP/Konsulta 
+Wala koy PhilHealth ID nga gikinahanglan para makaparehistro sa YAKAP/Konsulta 
+ 
+ 
+ 
+☐ Don't have the other requirements to register   Wala koy uban pang requirements para 
+makaparehistro 
+ 
+ 
+ 
+☐ I don't know  Wala kabalo 
+ 
+ 
+ 
+☐ Other (Specify)  Uban pa (I-specify) 
+ 
+ 
+F. Patient’s Health-Seeking Behavior    
+ Pamatasan/kina-iya sa Pagpangita og Serbisyong Panglawas sa Pasyente 
+ 
+We will now be asking about the patient’s actions taken for health concerns. This includes the type of 
+services and facilities they access for their health and well-being. 
+Mangutana na usab kami bahin sa mga lihok sa pasyente kung adunay concern sa panglawas. Apil niini 
+ang klase sa serbisyo ug pasilidad nga ilang giadtoan alang sa ilang panglawas ug kaayohan. 
+ 
+This section is for the Patient’s Health-Seeking Behavior.   Ask all questions in this section unless a skip rule applies. 
+Kini nga seksyon para sa Health-Seeking Behavior sa pasyente. Pangutan-a ang tanang pangutana niini nga seksyon gawas kung 
+adunay skip rule. 
+ 
+83. What best describes why the patient visited a health facility (e.g. RHU, health 
+center, clinic, hospital)? 
+Unsay labing hinungdan nganong mubisita and pasyente sa usa ka pasilidad sa 
+panglawas (Pananglitam: RHU, clinic,hospital)? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.  BASAHA ANG MGA OPSYON OG KUSOG. PILI UG USA KA 
+TUBAG LAMANG. 
+ 
+ 
+ 
+☐ Consultation for new health problem 
+Konsultasyon para sa bag-ong problema 
+sa panglawas 
+☐ To get a health certificate/administrative reason 
+Para makakuha og health certificate/o 
+administratibong rason 
+ 
+ 
+ 
+☐ Consultation to follow-up an ongoing 
+health problem 
+Konsultasyon para sa follow-up sa 
+padayon nga problema sa panglawas 
+☐ For immunizations/vaccinations 
+Para sa immunizations/vaccinations 
+ 
+ 
+ 
+☐ For tests/diagnostics only 
+Para sa tests/diagnostics lamang 
+☐ My doctor transferred to this health facility 
+Ang akong doktor nibalhin niini nga health facility 
+ 
+ 
+ 
+☐ For a general check-up 
+Para sa general check-up 
+☐ Other (Specify)   Uban pa (I-specify) 
+ 
+84. What type of service did the patient usually access? 
+Unsang klase sa serbisyo ang kasagarang gi-access sa pasyente? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+BASAHA ANG MGA OPSYON OG KUSOG. PILI UG USA KA TUBAG LAMANG. 
+ 
+ 
+ 
+☐ Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves 
+within the same day) 
+Outpatient care (konsultasyon, procedure, o treatment diin ang pasyente mobisita ug mouli sa 
+maong adlaw) 
+ 
+ 
+ 
+☐ Inpatient care (Care provided in hospital or another facility where the patient is admitted for at 
+least one night) 
+Inpatient care (pag-atiman sa ospital o laing pasilidad diin gi-admit ang pasyente og labing menos 
+usa ka gabii) 
+ 
+ 
+ 
+☐ Emergency care (Care for serious illnesses or injuries that need immediate medical attention; 
+usually provided in an emergency room or ER) 
+Emergency care (pag-atiman alang sa seryosong sakit o injury nga nanginahanglan dayon nga 
+medical attention; kasagarang gihimo sa emergency room o ER) 
+ 
+ 
+ 
+☐ Primary care consultation   
+ 
+ 
+ 
+☐ Other (Specify)   Uban pa (I-specify) 
+ 
+85. What condition/s do/es the patient usually visit the facility for? 
+Unsay mga kondisyon ang kasagarang hinungdan nganong muadto ang pasyente sa 
+pasilidad? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.  
+BASAHA ANG MGA OPSYON OG KUSOG. PILI ANG TANANG PWEDE. 
+ 
+ 
+ 
+☐ Upper respiratory infection 
+☐ Kidney problem /Dialysis   
+Problema sa kidney / Dialysis 
+ 
+ 
+ 
+☐ Hypertension 
+☐ Cancer (any)   Cancer (bisan unsang klase) 
+ 
+ 
+ 
+☐ Immunization 
+☐ Gastro problem (vomiting, diarrhea etc.) 
+Problema sa tiyan (pagsuka, kalibanga, ug uban pa) 
+ 
+ 
+ 
+☐ Pregnancy or birth  
+☐ Other infection (e.g. urine, skin, other virus etc.) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ Pagmabdos o pagpanganak 
+Uban pang impeksyon (pananglitan: ihi, panit, laing 
+virus, ug uban pa) 
+ 
+ 
+ 
+☐ Flu  Trangkaso 
+☐ Accident/injury (e.g. wound/broken bone) 
+Aksidente/injury (pananglitan: samad/nabali nga 
+bukog)  
+ 
+ 
+ 
+☐ Fever    Hilanat 
+☐ Dental 
+ 
+ 
+ 
+☐ Joint and muscle pain 
+Panakit sa lutahan ug kaunoran 
+☐ ENT (problem with ear/nose/throat) 
+ENT (problema sa dunggan/ilong/tutunlan) 
+ 
+ 
+ 
+☐ Asthma or COPD (chronic breathing 
+problem, not cancer) 
+Asthma o COPD (malungtarong 
+problema sa pagginhawa, dili cancer) 
+☐ Allergy 
+ 
+ 
+ 
+☐ Diabetes 
+☐ No condition - Regular check-up only 
+Walay kondisyon – regular check-up lamang 
+ 
+ 
+ 
+☐ Heart problem   Problema sa 
+kasingkasing 
+☐ Other (Specify)   Uban pa (I-specify) 
+ 
+86. Which of the following happened during the patient’s most recent visit? 
+Unsay nahitabo sa pinakaulahi nga pagbisita sa pasyente? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+BASAHA ANG MGA OPSYON OG KUSOG. PILI ANG TANANG PWEDE. 
+ 
+ 
+ 
+☐ Saw a doctor   Nakipagkita sa doktor 
+ 
+ 
+ 
+☐ Saw a nurse/midwife    Nakipagkita sa nurse/midwife 
+ 
+ 
+ 
+☐ Saw any other healthcare worker/member of medical staff 
+Nakipagkita sa laing mga healthcare worker/member of medical staff 
+ 
+ 
+ 
+☐ Had basic tests done (e.g. blood pressure check, height/weight) 
+Nakaagi og basic tests (pananglitan: blood pressure check, height/weight) 
+ 
+ 
+ 
+☐ Had any laboratory tests done (e.g. blood, urine sample) 
+Nakaagi og laboratory tests (pananglitan: blood, urine sample) 
+ 
+ 
+ 
+☐ Had any imaging done (e.g. ultrasound, Xray, CT) 
+Nakaagi og imaging (pananglitan: ultrasound, X-ray, CT) 
+ 
+ 
+ 
+☐ Prescribed medication   Giresetahan og tambal 
+ 
+ 
+ 
+☐ Had any minor procedure/surgery done    Nakaagi og minor procedure/surgery 
+Minor surgery involves minimally invasive, low-risk procedures often performed on an outpatient basis. 
+Ang minor surgery naglakip sa minimally invasive ug low-risk nga procedures nga kasagarang gihimo isip outpatient basis. 
+ 
+ 
+ 
+☐ Picked up medical certificate/other administration  
+Mikuha og medical certificate/o uban pang administratibong dokumento 
+Claiming of medical clearance for travel, fit to work, surgery, etc.  Pagkuha sa medical clearance para sa biyahe, fit to work, 
+surgery, ug uban pa. 
+ 
+ 
+ 
+☐ Was admitted for confinement    Gi-admit para sa confinement 
+ 
+87. Apart from this visit, has the patient done anything else to improve his/her health 
+condition or address his/her health concern? 
+Gawas niini nga pagbisita, aduna pa bay laing gibuhat ang pasyente aron mapaayo ang 
+iyang kondisyon sa panglawas o masulbad ang iyang concern sa panglawas? 
+ 
+ 
+ 
+☐ Visited other healthcare facility    Mibisita sa laing healthcare facility 
+ 
+ 
+ 
+☐ Sought alternative care (Healthcare apart from medical doctors or the formal healthcare 
+system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.) 
+Nangayo og alternative care (healthcare gawas sa medical doctors o formal healthcare system; 
+sama sa reflexology, acupuncture, massage therapy, herbal medicines, ug uban pa) 
+ 
+ 
+ 
+☐ Sought telemedicine (Remote diagnosis and treatment of patients by means of 
+telecommunications technology) 
+Nangayo og telemedicine (remote diagnosis ug treatment pinaagi sa telecommunications 
+technology) 
+ 
+ 
+ 
+☐ Used home care (Healthcare services and support provided to individuals in their own 
+homes)  Migamit og home care (healthcare services ug suporta nga gihatag sa balay sa 
+indibidwal) 
+ 
+ 
+ 
+☐ Bought medicine from a pharmacy   Mipalit og tambal sa pharmacy 
+ 
+ 
+ 
+☐ Did not seek other forms of care    Wala nangita og laing klase sa pag-atiman 
+ 
+ 
+ 
+☐ Other (Specify)   Uban pa (I-specify) 
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Note for CAPI Version: Questions on outpatient care should be front loaded when the tool is administered in the RHU and hospital OPD (before 
+primary care utilization) 
+ 
+G. Outpatient Care 
+This section is for the Outpatient Care. This section will be asked for respondents who received outpatient care. Ask all 
+questions in this section unless a skip rule applies. Note also that the facility referred in this section should be the 
+identified facility under Geographic Identification. 
+Kini nga seksyon para sa Outpatient Care. Kini nga seksyon pangutan-on lamang sa mga respondents nga nakadawat og outpatient 
+care. Pangutan-a ang tanang pangutana niini nga seksyon gawas kung adunay skip rule. Hinumdumi usab nga ang pasilidad nga 
+gihisgutan niini nga seksyon mao ang giila nga pasilidad ubos sa Geographic Identification. 
+ 
+For the following questions, we will ask about the patient’s most current outpatient visit. 
+Para sa mosunod nga mga pangutana, mangutana kami bahin sa pinakabag-o nga 
+outpatient visit sa pasyente. 
+ 
+88. Why are you visiting [FACILITY_NAME_INPUT] for consultation/advice or 
+treatment? 
+Ngano nga mibisita ka sa [FACILITY_NAME_INPUT] para sa konsultasyon/tambag o 
+pagtambal? 
+ 
+ 
+ 
+☐ Sick/Injured    Masakiton/Naangol 
+☐ Medical check-up 
+ 
+ 
+ 
+☐ Prenatal/Post-natal Check-up 
+☐ Medical requirement 
+ 
+ 
+ 
+☐ Gave Birth         Nanganak 
+☐ NHTS/CCT/4Ps Requirement   
+ Requirement sa NHTS/CCT/4Ps 
+ 
+ 
+ 
+☐ Dental check-up 
+☐ Other (specify)    Uban pa (I-specify) 
+ 
+89. Were you advised for hospitalization / to be admitted in the hospital? 
+Gitambagan ba ka nga ipa-hospital o i-admit sa ospital? 
+ 
+ 
+ 
+☐ Yes  Oo 
+ 
+ 
+ 
+☐ No   Wala 
+ 
+90. What were the reasons why you were not confined/ admitted in a hospital/clinic?  
+Unsay mga rason nganong wala ka na-confine/na-admit sa ospital/klinika? 
+Select all that apply.    Pilia tanang pwede. 
+ 
+ 
+ 
+☐ Facility is far   Layo ang pasilidad 
+☐ Health facility is not PhilHealth accredited 
+Ang health facility dili akreditado PhilHealth  
+ 
+ 
+ 
+☐ No money    Walay kuwarta 
+☐ No need/regular check-up only 
+Walay panginahanglan / regular check-up 
+lamang 
+ 
+ 
+ 
+☐ Worried about treatment cost 
+Nabalaka sa gasto sa pagtambal 
+☐ Other (specify)   Uban pa (I-specify) 
+ 
+ 
+ 
+☐ Home remedy is available 
+Adunay home remedy 
+ 
+ 
+91. Do you usually avail consultation services for outpatient care? 
+Kasagaran magpakonsulta ba ka para sa outpatient care? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No    Dili 
+ 
+92. How much was the cost of consultation?     Pila ang gasto sa konsultasyon? 
+ 
+ 
+ 
+☐ Out-of-pocket 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Amount in Pesos   Kantidad sa Pesos 
+ 
+ 
+ 
+☐ Donation 
+Donasyon 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Amount in Pesos     Kantidad sa Pesos 
+ 
+ 
+ 
+☐ Free/no cost     Libre / walay bayad 
+☐ Free, charge to HMO    Libre, charge sa HMO 
+ 
+ 
+ 
+☐ Free, charge to PhilHealth 
+Libre, charge sa PhilHealth 
+☐ In kind   Dili kwarta ang bayad 
+ 
+ 
+ 
+☐ Free, charge to Private Insurance 
+Libre, charge sa Private Insurance 
+☐ Don’t know   Wala kabalo 
+ 
+93. Did you have any of the following laboratory tests done during your outpatient 
+care? 
+Aduna ba kay bisan unsa sa mosunod nga laboratory tests nga gihimo panahon sa 
+imong outpatient care?  
+ Check all that apply.   Pili-a ang tanang pwede. 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ CBC with platelet 
+count 
+☐ Lipid profile 
+☐ HbA1c 
+ 
+ 
+ 
+☐ Urinalysis 
+☐ FBS 
+☐ Abdominal ultrasound 
+ 
+ 
+ 
+☐ Fecalysis 
+☐ OGTT (Oral glucose tolerance 
+tests) 
+☐ Dental Services 
+ 
+ 
+ 
+☐ Sputum Microscopy 
+☐ ECG 
+☐ Other, specify:  
+Uban pa , I-specify 
+ 
+ 
+ 
+☐ Fecal Occult Blood 
+☐ Chest X-Ray 
+ 
+ 
+ 
+☐ Pap smear 
+☐ Creatinine 
+☐ None <proceed to Q95> 
+Wala <padayon sa Q95> 
+ 
+94. How much was the cost of [laboratory test:         ]? Pila ang gasto sa [laboratory 
+test:  
+To be asked for each lab test ticked in Q93  Pangutan-on kini alang sa matag laboratory 
+test nga gi-check sa Q93. 
+ 
+ 
+ 
+☐ Out-of-
+pocket 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Amount in Pesos     Kantidad sa Pesos 
+ 
+ 
+ 
+☐ Free/no cost     Libre / walay bayad 
+☐ Free, charge to HMO    Libre, charge sa HMO 
+ 
+ 
+ 
+☐ Free, charge to PhilHealth 
+Libre, charge sa PhilHealth 
+☐ In kind   Dili kwarta ang bayad 
+ 
+ 
+ 
+☐ Free, charge to Private Insurance 
+Libre, charge sa Private Insurance 
+☐ Don’t know   Wala kabalo 
+ 
+95. Were you prescribed medicine/s after your check-up? 
+Giresetahan ba ka og tambal human sa imong check-up? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No <proceed to Q97>   Wala <padayon sa Q97> 
+ 
+96. How much was spent for (NAME IN ___)’s prescribed medicines?  
+Pila ang nagasto para sa giresetang tambal ni (NAME IN ___)? 
+ 
+ 
+ 
+☐ Out-of-pocket 
+Amount in Pesos    Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Free/no cost     Libre / walay bayad 
+ 
+ 
+ 
+☐ Free, charge to PhilHealth 
+Libre, charge sa PhilHealth 
+ 
+ 
+ 
+☐ Free, charge to Private Insurance 
+Libre, charge sa Private Insurance 
+ 
+ 
+ 
+☐ Free, charge to HMO    Libre, charge sa HMO 
+ 
+ 
+ 
+☐ In kind 
+  Dili kwarta ang 
+bayad 
+Amount in Pesos   Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Donation  
+Donasyon 
+Amount in Pesos    Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Don’t know   Wala kabalo 
+ 
+ 
+97.  What was the final amount you paid 
+in cash for your outpatient care? 
+Pila ang kinatibuk-ang kantidad nga 
+imong gibayad cash para sa imong 
+outpatient care? 
+Amount in Pesos   Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+97.1 Other than the expenses above (e.g. consultation, laboratory tests, prescribed 
+medicines, etc.), which of the following were also included in the bill?  How 
+much were you charged or billed? 
+Gawas sa mga gasto nga nahisgutan sa ibabaw (pananglitan: konsultasyon, 
+laboratory tests, giresetang tambal, ug uban pa), unsa pa sa mosunod ang naapil sa 
+bill? Pila ang imong gibayran o gi-charge? 
+If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud.  
+Kung adunay resibo ang pasyente, pilia ang tanang angay. Kung walay resibo, basaha ang mga opsyon og 
+kusog. 
+Select all that apply.   Pilia-ang tanan nga pwede 
+ 
+ 
+ 
+☐ Consultation  Fee 
+Amount in Pesos   Kantidad sa pesos 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Medical equipment or supplies 
+Medical equipment o supplies 
+Amount in Pesos    Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Non-medical expenses: (e.g. 
+Hygiene kit) 
+Non-medical expenses (pananglitan: 
+hygiene kit) 
+Amount in Pesos   Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Other expenses:   Uban pang gasto 
+Amount in Pesos    Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+97.2 Did you pay for any other expenses during your OPD visit that were not 
+included in the outpatient bill? 
+Nagbayad ba ka og uban pang gasto panahon sa imong OPD visit nga wala naapil sa 
+outpatient bill? 
+If yes, indicate the amount spent      Kung oo, ispecify ang kantidad nga nagasto. 
+ 
+ 
+ 
+a) 
+Consultation Fee  Bayad sa Konsultasyon 
+ 
+Amount in Pesos  Kantidad sa 
+pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+b) Diagnostic or laboratory procedure 
+Diagnostic o laboratory pamaagi 
+Amount in Pesos  Kantidad sa 
+pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+c) 
+Medical equipment or supplies 
+Gamit o suppy nga pang medikal 
+Amount in Pesos  Kantidad sa 
+pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+d) Medicines or drugs    Mga tambal o 
+medisina 
+ 
+Amount in Pesos  Kantidad sa 
+pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+e) 
+Non-medical expenses: travel 
+Non-medical expenses: plete/pamasahe 
+Amount in Pesos  Kantidad sa 
+pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+f) 
+Other expenses:    Uban pang gasto: 
+ 
+Amount in Pesos  Kantidad sa 
+pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I would like to know where you got the money to pay for medical costs incurred (IN ___, and 
+____) at the (FACILITY TYPE IN ___) 
+Gusto nako mahibal-an asa ninyo nakuha ang kuwarta nga gigamit sa pagbayad sa medical 
+costs nga nagasto (IN ___, ug ____) sa (FACILITY TYPE IN ___). 
+ 
+98. Did you use any of the following to pay for medical costs? (select all that apply) 
+Asa sa mga mosunod ang imong gikuhaan aron makabayad sa medical costs? 
+(Pili-a tanang pwede.) 
+ 
+ 
+ 
+1) Salary/income    Sweldo/kita 
+ 
+ 
+ 
+☐ Yes   Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No   Dili 
+ 
+ 
+ 
+ 
+2) Loan/Mortgage  Utang 
+ 
+ 
+ 
+☐ Yes   Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+ 
+ 
+ 
+3) Savings  Tinigom/Savings 
+ 
+ 
+ 
+☐ Yes     Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+ 
+ 
+ 
+4) Donation/Charity/Assistance from Private Organization 
+Donasyon/Charity/Assistance gikan sa Private Organization 
+ 
+ 
+ 
+☐ Yes    Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No   Dili 
+ 
+ 
+ 
+ 
+5) Malasakit Center 
+ 
+ 
+ 
+☐ Yes    Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No   Dili 
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+6)Other Donation/Charity/Assistance from Government 
+OrganizationDonasyon/Charity/Assistance gikan sa Gobyerno nga mga Organisasyon 
+ 
+ 
+ 
+☐ Yes, specify: 
+  Oo, specify 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+ 
+ 
+ 
+7) Sale of Assets   Pagbaligya og Assets/Kabtangan 
+ 
+ 
+ 
+☐ Yes    Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+ 
+ 
+ 
+8) Paid by someone else   Gibayran sa laing tawo 
+ 
+ 
+ 
+☐ Yes     Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+ 
+ 
+ 
+9) MAIFIP 
+ 
+ 
+ 
+☐ Yes    Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+ 
+ 
+ 
+10) PhilHealth  
+ 
+ 
+ 
+☐ Yes    Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+11) SSS 
+ 
+ 
+ 
+☐ Yes    Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No   Dili 
+ 
+ 
+ 
+ 
+12) GSIS 
+ 
+ 
+ 
+☐ Yes    Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+ 
+ 
+ 
+13) Private Insurance  Pribado nga Insurance 
+ 
+ 
+ 
+☐ Yes    Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No   Dili 
+ 
+ 
+ 
+ 
+14) HMO 
+ 
+ 
+ 
+☐ Yes   Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+ 
+ 
+ 
+15) Other (specify)   Uban pa (I-specify) 
+ 
+ 
+ 
+☐ Yes, specify: 
+Oo, I-specify 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No   Dili 
+ 
+ 
+ 
+We will now ask about the patient’s awareness about BUCAS and the services they 
+accessed in a BUCAS Center. 
+Mangutana na usab kami bahin sa kahibalo sa pasyente kabahin sa BUCAS ug sa mga 
+serbisyo nga ilang nagamit sa usa ka BUCAS Center. 
+ 
+Q99 to Q103 are applicable only to respondents in areas with BUCAS center. Otherwise, 
+skip. 
+Ang Q99 hangtod Q103 applicable lamang sa mga respondent nga naa sa mga lugar nga 
+adunay BUCAS center. Kung wala, I-skip kini. 
+ 
+99. Have you heard about Bagong Urgent Care and Ambulatory Services (BUCAS) 
+center? 
+Nakadungog na ba ka bahin sa Bagong Urgent Care and Ambulatory Services 
+(BUCAS) center? 
+ 
+ 
+ 
+☐ Yes  Oo 
+ 
+ 
+ 
+☐ No <proceed to Q115>   Dili <padayon sa Q115> 
+ 
+100. If yes, what are your sources of information about this BUCAS center? 
+Kung oo, unsa ang imong mga tinubdan sa impormasyon bahin niini nga BUCAS 
+center? 
+ 
+ 
+ 
+☐ News    Balita 
+☐ Health center/facility 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Legislation   Balaod 
+☐ LGU/Barangay 
+ 
+ 
+ 
+☐ Social Media 
+☐ I don't know   Wala kabalo 
+ 
+ 
+ 
+☐ Friends / Family   Higala/pamilya 
+☐ Other (Specify)  Uban pa (I-specify) 
+ 
+101. What is your understanding about a BUCAS center? 
+Unsa ang imong pagsabot bahin sa usa ka BUCAS center? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILI ANG TANANG PWEDE. 
+ 
+ 
+ 
+☐ Provides urgent care for non-life-threatening/serious conditions 
+Naghatag og urgent care para sa dili life-threatening o dili seryosong kondisyon 
+ 
+ 
+ 
+☐ Offers outpatient and ambulatory health services 
+Nagtanyag og outpatient ug ambulatory health services 
+ 
+ 
+ 
+☐ Helps reduce overcrowding in hospitals 
+Nakatabang sa pagkunhod sa kadaghan sa pasyente sa mga ospital 
+ 
+ 
+ 
+☐ Allows access to timely medical consultation and treatment 
+Nagtugot sa access sa tukmang oras nga medical consultation ug treatment 
+ 
+ 
+ 
+☐ Other (specify)    Uban pa (I-specify) 
+ 
+102. Have you accessed the services in a BUCAS center? 
+Naka-access na ba ka sa mga serbisyo sa usa ka BUCAS center? 
+ 
+ 
+ 
+☐ Yes  Oo 
+ 
+ 
+ 
+☐ No <proceed to Q104>  Wala <padayon sa Q104> 
+ 
+103. If yes, which service/s did you avail? Select all that apply.  
+Kung oo, unsang serbisyo/s ang imong nagamit? Pili-a ang tanang pwede. 
+ 
+ 
+ 
+☐ Medical consultation for urgent or minor conditions 
+Medical consultation para sa urgent o minor nga kondisyon 
+ 
+ 
+ 
+☐ Outpatient or ambulatory care services      Outpatient o ambulatory care services 
+ 
+ 
+ 
+☐ Basic diagnostic services (e.g., laboratory tests, X-ray)  
+Basic diagnostic services (pananglitan: laboratory tests, X-ray) 
+ 
+ 
+ 
+☐ Minor procedures or treatments    Minor procedures o treatment 
+ 
+ 
+ 
+☐ Referral to higher-level health facilities  
+ Referral ngadto sa mas taas nga lebel sa health facilities 
+ 
+ 
+ 
+☐ I don’t know   Wala kabalo 
+ 
+ 
+ 
+☐ Other (specify)  Uban pa (I-specify) 
+ 
+104. Without BUCAS Center, where would you have gone? <skip to Q116> 
+Kung walay BUCAS Center, asa unta ka moadto? <I-skip sa Q116> 
+ 
+ 
+ 
+☐ Another DOH hospital   Laing DOH hospital 
+ 
+ 
+ 
+☐ Private clinic/hospital 
+ 
+ 
+ 
+☐ LGU hospital 
+ 
+ 
+ 
+☐ Rural Health Unit / Health Center 
+ 
+ 
+ 
+☐ Would not seek care   Dili mangita og pag-atiman 
+ 
+ 
+ 
+☐ Others: ___   Uban pa 
+ 
+Note for CAPI Version: Questions on inpatient care should be front loaded when the tool is administered in the hospital (before primary care 
+utilization).  
+ 
+H. Inpatient Care 
+This section is for respondents in Inpatient Care. This section will be asked for respondents who received inpatient care. 
+Ask all questions in this section unless a skip rule applies. Note also that the facility referred in this section should be the 
+identified facility under Geographic Identification. 
+Kini nga seksyon para sa mga respondent nga nakadawat og Inpatient Care. Kini nga seksyon pangutan-on lamang sa mga 
+respondent nga nakadawat og inpatient care. Pangutan-a ang tanang pangutana niini nga seksyon gawas kung adunay skip rule. 
+Hinumdumi usab nga ang pasilidad nga gihisgutan niini nga seksyon mao ang giila nga pasilidad ubos sa Geographic Identification. 
+ 
+For the following questions, we will ask about the patient’s most current inpatient visit. 
+Para sa mosunod nga mga pangutana, mangutana kami bahin sa pinakabag-o nga inpatient 
+visit sa pasyente. 
+ 
+105. Why are you confined in the hospital?   Ngano nga na-confine ka sa ospital? 
+ 
+ 
+ 
+☐ Sick          Masakiton 
+ 
+ 
+ 
+☐ Injured       Naangol 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Gave birth    Nanganak 
+ 
+ 
+ 
+☐ Executive check-up 
+ 
+ 
+ 
+☐ Other (specify)    Uban pa (ispecify) 
+ 
+106. How long were you 
+confined? 
+Unsa kadugay ka na-confine? 
+ 
+ 
+ 
+Days   Adlaw 
+ 
+ 
+ 
+Nights   Gabie 
+ 
+107. How much was the total bill for your confinement?    
+  Pila ang kinatibuk-ang bill para sa imong confinement? 
+ 
+ 
+ 
+☐ Out-of-pocket 
+Amount in Pesos   Kantidad sa Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Free/no cost    Libre / walay bayad 
+ 
+ 
+ 
+☐ Free, charge to PhilHealth    Libre, charge sa PhilHealth 
+ 
+ 
+ 
+☐ Free, charge to Private Insurance     Libre, charge sa  Private Insurance 
+ 
+ 
+ 
+☐ Free, charge to HMO   Libre, charge sa  HMO 
+ 
+ 
+ 
+☐ Free, charge to MAIFIP   Libre, charge sa MAIFIP 
+ 
+ 
+ 
+☐ Donation 
+Donasyon 
+Amount in Pesos   Kantidad sa Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ In kind 
+Dili Kwarta 
+Amount in Pesos   Kantidad sa Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Don’t know  Wala kabalo 
+ 
+ 
+ 
+☐ Other, Specify:  Uban pa (ispecify) 
+ 
+108. Other than the medicine/s indicated in the hospital bill, did the patient buy 
+medicine/s from any pharmacy/facility outside the hospital? 
+Gawas sa tambal nga naa sa hospital bill, nipalit ba ang pasyente og tambal gikan sa 
+pharmacy/pasilidad sa gawas sa ospital? 
+ 
+ 
+ 
+☐ Yes  Oo 
+ 
+ 
+ 
+☐ No    Wala 
+ 
+109. How much was paid for the medicine/s outside the hospital? 
+Pila ang gibayran para sa tambal nga gikan sa gawas sa ospital? 
+ 
+ 
+ 
+☐ Out-of-
+pocket 
+Amount in Pesos   Kantidad sa Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Free, charge to PhilHealth    Libre, charge sa PhilHealth 
+ 
+ 
+ 
+☐ Free, charge to Private Insurance     Libre, charge sa  Private Insurance 
+ 
+ 
+ 
+☐ Free, charge to HMO   Libre, charge sa  HMO 
+ 
+ 
+ 
+☐ Free, charge to PhilHealth    Libre, charge sa PhilHealth 
+ 
+ 
+ 
+☐ Free, charge to MAIFIP   Libre, charge sa MAIFIP 
+ 
+ 
+ 
+☐ In kind   Dili Kwarta 
+ 
+ 
+ 
+☐ Don’t know  Wala kabalo 
+ 
+ 
+ 
+☐ Other, Specify:  Uban pa (ispecify) 
+ 
+110. Other than the laboratory service/s indicated in the hospital bill, did the patient 
+pay for other service/s outside the hospital? 
+Gawas sa laboratory services nga naa sa hospital bill, nagbayad ba ang pasyente para 
+sa uban pang serbisyo sa gawas sa ospital? 
+ 
+ 
+ 
+☐ Yes  Oo 
+ 
+ 
+ 
+☐ No   Wala 
+ 
+111. If yes, what are those services?    Kung oo, unsa kadtong mga serbisyo? 
+ 
+ 
+ 
+ 
+ 
+112. How much was paid for the service/s outside the hospital? 
+Pila ang gibayran para sa mga serbisyo nga gihimo sa gawas sa ospital? 
+ 
+ 
+ 
+☐ Out-of-
+pocket 
+Amount in Pesos   Kantidad sa Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Free, charge to PhilHealth    Libre, charge sa PhilHealth 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Free, charge to Private Insurance     Libre, charge sa  Private Insurance 
+ 
+ 
+ 
+☐ Free, charge to HMO   Libre, charge sa  HMO 
+ 
+ 
+ 
+☐ Free, charge to PhilHealth    Libre, charge sa PhilHealth 
+ 
+ 
+ 
+☐ Free, charge to MAIFIP   Libre, charge sa MAIFIP 
+ 
+ 
+ 
+☐ In kind   Dili Kwarta 
+ 
+ 
+ 
+☐ Don’t know  Wala kabalo 
+ 
+ 
+ 
+☐ Other, Specify:  Uban pa (ispecify) 
+ 
+ 
+ 
+I would like to know where you got the money to pay for medical costs incurred (IN ___, and 
+____) at the (FACILITY TYPE INPUT) 
+ 
+113. Did you use any of the following to pay for your hospital bill? (select all that apply) 
+Asa sa mga mosunod ang imong gikuhaan aron makabayad sa medical costs? 
+ 
+ 
+ 
+ 
+1) Salary/income    Sweldo/kita 
+ 
+ 
+ 
+☐ Yes   Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No   Dili 
+ 
+ 
+ 
+ 
+2) Loan/Mortgage  Utang 
+ 
+ 
+ 
+☐ Yes   Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+ 
+ 
+ 
+3) Savings  Tinigom/Savings 
+ 
+ 
+ 
+☐ Yes     Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+ 
+ 
+ 
+4)Donation/Charity/Assistance from Private Organization 
+Donasyon/Charity/Assistance gikan sa Private Organization 
+ 
+ 
+ 
+☐ Yes    Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No   Dili 
+ 
+ 
+ 
+ 
+5) Malasakit Center 
+ 
+ 
+ 
+☐ Yes    Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No   Dili 
+ 
+ 
+ 
+ 
+6)Other Donation/Charity/Assistance from Government 
+OrganizationDonasyon/Charity/Assistance gikan sa Gobyerno nga mga Organisasyon 
+ 
+ 
+ 
+☐ Yes, specify: 
+  Oo, specify 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+ 
+ 
+ 
+7) MAIFIP 
+ 
+ 
+ 
+☐ Yes   Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+ 
+ 
+ 
+8) PhilHealth  
+ 
+ 
+ 
+☐ Yes   Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+ 
+ 
+ 
+9) SSS 
+ 
+ 
+ 
+☐ Yes   Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+ 
+ 
+ 
+10) GSIS 
+ 
+ 
+ 
+☐ Yes   Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+ 
+ 
+ 
+11) Private Insurance 
+ 
+ 
+ 
+☐ Yes   Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+12) HMO 
+ 
+ 
+ 
+☐ Yes   Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+ 
+ 
+ 
+13) Other (specify)    Uban pa (I-specify) 
+ 
+ 
+ 
+☐ Yes   Oo 
+Amount in Pesos 
+Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No  Dili 
+ 
+ 
+114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) 
+Ngano nga wala ka naka-avail sa PhilHealth benefits? (Kung wala na-avail ang PhilHealth 
+sa Q113) 
+ 
+ 
+ 
+☐ Not a PhilHealth member   Dili miyembro sa PhilHealth 
+ 
+ 
+ 
+☐ PhilHealth member but not eligible for benefits   
+Miyembro sa PhilHealth pero dili eligible sa benepisyo 
+ 
+ 
+ 
+☐ Probably used PhilHealth but cannot remember amount because benefit was deducted 
+upon discharge from hospital 
+Tingali nagamit ang PhilHealth pero dili na mahinumduman ang kantidad kay gi-deduct na 
+ang benepisyo pag-discharge sa ospital 
+ 
+ 
+ 
+☐ Too many requirements to comply with before can avail 
+Daghan kaayong requirements nga kinahanglan comply-an sa dili pa maka-avail 
+ 
+ 
+ 
+☐ Limited hospitalization benefits   Limitado ang hospitalization benefits 
+ 
+ 
+ 
+☐ Claims processing too long   Dugay kaayo ang claims processing 
+ 
+ 
+ 
+☐ Other (specify)   Uban pa (I-specify) 
+ 
+115. What was the final amount you paid in cash at the hospital cashier upon 
+discharge? 
+Pila ang kinatibuk-ang kantidad nga imong gibayran cash sa hospital cashier pag-
+discharge? 
+ 
+Amount in Pesos    Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+115.1. Other than the expenses above (e.g. confinement, medicines, laboratory, etc.), 
+which of the following were also included in the bill?  How much were you 
+charged or billed? 
+Gawas sa mga gasto nga nahisgutan sa ibabaw (pananglitan: confinement, tambal, 
+laboratory, ug uban pa), unsa pa sa mosunod ang naapil sa bill? Pila ang imong gi-
+charge o gibayran? 
+If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud.  
+Select all that apply. 
+Kung adunay resibo ang pasyente, pilia ang tanang pwede. Kung walay resibo, basaha ang mga opsyon og kusog. 
+ 
+ 
+ 
+☐ Doctor’s Professional Fee 
+Bayad sa Doktor 
+Amount in Pesos  Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Medical equipment or supplies 
+Medikal nga gamit ug supplies 
+Amount in Pesos   Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Non-medical expenses: (e.g. 
+Hygiene kit) 
+Non-medical expenses (pananglitan: 
+hygiene kit) 
+Amount in Pesos    Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Diagnostic or laboratory procedure 
+inside the facility 
+Diagnostic o laboratory procedure 
+sulod sa pasilidad 
+Amount in Pesos   Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Medicines or drugs inside the facility 
+Tambal o medisina sulod sa pasilidad 
+Amount in Pesos   Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Other expenses:   Uban pang gasto 
+Amount in Pesos  Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+115.2. Did you pay for any other expenses during your confinement that were not 
+included in the hospital bill? 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Nagbayad ba ka og uban pang gasto panahon sa imong confinement nga wala naapil 
+sa hospital bill? 
+ 
+If yes, indicate the amount spent    Kung oo, ispecify ang kantidad nga nagasto. 
+ 
+ 
+ 
+☐ Medical equipment or supplies 
+bought outside the facility 
+Tambal o medisina gipalit gawas sa 
+pasilidad 
+Amount in Pesos   Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Payment made directly to doctor/s 
+and their secretary 
+Bayad nga direktang gihatag sa 
+doktor/doktor ug ilang secretary 
+Amount in Pesos   Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Food   Pagkaon 
+Amount in Pesos   Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Transportation   Plete/Pamasahe 
+Amount in Pesos   Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Donation to the facility 
+Donasyon sa Pasilidad 
+Amount in Pesos   Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Allowance for caregiver 
+Allowance sa Tigbantay/Tig-atiman 
+Amount in Pesos   Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Other (specify)   Uban pa (I-specify) 
+Amount in Pesos   Kantidad sa pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I. 
+Financial Risk Protection   Proteksyon batok sa Pinansyal nga Risgo 
+This section is for the Financial Risk Protection of the patient.   Ask all questions in this section unless a skip rule 
+applies. 
+Kini nga seksyon alang sa Financial Risk Protection sa pasyente. Pangutan-a ang tanang pangutana niini nga seksyon 
+gawas kung adunay skip rule nga magamit. 
+ 
+For this section, we will be asking about your awareness of NBB, ZBB, and MAIFIP 
+Alang niini nga seksyon, mangutana kami bahin sa imong kahibalo sa NBB, ZBB, ug 
+MAIFIP. 
+ 
+116. Have you heard of the No Balance Billing (NBB)? 
+Nakadungog ka na ba bahin sa No Balance Billing (NBB)? 
+ 
+ 
+ 
+☐ Yes  Oo 
+ 
+ 
+ 
+☐ No <proceed to Q119>    Wala <padayon sa Q119> 
+ 
+ 
+ 
+☐ I don’t know <proceed to Q119> Wala kabalo <padayon sa Q119> 
+ 
+117. If yes, what are your sources of information about NBB? 
+Kung oo, asa ka nakadungog sa impormasyon bahin sa NBB? 
+ 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILIA ANG TANANG PWEDE. 
+ 
+ 
+ 
+☐ News   Balita 
+☐ Health center/facility 
+ 
+ 
+ 
+☐ Legislation   Balaod 
+☐ LGU/Barangay 
+ 
+ 
+ 
+☐ Social Media 
+☐ I don't know   Wala kabalo 
+ 
+ 
+ 
+☐ Friends / Family   Higala/pamilya 
+☐ Other (Specify)  Uban pa (I-specify) 
+ 
+118. What is your understanding about NBB?   Unsay imong nasabtan bahin sa NBB? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.   
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILIA ANG TANANG PWEDE. 
+ 
+ 
+ 
+☐ Patient does not pay any hospital bill 
+Ang pasyente dili mobayad og bisan unsang 
+bayronon sa ospital 
+☐ Bills are settled between the hospital and 
+PhilHealth 
+Ang bayronon gi-settle tali sa ospital ug 
+PhilHealth 
+ 
+ 
+ 
+☐ PhilHealth will cover cost of treatment 
+Sakop sa PhilHealth ang gasto sa pagtambal 
+☐ Patients should not be charged extra fees 
+Dili dapat singlan og dugang bayronon ang 
+pasyente 
+ 
+ 
+ 
+☐ Medicine and service are already included 
+Apil na ang tambal ug serbisyo 
+☐ I don’t know  Wala kabalo 
+ 
+ 
+ 
+☐ No cash payment required upon discharge 
+☐ Other (Specify)   Uban pa (I-specify) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Walay cash nga bayranon sa pag-discharge 
+ 
+ 
+ 
+☐ Applies only to certain patients or hospitals 
+Nagamit lamang sa pipila ka pasyente o mga 
+ospital 
+ 
+ 
+119. Have you heard of the Zero Balance Billing (ZBB)? 
+Nakadungog ka na ba bahin sa Zero Balance Billing (ZBB)? 
+ 
+ 
+ 
+☐ Yes  Oo 
+ 
+ 
+ 
+☐ No <proceed to Q124>    Wala <padayon sa Q124> 
+ 
+ 
+ 
+☐ I don’t know <proceed to Q124> Wala kabalo <padayon sa Q124> 
+ 
+120. If yes, what are your sources of information about ZBB? 
+Kung oo, asa ka nakadungog sa impormasyon bahin sa ZBB? 
+ 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILIA ANG TANANG PWEDE. 
+ 
+ 
+ 
+☐ News   Balita 
+☐ Health center/facility 
+ 
+ 
+ 
+☐ Legislation   Balaod 
+☐ LGU/Barangay 
+ 
+ 
+ 
+☐ Social Media 
+☐ I don't know   Wala kabalo 
+ 
+ 
+ 
+☐ Friends / Family   Higala/pamilya 
+☐ Other (Specify)  Uban pa (I-specify) 
+ 
+121. What is your understanding about ZBB?   Unsay imong nasabtan bahin sa ZBB? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.   
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILIA ANG TANANG PWEDE. 
+ 
+ 
+ 
+☐ Patient does not pay any hospital bill 
+Ang pasyente dili mobayad og bisan unsang 
+bayronon sa ospital 
+☐ Bills are settled between the hospital and 
+PhilHealth 
+Ang bayronon gi-settle tali sa ospital ug 
+PhilHealth 
+ 
+ 
+ 
+☐ PhilHealth will cover cost of treatment 
+Sakop sa PhilHealth ang gasto sa pagtambal 
+☐ Patients should not be charged extra fees 
+Dili dapat singlan og dugang bayronon ang 
+pasyente 
+ 
+ 
+ 
+☐ Medicine and service are already included 
+Apil na ang tambal ug serbisyo 
+☐ I don’t know  Wala kabalo 
+ 
+ 
+ 
+☐ No cash payment required upon discharge 
+Walay cash nga bayranon sa pag-discharge 
+☐ Other (Specify)   Uban pa (I-specify) 
+ 
+ 
+ 
+☐ Applies only to certain patients or hospitals 
+Nagamit lamang sa pipila ka pasyente o mga 
+ospital 
+ 
+ 
+122. Were you informed about ZBB upon admission?  
+ Gipahibalo ba ka bahin sa ZBB sa panahon sa imong pag-admit? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+ 
+☐ No   Wala 
+ 
+ 
+123. To what extent did ZBB reduce your financial burden?  
+Hangtod unsa nga lebel nakatabang ang ZBB sa pagpakunhod sa imong pinansyal 
+nga kabug-at? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+ BASAHA ANG MGA OPSYON OG KUSOG. PILIA ANG USA KA TUBAG LAMANG. 
+ 
+ 
+ 
+☐ ZBB significantly reduced my financial burden by covering my expenses 
+Dako kaayo ang natabang sa ZBB sa pagpakunhod sa akong pinansyal nga kabug-at 
+pinaagi sa pagsalo sa akong mga gasto 
+ 
+ 
+ 
+☐ It helped lessen some costs, but I still incurred Out-of-Pocket (OOP) expenses 
+Nakatabang kini sa pagpakunhod sa pipila ka gasto, apan adunay gihapon koy Out-of-
+Pocket (OOP) nga mga bayronon 
+ 
+ 
+ 
+☐  ZBB provided some financial relief, though the support was limited compared to my 
+total needs 
+Nihatag ang ZBB og pipila ka pinansyal nga tabang, apan limitado ra ang suporta 
+kumpara sa akong kinatibuk-ang panginahanglan 
+ 
+ 
+ 
+☐ ZBB did not make a noticeable difference in my financial situation 
+Wala’y klarong kausaban nga nahimo ang ZBB sa akong pinansyal nga kahimtang 
+ 
+124. Have you heard of the Medical Assistance for Indigent and Financially 
+Incapacitated Patients (MAIFIP)? (SKIP iF ANSWERED MAIFIP IN Q113) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Nakadungog ka na ba bahin sa Medical Assistance for Indigent and Financially 
+Incapacitated Patients (MAIFIP)?(SKIP kung gitubag na ang MAIFIP sa Q113) 
+ 
+ 
+ 
+☐ Yes  Oo 
+ 
+ 
+ 
+☐ No <proceed to Q130    Wala <padayon sa Q130> 
+ 
+ 
+ 
+☐ I don’t know <proceed to Q130> Wala kabalo <padayon sa Q130> 
+ 
+ 
+125. What are your sources of information about MAIFIP? 
+Kung oo, asa ka nakadungog sa impormasyon bahin sa MAIFIP? 
+ 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILIA ANG TANANG PWEDE. 
+ 
+ 
+ 
+☐ News   Balita 
+☐ Health center/facility 
+ 
+ 
+ 
+☐ Legislation   Balaod 
+☐ LGU/Barangay 
+ 
+ 
+ 
+☐ Social Media 
+☐ I don't know   Wala kabalo 
+ 
+ 
+ 
+☐ Friends / Family   Higala/pamilya 
+☐ Other (Specify)  Uban pa (I-specify) 
+ 
+126. Did you avail of MAIFIP in this last confinement? 
+Naka-avail ba ka sa MAIFIP sa imohang kataposang confinement? 
+ 
+ 
+ 
+☐ Yes  Oo 
+ 
+ 
+ 
+☐ No <proceed to Q129>   Wala <padayon sa Q129) 
+ 
+127. If you availed MAIFIP, did you have to make any out-of-pocket payment? 
+Kung naka-avail ka sa MAIFIP, kinahanglan ba gihapon ka nga mobayad gikan sa 
+imong kaugalingong kwarta (out-of-pocket payment)? 
+ 
+ 
+ 
+☐ Yes  Oo 
+ 
+ 
+ 
+☐ No <proceed to Q130>   Wala <padayon sa Q130) 
+ 
+128. Which items did you have to pay for out-of-pocket ? <proceed to Q130> 
+Unsang mga butanga ang imong gibayran gikan sa imong kaugalingong kwarta (out-
+of-pocket)? <padayon sa Q130> 
+ 
+ 
+ 
+☐ Drugs    Tambal 
+ 
+ 
+ 
+☐ Laboratory   Laboratoryo 
+ 
+ 
+ 
+☐ Professional Fees   Bayad sa Doktor 
+ 
+ 
+ 
+☐ Accommodation  Gitulgan 
+ 
+129. Why did you not avail of MAIFP during this last confinement? 
+Ngano nga wala ka naka-avail sa MAIFIP niining kataposang confinement? 
+ 
+ 
+ 
+☐ Not eligible   Dili kwalipikado 
+ 
+ 
+ 
+☐ Too complicated    Lisod kaayo ang proseso 
+ 
+ 
+ 
+☐ I don’t like to stay in basic ward   Dili ko ganahan magpabilin sa basic ward 
+ 
+ 
+ 
+☐ There is no available basic ward    Walay available nga basic ward 
+ 
+130. Have you or your household had to reduce spending on things you need (such as 
+food, housing, or utilities) because of this health expenditure in the last 1 month? 
+Ikaw ba o ang imong panimalay napugos sa pagkunhod sa paggasto sa mga batakang 
+panginahanglan (sama sa pagkaon, puy-anan, o utilities) tungod niining gasto sa 
+panglawas sulod sa miaging 1 ka bulan? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No     Dili 
+ 
+ 
+ 
+☐ Don't know   Wala Kabalo 
+ 
+ 
+ 
+☐ Refused to answer    Midumili sa pagtubag 
+ 
+ 
+J. Satisfaction on Amenities and Medical Care   
+Katagbawan sa Amenities ug Serbisyong Medikal 
+This section is for the patient’s Satisfaction on Amenities and Medical Care.   Ask all questions in this section unless a 
+skip rule applies. 
+Kini nga seksyon alang sa katagbawan sa pasyente bahin sa amenities ug serbisyong medikal. Pangutan-a ang tanang pangutana 
+niini nga seksyon gawas kung adunay skip rule nga magamit. 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+The following questions relate to the patient’s most recent experience with 
+[facility_name_input] as an [inpatient] or [outpatient], where we invited you to participate in 
+our survey on [date_formatted]. 
+Ang mosunod nga mga pangutana may kalabutan sa pinakabag-o nimong kasinatian sa 
+[facility_name_input] isip usa ka [inpatient] o [outpatient], diin giimbitar ka namo nga moapil 
+sa among survey niadtong [date_formatted]. 
+ 
+How would you rate the cleanliness and comfort of the following amenities at this 
+facility? 
+Base sa imong satisfaction/ gana, i-rate ang kalimpyo ug kaharuhay sa mga musunod 
+nga amenities niining pasilidad. 
+ 
+ 
+ 
+ 
+Very 
+Satisfied 
+Giganahan 
+kaayo 
+Satisfied 
+Giganahan  
+Neither 
+satisfied 
+nor 
+dissatisfied 
+Insakto lang 
+(tunga-
+tunga) 
+Dissatisfied 
+Wala 
+giganahan 
+Very 
+Dissatisfied 
+Wala jud 
+kayo 
+giganahan  
+ 
+131. Waiting areas  Hulatanan 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+132. Bathrooms and toilets 
+Mga kasilyas ug comfort room 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+133. Consultation Rooms 
+Mga Consultation Rooms 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+134. Rooms  Mga Kwarto 
+<For inpatients only> 
+(Para sa inpatients 
+lamang) 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+135. Were you satisfied with the 
+overall time spent from 
+registration to exiting the 
+facility? 
+Giganahan ba ka sa kinatibuk-
+ang oras nga imong gigahin 
+gikan sa pag rehistro hangtud sa 
+pag gawas sa pasilidad? 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+ 
+ 
+In the patient’s most recent visit, how often did the staff: 
+Sa pinakabag-o nga pagbisita sa pasyente, unsa ka kanunay nga gibuhat sa staff ang 
+mosunod: 
+ 
+ 
+ 
+ 
+Never 
+Wala 
+Sometimes 
+Usahay 
+Usually 
+Kasagaran 
+Always 
+Kanunay 
+I don’t 
+know 
+Wala 
+kabalo 
+ 
+ 
+136. treat you with courtesy and 
+respect? 
+gitratar ka uban ang pagtahod ug 
+maayong pagtagad? 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+ 
+137. listen carefully to what you say or 
+ask? 
+naminaw pag-ayo sa imong gisulti o 
+gipangutana? 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+ 
+138. explain your condition and 
+procedures in a way you can 
+understand? 
+gipasabut ang imong kondisyon ug 
+mga proseso sa paagi nga imong 
+masabtan? 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+ 
+139. give you the chance to make 
+decisions about your treatment? 
+gihatagan ka og higayon nga 
+makahimog desisyon bahin sa imong 
+pagtambal? 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+140. ask you for your consent before 
+performing any treatments or 
+tests? 
+nangayo sa imong pagtugot (consent) 
+sa dili pa maghimo og bisan unsang 
+pagtambal o test? 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+141. In your most recent visit, did the staff assure you that information about the 
+patient's condition will be kept confidential? 
+Sa imong pinakabag-o nga pagbisita, gisiguro ba sa staff nga ang impormasyon bahin 
+sa kondisyon sa pasyente magpabiling kompidensyal? 
+For example, they did not disclose any of your private medical information to anyone not involved in your 
+care. 
+Pananglitan, wala nila gipahibalo ang imong pribadong medikal nga impormasyon ngadto sa mga tawo nga 
+dili apil sa imong pag-atiman. 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No     Wala 
+ 
+ 
+ 
+☐ I don’t know  Wala kabalo 
+ 
+142. In your most recent visit, did the staff respect your privacy during the physical 
+consultation?  
+Sa imong pinakabag-o nga pagbisita, gitahod ba sa staff ang imong pribasiya 
+panahon sa pisikal nga konsultasyon? 
+For example, your consultation was done in a private area, and no one could overhear your private medical 
+information 
+Pananglitan, gihimo ang imong konsultasyon sa pribadong lugar ug walay lain nga makadungog sa imong 
+pribadong medikal nga impormasyon. 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No     Wala 
+ 
+ 
+ 
+☐ I don’t know  Wala kabalo 
+ 
+143. Overall, would you recommend [facility_name_input] to a friend or relative? 
+Sa kinatibuk-an, irekomenda ba nimo ang [facility_name_input] ngadto sa usa ka 
+higala o paryente? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No     Wala 
+ 
+144. How would the patient rate the quality of care you received at 
+[facility_name_input]? 
+Unsay imong i-rate/grado sa kalidad sa pag-atiman kanimo [facility_name_input]? 
+ 
+ 
+ 
+☐ Very Satisfied Giganahan kayo ko 
+☐ Dissatisfied Wala ko Giganahan  
+ 
+ 
+ 
+☐ Satisfied Giganahan  
+☐ Very Dissatisfied Wala jud kayo ko 
+giganahan  
+ 
+ 
+ 
+☐ Neither Satisfied nor Dissatisfied 
+Insakto lang/sa tunga 
+ 
+ 
+ 
+K. Access to Medicines    Access sa Tambal 
+This section is for the Access to Medicines of the patient. For this section, we will ask the patient about how easy or 
+difficult it is for them to purchase or receive medicines.   Ask all questions in this section unless a skip rule applies. 
+Kini nga seksyon alang sa access sa tambal sa pasyente. Alang niini nga seksyon, mangutana kami sa pasyente kung unsa kadali o 
+kalisod alang kanila ang pagpalit o pagdawat og tambal. Pangutan-a ang tanang pangutana niini nga seksyon gawas kung adunay 
+skip rule nga magamit. 
+ 
+The next questions we will be asking are related to the patient’s access to medicines. We 
+would like to know how easy or difficult it is for them to purchase or receive medicines. We 
+will also ask some questions about their views in buying generic or branded medicines. 
+Ang sunod nga mga pangutana may kalabutan sa access sa pasyente sa tambal. Gusto 
+namo mahibal-an kung unsa kadali o kalisod alang kanila ang pagpalit o pagdawat og 
+tambal. Mangutana usab kami bahin sa ilang panan-aw sa pagpalit og generic o branded 
+nga tambal. 
+ 
+145. How often do you purchase or receive medicines? 
+Kapila ka kasagaran mupalit o mangayo ug mga tambal? 
+ 
+ 
+ 
+☐ Weekly   Kada semana 
+☐ Rarely   Panagsa 
+ 
+ 
+ 
+☐ Bi-weekly  Kada 2 ka semana 
+☐ Never <Proceed to Q152>  
+ Wala <padayon sa Q152> 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Monthly   Kada bulan 
+ 
+ 
+146. Was the most recent medicine purchased prescribed by a doctor or over-the-
+counter (OTC) medicine (no need for a prescription)? 
+Ang pinakabag-o nga tambal nga imong napalit, gireseta ba kini sa doktor o over-the-
+counter (OTC) nga tambal (dili kinahanglan og reseta)? 
+ 
+ 
+ 
+☐ Prescribed by a doctor       Gireseta sa doktor 
+ 
+ 
+ 
+☐ Over-the-counter medicine     Over-the-counter (OTC) nga tambal 
+ 
+ 
+ 
+☐ Purchased both prescribed medicine and OTC medicine 
+Nakapalit og parehong gireseta nga tambal ug OTC nga tambal 
+ 
+ 
+ 
+☐ I don’t know    Wala kabalo 
+ 
+ 
+ 
+147. What are the medications that you usually take? 
+Unsa nga mga tambal ang imong kasagarang ginainom? 
+PLEASE LIST DOWN ALL MEDICINES THAT YOU TOOK FOR THE HEALTH CONDITION. 
+PALIHOG ISULAT ANG TANANG TAMBAL NGA IMONG GIGAMIT ALANG SA IMONG KONDISYON SA PANGLAWAS. 
+ 
+ 
+ 
+148. What are the medical conditions that you take the medicines for? 
+Unsang mga medikal nga kondisyon ang imong ginatambalan pinaagi sa mga tambal? 
+ 
+ 
+CODING FOR QUESTION Q148     CODING PARA SA Q148 
+01-Upper respiratory  
+Infection   
+Impeksyon sa upper 
+respiratory tract 
+02-Hypertension  High 
+Blood 
+03-Immunization  Bakuha 
+04-Pregnancy or birth 
+Pagburos o pagpanganak 
+05-Flu   Trangkaso 
+06-Fever   Hilanat 
+07-Joint and muscle pain 
+Sakit sa lutahan ug 
+kaunoran 
+08-Asthma or COPD (chronic breathing problem, not 
+cancer)  Asthma o COPD (malungtarong problema sa 
+pagginhawa, dili cancer) 
+09-Diabetes 
+10-Heart problem   Problema sa Kasing kasing 
+11-Kidney problem /Dialysis   
+ Problema sa Kidney//Dialysis 
+12-Cancer (any)   Cancer (bisan unsang klase) 
+13-Gastro problem (vomiting, diarrhea, etc.) 
+Problema sa tiyan o tinai (pagsuka, kalibanga, ug uban 
+pa) 
+14-Other infection (e.g. urine, skin, other virus 
+etc.) 
+Uban pang impeksyon (pananglitan: ihi, panit, 
+ubang virus, ug uban pa) 
+15-Accident/injury (e.g. wound/broken bone) 
+Aksidente o samad (pananglitan: samad/nabali 
+nga bukog) 
+16-Dental 
+17-ENT (problem with ear/nose/throat) 
+ENT (problema sa dunggan, ilong, o tutunlan) 
+18-Allergy 
+19-No condition - Regular check-up only 
+Walay kondisyon – Regular check-up lamang 
+20-Other (Specify)  Uban pa (I-specify) 
+ 
+149. Where do you usually buy or receive your medicines? Select all that apply. 
+Asa ka kasagarang mopalit o makadawat sa imong mga tambal? Pilia ang tanan nga 
+pwede. 
+ 
+ 
+ 
+☐ Public Hospital    Pampublikong ospital 
+ 
+ 
+ 
+☐ Private Hospital    Pribadong ospital 
+ 
+ 
+ 
+☐ Chain Pharmacies (e.g. Mercury Drug, Watsons, TGP, Generika) 
+Mga chain pharmacy (pananglitan: Mercury Drug, Watsons, TGP, Generika) 
+ 
+ 
+ 
+☐ Local pharmacies     Lokal nga botika 
+ 
+ 
+ 
+☐ Online stores (e.g. Shopee, Lazada)   Online stores (pananglitan: Shopee, Lazada) 
+ 
+ 
+ 
+☐ Barangay Health Station 
+ 
+ 
+ 
+☐ Rural Health Unit or City Health Office       Rural Health Unit o City Health Office 
+ 
+ 
+ 
+☐ Other (specify)    Uban pa (I-specify) 
+ 
+150. How much time does it take for you to reach the nearest pharmacy from your 
+home? 
+Pila ka oras o minuto ang gikinahanglan aron makaabot ka sa pinakaduol nga botika 
+gikan sa inyong balay? 
+ 
+A Pharmacy is an ancillary primary care facility with a FDA LTO where registered medicines can be bought.  
+Ang pharmacy o botika usa ka ancillary primary care facility nga adunay FDA LTO diin mapalit ang mga rehistradong tambal. 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+Time 
+(HH:MM) 
+Oras 
+ 
+ 
+151. How easy is it for you to access a pharmacy or drugstore? 
+Unsa kadali alang kanimo ang pag-access sa usa ka pharmacy o botika? 
+ 
+ 
+ 
+☐ Very difficult   Lisod kaayo 
+☐ Easy  Sayon 
+ 
+ 
+ 
+☐ Difficult   Lisod 
+☐ Very easy   Sayon kaayo 
+ 
+ 
+ 
+☐ Neutral   Insakto lang 
+ 
+ 
+We will now ask about the patient’s awareness about the GAMOT package and the 
+medicines they availed in a GAMOT pharmacy.  
+Mangutana na usab kami bahin sa kahibalo sa pasyente sa GAMOT Package ug sa mga 
+tambal nga ilang nakuha gikan sa GAMOT pharmacy. 
+ 
+Q144 to Q149, Q151 are applicable only to respondents in areas with GAMOT. Otherwise, 
+skip. 
+Ang Q144 hangtod Q149 ug Q151 magamit lamang sa mga respondent nga nagpuyo sa 
+mga lugar nga adunay GAMOT. Kung wala, i-skip. 
+ 
+152. Have you heard of the Guaranteed and Accessible Medications for Outpatient 
+Treatment (GAMOT) Package, which is part of PhilHealth’s YAKAP/Konsulta or 
+primary care benefit package? 
+Nakadungog na ba ka bahin sa Guaranteed and Accessible Medications for Outpatient 
+Treatment (GAMOT) Package, nga kabahin sa YAKAP/Konsulta o primary care benefit 
+package sa PhilHealth? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No <Proceed to Q158>   Wala <Padayon sa Q158> 
+ 
+153. If yes, what are your sources of information for GAMOT Package? 
+Kung oo, asa/diin gikan ka nakakuha sa impormasyon bahin sa GAMOT Package? 
+ 
+Enumerator: Applicable only to respondents in areas with GAMOT 
+Enumerator: Magamit lamang sa mga respondent nga naa sa lugar nga adunay GAMOT 
+ 
+ 
+ 
+☐ News     Balita 
+☐ Health center/facility    pasilidad 
+ 
+ 
+ 
+☐ Legislation  Balaod 
+☐ LGU/Barangay 
+ 
+ 
+ 
+☐ Social Media 
+☐ I don't know   Wala kabalo 
+ 
+ 
+ 
+☐ Friends / Family  Higala/pamilya 
+☐ Other (Specify)  Uban pa (I-specify) 
+ 
+ 
+ 
+154. What is your understanding of the GAMOT Package? 
+Unsay imong nasabtan sa GAMOT Package? 
+Enumerator: Applicable only to respondents in areas with GAMOT 
+Enumerator: Magamit lamang sa mga respondent nga naa sa lugar nga adunay GAMOT 
+ 
+ 
+ 
+☐ Provides free or affordable medicines for outpatients 
+Naghatag og libre o baratuhon nga tambal alang sa mga outpatient 
+ 
+ 
+ 
+☐ Ensures continuous availability of essential medicines 
+Nagsiguro sa padayon nga pagkaanaa sa mga importanteng tambal 
+ 
+ 
+ 
+☐ Helps reduce out-of-pocket expenses for medicines 
+Nakatabang sa pagpakunhod sa out-of-pocket nga gasto sa tambal 
+ 
+ 
+ 
+☐ Supports treatment of common illnesses and chronic conditions 
+Nagsuporta sa pagtambal sa kasagarang sakit ug chronic conditions 
+ 
+ 
+ 
+☐ I don't know   Wala kabalo 
+ 
+ 
+ 
+☐ Other (Specify)  Uban pa (I-specify) 
+ 
+155. Did you get the medicines from the GAMOT Package during the past 6 months? 
+Nakakuha ba ka og tambal gikan sa GAMOT Package sulod sa milabay nga 6 ka 
+bulan? 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+Enumerator: Applicable only to respondents in areas with GAMOT 
+Enumerator: Magamit lamang sa mga respondent nga naa sa lugar nga adunay GAMOT 
+ 
+ 
+ 
+☐ Yes  Oo 
+ 
+ 
+ 
+☐ No    Wala 
+ 
+156. What are the medications that you obtained from the GAMOT Package? [LIST] 
+Unsang mga tambal ang imong nakuha gikan sa GAMOT Package? [LIST] 
+Enumerator: Applicable only to respondents in areas with GAMOT  
+Enumerator: Magamit lamang sa mga respondent nga naa sa lugar nga adunay GAMOT 
+ 
+ 
+ 
+ 
+ 
+157. Where did you get the rest of the medicines? Select all that apply. 
+Asa nimo nakuha ang uban nga mga tambal? Pilia ang tanan nga magamit. 
+ 
+ 
+ 
+☐ Purchased from pharmacy 
+Gipalit sa botika / pharmacy 
+☐ Received from LGU for free 
+Nadawat nga libre gikan sa LGU 
+ 
+ 
+ 
+☐ Purchased from public hospital 
+Gipalit sa pampublikong ospital 
+☐ Received from public hospital for free 
+Nadawat nga libre gikan sa pampublikong 
+ospital 
+ 
+ 
+ 
+☐ Purchased from private hospital 
+Gipalit sa pribadong ospital 
+☐ Received from private hospital for free 
+Nadawat nga libre gikan sa pribadong 
+ospital 
+ 
+ 
+ 
+☐ Purchased from primary care provider 
+(PCP) 
+Gipalit gikan sa primary care provider 
+(PCP) 
+☐ Other (Specify)  Uban pa (I-specify) 
+ 
+ 
+ 
+☐ Received from PCP for free 
+Nadawat nga libre gikan sa PCP 
+  
+ 
+ 
+158. Do you know the difference between a 'branded' and a 'generic' medicine? 
+Kahibalo ba ka sa kalainan sa “branded” ug “generic” nga tambal? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No <Proceed to Q162>  Wala <Padayon sa Q162> 
+ 
+159. Was/were the medicine/s you bought outside of GAMOT pharmacy branded or 
+generic? 
+Ang tambal ba nga imong napalit gawas sa GAMOT pharmacy branded o generic? 
+ 
+ 
+ 
+☐ Branded <Proceed to Q161>   Branded <Padayon sa Q161> 
+ 
+ 
+ 
+☐ Generic 
+ 
+ 
+ 
+☐ Both branded and generic    Parehong branded ug generic 
+ 
+ 
+ 
+☐ Don’t know the difference <Proceed to Q162>   
+Wala kabalo sa kalainan <Padayon sa Q162> 
+ 
+ 
+ 
+☐ Not applicable <Proceed to Q164>    Dili magamit / Not applicable <Padayon sa 
+Q164> 
+ 
+160. If generic, why did you buy generic medicine?   
+ Kung generic, nganong generic nga tambal man ang imong gipalit? 
+ 
+ 
+ 
+☐ Lower cost   Mas ubos ang presyo 
+☐ More or as effective as branded 
+medicine 
+Pareho o mas epektibo kaysa branded 
+nga tambal 
+ 
+ 
+ 
+☐ Prescribed by doctor  Gireseta sa doktor 
+☐ I don’t know   Wala ko kahibalo 
+ 
+ 
+ 
+☐ Readily available   Dali ra makit-an / 
+readily available 
+☐ Other (Specify)  Uban pa (I-specify) 
+ 
+ 
+ 
+☐ Given for free  Gihatag nga libre 
+ 
+ 
+161. If branded, why did you buy branded medicine? <Ask if answer in Q159 is branded 
+and both branded and generic, otherwise skip.> 
+Kung branded, nganong branded nga tambal man ang imong gipalit? 
+(Pangutan-a lamang kung ang tubag sa Q159 kay branded o parehong branded ug generic; 
+kung dili, i-skip.) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Branded medicine is more effective than 
+generic 
+Mas epektibo ang branded nga tambal 
+kaysa generic 
+☐ Prefer branded over generic option 
+Mas gusto nako ang branded kaysa 
+generic nga opsyon 
+ 
+ 
+ 
+☐ Not aware of generic option 
+Wala kahibalo nga adunay generic nga 
+opsyon 
+☐ I don’t know   Wala ko kahibalo 
+ 
+ 
+ 
+☐ Prescribed by doctor  Gireseta sa doktor 
+☐ Other (Specify)  Uban pa (I-specify) 
+ 
+ 
+ 
+☐ Given for free  Gihatag nga libre 
+ 
+ 
+ 
+L. Experiences and Satisfaction on Referrals   
+ Mga Kasinatian ug Katagbawan sa Referral 
+FOR BOTH OUTPATIENTS AND INPATIENTS  PARA SA TANANG OUTPATIENTS UG INPATIENTS 
+ 
+We will be asking about the patient’s experience and satisfaction on referrals. 
+Mangutana kami bahin sa kasinatian ug katagbawan sa pasyente sa referrals. 
+ 
+162. Based on your most recent visit/confinement at [facility_name_input], did a 
+healthcare worker refer you to another facility or specialist for further care or 
+specialized care? 
+Base sa imong pinakabag-o nga pagbisita/confinement sa [facility_name_input], gi-
+refer ba ka sa usa ka healthcare worker ngadto sa laing pasilidad o espesyalista alang 
+sa dugang o espesyal nga pag-atiman? 
+ 
+ 
+ 
+☐ Yes  Oo 
+ 
+ 
+ 
+☐ No <End of survey>   Wala <Katapusan sa survey> 
+ 
+163. What type of care was the referral for?   
+Unsang klase sa pag-atiman ang referral para niini? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.    BASAHA ANG MGA OPSYON OG KUSOG. PILIA ANG 
+TANANG PWEDE 
+ 
+ 
+ 
+☐ Outpatient care (Consultation, procedure, or treatment where the patient visits and 
+leaves within the same day) 
+Outpatient care (Konsultasyon, procedure, o pagtambal diin ang pasyente mobisita ug 
+mouli sulod sa maong adlaw) 
+ 
+ 
+ 
+☐ Emergency care (Care for serious illnesses or injuries that need immediate medical 
+attention; usually provided in an emergency room or ER) 
+Emergency care (Pag-atiman alang sa seryoso nga sakit o samad nga nanginahanglan 
+dayon nga medikal nga atensyon; kasagarang gihatag sa emergency room o ER) 
+ 
+ 
+ 
+☐ Inpatient care (Care provided in hospital or another facility where the patient is 
+admitted for at least one night) 
+Inpatient care (Pag-atiman nga gihatag sa ospital o laing pasilidad diin ang pasyente 
+ma-admit ug mopabilin og labing menos usa ka gabii) 
+ 
+ 
+ 
+☐ Dental care (Medical care for your teeth, such as cleanings, fillings, etc.) 
+Dental care (Pag-atiman sa ngipon sama sa cleaning, pasta/filling, ug uban pa) 
+ 
+ 
+ 
+☐ Other facility visits (Care that is provided in a facility that is not a health center or 
+hospital, such as independent diagnostic centers, TB dispensaries, etc.) 
+Uban pang pagbisita sa pasilidad (Pag-atiman nga gihatag sa pasilidad nga dili health 
+center o ospital, sama sa independent diagnostic centers, TB dispensaries, ug uban pa) 
+ 
+ 
+ 
+☐ Special therapy visits (Rehabilitation care or services, such as occupational 
+therapy, physical therapy, psychological and behavioral rehabilitation, prosthetics and 
+orthotics rehabilitation, or speech and language therapy) 
+Espesyal nga therapy visits (Rehabilitation care o serbisyo sama sa occupational 
+therapy, physical therapy, psychological ug behavioral rehabilitation, prosthetics ug 
+orthotics rehabilitation, o speech and language therapy) 
+ 
+ 
+ 
+☐ Alternative care (Healthcare apart from medical doctors or the formal health care 
+system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.) 
+Alternatibong pag-atiman (Healthcare gawas sa medical doctors o pormal nga 
+healthcare system; sama sa reflexology, acupuncture, massage therapy, herbal 
+medicines, ug uban pa) 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Outreach / medical missions (Care provided by the government or an NGO 
+through an outreach or medical mission within a community) 
+Outreach / medical missions (Pag-atiman nga gihatag sa gobyerno o NGO pinaagi sa 
+outreach o medical mission sulod sa komunidad) 
+ 
+ 
+ 
+☐ Home healthcare (Care that is administered at the patient's home, such as birth 
+delivery, checkups, immunization, rehabilitation, etc.) 
+Home healthcare (Pag-atiman nga gihatag sa balay sa pasyente sama sa pagpaanak, 
+check-up, immunization, rehabilitation, ug uban pa) 
+ 
+ 
+ 
+☐ Telemedicine (Remote diagnosis and treatment of patients by means of 
+telecommunications technology) 
+Telemedicine (Remote diagnosis ug pagtambal sa pasyente pinaagi sa 
+telecommunications technology) 
+ 
+ 
+ 
+☐ None of the above  Wala sa mga nahisgutan 
+ 
+ 
+ 
+☐ Other (Specify)   Uban pa (I-specify) 
+ 
+164. What kind of specialist did they recommend?   
+Unsang klase sa espesyalista ang ilang girekomenda? 
+        READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+BASAHA ANG MGA OPSYON OG KUSOG. PILIA ANG USA KA TUBAG LAMANG. 
+ 
+ 
+ 
+☐ No specialty   Walay specialty 
+☐ Orthopedics 
+ 
+ 
+ 
+☐ Anesthesia 
+☐ Otorhinolaryngology (ENT) 
+ 
+ 
+ 
+☐ Dermatology 
+☐ Pathology 
+ 
+ 
+ 
+☐ Emergency Medicine 
+☐ Pediatrics 
+ 
+ 
+ 
+☐ Family Medicine 
+☐ Physical and Rehabilitation Medicine 
+ 
+ 
+ 
+☐ General Surgery 
+☐ Psychiatry 
+ 
+ 
+ 
+☐ Internal Medicine 
+☐ Public health 
+ 
+ 
+ 
+☐ Neurology 
+☐ Radiology 
+ 
+ 
+ 
+☐ Nuclear Medicine 
+☐ Research 
+ 
+ 
+ 
+☐ Obstetrics and Gynecology 
+☐ I don’t know   Wala kabalo 
+ 
+ 
+ 
+☐ Occupational Medicine 
+☐ Other (Specify)   Uban pa (I-specify) 
+ 
+ 
+ 
+☐ Ophthalmology 
+ 
+ 
+165. How did they refer you to the doctor?    Giunsa ka nila pag-refer ngadto sa 
+doktor? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.   
+BASAHA ANG MGA OPSYON OG KUSOG. PILIA ANG USA KA TUBAG LAMANG. 
+ 
+ 
+ 
+☐ Physical referral slip 
+Pisikal nga referral slip 
+☐ I don’t know   Wala kabalo 
+ 
+ 
+ 
+☐ E-referral 
+☐ Other (Specify)   Uban pa (I-specify) 
+ 
+ 
+ 
+☐ Phone call from referring facility to receiving facility 
+Tawag sa telepono gikan sa referring facility ngadto sa receiving facility 
+ 
+166. Did they discuss with you the different places you could have gone to address 
+your health problem? 
+Gihisgutan ba nila uban kanimo ang nagkalain-laing lugar nga imong puwedeng 
+adtoan aron matubag ang imong problema sa panglawas? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No     Wala 
+ 
+167. Did they help you make the appointment for that visit? 
+Gitabangan ba ka nila sa paghimo sa appointment alang niadtong pagbisita? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No     Wala 
+ 
+168. Did they write down any information for the specialist about the reason for that 
+visit? 
+Gisulatan ba nila og bisan unsang impormasyon alang sa espesyalista bahin sa rason 
+sa maong pagbisita? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No     Wala 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+169. Have you visited the referred hospital or facility after the referral was made? 
+Nakabisita na ba ka sa gi-refer nga ospital o pasilidad human gihimo ang referral? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILIA ANG USA KA TUBAG LAMANG. 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No, I'm not planning to <Proceed to Q171> 
+Wala, ug wala koy plano moadto <Padayon sa Q171> 
+ 
+ 
+ 
+☐ Not yet, but I'm planning to <Proceed to Q171> 
+Wala pa, apan nagplano ko moadto <Padayon sa Q171> 
+ 
+170. After your visit to the referral hospital/ specialist, did they follow up with you 
+about what happened at the visit? <Proceed to Q172> 
+Human sa imong pagbisita sa referral hospital/especialista, nag-follow up ba sila 
+kanimo bahin sa nahitabo sa pagbisita? <Padayon sa Q172> 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No     Wala 
+ 
+171. Why are you NOT planning to visit? <Proceed to Q172> 
+Ngano nga wala ka nagplano nga moadto? <Padayon sa Q172> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILIA ANG TANANG MAGAMIT. 
+ 
+ 
+ 
+☐ Facility is too far   
+ Layo ra kaayo ang pasilidad 
+☐ Not needed   Dili kinahanglan 
+ 
+ 
+ 
+☐ Do not trust the referred facility 
+Wala salig sa gi-refer nga pasilidad 
+☐ Don't know how to get to facility 
+Wala kahibalo unsaon pag-adto sa pasilidad 
+ 
+ 
+ 
+☐ No time    Walay oras 
+☐ Other (Specify)   Uban (I-ispecify) 
+ 
+ 
+ 
+☐ Worried about additional costs 
+Nabalaka sa dugang nga gasto 
+ 
+ 
+172. Was the visit to [facility_name_input] a referral from your primary care facility? 
+Ang imong pagbisita ba sa [facility_name_input] usa ka referral gikan sa imong 
+primary care facility? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No <Proceed to Q177>   Wala <Padayon sa Q177> 
+ 
+173. Does your primary care provider know that you made the visit? 
+Nahibal-an ba sa imong primary care provider nga naghimo ka niining pagbisita? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No   Wala 
+ 
+ 
+ 
+☐ I don’t know   Wala kabalo 
+ 
+174. Did your primary care provider discuss with you different places you could have 
+gone to get help with your problem? 
+Gihisgutan ba sa imong primary care provider uban kanimo ang nagkalain-laing lugar 
+nga imong puwedeng adtoan aron mangayo og tabang alang sa imong problema? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No   Wala 
+ 
+175. Did your primary care provider (PCP) or someone working with your PCP help 
+you make the appointment for that visit? 
+Gitabangan ba ka sa imong primary care provider (PCP) o sa usa ka tawo nga kauban 
+sa imong PCP sa paghimo sa appointment alang niadtong pagbisita? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No   Wala 
+ 
+176. Did your primary care provider write down any information for the specialist 
+about the reason for that visit? 
+Gisulatan ba sa imong primary care provider og bisan unsang impormasyon alang sa 
+espesyalista bahin sa rason sa maong pagbisita? 
+ 
+ 
+ 
+☐ Yes   Oo 
+ 
+ 
+ 
+☐ No   Wala 
+ 
+177. As it was not a referral, why did you decide to visit a hospital? 
+Kay dili man kini referral, ngano nga nakahukom ka nga mobisita sa ospital? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILIA ANG TANANG PWEDE. 
+ 
+ 
+ 
+☐ Referred by other specialist (doctor in another hospital) 
+Gi-refer sa laing espesyalista (doktor sa laing ospital) 
+☐ Referred by family / friends 
+Gi-refer sa pamilya / mga higala 
+
+ 
+ICF ver.07/25/2026  | Translated Questionnaire ver.06/05/2026 
+ 
+ 
+ 
+☐ Nearest facility to house  Pinakaduol nga pasilidad sa 
+balay 
+☐ Facility offers subsidized or free 
+health services 
+Ang pasilidad naghatag og 
+subsidized o libre nga serbisyo sa 
+panglawas 
+ 
+ 
+ 
+☐ Facility is usual source of care 
+Kasagarang gigikanan sa pag-atiman sa panglawas ang 
+pasilidad 
+☐ ZBB eligibility 
+ 
+ 
+ 
+☐ Facility is the only place that can perform a certain test 
+Ang pasilidad ra ang makapahimo sa usa ka espesipikong 
+test 
+☐ I don’t know   Wala kabalo 
+ 
+ 
+ 
+☐ Referred by BHW/nurse/midwife/other community health 
+professional 
+☐ Other (Specify)  Uban pa (I-
+specify) 
+ 
+178. Overall, how would you rate your experience with the referral process? 
+Sa kinatibuk-an, unsa imong i-rate sa imong kasinatian sa proseso sa referral? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+BASAHA ANG MGA OPSYON OG KUSOG. PILIA ANG USA KA TUBAG LAMANG. 
+ 
+ 
+ 
+☐ Very Satisfied  Giganahan kaayo 
+☐ Dissatisfied Wala giganahan 
+ 
+ 
+ 
+☐ Satisfied  Giganahan 
+☐ Very Dissatisfied wala jud kayo giganahan 
+ 
+ 
+ 
+☐ Neither Satisfied nor Dissatisfied 
+Insakto lang 
+☐ Not applicable  Dili Applicable 
+ 
+END OF SURVEY 
+ 
