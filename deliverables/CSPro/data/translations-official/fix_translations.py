@@ -64,6 +64,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 CSPRO = os.path.abspath(os.path.join(HERE, "..", ".."))
 OFFICIAL = os.path.join(HERE, "official_translations.json")
 
+sys.path.insert(0, CSPRO)
+from cspro_helpers import _value_pair_key  # keys MUST match walk_labeled_nodes
+
 BASE = {"F1": "FacilityHeadSurvey", "F3": "PatientSurvey", "F4": "HouseholdSurvey"}
 LOCALES = ["fil", "bcl", "bis", "ceb", "war", "hil", "ilo"]
 
@@ -214,6 +217,90 @@ def scan_dcf(inst, code):
     return stems, options
 
 
+# Proposals a human review PARKED - never auto-applied, however many times plan() re-runs.
+PARKED_OPTIONS = {
+    # 2026-08-17 three-lens panel: F3 Hiligaynon "No" -> "Wala/Indi" is verbatim-cleared
+    # but a bare option key binds to EVERY value set carrying "No" (77 in F3); parked
+    # until per-value-set adjudication.
+    ("F3", "hil", "No"),
+}
+
+# Stems the 2026-08-17 three-lens panel REJECTED (contamination, wrong binding, meaning
+# drift, or directive residue - see the #1250/#1263/#1264/#1269 closing notes). plan()
+# keeps proposing them (the report is a worklist), but --stems must never ship them.
+PARKED_STEMS = {
+    ("F1", "fil", "66"), ("F1", "bis", "127"),
+    ("F1", "ceb", "71"), ("F1", "ceb", "73"), ("F1", "ceb", "74"), ("F1", "ceb", "151"),
+    ("F1", "ilo", "56"), ("F1", "ilo", "129"), ("F1", "ilo", "131"),
+    ("F3", "bcl", "92"), ("F3", "ilo", "93"), ("F4", "bcl", "91"),
+}
+
+
+def dcf_key_index(inst):
+    """-> (stem_keys, opt_keys, en_by_key) for the 2026-08-17 name-scoped map format.
+
+    stem_keys: EN label -> [item:/vs: keys];  opt_keys: EN value label -> [val: keys];
+    en_by_key: name-scoped key -> EN label (so guards written for text keys keep
+    working on migrated maps). Key shapes come from cspro_helpers.walk_labeled_nodes
+    via _value_pair_key - the one shared contract."""
+    path = os.path.join(CSPRO, inst, BASE[inst] + ".dcf")
+    d = json.loads(io.open(path, encoding="utf-8-sig").read())
+    stem_keys, opt_keys, en_by_key = defaultdict(list), defaultdict(list), {}
+
+    def visit(node):
+        if isinstance(node, dict):
+            nm = node.get("name")
+            if nm and node.get("labels"):
+                en = lab(node, "EN")
+                if en:
+                    stem_keys[en].append("item:" + nm)
+                    en_by_key["item:" + nm] = en
+            for vs in node.get("valueSets") or []:
+                vsn, en_vs = vs.get("name"), lab(vs, "EN")
+                if vsn and en_vs:
+                    stem_keys[en_vs].append("vs:" + vsn)
+                    en_by_key["vs:" + vsn] = en_vs
+                for v in vs.get("values") or []:
+                    en_v = lab(v, "EN")
+                    if vsn and en_v:
+                        k = f"val:{vsn}:{_value_pair_key(v)}"
+                        opt_keys[en_v].append(k)
+                        en_by_key[k] = en_v
+            for k, v in node.items():
+                if k not in ("labels", "valueSets"):
+                    visit(v)
+        elif isinstance(node, list):
+            for it in node:
+                visit(it)
+
+    visit(d)
+    return stem_keys, opt_keys, en_by_key
+
+
+def name_scope(p):
+    """Convert a plan's ENGLISH-keyed adds to name-scoped keys before writing.
+
+    apply_translations (2026-08-17) hard-rejects text keys, so the legacy apply path
+    shipped nothing but a broken build. Existing non-English values are never
+    overwritten - the plan was built against the same map, but re-checking here makes
+    the write idempotent."""
+    stem_keys, opt_keys, _ = dcf_key_index(p["inst"])
+    cur = json.loads(io.open(p["path"], encoding="utf-8").read())
+
+    def convert(adds, index):
+        out = {}
+        for en, val in adds.items():
+            for key in index.get(en, []):
+                if cur.get(key) not in (None, "", en, key):
+                    continue
+                out[key] = val
+        return out
+
+    p["stem_adds"] = convert(p["stem_adds"], stem_keys)
+    p["opt_adds"] = convert(p["opt_adds"], opt_keys)
+    return p
+
+
 def plan(inst, loc):
     """-> dict describing every change proposed for one instrument x locale."""
     code = loc.upper()
@@ -222,6 +309,7 @@ def plan(inst, loc):
         return None
     cur = json.loads(io.open(mpath, encoding="utf-8").read())
     off = json.loads(io.open(OFFICIAL, encoding="utf-8").read()).get(inst, {})
+    _, _, en_by_key = dcf_key_index(inst)
 
     trims = {}
     for k, v in cur.items():
@@ -232,7 +320,8 @@ def plan(inst, loc):
         # re-emits directives for question stems, so nothing is doubled and trimming would
         # simply delete an enumerator instruction. Found on the value-set option
         # "Refuse to answer (DO NOT READ OUT LOUD)".
-        if directive_at(norm(k)) is not None:
+        en_of_k = en_by_key.get(k, k) if ":" in k else k
+        if directive_at(norm(en_of_k)) is not None:
             continue
         at = directive_at(norm(v))
         if at is None or at == 0:
@@ -263,7 +352,7 @@ def plan(inst, loc):
             stem_skips.append((q, item, "no cleared translation"))
         elif en_stem and loose(val) == loose(en_stem):
             stem_skips.append((q, item, "cleared translation is the English"))
-        elif cur.get(en) and cur[en] != en:
+        elif cur.get("item:" + item) not in (None, "", en):
             stem_skips.append((q, item, "map already holds a value"))
         else:
             # A blank previous cell in this locale means the PDF rows shifted up, so
@@ -276,6 +365,8 @@ def plan(inst, loc):
             except (TypeError, ValueError):
                 prev_blank = False
             ok, why = sv.validate(en, val, en_stem, q, prev_locale_blank=prev_blank)
+            if ok and (inst, loc, q) in PARKED_STEMS:
+                ok, why = False, "parked by review - see PARKED_STEMS"
             if ok:
                 stem_adds[en] = val
             else:
@@ -287,6 +378,9 @@ def plan(inst, loc):
 
     proposals, where, opt_skips = defaultdict(set), defaultdict(set), []
     for q, item, en in dcf_opts:
+        if (inst, loc, en) in PARKED_OPTIONS:
+            opt_skips.append((q, en, "parked by review - see PARKED_OPTIONS"))
+            continue
         where[en].add(q)
         rec = off.get(q) or {}
         b, e = rec.get(code) or {}, rec.get("EN") or {}
@@ -332,8 +426,8 @@ def plan(inst, loc):
 
     opt_adds, conflicts = {}, []
     for en, vals in proposals.items():
-        if cur.get(en) and cur[en] != en:
-            continue
+        # per-key already-translated filtering happens in name_scope() at apply time
+
         if len(vals) > 1:
             conflicts.append((en, sorted(where[en]), sorted(vals)))
         else:
@@ -402,6 +496,7 @@ def main():
         for p in plans:
             if not a.stems:
                 p["stem_adds"] = {}
+            name_scope(p)
             n = apply_plan(p)
             print(f"  applied {n:>4} -> {p['inst']}/{p['locale']}.json")
 

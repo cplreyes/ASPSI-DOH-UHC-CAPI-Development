@@ -354,6 +354,20 @@ def validate_option(english_option, proposed):
         return False, "empty"
     if len(re.sub(r"[^A-Za-zÀ-ɏ]", "", p)) < 2:
         return False, f"no real text ({p!r}) - PDF punctuation artifact"
+    # 2026-08-17 review: "((Saan )" for Ilocano "No" passed every rule above - four real
+    # letters, no heading, no directive. Unbalanced parens/brackets are always extraction
+    # damage in an option label; the cleared PDFs never print them.
+    if p.count("(") != p.count(")") or p.count("[") != p.count("]"):
+        return False, f"unbalanced parens/brackets ({p!r}) - mangled source row"
+    # Same review: "Oo Indi" (Yes + No glued from one two-column row) proposed for "No".
+    # Only fires on SHORT English options (Yes/No/None class) where a proposal containing
+    # both a yes-word and a no-word can only be a glued row, never a real sentence.
+    if len(norm(english_option)) <= 12:
+        toks = set(re.findall(r"[a-zà-ɏ’'-]+", p.lower()))
+        _YES = {"oo", "iyo", "wen", "yes"}
+        _NO = {"indi", "dili", "dai", "dae", "saan", "wala", "hindi", "no"}
+        if toks & _YES and toks & _NO:
+            return False, f"glued Yes/No row ({p!r}) - two-column pair captured as one value"
     if SECTION_HEAD.search(p):
         return False, "carries a section heading - picked up the next option"
     if DIRECTIVE_PHRASE.search(p):

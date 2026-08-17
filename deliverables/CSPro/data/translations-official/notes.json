@@ -28,7 +28,7 @@
     "FIL": "Susunod, kami ay magtatanong ng mga katanungan tungkol sa pasilidad ng kalusugan na ito",
     "BCL": "Masunod mga kahapotan manungod sa health facility",
     "BIS": "Kining sunod nakong ipangutana nimo, mga butang kabahin niining pasilidad nga imong gitrabahuan B",
-    "CEB": "Sunod, Mangutana kami bahin aning health facility ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 B",
+    "CEB": "Sunod, Mangutana kami bahin aning health facility",
     "WAR": "Sunod, magpapakiana kami mahitungod hini nga pasilidad panlawas",
     "HIL": "Sunod, mamangkot kami tuhoy sa sini nga health facility",
     "ILO": "(Sumaruno, agsaludsodtayo maipapan iti daytoy a pasilidad ti salun-at.) B"
@@ -88,41 +88,33 @@
     "ILO": "(Ituloytayo itan ti maudi a benneg daytoy a surbey, a naipamaysa kadagiti rekurso ti tao.) H"
    },
    "const:_READ_ONE": {
-    "FIL": "NANG MALAKAS",
-    "BCL": "MASUNOD NA PLION SANA AN SIMBAG",
-    "CEB": "ANG MGA TUBAG",
-    "WAR": "AN MGA OPSYON",
-    "ILO": "ITI NAIPAAY"
+    "FIL": "BASAHIN ANG PAGPIPILIAN NANG MALAKAS. PUMILI NG ISANG SAGOT LAMANG",
+    "ILO": "(BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.)"
    },
    "const:_READ_ALL": {
-    "FIL": "NANG MALAKAS",
-    "BCL": "AN MGA DAPAT",
-    "BIS": "OPSYON OG KUSOG",
-    "WAR": "AN MGA OPSYON",
-    "ILO": "ITI NAIPAAY"
+    "FIL": "BASAHIN ANG MGA PAGPIPILIAN NANG MALAKAS. PILIIN LAHAT NG NAAANGKOP",
+    "WAR": "BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO",
+    "ILO": "(BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.)",
+    "CEB": "BASAHA UG KUSOG ANG MGA TUBAG. PILIA ANG TANAN NGA MO APPLY"
    },
    "const:_DNR_ALL": {
-    "FIL": "MGA PAGPIPILIAN NANG MALAKAS",
-    "BCL": "Dae pagbasahon nin makusog",
-    "BIS": "MGA OPSYON",
-    "WAR": "MAKUSOG AN MGA OPSYON",
-    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+    "WAR": "AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO",
+    "ILO": "(SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.)",
+    "CEB": "AYAW BASAHA UG KUSOG. PILIA ANG TANAN NGA MO APPLY"
    },
    "const:_DNR_UNPROMPTED": {
-    "FIL": "MALAKAS ANG MGA PAGPIPILIAN",
-    "BCL": "Dae pagbasahon ki makusog",
-    "CEB": "KUSOG ANG MGA TUBAG",
-    "WAR": "MAKUSOG AN MGA OPSYON",
-    "HIL": "MGA OPSYON SANG MATUNOG"
+    "FIL": "HUWAG BASAHIN NANG MALAKAS ANG MGA PAGPIPILIAN. PILIIN ANG LAHAT NG SAGOT NA IBIBIGAY NG RESPONDENTE NANG WALANG PAGHIHIKAYAT",
+    "CEB": "AYAW BASAHA UG KUSOG ANG MGA TUBAG. PILIA ANG TANANG TUBAG NGA IHATAG SA RESPONDENT NGA DILI I PROMPT/AGHATON",
+    "WAR": "AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA OPSYON HAN BATON NGA IGINHAHATAG HAN NAGBATON NGA WARAY PAG-AGHAT",
+    "HIL": "INDI PAGBASAHA ANG MGA OPSYON SANG MATUNOG. PILIA ANG TANAN NGA SABAT NGA GINAHATAG SANG RESPONDENT NGA WALA PAGPANGUNA"
    },
    "const:_PROBE": {
-    "FIL": "MALAKAS ANG MGA PAGPIPILIAN",
-    "BCL": "Dai, pagbasahon ki makusog an mga pagpipilian, gamiton an minasunod na guide sa paghahapot para mag probe",
-    "BIS": "ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 <Question is applicable to all facilities with ‘No' response in Q10> AYAW BASAHA OG KUSOG",
-    "CEB": "KUSOG ANG MGA TUBAG",
-    "WAR": "MAKUSOG AN MGA OPSYON",
-    "HIL": "MATUNOG ANG OPSYON",
-    "ILO": "<Question is applicable to all facilities with ‘No' response in Q10> (SAAN A BASAEN TI OPTIONS ITI NAIPAAY"
+    "FIL": "HUWAG BASAHIN NANG MALAKAS ANG MGA PAGPIPILIAN. GAMITIN ANG MGA SUMUSUNOD NA GABAY NA TANONG SA PAG-USISA. Naipatupad na ba ito? / Mayroon ba kayo nito?Ito ba ay ipinatupad bago o pagkatapos ng 2019? Ito ba ay ipinatupad dahil sa UHC? May plano ba kayong ipatupad ito sa loob ng susunod na 1–2 taon?",
+    "BIS": "AYAW BASAHA OG KUSOG. GAMITA ANG MGA MUSUNOD NGA MGA PANGUTANA APRA KINI MA-PROBE. Na-implementar ba kini? Naa mo ingon ani? Naimplementar ba kini sa wala pa o human an na ang 2019? na-implemetar ba kinin tungod sa UHC? Naa ba mo plano nga maimplementar kini sa musunod nga usa hangtod duha ka tuig?",
+    "CEB": "AYAW BASAHA UG KUSOG ANG MGA TUBAG. GAMITA ANG MGA GUIDE QUESTIONS PARA MAG PROBE. Napatuman na ba kini?/ Aduna ba mo niini? Napatuman ba kini sa wala pa o human sa 2019? Gipatuman ba kini tungod sa UHC? Aduna ba kamoy plano nga ipatuman kini sa sunod nga 1-2 ka tuig?",
+    "WAR": "AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka tuig?",
+    "HIL": "INDI PAGBASAHON SANG MATUNOG ANG OPSYON. GAMITA ANG MASUNOD NGA MGA GIYA NGA PAMANGKOT PARA SA PROBING. Na- implementar na bala ini? / May ara kamo sini? Na-implementar bala ini antes ukon pagkatapos sang tuig 2019? Na-implementar bala ini bangud sa UHC? Plano mo bala ini i-implementar sa masunod nga 1-2 ka tuig?",
+    "ILO": "(SAAN A BASAEN TI OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 1-2 a tawen?)"
    }
   }
  },
@@ -287,64 +279,46 @@
     "ILO": "(Saludsodenmi ti maipapan iti kapadasan ken pannakapnek ti pasiente kadagiti referral"
    },
    "const:_READ_ONE": {
-    "FIL": "ANG PAMIMILIAN",
-    "CEB": "Miyembro ba ang pasyente sa LGBTQIA+ community?",
-    "WAR": "NGA TINGOG AN MGA OPSYON",
-    "ILO": "ITI NAIPAAY"
+    "FIL": "BASAHIN NANG MALAKAS ANG PAMIMILIAN. PUMILI LAMANG NG ISANG SAGOT",
+    "ILO": "(BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.)"
    },
    "const:_READ_ALL": {
-    "FIL": "MALAKAS ANG MGA PAMIMILIAN",
-    "BIS": "MGA OPSYON OG KUSOG",
-    "CEB": "Unsa ang imong tinubdan sa impormasyon bahin sa UHC?",
-    "WAR": "DAKU NGA TINGOG AN MGA OPSYON",
-    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+    "FIL": "BASAHIN NANG MALAKAS ANG MGA PAMIMILIAN. PILIIN ANG LAHAT NG NAAANGKOP",
+    "BIS": "BASAHA ANG MGA OPSYON OG KUSOG. PILI ANG TANANG PWEDE",
+    "WAR": "BASAHA HA DAKU NGA TINGOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO",
+    "ILO": "(BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.)",
+    "BCL": "BASAHON AN MGA OPSYON. PILION AN DAPAT"
    },
    "const:_DNR_ONE": {
-    "FIL": "MALAKAS ANG MGA PAMIMILIAN",
-    "BIS": "MGA OPSYON OG KUSOG",
-    "CEB": "Unsa ang pinakataas nga ang-ang sa edukasyon nga nakab-ot sa pasyente?",
-    "WAR": "DAKU NGA TINGOG AN MGA OPSYON",
-    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+    "FIL": "HUWAG BASAHIN NANG MALAKAS ANG MGA PAMIMILIAN. PUMILI LAMANG NG ISANG SAGOT",
+    "BIS": "AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILI OG USA KA TUBAG LAMANG",
+    "WAR": "AYAW BASAHA HA DAKU NGA TINGOG AN MGA OPSYON. PILI MAUSA LA NGA BATON",
+    "ILO": "(SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.)"
    },
    "const:_DNR_ALL": {
-    "FIL": "MALAKAS ANG MGA PAMIMILIAN",
-    "BIS": "MGA OPSYON OG KUSOG",
-    "CEB": "Unsa ang imong tinubdan sa impormasyon bahin sa UHC?",
-    "WAR": "DAKU NGA TINGOG AN MGA OPSYON",
-    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+    "WAR": "AYAW BASAHA HA DAKU NGA TINGOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO",
+    "ILO": "(SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.)",
+    "BCL": "DAE PAGBASAHON NIN MAKSUOG. PILION AN DAPAT NA KASIMBAGAN"
    },
    "const:_RECEIPT": {
-    "FIL": "Kung ang pasyente ay nagbigay ng resibo, piliin ang lahat na naaangkop",
-    "BCL": "Kun an pasyente may resibo pilion an dapat",
-    "BIS": "Kung adunay resibo ang pasyente, pilia ang tanang pwede",
-    "CEB": "Gawas sa mga galastohan sa ibabaw (pananglitan, konsultasyon, laboratory test, gireseta nga mga tambal, ug uban pa), asa ani nga mga mosunod ang naapil usab sa bill?",
-    "WAR": "Kun an pasyente maghatag hin resibo, pilia an ngatanan nga aplikado",
-    "HIL": "Kon ang pasyente naghatag sang resibo, pili-a ang tanan nga angay",
-    "ILO": "(No mangipaay ti pasiente iti resibo, pilien amin nga agaplikar"
+    "FIL": "Kung ang pasyente ay nagbigay ng resibo, piliin ang lahat na naaangkop. Kung walang resibo, basahin ang mga opsyon nang malakas. Piliin ang lahat na naaangkop",
+    "BCL": "Kun an pasyente may resibo pilion an dapat. Kun wara man na maitao, basahon asin pilion an mga dapat na kasimbagan",
+    "WAR": "Kun an pasyente maghatag hin resibo, pilia an ngatanan nga aplikado. Kon waray iginhatag nga resibo, basaha ha daku nga tingog an mga opsyon. Pilia an ngatanan nga aplikado"
    },
    "const:_IF_YES_AMOUNT": {
-    "FIL": "spent Kung oo, ilagay ang halagang ginastos",
+    "FIL": "Kung oo, ilagay ang halagang ginastos",
     "BCL": "Kun iyo, pakikaag kan kantidad kun pira ini",
-    "BIS": "spent Kung oo, ispecify ang kantidad nga nagasto",
-    "WAR": "spent Kon oo, ipakita an kantidad nga gin-gasto a) Consultation Fee Bayad",
-    "HIL": "spent ICF ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 Nabayar",
-    "ILO": "spent (No wen, ipamatmat ti gatad a nagastos) a) Consultation Fee (Bayad"
+    "BIS": "Kung oo, ispecify ang kantidad nga nagasto"
    },
    "const:_GAMOT_AREA": {
     "FIL": "Enumerator: Itatanong lamang sa mga respondent na nasa mga lugar na may GAMOT",
-    "BCL": "ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 Enumerator: Aplikbale sana ini sa respondents na nasa",
     "BIS": "Enumerator: Magamit lamang sa mga respondent nga naa sa lugar nga adunay GAMOT",
-    "CEB": "Kung oo, unsa ang imong mga tinubdan sa impormasyon bahin aning GAMOT Package?",
     "WAR": "Enumerator: Applicable la ha mga respondente ha mga lugar nga mayda GAMOT",
     "HIL": "Enumerator: Naga-angut lamang ini sa mga respondents sa mga lugar nga may GAMOT",
     "ILO": "(Enumerator: Agaplikar laeng kadagiti respondents kadagiti lugar nga addaan iti GAMOT)"
    },
    "const:_SELECT_ALL": {
-    "FIL": "MALAKAS ANG MGA PAMIMILIAN",
-    "BIS": "MGA OPSYON OG KUSOG",
-    "CEB": "Unsa ang imong tinubdan sa impormasyon bahin sa UHC?",
-    "WAR": "DAKU NGA TINGOG AN MGA OPSYON",
-    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+    "BCL": "PILION AN DAPAT NA KASIMBAGAN"
    }
   }
  },
@@ -395,7 +369,7 @@
    "intro:51": {
     "FIL": "Magtatanong kami ngayon tungkol sa inyong kaalaman sa Universal Health Care (UHC)",
     "BCL": "Mahapot na kami manungod sa saimong kaaraman sa Universal Health Crae (UHC) Note to enumerator [do not read]: This section is for",
-    "BIS": "Mangutana kami karon bahin sa imong kahibalo sa Universal Health Care (UHC) ICF ver.07/25/2026 | Translated Questionnaire ver.06/",
+    "BIS": "Mangutana kami karon bahin sa imong kahibalo sa Universal Health Care (UHC)",
     "HIL": "Karun pangayuon namon ang imo kahibalo parte sa Universal Health Care (UHC)",
     "ILO": "(Saludsodenmi itan ti maipapan iti pannakaammoyo iti Universal Health Care (UHC)"
    },
@@ -423,9 +397,7 @@
     "ILO": "(Dagiti sumaruno a saludsod nga isaludsodmi ket mainaig iti pannakagun-odmo kadagiti agas"
    },
    "intro:69": {
-    "FIL": "ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 Magtatanong kami ngayon tungkol sa inyong kaalaman sa GAMOT package, at sa mga gamot na inyong nakuha sa isang GAMOT pharmacy",
     "BCL": "An masunod na kahapotan ay manungod sa GAMOT Package asin medisina na inavail mo sa GAMOT pharmacy",
-    "BIS": "ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 Mangutana kami karon bahin sa imong kahibalo sa GAMOT package, ug sa mga tambal nga imong nakuha sa GAMOT pharmacy",
     "WAR": "Magpapakiana kami yana mahitungod han iyo pagka-aram han GAMOT package, ngan han mga medisina nga iyo gin-avail ha usa nga botika han GAMOT",
     "HIL": "Subong, pamangkoton namon ikaw parte sa imo kahibalo sang GAMOT package kag ang mga bulong nga imo nakuha sa GAMOT nga botika",
     "ILO": "(Saludsodenmi itan ti maipapan iti pannakaammoyo iti pakete ti GAMOT, ken dagiti agas nga in-avail-yo iti maysa a botika ti GAMOT"
@@ -475,7 +447,6 @@
     "FIL": "Magtatanong kami ngayon tungkol sa inyong kaalaman sa No Balance Billing (NBB)",
     "BCL": "Mahapot naman kami manungod sa kaaraman mo sa No Balance Billing (NBB) Note to enumerator [do not read]: This section is for",
     "BIS": "Mangutana kami karon bahin sa imong kahibalo sa No Balance Billing (NBB)",
-    "CEB": "ver.07/25/2026 | Translated Questionnaire ver.06/05/2026 Note to enumerator [do not read]: This section is for No Balanc",
     "WAR": "Magpapakiana kami yana mahitungod han iyo pag-aram han No Balance Billing (NBB) Note to enumerator [do not read]: This secti",
     "HIL": "Subong, pamangkuton namon ikaw parte sa imo kahibalo sang No Balance Billing (NBB) Note to enumerator [do not read]: This se",
     "ILO": "(Saludsodenmi itan ti maipapan iti pannakaammoyo iti No Balance Billing (NBB)"
@@ -513,50 +484,37 @@
     "HIL": "Magapadayon kita subong sa pag‑pamangkot bahin sa konsumo ukon paggamit sang inyo panimalay sang mga produkto kag serbisyo para sa panlawas sa sulod sang nagligad nga 12 ka bulan"
    },
    "const:_READ_ONE": {
-    "FIL": "OPSYON NG MALINAW",
-    "CEB": "Miyembro ba ka sa LGBTQIA+ community?",
-    "WAR": "AN MGA OPSYON",
-    "ILO": "ITI NAIPAAY"
+    "FIL": "BASAHIN ANG MGA OPSYON NG MALINAW. PUMILI NG ISA LAMANG",
+    "WAR": "BASAHA HA MAKUSOG AN MGA OPSYON. PILI MA USA LA NA BATON"
    },
    "const:_READ_ALL": {
-    "FIL": "MALAKAS ANG MGA OPSYON",
-    "BIS": "MGA OPSYON",
-    "CEB": "Unsa ang imong tinubdan sa impormasyon bahin sa UHC?",
-    "WAR": "MAKUSOG AN MGA OPSYON",
-    "HIL": "MGA OPSYON",
-    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+    "FIL": "BASAHIN ANG MGA OPSYON NG MALINAW. PUMILI NG LAHAT NG NAAANGKOP",
+    "BIS": "BASAHA ANG MGA OPSYON. PILI-A ANG TANAN NGA PWEDE",
+    "WAR": "BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO",
+    "HIL": "BASAHA ANG MGA OPSYON. PILIA ANG TANAN NGA NAGA‑KABAGAY"
    },
    "const:_DNR_ONE": {
-    "FIL": "MALAKAS ANG MGA OPSYON",
-    "BCL": "MAKUSOG PILION AN DAPAT NA KASIMBAGAN",
-    "CEB": "Nagpaila ba ka isip usa ka tawo nga adunay kapansanan/PWD?",
-    "WAR": "AN MGA OPSYON",
-    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+    "FIL": "HUWAG BASAHIN NG MALAKAS ANG MGA OPSYON. PUMILI NG ISA LAMANG",
+    "ILO": "(SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.)"
    },
    "const:_DNR_ALL": {
-    "FIL": "MALAKAS ANG MGA OPSYON",
-    "BIS": "MGA OPSYON",
-    "CEB": "Unsa ang imong tinubdan sa impormasyon bahin sa UHC?",
-    "WAR": "MAKUSOG AN MGA OPSYON",
-    "HIL": "MGA OPSYON",
-    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+    "FIL": "HUWAG BASAHIN NG MALAKAS ANG MGA OPSYON. PUMILI NG LAHAT NG NAANGKOP",
+    "BIS": "AYAW BASAHA ANG MGA OPSYON. PILI-A ANG TANAN NGA PWEDE",
+    "WAR": "AYAW PAGBASAHA HIN MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO",
+    "HIL": "INDI PAGBASAHA ANG MGA OPSYON. PILIA ANG TANAN NGA NAGA‑KABAGAY",
+    "ILO": "(SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.)",
+    "BCL": "DAE PAGBASAHON NIN MAKSUOG. PILION AN DAPAT NA KASIMBAGAN"
    },
    "const:_GAMOT_FAC": {
-    "FIL": "facility Enumerator: Naaangkop lamang sa mga respondent sa mga lugar na may GAMOT facility",
-    "BCL": "facility Enumerator: Pwede sana ini sa respondents na nasa lugar na may GAMOT facility",
-    "BIS": "facility Enumerator: Magamit lamang kini sa mga respondents sa mga lugar nga naay GAMOT facility",
-    "CEB": "facility Kung oo, unsa ang imong mga tinubdan sa impormasyon bahin aning GAMOT Package?",
-    "WAR": "facility Enumerator: Aplikado la ha mga respondente nga aada ha mga lugar nga may pasilidad han GAMOT",
-    "HIL": "facility Naga-aplikar lamang sa mga respondent nga yara sa lugar nga may GAMOT nga pasilidad",
-    "ILO": "facility (Enumerator: Agaplikar laeng kadagiti respondents kadagiti lugar nga addaan iti pasilidad ti GAMOT)"
+    "FIL": "Enumerator: Naaangkop lamang sa mga respondent sa mga lugar na may GAMOT facility",
+    "BCL": "Enumerator: Pwede sana ini sa respondents na nasa lugar na may GAMOT facility",
+    "BIS": "Enumerator: Magamit lamang kini sa mga respondents sa mga lugar nga naay GAMOT facility",
+    "WAR": "Enumerator: Aplikado la ha mga respondente nga aada ha mga lugar nga may pasilidad han GAMOT",
+    "HIL": "Naga-aplikar lamang sa mga respondent nga yara sa lugar nga may GAMOT nga pasilidad",
+    "ILO": "(Enumerator: Agaplikar laeng kadagiti respondents kadagiti lugar nga addaan iti pasilidad ti GAMOT)"
    },
    "const:_SELECT_ALL": {
-    "FIL": "MALAKAS ANG MGA OPSYON",
-    "BIS": "MGA OPSYON",
-    "CEB": "Unsa ang imong tinubdan sa impormasyon bahin sa UHC?",
-    "WAR": "MAKUSOG AN MGA OPSYON",
-    "HIL": "MGA OPSYON",
-    "ILO": "A BASAEN TI OPTIONS ITI NAIPAAY"
+    "FIL": "PILIIN ANG LAHAT NG NAAANGKOP"
    }
   }
  }

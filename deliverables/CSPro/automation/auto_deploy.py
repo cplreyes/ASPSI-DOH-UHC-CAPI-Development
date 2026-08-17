@@ -49,8 +49,23 @@ OUT = Path(__file__).resolve().parent / "shots" / "deploy"
 
 def deploy_dialogs():
     # bare title = unsaved spec; "<PackageName> - CSPro Deploy Application" = loaded .csds
-    return [w for w in Desktop(backend="win32").windows()
-            if (w.window_text() or "").endswith("CSPro Deploy Application")]
+    # Desktop().windows() wraps EVERY top-level handle in one pass and raises
+    # InvalidWindowHandle when any window dies mid-enumeration (a flickering
+    # window makes that reproducible, seen 2026-08-17). Enumerate handles
+    # ourselves and wrap individually, skipping the dead ones - same race-safe
+    # stance as _get_picker().
+    import win32gui
+    from pywinauto.controls.hwndwrapper import HwndWrapper
+    handles = []
+    win32gui.EnumWindows(lambda h, _: (handles.append(h), True)[1], None)
+    out = []
+    for h in handles:
+        try:
+            if (win32gui.GetWindowText(h) or "").endswith("CSPro Deploy Application"):
+                out.append(HwndWrapper(h))
+        except Exception:
+            continue
+    return out
 
 
 def package_name(dd):

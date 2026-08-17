@@ -420,15 +420,15 @@
                   "language": "FIL"
                 },
                 {
-                  "text": "HEALTH FACILITY AND GEOGRAPHIC IDENTIFICATION Name of Health Facility (should match",
+                  "text": "Total Number of Visits",
                   "language": "BCL"
                 },
                 {
-                  "text": "HEALTH FACILITY AND GEOGRAPHIC IDENTIFICATION Name of Health Facility (should match",
+                  "text": "Total Number of Visits",
                   "language": "BIS"
                 },
                 {
-                  "text": "HEALTH FACILITY AND GEOGRAPHIC IDENTIFICATION Name of Health Facility (should match",
+                  "text": "Total Number of Visits",
                   "language": "CEB"
                 },
                 {
@@ -4733,7 +4733,7 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "1. Before we begin, to confirm, are you the patient?",
+                  "text": "Antes kita magsugod, agud makumpirma, ikaw bala ang pasyente?",
                   "language": "HIL"
                 },
                 {
@@ -4773,7 +4773,7 @@
                       "language": "WAR"
                     },
                     {
-                      "text": "1. Before we begin, to confirm, are you the patient?",
+                      "text": "Antes kita magsugod, agud makumpirma, ikaw bala ang pasyente?",
                       "language": "HIL"
                     },
                     {
@@ -4809,7 +4809,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -4850,11 +4850,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Indi",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -4892,11 +4892,11 @@
                   "language": "CEB"
                 },
                 {
-                  "text": "Mayda ka ba ginbaydan nga iba pa nga gastos durante han imo kaconfine nga dire upod ha baraydan han hospital?",
+                  "text": "Ano an imo relasyon ha pasyente?",
                   "language": "WAR"
                 },
                 {
-                  "text": "Ano ang imo relasyon sa pasyente? Asawa Apo nga lalaki Tiya Bata nga lalaki Apo nga Babye Hinablos nga lalaki Bata nga babaye Amay Hinablos nga babaye",
+                  "text": "Ano ang imo relasyon sa pasyente?",
                   "language": "HIL"
                 },
                 {
@@ -4932,11 +4932,11 @@
                       "language": "CEB"
                     },
                     {
-                      "text": "Mayda ka ba ginbaydan nga iba pa nga gastos durante han imo kaconfine nga dire upod ha baraydan han hospital?",
+                      "text": "Ano an imo relasyon ha pasyente?",
                       "language": "WAR"
                     },
                     {
-                      "text": "Ano ang imo relasyon sa pasyente? Asawa Apo nga lalaki Tiya Bata nga lalaki Apo nga Babye Hinablos nga lalaki Bata nga babaye Amay Hinablos nga babaye",
+                      "text": "Ano ang imo relasyon sa pasyente?",
                       "language": "HIL"
                     },
                     {
@@ -5714,7 +5714,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Dadduma pay (ibaga).",
                           "language": "ILO"
                         }
                       ],
@@ -6047,7 +6047,7 @@
                   "language": "HIL"
                 },
                 {
-                  "text": "(Nagan ti Pasiente (Apeliedo, Umuna a Nagan, MI, Extension) 5. In what month and year was the patient born? (Iti ania a bulan ken tawen a naipasngay ti pasiente? Month (Bulan)_________ Year (Tawen)__________",
+                  "text": "(Nagan ti Pasiente (Apeliedo, Umuna a Nagan, MI, Extension)",
                   "language": "ILO"
                 }
               ],
@@ -6202,11 +6202,11 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "7. What is the patient's sex at birth?",
+                  "text": "your Ano ang sekswalidad sang pasiente sang pagkabata?",
                   "language": "HIL"
                 },
                 {
-                  "text": "Ania ti sekso ti pasiente iti pannakayanakna?) Male (Lalaki",
+                  "text": "Ania ti sekso ti pasiente iti pannakayanakna?",
                   "language": "ILO"
                 }
               ],
@@ -6242,11 +6242,11 @@
                       "language": "WAR"
                     },
                     {
-                      "text": "7. What is the patient's sex at birth?",
+                      "text": "your Ano ang sekswalidad sang pasiente sang pagkabata?",
                       "language": "HIL"
                     },
                     {
-                      "text": "Ania ti sekso ti pasiente iti pannakayanakna?) Male (Lalaki",
+                      "text": "Ania ti sekso ti pasiente iti pannakayanakna?",
                       "language": "ILO"
                     }
                   ],
@@ -6441,7 +6441,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Oo",
                           "language": "HIL"
                         },
                         {
@@ -6482,11 +6482,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Indi",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "(Saan",
                           "language": "ILO"
                         }
                       ],
@@ -7014,11 +7014,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Iban pa (specify)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "(Dadduma pay (ibaga).",
                           "language": "ILO"
                         }
                       ],
@@ -7584,7 +7584,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -7625,11 +7625,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -9013,7 +9013,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Not applicable",
+                          "text": "Indi applicable",
                           "language": "HIL"
                         },
                         {
@@ -9054,11 +9054,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Iban pa (ispecify)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Dadduma pay (ibaga)",
                           "language": "ILO"
                         }
                       ],
@@ -9543,7 +9543,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Not applicable",
+                          "text": "Indi applicable",
                           "language": "HIL"
                         },
                         {
@@ -10971,7 +10971,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -11012,11 +11012,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -11261,7 +11261,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Dadduma pay (ibaga)",
                           "language": "ILO"
                         }
                       ],
@@ -12340,11 +12340,11 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "text": "Dai ko aram",
                           "language": "BCL"
                         },
                         {
-                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "text": "Wala ko kabalo",
                           "language": "BIS"
                         },
                         {
@@ -12356,11 +12356,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "text": "Wala ko Kabalo",
                           "language": "HIL"
                         },
                         {
-                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "text": "Saan ko nga ammo",
                           "language": "ILO"
                         }
                       ],
@@ -12519,7 +12519,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -12560,11 +12560,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -12721,7 +12721,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -12766,7 +12766,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -12929,7 +12929,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -13703,7 +13703,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -13744,11 +13744,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -14722,7 +14722,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -14763,11 +14763,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -15074,11 +15074,11 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "text": "Dai aram",
                           "language": "BCL"
                         },
                         {
-                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "text": "Wala ko kahibalo",
                           "language": "BIS"
                         },
                         {
@@ -15090,11 +15090,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "text": "Wala ko kabalo",
                           "language": "HIL"
                         },
                         {
-                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "text": "Diak ammo",
                           "language": "ILO"
                         }
                       ],
@@ -15539,11 +15539,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Iban pa (ispecify)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Dadduma pay (ibaga)",
                           "language": "ILO"
                         }
                       ],
@@ -16760,7 +16760,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -16801,11 +16801,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -17370,7 +17370,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -17411,11 +17411,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -18509,7 +18509,7 @@
                   "language": "BIS"
                 },
                 {
-                  "text": "46. What are some of the benefits that come with being a PhilHealth member?",
+                  "text": "Unsa ang pipila sa mga benepisyo sa pagka-miyembro sa PhilHealth?",
                   "language": "CEB"
                 },
                 {
@@ -18548,7 +18548,7 @@
                       "language": "BIS"
                     },
                     {
-                      "text": "46. What are some of the benefits that come with being a PhilHealth member?",
+                      "text": "Unsa ang pipila sa mga benepisyo sa pagka-miyembro sa PhilHealth?",
                       "language": "CEB"
                     },
                     {
@@ -18958,7 +18958,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -19121,7 +19121,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -19284,7 +19284,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -19447,7 +19447,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -19814,7 +19814,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -19855,11 +19855,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -20383,7 +20383,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -20424,11 +20424,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -20996,7 +20996,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -21037,11 +21037,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -21083,7 +21083,7 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "Sino ang imo pangunang primary care nga tagahatag sang serbisyo? General practitioner Specialty Care Provider/ Specialist Both",
+                  "text": "Sino ang imo pangunang primary care nga tagahatag sang serbisyo?",
                   "language": "HIL"
                 },
                 {
@@ -21123,7 +21123,7 @@
                       "language": "WAR"
                     },
                     {
-                      "text": "Sino ang imo pangunang primary care nga tagahatag sang serbisyo? General practitioner Specialty Care Provider/ Specialist Both",
+                      "text": "Sino ang imo pangunang primary care nga tagahatag sang serbisyo?",
                       "language": "HIL"
                     },
                     {
@@ -21286,7 +21286,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Dadduma pay (ibaga)",
                           "language": "ILO"
                         }
                       ],
@@ -21484,7 +21484,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -21525,11 +21525,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -21647,7 +21647,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -21688,11 +21688,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -21810,7 +21810,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -21851,11 +21851,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -21965,11 +21965,11 @@
                   "language": "BCL"
                 },
                 {
-                  "text": "59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider?",
+                  "text": "Unsang paagi/pamaagi sa komunikasyon ang available para nimo sa pag-schedule og konsultasyon sa imong pangunahing primary care provider? PILI ANG TANANG ANGAY.",
                   "language": "BIS"
                 },
                 {
-                  "text": "59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider?",
+                  "text": "Unsa nga paagi sa komunikasyon ang anaa para nimo sa pag-iskedyul og konsulta sa imong nag-unang primary care provider?",
                   "language": "CEB"
                 },
                 {
@@ -22004,11 +22004,11 @@
                       "language": "BCL"
                     },
                     {
-                      "text": "59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider?",
+                      "text": "Unsang paagi/pamaagi sa komunikasyon ang available para nimo sa pag-schedule og konsultasyon sa imong pangunahing primary care provider? PILI ANG TANANG ANGAY.",
                       "language": "BIS"
                     },
                     {
-                      "text": "59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider?",
+                      "text": "Unsa nga paagi sa komunikasyon ang anaa para nimo sa pag-iskedyul og konsulta sa imong nag-unang primary care provider?",
                       "language": "CEB"
                     },
                     {
@@ -22297,7 +22297,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -22342,7 +22342,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -22364,7 +22364,7 @@
                   "language": "EN"
                 },
                 {
-                  "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider?",
+                  "text": "Anong (mga) paraan ng komunikasyon ang available sa iyo kapag kumokonsulta sa iyong pangunahing primary care provider?",
                   "language": "FIL"
                 },
                 {
@@ -22372,11 +22372,11 @@
                   "language": "BCL"
                 },
                 {
-                  "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider?",
+                  "text": "Unsang paagi/pamaagi sa komunikasyon ang available para nimo sa pagkonsulta sa imong pangunahing primary care provider? PILI ANG TANANG ANGAY.",
                   "language": "BIS"
                 },
                 {
-                  "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider?",
+                  "text": "Unsa nga paagi sa komunikasyon ang anaa para nimo sa pagkonsulta sa imong nag-unang primary care provider?",
                   "language": "CEB"
                 },
                 {
@@ -22384,7 +22384,7 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider?",
+                  "text": "Ano nga paagi/pamaagi sa komunikasyon ang available sa imo sang nagakonsulta ka sa imo puno nga primary care provider?",
                   "language": "HIL"
                 },
                 {
@@ -22403,7 +22403,7 @@
                       "language": "EN"
                     },
                     {
-                      "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider?",
+                      "text": "Anong (mga) paraan ng komunikasyon ang available sa iyo kapag kumokonsulta sa iyong pangunahing primary care provider?",
                       "language": "FIL"
                     },
                     {
@@ -22411,11 +22411,11 @@
                       "language": "BCL"
                     },
                     {
-                      "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider?",
+                      "text": "Unsang paagi/pamaagi sa komunikasyon ang available para nimo sa pagkonsulta sa imong pangunahing primary care provider? PILI ANG TANANG ANGAY.",
                       "language": "BIS"
                     },
                     {
-                      "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider?",
+                      "text": "Unsa nga paagi sa komunikasyon ang anaa para nimo sa pagkonsulta sa imong nag-unang primary care provider?",
                       "language": "CEB"
                     },
                     {
@@ -22423,7 +22423,7 @@
                       "language": "WAR"
                     },
                     {
-                      "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider?",
+                      "text": "Ano nga paagi/pamaagi sa komunikasyon ang available sa imo sang nagakonsulta ka sa imo puno nga primary care provider?",
                       "language": "HIL"
                     },
                     {
@@ -22704,7 +22704,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -22745,11 +22745,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -22867,7 +22867,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -22908,11 +22908,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -23399,7 +23399,7 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "66. Is this the facility you usually go to for general health concerns?",
+                  "text": "this facility Ang this facility bala ang pasilidad nga ginakadtuan mo kasagaran para sa pangkalahatan nga kahimsog?",
                   "language": "HIL"
                 },
                 {
@@ -23439,7 +23439,7 @@
                       "language": "WAR"
                     },
                     {
-                      "text": "66. Is this the facility you usually go to for general health concerns?",
+                      "text": "this facility Ang this facility bala ang pasilidad nga ginakadtuan mo kasagaran para sa pangkalahatan nga kahimsog?",
                       "language": "HIL"
                     },
                     {
@@ -23475,7 +23475,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -23516,11 +23516,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -24413,11 +24413,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Iban pa (Ispecify)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "(Dadduma pay (ibaga)",
                           "language": "ILO"
                         }
                       ],
@@ -24690,7 +24690,7 @@
                           "language": "CEB"
                         },
                         {
-                          "text": "Bike",
+                          "text": "Bisikleta",
                           "language": "WAR"
                         },
                         {
@@ -25552,11 +25552,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Iban pa (Ispecify)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Dadduma pay (ibaga)",
                           "language": "ILO"
                         }
                       ],
@@ -25705,7 +25705,7 @@
                   "language": "BCL"
                 },
                 {
-                  "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility?",
+                  "text": "Unsang paagi/pamaagi sa transportasyon ang imong gigamit kung mobiyahe paingon sa health facility nga imong kasagarang adtoan? I-check ang tannag puwed",
                   "language": "BIS"
                 },
                 {
@@ -25744,7 +25744,7 @@
                       "language": "BCL"
                     },
                     {
-                      "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility?",
+                      "text": "Unsang paagi/pamaagi sa transportasyon ang imong gigamit kung mobiyahe paingon sa health facility nga imong kasagarang adtoan? I-check ang tannag puwed",
                       "language": "BIS"
                     },
                     {
@@ -25829,7 +25829,7 @@
                           "language": "CEB"
                         },
                         {
-                          "text": "Bike",
+                          "text": "Bisekleta",
                           "language": "WAR"
                         },
                         {
@@ -26404,7 +26404,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -26445,11 +26445,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -26471,31 +26471,31 @@
                   "language": "EN"
                 },
                 {
-                  "text": "Ano ang iyong mga pinagkukunan ng impormasyon tungkol sa YAKAP/Konsulta package? News [Balita]",
+                  "text": "Ano ang iyong mga pinagkukunan ng impormasyon tungkol sa YAKAP/Konsulta package?",
                   "language": "FIL"
                 },
                 {
-                  "text": "Saen hali an mga impormasyon mo manungod sa YAKAP/Konsulta? News Balita / News",
+                  "text": "Saen hali an mga impormasyon mo manungod sa YAKAP/Konsulta?",
                   "language": "BCL"
                 },
                 {
-                  "text": "Unsa ang imong mga source, gigikanan sa impormasyon bahin sa YAKAP/Konsulta package? News Balita",
+                  "text": "Unsa ang imong mga source, gigikanan sa impormasyon bahin sa YAKAP/Konsulta package?",
                   "language": "BIS"
                 },
                 {
-                  "text": "Unsa ang imong tinubdan sa impormasyon bahin sa YAKAP/Konsulta package? News Balita",
+                  "text": "Unsa ang imong tinubdan sa impormasyon bahin sa YAKAP/Konsulta package?",
                   "language": "CEB"
                 },
                 {
-                  "text": "Ano an imo mga ginkukuhaan hin impormasyon mahitungod han YAKAP/Konsulta package? News Balita",
+                  "text": "Ano an imo mga ginkukuhaan hin impormasyon mahitungod han YAKAP/Konsulta package?",
                   "language": "WAR"
                 },
                 {
-                  "text": "Ano ang imo mga ginhalinan sang impormasyon parte sa YAKAP/Konsulta nga package? News",
+                  "text": "Ano ang imo mga ginhalinan sang impormasyon parte sa YAKAP/Konsulta nga package?",
                   "language": "HIL"
                 },
                 {
-                  "text": "Ania dagiti gubuayan ti impormasionmo maipapan iti pakete ti YAKAP/Konsulta?) News (Dagiti damag",
+                  "text": "Ania dagiti gubuayan ti impormasionmo maipapan iti pakete ti YAKAP/Konsulta?",
                   "language": "ILO"
                 }
               ],
@@ -26510,31 +26510,31 @@
                       "language": "EN"
                     },
                     {
-                      "text": "Ano ang iyong mga pinagkukunan ng impormasyon tungkol sa YAKAP/Konsulta package? News [Balita]",
+                      "text": "Ano ang iyong mga pinagkukunan ng impormasyon tungkol sa YAKAP/Konsulta package?",
                       "language": "FIL"
                     },
                     {
-                      "text": "Saen hali an mga impormasyon mo manungod sa YAKAP/Konsulta? News Balita / News",
+                      "text": "Saen hali an mga impormasyon mo manungod sa YAKAP/Konsulta?",
                       "language": "BCL"
                     },
                     {
-                      "text": "Unsa ang imong mga source, gigikanan sa impormasyon bahin sa YAKAP/Konsulta package? News Balita",
+                      "text": "Unsa ang imong mga source, gigikanan sa impormasyon bahin sa YAKAP/Konsulta package?",
                       "language": "BIS"
                     },
                     {
-                      "text": "Unsa ang imong tinubdan sa impormasyon bahin sa YAKAP/Konsulta package? News Balita",
+                      "text": "Unsa ang imong tinubdan sa impormasyon bahin sa YAKAP/Konsulta package?",
                       "language": "CEB"
                     },
                     {
-                      "text": "Ano an imo mga ginkukuhaan hin impormasyon mahitungod han YAKAP/Konsulta package? News Balita",
+                      "text": "Ano an imo mga ginkukuhaan hin impormasyon mahitungod han YAKAP/Konsulta package?",
                       "language": "WAR"
                     },
                     {
-                      "text": "Ano ang imo mga ginhalinan sang impormasyon parte sa YAKAP/Konsulta nga package? News",
+                      "text": "Ano ang imo mga ginhalinan sang impormasyon parte sa YAKAP/Konsulta nga package?",
                       "language": "HIL"
                     },
                     {
-                      "text": "Ania dagiti gubuayan ti impormasionmo maipapan iti pakete ti YAKAP/Konsulta?) News (Dagiti damag",
+                      "text": "Ania dagiti gubuayan ti impormasionmo maipapan iti pakete ti YAKAP/Konsulta?",
                       "language": "ILO"
                     }
                   ],
@@ -26714,7 +26714,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Health center/facility",
+                          "text": "Health center/pasilidad",
                           "language": "BCL"
                         },
                         {
@@ -27420,7 +27420,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -27461,11 +27461,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -27910,7 +27910,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -27951,11 +27951,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -28073,7 +28073,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -28114,11 +28114,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -28236,7 +28236,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -28277,11 +28277,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -28933,7 +28933,7 @@
                   "language": "CEB"
                 },
                 {
-                  "text": "83. What best describes why the patient visited a health facility (e.g. RHU, health center, clinic, hospital)?",
+                  "text": "BASAHA HA DAKU NGA TINGOG AN MGA OPSYON. PILI MAUSA LA NGA BATON.",
                   "language": "WAR"
                 },
                 {
@@ -28973,7 +28973,7 @@
                       "language": "CEB"
                     },
                     {
-                      "text": "83. What best describes why the patient visited a health facility (e.g. RHU, health center, clinic, hospital)?",
+                      "text": "BASAHA HA DAKU NGA TINGOG AN MGA OPSYON. PILI MAUSA LA NGA BATON.",
                       "language": "WAR"
                     },
                     {
@@ -29461,11 +29461,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)",
+                          "text": "Outpatient nga pag-atipan (Konsultasyon, prosedura, ukon pagtambal nga ginabisita kag ginapapaw nga pasyente sa pareho nga adlaw)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)",
+                          "text": "(Outpatient care (Konsultasion, pamay-an, wenno panangagas a sadiay ti pasiente ket sumarungkar ken pumanaw iti uneg ti isu met laeng nga aldaw).",
                           "language": "ILO"
                         }
                       ],
@@ -29502,7 +29502,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)",
+                          "text": "Inpatient nga pag-atipan (Pag-atipan nga ginahatag sa ospital ukon iban nga pasilidad nga ang pasyente ginapaospital sang isa ka gab-i ukon labaw pa)",
                           "language": "HIL"
                         },
                         {
@@ -31669,11 +31669,11 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "88. Why are you visiting this facility for consultation/advice or treatment?",
+                  "text": "Ngaa nagabisita ka sa this facility para sa konsultasyon/ tambag ukon pagpang-ayo?",
                   "language": "HIL"
                 },
                 {
-                  "text": "88. Why are you visiting this facility for consultation/advice or treatment?",
+                  "text": "Apay a sumarungkarka iti this facility para iti konsultasion/balakad wenno panangagas?",
                   "language": "ILO"
                 }
               ],
@@ -31709,11 +31709,11 @@
                       "language": "WAR"
                     },
                     {
-                      "text": "88. Why are you visiting this facility for consultation/advice or treatment?",
+                      "text": "Ngaa nagabisita ka sa this facility para sa konsultasyon/ tambag ukon pagpang-ayo?",
                       "language": "HIL"
                     },
                     {
-                      "text": "88. Why are you visiting this facility for consultation/advice or treatment?",
+                      "text": "Apay a sumarungkarka iti this facility para iti konsultasion/balakad wenno panangagas?",
                       "language": "ILO"
                     }
                   ],
@@ -32032,11 +32032,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Iban pa (ispecify)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Dadduma pay (ibaga)",
                           "language": "ILO"
                         }
                       ],
@@ -32193,7 +32193,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -32234,11 +32234,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -32601,11 +32601,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Iban pa (ispecify)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Dadduma pay (ibaga)",
                           "language": "ILO"
                         }
                       ],
@@ -32762,7 +32762,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -32803,11 +32803,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -32829,7 +32829,7 @@
                   "language": "EN"
                 },
                 {
-                  "text": "92. Which of the following did you use to pay for the cost of consultation? (Select all that apply.)",
+                  "text": "How much was Magkano ang binayaran sa konsultasyon?",
                   "language": "FIL"
                 },
                 {
@@ -32837,11 +32837,11 @@
                   "language": "BCL"
                 },
                 {
-                  "text": "92. Which of the following did you use to pay for the cost of consultation? (Select all that apply.)",
+                  "text": "How much was Pila ang gasto sa konsultasyon?",
                   "language": "BIS"
                 },
                 {
-                  "text": "92. Which of the following did you use to pay for the cost of consultation? (Select all that apply.)",
+                  "text": "How much was Pila ang gasto sa konsultasyon?",
                   "language": "CEB"
                 },
                 {
@@ -32849,11 +32849,11 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "92. Which of the following did you use to pay for the cost of consultation? (Select all that apply.)",
+                  "text": "How much was Pila ang ginhalad para sa konsulta?",
                   "language": "HIL"
                 },
                 {
-                  "text": "92. Which of the following did you use to pay for the cost of consultation? (Select all that apply.)",
+                  "text": "How much was (Mano ti magastos iti konsultasion?)",
                   "language": "ILO"
                 }
               ],
@@ -32868,7 +32868,7 @@
                       "language": "EN"
                     },
                     {
-                      "text": "92. Which of the following did you use to pay for the cost of consultation? (Select all that apply.)",
+                      "text": "How much was Magkano ang binayaran sa konsultasyon?",
                       "language": "FIL"
                     },
                     {
@@ -32876,11 +32876,11 @@
                       "language": "BCL"
                     },
                     {
-                      "text": "92. Which of the following did you use to pay for the cost of consultation? (Select all that apply.)",
+                      "text": "How much was Pila ang gasto sa konsultasyon?",
                       "language": "BIS"
                     },
                     {
-                      "text": "92. Which of the following did you use to pay for the cost of consultation? (Select all that apply.)",
+                      "text": "How much was Pila ang gasto sa konsultasyon?",
                       "language": "CEB"
                     },
                     {
@@ -32888,11 +32888,11 @@
                       "language": "WAR"
                     },
                     {
-                      "text": "92. Which of the following did you use to pay for the cost of consultation? (Select all that apply.)",
+                      "text": "How much was Pila ang ginhalad para sa konsulta?",
                       "language": "HIL"
                     },
                     {
-                      "text": "92. Which of the following did you use to pay for the cost of consultation? (Select all that apply.)",
+                      "text": "How much was (Mano ti magastos iti konsultasion?)",
                       "language": "ILO"
                     }
                   ],
@@ -33211,7 +33211,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Don't know",
+                          "text": "Wala kabalo",
                           "language": "HIL"
                         },
                         {
@@ -33704,7 +33704,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Don't know",
+                          "text": "Wala kabalo",
                           "language": "HIL"
                         },
                         {
@@ -33814,7 +33814,7 @@
                   "language": "EN"
                 },
                 {
-                  "text": "93. Did you have any of the following laboratory tests done during your outpatient care?",
+                  "text": "Mayroon ka bang alinman sa mga sumusunod na laboratory test na ginawa noong huling pagiging outpatient? Piliin ang lahat na naaangkop.",
                   "language": "FIL"
                 },
                 {
@@ -33826,7 +33826,7 @@
                   "language": "BIS"
                 },
                 {
-                  "text": "93. Did you have any of the following laboratory tests done during your outpatient care?",
+                  "text": "Nakaagi ba ka og bisan hain ani nga mga laboratory test atol sa imong outpatient care? I-check ang tanan nga mo apply.",
                   "language": "CEB"
                 },
                 {
@@ -33834,7 +33834,7 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "93. Did you have any of the following laboratory tests done during your outpatient care?",
+                  "text": "Nakahimo ka bala sang bisan ano sa masunod nga laboratory tests durante sang imo outpatient care? Tsek ang tanan nga nagakaangay.",
                   "language": "HIL"
                 },
                 {
@@ -33853,7 +33853,7 @@
                       "language": "EN"
                     },
                     {
-                      "text": "93. Did you have any of the following laboratory tests done during your outpatient care?",
+                      "text": "Mayroon ka bang alinman sa mga sumusunod na laboratory test na ginawa noong huling pagiging outpatient? Piliin ang lahat na naaangkop.",
                       "language": "FIL"
                     },
                     {
@@ -33865,7 +33865,7 @@
                       "language": "BIS"
                     },
                     {
-                      "text": "93. Did you have any of the following laboratory tests done during your outpatient care?",
+                      "text": "Nakaagi ba ka og bisan hain ani nga mga laboratory test atol sa imong outpatient care? I-check ang tanan nga mo apply.",
                       "language": "CEB"
                     },
                     {
@@ -33873,7 +33873,7 @@
                       "language": "WAR"
                     },
                     {
-                      "text": "93. Did you have any of the following laboratory tests done during your outpatient care?",
+                      "text": "Nakahimo ka bala sang bisan ano sa masunod nga laboratory tests durante sang imo outpatient care? Tsek ang tanan nga nagakaangay.",
                       "language": "HIL"
                     },
                     {
@@ -35911,7 +35911,7 @@
                   "language": "BCL"
                 },
                 {
-                  "text": "Giresetahan ba ka og tambal human sa imong check-up? Yes Oo No Wala 96. How much was spent for (NAME IN ___)\u2019s prescribed medicines? Pila ang nagasto para sa giresetang tambal ni (NAME IN ___)?",
+                  "text": "Giresetahan ba ka og tambal human sa imong check-up?",
                   "language": "BIS"
                 },
                 {
@@ -35923,11 +35923,11 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "Ginpanghatag bala sa imo ang bulong pagkatapos sang imo check-up? Yes Huo No Wala 96. How much was spent for (NAME IN ___)\u2019s prescribed medicines? Pila ang nagasto para sa ginpreskribir sang medisina ni (NAME IN ___)?",
+                  "text": "Ginpanghatag bala sa imo ang bulong pagkatapos sang imo check-up?",
                   "language": "HIL"
                 },
                 {
-                  "text": "Nairesetada kadi kenka ti agas/dagiti agas kalpasan ti panag-check-up-mo?) Yes (Wen) No (Saan ) 96. How much was spent for (NAME IN ___)\u2019s prescribed medicines? (Mano ti nagastos para kadagiti naireseta nga agas ni (NAME IN ___)?",
+                  "text": "Nairesetada kadi kenka ti agas/dagiti agas kalpasan ti panag-check-up-mo?",
                   "language": "ILO"
                 }
               ],
@@ -35951,7 +35951,7 @@
                       "language": "BCL"
                     },
                     {
-                      "text": "Giresetahan ba ka og tambal human sa imong check-up? Yes Oo No Wala 96. How much was spent for (NAME IN ___)\u2019s prescribed medicines? Pila ang nagasto para sa giresetang tambal ni (NAME IN ___)?",
+                      "text": "Giresetahan ba ka og tambal human sa imong check-up?",
                       "language": "BIS"
                     },
                     {
@@ -35963,11 +35963,11 @@
                       "language": "WAR"
                     },
                     {
-                      "text": "Ginpanghatag bala sa imo ang bulong pagkatapos sang imo check-up? Yes Huo No Wala 96. How much was spent for (NAME IN ___)\u2019s prescribed medicines? Pila ang nagasto para sa ginpreskribir sang medisina ni (NAME IN ___)?",
+                      "text": "Ginpanghatag bala sa imo ang bulong pagkatapos sang imo check-up?",
                       "language": "HIL"
                     },
                     {
-                      "text": "Nairesetada kadi kenka ti agas/dagiti agas kalpasan ti panag-check-up-mo?) Yes (Wen) No (Saan ) 96. How much was spent for (NAME IN ___)\u2019s prescribed medicines? (Mano ti nagastos para kadagiti naireseta nga agas ni (NAME IN ___)?",
+                      "text": "Nairesetada kadi kenka ti agas/dagiti agas kalpasan ti panag-check-up-mo?",
                       "language": "ILO"
                     }
                   ],
@@ -35999,7 +35999,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -36040,11 +36040,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -36448,7 +36448,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Don't know",
+                          "text": "Wala ko kabalo",
                           "language": "HIL"
                         },
                         {
@@ -36941,7 +36941,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Don't know",
+                          "text": "Wala ko kabalo",
                           "language": "HIL"
                         },
                         {
@@ -40625,7 +40625,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -40666,11 +40666,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -40692,31 +40692,31 @@
                   "language": "EN"
                 },
                 {
-                  "text": "Ano ang inyong mga pinagkukunan ng impormasyon tungkol sa BUCAS center? News [Balita]",
+                  "text": "Ano ang inyong mga pinagkukunan ng impormasyon tungkol sa BUCAS center?",
                   "language": "FIL"
                 },
                 {
-                  "text": "Kun iyo, ano an pinanggalingan mo kan impormasyon manungod sa BUCAS? News Balita / News",
+                  "text": "Kun iyo, ano an pinanggalingan mo kan impormasyon manungod sa BUCAS?",
                   "language": "BCL"
                 },
                 {
-                  "text": "Kung oo, unsa ang imong mga tinubdan sa impormasyon bahin niini nga BUCAS center? News Balita",
+                  "text": "Kung oo, unsa ang imong mga tinubdan sa impormasyon bahin niini nga BUCAS center?",
                   "language": "BIS"
                 },
                 {
-                  "text": "Kung oo, unsa ang imong mga tinubdan sa impormasyon mahitungod niini nga BUCAS center? News Balita",
+                  "text": "Kung oo, unsa ang imong mga tinubdan sa impormasyon mahitungod niini nga BUCAS center?",
                   "language": "CEB"
                 },
                 {
-                  "text": "Kun oo, ano an iyo mga pinagkukuhaan hin impormasyon mahitungod hini nga sentro han BUCAS? News Balita",
+                  "text": "Kun oo, ano an iyo mga pinagkukuhaan hin impormasyon mahitungod hini nga sentro han BUCAS?",
                   "language": "WAR"
                 },
                 {
-                  "text": "Kon amo, ano ang imo mga tinubdan sang impormasyon parte sa sini nga BUCAS center? News",
+                  "text": "Kon amo, ano ang imo mga tinubdan sang impormasyon parte sa sini nga BUCAS center?",
                   "language": "HIL"
                 },
                 {
-                  "text": "No wen, ania dagiti gubuayan ti impormasionyo maipapan iti daytoy a sentro ti BUCAS?) News (Dagiti damag",
+                  "text": "No wen, ania dagiti gubuayan ti impormasionyo maipapan iti daytoy a sentro ti BUCAS?",
                   "language": "ILO"
                 }
               ],
@@ -40731,31 +40731,31 @@
                       "language": "EN"
                     },
                     {
-                      "text": "Ano ang inyong mga pinagkukunan ng impormasyon tungkol sa BUCAS center? News [Balita]",
+                      "text": "Ano ang inyong mga pinagkukunan ng impormasyon tungkol sa BUCAS center?",
                       "language": "FIL"
                     },
                     {
-                      "text": "Kun iyo, ano an pinanggalingan mo kan impormasyon manungod sa BUCAS? News Balita / News",
+                      "text": "Kun iyo, ano an pinanggalingan mo kan impormasyon manungod sa BUCAS?",
                       "language": "BCL"
                     },
                     {
-                      "text": "Kung oo, unsa ang imong mga tinubdan sa impormasyon bahin niini nga BUCAS center? News Balita",
+                      "text": "Kung oo, unsa ang imong mga tinubdan sa impormasyon bahin niini nga BUCAS center?",
                       "language": "BIS"
                     },
                     {
-                      "text": "Kung oo, unsa ang imong mga tinubdan sa impormasyon mahitungod niini nga BUCAS center? News Balita",
+                      "text": "Kung oo, unsa ang imong mga tinubdan sa impormasyon mahitungod niini nga BUCAS center?",
                       "language": "CEB"
                     },
                     {
-                      "text": "Kun oo, ano an iyo mga pinagkukuhaan hin impormasyon mahitungod hini nga sentro han BUCAS? News Balita",
+                      "text": "Kun oo, ano an iyo mga pinagkukuhaan hin impormasyon mahitungod hini nga sentro han BUCAS?",
                       "language": "WAR"
                     },
                     {
-                      "text": "Kon amo, ano ang imo mga tinubdan sang impormasyon parte sa sini nga BUCAS center? News",
+                      "text": "Kon amo, ano ang imo mga tinubdan sang impormasyon parte sa sini nga BUCAS center?",
                       "language": "HIL"
                     },
                     {
-                      "text": "No wen, ania dagiti gubuayan ti impormasionyo maipapan iti daytoy a sentro ti BUCAS?) News (Dagiti damag",
+                      "text": "No wen, ania dagiti gubuayan ti impormasionyo maipapan iti daytoy a sentro ti BUCAS?",
                       "language": "ILO"
                     }
                   ],
@@ -40935,7 +40935,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Health center/facility",
+                          "text": "Health center/pasilidad",
                           "language": "BCL"
                         },
                         {
@@ -41398,11 +41398,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Iban pa (ispecify)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "(Dadduma pay (ibaga).",
                           "language": "ILO"
                         }
                       ],
@@ -41559,7 +41559,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -41600,11 +41600,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -41967,11 +41967,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Iban pa (ispecify)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Dadduma pay (ibaga).",
                           "language": "ILO"
                         }
                       ],
@@ -42462,11 +42462,11 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "Ngaa ka ginatipon sa ospital? Sick Masakit",
+                  "text": "Ngaa ka ginatipon sa ospital?",
                   "language": "HIL"
                 },
                 {
-                  "text": "Apay a naibaludka iti ospital?) Sick (Masakit",
+                  "text": "Apay a naibaludka iti ospital?",
                   "language": "ILO"
                 }
               ],
@@ -42502,11 +42502,11 @@
                       "language": "WAR"
                     },
                     {
-                      "text": "Ngaa ka ginatipon sa ospital? Sick Masakit",
+                      "text": "Ngaa ka ginatipon sa ospital?",
                       "language": "HIL"
                     },
                     {
-                      "text": "Apay a naibaludka iti ospital?) Sick (Masakit",
+                      "text": "Apay a naibaludka iti ospital?",
                       "language": "ILO"
                     }
                   ],
@@ -42702,11 +42702,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Iban pa i-specify",
                           "language": "HIL"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Dadduma pay (ibaga)",
                           "language": "ILO"
                         }
                       ],
@@ -43270,7 +43270,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Don't know",
+                          "text": "Wala ko kabao",
                           "language": "HIL"
                         },
                         {
@@ -43845,7 +43845,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Don't know",
+                          "text": "Wala ko kabao",
                           "language": "HIL"
                         },
                         {
@@ -44059,7 +44059,7 @@
                   "language": "HIL"
                 },
                 {
-                  "text": "Malaksid kadagiti/dagiti agas a naiparang iti bayadan ti ospital, gimmatang kadi ti pasiente iti agas/dagiti agas iti aniaman a botika/pasilidad iti ruar ti ospital?) Yes (Wen) No (Saan) 109. How much was paid for the medicine/s outside the hospital?...",
+                  "text": "Malaksid kadagiti/dagiti agas a naiparang iti bayadan ti ospital, gimmatang kadi ti pasiente iti agas/dagiti agas iti aniaman a botika/pasilidad iti ruar ti ospital?",
                   "language": "ILO"
                 }
               ],
@@ -44099,7 +44099,7 @@
                       "language": "HIL"
                     },
                     {
-                      "text": "Malaksid kadagiti/dagiti agas a naiparang iti bayadan ti ospital, gimmatang kadi ti pasiente iti agas/dagiti agas iti aniaman a botika/pasilidad iti ruar ti ospital?) Yes (Wen) No (Saan) 109. How much was paid for the medicine/s outside the hospital?...",
+                      "text": "Malaksid kadagiti/dagiti agas a naiparang iti bayadan ti ospital, gimmatang kadi ti pasiente iti agas/dagiti agas iti aniaman a botika/pasilidad iti ruar ti ospital?",
                       "language": "ILO"
                     }
                   ],
@@ -44131,7 +44131,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -44172,11 +44172,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -44621,7 +44621,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Don't know",
+                          "text": "Wala ko kabao",
                           "language": "HIL"
                         },
                         {
@@ -45196,7 +45196,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Don't know",
+                          "text": "Wala ko kabao",
                           "language": "HIL"
                         },
                         {
@@ -45482,7 +45482,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -45523,11 +45523,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -45569,7 +45569,7 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "Kon oo, ano ang amo nga mga serbisyo? 112. How much was paid for the service/s outside the hospital?",
+                  "text": "Kon oo, ano ang amo nga mga serbisyo?",
                   "language": "HIL"
                 },
                 {
@@ -48469,11 +48469,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Iban pa (ispecify)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "(Dadduma pay (ibaga).",
                           "language": "ILO"
                         }
                       ],
@@ -51431,7 +51431,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -51472,11 +51472,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -52570,7 +52570,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -52611,11 +52611,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -53709,7 +53709,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -53750,11 +53750,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -54117,7 +54117,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -54158,11 +54158,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -54237,7 +54237,7 @@
                   "language": "BIS"
                 },
                 {
-                  "text": "125. What are your sources of information about MAIFIP?",
+                  "text": "Unsa ang imong mga tinubdan sa impormasyon bahin aning MAIFIP?",
                   "language": "CEB"
                 },
                 {
@@ -54276,7 +54276,7 @@
                       "language": "BIS"
                     },
                     {
-                      "text": "125. What are your sources of information about MAIFIP?",
+                      "text": "Unsa ang imong mga tinubdan sa impormasyon bahin aning MAIFIP?",
                       "language": "CEB"
                     },
                     {
@@ -54468,7 +54468,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Health center/facility",
+                          "text": "Health center/pasilidad",
                           "language": "BCL"
                         },
                         {
@@ -54768,7 +54768,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -54809,11 +54809,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -54931,7 +54931,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -54972,11 +54972,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -54998,7 +54998,7 @@
                   "language": "EN"
                 },
                 {
-                  "text": "Alin ang mga kinailangan mong bayaran mula sa sariling bulsa? Drugs",
+                  "text": "Alin ang mga kinailangan mong bayaran mula sa sariling bulsa?",
                   "language": "FIL"
                 },
                 {
@@ -55018,7 +55018,7 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "Ano nga mga butang ang kinahanglan mo bayaran gikan sa imo bulsa? Drugs",
+                  "text": "Ano nga mga butang ang kinahanglan mo bayaran gikan sa imo bulsa?",
                   "language": "HIL"
                 },
                 {
@@ -55037,7 +55037,7 @@
                       "language": "EN"
                     },
                     {
-                      "text": "Alin ang mga kinailangan mong bayaran mula sa sariling bulsa? Drugs",
+                      "text": "Alin ang mga kinailangan mong bayaran mula sa sariling bulsa?",
                       "language": "FIL"
                     },
                     {
@@ -55057,7 +55057,7 @@
                       "language": "WAR"
                     },
                     {
-                      "text": "Ano nga mga butang ang kinahanglan mo bayaran gikan sa imo bulsa? Drugs",
+                      "text": "Ano nga mga butang ang kinahanglan mo bayaran gikan sa imo bulsa?",
                       "language": "HIL"
                     },
                     {
@@ -55783,7 +55783,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -55824,11 +55824,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -55865,7 +55865,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Don't know",
+                          "text": "Wala kabalo",
                           "language": "HIL"
                         },
                         {
@@ -57284,11 +57284,11 @@
                   "language": "EN"
                 },
                 {
-                  "text": "Nasiyahan ka ba sa kabuuang oras na ginugol mula sa pagpaparehistro hanggang sa paglabas sa pasilidad? In the patient\u2019s most recent visit, how often did the staff: Sa pinakahuling pagbisita ng pasyente, gaano kadalas ang ginawa ng mga staff: Never...",
+                  "text": "Nasiyahan ka ba sa kabuuang oras na ginugol mula sa pagpaparehistro hanggang sa paglabas sa pasilidad?",
                   "language": "FIL"
                 },
                 {
-                  "text": "Kontento ka ba sa kabuuang oras na ginugol mo, maghali sa registration hasta sa pagluwas sa pasilidad? In the patient\u2019s most recent visit, how often did the staff: Sa saimong pinakahuring pagbisita, pirang beses an staff ay: Never Dai",
+                  "text": "Kontento ka ba sa kabuuang oras na ginugol mo, maghali sa registration hasta sa pagluwas sa pasilidad?",
                   "language": "BCL"
                 },
                 {
@@ -57296,19 +57296,19 @@
                   "language": "BIS"
                 },
                 {
-                  "text": "Kontento ba ka sa kinatibuk-ang oras nga gigugol gikan sa pagparehistro hangtod sa paggawas sa pasilidad? In the patient\u2019s most recent visit, how often did the staff: Sa pinakaulahing pagbisita sa pasyente, unsa ka sagad ang mga kawani: Never Wala...",
+                  "text": "Kontento ba ka sa kinatibuk-ang oras nga gigugol gikan sa pagparehistro hangtod sa paggawas sa pasilidad?",
                   "language": "CEB"
                 },
                 {
-                  "text": "Kuntento ka ba han kabug-usan nga oras nga gingamit tikang ha pagparehistro tubtob ha paggawas ha pasilidad? In the patient\u2019s most recent visit, how often did the staff: Ha pinakabag-o nga pagbisita han pasyente, mationan-o kaagsob nga an mga...",
+                  "text": "Kuntento ka ba han kabug-usan nga oras nga gingamit tikang ha",
                   "language": "WAR"
                 },
                 {
-                  "text": "Kontento ka bala sa kabug-usan nga oras nga gin-gasto halin sa pagparehistro tubtob sa paggwa sa pasilidad? In the patient\u2019s most recent visit, how often did the staff: Sa pinakaulihi nga bisita sang pasyente, pilion ka beses nga ang mga staff: Never...",
+                  "text": "Kontento ka bala sa kabug-usan nga oras nga gin-gasto halin sa pagparehistro tubtob sa paggwa sa pasilidad?",
                   "language": "HIL"
                 },
                 {
-                  "text": "Napnekka kadi iti pakabuklan a panawen a nabusbos manipud panagrehistro agingga iti iruruar iti pasilidad?) In the patient\u2019s most recent visit, how often did the staff: (Iti kaudian a panagbisita ti pasiente, kasano kasansan nga inaramid dagiti...",
+                  "text": "Napnekka kadi iti pakabuklan a panawen a nabusbos manipud panagrehistro agingga iti iruruar iti pasilidad?",
                   "language": "ILO"
                 }
               ],
@@ -57324,11 +57324,11 @@
                       "language": "EN"
                     },
                     {
-                      "text": "Nasiyahan ka ba sa kabuuang oras na ginugol mula sa pagpaparehistro hanggang sa paglabas sa pasilidad? In the patient\u2019s most recent visit, how often did the staff: Sa pinakahuling pagbisita ng pasyente, gaano kadalas ang ginawa ng mga staff: Never...",
+                      "text": "Nasiyahan ka ba sa kabuuang oras na ginugol mula sa pagpaparehistro hanggang sa paglabas sa pasilidad?",
                       "language": "FIL"
                     },
                     {
-                      "text": "Kontento ka ba sa kabuuang oras na ginugol mo, maghali sa registration hasta sa pagluwas sa pasilidad? In the patient\u2019s most recent visit, how often did the staff: Sa saimong pinakahuring pagbisita, pirang beses an staff ay: Never Dai",
+                      "text": "Kontento ka ba sa kabuuang oras na ginugol mo, maghali sa registration hasta sa pagluwas sa pasilidad?",
                       "language": "BCL"
                     },
                     {
@@ -57336,19 +57336,19 @@
                       "language": "BIS"
                     },
                     {
-                      "text": "Kontento ba ka sa kinatibuk-ang oras nga gigugol gikan sa pagparehistro hangtod sa paggawas sa pasilidad? In the patient\u2019s most recent visit, how often did the staff: Sa pinakaulahing pagbisita sa pasyente, unsa ka sagad ang mga kawani: Never Wala...",
+                      "text": "Kontento ba ka sa kinatibuk-ang oras nga gigugol gikan sa pagparehistro hangtod sa paggawas sa pasilidad?",
                       "language": "CEB"
                     },
                     {
-                      "text": "Kuntento ka ba han kabug-usan nga oras nga gingamit tikang ha pagparehistro tubtob ha paggawas ha pasilidad? In the patient\u2019s most recent visit, how often did the staff: Ha pinakabag-o nga pagbisita han pasyente, mationan-o kaagsob nga an mga...",
+                      "text": "Kuntento ka ba han kabug-usan nga oras nga gingamit tikang ha",
                       "language": "WAR"
                     },
                     {
-                      "text": "Kontento ka bala sa kabug-usan nga oras nga gin-gasto halin sa pagparehistro tubtob sa paggwa sa pasilidad? In the patient\u2019s most recent visit, how often did the staff: Sa pinakaulihi nga bisita sang pasyente, pilion ka beses nga ang mga staff: Never...",
+                      "text": "Kontento ka bala sa kabug-usan nga oras nga gin-gasto halin sa pagparehistro tubtob sa paggwa sa pasilidad?",
                       "language": "HIL"
                     },
                     {
-                      "text": "Napnekka kadi iti pakabuklan a panawen a nabusbos manipud panagrehistro agingga iti iruruar iti pasilidad?) In the patient\u2019s most recent visit, how often did the staff: (Iti kaudian a panagbisita ti pasiente, kasano kasansan nga inaramid dagiti...",
+                      "text": "Napnekka kadi iti pakabuklan a panawen a nabusbos manipud panagrehistro agingga iti iruruar iti pasilidad?",
                       "language": "ILO"
                     }
                   ],
@@ -57623,7 +57623,7 @@
                   "language": "BIS"
                 },
                 {
-                  "text": "Sa pinakaulahing pagbisita sa pasyente, unsa ka sagad ang mga kawani mitagad kanimo uban sa maayong pamatasan ug pagrespeto?",
+                  "text": "mitagad kanimo uban sa maayong pamatasan ug pagrespeto?",
                   "language": "CEB"
                 },
                 {
@@ -57663,7 +57663,7 @@
                       "language": "BIS"
                     },
                     {
-                      "text": "Sa pinakaulahing pagbisita sa pasyente, unsa ka sagad ang mga kawani mitagad kanimo uban sa maayong pamatasan ug pagrespeto?",
+                      "text": "mitagad kanimo uban sa maayong pamatasan ug pagrespeto?",
                       "language": "CEB"
                     },
                     {
@@ -57909,7 +57909,7 @@
                   "language": "BIS"
                 },
                 {
-                  "text": "Sa pinakaulahing pagbisita sa pasyente, unsa ka sagad ang mga kawani maminaw pag-ayo sa imong gisulti o gipangutana?",
+                  "text": "maminaw pag-ayo sa imong gisulti o gipangutana?",
                   "language": "CEB"
                 },
                 {
@@ -57949,7 +57949,7 @@
                       "language": "BIS"
                     },
                     {
-                      "text": "Sa pinakaulahing pagbisita sa pasyente, unsa ka sagad ang mga kawani maminaw pag-ayo sa imong gisulti o gipangutana?",
+                      "text": "maminaw pag-ayo sa imong gisulti o gipangutana?",
                       "language": "CEB"
                     },
                     {
@@ -58469,7 +58469,7 @@
                   "language": "EN"
                 },
                 {
-                  "text": "binigyan ka ba ng pagkakataon na makagawa ng desisyon tungkol sa iyong pagpapagamot?",
+                  "text": "binigyan ka ba ng pagkakataon na",
                   "language": "FIL"
                 },
                 {
@@ -58509,7 +58509,7 @@
                       "language": "EN"
                     },
                     {
-                      "text": "binigyan ka ba ng pagkakataon na makagawa ng desisyon tungkol sa iyong pagpapagamot?",
+                      "text": "binigyan ka ba ng pagkakataon na",
                       "language": "FIL"
                     },
                     {
@@ -59137,7 +59137,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -59182,7 +59182,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -59341,7 +59341,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -59386,7 +59386,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -59469,11 +59469,11 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "143. Overall, would you recommend this facility to a friend or relative?",
+                  "text": "Sa kabug-usan, imo bala irekomendar ang this facility sa imo abyan ukon paryente?",
                   "language": "HIL"
                 },
                 {
-                  "text": "143. Overall, would you recommend this facility to a friend or relative?",
+                  "text": "Iti pakabuklan, irekomendarmo kadi ti this facility iti maysa a gayyem wenno kabagian?",
                   "language": "ILO"
                 }
               ],
@@ -59509,11 +59509,11 @@
                       "language": "WAR"
                     },
                     {
-                      "text": "143. Overall, would you recommend this facility to a friend or relative?",
+                      "text": "Sa kabug-usan, imo bala irekomendar ang this facility sa imo abyan ukon paryente?",
                       "language": "HIL"
                     },
                     {
-                      "text": "143. Overall, would you recommend this facility to a friend or relative?",
+                      "text": "Iti pakabuklan, irekomendarmo kadi ti this facility iti maysa a gayyem wenno kabagian?",
                       "language": "ILO"
                     }
                   ],
@@ -59545,7 +59545,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -59590,7 +59590,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -59632,11 +59632,11 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "144. How would the patient rate the quality of care you received at this facility?",
+                  "text": "Paano gin-ebalwasyon sang pasyente ang kalidad sang pag-atipan nga iya nabaton sa this facility?",
                   "language": "HIL"
                 },
                 {
-                  "text": "144. How would the patient rate the quality of care you received at this facility?",
+                  "text": "Kasano nga i-rate ti pasiente ti kalidad ti pannakaaywan a naawatmo iti this facility?",
                   "language": "ILO"
                 }
               ],
@@ -59672,11 +59672,11 @@
                       "language": "WAR"
                     },
                     {
-                      "text": "144. How would the patient rate the quality of care you received at this facility?",
+                      "text": "Paano gin-ebalwasyon sang pasyente ang kalidad sang pag-atipan nga iya nabaton sa this facility?",
                       "language": "HIL"
                     },
                     {
-                      "text": "144. How would the patient rate the quality of care you received at this facility?",
+                      "text": "Kasano nga i-rate ti pasiente ti kalidad ti pannakaaywan a naawatmo iti this facility?",
                       "language": "ILO"
                     }
                   ],
@@ -60526,7 +60526,7 @@
                   "language": "BIS"
                 },
                 {
-                  "text": "147. What are the medications that you usually take?",
+                  "text": "Unsa ang mga tambal nga kasagaran nimong ginainom? PALIHUG ILISTA ANG TANANG TAMBAL NGA IMONG GIINOM PARA SA IMONG KONDISYON SA PANGLAWAS.",
                   "language": "CEB"
                 },
                 {
@@ -61874,11 +61874,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Iban pa -ispecify",
                           "language": "HIL"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Dadduma pay (ibaga)",
                           "language": "ILO"
                         }
                       ],
@@ -62564,7 +62564,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -62605,11 +62605,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -62874,7 +62874,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Health center/facility",
+                          "text": "Health center/ pasilidad",
                           "language": "BCL"
                         },
                         {
@@ -63378,11 +63378,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Iban pa (ispecify)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Other (specify)",
+                          "text": "Dadduma pay (ibaga)",
                           "language": "ILO"
                         }
                       ],
@@ -63539,7 +63539,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -63580,11 +63580,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -64270,7 +64270,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -64311,11 +64311,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -64597,7 +64597,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Not applicable",
+                          "text": "Indi Applicable",
                           "language": "HIL"
                         },
                         {
@@ -65499,7 +65499,7 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "162. Based on your most recent visit/confinement at this facility, did a healthcare worker refer you to another facility or specialist for further care or specialized care?",
+                  "text": "Base sa imo pinakaulihi nga pagbisita/pagpabili sa this facility, may healthcare worker bala nga nagrekomendar sa imo sa iban nga pasilidad ukon espesyalista para sa dugang nga pag-atipan ukon espesyalisado nga pag-atipan?",
                   "language": "HIL"
                 },
                 {
@@ -65539,7 +65539,7 @@
                       "language": "WAR"
                     },
                     {
-                      "text": "162. Based on your most recent visit/confinement at this facility, did a healthcare worker refer you to another facility or specialist for further care or specialized care?",
+                      "text": "Base sa imo pinakaulihi nga pagbisita/pagpabili sa this facility, may healthcare worker bala nga nagrekomendar sa imo sa iban nga pasilidad ukon espesyalista para sa dugang nga pag-atipan ukon espesyalisado nga pag-atipan?",
                       "language": "HIL"
                     },
                     {
@@ -65575,7 +65575,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -65616,7 +65616,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
@@ -65737,11 +65737,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)",
+                          "text": "Outpatient nga pag-atipan (Konsultasyon, prosedura, o pagbulong nga ang pasyente nagabisita kag nagahalin sa amo man nga adlaw)",
                           "language": "HIL"
                         },
                         {
-                          "text": "Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)",
+                          "text": "Outpatient care (Konsultasion, pamay-an, wenno panangagas a sadiay ti pasiente ket sumarungkar ken pumanaw iti uneg ti isu met laeng nga aldaw)",
                           "language": "ILO"
                         }
                       ],
@@ -65819,7 +65819,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)",
+                          "text": "Inpatient nga pag-atipan (Pag-atipan nga ginahatag sa ospital o iban pa nga pasilidad nga ang pasyente gin-admit sa labing menos isa ka gab-i)",
                           "language": "HIL"
                         },
                         {
@@ -67737,7 +67737,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -67778,11 +67778,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -67900,7 +67900,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -67941,11 +67941,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -68063,7 +68063,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -68104,11 +68104,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -68226,7 +68226,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -68430,7 +68430,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -68471,11 +68471,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -68923,11 +68923,11 @@
                   "language": "WAR"
                 },
                 {
-                  "text": "172. Was the visit to this facility a referral from your primary care facility?",
+                  "text": "Ang pagbisita sa this facility bala ginrekomendar sang imo primarya nga pasilidad pang-atipan?",
                   "language": "HIL"
                 },
                 {
-                  "text": "172. Was the visit to this facility a referral from your primary care facility?",
+                  "text": "Ti kadi panagbisita iti this facility ket maysa a panangiturong manipud iti pasilidadmo iti kangrunaan a panangtaripato?",
                   "language": "ILO"
                 }
               ],
@@ -68963,11 +68963,11 @@
                       "language": "WAR"
                     },
                     {
-                      "text": "172. Was the visit to this facility a referral from your primary care facility?",
+                      "text": "Ang pagbisita sa this facility bala ginrekomendar sang imo primarya nga pasilidad pang-atipan?",
                       "language": "HIL"
                     },
                     {
-                      "text": "172. Was the visit to this facility a referral from your primary care facility?",
+                      "text": "Ti kadi panagbisita iti this facility ket maysa a panangiturong manipud iti pasilidadmo iti kangrunaan a panangtaripato?",
                       "language": "ILO"
                     }
                   ],
@@ -68999,7 +68999,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -69040,11 +69040,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -69162,7 +69162,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -69203,11 +69203,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -69366,7 +69366,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -69407,11 +69407,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -69529,7 +69529,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -69570,11 +69570,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -69692,7 +69692,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Huo",
                           "language": "HIL"
                         },
                         {
@@ -69733,11 +69733,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "No",
+                          "text": "Wala",
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],

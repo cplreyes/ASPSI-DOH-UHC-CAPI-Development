@@ -42,7 +42,7 @@ Item=QUESTIONNAIRE_NUMBER
 
 [Form]
 
-Name=FORM003
+Name=FORM001
 
 Label=A. Informed Consent (Q1 gate)
 
@@ -66,7 +66,7 @@ Item=Q1_IS_HH_HEAD
 
 [Form]
 
-Name=FORM001
+Name=FORM002
 
 Label=Interview status
 
@@ -86,7 +86,7 @@ Item=BREAKOFF
 
 [Form]
 
-Name=FORM002
+Name=FORM003
 
 Label=FC Geographic ID
 
@@ -9992,7 +9992,7 @@ Form=40
 
 Position=50,120,330,136
 
-Text=Food item - During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read...
+Text=Food item — total value produced/received in-kind or as gifts, last week (PHP)
 
  
 
@@ -10154,7 +10154,7 @@ Form=42
 
 Position=50,120,330,136
 
-Text=Expenditure item - During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...
+Text=Expenditure item — total value received in-kind or as gifts, last week (PHP)
 
  
 
@@ -10274,7 +10274,7 @@ Form=43
 
 Position=50,120,330,136
 
-Text=Non-food item - During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not...
+Text=Non-food item — total value received in-kind or as gifts, last month (PHP)
 
  
 
@@ -10394,7 +10394,7 @@ Form=44
 
 Position=50,120,330,136
 
-Text=Non-food item - During the last 6 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...
+Text=Non-food item — total value received in-kind or as gifts, last 6 months (PHP)
 
  
 
@@ -10514,7 +10514,7 @@ Form=45
 
 Position=50,120,330,136
 
-Text=Non-food item - During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...
+Text=Non-food item — total value received in-kind or as gifts, last 12 months (PHP)
 
  
 
@@ -10634,7 +10634,7 @@ Form=46
 
 Position=50,120,330,136
 
-Text=Health product or service - During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to...
+Text=Health product/service — total value received in-kind or as gifts, last 12 months (PHP)
 
  
 
@@ -10796,7 +10796,7 @@ Form=48
 
 Position=50,120,330,136
 
-Text=Health product or service - During the last 6 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to...
+Text=Health product/service — total value received in-kind or as gifts, last 6 months (PHP)
 
  
 
@@ -10958,7 +10958,7 @@ Form=50
 
 Position=50,120,330,136
 
-Text=Health product or service - During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to...
+Text=Health product/service — total value received in-kind or as gifts, last month (PHP)
 
  
 

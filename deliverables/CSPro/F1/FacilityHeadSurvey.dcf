@@ -4452,7 +4452,7 @@
                   "language": "HIL"
                 },
                 {
-                  "text": "Ania ti naituding a seksom iti pannakayanakmo?) Male (Lalaki",
+                  "text": "Ania ti naituding a seksom iti pannakayanakmo?",
                   "language": "ILO"
                 }
               ],
@@ -4492,7 +4492,7 @@
                       "language": "HIL"
                     },
                     {
-                      "text": "Ania ti naituding a seksom iti pannakayanakmo?) Male (Lalaki",
+                      "text": "Ania ti naituding a seksom iti pannakayanakmo?",
                       "language": "ILO"
                     }
                   ],
@@ -5347,7 +5347,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -5368,7 +5368,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -5388,7 +5388,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -5510,7 +5510,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -5531,7 +5531,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -5551,7 +5551,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -6142,7 +6142,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Iyo, na implementar ini asin na-improve pero bako dahil sa UHC Act",
+                          "text": "Iyo, may bagong implementasyon sa pag-improve pero bako dahil sa UHC Act",
                           "language": "BCL"
                         },
                         {
@@ -6224,7 +6224,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae pa ini naimplementar pero igwang plano sa mga masunod na 1-2 taon",
+                          "text": "Dae pa ini naipatupad, pero may igwang plano sa mga masunod na 1-2 taon",
                           "language": "BCL"
                         },
                         {
@@ -6532,7 +6532,7 @@
                   "language": "HIL"
                 },
                 {
-                  "text": "13. Do you have a public health unit at this facility?",
+                  "text": "Saan nga agaplikar (Sadino ti pagaplayam adda kadi iti daytoy a pasilidad?)",
                   "language": "ILO"
                 }
               ],
@@ -6572,7 +6572,7 @@
                       "language": "HIL"
                     },
                     {
-                      "text": "13. Do you have a public health unit at this facility?",
+                      "text": "Saan nga agaplikar (Sadino ti pagaplayam adda kadi iti daytoy a pasilidad?)",
                       "language": "ILO"
                     }
                   ],
@@ -6608,7 +6608,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "wen",
                           "language": "ILO"
                         }
                       ],
@@ -6649,7 +6649,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -7747,7 +7747,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -7768,7 +7768,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -7788,7 +7788,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -8013,7 +8013,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Iyo, na-implementar ini o na-improve pero bako dahil sa UHC Act",
+                          "text": "Iyo, may bagong implementasyon sa pag-improve pero bako dahil sa UHC Act",
                           "language": "BCL"
                         },
                         {
@@ -8095,7 +8095,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae pa ini naimplementar pero igwang plano sa mga masunod na 1-2 taon.",
+                          "text": "Dae pa ini naipatupad, pero may igwang plano sa mga masunod na 1-2 taon",
                           "language": "BCL"
                         },
                         {
@@ -9556,7 +9556,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae pa ini naipatupad, pero igwang plano sa masunod na 1-2 taon",
+                          "text": "Dae pa ini naipatupad, pero may igwang plano sa mga masunod na 1-2 taon",
                           "language": "BCL"
                         },
                         {
@@ -13566,7 +13566,7 @@
                           "language": "EN"
                         },
                         {
-                          "text": "NBB compliance",
+                          "text": "YAKAP/Konsulta utilization reports",
                           "language": "FIL"
                         },
                         {
@@ -13574,19 +13574,19 @@
                           "language": "BCL"
                         },
                         {
-                          "text": "NBB compliance",
+                          "text": "YAKAP/Konsulta utilization reports",
                           "language": "BIS"
                         },
                         {
-                          "text": "NBB compliance",
+                          "text": "YAKAP/Konsulta utilization reports",
                           "language": "CEB"
                         },
                         {
-                          "text": "NBB compliance",
+                          "text": "YAKAP/Konsulta utilization reports",
                           "language": "WAR"
                         },
                         {
-                          "text": "NBB compliance",
+                          "text": "YAKAP/Konsulta utilization reports",
                           "language": "HIL"
                         },
                         {
@@ -13997,7 +13997,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -14018,7 +14018,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -14038,7 +14038,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -14688,7 +14688,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -14729,7 +14729,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -20658,7 +20658,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Limited resources (e.g., shortages in healthcare personnel/manpower, medical equipment, essential supplies, or funding)",
+                          "text": "(Limitado a rekurso (e.g., kinakurang dagiti healthcare personnel/manpower, medikal nga alikamen, nasken a suplay, wenno pondo)",
                           "language": "ILO"
                         }
                       ],
@@ -20683,7 +20683,7 @@
                           "language": "BCL"
                         },
                         {
-                          "text": "Challenging quality standards (e.g., high standards that are difficult to achieve)",
+                          "text": "Mga hagit sa pamantayan sa kalidad (pananglitan taas nga pamantayan nga lisud makab-ot)",
                           "language": "BIS"
                         },
                         {
@@ -20691,7 +20691,7 @@
                           "language": "CEB"
                         },
                         {
-                          "text": "Challenging quality standards (e.g., high standards that are difficult to achieve)",
+                          "text": "Pag-ayat hin mga pamantayan han kalidad (pananglitan, hataas nga mga pamantayan nga makuri makuha)",
                           "language": "WAR"
                         },
                         {
@@ -20806,7 +20806,7 @@
                           "language": "BCL"
                         },
                         {
-                          "text": "Inadequate training of healthcare workers (i.e., Healthcare workers needing additional training to meet the facility's quality standards)",
+                          "text": "Dili igo nga pagbansay sa mga health workers (sama sa: healthworkers nga nanginahanglan ug dugang training para makab-ot ang pamatanyan sa kalidad sa pasilidad)",
                           "language": "BIS"
                         },
                         {
@@ -20863,7 +20863,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Lack of patient awareness of the benefits of UHC (e.g., patients do not know they can avail of free consultations, and selected medicines and laboratory services)",
+                          "text": "( Ti kinakurang ti pannakaammo ti pasiente kadagiti pagimbagan ti UHC (e.g., dagiti pasiente ket dida ammo a mabalinda ti ag-avail kadagiti libre a konsultasion, ken dagiti napili nga agas ken serbisio ti laboratorio)",
                           "language": "ILO"
                         }
                       ],
@@ -21187,7 +21187,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Limited resources (e.g., shortages in healthcare personnel/manpower, medical equipment, essential supplies, or funding)",
+                          "text": "( Limitado a rekurso (e.g., kinakurang dagiti healthcare personnel/manpower, medikal nga alikamen, nasken a suplay, wenno pondo)",
                           "language": "ILO"
                         }
                       ],
@@ -21212,7 +21212,7 @@
                           "language": "BCL"
                         },
                         {
-                          "text": "Challenging quality standards (e.g., high standards that are difficult to achieve)",
+                          "text": "Mga hagit sa pamantayan sa kalidad (Pananglitan: taas nga pamantayan nga lisud makab-ot)",
                           "language": "BIS"
                         },
                         {
@@ -21220,7 +21220,7 @@
                           "language": "CEB"
                         },
                         {
-                          "text": "Challenging quality standards (e.g., high standards that are difficult to achieve)",
+                          "text": "Pag-ayat hin mga pamantayan han kalidad (pananglitan, hataas nga mga pamantayan nga makuri makahua)",
                           "language": "WAR"
                         },
                         {
@@ -21335,7 +21335,7 @@
                           "language": "BCL"
                         },
                         {
-                          "text": "Inadequate training of healthcare workers (i.e., Healthcare workers needing additional training to meet the facility's quality standards)",
+                          "text": "Dili igo nga pagbansay sa mga health workers (Pananglitan: mga healthworkers nga nanginahanglan ug dugang training para makab-ot ang pamatanyan sa kalidad sa pasilidad)",
                           "language": "BIS"
                         },
                         {
@@ -21392,7 +21392,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Lack of patient awareness of the benefits of UHC (e.g., patients do not know they can avail of free consultations, and selected medicines and laboratory services)",
+                          "text": "(Ti kinakurang ti pannakaammo ti pasiente kadagiti pagimbagan ti UHC (e.g., dagiti pasiente ket dida ammo a mabalinda ti ag-avail kadagiti libre a konsultasion, ken dagiti napili nga agas ken serbisio ti laboratorio).",
                           "language": "ILO"
                         }
                       ],
@@ -21761,7 +21761,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -21802,7 +21802,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -22533,7 +22533,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -22737,7 +22737,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -22778,7 +22778,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -22941,7 +22941,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -22982,7 +22982,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -23632,7 +23632,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -23673,7 +23673,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -24040,7 +24040,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -24081,7 +24081,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -24916,15 +24916,15 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Kaipuhanan kan DOH/UHC To improve the services of the facilities Para maparahay an serbisyo kan pasilidad",
+                          "text": "Kaipuhanan kan DOH/UHC",
                           "language": "BCL"
                         },
                         {
-                          "text": "Mandato/gi-require sa DOH/UHC To improve the services of the facilities Para mapalamboa ng serbisyo sa pasilidad",
+                          "text": "Mandato/gi-require sa DOH/UHC",
                           "language": "BIS"
                         },
                         {
-                          "text": "Mandato/required sa DOH/UHC To improve the services of the facilities Para mapalambo ang serbisyo sa pasilidad",
+                          "text": "Mandato/required sa DOH/UHC",
                           "language": "CEB"
                         },
                         {
@@ -25154,27 +25154,27 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Kakayahang magsagawa ng preventive/screening services at health education Capability to provide services for required laboratory and radiologic services Kakayahang magbigay ng kinakailangang laboratoryo at radiologic services",
+                          "text": "Kakayahang magsagawa ng preventive/screening services at health education",
                           "language": "FIL"
                         },
                         {
-                          "text": "May kakayahan sa pagconduct/screening services asin health education Capability to provide services for required laboratory and radiologic services Kakayahan sa pagprovide ki serbisyo sa laboratory asin radiologic services",
+                          "text": "May kakayahan sa pagconduct/screening services asin health education",
                           "language": "BCL"
                         },
                         {
-                          "text": "Katakos/abilidad sa pag-conduct og preventive/screening services ug health education Capability to provide services for required laboratory and radiologic services Kakayahan sa paghatag og serbisyo para sa gikinahanglang laboratoryo ug radiologic services",
+                          "text": "Katakos/abilidad sa pag-conduct og preventive/screening services ug health education",
                           "language": "BIS"
                         },
                         {
-                          "text": "Abilidad sa pagpahigayon ug preventive/screening services ug health education Capability to provide services for required laboratory and radiologic services Kapabilidad sa paghatag ug mga serbisyo nga gikinahanglan sa laboratory ug radiologic services",
+                          "text": "Abilidad sa pagpahigayon ug preventive/screening services ug health education",
                           "language": "CEB"
                         },
                         {
-                          "text": "Kapasidad pagdumara hin mga serbisyo ha pagpugong/pag-eksamin ngan edukasyon ha panlawas Capability to provide services for required laboratory and radiologic services Kapasidad paghatag hin serbisyo para han ginkikinahanglan nga mga serbisyo ha laboratoryo ngan radiolohiya",
+                          "text": "Kapasidad pagdumara hin mga serbisyo ha pagpugong/pag-eksamin ngan edukasyon ha panlawas",
                           "language": "WAR"
                         },
                         {
-                          "text": "Abilidad sa pagpatigayon sang preventive/screening services kag health education Capability to provide services for required laboratory and radiologic services Kapasidad sa paghatag sang kinahanglan nga laboratory kag radiologic services",
+                          "text": "Abilidad sa pagpatigayon sang preventive/screening services kag health education",
                           "language": "HIL"
                         },
                         {
@@ -30217,7 +30217,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "(Wenl",
                           "language": "ILO"
                         }
                       ],
@@ -30258,7 +30258,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -31355,7 +31355,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -31396,7 +31396,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -31638,7 +31638,7 @@
                   "language": "HIL"
                 },
                 {
-                  "text": "(How many eligible patients in your catchment area are already registered to this YAKAP/Konsulta provider? 88. The maximum per capita rate amount for YAKAP/Konsulta is at Php 1,700 across",
+                  "text": "(How many eligible patients in your catchment area are already registered to this YAKAP/Konsulta provider?",
                   "language": "ILO"
                 }
               ],
@@ -31754,7 +31754,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -31795,7 +31795,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "(Saan?",
                           "language": "ILO"
                         }
                       ],
@@ -31958,7 +31958,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -31999,7 +31999,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -32162,7 +32162,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -32203,7 +32203,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -32446,7 +32446,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -32487,7 +32487,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -33123,15 +33123,15 @@
                   "language": "FIL"
                 },
                 {
-                  "text": "96. Why not?",
+                  "text": "Ngata ta dai?",
                   "language": "BCL"
                 },
                 {
-                  "text": "96. Why not?",
+                  "text": "Nganong wala man?",
                   "language": "BIS"
                 },
                 {
-                  "text": "96. Why not?",
+                  "text": "Ngano wala man?",
                   "language": "CEB"
                 },
                 {
@@ -33162,15 +33162,15 @@
                       "language": "FIL"
                     },
                     {
-                      "text": "96. Why not?",
+                      "text": "Ngata ta dai?",
                       "language": "BCL"
                     },
                     {
-                      "text": "96. Why not?",
+                      "text": "Nganong wala man?",
                       "language": "BIS"
                     },
                     {
-                      "text": "96. Why not?",
+                      "text": "Ngano wala man?",
                       "language": "CEB"
                     },
                     {
@@ -33625,7 +33625,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -33666,7 +33666,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -34560,7 +34560,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -34601,7 +34601,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -34723,7 +34723,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -34764,7 +34764,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -36021,7 +36021,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "wen",
                           "language": "ILO"
                         }
                       ],
@@ -36062,7 +36062,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -36184,7 +36184,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -36225,7 +36225,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -36347,7 +36347,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -36388,7 +36388,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -37241,7 +37241,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -37282,7 +37282,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -37933,7 +37933,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -37974,7 +37974,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -38464,7 +38464,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -38505,7 +38505,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -47426,7 +47426,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -47467,7 +47467,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -47589,7 +47589,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -47630,7 +47630,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -47727,7 +47727,7 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Complying with the no fees for basic or ward accommodation",
+                          "text": "Pagsunod sa prinsipyong walang dagdag na bayad para sa basic o ward accommodation",
                           "language": "FIL"
                         },
                         {
@@ -47739,7 +47739,7 @@
                           "language": "BIS"
                         },
                         {
-                          "text": "Complying with the no fees for basic or ward accommodation",
+                          "text": "Pagsunod sa walay bayad para sa basic nga accommodation",
                           "language": "CEB"
                         },
                         {
@@ -47854,7 +47854,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Insufficient PhilHealth support value",
+                          "text": "Kulang an PhilHealth support value",
                           "language": "BCL"
                         },
                         {
@@ -47907,7 +47907,7 @@
                           "language": "CEB"
                         },
                         {
-                          "text": "Insufficient other sources (e.g. MAIFIP, DSWD, PCSO) (late payments applicable for MAIFIP)",
+                          "text": "Kulang ha ibanga tinikangan (e.g. MAIFIP, DSWD, PCSO) (Urhi nga bayad nga aplikado haMAIFIP )",
                           "language": "WAR"
                         },
                         {
@@ -47936,7 +47936,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Pagkahaloy kan",
+                          "text": "Pagkahaloy kan Philhealth payment",
                           "language": "BCL"
                         },
                         {
@@ -48199,7 +48199,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -48220,7 +48220,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -48240,7 +48240,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -48362,7 +48362,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -48383,7 +48383,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -48403,7 +48403,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -48500,7 +48500,7 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Complying with the no fees for basic or ward accommodation",
+                          "text": "Pagsunod sa batas na walang dagdag na bayad para sa basic o ward accommodation",
                           "language": "FIL"
                         },
                         {
@@ -48512,7 +48512,7 @@
                           "language": "BIS"
                         },
                         {
-                          "text": "Complying with the no fees for basic or ward accommodation",
+                          "text": "Pagsunod sa walay bayad para sa basic o ward nga accommodation",
                           "language": "CEB"
                         },
                         {
@@ -48627,7 +48627,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Insufficient PhilHealth support value",
+                          "text": "Kulang an PhilHealth support value",
                           "language": "BCL"
                         },
                         {
@@ -48680,7 +48680,7 @@
                           "language": "CEB"
                         },
                         {
-                          "text": "Insufficient other sources (e.g. MAIFIP, DSWD, PCSO) (late payments applicable for MAIFIP)",
+                          "text": "Kulang ha iba nga tinikangan (e.g. MAIFIP, DSWD, PCSO) (Urhi nga bayad nga aplikado haMAIFIP )",
                           "language": "WAR"
                         },
                         {
@@ -48709,7 +48709,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Pagkahaloy kan",
+                          "text": "Pagkahaloy kan Philhealth payment",
                           "language": "BCL"
                         },
                         {
@@ -48972,7 +48972,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -48993,7 +48993,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -49013,7 +49013,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -49741,7 +49741,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -49762,7 +49762,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -49782,7 +49782,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -50289,11 +50289,11 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Kulang an dokumento kan pasyente High patient volume leading to service bottlenecks Paglangkaw kan patient volume leading to service bottlenecks",
+                          "text": "Kulang an dokumento kan pasyente",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili kompleto nga dokumento sa pasyente High patient volume leading to service bottlenecks Daghang pasyente nga gadala sa paghinay sa serbisyo",
+                          "text": "Dili kompleto nga dokumento sa pasyente",
                           "language": "BIS"
                         },
                         {
@@ -50552,7 +50552,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -50573,7 +50573,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -50593,7 +50593,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -51039,7 +51039,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -51060,7 +51060,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -51080,7 +51080,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -51106,11 +51106,11 @@
                   "language": "FIL"
                 },
                 {
-                  "text": "151. Why not?",
+                  "text": "Kun dae, nata?",
                   "language": "BCL"
                 },
                 {
-                  "text": "151. Why not?",
+                  "text": "Nganong dili man?",
                   "language": "BIS"
                 },
                 {
@@ -51145,11 +51145,11 @@
                       "language": "FIL"
                     },
                     {
-                      "text": "151. Why not?",
+                      "text": "Kun dae, nata?",
                       "language": "BCL"
                     },
                     {
-                      "text": "151. Why not?",
+                      "text": "Nganong dili man?",
                       "language": "BIS"
                     },
                     {
@@ -51181,7 +51181,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "other sources ( e.g., MAIFIP, DSWD, PCSO) Kulang an",
+                          "text": "Kulang",
                           "language": "BCL"
                         },
                         {
@@ -51189,7 +51189,7 @@
                           "language": "BIS"
                         },
                         {
-                          "text": "other sources ( e.g., MAIFIP, DSWD, PCSO) Kulang ang",
+                          "text": "Kulang",
                           "language": "CEB"
                         },
                         {
@@ -52539,7 +52539,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes",
+                          "text": "Wen",
                           "language": "ILO"
                         }
                       ],
@@ -52580,7 +52580,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "No",
+                          "text": "Saan",
                           "language": "ILO"
                         }
                       ],
@@ -54357,7 +54357,7 @@
                           "language": "BCL"
                         },
                         {
-                          "text": "Lisod ang pag-retain sa staff / taas ang staff turnover Multi-tasking Multi-tasking (daghang buluhaton sa usa ka oras)",
+                          "text": "Lisod ang pag-retain sa staff / taas ang staff turnover",
                           "language": "BIS"
                         },
                         {
@@ -54369,7 +54369,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Pagpabilin / mataas nga turnover sang staff Multi-tasking Multi-tasking ukon madamo sang dapat hikuton sa isa ka tion",
+                          "text": "Pagpabilin / mataas nga turnover sang staff",
                           "language": "HIL"
                         },
                         {
@@ -54892,7 +54892,7 @@
                           "language": "CEB"
                         },
                         {
-                          "text": "Support for independent professional development: research grants",
+                          "text": "Suporta para han lugaring nga pag-uswag han propesyon: mga pinansyal na bulig para han pag-sram",
                           "language": "WAR"
                         },
                         {
@@ -55298,7 +55298,7 @@
                           "language": "CEB"
                         },
                         {
-                          "text": "Support for independent professional development: research grants",
+                          "text": "Suporta para han lugaring nga pag-uswag han propesyon: mga pinansyal na bulig han pag-aram",
                           "language": "WAR"
                         },
                         {

@@ -21,6 +21,18 @@ Item=QUESTIONNAIRE_NUMBER
   
 [Form]
 Name=FORM001
+Label=A. Informed Consent (Q1 gate)
+Level=1
+Size=806,300
+  
+Item=ICF_PART1
+Item=ICF_PART2
+Item=Q1_IS_HH_HEAD
+  
+[EndForm]
+  
+[Form]
+Name=FORM002
 Label=Interview status
 Level=1
 Size=806,300
@@ -30,7 +42,7 @@ Item=BREAKOFF
 [EndForm]
   
 [Form]
-Name=FORM002
+Name=FORM003
 Label=FC Geographic ID
 Level=1
 Size=806,300
@@ -41,18 +53,6 @@ Item=CITY_NAME
 Item=CLASSIFICATION
 Item=BARANGAY
 Item=HH_ADDRESS
-  
-[EndForm]
-  
-[Form]
-Name=FORM003
-Label=A. Informed Consent (Q1 gate)
-Level=1
-Size=806,300
-  
-Item=ICF_PART1
-Item=ICF_PART2
-Item=Q1_IS_HH_HEAD
   
 [EndForm]
   
@@ -871,115 +871,9 @@ Text=Questionnaire Number (12-digit: RR-PP-MMM-FF-CCC)
   
 [Group]
 Required=Yes
-Name=FIELD_CONTROL_FORM
-Label=Interview status
-Form=2
-Max=1
-  
-[Field]
-Name=BREAKOFF
-Position=350,27,365,47
-Item=BREAKOFF,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=2
-  
-[Text]
-Position=50,30,330,46
-Text=Interview status (leave as Continue unless ending the interview early)
- 
-  
-[EndGroup]
-  
-[Group]
-Required=Yes
-Name=FIELD_CONTROL_FORM_2
-Label=FC Geographic ID
-Form=3
-Max=1
-  
-[Field]
-Name=REGION_NAME
-Position=350,27,760,47
-Item=REGION_NAME,HOUSEHOLDSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=3
-  
-[Text]
-Position=50,30,330,46
-Text=Region (from PSGC)
- 
-  
-[Field]
-Name=PROVINCE_NAME
-Position=350,57,760,77
-Item=PROVINCE_NAME,HOUSEHOLDSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=3
-  
-[Text]
-Position=50,60,330,76
-Text=Province / HUC (from PSGC)
- 
-  
-[Field]
-Name=CITY_NAME
-Position=350,87,760,107
-Item=CITY_NAME,HOUSEHOLDSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=3
-  
-[Text]
-Position=50,90,330,106
-Text=City / Municipality (from PSGC)
- 
-  
-[Field]
-Name=CLASSIFICATION
-Position=350,117,365,137
-Item=CLASSIFICATION,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=3
-  
-[Text]
-Position=50,120,330,136
-Text=Classification
- 
-  
-[Field]
-Name=BARANGAY
-Position=350,147,365,167
-Item=BARANGAY,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=3
-  
-[Text]
-Position=50,150,330,166
-Text=Barangay
- 
-  
-[Field]
-Name=HH_ADDRESS
-Position=350,177,760,197
-Item=HH_ADDRESS,HOUSEHOLDSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=3
-  
-[Text]
-Position=50,180,330,196
-Text=Household Address
- 
-  
-[EndGroup]
-  
-[Group]
-Required=Yes
 Name=A_INFORMED_CONSENT_FORM
 Label=A. Informed Consent (Q1 gate)
-Form=4
+Form=2
 Max=1
   
 [Field]
@@ -987,7 +881,7 @@ Name=ICF_PART1
 Position=350,27,365,47
 Item=ICF_PART1,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=4
+Form=2
   
 [Text]
 Position=50,30,330,46
@@ -999,7 +893,7 @@ Name=ICF_PART2
 Position=350,57,365,77
 Item=ICF_PART2,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=4
+Form=2
   
 [Text]
 Position=50,60,330,76
@@ -1011,7 +905,7 @@ Name=Q1_IS_HH_HEAD
 Position=350,87,365,107
 Item=Q1_IS_HH_HEAD,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
-Form=4
+Form=2
   
 [Text]
 Position=50,90,330,106
@@ -1038,6 +932,112 @@ Label=Q1
 DisplayTogether=Yes
 Position=4
 Length=1
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=FIELD_CONTROL_FORM
+Label=Interview status
+Form=3
+Max=1
+  
+[Field]
+Name=BREAKOFF
+Position=350,27,365,47
+Item=BREAKOFF,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=3
+  
+[Text]
+Position=50,30,330,46
+Text=Interview status (leave as Continue unless ending the interview early)
+ 
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=FIELD_CONTROL_FORM_2
+Label=FC Geographic ID
+Form=4
+Max=1
+  
+[Field]
+Name=REGION_NAME
+Position=350,27,760,47
+Item=REGION_NAME,HOUSEHOLDSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=4
+  
+[Text]
+Position=50,30,330,46
+Text=Region (from PSGC)
+ 
+  
+[Field]
+Name=PROVINCE_NAME
+Position=350,57,760,77
+Item=PROVINCE_NAME,HOUSEHOLDSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=4
+  
+[Text]
+Position=50,60,330,76
+Text=Province / HUC (from PSGC)
+ 
+  
+[Field]
+Name=CITY_NAME
+Position=350,87,760,107
+Item=CITY_NAME,HOUSEHOLDSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=4
+  
+[Text]
+Position=50,90,330,106
+Text=City / Municipality (from PSGC)
+ 
+  
+[Field]
+Name=CLASSIFICATION
+Position=350,117,365,137
+Item=CLASSIFICATION,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=4
+  
+[Text]
+Position=50,120,330,136
+Text=Classification
+ 
+  
+[Field]
+Name=BARANGAY
+Position=350,147,365,167
+Item=BARANGAY,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=4
+  
+[Text]
+Position=50,150,330,166
+Text=Barangay
+ 
+  
+[Field]
+Name=HH_ADDRESS
+Position=350,177,760,197
+Item=HH_ADDRESS,HOUSEHOLDSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=4
+  
+[Text]
+Position=50,180,330,196
+Text=Household Address
+ 
   
 [EndGroup]
   
@@ -4995,7 +4995,7 @@ Form=40
   
 [Text]
 Position=50,120,330,136
-Text=Food item - During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read...
+Text=Food item — total value produced/received in-kind or as gifts, last week (PHP)
  
   
 [EndGroup]
@@ -5076,7 +5076,7 @@ Form=42
   
 [Text]
 Position=50,120,330,136
-Text=Expenditure item - During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...
+Text=Expenditure item — total value received in-kind or as gifts, last week (PHP)
  
   
 [EndGroup]
@@ -5136,7 +5136,7 @@ Form=43
   
 [Text]
 Position=50,120,330,136
-Text=Non-food item - During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not...
+Text=Non-food item — total value received in-kind or as gifts, last month (PHP)
  
   
 [EndGroup]
@@ -5196,7 +5196,7 @@ Form=44
   
 [Text]
 Position=50,120,330,136
-Text=Non-food item - During the last 6 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...
+Text=Non-food item — total value received in-kind or as gifts, last 6 months (PHP)
  
   
 [EndGroup]
@@ -5256,7 +5256,7 @@ Form=45
   
 [Text]
 Position=50,120,330,136
-Text=Non-food item - During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do...
+Text=Non-food item — total value received in-kind or as gifts, last 12 months (PHP)
  
   
 [EndGroup]
@@ -5316,7 +5316,7 @@ Form=46
   
 [Text]
 Position=50,120,330,136
-Text=Health product or service - During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to...
+Text=Health product/service — total value received in-kind or as gifts, last 12 months (PHP)
  
   
 [EndGroup]
@@ -5397,7 +5397,7 @@ Form=48
   
 [Text]
 Position=50,120,330,136
-Text=Health product or service - During the last 6 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to...
+Text=Health product/service — total value received in-kind or as gifts, last 6 months (PHP)
  
   
 [EndGroup]
@@ -5478,7 +5478,7 @@ Form=50
   
 [Text]
 Position=50,120,330,136
-Text=Health product or service - During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to...
+Text=Health product/service — total value received in-kind or as gifts, last month (PHP)
  
   
 [EndGroup]

@@ -2046,6 +2046,45 @@ def build_section_q():
 # ASSEMBLE THE DICTIONARY
 # ============================================================
 
+# 1182: the 8 Section-N in-kind value prompts overrun CSPro's 255-char label cap, so
+# write_dcf's last-resort truncation cut them mid-sentence on every build - and the cut
+# text is what the case tree / roster caption shows. The FULL prompt still reaches the
+# CAPI question bar: generate_qsf builds the dictionary in-memory and never caps (its
+# #741 note). These are designed DCF/FMF display captions, not cuts; generate_qsf must
+# NOT apply them.
+DCF_SHORT_LABELS = {
+    "N_FOOD_INKIND_PHP":  "Food item — total value produced/received in-kind or as gifts, last week (PHP)",
+    "N_WKOTH_INKIND_PHP": "Expenditure item — total value received in-kind or as gifts, last week (PHP)",
+    "N_NF1M_INKIND_PHP":  "Non-food item — total value received in-kind or as gifts, last month (PHP)",
+    "N_NF6M_INKIND_PHP":  "Non-food item — total value received in-kind or as gifts, last 6 months (PHP)",
+    "N_NF12M_INKIND_PHP": "Non-food item — total value received in-kind or as gifts, last 12 months (PHP)",
+    "N_H1M_INKIND_PHP":   "Health product/service — total value received in-kind or as gifts, last month (PHP)",
+    "N_H6M_INKIND_PHP":   "Health product/service — total value received in-kind or as gifts, last 6 months (PHP)",
+    "N_H12M_INKIND_PHP":  "Health product/service — total value received in-kind or as gifts, last 12 months (PHP)",
+}
+
+
+def apply_dcf_short_labels(dictionary):
+    """Swap in the designed short display captions (dcf/fmf surfaces only)."""
+    def walk(o):
+        if isinstance(o, dict):
+            yield o
+            for v in o.values():
+                yield from walk(v)
+        elif isinstance(o, list):
+            for v in o:
+                yield from walk(v)
+    hits = 0
+    for node in walk(dictionary):
+        if isinstance(node, dict) and node.get("name") in DCF_SHORT_LABELS and node.get("labels"):
+            for lab in node["labels"]:
+                lab["text"] = DCF_SHORT_LABELS[node["name"]]
+            hits += 1
+    if hits != len(DCF_SHORT_LABELS):
+        raise SystemExit(f"apply_dcf_short_labels: expected {len(DCF_SHORT_LABELS)} items, hit {hits}")
+    return hits
+
+
 def build_f4_dictionary():
     records = [
         build_f4_field_control(),
@@ -2086,6 +2125,7 @@ def main():
     # silently resets the .dcf to English). Auto-discovers locales by file
     # existence in translations/; F4 has bcl/bis/ceb/war (no hil/fil).
     dictionary = apply_translations(dictionary, Path(__file__).parent / "translations")
+    apply_dcf_short_labels(dictionary)
     write_dcf(dictionary, out_path)
 
 

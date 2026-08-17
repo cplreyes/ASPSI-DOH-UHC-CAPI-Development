@@ -26,7 +26,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from generate_dcf import build_f4_dictionary
+from generate_dcf import build_f4_dictionary, apply_dcf_short_labels
 from cspro_helpers import _truncate_long_labels
 
 
@@ -601,6 +601,7 @@ def _emit_blocks(lines, item_objs):
 
 def build_fmf():
     dictionary = build_f4_dictionary()
+    apply_dcf_short_labels(dictionary)  # designed short captions (#1182), same as the .dcf
     _truncate_long_labels(dictionary)  # match the .dcf's 255-char label cap (CSPro max)
     global _ACTIVE_BLOCK_PLAN
     # Skip-awareness reads the CURRENT .ent.apc — the orchestrator (cspro_compile_driver.py
