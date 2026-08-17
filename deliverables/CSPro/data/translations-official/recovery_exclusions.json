@@ -1,0 +1,242 @@
+{
+ "_README": "Recovered translation cells that adversarial review REJECTED. extract_official's recovery pass proposes these, but they must never be written: each is contaminated, bound to the wrong option, not verbatim, or in the wrong language. Excluding them here keeps the extractor reproducible - regenerating cannot quietly reintroduce a value a reviewer already threw out. A cell listed here falls back to English, which is always safe. id = INSTRUMENT|LOCALE|QNUM|OPTION_INDEX.",
+ "_reviewed": "2026-08-16, 5 reviewers + adjudication, 200 candidates, 59 rejected",
+ "exclusions": {
+  "F1|BIS|140|2": {
+   "test": "contamination",
+   "why": "Leading English word 'through' survives from the option's own English line. The BIS PDF reads 'Patients do not go through the process of availing it' while the English master reads 'Patients do not go to the process of availing it', so the deletion left the word 'through' stranded in front of the Bi"
+  },
+  "F1|BIS|166|5": {
+   "test": "contamination",
+   "why": "Leading English word 'doctors' survives from the option's English line. The Q166 block in the BIS PDF mis-copies the English label as '...provided to our doctors'; the deletion removed everything except the trailing 'doctors', which now sits in front of the Bisaya. The Bisaya itself ('among mga nurs"
+  },
+  "F1|CEB|140|5": {
+   "test": "contamination",
+   "why": "Over-deletion produced a broken splice across two source lines. The Cebuano head noun 'sources (e.g. MAIFIP, DSWD, PCSO) <isulti ang ubang sources' was cut out, leaving the dangling fragment 'Kulang ang uban pang' welded onto 'Ulahing bayad applicable para sa MAIFIP'. The result is ungrammatical and"
+  },
+  "F1|CEB|18|1": {
+   "test": "verbatim",
+   "why": "Not verbatim: the source word is 'Pag-uban', broken across the line wrap as 'Pag-' + 'uban'. The recovered value silently drops the hyphen and ships 'Paguban', a word that does not exist in the cleared PDF and is a misspelling of the Cebuano pag- prefix form. Everything after that point matches, so "
+  },
+  "F1|FIL|140|3": {
+   "test": "wrong_option",
+   "why": "Off-by-one: the value was lifted from the NEXT option's block. Option 3 is 'Insufficient PhilHealth support value and/or insufficient other sources (e.g., MAIFIP, DSWD, PCSO)', whose Tagalog in the PDF is 'Hindi sapat ang suportang halaga ng PhilHealth at/o hindi sapat ang ibang mapagkukunan (hal. M"
+  },
+  "F1|HIL|140|2": {
+   "test": "contamination",
+   "why": "Leading English word 'through' survives from the option's own English line ('Patients do not go through the process of availing it' in the HIL PDF vs '...go to the process...' in the English master), leaving a stray English token in front of the Hiligaynon."
+  },
+  "F1|HIL|161|2": {
+   "test": "contamination",
+   "why": "Leading English 'Neither,' is carried over from the checkbox line, and it is a splice: the sequence 'Neither, Nagakinahanglan' occurs nowhere in the source. In the HIL PDF the English label line is 'Neither, Improvements needed, but generally functional' and the translation line begins 'Neither Sati"
+  },
+  "F1|ILO|121|9": {
+   "test": "contamination",
+   "why": "A stray empty parenthesis pair '( )' is appended at the end. It is not part of the translation block — the '(' that follows in the source belongs to the NEXT line's <This is a licensing requirement...> scope note. The value is therefore a splice, and would print a meaningless '( )' after the option "
+  },
+  "F1|ILO|140|3": {
+   "test": "wrong_option",
+   "why": "Off-by-one: option 3's Ilocano in the PDF is '(Saan nga umdas a pateg ti suporta ti PhilHealth ken/wenno saan nga umdas a dadduma pay a gubuayan ( e.g., MAIFIP, DSWD, PCSO)'. The recovered value uses 'umdas ti pateg' — verbatim the option-4 line 'Insufficient PhilHealth support value and/or'. It is "
+  },
+  "F1|WAR|140|3": {
+   "test": "wrong_option",
+   "why": "Off-by-one: option 3's Waray in the PDF is 'Kulang nga kantidad ha suporta ha PhilHealth ngan/o kulang ha iba nga pinagkukuhaan ( e.g., MAIFIP, DSWD, PCSO)'. The recovered value reads 'kantidad han suporta han PhilHealth' — verbatim the option-4 line 'Insufficient PhilHealth support value and/or'. W"
+  },
+  "F1|WAR|165|7": {
+   "test": "contamination",
+   "why": "Two independent defects. (1) The English fragment 'provide' survives at the front — the WAR PDF truncates the label as 'No forms of professional development are provide', and only the earlier words were deleted. (2) The Waray text itself says 'ha aton mga nars' (to our NURSES) although this is the Q"
+  },
+  "F2|BCL|30|2": {
+   "test": "contamination",
+   "why": "Value for the 'I don't know' option code carries the whole Section-C introduction and the section header. 'pakicheck an mga box/es sa saimong kasimbagan' is an enumerator/respondent directive ('Please check the box/es of your answer') and 'YAKAP / Konsulta Package' is a section heading - neither bel"
+  },
+  "F2|BCL|5|13": {
+   "test": "contamination",
+   "why": "The BCL block for this option carries no Bikol at all - the 'translation' line is the English option repeated verbatim. The recovered value additionally begins with a stray line-wrap fragment 'coordinator' that belongs to the preceding wrapped line, so it is English + edge fragment, not a translatio"
+  },
+  "F2|BIS|30|2": {
+   "test": "contamination",
+   "why": "Same defect: the 'I don't know' option label absorbs the section-introduction paragraph including the directive 'Palihog I-chek ang mga boxes para sa imohang tubag' ('Please check the box/es of your answer')."
+  },
+  "F2|BIS|52|4": {
+   "test": "contamination",
+   "why": "The section header's Bisaya translation 'Kahibalo sa GAMOT Package' ('Awareness of GAMOT Package') is appended to the Q52 'Other (specify)' option label. Page/section furniture inside an option value."
+  },
+  "F2|CEB|30|2": {
+   "test": "contamination",
+   "why": "Carries the section-introduction directive AND a stray English word 'the' left behind by the deletion (the CEB PDF's English line reads '...awareness of the YAKAP/Konsulta package...', which does not match the canonical English string, so 'the' survived)."
+  },
+  "F2|FIL|30|2": {
+   "test": "contamination",
+   "why": "The 'I don't know' option label absorbs the Section-C introduction, including the directive 'Pakilagyan ng tsek ang kahon ng iyong sagot' ('Please check the box/es of your answer')."
+  },
+  "F2|FIL|43|8": {
+   "test": "wrong_language",
+   "why": "The value is plain English, not Tagalog. The FIL PDF's Q43 option at this slot reads 'Applies only to certain patients or hospitals' with its Tagalog rendered far away on the next page, so the extractor returned only the English tail 'certain patients or hospitals'. It is also bound to a different E"
+  },
+  "F2|FIL|46|8": {
+   "test": "contamination",
+   "why": "Leading English fragment 'certain patients or hospitals' survives ahead of the Tagalog. Compounding it, the Tagalog present ('Para lamang sa ilang pasyente o ospital' = 'only for certain patients or hospitals') translates the FIL PDF's variant wording, not the master option 'Applies only to PhilHeal"
+  },
+  "F2|HIL|52|4": {
+   "test": "contamination",
+   "why": "Two defects: a stray English fragment 'about GAMOT' (the HIL PDF's header reads 'E2. Awareness about GAMOT', which does not match the canonical 'Awareness of GAMOT Package', so the deletion left 'about GAMOT'), plus the section header's Hiligaynon translation 'Ihibalo nahanungod sa GAMOT' appended t"
+  },
+  "F2|WAR|30|2": {
+   "test": "contamination",
+   "why": "Same defect: option label absorbs the section-introduction directive 'Alayon pagtsek han kahon/mga kahon han imo baton' ('Please check the box/es of your answer')."
+  },
+  "F2|WAR|52|4": {
+   "test": "contamination",
+   "why": "The section header's Waray translation 'Paghibaro han GAMOT Package' ('Awareness of GAMOT Package') is appended to the Q52 'Other (specify)' option label."
+  },
+  "F3|BCL|115.2|1": {
+   "test": "contamination",
+   "why": "Truncated: the cleared Bikol is 'Binayad mismo sa doctor asin saiyang secretary', but 'secretary' was deleted as an English match, leaving the dangling possessive 'asin saiyang' ('...and his/her ___'). Would display as an unfinished phrase."
+  },
+  "F3|BCL|115.2|5": {
+   "test": "contamination",
+   "why": "Truncated: cleared Bikol is 'Allowance kan caregiver', but 'caregiver' was deleted as an English match, leaving 'Allowance kan Kantidad sa Peso' — a dangling genitive with no head noun, so the respondent cannot tell whose allowance is meant."
+  },
+  "F3|BCL|135|0": {
+   "test": "contamination",
+   "why": "The four English scale labels 'Never', 'Sometimes', 'Usually', 'Always' are still present sitting immediately before their own Bikol renderings ('Dai', 'Minsan', 'Minsanan', 'Pirmi') — English repeated alongside its own translation. The value is also a mash of the matrix stem plus five column header"
+  },
+  "F3|BCL|86|7": {
+   "test": "contamination",
+   "why": "Carries the stray English fragments 'Minor' and 'basis.' from the untranslated English gloss line that sits between the Bikol label and the Bikol gloss. 'Minor basis.' would print to the respondent as orphaned English."
+  },
+  "F3|BCL|86|8": {
+   "test": "contamination",
+   "why": "Carries the stray English fragments 'Claiming' and 'etc.' left over from the English parenthetical gloss line that was supposed to be deleted entirely."
+  },
+  "F3|BCL|94|17": {
+   "test": "contamination",
+   "why": "Prefixed with the untranslated English mode-of-payment label 'Out-of-pocket', mangled by the PDF line-wrap into 'Out-ofpocket' (hyphen lost mid-word). The Q94 BCL block leaves that label untranslated, so the fragment is pure English furniture from a neighbouring cell."
+  },
+  "F3|BIS|115.1|1": {
+   "test": "contamination",
+   "why": "Truncated mid-phrase: cleared Bisaya is 'Medikal nga gamit ug supplies', but 'supplies' was deleted as an English match, leaving a dangling 'ug' ('Medikal nga gamit ug Kantidad sa pesos'). Fixing it requires re-adding a word, not deleting one."
+  },
+  "F3|BIS|115.2|0": {
+   "test": "wrong_option",
+   "why": "The Bisaya line printed against 'Medical equipment or supplies bought outside the facility' reads 'Tambal o medisina gipalit gawas sa pasilidad' = 'medicine or drugs bought outside the facility'. It is a copy of the medicines wording (cf. BIS 115.1 row 4 'Tambal o medisina sulod sa pasilidad'), not "
+  },
+  "F3|BIS|115.2|1": {
+   "test": "contamination",
+   "why": "Truncated: cleared Bisaya is '...doktor/doktor ug ilang secretary', but 'secretary' was deleted as an English match, leaving the dangling possessive 'ug ilang'."
+  },
+  "F3|BIS|121|8": {
+   "test": "contamination",
+   "why": "Leads with raw English 'certain patients or hospitals'. In the BIS PDF this option's English reads 'Applies only to certain patients or hospitals', so the words that differ from the canonical option text survived the deletion pass. The surviving Bisaya ('Nagamit lamang sa pipila ka pasyente o mga os"
+  },
+  "F3|BIS|135|0": {
+   "test": "contamination",
+   "why": "Same defect: 'Never', 'Sometimes', 'Usually', 'Always' survive next to 'Wala', 'Usahay', 'Kasagaran', 'Kanunay'. English of the scale is repeated alongside its own Bisaya translation."
+  },
+  "F3|BIS|86|7": {
+   "test": "contamination",
+   "why": "Same defect as the BCL twin: 'Minor basis.' is residue of the English gloss line (its first and last words survived the deletion pass)."
+  },
+  "F3|BIS|86|8": {
+   "test": "contamination",
+   "why": "Carries English residue 'Claiming' and 'etc.' from the gloss line. Additionally the deletion pass ate 'fit to work,' and 'surgery,' out of the Bisaya gloss itself, so the surviving text ('para sa biyahe, ug uban pa') no longer states two of the three cleared use-cases — restoring it is not a pure de"
+  },
+  "F3|BIS|94|17": {
+   "test": "contamination",
+   "why": "Same defect as the BCL twin: the untranslated English column label 'Out-of-pocket' is wrapped in the PDF and joins as 'Out-ofpocket' ahead of the actual translation."
+  },
+  "F3|BIS|97.1|1": {
+   "test": "contamination",
+   "why": "Truncated mid-phrase: the cleared Bisaya line is 'Medical equipment o supplies', but 'supplies' was deleted because it also occurs in the English option, leaving a dangling conjunction ('Medical equipment o Kantidad sa pesos'). Restoring 'supplies' is an addition, not a deletion, so no fix is offere"
+  },
+  "F3|CEB|115.2|1": {
+   "test": "contamination",
+   "why": "Truncated: cleared Cebuano is 'Direkta nga bayad sa doktor ug ilang secretary', but 'secretary' was deleted as an English match, leaving the dangling possessive 'ug ilang'."
+  },
+  "F3|CEB|135|0": {
+   "test": "contamination",
+   "why": "English scale labels survive next to their Cebuano equivalents, and two are split mid-word by the PDF wrap and carried through as such: 'Sometime s' and 'Kasagara n'. Both the leftover English and the broken tokens would print to the respondent."
+  },
+  "F3|CEB|86|7": {
+   "test": "contamination",
+   "why": "Leads with the English residue 'Minor basis.' — in the CEB layout the English gloss line precedes the Cebuano label, so the fragment lands at the front of the value."
+  },
+  "F3|FIL|121|8": {
+   "test": "contamination",
+   "why": "Carries the tail of the English option ('certain patients or hospitals') ahead of its own Tagalog translation. Note the FIL PDF also words this option differently from the English master ('certain patients or hospitals' vs 'PhilHealth members and DOH-run hospitals')."
+  },
+  "F3|FIL|135|0": {
+   "test": "contamination",
+   "why": "The English column headers Never / Sometimes / Usually / Always are still present, each sitting immediately in front of its own Tagalog rendering (Hindi kailanman / Minsan / Kadalasan / Palagi)."
+  },
+  "F3|FIL|82|4": {
+   "test": "contamination",
+   "why": "Leads with 'es', a mid-word fragment left over from the English 'does' in 'Intend to register but does not have found a time to do it.'"
+  },
+  "F3|HIL|115.2|4": {
+   "test": "wrong_option",
+   "why": "Off-by-one. The HIL 115.2 translation column is shifted by one option from 'Transportation' onward, so the line sitting under 'Donation to the facility' is actually 'Allowance para sa nagabantay' = Allowance for caregiver. Attaching this to the Donation code would silently mislabel the answer."
+  },
+  "F3|HIL|115.2|5": {
+   "test": "wrong_option",
+   "why": "Same one-step shift: the line under 'Allowance for caregiver' is 'Iban pa (ispecify)' = Other (specify), not a caregiver allowance."
+  },
+  "F3|HIL|121|8": {
+   "test": "contamination",
+   "why": "Opens with the tail of the English option, 'or DOH runs hospitals.', ahead of the Hiligaynon."
+  },
+  "F3|HIL|135|0": {
+   "test": "contamination",
+   "why": "English column headers Never / Sometimes / Usually / Always remain, each in front of its own Hiligaynon rendering (Wala gid / Talagsa / Kalabanan / Permi)."
+  },
+  "F3|HIL|86|7": {
+   "test": "contamination",
+   "why": "Two defects: it opens with the stray English fragment 'Minor basis.', and the extractor also cut 'minimally invasive, low-risk' out of the MIDDLE of the Hiligaynon sentence, leaving the ungrammatical 'nagalakip sang nga mga proseso' and dropping the risk qualifier that defines minor surgery."
+  },
+  "F3|ILO|114|2": {
+   "test": "contamination",
+   "why": "Opens with 'b0pecause', a mangled fragment of the English word 'because' from the option's English line, left sitting ahead of the Ilocano."
+  },
+  "F3|ILO|135|0": {
+   "test": "contamination",
+   "why": "English column headers Never / Sometimes / Usually / Always remain, each in front of its own Ilocano rendering."
+  },
+  "F3|ILO|86|8": {
+   "test": "contamination",
+   "why": "Retains the English fragment 'Claiming etc.' between the two Ilocano parts, and the extractor additionally deleted 'fit to work' from INSIDE the Ilocano gloss, so the recovered text drops one of the three clearance reasons the cleared PDF lists."
+  },
+  "F3|WAR|15|0": {
+   "test": "contamination",
+   "why": "Opens with a leftover '(Preschool)' — the tail of the English option 'Early Childhood Education (Pre-school)' that wraps across a line — sitting in front of the Waray, which then repeats it."
+  },
+  "F3|WAR|86|7": {
+   "test": "contamination",
+   "why": "Carries the stray English fragment 'Minor basis.' — the two ends of the English gloss line 'Minor surgery involves ... on an outpatient basis.' — wedged between the option label and its Waray gloss."
+  },
+  "F3|WAR|86|8": {
+   "test": "contamination",
+   "why": "Carries the stray English fragment 'Claiming etc.' — the two ends of 'Claiming of medical clearance for travel, fit to work, surgery, etc.' — between the label and its Waray gloss."
+  },
+  "F4|BIS|196|7": {
+   "test": "contamination",
+   "why": "The value glues the option translation to the translation of the SECTION HEADER 'P. Financial Risk Protection: Incidence of Reduced/Delayed Care', which sits after the last Q196 option. Shipping it would label answer code 8 with a section heading. (It is also not a contiguous substring: the interven"
+  },
+  "F4|CEB|202|2": {
+   "test": "contamination",
+   "why": "Trailing 'KATAPUSAN SA SURVEY' is the translation of the 'END OF SURVEY' page directive that follows the last option, not part of the option label. The English 'END OF SURVEY' between them was cut out, so the value is not a contiguous substring either."
+  },
+  "F4|FIL|196|6": {
+   "test": "contamination",
+   "why": "Carries the source PDF's bracket delimiters that mark the Tagalog gloss plus the paper form's write-in blank. The '[' ... ']' and the trailing '_________' are layout furniture at both edges, not part of the cleared option wording — everywhere else in F4_FIL the extractor strips these (e.g. '☐ Yes [O"
+  },
+  "F4|HIL|202|2": {
+   "test": "verbatim",
+   "why": "Two characters were altered, not just whitespace: the source em dash U+2014 was emitted as an ASCII hyphen U+002D, and the closing curly quote U+201D was emitted as a straight quote U+0022. Longest matching prefix stops at 64 of 131 characters, exactly at that dash. The trailing quote is also a stra"
+  },
+  "F4|ILO|196|7": {
+   "test": "contamination",
+   "why": "Two parenthesised chunks: the option gloss AND the gloss of the section header 'P. Financial Risk Protection: Incidence of Reduced/Delayed Care'. The header text is not part of option 8, and the English header line between them was deleted from the middle, so the value is not even contiguous in the "
+  }
+ }
+}

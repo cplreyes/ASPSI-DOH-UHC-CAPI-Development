@@ -21196,7 +21196,7 @@
                           "language": "CEB"
                         },
                         {
-                          "text": "Specialty Care Provider/ Specialist (a doctor with more expertise in specific areas of health)",
+                          "text": "Espesyal nga Tag-ataman/ Espesyalista",
                           "language": "WAR"
                         },
                         {
@@ -21204,7 +21204,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Specialty Care Provider/ Specialist (a doctor with more expertise in specific areas of health)",
+                          "text": "Espesial a Mangipaay ti Panagtaripato/ Espesyalista",
                           "language": "ILO"
                         }
                       ],
@@ -30991,7 +30991,7 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Had any minor procedure/surgery done (minor surgery involves minimally invasive, low-risk procedures often performed on an outpatient basis)",
+                          "text": "Sumailalim sa maliit na procedure o operasyon",
                           "language": "FIL"
                         },
                         {
@@ -41701,31 +41701,31 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Medical consultation for urgent or minor conditions (e.g., fevers, flu-like symptoms, Urinary tract infections (UTIs), sprains, small burns, etc.)",
+                          "text": "Medikal na konsultasyon para sa agarang o maliit na kondisyon",
                           "language": "FIL"
                         },
                         {
-                          "text": "Medical consultation for urgent or minor conditions (e.g., fevers, flu-like symptoms, Urinary tract infections (UTIs), sprains, small burns, etc.)",
+                          "text": "Medical consultation para sa urgent o minor conditions",
                           "language": "BCL"
                         },
                         {
-                          "text": "Medical consultation for urgent or minor conditions (e.g., fevers, flu-like symptoms, Urinary tract infections (UTIs), sprains, small burns, etc.)",
+                          "text": "Medical consultation para sa urgent o minor nga kondisyon",
                           "language": "BIS"
                         },
                         {
-                          "text": "Medical consultation for urgent or minor conditions (e.g., fevers, flu-like symptoms, Urinary tract infections (UTIs), sprains, small burns, etc.)",
+                          "text": "Konsultasyon sa doktor para sa dinalian o gagmay nga kondisyon",
                           "language": "CEB"
                         },
                         {
-                          "text": "Medical consultation for urgent or minor conditions (e.g., fevers, flu-like symptoms, Urinary tract infections (UTIs), sprains, small burns, etc.)",
+                          "text": "Para ha apurado o gudtiay nga mga kahimtang",
                           "language": "WAR"
                         },
                         {
-                          "text": "Medical consultation for urgent or minor conditions (e.g., fevers, flu-like symptoms, Urinary tract infections (UTIs), sprains, small burns, etc.)",
+                          "text": "Konsultasyon medikal para sa madali ukon gamay nga kondisyon",
                           "language": "HIL"
                         },
                         {
-                          "text": "Medical consultation for urgent or minor conditions (e.g., fevers, flu-like symptoms, Urinary tract infections (UTIs), sprains, small burns, etc.)",
+                          "text": "Medikal a konsultasion para kadagiti naganat wenno babassit a kasasaad",
                           "language": "ILO"
                         }
                       ],
@@ -41836,7 +41836,7 @@
                           "language": "BIS"
                         },
                         {
-                          "text": "Minor procedures or treatments (e.g., wound suturing, biopsies, and other conditions requiring minimal anesthesia and a short recovery time)",
+                          "text": "Gagmay nga mga procedure o pagtambal",
                           "language": "CEB"
                         },
                         {
@@ -41844,11 +41844,11 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Minor procedures or treatments (e.g., wound suturing, biopsies, and other conditions requiring minimal anesthesia and a short recovery time)",
+                          "text": "Gamay nga mga prosedura ukon pagtambal",
                           "language": "HIL"
                         },
                         {
-                          "text": "Minor procedures or treatments (e.g., wound suturing, biopsies, and other conditions requiring minimal anesthesia and a short recovery time)",
+                          "text": "Dagiti babassit a pamay-an wenno panangagas",
                           "language": "ILO"
                         }
                       ],
@@ -65963,7 +65963,7 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Alternative care (Healthcare apart from medical doctors or the formal health care system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)",
+                          "text": "Alternative Care (Pangangalaga sa kalusugan bukod sa mga doktor o pormal na sistema ng pangangalagang pangkalusugan; tulad ng reflexology, acupuncture, masahe, halamang gamot, atbp.)",
                           "language": "FIL"
                         },
                         {

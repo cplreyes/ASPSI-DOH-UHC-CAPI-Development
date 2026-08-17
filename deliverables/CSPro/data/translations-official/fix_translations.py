@@ -123,6 +123,23 @@ def directive_at(s):
     return sv.directive_at(s)
 
 
+def head(s):
+    """The option text before its first bracketed qualifier.
+
+    The dictionary and the cleared PDF write the same editorial note differently:
+
+        .dcf   "Emergency cart contents (hospitals only)"
+        PDF    "Emergency cart contents <This is a licensing requirement only for
+                hospitals. Not applicable to primary care facilities>"
+
+    loose() compares the whole string, so those never match and the option is filed as
+    "not present in cleared set" even though its translation was extracted correctly.
+    Comparing the heads joins them - guarded, at the call site, by a uniqueness test on
+    BOTH sides so a head shared by two options can never bind the wrong translation.
+    """
+    return loose(re.split(r"[<(\[]", s or "", 1)[0])
+
+
 def cut(text):
     """-> the stem portion of a cleared string, verbatim, or '' if nothing survives."""
     s = clean(text).lstrip("| ").strip()
@@ -285,6 +302,23 @@ def plan(inst, loc):
             if loose(eo) == loose(en):
                 hit = cut(bo) or clean(bo)
                 break
+        if hit is None:
+            # Fall back to the option head, for the note-rendering mismatch described on
+            # head(). Only when the head identifies exactly ONE option on each side - in
+            # the cleared set AND among this question's dictionary options - so an
+            # ambiguous head is skipped rather than guessed.
+            he = head(en)
+            if he:
+                cands = [(eo, bo) for eo, bo in zip(eo_list, bo_list) if head(eo) == he]
+                # Count DISTINCT dictionary labels, not rows. A question can carry the
+                # same option in more than one value set (Q121 lists each licensing row
+                # twice); identical labels are not an ambiguity, they take the same
+                # translation. Counting rows made the guard reject exactly the case it
+                # was written to allow.
+                same_dcf = {loose(x[2]) for x in dcf_opts
+                            if x[0] == q and head(x[2]) == he}
+                if len(cands) == 1 and len(same_dcf) == 1:
+                    hit = cut(cands[0][1]) or clean(cands[0][1])
         if hit is None:
             opt_skips.append((q, en, "not present in cleared set"))
         elif not hit or loose(hit) == loose(en):

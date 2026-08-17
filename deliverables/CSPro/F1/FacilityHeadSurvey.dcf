@@ -8496,11 +8496,11 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Conducting and coordinating health screening and promotion activities (e.g., collaborating and implementing with other units and program coordinators to promote healthy lifestyles and preventive care)",
+                          "text": "Pagsasagawa at pag-uugnay ng mga aktibidad sa pagsusuri at promosyon ng kalusugan (hal. pakikipagtulungan at pagpapatupad kasama ang ibang yunit at mga tagapag-ugnay ng programa upang isulong ang malusog na pamumuhay at pang-iwas na pangangalaga)",
                           "language": "FIL"
                         },
                         {
-                          "text": "Conducting and coordinating health screening and promotion activities (e.g., collaborating and implementing with other units and program coordinators to promote healthy lifestyles and preventive care)",
+                          "text": "Pag-gibo asin pag-koordinar kan health screening asin pagpromote kan iba ibang mga aktibidades",
                           "language": "BCL"
                         },
                         {
@@ -8512,7 +8512,7 @@
                           "language": "CEB"
                         },
                         {
-                          "text": "Conducting and coordinating health screening and promotion activities (e.g., collaborating and implementing with other units and program coordinators to promote healthy lifestyles and preventive care)",
+                          "text": "Pagdumara ngan pagkoordinar han mga health screening ngan health promotion nga mga buruhaton (pananglitan, pakig-usa ngan pagpatuman kaupod an iba nga mga yunit ngan mga koordinator han programa ha pagpadukwag han mahimsog nga mga estilo han pagkinabuhi ngan pag-ataman ha pagpugong)",
                           "language": "WAR"
                         },
                         {
@@ -8578,23 +8578,23 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Resource mobilization and fundraising (e.g., securing funding, grants)",
+                          "text": "Pagpapakilos ng rekurso at pangangalap ng pondo (hal. pagkuha ng pondo, mga grant)",
                           "language": "FIL"
                         },
                         {
-                          "text": "Resource mobilization and fundraising (e.g., securing funding, grants)",
+                          "text": "Paglikom nin mga resources asin fundraising",
                           "language": "BCL"
                         },
                         {
-                          "text": "Resource mobilization and fundraising (e.g., securing funding, grants)",
+                          "text": "Pagpalihok sa mga kapanguhaan ug pangangalap og pondo (pananglitan: pag-secure og pondo, grants)",
                           "language": "BIS"
                         },
                         {
-                          "text": "Resource mobilization and fundraising (e.g., securing funding, grants)",
+                          "text": "Pagpalihok sa mga resources ug pagtigum ug pundo (e.g.Pagkuha ug pundo, tabang pinansyal)",
                           "language": "CEB"
                         },
                         {
-                          "text": "Resource mobilization and fundraising (e.g., securing funding, grants)",
+                          "text": "Pagtirok hin mga pinagkukuhaan ngan pagtirok hin pondo (pananglitan, pagkuha hin pondo, mga grant)",
                           "language": "WAR"
                         },
                         {
@@ -39543,19 +39543,19 @@
                           "language": "EN"
                         },
                         {
-                          "text": "National laws and DOH issuances implemented in hospitals and other health facilities (hospitals only)",
+                          "text": "Mga batas na pambansa at mga kautusan ng DOH na ipinatutupad sa mga ospital at iba pang kalusugang pasilidad",
                           "language": "FIL"
                         },
                         {
-                          "text": "National laws and DOH issuances implemented in hospitals and other health facilities (hospitals only)",
+                          "text": "National laws asin pagimplementar kan iba pang DOH issuances sa mga hospitals asin iba pang health facilities",
                           "language": "BCL"
                         },
                         {
-                          "text": "National laws and DOH issuances implemented in hospitals and other health facilities (hospitals only)",
+                          "text": "Mga nasudnong/naimplementar nga mga balaod ug mga ipagawas sa DOH nga gipatuman sa mga ospital ug uban pang pasilidad sa panglawas",
                           "language": "BIS"
                         },
                         {
-                          "text": "National laws and DOH issuances implemented in hospitals and other health facilities (hospitals only)",
+                          "text": "Mga balaod sa nasud ug mando sa DOH nga gisunod sa mga ospital ug ubang health facility",
                           "language": "CEB"
                         },
                         {
@@ -39563,7 +39563,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "National laws and DOH issuances implemented in hospitals and other health facilities (hospitals only)",
+                          "text": "Nasyonal nga mga layi kag mga issuances sang DOH nga ginapatuman sa mga ospital kag iban pa nga pasilidad sang ikaayong lawas",
                           "language": "HIL"
                         },
                         {
@@ -39584,19 +39584,19 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Emergency cart contents (hospitals only)",
+                          "text": "Nilalaman ng emergency cart",
                           "language": "FIL"
                         },
                         {
-                          "text": "Emergency cart contents (hospitals only)",
+                          "text": "Mga laog kan emergency cart",
                           "language": "BCL"
                         },
                         {
-                          "text": "Emergency cart contents (hospitals only)",
+                          "text": "Sulod sa emergency cart",
                           "language": "BIS"
                         },
                         {
-                          "text": "Emergency cart contents (hospitals only)",
+                          "text": "Sulod sa emergency cart",
                           "language": "CEB"
                         },
                         {
@@ -39604,7 +39604,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Emergency cart contents (hospitals only)",
+                          "text": "Kaundan sang emergency cart",
                           "language": "HIL"
                         },
                         {
@@ -39625,19 +39625,19 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Add-on services (hospitals only)",
+                          "text": "mga add-on na serbisyo",
                           "language": "FIL"
                         },
                         {
-                          "text": "Add-on services (hospitals only)",
+                          "text": "Dagdag na serbisyo",
                           "language": "BCL"
                         },
                         {
-                          "text": "Add-on services (hospitals only)",
+                          "text": "Mga dugang nga serbisyo",
                           "language": "BIS"
                         },
                         {
-                          "text": "Add-on services (hospitals only)",
+                          "text": "Dugang nga mga serbisyo",
                           "language": "CEB"
                         },
                         {
@@ -39645,7 +39645,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Add-on services (hospitals only)",
+                          "text": "Dugang nga serbisyo",
                           "language": "HIL"
                         },
                         {
@@ -39666,19 +39666,19 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Public access to price information (primary care facilities only)",
+                          "text": "Pagbibigay\u2011access ng publiko sa impormasyon ng presyo",
                           "language": "FIL"
                         },
                         {
-                          "text": "Public access to price information (primary care facilities only)",
+                          "text": "Akses sa public price information",
                           "language": "BCL"
                         },
                         {
-                          "text": "Public access to price information (primary care facilities only)",
+                          "text": "Publikong access sa impormasyon sa presyo",
                           "language": "BIS"
                         },
                         {
-                          "text": "Public access to price information (primary care facilities only)",
+                          "text": "Impormasyon sa presyo bukas sa publiko",
                           "language": "CEB"
                         },
                         {
@@ -39686,7 +39686,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Public access to price information (primary care facilities only)",
+                          "text": "Publiko nga akses sa impormasyon sang presyo",
                           "language": "HIL"
                         },
                         {
@@ -40156,19 +40156,19 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Public access to price information (primary care facilities only)",
+                          "text": "Pagbibigay\u2011access ng publiko sa impormasyon ng presyo",
                           "language": "FIL"
                         },
                         {
-                          "text": "Public access to price information (primary care facilities only)",
+                          "text": "Akses sa public price information",
                           "language": "BCL"
                         },
                         {
-                          "text": "Public access to price information (primary care facilities only)",
+                          "text": "Publikong access sa impormasyon sa presyo",
                           "language": "BIS"
                         },
                         {
-                          "text": "Public access to price information (primary care facilities only)",
+                          "text": "Impormasyon sa presyo bukas sa publiko",
                           "language": "CEB"
                         },
                         {
@@ -40176,7 +40176,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Public access to price information (primary care facilities only)",
+                          "text": "Publiko nga akses sa impormasyon sang presyo",
                           "language": "HIL"
                         },
                         {
@@ -40646,19 +40646,19 @@
                           "language": "EN"
                         },
                         {
-                          "text": "National laws and DOH issuances implemented in hospitals and other health facilities (hospitals only)",
+                          "text": "Mga batas na pambansa at mga kautusan ng DOH na ipinatutupad sa mga ospital at iba pang kalusugang pasilidad",
                           "language": "FIL"
                         },
                         {
-                          "text": "National laws and DOH issuances implemented in hospitals and other health facilities (hospitals only)",
+                          "text": "National laws asin pagimplementar kan iba pang DOH issuances sa mga hospitals asin iba pang health facilities",
                           "language": "BCL"
                         },
                         {
-                          "text": "National laws and DOH issuances implemented in hospitals and other health facilities (hospitals only)",
+                          "text": "Mga nasudnong/naimplementar nga mga balaod ug mga ipagawas sa DOH nga gipatuman sa mga ospital ug uban pang pasilidad sa panglawas",
                           "language": "BIS"
                         },
                         {
-                          "text": "National laws and DOH issuances implemented in hospitals and other health facilities (hospitals only)",
+                          "text": "Mga balaod sa nasud ug mando sa DOH nga gisunod sa mga ospital ug ubang health facility",
                           "language": "CEB"
                         },
                         {
@@ -40666,7 +40666,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "National laws and DOH issuances implemented in hospitals and other health facilities (hospitals only)",
+                          "text": "Nasyonal nga mga layi kag mga issuances sang DOH nga ginapatuman sa mga ospital kag iban pa nga pasilidad sang ikaayong lawas",
                           "language": "HIL"
                         },
                         {
@@ -40687,19 +40687,19 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Emergency cart contents (hospitals only)",
+                          "text": "Nilalaman ng emergency cart",
                           "language": "FIL"
                         },
                         {
-                          "text": "Emergency cart contents (hospitals only)",
+                          "text": "Mga laog kan emergency cart",
                           "language": "BCL"
                         },
                         {
-                          "text": "Emergency cart contents (hospitals only)",
+                          "text": "Sulod sa emergency cart",
                           "language": "BIS"
                         },
                         {
-                          "text": "Emergency cart contents (hospitals only)",
+                          "text": "Sulod sa emergency cart",
                           "language": "CEB"
                         },
                         {
@@ -40707,7 +40707,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Emergency cart contents (hospitals only)",
+                          "text": "Kaundan sang emergency cart",
                           "language": "HIL"
                         },
                         {
@@ -40728,19 +40728,19 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Add-on services (hospitals only)",
+                          "text": "mga add-on na serbisyo",
                           "language": "FIL"
                         },
                         {
-                          "text": "Add-on services (hospitals only)",
+                          "text": "Dagdag na serbisyo",
                           "language": "BCL"
                         },
                         {
-                          "text": "Add-on services (hospitals only)",
+                          "text": "Mga dugang nga serbisyo",
                           "language": "BIS"
                         },
                         {
-                          "text": "Add-on services (hospitals only)",
+                          "text": "Dugang nga mga serbisyo",
                           "language": "CEB"
                         },
                         {
@@ -40748,7 +40748,7 @@
                           "language": "WAR"
                         },
                         {
-                          "text": "Add-on services (hospitals only)",
+                          "text": "Dugang nga serbisyo",
                           "language": "HIL"
                         },
                         {
@@ -47915,7 +47915,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Insufficient other sources (e.g. MAIFIP, DSWD, PCSO) (late payments applicable for MAIFIP)",
+                          "text": "saan nga umdas dagiti sabali a taudan (dagiti naladaw a panagbayad ket agaplikar para iti MAIFIP)",
                           "language": "ILO"
                         }
                       ],
@@ -48688,7 +48688,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Insufficient other sources (e.g. MAIFIP, DSWD, PCSO) (late payments applicable for MAIFIP)",
+                          "text": "saan nga umdas dagiti sabali a taudan (dagiti naladaw a panagbayad ket agaplikar para iti MAIFIP)",
                           "language": "ILO"
                         }
                       ],
@@ -53802,7 +53802,7 @@
                           "language": "HIL"
                         },
                         {
-                          "text": "Dissatisfied: Moderate improvements needed, a number of patients are referred to the wrong specialists or do not receive appropriate follow-up care",
+                          "text": "Saan a mapnek: Kasapulan ti kalkalainganna a panagrang-ay, sumagmamano a pasiente ti maiturong kadagiti di umiso nga espesialista wenno saan nga umawat iti maitutop a panangsurot a panangaywan",
                           "language": "ILO"
                         }
                       ],

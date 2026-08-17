@@ -1139,5 +1139,8 @@
  "118. What is your understanding about NBB?": "Ano ang iyong pagkaunawa tungkol sa NBB?",
  "163. What type of care was the referral for?": "Anong uri ng pangangalaga ang dahilan ng inirerekomenda sa iyo?",
  "171. Why are you NOT planning to visit?": "Bakit HINDI ka nagbabalak na bumisita?",
- "In kind": "Hindi pera ang ibinayad"
+ "In kind": "Hindi pera ang ibinayad",
+ "Had any minor procedure/surgery done (minor surgery involves minimally invasive, low-risk procedures often performed on an outpatient basis)": "Sumailalim sa maliit na procedure o operasyon",
+ "Medical consultation for urgent or minor conditions (e.g., fevers, flu-like symptoms, Urinary tract infections (UTIs), sprains, small burns, etc.)": "Medikal na konsultasyon para sa agarang o maliit na kondisyon",
+ "Alternative care (Healthcare apart from medical doctors or the formal health care system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)": "Alternative Care (Pangangalaga sa kalusugan bukod sa mga doktor o pormal na sistema ng pangangalagang pangkalusugan; tulad ng reflexology, acupuncture, masahe, halamang gamot, atbp.)"
 }
