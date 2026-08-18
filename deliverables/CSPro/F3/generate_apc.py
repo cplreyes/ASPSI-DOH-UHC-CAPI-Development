@@ -168,14 +168,15 @@ SOFT_CROSS = [
      "  if (Q16_EMPLOYMENT = 4 or Q16_EMPLOYMENT = 5) and Q17_INCOME_SOURCE >= 1 and Q17_INCOME_SOURCE <= 5 then\n"
      "    errmsg(\"Q16 = unemployed but Q17 reports a paid-work income source — confirm.\");\n  endif;"),
     ("Q29_SEC_CLASS",
-     # #631: re-mapped to the new 11-band income value set, preserving the original peso
-     # intent (low ~under 100k; high ~100k+). SOFT confirm only. ASPSI may recalibrate the
-     # socio-economic-class income thresholds against the updated brackets.
-     # #398: 'Don't know' income (99) is out-of-range — bound the high-bracket test to the
-     # 11 real bands so a DK answer doesn't false-trip the Class D/E "high bracket" warn.
+     # R16 (Aug-17 rewrite, 2026-08-18): Q18's income-bracket value set moved from the
+     # 11-band 50k scheme to the paper's 7 PSA income-class bands (DK=8, RF=9 — was
+     # 99/98). Re-bound to the new 7 real bands, same structural split as before
+     # (bottom 2 bands = "lowest"; remaining bands = "high") — SOFT confirm only. ASPSI
+     # may recalibrate the socio-economic-class income thresholds against the new
+     # brackets. DK(8)/RF(9) stay out-of-range so neither false-trips these bound tests.
      "  if Q29_SEC_CLASS = 1 and Q18_INCOME_BRACKET >= 1 and Q18_INCOME_BRACKET <= 2 then\n"
      "    errmsg(\"Q29 = socio-economic Class A/B but income is in the lowest bracket — confirm.\");\n  endif;\n"
-     "  if Q29_SEC_CLASS = 3 and Q18_INCOME_BRACKET >= 3 and Q18_INCOME_BRACKET <= 11 then\n"
+     "  if Q29_SEC_CLASS = 3 and Q18_INCOME_BRACKET >= 3 and Q18_INCOME_BRACKET <= 7 then\n"
      "    errmsg(\"Q29 = socio-economic Class D/E but income is in a high bracket — confirm.\");\n  endif;"),
     # #782 (tester request, 2026-06-27): the Q97 and Q115 "final amount vs sum of OOP lines
     # ±10%" SOFT consistency warnings are REMOVED per the testers ("lift computation logic").
@@ -1377,26 +1378,26 @@ postproc
 
 PROC Q18_INCOME_BRACKET
 postproc
-  { #398: 'Don't know' (99) — respondent can't even estimate household income.
-    No bracket amount is required; bypass the bracket<->amount reconciliation. }
-  if Q18_INCOME_BRACKET = 99 then
+  { R16 (Aug-17 rewrite, 2026-08-18, reverses R4/#631): paper's 7 PSA income-class
+    bands replace the deployed 11-band 50k scheme; DK is now code 8 (was 99), RF is
+    code 9 (was 98). Boundaries verbatim from normalized/F3-paper.csv qnum=18. }
+  { DK (8) — respondent can't even estimate household income. No bracket amount is
+    required; bypass the bracket<->amount reconciliation. }
+  if Q18_INCOME_BRACKET = 8 then
     exit;
   endif;
-  { bracket must contain Q18_INCOME_AMOUNT — #631: 11 contiguous 50k bands }
+  { bracket must contain Q18_INCOME_AMOUNT — R16: 7 PSA bands, boundaries verbatim
+    from the Aug-17 paper (12,030 / 24,060 / 48,120 / 84,210 / 144,360 / 240,600) }
   numeric a = Q18_INCOME_AMOUNT;
   numeric ok = 0;
   if a = -98 or a = -99 then ok = 1; endif;   { #761: -98 don't-know / -99 refused -> no bracket cross-check }
-  if Q18_INCOME_BRACKET = 1  and a < 50000 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 2  and a >= 50000  and a <= 99999  then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 3  and a >= 100000 and a <= 149999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 4  and a >= 150000 and a <= 199999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 5  and a >= 200000 and a <= 249999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 6  and a >= 250000 and a <= 299999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 7  and a >= 300000 and a <= 349999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 8  and a >= 350000 and a <= 399999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 9  and a >= 400000 and a <= 449999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 10 and a >= 450000 and a <= 499999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 11 and a >= 500000 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 1 and a < 12030 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 2 and a >= 12030  and a <= 24060  then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 3 and a >= 24061  and a <= 48120  then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 4 and a >= 48121  and a <= 84210  then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 5 and a >= 84211  and a <= 144360 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 6 and a >= 144361 and a <= 240600 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 7 and a > 240600 then ok = 1; endif;
   if ok = 0 then
     errmsg("Income bracket does not match the reported amount (%d PHP/month). Reconcile.", a);
     reenter;

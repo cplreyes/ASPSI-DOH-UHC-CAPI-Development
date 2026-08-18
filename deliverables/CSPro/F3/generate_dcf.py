@@ -366,28 +366,24 @@ def build_section_b():
         # codes unchanged (NA=98, DK=99) so no data / consistency-check impact.
         ("Not Applicable",                                     "98"),
     ]
-    # #631 (ASPSI updated questionnaire, 2026-06-17): income categories revised to
-    # 11 contiguous 50k bands (was 6 uneven bands). 2-digit codes (field length 2).
-    # NOTE: the tester's printed "150,000 - 199,000" is a transcription typo —
-    # corrected to 199,999 to keep the bands contiguous and non-overlapping with the
-    # 200,000 band (every other band ends in 9,999). Flagged for ASPSI confirmation.
+    # R16 (Aug-17 rewrite, 2026-08-18) — REVERSES R4/#631: the Aug-17 paper prints 7
+    # PSA income-class bands, NOT the deployed 11 round-50k bands. Paper wins; a
+    # declared data-shape break (F3 -> 4.0.0). Labels/codes VERBATIM from
+    # normalized/F3-paper.csv qnum=18 (WT aug17-tools extract) — 1-digit codes, no
+    # zero-fill. DK is now code 8 (was 99); Refuse is now code 9 (was 98). Both stay
+    # out-of-range so the bracket<->amount + SEC cross-checks bypass them (PROC
+    # Q18_INCOME_BRACKET / SOFT_CROSS Q29_SEC_CLASS in generate_apc.py, both updated
+    # to match). See aug17-approved-divergences.md (F3 | Q18).
     Q18_BRACKET = [
-        ("Under 50,000",      "01"),
-        ("50,000 - 99,999",   "02"),
-        ("100,000 - 149,999", "03"),
-        ("150,000 - 199,999", "04"),
-        ("200,000 - 249,999", "05"),
-        ("250,000 - 299,999", "06"),
-        ("300,000 - 349,999", "07"),
-        ("350,000 - 399,999", "08"),
-        ("400,000 - 449,999", "09"),
-        ("450,000 - 499,999", "10"),
-        ("500,000 and above", "11"),
-        # #1048 (pretest 2026-08-04): paper carries both missing-value options with the
-        # do-not-read tag. DK keeps its deployed code 99 (#398); Refuse is NEW on 98 —
-        # both out-of-range so the bracket<->amount + SEC cross-checks bypass them.
-        ("I don't know [DO NOT READ OUT LOUD]",     "99"),
-        ("Refuse to answer [DO NOT READ OUT LOUD]", "98"),
+        ("< PhP12,030",                             "1"),
+        ("PhP12,030 to PhP24,060",                  "2"),
+        ("PhP24,061 to PhP48,120",                  "3"),
+        ("PhP48,121 to PhP84,210",                  "4"),
+        ("PhP84,211 to PhP144,360",                 "5"),
+        ("PhP144,361 to PhP240,600",                "6"),
+        (">PhP240,600",                              "7"),
+        ("I don't know [DO NOT READ OUT LOUD]",     "8"),
+        ("Refuse to answer [DO NOT READ OUT LOUD]", "9"),
     ]
     Q23_WATER = [
         ("Faucet inside the house", "1"),
@@ -488,7 +484,7 @@ def build_section_b():
                 length=8),
         select_one("Q18_INCOME_BRACKET",
                    "18. Income category corresponding to the respondent's approximate household income",
-                   Q18_BRACKET, length=2),   # #631: 11 brackets -> 2-digit codes
+                   Q18_BRACKET, length=1),   # R16: 9 codes (7 real + DK/RF), 1-digit no zero-fill
         numeric("Q19_HH_SIZE",
                 "19. How many total individuals (including children) live in the patient's house now?",
                 length=2),
