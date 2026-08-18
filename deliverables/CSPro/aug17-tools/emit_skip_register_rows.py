@@ -155,6 +155,18 @@ def already_registered_qnums(register_text: str, inst: str) -> set:
     return out
 
 
+def _sanitize_cell(text: str) -> str:
+    """aug17_diff.parse_register_rows splits a row on every raw "|" with no
+    escape-awareness (`cells = line.split("|")`, then requires exactly 6) --
+    a backslash-escaped `\\|` is NOT respected and silently corrupts the row
+    into a >6-cell line that the parser then discards outright (a real
+    finding, e.g. Q89's `isYes(v['Q87']) || isYes(v['Q88'])`, would go
+    unregistered without any error). Replace a JS `||` (OR) with the word
+    "OR", and any other stray literal pipe with a Unicode broken-bar
+    look-alike, rather than relying on an escape the parser doesn't honor."""
+    return text.replace("||", " OR ").replace("|", "¦")
+
+
 def format_register_row(inst: str, qnum: str, finding: dict, matrix_row: dict, today: str) -> str:
     paper = finding["paper"] or "(no printed skip note -- this item is the destination of an earlier item's printed goto, not its source)"
     build = finding["build"] or f"(no visible-if declared -- {finding['item']} is the SOURCE of a forward routing decision; the destination item(s) carry the visible-if instead)"
@@ -164,9 +176,9 @@ def format_register_row(inst: str, qnum: str, finding: dict, matrix_row: dict, t
         f"covering test(s) {matrix_row['test']}. Emitted by emit_skip_register_rows.py from a VERIFIED "
         f"(Status=PASS) matrix row, per Task 3.4 R15. {today}."
     )
-    paper = paper.replace("|", "\\|")
-    build = build.replace("|", "\\|")
-    rationale = rationale.replace("|", "\\|")
+    paper = _sanitize_cell(paper)
+    build = _sanitize_cell(build)
+    rationale = _sanitize_cell(rationale)
     return f"| {inst} | Q{qnum} | capi-adaptation | {paper} | {build} | {rationale} |"
 
 

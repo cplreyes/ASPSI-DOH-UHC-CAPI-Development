@@ -106,7 +106,7 @@ SECTION_HASH_RE = re.compile(r"^#\s*\*\*\s*(.*)$")
 
 SKIP_RE = re.compile(r"<\s*(proceed to|skip to|end of survey)([^>]*)>", re.IGNORECASE)
 NOTE_RE = re.compile(r"note to enumerator|enumerator note|note for capi version", re.IGNORECASE)
-MULTI_SELECT_RE = re.compile(r"select all that apply", re.IGNORECASE)
+MULTI_SELECT_RE = re.compile(r"(select|check) all that apply", re.IGNORECASE)
 SINGLE_SELECT_RE = re.compile(r"select one answer only", re.IGNORECASE)
 
 DIRECTIVE_BANNER_RE = re.compile(

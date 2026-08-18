@@ -738,6 +738,26 @@ def test_wrapped_row_merge_recovers_split_option_label():
     assert any(o["label"] == "Patient invented and continuation label" for o in q62.options)
 
 
+def test_multi_select_recognizes_check_all_variant():
+    # F2 Q111 prints "Check all that apply" (not "Select all that apply");
+    # MULTI_SELECT_RE only matched the "select" phrasing, so the paper side
+    # mis-derived qtype=single/cardinality=single against a build that
+    # correctly implements multi -- a genuine cardinality misclassification,
+    # not a real content divergence.
+    md = (
+        "+----+\n"
+        "| 111. **Invented multi item (fixture)?** *Check all that apply* |\n"
+        "+----+\n"
+        "|    | ☐ Invented option (fixture) |\n"
+        "+----+\n"
+    )
+    rows = parse_extract(md, "F9")
+    items = [r for r in rows if r.kind == "item"]
+    q111 = next(r for r in items if r.qnum == "111")
+    assert q111.qtype == "multi"
+    assert q111.cardinality == "multi"
+
+
 def test_wrapped_row_merge_leaves_normal_divided_rows_alone():
     # Sanity guard: rows properly separated by a "+---+" divider (the
     # overwhelming common case) must be completely unaffected by the merge
@@ -868,6 +888,29 @@ def test_format_register_row_cites_the_matrix_row():
     assert line.startswith("| F9 | Q7 | capi-adaptation |")
     assert "Q7 visibility (fixture)" in line
     assert line.count("|") == 7  # 6 columns -> 7 pipes
+
+
+def test_format_register_row_escapes_js_or_operator_safely():
+    # Real-world catch: a build predicate containing "||" (e.g.
+    # "isYes(v['Q87']) || isYes(v['Q88'])") would otherwise produce a
+    # register row with MORE than 6 pipe-delimited cells -- aug17_diff's
+    # parse_register_rows has no escape-awareness and silently discards any
+    # row that doesn't split to exactly 6 cells, so the row would vanish
+    # with no error. Must sanitize, not backslash-escape.
+    finding = {"qnum": "89", "paper": "", "build": "visible-if: isYes(v['Q87']) || isYes(v['Q88']) (fixture)", "item": "Q89"}
+    matrix_row = {"rule": "Q89 gate (fixture)", "expected": "Shown when Q87 or Q88 = Yes (fixture)",
+                  "test": "`shows Q89 (fixture)`", "status": "PASS", "qnums": {"87", "88", "89"}}
+    line = format_register_row("F9", "89", finding, matrix_row, "2026-08-18")
+    from aug17_diff import parse_register_rows
+    reg_text = (
+        "# fixture register\n\n"
+        "| inst | qnum/item | class | paper says | build does | rationale / ticket |\n"
+        "|---|---|---|---|---|---|\n"
+        + line + "\n"
+    )
+    parsed = parse_register_rows(reg_text)
+    assert len(parsed) == 1
+    assert parsed[0].qnum_item == "Q89"
 
 
 def test_format_register_row_notes_missing_skip_direction():
