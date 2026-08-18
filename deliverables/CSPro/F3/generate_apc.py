@@ -1444,7 +1444,18 @@ postproc
 # EXTRA_PROCS above.
 SKIP_RULES = [
     # Section A — Introduction & Consent
-    ("Q1_IS_PATIENT",        "Q1_IS_PATIENT = 1",            "Q4_NAME"),                 # respondent IS the patient -> skip Q2,Q3
+    # aug17 Task 1.5 fix: retargeted Q4_NAME -> PATIENT_TYPE. FORM_PLAN puts
+    # the "Patient Type" form (FIELD_CONTROL: PATIENT_TYPE/BREAKOFF) AFTER
+    # A_INFORMED_CONSENT and BEFORE B_PATIENT_PROFILE (Q4) -- the old Q4_NAME
+    # target leapfrogged over that whole form (and the geo/date forms after
+    # it), so PATIENT_TYPE was NEVER asked whenever Q1=Yes (the common case:
+    # respondent IS the patient) -- leaving PATIENT_TYPE unset broke the G/H
+    # (outpatient/inpatient) routing for every such case. Retargeting to
+    # PATIENT_TYPE still skips Q2/Q3 (the companion-only items) while letting
+    # normal form flow carry through FIELD_CONTROL -> geo/dates -> Q4, exactly
+    # as the Q1=No path already does. Found + fixed during Step 3 scenario
+    # testing (task-1.5-report.md).
+    ("Q1_IS_PATIENT",        "Q1_IS_PATIENT = 1",            "PATIENT_TYPE"),            # respondent IS the patient -> skip Q2,Q3 only (was Q4_NAME -- see comment above)
     # Section B — Patient Profile
     ("Q8_LGBTQIA",           "Q8_LGBTQIA <> 1",              "Q10_CIVIL_STATUS"),        # #392: Q9 (LGBTQIA+ group) only when Q8=Yes
     ("Q11_PWD",              "Q11_PWD = 2",                  "Q15_EDUCATION"),

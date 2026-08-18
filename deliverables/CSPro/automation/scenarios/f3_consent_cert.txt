@@ -1,0 +1,9 @@
+# aug17 Task 1.5: capture the consent certificate contact screen (icf_content
+# SCREENS["F3"] screen 2 -- the reviewer-caught #1.1 fix, SJREB/ASPSI contact
+# block). Reach ICF_PART2 and screenshot before answering (full text visible).
+rmdata ../F3/desktest.csdb
+launch ../F3/PatientSurvey_desktest.pff
+casekey 04 03 403 02 001
+shot icf_part1_full
+type 1
+shot icf_part2_full

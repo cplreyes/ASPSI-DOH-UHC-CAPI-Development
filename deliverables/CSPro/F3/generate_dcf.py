@@ -450,7 +450,12 @@ def build_section_b():
                    "8. Is the patient part of the LGBTQIA+ community? (e.g., gay, lesbian, bisexual, etc.). It is fine if not comfortable answering.",
                    Q8_LGBTQIA, length=1),
         select_one("Q9_GROUP",
-                   "9. Which group does the patient identify with?", Q9_GROUP, length=1),
+                   # aug17 Task 1.5: paper (F3-extract.md L261) prints "It is fine if not
+                   # comfortable answering." on Q9's own stem, same as Q8's caveat -- the
+                   # build had dropped it while Q9's own INSTRUCTIONS[9]=_READ_ONE note
+                   # still fires separately. Restored verbatim from paper.
+                   "9. Which group does the patient identify with? It is fine if not "
+                   "comfortable answering.", Q9_GROUP, length=1),
         alpha("Q9_GROUP_OTHER_TXT",
               "9. Group identity — Other (specify) text", length=120),
         select_one("Q10_CIVIL_STATUS",

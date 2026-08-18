@@ -1,4 +1,4 @@
----
+OK: banner ---
 type: spec
 project: ASPSI-DOH-CAPI-CSPro-Development
 deliverable: F3 Patient Survey — CAPI logic spec
@@ -12,9 +12,9 @@ tags: [cspro, capi, skip-logic, validations, f3]
 
 # F3 Patient Survey — Skip Logic and Validations Spec
 
-> [!warning] SUPERSEDED — the generator is the source of truth (banner added 2026-06-27)
-> This spec (reviewed 2026-04-21) **trails the UAT-evolved generator.** For current behavior read the inline comments in `deliverables/CSPro/F3/generate_apc.py` / `generate_dcf.py` and the bound `.apc`. Do **not** "re-fix" code to match this doc — several departures are intentional UAT closures.
-> Known drift: **F3-QC-01** income table is stale (6 brackets) vs the shipped 11-band design (#631); **F3-QC-02** retired `CONSENT_GIVEN` terminator + `F3_FACILITY_ID` are correctly removed (→ BREAKOFF disposition / case-key + CSWeb sync); **F3-QC-03** Q169 code 3 now routes to **Q172** (not Q171, per #799).
+> [!warning] SUPERSEDED — the generator is the source of truth (banner added 2026-06-27; re-synced 2026-08-19 for the Aug-17 rewrite, Task 1.5)
+> This spec **trails the UAT-evolved generator.** For current behavior read the inline comments in `deliverables/CSPro/F3/generate_apc.py` / `generate_dcf.py` and the bound `.apc`. Do **not** "re-fix" code to match this doc — several departures are intentional UAT closures.
+> Known drift (2026-08-19): **F3-QC-01 RESOLVED** — Q18 income table now matches the Aug-17 paper's 7 real PSA income-class bands (R16, reverses R4/#631; DK=code 8, RF=code 9), replacing the stale 6/11-bracket schemes; **F3-QC-02** retired `CONSENT_GIVEN` terminator + `F3_FACILITY_ID` remain correctly removed; **F3-QC-03** Q169 code 3 routes to **Q172** (per #799); **F3-QC-04 NEW** — Sections G/H (outpatient/inpatient care) are now front-loaded immediately after Section D, ahead of Sections E/F (order:G,H / order:E,F, per the paper's own "Note for CAPI Version" blocks) — every Section D/E/F/G/H/I routing target in this doc below has been re-verified against that order; **F3-QC-05 NEW** — `Q1_IS_PATIENT`'s skip target was retargeted from `Q4_NAME` to `PATIENT_TYPE` (Task 1.5 defect-fix): the old target leapfrogged the entire "Patient Type" FIELD_CONTROL form (PATIENT_TYPE/BREAKOFF), leaving PATIENT_TYPE permanently unset — and therefore Section G/H routing permanently broken — for every case where the respondent is the patient (the common path). See `reports/F3-tier2-matrix.md` for the full verification (live scenario evidence + code citations).
 
 Source-of-truth for CSPro CAPI logic on `PatientSurvey.dcf`. Covers:
 
@@ -61,7 +61,7 @@ Format: **Trigger → Destination (skip range)**. Multiple "No / IDK / Not appli
 
 | Q | Condition | Skip to |
 |---|---|---|
-| Q1 IS_PATIENT | = Yes (1) | **Q4** (skip Q2, Q3; respondent IS the patient, no relationship or co-residence questions needed) |
+| Q1 IS_PATIENT | = Yes (1) | **PATIENT_TYPE** (skip Q2, Q3 only; respondent IS the patient, no relationship/co-residence questions needed — Task 1.5 fix: was `Q4_NAME`, which wrongly also skipped the "Patient Type" FIELD_CONTROL form; normal form flow then carries PATIENT_TYPE -> BREAKOFF -> geo/facility -> **Q4**, same tail as the Q1=No path) |
 | — | `FIELD_CONTROL.BREAKOFF = Respondent withdrew (2)` | **Terminate interview** with `ENUM_RESULT_FINAL_VISIT = 6 (Withdraw Participation/Consent)` + `CASE_DISPOSITION = 2` |
 
 ### Section B — Patient Profile
@@ -178,19 +178,22 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | `Q16_EMPLOYMENT` | Required, ∈ {1–9} | HARD |
 | `Q17_INCOME_SOURCE` | Required, ∈ {01–09, 99} | HARD |
 | `Q17` employment-consistency | If `Q16_EMPLOYMENT = 4 or 5` (unemployed) → `Q17_INCOME_SOURCE ∈ {06, 07, 08, 09, 99}` (no paid-work income source) | SOFT |
-| `Q18_INCOME_AMOUNT` | Numeric; `0 ≤ amt ≤ 99,999,999`; units = PHP/month | HARD |
-| `Q18_INCOME_BRACKET` | Required; bracket must contain `Q18_INCOME_AMOUNT` (see table) | HARD |
+| `Q18_INCOME_AMOUNT` | Numeric; PHP/month; -98 = don't know, -99 = refuse to answer (sentinel, bypasses the bracket check) | HARD |
+| `Q18_INCOME_BRACKET` | Required, ∈ {1–9}: 1–7 = the real PSA bands, 8 = "I don't know", 9 = "Refuse to answer"; bracket 1–7 must contain `Q18_INCOME_AMOUNT` (see table) | HARD |
 
-Bracket-vs-amount table (for Q18 consistency check):
+Bracket-vs-amount table (Aug-17 R16, the paper's real PSA income-class bands — replaces the pre-Aug-17 6/11-bracket schemes):
 
 | Bracket | Amount range (PHP/month) |
 |---|---|
-| 1 — Under 40,000     | `0 ≤ amt < 40,000` |
-| 2 — 40,000–59,999    | `40,000 ≤ amt ≤ 59,999` |
-| 3 — 60,000–99,999    | `60,000 ≤ amt ≤ 99,999` |
-| 4 — 100,000–249,999  | `100,000 ≤ amt ≤ 249,999` |
-| 5 — 250,000–499,999  | `250,000 ≤ amt ≤ 499,999` |
-| 6 — 500,000 and over | `amt ≥ 500,000` |
+| 1 — Under PhP12,030             | `0 ≤ amt < 12,030` |
+| 2 — PhP12,030 to PhP24,060      | `12,030 ≤ amt ≤ 24,060` |
+| 3 — PhP24,061 to PhP48,120      | `24,061 ≤ amt ≤ 48,120` |
+| 4 — PhP48,121 to PhP84,210      | `48,121 ≤ amt ≤ 84,210` |
+| 5 — PhP84,211 to PhP144,360     | `84,211 ≤ amt ≤ 144,360` |
+| 6 — PhP144,361 to PhP240,600    | `144,361 ≤ amt ≤ 240,600` |
+| 7 — Over PhP240,600             | `amt > 240,600` |
+| 8 — I don't know                | `Q18_INCOME_AMOUNT = -98` (sentinel, bypasses range check) |
+| 9 — Refuse to answer            | `Q18_INCOME_AMOUNT = -99` (sentinel, bypasses range check) |
 
 **Household composition**
 
@@ -273,9 +276,11 @@ Bracket-vs-amount table (for Q18 consistency check):
 | — | `Q38_PHILHEALTH_REG ≠ Yes` | **Q51** after Q45 (non-members skip Q46–Q50: benefits/packages/premiums) |
 | Q48 PREMIUM_PAY | = "No, I do not pay premiums" (3) | **Q51** (skip Q49, Q50) |
 | Q49 PREMIUM_DIFFICULT | = No | **Q51** (skip Q50) |
-| Q51 OTHER_INSURANCE | = No | **Q53** (skip Q52) |
+| Q51 OTHER_INSURANCE | = No | **Q88** (skip Q52 AND all of Section E/F, Q53-Q87 -- Task 1.5/order:G,H: Sections G/H are now front-loaded here, ahead of E/F; Q51=Yes falls through normally to Q52 then into Section G/H at the same point) |
 
 ### Section E — Primary Care Utilization
+
+> [!note] Task 1.5/order:E,F -- Section E/F now sits AFTER Sections G/H (front-loaded), not before. Entry point: from Section D via Q51/Q52 when the case falls through normally (see Section D table); or from the end of Section G (`Q99_BUCAS_HEARD`) or Section H (`Q105_REASON`) once the applicable outpatient/inpatient block completes -- see the G-H-I preamble below.
 
 | Q | Condition | Skip to |
 |---|---|---|
@@ -464,21 +469,22 @@ No explicit skip rules in Section F. Q84 `SERVICE_TYPE` is advisory for Section 
 
 ## 2. Skip-logic table (Sections G–I)
 
-**Routing preamble.** `FIELD_CONTROL.PATIENT_TYPE` is the authoritative routing signal:
+**Routing preamble (updated Task 1.5, order:G,H).** `FIELD_CONTROL.PATIENT_TYPE` is the authoritative routing signal. Sections G and H are now front-loaded immediately after Section D (ahead of E/F), and Section E/F sits between H and I:
 
-- `PATIENT_TYPE = Outpatient` → enter Section G (Q88–Q104); skip Section H (Q105–Q115) entirely.
-- `PATIENT_TYPE = Inpatient`  → skip Section G (Q88–Q104); enter Section H (Q105–Q115).
-- Section I (Q116–Q130) is asked **for both** patient types after the applicable G or H has completed.
+- `PATIENT_TYPE = Outpatient` (1) → enter Section G (Q88–Q104) from Q51/Q52; `Q88_WHY_VISIT` preproc skips straight to `Q105_REASON` (Section H start) if not Outpatient. On completing G, `Q99_BUCAS_HEARD` exits to **Q53_HAS_PCP** (Section E/F start) whether or not BUCAS was heard-of, so Section H (Q105-Q115) is skipped entirely.
+- `PATIENT_TYPE = Inpatient` (2) → `Q88_WHY_VISIT`'s preproc redirects to `Q105_REASON` (Section H); `Q105_REASON`'s own preproc skips to **Q53_HAS_PCP** if not Inpatient, so a non-Outpatient/non-Inpatient case that somehow reaches here falls through Section G AND H. On completing H (Q105-Q115), the last item falls through normally into Section E/F (Q53).
+- **PATIENT_TYPE must be set for this routing to work at all** -- see the Task 1.5 defect-fix note in the banner above (Q1_IS_PATIENT retarget) for the bug this closes.
+- Section E/F (Q53–Q87) sits between the G/H block and Section I; Section I (Q116–Q130) is asked **for both** patient types after E/F completes.
 
 ### Section G — Outpatient Care
 
 | Q | Condition | Skip to |
 |---|---|---|
 | — | `PATIENT_TYPE ≠ Outpatient` | **Section I** (skip entire G record) |
-| Q89 ADVISED_ADMIT | = Yes | Q91 (Q90 is the "why not confined" reasons — only meaningful when Q89 = No; see §3.8 sanity rule) |
+| Q89 ADVISED_ADMIT | (no build skip either answer) | Q90 is now asked UNCONDITIONALLY regardless of Q89 (Task 1.5 correction: `Q89_ADVISED_ADMIT` carries no PROC/skip in the current build -- verified directly in `PatientSurvey.ent.apc`, no `PROC Q89_ADVISED_ADMIT` block exists. The old row here, gating Q90 on Q89=No, is stale/does not match current behavior) |
 | Q93 LABS | "None" (17) ticked | **Q95** (skip Q94 lab-cost matrix) |
 | Q95 PRESCRIBED | = No | **Q97** (skip Q96 meds-cost matrix) |
-| Q99 BUCAS_HEARD | = No | **Q115 as printed** — source prints `<proceed to Q115>` which crosses out of Section G into Section H. See sanity finding #9; default behaviour: **skip to end of Section G** (i.e., skip Q100–Q104) |
+| Q99 BUCAS_HEARD | = No **or** = Yes | **Q53_HAS_PCP** (Section E/F start) always, once the BUCAS sub-block resolves -- Task 1.5/order:G,H: retargeted from the pre-reorder `Q116_NBB_HEARD` (Section I) since G now sits ahead of E/F, not I. `= No` additionally skips Q100-Q104 (the BUCAS detail items) before this exit. |
 | Q99 / Q100–Q103 enumerator gate | Respondent's area has no BUCAS center | Skip Q99–Q103 entirely (enumerator judgment per source note) |
 | Q102 BUCAS_ACCESSED | = No | **Q104** (skip Q103) |
 

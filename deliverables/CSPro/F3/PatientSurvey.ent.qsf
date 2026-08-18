@@ -1203,21 +1203,21 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>9. Which group does the patient identify with?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
+            <p>9. Which group does the patient identify with? It is fine if not comfortable answering.</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           FIL: |
-            <p>9. Which group does the patient identify with?</p><p class="instruction">BASAHIN ANG PAGPIPILIAN NANG MALAKAS. PUMILI NG ISANG SAGOT LAMANG</p>
+            <p>9. Which group does the patient identify with? It is fine if not comfortable answering.</p><p class="instruction">BASAHIN ANG PAGPIPILIAN NANG MALAKAS. PUMILI NG ISANG SAGOT LAMANG</p>
           BCL: |
-            <p>9. Which group does the patient identify with?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
+            <p>9. Which group does the patient identify with? It is fine if not comfortable answering.</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           BIS: |
-            <p>9. Which group does the patient identify with?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
+            <p>9. Which group does the patient identify with? It is fine if not comfortable answering.</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           CEB: |
-            <p>9. Which group does the patient identify with?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
+            <p>9. Which group does the patient identify with? It is fine if not comfortable answering.</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           WAR: |
-            <p>9. Which group does the patient identify with?</p><p class="instruction">BASAHA HA MAKUSOG AN MGA OPSYON. PILI MA USA LA NA BATON</p>
+            <p>9. Which group does the patient identify with? It is fine if not comfortable answering.</p><p class="instruction">BASAHA HA MAKUSOG AN MGA OPSYON. PILI MA USA LA NA BATON</p>
           HIL: |
-            <p>9. Which group does the patient identify with?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
+            <p>9. Which group does the patient identify with? It is fine if not comfortable answering.</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           ILO: |
-            <p>9. Which group does the patient identify with?</p><p class="instruction">(BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.)</p>
+            <p>9. Which group does the patient identify with? It is fine if not comfortable answering.</p><p class="instruction">(BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.)</p>
   - name: PATIENTSURVEY_DICT.Q9_GROUP_OTHER_TXT
     conditions:
       - questionText:

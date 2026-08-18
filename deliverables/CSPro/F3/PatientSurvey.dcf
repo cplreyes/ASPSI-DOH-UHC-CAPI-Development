@@ -6627,35 +6627,35 @@
               "name": "Q9_GROUP",
               "labels": [
                 {
-                  "text": "9. Which group does the patient identify with?",
+                  "text": "9. Which group does the patient identify with? It is fine if not comfortable answering.",
                   "language": "EN"
                 },
                 {
-                  "text": "9. Which group does the patient identify with?",
+                  "text": "9. Which group does the patient identify with? It is fine if not comfortable answering.",
                   "language": "FIL"
                 },
                 {
-                  "text": "9. Which group does the patient identify with?",
+                  "text": "9. Which group does the patient identify with? It is fine if not comfortable answering.",
                   "language": "BCL"
                 },
                 {
-                  "text": "9. Which group does the patient identify with?",
+                  "text": "9. Which group does the patient identify with? It is fine if not comfortable answering.",
                   "language": "BIS"
                 },
                 {
-                  "text": "9. Which group does the patient identify with?",
+                  "text": "9. Which group does the patient identify with? It is fine if not comfortable answering.",
                   "language": "CEB"
                 },
                 {
-                  "text": "9. Which group does the patient identify with?",
+                  "text": "9. Which group does the patient identify with? It is fine if not comfortable answering.",
                   "language": "WAR"
                 },
                 {
-                  "text": "9. Which group does the patient identify with?",
+                  "text": "9. Which group does the patient identify with? It is fine if not comfortable answering.",
                   "language": "HIL"
                 },
                 {
-                  "text": "9. Which group does the patient identify with?",
+                  "text": "9. Which group does the patient identify with? It is fine if not comfortable answering.",
                   "language": "ILO"
                 }
               ],
@@ -6667,7 +6667,7 @@
                   "name": "Q9_GROUP_VS1",
                   "labels": [
                     {
-                      "text": "9. Which group does the patient identify with?",
+                      "text": "9. Which group does the patient identify with? It is fine if not comfortable answering.",
                       "language": "EN"
                     },
                     {
@@ -6691,11 +6691,11 @@
                       "language": "WAR"
                     },
                     {
-                      "text": "9. Which group does the patient identify with?",
+                      "text": "9. Which group does the patient identify with? It is fine if not comfortable answering.",
                       "language": "HIL"
                     },
                     {
-                      "text": "9. Which group does the patient identify with?",
+                      "text": "9. Which group does the patient identify with? It is fine if not comfortable answering.",
                       "language": "ILO"
                     }
                   ],

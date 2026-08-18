@@ -1,0 +1,14 @@
+# aug17 Task 1.5: verify path 3 -- Q1_IS_PATIENT = No (respondent is a
+# companion, not the patient). Q2/Q3 (relationship, co-residence) must
+# still be asked, unchanged from before the PATIENT_TYPE retarget fix.
+rmdata ../F3/desktest.csdb
+launch ../F3/PatientSurvey_desktest.pff
+casekey 04 03 403 02 001
+type 1
+type 1
+type 2
+shot after_q1_no
+type 01
+shot after_q2
+type 1
+shot after_q3

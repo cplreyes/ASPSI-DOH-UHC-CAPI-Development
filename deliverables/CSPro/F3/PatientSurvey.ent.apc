@@ -3239,7 +3239,7 @@ postproc
 PROC Q1_IS_PATIENT
 postproc
   if Q1_IS_PATIENT = 1 then
-    skip to Q4_NAME;
+    skip to PATIENT_TYPE;
   endif;
 
 PROC Q8_LGBTQIA
