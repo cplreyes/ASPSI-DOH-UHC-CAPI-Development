@@ -1033,9 +1033,13 @@ def test_join_paper_build_items_no_longer_drops_extra_build_rows():
             stem="Different invented build-only stem (fixture).", qtype="text", cardinality="single"),
     ]
     pairs = join_paper_build_items("F9", paper, build)
-    item_names = {b.item_name for _q, _p, b in pairs if b is not None}
+    item_names = {b.item_name for _q, _p, b, _broadcast in pairs if b is not None}
     assert "Q22_A" in item_names
     assert "Q22_B" in item_names  # previously silently dropped entirely
+    # The real 1:1 pair is NOT flagged broadcast; the extra row IS.
+    broadcast_flags = {b.item_name: is_b for _q, _p, b, is_b in pairs if b is not None}
+    assert broadcast_flags["Q22_A"] is False
+    assert broadcast_flags["Q22_B"] is True
 
 
 def test_compute_stale_from_tables_does_not_false_flag_extra_build_rows_stale():

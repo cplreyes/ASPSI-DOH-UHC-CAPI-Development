@@ -281,9 +281,26 @@ def load_rename_map(csv_path):
 def join_paper_build_items(inst, paper_rows, build_rows):
     """Same qnum-grouping / F4-paper-defect-rekey / build_unnumbered
     stem-matching as aug17_diff.diff_instrument's join (imported helpers,
-    not reimplemented). Returns a list of (qnum, paper_row, build_row) for
-    matched pairs and (qnum, paper_row, None) for paper rows with no old
-    build counterpart ("new" content -- see compute_stale_from_tables)."""
+    not reimplemented). Returns a list of (qnum, paper_row, build_row,
+    is_broadcast) 4-tuples: `is_broadcast=False` for matched 1:1 pairs and
+    for (qnum, paper_row, None, False) rows with no old build counterpart
+    ("new" content -- see compute_stale_from_tables); `is_broadcast=True`
+    for a build row BEYOND paper's row count at this qnum, paired against
+    paper's LAST row there purely for visibility/reporting.
+
+    Scope-add fix (post-Task-3.4, impl-1-4/F3 lane finding): previously an
+    "extra" build row at a qnum (e.g. paper's ONE combined income question
+    splitting into build's Q18_INCOME_AMOUNT + Q18_INCOME_BRACKET) was not
+    returned in `pairs` AT ALL -- fully invisible, not even reachable to
+    flag manually. It's now included, but marked `is_broadcast=True` so
+    `compute_stale_from_tables` can deliberately EXCLUDE it from staleness
+    derivation: comparing it against an unrelated anchor stem would ALWAYS
+    look "changed" even when nothing in the paper actually changed since
+    the last translation pass, which would perpetually and wrongly drop a
+    possibly-still-correct translation. Same broadcast semantic as
+    aug17_diff.diff_instrument's identical fix, but this consumer's use
+    (auto-DROPPING translations) is higher-stakes than that one's (purely
+    reporting), hence the more conservative non-flagging here."""
     paper_items = [r for r in paper_rows if r.kind == "item"]
     build_items = [r for r in build_rows if r.kind == "item"]
     if inst == "F4":
@@ -303,9 +320,12 @@ def join_paper_build_items(inst, paper_rows, build_rows):
         p_list, b_list = paper_g.get(q, []), build_g.get(q, [])
         n = min(len(p_list), len(b_list))
         for i in range(n):
-            pairs.append((q, p_list[i], b_list[i]))
+            pairs.append((q, p_list[i], b_list[i], False))
         for extra_p in p_list[n:]:
-            pairs.append((q, extra_p, None))
+            pairs.append((q, extra_p, None, False))
+        for extra_b in b_list[n:]:
+            if p_list:
+                pairs.append((q, p_list[-1], extra_b, True))
     return pairs
 
 
@@ -315,11 +335,15 @@ def compute_stale_from_tables(inst, paper_rows, build_rows):
     staleness signal that plan_stale_drop() consumes per locale file."""
     pairs = join_paper_build_items(inst, paper_rows, build_rows)
     stem_changed, option_changed, new_rows = set(), set(), []
-    for _q, p, b in pairs:
+    for _q, p, b, is_broadcast in pairs:
         if b is None:
             new_rows.append(p)
             continue
         if not b.item_name:
+            continue
+        if is_broadcast:
+            # Never auto-derive staleness from a broadcast pair -- see the
+            # module docstring on join_paper_build_items for why.
             continue
         if _norm_paper_text(p.stem) != _norm_build_stem(b.stem):
             stem_changed.add(b.item_name)
