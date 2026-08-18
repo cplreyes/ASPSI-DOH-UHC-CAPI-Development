@@ -421,33 +421,33 @@ that the `Q108` gap is retired — `legacy_q` carries each item's Apr-20 id.
 
 ## Skip-logic surface — consolidated (for Task 3.2)
 
-The Aug-17 renumber is content-neutral for Sections A, C, D, E, F, G, H, I, K —
-same ids, same choices, same gates as the current build. It is **not**
-content-neutral for:
+**Task 3.2 ✅ (2026-08-19).** All three items below are resolved in
+`src/lib/skip-logic.ts`; kept here for history.
 
-- **Section B (Q13–Q24.2).** Ten items reworded from a compound
-  single-choice question into a plain Yes/No + a new `.1` attribution
-  sub-item (plus Q24's unique `.2`). None of the eleven new sub-item ids have
-  a `shouldShow` predicate in `src/lib/skip-logic.ts` yet — they render as
-  always-visible (schema-optional via the `gate` column, but not runtime-
-  hidden). Task 3.2 needs to add: `Q13.1`/`Q15.1`/`Q17.1`/`Q18.1`/`Q19.1`/
+- **Section B (Q13–Q24.2).** ✅ Wired. `Q13.1`/`Q15.1`/`Q17.1`/`Q18.1`/`Q19.1`/
   `Q20.1`/`Q21.1`/`Q22.1`/`Q23.1`/`Q24.1` gated on their respective parent
-  `=Yes`, and `Q24.2` gated on `Q24=Yes`.
-- **Section J (Q108–Q124).** Pure id shift, mechanically re-keyed in
-  `skip-logic.ts`'s `J` predicate block as part of this task (Q122→Q121,
-  Q124→Q123, Q125→Q124; dependency refs Q114→Q113, Q123→Q122) — see the
-  Task 3.1 report for the exact diff.
-- **Q34 (Section C).** `F2-inventory.md` reads the paper's "I don't know…"
-  branch as exiting straight to Q41 (skipping Q37), while the current build
-  routes it through Q37 like "No". Not changed here (routing decision, not
-  content) — flagged for Task 3.2.
+  `=Yes` (plus the outer `Q12=Yes` Section-B gate); `Q24.2` gated on
+  `Q24=Yes` (sibling of `Q24.1`, not chained to it). Predicate keys are
+  quoted dotted strings (`'Q13.1': (v) => …`) matching the literal item id
+  the spec's `pdf_q` column emits — not underscores.
+- **Section J (Q108–Q124).** ✅ Pure id shift, mechanically re-keyed in
+  `skip-logic.ts`'s `J` predicate block (Q122→Q121, Q124→Q123, Q125→Q124;
+  dependency refs Q114→Q113, Q123→Q122) — see the Task 3.1 report for the
+  exact diff.
+- **Q34 (Section C).** ✅ Resolved, no code change needed. `F2-inventory.md`'s
+  fuller routing table (not just the normalized CSV's single `skip` cell)
+  documents the paper's own printed note for "I don't know…" as an explicit
+  `<proceed to Q41>` — exits straight past the whole C tail (Q35–Q40), same
+  as this task originally suspected, and the build's existing strict
+  `Q34 === 'No'` checks on Q37/Q38 already produce exactly that (verified,
+  not changed). See `aug17-approved-divergences.md`.
 
 ## Open items flagged for ASPSI / Dr. Claro review
 
 1. **Q1 (name)** — identity-capture risk for a self-admin survey with raffle incentive; carried unresolved from Apr-20.
-2. **Q25/Q30 spelling mismatch** — Q25's option reads "Preventative health care"; Q30's own gate string reads "Preventive healthcare" (`F2-inventory.md` anomaly #7). Preserved verbatim on both sides; carried from Apr-20.
-3. **Q121 gate mis-reference** — paper prints "\<Skip if you have answered 'Never' in Q114\>" but Q114 (Aug-17 numbering) is "I have been compensated for working overtime"; the semantically intended item is Q113 ("worked beyond my scheduled hours") — see the Q121 row above. New with the Aug-17 renumber (the paper's own cross-reference didn't get updated when Section J was renumbered).
-4. **Q34 "I don't know…" destination** — `F2-inventory.md` reads this as routing to Q41 (exiting Section C), differing from the current build's Q37 routing for that answer. Confirm intended destination.
+2. **Q25/Q30 spelling mismatch** — Q25's option reads "Preventative health care"; Q30's own gate string reads "Preventive healthcare" (`F2-inventory.md` anomaly #7). **Resolved in code** (Task 3.2, 2026-08-19): `skip-logic.ts`'s `B.Q30` predicate matches Q25's real choice value, not the paper's non-matching literal text — see `aug17-approved-divergences.md`. Display text (this row, the Q30 stem) stays verbatim per paper.
+3. **Q121 gate mis-reference** — paper prints "\<Skip if you have answered 'Never' in Q114\>" but Q114 (Aug-17 numbering) is "I have been compensated for working overtime"; the semantically intended item is Q113 ("worked beyond my scheduled hours") — see the Q121 row above. **Resolved in code** (Task 3.2, 2026-08-19): gates on Q113, registered in `aug17-approved-divergences.md`. ASPSI confirmation still welcome but not build-blocking.
+4. **Q34 "I don't know…" destination** — `F2-inventory.md` reads this as routing to Q41 (exiting Section C). **Resolved, not actually ambiguous** (Task 3.2, 2026-08-19): the paper's full per-option routing notes (not just the CSV's single `skip` cell) confirm Q41; the build's existing gates already implement it — see `aug17-approved-divergences.md`.
 5. **Q36 stem/context mismatch** — Q36 is reached only from Q34 = Yes (already accredited), yet the stem reads "Why is your facility **applying to become** an accredited YAKAP/Konsulta provider?" (`F2-inventory.md` anomaly #11). Carried from Apr-20, unresolved.
 6. **Section J burnout block (Q113–Q120, formerly Q114–Q121)** — retained per Apr-20 decision gate; still open per Dr. Claro sign-off status.
 7. **8 ambiguous-cardinality lists** (Q50, Q93, Q97, Q109, Q110, Q112, Q123, Q124) — no printed select-all/select-one directive; kept as `multi` (current build behavior), registered in `aug17-approved-divergences.md`. Confirm intended cardinality with ASPSI.
@@ -458,7 +458,7 @@ content-neutral for:
 ## Next steps
 
 - **Task 3.1 ✅ (this file rev, Aug 17)** — structured spec rewritten against the Aug-17 instrument: full Q1–Q124 renumber, Section-B attribution-battery split + Q24.2, consent contact-detail sync, emit-items.ts gap retirement.
-- **Task 3.2** — routing + validation rewrite: wire the eleven new Section-B `shouldShow` predicates, resolve the Q34 "I don't know…" destination question, review the Q121 gate mis-reference with ASPSI.
-- **Task 3.3** — translations re-key + audit (English text changed for the ten Section-B items + eleven new sub-items; existing dialect translations for those English strings won't match and will render in English until re-translated).
-- **Task 3.4** — consumers re-key (any UI/report code keying off old Section-J ids), Tier-1/2 evidence, a11y, statuses.
+- **Task 3.2 ✅ (2026-08-19)** — routing + validation rewrite: Q5 reworded to the paper's verbatim wording/order (R12) with `skip-logic.ts`/`draft.ts` role sets re-keyed to match; eleven new Section-B `shouldShow` predicates wired; Q34 "I don't know…" destination confirmed (no change needed); Q121 gate mis-reference and Q25/Q30 spelling mismatch registered as defect-fixes. Full report: `.superpowers/sdd/2026-08-18-aug17-capi-migration/task-3.2-report.md`.
+- **Task 3.3** — translations re-key + audit (English text changed for the ten Section-B items + eleven new sub-items, plus the reworded Q5 Nutrition/Pharmacist role strings; existing dialect translations for those English strings won't match and will render in English until re-translated).
+- **Task 3.4** — consumers re-key (any UI/report code keying off old Section-J ids or the pre-R12 Q5 role strings — `src/lib/draft.ts`'s `RENAMED_VALUES` migration table was extended in Task 3.2 to cover the Q5 rename, but `src/components/survey/ReviewSection.test.tsx` still uses the old Pharmacist string as inert test fixture data), Tier-1/2 evidence, a11y, statuses.
 - **Task 3.5** — e2e, version bump, deploy.
