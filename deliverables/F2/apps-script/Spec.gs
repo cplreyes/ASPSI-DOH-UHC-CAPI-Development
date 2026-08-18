@@ -1,8 +1,13 @@
 /**
- * F2 Spec — 124 actual items (numbered Q1..Q125 with Q108 as a PDF numbering gap),
- * verbatim labels per project rule.
+ * F2 Spec — 124 actual items (numbered Q1..Q124; the paper's PDF Q108
+ * numbering gap from the Apr 20 rev closes in the Aug 17 rev), verbatim
+ * labels per project rule.
  *
- * Source: deliverables/F2/F2-Spec.md (Apr 20, 2026 PDF rev).
+ * Source: deliverables/F2/F2-Spec.md (Apr 20, 2026 PDF rev); item ids Q109-Q125
+ * renumbered Q108-Q124 per deliverables/CSPro/instruments-aug17-extract/maps/F2-renames.csv
+ * (Aug 17, 2026 rev closes the Q108 gap). This bundle is a dead/never-deployed
+ * Google Forms prototype (see README "Known limitations") — renumbered for
+ * consistency only; NOT a live consumer of PWA submissions.
  * Routing: deliverables/F2/F2-Skip-Logic.md (Apr 20 rev).
  * Validation: deliverables/F2/F2-Validation.md (Apr 20 rev).
  * Cross-field: deliverables/F2/F2-Cross-Field.md (Apr 20 rev).
@@ -19,7 +24,7 @@
  *   - Section G: three ZBB/NBB sibling pairs — Q69/Q70 implications, Q75/Q76 fairness
  *     scales, Q87/Q88 balance billing — replacing Apr 08's ZBB-with-.1-NBB pattern.
  *   - Section J: grid-lift shifted from Q103 → Q114 (standalone single so Q122
- *     skip-if-Never survives); Q108 is a PDF numbering gap (no item emitted).
+ *     skip-if-Never survives); Q108 numbering gap closed in the Aug 17 rev (Q109-Q125 -> Q108-Q124).
  *   - Terminal branch driver: Q123 (was Q112).
  *
  * Sections use section IDs (SEC-A, SEC-B, ..., SEC-END) as routing keys.
@@ -725,7 +730,7 @@ var F2_SPEC = { sections: [
     ] },
 
   // =============================================================
-  // Section J — Job Satisfaction (Q98–Q125; Q108 is a PDF numbering gap)
+  // Section J — Job Satisfaction (Q98-Q124; Aug 17 rev closes the Apr 20 Q108 gap)
   // Apr 20: grid-lift shifted from Q103 → Q114 (was Apr 08 Q103); terminal driver Q123 (was Q112)
   // =============================================================
   { id: 'SEC-J1', title: 'Section J — Job Satisfaction (Part 1)',
@@ -746,29 +751,28 @@ var F2_SPEC = { sections: [
           'Q107. I am satisfied with the professional development opportunities I have in my job.'
         ],
         columns: AGREE_5 },
-      // NOTE: Q108 is a PDF numbering gap — no item emitted at this slot.
-      { type: 'paragraph', label: 'Q109. In addition to your salary, what other benefits as an accredited healthcare provider do you receive?', required: false },
-      { type: 'multi', label: 'Q110. What additional resources do you need to perform well in this job?',
+      { type: 'paragraph', label: 'Q108. In addition to your salary, what other benefits as an accredited healthcare provider do you receive?', required: false },
+      { type: 'multi', label: 'Q109. What additional resources do you need to perform well in this job?',
         required: false,
         choices: ['Professional development opportunities','Better compensation policies','Better equipment/facilities','Other (specify)'] },
-      { type: 'text', label: 'Q110.other. Please specify if "Other".', required: false },
-      { type: 'multi', label: 'Q111. What opportunities to develop leadership skill/s would be useful to you?',
+      { type: 'text', label: 'Q109.other. Please specify if "Other".', required: false },
+      { type: 'multi', label: 'Q110. What opportunities to develop leadership skill/s would be useful to you?',
         required: false,
         choices: ['Seminars, conferences, workshops','Supervisory trainings','More training related to my job post','Other (specify)'] },
-      { type: 'text', label: 'Q111.other. Please specify if "Other".', required: false },
-      { type: 'multi', label: 'Q112. Which of the following professional development opportunity/ies is/are currently provided to you by your facility? (Check all that apply)',
+      { type: 'text', label: 'Q110.other. Please specify if "Other".', required: false },
+      { type: 'multi', label: 'Q111. Which of the following professional development opportunity/ies is/are currently provided to you by your facility? (Check all that apply)',
         required: false,
         choices: ['Clinical audits','Surgical audits','Quality assurance meetings','Seminars, conferences, workshops',
                   'Support for independent professional development: scholarships',
                   'Support for independent professional development: research grants','None'] },
-      { type: 'multi', label: 'Q113. Which of the following professional development opportunity/ies would be most useful to you?',
+      { type: 'multi', label: 'Q112. Which of the following professional development opportunity/ies would be most useful to you?',
         required: false,
         choices: ['Clinical audits','Surgical audits','Quality assurance meetings','Seminars, conferences, workshops',
                   'Support for independent professional development: scholarships',
                   'Support for independent professional development: research grants','Other (specify)'] },
-      { type: 'text', label: 'Q113.other. Please specify if "Other".', required: false },
-      // Q114 lifted out of Grid #2 so Q122 skip-if-Never can route. Apr 20: was Q103 in Apr 08.
-      { type: 'single', label: 'Q114. In the past month, I have worked beyond my scheduled hours.',
+      { type: 'text', label: 'Q112.other. Please specify if "Other".', required: false },
+      // Q113 lifted out of Grid #2 so Q121 skip-if-Never can route. Apr 20: was Q103 in Apr 08.
+      { type: 'single', label: 'Q113. In the past month, I have worked beyond my scheduled hours.',
         required: false, choices: FREQ_5,
         branchTo: {
           'Always': 'SEC-J2', 'Often': 'SEC-J2', 'Sometimes': 'SEC-J2', 'Seldom': 'SEC-J2', 'Never': 'SEC-J3'
@@ -778,19 +782,19 @@ var F2_SPEC = { sections: [
   { id: 'SEC-J2', title: 'Section J — Frequency grid + overtime pattern',
     description: 'Please think about your experience in this post for the past 6 months.',
     items: [
-      { type: 'grid-single', label: 'Q115–Q121. For each statement, indicate how often it applies.',
+      { type: 'grid-single', label: 'Q114–Q120. For each statement, indicate how often it applies.',
         required: false,
         rows: [
-          'Q115. I have been compensated for working overtime.',
-          'Q116. My work is emotionally exhausting.',
-          'Q117. My work frustrates me.',
-          'Q118. I feel worn out at the end of a working day.',
-          'Q119. I feel exhausted every morning at the thought of another day at work.',
-          'Q120. I feel that every working hour is tiring for me.',
-          'Q121. I have enough energy for family and friends during leisure time.'
+          'Q114. I have been compensated for working overtime.',
+          'Q115. My work is emotionally exhausting.',
+          'Q116. My work frustrates me.',
+          'Q117. I feel worn out at the end of a working day.',
+          'Q118. I feel exhausted every morning at the thought of another day at work.',
+          'Q119. I feel that every working hour is tiring for me.',
+          'Q120. I have enough energy for family and friends during leisure time.'
         ],
         columns: FREQ_5 },
-      { type: 'single', label: 'Q122. I have worked overtime for:',
+      { type: 'single', label: 'Q121. I have worked overtime for:',
         required: false,
         choices: ['Once or twice in the past month','Once or twice a week',
                   'Three or four days every week','Almost everyday','Everyday'] }
@@ -799,24 +803,24 @@ var F2_SPEC = { sections: [
   { id: 'SEC-J3', title: 'Section J — Frequency grid (no overtime)',
     description: 'Please think about your experience in this post for the past 6 months.',
     items: [
-      { type: 'grid-single', label: 'Q115–Q121. For each statement, indicate how often it applies.',
+      { type: 'grid-single', label: 'Q114–Q120. For each statement, indicate how often it applies.',
         required: false,
         rows: [
-          'Q115. I have been compensated for working overtime.',
-          'Q116. My work is emotionally exhausting.',
-          'Q117. My work frustrates me.',
-          'Q118. I feel worn out at the end of a working day.',
-          'Q119. I feel exhausted every morning at the thought of another day at work.',
-          'Q120. I feel that every working hour is tiring for me.',
-          'Q121. I have enough energy for family and friends during leisure time.'
+          'Q114. I have been compensated for working overtime.',
+          'Q115. My work is emotionally exhausting.',
+          'Q116. My work frustrates me.',
+          'Q117. I feel worn out at the end of a working day.',
+          'Q118. I feel exhausted every morning at the thought of another day at work.',
+          'Q119. I feel that every working hour is tiring for me.',
+          'Q120. I have enough energy for family and friends during leisure time.'
         ],
         columns: FREQ_5 }
-      // Q122 not shown when Q114 = Never
+      // Q121 not shown when Q113 = Never
     ] },
 
   { id: 'SEC-J4', title: 'Section J — Closing',
     items: [
-      { type: 'single', label: 'Q123. Have you considered leaving this facility?',
+      { type: 'single', label: 'Q122. Have you considered leaving this facility?',
         required: true,
         choices: [
           'Yes, I’ve thought about it and have definite plans to leave',
@@ -834,19 +838,19 @@ var F2_SPEC = { sections: [
 
   { id: 'SEC-J5', title: 'Section J — Leaving intent',
     items: [
-      { type: 'multi', label: 'Q124. Why are you planning on leaving this facility?',
+      { type: 'multi', label: 'Q123. Why are you planning on leaving this facility?',
         required: false,
         choices: ['Poor compensation','Lack of opportunities','Burnt out',
                   'Moving to another part of the country','Moving to another country','Other (specify)'] },
-      { type: 'text', label: 'Q124.other. Please specify if "Other".', required: false },
-      { type: 'multi', label: 'Q125. What are you planning to do after leaving this facility?',
+      { type: 'text', label: 'Q123.other. Please specify if "Other".', required: false },
+      { type: 'multi', label: 'Q124. What are you planning to do after leaving this facility?',
         required: false,
         choices: ['Transfer to a new facility with the same role',
                   'Change training/specialization within healthcare',
                   'Change profession','Take an extended leave from work',
                   'Take a position as a health worker in another country',
                   'Retire','Other (specify)'] },
-      { type: 'text', label: 'Q125.other. Please specify if "Other".', required: false }
+      { type: 'text', label: 'Q124.other. Please specify if "Other".', required: false }
     ] },
 
   { id: 'SEC-END', title: 'End of survey',

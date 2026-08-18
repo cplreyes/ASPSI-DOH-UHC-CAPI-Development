@@ -23,7 +23,7 @@ This directory is an **Apps Script project** that builds the F2 Healthcare Worke
 | File | Purpose |
 |---|---|
 | `Code.gs` | Main entry — `buildForm()`, `rebuildForm()`, custom menu, orchestration |
-| `Spec.gs` | Full Apr 20 spec as structured JS data (124 actual items, numbered Q1–Q125 with Q108 as a PDF numbering gap) — sections, items, choices, routing |
+| `Spec.gs` | Full spec as structured JS data (124 actual items, numbered Q1–Q124; the Apr 20 rev's Q108 PDF numbering gap closes in the Aug 17 rev, Q109-Q125 renumbered Q108-Q124) — sections, items, choices, routing |
 | `FormBuilder.gs` | Helpers that materialize spec entries into Form items |
 | `Routing.gs` | Section-based branching helpers (`setGoToPageBasedOnAnswer`) |
 | `OnSubmit.gs` | `onFormSubmit` trigger — runs the 20 POST rules from F2-Cross-Field.md |
@@ -65,8 +65,9 @@ This directory is an **Apps Script project** that builds the F2 Healthcare Worke
 - **No cross-section memory.** Role bucket (BUCKET-CD / BUCKET-PHARM / BUCKET-OTHER) is re-asked at each gate rather than remembered from Q5. See `F2-Skip-Logic.md` open item #2.
 - **Q114 lifted from Grid #2 (Apr 20).** See `F2-Validation.md` — Q114 is a standalone single-choice so Q122 skip-if-Never survives the Forms translation. (Was Q103 in the Apr 08 spec.)
 - **Facility-type triple-pair (Apr 20).** Q69/Q70, Q75/Q76, Q87/Q88 — ZBB + NBB siblings instead of the Apr 08 ZBB-with-NBB-.1 pattern. Handled via three facility-type router sections (SEC-G3, SEC-G-scales, SEC-G-Q87) per `F2-Skip-Logic.md`.
-- **Q108 numbering gap.** Apr 20 PDF numbers items Q1–Q125 but Q108 is omitted. Builder must NOT emit a Q108 field. Cross-field `SCHEMA-01` rule guards against accidental emission.
+- **Q108 numbering gap (Apr 20 only, closed Aug 17).** The Apr 20 PDF numbered items Q1–Q125 with Q108 omitted; the Aug 17 rev closes the gap, so `Spec.gs` now numbers Q1–Q124 with no gap (Q109–Q125 renumbered Q108–Q124 per `deliverables/CSPro/instruments-aug17-extract/maps/F2-renames.csv`). No runtime guard ever existed for this — the README's earlier claim of a cross-field `SCHEMA-01` rule was aspirational; `OnSubmit.gs`'s real POST rules never reference the Q108 slot.
 - **~15 ASPSI decisions still open.** The build uses defaults from the spec docs; flipping any default is a one-line `Spec.gs` edit followed by `rebuildForm()`.
+- **This bundle is a dead/never-deployed prototype, not the live F2 backend.** The Aug-17 migration's actual downstream consumer is `deliverables/F2/PWA/backend/` (clasp-automated Apps Script that receives the React PWA's submissions) — it stores answers as an opaque `values_json` blob gated only by a `spec_version` string comparison (see `backend/src/Handlers.js`), with no per-question column map to re-key. This directory's ids were renumbered for documentation consistency only.
 
 ## Handoff to Shan
 
