@@ -340,6 +340,86 @@ def test_unmarked_register_row_still_covers_any_category():
     assert blocking == 0
 
 
+# R20 item 9 (F3 lane's Step-0 finding): UNMATCHED_BUILD findings carry
+# f.qnum="" (no qnum, no stem match to any paper item) -- the generic
+# registration branch (`elif f.qnum:`) never even attempts to register them,
+# and unlike DISPOSITION_DIFF/ORDER_DIFF/CONSENT_DIFF there was no
+# find_structural_registered branch for this category either. Structurally
+# unregisterable: the F3 lane's own correctly-worded rows (keyed on the
+# build item name) never matched anything until this is wired.
+
+
+def test_unmatched_build_finding_registers_by_item_name():
+    build = [Row(inst="F9", item_name="FIXTURE_BUILD_ONLY_ITEM", kind="item",
+                 stem="A build-only administrative item with no paper stem match (fixture).",
+                 qtype="text", cardinality="single")]
+    reg_text = REGISTER_HEADER + (
+        "| F9 | FIXTURE_BUILD_ONLY_ITEM (fixture) | system-item | (no paper counterpart) | "
+        "build-only administrative item (fixture) | rationale citing the item name (fixture) |\n"
+    )
+    register = build_register_index(parse_register_rows(reg_text))
+    findings, counts, blocking = diff_instrument("F9", [], build, register)
+    unmatched = [f for f in findings if f.category == "UNMATCHED_BUILD"]
+    assert len(unmatched) == 1
+    assert unmatched[0].registered is not None
+    assert blocking == 0
+
+
+def test_unmatched_build_finding_stays_unregistered_without_a_matching_row():
+    build = [Row(inst="F9", item_name="FIXTURE_BUILD_ONLY_ITEM", kind="item",
+                 stem="A build-only administrative item with no paper stem match (fixture).",
+                 qtype="text", cardinality="single")]
+    findings, counts, blocking = diff_instrument("F9", [], build, _empty_register())
+    unmatched = [f for f in findings if f.category == "UNMATCHED_BUILD"]
+    assert len(unmatched) == 1
+    assert unmatched[0].registered is None
+    assert blocking == 1
+
+
+# R20 item 10 (F3 lane's Step-0 finding): a hand-written register row that
+# legitimately covers SEVERAL categories at one qnum (e.g. the PAY-triad
+# rows, which cover both STEM_DIFF and EXTRA_IN_BUILD for the same build
+# item) needs a scope marker that names a LIST of categories, not just one.
+# "[scope: STEM_DIFF,EXTRA_IN_BUILD]" -- single-category and unmarked-legacy
+# forms both keep working exactly as before.
+
+
+def test_multi_category_scope_marker_covers_every_listed_category():
+    paper = [Row(inst="F9", qnum="8", kind="item", stem="Original stem (fixture).",
+                 options=[{"code": "1", "label": "A (fixture)"}],
+                 qtype="single", cardinality="single")]
+    build = [Row(inst="F9", qnum="8", item_name="Q8", kind="item", stem="Changed stem (fixture).",
+                 options=[{"code": "1", "label": "B (fixture)"}],
+                 qtype="single", cardinality="single")]
+    reg_text = REGISTER_HEADER + (
+        "| F9 | Q8 (fixture) | capi-adaptation | paper (fixture) | build (fixture) | "
+        "rationale citing both findings [scope: STEM_DIFF,OPTION_DIFF] (fixture) |\n"
+    )
+    register = build_register_index(parse_register_rows(reg_text))
+    findings, counts, blocking = diff_instrument("F9", paper, build, register)
+    stem_diffs = [f for f in findings if f.category == "STEM_DIFF"]
+    option_diffs = [f for f in findings if f.category == "OPTION_DIFF"]
+    assert stem_diffs and stem_diffs[0].registered is not None
+    assert option_diffs and option_diffs[0].registered is not None
+    assert blocking == 0
+
+
+def test_multi_category_scope_marker_does_not_cover_an_unlisted_category():
+    paper = [Row(inst="F9", qnum="9", kind="item", stem="Original stem (fixture).",
+                 qtype="text", cardinality="single")]
+    build = [Row(inst="F9", qnum="9", item_name="Q9", kind="item", stem="Changed stem (fixture).",
+                 qtype="text", cardinality="single", skip="visible-if: v.Q5 (fixture)")]
+    reg_text = REGISTER_HEADER + (
+        "| F9 | Q9 (fixture) | capi-adaptation | paper (fixture) | build (fixture) | "
+        "rationale citing an unrelated pair [scope: OPTION_DIFF,CARDINALITY_DIFF] (fixture) |\n"
+    )
+    register = build_register_index(parse_register_rows(reg_text))
+    findings, counts, blocking = diff_instrument("F9", paper, build, register)
+    stem_diffs = [f for f in findings if f.category == "STEM_DIFF"]
+    assert stem_diffs and stem_diffs[0].registered is None
+    assert blocking > 0
+
+
 def test_cardinality_diff():
     paper = [Row(inst="F9", qnum="2", kind="item", stem="Pick one.",
                  options=[{"code": "1", "label": "A"}], qtype="single", cardinality="single")]

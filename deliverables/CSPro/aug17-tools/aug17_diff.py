@@ -399,15 +399,21 @@ def load_register(path) -> dict:
     return build_register_index(parse_register_rows(text))
 
 
-_SCOPE_MARKER_RE = re.compile(r"\[scope:\s*([A-Z_]+)\]")
+_SCOPE_MARKER_RE = re.compile(r"\[scope:\s*([A-Z_]+(?:\s*,\s*[A-Z_]+)*)\]")
 
 
-def _row_scope(row) -> str:
+def _row_scopes(row) -> set:
     """A register row's rationale may carry an explicit "[scope: CATEGORY]"
-    marker (R20, rev-3-4 review finding). Returns the marked category, or
-    "" if unmarked (legacy rows -- see find_registered)."""
+    marker (R20, rev-3-4 review finding), or a COMMA-SEPARATED list of
+    categories (R20 item 10, F3 lane's Step-0 finding -- a hand-written row
+    can legitimately cover several classes at one qnum, e.g. a PAY-triad row
+    covering both STEM_DIFF and EXTRA_IN_BUILD). Returns the set of marked
+    categories, or an empty set if unmarked (legacy rows -- see
+    find_registered, which treats an empty set as "covers any category")."""
     m = _SCOPE_MARKER_RE.search(row.rationale or "")
-    return m.group(1) if m else ""
+    if not m:
+        return set()
+    return {c.strip() for c in m.group(1).split(",")}
 
 
 def find_registered(register: dict, inst: str, qnum: str, category: str = None):
@@ -420,8 +426,9 @@ def find_registered(register: dict, inst: str, qnum: str, category: str = None):
     SKIP_DIFF rows absorbing an unrelated STEM/OPTION/CARDINALITY finding
     at the same qnum -- reviewer-quantified: 12 F2 findings this way).
     A row carrying an explicit "[scope: CATEGORY]" marker in its rationale
-    now only satisfies a finding of that EXACT category. A row with NO
-    marker (every pre-R20 row) keeps the original any-category behavior --
+    now only satisfies a finding of that EXACT category (or, per R20 item 10,
+    any category in a comma-separated "[scope: CAT1,CAT2]" list). A row with
+    NO marker (every pre-R20 row) keeps the original any-category behavior --
     backward compatible, not a mass re-registration requirement."""
     key = _norm_key(qnum)
     if not key:
@@ -429,9 +436,9 @@ def find_registered(register: dict, inst: str, qnum: str, category: str = None):
     for cls in CLASS_ENUM:
         row = register.get((inst, key, cls))
         if row:
-            scope = _row_scope(row)
-            if scope and scope != category:
-                continue  # scoped to a different category -- not a match
+            scopes = _row_scopes(row)
+            if scopes and category not in scopes:
+                continue  # scoped to different category(ies) -- not a match
             return row
     return None
 
@@ -863,7 +870,8 @@ def diff_instrument(inst: str, paper_rows: list, build_rows: list, register: dic
 
     for r in unmatched_build:
         findings.append(Finding("UNMATCHED_BUILD", "",
-            f'{r.item_name}: "{r.stem[:100]}" -- no qnum, no stem match to any paper item'))
+            f'{r.item_name}: "{r.stem[:100]}" -- no qnum, no stem match to any paper item',
+            context={"item_name": r.item_name}))
 
     for r in paper_rows:
         if r.kind == "note":
@@ -895,6 +903,17 @@ def diff_instrument(inst: str, paper_rows: list, build_rows: list, register: dic
             reg_row = find_order_registered(register, inst, f.qnum)
         elif f.category == "CONSENT_DIFF":
             reg_row = find_structural_registered(register, inst, "consent")
+        elif f.category == "UNMATCHED_BUILD":
+            # R20 item 9 (F3 lane's Step-0 finding): f.qnum is always "" for
+            # this category (no qnum, no stem match), so the generic
+            # `elif f.qnum:` branch below never even attempts to register
+            # these -- structurally unregisterable until now. Keyed on the
+            # build item name instead (e.g. QUESTIONNAIRE_NUMBER,
+            # PATIENT_TYPE, FACILITY_STREET), via the same substring-
+            # containment Tier B lookup DISPOSITION_DIFF/CONSENT_DIFF use.
+            item_name = f.context.get("item_name", "")
+            if item_name:
+                reg_row = find_structural_registered(register, inst, item_name)
         elif f.qnum:
             reg_row = find_registered(register, inst, f.qnum, category=f.category)
         f.registered = reg_row
