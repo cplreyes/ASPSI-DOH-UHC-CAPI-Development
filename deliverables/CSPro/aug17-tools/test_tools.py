@@ -668,6 +668,49 @@ def test_trailing_directive_strip_is_logged():
     assert any(e["kind"] == "trailing-bracket" for e in _norm_events)
 
 
+# --- R18 (rev-1.4 finding, F3): build-side "(cont. N)" pagination fold -----
+
+
+def test_build_cont_suffix_stripped_before_section_comparison():
+    # CSPro splits a long section across multiple form pages; every page
+    # after the first gets a "(cont.)"/"(cont. N)" suffix appended to the
+    # displayed section title on the BUILD side only -- the paper prints
+    # the plain section name throughout. Sanctioned build-side fold,
+    # logged (same _norm_events mechanism as the paper-side folds).
+    paper = [Row(inst="F9", qnum="1", kind="item", stem="Invented item (fixture)?",
+                 section="G Invented Section", qtype="text", cardinality="single")]
+    build = [Row(inst="F9", qnum="1", item_name="Q1", kind="item", stem="Invented item (fixture)?",
+                 section="G Invented Section (cont. 3)", qtype="text", cardinality="single")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert not any(f.category == "SECTION_DIFF" for f in findings)
+
+
+def test_build_cont_suffix_bare_form_also_stripped():
+    # First continuation page prints "(cont.)" with no number.
+    paper = [Row(inst="F9", qnum="2", kind="item", stem="Invented item (fixture)?",
+                 section="H Invented Section", qtype="text", cardinality="single")]
+    build = [Row(inst="F9", qnum="2", item_name="Q2", kind="item", stem="Invented item (fixture)?",
+                 section="H Invented Section (cont.)", qtype="text", cardinality="single")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert not any(f.category == "SECTION_DIFF" for f in findings)
+
+
+def test_build_cont_suffix_fold_is_logged():
+    from aug17_diff import _norm_events, _fold_build_cont_suffix
+    _norm_events.clear()
+    out = _fold_build_cont_suffix("Invented Section (cont. 3)")
+    assert out == "Invented Section"
+    assert any(e["kind"] == "build-cont-suffix" for e in _norm_events)
+
+
+def test_build_cont_suffix_never_strips_a_real_mid_string_occurrence():
+    # Anchored to the END only -- a genuine printed "(cont.)" appearing
+    # mid-string (not as the trailing pagination artifact) must survive.
+    from aug17_diff import _fold_build_cont_suffix
+    text = "Invented Section (cont.) with more text after it"
+    assert _fold_build_cont_suffix(text) == text
+
+
 # --- Task 3.4, R15 addendum: paper_tables.py section-parser fixes ----------
 
 
