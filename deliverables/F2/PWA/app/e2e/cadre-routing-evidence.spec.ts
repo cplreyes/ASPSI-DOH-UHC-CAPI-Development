@@ -126,6 +126,7 @@ for (const cadre of CADRES) {
     const roleSelect = page.getByLabel(/What is your role at this health facility/i);
     await expect(roleSelect).toBeVisible({ timeout: 10000 });
     const names = await readVisibleSections(page, cadre.role);
+    console.log('DEBUG sidebar names for', cadre.role, ':', JSON.stringify(names));
 
     for (const expected of cadre.expectSections) {
       expect(names.some((n) => n.includes(expected))).toBe(true);
