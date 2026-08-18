@@ -82,14 +82,17 @@ const ANSWERS: Record<string, unknown> = {
   Q101: 'Strongly Agree', Q102: 'Strongly Agree', Q103: 'Strongly Agree',
   Q104: 'Strongly Agree', Q105: 'Strongly Agree', Q106: 'Strongly Agree',
   Q107: 'Strongly Agree',
-  Q109: 'UAT test answer',
-  Q110: ['Professional development opportunities'],
-  Q111: ['Seminars, conferences, workshops'],
+  // aug17 migration: Section J ids Q109-Q125 shifted to Q108-Q124 (the
+  // Apr-20 Q108 PDF numbering gap closes in the Aug-17 rev) — re-keyed per
+  // maps/F2-renames.csv, Task 3.4, 2026-08-18. Values unchanged.
+  Q108: 'UAT test answer',
+  Q109: ['Professional development opportunities'],
+  Q110: ['Seminars, conferences, workshops'],
+  Q111: ['Clinical audits'],
   Q112: ['Clinical audits'],
-  Q113: ['Clinical audits'],
-  Q114: 'Always', Q115: 'Always', Q116: 'Always', Q117: 'Always',
-  Q118: 'Always', Q119: 'Always', Q120: 'Always', Q121: 'Always',
-  Q123: "Yes, I've thought about it and have definite plans to leave",
+  Q113: 'Always', Q114: 'Always', Q115: 'Always', Q116: 'Always',
+  Q117: 'Always', Q118: 'Always', Q119: 'Always', Q120: 'Always',
+  Q122: "Yes, I've thought about it and have definite plans to leave",
 };
 
 async function seedDraft(
@@ -208,7 +211,7 @@ test('preambles render above matrix groups in Sections G and J (#1179-#1181)', a
   const note = page.getByText(/Please think about your experience in this post/);
   await expect(note.first()).toBeVisible({ timeout: 5000 });
   await page.screenshot({ path: 'e2e-evidence-1180-section-j-top.png', fullPage: false });
-  // Scroll to the second battery (Q113-Q120 display range) and capture it too
+  // Scroll to the second battery (Q114-Q120 display range, aug17-renumbered) and capture it too
   await note.last().scrollIntoViewIfNeeded();
   await expect(note.last()).toBeVisible();
   await page.screenshot({ path: 'e2e-evidence-1181-section-j-battery2.png', fullPage: false });

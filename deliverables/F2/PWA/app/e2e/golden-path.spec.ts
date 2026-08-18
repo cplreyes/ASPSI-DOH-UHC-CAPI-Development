@@ -79,14 +79,17 @@ const COMPLETE_ANSWERS: Record<string, unknown> = {
   Q101: 'Strongly Agree', Q102: 'Strongly Agree', Q103: 'Strongly Agree',
   Q104: 'Strongly Agree', Q105: 'Strongly Agree', Q106: 'Strongly Agree',
   Q107: 'Strongly Agree',
-  Q109: 'UAT test answer',
-  Q110: ['Professional development opportunities'],
-  Q111: ['Seminars, conferences, workshops'],
+  // aug17 migration: Section J ids Q109-Q125 shifted to Q108-Q124 (the
+  // Apr-20 Q108 PDF numbering gap closes in the Aug-17 rev) — re-keyed per
+  // maps/F2-renames.csv, Task 3.4, 2026-08-18. Values unchanged.
+  Q108: 'UAT test answer',
+  Q109: ['Professional development opportunities'],
+  Q110: ['Seminars, conferences, workshops'],
+  Q111: ['Clinical audits'],
   Q112: ['Clinical audits'],
-  Q113: ['Clinical audits'],
-  Q114: 'Always', Q115: 'Always', Q116: 'Always', Q117: 'Always',
-  Q118: 'Always', Q119: 'Always', Q120: 'Always', Q121: 'Always',
-  Q123: "Yes, I've thought about it and have definite plans to leave",
+  Q113: 'Always', Q114: 'Always', Q115: 'Always', Q116: 'Always',
+  Q117: 'Always', Q118: 'Always', Q119: 'Always', Q120: 'Always',
+  Q122: "Yes, I've thought about it and have definite plans to leave",
 };
 
 async function seedDraft(
