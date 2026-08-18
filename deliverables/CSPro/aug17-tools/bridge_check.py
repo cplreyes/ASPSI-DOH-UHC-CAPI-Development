@@ -44,26 +44,88 @@ against three failure modes found by hand during Task 0.1:
                       translation. A pure length-ratio heuristic was tried
                       first and rejected: "Resulta aCodes: 1" (18 chars) is
                       LONGER than the correct concise "Sinuri ni" (9 chars),
-                      so "shorter = corrupt" mis-detects here. Instead this
-                      flags on literal markers verified by hand against the
-                      actual corruption: a bare value of "Resulta" (a single
-                      generic word — cannot be a real translation of any of
-                      these multi-word EN labels), or any value containing
-                      "aCodes:" (an unambiguous leaked ticket/governance
-                      annotation, never legitimate target-language content).
+                      so "shorter = corrupt" mis-detects here. Flags on
+                      literal markers verified by hand against the actual
+                      corruption: a SUBSTRING match on "resulta"
+                      (case-insensitive — broadened after fix-round-1 review
+                      found variants like "(Nagan ti Enumerator) Resulta" and
+                      "Nagan ti Enumerator) Result(Resulta" that the original
+                      exact-match `== "Resulta"` missed), or any value
+                      containing "acodes:" (case-insensitive; an unambiguous
+                      leaked ticket/governance annotation, never legitimate
+                      target-language content). Scoped to the FIELD_CONTROL
+                      record specifically — these are pure CAPI housekeeping
+                      fields with no printed-paper equivalent, so a
+                      substring match here carries much lower false-positive
+                      risk than it would against ordinary content fields.
                       Fix: delete (fall back to English) — never borrow a
                       sibling instrument's unreviewed content across
                       instruments.
 
-  Rule C (glued text) A translated value containing stray glued-together
-                      English field-label fragments (e.g. RESP_POSITION in
-                      F1 fil.json: "Posisyon, Opisina Email address
-                      _______ Mobile Number Numero ng Telepono
-                      Questionnaire No") — a source-extraction artifact
-                      where multiple cover-sheet field labels got
-                      concatenated. Fix: delete (fall back to English) —
-                      the legacy value is equally corrupt, so there is
-                      nothing clean to copy.
+  Rule C (glued text) Two independently-justified sub-checks, combined with
+                      OR (both delete on fire):
+                      (a) contains a raw English cover-sheet field-label
+                      fragment ("Email address", "Mobile Number",
+                      "Questionnaire No", "Numero ng Telepono") — e.g.
+                      RESP_POSITION in F1 fil.json: "Posisyon, Opisina
+                      Email address _______ Mobile Number Numero ng
+                      Telepono Questionnaire No". No length gate — these
+                      phrases are specific enough on their own (verified: a
+                      full sweep for these markers across the whole fleet
+                      turns up nothing but genuine corruption, including the
+                      44- and 76-char F1/ceb and F1/hil RESP_POSITION rows
+                      the original `len > 100` gate was hiding). Deliberately
+                      case-SENSITIVE, Title-Case only: an earlier attempt
+                      made this case-insensitive and it produced a false
+                      positive on F4/fil Q99_PHONE_ADVICE_CLOSED, a clean,
+                      correct sentence that legitimately contains the
+                      ordinary lowercase phrase "numero ng telepono" ("phone
+                      number") as normal Filipino vocabulary, not a leaked
+                      cover-sheet fragment — Title-Case is what actually
+                      distinguishes the leaked-label pattern from ordinary
+                      sentence content built from the same words.
+                      (b) contains a 5+ underscore run AND is over 100
+                      chars. The underscore run alone is NOT safe to flag —
+                      "Month _________ Year__________" is a legitimate,
+                      widely-used bilingual fill-in-the-blank convention for
+                      date fields (confirmed clean at 78-89 chars across
+                      several F3/F4 locales) — but every confirmed-corrupt
+                      row carrying only an underscore run as its signal
+                      (duplicated blank-fill labels, or a leaked English
+                      question fragment bleeding in) was 103-186 chars, so
+                      the length gate is kept here specifically as the
+                      guard that separates the two, not dropped as a first
+                      instinct might suggest.
+
+  Rule D (orphaned    A value that (after stripping) STARTS with an
+  tag fragment)       orphaned placeholder-tag close — `_input]` or
+                      `_INPUT)` (case-insensitive) at position 0, with no
+                      matching `[` opening bracket anywhere before it in the
+                      string. Found on F3 FACILITY_NAME (Q88's prompt-fill
+                      value) across all 7 locales, all with distinct garbage
+                      tails ("_INPUT)? Days Minutes", "_input] the facility
+                      you", "_INPUT) Days Adlaw Minutes Minutos") — a
+                      truncated/mis-sliced templated tag, invisible to
+                      Rules A-C (legacy carries the identical corruption, so
+                      Rule A is silent too; it's not in FIELD_CONTROL, and
+                      has none of Rule C's markers). IMPORTANT: this marker
+                      is NOT safe as a general "contains an orphaned tag"
+                      check — `[facility_name_input]` and similar bracketed
+                      placeholders appear correctly, mid-sentence, in dozens
+                      of OTHER legitimate items (Q66/Q88/Q143/Q144/Q162/Q172
+                      all use it as an intentional prompt-fill). Anchoring
+                      to "value literally starts with the orphaned closing
+                      fragment" is what keeps this specific — verified
+                      against the full fleet: exactly 7 hits, all
+                      FACILITY_NAME, zero collisions with the ~30 legitimate
+                      mid-sentence placeholder usages.
+
+Rule-completeness caveat: these four rules were derived from the specific
+corrupt examples found by hand plus one review round that independently
+found 3 more variants the first pass missed. They are NOT proven exhaustive
+— absence from this tool's report is not proof a row is clean. Treat "0
+Rule-B/C/D defects" as "none of the KNOWN corruption patterns detected,"
+not as a completeness guarantee, when Task 0.4 or later tasks build on this.
 
 Usage:
     py bridge_check.py --check                  # report only, no writes
@@ -102,10 +164,12 @@ INSTRUMENTS = {
 }
 LOCALES = ["fil", "bcl", "bis", "ceb", "war", "hil", "ilo"]
 
-GLUED_MARKERS = re.compile(
-    r"Email address|Mobile Number|Questionnaire No|Numero ng Telepono|_{5,}"
-)
-ADMIN_LEAK_MARKERS = re.compile(r"aCodes:")
+GLUED_FIELD_LABEL_MARKERS = re.compile(
+    r"Email address|Mobile Number|Questionnaire No|Numero ng Telepono"
+)  # deliberately case-SENSITIVE, Title-Case only — see docstring false-positive note
+UNDERSCORE_RUN = re.compile(r"_{5,}")
+ADMIN_LEAK_MARKERS = re.compile(r"resulta|acodes:", re.IGNORECASE)
+ORPHANED_TAG_START = re.compile(r"^_input[\)\]]", re.IGNORECASE)
 
 
 def load_json(path):
@@ -217,19 +281,33 @@ def main():
                     fix_value = legacy_val  # recorded for the report; NOT applied
                     auto_apply = False
 
-                # Rule B: FIELD_CONTROL admin-leak literal markers, verified
-                # by hand against the confirmed corruption (see module docstring).
+                # Rule B: FIELD_CONTROL admin-leak — substring match (see
+                # module docstring for why exact-match was too narrow).
                 if fired is None and rec == "FIELD_CONTROL" and isinstance(current, str):
-                    stripped = current.strip()
-                    if stripped == "Resulta" or ADMIN_LEAK_MARKERS.search(current):
+                    if ADMIN_LEAK_MARKERS.search(current):
                         fired = "B-admin-leak"
                         fix_value = None  # delete, do not borrow cross-instrument
                         auto_apply = True
 
-                # Rule C: glued English-fragment heuristic (any item).
-                if fired is None and isinstance(current, str) and len(current) > 100 \
-                        and GLUED_MARKERS.search(current):
-                    fired = "C-glued-fragments"
+                # Rule C: two independently-justified sub-checks (see
+                # module docstring — the underscore-run sub-check keeps its
+                # length gate on purpose; the field-label sub-check doesn't
+                # need one).
+                if fired is None and isinstance(current, str):
+                    field_label_leak = GLUED_FIELD_LABEL_MARKERS.search(current)
+                    underscore_leak = len(current) > 100 and UNDERSCORE_RUN.search(current)
+                    if field_label_leak or underscore_leak:
+                        fired = "C-glued-fragments"
+                        fix_value = None
+                        auto_apply = True
+
+                # Rule D: orphaned placeholder-tag fragment (value starts
+                # with an unmatched closing tag — see module docstring for
+                # why this is anchored to the START of the value rather than
+                # a bare "contains" check).
+                if fired is None and isinstance(current, str) \
+                        and ORPHANED_TAG_START.match(current.strip()):
+                    fired = "D-orphaned-tag"
                     fix_value = None
                     auto_apply = True
 
@@ -262,8 +340,8 @@ def main():
                     if apply_mode and auto_apply and fix_value is None:
                         to_delete.append(name)
                     # Note: no Rule currently sets auto_apply=True with a
-                    # non-None fix_value (B/C are always deletions). If that
-                    # ever changes, this surgical approach would need a
+                    # non-None fix_value (B/C/D are always deletions). If
+                    # that ever changes, this surgical approach would need a
                     # value-replace mode too — not implemented, by design:
                     # see the Rule-A docstring on why "copy legacy value" is
                     # unsafe to automate.
