@@ -434,8 +434,22 @@ def main():
     for r in rows:
         kinds[r.kind] = kinds.get(r.kind, 0) + 1
     unparsed = getattr(parse_extract, "last_unparsed_count", 0)
+
+    qnum_counts: dict = {}
+    for r in items:
+        qnum_counts[r.qnum] = qnum_counts.get(r.qnum, 0) + 1
+    unique_qnums = len(qnum_counts)
+    dupe_qnums = sorted(
+        (q for q, c in qnum_counts.items() if c > 1),
+        key=lambda q: (float(q) if q.replace(".", "", 1).isdigit() else float("inf")),
+    )
+
     print(f"{args.instrument}: {len(rows)} rows -> {out_path}")
     print(f"  items={len(items)}  kinds={kinds}  unparsed_multicell_rows={unparsed}")
+    print(
+        f"  item_rows={len(items)}  unique_qnums={unique_qnums}  "
+        f"duplicate_qnum_groups={len(dupe_qnums)}: {dupe_qnums}"
+    )
 
 
 if __name__ == "__main__":

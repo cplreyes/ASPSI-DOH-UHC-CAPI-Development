@@ -11,7 +11,7 @@ def test_normalize_text_folds_quotes_and_prefix():
 
 
 def test_normalize_text_collapses_whitespace_without_strip():
-    assert normalize_text("10.  What   is  it?") == "10. What is it?"
+    assert normalize_text("20.  Kindly   state  it.") == "20. Kindly state it."
 
 
 def test_row_csv_round_trip():
@@ -54,7 +54,7 @@ def test_parse_extract_captures_skip_fragment():
     md = open(FIXTURES / "f3_snippet.md", encoding="utf-8").read()
     items = [r for r in parse_extract(md, "F3") if r.kind == "item"]
     q61 = next(r for r in items if r.qnum == "61")
-    assert "q97" in q61.skip.lower()
+    assert "q930" in q61.skip.lower()
 
 
 def test_parse_extract_captures_mark_span_option():
