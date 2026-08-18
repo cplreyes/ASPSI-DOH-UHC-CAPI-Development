@@ -68,7 +68,11 @@
   "type": "single"
  },
  "Q13": {
-  "label": "Has the increase in equipment been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "label": "Has there been an increase in equipment in this facility?",
+  "type": "single"
+ },
+ "Q13.1": {
+  "label": "If yes, was it a result of the UHC Act enacted in 2019?",
   "type": "single"
  },
  "Q14": {
@@ -76,7 +80,11 @@
   "type": "long-text"
  },
  "Q15": {
-  "label": "Has the increase in supplies been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "label": "Has there been an increase in supplies in this facility?",
+  "type": "single"
+ },
+ "Q15.1": {
+  "label": "If yes, was it a result of the UHC Act enacted in 2019?",
   "type": "single"
  },
  "Q16": {
@@ -84,36 +92,72 @@
   "type": "long-text"
  },
  "Q17": {
-  "label": "Has the use of electronic medical records at the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "label": "Have electronic medical records been used in this facility?",
+  "type": "single"
+ },
+ "Q17.1": {
+  "label": "If yes, was it a result of the UHC Act enacted in 2019?",
   "type": "single"
  },
  "Q18": {
-  "label": "Have the changes to the referral system (inbound or outbound) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "label": "Have there been changes in the referral system in this facility?",
+  "type": "single"
+ },
+ "Q18.1": {
+  "label": "If yes, was it a result of the UHC Act enacted in 2019?",
   "type": "single"
  },
  "Q19": {
-  "label": "Have the changes in staffing been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "label": "Have there been changes in the facility staffing?",
+  "type": "single"
+ },
+ "Q19.1": {
+  "label": "If yes, was it a result of the UHC Act enacted in 2019?",
   "type": "single"
  },
  "Q20": {
-  "label": "Have the improved clinical practice guidelines been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "label": "Has there been an improvement in the clinical practice guidelines of this facility?",
+  "type": "single"
+ },
+ "Q20.1": {
+  "label": "If yes, was it a result of the UHC Act enacted in 2019?",
   "type": "single"
  },
  "Q21": {
-  "label": "Have the DOH licensing standards been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "label": "Does this facility implement DOH licensing standards?",
+  "type": "single"
+ },
+ "Q21.1": {
+  "label": "If yes, was it a result of the UHC Act enacted in 2019?",
   "type": "single"
  },
  "Q22": {
-  "label": "Have the PhilHealth accreditation requirements been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "label": "Does this facility implement PhilHealth accreditation requirements?",
+  "type": "single"
+ },
+ "Q22.1": {
+  "label": "If yes, was it a result of the UHC Act enacted in 2019?",
   "type": "single"
  },
  "Q23": {
-  "label": "Have the service delivery protocols been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "label": "Does this facility implement service delivery protocols?",
+  "type": "single"
+ },
+ "Q23.1": {
+  "label": "If yes, was it a result of the UHC Act enacted in 2019?",
   "type": "single"
  },
  "Q24": {
-  "label": "Have the primary care quality measures been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?",
+  "label": "Does this facility implement primary care quality measures?",
   "type": "single"
+ },
+ "Q24.1": {
+  "label": "If yes, was it a result of the UHC Act enacted in 2019?",
+  "type": "single"
+ },
+ "Q24.2": {
+  "label": "If yes, what are the primary care quality measures are you implementing?",
+  "type": "multi"
  },
  "Q25": {
   "label": "Which of the following do you expect to change in your personal work as a health worker under UHC?",
@@ -161,7 +205,7 @@
  },
  "Q36": {
   "label": "Why is your facility applying to become an accredited YAKAP/Konsulta provider?",
-  "type": "multi"
+  "type": "single"
  },
  "Q37": {
   "label": "Why is your facility not accredited?",
@@ -173,7 +217,7 @@
  },
  "Q39": {
   "label": "Why would your facility consider it?",
-  "type": "multi"
+  "type": "single"
  },
  "Q40": {
   "label": "What might convince your facility to become a primary care provider?",
@@ -451,72 +495,92 @@
   "label": "I am satisfied with the professional development opportunities I have in my job.",
   "type": "single"
  },
- "Q109": {
+ "Q108": {
   "label": "In addition to your salary, what other benefits as an accredited healthcare provider do you receive?",
   "type": "long-text"
  },
- "Q110": {
+ "Q109": {
   "label": "What additional resources do you need to perform well in this job?",
   "type": "multi"
  },
- "Q111": {
+ "Q110": {
   "label": "What opportunities to develop leadership skill/s would be useful to you?",
   "type": "multi"
  },
- "Q112": {
+ "Q111": {
   "label": "Which of the following professional development opportunity/ies is/are currently provided to you by your facility? Check all that apply",
   "type": "multi"
  },
- "Q113": {
+ "Q112": {
   "label": "Which of the following professional development opportunity/ies would be most useful to you?",
   "type": "multi"
  },
- "Q114": {
+ "Q113": {
   "label": "In the past month, I have worked beyond my scheduled hours.",
   "type": "single"
  },
- "Q115": {
+ "Q114": {
   "label": "I have been compensated for working overtime.",
   "type": "single"
  },
- "Q116": {
+ "Q115": {
   "label": "My work is emotionally exhausting.",
   "type": "single"
  },
- "Q117": {
+ "Q116": {
   "label": "My work frustrates me.",
   "type": "single"
  },
- "Q118": {
+ "Q117": {
   "label": "I feel worn out at the end of a working day.",
   "type": "single"
  },
- "Q119": {
+ "Q118": {
   "label": "I feel exhausted every morning at the thought of another day at work.",
   "type": "single"
  },
- "Q120": {
+ "Q119": {
   "label": "I feel that every working hour is tiring for me.",
   "type": "single"
  },
- "Q121": {
+ "Q120": {
   "label": "I have enough energy for family and friends during leisure time.",
   "type": "single"
  },
- "Q122": {
+ "Q121": {
   "label": "I have worked overtime for:",
   "type": "single"
  },
- "Q123": {
+ "Q122": {
   "label": "Have you considered leaving this facility?",
   "type": "single"
  },
- "Q124": {
+ "Q123": {
   "label": "Why are you planning on leaving this facility?",
   "type": "multi"
  },
- "Q125": {
+ "Q124": {
   "label": "What are you planning to do after leaving this facility?",
   "type": "multi"
+ },
+ "FB1": {
+  "label": "Was the questionnaire comprehensive?",
+  "type": "single"
+ },
+ "FB2": {
+  "label": "Did we adequately cover the topic?",
+  "type": "single"
+ },
+ "FB3": {
+  "label": "Are there any questions you expected that we would ask and that we didn't?",
+  "type": "long-text"
+ },
+ "FB4": {
+  "label": "Are there any questions you feel may be too sensitive or that may affect the response rate that we should consider deleting?",
+  "type": "long-text"
+ },
+ "FB5": {
+  "label": "Was the questionnaire too long, too short, or about right?",
+  "type": "long-text"
  }
 }
