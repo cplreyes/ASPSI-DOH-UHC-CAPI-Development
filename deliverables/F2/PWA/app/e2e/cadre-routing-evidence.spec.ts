@@ -66,12 +66,14 @@ async function passConsent(page: import('@playwright/test').Page) {
 /** Sets Q5 through the live Section A form (not IndexedDB) so
  * shouldShowSection's `values.Q5` reflects it exactly the way a real
  * respondent's answer would, then reads back the desktop sidebar's list of
- * visible section names. */
+ * visible section names. Q5 renders as one radio input per choice, each
+ * wrapped in its own <label> (Question.tsx, `case 'single'`) — no <select>,
+ * so target the radio directly by its exact accessible name. */
 async function readVisibleSections(page: import('@playwright/test').Page, role: string): Promise<string[]> {
-  await page.getByLabel(/What is your role at this health facility/i).selectOption({ label: role }).catch(async () => {
-    // Radio-group rendering fallback if this isn't a <select>.
-    await page.getByRole('radio', { name: role }).check();
-  });
+  const radio = page.getByRole('radio', { name: role, exact: true });
+  await expect(radio).toBeVisible({ timeout: 10000 });
+  await radio.check({ force: true });
+  await expect(radio).toBeChecked();
   await page.waitForTimeout(300);
   const items = page.locator('aside').first().getByRole('button');
   const count = await items.count();
@@ -89,44 +91,51 @@ const SEC_D = 'No Balance Billing';
 const SEC_E = 'Expanded Health Programs';
 const SEC_G = 'Professional Setting, Charging';
 
-const CADRES: Array<{ role: string; expectSections: string[]; skipSections: string[] }> = [
+// `label` is the display name for the test title / evidence filename;
+// `q5Value` is the EXACT Q5 choice text (items.ts) the radio's accessible
+// name matches — several roles print longer than their common short name
+// (e.g. Pharmacist's real Q5 option is the combined
+// "Pharmacist/Dispenser/Assistant Pharmacist" string, R12/Task 3.2).
+const CADRES: Array<{ label: string; q5Value: string; expectSections: string[]; skipSections: string[] }> = [
   {
-    role: 'Physician/Doctor',
+    label: 'Physician-Doctor',
+    q5Value: 'Physician/Doctor',
     expectSections: [SEC_C, SEC_D, SEC_E, SEC_G],
     skipSections: [],
   },
   {
-    role: 'Nurse',
+    label: 'Nurse',
+    q5Value: 'Nurse',
     expectSections: [SEC_C, SEC_D, SEC_E],
     skipSections: [SEC_G],
   },
   {
-    role: 'Pharmacist',
+    label: 'Pharmacist',
+    q5Value: 'Pharmacist/Dispenser/Assistant Pharmacist',
     expectSections: [SEC_E],
     skipSections: [SEC_C, SEC_D, SEC_G],
   },
   {
-    role: 'Dentist aide',
+    label: 'Dentist-aide',
+    q5Value: 'Dentist aide',
     expectSections: [],
     skipSections: [SEC_C, SEC_D, SEC_E, SEC_G],
   },
 ];
 
 for (const cadre of CADRES) {
-  test(`cadre routing: ${cadre.role} sees the correct section set`, async ({ page }) => {
+  test(`cadre routing: ${cadre.label} sees the correct section set`, async ({ page }) => {
     const state = defaultState();
     await installMockBackend(page, state);
     await page.goto('/');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(800);
-    await seedEnrollmentAndDraft(page, cadre.role.replace(/[^A-Za-z]/g, ''));
+    await seedEnrollmentAndDraft(page, cadre.label.replace(/[^A-Za-z]/g, ''));
     await page.reload();
     await passConsent(page);
 
-    const roleSelect = page.getByLabel(/What is your role at this health facility/i);
-    await expect(roleSelect).toBeVisible({ timeout: 10000 });
-    const names = await readVisibleSections(page, cadre.role);
-    console.log('DEBUG sidebar names for', cadre.role, ':', JSON.stringify(names));
+    const names = await readVisibleSections(page, cadre.q5Value);
+    console.log('DEBUG sidebar names for', cadre.label, ':', JSON.stringify(names));
 
     for (const expected of cadre.expectSections) {
       expect(names.some((n) => n.includes(expected))).toBe(true);
@@ -136,7 +145,7 @@ for (const cadre of CADRES) {
     }
 
     await page.screenshot({
-      path: `docs/uat-fix-evidence-cadre-routing/${cadre.role.replace(/[^A-Za-z]/g, '-')}.png`,
+      path: `docs/uat-fix-evidence-cadre-routing/${cadre.label}.png`,
       fullPage: false,
     });
   });
