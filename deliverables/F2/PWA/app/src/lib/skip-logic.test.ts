@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { shouldShow, shouldShowSection } from './skip-logic';
+import { shouldShow, shouldShowSection, filterChoices } from './skip-logic';
 
 describe('shouldShow', () => {
   it('returns true when no predicate is registered for the item', () => {
@@ -80,6 +80,45 @@ describe('shouldShow', () => {
         expect(shouldShow('B', 'Q24.2', { Q12: 'Yes', Q24: 'Yes' })).toBe(true);
         expect(shouldShow('B', 'Q24.1', { Q12: 'Yes', Q24: 'No' })).toBe(false);
         expect(shouldShow('B', 'Q24.2', { Q12: 'Yes', Q24: 'No' })).toBe(false);
+      });
+    });
+
+    // Tier-2 matrix gap (Task 3.4, 2026-08-18): Q26–Q30 had zero direct
+    // coverage — only ever exercised indirectly as a side effect of other
+    // tests. Each shows only when its own Q25 multi-select choice was
+    // picked; Q30 is the F2-inventory.md anomaly #7 defect-fix (matches
+    // Q25's real choice value 'Preventative health care', not Q30's own
+    // printed gate text 'Preventive healthcare' — see
+    // aug17-approved-divergences.md).
+    describe('Q26–Q30 (per-choice Q25 follow-ups)', () => {
+      it('hides Q25 when Q12 is No, shows it when Q12 is Yes', () => {
+        expect(shouldShow('B', 'Q25', { Q12: 'No' })).toBe(false);
+        expect(shouldShow('B', 'Q25', { Q12: 'Yes' })).toBe(true);
+      });
+
+      it('shows each Q26–Q29 only when its own choice is in Q25, not a sibling choice', () => {
+        const base = { Q12: 'Yes', Q25: ['Salary', 'Working hours'] };
+        expect(shouldShow('B', 'Q26', base)).toBe(true); // Salary selected
+        expect(shouldShow('B', 'Q27', base)).toBe(false); // Number of patients not selected
+        expect(shouldShow('B', 'Q28', base)).toBe(true); // Working hours selected
+        expect(shouldShow('B', 'Q29', base)).toBe(false); // Standards to follow not selected
+      });
+
+      it('hides Q26–Q29 entirely when Q12 is No, even if Q25 lists the choice', () => {
+        expect(shouldShow('B', 'Q26', { Q12: 'No', Q25: ['Salary'] })).toBe(false);
+      });
+
+      it('defect-fix: Q30 matches Q25’s real choice value, not Q30’s own printed gate text', () => {
+        expect(shouldShow('B', 'Q30', { Q12: 'Yes', Q25: ['Preventative health care'] })).toBe(true);
+        // The paper's own Q30 gate note reads "Preventive healthcare" (no 'a') —
+        // that string is never a real Q25 value, so it must NOT show Q30.
+        expect(shouldShow('B', 'Q30', { Q12: 'Yes', Q25: ['Preventive healthcare'] })).toBe(false);
+        expect(shouldShow('B', 'Q30', { Q12: 'Yes', Q25: ['Salary'] })).toBe(false);
+      });
+
+      it('hides Q26–Q30 when Q25 is unanswered', () => {
+        expect(shouldShow('B', 'Q26', { Q12: 'Yes' })).toBe(false);
+        expect(shouldShow('B', 'Q30', { Q12: 'Yes' })).toBe(false);
       });
     });
   });
@@ -319,6 +358,52 @@ describe('shouldShow', () => {
       expect(shouldShow('J', 'Q123', { Q122: yes })).toBe(true);
       expect(shouldShow('J', 'Q124', { Q122: yes })).toBe(true);
     });
+  });
+});
+
+// Tier-2 matrix gap (Task 3.4, 2026-08-18): filterChoices had zero coverage
+// anywhere in the suite despite gating a real per-role choice list (Q6
+// specialty). MD_SPECIALTY_ROLES (Physician/Doctor, Physician assistant) see
+// the full medical specialty list; every other role sees only the two
+// role-agnostic options.
+describe('filterChoices', () => {
+  const fullSpecialtyList = [
+    { value: 'No specialty' },
+    { value: 'Internal Medicine' },
+    { value: 'Pediatrics' },
+    { value: 'Others (specify)' },
+  ];
+
+  it('passes the full list through unfiltered for Physician/Doctor', () => {
+    const out = filterChoices('A', 'Q6', { Q5: 'Physician/Doctor' }, fullSpecialtyList);
+    expect(out).toEqual(fullSpecialtyList);
+  });
+
+  it('passes the full list through unfiltered for Physician assistant', () => {
+    const out = filterChoices('A', 'Q6', { Q5: 'Physician assistant' }, fullSpecialtyList);
+    expect(out).toEqual(fullSpecialtyList);
+  });
+
+  it('narrows to the two role-agnostic options for a non-MD role (Nurse)', () => {
+    const out = filterChoices('A', 'Q6', { Q5: 'Nurse' }, fullSpecialtyList);
+    expect(out.map((c) => c.value)).toEqual(['No specialty', 'Others (specify)']);
+  });
+
+  it('narrows for every ROLES_WITH_SPECIALTY member that is not MD/PA', () => {
+    for (const role of ['Administrator', 'Midwife', 'Dentist']) {
+      const out = filterChoices('A', 'Q6', { Q5: role }, fullSpecialtyList);
+      expect(out.map((c) => c.value)).toEqual(['No specialty', 'Others (specify)']);
+    }
+  });
+
+  it('is a no-op for any other item/section (only A.Q6 has a registered filter)', () => {
+    const out = filterChoices('A', 'Q7', { Q5: 'Nurse' }, fullSpecialtyList);
+    expect(out).toEqual(fullSpecialtyList);
+  });
+
+  it('is a no-op when Q5 is unset (role unknown → show the full list)', () => {
+    const out = filterChoices('A', 'Q6', {}, fullSpecialtyList);
+    expect(out).toEqual(fullSpecialtyList);
   });
 });
 
