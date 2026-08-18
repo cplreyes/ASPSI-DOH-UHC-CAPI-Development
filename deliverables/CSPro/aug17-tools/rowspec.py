@@ -63,7 +63,7 @@ ROW_FIELDS = [
     "messages",
 ]
 
-KINDS = {"item", "section_header", "note", "consent", "instruction"}
+KINDS = {"item", "section_header", "note", "consent", "instruction", "disposition"}
 
 
 @dataclass
