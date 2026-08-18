@@ -690,6 +690,18 @@ def diff_instrument(inst: str, paper_rows: list, build_rows: list, register: dic
         for extra_b in b_list[n:]:
             findings.append(Finding("EXTRA_IN_BUILD", q,
                 f'build {extra_b.item_name} (qnum {q}): "{extra_b.stem[:100]}" has no paper counterpart at this position'))
+            if p_list:
+                # Scope-add fix (post-Task-3.4, controller-directed): impl-1-4 (F3
+                # lane) found that a build row beyond paper's row count at this qnum
+                # (e.g. paper's ONE combined income question splitting into build's
+                # Q18_INCOME_AMOUNT + Q18_INCOME_BRACKET) was previously NEVER run
+                # through _compare_pair at all -- content-invisible to Tier-1 forever
+                # once the qnum's EXTRA_IN_BUILD notice above is registered once, even
+                # if the row's actual content later regresses. Broadcast-compare it
+                # against paper's LAST row at this qnum, IN ADDITION to (not instead
+                # of) the structural EXTRA_IN_BUILD notice, so its real stem/options/
+                # etc. are visible and verifiable, not just its presence.
+                findings.extend(_compare_pair(q, p_list[-1], extra_b))
 
     for r in unmatched_build:
         findings.append(Finding("UNMATCHED_BUILD", "",
