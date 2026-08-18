@@ -94,7 +94,7 @@ describe('evaluateCrossField', () => {
   });
 
   it('flags GATE-05 when a pharmacist has answered Section C items', () => {
-    const out = evaluateCrossField({ Q5: 'Pharmacist/Dispenser or Assistant Pharmacist', Q31: 'Yes' });
+    const out = evaluateCrossField({ Q5: 'Pharmacist/Dispenser/Assistant Pharmacist', Q31: 'Yes' });
     expect(out.map((w) => w.id)).toContain('GATE-05');
   });
 
@@ -112,7 +112,7 @@ describe('evaluateCrossField', () => {
   });
 
   it('R6 #820 (supersedes #539): no GATE-05 for Nutrition-Dietician who answered Section C', () => {
-    const out = evaluateCrossField({ Q5: 'Nutrition-Dietician or Nutrition Action Officer/Coordinator', Q31: 'Yes' });
+    const out = evaluateCrossField({ Q5: 'Nutrition action officer/coordinator/Nutritionist-Dietician', Q31: 'Yes' });
     expect(out.map((w) => w.id)).not.toContain('GATE-05');
   });
 

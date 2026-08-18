@@ -49,12 +49,21 @@ export function getOrCreateDraftId(): string {
 // are no longer in the regenerated enums — the resumed respondent's answer
 // would read as unanswered and role-gated sections would mis-route. Migrate
 // on load; harmless once no pre-R6 drafts remain.
+// aug17 migration (R12, Task 3.2, 2026-08-19): the same two Q5 roles were
+// reworded again, to the Aug-17 paper's verbatim wording (skip-logic.ts's
+// SECTION_CDE_ROLES/SECTION_E_ROLES/ROLES_WITH_SPECIALTY). Chained onto the
+// R6 targets below so a draft saved any time since R6 still resolves to the
+// current canonical value in one pass.
 const RENAMED_VALUES: Record<string, Record<string, string>> = {
   Q2: { Project: 'Project-based' },
   Q5: {
     'Nutrition action officer/ coordinator':
-      'Nutrition-Dietician or Nutrition Action Officer/Coordinator',
-    'Pharmacist/Dispenser': 'Pharmacist/Dispenser or Assistant Pharmacist',
+      'Nutrition action officer/coordinator/Nutritionist-Dietician',
+    'Pharmacist/Dispenser': 'Pharmacist/Dispenser/Assistant Pharmacist',
+    // R6 → aug17 chain targets (R12 reworded these again; see comment above).
+    'Nutrition-Dietician or Nutrition Action Officer/Coordinator':
+      'Nutrition action officer/coordinator/Nutritionist-Dietician',
+    'Pharmacist/Dispenser or Assistant Pharmacist': 'Pharmacist/Dispenser/Assistant Pharmacist',
   },
 };
 

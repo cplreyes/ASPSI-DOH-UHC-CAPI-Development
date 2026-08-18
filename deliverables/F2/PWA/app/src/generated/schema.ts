@@ -10,7 +10,7 @@ export const sectionASchema = z.object({
   Q2_other: z.string().optional(),
   Q3: z.enum(['Male', 'Female']),
   Q4: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(18).max(99),
-  Q5: z.enum(['Administrator', 'Physician/Doctor', 'Physician assistant', 'Nurse', 'Nursing assistant', 'Pharmacist/Dispenser or Assistant Pharmacist', 'Midwife', 'Laboratory technician', 'Medical/ radiologic technologist', 'Health promotion officer', 'Nutrition-Dietician or Nutrition Action Officer/Coordinator', 'Physical Therapist', 'Dentist', 'Dentist aide', 'Barangay Health Worker', 'Other (specify)']),
+  Q5: z.enum(['Administrator', 'Midwife', 'Dentist', 'Physician/Doctor', 'Laboratory technician', 'Dentist aide', 'Physician assistant', 'Medical/ radiologic technologist', 'Barangay Health Worker', 'Nurse', 'Health promotion officer', 'Other (specify)', 'Nursing assistant', 'Nutrition action officer/coordinator/Nutritionist-Dietician', 'Pharmacist/Dispenser/Assistant Pharmacist', 'Physical Therapist']),
   Q5_other: z.string().optional(),
   Q6: z.enum(['No specialty', 'Nuclear Medicine', 'Physical and Rehabilitation Medicine', 'Anesthesia', 'Obstetrics and Gynecology', 'Psychiatry', 'Dermatology', 'Occupational Medicine', 'Public health', 'Emergency Medicine', 'Ophthalmology', 'Radiology', 'Family Medicine', 'Orthopedics', 'Research', 'General Surgery', 'Otorhinolaryngology (ENT)', 'Others (specify)', 'Internal Medicine', 'Pathology', 'Neurology', 'Pediatrics']).optional(),
   Q6_other: z.string().optional(),

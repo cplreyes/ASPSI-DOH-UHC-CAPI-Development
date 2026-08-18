@@ -23,10 +23,20 @@ const SECTION_G_ROLES = new Set(['Physician/Doctor', 'Dentist']);
 // in the R2-#114 set; the new spec excludes both. They leaked C/D/E to those
 // two personas (Aidan re-test 2026-06-16) until removed here.
 // R6 #820 (2026-07-02) SUPERSEDES #539 for the Nutrition role only: the role
-// is renamed 'Nutrition-Dietician or Nutrition Action Officer/Coordinator'
-// and routes with Administrator/Nurse/Midwife again (C/D/E1/E2; still not G)
-// — the paper's own C/D/E1 gates include nutritionists-dieticians.
+// routes with Administrator/Nurse/Midwife again (C/D/E1/E2; still not G) —
+// the paper's own C/D/E1 gates include nutritionists-dieticians.
 // 'Physician assistant' stays excluded.
+// aug17 migration (R12, Task 3.2, 2026-08-19): the Nutrition and Pharmacist
+// role VALUES below are reworded to the Aug-17 paper's verbatim Q5 print
+// order/wording ('Nutrition action officer/coordinator/Nutritionist-Dietician',
+// 'Pharmacist/Dispenser/Assistant Pharmacist') — was
+// 'Nutrition-Dietician or Nutrition Action Officer/Coordinator' /
+// 'Pharmacist/Dispenser or Assistant Pharmacist' (Apr-20 build wording, kept
+// through Task 3.1 to avoid breaking gating mid-spec-rewrite). Role
+// MEMBERSHIP is unchanged — same 6 roles in C/D/E1, same +1 pharmacist in E2
+// — only the string values change. See spec/F2-Spec.md Q5 row +
+// aug17-approved-divergences.md is NOT touched here since post-rename the
+// build's Q5 values now match the paper exactly (no divergence to register).
 // Exported so cross-field.ts (the C/D data-quality gate, GATE-05) shares one
 // source of truth and can't drift from the section gate — the drift that let
 // #539 slip in.
@@ -37,13 +47,14 @@ export const SECTION_CDE_ROLES = new Set([
   'Midwife',
   'Dentist',
   // R6 #820: routed like Administrator/Nurse/Midwife (supersedes #539 for
-  // this one role).
-  'Nutrition-Dietician or Nutrition Action Officer/Coordinator',
+  // this one role). Value reworded R12/Task 3.2 — see comment block above.
+  'Nutrition action officer/coordinator/Nutritionist-Dietician',
 ]);
 const SECTION_E_ROLES = new Set([
   ...SECTION_CDE_ROLES,
-  // R6 #820: renamed from 'Pharmacist/Dispenser'.
-  'Pharmacist/Dispenser or Assistant Pharmacist',
+  // R6 #820: renamed from 'Pharmacist/Dispenser'. Value reworded R12/Task
+  // 3.2 — see comment block above.
+  'Pharmacist/Dispenser/Assistant Pharmacist',
 ]);
 
 const ROLES_WITH_SPECIALTY = new Set([
@@ -54,8 +65,9 @@ const ROLES_WITH_SPECIALTY = new Set([
   'Midwife',
   'Dentist',
   // R6 #820: same Section A treatment as Administrator/Nurse/Midwife (the
-  // Q6 choice filter still limits non-MD roles to the role-agnostic options).
-  'Nutrition-Dietician or Nutrition Action Officer/Coordinator',
+  // Q6 choice filter still limits non-MD roles to the role-agnostic
+  // options). Value reworded R12/Task 3.2 — see comment block above.
+  'Nutrition action officer/coordinator/Nutritionist-Dietician',
 ]);
 
 // Q6 specialty list filter — roles whose specialties match the medical-doctor list (Q6's
@@ -99,12 +111,44 @@ const predicates: Record<string, Record<string, Predicate>> = {
     Q22: (v) => v.Q12 === 'Yes',
     Q23: (v) => v.Q12 === 'Yes',
     Q24: (v) => v.Q12 === 'Yes',
+    // aug17 migration (Task 3.2, 2026-08-19): the eleven new `.1`/`.2`
+    // UHC-attribution sub-items (spec.md's Section-B rewrite, Task 3.1) —
+    // each shows only when its parent Yes/No stem was answered Yes. Ids are
+    // literal dots ('Q13.1'), matching `maps/F2-renames.csv` and the item id
+    // the spec's `pdf_q` column emits into `items.ts` — NOT underscores, so
+    // these keys must stay quoted strings (an unquoted `Q13.1:` is invalid
+    // JS). The generator's `loadConditionalItemKeys()` regex in
+    // parse-spec.ts doesn't match quoted dotted keys, so these don't get
+    // auto-detected as conditional via skip-logic.ts — harmless here because
+    // each `.1`/`.2` row's spec `required` column is already `conditional`,
+    // which independently makes isConditional() return true (see
+    // parse-spec.ts's isConditional(), condition 1).
+    'Q13.1': (v) => v.Q12 === 'Yes' && typeof v.Q13 === 'string' && v.Q13.startsWith('Yes'),
+    'Q15.1': (v) => v.Q12 === 'Yes' && typeof v.Q15 === 'string' && v.Q15.startsWith('Yes'),
+    'Q17.1': (v) => v.Q12 === 'Yes' && typeof v.Q17 === 'string' && v.Q17.startsWith('Yes'),
+    'Q18.1': (v) => v.Q12 === 'Yes' && typeof v.Q18 === 'string' && v.Q18.startsWith('Yes'),
+    'Q19.1': (v) => v.Q12 === 'Yes' && typeof v.Q19 === 'string' && v.Q19.startsWith('Yes'),
+    'Q20.1': (v) => v.Q12 === 'Yes' && typeof v.Q20 === 'string' && v.Q20.startsWith('Yes'),
+    'Q21.1': (v) => v.Q12 === 'Yes' && typeof v.Q21 === 'string' && v.Q21.startsWith('Yes'),
+    'Q22.1': (v) => v.Q12 === 'Yes' && typeof v.Q22 === 'string' && v.Q22.startsWith('Yes'),
+    'Q23.1': (v) => v.Q12 === 'Yes' && typeof v.Q23 === 'string' && v.Q23.startsWith('Yes'),
+    'Q24.1': (v) => v.Q12 === 'Yes' && typeof v.Q24 === 'string' && v.Q24.startsWith('Yes'),
+    // Q24's second sub-item (primary care quality measures) — same gate as
+    // Q24.1, both fire off Q24=Yes independently (not chained on each other).
+    'Q24.2': (v) => v.Q12 === 'Yes' && typeof v.Q24 === 'string' && v.Q24.startsWith('Yes'),
     Q25: (v) => v.Q12 === 'Yes',
     // Q26–Q30 show only for their respective Q25 selection
     Q26: (v) => v.Q12 === 'Yes' && q25Includes(v, 'Salary'),
     Q27: (v) => v.Q12 === 'Yes' && q25Includes(v, 'Number of patients'),
     Q28: (v) => v.Q12 === 'Yes' && q25Includes(v, 'Working hours'),
     Q29: (v) => v.Q12 === 'Yes' && q25Includes(v, 'Standards to follow'),
+    // aug17 migration (Task 3.2, 2026-08-19): matches Q25's actual choice
+    // value ('Preventative health care'), not Q30's own printed gate text
+    // ('Preventive healthcare' — F2-inventory.md anomaly #7, a paper-author
+    // spelling/spacing mismatch between the two). Matching the literal Q30
+    // text would never fire (that string isn't a real Q25 value), hiding
+    // Q30 permanently — defect fix, single spelling matching the real
+    // choice value. See aug17-approved-divergences.md.
     Q30: (v) => v.Q12 === 'Yes' && q25Includes(v, 'Preventative health care'),
   },
   C: {
@@ -119,6 +163,17 @@ const predicates: Record<string, Record<string, Predicate>> = {
     // accredited) skips the whole C tail (Q37–Q40) → Q41. Q38 ("would you
     // consider becoming accredited?") only makes sense for the not-yet-
     // accredited path, so gate it on Q34=No like Q37.
+    // aug17 migration (Task 3.2, 2026-08-19): Q34 also has "I don't know
+    // what PhilHealth YAKAP/Konsulta accreditation is" and "Other (specify)"
+    // options beyond Yes/No. F2-inventory.md's routing table (line 285)
+    // documents the paper's printed per-option note for "I don't know" as
+    // an explicit `<proceed to Q41>` — the whole C tail (Q35–Q40) is
+    // skipped, not just Q37 as an incomplete read of the normalized CSV's
+    // single `skip` cell might suggest (that cell only captured the "No"
+    // note). The strict `=== 'No'` checks on Q37/Q38 already produce exactly
+    // this: neither "I don't know" nor "Other (specify)" satisfies them, so
+    // both fall straight through to Q41. Verified correct as-is — no change.
+    // See aug17-approved-divergences.md for the register entry.
     Q38: (v) => v.Q31 === 'Yes' && v.Q34 === 'No',
     Q39: (v) => v.Q31 === 'Yes' && v.Q38 === 'Yes',
     Q40: (v) => v.Q31 === 'Yes' && v.Q38 === 'No',
@@ -187,6 +242,13 @@ const predicates: Record<string, Record<string, Predicate>> = {
   // Q123/Q124 still gate on "are you planning to leave" (was Q124/Q125←Q123,
   // now Q123/Q124←Q122).
   J: {
+    // Defect fix (Task 3.2, 2026-08-19): the Aug-17 paper's own printed note
+    // for Q121 says "<Skip if you have answered 'Never' in Q114>", but Q114
+    // is "I have been compensated for working overtime" — Q121 ("I have
+    // worked overtime for:") logically gates on Q113 ("I have worked beyond
+    // my scheduled hours") instead (F2-inventory.md anomaly #8 / open item
+    // #3). Gates on Q113 here, not the paper's literal Q114 reference. See
+    // aug17-approved-divergences.md.
     Q121: (v) => typeof v.Q113 === 'string' && v.Q113 !== 'Never',
     Q123: (v) => q122IsYes(v.Q122),
     Q124: (v) => q122IsYes(v.Q122),

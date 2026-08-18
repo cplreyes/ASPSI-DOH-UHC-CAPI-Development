@@ -8,9 +8,9 @@ describe('shouldShow', () => {
 
   describe('Section A', () => {
     it('hides Q6 when Q5 is not a role with specialty', () => {
-      expect(shouldShow('A', 'Q6', { Q5: 'Pharmacist/Dispenser or Assistant Pharmacist' })).toBe(false);
+      expect(shouldShow('A', 'Q6', { Q5: 'Pharmacist/Dispenser/Assistant Pharmacist' })).toBe(false);
       // R6 #820: Nutrition-Dietician gets Q6 like Administrator/Nurse/Midwife.
-      expect(shouldShow('A', 'Q6', { Q5: 'Nutrition-Dietician or Nutrition Action Officer/Coordinator' })).toBe(true);
+      expect(shouldShow('A', 'Q6', { Q5: 'Nutrition action officer/coordinator/Nutritionist-Dietician' })).toBe(true);
     });
 
     it('shows Q6 when Q5 is Physician/Doctor', () => {
@@ -42,6 +42,46 @@ describe('shouldShow', () => {
     it('hides Q14 when Q12 is No (entire Q13–Q30 block hidden)', () => {
       expect(shouldShow('B', 'Q14', { Q12: 'No', Q13: 'Yes, direct result of UHC Act' })).toBe(false);
     });
+
+    // aug17 migration (Task 3.2, 2026-08-19): the eleven new `.1`/`.2`
+    // UHC-attribution sub-items. Q13/Q13.1 stands in as the representative
+    // two-step battery pair (base No → probe hidden; base Yes → probe
+    // visible) — the same shape repeats for Q15.1/Q17.1/.../Q24.1.
+    describe('the .1/.2 UHC-attribution sub-items (new in Aug-17)', () => {
+      it('hides Q13.1 when Q13 is No (two-step pair: base No → probe hidden)', () => {
+        expect(shouldShow('B', 'Q13.1', { Q12: 'Yes', Q13: 'No' })).toBe(false);
+      });
+
+      it('shows Q13.1 when Q13 is Yes (two-step pair: base Yes → probe visible)', () => {
+        expect(shouldShow('B', 'Q13.1', { Q12: 'Yes', Q13: 'Yes' })).toBe(true);
+      });
+
+      it('hides Q13.1 when Q13 is unanswered', () => {
+        expect(shouldShow('B', 'Q13.1', { Q12: 'Yes' })).toBe(false);
+      });
+
+      it('hides Q13.1 when Q12 is No (outer Section-B gate still applies)', () => {
+        expect(shouldShow('B', 'Q13.1', { Q12: 'No', Q13: 'Yes' })).toBe(false);
+      });
+
+      it('gates each sub-item on its own parent, not a sibling', () => {
+        expect(shouldShow('B', 'Q15.1', { Q12: 'Yes', Q15: 'Yes', Q17: 'No' })).toBe(true);
+        expect(shouldShow('B', 'Q17.1', { Q12: 'Yes', Q15: 'Yes', Q17: 'No' })).toBe(false);
+        expect(shouldShow('B', 'Q18.1', { Q12: 'Yes', Q18: 'Yes' })).toBe(true);
+        expect(shouldShow('B', 'Q19.1', { Q12: 'Yes', Q19: 'No' })).toBe(false);
+        expect(shouldShow('B', 'Q20.1', { Q12: 'Yes', Q20: 'Yes' })).toBe(true);
+        expect(shouldShow('B', 'Q21.1', { Q12: 'Yes', Q21: 'No' })).toBe(false);
+        expect(shouldShow('B', 'Q22.1', { Q12: 'Yes', Q22: 'Yes' })).toBe(true);
+        expect(shouldShow('B', 'Q23.1', { Q12: 'Yes', Q23: 'No' })).toBe(false);
+      });
+
+      it('Q24.1 and Q24.2 are independent siblings, both gated on Q24=Yes', () => {
+        expect(shouldShow('B', 'Q24.1', { Q12: 'Yes', Q24: 'Yes' })).toBe(true);
+        expect(shouldShow('B', 'Q24.2', { Q12: 'Yes', Q24: 'Yes' })).toBe(true);
+        expect(shouldShow('B', 'Q24.1', { Q12: 'Yes', Q24: 'No' })).toBe(false);
+        expect(shouldShow('B', 'Q24.2', { Q12: 'Yes', Q24: 'No' })).toBe(false);
+      });
+    });
   });
 
   describe('Section C', () => {
@@ -63,6 +103,22 @@ describe('shouldShow', () => {
     // a facility that already is, so it must be hidden when Q34=Yes.
     it('hides Q38 when Q34 is Yes (already accredited — skip C tail)', () => {
       expect(shouldShow('C', 'Q38', { Q31: 'Yes', Q34: 'Yes' })).toBe(false);
+    });
+
+    // aug17 migration (Task 3.2, 2026-08-19): Q34 also has "I don't know…"
+    // and "Other (specify)" options besides Yes/No. F2-inventory.md's fuller
+    // routing table documents the paper's "I don't know" option as an
+    // explicit <proceed to Q41> — skips the whole C tail like Q34=Yes does,
+    // not just Q37 like Q34=No. See aug17-approved-divergences.md.
+    it("hides Q37/Q38 (whole C tail) when Q34 is \"I don't know\" (paper's own routing note)", () => {
+      const idk = "I don't know what PhilHealth YAKAP/Konsulta package accreditation is";
+      expect(shouldShow('C', 'Q37', { Q31: 'Yes', Q34: idk })).toBe(false);
+      expect(shouldShow('C', 'Q38', { Q31: 'Yes', Q34: idk })).toBe(false);
+    });
+
+    it('hides Q37/Q38 (whole C tail) when Q34 is Other (specify) (undocumented option, same fallthrough)', () => {
+      expect(shouldShow('C', 'Q37', { Q31: 'Yes', Q34: 'Other (specify)' })).toBe(false);
+      expect(shouldShow('C', 'Q38', { Q31: 'Yes', Q34: 'Other (specify)' })).toBe(false);
     });
 
     it('shows Q38 when Q31=Yes and Q34=No (consider-accreditation path)', () => {
@@ -116,12 +172,12 @@ describe('shouldShow', () => {
 
     // R2-#117: Q48-Q52 hidden for Pharmacist/Dispenser even with Q48/Q49=Yes
     it('R2-#117: hides Q48 (BUCAS gate) for Pharmacist/Dispenser', () => {
-      expect(shouldShow('E', 'Q48', { Q5: 'Pharmacist/Dispenser or Assistant Pharmacist' })).toBe(false);
+      expect(shouldShow('E', 'Q48', { Q5: 'Pharmacist/Dispenser/Assistant Pharmacist' })).toBe(false);
     });
 
     it('R2-#117: hides Q52 for Pharmacist/Dispenser even with Q48/Q49=Yes', () => {
       expect(
-        shouldShow('E', 'Q52', { Q5: 'Pharmacist/Dispenser or Assistant Pharmacist', Q48: 'Yes', Q49: 'Yes' }),
+        shouldShow('E', 'Q52', { Q5: 'Pharmacist/Dispenser/Assistant Pharmacist', Q48: 'Yes', Q49: 'Yes' }),
       ).toBe(false);
     });
 
@@ -137,7 +193,7 @@ describe('shouldShow', () => {
     // assistant stays excluded.
     it('#539/#820: hides Q48 for Physician assistant; shows it for Nutrition-Dietician', () => {
       expect(shouldShow('E', 'Q48', { Q5: 'Physician assistant' })).toBe(false);
-      expect(shouldShow('E', 'Q48', { Q5: 'Nutrition-Dietician or Nutrition Action Officer/Coordinator' })).toBe(true);
+      expect(shouldShow('E', 'Q48', { Q5: 'Nutrition action officer/coordinator/Nutritionist-Dietician' })).toBe(true);
     });
   });
 
@@ -299,8 +355,8 @@ describe('shouldShowSection', () => {
       expect(shouldShowSection('G', { Q5: 'Nurse' })).toBe(false);
     });
 
-    it('hides G for Pharmacist/Dispenser or Assistant Pharmacist', () => {
-      expect(shouldShowSection('G', { Q5: 'Pharmacist/Dispenser or Assistant Pharmacist' })).toBe(false);
+    it('hides G for Pharmacist/Dispenser/Assistant Pharmacist', () => {
+      expect(shouldShowSection('G', { Q5: 'Pharmacist/Dispenser/Assistant Pharmacist' })).toBe(false);
     });
 
     it('hides G when Q5 is unset', () => {
@@ -315,13 +371,13 @@ describe('shouldShowSection', () => {
       'Nurse',
       'Midwife',
       'Dentist',
-      'Nutrition-Dietician or Nutrition Action Officer/Coordinator', // R6 #820
+      'Nutrition action officer/coordinator/Nutritionist-Dietician', // R6 #820
     ])('shows C for %s', (role) => {
       expect(shouldShowSection('C', { Q5: role })).toBe(true);
     });
 
     it.each([
-      'Pharmacist/Dispenser or Assistant Pharmacist',
+      'Pharmacist/Dispenser/Assistant Pharmacist',
       'Physician assistant', // #539
       'Nursing assistant',
       'Laboratory technician',
@@ -345,8 +401,8 @@ describe('shouldShowSection', () => {
       expect(shouldShowSection('D', { Q5: 'Nurse' })).toBe(true);
     });
 
-    it('hides D for Pharmacist/Dispenser or Assistant Pharmacist', () => {
-      expect(shouldShowSection('D', { Q5: 'Pharmacist/Dispenser or Assistant Pharmacist' })).toBe(false);
+    it('hides D for Pharmacist/Dispenser/Assistant Pharmacist', () => {
+      expect(shouldShowSection('D', { Q5: 'Pharmacist/Dispenser/Assistant Pharmacist' })).toBe(false);
     });
 
     it('hides D for Dentist aide', () => {
@@ -361,8 +417,8 @@ describe('shouldShowSection', () => {
       'Nurse',
       'Midwife',
       'Dentist',
-      'Nutrition-Dietician or Nutrition Action Officer/Coordinator', // R6 #820
-      'Pharmacist/Dispenser or Assistant Pharmacist', // E2 GAMOT half — sees E (item gates hide E1 Q48–Q52)
+      'Nutrition action officer/coordinator/Nutritionist-Dietician', // R6 #820
+      'Pharmacist/Dispenser/Assistant Pharmacist', // E2 GAMOT half — sees E (item gates hide E1 Q48–Q52)
     ])('shows E for %s', (role) => {
       expect(shouldShowSection('E', { Q5: role })).toBe(true);
     });
@@ -391,8 +447,8 @@ describe('shouldShowSection', () => {
   });
 
   describe('Persona section-visibility (R2 #114 + #539)', () => {
-    it('Pharmacist/Dispenser or Assistant Pharmacist sees A,B,E,F,H,I,J — not C,D,G', () => {
-      const v = { Q5: 'Pharmacist/Dispenser or Assistant Pharmacist' };
+    it('Pharmacist/Dispenser/Assistant Pharmacist sees A,B,E,F,H,I,J — not C,D,G', () => {
+      const v = { Q5: 'Pharmacist/Dispenser/Assistant Pharmacist' };
       expect(shouldShowSection('A', v)).toBe(true);
       expect(shouldShowSection('B', v)).toBe(true);
       expect(shouldShowSection('C', v)).toBe(false); // was the bug
@@ -403,11 +459,23 @@ describe('shouldShowSection', () => {
       expect(shouldShowSection('H', v)).toBe(true);
     });
 
-    it('Physician/Doctor sees all sections', () => {
+    it('Physician/Doctor sees all sections (physician path — reaches G)', () => {
       const v = { Q5: 'Physician/Doctor' };
       for (const id of ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']) {
         expect(shouldShowSection(id, v)).toBe(true);
       }
+    });
+
+    // aug17 migration (Task 3.2, 2026-08-19): nurse path — one of the 6
+    // SECTION_CDE_ROLES/SECTION_E_ROLES patient-care roles; sees C/D/E1/E2
+    // (item-level Q48–Q52 gates admit it) but not G (physicians/dentists only).
+    it('Nurse sees A,B,C,D,E,F,H,I,J — not G (nurse path, patient-care role)', () => {
+      const v = { Q5: 'Nurse' };
+      for (const id of ['A', 'B', 'C', 'D', 'E', 'F', 'H', 'I', 'J']) {
+        expect(shouldShowSection(id, v)).toBe(true);
+      }
+      expect(shouldShowSection('G', v)).toBe(false);
+      expect(shouldShow('E', 'Q48', v)).toBe(true); // reaches E1 (BUCAS), unlike the pharmacist path
     });
 
     it('Dentist aide sees A,B,F,H,I,J — not C,D,E,G (skip to F)', () => {
@@ -434,7 +502,7 @@ describe('shouldShowSection', () => {
     });
 
     it('R6 #820 (supersedes #539): Nutrition-Dietician sees A,B,C,D,E,F,H,I,J — not G', () => {
-      const v = { Q5: 'Nutrition-Dietician or Nutrition Action Officer/Coordinator' };
+      const v = { Q5: 'Nutrition action officer/coordinator/Nutritionist-Dietician' };
       expect(shouldShowSection('G', v)).toBe(false);
       for (const id of ['A', 'B', 'C', 'D', 'E', 'F', 'H', 'I', 'J']) {
         expect(shouldShowSection(id, v)).toBe(true);
