@@ -317,6 +317,7 @@ from rejoin_translations import (
     _prepare_cspro_write,
     _prepare_pwa_write,
     compute_stale_from_tables,
+    join_paper_build_items,
     plan_pwa_rekey,
     plan_rejoin,
     plan_stale_drop,
@@ -919,6 +920,147 @@ def test_format_register_row_notes_missing_skip_direction():
                   "test": "`shows Q7 when Q6 is Yes (fixture)`", "status": "PASS", "qnums": {"6", "7"}}
     line = format_register_row("F9", "6", finding, matrix_row, "2026-08-18")
     assert "SOURCE of a forward routing decision" in line
+
+
+# --- Scope add (controller, post-3.4): join_paper_build_items min()-pairing bug ---
+#
+# impl-1-4 (Task 1.4, F3 lane) found and documented: when a paper qnum has FEWER rows
+# than build at the same qnum (e.g. paper's one combined "household income" question
+# splits into build's Q18_INCOME_AMOUNT + Q18_INCOME_BRACKET), the pairing loop's
+# n = min(len(p_list), len(b_list)) only ever runs _compare_pair on the FIRST n rows.
+# The "extra" build row(s) beyond n get a content-BLIND EXTRA_IN_BUILD/no-pair notice
+# only -- their actual stem/options/etc. are NEVER compared against anything, so a
+# real content regression in that field would be permanently invisible to Tier-1 once
+# the qnum is registered once. Same root bug in rejoin_translations.py's
+# join_paper_build_items (used by --stale-from-tables): the extra build row isn't
+# even returned in `pairs` at all, so it can never be flagged stale either.
+
+
+def test_extra_build_row_beyond_paper_count_was_previously_invisible_to_comparison():
+    # Characterization of the OLD (buggy) behavior, kept as a regression guard: before
+    # the fix, a qnum with 1 paper row / 2 build rows only ever compares the FIRST
+    # build row -- the second's genuinely different content produces NO STEM_DIFF at
+    # all, even though it obviously differs from anything on the paper side.
+    # (This test intentionally does NOT import the fix -- see the GREEN test below for
+    # the fixed behavior. Kept to document what "invisible" meant concretely.)
+    paper = [Row(inst="F9", qnum="18", kind="item",
+                 stem="Invented combined income question (fixture)?",
+                 options=[{"code": "1", "label": "Invented bracket A (fixture)"}],
+                 qtype="single", cardinality="single")]
+    build = [
+        Row(inst="F9", qnum="18", item_name="Q18_AMOUNT", kind="item",
+            stem="Invented combined income question (fixture)?",
+            options=[{"code": "1", "label": "Invented bracket A (fixture)"}],
+            qtype="single", cardinality="single"),
+        Row(inst="F9", qnum="18", item_name="Q18_BRACKET", kind="item",
+            stem="Completely unrelated invented bracket stem (fixture)?",
+            options=[{"code": "1", "label": "Totally different invented option (fixture)"}],
+            qtype="single", cardinality="single"),
+    ]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    # The fixed behavior (see test below) DOES surface this -- so this
+    # characterization test asserts the fix is present (broadcast comparison runs),
+    # proving the second build row is no longer invisible.
+    stem_diffs = [f for f in findings if f.category == "STEM_DIFF" and f.qnum == "18"]
+    assert len(stem_diffs) >= 1  # Q18_BRACKET's own genuinely-different stem now surfaces
+    assert any("Q18_BRACKET" in f.detail for f in stem_diffs)
+
+
+def test_extra_build_row_is_broadcast_compared_against_last_paper_row():
+    # GREEN: the extra build row (beyond paper's row count at this qnum) is now ALSO
+    # run through _compare_pair against paper's LAST row at that qnum, in ADDITION to
+    # (not instead of) the existing EXTRA_IN_BUILD structural notice -- so its real
+    # content is visible to Tier-1, not just its presence.
+    paper = [Row(inst="F9", qnum="20", kind="item",
+                 stem="Invented paper stem (fixture).",
+                 options=[{"code": "1", "label": "Invented option (fixture)"}],
+                 qtype="single", cardinality="single")]
+    build = [
+        Row(inst="F9", qnum="20", item_name="Q20_A", kind="item",
+            stem="Invented paper stem (fixture).",
+            options=[{"code": "1", "label": "Invented option (fixture)"}],
+            qtype="single", cardinality="single"),
+        Row(inst="F9", qnum="20", item_name="Q20_B", kind="item",
+            stem="A totally different build-only stem (fixture).",
+            options=[{"code": "1", "label": "A totally different option (fixture)"}],
+            qtype="single", cardinality="single"),
+    ]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    extra = [f for f in findings if f.category == "EXTRA_IN_BUILD" and f.qnum == "20"]
+    assert len(extra) == 1  # structural notice still present, unchanged
+    broadcast_stem = [f for f in findings if f.category == "STEM_DIFF" and f.qnum == "20"
+                       and "Q20_B" in f.detail]
+    assert len(broadcast_stem) == 1  # NEW: content comparison against paper's last row
+    broadcast_opt = [f for f in findings if f.category == "OPTION_DIFF" and f.qnum == "20"
+                      and "Q20_B" in f.detail]
+    assert len(broadcast_opt) == 1
+
+
+def test_missing_in_build_side_is_unchanged_by_the_broadcast_fix():
+    # Sanity guard: the fix is scoped to build-has-MORE-rows only. The symmetric
+    # paper-has-more-rows case (MISSING_IN_BUILD) must be completely untouched -- no
+    # new broadcast comparison against an unrelated build row (which would produce
+    # misleading findings for a paper item that genuinely has no build implementation).
+    paper = [
+        Row(inst="F9", qnum="21", kind="item", stem="First invented paper stem (fixture).",
+            qtype="text", cardinality="single"),
+        Row(inst="F9", qnum="21", kind="item", stem="Second invented paper stem (fixture).",
+            qtype="text", cardinality="single"),
+    ]
+    build = [
+        Row(inst="F9", qnum="21", item_name="Q21", kind="item",
+            stem="First invented paper stem (fixture).", qtype="text", cardinality="single"),
+    ]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    missing = [f for f in findings if f.category == "MISSING_IN_BUILD" and f.qnum == "21"]
+    assert len(missing) == 1
+    stem_diffs = [f for f in findings if f.category == "STEM_DIFF" and f.qnum == "21"]
+    assert len(stem_diffs) == 0  # the one real pair matches -- no broadcast noise added
+
+
+def test_join_paper_build_items_no_longer_drops_extra_build_rows():
+    # rejoin_translations.py's join_paper_build_items previously didn't even return a
+    # tuple for a build row beyond paper's count at a qnum -- fully dropped, not even
+    # visible as an unpaired row. Now it must appear, flagged distinctly (not silently
+    # merged into an ordinary 1:1 pair, to avoid falsely marking it stale against an
+    # unrelated anchor stem -- see compute_stale_from_tables below).
+    paper = [Row(inst="F9", qnum="22", kind="item", stem="Invented paper stem (fixture).",
+                 qtype="text", cardinality="single")]
+    build = [
+        Row(inst="F9", qnum="22", item_name="Q22_A", kind="item",
+            stem="Invented paper stem (fixture).", qtype="text", cardinality="single"),
+        Row(inst="F9", qnum="22", item_name="Q22_B", kind="item",
+            stem="Different invented build-only stem (fixture).", qtype="text", cardinality="single"),
+    ]
+    pairs = join_paper_build_items("F9", paper, build)
+    item_names = {b.item_name for _q, _p, b in pairs if b is not None}
+    assert "Q22_A" in item_names
+    assert "Q22_B" in item_names  # previously silently dropped entirely
+
+
+def test_compute_stale_from_tables_does_not_false_flag_extra_build_rows_stale():
+    # The broadcast pair for an "extra" build row is intentionally NOT auto-derived
+    # into stem_changed/option_changed -- comparing it against an unrelated anchor
+    # paper stem would ALWAYS look "changed" even when nothing really changed since
+    # the last translation pass, which would perpetually drop a possibly-fine
+    # translation. compute_stale_from_tables must only judge staleness from genuine
+    # 1:1 positional pairs.
+    paper = [Row(inst="F9", qnum="23", kind="item", stem="Invented paper stem (fixture).",
+                 options=[{"code": "1", "label": "Invented option (fixture)"}],
+                 qtype="single", cardinality="single")]
+    build = [
+        Row(inst="F9", qnum="23", item_name="Q23_A", kind="item",
+            stem="Invented paper stem (fixture).",
+            options=[{"code": "1", "label": "Invented option (fixture)"}],
+            qtype="single", cardinality="single"),
+        Row(inst="F9", qnum="23", item_name="Q23_B", kind="item",
+            stem="Totally unrelated build-only stem (fixture).",
+            options=[{"code": "1", "label": "Totally unrelated option (fixture)"}],
+            qtype="single", cardinality="single"),
+    ]
+    stem_changed, option_changed, new_rows = compute_stale_from_tables("F9", paper, build)
+    assert "Q23_A" not in stem_changed
+    assert "Q23_B" not in stem_changed  # NOT auto-flagged from the broadcast pair
 
 
 def test_summarize_plan_excludes_meta_and_counts_colon_keys():
