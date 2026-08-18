@@ -539,6 +539,345 @@ def test_pwa_apply_write_path_preserves_lf_only_line_endings(tmp_path):
         assert line in new_lines_set
 
 
+# --- Task 3.4, R15 design fixes ---------------------------------------------
+
+
+def test_validation_diff_paper_empty_is_info_not_blocking():
+    # R15 item 1: VALIDATION_DIFF blocks ONLY when both sides have content --
+    # the paper never encodes machine validation, so a paper-empty/build-
+    # nonempty pair must surface as a visible, non-blocking INFO line, not a
+    # blocking red.
+    paper = [Row(inst="F9", qnum="1", kind="item", stem="Enter amount (fixture).",
+                 qtype="number", cardinality="single", validation="")]
+    build = [Row(inst="F9", qnum="1", item_name="Q1", kind="item", stem="Enter amount (fixture).",
+                 qtype="number", cardinality="single", validation="required")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert not any(f.category == "VALIDATION_DIFF" for f in findings)
+    assert any(f.category == "VALIDATION_INFO" for f in findings)
+    assert blocking == 0
+
+
+def test_validation_diff_build_empty_is_also_info_not_blocking():
+    # Symmetric case: paper has content, build has none -- still "not both
+    # sides have content", per the literal rule text.
+    paper = [Row(inst="F9", qnum="2", kind="item", stem="Enter amount (fixture).",
+                 qtype="number", cardinality="single", validation="must be positive (fixture)")]
+    build = [Row(inst="F9", qnum="2", item_name="Q2", kind="item", stem="Enter amount (fixture).",
+                 qtype="number", cardinality="single", validation="")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert not any(f.category == "VALIDATION_DIFF" for f in findings)
+    assert any(f.category == "VALIDATION_INFO" for f in findings)
+    assert blocking == 0
+
+
+def test_validation_diff_both_sides_content_still_blocks():
+    # The one case that must still block: both sides declare validation and
+    # they disagree.
+    paper = [Row(inst="F9", qnum="3", kind="item", stem="Enter amount (fixture).",
+                 qtype="number", cardinality="single", validation="must be numeric (fixture)")]
+    build = [Row(inst="F9", qnum="3", item_name="Q3", kind="item", stem="Enter amount (fixture).",
+                 qtype="number", cardinality="single", validation="required")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert any(f.category == "VALIDATION_DIFF" for f in findings)
+    assert blocking > 0
+
+
+def test_escape_apostrophe_fold_is_not_a_false_option_diff():
+    # R15 item 2: escape-artifact fold. pandoc's own backslash-escape table
+    # (paper_tables._strip_md) doesn't cover \' -- a literal backslash
+    # survives into the paper option label ("I don\'t know") while the build
+    # never has one. Sanctioned fold, paper side only, logged.
+    paper = [Row(inst="F9", qnum="7", kind="item", stem="Invented question (fixture)?",
+                 options=[{"code": "1", "label": "I don\\'t know (fixture)"}],
+                 qtype="single", cardinality="single")]
+    build = [Row(inst="F9", qnum="7", item_name="Q7", kind="item", stem="Invented question (fixture)?",
+                 options=[{"code": "1", "label": "I don't know (fixture)"}],
+                 qtype="single", cardinality="single")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert not any(f.category == "OPTION_DIFF" for f in findings)
+
+
+def test_escape_apostrophe_fold_is_logged():
+    from aug17_diff import _norm_events, _fold_escape_artifacts
+    _norm_events.clear()
+    out = _fold_escape_artifacts("I don\\'t know (fixture)")
+    assert out == "I don't know (fixture)"
+    assert any(e["kind"] == "escape-apostrophe" for e in _norm_events)
+
+
+def test_trailing_bracket_gate_stripped_from_stem():
+    # R15 item 2: trailing bracket/SELECT-directive strip. A paper stem
+    # ending in a printed eligibility-gate annotation (angle brackets) must
+    # not false-positive STEM_DIFF against a build stem that never prints
+    # the annotation.
+    paper = [Row(inst="F9", qnum="8", kind="item",
+                 stem="Do you enjoy invented tea? <only for respondents from invented facilities>",
+                 qtype="text", cardinality="single")]
+    build = [Row(inst="F9", qnum="8", item_name="Q8", kind="item",
+                 stem="Do you enjoy invented tea?",
+                 qtype="text", cardinality="single")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert not any(f.category == "STEM_DIFF" for f in findings)
+
+
+def test_trailing_select_directive_stripped_from_stem():
+    paper = [Row(inst="F9", qnum="9", kind="item",
+                 stem="Which invented flavors do you like? SELECT ALL THAT APPLY.",
+                 qtype="text", cardinality="single")]
+    build = [Row(inst="F9", qnum="9", item_name="Q9", kind="item",
+                 stem="Which invented flavors do you like?",
+                 qtype="text", cardinality="single")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert not any(f.category == "STEM_DIFF" for f in findings)
+
+
+def test_trailing_directive_strip_applies_to_options_too():
+    paper = [Row(inst="F9", qnum="10", kind="item", stem="Invented item (fixture)?",
+                 options=[{"code": "1", "label": "Invented option one <only for invented facilities>"}],
+                 qtype="single", cardinality="single")]
+    build = [Row(inst="F9", qnum="10", item_name="Q10", kind="item", stem="Invented item (fixture)?",
+                 options=[{"code": "1", "label": "Invented option one"}],
+                 qtype="single", cardinality="single")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert not any(f.category == "OPTION_DIFF" for f in findings)
+
+
+def test_trailing_bracket_never_strips_mid_string():
+    # "never strip mid-string" -- a bracket fragment that is NOT at the very
+    # end is real content and must stay a genuine STEM_DIFF.
+    paper = [Row(inst="F9", qnum="11", kind="item",
+                 stem="Enter the invented code <see the invented legend> now please.",
+                 qtype="text", cardinality="single")]
+    build = [Row(inst="F9", qnum="11", item_name="Q11", kind="item",
+                 stem="Enter the invented code now please.",
+                 qtype="text", cardinality="single")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert any(f.category == "STEM_DIFF" for f in findings)
+
+
+def test_trailing_directive_strip_is_logged():
+    from aug17_diff import _norm_events, _strip_trailing_directive
+    _norm_events.clear()
+    out = _strip_trailing_directive("Invented stem (fixture)? SELECT ALL THAT APPLY.")
+    assert out == "Invented stem (fixture)?"
+    assert any(e["kind"] == "trailing-select-directive" for e in _norm_events)
+    _norm_events.clear()
+    out = _strip_trailing_directive("Invented stem (fixture)? <only for invented respondents>")
+    assert out == "Invented stem (fixture)?"
+    assert any(e["kind"] == "trailing-bracket" for e in _norm_events)
+
+
+# --- Task 3.4, R15 addendum: paper_tables.py section-parser fixes ----------
+
+
+def test_section_header_bold_wraps_whole_cell():
+    # Some F2 sections (D/E/F) print "**D. Title**" (bold wraps the letter
+    # AND the period), not "D. **Title**" (letter bare) like A/B/C/G/J.
+    # SECTION_LETTER_RE must accept both forms.
+    md = (
+        "+----+\n"
+        "| **D. Invented Section Title**  |\n"
+        "+----+\n"
+        "| 40. **Invented item stem (fixture)?** |\n"
+        "+----+\n"
+        "|    | ☐ Invented option (fixture) |\n"
+        "+----+\n"
+    )
+    rows = parse_extract(md, "F9")
+    headers = [r for r in rows if r.kind == "section_header"]
+    assert any(h.section.startswith("D ") and "Invented Section Title" in h.section for h in headers)
+    items = [r for r in rows if r.kind == "item"]
+    q40 = next(r for r in items if r.qnum == "40")
+    assert q40.section.startswith("D ")
+
+
+def test_wrapped_directive_fragment_not_misread_as_section_heading():
+    # Pandoc word-wraps a long cell across two physical lines with no
+    # "+---+" divider between them. When that wrap splits a directive banner
+    # ("...SELECT ALL" / "THAT APPLY..."), the orphaned tail fragment must
+    # NOT become a spurious section header (and the item's own stem/skip
+    # accumulation must not be truncated by the premature item-close).
+    md = (
+        "+----+\n"
+        "| 61. **Invented follow-up item text (fixture)?** SELECT ALL |\n"
+        "|     THAT APPLY                                              |\n"
+        "+----+\n"
+        "|    | ☐ Invented option (fixture) |\n"
+        "+----+\n"
+        "| 62. **Next invented item (fixture)?** |\n"
+        "+----+\n"
+        "|    | ☐ Another invented option (fixture) |\n"
+        "+----+\n"
+    )
+    rows = parse_extract(md, "F9")
+    headers = [r for r in rows if r.kind == "section_header"]
+    assert not any("THAT APPLY" in h.stem for h in headers)
+    items = [r for r in rows if r.kind == "item"]
+    q61 = next(r for r in items if r.qnum == "61")
+    assert "SELECT ALL THAT APPLY" in q61.stem
+    q62 = next(r for r in items if r.qnum == "62")
+    assert q62.section == q61.section  # no spurious section boundary inserted between them
+
+
+def test_wrapped_row_merge_recovers_split_option_label():
+    # Same word-wrap defect, checkbox-option flavor: a long option label
+    # wraps to a second physical line with no divider; unmerged, the
+    # continuation becomes an orphan instruction row and the option is
+    # silently truncated (an OPTION_DIFF artifact, not a real divergence).
+    md = (
+        "+----+----+----+----+\n"
+        "| 62. **Invented multi-select item (fixture)?**             |\n"
+        "+----+----+----+----+\n"
+        "|    |    | ☐ Patient invented and |    |\n"
+        "|    |    | continuation label     |    |\n"
+        "+----+----+----+----+\n"
+    )
+    rows = parse_extract(md, "F9")
+    items = [r for r in rows if r.kind == "item"]
+    q62 = next(r for r in items if r.qnum == "62")
+    assert any(o["label"] == "Patient invented and continuation label" for o in q62.options)
+
+
+def test_wrapped_row_merge_leaves_normal_divided_rows_alone():
+    # Sanity guard: rows properly separated by a "+---+" divider (the
+    # overwhelming common case) must be completely unaffected by the merge
+    # pre-pass -- two genuinely distinct items must NOT get glued together.
+    md = (
+        "+----+\n"
+        "| 1. **First invented item (fixture)?** |\n"
+        "+----+\n"
+        "|    | ☐ Invented option A (fixture) |\n"
+        "+----+\n"
+        "| 2. **Second invented item (fixture)?** |\n"
+        "+----+\n"
+        "|    | ☐ Invented option B (fixture) |\n"
+        "+----+\n"
+    )
+    rows = parse_extract(md, "F9")
+    items = [r for r in rows if r.kind == "item"]
+    assert len(items) == 2
+    q1 = next(r for r in items if r.qnum == "1")
+    q2 = next(r for r in items if r.qnum == "2")
+    assert q1.options == [{"code": "1", "label": "Invented option A (fixture)"}]
+    assert q2.options == [{"code": "1", "label": "Invented option B (fixture)"}]
+
+
+# --- Task 3.4, R15 item 4: emit_skip_register_rows.py ----------------------
+
+from emit_skip_register_rows import (
+    _extract_qnums,
+    already_registered_qnums,
+    build_coverage_index,
+    format_register_row,
+    parse_matrix_rows,
+    parse_skip_diff_findings,
+    pick_covering_row,
+)
+
+_FIXTURE_DIFF_MD = """# F9 diff report
+
+## SKIP_DIFF (3)
+
+- **UNREGISTERED** [6] paper skip="IF No GOTO <proceed to Q9> (fixture)" | build (Q6) skip=""
+- **UNREGISTERED** [7] paper skip="" | build (Q7) skip="visible-if: v.Q6 === 'Yes' (fixture)"
+- **REGISTERED** [8] paper skip="" | build (Q8) skip="visible-if: v.Q6 === 'Yes' (fixture)" — already covered
+
+## MESSAGE_DIFF (0)
+"""
+
+_FIXTURE_MATRIX_MD = """# F9 tier-2 matrix (fixture)
+
+## Section A
+
+| Rule | Expected behavior | Covering test | Status |
+|---|---|---|---|
+| Q7 visibility (fixture) | Shown only when Q6 (invented gate) = Yes | `shows Q7 when Q6 is Yes (fixture)` | PASS |
+| Q99 unrelated (fixture) | Some unrelated invented rule | `some invented test` | PASS |
+| Q100 not verified (fixture) | Invented rule not yet passing | `some other invented test` | FAIL |
+"""
+
+
+def test_parse_skip_diff_findings_extracts_unregistered_only_by_default():
+    findings = parse_skip_diff_findings(_FIXTURE_DIFF_MD)
+    assert len(findings) == 3
+    q6 = next(f for f in findings if f["qnum"] == "6")
+    assert q6["registered"] is False
+    assert "Q9" in q6["paper"]
+    q8 = next(f for f in findings if f["qnum"] == "8")
+    assert q8["registered"] is True
+
+
+def test_extract_qnums_explicit_and_range():
+    assert _extract_qnums("Q7 visibility (fixture)") == {"7"}
+    assert _extract_qnums("Q13-Q30 block gate (fixture)") == {str(n) for n in range(13, 31)}
+    assert _extract_qnums("Q71a/Q71b independent (fixture)") == {"71a", "71b"}
+    assert _extract_qnums("no qnums here (fixture)") == set()
+
+
+def test_parse_matrix_rows_and_coverage_index():
+    rows = parse_matrix_rows(_FIXTURE_MATRIX_MD)
+    assert len(rows) == 3
+    coverage = build_coverage_index(rows)
+    # Q7's own row covers both Q7 (subject) and Q6 (condition variable
+    # named in the Expected-behavior column) -- broad text scan, not just
+    # the Rule cell.
+    assert "7" in coverage
+    assert "6" in coverage
+    # FAIL-status rows never enter the coverage index.
+    assert "100" not in coverage
+
+
+def test_coverage_index_accepts_pass_with_qualifier_suffix():
+    # Real F2 matrix rows sometimes annotate PASS with a parenthetical
+    # ("PASS (predicate identical across Q92-Q95, ...)") -- still verified.
+    md = (
+        "| Rule | Expected behavior | Covering test | Status |\n"
+        "|---|---|---|---|\n"
+        "| Q92 gate (fixture) | Invented rule | invented test | PASS (qualifier text, fixture) |\n"
+    )
+    rows = parse_matrix_rows(md)
+    coverage = build_coverage_index(rows)
+    assert "92" in coverage
+
+
+def test_pick_covering_row_prefers_the_rows_own_subject():
+    rows = parse_matrix_rows(_FIXTURE_MATRIX_MD)
+    coverage = build_coverage_index(rows)
+    row = pick_covering_row("7", coverage["7"])
+    assert row["rule"].startswith("Q7")
+    # Q6 has no row of its own -- falls back to the row that references it.
+    row6 = pick_covering_row("6", coverage["6"])
+    assert row6["rule"].startswith("Q7")
+
+
+def test_already_registered_qnums_reads_existing_register():
+    reg_text = (
+        "# fixture register\n\n"
+        "| inst | qnum/item | class | paper says | build does | rationale / ticket |\n"
+        "|---|---|---|---|---|---|\n"
+        "| F9 | Q8 (fixture) | defect-fix | paper (fixture) | build (fixture) | fixture rationale |\n"
+    )
+    assert already_registered_qnums(reg_text, "F9") == {"8"}
+
+
+def test_format_register_row_cites_the_matrix_row():
+    finding = {"qnum": "7", "paper": "", "build": "visible-if: v.Q6 === 'Yes' (fixture)", "item": "Q7"}
+    matrix_row = {"rule": "Q7 visibility (fixture)", "expected": "Shown only when Q6 = Yes (fixture)",
+                  "test": "`shows Q7 when Q6 is Yes (fixture)`", "status": "PASS", "qnums": {"6", "7"}}
+    line = format_register_row("F9", "7", finding, matrix_row, "2026-08-18")
+    assert line.startswith("| F9 | Q7 | capi-adaptation |")
+    assert "Q7 visibility (fixture)" in line
+    assert line.count("|") == 7  # 6 columns -> 7 pipes
+
+
+def test_format_register_row_notes_missing_skip_direction():
+    finding = {"qnum": "6", "paper": "IF No GOTO <proceed to Q9> (fixture)", "build": "", "item": "Q6"}
+    matrix_row = {"rule": "Q7 visibility (fixture)", "expected": "Shown only when Q6 = Yes (fixture)",
+                  "test": "`shows Q7 when Q6 is Yes (fixture)`", "status": "PASS", "qnums": {"6", "7"}}
+    line = format_register_row("F9", "6", finding, matrix_row, "2026-08-18")
+    assert "SOURCE of a forward routing decision" in line
+
+
 def test_summarize_plan_excludes_meta_and_counts_colon_keys():
     # fix round 1: the old heuristic (startswith item:/vs:/val:/record: OR
     # ":" not in key) counted "_meta" as carried (colon-free) and DROPPED

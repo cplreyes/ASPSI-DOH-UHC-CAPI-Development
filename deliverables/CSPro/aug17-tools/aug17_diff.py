@@ -11,7 +11,7 @@ every divergence found is registered, else 1. This is deliberately a
 COUNTERCHECK, not a corrector: nothing here edits paper or build data, it
 only classifies and reports.
 
-Text normalization -- THREE sanctioned transforms, no others
+Text normalization -- sanctioned transforms, no others
 --------------------------------------------------------------
 1 + 2. `rowspec.normalize_text` -- whitespace collapse + smart-quote fold
    (shared with paper_tables.py/build_tables.py; see rowspec.py).
@@ -23,6 +23,30 @@ Text normalization -- THREE sanctioned transforms, no others
    surfaces as a false STEM_DIFF/OPTION_DIFF/etc. Build-side text is never
    run through this fold (it doesn't need it, and folding it too would risk
    masking a genuine build-authored double-hyphen).
+4. Escape-artifact fold `\'` -> `'` (PAPER SIDE ONLY, this module; Task 3.4
+   R15): pandoc's own backslash-escape table (`paper_tables._strip_md`)
+   unescapes `\<`, `\>`, `\[`, `\]`, `\-`, `\.` but not `\'` -- a literal
+   backslash survives into paper option/stem text ahead of an apostrophe
+   ("I don\'t know"), the build never has one. Folded by
+   `_fold_escape_artifacts`, applied inside `_norm_paper_text`. LOGGED (not
+   silent): every fold that actually changes text appends an entry to
+   `_norm_events` (module-level, cleared and read once per `diff_instrument`
+   call) -- see `write_report`'s "Applied normalizations" section.
+5. Trailing bracket/SELECT-directive strip (PAPER SIDE ONLY, STEM/OPTION
+   comparisons only, this module; Task 3.4 R15): the paper prints
+   eligibility-gate annotations (`<only for respondents from ...>`,
+   `<only for those who answered "X" on Qn>`) and multi/single-select mode
+   banners (`SELECT ALL THAT APPLY`, `SELECT ONE ANSWER ONLY`) inline, as
+   the LAST clause of a stem or option label; the build never prints either
+   (the gate is enforced as visibility logic, the mode is a UI affordance).
+   `_strip_trailing_directive` strips ONE such fragment from the very END of
+   the string, in a loop (so a stem ending in more than one, rare but
+   possible, is fully cleaned) -- anchored with `$`, so it can NEVER strip a
+   mid-string bracket (that's real divergent content, stays a genuine
+   STEM_DIFF/OPTION_DIFF). Applied via `_norm_paper_stem` in `_compare_pair`'s
+   stem check and in the `OPTION_DIFF` check's `_opts_key` call -- NOT
+   applied to skip/validation/messages/section/disposition comparisons
+   (out of the brief's stated scope). LOGGED the same way as #4.
 
 Also applied (not a new transform, but easy to miss): rowspec.py's own
 `strip_qnum=True` toggle, on the BUILD side only, for stem comparisons.
@@ -117,28 +141,100 @@ CLASS_ENUM = (
 )
 
 # Core categories per the task-0.4 brief, plus two join-mechanics extensions
-# the brief's own point (b)/(d) require (UNMATCHED_BUILD, CONSENT_DIFF).
+# the brief's own point (b)/(d) require (UNMATCHED_BUILD, CONSENT_DIFF), plus
+# VALIDATION_INFO (Task 3.4 R15): the non-blocking sibling of VALIDATION_DIFF
+# for the "not both sides have content" case -- see module docstring and
+# `_compare_pair`.
 CATEGORIES = [
     "MISSING_IN_BUILD", "EXTRA_IN_BUILD", "STEM_DIFF", "OPTION_DIFF",
     "ORDER_DIFF", "SECTION_DIFF", "NOTE_DIFF", "CARDINALITY_DIFF",
-    "SKIP_DIFF", "VALIDATION_DIFF", "MESSAGE_DIFF", "DISPOSITION_DIFF",
-    "CONSENT_DIFF", "UNMATCHED_BUILD",
+    "SKIP_DIFF", "VALIDATION_DIFF", "VALIDATION_INFO", "MESSAGE_DIFF",
+    "DISPOSITION_DIFF", "CONSENT_DIFF", "UNMATCHED_BUILD",
 ]
 
 # Categories excluded from the exit-code gate this wave even when
 # unregistered (brief join-mechanics point (d): full consent conformance
-# is a Wave-1 task).
-NON_BLOCKING_CATEGORIES = {"CONSENT_DIFF"}
+# is a Wave-1 task; R15: VALIDATION_INFO is visible-but-non-blocking by
+# design, not a deferred wave).
+NON_BLOCKING_CATEGORIES = {"CONSENT_DIFF", "VALIDATION_INFO"}
 
 
 # --- text normalization (transform #3; see module docstring) --------------
 
 _PANDOC_DASH_RE = re.compile(r"-{2,}")
 
+# Log of every normalization instance that actually changed text this run
+# (Task 3.4 R15: "logged, never silent"). Cleared at the start of each
+# diff_instrument() call, read at the end for write_report()'s "Applied
+# normalizations" section. A module-level list (not a return value) because
+# the fold/strip helpers are called from deep inside per-field comparisons
+# where threading an accumulator through every call site would be noise.
+_norm_events: list = []
+
+_ESCAPED_APOS_RE = re.compile(r"\\'")
+
+
+def _fold_escape_artifacts(s: str) -> str:
+    """Sanctioned transform #4 (see module docstring): `\\'` -> `'`. Only
+    touches the exact 2-character escape sequence; a genuine backslash
+    elsewhere in the text (none observed, but not this fold's job) is left
+    alone."""
+    if s and "\\'" in s:
+        new = _ESCAPED_APOS_RE.sub("'", s)
+        _norm_events.append({"kind": "escape-apostrophe", "before": s, "after": new})
+        return new
+    return s
+
 
 def _norm_paper_text(s: str, strip_qnum: bool = False) -> str:
-    """normalize_text + pandoc double/triple-hyphen fold. PAPER SIDE ONLY."""
+    """normalize_text + pandoc double/triple-hyphen fold + escape-artifact
+    fold. PAPER SIDE ONLY."""
+    s = _fold_escape_artifacts(s)
     return _PANDOC_DASH_RE.sub("-", normalize_text(s, strip_qnum=strip_qnum))
+
+
+# Sanctioned transform #5 (see module docstring): trailing bracket / SELECT-
+# directive strip. STEM/OPTION comparisons only, applied via
+# `_norm_paper_stem` below -- never wired into skip/validation/messages/
+# section, which stay exact per the brief's stated scope.
+_TRAILING_BRACKET_RE = re.compile(r"\s*[<\[][^<>\[\]]*[>\]]\s*$")
+_TRAILING_SELECT_DIRECTIVE_RE = re.compile(
+    r"\s*SELECT\s+(?:ALL\s+THAT\s+APPLY|ONE\s+ANSWER\s+ONLY)\.?\s*$", re.IGNORECASE
+)
+
+
+def _strip_trailing_directive(s: str) -> str:
+    """Strip a trailing eligibility-gate bracket (`<...>`/`[...]`) or a
+    trailing SELECT-ALL/SELECT-ONE mode banner, in a loop (in case a stem
+    ends in more than one). Anchored with `$` on every pass -- a bracket or
+    banner that is NOT at the very end of the string is never touched (real
+    content, must surface as a genuine divergence, not get silently
+    dropped)."""
+    out = s
+    changed = True
+    while changed:
+        changed = False
+        m = _TRAILING_SELECT_DIRECTIVE_RE.search(out)
+        if m:
+            _norm_events.append({"kind": "trailing-select-directive", "before": out,
+                                  "stripped": out[m.start():].strip()})
+            out = out[:m.start()].rstrip()
+            changed = True
+            continue
+        m = _TRAILING_BRACKET_RE.search(out)
+        if m:
+            _norm_events.append({"kind": "trailing-bracket", "before": out,
+                                  "stripped": out[m.start():].strip()})
+            out = out[:m.start()].rstrip()
+            changed = True
+    return out
+
+
+def _norm_paper_stem(s: str, strip_qnum: bool = False) -> str:
+    """`_norm_paper_text` + the trailing bracket/SELECT-directive strip.
+    Used ONLY for stem and option-label comparisons (see module docstring
+    transform #5) -- never for skip/validation/messages/section."""
+    return _strip_trailing_directive(_norm_paper_text(s, strip_qnum=strip_qnum))
 
 
 def _norm_build_text(s: str) -> str:
@@ -325,11 +421,11 @@ def _match_by_stem(build_row: Row, paper_items: list, claimed: set):
 
 def _compare_pair(q: str, p: Row, b: Row) -> list:
     out = []
-    if _norm_paper_text(p.stem) != _norm_build_stem(b.stem):
+    if _norm_paper_stem(p.stem) != _norm_build_stem(b.stem):
         out.append(Finding("STEM_DIFF", q,
             f'paper: "{p.stem[:120]}" | build ({b.item_name}): "{b.stem[:120]}"'))
 
-    if _opts_key(p.options, _norm_paper_text) != _opts_key(b.options, _norm_build_text):
+    if _opts_key(p.options, _norm_paper_stem) != _opts_key(b.options, _norm_build_text):
         out.append(Finding("OPTION_DIFF", q,
             f"paper options={[o.get('label') for o in p.options]} | "
             f"build ({b.item_name}) options={[o.get('label') for o in b.options]}"))
@@ -343,9 +439,22 @@ def _compare_pair(q: str, p: Row, b: Row) -> list:
         out.append(Finding("SKIP_DIFF", q,
             f'paper skip="{p.skip}" | build ({b.item_name}) skip="{b.skip}"'))
 
-    if _norm_paper_text(p.validation) != _norm_build_text(b.validation):
-        out.append(Finding("VALIDATION_DIFF", q,
-            f'paper validation="{p.validation}" | build ({b.item_name}) validation="{b.validation}"'))
+    p_val = _norm_paper_text(p.validation)
+    b_val = _norm_build_text(b.validation)
+    if p_val != b_val:
+        # R15 item 1: VALIDATION_DIFF blocks ONLY when both sides have
+        # content. The paper never encodes machine validation (it's a
+        # printed instrument, not executable logic) -- a paper-empty side
+        # is not a "the build is wrong" signal, it's just the paper having
+        # nothing to say. Still reported (visible, never silent), just
+        # non-blocking. Symmetric: a build-empty side is equally "not both
+        # sides have content" per the literal rule.
+        detail = f'paper validation="{p.validation}" | build ({b.item_name}) validation="{b.validation}"'
+        if p_val and b_val:
+            out.append(Finding("VALIDATION_DIFF", q, detail))
+        else:
+            out.append(Finding("VALIDATION_INFO", q,
+                detail + " -- non-blocking (not both sides declare validation)"))
 
     if _norm_paper_text(p.messages) != _norm_build_text(b.messages):
         out.append(Finding("MESSAGE_DIFF", q,
@@ -543,6 +652,7 @@ def diff_instrument(inst: str, paper_rows: list, build_rows: list, register: dic
     """Returns (findings: list[Finding], counts: dict[str,int],
     blocking_unregistered: int). `blocking_unregistered` > 0 means exit 1."""
     header_notes = []
+    _norm_events.clear()  # R15: fresh log for this run; read via diff_instrument.last_norm_events below
 
     paper_items = [r for r in paper_rows if r.kind == "item"]
     build_items = [r for r in build_rows if r.kind == "item"]
@@ -625,6 +735,7 @@ def diff_instrument(inst: str, paper_rows: list, build_rows: list, register: dic
 
     counts["REGISTERED"] = registered_count
     diff_instrument.last_header_notes = header_notes  # type: ignore[attr-defined]
+    diff_instrument.last_norm_events = list(_norm_events)  # type: ignore[attr-defined]
     return findings, counts, blocking_unregistered
 
 
@@ -632,7 +743,7 @@ def diff_instrument(inst: str, paper_rows: list, build_rows: list, register: dic
 
 
 def write_report(inst: str, findings: list, counts: dict, blocking: int,
-                  header_notes: list, out_path: Path) -> None:
+                  header_notes: list, out_path: Path, norm_events: list = None) -> None:
     out_path = Path(out_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     lines = [
@@ -656,8 +767,15 @@ def write_report(inst: str, findings: list, counts: dict, blocking: int,
         "(fix round 1, 2026-08-18).",
         "- CONSENT_DIFF is reported but NEVER blocks the exit code this wave "
         "(full consent conformance is a Wave-1 task per the task-0.4 brief).",
-        "- Text comparisons use 3 sanctioned normalizations: whitespace collapse, "
-        "smart-quote fold, and (paper side only) pandoc `--`/`---` -> `-` fold.",
+        "- Text comparisons use 5 sanctioned normalizations: whitespace collapse, "
+        "smart-quote fold, (paper side only) pandoc `--`/`---` -> `-` fold, "
+        "(paper side only) escape-artifact `\\'` -> `'` fold, and (paper side, "
+        "stem/option comparisons only) a trailing bracket/SELECT-directive strip "
+        "(Task 3.4 R15, 2026-08-18) -- every instance of the last two is logged "
+        "below, never silent.",
+        "- VALIDATION_DIFF blocks the exit code ONLY when BOTH paper and build "
+        "declare validation content; a one-sided-empty pair is reported as "
+        "VALIDATION_INFO instead -- visible, never blocking (Task 3.4 R15).",
     ]
     if header_notes:
         lines.append("")
@@ -673,6 +791,20 @@ def write_report(inst: str, findings: list, counts: dict, blocking: int,
         lines.append(f"| {c} | {counts.get(c, 0)} |")
     lines.append(f"| REGISTERED | {counts.get('REGISTERED', 0)} |")
     lines.append("")
+
+    if norm_events:
+        lines.append(f"## Applied normalizations ({len(norm_events)})")
+        lines.append("")
+        lines.append("Every instance where the escape-artifact fold or the trailing "
+                      "bracket/SELECT-directive strip actually changed text this run "
+                      "(R15: logged, never silent):")
+        lines.append("")
+        for e in norm_events:
+            if e["kind"] == "escape-apostrophe":
+                lines.append(f'- **escape-apostrophe**: "{e["before"][:100]}" -> "{e["after"][:100]}"')
+            else:
+                lines.append(f'- **{e["kind"]}**: stripped "{e["stripped"][:80]}" from "{e["before"][:100]}"')
+        lines.append("")
 
     for cat in CATEGORIES:
         cat_findings = [f for f in findings if f.category == cat]
@@ -719,11 +851,12 @@ def main():
 
     findings, counts, blocking = diff_instrument(args.instrument, paper_rows, build_rows, register)
     header_notes = getattr(diff_instrument, "last_header_notes", [])
+    norm_events = getattr(diff_instrument, "last_norm_events", [])
     ok = blocking == 0
 
     report_path = data_dir / "reports" / f"{args.instrument}-diff.md"
     status_path = data_dir / "status" / f"{args.instrument}-verify.json"
-    write_report(args.instrument, findings, counts, blocking, header_notes, report_path)
+    write_report(args.instrument, findings, counts, blocking, header_notes, report_path, norm_events)
     write_status(args.instrument, counts, ok, status_path)
 
     top = sorted(

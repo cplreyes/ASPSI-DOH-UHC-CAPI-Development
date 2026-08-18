@@ -44,6 +44,43 @@ Paper defects (broken cross-refs, duplicate/renumbered item numbers, e.g.
 the two "1."/"2." Word-renumbering artifacts in F3 Sections G/H) are parsed
 AS PRINTED — this tool does not try to detect or fix them, the divergence
 register (Task 0.4) does.
+
+Task 3.4 R15 addendum — two section-parser defects (F2, scoped fixes only)
+----------------------------------------------------------------------------
+(a) A pandoc grid table word-wraps a long cell's content across two or more
+    PHYSICAL lines when it's one LOGICAL row (no `+---+` divider between the
+    wrapped lines — the divider only marks true row boundaries). The old
+    line-scan classified each physical line independently, so a wrap that
+    happened to split a directive banner ("...SELECT ALL |" / "|  THAT
+    APPLY*") turned the orphaned tail fragment "THAT APPLY" into a spurious
+    all-caps section heading (`_is_allcaps_heading` matches, and it doesn't
+    match `DIRECTIVE_BANNER_RE` because that phrase alone isn't a
+    recognized banner-start). The SAME defect truncates checkbox option
+    labels that wrap the same way (the continuation becomes an orphan
+    "instruction" row and the option text is silently cut mid-word) — this
+    is also the root cause of most F2 OPTION_DIFF artifacts.
+    Fix: `_merge_wrapped_row_lines` pre-pass, run once on the raw split
+    lines before the main classification loop. It merges a run of
+    consecutive, non-divider, non-blank, pipe-led physical lines that ALL
+    pipe-split to the SAME cell count — column-by-column, joined with a
+    single space — back into one logical line. Lines separated by a real
+    `+---+` divider (the overwhelming common case) are never touched: the
+    merge only fires within an undivided run.
+(b) Some F2 sections (D, E, F) print their letter heading fully bold-wrapped
+    — `**D. Awareness on No Balance Billing...**` — instead of the letter-
+    bare-then-bold form every other section (A, B, C, G, J) uses —
+    `C.  **YAKAP/Konsulta Package**`. The old `SECTION_LETTER_RE` only
+    matched the second form, so D/E/F fell through every classification
+    branch (not an item, not all-caps since real prose isn't all-caps, no
+    open item to attach to) and were silently emitted as plain
+    "instruction" rows — `section` never updated, so the OLD section
+    ("C YAKAP/Konsulta Package") carried forward across what should have
+    been three new section boundaries (the SECTION_DIFF symptom: every item
+    from D through F shows paper section "C ..." against the build's
+    correct D/E/F).
+    Fix: `SECTION_LETTER_RE` widened to accept an optional leading `\*{0,2}`
+    before the letter (in addition to the existing optional bold AFTER the
+    period), so it matches both printed forms.
 """
 from __future__ import annotations
 
@@ -61,7 +98,10 @@ CHECKBOX = "☐"
 DIVIDER_RE = re.compile(r"^[+\-:=\s]+$")
 
 ITEM_START_RE = re.compile(r"^\*{0,2}\s*(\d+[a-z]?(?:\.\d+)?)\.\s*\*{0,2}\s*(.*)$")
-SECTION_LETTER_RE = re.compile(r"^([A-Z])\.\s*\*\*\s*(.*)$")
+# \*{0,2} leading: some sections (F2 D/E/F) bold-wrap the WHOLE cell
+# including the letter+period ("**D. Title**"), not just the title after it
+# ("C.  **Title**") -- see module docstring "Task 3.4 R15 addendum" (b).
+SECTION_LETTER_RE = re.compile(r"^\*{0,2}([A-Z])\.\s*\*{0,2}\s*(.*)$")
 SECTION_HASH_RE = re.compile(r"^#\s*\*\*\s*(.*)$")
 
 SKIP_RE = re.compile(r"<\s*(proceed to|skip to|end of survey)([^>]*)>", re.IGNORECASE)
@@ -272,6 +312,57 @@ def _merge_split_grid_items(rows: list) -> list:
     return [r for i, r in enumerate(rows) if i not in to_drop]
 
 
+def _pipe_column_count(line: str) -> int:
+    return len(line.strip().split("|"))
+
+
+def _is_row_content_line(line: str) -> bool:
+    stripped = line.rstrip("\r")
+    return bool(stripped.strip()) and not _is_divider(stripped) and stripped.lstrip().startswith("|")
+
+
+def _merge_wrapped_row_lines(lines: list) -> list:
+    """Pre-pass (Task 3.4 R15 addendum (a) -- see module docstring): merge a
+    run of consecutive, pipe-led, non-divider, non-blank physical lines that
+    ALL pipe-split to the SAME cell count into one logical line, joining
+    each column's text with a single space. A run of lines whose cell
+    counts DIFFER is left untouched (safe degrade: better to keep the old
+    per-line behavior on an unanticipated shape than merge wrongly). Lines
+    outside a table, blank lines, and divider lines pass through unchanged
+    and never start or extend a run -- this only fires on genuine same-row
+    word-wrap continuations, never across a real `+---+` row boundary."""
+    out = []
+    i = 0
+    n = len(lines)
+    while i < n:
+        line = lines[i]
+        if not _is_row_content_line(line):
+            out.append(line)
+            i += 1
+            continue
+        stripped = line.rstrip("\r")
+        run = [stripped]
+        col_count = _pipe_column_count(stripped)
+        j = i + 1
+        while j < n and _is_row_content_line(lines[j]):
+            nxt = lines[j].rstrip("\r")
+            if _pipe_column_count(nxt) != col_count:
+                break
+            run.append(nxt)
+            j += 1
+        if len(run) == 1:
+            out.append(run[0])
+        else:
+            split_rows = [r.strip().split("|") for r in run]
+            merged_cols = []
+            for k in range(col_count):
+                parts = [row[k].strip() for row in split_rows if row[k].strip()]
+                merged_cols.append((" " + " ".join(parts) + " ") if parts else split_rows[0][k])
+            out.append("|".join(merged_cols))
+        i = j
+    return out
+
+
 def parse_extract(md_text: str, inst: str) -> list:
     rows: list = []
     section = ""
@@ -285,7 +376,8 @@ def parse_extract(md_text: str, inst: str) -> list:
             rows.append(_finalize_item(cur))
             cur = None
 
-    for raw_line in md_text.split("\n"):
+    merged_lines = _merge_wrapped_row_lines(md_text.split("\n"))
+    for raw_line in merged_lines:
         line = raw_line.rstrip("\r")
         if not line.strip():
             continue
