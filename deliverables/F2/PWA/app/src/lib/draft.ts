@@ -15,7 +15,12 @@ export const COMPLETED_CSID_KEY = 'f2_completed_csid';
 // r8 (2026-08-05, #1003/#1004): Section K questionnaire-feedback items
 // FB1–FB5 + optional consent-page raffle_phone (#1002) join the values
 // payload — post-r8 submissions carry them, earlier ones don't.
-export const LOCAL_SPEC_VERSION = '2026-08-05-r8';
+// m1 (2026-08-19, aug17 migration Task 3.1): F2 spec rewritten to the Aug-17
+// instrument — full Q1–Q124 renumber (Q108 gap retired), Section-B
+// attribution battery split into new Q13.1–Q24.2 sub-items, Section J ids
+// from the old Q109 onward shift down by one. Pre-m1 drafts/submissions use
+// the old ids; do not silently merge them against post-m1 data.
+export const LOCAL_SPEC_VERSION = '2026-08-19-m1';
 
 export interface EnrollmentInfo {
   hcw_id: string;
