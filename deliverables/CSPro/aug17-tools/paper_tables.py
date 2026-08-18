@@ -151,18 +151,33 @@ def _strip_md(text: str) -> str:
 
 
 def _is_divider(line: str) -> bool:
-    """True for a pandoc grid-table border line. Handles the plain case
+    r"""True for a pandoc grid-table border line. Handles the plain case
     (`+---+---+`) and the mid-row case where an uneven column split makes a
     divider start with a leading `|` (e.g. one cell's box continues past
     where its neighbors already closed) — stripping `|` before the
     divider-charset check catches both; without it, the `|`-led form falls
     through as ordinary content and its `+---+` border junk gets glued
-    onto whatever item is open."""
+    onto whatever item is open.
+
+    R18 (rev-1.4 finding, F3): `DIVIDER_RE` (`^[+\-:=\s]+$`) matches a
+    STRING OF PURE WHITESPACE too, since `\s` is one of its allowed
+    characters — so a genuine blank CONTENT row (e.g. `"|          |"`,
+    used as visual spacing between a stem and its skip-note annotation)
+    was misclassified as a divider. That silently ended
+    `_merge_wrapped_row_lines`'s merge run one line early, isolating the
+    NEXT line as its own standalone cell — which could then be misread as
+    a spurious section heading (a real, printed all-caps skip directive
+    like "SKIP THIS QUESTION WHEN ANSWER IN Qnn IS NO", split off from its
+    own item by the phantom divider). A real divider always contains at
+    least one actual border character (`+`/`-`/`:`/`=`); requiring that
+    (rather than accepting pure whitespace) distinguishes the two."""
     stripped = line.strip()
     if not stripped:
         return False
     without_pipes = stripped.replace("|", "")
-    return bool(without_pipes) and bool(DIVIDER_RE.match(without_pipes))
+    if not without_pipes.strip():
+        return False  # pure whitespace between the pipes -- a blank content row, not a divider
+    return bool(DIVIDER_RE.match(without_pipes))
 
 
 def _split_cells(line: str) -> list:
@@ -237,6 +252,10 @@ def _new_item(inst: str, section: str, qnum: str, stem_start: str) -> dict:
         "qnum": qnum,
         "stem_parts": [stem_start] if stem_start.strip() else [],
         "options": [],
+        # R18 (rev-1.4 finding): per-column option buffers, populated
+        # alongside `options` (unchanged, still used by every other guard/
+        # skip-generation check) -- see _finalize_item for why.
+        "_option_columns": [],
         "skip_fragments": [],
     }
 
@@ -246,7 +265,20 @@ def _finalize_item(cur: dict) -> Row:
     stem = normalize_text(stem_raw)
     text_for_type = stem_raw
     options = []
-    for idx, (label, _frag) in enumerate(cur["options"], start=1):
+    # R18 (rev-1.4 finding, F3): a multi-row 2(+)-column checkbox grid is
+    # extracted in ROW-major physical order (row 1's cells left-to-right,
+    # then row 2's, ...), but the printed form -- and the build's own real
+    # option order -- reads COLUMN-major (all of column 1 top-to-bottom,
+    # then column 2, ...). `_option_columns[j]` collects every checkbox
+    # label that appeared at cell-position j within its row, across all
+    # rows of this item; concatenating column-by-column undoes the
+    # row-major interleave. Degenerates to the original row-major order
+    # (no-op) for the overwhelming common single-checkbox-per-row case,
+    # since then there's only ever one column.
+    ordered_options = [pair for col in cur.get("_option_columns", []) for pair in col]
+    if not ordered_options:
+        ordered_options = cur["options"]  # defensive fallback, should not occur
+    for idx, (label, _frag) in enumerate(ordered_options, start=1):
         options.append({"code": str(idx), "label": label})
         text_for_type += " " + label
     if MULTI_SELECT_RE.search(text_for_type):
@@ -406,11 +438,17 @@ def parse_extract(md_text: str, inst: str) -> list:
         # yet. A single whole-line classifier missed both; cells are now
         # classified independently, in order.
         row_matched_something = False
+        row_checkbox_col = 0  # R18: this row's Nth checkbox cell = column N
         for raw_cell in cells:
             if CHECKBOX in raw_cell:
                 opts = _extract_options([raw_cell])
                 if cur is not None:
                     cur["options"].extend(opts)
+                    cols = cur["_option_columns"]
+                    while len(cols) <= row_checkbox_col:
+                        cols.append([])
+                    cols[row_checkbox_col].extend(opts)
+                    row_checkbox_col += 1
                     row_matched_something = True
                 # An orphan option cell (no open item) has nowhere
                 # principled to go; drop it rather than fabricate an item.

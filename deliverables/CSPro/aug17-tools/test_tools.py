@@ -759,6 +759,135 @@ def test_multi_select_recognizes_check_all_variant():
     assert q111.cardinality == "multi"
 
 
+def test_two_column_checkbox_grid_reads_column_major_not_row_major():
+    # R18 (rev-1.4 finding, F3): a multi-row 2-column checkbox grid (each
+    # physical row prints one item from column 1 and one from column 2) is
+    # read by pandoc/the line-scan in ROW-major physical order, but the
+    # RESPONDENT reads it column-major (down column 1 fully, then down
+    # column 2) -- which is also the build's own real option order. Without
+    # a fix, the paper-extracted order is a perfect row-major interleave of
+    # the true column-major order (confirmed against real F3 data: an
+    # 8-option list read as 1,5,2,6,3,7,4,8 instead of 1,2,3,4,5,6,7,8).
+    md = (
+        "+----+----+\n"
+        "| 9. **Invented multi-row group item (fixture)?**    |\n"
+        "+----+----+\n"
+        "| ☐ Invented A | ☐ Invented E |\n"
+        "+----+----+\n"
+        "| ☐ Invented B | ☐ Invented F |\n"
+        "+----+----+\n"
+        "| ☐ Invented C | ☐ Invented G |\n"
+        "+----+----+\n"
+        "| ☐ Invented D | ☐ Invented H |\n"
+        "+----+----+\n"
+    )
+    rows = parse_extract(md, "F9")
+    items = [r for r in rows if r.kind == "item"]
+    q9 = next(r for r in items if r.qnum == "9")
+    labels = [o["label"] for o in q9.options]
+    # column-major: A,B,C,D (column 1, top to bottom) then E,F,G,H (column 2)
+    assert labels == ["Invented A", "Invented B", "Invented C", "Invented D",
+                       "Invented E", "Invented F", "Invented G", "Invented H"]
+
+
+def test_two_column_checkbox_grid_handles_uneven_split():
+    # 9 items, 5 in column 1 / 4 in column 2 (the last row has only one
+    # checkbox cell, no partner) -- must not lose or misplace the odd one.
+    md = (
+        "+----+----+\n"
+        "| 10. **Invented odd-count group item (fixture)?**   |\n"
+        "+----+----+\n"
+        "| ☐ Item 1 | ☐ Item 6 |\n"
+        "+----+----+\n"
+        "| ☐ Item 2 | ☐ Item 7 |\n"
+        "+----+----+\n"
+        "| ☐ Item 3 | ☐ Item 8 |\n"
+        "+----+----+\n"
+        "| ☐ Item 4 | ☐ Item 9 |\n"
+        "+----+----+\n"
+        "| ☐ Item 5 |\n"
+        "+----+\n"
+    )
+    rows = parse_extract(md, "F9")
+    items = [r for r in rows if r.kind == "item"]
+    q10 = next(r for r in items if r.qnum == "10")
+    labels = [o["label"] for o in q10.options]
+    assert labels == [f"Item {n}" for n in range(1, 10)]
+
+
+def test_single_column_checkbox_list_unaffected_by_column_major_fix():
+    # Sanity guard: the overwhelming common case (one checkbox per row) must
+    # produce EXACTLY the same order as before -- column-major degenerates
+    # to row-major when there's only one column.
+    md = (
+        "+----+\n"
+        "| 11. **Invented single-column item (fixture)?**  |\n"
+        "+----+\n"
+        "| ☐ First invented option |\n"
+        "+----+\n"
+        "| ☐ Second invented option |\n"
+        "+----+\n"
+        "| ☐ Third invented option |\n"
+        "+----+\n"
+    )
+    rows = parse_extract(md, "F9")
+    items = [r for r in rows if r.kind == "item"]
+    q11 = next(r for r in items if r.qnum == "11")
+    labels = [o["label"] for o in q11.options]
+    assert labels == ["First invented option", "Second invented option", "Third invented option"]
+
+
+def test_blank_content_row_is_not_misread_as_a_table_divider():
+    # R18 (rev-1.4 finding, F3): a genuine table divider ("+---+---+") and a
+    # blank CONTENT row (a real row whose cell is pure whitespace, used as
+    # visual spacing between a stem and its skip-note annotation) look
+    # different but _is_divider's old regex (`[+\-:=\s]+$`) matched BOTH,
+    # since a whitespace-only string still satisfies "one or more of
+    # +/-/:/=/whitespace". This silently ended a wrapped-row merge run one
+    # line early, isolating the NEXT line (e.g. a "> *SKIP THIS QUESTION...*"
+    # annotation) as its own standalone cell -- which then gets misread as a
+    # spurious section heading (see the next test).
+    md = (
+        "+----+\n"
+        "| 5. **Invented item with a blank spacer row (fixture)?** |\n"
+        "|                                                          |\n"
+        "| skip-note-like continuation text (fixture)               |\n"
+        "+----+\n"
+    )
+    rows = parse_extract(md, "F9")
+    items = [r for r in rows if r.kind == "item"]
+    q5 = next(r for r in items if r.qnum == "5")
+    assert "skip-note-like continuation text (fixture)" in q5.stem
+    headers = [r for r in rows if r.kind == "section_header"]
+    assert not headers
+
+
+def test_skip_directive_after_blank_spacer_not_misread_as_section_heading():
+    # End-to-end reproduction of the real F3 defect (item 70's "Check all
+    # that apply." stem followed by a blank row then a
+    # "> *SKIP THIS QUESTION WHEN ANSWER IN Qnn IS NO*" annotation). Item
+    # number changed from the real F3 "Q63" to an invented "Q99" reference,
+    # but the all-caps SHAPE is kept verbatim -- a lowercase "(fixture)"
+    # marker inside the caps run would itself defeat _is_allcaps_heading and
+    # fail to reproduce the bug.
+    md = (
+        "+----+\n"
+        "| 70. **Invented multi-select item?** Check all |\n"
+        "|     that apply.                                          |\n"
+        "|                                                          |\n"
+        "| > *SKIP THIS QUESTION WHEN ANSWER IN Q99 IS NO*           |\n"
+        "+----+\n"
+        "|    | ☐ Invented option |\n"
+        "+----+\n"
+    )
+    rows = parse_extract(md, "F9")
+    headers = [r for r in rows if r.kind == "section_header"]
+    assert not any("SKIP THIS QUESTION" in h.section for h in headers)
+    items = [r for r in rows if r.kind == "item"]
+    q70 = next(r for r in items if r.qnum == "70")
+    assert "SKIP THIS QUESTION WHEN ANSWER IN Q99 IS NO" in q70.stem
+
+
 def test_wrapped_row_merge_leaves_normal_divided_rows_alone():
     # Sanity guard: rows properly separated by a "+---+" divider (the
     # overwhelming common case) must be completely unaffected by the merge
