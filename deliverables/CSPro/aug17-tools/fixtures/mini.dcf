@@ -1,0 +1,51 @@
+{
+  "software": "CSPro",
+  "version": "8.0",
+  "fileType": "dictionary",
+  "name": "MINI_DICT",
+  "labels": [{ "text": "Mini Test Dictionary (invented, not real ASPSI content)", "language": "EN" }],
+  "levels": [
+    {
+      "name": "MINI_LEVEL",
+      "labels": [{ "text": "Mini Level", "language": "EN" }],
+      "ids": {
+        "items": [
+          {
+            "name": "CASE_ID",
+            "labels": [{ "text": "Case ID (fixture only)", "language": "EN" }],
+            "contentType": "numeric",
+            "length": 3
+          }
+        ]
+      },
+      "records": [
+        {
+          "name": "A_MINI_SECTION",
+          "labels": [{ "text": "A. Mini Invented Section", "language": "EN" }],
+          "occurrences": { "required": true, "maximum": 1 },
+          "items": [
+            {
+              "name": "Q1_TEST_SELECT",
+              "labels": [{ "text": "Do you like invented tea? (fixture only)", "language": "EN" }],
+              "contentType": "numeric",
+              "length": 1,
+              "valueSets": [
+                {
+                  "name": "Q1_TEST_SELECT_VS1",
+                  "labels": [{ "text": "Do you like invented tea? (fixture only)", "language": "EN" }],
+                  "values": [
+                    {
+                      "labels": [{ "text": "Yes", "language": "EN" }],
+                      "pairs": [{ "value": "1" }]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "languages": [{ "name": "EN", "label": "English" }]
+}
