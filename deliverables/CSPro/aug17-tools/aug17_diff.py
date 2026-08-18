@@ -93,8 +93,8 @@ content-verified:
   and requires exact set equality -- an "order:G,H" row does not cover an
   "order:G"-only move (nor an "order:G,H,I" move); it must name every
   moved section, no more, no less.
-See task-0.4-report.md / task-0.4-fix-1-report.md for the concrete matching
-rules and their known gaps.
+See task-0.4-report.md (including its "Fix round 1" section) for the
+concrete matching rules and their known gaps.
 """
 from __future__ import annotations
 
