@@ -12,7 +12,7 @@ export const sectionASchema = z.object({
   Q4: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(18).max(99),
   Q5: z.enum(['Administrator', 'Physician/Doctor', 'Physician assistant', 'Nurse', 'Nursing assistant', 'Pharmacist/Dispenser or Assistant Pharmacist', 'Midwife', 'Laboratory technician', 'Medical/ radiologic technologist', 'Health promotion officer', 'Nutrition-Dietician or Nutrition Action Officer/Coordinator', 'Physical Therapist', 'Dentist', 'Dentist aide', 'Barangay Health Worker', 'Other (specify)']),
   Q5_other: z.string().optional(),
-  Q6: z.enum(['No specialty', 'Anesthesia', 'Dermatology', 'Emergency Medicine', 'Family Medicine', 'General Surgery', 'Internal Medicine', 'Neurology', 'Nuclear Medicine', 'Obstetrics and Gynecology', 'Occupational Medicine', 'Ophthalmology', 'Orthopedics', 'Otorhinolaryngology (ENT)', 'Pathology', 'Pediatrics', 'Physical and Rehabilitation Medicine', 'Psychiatry', 'Public health', 'Radiology', 'Research', 'Others (specify)']).optional(),
+  Q6: z.enum(['No specialty', 'Nuclear Medicine', 'Physical and Rehabilitation Medicine', 'Anesthesia', 'Obstetrics and Gynecology', 'Psychiatry', 'Dermatology', 'Occupational Medicine', 'Public health', 'Emergency Medicine', 'Ophthalmology', 'Radiology', 'Family Medicine', 'Orthopedics', 'Research', 'General Surgery', 'Otorhinolaryngology (ENT)', 'Others (specify)', 'Internal Medicine', 'Pathology', 'Neurology', 'Pediatrics']).optional(),
   Q6_other: z.string().optional(),
   Q7: z.enum(['Yes', 'No']).optional(),
   Q8: z.enum(['I spend all of my time in private practice', 'I spend over half, but not all of my time in private practice', 'I spend my time equally in private and public practice', 'I spend over half, but not all of my time in public practice', 'I spend all of my time in public practice', 'I don\'t know']).optional(),
@@ -69,7 +69,7 @@ export const sectionBSchema = z.object({
   'Q24.1_other': z.string().optional(),
   'Q24.2': z.array(z.enum(['Client satisfaction survey', 'Dashboards', 'Other (specify)'])).optional(),
   'Q24.2_other': z.string().optional(),
-  Q25: z.array(z.enum(['Salary', 'Number of patients', 'Working hours', 'Standards to follow', 'Preventative health care', 'Patients seek healthcare in different ways', 'I don\'t know', 'Other (specify)'])).optional(),
+  Q25: z.array(z.enum(['Salary', 'Standards to follow', 'I don\'t know', 'Number of patients', 'Preventative health care', 'Other (specify)', 'Working hours', 'Patients seek healthcare in different ways'])).optional(),
   Q25_other: z.string().optional(),
   Q26: z.enum(['Higher', 'Lower', 'I don\'t know']).optional(),
   Q27: z.enum(['Higher', 'Lower', 'I don\'t know']).optional(),
@@ -118,7 +118,7 @@ export type SectionBValues = z.infer<typeof sectionBSchema>;
 
 export const sectionCSchema = z.object({
   Q31: z.enum(['Yes', 'No']),
-  Q32: z.array(z.enum(['Pap smear', 'Mammogram', 'Lipid profile', 'Thyroid function test', 'Chest X-ray', 'Low-dose Chest CT scan', 'Dental services', 'All of the above', 'I don\'t know'])).optional(),
+  Q32: z.array(z.enum(['Pap smear', 'Chest X-ray', 'I don\'t know', 'Mammogram', 'Low-dose Chest CT scan', 'Lipid profile', 'Dental services', 'Thyroid function test', 'All of the above'])).optional(),
   Q33: z.enum(['It is possible to register individual patients to YAKAP/Konsulta', 'It is possible to register whole families to YAKAP/Konsulta', 'It is possible to register both individual patients and their family members together to YAKAP/Konsulta', 'None of the above are true', 'I don\'t know']).optional(),
   Q34: z.enum(['Yes', 'No', 'I don\'t know what PhilHealth YAKAP/Konsulta package accreditation is', 'Other (specify)']).optional(),
   Q34_other: z.string().optional(),
@@ -149,16 +149,16 @@ export type SectionCValues = z.infer<typeof sectionCSchema>;
 
 export const sectionDSchema = z.object({
   Q41: z.enum(['Yes', 'No']),
-  Q42: z.array(z.enum(['News', 'Legislation', 'Social Media', 'Friends/Family', 'Health center/facility', 'LGU/Barangay', 'I don\'t know', 'Other (specify)'])).optional(),
+  Q42: z.array(z.enum(['News', 'Health center/facility', 'Legislation', 'LGU/Barangay', 'Social Media', 'I don\'t know', 'Friends/Family', 'Other (specify)'])).optional(),
   Q42_other: z.string().optional(),
-  Q43: z.array(z.enum(['Patient does not pay any hospital bill', 'PhilHealth will cover cost of treatment', 'Medicine and service are already included', 'No cash payment required upon discharge', 'Applies only to PhilHealth members and DOH-run hospitals', 'Bills are settled between the hospital and PhilHealth', 'Patients should not be charged extra fees', 'Applies only to PhilHealth members and any public hospital', 'Applies only to PhilHealth members and any public and private hospital', 'I don\'t know', 'Other (Specify)'])).optional(),
+  Q43: z.array(z.enum(['Patient does not pay any hospital bill', 'Patients should not be charged extra fees', 'PhilHealth will cover cost of treatment', 'Applies only to PhilHealth members and any public hospital', 'Medicine and service are already included', 'Applies only to PhilHealth members and any public and private hospital', 'No cash payment required upon discharge', 'I don\'t know', 'Applies only to PhilHealth members and DOH-run hospitals', 'Other (Specify)', 'Bills are settled between the hospital and PhilHealth'])).optional(),
   Q43_other: z.string().optional(),
   Q44: z.enum(['Yes', 'No']),
-  Q45: z.array(z.enum(['News', 'Legislation', 'Social Media', 'Friends/Family', 'Health center/facility', 'LGU/Barangay', 'I don\'t know', 'Other (specify)'])).optional(),
+  Q45: z.array(z.enum(['News', 'Health center/facility', 'Legislation', 'LGU/Barangay', 'Social Media', 'I don\'t know', 'Friends/Family', 'Other (specify)'])).optional(),
   Q45_other: z.string().optional(),
-  Q46: z.array(z.enum(['Patient does not pay any hospital bill', 'PhilHealth will cover cost of treatment', 'Medicine and service are already included', 'No cash payment required upon discharge', 'Applies only to PhilHealth members and DOH-run hospitals', 'Bills are settled between the hospital and PhilHealth', 'Patients should not be charged extra fees', 'Applies only to PhilHealth members and any public hospital', 'Applies only to PhilHealth members and any public and private hospital', 'I don\'t know', 'Other (Specify)'])).optional(),
+  Q46: z.array(z.enum(['Patient does not pay any hospital bill', 'Patients should not be charged extra fees', 'PhilHealth will cover cost of treatment', 'Applies only to PhilHealth members and any public hospital', 'Medicine and service are already included', 'Applies only to PhilHealth members and any public and private hospital', 'No cash payment required upon discharge', 'I don\'t know', 'Applies only to PhilHealth members and DOH-run hospitals', 'Other (Specify)', 'Bills are settled between the hospital and PhilHealth'])).optional(),
   Q46_other: z.string().optional(),
-  Q47: z.array(z.enum(['Lack/Insufficient medicines/supplies', 'Limited diagnostic services', 'High patient volume/workload', 'Documentation/compliance issues', 'ICT/system limitations', 'Patient-related concerns', 'Other (specify)'])).optional(),
+  Q47: z.array(z.enum(['Lack/Insufficient medicines/supplies', 'Limited diagnostic services', 'High patient volume/workload', 'Documentation/compliance issues', 'ICT/system limitations', 'Patient-related concerns', 'Other (specify)', 'None'])).optional(),
   Q47_other: z.string().optional(),
 }).superRefine((data, ctx) => {
   if (Array.isArray(data.Q42) && data.Q42.includes('Other (specify)') && !(typeof data.Q42_other === 'string' && data.Q42_other.trim().length > 0)) {
@@ -205,13 +205,13 @@ export const sectionESchema = z.object({
 export type SectionEValues = z.infer<typeof sectionESchema>;
 
 export const sectionFSchema = z.object({
-  Q56: z.array(z.enum(['Physical referral slip', 'E-referral', 'Referring facility calls receiving facility', 'Not Applicable', 'I don\'t know', 'Other (specify)'])).min(1),
+  Q56: z.array(z.enum(['Physical referral slip', 'I don\'t know', 'E-referral', 'Not Applicable', 'Referring facility calls receiving facility', 'Other (specify)'])).min(1),
   Q56_other: z.string().optional(),
-  Q57: z.enum(['DOH standard referral form', 'Facility\'s standard referral form', 'Province\'s standard referral form', 'City / LGU standard referral form', 'No standard referral form', 'Not Applicable', 'I don\'t know', 'Other (specify)']),
+  Q57: z.enum(['DOH standard referral form', 'No standard referral form', 'Facility\'s standard referral form', 'I don\'t know', 'Province\'s standard referral form', 'Not Applicable', 'City / LGU standard referral form', 'Other (specify)']),
   Q57_other: z.string().optional(),
-  Q58: z.enum(['Yes', 'No', 'I\'ve never heard of it', 'I don\'t know']),
+  Q58: z.enum(['Yes', 'I\'ve never heard of it', 'No', 'I don\'t know']),
   Q59: z.enum(['Almost all patients are referred, very few walk-in/self-referred', 'Majority of patients are referred, some walk-in/self-referred', 'The proportion of referrals is about equal to walk-ins', 'Majority of patients walk-in/self-referred, some are referred', 'Almost all patients walk-in/self-referred, very few are referred', 'I am unsure about the typical ratio of referrals to walk-ins', 'I don\'t know', 'Not Applicable']),
-  Q60: z.array(z.enum(['Physical referral slip', 'E-referral', 'Referring facility calls receiving facility', 'Not Applicable', 'I don\'t know', 'Other (specify)'])).min(1),
+  Q60: z.array(z.enum(['Physical referral slip', 'I don\'t know', 'E-referral', 'Not Applicable', 'Referring facility calls receiving facility', 'Other (specify)'])).min(1),
   Q60_other: z.string().optional(),
   Q61: z.enum(['Very Satisfied: Minor improvements needed, patients are always referred appropriately', 'Satisfied: Some improvements needed, patients are generally referred appropriately', 'Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional', 'Dissatisfied: Moderate improvements needed, a number of patients are referred to the wrong specialists or do not receive appropriate follow-up care', 'Very Dissatisfied: Major improvements needed, many patients are referred to the wrong specialists or do not receive appropriate follow-up care', 'Not applicable']),
   Q62: z.array(z.enum(['Facilities are overcrowded or operating beyond capacity and do not accept the health care provider\'s patient referrals', 'The referral process is slow', 'There is poor coordination between our facility and referred facilities (e.g. We do not get information back from the facility about the patients we referred to them.)', 'Other (specify)'])).optional(),
@@ -273,7 +273,7 @@ export const sectionHSchema = z.object({
   Q93_other: z.string().optional(),
   Q94: z.enum(['We are short staffed, so I have to', 'I am capable of the task, I just haven\'t completed official certification yet', 'I think that someone of my role should be responsible for these tasks', 'Other (specify)']).optional(),
   Q94_other: z.string().optional(),
-  Q95: z.enum(['Agree but for medical tasks only', 'Agree but for clerical tasks only', 'Agree for both medical and clerical tasks', 'Disagree for both medical and clerical tasks']).optional(),
+  Q95: z.enum(['Agree but for medical tasks only', 'Agree for both medical and clerical tasks', 'Agree but for clerical tasks only', 'Disagree for both medical and clerical tasks']).optional(),
 }).superRefine((data, ctx) => {
   if (data.Q92 === 'Other (specify)' && !(typeof data.Q92_other === 'string' && data.Q92_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q92_other'], message: 'Please specify' });
@@ -310,7 +310,7 @@ export const sectionJSchema = z.object({
   Q106: z.enum(['Strongly Agree', 'Agree', 'Neither Agree nor Disagree', 'Disagree', 'Strongly Disagree']),
   Q107: z.enum(['Strongly Agree', 'Agree', 'Neither Agree nor Disagree', 'Disagree', 'Strongly Disagree']),
   Q108: z.string().min(1),
-  Q109: z.array(z.enum(['Professional development opportunities', 'Better compensation policies', 'Better equipment / facilities', 'Other (specify)'])).min(1),
+  Q109: z.array(z.enum(['Professional development opportunities', 'Better compensation policies', 'Better equipment / facilities', 'Other (specify)', 'None'])).min(1),
   Q109_other: z.string().optional(),
   Q110: z.array(z.enum(['Seminars, conferences, workshops', 'Supervisory trainings', 'More training related to my job post', 'Other (specify)'])).min(1),
   Q110_other: z.string().optional(),
