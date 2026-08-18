@@ -32,6 +32,16 @@ consumed that same prefix as the item-start marker while parsing, so paper
 stems never carry it. Without this, nearly every item would false-positive
 STEM_DIFF. See `_norm_build_stem`.
 
+NOT sanctioned: case-folding (fix round 1, reviewer-caught). Every content
+comparison (stem/option-label/section/skip/validation/messages) is
+case-SENSITIVE -- "Refused to answer" vs "REFUSED TO ANSWER" is a real
+OPTION_DIFF, not noise. `.casefold()` still appears in a few places in this
+module, but only for REGISTER-KEY matching (finding which register row
+covers a divergence, e.g. `_norm_key`, `find_structural_registered`'s
+needle search) or for the deliberately-loose UNMATCHED_BUILD
+stem-association / CONSENT_DIFF containment checks -- never for deciding
+whether paper and build content are "the same" for reporting purposes.
+
 Join mechanics
 ---------------
 - Paper/build item rows are grouped by qnum (document order preserved).
@@ -68,9 +78,23 @@ Ordinary per-item categories look up `(inst, norm_key(qnum))` against every
 class in CLASS_ENUM (Tier A -- exact-ish key match). DISPOSITION_DIFF and
 ORDER_DIFF are structural -- a single register row can cover an entire
 instrument's disposition code-set divergence or a whole section-order
-swap -- so those use `find_structural_registered`, a substring-containment
-scan over the inst's register rows (Tier B). See task-0.4-report.md for the
-concrete matching rules and their known gaps.
+swap -- so a presence-only substring check isn't enough (fix round 1: it
+would auto-stamp any FUTURE regression REGISTERED forever just because a
+"FIELD CONTROL"/"order:X,Y" row happens to exist). Both are now
+content-verified:
+- DISPOSITION_DIFF: a matching "FIELD CONTROL" row (`find_structural_
+  registered`, presence check) must ALSO carry a `(codes: 1=Label,...)`
+  parenthetical in its `build_does` cell (`_parse_canonical_codes`) that
+  EXACTLY equals the currently-computed build code set -- else the row is
+  treated as not covering this run's content and the finding stays
+  UNREGISTERED.
+- ORDER_DIFF: `find_order_registered` parses both the finding's "order:X,Y"
+  key and each candidate register row's `qnum/item` cell into a letter SET
+  and requires exact set equality -- an "order:G,H" row does not cover an
+  "order:G"-only move (nor an "order:G,H,I" move); it must name every
+  moved section, no more, no less.
+See task-0.4-report.md / task-0.4-fix-1-report.md for the concrete matching
+rules and their known gaps.
 """
 from __future__ import annotations
 
@@ -238,6 +262,7 @@ class Finding:
     qnum: str
     detail: str
     registered: object = None  # RegisterRow | None, set by the registration pass
+    context: dict = field(default_factory=dict)  # side-channel data the registration pass needs (e.g. build_codes for DISPOSITION_DIFF content verification)
 
 
 def _qnum_sort_key(q: str):
@@ -250,7 +275,11 @@ def _qnum_sort_key(q: str):
 
 
 def _opts_key(options: list, norm) -> tuple:
-    return tuple(norm(o.get("label", "")).casefold() for o in options)
+    """NOT case-folded -- case-insensitivity is not a sanctioned
+    normalization (fix round 1). A pure-case option-label mismatch (e.g.
+    paper "Refused to answer" vs build "REFUSED TO ANSWER") must surface as
+    OPTION_DIFF, not be silently treated as identical."""
+    return tuple(norm(o.get("label", "")) for o in options)
 
 
 def _group_by_qnum(rows: list) -> dict:
@@ -322,7 +351,7 @@ def _compare_pair(q: str, p: Row, b: Row) -> list:
         out.append(Finding("MESSAGE_DIFF", q,
             f'paper messages="{p.messages}" | build ({b.item_name}) messages="{b.messages}"'))
 
-    if _norm_paper_text(p.section).casefold() != _norm_build_text(b.section).casefold():
+    if _norm_paper_text(p.section) != _norm_build_text(b.section):
         out.append(Finding("SECTION_DIFF", q,
             f'paper section="{p.section}" | build ({b.item_name}) section="{b.section}"'))
 
@@ -395,7 +424,33 @@ def _compare_disposition(paper_rows: list, build_rows: list) -> list:
         return []
     return [Finding("DISPOSITION_DIFF", "FIELD CONTROL",
         f"paper result-of-visit codes = {{{_fmt_codes(paper_codes)}}} | "
-        f"build ENUM_RESULT = {{{_fmt_codes(build_codes)}}}")]
+        f"build ENUM_RESULT = {{{_fmt_codes(build_codes)}}}",
+        context={"build_codes": build_codes})]
+
+
+_CANON_CODES_RE = re.compile(r"\(codes:\s*([^)]*)\)")
+
+
+def _parse_canonical_codes(text: str) -> dict:
+    """Parse a register row's `build_does` cell for a trailing
+    '(codes: 1=Label,2=Label,...)' canonical code list -- the
+    content-verification anchor for DISPOSITION_DIFF registration (fix
+    round 1: presence of a "FIELD CONTROL" row alone is not enough, the
+    row must name the EXACT code set it approves). Returns {} if absent,
+    unparsable, or explicitly 'none' -- callers must then treat the row as
+    NOT covering content (fail closed: an empty/missing canonical list only
+    matches a build with zero disposition codes, e.g. F2)."""
+    m = _CANON_CODES_RE.search(text or "")
+    if not m:
+        return {}
+    out = {}
+    for piece in m.group(1).split(","):
+        piece = piece.strip()
+        if "=" not in piece:
+            continue
+        code, label = piece.split("=", 1)
+        out[code.strip()] = normalize_text(label.strip())
+    return out
 
 
 _SECTION_LETTER_RE = re.compile(r"^([A-Z])\b")
@@ -418,15 +473,16 @@ def _first_appearance_order(items: list) -> list:
 def _find_moved_block(paper_order: list, build_order: list):
     """If build_order is paper_order with exactly one contiguous run of
     letters relocated elsewhere (rest stays in the same relative order),
-    return that run (paper order). Else None. Brute-forces every
-    contiguous sub-run -- fine for section-letter-count-sized lists."""
+    return that run (paper order). Else None. A single transposition can
+    always be described two ways (the small block that moved, or its large
+    complement that "moved" the other direction around it) -- iterates
+    block length ascending so the SMALLEST valid block wins; that's the
+    minimal, meaningful description of what actually relocated."""
     n = len(paper_order)
-    for i in range(n):
-        for j in range(i + 1, n + 1):
-            block = paper_order[i:j]
-            if not block:
-                continue
-            rest = paper_order[:i] + paper_order[j:]
+    for length in range(1, n + 1):
+        for i in range(0, n - length + 1):
+            block = paper_order[i:i + length]
+            rest = paper_order[:i] + paper_order[i + length:]
             build_rest = [x for x in build_order if x not in block]
             if build_rest == rest and any(x in block for x in build_order):
                 return block
@@ -449,6 +505,35 @@ def _compare_order(inst: str, paper_items: list, build_items: list) -> list:
         key = "order:" + ",".join(common)
         detail = f'section order differs: paper={",".join(common)} | build={",".join(common_build)}'
     return [Finding("ORDER_DIFF", key, detail)]
+
+
+_ORDER_KEY_RE = re.compile(r"^order:(.+)$", re.IGNORECASE)
+
+
+def _parse_order_letters(key: str):
+    """'order:G,H' -> frozenset({'G','H'}). None if the text isn't an
+    order: key at all (register rows for other categories)."""
+    m = _ORDER_KEY_RE.match((key or "").split("(", 1)[0].strip())
+    if not m:
+        return None
+    return frozenset(x.strip().upper() for x in m.group(1).split(",") if x.strip())
+
+
+def find_order_registered(register: dict, inst: str, order_key: str):
+    """Content-verified ORDER_DIFF match (fix round 1): the register row
+    must name EVERY moved section, exactly -- a "order:G,H" row does NOT
+    cover a "order:G"-only move (and wouldn't cover a "order:G,H,I" move
+    either). Set equality, not substring containment."""
+    moved = _parse_order_letters(order_key)
+    if not moved:
+        return None
+    for row in register.values():
+        if row.inst != inst:
+            continue
+        row_letters = _parse_order_letters(row.qnum_item)
+        if row_letters is not None and row_letters == moved:
+            return row
+    return None
 
 
 # --- top-level diff ----------------------------------------------------------
@@ -516,9 +601,18 @@ def diff_instrument(inst: str, paper_rows: list, build_rows: list, register: dic
         counts[f.category] = counts.get(f.category, 0) + 1
         reg_row = None
         if f.category == "DISPOSITION_DIFF":
-            reg_row = find_structural_registered(register, inst, "FIELD CONTROL")
+            candidate = find_structural_registered(register, inst, "FIELD CONTROL")
+            if candidate is not None:
+                canon = _parse_canonical_codes(candidate.build_does)
+                if canon == f.context.get("build_codes", {}):
+                    reg_row = candidate
+                # else: a FIELD CONTROL row exists but its canonical code
+                # list doesn't match the CURRENT build -- content mismatch,
+                # stays unregistered (fix round 1: presence alone isn't
+                # enough, or any future disposition regression would be
+                # auto-stamped REGISTERED forever).
         elif f.category == "ORDER_DIFF":
-            reg_row = find_registered(register, inst, f.qnum) or find_structural_registered(register, inst, f.qnum)
+            reg_row = find_order_registered(register, inst, f.qnum)
         elif f.category == "CONSENT_DIFF":
             reg_row = find_structural_registered(register, inst, "consent")
         elif f.qnum:
@@ -552,9 +646,14 @@ def write_report(inst: str, findings: list, counts: dict, blocking: int,
         "- Per-item categories (STEM_DIFF, OPTION_DIFF, CARDINALITY_DIFF, SKIP_DIFF, "
         "VALIDATION_DIFF, MESSAGE_DIFF, SECTION_DIFF, MISSING/EXTRA_IN_BUILD) register-match "
         "on a normalized qnum key against the register's `qnum/item` column.",
-        "- DISPOSITION_DIFF and ORDER_DIFF register-match structurally (any register row "
-        "for this instrument whose `qnum/item` text contains the relevant keyword(s)) -- "
-        "one register row can cover an entire instrument.",
+        "- DISPOSITION_DIFF and ORDER_DIFF register-match structurally AND "
+        "content-verified: a 'FIELD CONTROL' row must ALSO carry a matching "
+        "`(codes: 1=Label,...)` canonical list, and an 'order:X,Y' row must name "
+        "EXACTLY the moved section letters -- presence of a plausible-looking row "
+        "alone is not enough (fix round 1, 2026-08-18).",
+        "- Every content comparison (stem/option/section/skip/validation/messages) is "
+        "case-SENSITIVE -- case-insensitivity is not a sanctioned normalization "
+        "(fix round 1, 2026-08-18).",
         "- CONSENT_DIFF is reported but NEVER blocks the exit code this wave "
         "(full consent conformance is a Wave-1 task per the task-0.4 brief).",
         "- Text comparisons use 3 sanctioned normalizations: whitespace collapse, "

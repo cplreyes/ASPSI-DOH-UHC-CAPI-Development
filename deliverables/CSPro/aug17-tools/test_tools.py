@@ -216,3 +216,92 @@ def test_pandoc_dash_fold_is_not_a_false_stem_diff():
                  qtype="number", cardinality="single")]
     findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
     assert not any(f.category == "STEM_DIFF" for f in findings)
+
+
+# --- Fix round 1 (review): drop unsanctioned casefold; content-verify
+# structural register matches -------------------------------------------
+
+
+def test_option_diff_case_only():
+    # Case-insensitivity was never a sanctioned normalization. A pure-case
+    # option-label mismatch must surface as OPTION_DIFF, not be silently
+    # folded away.
+    paper = [Row(inst="F9", qnum="5", kind="item", stem="Refuse to answer?",
+                 options=[{"code": "1", "label": "Refused to answer"}],
+                 qtype="single", cardinality="single")]
+    build = [Row(inst="F9", qnum="5", item_name="Q5", kind="item", stem="Refuse to answer?",
+                 options=[{"code": "1", "label": "REFUSED TO ANSWER"}],
+                 qtype="single", cardinality="single")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert any(f.category == "OPTION_DIFF" for f in findings)
+
+
+def test_section_diff_case_only():
+    paper = [Row(inst="F9", qnum="6", kind="item", stem="Item text.", section="G Section Title",
+                 qtype="text", cardinality="single")]
+    build = [Row(inst="F9", qnum="6", item_name="Q6", kind="item", stem="Item text.",
+                 section="G SECTION TITLE", qtype="text", cardinality="single")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert any(f.category == "SECTION_DIFF" for f in findings)
+
+
+def test_disposition_register_content_mismatch_is_unregistered():
+    # A "FIELD CONTROL" register row exists for this inst, but its
+    # canonical code list is stale (doesn't match the currently-computed
+    # build code set) -- must NOT auto-pass. Content-blind presence-only
+    # matching would wrongly stamp any future disposition regression
+    # REGISTERED forever.
+    paper = [
+        Row(inst="F9", kind="section_header", section="FIELD CONTROL", stem="FIELD CONTROL"),
+        Row(inst="F9", kind="instruction", section="FIELD CONTROL", stem="1. Completed"),
+        Row(inst="F9", kind="instruction", section="FIELD CONTROL", stem="2. Postponed"),
+        Row(inst="F9", kind="instruction", section="FIELD CONTROL", stem="Total number of visits:"),
+    ]
+    build = [
+        Row(inst="F9", item_name="ENUM_RESULT_FIRST_VISIT", kind="disposition",
+            stem="Result of First Visit",
+            options=[
+                {"code": "1", "label": "Completed"}, {"code": "2", "label": "Postponed"},
+                {"code": "3", "label": "Replaced"},  # unregistered 3rd code
+            ],
+            qtype="single", cardinality="single"),
+    ]
+    reg_text = REGISTER_HEADER + (
+        "| F9 | FIELD CONTROL | system-item | 1-Completed / 2-Postponed | "
+        "Build ENUM_RESULT (codes: 1=Completed,2=Postponed) | stale canonical list, missing code 3 |\n"
+    )
+    register = build_register_index(parse_register_rows(reg_text))
+    findings, counts, blocking = diff_instrument("F9", paper, build, register)
+    disp = [f for f in findings if f.category == "DISPOSITION_DIFF"]
+    assert len(disp) == 1
+    assert disp[0].registered is None
+    assert blocking > 0
+
+
+def test_order_diff_registration_requires_full_coverage():
+    # A register row for "order:G,H" must NOT cover a G-only move -- the
+    # register row must name every moved section, not just overlap one.
+    paper = [
+        Row(inst="F9", qnum="1", kind="item", stem="a", section="A", qtype="text", cardinality="single"),
+        Row(inst="F9", qnum="2", kind="item", stem="b", section="B", qtype="text", cardinality="single"),
+        Row(inst="F9", qnum="3", kind="item", stem="c", section="C", qtype="text", cardinality="single"),
+        Row(inst="F9", qnum="4", kind="item", stem="d", section="D", qtype="text", cardinality="single"),
+        Row(inst="F9", qnum="7", kind="item", stem="g", section="G", qtype="text", cardinality="single"),
+    ]
+    build = [
+        Row(inst="F9", qnum="1", item_name="Q1", kind="item", stem="a", section="A", qtype="text", cardinality="single"),
+        Row(inst="F9", qnum="7", item_name="Q7", kind="item", stem="g", section="G", qtype="text", cardinality="single"),
+        Row(inst="F9", qnum="2", item_name="Q2", kind="item", stem="b", section="B", qtype="text", cardinality="single"),
+        Row(inst="F9", qnum="3", item_name="Q3", kind="item", stem="c", section="C", qtype="text", cardinality="single"),
+        Row(inst="F9", qnum="4", item_name="Q4", kind="item", stem="d", section="D", qtype="text", cardinality="single"),
+    ]
+    reg_text = REGISTER_HEADER + (
+        "| F9 | order:G,H | capi-adaptation | G/H after primary-care | G/H front-loaded | unrelated bigger move |\n"
+    )
+    register = build_register_index(parse_register_rows(reg_text))
+    findings, counts, blocking = diff_instrument("F9", paper, build, register)
+    order_findings = [f for f in findings if f.category == "ORDER_DIFF"]
+    assert len(order_findings) == 1
+    assert order_findings[0].qnum == "order:G"
+    assert order_findings[0].registered is None
+    assert blocking > 0
