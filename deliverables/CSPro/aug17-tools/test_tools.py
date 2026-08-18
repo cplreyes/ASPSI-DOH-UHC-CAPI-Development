@@ -12,6 +12,7 @@ from build_tables import (
     parse_dcf_qsf_apc,
     parse_items_ts,
     parse_pwa,
+    split_qsf_stem_and_instructions,
 )
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -117,6 +118,101 @@ def test_parse_pwa_reads_items_ts():
     assert {"code": "Yes", "label": "Yes"} in q1.options
     assert {"code": "No", "label": "No"} in q1.options
     assert q1.validation == "required"
+
+
+# --- Task 3.4, R19 (rev-1.4 close-out finding): qsf stem/instruction split -
+
+
+def test_qsf_split_single_paragraph_is_a_no_op():
+    html = "<p>14. Invented single-paragraph item text (fixture)?</p>\n"
+    stem, instructions = split_qsf_stem_and_instructions(html)
+    assert stem == "14. Invented single-paragraph item text (fixture)?"
+    assert instructions == ""
+
+
+def test_qsf_split_stem_first_instruction_second():
+    # Real F3 shape (Q9_GROUP): numbered stem first, class="instruction"
+    # paragraph second.
+    html = (
+        '<p>9. Which invented group does the patient identify with (fixture)?</p>'
+        '<p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>\n'
+    )
+    stem, instructions = split_qsf_stem_and_instructions(html)
+    assert stem == "9. Which invented group does the patient identify with (fixture)?"
+    assert "READ OPTIONS OUT LOUD" in instructions
+
+
+def test_qsf_split_stem_last_intro_and_instruction_first():
+    # Real F3 shape (Q4_NAME): plain intro paragraph, THEN a
+    # class="instruction" paragraph, THEN the numbered stem LAST -- the
+    # stem paragraph is identified by its printed number, not position.
+    html = (
+        "<p>Before proceeding, we would like to ask about invented personal "
+        "information (fixture).</p>"
+        '<p class="instruction">Note to enumerator [do not read]: invented '
+        "section instruction (fixture).</p>"
+        "<p>4. Invented patient name field (fixture)?</p>\n"
+    )
+    stem, instructions = split_qsf_stem_and_instructions(html)
+    assert stem == "4. Invented patient name field (fixture)?"
+    assert "Before proceeding" in instructions
+    assert "Note to enumerator" in instructions
+
+
+def test_qsf_split_decimal_qnum_with_and_without_trailing_period():
+    # Real F3 shapes: "97.1 " (no trailing period after the decimal) and
+    # "38.1. " (WITH a trailing period) both occur.
+    html_a = (
+        "<p>97.1 Invented decimal sub-item, no trailing period (fixture)?</p>"
+        "<p>If invented condition, select all that apply (fixture).</p>\n"
+    )
+    stem_a, instr_a = split_qsf_stem_and_instructions(html_a)
+    assert stem_a.startswith("97.1 Invented decimal sub-item")
+    assert instr_a
+
+    html_b = (
+        "<p>38.1. Invented decimal sub-item, WITH trailing period (fixture)?</p>"
+        "<p>SELECT ONE ANSWER ONLY (fixture).</p>\n"
+    )
+    stem_b, instr_b = split_qsf_stem_and_instructions(html_b)
+    assert stem_b.startswith("38.1. Invented decimal sub-item")
+    assert instr_b
+
+
+def test_qsf_split_multi_paragraph_no_stem_match_falls_back_whole_text():
+    # Real F3 shape (consent-script / build-banner blocks): multiple
+    # paragraphs, NONE starting with a printed item number -- can't
+    # confidently identify a stem paragraph, so the whole HTML-stripped
+    # text is kept as `stem` (old behavior), never guessed, never dropped.
+    html = (
+        "<p>Invented consent intro paragraph with no number (fixture).</p>"
+        "<p>Invented consent second paragraph, also no number (fixture).</p>\n"
+    )
+    stem, instructions = split_qsf_stem_and_instructions(html)
+    assert "Invented consent intro paragraph" in stem
+    assert "Invented consent second paragraph" in stem
+    assert instructions == ""
+
+
+def test_qsf_split_real_stem_diff_in_first_paragraph_still_detectable():
+    # Guard: the split must not accidentally HIDE a genuine stem wording
+    # difference -- it only separates the instruction text out, the stem
+    # text itself is untouched (still exactly what was printed).
+    html = (
+        "<p>14. Invented item wording that genuinely differs from paper (fixture)?</p>"
+        '<p class="instruction">Invented instruction text (fixture).</p>\n'
+    )
+    stem, instructions = split_qsf_stem_and_instructions(html)
+    assert stem == "14. Invented item wording that genuinely differs from paper (fixture)?"
+
+
+def test_parse_dcf_qsf_apc_sets_instructions_field_from_qsf():
+    # End-to-end: parse_dcf_qsf_apc must populate Row.instructions from the
+    # qsf split, not silently drop the severed text.
+    rows = parse_dcf_qsf_apc(FIXTURES, "mini_split")
+    q1 = next(r for r in rows if r.item_name == "Q1_TEST_SELECT")
+    assert q1.stem == "1. Invented split-fixture stem (fixture)?"
+    assert "invented instruction" in q1.instructions.lower()
 
 
 # --- Task 0.4: aug17_diff.py -----------------------------------------------

@@ -346,11 +346,54 @@ def parse_apc(apc_path: Path) -> dict:
     return info
 
 
+# R19: identifies the TRUE stem paragraph among a multi-paragraph qsf
+# questionText block -- the one starting with the item's own printed
+# number. Validated against all 371 real F3 qsf items: matches every
+# numbering shape observed -- "14. " (whole number + period), "97.1 "
+# (decimal, no trailing period), "38.1. " (decimal WITH trailing period).
+# See module docstring "Stem/instruction split" for the full rationale.
+_STEM_PARAGRAPH_RE = re.compile(r"^\d+[a-z]?(?:\.\d+)?\.?\s+")
+
+_QSF_PARAGRAPH_RE = re.compile(r"<p[^>]*>(.*?)</p>", re.IGNORECASE | re.DOTALL)
+
+
+def _split_qsf_paragraphs(html_text: str) -> list:
+    """Raw questionText.EN HTML -> list of HTML-stripped, non-empty `<p>`
+    block texts, in document order. Falls back to a single-element list
+    (the whole HTML-stripped text) if there are no `<p>` tags at all (some
+    qsf blocks are a bare string, not wrapped in a paragraph tag)."""
+    blocks = _QSF_PARAGRAPH_RE.findall(html_text or "")
+    if not blocks:
+        whole = strip_html(html_text)
+        return [whole] if whole else []
+    out = [strip_html(b) for b in blocks]
+    return [b for b in out if b]
+
+
+def split_qsf_stem_and_instructions(html_text: str) -> tuple:
+    """Raw questionText.EN HTML -> (stem, instructions). See module
+    docstring "Stem/instruction split" -- structural detection via
+    `_STEM_PARAGRAPH_RE`, never a guess: degrades to the old whole-text-
+    as-stem behavior (instructions="") whenever there's <=1 paragraph, or
+    none of several paragraphs matches the stem pattern."""
+    paras = _split_qsf_paragraphs(html_text)
+    if len(paras) <= 1:
+        return (paras[0] if paras else "", "")
+    stem_idx = next((i for i, p in enumerate(paras) if _STEM_PARAGRAPH_RE.match(p)), None)
+    if stem_idx is None:
+        return (" ".join(paras), "")
+    instructions = " ".join(p for i, p in enumerate(paras) if i != stem_idx)
+    return (paras[stem_idx], instructions)
+
+
 def load_qsf_text(qsf_path: Path) -> dict:
-    """.ent.qsf -> {UPPER item name: literal EN question text}. Same
+    """.ent.qsf -> {UPPER item name: (stem, instructions)}. Same source
     approach as data-harmonization/generate_codebook.py:load_qsf (YAML,
-    utf-8-sig, dict.item name, first conditions[].questionText.EN,
-    HTML-stripped). Returns {} if missing."""
+    utf-8-sig, dict.item name, first conditions[].questionText.EN) --
+    R19 (rev-1.4 close-out finding): now splits the raw HTML into
+    (true stem, severed instruction/intro text) via
+    `split_qsf_stem_and_instructions` instead of flat-stripping the whole
+    block into one string. Returns {} if missing."""
     if not qsf_path.exists():
         return {}
     import yaml  # local import: only needed for CSPro mode
@@ -360,9 +403,12 @@ def load_qsf_text(qsf_path: Path) -> dict:
     for q in d.get("questions", []):
         name = (q.get("name") or "").split(".")[-1].upper()
         for c in q.get("conditions", []):
-            t = strip_html((c.get("questionText") or {}).get("EN", ""))
-            if name and t:
-                out[name] = t
+            raw = (c.get("questionText") or {}).get("EN", "")
+            if not raw.strip():
+                continue
+            stem, instructions = split_qsf_stem_and_instructions(raw)
+            if name and stem:
+                out[name] = (stem, instructions)
                 break
     return out
 
@@ -418,8 +464,13 @@ def parse_dcf_qsf_apc(inst_dir: Path, base: str) -> list:
         else:
             kind = "item"
 
-        stem = qsf_text.get(upper_name) or _en_label(item)
+        qsf_entry = qsf_text.get(upper_name)
+        if qsf_entry:
+            stem, instructions = qsf_entry
+        else:
+            stem, instructions = _en_label(item), ""
         stem = normalize_text(strip_html(stem))
+        instructions = normalize_text(strip_html(instructions))
         options = build_options(item)
         qtype, cardinality = derive_qtype(item)
         qnum = derive_qnum(name)
@@ -437,6 +488,7 @@ def parse_dcf_qsf_apc(inst_dir: Path, base: str) -> list:
             inst=inst, qnum=qnum, item_name=name, section=section, kind=kind,
             stem=stem, options=options, qtype=qtype, cardinality=cardinality,
             skip=skip, validation=validation, messages=messages,
+            instructions=instructions,
         ))
     return rows
 

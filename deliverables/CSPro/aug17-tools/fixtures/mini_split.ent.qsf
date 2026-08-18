@@ -1,0 +1,8 @@
+software: CSPro
+version: "8.0"
+fileType: entry
+questions:
+  - name: "Q1_TEST_SELECT"
+    conditions:
+      - questionText:
+          EN: "<p>1. Invented split-fixture stem (fixture)?</p><p class=\"instruction\">Do not read aloud: invented instruction text (fixture).</p>\n"
