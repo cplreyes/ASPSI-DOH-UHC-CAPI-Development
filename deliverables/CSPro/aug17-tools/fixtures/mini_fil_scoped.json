@@ -1,0 +1,13 @@
+{
+ "_meta": {
+  "format": "name-scoped-v2",
+  "migrated": "2026-08-17",
+  "keys": "cspro_helpers.walk_labeled_nodes"
+ },
+ "item:Q1_LIKES_TEA": "Gusto mo ba ng tsaa? (fixture)",
+ "vs:Q1_LIKES_TEA_VS1": "Pagpipilian (fixture)",
+ "val:Q1_LIKES_TEA_VS1:1": "Oo (fixture)",
+ "val:Q1_LIKES_TEA_VS1:2": "Hindi (fixture)",
+ "item:Q2_COLOR": "Anong kulay ang paborito mo? (fixture)",
+ "record:MINI_ROSTER": "Mini Roster (fixture)"
+}

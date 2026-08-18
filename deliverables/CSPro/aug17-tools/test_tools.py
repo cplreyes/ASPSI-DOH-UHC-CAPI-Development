@@ -1,4 +1,7 @@
+import json
 from pathlib import Path
+
+import pytest
 
 from rowspec import Row, normalize_text
 from paper_tables import parse_extract
@@ -305,3 +308,144 @@ def test_order_diff_registration_requires_full_coverage():
     assert order_findings[0].qnum == "order:G"
     assert order_findings[0].registered is None
     assert blocking > 0
+
+
+# --- Task 0.6: rejoin_translations.py ---------------------------------------
+
+from rejoin_translations import (
+    compute_stale_from_tables,
+    plan_pwa_rekey,
+    plan_rejoin,
+    plan_stale_drop,
+    rebuild_locale_dict,
+    require_name_scoped,
+    surgical_rejoin_scoped_text,
+)
+
+
+def _load_fixture(name):
+    return json.loads((FIXTURES / name).read_text(encoding="utf-8"))
+
+
+def test_scoped_rename_moves_all_key_kinds():
+    data = _load_fixture("mini_fil_scoped.json")
+    rename_map = {"Q1_LIKES_TEA": "Q1_ENJOYS_TEA"}
+    plan = plan_rejoin(data, rename_map, stem_changed_names=set(), stale_val_codes=set())
+    moved = dict(plan["moved"])
+    assert moved["item:Q1_LIKES_TEA"] == "item:Q1_ENJOYS_TEA"
+    assert moved["vs:Q1_LIKES_TEA_VS1"] == "vs:Q1_ENJOYS_TEA_VS1"
+    assert moved["val:Q1_LIKES_TEA_VS1:1"] == "val:Q1_ENJOYS_TEA_VS1:1"
+    assert moved["val:Q1_LIKES_TEA_VS1:2"] == "val:Q1_ENJOYS_TEA_VS1:2"
+    assert not plan["fellback"]
+
+    new_data = rebuild_locale_dict(data, plan)
+    assert new_data["item:Q1_ENJOYS_TEA"] == data["item:Q1_LIKES_TEA"]
+    assert new_data["vs:Q1_ENJOYS_TEA_VS1"] == data["vs:Q1_LIKES_TEA_VS1"]
+    assert new_data["val:Q1_ENJOYS_TEA_VS1:1"] == data["val:Q1_LIKES_TEA_VS1:1"]
+    assert new_data["val:Q1_ENJOYS_TEA_VS1:2"] == data["val:Q1_LIKES_TEA_VS1:2"]
+    assert new_data["_meta"] == data["_meta"]
+
+
+def test_reworded_stem_drops_to_fellback():
+    data = _load_fixture("mini_fil_scoped.json")
+    rename_map = {"Q1_LIKES_TEA": "Q1_ENJOYS_TEA"}
+    plan = plan_rejoin(data, rename_map, stem_changed_names={"Q1_LIKES_TEA"}, stale_val_codes=set())
+    fellback = dict(plan["fellback"])
+    assert fellback["item:Q1_LIKES_TEA"] == "renamed+reworded"
+    moved_old_keys = {old for old, _new in plan["moved"]}
+    assert "item:Q1_LIKES_TEA" not in moved_old_keys
+    # the item's own stem translation drops, but its value set/options still
+    # carry -- Decision 2 is scoped to the exact key whose English changed.
+    assert "vs:Q1_LIKES_TEA_VS1" in moved_old_keys
+    assert "val:Q1_LIKES_TEA_VS1:1" in moved_old_keys
+
+
+def test_unmapped_scoped_keys_untouched():
+    data = _load_fixture("mini_fil_scoped.json")
+    rename_map = {"Q1_LIKES_TEA": "Q1_ENJOYS_TEA"}  # Q2_COLOR / MINI_ROSTER absent from the map
+    plan = plan_rejoin(data, rename_map, stem_changed_names=set(), stale_val_codes=set())
+    assert plan["kept"]["item:Q2_COLOR"] == data["item:Q2_COLOR"]
+    assert plan["kept"]["record:MINI_ROSTER"] == data["record:MINI_ROSTER"]
+    moved_old_keys = {old for old, _new in plan["moved"]}
+    assert "item:Q2_COLOR" not in moved_old_keys
+    assert "record:MINI_ROSTER" not in moved_old_keys
+
+
+def test_pwa_mode_rekeys_english():
+    data = {
+        "Do you like invented tea? (fixture)": "Gusto mo ba ng tsaa? (fixture)",
+        "Yes (fixture)": "Oo (fixture)",
+    }
+    rekey_map = {"Do you like invented tea? (fixture)": "Do you enjoy invented tea? (fixture)"}
+    plan = plan_pwa_rekey(data, rekey_map)
+    new_data = rebuild_locale_dict(data, plan)
+    assert new_data["Do you enjoy invented tea? (fixture)"] == "Gusto mo ba ng tsaa? (fixture)"
+    assert "Do you like invented tea? (fixture)" not in new_data
+    assert new_data["Yes (fixture)"] == "Oo (fixture)"  # unmapped -> untouched, verbatim
+    assert not plan["fellback"]
+
+
+def test_legacy_text_key_refused():
+    data = _load_fixture("mini_fil_text.json")
+    with pytest.raises(ValueError, match="name-scoped"):
+        require_name_scoped(data, "fixtures/mini_fil_text.json")
+
+
+def test_stale_from_tables_drops_reworded():
+    paper = [Row(inst="F9", qnum="1", kind="item", stem="Original tea stem (fixture).",
+                 options=[{"code": "1", "label": "Yes (fixture)"}, {"code": "2", "label": "No, changed (fixture)"}],
+                 qtype="single", cardinality="single")]
+    build = [Row(inst="F9", qnum="1", item_name="Q1_LIKES_TEA", kind="item", stem="Changed tea stem (fixture).",
+                 options=[{"code": "1", "label": "Yes (fixture)"}, {"code": "2", "label": "No (fixture)"}],
+                 qtype="single", cardinality="single")]
+    stem_changed, option_changed, new_rows = compute_stale_from_tables("F9", paper, build)
+    assert "Q1_LIKES_TEA" in stem_changed
+    assert ("Q1_LIKES_TEA", "2") in option_changed
+    assert ("Q1_LIKES_TEA", "1") not in option_changed
+    assert new_rows == []
+
+    data = _load_fixture("mini_fil_scoped.json")
+    plan = plan_stale_drop(data, stem_changed, option_changed)
+    fellback = dict(plan["fellback"])
+    assert fellback["item:Q1_LIKES_TEA"] == "stale-stem"
+    assert fellback["val:Q1_LIKES_TEA_VS1:2"] == "stale-option"
+    assert "val:Q1_LIKES_TEA_VS1:1" in plan["kept"]  # code 1 unchanged -> carried
+
+
+# --- extra coverage (not individually named in the brief, but load-bearing
+# for the Wave tasks that will actually run --apply against real files) ----
+
+
+def test_rename_collision_raises():
+    data = {
+        "_meta": {"format": "name-scoped-v2"},
+        "item:Q1_OLD": "stem A (fixture)",
+        "item:Q2_KEEP": "stem B (fixture)",
+    }
+    # both Q1_OLD and Q2_KEEP would collide onto item:Q2_KEEP after rename
+    rename_map = {"Q1_OLD": "Q2_KEEP"}
+    with pytest.raises(ValueError, match="collision"):
+        plan_rejoin(data, rename_map, stem_changed_names=set(), stale_val_codes=set())
+
+
+def test_surgical_apply_renames_and_drops_without_reformatting():
+    raw_text = (FIXTURES / "mini_fil_scoped.json").read_text(encoding="utf-8")
+    data = json.loads(raw_text)
+    rename_map = {"Q1_LIKES_TEA": "Q1_ENJOYS_TEA"}
+    plan = plan_rejoin(data, rename_map, stem_changed_names=set(), stale_val_codes={("Q1_LIKES_TEA", "2")})
+    new_text, applied_moves, applied_drops = surgical_rejoin_scoped_text(raw_text, plan["moved"], plan["fellback"])
+
+    reparsed = json.loads(new_text)  # must still be valid JSON
+    assert reparsed["item:Q1_ENJOYS_TEA"] == data["item:Q1_LIKES_TEA"]
+    assert "val:Q1_ENJOYS_TEA_VS1:2" not in reparsed  # dropped (stale-option), falls back to English
+    assert reparsed["val:Q1_ENJOYS_TEA_VS1:1"] == data["val:Q1_LIKES_TEA_VS1:1"]
+    assert reparsed["item:Q2_COLOR"] == data["item:Q2_COLOR"]  # untouched
+    assert reparsed["_meta"] == data["_meta"]
+    assert set(applied_moves) == {k for k, _ in plan["moved"]}
+    assert set(applied_drops) == {k for k, _ in plan["fellback"]}
+    # untouched lines are byte-identical: every line not carrying a
+    # moved/dropped key must appear verbatim in the new text
+    touched = {k for k, _ in plan["moved"]} | {k for k, _ in plan["fellback"]}
+    for line in raw_text.splitlines():
+        if not any(f'"{k}"' in line for k in touched):
+            assert line in new_text
