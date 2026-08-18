@@ -26,9 +26,9 @@ parser strips border/pipe syntax and classifies each *logical cell* (a
     letter — see each F{n}-inventory.md §1; letters are assigned by a
     rolling counter reset whenever an explicit letter is seen);
   - a lone cell that is a short bold ALL-CAPS run (letters only, no digits)
-    is treated as an unlettered heading (PART I/II banners, consent
-    headers) — tagged kind=consent if it mentions "consent", else
-    kind=section_header;
+    is treated as an unlettered heading (untitled document banners and
+    consent-related headers) — tagged kind=consent if it mentions
+    "consent", else kind=section_header;
   - any other lone cell is either stem continuation (if the currently open
     item has no options yet — i.e. we're still inside its stem) or a
     standalone note/instruction row (once the open item already has
@@ -149,13 +149,13 @@ def _looks_like_glossary_entry(text: str) -> bool:
 
 def _is_allcaps_heading(text: str) -> bool:
     """True for a genuine unlettered document heading — an untitled banner
-    like "PART I: SECTION TITLE" or a bare all-caps section label such as
-    "CONSENT FORM". Requires a letter-led, multi-word all-caps run —
-    excludes bracket/paren/digit-led fragments (e.g. a piped-fill
-    placeholder like "[FIELD]?", a stray cross-reference fragment like
-    "(SEE Q9...", or a numbered legend row like "3) ABC") and single-word
-    acronym fragments that share the all-caps look but are legend/piped-
-    fill noise bleeding out of a roster cell, not a heading."""
+    ("PART <roman numeral>: <title>") or a bare all-caps section label with
+    no leading letter/number. Requires a letter-led, multi-word all-caps
+    run — excludes bracket/paren/digit-led fragments (a piped-fill
+    placeholder, a stray parenthetical cross-reference, a numbered legend
+    row) and single-word acronym fragments that share the all-caps look
+    but are legend/piped-fill noise bleeding out of a roster cell, not a
+    heading."""
     text = text.strip()
     if not text or not text[0].isalpha():
         return False
