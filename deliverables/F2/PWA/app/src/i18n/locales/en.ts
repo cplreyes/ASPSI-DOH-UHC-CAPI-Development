@@ -160,8 +160,12 @@ export const en = {
       'You are free to decline participation or to stop at any time before submitting the form. Choosing not to participate will not result in any penalty, and you will not have to pay anything to take part in this study.',
     contactsHeading:
       'If you have concerns or questions about your rights as a participant, you can contact:',
+    // aug17 migration (Task 3.1, 2026-08-19): synced to the Aug-17 printed
+    // ethics-contact table (F2-paper.csv rows 49-57 / F2-inventory.md §1) —
+    // the SJREB email/phone and ASPSI email here were stale (an older
+    // contact set); the DOH/Villarante block was already correct.
     contactsBody:
-      'Single Joint Research Ethics Board (SJREB) at the Philippines Department of Health\nEmail: sjreb.doh@gmail.com\nNational Tel: (02) 651-7800 local 1328\nTel: +63 936 992 5513\n\nDepartment of Health\nName: Lindsley Jeremiah D. Villarante\nEmail: ldvillarante@doh.gov.ph\nTel: +63 (02) 8651-7800 local 1432\n\nAsian Social Project Services, Inc.\nName: Paulyn Jean A. Claro\nEmail: aspsiglobal@gmail.com\nTel: +63 917 819 6884',
+      'Single Joint Research Ethics Board (SJREB), Department of Health\nEmail: sjreb@doh.gov.ph\nTel: (02) 8651-7800 local 1326, 1328\n\nDepartment of Health\nName: Lindsley Jeremiah D. Villarante\nEmail: ldvillarante@doh.gov.ph\nTel: +63 (02) 8651-7800 local 1432\n\nAsian Social Project Services, Inc.\nName: Paulyn Jean A. Claro\nEmail: inquiry.aspsi.doh.uhc.survey2@gmail.com\nTel: +63 917 819 6884',
     confirmHeading: 'Consent confirmation',
     confirmPrompt:
       'Please confirm whether you have read and understood the information above and whether you agree to participate in this survey. You must confirm to proceed.',

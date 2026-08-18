@@ -326,7 +326,7 @@ export const sectionJSchema = z.object({
   Q119: z.enum(['Always', 'Often', 'Sometimes', 'Seldom', 'Never']),
   Q120: z.enum(['Always', 'Often', 'Sometimes', 'Seldom', 'Never']),
   Q121: z.enum(['Once or twice in the past month', 'Once or twice a week', 'Three or four days every week', 'Almost everyday', 'Everyday']).optional(),
-  Q122: z.enum(['Yes, I\'ve thought about it and have definite plans to leave', 'Yes, I\'ve thought about it and am actively exploring other opportunities, but no firm plans yet', 'Yes, I\'ve thought about it, but I\'m not actively exploring nor have I made any firm plans yet', 'No, I haven\'t thought about it']).optional(),
+  Q122: z.enum(['Yes, I\'ve thought about it and have definite plans to leave', 'Yes, I\'ve thought about it and am actively exploring other opportunities, but no firm plans yet', 'Yes, I\'ve thought about it, but I\'m not actively exploring nor have I made any firm plans yet', 'No, I haven\'t thought about it']),
   Q123: z.array(z.enum(['Poor compensation', 'Moving to another part of the country', 'Lack of opportunities', 'Moving to another country', 'Burnt out', 'Other (specify)'])).optional(),
   Q123_other: z.string().optional(),
   Q124: z.array(z.enum(['Transfer to a new facility with the same role', 'Change training/specialization within healthcare', 'Change profession', 'Take an extended leave from work', 'Take a position as a health worker in another country', 'Retire', 'Other (specify)'])).optional(),

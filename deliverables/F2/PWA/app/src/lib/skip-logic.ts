@@ -71,7 +71,11 @@ const isDissatisfied = (v: unknown) => {
   return v.startsWith('Dissatisfied') || v.startsWith('Very Dissatisfied');
 };
 
-const q123IsYes = (v: unknown) => typeof v === 'string' && v.startsWith('Yes,');
+// aug17 migration (Task 3.1, 2026-08-19): renamed from q123IsYes — the item
+// this gates on is Q122 in the Aug-17 renumber (was Q123 pre-renumber; the
+// Q108 gap retirement shifts every Section J id from the old Q109 onward
+// down by one). Pure re-key, same predicate.
+const q122IsYes = (v: unknown) => typeof v === 'string' && v.startsWith('Yes,');
 
 const q25Includes = (v: FormValues, choice: string) =>
   Array.isArray(v.Q25) && (v.Q25 as string[]).includes(choice);
@@ -175,10 +179,17 @@ const predicates: Record<string, Record<string, Predicate>> = {
   I: {
     Q97: (v) => v.Q96 === 'No',
   },
+  // aug17 migration (Task 3.1, 2026-08-19): mechanical re-key per
+  // maps/F2-renames.csv — the Q108 numbering gap retired, so every Section J
+  // id from the old Q109 onward (both these keys and their v.Qnn
+  // dependencies) shifts down by one. Zero logic change: Q121 still gates on
+  // "did you work beyond scheduled hours" (was Q122←Q114, now Q121←Q113);
+  // Q123/Q124 still gate on "are you planning to leave" (was Q124/Q125←Q123,
+  // now Q123/Q124←Q122).
   J: {
-    Q122: (v) => typeof v.Q114 === 'string' && v.Q114 !== 'Never',
-    Q124: (v) => q123IsYes(v.Q123),
-    Q125: (v) => q123IsYes(v.Q123),
+    Q121: (v) => typeof v.Q113 === 'string' && v.Q113 !== 'Never',
+    Q123: (v) => q122IsYes(v.Q122),
+    Q124: (v) => q122IsYes(v.Q122),
   },
 };
 

@@ -239,25 +239,29 @@ describe('shouldShow', () => {
     });
   });
 
+  // aug17 migration (Task 3.1, 2026-08-19): mechanical re-key per
+  // maps/F2-renames.csv — Q108 gap retired, Section J ids from the old Q109
+  // onward shift down by one (Q122→Q121, Q124→Q123, Q125→Q124; dependency
+  // refs Q114→Q113, Q123→Q122). Same predicates under the new ids.
   describe('Section J', () => {
-    it('hides Q122 when Q114 is Never', () => {
-      expect(shouldShow('J', 'Q122', { Q114: 'Never' })).toBe(false);
+    it('hides Q121 when Q113 is Never', () => {
+      expect(shouldShow('J', 'Q121', { Q113: 'Never' })).toBe(false);
     });
 
-    it('shows Q122 when Q114 is any other frequency', () => {
-      expect(shouldShow('J', 'Q122', { Q114: 'Always' })).toBe(true);
-      expect(shouldShow('J', 'Q122', { Q114: 'Seldom' })).toBe(true);
+    it('shows Q121 when Q113 is any other frequency', () => {
+      expect(shouldShow('J', 'Q121', { Q113: 'Always' })).toBe(true);
+      expect(shouldShow('J', 'Q121', { Q113: 'Seldom' })).toBe(true);
     });
 
-    it('hides Q124 and Q125 when Q123 is No', () => {
-      expect(shouldShow('J', 'Q124', { Q123: "No, I haven't thought about it" })).toBe(false);
-      expect(shouldShow('J', 'Q125', { Q123: "No, I haven't thought about it" })).toBe(false);
+    it('hides Q123 and Q124 when Q122 is No', () => {
+      expect(shouldShow('J', 'Q123', { Q122: "No, I haven't thought about it" })).toBe(false);
+      expect(shouldShow('J', 'Q124', { Q122: "No, I haven't thought about it" })).toBe(false);
     });
 
-    it('shows Q124 and Q125 when Q123 starts with Yes,', () => {
+    it('shows Q123 and Q124 when Q122 starts with Yes,', () => {
       const yes = "Yes, I've thought about it and have definite plans to leave";
-      expect(shouldShow('J', 'Q124', { Q123: yes })).toBe(true);
-      expect(shouldShow('J', 'Q125', { Q123: yes })).toBe(true);
+      expect(shouldShow('J', 'Q123', { Q122: yes })).toBe(true);
+      expect(shouldShow('J', 'Q124', { Q122: yes })).toBe(true);
     });
   });
 });
