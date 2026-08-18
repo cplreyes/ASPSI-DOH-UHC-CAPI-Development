@@ -37,18 +37,16 @@ function emitSectionConst(section: Section): string {
   return `export const section${section.id}: Section = {\n${parts.join(',\n')},\n};`;
 }
 
-// #519: the source questionnaire numbers items Q1–Q125 but omits Q108 (the
-// numbering jumps Q107→Q109), so `id` (which is 1:1 with the PDF) carries that
-// gap. For DISPLAY we want a contiguous number so the gap doesn't read as a
-// missing question — any id above the gap shows one less (Q109→Q108 … Q125→Q124).
-// Returns undefined at/below the gap, where the displayed number already == id.
-const NUMBERING_GAP = 108;
-function displayNumberFor(id: string): string | undefined {
-  const m = /^Q(\d+)(.*)$/.exec(id);
-  if (!m) return undefined;
-  const n = Number(m[1]);
-  if (n <= NUMBERING_GAP) return undefined;
-  return `Q${n - 1}${m[2]}`;
+// #519 (retired 2026-08-19, aug17 migration Task 3.1): the Apr-20 PDF numbered
+// items Q1–Q125 but omitted Q108 (the numbering jumped Q107→Q109), so `id`
+// carried that gap and DISPLAY subtracted one above it. The Aug-17 instrument
+// renumbers Q1–Q124 continuously — there is no gap anymore, `id` IS the
+// printed number for every item — so this always returns undefined and the
+// renderer falls back to the item's own id (see emitItem below). Kept as a
+// named function (rather than deleted outright) so a future gap, if the
+// paper ever reintroduces one, has an obvious place to land.
+function displayNumberFor(_id: string): string | undefined {
+  return undefined;
 }
 
 function emitItem(item: Item): string {

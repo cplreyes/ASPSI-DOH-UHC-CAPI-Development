@@ -116,6 +116,37 @@ describe('emitItems', () => {
     expect(code).toContain('// - A.Q1 (section-break): section break');
   });
 
+  // aug17 migration (Task 3.1): the Aug-17 instrument renumbers Q1–Q124
+  // continuously — the Apr-20 PDF's Q108 numbering gap no longer exists.
+  // No id should ever get a displayNumber override now; the renderer falls
+  // back to the item's own id for display.
+  it('emits no displayNumber override for an id above the old numbering gap', () => {
+    const result: ParseResult = {
+      sections: [
+        {
+          id: 'J',
+          title: dual('Job Satisfaction'),
+          items: [
+            {
+              id: 'Q109',
+              section: 'J',
+              type: 'multi',
+              required: true,
+              label: dual('What additional resources do you need to perform well in this job?'),
+              hasOtherSpecify: true,
+              choices: [{ label: dual('Better compensation policies'), value: 'Better compensation policies' }],
+            },
+          ],
+        },
+      ],
+      unsupported: [],
+    };
+
+    const code = emitItems(result);
+    expect(code).toContain("id: 'Q109'");
+    expect(code).not.toContain('displayNumber:');
+  });
+
   it('serialises subFields onto multi-field items', () => {
     const result: ParseResult = {
       sections: [
