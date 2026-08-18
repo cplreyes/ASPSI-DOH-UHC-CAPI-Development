@@ -148,12 +148,14 @@ def _looks_like_glossary_entry(text: str) -> bool:
 
 
 def _is_allcaps_heading(text: str) -> bool:
-    """True for a genuine unlettered document heading (PART I/II banners,
-    CERTIFICATE OF CONSENT, INFORMED CONSENT FORM). Requires a letter-led,
-    multi-word all-caps run — excludes bracket/paren/digit-led fragments
-    ("[ITEM]?", "(BASED ON...", "14) HMO") and single-word acronym
-    fragments ("PWD", "CODES") that share the all-caps look but are legend/
-    piped-fill noise bleeding out of a roster cell, not a heading."""
+    """True for a genuine unlettered document heading — an untitled banner
+    like "PART I: SECTION TITLE" or a bare all-caps section label such as
+    "CONSENT FORM". Requires a letter-led, multi-word all-caps run —
+    excludes bracket/paren/digit-led fragments (e.g. a piped-fill
+    placeholder like "[FIELD]?", a stray cross-reference fragment like
+    "(SEE Q9...", or a numbered legend row like "3) ABC") and single-word
+    acronym fragments that share the all-caps look but are legend/piped-
+    fill noise bleeding out of a roster cell, not a heading."""
     text = text.strip()
     if not text or not text[0].isalpha():
         return False

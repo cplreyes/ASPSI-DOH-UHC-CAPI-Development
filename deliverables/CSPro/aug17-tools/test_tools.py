@@ -7,7 +7,7 @@ FIXTURES = Path(__file__).parent / "fixtures"
 
 
 def test_normalize_text_folds_quotes_and_prefix():
-    assert normalize_text("10.  What is the patient’s sex?", strip_qnum=True) == "What is the patient's sex?"
+    assert normalize_text("20.  Kindly state the respondent’s usual commute mode.", strip_qnum=True) == "Kindly state the respondent's usual commute mode."
 
 
 def test_normalize_text_collapses_whitespace_without_strip():
@@ -20,7 +20,7 @@ def test_row_csv_round_trip():
         qnum="7",
         section="B",
         kind="item",
-        stem="What is the sex?",
+        stem="Kindly state the usual commute mode.",
         options=[{"code": "1", "label": "Male"}, {"code": "2", "label": "Female"}],
         qtype="single",
         cardinality="single",
@@ -53,12 +53,12 @@ def test_parse_extract_emits_note():
 def test_parse_extract_captures_skip_fragment():
     md = open(FIXTURES / "f3_snippet.md", encoding="utf-8").read()
     items = [r for r in parse_extract(md, "F3") if r.kind == "item"]
-    q6 = next(r for r in items if r.qnum == "6")
-    assert "q9" in q6.skip.lower()
+    q61 = next(r for r in items if r.qnum == "61")
+    assert "q97" in q61.skip.lower()
 
 
 def test_parse_extract_captures_mark_span_option():
     md = open(FIXTURES / "f3_snippet.md", encoding="utf-8").read()
     items = [r for r in parse_extract(md, "F3") if r.kind == "item"]
-    q8 = next(r for r in items if r.qnum == "8")
-    assert any(o["label"] == "None" for o in q8.options)
+    q82 = next(r for r in items if r.qnum == "82")
+    assert any(o["label"] == "None" for o in q82.options)

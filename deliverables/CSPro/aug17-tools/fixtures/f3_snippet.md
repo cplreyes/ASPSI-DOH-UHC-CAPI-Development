@@ -3,20 +3,20 @@
 +---+---------------------------------------------------------------------------+
 
 +---+---------------------------------------------------------------------------+
-|   | 6.  **Does the respondent currently attend the clinic?**                  |
+|   | 61.  **Does the respondent currently attend the clinic?**                 |
 +---+----------+----------+----------------------------------------------------+
-|   |          |          | ☐ Yes                    | ☐ No *\<proceed to Q9\>* |
+|   |          |          | ☐ Yes                     | ☐ No *\<proceed to Q97\>* |
 +---+----------+----------+----------------------------------------------------+
-|   | 7.  **What is the respondent's assigned sex?**                            |
+|   | 7.  **Please indicate the respondent's biological sex.**                  |
 +---+----------+----------+----------------------------------------------------+
-|   |          |          | ☐ Male                   | ☐ Female                 |
+|   |          |          | ☐ Male                    | ☐ Female                  |
 +---+----------+----------+----------------------------------------------------+
-|   | 8.  **Which water source option applies to this household?**              |
+|   | 82.  **Which water source option applies to this household?**            |
 +---+----------+----------+----------------------------------------------------+
-|   |          |          | ☐ Own supply             | [☐ None]{.mark}          |
+|   |          |          | ☐ Own supply              | [☐ None]{.mark}           |
 +---+----------+----------+----------------------------------------------------+
 
 +----------------------------------------------------------------------+
-| *Note to enumerator \[DO NOT READ\]: This block is a fixture for     |
-| testing the parser only; it is not real questionnaire content.*      |
+| *A note to enumerator: keep this fixture block invented, never copy  |
+| real question wording in here.*                                     |
 +----------------------------------------------------------------------+
