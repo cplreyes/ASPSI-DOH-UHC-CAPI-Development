@@ -281,7 +281,7 @@ def _finalize_item(cur: dict) -> Row:
     for idx, (label, _frag) in enumerate(ordered_options, start=1):
         options.append({"code": str(idx), "label": label})
         text_for_type += " " + label
-    if MULTI_SELECT_RE.search(text_for_type):
+    if MULTI_SELECT_RE.search(text_for_type) or cur.get("_multi_select_seen"):
         qtype = "multi"
         cardinality = "multi"
     elif options:
@@ -507,6 +507,16 @@ def parse_extract(md_text: str, inst: str) -> list:
                     # not a new section — leave `section`/`cur` untouched
                     # so it doesn't relabel every later item until the
                     # next real section header.
+                    # R18 (rev-1.4 finding, F3, ~34 rows): this banner
+                    # commonly prints on its OWN grid row rather than
+                    # inline with the item's stem cell -- it correctly
+                    # stays a standalone instruction row (not glued into
+                    # the stem), but if it's a multi-select directive AND
+                    # an item is still open, that item's cardinality signal
+                    # would otherwise be lost (MULTI_SELECT_RE only ever
+                    # searches the open item's OWN stem+options text).
+                    if cur is not None and MULTI_SELECT_RE.search(text):
+                        cur["_multi_select_seen"] = True
                     rows.append(Row(inst=inst, kind="instruction", section=section, stem=text))
                 else:
                     close_current()

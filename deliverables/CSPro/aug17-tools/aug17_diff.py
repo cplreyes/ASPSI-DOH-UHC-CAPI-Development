@@ -142,21 +142,21 @@ CLASS_ENUM = (
 
 # Core categories per the task-0.4 brief, plus two join-mechanics extensions
 # the brief's own point (b)/(d) require (UNMATCHED_BUILD, CONSENT_DIFF), plus
-# VALIDATION_INFO (Task 3.4 R15): the non-blocking sibling of VALIDATION_DIFF
-# for the "not both sides have content" case -- see module docstring and
-# `_compare_pair`.
+# VALIDATION_INFO (Task 3.4 R15) and MESSAGE_INFO (R18): the non-blocking
+# siblings of VALIDATION_DIFF/MESSAGE_DIFF for the "not both sides have
+# content" case -- see module docstring and `_compare_pair`.
 CATEGORIES = [
     "MISSING_IN_BUILD", "EXTRA_IN_BUILD", "STEM_DIFF", "OPTION_DIFF",
     "ORDER_DIFF", "SECTION_DIFF", "NOTE_DIFF", "CARDINALITY_DIFF",
     "SKIP_DIFF", "VALIDATION_DIFF", "VALIDATION_INFO", "MESSAGE_DIFF",
-    "DISPOSITION_DIFF", "CONSENT_DIFF", "UNMATCHED_BUILD",
+    "MESSAGE_INFO", "DISPOSITION_DIFF", "CONSENT_DIFF", "UNMATCHED_BUILD",
 ]
 
 # Categories excluded from the exit-code gate this wave even when
 # unregistered (brief join-mechanics point (d): full consent conformance
-# is a Wave-1 task; R15: VALIDATION_INFO is visible-but-non-blocking by
-# design, not a deferred wave).
-NON_BLOCKING_CATEGORIES = {"CONSENT_DIFF", "VALIDATION_INFO"}
+# is a Wave-1 task; R15/R18: VALIDATION_INFO/MESSAGE_INFO are visible-but-
+# non-blocking by design, not a deferred wave).
+NON_BLOCKING_CATEGORIES = {"CONSENT_DIFF", "VALIDATION_INFO", "MESSAGE_INFO"}
 
 
 # --- text normalization (transform #3; see module docstring) --------------
@@ -239,6 +239,33 @@ def _norm_paper_stem(s: str, strip_qnum: bool = False) -> str:
 
 def _norm_build_text(s: str) -> str:
     return normalize_text(s)
+
+
+# R18 (rev-1.4 finding, F3): build-side "(cont. N)" pagination fold. CSPro
+# splits a long section across multiple form pages; every page after the
+# first gets a "(cont.)"/"(cont. N)" suffix appended to the DISPLAYED
+# section title (F3 real data: "G Outpatient Care (cont. 2)" through
+# "(cont. 6)", "H Inpatient Care (cont.)" through "(cont. 4)") -- the paper
+# prints the plain section name throughout, with no such artifact. BUILD
+# side only (the paper never has this), section comparisons only. Anchored
+# to the END, same "never strip mid-string" discipline as the other
+# trailing-fragment folds. LOGGED via the same `_norm_events` mechanism.
+_BUILD_CONT_SUFFIX_RE = re.compile(r"\s*\(cont\.\s*\d*\)\s*$", re.IGNORECASE)
+
+
+def _fold_build_cont_suffix(s: str) -> str:
+    m = _BUILD_CONT_SUFFIX_RE.search(s or "")
+    if not m:
+        return s
+    new = s[:m.start()].rstrip()
+    _norm_events.append({"kind": "build-cont-suffix", "before": s, "after": new})
+    return new
+
+
+def _norm_build_section(s: str) -> str:
+    """`_norm_build_text` + the "(cont. N)" pagination fold. Section
+    comparisons only -- see module docstring / `_fold_build_cont_suffix`."""
+    return _fold_build_cont_suffix(_norm_build_text(s))
 
 
 def _norm_build_stem(s: str) -> str:
@@ -456,11 +483,22 @@ def _compare_pair(q: str, p: Row, b: Row) -> list:
             out.append(Finding("VALIDATION_INFO", q,
                 detail + " -- non-blocking (not both sides declare validation)"))
 
-    if _norm_paper_text(p.messages) != _norm_build_text(b.messages):
-        out.append(Finding("MESSAGE_DIFF", q,
-            f'paper messages="{p.messages}" | build ({b.item_name}) messages="{b.messages}"'))
+    p_msg = _norm_paper_text(p.messages)
+    b_msg = _norm_build_text(b.messages)
+    if p_msg != b_msg:
+        # R18 (rev-1.4 finding, F3): same "paper never encodes machine
+        # logic" gap as VALIDATION_DIFF/VALIDATION_INFO (R15 item 1),
+        # generalized here -- CAPI-only validation/cross-field messages
+        # (e.g. "W: PROF-01") have no paper analog at all; a one-sided-
+        # empty pair is non-blocking MESSAGE_INFO, not MESSAGE_DIFF.
+        detail = f'paper messages="{p.messages}" | build ({b.item_name}) messages="{b.messages}"'
+        if p_msg and b_msg:
+            out.append(Finding("MESSAGE_DIFF", q, detail))
+        else:
+            out.append(Finding("MESSAGE_INFO", q,
+                detail + " -- non-blocking (not both sides declare messages)"))
 
-    if _norm_paper_text(p.section) != _norm_build_text(b.section):
+    if _norm_paper_text(p.section) != _norm_build_section(b.section):
         out.append(Finding("SECTION_DIFF", q,
             f'paper section="{p.section}" | build ({b.item_name}) section="{b.section}"'))
 
@@ -812,10 +850,10 @@ def write_report(inst: str, findings: list, counts: dict, blocking: int,
                       "(R15: logged, never silent):")
         lines.append("")
         for e in norm_events:
-            if e["kind"] == "escape-apostrophe":
-                lines.append(f'- **escape-apostrophe**: "{e["before"][:100]}" -> "{e["after"][:100]}"')
-            else:
+            if "stripped" in e:
                 lines.append(f'- **{e["kind"]}**: stripped "{e["stripped"][:80]}" from "{e["before"][:100]}"')
+            else:
+                lines.append(f'- **{e["kind"]}**: "{e["before"][:100]}" -> "{e["after"][:100]}"')
         lines.append("")
 
     for cat in CATEGORIES:

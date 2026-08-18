@@ -170,12 +170,30 @@ def test_cardinality_diff():
 
 
 def test_message_diff():
+    # R18: MESSAGE_DIFF now blocks only when BOTH sides declare messages
+    # (same rule as VALIDATION_DIFF/R15) -- both sides non-empty and
+    # disagreeing is the case that must still block.
     paper = [Row(inst="F9", qnum="3", kind="item", stem="Enter amount.",
-                 qtype="number", cardinality="single", messages="")]
+                 qtype="number", cardinality="single", messages="E: Amount is mandatory.")]
     build = [Row(inst="F9", qnum="3", item_name="Q3", kind="item", stem="Enter amount.",
                  qtype="number", cardinality="single", messages="E: Amount is required.")]
     findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
     assert any(f.category == "MESSAGE_DIFF" for f in findings)
+
+
+def test_message_diff_paper_empty_is_info_not_blocking():
+    # R18 (rev-1.4 finding, F3): generalizes R15's VALIDATION_INFO rule to
+    # MESSAGE_DIFF -- the paper never encodes CAPI-only cross-field/
+    # validation messages (69/69 F3 MESSAGE_DIFF rows were exactly this
+    # paper-empty shape).
+    paper = [Row(inst="F9", qnum="4", kind="item", stem="Enter amount.",
+                 qtype="number", cardinality="single", messages="")]
+    build = [Row(inst="F9", qnum="4", item_name="Q4", kind="item", stem="Enter amount.",
+                 qtype="number", cardinality="single", messages="E: Amount is required.")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert not any(f.category == "MESSAGE_DIFF" for f in findings)
+    assert any(f.category == "MESSAGE_INFO" for f in findings)
+    assert blocking == 0
 
 
 def test_disposition_diff():
@@ -800,6 +818,34 @@ def test_multi_select_recognizes_check_all_variant():
     q111 = next(r for r in items if r.qnum == "111")
     assert q111.qtype == "multi"
     assert q111.cardinality == "multi"
+
+
+def test_multi_select_banner_on_its_own_row_still_sets_cardinality():
+    # R18 (rev-1.4 finding, F3, ~34 rows): a "DO NOT READ OPTIONS OUT LOUD.
+    # SELECT ALL THAT APPLY." banner commonly prints as its OWN grid row
+    # (its own divider-bounded cell), not inline with the item's stem cell.
+    # DIRECTIVE_BANNER_RE correctly routes it to a standalone kind=
+    # instruction row (so it doesn't get glued into the stem or misread as
+    # a section) -- but that meant the multi-select signal never reached
+    # MULTI_SELECT_RE.search(text_for_type), which only ever looks at the
+    # currently-open item's OWN stem + option text. The still-open item
+    # must pick up the cardinality signal from this banner too.
+    md = (
+        "+----+\n"
+        "| 5. **Invented multi-row-banner item (fixture)?** |\n"
+        "+----+\n"
+        "| DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. |\n"
+        "+----+\n"
+        "|    | ☐ Invented option (fixture) |\n"
+        "+----+\n"
+    )
+    rows = parse_extract(md, "F9")
+    items = [r for r in rows if r.kind == "item"]
+    q5 = next(r for r in items if r.qnum == "5")
+    assert q5.qtype == "multi"
+    assert q5.cardinality == "multi"
+    instructions = [r for r in rows if r.kind == "instruction"]
+    assert any("SELECT ALL THAT APPLY" in r.stem for r in instructions)  # banner row still emitted too
 
 
 def test_two_column_checkbox_grid_reads_column_major_not_row_major():
