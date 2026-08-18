@@ -174,7 +174,7 @@ def format_register_row(inst: str, qnum: str, finding: dict, matrix_row: dict, t
         f"Paper prose skip note vs build JS visible-if predicate -- notation differs, routing logic "
         f"verified identical by Tier-2 matrix row \"{matrix_row['rule']}\" ({matrix_row['expected']}), "
         f"covering test(s) {matrix_row['test']}. Emitted by emit_skip_register_rows.py from a VERIFIED "
-        f"(Status=PASS) matrix row, per Task 3.4 R15. {today}."
+        f"(Status=PASS) matrix row, per Task 3.4 R15. [scope: SKIP_DIFF] {today}."
     )
     paper = _sanitize_cell(paper)
     build = _sanitize_cell(build)
@@ -182,17 +182,62 @@ def format_register_row(inst: str, qnum: str, finding: dict, matrix_row: dict, t
     return f"| {inst} | Q{qnum} | capi-adaptation | {paper} | {build} | {rationale} |"
 
 
+_EMITTED_ROW_SIGNATURE = "Emitted by emit_skip_register_rows.py from a VERIFIED"
+_SCOPE_MARKER = "[scope: SKIP_DIFF]"
+
+
+def migrate_add_scope_marker(register_text: str, inst: str) -> tuple:
+    """R20 (rev-3-4 review finding): retrofit pass for rows this tool
+    emitted BEFORE the scope marker existed (the real case: 64 F2 rows).
+    Controller-sanctioned exception -- a logged, deterministic in-place
+    annotation of rows the tool itself emitted, identified unambiguously
+    by this tool's own distinctive rationale signature text
+    (`_EMITTED_ROW_SIGNATURE`). NEVER touches a hand-authored row or a row
+    from any other tool/task -- the signature string only ever appears in
+    a row this function itself wrote. Idempotent: a row that already
+    carries the marker is left untouched (migrated count excludes it).
+    Returns (new_text, migrated_count)."""
+    out_lines = []
+    migrated = 0
+    for line in register_text.split("\n"):
+        stripped = line.strip()
+        if (stripped.startswith("|") and f"| {inst} |" in line
+                and _EMITTED_ROW_SIGNATURE in line and _SCOPE_MARKER not in line):
+            # Insert the marker right before the signature sentence, inside
+            # the same (last) rationale cell -- a single, deterministic
+            # insertion point, never touching any other cell's content.
+            line = line.replace(_EMITTED_ROW_SIGNATURE, f"{_SCOPE_MARKER} {_EMITTED_ROW_SIGNATURE}")
+            migrated += 1
+        out_lines.append(line)
+    return "\n".join(out_lines), migrated
+
+
 def main():
     ap = argparse.ArgumentParser(description="Emit register rows for VERIFIED SKIP_DIFF divergences (Task 3.4 R15)")
     ap.add_argument("instrument", choices=["F1", "F2", "F3", "F4"])
     ap.add_argument("--data-dir", type=Path, default=DEFAULT_DATA_DIR)
     ap.add_argument("--apply", action="store_true", help="append to the register file (default: dry-run report only)")
+    ap.add_argument("--migrate-scope", action="store_true",
+                     help="R20: retrofit [scope: SKIP_DIFF] onto this tool's own "
+                          "already-emitted rows for --instrument (dry-run unless --apply)")
     args = ap.parse_args()
 
     data_dir = args.data_dir.resolve()
+    register_path = data_dir / "aug17-approved-divergences.md"
+
+    if args.migrate_scope:
+        register_text = register_path.read_text(encoding="utf-8") if register_path.exists() else ""
+        new_text, migrated = migrate_add_scope_marker(register_text, args.instrument)
+        print(f"{args.instrument}: {migrated} row(s) to annotate with {_SCOPE_MARKER}.")
+        if args.apply:
+            register_path.write_text(new_text, encoding="utf-8", newline="")
+            print(f"  applied -> {register_path}")
+        else:
+            print("  DRY RUN -- no file written. Pass --apply to write.")
+        return
+
     diff_path = data_dir / "reports" / f"{args.instrument}-diff.md"
     matrix_path = data_dir / "reports" / f"{args.instrument}-tier2-matrix.md"
-    register_path = data_dir / "aug17-approved-divergences.md"
 
     diff_text = diff_path.read_text(encoding="utf-8")
     matrix_text = matrix_path.read_text(encoding="utf-8")

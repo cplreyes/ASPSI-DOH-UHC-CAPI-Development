@@ -203,12 +203,23 @@ _TRAILING_BRACKET_RE = re.compile(r"\s*[<\[][^<>\[\]]*[>\]]\s*$")
 _TRAILING_SELECT_DIRECTIVE_RE = re.compile(
     r"\s*SELECT\s+(?:ALL\s+THAT\s+APPLY|ONE\s+ANSWER\s+ONLY)\.?\s*$", re.IGNORECASE
 )
+# R20 (rev-3-4 review + F3 lane finding): a trailing read/skip-mode banner
+# other than "SELECT ..." -- e.g. "(DO NOT )READ OPTIONS OUT LOUD." often
+# printed as its OWN sentence immediately before "SELECT ..." ("READ
+# OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY."). The strip loop below already
+# handles multiple trailing sentences (each pass strips one, in ANY order,
+# until nothing more matches); this just adds the recognized shapes.
+_TRAILING_READ_BANNER_RE = re.compile(
+    r"\s*(?:DO NOT\s+)?READ OPTIONS OUT LOUD\.?\s*$", re.IGNORECASE
+)
 
 
 def _strip_trailing_directive(s: str) -> str:
-    """Strip a trailing eligibility-gate bracket (`<...>`/`[...]`) or a
-    trailing SELECT-ALL/SELECT-ONE mode banner, in a loop (in case a stem
-    ends in more than one). Anchored with `$` on every pass -- a bracket or
+    """Strip a trailing eligibility-gate bracket (`<...>`/`[...]`), a
+    trailing SELECT-ALL/SELECT-ONE mode banner, or a trailing (DO NOT)
+    READ OPTIONS OUT LOUD banner, in a loop (in case a stem ends in more
+    than one -- e.g. "READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY."
+    strips in two passes). Anchored with `$` on every pass -- a bracket or
     banner that is NOT at the very end of the string is never touched (real
     content, must surface as a genuine divergence, not get silently
     dropped)."""
@@ -219,6 +230,13 @@ def _strip_trailing_directive(s: str) -> str:
         m = _TRAILING_SELECT_DIRECTIVE_RE.search(out)
         if m:
             _norm_events.append({"kind": "trailing-select-directive", "before": out,
+                                  "stripped": out[m.start():].strip()})
+            out = out[:m.start()].rstrip()
+            changed = True
+            continue
+        m = _TRAILING_READ_BANNER_RE.search(out)
+        if m:
+            _norm_events.append({"kind": "trailing-read-banner", "before": out,
                                   "stripped": out[m.start():].strip()})
             out = out[:m.start()].rstrip()
             changed = True
@@ -277,8 +295,20 @@ def _norm_build_stem(s: str) -> str:
     consumes that same prefix as the item-start marker, so paper stems
     never carry it. strip_qnum=True is rowspec.py's one sanctioned
     transform for exactly this asymmetry -- applied build-side, not
-    paper-side, since the build is the side that still has the prefix."""
-    return normalize_text(s, strip_qnum=True)
+    paper-side, since the build is the side that still has the prefix.
+
+    R20 (rev-3-4 review + F3 lane finding): also runs
+    `_strip_trailing_directive` -- `_norm_paper_stem` always applied this
+    fold, but the build side never did, an asymmetric comparison that
+    false-fired STEM_DIFF whenever a build stem ends in a directive banner
+    ("SELECT ALL THAT APPLY.", "READ OPTIONS OUT LOUD...", etc.), whether
+    the paper printed the SAME directive too (paper-side already stripped
+    it, build-side wasn't -- e.g. F3 Q149) or the directive is baked into
+    the stem's own sentence by generate_qsf.py's INSTRUCTIONS text and
+    paper never printed it at all (e.g. F3 Q9 -- the R19 paragraph split
+    doesn't catch this class, since the directive lives inside the SAME
+    paragraph as the real stem, not a separate `<p>` block)."""
+    return _strip_trailing_directive(normalize_text(s, strip_qnum=True))
 
 
 # --- register --------------------------------------------------------------
@@ -301,14 +331,30 @@ def _is_divider_cell(cell: str) -> bool:
 def parse_register_rows(text: str) -> list:
     """Markdown table -> list[RegisterRow]. Skips the title/prose, the
     header row, and the `|---|---|...|` divider row. Tolerant of a missing
-    file (caller passes '' for that)."""
+    file (caller passes '' for that).
+
+    R20 (rev-3-4 review + F3 lane finding): the cell split is naive
+    (`line.split("|")`, no escape-awareness) -- a literal `|` inside any
+    cell (an unescaped JS `||`, or anything else) produces a cell count
+    other than 6 and the row can't be reconstructed. Two real F3 register
+    rows were silently dropped this way and never functioned as
+    registrations until the F3 lane found and reworded them. A malformed
+    row is now reported LOUDLY (to stderr, naming the row) before being
+    skipped -- it's still not includable (the split genuinely can't
+    recover the intended cells), but the drop is never silent again."""
     rows = []
-    for line in text.split("\n"):
+    for lineno, line in enumerate(text.split("\n"), start=1):
         line = line.rstrip()
         if not line.strip().startswith("|"):
             continue
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
         if len(cells) != 6:
+            print(
+                f"parse_register_rows: MALFORMED ROW at line {lineno} "
+                f"(expected 6 cells, got {len(cells)} -- likely an unescaped "
+                f"'|' inside a cell): {line[:200]}",
+                file=sys.stderr,
+            )
             continue
         if cells[0].lower() == "inst":
             continue
@@ -353,14 +399,39 @@ def load_register(path) -> dict:
     return build_register_index(parse_register_rows(text))
 
 
-def find_registered(register: dict, inst: str, qnum: str):
-    """Tier A: exact-ish per-item key match, tried against every class."""
+_SCOPE_MARKER_RE = re.compile(r"\[scope:\s*([A-Z_]+)\]")
+
+
+def _row_scope(row) -> str:
+    """A register row's rationale may carry an explicit "[scope: CATEGORY]"
+    marker (R20, rev-3-4 review finding). Returns the marked category, or
+    "" if unmarked (legacy rows -- see find_registered)."""
+    m = _SCOPE_MARKER_RE.search(row.rationale or "")
+    return m.group(1) if m else ""
+
+
+def find_registered(register: dict, inst: str, qnum: str, category: str = None):
+    """Tier A: exact-ish per-item key match, tried against every class.
+
+    R20 (rev-3-4 review finding): a register row's key is (inst,
+    norm_key(qnum), cls) -- ANY finding at that bare qnum, in ANY
+    CATEGORY, previously got silently registered by a row that was really
+    only ever about one specific category (e.g. emit_skip_register_rows.py's
+    SKIP_DIFF rows absorbing an unrelated STEM/OPTION/CARDINALITY finding
+    at the same qnum -- reviewer-quantified: 12 F2 findings this way).
+    A row carrying an explicit "[scope: CATEGORY]" marker in its rationale
+    now only satisfies a finding of that EXACT category. A row with NO
+    marker (every pre-R20 row) keeps the original any-category behavior --
+    backward compatible, not a mass re-registration requirement."""
     key = _norm_key(qnum)
     if not key:
         return None
     for cls in CLASS_ENUM:
         row = register.get((inst, key, cls))
         if row:
+            scope = _row_scope(row)
+            if scope and scope != category:
+                continue  # scoped to a different category -- not a match
             return row
     return None
 
@@ -407,7 +478,8 @@ def _opts_key(options: list, norm) -> tuple:
     return tuple(norm(o.get("label", "")) for o in options)
 
 
-def _opts_key_multiset_match(p_key: tuple, b_key: tuple, qnum: str = "") -> bool:
+def _opts_key_multiset_match(p_key: tuple, b_key: tuple, qnum: str = "",
+                              p_qtype: str = "multi", b_qtype: str = "multi") -> bool:
     """R18 (rev-1.4 finding, F2): order-insensitive fallback for OPTION_DIFF.
     The 2-column checkbox grid fix (paper_tables.py's column-major
     flattening) assumes one universal reading convention, but real data
@@ -422,7 +494,16 @@ def _opts_key_multiset_match(p_key: tuple, b_key: tuple, qnum: str = "") -> bool
     comparison already failed -- if the sets are identical, the divergence
     is pure print-layout ambiguity, not real content. NEVER fires when the
     sets genuinely differ (a real content mismatch always still surfaces).
+
+    R20 (rev-3-4 review finding): guarded to `qtype == "multi"` on BOTH
+    sides. A single-select item's option ORDER carries real meaning (e.g.
+    a Likert scale printed "Never..Always" vs coded "Always..Never" is a
+    genuine content defect, not print-layout ambiguity) -- without this
+    guard the fallback would risk masking exactly that class of bug,
+    which F3's Likert items make a live risk, not a hypothetical one.
     LOGGED, never silent."""
+    if p_qtype != "multi" or b_qtype != "multi":
+        return False
     if sorted(p_key) != sorted(b_key):
         return False
     _norm_events.append({"kind": "option-order-insensitive", "qnum": qnum,
@@ -479,7 +560,8 @@ def _compare_pair(q: str, p: Row, b: Row) -> list:
 
     p_opts_key = _opts_key(p.options, _norm_paper_stem)
     b_opts_key = _opts_key(b.options, _norm_build_text)
-    if p_opts_key != b_opts_key and not _opts_key_multiset_match(p_opts_key, b_opts_key, qnum=q):
+    if p_opts_key != b_opts_key and not _opts_key_multiset_match(
+            p_opts_key, b_opts_key, qnum=q, p_qtype=p.qtype, b_qtype=b.qtype):
         out.append(Finding("OPTION_DIFF", q,
             f"paper options={[o.get('label') for o in p.options]} | "
             f"build ({b.item_name}) options={[o.get('label') for o in b.options]}"))
@@ -814,7 +896,7 @@ def diff_instrument(inst: str, paper_rows: list, build_rows: list, register: dic
         elif f.category == "CONSENT_DIFF":
             reg_row = find_structural_registered(register, inst, "consent")
         elif f.qnum:
-            reg_row = find_registered(register, inst, f.qnum)
+            reg_row = find_registered(register, inst, f.qnum, category=f.category)
         f.registered = reg_row
         if reg_row:
             registered_count += 1

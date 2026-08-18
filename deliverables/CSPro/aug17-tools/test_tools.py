@@ -230,6 +230,38 @@ def _empty_register():
     return build_register_index(parse_register_rows(REGISTER_HEADER))
 
 
+# --- R20 (rev-3-4 + F3 lane finding): parse_register_rows must fail LOUDLY
+# on a malformed row, never silently drop it. Root cause: the naive
+# `line.split("|")` has no escape-awareness -- a literal `|` inside a cell
+# (e.g. a JS `||` operator, or any other unescaped pipe) produces >6 cells
+# and the row was silently discarded (two real F3 register rows -- an
+# "order:E,F" row and a Q159 annotation row -- were dropped this way and
+# never functioned as registrations until the F3 lane found and reworded
+# them).
+
+
+def test_malformed_register_row_with_embedded_pipe_is_dropped_loudly(capsys):
+    reg_text = REGISTER_HEADER + (
+        "| F9 | Q1 (fixture) | defect-fix | paper says (fixture) | "
+        "build has an embedded | pipe (fixture) | rationale (fixture) |\n"
+    )
+    rows = parse_register_rows(reg_text)
+    assert rows == []  # can't confidently parse it -- still not included
+    captured = capsys.readouterr()
+    assert "Q1" in captured.err or "Q1" in captured.out  # names the row
+    assert "malformed" in (captured.err + captured.out).lower()
+
+
+def test_well_formed_register_rows_unaffected_by_the_loud_check(capsys):
+    reg_text = REGISTER_HEADER + (
+        "| F9 | Q1 (fixture) | defect-fix | paper says (fixture) | build does (fixture) | rationale (fixture) |\n"
+    )
+    rows = parse_register_rows(reg_text)
+    assert len(rows) == 1
+    captured = capsys.readouterr()
+    assert "malformed" not in (captured.err + captured.out).lower()
+
+
 def test_diff_flags_stem_change():
     paper = [Row(inst="F9", qnum="1", kind="item", stem="Original stem text.",
                  qtype="text", cardinality="single")]
@@ -254,6 +286,58 @@ def test_registered_divergence_passes():
     assert counts["REGISTERED"] >= 1
     stem_diffs = [f for f in findings if f.category == "STEM_DIFF"]
     assert stem_diffs and stem_diffs[0].registered is not None
+
+
+# --- R20 (rev-3-4 review finding): scoped register citations. A register
+# row's key is (inst, norm_key(qnum), cls) and find_registered tries every
+# CLASS_ENUM value for a bare qnum -- so ANY finding at that qnum, in ANY
+# category, gets silently registered by a row that's actually only about
+# ONE specific category (e.g. emit_skip_register_rows.py's 64 SKIP_DIFF
+# rows absorbed 12 unrelated STEM/OPTION/CARDINALITY findings, reviewer-
+# quantified). Fix: an explicit "[scope: CATEGORY]" marker in the
+# rationale cell -- when present, the row only satisfies a finding of that
+# EXACT category; legacy unmarked rows keep the current any-category
+# behavior (backward compatible, see test_registered_divergence_passes
+# above and test_unmarked_register_row_still_covers_any_category below).
+
+
+def test_scoped_register_row_only_covers_its_marked_category():
+    paper = [Row(inst="F9", qnum="6", kind="item", stem="Original stem (fixture).",
+                 qtype="text", cardinality="single")]
+    build = [Row(inst="F9", qnum="6", item_name="Q6", kind="item", stem="Changed stem (fixture).",
+                 qtype="text", cardinality="single", skip="visible-if: v.Q5 (fixture)")]
+    reg_text = REGISTER_HEADER + (
+        "| F9 | Q6 (fixture) | capi-adaptation | paper skip (fixture) | build skip (fixture) | "
+        "rationale citing the skip finding [scope: SKIP_DIFF] (fixture) |\n"
+    )
+    register = build_register_index(parse_register_rows(reg_text))
+    findings, counts, blocking = diff_instrument("F9", paper, build, register)
+    skip_diffs = [f for f in findings if f.category == "SKIP_DIFF"]
+    stem_diffs = [f for f in findings if f.category == "STEM_DIFF"]
+    assert skip_diffs and skip_diffs[0].registered is not None  # the marked category IS covered
+    assert stem_diffs and stem_diffs[0].registered is None  # an unrelated category is NOT
+    assert blocking > 0  # the unregistered STEM_DIFF still blocks
+
+
+def test_unmarked_register_row_still_covers_any_category():
+    # Legacy behavior preserved exactly -- an unmarked row still registers
+    # every category's finding at its qnum, same as before this fix.
+    paper = [Row(inst="F9", qnum="7", kind="item", stem="Original stem (fixture).",
+                 options=[{"code": "1", "label": "A (fixture)"}],
+                 qtype="single", cardinality="single")]
+    build = [Row(inst="F9", qnum="7", item_name="Q7", kind="item", stem="Changed stem (fixture).",
+                 options=[{"code": "1", "label": "B (fixture)"}],
+                 qtype="single", cardinality="single")]
+    reg_text = REGISTER_HEADER + (
+        "| F9 | Q7 (fixture) | defect-fix | paper (fixture) | build (fixture) | unmarked legacy rationale (fixture) |\n"
+    )
+    register = build_register_index(parse_register_rows(reg_text))
+    findings, counts, blocking = diff_instrument("F9", paper, build, register)
+    stem_diffs = [f for f in findings if f.category == "STEM_DIFF"]
+    option_diffs = [f for f in findings if f.category == "OPTION_DIFF"]
+    assert stem_diffs and stem_diffs[0].registered is not None
+    assert option_diffs and option_diffs[0].registered is not None
+    assert blocking == 0
 
 
 def test_cardinality_diff():
@@ -795,6 +879,59 @@ def test_trailing_bracket_never_strips_mid_string():
     assert any(f.category == "STEM_DIFF" for f in findings)
 
 
+# --- R20 (rev-3-4 review + F3 lane finding): symmetric build-side directive
+# strip. `_norm_paper_stem` always ran `_strip_trailing_directive`, but
+# `_norm_build_stem` never did -- a false STEM_DIFF fires whenever the
+# build stem itself ends in a directive banner, whether the paper printed
+# it too (paper-side already stripped, build-side wasn't -- asymmetric) or
+# it's build_tables.py's own baked instruction text bleeding into the stem
+# sentence (the paragraph-split fix doesn't catch this class: the
+# directive is part of the SAME paragraph as the real stem text, not a
+# separate <p> block).
+
+
+def test_build_stem_trailing_directive_stripped_symmetrically():
+    # "Q149-class": paper prints the directive too, and paper-side folding
+    # already strips it -- but build-side never did, so the comparison was
+    # asymmetric (paper stripped, build not) even though both sides
+    # printed the exact same words.
+    paper = [Row(inst="F9", qnum="149", kind="item",
+                 stem="Where do you usually buy invented medicines (fixture)? SELECT ALL THAT APPLY.",
+                 qtype="multi", cardinality="multi")]
+    build = [Row(inst="F9", qnum="149", item_name="Q149", kind="item",
+                 stem="Where do you usually buy invented medicines (fixture)? SELECT ALL THAT APPLY.",
+                 qtype="multi", cardinality="multi")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert not any(f.category == "STEM_DIFF" for f in findings)
+
+
+def test_build_only_trailing_directive_stripped_from_stem():
+    # "Q9-class": the directive is build-only (baked into the stem's own
+    # sentence by generate_qsf.py, not a separate <p> block the paragraph
+    # split can catch) -- paper never printed it at all.
+    paper = [Row(inst="F9", qnum="9", kind="item",
+                 stem="Which invented group does the patient identify with (fixture)?",
+                 qtype="single", cardinality="single")]
+    build = [Row(inst="F9", qnum="9", item_name="Q9", kind="item",
+                 stem="Which invented group does the patient identify with (fixture)? READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.",
+                 qtype="single", cardinality="single")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert not any(f.category == "STEM_DIFF" for f in findings)
+
+
+def test_build_stem_trailing_directive_strip_never_hides_a_real_difference():
+    # Guard: the build-side strip must still leave a genuine stem wording
+    # difference detectable.
+    paper = [Row(inst="F9", qnum="12", kind="item",
+                 stem="Invented paper wording (fixture)? SELECT ALL THAT APPLY.",
+                 qtype="multi", cardinality="multi")]
+    build = [Row(inst="F9", qnum="12", item_name="Q12", kind="item",
+                 stem="Invented DIFFERENT build wording (fixture)? SELECT ALL THAT APPLY.",
+                 qtype="multi", cardinality="multi")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert any(f.category == "STEM_DIFF" for f in findings)
+
+
 def test_trailing_directive_strip_is_logged():
     from aug17_diff import _norm_events, _strip_trailing_directive
     _norm_events.clear()
@@ -892,6 +1029,29 @@ def test_option_diff_still_fires_when_sets_genuinely_differ():
     build = [Row(inst="F9", qnum="57", item_name="Q57", kind="item", stem="Invented item (fixture)?",
                  options=[{"code": "1", "label": "Invented A"}, {"code": "2", "label": "Invented Z"}],
                  qtype="multi", cardinality="multi")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert any(f.category == "OPTION_DIFF" for f in findings)
+
+
+def test_option_diff_multiset_fallback_never_fires_for_single_select():
+    # R20 (rev-3-4 review finding): the order-insensitive fallback fired
+    # unconditionally, which risks MASKING a real ordinal-order defect in a
+    # SINGLE-select item (order carries real meaning there -- e.g. a Likert
+    # scale printed "Never..Always" vs coded "Always..Never" is a genuine
+    # content bug, not print-layout ambiguity). Guarded to multi-select
+    # (qtype=='multi' on BOTH sides) only -- a reordered single-select
+    # ordinal list must still fire OPTION_DIFF even though the label SET
+    # matches exactly.
+    paper = [Row(inst="F9", qnum="83", kind="item", stem="Invented single-select item (fixture)?",
+                 options=[{"code": "1", "label": "Never"}, {"code": "2", "label": "Rarely"},
+                          {"code": "3", "label": "Sometimes"}, {"code": "4", "label": "Often"},
+                          {"code": "5", "label": "Always"}],
+                 qtype="single", cardinality="single")]
+    build = [Row(inst="F9", qnum="83", item_name="Q83", kind="item", stem="Invented single-select item (fixture)?",
+                 options=[{"code": "1", "label": "Always"}, {"code": "2", "label": "Often"},
+                          {"code": "3", "label": "Sometimes"}, {"code": "4", "label": "Rarely"},
+                          {"code": "5", "label": "Never"}],
+                 qtype="single", cardinality="single")]
     findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
     assert any(f.category == "OPTION_DIFF" for f in findings)
 
@@ -1294,6 +1454,18 @@ def test_format_register_row_cites_the_matrix_row():
     assert line.count("|") == 7  # 6 columns -> 7 pipes
 
 
+def test_format_register_row_carries_a_skip_diff_scope_marker():
+    # R20 (rev-3-4 review finding): every row this tool emits is ONLY ever
+    # about a SKIP_DIFF finding -- it must carry "[scope: SKIP_DIFF]" in
+    # the rationale so find_registered doesn't let it silently absorb an
+    # unrelated STEM/OPTION/CARDINALITY finding at the same qnum.
+    finding = {"qnum": "7", "paper": "", "build": "visible-if: v.Q6 === 'Yes' (fixture)", "item": "Q7"}
+    matrix_row = {"rule": "Q7 visibility (fixture)", "expected": "Shown only when Q6 = Yes (fixture)",
+                  "test": "`shows Q7 when Q6 is Yes (fixture)`", "status": "PASS", "qnums": {"6", "7"}}
+    line = format_register_row("F9", "7", finding, matrix_row, "2026-08-18")
+    assert "[scope: SKIP_DIFF]" in line
+
+
 def test_format_register_row_escapes_js_or_operator_safely():
     # Real-world catch: a build predicate containing "||" (e.g.
     # "isYes(v['Q87']) || isYes(v['Q88'])") would otherwise produce a
@@ -1325,6 +1497,46 @@ def test_format_register_row_notes_missing_skip_direction():
     assert "SOURCE of a forward routing decision" in line
 
 
+def test_migrate_add_scope_marker_annotates_only_this_tools_own_rows():
+    # R20: retrofit pass for the 64 F2 rows this tool already emitted
+    # BEFORE the scope marker existed. Controller-sanctioned: a logged,
+    # deterministic in-place annotation of rows the tool itself emitted
+    # (identified by its own distinctive rationale signature text) --
+    # never touches a hand-authored or another tool's row.
+    from emit_skip_register_rows import migrate_add_scope_marker
+    reg_text = (
+        "# fixture register\n\n"
+        "| inst | qnum/item | class | paper says | build does | rationale / ticket |\n"
+        "|---|---|---|---|---|---|\n"
+        "| F9 | Q7 (fixture) | capi-adaptation | paper (fixture) | build (fixture) | "
+        "Paper prose skip note vs build JS visible-if predicate (fixture) -- notation differs. "
+        "Emitted by emit_skip_register_rows.py from a VERIFIED (Status=PASS) matrix row, "
+        "per Task 3.4 R15. 2026-08-18. |\n"
+        "| F9 | Q8 (fixture) | defect-fix | paper (fixture) | build (fixture) | "
+        "hand-authored rationale (fixture), never touched by this migration. |\n"
+    )
+    new_text, migrated = migrate_add_scope_marker(reg_text, "F9")
+    assert migrated == 1
+    rows = {r.qnum_item: r.rationale for r in parse_register_rows(new_text)}
+    assert "[scope: SKIP_DIFF]" in rows["Q7 (fixture)"]
+    assert "[scope: SKIP_DIFF]" not in rows["Q8 (fixture)"]
+
+
+def test_migrate_add_scope_marker_is_idempotent():
+    from emit_skip_register_rows import migrate_add_scope_marker
+    reg_text = (
+        "# fixture register\n\n"
+        "| inst | qnum/item | class | paper says | build does | rationale / ticket |\n"
+        "|---|---|---|---|---|---|\n"
+        "| F9 | Q7 (fixture) | capi-adaptation | paper (fixture) | build (fixture) | "
+        "Emitted by emit_skip_register_rows.py from a VERIFIED (Status=PASS) matrix row, "
+        "per Task 3.4 R15. [scope: SKIP_DIFF] 2026-08-18. |\n"
+    )
+    new_text, migrated = migrate_add_scope_marker(reg_text, "F9")
+    assert migrated == 0  # already marked -- not double-annotated
+    assert new_text.count("[scope: SKIP_DIFF]") == 1
+
+
 # --- Scope add (controller, post-3.4): join_paper_build_items min()-pairing bug ---
 #
 # impl-1-4 (Task 1.4, F3 lane) found and documented: when a paper qnum has FEWER rows
@@ -1337,36 +1549,6 @@ def test_format_register_row_notes_missing_skip_direction():
 # the qnum is registered once. Same root bug in rejoin_translations.py's
 # join_paper_build_items (used by --stale-from-tables): the extra build row isn't
 # even returned in `pairs` at all, so it can never be flagged stale either.
-
-
-def test_extra_build_row_beyond_paper_count_was_previously_invisible_to_comparison():
-    # Characterization of the OLD (buggy) behavior, kept as a regression guard: before
-    # the fix, a qnum with 1 paper row / 2 build rows only ever compares the FIRST
-    # build row -- the second's genuinely different content produces NO STEM_DIFF at
-    # all, even though it obviously differs from anything on the paper side.
-    # (This test intentionally does NOT import the fix -- see the GREEN test below for
-    # the fixed behavior. Kept to document what "invisible" meant concretely.)
-    paper = [Row(inst="F9", qnum="18", kind="item",
-                 stem="Invented combined income question (fixture)?",
-                 options=[{"code": "1", "label": "Invented bracket A (fixture)"}],
-                 qtype="single", cardinality="single")]
-    build = [
-        Row(inst="F9", qnum="18", item_name="Q18_AMOUNT", kind="item",
-            stem="Invented combined income question (fixture)?",
-            options=[{"code": "1", "label": "Invented bracket A (fixture)"}],
-            qtype="single", cardinality="single"),
-        Row(inst="F9", qnum="18", item_name="Q18_BRACKET", kind="item",
-            stem="Completely unrelated invented bracket stem (fixture)?",
-            options=[{"code": "1", "label": "Totally different invented option (fixture)"}],
-            qtype="single", cardinality="single"),
-    ]
-    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
-    # The fixed behavior (see test below) DOES surface this -- so this
-    # characterization test asserts the fix is present (broadcast comparison runs),
-    # proving the second build row is no longer invisible.
-    stem_diffs = [f for f in findings if f.category == "STEM_DIFF" and f.qnum == "18"]
-    assert len(stem_diffs) >= 1  # Q18_BRACKET's own genuinely-different stem now surfaces
-    assert any("Q18_BRACKET" in f.detail for f in stem_diffs)
 
 
 def test_extra_build_row_is_broadcast_compared_against_last_paper_row():
