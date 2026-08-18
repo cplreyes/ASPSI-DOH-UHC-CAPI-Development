@@ -5,12 +5,9 @@
     "keys": "cspro_helpers.walk_labeled_nodes",
     "source": "legacy-textkey-2026-08-17/hil.json bridged via PRE-APPLY source English"
   },
-  "item:ENUMERATOR_S_NAME": "Resulta",
-  "item:FIELD_EDITED_BY": "Resulta aCodes: 1",
   "record:A_INFORMED_CONSENT": "Form Profile",
   "item:Q1_IS_HH_HEAD": "Antes kita magsugod, agud makumpirmar, ikaw bala ang ulo sang panimalay?",
   "vs:Q1_IS_HH_HEAD_VS1": "Antes kita magsugod, agud makumpirmar, ikaw bala ang ulo sang panimalay?",
-  "item:RESPONDENT_NAME": "Ngalan: (Apelyido, Pangalang Una, MI, Dugang) 2. In what month and year were you born? Sa ano nga bulan kag tuig natawo ang pasiente? Month Bulan ____ Year Tuig_____",
   "item:Q2_BIRTH_MONTH": "Sa ano nga bulan kag tuig natawo ang pasiente? Month Bulan ____ Year Tuig_____",
   "item:Q2_1_AGE": "Para lang makasiguro, pila na ang edad sang pasiente sa iya ulihi nga kaadlawan? (sa tuig)",
   "item:Q3_SEX": "Ano ang sekswalidad sang pasiente sang pagkabata?",

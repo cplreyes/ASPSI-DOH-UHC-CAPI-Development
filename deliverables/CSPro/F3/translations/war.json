@@ -57,7 +57,6 @@
   "val:Q3_SAME_HOUSE_VS1:2": "Dire",
   "record:B_PATIENT_PROFILE": "Propila han Pasyente",
   "item:Q4_NAME": "Ngaran han Pasyente (Apelyido, Una nga Ngaran, MI, Pagpahilawig)",
-  "item:Q5_BIRTH_MONTH": "Ano nga bulan ngan tuig natawo an pasyente? Month _________ Year__________ Bulan __________ Tuig __________",
   "item:Q6_AGE": "Para la makumpirma, pira na an edad han pasyente tikang han iya urhi nga kaadlawan? (ha mga tuig)",
   "item:Q7_SEX": "Ano an sekso han pasyente han katawo?",
   "vs:Q7_SEX_VS1": "Ano an sekso han pasyente han katawo?",

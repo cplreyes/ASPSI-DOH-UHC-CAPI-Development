@@ -5,8 +5,6 @@
   "keys": "cspro_helpers.walk_labeled_nodes",
   "source": "legacy-textkey-2026-08-17/ceb.json bridged via PRE-APPLY source English"
  },
- "item:ENUMERATOR_S_NAME": "Resulta",
- "item:FIELD_EDITED_BY": "Resulta aCodes: 1",
  "val:ENUM_RESULT_FIRST_VISIT_VS1:1": "Naabot nga edukasyon 1",
  "val:ENUM_RESULT_FINAL_VISIT_VS1:1": "Naabot nga edukasyon 1",
  "val:CASE_DISPOSITION_VS1:1": "Naabot nga edukasyon 1",

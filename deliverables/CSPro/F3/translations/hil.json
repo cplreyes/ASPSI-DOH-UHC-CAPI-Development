@@ -5,8 +5,6 @@
     "keys": "cspro_helpers.walk_labeled_nodes",
     "source": "legacy-textkey-2026-08-17/hil.json bridged via PRE-APPLY source English"
   },
-  "item:ENUMERATOR_S_NAME": "Resulta",
-  "item:FIELD_EDITED_BY": "Resulta aCodes: 1",
   "val:PATIENT_TYPE_VS1:1": "nga serbisyo",
   "val:PATIENT_TYPE_VS1:2": "kag",
   "item:FACILITY_NAME": "_INPUT)? Days Minutes",
@@ -17,7 +15,6 @@
   "item:Q3_SAME_HOUSE": "Nagapuyo ka bala sa amo man nga balay upod sang pasyente?",
   "vs:Q3_SAME_HOUSE_VS1": "Nagapuyo ka bala sa amo man nga balay upod sang pasyente?",
   "item:Q4_NAME": "Suffix) Ngalan sang Pasiente (Apelyido, Pangalang Una, MI, Dugang)",
-  "item:Q5_BIRTH_MONTH": "were you born? Sa ano nga bulan kag tuig natawo ang pasiente? Month Bulan _________ Year Tuig__________",
   "val:Q7_SEX_VS1:1": "Lalaki",
   "val:Q7_SEX_VS1:2": "Babaye",
   "val:Q8_LGBTQIA_VS1:3": "Indi Komportable sa pagsabat",

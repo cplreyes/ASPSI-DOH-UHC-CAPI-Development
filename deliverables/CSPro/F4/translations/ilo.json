@@ -6,7 +6,6 @@
     "source": "legacy-textkey-2026-08-17/ilo.json bridged via PRE-APPLY source English"
   },
   "item:ENUMERATOR_S_NAME": "Nagan ti Enumerator) Result(Resulta",
-  "item:FIELD_EDITED_BY": "(Inurnos ni) Resulta (Resulta) aCodes: (aDagiti Kodigo)(1",
   "item:TOTAL_NUMBER_OF_VISITS": "Dagup a bilang dagiti panagbisita:",
   "val:ENUM_RESULT_FIRST_VISIT_VS1:1": "(Nalpasen)2",
   "val:ENUM_RESULT_FIRST_VISIT_VS1:2": "( Naitantan) 3",
@@ -30,7 +29,6 @@
   "val:Q1_IS_HH_HEAD_VS1:1": "Wen",
   "val:Q1_IS_HH_HEAD_VS1:2": "Saan",
   "record:B_RESPONDENT_PROFILE": "Profile ti Napagsaludsodan",
-  "item:RESPONDENT_NAME": "(Nagan: (Apelido, Umuna a Nagan, MI, Ekstension) 2. In what month and year were you born? (Iti ania a bulan ken tawen ti pannakayanakmo?) Month (Bulan) _________ Year (Tawen)____________",
   "item:Q2_1_AGE": "Tapno laeng mapasingkedan, mano ti tawenmo agingga iti maudi a kasangaymo (iti tawen)?",
   "item:Q3_SEX": "Ania ti seksom iti pannakayanakmo?",
   "vs:Q3_SEX_VS1": "Ania ti seksom iti pannakayanakmo?",

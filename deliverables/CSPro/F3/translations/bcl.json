@@ -5,8 +5,6 @@
     "keys": "cspro_helpers.walk_labeled_nodes",
     "source": "legacy-textkey-2026-08-17/bcl.json bridged via PRE-APPLY source English"
   },
-  "item:ENUMERATOR_S_NAME": "Resulta",
-  "item:FIELD_EDITED_BY": "Resulta aCodes: 1",
   "val:PATIENT_TYPE_VS1:1": "mentioned facility)",
   "item:PROVINCE_HUC": "PROBINSYA/HUC",
   "vs:PROVINCE_HUC_VS1": "PROBINSYA/HUC",
