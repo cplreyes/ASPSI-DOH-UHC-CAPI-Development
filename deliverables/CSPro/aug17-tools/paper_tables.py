@@ -290,7 +290,7 @@ def _finalize_item(cur: dict) -> Row:
     elif re.search(r"pesos|amount|\bage\b|years|days|minutes|number of", stem, re.IGNORECASE):
         qtype = "number"
         cardinality = "single"
-    elif re.search(r"\btime\s*\(hh:mm\)|date of|month and year", stem, re.IGNORECASE):
+    elif re.search(r"\btime\s*\(hh:mm\)|date of|month and year|month\s+day\s+year", stem, re.IGNORECASE):
         qtype = "date"
         cardinality = "single"
     else:
@@ -362,7 +362,16 @@ def _merge_wrapped_row_lines(lines: list) -> list:
     per-line behavior on an unanticipated shape than merge wrongly). Lines
     outside a table, blank lines, and divider lines pass through unchanged
     and never start or extend a run -- this only fires on genuine same-row
-    word-wrap continuations, never across a real `+---+` row boundary."""
+    word-wrap continuations, never across a real `+---+` row boundary.
+
+    R20 (rev-3-4 review + investigation of a real F2 STEM_DIFF, Q95): a
+    multi-line markdown blockquote paragraph repeats its "> " prefix on
+    EVERY physical line, not just the first ("> line one" / "> line two").
+    `_prep_cell`'s leading-"> "-strip runs AFTER this merge and only
+    strips the START of the whole merged string -- so a SECOND (or later)
+    line's own "> " survived as a literal " > " artifact embedded
+    mid-string. Each constituent line's leading "> " is now stripped
+    BEFORE joining (harmless no-op on a line that never had one)."""
     out = []
     i = 0
     n = len(lines)
@@ -388,7 +397,9 @@ def _merge_wrapped_row_lines(lines: list) -> list:
             split_rows = [r.strip().split("|") for r in run]
             merged_cols = []
             for k in range(col_count):
-                parts = [row[k].strip() for row in split_rows if row[k].strip()]
+                parts = [BLOCKQUOTE_PREFIX_RE.sub("", row[k].strip()).strip()
+                         for row in split_rows if row[k].strip()]
+                parts = [p for p in parts if p]
                 merged_cols.append((" " + " ".join(parts) + " ") if parts else split_rows[0][k])
             out.append("|".join(merged_cols))
         i = j

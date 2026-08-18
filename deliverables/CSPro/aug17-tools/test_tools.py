@@ -1184,6 +1184,25 @@ def test_multi_select_banner_on_its_own_row_still_sets_cardinality():
     assert any("SELECT ALL THAT APPLY" in r.stem for r in instructions)  # banner row still emitted too
 
 
+def test_date_qtype_detection_recognizes_month_day_year_without_and():
+    # R20 (rev-3-4 review + investigation of a real F2 CARDINALITY_DIFF,
+    # Q35): the paper prints inline date sub-labels as "Month Day Year"
+    # (no "and") -- the existing qtype heuristic only matched "month and
+    # year", so this fell through to qtype=text/cardinality=single against
+    # a build that correctly derives date/single from its own date input
+    # component.
+    md = (
+        "+----+\n"
+        "| 35. **Invented date item (fixture)?** Month Day Year |\n"
+        "+----+\n"
+    )
+    rows = parse_extract(md, "F9")
+    items = [r for r in rows if r.kind == "item"]
+    q35 = next(r for r in items if r.qnum == "35")
+    assert q35.qtype == "date"
+    assert q35.cardinality == "single"
+
+
 def test_two_column_checkbox_grid_reads_column_major_not_row_major():
     # R18 (rev-1.4 finding, F3): a multi-row 2-column checkbox grid (each
     # physical row prints one item from column 1 and one from column 2) is
@@ -1320,6 +1339,35 @@ def test_section_header_does_not_absorb_following_blank_separated_paragraph():
     assert len(headers) == 1
     assert headers[0].section == "G Invented Section Title"
     assert "covers invented respondents" not in headers[0].section
+
+
+def test_wrapped_row_merge_strips_blockquote_prefix_from_each_continuation_line():
+    # R20 (rev-3-4 review + investigation of a real F2 STEM_DIFF, Q95): a
+    # multi-line markdown blockquote paragraph repeats its "> " prefix on
+    # EVERY physical line ("> line one" / "> line two"), not just the
+    # first. _merge_wrapped_row_lines joins the raw physical lines BEFORE
+    # _prep_cell's leading-"> "-strip runs (which only strips the START of
+    # the WHOLE merged string) -- so the SECOND line's "> " survived as a
+    # literal artifact embedded mid-string after merging (paper stem showed
+    # "...beyond their job > description." -- the stray "> " never
+    # existed in the real question text). Every constituent line's own
+    # leading "> " must be stripped BEFORE joining, not just the merged
+    # result's overall start.
+    md = (
+        "+----+\n"
+        "| 1. **Invented multi-line blockquote item (fixture)?**  |\n"
+        "|                                                          |\n"
+        "| > *Invented first continuation line of the blockquote    |\n"
+        "| > second line (fixture).*                                 |\n"
+        "+----+\n"
+        "|    | ☐ Invented option (fixture) |\n"
+        "+----+\n"
+    )
+    rows = parse_extract(md, "F9")
+    items = [r for r in rows if r.kind == "item"]
+    q1 = next(r for r in items if r.qnum == "1")
+    assert " > " not in q1.stem
+    assert "second line" in q1.stem
 
 
 def test_wrapped_row_merge_leaves_normal_divided_rows_alone():
