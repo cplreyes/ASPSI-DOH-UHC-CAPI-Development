@@ -41,7 +41,7 @@ def test_parse_extract_emits_item_rows():
 def test_parse_extract_emits_section_header():
     md = open(FIXTURES / "f3_snippet.md", encoding="utf-8").read()
     headers = [r for r in parse_extract(md, "F3") if r.kind == "section_header"]
-    assert any("respondent profile" in h.stem.lower() for h in headers)
+    assert any("household context and chores" in h.stem.lower() for h in headers)
 
 
 def test_parse_extract_emits_note():
