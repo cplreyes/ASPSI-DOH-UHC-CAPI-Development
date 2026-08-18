@@ -69,6 +69,12 @@ NOTE_RE = re.compile(r"note to enumerator|enumerator note|note for capi version"
 MULTI_SELECT_RE = re.compile(r"select all that apply", re.IGNORECASE)
 SINGLE_SELECT_RE = re.compile(r"select one answer only", re.IGNORECASE)
 
+DIRECTIVE_BANNER_RE = re.compile(
+    r"^(READ OPTIONS|DO NOT READ|SELECT (ALL|ONE)|CODING FOR QUESTION|CODES\b|"
+    r"BASED ON|ONLY FOR|ONLY ANSWER|ASK IF|SKIP (TO|IF)|FOR (BOTH|INPATIENT|OUTPATIENT)|"
+    r"PLEASE LIST DOWN)",
+    re.IGNORECASE,
+)
 MARK_SPAN_RE = re.compile(r"\[([^\]]*)\]\{\.mark\}")
 SUPERSCRIPT_RE = re.compile(r"\^([A-Za-z0-9]+)\^")
 BLOCKQUOTE_PREFIX_RE = re.compile(r"^>\s*")
@@ -105,7 +111,18 @@ def _strip_md(text: str) -> str:
 
 
 def _is_divider(line: str) -> bool:
-    return bool(line.strip()) and bool(DIVIDER_RE.match(line))
+    """True for a pandoc grid-table border line. Handles the plain case
+    (`+---+---+`) and the mid-row case where an uneven column split makes a
+    divider start with a leading `|` (e.g. one cell's box continues past
+    where its neighbors already closed) — stripping `|` before the
+    divider-charset check catches both; without it, the `|`-led form falls
+    through as ordinary content and its `+---+` border junk gets glued
+    onto whatever item is open."""
+    stripped = line.strip()
+    if not stripped:
+        return False
+    without_pipes = stripped.replace("|", "")
+    return bool(without_pipes) and bool(DIVIDER_RE.match(without_pipes))
 
 
 def _split_cells(line: str) -> list:
@@ -114,7 +131,34 @@ def _split_cells(line: str) -> list:
     return [p.strip() for p in parts if p.strip()]
 
 
+def _looks_like_glossary_entry(text: str) -> bool:
+    """True for definitional-legend lines that happen to share the item-
+    start print shape "N. **Term**: elaboration..." (or the colon just
+    inside the bold run, "N. **Term:** elaboration"). Observed in F2 after
+    Q2 ("employment type"): a 7-entry glossary numbered 1-7, restarting the
+    paper's own numbering, immediately followed by the real Q3. Every real
+    survey item in these instruments is phrased as a question, an
+    imperative, or a bare field label — never "term: definition" on its
+    first line — so "has an early colon but no early question mark" is a
+    precise enough discriminator without a global qnum-monotonicity rule
+    (which would also wrongly swallow F3's genuine "1."/"2." renumbering
+    artifacts elsewhere in the document)."""
+    head = text[:70]
+    return ":" in head and "?" not in head
+
+
 def _is_allcaps_heading(text: str) -> bool:
+    """True for a genuine unlettered document heading (PART I/II banners,
+    CERTIFICATE OF CONSENT, INFORMED CONSENT FORM). Requires a letter-led,
+    multi-word all-caps run — excludes bracket/paren/digit-led fragments
+    ("[ITEM]?", "(BASED ON...", "14) HMO") and single-word acronym
+    fragments ("PWD", "CODES") that share the all-caps look but are legend/
+    piped-fill noise bleeding out of a roster cell, not a heading."""
+    text = text.strip()
+    if not text or not text[0].isalpha():
+        return False
+    if " " not in text:
+        return False
     letters = [c for c in text if c.isalpha()]
     return len(letters) >= 3 and all(c.isupper() for c in letters)
 
@@ -202,12 +246,36 @@ def _finalize_item(cur: dict) -> Row:
     )
 
 
+def _merge_split_grid_items(rows: list) -> list:
+    """Collapse a bare-column-number roster placeholder (e.g. a household-
+    roster header row printing consecutive bare numbers with no stem text
+    yet) into the same qnum's later, content-bearing row from that block's
+    CODES/legend restatement (same number, now paired with its real field
+    label). Both are the SAME paper item printed twice for typesetting
+    reasons, not a genuine duplicate/renumbering artifact (those keep
+    distinct printed content on each occurrence and are left alone — see
+    F3-inventory.md's renumbering-artifact rows)."""
+    by_qnum: dict = {}
+    for i, r in enumerate(rows):
+        if r.kind == "item":
+            by_qnum.setdefault(r.qnum, []).append(i)
+    to_drop = set()
+    for idxs in by_qnum.values():
+        if len(idxs) < 2:
+            continue
+        empties = [i for i in idxs if not rows[i].stem and not rows[i].options]
+        non_empties = [i for i in idxs if i not in empties]
+        if empties and non_empties:
+            to_drop.update(empties)
+    return [r for i, r in enumerate(rows) if i not in to_drop]
+
+
 def parse_extract(md_text: str, inst: str) -> list:
     rows: list = []
     section = ""
     section_letter_ord = ord("A")
     cur = None
-    unparsed_count = 0
+    unparsed_row_count = 0
 
     def close_current():
         nonlocal cur
@@ -233,24 +301,49 @@ def parse_extract(md_text: str, inst: str) -> list:
         cells = _split_cells(line)
         if not cells:
             continue
-        joined = " ".join(cells)
 
-        if CHECKBOX in joined:
-            opts = _extract_options(cells)
-            if cur is not None:
-                cur["options"].extend(opts)
-            # An orphan option row (no open item) has nowhere principled to
-            # go; drop it rather than fabricate a synthetic item.
-            continue
+        # Cell-level dispatch, not line-level: some rows pack a plain
+        # (non-bold) item number into one cell and its Yes/No checkboxes
+        # into the very next cell on the SAME physical line (F4's Section N
+        # income-source roster does this for a run of items), and
+        # household-roster matrices (F1/F4 "C3/C4..." blocks) print a bare
+        # column-number header row (consecutive numbers, e.g. three cells
+        # in a row) where each cell is its own item start with no stem text
+        # yet. A single whole-line classifier missed both; cells are now
+        # classified independently, in order.
+        row_matched_something = False
+        for raw_cell in cells:
+            if CHECKBOX in raw_cell:
+                opts = _extract_options([raw_cell])
+                if cur is not None:
+                    cur["options"].extend(opts)
+                    row_matched_something = True
+                # An orphan option cell (no open item) has nowhere
+                # principled to go; drop it rather than fabricate an item.
+                continue
 
-        if len(cells) == 1:
-            cell = cells[0]
+            cell = _prep_cell(raw_cell)
 
             m_item = ITEM_START_RE.match(cell)
             if m_item:
-                close_current()
-                qnum = m_item.group(1)
-                cur = _new_item(inst, section, qnum, m_item.group(2))
+                stem_start = m_item.group(2)
+                # NOTE: tried widening this to "cur is not None" (drop the
+                # "not cur['options']" requirement) so it would also catch
+                # F2's Q2 employment-type glossary, which sits in a "Note:"
+                # block AFTER Q2's own checkboxes (so cur.options is
+                # already non-empty by the time its first numbered
+                # definitional entry appears) — that leaves ONE residual
+                # duplicate qnum in F2 (see spot-check report). The widened
+                # version was reverted: it also suppresses a genuine
+                # colon-shaped F1
+                # item elsewhere (186 -> 180), a much worse trade.
+                if cur is not None and not cur["options"] and _looks_like_glossary_entry(stem_start):
+                    cur["stem_parts"].append(cell)
+                else:
+                    close_current()
+                    qnum = m_item.group(1)
+                    cur = _new_item(inst, section, qnum, stem_start)
+                row_matched_something = True
                 continue
 
             m_letter = SECTION_LETTER_RE.match(cell)
@@ -268,6 +361,7 @@ def parse_extract(md_text: str, inst: str) -> list:
                 title_clean = normalize_text(_strip_md(title))
                 section = f"{letter} {title_clean}".strip()
                 rows.append(Row(inst=inst, kind="section_header", section=section, stem=title_clean))
+                row_matched_something = True
                 continue
 
             text = normalize_text(_strip_md(cell))
@@ -275,11 +369,20 @@ def parse_extract(md_text: str, inst: str) -> list:
                 continue
 
             if _is_allcaps_heading(text):
-                close_current()
-                kind = "consent" if "consent" in text.lower() else "section_header"
-                if kind == "section_header":
-                    section = text
-                rows.append(Row(inst=inst, kind=kind, section=section, stem=text))
+                if DIRECTIVE_BANNER_RE.match(text):
+                    # A loud read/skip/select-mode directive banner or a
+                    # back-coding legend header (see DIRECTIVE_BANNER_RE),
+                    # not a new section — leave `section`/`cur` untouched
+                    # so it doesn't relabel every later item until the
+                    # next real section header.
+                    rows.append(Row(inst=inst, kind="instruction", section=section, stem=text))
+                else:
+                    close_current()
+                    kind = "consent" if "consent" in text.lower() else "section_header"
+                    if kind == "section_header":
+                        section = text
+                    rows.append(Row(inst=inst, kind=kind, section=section, stem=text))
+                row_matched_something = True
                 continue
 
             if cur is not None and not cur["options"]:
@@ -288,15 +391,19 @@ def parse_extract(md_text: str, inst: str) -> list:
 
             kind = "note" if NOTE_RE.search(text) else "instruction"
             rows.append(Row(inst=inst, kind=kind, section=section, stem=text))
-            continue
 
-        # Multi-cell row with no checkbox: FIELD CONTROL grids, coding-list
-        # blocks, roster amount/date sub-rows. Not cleanly parseable with
-        # this line-scan approach; skip and count (see module docstring).
-        unparsed_count += 1
+        if len(cells) > 1 and not row_matched_something:
+            # Multi-cell row where no cell resolved to an item/section start
+            # or a checkbox option: FIELD CONTROL grids, hyphenated coding-
+            # list legends, roster label/date sub-rows. Content isn't lost
+            # (each cell still became stem-continuation or a note/
+            # instruction row above) but nothing new was structurally
+            # recognized here — counted for the spot-check report.
+            unparsed_row_count += 1
 
     close_current()
-    parse_extract.last_unparsed_count = unparsed_count  # type: ignore[attr-defined]
+    rows = _merge_split_grid_items(rows)
+    parse_extract.last_unparsed_count = unparsed_row_count  # type: ignore[attr-defined]
     return rows
 
 
