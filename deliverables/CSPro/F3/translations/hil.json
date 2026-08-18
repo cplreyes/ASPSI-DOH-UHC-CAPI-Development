@@ -7,7 +7,6 @@
   },
   "val:PATIENT_TYPE_VS1:1": "nga serbisyo",
   "val:PATIENT_TYPE_VS1:2": "kag",
-  "item:FACILITY_NAME": "_INPUT)? Days Minutes",
   "record:A_INFORMED_CONSENT": "1. Before we start, to confirm, are you the patient? Antes kita magsugod, agud makumpirma, ikaw bala ang pasyente? Yes Huo Non Indi",
   "item:Q2_RELATIONSHIP": "Ano ang imo relasyon sa pasyente?",
   "vs:Q2_RELATIONSHIP_VS1": "Ano ang imo relasyon sa pasyente?",

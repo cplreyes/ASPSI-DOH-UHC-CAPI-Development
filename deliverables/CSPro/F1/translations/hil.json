@@ -7,7 +7,6 @@
   },
   "item:BARANGAY": "Health Workers (BHWs)",
   "vs:BARANGAY_VS1": "Health Workers (BHWs)",
-  "item:RESP_POSITION": "(Posisyon, Opisina) Telephone Number (Numero sang Telepono) Questionnaire No",
   "item:Q1_NAME": "Ano ang imo ngalan? (Last Name, First Name, Middle Initial, Ext)",
   "item:Q2_FACILITY_ROLE": "Ano ang imo opisyal nga katungdanan sa ini nga health facility?",
   "vs:Q2_FACILITY_ROLE_VS1": "Ano ang imo opisyal nga katungdanan sa ini nga health facility?",

@@ -7,7 +7,6 @@
   },
   "val:PATIENT_TYPE_VS1:1": "mentioned facility)",
   "val:PATIENT_TYPE_VS1:2": "visit sa pasyente",
-  "item:FACILITY_NAME": "_INPUT) Days Adlaw Minutes Minutos",
   "item:Q1_IS_PATIENT": "Sa dili pa kita magsugod, aron makumpirma, ikaw ba ang pasyente?",
   "vs:Q1_IS_PATIENT_VS1": "Sa dili pa kita magsugod, aron makumpirma, ikaw ba ang pasyente?",
   "val:Q1_IS_PATIENT_VS1:1": "Oo",
