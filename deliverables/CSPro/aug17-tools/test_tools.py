@@ -837,39 +837,24 @@ def test_single_column_checkbox_list_unaffected_by_column_major_fix():
     assert labels == ["First invented option", "Second invented option", "Third invented option"]
 
 
-def test_blank_content_row_is_not_misread_as_a_table_divider():
-    # R18 (rev-1.4 finding, F3): a genuine table divider ("+---+---+") and a
-    # blank CONTENT row (a real row whose cell is pure whitespace, used as
-    # visual spacing between a stem and its skip-note annotation) look
-    # different but _is_divider's old regex (`[+\-:=\s]+$`) matched BOTH,
-    # since a whitespace-only string still satisfies "one or more of
-    # +/-/:/=/whitespace". This silently ended a wrapped-row merge run one
-    # line early, isolating the NEXT line (e.g. a "> *SKIP THIS QUESTION...*"
-    # annotation) as its own standalone cell -- which then gets misread as a
-    # spurious section heading (see the next test).
-    md = (
-        "+----+\n"
-        "| 5. **Invented item with a blank spacer row (fixture)?** |\n"
-        "|                                                          |\n"
-        "| skip-note-like continuation text (fixture)               |\n"
-        "+----+\n"
-    )
-    rows = parse_extract(md, "F9")
-    items = [r for r in rows if r.kind == "item"]
-    q5 = next(r for r in items if r.qnum == "5")
-    assert "skip-note-like continuation text (fixture)" in q5.stem
-    headers = [r for r in rows if r.kind == "section_header"]
-    assert not headers
-
-
-def test_skip_directive_after_blank_spacer_not_misread_as_section_heading():
-    # End-to-end reproduction of the real F3 defect (item 70's "Check all
-    # that apply." stem followed by a blank row then a
-    # "> *SKIP THIS QUESTION WHEN ANSWER IN Qnn IS NO*" annotation). Item
-    # number changed from the real F3 "Q63" to an invented "Q99" reference,
-    # but the all-caps SHAPE is kept verbatim -- a lowercase "(fixture)"
-    # marker inside the caps run would itself defeat _is_allcaps_heading and
-    # fail to reproduce the bug.
+def test_skip_this_directive_recognized_not_misread_as_section_heading():
+    # R18 (rev-1.4 finding, F3): a printed all-caps skip directive like
+    # "SKIP THIS QUESTION WHEN ANSWER IN Qnn IS NO" -- isolated on its own
+    # row by the (unchanged, intentional) blank-line run boundary above and
+    # a real table divider below -- matched _is_allcaps_heading but NOT the
+    # old DIRECTIVE_BANNER_RE (which covered "SKIP (TO|IF)" but not "SKIP
+    # THIS"), so it fell through to the section_header/consent branch and
+    # silently became a spurious section boundary (12 F3 rows carried this
+    # exact text as their `section`). Fixed by widening DIRECTIVE_BANNER_RE
+    # to also match "SKIP THIS" -- routes it to kind=instruction instead,
+    # leaving `cur`/`section` untouched, no merge-behavior change anywhere
+    # (deliberately NOT folded into the item's own stem -- a first attempt
+    # via loosening the blank-line divider check was tried and reverted:
+    # it corrupted section titles elsewhere, see the next test and
+    # _is_divider's docstring). Item number changed from the real F3 "Q63"
+    # to an invented "Q99" reference; the all-caps SHAPE is kept verbatim --
+    # a lowercase "(fixture)" marker inside the caps run would itself
+    # defeat _is_allcaps_heading and fail to reproduce the bug.
     md = (
         "+----+\n"
         "| 70. **Invented multi-select item?** Check all |\n"
@@ -883,9 +868,33 @@ def test_skip_directive_after_blank_spacer_not_misread_as_section_heading():
     rows = parse_extract(md, "F9")
     headers = [r for r in rows if r.kind == "section_header"]
     assert not any("SKIP THIS QUESTION" in h.section for h in headers)
+    instructions = [r for r in rows if r.kind == "instruction"]
+    assert any("SKIP THIS QUESTION WHEN ANSWER IN Q99 IS NO" in r.stem for r in instructions)
     items = [r for r in rows if r.kind == "item"]
     q70 = next(r for r in items if r.qnum == "70")
-    assert "SKIP THIS QUESTION WHEN ANSWER IN Q99 IS NO" in q70.stem
+    assert "Check all that apply" in q70.stem  # its own stem is otherwise intact
+
+
+def test_section_header_does_not_absorb_following_blank_separated_paragraph():
+    # Regression guard: a section header must NOT pull in a following
+    # descriptive paragraph separated from it by a blank row (exactly what
+    # the reverted "loosen the blank-line divider check" attempt caused).
+    md = (
+        "+----+\n"
+        "| G. **Invented Section Title** |\n"
+        "|                                |\n"
+        "| This section covers invented respondents only. |\n"
+        "+----+\n"
+        "| 1. **Invented item (fixture)?** |\n"
+        "+----+\n"
+        "|    | ☐ Invented option |\n"
+        "+----+\n"
+    )
+    rows = parse_extract(md, "F9")
+    headers = [r for r in rows if r.kind == "section_header"]
+    assert len(headers) == 1
+    assert headers[0].section == "G Invented Section Title"
+    assert "covers invented respondents" not in headers[0].section
 
 
 def test_wrapped_row_merge_leaves_normal_divided_rows_alone():

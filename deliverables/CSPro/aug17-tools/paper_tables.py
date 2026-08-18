@@ -111,7 +111,7 @@ SINGLE_SELECT_RE = re.compile(r"select one answer only", re.IGNORECASE)
 
 DIRECTIVE_BANNER_RE = re.compile(
     r"^(READ OPTIONS|DO NOT READ|SELECT (ALL|ONE)|CODING FOR QUESTION|CODES\b|"
-    r"BASED ON|ONLY FOR|ONLY ANSWER|ASK IF|SKIP (TO|IF)|FOR (BOTH|INPATIENT|OUTPATIENT)|"
+    r"BASED ON|ONLY FOR|ONLY ANSWER|ASK IF|SKIP (TO|IF|THIS)|FOR (BOTH|INPATIENT|OUTPATIENT)|"
     r"PLEASE LIST DOWN)",
     re.IGNORECASE,
 )
@@ -151,7 +151,7 @@ def _strip_md(text: str) -> str:
 
 
 def _is_divider(line: str) -> bool:
-    r"""True for a pandoc grid-table border line. Handles the plain case
+    """True for a pandoc grid-table border line. Handles the plain case
     (`+---+---+`) and the mid-row case where an uneven column split makes a
     divider start with a leading `|` (e.g. one cell's box continues past
     where its neighbors already closed) — stripping `|` before the
@@ -159,25 +159,25 @@ def _is_divider(line: str) -> bool:
     through as ordinary content and its `+---+` border junk gets glued
     onto whatever item is open.
 
-    R18 (rev-1.4 finding, F3): `DIVIDER_RE` (`^[+\-:=\s]+$`) matches a
-    STRING OF PURE WHITESPACE too, since `\s` is one of its allowed
-    characters — so a genuine blank CONTENT row (e.g. `"|          |"`,
-    used as visual spacing between a stem and its skip-note annotation)
-    was misclassified as a divider. That silently ended
-    `_merge_wrapped_row_lines`'s merge run one line early, isolating the
-    NEXT line as its own standalone cell — which could then be misread as
-    a spurious section heading (a real, printed all-caps skip directive
-    like "SKIP THIS QUESTION WHEN ANSWER IN Qnn IS NO", split off from its
-    own item by the phantom divider). A real divider always contains at
-    least one actual border character (`+`/`-`/`:`/`=`); requiring that
-    (rather than accepting pure whitespace) distinguishes the two."""
+    Deliberately ALSO treats a purely-blank content row (`"|          |"`,
+    common as visual spacing e.g. between a stem and a following skip-note
+    annotation, or between a section title and its intro paragraph) as a
+    run terminator, same as a real divider -- tried making this stricter
+    (require an actual `+`/`-`/`:`/`=` border character) to fix one
+    specific case (a "SKIP THIS QUESTION..." banner getting isolated and
+    misread as a section heading, R18/rev-1.4), but that let
+    `_merge_wrapped_row_lines` merge PAST the blank line in the general
+    case -- which then wrongly pulled a section's own following
+    descriptive paragraph INTO the section title (sections G-L each
+    absorbed their multi-line intro paragraph). Reverted: fixed the
+    "SKIP THIS QUESTION" case narrowly instead, via `DIRECTIVE_BANNER_RE`
+    (see its definition) -- keeps blank lines as hard boundaries
+    everywhere, no merge-behavior change, no section corruption."""
     stripped = line.strip()
     if not stripped:
         return False
     without_pipes = stripped.replace("|", "")
-    if not without_pipes.strip():
-        return False  # pure whitespace between the pipes -- a blank content row, not a divider
-    return bool(DIVIDER_RE.match(without_pipes))
+    return bool(without_pipes) and bool(DIVIDER_RE.match(without_pipes))
 
 
 def _split_cells(line: str) -> list:
