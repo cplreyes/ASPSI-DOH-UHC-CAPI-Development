@@ -630,13 +630,14 @@ Q972_ROSTER_PROCS = build_roster_procs(
     exclusive_code="90",     # #1208: 'None of the above' must stand alone
     exclusive_msg="97.2 'None' must be the only choice — untick it or the other expense items before continuing.")
 Q98_ROSTER_PROCS = build_roster_procs(
-    98, "98", [(None, f"{n:02d}") for n in range(1, 16)],
+    # aug17: 15 -> 16 codes (Quantified Free Service inserted at 15, Other pushed to 16).
+    98, "98", [(None, f"{n:02d}") for n in range(1, 17)],
     set(),   # all-amount
     "98. Tick at least one source of money used to pay for the medical costs before continuing.",
     gated_texts=[
         ("06", "Q98_OTHER_DONATION_TXT",
          "'Other Donation/Charity/Assistance' was selected in Q98. Please specify."),
-        ("15", "Q98_OTHER_TXT", "'Other (specify)' was selected in Q98. Please specify.")],
+        ("16", "Q98_OTHER_TXT", "'Other (specify)' was selected in Q98. Please specify.")],
     require_positive=True)   # #749: every ticked money source must be > 0
 
 # The four NEW Section H roster conversions (#691/#692/#693). Amount boxes follow the
@@ -675,10 +676,11 @@ Q112_ROSTER_PROCS = build_roster_procs(
     gated_texts=[("09", "Q112_PAY_OTHER_TXT", "112. 'Other' was ticked — please specify.")],
     require_positive=True)   # #757: every ticked payment source must be > 0
 Q113_ROSTER_PROCS = build_roster_procs(
-    113, "113", [(None, f"{n:02d}") for n in range(1, 14)],
+    # aug17: 13 -> 14 codes (Quantified Free Service inserted at 13, Other pushed to 14).
+    113, "113", [(None, f"{n:02d}") for n in range(1, 15)],
     set(),
     "113. Tick at least one payment source for the hospital bill before continuing.",
-    gated_texts=[("13", "Q113_PAY_OTHER_TXT", "113. 'Other (specify)' was ticked — please specify.")],
+    gated_texts=[("14", "Q113_PAY_OTHER_TXT", "113. 'Other (specify)' was ticked — please specify.")],
     require_positive=True)   # #757: every ticked payment source must be > 0
 
 
@@ -1082,24 +1084,28 @@ onfocus
 # #164 Outpatient/Inpatient routing (spec 2 Sections G-I preamble):
 #   PATIENT_TYPE = 1 Outpatient -> Section G (Q88-Q104), skip H (Q105-Q115)
 #   PATIENT_TYPE = 2 Inpatient  -> skip G, Section H
-#   Section I (Q116+) asked for both. Gate the FIRST item of G and of H.
+#   Section E (Q53+, front-loaded to sit right after G/H per aug17 order:G,H) asked for
+#   both. Gate the FIRST item of G and of H.
 #   (Verify PATIENT_TYPE codes 1/2 against the dcf value set on first compile.)
 BRANCHING = """\
 { ---- #164 Outpatient vs Inpatient branching ---- }
 PROC Q88_WHY_VISIT
 preproc
-  { #441: not Outpatient -> skip Section G to the START of Section H (Q105), NOT to Q116.
-    The old target (Q116) jumped past Section H entirely, so INPATIENTS lost all of Section H.
-    Q105's own gate (PATIENT_TYPE <> 2 -> skip to Q116) then decides: inpatient keeps H,
-    a blank/other type falls through to Q116. }
+  { #441: not Outpatient -> skip Section G to the START of Section H (Q105), NOT to
+    what follows H. The old target jumped past Section H entirely, so INPATIENTS lost
+    all of Section H. Q105's own gate (PATIENT_TYPE <> 2 -> skip past H) then decides:
+    inpatient keeps H, a blank/other type falls through past it. }
   if PATIENT_TYPE <> 1 then    { not Outpatient -> skip Section G; land at Section H start }
     skip to Q105_REASON;
   endif;
 
 PROC Q105_REASON
 preproc
+  { aug17: target moved from Q116_NBB_HEARD (Section I) to Q53_HAS_PCP (Section E) --
+    G/H are now front-loaded immediately after Section D, ahead of E, per the paper's
+    two 'Note for CAPI Version' blocks (order:G,H). }
   if PATIENT_TYPE <> 2 then    { not Inpatient -> skip Section H entirely }
-    skip to Q116_NBB_HEARD;
+    skip to Q53_HAS_PCP;
   endif;
 """
 
@@ -1425,9 +1431,9 @@ postproc
     reenter;
   endif;
 
-PROC Q28_WASHER
+PROC Q29_WASHER
 postproc
-  if Q22_ELECTRICITY = 2 and (Q26_REFRIGERATOR = 1 or Q27_TELEVISION = 1 or Q28_WASHER = 1) then
+  if Q22_ELECTRICITY = 2 and (Q27_REFRIGERATOR = 1 or Q28_TELEVISION = 1 or Q29_WASHER = 1) then
     errmsg("Household reports no electricity but owns a powered appliance. Confirm.");
   endif;
 """
@@ -1460,7 +1466,9 @@ SKIP_RULES = [
     ("Q43_KNOWS_ASSIST",     "Q43_KNOWS_ASSIST = 2",         "Q45_CATEGORY"),
     ("Q48_PREMIUM_PAY",      "Q48_PREMIUM_PAY = 3",          "Q51_OTHER_INSURANCE"),
     ("Q49_PREMIUM_DIFFICULT","Q49_PREMIUM_DIFFICULT = 2",    "Q51_OTHER_INSURANCE"),
-    ("Q51_OTHER_INSURANCE",  "Q51_OTHER_INSURANCE = 2",      "Q53_HAS_PCP"),
+    # aug17: Section D is now immediately followed by G (front-load reorder, order:G,H) —
+    # was Q53_HAS_PCP (E's start) when D directly preceded E.
+    ("Q51_OTHER_INSURANCE",  "Q51_OTHER_INSURANCE = 2",      "Q88_WHY_VISIT"),
     # Section E — Primary Care Utilization
     ("Q53_HAS_PCP",          "Q53_HAS_PCP = 2",              "Q63_HAS_USUAL_FACILITY"),
     # Q66_SAME_AS_USUAL routing now lives in EXTRA_PROCS (Q63 usual-facility block, #418/#419).
@@ -1481,12 +1489,23 @@ SKIP_RULES = [
     #   "≥1 ticked when Q89=No" (spec line 511) is unaffected — it only fires when Q89=No.
     # Q93_LABS_O17 'None' routing now in EXTRA_PROCS (exclusivity warn must precede the skip, #448).
     ("Q95_PRESCRIBED",     "Q95_PRESCRIBED = 2",                          "Q97_FINAL_AMOUNT"),       # No prescription -> skip meds-cost matrix
-    ("AREA_HAS_BUCAS",     "AREA_HAS_BUCAS = 2",                          "Q116_NBB_HEARD"),         # #464: area has no BUCAS -> skip Q99-104 (mirrors Q99=No)
-    ("Q99_BUCAS_HEARD",    "Q99_BUCAS_HEARD = 2",                         "Q116_NBB_HEARD"),         # No -> end of Section G (sanity #9; skip Q100-104)
+    # aug17: G is now immediately followed by H, then E (front-load reorder, order:G,H) —
+    # these two 'end of G' shortcuts (which used to land past H, on Section I's start
+    # since I directly followed H) now land on E's start instead; H's own Q105 gate is
+    # unaffected (an outpatient reaching either of these is never PATIENT_TYPE=2, so H's
+    # gate would have sent them to the same place anyway -- these are the shortcut that
+    # skips walking through H's gate check).
+    ("AREA_HAS_BUCAS",     "AREA_HAS_BUCAS = 2",                          "Q53_HAS_PCP"),            # #464: area has no BUCAS -> skip Q99-104 (mirrors Q99=No)
+    ("Q99_BUCAS_HEARD",    "Q99_BUCAS_HEARD = 2",                         "Q53_HAS_PCP"),            # No -> end of Section G (sanity #9; skip Q100-104)
     ("Q102_BUCAS_ACCESSED","Q102_BUCAS_ACCESSED = 2",                     "Q104_WITHOUT_BUCAS"),     # No -> Q104 (skip Q103)
     # Section H — Inpatient Care
     ("Q108_MEDS_OUTSIDE",  "Q108_MEDS_OUTSIDE = 2",                       "Q110_LAB_OUTSIDE"),       # No -> skip meds-outside-cost
     ("Q110_LAB_OUTSIDE",   "Q110_LAB_OUTSIDE = 2",                        "Q113_SOURCES"),           # No -> skip Q111/Q112 to the hospital-bill pay matrix (Option B fan-out #693: was Q113_PAY_01)
+    # aug17 {.mark}: paper adds an explicit Yes/No gate ahead of the 115.2 a)-g) breakdown
+    # (F3-extract.md L2180/L2231) that the earlier build lacked (see Q1142_HAS_OTHER in
+    # generate_dcf.py). No -> skip the whole breakdown + its Other-specify text, straight
+    # to whatever follows H -- E's start post-reorder (order:G,H; was Section I pre-reorder).
+    ("Q1142_HAS_OTHER",    "Q1142_HAS_OTHER = 2",                         "Q53_HAS_PCP"),            # No -> skip the 115.2 a)-g) breakdown entirely
     # Section I — Financial Risk Protection
     ("Q116_NBB_HEARD",     "Q116_NBB_HEARD in 2,3",                       "Q119_ZBB_HEARD"),         # No / IDK -> skip Q117,Q118
     ("Q119_ZBB_HEARD",     "Q119_ZBB_HEARD in 2,3",                       "Q124_MAIFIP_HEARD"),      # No / IDK -> skip Q120-123
@@ -1649,7 +1668,7 @@ def main():
                "Q169_VISITED",   # #799: bespoke routing PROC in EXTRA_PROCS (code 2 -> Q171, code 3 -> Q172)
                "Q170_FOLLOWUP",  # EXTRA_PROCS (Wave 4 #508/#511; #503/#696: Q161_WHY_BRANDED_O01 gone — Q161 now a Check Box base, gate folded into its checkbox PROC; #529: Q177_WHY_HOSPITAL_O01 gone — same)
                "Q5_BIRTH_MONTH", "Q5_BIRTH_YEAR", "Q6_AGE", "Q18_INCOME_BRACKET",
-               "Q19_HH_SIZE", "Q20_HH_CHILDREN", "Q21_HH_SENIORS", "Q28_WASHER",  # VALIDATION_PROCS
+               "Q19_HH_SIZE", "Q20_HH_CHILDREN", "Q21_HH_SENIORS", "Q29_WASHER",  # VALIDATION_PROCS
                # #529: the 13 select_all -> Check Box bases (+ their _OTHER_TXT) get
                # bespoke PROCs from CHECKBOX_MULTISELECT_PROCS (added below) — seed them
                # into `covered` so the dcf-driven other-specify / select-all auto-gens

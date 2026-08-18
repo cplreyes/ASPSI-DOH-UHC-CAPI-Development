@@ -12,6 +12,20 @@ tags: [cspro, capi, fmf, form-layout, f3]
 
 # F3 Patient Survey — Form-Layout Plan
 
+> [!warning] aug17 front-load reorder (2026-08-18)
+> The paper's two "Note for CAPI Version" blocks (F3-extract.md L1237/L1808) require
+> Sections G (Outpatient Care) and H (Inpatient Care) to be administered BEFORE primary
+> care utilization (Section E) when the tool is used in the RHU/hospital OPD. `generate_fmf.py`'s
+> `FORM_PLAN` and `generate_dcf.py`'s `build_f3_dictionary()` records list were both updated
+> to the new order: **A, B, C, D, G, H, E, F, I, J, K, L**. PROC order in `generate_apc.py` did
+> NOT need to move (only skip targets — see `Q88_WHY_VISIT`/`Q105_REASON` preproc gates and the
+> `Q51_OTHER_INSURANCE`/`AREA_HAS_BUCAS`/`Q99_BUCAS_HEARD`/`Q1142_HAS_OTHER` `SKIP_RULES` rows).
+> The tables and form order below (§1, §3) are UPDATED for the reorder; §2's per-form detail
+> predates the June-2026 Option B roster fan-out and is otherwise stale — treat it as historical
+> context only, not a form-by-form source of truth (see `generate_fmf.py`'s live `FORM_PLAN` for
+> the actual, current form-to-record map). Registered: `aug17-approved-divergences.md`, F3 |
+> order:G,H | capi-adaptation.
+
 **Scope:** section-by-section form inventory for `PatientSurvey.fmf`, mapping each DCF record to concrete CSEntry forms. Built on top of [[../Form-Layout-Principles]] — read that first.
 
 **Source DCF:** 18 records / 835 items (Apr 21 build), covering 178 source questions.
@@ -40,10 +54,10 @@ tags: [cspro, capi, fmf, form-layout, f3]
 | 8 | `B_PATIENT_PROFILE` | D (1 occ) | 3 forms | Demographics + disability + income |
 | 9 | `C_UHC_AWARENESS` | E (1 occ) | 2 forms | — |
 | 10 | `D_PHILHEALTH_REG` | F (1 occ) | 2 forms | Registration + membership category |
-| 11 | `E_PRIMARY_CARE` | G (1 occ) | 3 forms | PCP + YAKAP/Konsulta |
-| 12 | `F_HEALTH_SEEKING` | H (1 occ) | 2 forms | — |
-| 13 | `G_OUTPATIENT_CARE` | I (1 occ) | 3 forms | Payment-source matrix (Q92 et al.) drives split |
-| 14 | `H_INPATIENT_CARE` | J (1 occ) | 3 forms | Payment-source matrix (Q107 et al.) drives split |
+| 11 | `G_OUTPATIENT_CARE` | I (1 occ) | 3 forms | **aug17: moved here (was after F)** — front-loaded per the paper's CAPI note; payment-source matrix (Q92 et al.) drives split |
+| 12 | `H_INPATIENT_CARE` | J (1 occ) | 3 forms | **aug17: moved here (was after G)** — front-loaded per the paper's CAPI note; payment-source matrix (Q107 et al.) drives split |
+| 13 | `E_PRIMARY_CARE` | G (1 occ) | 3 forms | **aug17: moved here (was before G)** — PCP + YAKAP/Konsulta |
+| 14 | `F_HEALTH_SEEKING` | H (1 occ) | 2 forms | **aug17: moved here (was before G)** |
 | 15 | `I_FINANCIAL_RISK` | K (1 occ) | 3 forms | NBB + ZBB + MAIFIP + distress |
 | 16 | `J_SATISFACTION` | L (1 occ) | 1 form | — |
 | 17 | `K_ACCESS_MEDICINES` | M (1 occ) | 2 forms | Q147/Q156 med lists, Q150 travel time |
@@ -204,10 +218,10 @@ Single form. Satisfaction items are short-form Likert — high row budget utiliz
 8  B3_INCOME_HH (Q18 amount↔bracket HARD check)
 9–10   C1, C2 (UHC Awareness)
 11–12  D1, D2 (PhilHealth)
-13–15  E1, E2, E3 (Primary care + YAKAP/Konsulta)
-16–17  F1, F2 (Health-seeking)
-18–20  G1, G2, G3 (Outpatient)
-21–23  H1, H2, H3 (Inpatient)
+13–15  G1, G2, G3 (Outpatient) — aug17: front-loaded here (was after F/Section 16-17)
+16–18  H1, H2, H3 (Inpatient) — aug17: front-loaded here (was after G)
+19–21  E1, E2, E3 (Primary care + YAKAP/Konsulta) — aug17: moved here (was before G)
+22–23  F1, F2 (Health-seeking) — aug17: moved here (was before G)
 24–26  I1, I2, I3 (NBB/ZBB/MAIFIP/distress)
 27     J (Satisfaction)
 28–29  K1, K2 (GAMOT)
@@ -230,7 +244,7 @@ All other skips are intra-form GATE logic.
 | Item | Blocks | Owner | Notes |
 |---|---|---|---|
 | Q31 IP_GROUP coded list decision | Form 8 (B3) | ASPSI | Default: keep alpha |
-| Q159 → Q164 cross-section jump verified intentional | Form 29 → Form 30 | ASPSI | Honor source as printed until confirmed |
+| ~~Q159 → Q164 cross-section jump verified intentional~~ | Form 29 → Form 30 | ASPSI | **RESOLVED** (#731, R5, 2026-08-xx): Carl ruled "do what the testers need" — Q159=5 (Not applicable) routes to Q164 per the paper's literal printed routing, reversing an earlier attempt (#501) to route through Q162 first. `aug17-approved-divergences.md`'s "F3 \| Q159" register row describes the #501-era intent and is now STALE against the live code — flagged for the controller/Task 1.4 to reconcile (see task-1.1-1.3 report). |
 | Q147/Q156 med list length monitoring | Forms 28, 29 | Pilot | Convert to roster only if field reports 240-char overflow |
 
 ---

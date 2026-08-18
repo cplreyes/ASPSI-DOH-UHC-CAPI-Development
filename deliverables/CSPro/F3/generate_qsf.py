@@ -45,6 +45,13 @@ _LOGO_B64 = _b64.b64encode((HERE.parent / "cover_logos.png").read_bytes()).decod
 _LOGO_HTML = f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>'
 
 BUILD_FOOTER = (_LOGO_HTML
+                # aug17: the paper retitles itself "In-Patient and Out-Patient Survey
+                # Questionnaire" (F3-inventory.md §1) -- rendered here since this footer
+                # is the only place the instrument's full title reaches the CAPI screen
+                # (versions.json's "app" display name stays "Patient Survey" for fleet
+                # continuity; registered class=formatting, aug17-approved-divergences.md).
+                + '<p class="instruction"><b>In-Patient and Out-Patient Survey '
+                  'Questionnaire</b></p>'
                 + f'<p class="instruction">Build: F3 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
                 + _icf.clearance_html("F3"))
 
@@ -161,16 +168,24 @@ CONSENT_HTML = "".join([
     _p("normal",
        "If you have concerns or questions about your rights as a participant, you can "
        "contact:"),
+    # aug17 (Task 1.1 content pass, found while verifying the certificate block against
+    # normalized/F3-paper.csv consent rows / F3-extract.md L64-81): the SJREB email/phone
+    # and the ASPSI email here didn't match the paper's ethics-contact table -- fixed
+    # verbatim. The build's own SJREB "Tel: +63 936 992 5513" mobile line has no paper
+    # counterpart (dropped); the paper prints ONE contact-number cell with two extensions.
+    # This same wrong block is copied verbatim into F1/generate_qsf.py and
+    # F4/generate_qsf.py -- flagged in the task-1.1-1.3 report for those instruments'
+    # own content-pass tasks (F4 Task 1.7; F1 Task 2.x).
     _p("normal",
-       "<b>Single Joint Research Ethics Board (SJREB) at the Philippines Department of "
-       "Health</b><br/>Email: sjreb.doh@gmail.com<br/>National Tel: (02) 651-7800 "
-       "local 1328<br/>Tel: +63 936 992 5513"),
+       "<b>Single Joint Research Ethics Board (SJREB) | Department of "
+       "Health</b><br/>Email: sjreb@doh.gov.ph<br/>Contact No.: (02) 8651-7800 "
+       "local 1326, 1328"),
     _p("normal",
        "<b>Department of Health</b><br/>Name: Lindsley Jeremiah D. Villarante<br/>"
        "Email: ldvillarante@doh.gov.ph<br/>Tel: +63 (02) 8651-7800 local 1432"),
     _p("normal",
        "<b>Asian Social Project Services, Inc.</b><br/>Name: Paulyn Jean A. Claro<br/>"
-       "Email: aspsiglobal@gmail.com<br/>Tel: +63 917 819 6884"),
+       "Email: inquiry.aspsi.doh.uhc.survey2@gmail.com<br/>Tel: +63 917 819 6884"),
     _p("instruction",
        "Record the respondent’s decision: 1 = Yes (consent given — continue the "
        "interview); 2 = No (consent refused — the interview ends)."),
@@ -297,6 +312,14 @@ INSTRUCTIONS_BY_NAME = {
                            "income."),   # #1048: bracket only + "tick" -> "Select"
     "Q150_TRAVEL_HH": ("A Pharmacy is an ancillary primary care facility with a "
                        "FDA LTO where registered medicines can be bought."),
+    # aug17 {.mark}: the 'Quantified Free Service' source (new in both payment rosters)
+    # carries its own enumerator note in the paper (F3-extract.md L1689/L2081), identical
+    # wording both places. No per-option instruction slot exists, so it attaches to the
+    # whole checkbox field, worded to point at the specific new item.
+    "Q98_SOURCES": ("Enumerator Note: 'Quantified Free Service' fees are those "
+                    "directly charged to the hospital budget."),
+    "Q113_SOURCES": ("Enumerator Note: 'Quantified Free Service' fees are those "
+                     "directly charged to the hospital budget."),
 }
 
 SECTION_INTROS = {

@@ -106,10 +106,12 @@ FORM_PLAN = [
      [("C_UHC_AWARENESS", None)]),
     ("D. PhilHealth Registration",
      [("D_PHILHEALTH_REG", None)]),
-    ("E. Primary Care + YAKAP/Konsulta",
-     [("E_PRIMARY_CARE", None)]),
-    ("F. Health-Seeking",
-     [("F_HEALTH_SEEKING", None)]),
+    # aug17 front-load reorder (order:G,H): G/H moved here, immediately after D and ahead
+    # of E, per the paper's two "Note for CAPI Version" blocks (F3-extract.md L1237/L1808
+    # -- outpatient/inpatient care front-loaded before primary care utilization when
+    # administered in the RHU/hospital OPD). Internal G/H interleave order (roster fan-out)
+    # is UNCHANGED -- only their position relative to E/F moved.
+    #
     # Option B fan-out (2026-06-19): Section G is split around SIX cost-matrix rosters.
     # Each tick-list ends a host fragment; its roster grid renders next; then the next
     # fragment. Order must match _split_host_with_rosters (Q92/Q94/Q96/Q97.1/Q97.2/Q98).
@@ -159,6 +161,10 @@ FORM_PLAN = [
      [("Q113_PAY_ROSTER", None)]),
     ("H. Inpatient Care (cont. 4)",
      [("H_INPATIENT_CARE_5", None)]),
+    ("E. Primary Care + YAKAP/Konsulta",
+     [("E_PRIMARY_CARE", None)]),
+    ("F. Health-Seeking",
+     [("F_HEALTH_SEEKING", None)]),
     ("I. Financial Risk",
      [("I_FINANCIAL_RISK", None)]),
     ("J. Satisfaction",

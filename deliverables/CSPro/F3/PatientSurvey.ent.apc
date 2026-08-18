@@ -716,25 +716,29 @@ postproc
 { ---- #164 Outpatient vs Inpatient branching ---- }
 PROC Q88_WHY_VISIT
 preproc
-  { #441: not Outpatient -> skip Section G to the START of Section H (Q105), NOT to Q116.
-    The old target (Q116) jumped past Section H entirely, so INPATIENTS lost all of Section H.
-    Q105's own gate (PATIENT_TYPE <> 2 -> skip to Q116) then decides: inpatient keeps H,
-    a blank/other type falls through to Q116. }
+  { #441: not Outpatient -> skip Section G to the START of Section H (Q105), NOT to
+    what follows H. The old target jumped past Section H entirely, so INPATIENTS lost
+    all of Section H. Q105's own gate (PATIENT_TYPE <> 2 -> skip past H) then decides:
+    inpatient keeps H, a blank/other type falls through past it. }
   if PATIENT_TYPE <> 1 then    { not Outpatient -> skip Section G; land at Section H start }
     skip to Q105_REASON;
   endif;
 
 PROC Q105_REASON
 preproc
+  { aug17: target moved from Q116_NBB_HEARD (Section I) to Q53_HAS_PCP (Section E) --
+    G/H are now front-loaded immediately after Section D, ahead of E, per the paper's
+    two 'Note for CAPI Version' blocks (order:G,H). }
   if PATIENT_TYPE <> 2 then    { not Inpatient -> skip Section H entirely }
-    skip to Q116_NBB_HEARD;
+    skip to Q53_HAS_PCP;
   endif;
 
 
 { ---- Q98 payment-matrix 'Other (specify)' gates: Option B fan-out (#689, 2026-06-19)
   re-pointed these from the old flat Q98_PAY_06 / Q98_PAY_15 flags (now removed) to
-  pos("06"/"15", Q98_SOURCES). The gated-text PROCs are emitted by Q98_ROSTER_PROCS
-  (build_roster_procs gated_texts=...), not here. ---- }
+  pos("06"/"16", Q98_SOURCES) -- code 16 since aug17 inserted 'Quantified Free Service'
+  at 15 and pushed 'Other (specify)' to 16. The gated-text PROCs are emitted by
+  Q98_ROSTER_PROCS (build_roster_procs gated_texts=...), not here. ---- }
 
 { ---- #558/#694 (R4): Q114 (why no PhilHealth) gate ----
   Q114 is now a Check Box base (select_all -> tick-all); the PhilHealth-availed gate
@@ -926,36 +930,45 @@ postproc
   concatenated 2-digit condition codes (CSEntry Check Box). The old 20 Yes/No items are
   gone, so these are hand-written (the select-all auto-gen no longer sees an _O run for
   Q148). 2026-07-02 #450-class fix: the '19' membership test chunk-scans — pos("19", ...)
-  DID false-match across code boundaries (01+99 packs "0199", which contains "19"). ---- }
+  DID false-match across code boundaries (01+99 packs "0199", which contains "19").
+  aug17: paper's Q148 coding has no 'No condition' item at all (dropped from the build,
+  its old exclusivity rule removed with it) and moves 'Other (Specify)' from the old
+  anti-collision code 99 onto the paper's real code 19 — kept the aligned-chunk scan
+  (not pos()) for the 19 test as a matter of established codebase caution, even though
+  the specific 01+99 collision this originally guarded against can't recur once no
+  remaining code starts with '9' except 19 itself. ---- }
 PROC Q148_CONDITIONS
 postproc
-  numeric qcN; numeric qcK; numeric qcP; numeric qcHit19;
   if length(strip(Q148_CONDITIONS)) = 0 then
-    errmsg(1011);
-    reenter;
-  endif;
-  { exclusivity (HARD — #1166): 'No condition - Regular check-up only' (19) must stand alone.
-    Aligned 2-char chunk scan, NOT pos(): codes 01 + 99 pack to "0199", which contains "19". }
-  qcHit19 = 0;
-  qcN = length(strip(Q148_CONDITIONS)) / 2;
-  do qcK = 1 while qcK <= qcN
-    qcP = (qcK - 1) * 2 + 1;
-    if tonumber(Q148_CONDITIONS[qcP:2]) = 19 then qcHit19 = 1; endif;
-  enddo;
-  if qcHit19 = 1 and length(strip(Q148_CONDITIONS)) > 2 then
-    errmsg(1264);
+    errmsg(1279);
     reenter;
   endif;
 
 PROC Q148_CONDITIONS_OTHER_TXT
 preproc
-  if pos("99", Q148_CONDITIONS) = 0 then
-    Q148_CONDITIONS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+  numeric qotN; numeric qotK; numeric qotP; numeric qotHit19;
+  qotHit19 = 0;
+  qotN = length(strip(Q148_CONDITIONS)) / 2;
+  do qotK = 1 while qotK <= qotN
+    qotP = (qotK - 1) * 2 + 1;
+    if tonumber(Q148_CONDITIONS[qotP:2]) = 19 then qotHit19 = 1; endif;
+  enddo;
+  if qotHit19 = 0 then
+    Q148_CONDITIONS_OTHER_TXT = "";   { gated: 'Other (Specify)' (19) not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q148_CONDITIONS) > 0 and length(strip(Q148_CONDITIONS_OTHER_TXT)) = 0 then
-    errmsg(1013);
+  { qotHit19 from preproc doesn't persist to postproc across a re-entry cycle in every
+    CSPro execution path -- recompute defensively rather than trust it survives. }
+  numeric qotN2; numeric qotK2; numeric qotP2; numeric qotHit19b;
+  qotHit19b = 0;
+  qotN2 = length(strip(Q148_CONDITIONS)) / 2;
+  do qotK2 = 1 while qotK2 <= qotN2
+    qotP2 = (qotK2 - 1) * 2 + 1;
+    if tonumber(Q148_CONDITIONS[qotP2:2]) = 19 then qotHit19b = 1; endif;
+  enddo;
+  if qotHit19b = 1 and length(strip(Q148_CONDITIONS_OTHER_TXT)) = 0 then
+    errmsg(1280);
     reenter;
   endif;
 
@@ -2520,9 +2533,9 @@ postproc
     reenter;
   endif;
 
-PROC Q28_WASHER
+PROC Q29_WASHER
 postproc
-  if Q22_ELECTRICITY = 2 and (Q26_REFRIGERATOR = 1 or Q27_TELEVISION = 1 or Q28_WASHER = 1) then
+  if Q22_ELECTRICITY = 2 and (Q27_REFRIGERATOR = 1 or Q28_TELEVISION = 1 or Q29_WASHER = 1) then
     errmsg(1133);
   endif;
 
@@ -2912,7 +2925,7 @@ preproc
   gt = 0; gn = length(strip(Q98_SOURCES)) / 2;
   do gk = 1 while gk <= gn
     gp = (gk - 1) * 2 + 1;
-    if Q98_SOURCES[gp:2] = "15" then gt = 1; endif;
+    if Q98_SOURCES[gp:2] = "16" then gt = 1; endif;
   enddo;
   if gt = 0 then
     Q98_OTHER_TXT = "";   { not ticked -> not enterable }
@@ -2923,7 +2936,7 @@ postproc
   ht = 0; hn = length(strip(Q98_SOURCES)) / 2;
   do hk = 1 while hk <= hn
     hp = (hk - 1) * 2 + 1;
-    if Q98_SOURCES[hp:2] = "15" then ht = 1; endif;
+    if Q98_SOURCES[hp:2] = "16" then ht = 1; endif;
   enddo;
   if ht = 1 and length(strip(Q98_OTHER_TXT)) = 0 then
     errmsg(1155);
@@ -3203,7 +3216,7 @@ preproc
   gt = 0; gn = length(strip(Q113_SOURCES)) / 2;
   do gk = 1 while gk <= gn
     gp = (gk - 1) * 2 + 1;
-    if Q113_SOURCES[gp:2] = "13" then gt = 1; endif;
+    if Q113_SOURCES[gp:2] = "14" then gt = 1; endif;
   enddo;
   if gt = 0 then
     Q113_PAY_OTHER_TXT = "";   { not ticked -> not enterable }
@@ -3214,7 +3227,7 @@ postproc
   ht = 0; hn = length(strip(Q113_SOURCES)) / 2;
   do hk = 1 while hk <= hn
     hp = (hk - 1) * 2 + 1;
-    if Q113_SOURCES[hp:2] = "13" then ht = 1; endif;
+    if Q113_SOURCES[hp:2] = "14" then ht = 1; endif;
   enddo;
   if ht = 1 and length(strip(Q113_PAY_OTHER_TXT)) = 0 then
     errmsg(1174);
@@ -3304,7 +3317,7 @@ postproc
 PROC Q51_OTHER_INSURANCE
 postproc
   if Q51_OTHER_INSURANCE = 2 then
-    skip to Q53_HAS_PCP;
+    skip to Q88_WHY_VISIT;
   endif;
 
 PROC Q53_HAS_PCP
@@ -3364,13 +3377,13 @@ postproc
 PROC AREA_HAS_BUCAS
 postproc
   if AREA_HAS_BUCAS = 2 then
-    skip to Q116_NBB_HEARD;
+    skip to Q53_HAS_PCP;
   endif;
 
 PROC Q99_BUCAS_HEARD
 postproc
   if Q99_BUCAS_HEARD = 2 then
-    skip to Q116_NBB_HEARD;
+    skip to Q53_HAS_PCP;
   endif;
 
 PROC Q102_BUCAS_ACCESSED
@@ -3389,6 +3402,12 @@ PROC Q110_LAB_OUTSIDE
 postproc
   if Q110_LAB_OUTSIDE = 2 then
     skip to Q113_SOURCES;
+  endif;
+
+PROC Q1142_HAS_OTHER
+postproc
+  if Q1142_HAS_OTHER = 2 then
+    skip to Q53_HAS_PCP;
   endif;
 
 PROC Q116_NBB_HEARD

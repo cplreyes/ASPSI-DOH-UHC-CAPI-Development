@@ -1,7 +1,8 @@
 { ---- Q98 payment-matrix 'Other (specify)' gates: Option B fan-out (#689, 2026-06-19)
   re-pointed these from the old flat Q98_PAY_06 / Q98_PAY_15 flags (now removed) to
-  pos("06"/"15", Q98_SOURCES). The gated-text PROCs are emitted by Q98_ROSTER_PROCS
-  (build_roster_procs gated_texts=...), not here. ---- }
+  pos("06"/"16", Q98_SOURCES) -- code 16 since aug17 inserted 'Quantified Free Service'
+  at 15 and pushed 'Other (specify)' to 16. The gated-text PROCs are emitted by
+  Q98_ROSTER_PROCS (build_roster_procs gated_texts=...), not here. ---- }
 
 { ---- #558/#694 (R4): Q114 (why no PhilHealth) gate ----
   Q114 is now a Check Box base (select_all -> tick-all); the PhilHealth-availed gate
@@ -193,36 +194,45 @@ postproc
   concatenated 2-digit condition codes (CSEntry Check Box). The old 20 Yes/No items are
   gone, so these are hand-written (the select-all auto-gen no longer sees an _O run for
   Q148). 2026-07-02 #450-class fix: the '19' membership test chunk-scans — pos("19", ...)
-  DID false-match across code boundaries (01+99 packs "0199", which contains "19"). ---- }
+  DID false-match across code boundaries (01+99 packs "0199", which contains "19").
+  aug17: paper's Q148 coding has no 'No condition' item at all (dropped from the build,
+  its old exclusivity rule removed with it) and moves 'Other (Specify)' from the old
+  anti-collision code 99 onto the paper's real code 19 — kept the aligned-chunk scan
+  (not pos()) for the 19 test as a matter of established codebase caution, even though
+  the specific 01+99 collision this originally guarded against can't recur once no
+  remaining code starts with '9' except 19 itself. ---- }
 PROC Q148_CONDITIONS
 postproc
-  numeric qcN; numeric qcK; numeric qcP; numeric qcHit19;
   if length(strip(Q148_CONDITIONS)) = 0 then
-    errmsg("Tick at least one medical condition (or 'No condition - Regular check-up only').");
-    reenter;
-  endif;
-  { exclusivity (HARD — #1166): 'No condition - Regular check-up only' (19) must stand alone.
-    Aligned 2-char chunk scan, NOT pos(): codes 01 + 99 pack to "0199", which contains "19". }
-  qcHit19 = 0;
-  qcN = length(strip(Q148_CONDITIONS)) / 2;
-  do qcK = 1 while qcK <= qcN
-    qcP = (qcK - 1) * 2 + 1;
-    if tonumber(Q148_CONDITIONS[qcP:2]) = 19 then qcHit19 = 1; endif;
-  enddo;
-  if qcHit19 = 1 and length(strip(Q148_CONDITIONS)) > 2 then
-    errmsg("'No condition - Regular check-up only' must be the only choice — untick it or the other conditions before continuing.");
+    errmsg("Tick at least one medical condition.");
     reenter;
   endif;
 
 PROC Q148_CONDITIONS_OTHER_TXT
 preproc
-  if pos("99", Q148_CONDITIONS) = 0 then
-    Q148_CONDITIONS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+  numeric qotN; numeric qotK; numeric qotP; numeric qotHit19;
+  qotHit19 = 0;
+  qotN = length(strip(Q148_CONDITIONS)) / 2;
+  do qotK = 1 while qotK <= qotN
+    qotP = (qotK - 1) * 2 + 1;
+    if tonumber(Q148_CONDITIONS[qotP:2]) = 19 then qotHit19 = 1; endif;
+  enddo;
+  if qotHit19 = 0 then
+    Q148_CONDITIONS_OTHER_TXT = "";   { gated: 'Other (Specify)' (19) not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q148_CONDITIONS) > 0 and length(strip(Q148_CONDITIONS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was ticked for Q148 — please specify.");
+  { qotHit19 from preproc doesn't persist to postproc across a re-entry cycle in every
+    CSPro execution path -- recompute defensively rather than trust it survives. }
+  numeric qotN2; numeric qotK2; numeric qotP2; numeric qotHit19b;
+  qotHit19b = 0;
+  qotN2 = length(strip(Q148_CONDITIONS)) / 2;
+  do qotK2 = 1 while qotK2 <= qotN2
+    qotP2 = (qotK2 - 1) * 2 + 1;
+    if tonumber(Q148_CONDITIONS[qotP2:2]) = 19 then qotHit19b = 1; endif;
+  enddo;
+  if qotHit19b = 1 and length(strip(Q148_CONDITIONS_OTHER_TXT)) = 0 then
+    errmsg("'Other (Specify)' was ticked for Q148 — please specify.");
     reenter;
   endif;
 

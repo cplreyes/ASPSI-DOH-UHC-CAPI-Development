@@ -71,7 +71,7 @@ Item=P_BARANGAY
 Name=FORM004
 Label=B. Patient Profile
 Level=1
-Size=806,1207
+Size=806,1237
   
 Item=Q4_NAME
 Item=Q5_BIRTH_MONTH
@@ -101,9 +101,10 @@ Item=Q23_WATER
 Item=Q23_WATER_OTHER_TXT
 Item=Q24_FAUCET_OWN
 Item=Q25_TUBE_OWN
-Item=Q26_REFRIGERATOR
-Item=Q27_TELEVISION
-Item=Q28_WASHER
+Item=Q26_WELL_OWN
+Item=Q27_REFRIGERATOR
+Item=Q28_TELEVISION
+Item=Q29_WASHER
 Item=Q29_SEC_CLASS
 Item=Q30_IP
 Item=Q31_IP_GROUP
@@ -168,6 +169,323 @@ Item=Q52_PLANS_OTHER_TXT
   
 [Form]
 Name=FORM007
+Label=G. Outpatient Care
+Level=1
+Size=806,300
+  
+Item=Q88_WHY_VISIT
+Item=Q88_WHY_VISIT_OTHER_TXT
+Item=Q89_ADVISED_ADMIT
+Item=Q90_NOT_CONFINED
+Item=Q90_NOT_CONFINED_OTHER_TXT
+Item=Q91_USUAL_OUTPATIENT
+Item=Q92_SOURCES
+  
+[EndForm]
+  
+[Form]
+Name=FORM008
+Label=G. Cost of consultation — amount by source
+Level=1
+Repeat=Q92_PAY_ROSTER
+Size=806,300
+  
+Item=Q92_PAY_LINE
+Item=Q92_PAY_SRC
+Item=Q92_PAY_AMT
+  
+[EndForm]
+  
+[Form]
+Name=FORM009
+Label=G. Outpatient Care (cont.)
+Level=1
+Size=806,300
+  
+Item=Q93_LABS
+Item=Q93_LABS_OTHER_TXT
+  
+[EndForm]
+  
+[Form]
+Name=FORM010
+Label=G. Cost of laboratory tests — per test (Q94)
+Level=1
+Repeat=Q94_LAB_ROSTER
+Size=806,300
+  
+Item=Q94_LAB_LINE
+Item=Q94_LAB_CODE
+Item=Q94_LAB_PAY
+Item=Q94_LAB_AMT
+  
+[EndForm]
+  
+[Form]
+Name=FORM011
+Label=G. Outpatient Care (cont. 2)
+Level=1
+Size=806,300
+  
+Item=Q95_PRESCRIBED
+Item=Q96_SOURCES
+  
+[EndForm]
+  
+[Form]
+Name=FORM012
+Label=G. Cost of prescribed medicines — amount by source
+Level=1
+Repeat=Q96_PAY_ROSTER
+Size=806,300
+  
+Item=Q96_PAY_LINE
+Item=Q96_PAY_SRC
+Item=Q96_PAY_AMT
+  
+[EndForm]
+  
+[Form]
+Name=FORM013
+Label=G. Outpatient Care (cont. 3)
+Level=1
+Size=806,300
+  
+Item=Q97_FINAL_AMOUNT
+Item=Q971_SOURCES
+  
+[EndForm]
+  
+[Form]
+Name=FORM014
+Label=G. Other items in outpatient bill — amount by category
+Level=1
+Repeat=Q971_ROSTER
+Size=806,300
+  
+Item=Q971_PAY_LINE
+Item=Q971_PAY_SRC
+Item=Q971_PAY_AMT
+  
+[EndForm]
+  
+[Form]
+Name=FORM015
+Label=G. Outpatient Care (cont. 4)
+Level=1
+Size=806,300
+  
+Item=Q971_OTHER_TXT
+Item=Q972_SOURCES
+  
+[EndForm]
+  
+[Form]
+Name=FORM016
+Label=G. Other expenses not in bill — amount by item
+Level=1
+Repeat=Q972_PAY_ROSTER
+Size=806,300
+  
+Item=Q972_PAY_LINE
+Item=Q972_PAY_SRC
+Item=Q972_PAY_AMT
+  
+[EndForm]
+  
+[Form]
+Name=FORM017
+Label=G. Outpatient Care (cont. 5)
+Level=1
+Size=806,300
+  
+Item=Q972_OTHER_TXT
+Item=Q98_SOURCES
+  
+[EndForm]
+  
+[Form]
+Name=FORM018
+Label=G. Sources of money for medical costs — amount by source
+Level=1
+Repeat=Q98_PAY_ROSTER
+Size=806,300
+  
+Item=Q98_PAY_LINE
+Item=Q98_PAY_SRC
+Item=Q98_PAY_AMT
+  
+[EndForm]
+  
+[Form]
+Name=FORM019
+Label=G. Outpatient Care (cont. 6)
+Level=1
+Size=806,457
+  
+Item=Q98_OTHER_DONATION_TXT
+Item=Q98_OTHER_TXT
+Item=AREA_HAS_BUCAS
+Item=Q99_BUCAS_HEARD
+Item=Q100_BUCAS_SOURCE
+Item=Q100_BUCAS_SOURCE_OTHER_TXT
+Item=Q101_BUCAS_UNDERSTAND
+Item=Q101_BUCAS_UNDERSTAND_OTHER_TXT
+Item=Q102_BUCAS_ACCESSED
+Item=Q103_BUCAS_SERVICES
+Item=Q103_BUCAS_SERVICES_OTHER_TXT
+Item=Q104_WITHOUT_BUCAS
+Item=Q104_WITHOUT_BUCAS_OTHER_TXT
+  
+[EndForm]
+  
+[Form]
+Name=FORM020
+Label=H. Inpatient Care
+Level=1
+Size=806,300
+  
+Item=Q105_REASON
+Item=Q105_REASON_OTHER_TXT
+Item=Q106_NIGHTS
+Item=Q106_DAYS
+Item=Q107_SOURCES
+  
+[EndForm]
+  
+[Form]
+Name=FORM021
+Label=H. Total bill for confinement — amount by source
+Level=1
+Repeat=Q107_PAY_ROSTER
+Size=806,300
+  
+Item=Q107_PAY_LINE
+Item=Q107_PAY_SRC
+Item=Q107_PAY_AMT
+  
+[EndForm]
+  
+[Form]
+Name=FORM022
+Label=H. Inpatient Care (cont.)
+Level=1
+Size=806,300
+  
+Item=Q107_PAY_OTHER_TXT
+Item=Q108_MEDS_OUTSIDE
+Item=Q109_SOURCES
+  
+[EndForm]
+  
+[Form]
+Name=FORM023
+Label=H. Medicines bought outside — amount by source
+Level=1
+Repeat=Q109_PAY_ROSTER
+Size=806,300
+  
+Item=Q109_PAY_LINE
+Item=Q109_PAY_SRC
+Item=Q109_PAY_AMT
+  
+[EndForm]
+  
+[Form]
+Name=FORM024
+Label=H. Inpatient Care (cont. 2)
+Level=1
+Size=806,300
+  
+Item=Q109_PAY_OTHER_TXT
+Item=Q110_LAB_OUTSIDE
+Item=Q111_SERVICES_OUTSIDE
+Item=Q112_SOURCES
+  
+[EndForm]
+  
+[Form]
+Name=FORM025
+Label=H. Services done outside — amount by source
+Level=1
+Repeat=Q112_PAY_ROSTER
+Size=806,300
+  
+Item=Q112_PAY_LINE
+Item=Q112_PAY_SRC
+Item=Q112_PAY_AMT
+  
+[EndForm]
+  
+[Form]
+Name=FORM026
+Label=H. Inpatient Care (cont. 3)
+Level=1
+Size=806,300
+  
+Item=Q112_PAY_OTHER_TXT
+Item=Q113_SOURCES
+  
+[EndForm]
+  
+[Form]
+Name=FORM027
+Label=H. Hospital bill — amount by source
+Level=1
+Repeat=Q113_PAY_ROSTER
+Size=806,300
+  
+Item=Q113_PAY_LINE
+Item=Q113_PAY_SRC
+Item=Q113_PAY_AMT
+  
+[EndForm]
+  
+[Form]
+Name=FORM028
+Label=H. Inpatient Care (cont. 4)
+Level=1
+Size=806,1087
+  
+Item=Q113_PAY_OTHER_TXT
+Item=Q114_NO_PH
+Item=Q114_NO_PH_OTHER_TXT
+Item=Q115_FINAL_CASH
+Item=Q1141_1
+Item=Q1141_1_AMT
+Item=Q1141_2
+Item=Q1141_2_AMT
+Item=Q1141_3
+Item=Q1141_3_AMT
+Item=Q1141_4
+Item=Q1141_4_AMT
+Item=Q1141_5
+Item=Q1141_5_AMT
+Item=Q1141_6
+Item=Q1141_6_AMT
+Item=Q1141_OTHER_TXT
+Item=Q1141_NONE
+Item=Q1142_HAS_OTHER
+Item=Q1142_1
+Item=Q1142_1_AMT
+Item=Q1142_2
+Item=Q1142_2_AMT
+Item=Q1142_3
+Item=Q1142_3_AMT
+Item=Q1142_4
+Item=Q1142_4_AMT
+Item=Q1142_5
+Item=Q1142_5_AMT
+Item=Q1142_6
+Item=Q1142_6_AMT
+Item=Q1142_7
+Item=Q1142_7_AMT
+Item=Q1142_OTHER_TXT
+  
+[EndForm]
+  
+[Form]
+Name=FORM029
 Label=E. Primary Care + YAKAP/Konsulta
 Level=1
 Size=806,1357
@@ -219,7 +537,7 @@ Item=Q82_KON_WHY_NOT_REG_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM008
+Name=FORM030
 Label=F. Health-Seeking
 Level=1
 Size=806,367
@@ -234,321 +552,6 @@ Item=Q86_VISIT_EVENTS
 Item=Q86_VISIT_EVENTS_OTHER_TXT
 Item=Q87_OTHER_ACTIONS
 Item=Q87_OTHER_ACTIONS_OTHER_TXT
-  
-[EndForm]
-  
-[Form]
-Name=FORM009
-Label=G. Outpatient Care
-Level=1
-Size=806,300
-  
-Item=Q88_WHY_VISIT
-Item=Q88_WHY_VISIT_OTHER_TXT
-Item=Q89_ADVISED_ADMIT
-Item=Q90_NOT_CONFINED
-Item=Q90_NOT_CONFINED_OTHER_TXT
-Item=Q91_USUAL_OUTPATIENT
-Item=Q92_SOURCES
-  
-[EndForm]
-  
-[Form]
-Name=FORM010
-Label=G. Cost of consultation — amount by source
-Level=1
-Repeat=Q92_PAY_ROSTER
-Size=806,300
-  
-Item=Q92_PAY_LINE
-Item=Q92_PAY_SRC
-Item=Q92_PAY_AMT
-  
-[EndForm]
-  
-[Form]
-Name=FORM011
-Label=G. Outpatient Care (cont.)
-Level=1
-Size=806,300
-  
-Item=Q93_LABS
-Item=Q93_LABS_OTHER_TXT
-  
-[EndForm]
-  
-[Form]
-Name=FORM012
-Label=G. Cost of laboratory tests — per test (Q94)
-Level=1
-Repeat=Q94_LAB_ROSTER
-Size=806,300
-  
-Item=Q94_LAB_LINE
-Item=Q94_LAB_CODE
-Item=Q94_LAB_PAY
-Item=Q94_LAB_AMT
-  
-[EndForm]
-  
-[Form]
-Name=FORM013
-Label=G. Outpatient Care (cont. 2)
-Level=1
-Size=806,300
-  
-Item=Q95_PRESCRIBED
-Item=Q96_SOURCES
-  
-[EndForm]
-  
-[Form]
-Name=FORM014
-Label=G. Cost of prescribed medicines — amount by source
-Level=1
-Repeat=Q96_PAY_ROSTER
-Size=806,300
-  
-Item=Q96_PAY_LINE
-Item=Q96_PAY_SRC
-Item=Q96_PAY_AMT
-  
-[EndForm]
-  
-[Form]
-Name=FORM015
-Label=G. Outpatient Care (cont. 3)
-Level=1
-Size=806,300
-  
-Item=Q97_FINAL_AMOUNT
-Item=Q971_SOURCES
-  
-[EndForm]
-  
-[Form]
-Name=FORM016
-Label=G. Other items in outpatient bill — amount by category
-Level=1
-Repeat=Q971_ROSTER
-Size=806,300
-  
-Item=Q971_PAY_LINE
-Item=Q971_PAY_SRC
-Item=Q971_PAY_AMT
-  
-[EndForm]
-  
-[Form]
-Name=FORM017
-Label=G. Outpatient Care (cont. 4)
-Level=1
-Size=806,300
-  
-Item=Q971_OTHER_TXT
-Item=Q972_SOURCES
-  
-[EndForm]
-  
-[Form]
-Name=FORM018
-Label=G. Other expenses not in bill — amount by item
-Level=1
-Repeat=Q972_PAY_ROSTER
-Size=806,300
-  
-Item=Q972_PAY_LINE
-Item=Q972_PAY_SRC
-Item=Q972_PAY_AMT
-  
-[EndForm]
-  
-[Form]
-Name=FORM019
-Label=G. Outpatient Care (cont. 5)
-Level=1
-Size=806,300
-  
-Item=Q972_OTHER_TXT
-Item=Q98_SOURCES
-  
-[EndForm]
-  
-[Form]
-Name=FORM020
-Label=G. Sources of money for medical costs — amount by source
-Level=1
-Repeat=Q98_PAY_ROSTER
-Size=806,300
-  
-Item=Q98_PAY_LINE
-Item=Q98_PAY_SRC
-Item=Q98_PAY_AMT
-  
-[EndForm]
-  
-[Form]
-Name=FORM021
-Label=G. Outpatient Care (cont. 6)
-Level=1
-Size=806,457
-  
-Item=Q98_OTHER_DONATION_TXT
-Item=Q98_OTHER_TXT
-Item=AREA_HAS_BUCAS
-Item=Q99_BUCAS_HEARD
-Item=Q100_BUCAS_SOURCE
-Item=Q100_BUCAS_SOURCE_OTHER_TXT
-Item=Q101_BUCAS_UNDERSTAND
-Item=Q101_BUCAS_UNDERSTAND_OTHER_TXT
-Item=Q102_BUCAS_ACCESSED
-Item=Q103_BUCAS_SERVICES
-Item=Q103_BUCAS_SERVICES_OTHER_TXT
-Item=Q104_WITHOUT_BUCAS
-Item=Q104_WITHOUT_BUCAS_OTHER_TXT
-  
-[EndForm]
-  
-[Form]
-Name=FORM022
-Label=H. Inpatient Care
-Level=1
-Size=806,300
-  
-Item=Q105_REASON
-Item=Q105_REASON_OTHER_TXT
-Item=Q106_NIGHTS
-Item=Q106_DAYS
-Item=Q107_SOURCES
-  
-[EndForm]
-  
-[Form]
-Name=FORM023
-Label=H. Total bill for confinement — amount by source
-Level=1
-Repeat=Q107_PAY_ROSTER
-Size=806,300
-  
-Item=Q107_PAY_LINE
-Item=Q107_PAY_SRC
-Item=Q107_PAY_AMT
-  
-[EndForm]
-  
-[Form]
-Name=FORM024
-Label=H. Inpatient Care (cont.)
-Level=1
-Size=806,300
-  
-Item=Q107_PAY_OTHER_TXT
-Item=Q108_MEDS_OUTSIDE
-Item=Q109_SOURCES
-  
-[EndForm]
-  
-[Form]
-Name=FORM025
-Label=H. Medicines bought outside — amount by source
-Level=1
-Repeat=Q109_PAY_ROSTER
-Size=806,300
-  
-Item=Q109_PAY_LINE
-Item=Q109_PAY_SRC
-Item=Q109_PAY_AMT
-  
-[EndForm]
-  
-[Form]
-Name=FORM026
-Label=H. Inpatient Care (cont. 2)
-Level=1
-Size=806,300
-  
-Item=Q109_PAY_OTHER_TXT
-Item=Q110_LAB_OUTSIDE
-Item=Q111_SERVICES_OUTSIDE
-Item=Q112_SOURCES
-  
-[EndForm]
-  
-[Form]
-Name=FORM027
-Label=H. Services done outside — amount by source
-Level=1
-Repeat=Q112_PAY_ROSTER
-Size=806,300
-  
-Item=Q112_PAY_LINE
-Item=Q112_PAY_SRC
-Item=Q112_PAY_AMT
-  
-[EndForm]
-  
-[Form]
-Name=FORM028
-Label=H. Inpatient Care (cont. 3)
-Level=1
-Size=806,300
-  
-Item=Q112_PAY_OTHER_TXT
-Item=Q113_SOURCES
-  
-[EndForm]
-  
-[Form]
-Name=FORM029
-Label=H. Hospital bill — amount by source
-Level=1
-Repeat=Q113_PAY_ROSTER
-Size=806,300
-  
-Item=Q113_PAY_LINE
-Item=Q113_PAY_SRC
-Item=Q113_PAY_AMT
-  
-[EndForm]
-  
-[Form]
-Name=FORM030
-Label=H. Inpatient Care (cont. 4)
-Level=1
-Size=806,1027
-  
-Item=Q113_PAY_OTHER_TXT
-Item=Q114_NO_PH
-Item=Q114_NO_PH_OTHER_TXT
-Item=Q115_FINAL_CASH
-Item=Q1141_1
-Item=Q1141_1_AMT
-Item=Q1141_2
-Item=Q1141_2_AMT
-Item=Q1141_3
-Item=Q1141_3_AMT
-Item=Q1141_4
-Item=Q1141_4_AMT
-Item=Q1141_5
-Item=Q1141_5_AMT
-Item=Q1141_6
-Item=Q1141_6_AMT
-Item=Q1141_OTHER_TXT
-Item=Q1142_1
-Item=Q1142_1_AMT
-Item=Q1142_2
-Item=Q1142_2_AMT
-Item=Q1142_3
-Item=Q1142_3_AMT
-Item=Q1142_4
-Item=Q1142_4_AMT
-Item=Q1142_5
-Item=Q1142_5_AMT
-Item=Q1142_6
-Item=Q1142_6_AMT
-Item=Q1142_7
-Item=Q1142_7_AMT
-Item=Q1142_OTHER_TXT
   
 [EndForm]
   
@@ -1434,124 +1437,136 @@ Text=25. Does the patient have their own tube/pipe, or do they share with their 
  
   
 [Field]
-Name=Q26_REFRIGERATOR
+Name=Q26_WELL_OWN
 Position=350,867,365,887
-Item=Q26_REFRIGERATOR,PATIENTSURVEY_DICT
+Item=Q26_WELL_OWN,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=5
   
 [Text]
 Position=50,870,330,886
-Text=26. Does the patient's family own a refrigerator/freezer?
+Text=26. Does the patient have their own dug well, or do they share with their community?
  
   
 [Field]
-Name=Q27_TELEVISION
+Name=Q27_REFRIGERATOR
 Position=350,897,365,917
-Item=Q27_TELEVISION,PATIENTSURVEY_DICT
+Item=Q27_REFRIGERATOR,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=5
   
 [Text]
 Position=50,900,330,916
-Text=27. Does the patient's family own a television set?
+Text=27. Does the patient's family own a refrigerator/freezer?
  
   
 [Field]
-Name=Q28_WASHER
+Name=Q28_TELEVISION
 Position=350,927,365,947
-Item=Q28_WASHER,PATIENTSURVEY_DICT
+Item=Q28_TELEVISION,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=5
   
 [Text]
 Position=50,930,330,946
-Text=28. Does the patient's family own a washing machine?
+Text=28. Does the patient's family own a television set?
  
   
 [Field]
-Name=Q29_SEC_CLASS
+Name=Q29_WASHER
 Position=350,957,365,977
-Item=Q29_SEC_CLASS,PATIENTSURVEY_DICT
+Item=Q29_WASHER,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=5
   
 [Text]
 Position=50,960,330,976
-Text=29. How would the socioeconomic class of the patient's household be classified?
+Text=29. Does the patient's family own a washing machine?
  
   
 [Field]
-Name=Q30_IP
+Name=Q29_SEC_CLASS
 Position=350,987,365,1007
-Item=Q30_IP,PATIENTSURVEY_DICT
+Item=Q29_SEC_CLASS,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=5
   
 [Text]
 Position=50,990,330,1006
+Text=How would the socioeconomic class of the patient's household be classified?
+ 
+  
+[Field]
+Name=Q30_IP
+Position=350,1017,365,1037
+Item=Q30_IP,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=5
+  
+[Text]
+Position=50,1020,330,1036
 Text=30. Is the patient member of Indigenous People (IP) community, like the Igorot, Lumad, Mangyans, etc.?
  
   
 [Field]
 Name=Q31_IP_GROUP
-Position=350,1017,760,1037
+Position=350,1047,760,1067
 Item=Q31_IP_GROUP,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=5
   
 [Text]
-Position=50,1020,330,1036
+Position=50,1050,330,1066
 Text=31. If yes, which group? (Specify)
  
   
 [Field]
 Name=Q32_4PS
-Position=350,1047,365,1067
+Position=350,1077,365,1097
 Item=Q32_4PS,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=5
   
 [Text]
-Position=50,1050,330,1066
+Position=50,1080,330,1096
 Text=32. Is the patient's household a beneficiary of the Pantawid Pamilyang Pilipino Program (4Ps)?
  
   
 [Field]
 Name=Q33_DECISION_MAKER
-Position=350,1077,365,1097
+Position=350,1107,365,1127
 Item=Q33_DECISION_MAKER,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=5
   
 [Text]
-Position=50,1080,330,1096
+Position=50,1110,330,1126
 Text=33. Is the patient the main decision-maker on health care in your household?
  
   
 [Field]
 Name=Q34_WHO_DECIDES
-Position=350,1107,365,1127
+Position=350,1137,365,1157
 Item=Q34_WHO_DECIDES,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=5
   
 [Text]
-Position=50,1110,330,1126
+Position=50,1140,330,1156
 Text=34. Who takes the most responsibility for making the decisions regarding healthcare in the patient's household?
  
   
 [Field]
 Name=Q34_WHO_DECIDES_OTHER_TXT
-Position=350,1137,760,1157
+Position=350,1167,760,1187
 Item=Q34_WHO_DECIDES_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=5
   
 [Text]
-Position=50,1140,330,1156
+Position=50,1170,330,1186
 Text=34. Decision maker — Other (specify) text
  
   
@@ -1665,34 +1680,34 @@ Name=DG_BLK_21
 Label=Q29-Q30
 DisplayTogether=Yes
 Position=46
-Length=2
+Length=3
   
 [Block]
 Name=DG_BLK_22
 Label=Q31
 DisplayTogether=Yes
-Position=49
+Position=50
 Length=1
   
 [Block]
 Name=DG_BLK_23
 Label=Q32-Q33
 DisplayTogether=Yes
-Position=51
+Position=52
 Length=2
   
 [Block]
 Name=DG_BLK_24
 Label=Q34
 DisplayTogether=Yes
-Position=54
+Position=55
 Length=1
   
 [Block]
 Name=DG_BLK_25
 Label=Q34
 DisplayTogether=Yes
-Position=56
+Position=57
 Length=1
   
 [EndGroup]
@@ -2346,994 +2361,9 @@ Length=1
   
 [Group]
 Required=Yes
-Name=E_PRIMARY_CARE_FORM
-Label=E. Primary Care + YAKAP/Konsulta
-Form=8
-Max=1
-  
-[Field]
-Name=Q53_HAS_PCP
-Position=350,27,365,47
-Item=Q53_HAS_PCP,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,30,330,46
-Text=53. Do you have a primary care provider?
- 
-  
-[Field]
-Name=Q54_PCP_TYPE
-Position=350,57,365,77
-Item=Q54_PCP_TYPE,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,60,330,76
-Text=54. Who is your main primary care provider?
- 
-  
-[Field]
-Name=Q54_PCP_TYPE_OTHER_TXT
-Position=350,87,760,107
-Item=Q54_PCP_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=8
-  
-[Text]
-Position=50,90,330,106
-Text=54. Primary care provider — Other (specify) text
- 
-  
-[Field]
-Name=Q55_LOC_CONVENIENT
-Position=350,117,365,137
-Item=Q55_LOC_CONVENIENT,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,120,330,136
-Text=55. Is the location of your main primary care provider convenient for you?
- 
-  
-[Field]
-Name=Q56_HOURS_CONVENIENT
-Position=350,147,365,167
-Item=Q56_HOURS_CONVENIENT,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,150,330,166
-Text=56. Is your main primary care provider's clinic hours (time that your provider/s is/are open for medical appointments) convenient for you?
- 
-  
-[Field]
-Name=Q57_WAIT_CONVENIENT
-Position=350,177,365,197
-Item=Q57_WAIT_CONVENIENT,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,180,330,196
-Text=57. Is the usual wait for setting an appointment with your main primary care provider convenient for you?
- 
-  
-[Field]
-Name=Q58_WAIT_DAYS
-Position=350,207,760,227
-Item=Q58_WAIT_DAYS,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=8
-  
-[Text]
-Position=50,210,330,226
-Text=Number of Day(s)
- 
-  
-[Field]
-Name=Q58_WAIT_MINUTES
-Position=350,237,760,257
-Item=Q58_WAIT_MINUTES,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=8
-  
-[Text]
-Position=50,240,330,256
-Text=Number of Minute(s)
- 
-  
-[Field]
-Name=Q59_SCHED_COMM
-Position=350,267,365,287
-Item=Q59_SCHED_COMM,PATIENTSURVEY_DICT
-DataCaptureType=CheckBox
-Form=8
-  
-[Text]
-Position=50,270,330,286
-Text=59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider?
- 
-  
-[Field]
-Name=Q60_SCHED_TELECON_OK
-Position=350,297,365,317
-Item=Q60_SCHED_TELECON_OK,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,300,330,316
-Text=60. If teleconsultation was available, did you succeed in using the teleconsult? (scheduling)
- 
-  
-[Field]
-Name=Q61_CONSULT_COMM
-Position=350,327,365,347
-Item=Q61_CONSULT_COMM,PATIENTSURVEY_DICT
-DataCaptureType=CheckBox
-Form=8
-  
-[Text]
-Position=50,330,330,346
-Text=61. What mode/s of communication was/were available to you when consulting with your main primary care provider?
- 
-  
-[Field]
-Name=Q62_CONSULT_TELECON_OK
-Position=350,357,365,377
-Item=Q62_CONSULT_TELECON_OK,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,360,330,376
-Text=62. If teleconsultation was available, did you succeed in using the teleconsult? (consultation)
- 
-  
-[Field]
-Name=Q63_HAS_USUAL_FACILITY
-Position=350,387,365,407
-Item=Q63_HAS_USUAL_FACILITY,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,390,330,406
-Text=63. In the past 12 months, do you have a clinic, or health center that you usually go to?
- 
-  
-[Field]
-Name=Q64_FACILITY_NAME
-Position=350,417,760,437
-Item=Q64_FACILITY_NAME,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=8
-  
-[Text]
-Position=50,420,330,436
-Text=64. What is the name of the facility?
- 
-  
-[Field]
-Name=Q65_WHY_NO_USUAL
-Position=350,447,365,467
-Item=Q65_WHY_NO_USUAL,PATIENTSURVEY_DICT
-DataCaptureType=CheckBox
-Form=8
-  
-[Text]
-Position=50,450,330,466
-Text=65. If none, why do you not have a usual clinic, or health center that you usually go to?
- 
-  
-[Field]
-Name=Q65_WHY_NO_USUAL_OTHER_TXT
-Position=350,477,760,497
-Item=Q65_WHY_NO_USUAL_OTHER_TXT,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=8
-  
-[Text]
-Position=50,480,330,496
-Text=65. If none, why do you not have a usual clinic, or health center that you usually go to? — Other (specify) text
- 
-  
-[Field]
-Name=Q66_SAME_AS_USUAL
-Position=350,507,365,527
-Item=Q66_SAME_AS_USUAL,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,510,330,526
-Text=66. Is this the facility you usually go to for general health concerns?
- 
-  
-[Field]
-Name=Q67_WHY_THIS_FACILITY
-Position=350,537,365,557
-Item=Q67_WHY_THIS_FACILITY,PATIENTSURVEY_DICT
-DataCaptureType=CheckBox
-Form=8
-  
-[Text]
-Position=50,540,330,556
-Text=67. Why did you go to this facility instead of your usual facility?
- 
-  
-[Field]
-Name=Q67_WHY_THIS_FACILITY_OTHER_TXT
-Position=350,567,760,587
-Item=Q67_WHY_THIS_FACILITY_OTHER_TXT,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=8
-  
-[Text]
-Position=50,570,330,586
-Text=67. Why did you go to this facility instead of your usual facility? — Other (specify) text
- 
-  
-[Field]
-Name=Q68_USUAL_FAC_TYPE
-Position=350,597,365,617
-Item=Q68_USUAL_FAC_TYPE,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,600,330,616
-Text=68. What is the type of health facility that you usually go to?
- 
-  
-[Field]
-Name=Q68_USUAL_FAC_TYPE_OTHER_TXT
-Position=350,627,760,647
-Item=Q68_USUAL_FAC_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=8
-  
-[Text]
-Position=50,630,330,646
-Text=68. Usual facility type — Other (specify) text
- 
-  
-[Field]
-Name=Q69_USUAL_TRAVEL_HH
-Position=350,657,760,677
-Item=Q69_USUAL_TRAVEL_HH,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=8
-  
-[Text]
-Position=50,660,330,676
-Text=Number of Hour(s)
- 
-  
-[Field]
-Name=Q69_USUAL_TRAVEL_MM
-Position=350,687,760,707
-Item=Q69_USUAL_TRAVEL_MM,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=8
-  
-[Text]
-Position=50,690,330,706
-Text=Number of Minute(s)
- 
-  
-[Field]
-Name=Q70_USUAL_TRANSPORT
-Position=350,717,365,737
-Item=Q70_USUAL_TRANSPORT,PATIENTSURVEY_DICT
-DataCaptureType=CheckBox
-Form=8
-  
-[Text]
-Position=50,720,330,736
-Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to?
- 
-  
-[Field]
-Name=Q70_USUAL_TRANSPORT_OTHER_TXT
-Position=350,747,760,767
-Item=Q70_USUAL_TRANSPORT_OTHER_TXT,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=8
-  
-[Text]
-Position=50,750,330,766
-Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Other (specify) text
- 
-  
-[Field]
-Name=Q71_NEAREST_TYPE
-Position=350,777,365,797
-Item=Q71_NEAREST_TYPE,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,780,330,796
-Text=71. What is the type of the primary care facility nearest to your house?
- 
-  
-[Field]
-Name=Q71_NEAREST_TYPE_OTHER_TXT
-Position=350,807,760,827
-Item=Q71_NEAREST_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=8
-  
-[Text]
-Position=50,810,330,826
-Text=71. Nearest primary care facility type — Other (specify) text
- 
-  
-[Field]
-Name=Q72_NEAREST_TRAVEL_HH
-Position=350,837,760,857
-Item=Q72_NEAREST_TRAVEL_HH,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=8
-  
-[Text]
-Position=50,840,330,856
-Text=Number of Hour(s)
- 
-  
-[Field]
-Name=Q72_NEAREST_TRAVEL_MM
-Position=350,867,760,887
-Item=Q72_NEAREST_TRAVEL_MM,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=8
-  
-[Text]
-Position=50,870,330,886
-Text=Number of Minute(s)
- 
-  
-[Field]
-Name=Q73_NEAREST_TRANSPORT
-Position=350,897,365,917
-Item=Q73_NEAREST_TRANSPORT,PATIENTSURVEY_DICT
-DataCaptureType=CheckBox
-Form=8
-  
-[Text]
-Position=50,900,330,916
-Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility?
- 
-  
-[Field]
-Name=Q73_NEAREST_TRANSPORT_OTHER_TXT
-Position=350,927,760,947
-Item=Q73_NEAREST_TRANSPORT_OTHER_TXT,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=8
-  
-[Text]
-Position=50,930,330,946
-Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Other (specify) text
- 
-  
-[Field]
-Name=Q74_KON_HEARD
-Position=350,957,365,977
-Item=Q74_KON_HEARD,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,960,330,976
-Text=74. Have you heard of the term "YAKAP/ Konsulta package"?
- 
-  
-[Field]
-Name=Q75_KON_SOURCE
-Position=350,987,365,1007
-Item=Q75_KON_SOURCE,PATIENTSURVEY_DICT
-DataCaptureType=CheckBox
-Form=8
-  
-[Text]
-Position=50,990,330,1006
-Text=75. What are your sources of information about the YAKAP/Konsulta package?
- 
-  
-[Field]
-Name=Q75_KON_SOURCE_OTHER_TXT
-Position=350,1017,760,1037
-Item=Q75_KON_SOURCE_OTHER_TXT,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=8
-  
-[Text]
-Position=50,1020,330,1036
-Text=75. What are your sources of information about the YAKAP/Konsulta package? — Other (specify) text
- 
-  
-[Field]
-Name=Q76_KON_UNDERSTAND
-Position=350,1047,365,1067
-Item=Q76_KON_UNDERSTAND,PATIENTSURVEY_DICT
-DataCaptureType=CheckBox
-Form=8
-  
-[Text]
-Position=50,1050,330,1066
-Text=76. What is your understanding about the YAKAP/Konsulta package?
- 
-  
-[Field]
-Name=Q76_KON_UNDERSTAND_OTHER_TXT
-Position=350,1077,760,1097
-Item=Q76_KON_UNDERSTAND_OTHER_TXT,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=8
-  
-[Text]
-Position=50,1080,330,1096
-Text=76. What is your understanding about the YAKAP/Konsulta package? — Other (specify) text
- 
-  
-[Field]
-Name=Q77_KON_REGISTERED
-Position=350,1107,365,1127
-Item=Q77_KON_REGISTERED,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,1110,330,1126
-Text=77. Are you registered with a YAKAP/Konsulta package provider?
- 
-  
-[Field]
-Name=Q78_KON_WHEN_REG
-Position=350,1137,365,1157
-Item=Q78_KON_WHEN_REG,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,1140,330,1156
-Text=78. When did you register with a YAKAP/Konsulta package provider?
- 
-  
-[Field]
-Name=Q79_KON_HAD_APPT
-Position=350,1167,365,1187
-Item=Q79_KON_HAD_APPT,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,1170,330,1186
-Text=79. Since registering, have you had an appointment with your YAKAP/Konsulta package provider?
- 
-  
-[Field]
-Name=Q80_KON_KNOWS_BOOKING
-Position=350,1197,365,1217
-Item=Q80_KON_KNOWS_BOOKING,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,1200,330,1216
-Text=80. When you have a health problem, do you know how to book an appointment at your YAKAP/Konsulta package provider?
- 
-  
-[Field]
-Name=Q81_KON_APPT_CHECKUP
-Position=350,1227,365,1247
-Item=Q81_KON_APPT_CHECKUP,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,1230,330,1246
-Text=81. Was that appointment for a general check-up (i.e. not related to an illness or injury)?
- 
-  
-[Field]
-Name=Q82_KON_WHY_NOT_REG
-Position=350,1257,365,1277
-Item=Q82_KON_WHY_NOT_REG,PATIENTSURVEY_DICT
-DataCaptureType=CheckBox
-Form=8
-  
-[Text]
-Position=50,1260,330,1276
-Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider?
- 
-  
-[Field]
-Name=Q82_KON_WHY_NOT_REG_OTHER_TXT
-Position=350,1287,760,1307
-Item=Q82_KON_WHY_NOT_REG_OTHER_TXT,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=8
-  
-[Text]
-Position=50,1290,330,1306
-Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Other (specify) text
- 
-  
-[Block]
-Name=DG_BLK_56
-Label=Q53
-DisplayTogether=Yes
-Position=0
-Length=1
-  
-[Block]
-Name=DG_BLK_57
-Label=Q54
-DisplayTogether=Yes
-Position=2
-Length=1
-  
-[Block]
-Name=DG_BLK_58
-Label=Q54
-DisplayTogether=Yes
-Position=4
-Length=1
-  
-[Block]
-Name=DG_BLK_59
-Label=Q55-Q58
-DisplayTogether=Yes
-Position=6
-Length=5
-  
-[Block]
-Name=DG_BLK_60
-Label=Q59
-DisplayTogether=Yes
-Position=12
-Length=1
-  
-[Block]
-Name=DG_BLK_61
-Label=Q60
-DisplayTogether=Yes
-Position=14
-Length=1
-  
-[Block]
-Name=DG_BLK_62
-Label=Q61
-DisplayTogether=Yes
-Position=16
-Length=1
-  
-[Block]
-Name=DG_BLK_63
-Label=Q62
-DisplayTogether=Yes
-Position=18
-Length=1
-  
-[Block]
-Name=DG_BLK_64
-Label=Q63
-DisplayTogether=Yes
-Position=20
-Length=1
-  
-[Block]
-Name=DG_BLK_65
-Label=Q64
-DisplayTogether=Yes
-Position=22
-Length=1
-  
-[Block]
-Name=DG_BLK_66
-Label=Q65
-DisplayTogether=Yes
-Position=24
-Length=1
-  
-[Block]
-Name=DG_BLK_67
-Label=Q65
-DisplayTogether=Yes
-Position=26
-Length=1
-  
-[Block]
-Name=DG_BLK_68
-Label=Q66
-DisplayTogether=Yes
-Position=28
-Length=1
-  
-[Block]
-Name=DG_BLK_69
-Label=Q67
-DisplayTogether=Yes
-Position=30
-Length=1
-  
-[Block]
-Name=DG_BLK_70
-Label=Q67
-DisplayTogether=Yes
-Position=32
-Length=1
-  
-[Block]
-Name=DG_BLK_71
-Label=Q68
-DisplayTogether=Yes
-Position=34
-Length=1
-  
-[Block]
-Name=DG_BLK_72
-Label=Q68
-DisplayTogether=Yes
-Position=36
-Length=1
-  
-[Block]
-Name=DG_BLK_73
-Label=Q69
-DisplayTogether=Yes
-Position=38
-Length=2
-  
-[Block]
-Name=DG_BLK_74
-Label=Q70
-DisplayTogether=Yes
-Position=41
-Length=1
-  
-[Block]
-Name=DG_BLK_75
-Label=Q70
-DisplayTogether=Yes
-Position=43
-Length=1
-  
-[Block]
-Name=DG_BLK_76
-Label=Q71
-DisplayTogether=Yes
-Position=45
-Length=1
-  
-[Block]
-Name=DG_BLK_77
-Label=Q71
-DisplayTogether=Yes
-Position=47
-Length=1
-  
-[Block]
-Name=DG_BLK_78
-Label=Q72
-DisplayTogether=Yes
-Position=49
-Length=2
-  
-[Block]
-Name=DG_BLK_79
-Label=Q73
-DisplayTogether=Yes
-Position=52
-Length=1
-  
-[Block]
-Name=DG_BLK_80
-Label=Q73
-DisplayTogether=Yes
-Position=54
-Length=1
-  
-[Block]
-Name=DG_BLK_81
-Label=Q74
-DisplayTogether=Yes
-Position=56
-Length=1
-  
-[Block]
-Name=DG_BLK_82
-Label=Q75
-DisplayTogether=Yes
-Position=58
-Length=1
-  
-[Block]
-Name=DG_BLK_83
-Label=Q75
-DisplayTogether=Yes
-Position=60
-Length=1
-  
-[Block]
-Name=DG_BLK_84
-Label=Q76
-DisplayTogether=Yes
-Position=62
-Length=1
-  
-[Block]
-Name=DG_BLK_85
-Label=Q76
-DisplayTogether=Yes
-Position=64
-Length=1
-  
-[Block]
-Name=DG_BLK_86
-Label=Q77
-DisplayTogether=Yes
-Position=66
-Length=1
-  
-[Block]
-Name=DG_BLK_87
-Label=Q78-Q80
-DisplayTogether=Yes
-Position=68
-Length=3
-  
-[Block]
-Name=DG_BLK_88
-Label=Q81
-DisplayTogether=Yes
-Position=72
-Length=1
-  
-[Block]
-Name=DG_BLK_89
-Label=Q82
-DisplayTogether=Yes
-Position=74
-Length=1
-  
-[Block]
-Name=DG_BLK_90
-Label=Q82
-DisplayTogether=Yes
-Position=76
-Length=1
-  
-[EndGroup]
-  
-[Group]
-Required=Yes
-Name=F_HEALTH_SEEKING_FORM
-Label=F. Health-Seeking
-Form=9
-Max=1
-  
-[Field]
-Name=Q83_VISIT_REASON
-Position=350,27,365,47
-Item=Q83_VISIT_REASON,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,30,330,46
-Text=83. What best describes why the patient visited a health facility (e.g. RHU, health center, clinic, hospital)?
- 
-  
-[Field]
-Name=Q83_VISIT_REASON_OTHER_TXT
-Position=350,57,760,77
-Item=Q83_VISIT_REASON_OTHER_TXT,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,60,330,76
-Text=83. Visit reason — Other (specify) text
- 
-  
-[Field]
-Name=Q84_SERVICE_TYPE
-Position=350,87,365,107
-Item=Q84_SERVICE_TYPE,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,90,330,106
-Text=84. What type of service did the patient usually access?
- 
-  
-[Field]
-Name=Q84_SERVICE_TYPE_OTHER_TXT
-Position=350,117,760,137
-Item=Q84_SERVICE_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,120,330,136
-Text=84. Service type — Other (specify) text
- 
-  
-[Field]
-Name=Q85_CONDITIONS
-Position=350,147,365,167
-Item=Q85_CONDITIONS,PATIENTSURVEY_DICT
-DataCaptureType=CheckBox
-Form=9
-  
-[Text]
-Position=50,150,330,166
-Text=85. What condition/s do/es the patient usually visit the facility for?
- 
-  
-[Field]
-Name=Q85_CONDITIONS_OTHER_TXT
-Position=350,177,760,197
-Item=Q85_CONDITIONS_OTHER_TXT,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,180,330,196
-Text=85. What condition/s do/es the patient usually visit the facility for? — Other (specify) text
- 
-  
-[Field]
-Name=Q86_VISIT_EVENTS
-Position=350,207,365,227
-Item=Q86_VISIT_EVENTS,PATIENTSURVEY_DICT
-DataCaptureType=CheckBox
-Form=9
-  
-[Text]
-Position=50,210,330,226
-Text=86. Which of the following happened during the patient's most recent visit?
- 
-  
-[Field]
-Name=Q86_VISIT_EVENTS_OTHER_TXT
-Position=350,237,760,257
-Item=Q86_VISIT_EVENTS_OTHER_TXT,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,240,330,256
-Text=86. Which of the following happened during the patient's most recent visit? — Other (specify) text
- 
-  
-[Field]
-Name=Q87_OTHER_ACTIONS
-Position=350,267,365,287
-Item=Q87_OTHER_ACTIONS,PATIENTSURVEY_DICT
-DataCaptureType=CheckBox
-Form=9
-  
-[Text]
-Position=50,270,330,286
-Text=87. Apart from this visit, has the patient done anything else to improve his/her health condition or address his/her health concern?
- 
-  
-[Field]
-Name=Q87_OTHER_ACTIONS_OTHER_TXT
-Position=350,297,760,317
-Item=Q87_OTHER_ACTIONS_OTHER_TXT,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,300,330,316
-Text=87. Apart from this visit, has the patient done anything else to improve his/her health condition or address his/her health concern? — Other (specify) text
- 
-  
-[Block]
-Name=DG_BLK_91
-Label=Q83
-DisplayTogether=Yes
-Position=0
-Length=1
-  
-[Block]
-Name=DG_BLK_92
-Label=Q83
-DisplayTogether=Yes
-Position=2
-Length=1
-  
-[Block]
-Name=DG_BLK_93
-Label=Q84
-DisplayTogether=Yes
-Position=4
-Length=1
-  
-[Block]
-Name=DG_BLK_94
-Label=Q84
-DisplayTogether=Yes
-Position=6
-Length=1
-  
-[Block]
-Name=DG_BLK_95
-Label=Q85
-DisplayTogether=Yes
-Position=8
-Length=1
-  
-[Block]
-Name=DG_BLK_96
-Label=Q85
-DisplayTogether=Yes
-Position=10
-Length=1
-  
-[Block]
-Name=DG_BLK_97
-Label=Q86
-DisplayTogether=Yes
-Position=12
-Length=1
-  
-[Block]
-Name=DG_BLK_98
-Label=Q86
-DisplayTogether=Yes
-Position=14
-Length=1
-  
-[Block]
-Name=DG_BLK_99
-Label=Q87
-DisplayTogether=Yes
-Position=16
-Length=1
-  
-[Block]
-Name=DG_BLK_100
-Label=Q87
-DisplayTogether=Yes
-Position=18
-Length=1
-  
-[EndGroup]
-  
-[Group]
-Required=Yes
 Name=G_OUTPATIENT_CARE_FORM
 Label=G. Outpatient Care
-Form=10
+Form=8
 Max=1
   
 [Field]
@@ -3341,7 +2371,7 @@ Name=Q88_WHY_VISIT
 Position=350,27,365,47
 Item=Q88_WHY_VISIT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,30,330,46
@@ -3354,7 +2384,7 @@ Position=350,57,760,77
 Item=Q88_WHY_VISIT_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,60,330,76
@@ -3366,7 +2396,7 @@ Name=Q89_ADVISED_ADMIT
 Position=350,87,365,107
 Item=Q89_ADVISED_ADMIT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,90,330,106
@@ -3378,7 +2408,7 @@ Name=Q90_NOT_CONFINED
 Position=350,117,365,137
 Item=Q90_NOT_CONFINED,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=8
   
 [Text]
 Position=50,120,330,136
@@ -3391,7 +2421,7 @@ Position=350,147,760,167
 Item=Q90_NOT_CONFINED_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=8
   
 [Text]
 Position=50,150,330,166
@@ -3403,7 +2433,7 @@ Name=Q91_USUAL_OUTPATIENT
 Position=350,177,365,197
 Item=Q91_USUAL_OUTPATIENT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=8
   
 [Text]
 Position=50,180,330,196
@@ -3415,7 +2445,7 @@ Name=Q92_SOURCES
 Position=350,207,365,227
 Item=Q92_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=8
   
 [Text]
 Position=50,210,330,226
@@ -3423,49 +2453,49 @@ Text=92. Which of the following did you use to pay for the cost of consultation?
  
   
 [Block]
-Name=DG_BLK_101
+Name=DG_BLK_56
 Label=Q88
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_102
+Name=DG_BLK_57
 Label=Q88
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_103
+Name=DG_BLK_58
 Label=Q89
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_104
+Name=DG_BLK_59
 Label=Q90
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_105
+Name=DG_BLK_60
 Label=Q90
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_106
+Name=DG_BLK_61
 Label=Q91
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_107
+Name=DG_BLK_62
 Label=Q92
 DisplayTogether=Yes
 Position=12
@@ -3477,7 +2507,7 @@ Length=1
 Required=Yes
 Name=Q92_PAY_ROSTER_FORM
 Label=G. Cost of consultation — amount by source
-Form=11
+Form=9
 Type=Record
 TypeName=Q92_PAY_ROSTER
 Max=8
@@ -3487,7 +2517,7 @@ Name=Q92_PAY_LINE
 Position=350,27,760,47
 Item=Q92_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=11
+Form=9
   
 [Text]
 Position=50,30,330,46
@@ -3499,7 +2529,7 @@ Name=Q92_PAY_SRC
 Position=350,57,365,77
 Item=Q92_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=11
+Form=9
   
 [Text]
 Position=50,60,330,76
@@ -3511,7 +2541,7 @@ Name=Q92_PAY_AMT
 Position=350,87,760,107
 Item=Q92_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=11
+Form=9
   
 [Text]
 Position=50,90,330,106
@@ -3524,7 +2554,7 @@ Text=92. Amount paid for the consultation, by source (Pesos)
 Required=Yes
 Name=G_OUTPATIENT_CARE_2_FORM
 Label=G. Outpatient Care (cont.)
-Form=12
+Form=10
 Max=1
   
 [Field]
@@ -3532,7 +2562,7 @@ Name=Q93_LABS
 Position=350,27,365,47
 Item=Q93_LABS,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=12
+Form=10
   
 [Text]
 Position=50,30,330,46
@@ -3545,7 +2575,7 @@ Position=350,57,760,77
 Item=Q93_LABS_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=12
+Form=10
   
 [Text]
 Position=50,60,330,76
@@ -3553,14 +2583,14 @@ Text=93. Did you have any of the following laboratory tests done during your out
  
   
 [Block]
-Name=DG_BLK_108
+Name=DG_BLK_63
 Label=Q93
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_109
+Name=DG_BLK_64
 Label=Q93
 DisplayTogether=Yes
 Position=2
@@ -3572,7 +2602,7 @@ Length=1
 Required=Yes
 Name=Q94_LAB_ROSTER_FORM
 Label=G. Cost of laboratory tests — per test (Q94)
-Form=13
+Form=11
 Type=Record
 TypeName=Q94_LAB_ROSTER
 Max=16
@@ -3582,7 +2612,7 @@ Name=Q94_LAB_LINE
 Position=350,27,760,47
 Item=Q94_LAB_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=13
+Form=11
   
 [Text]
 Position=50,30,330,46
@@ -3594,7 +2624,7 @@ Name=Q94_LAB_CODE
 Position=350,57,365,77
 Item=Q94_LAB_CODE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=13
+Form=11
   
 [Text]
 Position=50,60,330,76
@@ -3606,7 +2636,7 @@ Name=Q94_LAB_PAY
 Position=350,87,365,107
 Item=Q94_LAB_PAY,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=13
+Form=11
   
 [Text]
 Position=50,90,330,106
@@ -3618,7 +2648,7 @@ Name=Q94_LAB_AMT
 Position=350,117,760,137
 Item=Q94_LAB_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=13
+Form=11
   
 [Text]
 Position=50,120,330,136
@@ -3631,7 +2661,7 @@ Text=94. How much was the cost of this laboratory test? (amount paid out-of-pock
 Required=Yes
 Name=G_OUTPATIENT_CARE_3_FORM
 Label=G. Outpatient Care (cont. 2)
-Form=14
+Form=12
 Max=1
   
 [Field]
@@ -3639,7 +2669,7 @@ Name=Q95_PRESCRIBED
 Position=350,27,365,47
 Item=Q95_PRESCRIBED,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=14
+Form=12
   
 [Text]
 Position=50,30,330,46
@@ -3651,7 +2681,7 @@ Name=Q96_SOURCES
 Position=350,57,365,77
 Item=Q96_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=14
+Form=12
   
 [Text]
 Position=50,60,330,76
@@ -3659,14 +2689,14 @@ Text=96. Which of the following did you use to pay for the prescribed medicines?
  
   
 [Block]
-Name=DG_BLK_110
+Name=DG_BLK_65
 Label=Q95
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_111
+Name=DG_BLK_66
 Label=Q96
 DisplayTogether=Yes
 Position=2
@@ -3678,7 +2708,7 @@ Length=1
 Required=Yes
 Name=Q96_PAY_ROSTER_FORM
 Label=G. Cost of prescribed medicines — amount by source
-Form=15
+Form=13
 Type=Record
 TypeName=Q96_PAY_ROSTER
 Max=8
@@ -3688,7 +2718,7 @@ Name=Q96_PAY_LINE
 Position=350,27,760,47
 Item=Q96_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=15
+Form=13
   
 [Text]
 Position=50,30,330,46
@@ -3700,7 +2730,7 @@ Name=Q96_PAY_SRC
 Position=350,57,365,77
 Item=Q96_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=15
+Form=13
   
 [Text]
 Position=50,60,330,76
@@ -3712,7 +2742,7 @@ Name=Q96_PAY_AMT
 Position=350,87,760,107
 Item=Q96_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=15
+Form=13
   
 [Text]
 Position=50,90,330,106
@@ -3725,7 +2755,7 @@ Text=96. Amount spent for the prescribed medicines, by source (Pesos)
 Required=Yes
 Name=G_OUTPATIENT_CARE_4_FORM
 Label=G. Outpatient Care (cont. 3)
-Form=16
+Form=14
 Max=1
   
 [Field]
@@ -3733,7 +2763,7 @@ Name=Q97_FINAL_AMOUNT
 Position=350,27,760,47
 Item=Q97_FINAL_AMOUNT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=16
+Form=14
   
 [Text]
 Position=50,30,330,46
@@ -3745,7 +2775,7 @@ Name=Q971_SOURCES
 Position=350,57,365,77
 Item=Q971_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=16
+Form=14
   
 [Text]
 Position=50,60,330,76
@@ -3753,14 +2783,14 @@ Text=97.1 Other than the expenses above (e.g. consultation, laboratory tests, pr
  
   
 [Block]
-Name=DG_BLK_112
+Name=DG_BLK_67
 Label=Q97
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_113
+Name=DG_BLK_68
 Label=Q97
 DisplayTogether=Yes
 Position=2
@@ -3772,7 +2802,7 @@ Length=1
 Required=Yes
 Name=Q971_ROSTER_FORM
 Label=G. Other items in outpatient bill — amount by category
-Form=17
+Form=15
 Type=Record
 TypeName=Q971_ROSTER
 Max=4
@@ -3782,7 +2812,7 @@ Name=Q971_PAY_LINE
 Position=350,27,760,47
 Item=Q971_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=17
+Form=15
   
 [Text]
 Position=50,30,330,46
@@ -3794,7 +2824,7 @@ Name=Q971_PAY_SRC
 Position=350,57,365,77
 Item=Q971_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=17
+Form=15
   
 [Text]
 Position=50,60,330,76
@@ -3806,7 +2836,7 @@ Name=Q971_PAY_AMT
 Position=350,87,760,107
 Item=Q971_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=17
+Form=15
   
 [Text]
 Position=50,90,330,106
@@ -3819,7 +2849,7 @@ Text=97.1 Amount charged for this item (Pesos)
 Required=Yes
 Name=G_OUTPATIENT_CARE_5_FORM
 Label=G. Outpatient Care (cont. 4)
-Form=18
+Form=16
 Max=1
   
 [Field]
@@ -3828,7 +2858,7 @@ Position=350,27,760,47
 Item=Q971_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=18
+Form=16
   
 [Text]
 Position=50,30,330,46
@@ -3840,7 +2870,7 @@ Name=Q972_SOURCES
 Position=350,57,365,77
 Item=Q972_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=18
+Form=16
   
 [Text]
 Position=50,60,330,76
@@ -3848,14 +2878,14 @@ Text=97.2 Did you pay for any other expenses during your OPD visit that were not
  
   
 [Block]
-Name=DG_BLK_114
+Name=DG_BLK_69
 Label=Q97
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_115
+Name=DG_BLK_70
 Label=Q97
 DisplayTogether=Yes
 Position=2
@@ -3867,7 +2897,7 @@ Length=1
 Required=Yes
 Name=Q972_PAY_ROSTER_FORM
 Label=G. Other expenses not in bill — amount by item
-Form=19
+Form=17
 Type=Record
 TypeName=Q972_PAY_ROSTER
 Max=6
@@ -3877,7 +2907,7 @@ Name=Q972_PAY_LINE
 Position=350,27,760,47
 Item=Q972_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=19
+Form=17
   
 [Text]
 Position=50,30,330,46
@@ -3889,7 +2919,7 @@ Name=Q972_PAY_SRC
 Position=350,57,365,77
 Item=Q972_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=19
+Form=17
   
 [Text]
 Position=50,60,330,76
@@ -3901,7 +2931,7 @@ Name=Q972_PAY_AMT
 Position=350,87,760,107
 Item=Q972_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=19
+Form=17
   
 [Text]
 Position=50,90,330,106
@@ -3914,7 +2944,7 @@ Text=97.2 Amount for this expense (Pesos)
 Required=Yes
 Name=G_OUTPATIENT_CARE_6_FORM
 Label=G. Outpatient Care (cont. 5)
-Form=20
+Form=18
 Max=1
   
 [Field]
@@ -3923,7 +2953,7 @@ Position=350,27,760,47
 Item=Q972_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=20
+Form=18
   
 [Text]
 Position=50,30,330,46
@@ -3935,7 +2965,7 @@ Name=Q98_SOURCES
 Position=350,57,365,77
 Item=Q98_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=20
+Form=18
   
 [Text]
 Position=50,60,330,76
@@ -3943,14 +2973,14 @@ Text=98. Which of the following did you use to pay for the medical costs? (Selec
  
   
 [Block]
-Name=DG_BLK_116
+Name=DG_BLK_71
 Label=Q97
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_117
+Name=DG_BLK_72
 Label=Q98
 DisplayTogether=Yes
 Position=2
@@ -3962,17 +2992,17 @@ Length=1
 Required=Yes
 Name=Q98_PAY_ROSTER_FORM
 Label=G. Sources of money for medical costs — amount by source
-Form=21
+Form=19
 Type=Record
 TypeName=Q98_PAY_ROSTER
-Max=15
+Max=16
   
 [Field]
 Name=Q98_PAY_LINE
 Position=350,27,760,47
 Item=Q98_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=21
+Form=19
   
 [Text]
 Position=50,30,330,46
@@ -3984,7 +3014,7 @@ Name=Q98_PAY_SRC
 Position=350,57,365,77
 Item=Q98_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=21
+Form=19
   
 [Text]
 Position=50,60,330,76
@@ -3996,7 +3026,7 @@ Name=Q98_PAY_AMT
 Position=350,87,760,107
 Item=Q98_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=21
+Form=19
   
 [Text]
 Position=50,90,330,106
@@ -4009,7 +3039,7 @@ Text=98. Amount from this source (Pesos)
 Required=Yes
 Name=G_OUTPATIENT_CARE_7_FORM
 Label=G. Outpatient Care (cont. 6)
-Form=22
+Form=20
 Max=1
   
 [Field]
@@ -4018,7 +3048,7 @@ Position=350,27,760,47
 Item=Q98_OTHER_DONATION_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=22
+Form=20
   
 [Text]
 Position=50,30,330,46
@@ -4031,7 +3061,7 @@ Position=350,57,760,77
 Item=Q98_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=22
+Form=20
   
 [Text]
 Position=50,60,330,76
@@ -4043,7 +3073,7 @@ Name=AREA_HAS_BUCAS
 Position=350,87,365,107
 Item=AREA_HAS_BUCAS,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=22
+Form=20
   
 [Text]
 Position=50,90,330,106
@@ -4055,7 +3085,7 @@ Name=Q99_BUCAS_HEARD
 Position=350,117,365,137
 Item=Q99_BUCAS_HEARD,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=22
+Form=20
   
 [Text]
 Position=50,120,330,136
@@ -4067,7 +3097,7 @@ Name=Q100_BUCAS_SOURCE
 Position=350,147,365,167
 Item=Q100_BUCAS_SOURCE,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=22
+Form=20
   
 [Text]
 Position=50,150,330,166
@@ -4080,7 +3110,7 @@ Position=350,177,760,197
 Item=Q100_BUCAS_SOURCE_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=22
+Form=20
   
 [Text]
 Position=50,180,330,196
@@ -4092,7 +3122,7 @@ Name=Q101_BUCAS_UNDERSTAND
 Position=350,207,365,227
 Item=Q101_BUCAS_UNDERSTAND,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=22
+Form=20
   
 [Text]
 Position=50,210,330,226
@@ -4105,7 +3135,7 @@ Position=350,237,760,257
 Item=Q101_BUCAS_UNDERSTAND_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=22
+Form=20
   
 [Text]
 Position=50,240,330,256
@@ -4117,7 +3147,7 @@ Name=Q102_BUCAS_ACCESSED
 Position=350,267,365,287
 Item=Q102_BUCAS_ACCESSED,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=22
+Form=20
   
 [Text]
 Position=50,270,330,286
@@ -4129,7 +3159,7 @@ Name=Q103_BUCAS_SERVICES
 Position=350,297,365,317
 Item=Q103_BUCAS_SERVICES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=22
+Form=20
   
 [Text]
 Position=50,300,330,316
@@ -4142,7 +3172,7 @@ Position=350,327,760,347
 Item=Q103_BUCAS_SERVICES_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=22
+Form=20
   
 [Text]
 Position=50,330,330,346
@@ -4154,7 +3184,7 @@ Name=Q104_WITHOUT_BUCAS
 Position=350,357,365,377
 Item=Q104_WITHOUT_BUCAS,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=22
+Form=20
   
 [Text]
 Position=50,360,330,376
@@ -4167,7 +3197,7 @@ Position=350,387,760,407
 Item=Q104_WITHOUT_BUCAS_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=22
+Form=20
   
 [Text]
 Position=50,390,330,406
@@ -4175,91 +3205,91 @@ Text=104. Without BUCAS — Others specify text
  
   
 [Block]
-Name=DG_BLK_118
+Name=DG_BLK_73
 Label=Q98
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_119
+Name=DG_BLK_74
 Label=Q98
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_120
+Name=DG_BLK_75
 Label=Questions
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_121
+Name=DG_BLK_76
 Label=Q99
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_122
+Name=DG_BLK_77
 Label=Q100
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_123
+Name=DG_BLK_78
 Label=Q100
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_124
+Name=DG_BLK_79
 Label=Q101
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_125
+Name=DG_BLK_80
 Label=Q101
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_BLK_126
+Name=DG_BLK_81
 Label=Q102
 DisplayTogether=Yes
 Position=16
 Length=1
   
 [Block]
-Name=DG_BLK_127
+Name=DG_BLK_82
 Label=Q103
 DisplayTogether=Yes
 Position=18
 Length=1
   
 [Block]
-Name=DG_BLK_128
+Name=DG_BLK_83
 Label=Q103
 DisplayTogether=Yes
 Position=20
 Length=1
   
 [Block]
-Name=DG_BLK_129
+Name=DG_BLK_84
 Label=Q104
 DisplayTogether=Yes
 Position=22
 Length=1
   
 [Block]
-Name=DG_BLK_130
+Name=DG_BLK_85
 Label=Q104
 DisplayTogether=Yes
 Position=24
@@ -4271,7 +3301,7 @@ Length=1
 Required=Yes
 Name=H_INPATIENT_CARE_FORM
 Label=H. Inpatient Care
-Form=23
+Form=21
 Max=1
   
 [Field]
@@ -4279,7 +3309,7 @@ Name=Q105_REASON
 Position=350,27,365,47
 Item=Q105_REASON,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=23
+Form=21
   
 [Text]
 Position=50,30,330,46
@@ -4292,7 +3322,7 @@ Position=350,57,760,77
 Item=Q105_REASON_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=23
+Form=21
   
 [Text]
 Position=50,60,330,76
@@ -4304,7 +3334,7 @@ Name=Q106_NIGHTS
 Position=350,87,760,107
 Item=Q106_NIGHTS,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=23
+Form=21
   
 [Text]
 Position=50,90,330,106
@@ -4316,7 +3346,7 @@ Name=Q106_DAYS
 Position=350,117,760,137
 Item=Q106_DAYS,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=23
+Form=21
   
 [Text]
 Position=50,120,330,136
@@ -4328,7 +3358,7 @@ Name=Q107_SOURCES
 Position=350,147,365,167
 Item=Q107_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=23
+Form=21
   
 [Text]
 Position=50,150,330,166
@@ -4336,28 +3366,28 @@ Text=107. Which of the following did you use to pay for the total bill for confi
  
   
 [Block]
-Name=DG_BLK_131
+Name=DG_BLK_86
 Label=Q105
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_132
+Name=DG_BLK_87
 Label=Q105
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_133
+Name=DG_BLK_88
 Label=Q106
 DisplayTogether=Yes
 Position=4
 Length=2
   
 [Block]
-Name=DG_BLK_134
+Name=DG_BLK_89
 Label=Q107
 DisplayTogether=Yes
 Position=7
@@ -4369,7 +3399,7 @@ Length=1
 Required=Yes
 Name=Q107_PAY_ROSTER_FORM
 Label=H. Total bill for confinement — amount by source
-Form=24
+Form=22
 Type=Record
 TypeName=Q107_PAY_ROSTER
 Max=10
@@ -4379,7 +3409,7 @@ Name=Q107_PAY_LINE
 Position=350,27,760,47
 Item=Q107_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=24
+Form=22
   
 [Text]
 Position=50,30,330,46
@@ -4391,7 +3421,7 @@ Name=Q107_PAY_SRC
 Position=350,57,365,77
 Item=Q107_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=24
+Form=22
   
 [Text]
 Position=50,60,330,76
@@ -4403,7 +3433,7 @@ Name=Q107_PAY_AMT
 Position=350,87,760,107
 Item=Q107_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=24
+Form=22
   
 [Text]
 Position=50,90,330,106
@@ -4416,7 +3446,7 @@ Text=107. Amount of the total bill, by source (Pesos)
 Required=Yes
 Name=H_INPATIENT_CARE_2_FORM
 Label=H. Inpatient Care (cont.)
-Form=25
+Form=23
 Max=1
   
 [Field]
@@ -4425,7 +3455,7 @@ Position=350,27,760,47
 Item=Q107_PAY_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=25
+Form=23
   
 [Text]
 Position=50,30,330,46
@@ -4437,7 +3467,7 @@ Name=Q108_MEDS_OUTSIDE
 Position=350,57,365,77
 Item=Q108_MEDS_OUTSIDE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=25
+Form=23
   
 [Text]
 Position=50,60,330,76
@@ -4449,7 +3479,7 @@ Name=Q109_SOURCES
 Position=350,87,365,107
 Item=Q109_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=25
+Form=23
   
 [Text]
 Position=50,90,330,106
@@ -4457,21 +3487,21 @@ Text=109. Which of the following did you use to pay for the medicines bought out
  
   
 [Block]
-Name=DG_BLK_135
+Name=DG_BLK_90
 Label=Q107
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_136
+Name=DG_BLK_91
 Label=Q108
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_137
+Name=DG_BLK_92
 Label=Q109
 DisplayTogether=Yes
 Position=4
@@ -4483,7 +3513,7 @@ Length=1
 Required=Yes
 Name=Q109_PAY_ROSTER_FORM
 Label=H. Medicines bought outside — amount by source
-Form=26
+Form=24
 Type=Record
 TypeName=Q109_PAY_ROSTER
 Max=10
@@ -4493,7 +3523,7 @@ Name=Q109_PAY_LINE
 Position=350,27,760,47
 Item=Q109_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=26
+Form=24
   
 [Text]
 Position=50,30,330,46
@@ -4505,7 +3535,7 @@ Name=Q109_PAY_SRC
 Position=350,57,365,77
 Item=Q109_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=26
+Form=24
   
 [Text]
 Position=50,60,330,76
@@ -4517,7 +3547,7 @@ Name=Q109_PAY_AMT
 Position=350,87,760,107
 Item=Q109_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=26
+Form=24
   
 [Text]
 Position=50,90,330,106
@@ -4530,7 +3560,7 @@ Text=109. Amount paid for medicines outside, by source (Pesos)
 Required=Yes
 Name=H_INPATIENT_CARE_3_FORM
 Label=H. Inpatient Care (cont. 2)
-Form=27
+Form=25
 Max=1
   
 [Field]
@@ -4539,7 +3569,7 @@ Position=350,27,760,47
 Item=Q109_PAY_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=27
+Form=25
   
 [Text]
 Position=50,30,330,46
@@ -4551,7 +3581,7 @@ Name=Q110_LAB_OUTSIDE
 Position=350,57,365,77
 Item=Q110_LAB_OUTSIDE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=27
+Form=25
   
 [Text]
 Position=50,60,330,76
@@ -4564,7 +3594,7 @@ Position=350,87,760,107
 Item=Q111_SERVICES_OUTSIDE,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=27
+Form=25
   
 [Text]
 Position=50,90,330,106
@@ -4576,7 +3606,7 @@ Name=Q112_SOURCES
 Position=350,117,365,137
 Item=Q112_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=27
+Form=25
   
 [Text]
 Position=50,120,330,136
@@ -4584,28 +3614,28 @@ Text=112. Which of the following did you use to pay for the services done outsid
  
   
 [Block]
-Name=DG_BLK_138
+Name=DG_BLK_93
 Label=Q109
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_139
+Name=DG_BLK_94
 Label=Q110
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_140
+Name=DG_BLK_95
 Label=Q111
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_141
+Name=DG_BLK_96
 Label=Q112
 DisplayTogether=Yes
 Position=6
@@ -4617,7 +3647,7 @@ Length=1
 Required=Yes
 Name=Q112_PAY_ROSTER_FORM
 Label=H. Services done outside — amount by source
-Form=28
+Form=26
 Type=Record
 TypeName=Q112_PAY_ROSTER
 Max=9
@@ -4627,7 +3657,7 @@ Name=Q112_PAY_LINE
 Position=350,27,760,47
 Item=Q112_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=28
+Form=26
   
 [Text]
 Position=50,30,330,46
@@ -4639,7 +3669,7 @@ Name=Q112_PAY_SRC
 Position=350,57,365,77
 Item=Q112_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=28
+Form=26
   
 [Text]
 Position=50,60,330,76
@@ -4651,7 +3681,7 @@ Name=Q112_PAY_AMT
 Position=350,87,760,107
 Item=Q112_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=28
+Form=26
   
 [Text]
 Position=50,90,330,106
@@ -4664,7 +3694,7 @@ Text=112. Amount paid for services outside, by source (Pesos)
 Required=Yes
 Name=H_INPATIENT_CARE_4_FORM
 Label=H. Inpatient Care (cont. 3)
-Form=29
+Form=27
 Max=1
   
 [Field]
@@ -4673,7 +3703,7 @@ Position=350,27,760,47
 Item=Q112_PAY_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=29
+Form=27
   
 [Text]
 Position=50,30,330,46
@@ -4685,7 +3715,7 @@ Name=Q113_SOURCES
 Position=350,57,365,77
 Item=Q113_SOURCES,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=29
+Form=27
   
 [Text]
 Position=50,60,330,76
@@ -4693,14 +3723,14 @@ Text=113. Which of the following did you use to pay for the hospital bill? (Sele
  
   
 [Block]
-Name=DG_BLK_142
+Name=DG_BLK_97
 Label=Q112
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_143
+Name=DG_BLK_98
 Label=Q113
 DisplayTogether=Yes
 Position=2
@@ -4712,17 +3742,17 @@ Length=1
 Required=Yes
 Name=Q113_PAY_ROSTER_FORM
 Label=H. Hospital bill — amount by source
-Form=30
+Form=28
 Type=Record
 TypeName=Q113_PAY_ROSTER
-Max=13
+Max=14
   
 [Field]
 Name=Q113_PAY_LINE
 Position=350,27,760,47
 Item=Q113_PAY_LINE,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=30
+Form=28
   
 [Text]
 Position=50,30,330,46
@@ -4734,7 +3764,7 @@ Name=Q113_PAY_SRC
 Position=350,57,365,77
 Item=Q113_PAY_SRC,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=30
+Form=28
   
 [Text]
 Position=50,60,330,76
@@ -4746,7 +3776,7 @@ Name=Q113_PAY_AMT
 Position=350,87,760,107
 Item=Q113_PAY_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=30
+Form=28
   
 [Text]
 Position=50,90,330,106
@@ -4759,7 +3789,7 @@ Text=113. Amount paid for the hospital bill, by source (Pesos)
 Required=Yes
 Name=H_INPATIENT_CARE_5_FORM
 Label=H. Inpatient Care (cont. 4)
-Form=31
+Form=29
 Max=1
   
 [Field]
@@ -4768,7 +3798,7 @@ Position=350,27,760,47
 Item=Q113_PAY_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
 Position=50,30,330,46
@@ -4780,7 +3810,7 @@ Name=Q114_NO_PH
 Position=350,57,365,77
 Item=Q114_NO_PH,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
-Form=31
+Form=29
   
 [Text]
 Position=50,60,330,76
@@ -4793,7 +3823,7 @@ Position=350,87,760,107
 Item=Q114_NO_PH_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
 Position=50,90,330,106
@@ -4805,7 +3835,7 @@ Name=Q115_FINAL_CASH
 Position=350,117,760,137
 Item=Q115_FINAL_CASH,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
 Position=50,120,330,136
@@ -4817,7 +3847,7 @@ Name=Q1141_1
 Position=350,147,365,167
 Item=Q1141_1,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=31
+Form=29
   
 [Text]
 Position=50,150,330,166
@@ -4829,7 +3859,7 @@ Name=Q1141_1_AMT
 Position=350,177,760,197
 Item=Q1141_1_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
 Position=50,180,330,196
@@ -4841,7 +3871,7 @@ Name=Q1141_2
 Position=350,207,365,227
 Item=Q1141_2,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=31
+Form=29
   
 [Text]
 Position=50,210,330,226
@@ -4853,7 +3883,7 @@ Name=Q1141_2_AMT
 Position=350,237,760,257
 Item=Q1141_2_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
 Position=50,240,330,256
@@ -4865,7 +3895,7 @@ Name=Q1141_3
 Position=350,267,365,287
 Item=Q1141_3,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=31
+Form=29
   
 [Text]
 Position=50,270,330,286
@@ -4877,7 +3907,7 @@ Name=Q1141_3_AMT
 Position=350,297,760,317
 Item=Q1141_3_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
 Position=50,300,330,316
@@ -4889,7 +3919,7 @@ Name=Q1141_4
 Position=350,327,365,347
 Item=Q1141_4,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=31
+Form=29
   
 [Text]
 Position=50,330,330,346
@@ -4901,7 +3931,7 @@ Name=Q1141_4_AMT
 Position=350,357,760,377
 Item=Q1141_4_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
 Position=50,360,330,376
@@ -4913,7 +3943,7 @@ Name=Q1141_5
 Position=350,387,365,407
 Item=Q1141_5,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=31
+Form=29
   
 [Text]
 Position=50,390,330,406
@@ -4925,7 +3955,7 @@ Name=Q1141_5_AMT
 Position=350,417,760,437
 Item=Q1141_5_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
 Position=50,420,330,436
@@ -4937,7 +3967,7 @@ Name=Q1141_6
 Position=350,447,365,467
 Item=Q1141_6,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=31
+Form=29
   
 [Text]
 Position=50,450,330,466
@@ -4949,7 +3979,7 @@ Name=Q1141_6_AMT
 Position=350,477,760,497
 Item=Q1141_6_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
 Position=50,480,330,496
@@ -4962,7 +3992,7 @@ Position=350,507,760,527
 Item=Q1141_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
 Position=50,510,330,526
@@ -4970,408 +4000,1424 @@ Text=115.1 Other expenses — specify text
  
   
 [Field]
-Name=Q1142_1
+Name=Q1141_NONE
 Position=350,537,365,557
-Item=Q1142_1,PATIENTSURVEY_DICT
+Item=Q1141_NONE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=31
+Form=29
   
 [Text]
 Position=50,540,330,556
+Text=115.1 Other items included in the bill — None
+ 
+  
+[Field]
+Name=Q1142_HAS_OTHER
+Position=350,567,365,587
+Item=Q1142_HAS_OTHER,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=29
+  
+[Text]
+Position=50,570,330,586
+Text=115.2 Did you pay for any other expenses during your confinement that were not included in the hospital bill?
+ 
+  
+[Field]
+Name=Q1142_1
+Position=350,597,365,617
+Item=Q1142_1,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=29
+  
+[Text]
+Position=50,600,330,616
 Text=115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility
  
   
 [Field]
 Name=Q1142_1_AMT
-Position=350,567,760,587
+Position=350,627,760,647
 Item=Q1142_1_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
-Position=50,570,330,586
+Position=50,630,330,646
 Text=115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility (Amount in Pesos)
  
   
 [Field]
 Name=Q1142_2
-Position=350,597,365,617
+Position=350,657,365,677
 Item=Q1142_2,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=31
+Form=29
   
 [Text]
-Position=50,600,330,616
+Position=50,660,330,676
 Text=115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary
  
   
 [Field]
 Name=Q1142_2_AMT
-Position=350,627,760,647
+Position=350,687,760,707
 Item=Q1142_2_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
-Position=50,630,330,646
+Position=50,690,330,706
 Text=115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary (Amount in Pesos)
  
   
 [Field]
 Name=Q1142_3
-Position=350,657,365,677
+Position=350,717,365,737
 Item=Q1142_3,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=31
+Form=29
   
 [Text]
-Position=50,660,330,676
+Position=50,720,330,736
 Text=115.2 Other expenses during confinement not in bill — Food
  
   
 [Field]
 Name=Q1142_3_AMT
-Position=350,687,760,707
+Position=350,747,760,767
 Item=Q1142_3_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
-Position=50,690,330,706
+Position=50,750,330,766
 Text=115.2 Other expenses during confinement not in bill — Food (Amount in Pesos)
  
   
 [Field]
 Name=Q1142_4
-Position=350,717,365,737
+Position=350,777,365,797
 Item=Q1142_4,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=31
+Form=29
   
 [Text]
-Position=50,720,330,736
+Position=50,780,330,796
 Text=115.2 Other expenses during confinement not in bill — Transportation
  
   
 [Field]
 Name=Q1142_4_AMT
-Position=350,747,760,767
+Position=350,807,760,827
 Item=Q1142_4_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
-Position=50,750,330,766
+Position=50,810,330,826
 Text=115.2 Other expenses during confinement not in bill — Transportation (Amount in Pesos)
  
   
 [Field]
 Name=Q1142_5
-Position=350,777,365,797
+Position=350,837,365,857
 Item=Q1142_5,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=31
+Form=29
   
 [Text]
-Position=50,780,330,796
+Position=50,840,330,856
 Text=115.2 Other expenses during confinement not in bill — Donation to the facility
  
   
 [Field]
 Name=Q1142_5_AMT
-Position=350,807,760,827
+Position=350,867,760,887
 Item=Q1142_5_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
-Position=50,810,330,826
+Position=50,870,330,886
 Text=115.2 Other expenses during confinement not in bill — Donation to the facility (Amount in Pesos)
  
   
 [Field]
 Name=Q1142_6
-Position=350,837,365,857
+Position=350,897,365,917
 Item=Q1142_6,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=31
+Form=29
   
 [Text]
-Position=50,840,330,856
+Position=50,900,330,916
 Text=115.2 Other expenses during confinement not in bill — Allowance for caregiver
  
   
 [Field]
 Name=Q1142_6_AMT
-Position=350,867,760,887
+Position=350,927,760,947
 Item=Q1142_6_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
-Position=50,870,330,886
+Position=50,930,330,946
 Text=115.2 Other expenses during confinement not in bill — Allowance for caregiver (Amount in Pesos)
  
   
 [Field]
 Name=Q1142_7
-Position=350,897,365,917
+Position=350,957,365,977
 Item=Q1142_7,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
-Form=31
+Form=29
   
 [Text]
-Position=50,900,330,916
+Position=50,960,330,976
 Text=115.2 Other expenses during confinement not in bill — Other (specify)
  
   
 [Field]
 Name=Q1142_7_AMT
-Position=350,927,760,947
+Position=350,987,760,1007
 Item=Q1142_7_AMT,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
-Position=50,930,330,946
+Position=50,990,330,1006
 Text=115.2 Other expenses during confinement not in bill — Other (specify) (Amount in Pesos)
  
   
 [Field]
 Name=Q1142_OTHER_TXT
-Position=350,957,760,977
+Position=350,1017,760,1037
 Item=Q1142_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=31
+Form=29
   
 [Text]
-Position=50,960,330,976
+Position=50,1020,330,1036
 Text=115.2 Other expenses — specify text
  
   
 [Block]
-Name=DG_BLK_144
+Name=DG_BLK_99
 Label=Q113
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_145
+Name=DG_BLK_100
 Label=Q114
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_146
+Name=DG_BLK_101
 Label=Q114
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_147
+Name=DG_BLK_102
 Label=Q115
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_148
+Name=DG_BLK_103
 Label=Q115
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_149
+Name=DG_BLK_104
 Label=Q115
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_150
+Name=DG_BLK_105
 Label=Q115
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_151
+Name=DG_BLK_106
 Label=Q115
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_BLK_152
+Name=DG_BLK_107
 Label=Q115
 DisplayTogether=Yes
 Position=16
 Length=1
   
 [Block]
-Name=DG_BLK_153
+Name=DG_BLK_108
 Label=Q115
 DisplayTogether=Yes
 Position=18
 Length=1
   
 [Block]
-Name=DG_BLK_154
+Name=DG_BLK_109
 Label=Q115
 DisplayTogether=Yes
 Position=20
 Length=1
   
 [Block]
-Name=DG_BLK_155
+Name=DG_BLK_110
 Label=Q115
 DisplayTogether=Yes
 Position=22
 Length=1
   
 [Block]
-Name=DG_BLK_156
+Name=DG_BLK_111
 Label=Q115
 DisplayTogether=Yes
 Position=24
 Length=1
   
 [Block]
-Name=DG_BLK_157
+Name=DG_BLK_112
 Label=Q115
 DisplayTogether=Yes
 Position=26
 Length=1
   
 [Block]
-Name=DG_BLK_158
+Name=DG_BLK_113
 Label=Q115
 DisplayTogether=Yes
 Position=28
 Length=1
   
 [Block]
-Name=DG_BLK_159
+Name=DG_BLK_114
 Label=Q115
 DisplayTogether=Yes
 Position=30
 Length=1
   
 [Block]
-Name=DG_BLK_160
+Name=DG_BLK_115
 Label=Q115
 DisplayTogether=Yes
 Position=32
 Length=1
   
 [Block]
-Name=DG_BLK_161
+Name=DG_BLK_116
 Label=Q115
+DisplayTogether=Yes
+Position=34
+Length=2
+  
+[Block]
+Name=DG_BLK_117
+Label=Q115
+DisplayTogether=Yes
+Position=37
+Length=1
+  
+[Block]
+Name=DG_BLK_118
+Label=Q115
+DisplayTogether=Yes
+Position=39
+Length=1
+  
+[Block]
+Name=DG_BLK_119
+Label=Q115
+DisplayTogether=Yes
+Position=41
+Length=1
+  
+[Block]
+Name=DG_BLK_120
+Label=Q115
+DisplayTogether=Yes
+Position=43
+Length=1
+  
+[Block]
+Name=DG_BLK_121
+Label=Q115
+DisplayTogether=Yes
+Position=45
+Length=1
+  
+[Block]
+Name=DG_BLK_122
+Label=Q115
+DisplayTogether=Yes
+Position=47
+Length=1
+  
+[Block]
+Name=DG_BLK_123
+Label=Q115
+DisplayTogether=Yes
+Position=49
+Length=1
+  
+[Block]
+Name=DG_BLK_124
+Label=Q115
+DisplayTogether=Yes
+Position=51
+Length=1
+  
+[Block]
+Name=DG_BLK_125
+Label=Q115
+DisplayTogether=Yes
+Position=53
+Length=1
+  
+[Block]
+Name=DG_BLK_126
+Label=Q115
+DisplayTogether=Yes
+Position=55
+Length=1
+  
+[Block]
+Name=DG_BLK_127
+Label=Q115
+DisplayTogether=Yes
+Position=57
+Length=1
+  
+[Block]
+Name=DG_BLK_128
+Label=Q115
+DisplayTogether=Yes
+Position=59
+Length=1
+  
+[Block]
+Name=DG_BLK_129
+Label=Q115
+DisplayTogether=Yes
+Position=61
+Length=1
+  
+[Block]
+Name=DG_BLK_130
+Label=Q115
+DisplayTogether=Yes
+Position=63
+Length=1
+  
+[Block]
+Name=DG_BLK_131
+Label=Q115
+DisplayTogether=Yes
+Position=65
+Length=1
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=E_PRIMARY_CARE_FORM
+Label=E. Primary Care + YAKAP/Konsulta
+Form=30
+Max=1
+  
+[Field]
+Name=Q53_HAS_PCP
+Position=350,27,365,47
+Item=Q53_HAS_PCP,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=30
+  
+[Text]
+Position=50,30,330,46
+Text=53. Do you have a primary care provider?
+ 
+  
+[Field]
+Name=Q54_PCP_TYPE
+Position=350,57,365,77
+Item=Q54_PCP_TYPE,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=30
+  
+[Text]
+Position=50,60,330,76
+Text=54. Who is your main primary care provider?
+ 
+  
+[Field]
+Name=Q54_PCP_TYPE_OTHER_TXT
+Position=350,87,760,107
+Item=Q54_PCP_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=30
+  
+[Text]
+Position=50,90,330,106
+Text=54. Primary care provider — Other (specify) text
+ 
+  
+[Field]
+Name=Q55_LOC_CONVENIENT
+Position=350,117,365,137
+Item=Q55_LOC_CONVENIENT,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=30
+  
+[Text]
+Position=50,120,330,136
+Text=55. Is the location of your main primary care provider convenient for you?
+ 
+  
+[Field]
+Name=Q56_HOURS_CONVENIENT
+Position=350,147,365,167
+Item=Q56_HOURS_CONVENIENT,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=30
+  
+[Text]
+Position=50,150,330,166
+Text=56. Is your main primary care provider's clinic hours (time that your provider/s is/are open for medical appointments) convenient for you?
+ 
+  
+[Field]
+Name=Q57_WAIT_CONVENIENT
+Position=350,177,365,197
+Item=Q57_WAIT_CONVENIENT,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=30
+  
+[Text]
+Position=50,180,330,196
+Text=57. Is the usual wait for setting an appointment with your main primary care provider convenient for you?
+ 
+  
+[Field]
+Name=Q58_WAIT_DAYS
+Position=350,207,760,227
+Item=Q58_WAIT_DAYS,PATIENTSURVEY_DICT
+DataCaptureType=TextBox
+Form=30
+  
+[Text]
+Position=50,210,330,226
+Text=Number of Day(s)
+ 
+  
+[Field]
+Name=Q58_WAIT_MINUTES
+Position=350,237,760,257
+Item=Q58_WAIT_MINUTES,PATIENTSURVEY_DICT
+DataCaptureType=TextBox
+Form=30
+  
+[Text]
+Position=50,240,330,256
+Text=Number of Minute(s)
+ 
+  
+[Field]
+Name=Q59_SCHED_COMM
+Position=350,267,365,287
+Item=Q59_SCHED_COMM,PATIENTSURVEY_DICT
+DataCaptureType=CheckBox
+Form=30
+  
+[Text]
+Position=50,270,330,286
+Text=59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider?
+ 
+  
+[Field]
+Name=Q60_SCHED_TELECON_OK
+Position=350,297,365,317
+Item=Q60_SCHED_TELECON_OK,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=30
+  
+[Text]
+Position=50,300,330,316
+Text=60. If teleconsultation was available, did you succeed in using the teleconsult? (scheduling)
+ 
+  
+[Field]
+Name=Q61_CONSULT_COMM
+Position=350,327,365,347
+Item=Q61_CONSULT_COMM,PATIENTSURVEY_DICT
+DataCaptureType=CheckBox
+Form=30
+  
+[Text]
+Position=50,330,330,346
+Text=61. What mode/s of communication was/were available to you when consulting with your main primary care provider?
+ 
+  
+[Field]
+Name=Q62_CONSULT_TELECON_OK
+Position=350,357,365,377
+Item=Q62_CONSULT_TELECON_OK,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=30
+  
+[Text]
+Position=50,360,330,376
+Text=62. If teleconsultation was available, did you succeed in using the teleconsult? (consultation)
+ 
+  
+[Field]
+Name=Q63_HAS_USUAL_FACILITY
+Position=350,387,365,407
+Item=Q63_HAS_USUAL_FACILITY,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=30
+  
+[Text]
+Position=50,390,330,406
+Text=63. In the past 12 months, do you have a clinic, or health center that you usually go to?
+ 
+  
+[Field]
+Name=Q64_FACILITY_NAME
+Position=350,417,760,437
+Item=Q64_FACILITY_NAME,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=30
+  
+[Text]
+Position=50,420,330,436
+Text=64. What is the name of the facility?
+ 
+  
+[Field]
+Name=Q65_WHY_NO_USUAL
+Position=350,447,365,467
+Item=Q65_WHY_NO_USUAL,PATIENTSURVEY_DICT
+DataCaptureType=CheckBox
+Form=30
+  
+[Text]
+Position=50,450,330,466
+Text=65. If none, why do you not have a usual clinic, or health center that you usually go to?
+ 
+  
+[Field]
+Name=Q65_WHY_NO_USUAL_OTHER_TXT
+Position=350,477,760,497
+Item=Q65_WHY_NO_USUAL_OTHER_TXT,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=30
+  
+[Text]
+Position=50,480,330,496
+Text=65. If none, why do you not have a usual clinic, or health center that you usually go to? — Other (specify) text
+ 
+  
+[Field]
+Name=Q66_SAME_AS_USUAL
+Position=350,507,365,527
+Item=Q66_SAME_AS_USUAL,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=30
+  
+[Text]
+Position=50,510,330,526
+Text=66. Is this the facility you usually go to for general health concerns?
+ 
+  
+[Field]
+Name=Q67_WHY_THIS_FACILITY
+Position=350,537,365,557
+Item=Q67_WHY_THIS_FACILITY,PATIENTSURVEY_DICT
+DataCaptureType=CheckBox
+Form=30
+  
+[Text]
+Position=50,540,330,556
+Text=67. Why did you go to this facility instead of your usual facility?
+ 
+  
+[Field]
+Name=Q67_WHY_THIS_FACILITY_OTHER_TXT
+Position=350,567,760,587
+Item=Q67_WHY_THIS_FACILITY_OTHER_TXT,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=30
+  
+[Text]
+Position=50,570,330,586
+Text=67. Why did you go to this facility instead of your usual facility? — Other (specify) text
+ 
+  
+[Field]
+Name=Q68_USUAL_FAC_TYPE
+Position=350,597,365,617
+Item=Q68_USUAL_FAC_TYPE,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=30
+  
+[Text]
+Position=50,600,330,616
+Text=68. What is the type of health facility that you usually go to?
+ 
+  
+[Field]
+Name=Q68_USUAL_FAC_TYPE_OTHER_TXT
+Position=350,627,760,647
+Item=Q68_USUAL_FAC_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=30
+  
+[Text]
+Position=50,630,330,646
+Text=68. Usual facility type — Other (specify) text
+ 
+  
+[Field]
+Name=Q69_USUAL_TRAVEL_HH
+Position=350,657,760,677
+Item=Q69_USUAL_TRAVEL_HH,PATIENTSURVEY_DICT
+DataCaptureType=TextBox
+Form=30
+  
+[Text]
+Position=50,660,330,676
+Text=Number of Hour(s)
+ 
+  
+[Field]
+Name=Q69_USUAL_TRAVEL_MM
+Position=350,687,760,707
+Item=Q69_USUAL_TRAVEL_MM,PATIENTSURVEY_DICT
+DataCaptureType=TextBox
+Form=30
+  
+[Text]
+Position=50,690,330,706
+Text=Number of Minute(s)
+ 
+  
+[Field]
+Name=Q70_USUAL_TRANSPORT
+Position=350,717,365,737
+Item=Q70_USUAL_TRANSPORT,PATIENTSURVEY_DICT
+DataCaptureType=CheckBox
+Form=30
+  
+[Text]
+Position=50,720,330,736
+Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to?
+ 
+  
+[Field]
+Name=Q70_USUAL_TRANSPORT_OTHER_TXT
+Position=350,747,760,767
+Item=Q70_USUAL_TRANSPORT_OTHER_TXT,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=30
+  
+[Text]
+Position=50,750,330,766
+Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Other (specify) text
+ 
+  
+[Field]
+Name=Q71_NEAREST_TYPE
+Position=350,777,365,797
+Item=Q71_NEAREST_TYPE,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=30
+  
+[Text]
+Position=50,780,330,796
+Text=71. What is the type of the primary care facility nearest to your house?
+ 
+  
+[Field]
+Name=Q71_NEAREST_TYPE_OTHER_TXT
+Position=350,807,760,827
+Item=Q71_NEAREST_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=30
+  
+[Text]
+Position=50,810,330,826
+Text=71. Nearest primary care facility type — Other (specify) text
+ 
+  
+[Field]
+Name=Q72_NEAREST_TRAVEL_HH
+Position=350,837,760,857
+Item=Q72_NEAREST_TRAVEL_HH,PATIENTSURVEY_DICT
+DataCaptureType=TextBox
+Form=30
+  
+[Text]
+Position=50,840,330,856
+Text=Number of Hour(s)
+ 
+  
+[Field]
+Name=Q72_NEAREST_TRAVEL_MM
+Position=350,867,760,887
+Item=Q72_NEAREST_TRAVEL_MM,PATIENTSURVEY_DICT
+DataCaptureType=TextBox
+Form=30
+  
+[Text]
+Position=50,870,330,886
+Text=Number of Minute(s)
+ 
+  
+[Field]
+Name=Q73_NEAREST_TRANSPORT
+Position=350,897,365,917
+Item=Q73_NEAREST_TRANSPORT,PATIENTSURVEY_DICT
+DataCaptureType=CheckBox
+Form=30
+  
+[Text]
+Position=50,900,330,916
+Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility?
+ 
+  
+[Field]
+Name=Q73_NEAREST_TRANSPORT_OTHER_TXT
+Position=350,927,760,947
+Item=Q73_NEAREST_TRANSPORT_OTHER_TXT,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=30
+  
+[Text]
+Position=50,930,330,946
+Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Other (specify) text
+ 
+  
+[Field]
+Name=Q74_KON_HEARD
+Position=350,957,365,977
+Item=Q74_KON_HEARD,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=30
+  
+[Text]
+Position=50,960,330,976
+Text=74. Have you heard of the term "YAKAP/ Konsulta package"?
+ 
+  
+[Field]
+Name=Q75_KON_SOURCE
+Position=350,987,365,1007
+Item=Q75_KON_SOURCE,PATIENTSURVEY_DICT
+DataCaptureType=CheckBox
+Form=30
+  
+[Text]
+Position=50,990,330,1006
+Text=75. What are your sources of information about the YAKAP/Konsulta package?
+ 
+  
+[Field]
+Name=Q75_KON_SOURCE_OTHER_TXT
+Position=350,1017,760,1037
+Item=Q75_KON_SOURCE_OTHER_TXT,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=30
+  
+[Text]
+Position=50,1020,330,1036
+Text=75. What are your sources of information about the YAKAP/Konsulta package? — Other (specify) text
+ 
+  
+[Field]
+Name=Q76_KON_UNDERSTAND
+Position=350,1047,365,1067
+Item=Q76_KON_UNDERSTAND,PATIENTSURVEY_DICT
+DataCaptureType=CheckBox
+Form=30
+  
+[Text]
+Position=50,1050,330,1066
+Text=76. What is your understanding about the YAKAP/Konsulta package?
+ 
+  
+[Field]
+Name=Q76_KON_UNDERSTAND_OTHER_TXT
+Position=350,1077,760,1097
+Item=Q76_KON_UNDERSTAND_OTHER_TXT,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=30
+  
+[Text]
+Position=50,1080,330,1096
+Text=76. What is your understanding about the YAKAP/Konsulta package? — Other (specify) text
+ 
+  
+[Field]
+Name=Q77_KON_REGISTERED
+Position=350,1107,365,1127
+Item=Q77_KON_REGISTERED,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=30
+  
+[Text]
+Position=50,1110,330,1126
+Text=77. Are you registered with a YAKAP/Konsulta package provider?
+ 
+  
+[Field]
+Name=Q78_KON_WHEN_REG
+Position=350,1137,365,1157
+Item=Q78_KON_WHEN_REG,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=30
+  
+[Text]
+Position=50,1140,330,1156
+Text=78. When did you register with a YAKAP/Konsulta package provider?
+ 
+  
+[Field]
+Name=Q79_KON_HAD_APPT
+Position=350,1167,365,1187
+Item=Q79_KON_HAD_APPT,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=30
+  
+[Text]
+Position=50,1170,330,1186
+Text=79. Since registering, have you had an appointment with your YAKAP/Konsulta package provider?
+ 
+  
+[Field]
+Name=Q80_KON_KNOWS_BOOKING
+Position=350,1197,365,1217
+Item=Q80_KON_KNOWS_BOOKING,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=30
+  
+[Text]
+Position=50,1200,330,1216
+Text=80. When you have a health problem, do you know how to book an appointment at your YAKAP/Konsulta package provider?
+ 
+  
+[Field]
+Name=Q81_KON_APPT_CHECKUP
+Position=350,1227,365,1247
+Item=Q81_KON_APPT_CHECKUP,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=30
+  
+[Text]
+Position=50,1230,330,1246
+Text=81. Was that appointment for a general check-up (i.e. not related to an illness or injury)?
+ 
+  
+[Field]
+Name=Q82_KON_WHY_NOT_REG
+Position=350,1257,365,1277
+Item=Q82_KON_WHY_NOT_REG,PATIENTSURVEY_DICT
+DataCaptureType=CheckBox
+Form=30
+  
+[Text]
+Position=50,1260,330,1276
+Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider?
+ 
+  
+[Field]
+Name=Q82_KON_WHY_NOT_REG_OTHER_TXT
+Position=350,1287,760,1307
+Item=Q82_KON_WHY_NOT_REG_OTHER_TXT,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=30
+  
+[Text]
+Position=50,1290,330,1306
+Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Other (specify) text
+ 
+  
+[Block]
+Name=DG_BLK_132
+Label=Q53
+DisplayTogether=Yes
+Position=0
+Length=1
+  
+[Block]
+Name=DG_BLK_133
+Label=Q54
+DisplayTogether=Yes
+Position=2
+Length=1
+  
+[Block]
+Name=DG_BLK_134
+Label=Q54
+DisplayTogether=Yes
+Position=4
+Length=1
+  
+[Block]
+Name=DG_BLK_135
+Label=Q55-Q58
+DisplayTogether=Yes
+Position=6
+Length=5
+  
+[Block]
+Name=DG_BLK_136
+Label=Q59
+DisplayTogether=Yes
+Position=12
+Length=1
+  
+[Block]
+Name=DG_BLK_137
+Label=Q60
+DisplayTogether=Yes
+Position=14
+Length=1
+  
+[Block]
+Name=DG_BLK_138
+Label=Q61
+DisplayTogether=Yes
+Position=16
+Length=1
+  
+[Block]
+Name=DG_BLK_139
+Label=Q62
+DisplayTogether=Yes
+Position=18
+Length=1
+  
+[Block]
+Name=DG_BLK_140
+Label=Q63
+DisplayTogether=Yes
+Position=20
+Length=1
+  
+[Block]
+Name=DG_BLK_141
+Label=Q64
+DisplayTogether=Yes
+Position=22
+Length=1
+  
+[Block]
+Name=DG_BLK_142
+Label=Q65
+DisplayTogether=Yes
+Position=24
+Length=1
+  
+[Block]
+Name=DG_BLK_143
+Label=Q65
+DisplayTogether=Yes
+Position=26
+Length=1
+  
+[Block]
+Name=DG_BLK_144
+Label=Q66
+DisplayTogether=Yes
+Position=28
+Length=1
+  
+[Block]
+Name=DG_BLK_145
+Label=Q67
+DisplayTogether=Yes
+Position=30
+Length=1
+  
+[Block]
+Name=DG_BLK_146
+Label=Q67
+DisplayTogether=Yes
+Position=32
+Length=1
+  
+[Block]
+Name=DG_BLK_147
+Label=Q68
 DisplayTogether=Yes
 Position=34
 Length=1
   
 [Block]
-Name=DG_BLK_162
-Label=Q115
+Name=DG_BLK_148
+Label=Q68
 DisplayTogether=Yes
 Position=36
 Length=1
   
 [Block]
-Name=DG_BLK_163
-Label=Q115
+Name=DG_BLK_149
+Label=Q69
 DisplayTogether=Yes
 Position=38
-Length=1
+Length=2
   
 [Block]
-Name=DG_BLK_164
-Label=Q115
+Name=DG_BLK_150
+Label=Q70
 DisplayTogether=Yes
-Position=40
+Position=41
 Length=1
   
 [Block]
-Name=DG_BLK_165
-Label=Q115
+Name=DG_BLK_151
+Label=Q70
 DisplayTogether=Yes
-Position=42
+Position=43
 Length=1
   
 [Block]
-Name=DG_BLK_166
-Label=Q115
+Name=DG_BLK_152
+Label=Q71
 DisplayTogether=Yes
-Position=44
+Position=45
 Length=1
   
 [Block]
-Name=DG_BLK_167
-Label=Q115
+Name=DG_BLK_153
+Label=Q71
 DisplayTogether=Yes
-Position=46
+Position=47
 Length=1
   
 [Block]
-Name=DG_BLK_168
-Label=Q115
+Name=DG_BLK_154
+Label=Q72
 DisplayTogether=Yes
-Position=48
-Length=1
+Position=49
+Length=2
   
 [Block]
-Name=DG_BLK_169
-Label=Q115
-DisplayTogether=Yes
-Position=50
-Length=1
-  
-[Block]
-Name=DG_BLK_170
-Label=Q115
+Name=DG_BLK_155
+Label=Q73
 DisplayTogether=Yes
 Position=52
 Length=1
   
 [Block]
-Name=DG_BLK_171
-Label=Q115
+Name=DG_BLK_156
+Label=Q73
 DisplayTogether=Yes
 Position=54
 Length=1
   
 [Block]
-Name=DG_BLK_172
-Label=Q115
+Name=DG_BLK_157
+Label=Q74
 DisplayTogether=Yes
 Position=56
 Length=1
   
 [Block]
-Name=DG_BLK_173
-Label=Q115
+Name=DG_BLK_158
+Label=Q75
 DisplayTogether=Yes
 Position=58
 Length=1
   
 [Block]
-Name=DG_BLK_174
-Label=Q115
+Name=DG_BLK_159
+Label=Q75
 DisplayTogether=Yes
 Position=60
 Length=1
   
 [Block]
-Name=DG_BLK_175
-Label=Q115
+Name=DG_BLK_160
+Label=Q76
 DisplayTogether=Yes
 Position=62
+Length=1
+  
+[Block]
+Name=DG_BLK_161
+Label=Q76
+DisplayTogether=Yes
+Position=64
+Length=1
+  
+[Block]
+Name=DG_BLK_162
+Label=Q77
+DisplayTogether=Yes
+Position=66
+Length=1
+  
+[Block]
+Name=DG_BLK_163
+Label=Q78-Q80
+DisplayTogether=Yes
+Position=68
+Length=3
+  
+[Block]
+Name=DG_BLK_164
+Label=Q81
+DisplayTogether=Yes
+Position=72
+Length=1
+  
+[Block]
+Name=DG_BLK_165
+Label=Q82
+DisplayTogether=Yes
+Position=74
+Length=1
+  
+[Block]
+Name=DG_BLK_166
+Label=Q82
+DisplayTogether=Yes
+Position=76
+Length=1
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=F_HEALTH_SEEKING_FORM
+Label=F. Health-Seeking
+Form=31
+Max=1
+  
+[Field]
+Name=Q83_VISIT_REASON
+Position=350,27,365,47
+Item=Q83_VISIT_REASON,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=31
+  
+[Text]
+Position=50,30,330,46
+Text=83. What best describes why the patient visited a health facility (e.g. RHU, health center, clinic, hospital)?
+ 
+  
+[Field]
+Name=Q83_VISIT_REASON_OTHER_TXT
+Position=350,57,760,77
+Item=Q83_VISIT_REASON_OTHER_TXT,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=31
+  
+[Text]
+Position=50,60,330,76
+Text=83. Visit reason — Other (specify) text
+ 
+  
+[Field]
+Name=Q84_SERVICE_TYPE
+Position=350,87,365,107
+Item=Q84_SERVICE_TYPE,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=31
+  
+[Text]
+Position=50,90,330,106
+Text=84. What type of service did the patient usually access?
+ 
+  
+[Field]
+Name=Q84_SERVICE_TYPE_OTHER_TXT
+Position=350,117,760,137
+Item=Q84_SERVICE_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=31
+  
+[Text]
+Position=50,120,330,136
+Text=84. Service type — Other (specify) text
+ 
+  
+[Field]
+Name=Q85_CONDITIONS
+Position=350,147,365,167
+Item=Q85_CONDITIONS,PATIENTSURVEY_DICT
+DataCaptureType=CheckBox
+Form=31
+  
+[Text]
+Position=50,150,330,166
+Text=85. What condition/s do/es the patient usually visit the facility for?
+ 
+  
+[Field]
+Name=Q85_CONDITIONS_OTHER_TXT
+Position=350,177,760,197
+Item=Q85_CONDITIONS_OTHER_TXT,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=31
+  
+[Text]
+Position=50,180,330,196
+Text=85. What condition/s do/es the patient usually visit the facility for? — Other (specify) text
+ 
+  
+[Field]
+Name=Q86_VISIT_EVENTS
+Position=350,207,365,227
+Item=Q86_VISIT_EVENTS,PATIENTSURVEY_DICT
+DataCaptureType=CheckBox
+Form=31
+  
+[Text]
+Position=50,210,330,226
+Text=86. Which of the following happened during the patient's most recent visit?
+ 
+  
+[Field]
+Name=Q86_VISIT_EVENTS_OTHER_TXT
+Position=350,237,760,257
+Item=Q86_VISIT_EVENTS_OTHER_TXT,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=31
+  
+[Text]
+Position=50,240,330,256
+Text=86. Which of the following happened during the patient's most recent visit? — Other (specify) text
+ 
+  
+[Field]
+Name=Q87_OTHER_ACTIONS
+Position=350,267,365,287
+Item=Q87_OTHER_ACTIONS,PATIENTSURVEY_DICT
+DataCaptureType=CheckBox
+Form=31
+  
+[Text]
+Position=50,270,330,286
+Text=87. Apart from this visit, has the patient done anything else to improve his/her health condition or address his/her health concern?
+ 
+  
+[Field]
+Name=Q87_OTHER_ACTIONS_OTHER_TXT
+Position=350,297,760,317
+Item=Q87_OTHER_ACTIONS_OTHER_TXT,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=31
+  
+[Text]
+Position=50,300,330,316
+Text=87. Apart from this visit, has the patient done anything else to improve his/her health condition or address his/her health concern? — Other (specify) text
+ 
+  
+[Block]
+Name=DG_BLK_167
+Label=Q83
+DisplayTogether=Yes
+Position=0
+Length=1
+  
+[Block]
+Name=DG_BLK_168
+Label=Q83
+DisplayTogether=Yes
+Position=2
+Length=1
+  
+[Block]
+Name=DG_BLK_169
+Label=Q84
+DisplayTogether=Yes
+Position=4
+Length=1
+  
+[Block]
+Name=DG_BLK_170
+Label=Q84
+DisplayTogether=Yes
+Position=6
+Length=1
+  
+[Block]
+Name=DG_BLK_171
+Label=Q85
+DisplayTogether=Yes
+Position=8
+Length=1
+  
+[Block]
+Name=DG_BLK_172
+Label=Q85
+DisplayTogether=Yes
+Position=10
+Length=1
+  
+[Block]
+Name=DG_BLK_173
+Label=Q86
+DisplayTogether=Yes
+Position=12
+Length=1
+  
+[Block]
+Name=DG_BLK_174
+Label=Q86
+DisplayTogether=Yes
+Position=14
+Length=1
+  
+[Block]
+Name=DG_BLK_175
+Label=Q87
+DisplayTogether=Yes
+Position=16
+Length=1
+  
+[Block]
+Name=DG_BLK_176
+Label=Q87
+DisplayTogether=Yes
+Position=18
 Length=1
   
 [EndGroup]
@@ -5655,154 +5701,154 @@ Text=130. Have you or your household had to reduce spending on things you need (
  
   
 [Block]
-Name=DG_BLK_176
+Name=DG_BLK_177
 Label=Q116
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_177
+Name=DG_BLK_178
 Label=Q117
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_178
+Name=DG_BLK_179
 Label=Q117
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_179
+Name=DG_BLK_180
 Label=Q118
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_180
+Name=DG_BLK_181
 Label=Q118
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_181
+Name=DG_BLK_182
 Label=Q119
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_182
+Name=DG_BLK_183
 Label=Q120
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_183
+Name=DG_BLK_184
 Label=Q120
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_BLK_184
+Name=DG_BLK_185
 Label=Q121
 DisplayTogether=Yes
 Position=16
 Length=1
   
 [Block]
-Name=DG_BLK_185
+Name=DG_BLK_186
 Label=Q121
 DisplayTogether=Yes
 Position=18
 Length=1
   
 [Block]
-Name=DG_BLK_186
+Name=DG_BLK_187
 Label=Q122
 DisplayTogether=Yes
 Position=20
 Length=1
   
 [Block]
-Name=DG_BLK_187
+Name=DG_BLK_188
 Label=Q123
 DisplayTogether=Yes
 Position=22
 Length=1
   
 [Block]
-Name=DG_BLK_188
+Name=DG_BLK_189
 Label=Q124
 DisplayTogether=Yes
 Position=24
 Length=1
   
 [Block]
-Name=DG_BLK_189
+Name=DG_BLK_190
 Label=Q125
 DisplayTogether=Yes
 Position=26
 Length=1
   
 [Block]
-Name=DG_BLK_190
+Name=DG_BLK_191
 Label=Q125
 DisplayTogether=Yes
 Position=28
 Length=1
   
 [Block]
-Name=DG_BLK_191
+Name=DG_BLK_192
 Label=Q126
 DisplayTogether=Yes
 Position=30
 Length=1
   
 [Block]
-Name=DG_BLK_192
+Name=DG_BLK_193
 Label=Q127
 DisplayTogether=Yes
 Position=32
 Length=1
   
 [Block]
-Name=DG_BLK_193
+Name=DG_BLK_194
 Label=Q128
 DisplayTogether=Yes
 Position=34
 Length=1
   
 [Block]
-Name=DG_BLK_194
+Name=DG_BLK_195
 Label=Q128
 DisplayTogether=Yes
 Position=36
 Length=1
   
 [Block]
-Name=DG_BLK_195
+Name=DG_BLK_196
 Label=Q129
 DisplayTogether=Yes
 Position=38
 Length=1
   
 [Block]
-Name=DG_BLK_196
+Name=DG_BLK_197
 Label=Q129
 DisplayTogether=Yes
 Position=40
 Length=1
   
 [Block]
-Name=DG_BLK_197
+Name=DG_BLK_198
 Label=Q130
 DisplayTogether=Yes
 Position=42
@@ -5986,21 +6032,21 @@ Text=144. How would the patient rate the quality of care you received at this fa
  
   
 [Block]
-Name=DG_BLK_198
+Name=DG_BLK_199
 Label=Q131-Q135
 DisplayTogether=Yes
 Position=0
 Length=5
   
 [Block]
-Name=DG_BLK_199
+Name=DG_BLK_200
 Label=Q136-Q140
 DisplayTogether=Yes
 Position=6
 Length=5
   
 [Block]
-Name=DG_BLK_200
+Name=DG_BLK_201
 Label=Q141-Q144
 DisplayTogether=Yes
 Position=12
@@ -6337,161 +6383,161 @@ Text=161. If branded, why did you buy branded medicine? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_201
+Name=DG_BLK_202
 Label=Q145
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_202
+Name=DG_BLK_203
 Label=Q146-Q147
 DisplayTogether=Yes
 Position=2
 Length=2
   
 [Block]
-Name=DG_BLK_203
+Name=DG_BLK_204
 Label=Q148
 DisplayTogether=Yes
 Position=5
 Length=1
   
 [Block]
-Name=DG_BLK_204
+Name=DG_BLK_205
 Label=Q148
 DisplayTogether=Yes
 Position=7
 Length=1
   
 [Block]
-Name=DG_BLK_205
+Name=DG_BLK_206
 Label=Q149
 DisplayTogether=Yes
 Position=9
 Length=1
   
 [Block]
-Name=DG_BLK_206
+Name=DG_BLK_207
 Label=Q149
 DisplayTogether=Yes
 Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_207
+Name=DG_BLK_208
 Label=Q150-Q151
 DisplayTogether=Yes
 Position=13
 Length=3
   
 [Block]
-Name=DG_BLK_208
+Name=DG_BLK_209
 Label=Questions
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_BLK_209
+Name=DG_BLK_210
 Label=Q152
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_BLK_210
+Name=DG_BLK_211
 Label=Q153
 DisplayTogether=Yes
 Position=21
 Length=1
   
 [Block]
-Name=DG_BLK_211
+Name=DG_BLK_212
 Label=Q153
 DisplayTogether=Yes
 Position=23
 Length=1
   
 [Block]
-Name=DG_BLK_212
+Name=DG_BLK_213
 Label=Q154
 DisplayTogether=Yes
 Position=25
 Length=1
   
 [Block]
-Name=DG_BLK_213
+Name=DG_BLK_214
 Label=Q154
 DisplayTogether=Yes
 Position=27
 Length=1
   
 [Block]
-Name=DG_BLK_214
+Name=DG_BLK_215
 Label=Q155
 DisplayTogether=Yes
 Position=29
 Length=1
   
 [Block]
-Name=DG_BLK_215
+Name=DG_BLK_216
 Label=Q156
 DisplayTogether=Yes
 Position=31
 Length=1
   
 [Block]
-Name=DG_BLK_216
+Name=DG_BLK_217
 Label=Q157
 DisplayTogether=Yes
 Position=33
 Length=1
   
 [Block]
-Name=DG_BLK_217
+Name=DG_BLK_218
 Label=Q157
 DisplayTogether=Yes
 Position=35
 Length=1
   
 [Block]
-Name=DG_BLK_218
+Name=DG_BLK_219
 Label=Q158
 DisplayTogether=Yes
 Position=37
 Length=1
   
 [Block]
-Name=DG_BLK_219
+Name=DG_BLK_220
 Label=Q159
 DisplayTogether=Yes
 Position=39
 Length=1
   
 [Block]
-Name=DG_BLK_220
+Name=DG_BLK_221
 Label=Q160
 DisplayTogether=Yes
 Position=41
 Length=1
   
 [Block]
-Name=DG_BLK_221
+Name=DG_BLK_222
 Label=Q160
 DisplayTogether=Yes
 Position=43
 Length=1
   
 [Block]
-Name=DG_BLK_222
+Name=DG_BLK_223
 Label=Q161
 DisplayTogether=Yes
 Position=45
 Length=1
   
 [Block]
-Name=DG_BLK_223
+Name=DG_BLK_224
 Label=Q161
 DisplayTogether=Yes
 Position=47
@@ -6776,112 +6822,112 @@ Text=178. Overall, how would you rate your experience with the referral process?
  
   
 [Block]
-Name=DG_BLK_224
+Name=DG_BLK_225
 Label=Q162
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_225
+Name=DG_BLK_226
 Label=Q163
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_226
+Name=DG_BLK_227
 Label=Q163
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_227
+Name=DG_BLK_228
 Label=Q164
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_228
+Name=DG_BLK_229
 Label=Q164
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_229
+Name=DG_BLK_230
 Label=Q165
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_230
+Name=DG_BLK_231
 Label=Q165
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_231
+Name=DG_BLK_232
 Label=Q166-Q169
 DisplayTogether=Yes
 Position=14
 Length=4
   
 [Block]
-Name=DG_BLK_232
+Name=DG_BLK_233
 Label=Q170
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_BLK_233
+Name=DG_BLK_234
 Label=Q171
 DisplayTogether=Yes
 Position=21
 Length=1
   
 [Block]
-Name=DG_BLK_234
+Name=DG_BLK_235
 Label=Q171
 DisplayTogether=Yes
 Position=23
 Length=1
   
 [Block]
-Name=DG_BLK_235
+Name=DG_BLK_236
 Label=Q172
 DisplayTogether=Yes
 Position=25
 Length=1
   
 [Block]
-Name=DG_BLK_236
+Name=DG_BLK_237
 Label=Q173-Q176
 DisplayTogether=Yes
 Position=27
 Length=4
   
 [Block]
-Name=DG_BLK_237
+Name=DG_BLK_238
 Label=Q177
 DisplayTogether=Yes
 Position=32
 Length=1
   
 [Block]
-Name=DG_BLK_238
+Name=DG_BLK_239
 Label=Q177
 DisplayTogether=Yes
 Position=34
 Length=1
   
 [Block]
-Name=DG_BLK_239
+Name=DG_BLK_240
 Label=Q178
 DisplayTogether=Yes
 Position=36

@@ -12,8 +12,6 @@ Language = EN
 1008 Q45 = Senior citizen but patient age (%d) is under 60 — confirm.
 1009 Q147: list the medications taken (type 'None' if the patient takes none) — required.
 1010 Q156: list the medicines obtained from GAMOT — required when Q155 = Yes.
-1011 Tick at least one medical condition (or 'No condition - Regular check-up only').
-1013 "'Other (specify)' was ticked for Q148 — please specify."
 1014 Select at least one option for Q100 before continuing.
 1016 "'Other (specify)' was ticked for Q100 - please specify."
 1017 Select at least one option for Q101 before continuing.
@@ -238,3 +236,5 @@ Language = EN
 1276 97.1 'None' must be the only choice — untick it or the other items before continuing.
 1277 97.2 Tick at least one expense item, or tick 'None' if there were no out-of-bill expenses.
 1278 97.2 'None' must be the only choice — untick it or the other expense items before continuing.
+1279 Tick at least one medical condition.
+1280 "'Other (Specify)' was ticked for Q148 — please specify."
