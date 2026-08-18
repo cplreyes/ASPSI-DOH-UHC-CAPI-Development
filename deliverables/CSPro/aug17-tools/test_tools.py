@@ -729,6 +729,61 @@ def test_build_cont_suffix_never_strips_a_real_mid_string_occurrence():
     assert _fold_build_cont_suffix(text) == text
 
 
+# --- R18 (rev-1.4 finding, F2): order-insensitive option-set fallback fold -
+#
+# The 2-column checkbox grid fix (column-major flattening, above) assumes
+# ONE universal reading convention -- but real F2/F3 data proves there
+# ISN'T one: some items lay out as "column 1 = first half, column 2 =
+# second half" (paper_tables' fix correctly recovers build's order for
+# these, e.g. F3 Q9) while OTHERS lay out as "each row = two build-
+# CONSECUTIVE items side by side" (e.g. F2 Q56: build's own order 1-6
+# already interleaves left/right-column content 1,2,3,4,5,6 = left1,
+# right1,left2,right2,left3,right3 -- column-major flattening of THIS
+# shape produces 1,3,5,2,4,6, a genuine regression). Per the team lead's
+# own fallback framing: rather than guess which convention a given grid
+# uses, fall back to an order-INSENSITIVE multiset comparison whenever the
+# exact-order comparison fails but the two option SETS are identical --
+# logged, never silent, and never masks a REAL option-set mismatch (only
+# fires when the sets are byte-identical after normalization).
+
+
+def test_option_diff_order_insensitive_fallback_when_sets_match():
+    paper = [Row(inst="F9", qnum="56", kind="item", stem="Invented item (fixture)?",
+                 options=[{"code": "1", "label": "Invented A"}, {"code": "2", "label": "Invented C"},
+                          {"code": "3", "label": "Invented E"}, {"code": "4", "label": "Invented B"},
+                          {"code": "5", "label": "Invented D"}, {"code": "6", "label": "Invented F"}],
+                 qtype="multi", cardinality="multi")]
+    build = [Row(inst="F9", qnum="56", item_name="Q56", kind="item", stem="Invented item (fixture)?",
+                 options=[{"code": "1", "label": "Invented A"}, {"code": "2", "label": "Invented B"},
+                          {"code": "3", "label": "Invented C"}, {"code": "4", "label": "Invented D"},
+                          {"code": "5", "label": "Invented E"}, {"code": "6", "label": "Invented F"}],
+                 qtype="multi", cardinality="multi")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert not any(f.category == "OPTION_DIFF" for f in findings)
+
+
+def test_option_diff_still_fires_when_sets_genuinely_differ():
+    # Sanity guard: the fallback must NEVER mask a real content mismatch --
+    # only the exact same set of labels in a different order qualifies.
+    paper = [Row(inst="F9", qnum="57", kind="item", stem="Invented item (fixture)?",
+                 options=[{"code": "1", "label": "Invented A"}, {"code": "2", "label": "Invented B"}],
+                 qtype="multi", cardinality="multi")]
+    build = [Row(inst="F9", qnum="57", item_name="Q57", kind="item", stem="Invented item (fixture)?",
+                 options=[{"code": "1", "label": "Invented A"}, {"code": "2", "label": "Invented Z"}],
+                 qtype="multi", cardinality="multi")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert any(f.category == "OPTION_DIFF" for f in findings)
+
+
+def test_option_diff_order_insensitive_fallback_is_logged():
+    from aug17_diff import _norm_events, _opts_key_multiset_match
+    _norm_events.clear()
+    matched = _opts_key_multiset_match(("Invented A", "Invented C", "Invented B"),
+                                        ("Invented A", "Invented B", "Invented C"), qnum="58")
+    assert matched is True
+    assert any(e["kind"] == "option-order-insensitive" for e in _norm_events)
+
+
 # --- Task 3.4, R15 addendum: paper_tables.py section-parser fixes ----------
 
 

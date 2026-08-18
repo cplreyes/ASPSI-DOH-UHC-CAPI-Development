@@ -405,6 +405,29 @@ def _opts_key(options: list, norm) -> tuple:
     return tuple(norm(o.get("label", "")) for o in options)
 
 
+def _opts_key_multiset_match(p_key: tuple, b_key: tuple, qnum: str = "") -> bool:
+    """R18 (rev-1.4 finding, F2): order-insensitive fallback for OPTION_DIFF.
+    The 2-column checkbox grid fix (paper_tables.py's column-major
+    flattening) assumes one universal reading convention, but real data
+    proves there isn't one -- some grids are "column 1 = first half,
+    column 2 = second half" (column-major is correct, e.g. F3 Q9) and
+    others are "each row = two build-consecutive items side by side"
+    (build's own order is already row-major relative to the print layout,
+    e.g. F2 Q56/57/58/60 -- column-major flattening there produces a
+    genuinely WRONG order, a regression). Rather than guess which
+    convention a given grid uses, fall back to comparing the two option
+    SETS (sorted multiset, case-sensitive) whenever the exact-order
+    comparison already failed -- if the sets are identical, the divergence
+    is pure print-layout ambiguity, not real content. NEVER fires when the
+    sets genuinely differ (a real content mismatch always still surfaces).
+    LOGGED, never silent."""
+    if sorted(p_key) != sorted(b_key):
+        return False
+    _norm_events.append({"kind": "option-order-insensitive", "qnum": qnum,
+                          "before": str(p_key), "after": str(b_key)})
+    return True
+
+
 def _group_by_qnum(rows: list) -> dict:
     g: dict = {}
     for r in rows:
@@ -452,7 +475,9 @@ def _compare_pair(q: str, p: Row, b: Row) -> list:
         out.append(Finding("STEM_DIFF", q,
             f'paper: "{p.stem[:120]}" | build ({b.item_name}): "{b.stem[:120]}"'))
 
-    if _opts_key(p.options, _norm_paper_stem) != _opts_key(b.options, _norm_build_text):
+    p_opts_key = _opts_key(p.options, _norm_paper_stem)
+    b_opts_key = _opts_key(b.options, _norm_build_text)
+    if p_opts_key != b_opts_key and not _opts_key_multiset_match(p_opts_key, b_opts_key, qnum=q):
         out.append(Finding("OPTION_DIFF", q,
             f"paper options={[o.get('label') for o in p.options]} | "
             f"build ({b.item_name}) options={[o.get('label') for o in b.options]}"))
