@@ -296,6 +296,15 @@ function SectionDetail({ section, values, locale }: { section: SectionModel; val
   );
 }
 
+// aug17 migration (maps/F2-renames.csv): items renumbered in the Aug-17 cutover
+// carry `legacyId` (their Apr-20 id) in the generated spec. Submissions recorded
+// before the cutover deploy still hold values_json keyed by the OLD id, so a
+// pure `values[item.id]` lookup silently drops those answers once the current
+// spec's ids move on. Falling back to `values[item.legacyId]` when the current
+// key is empty keeps pre-cutover submissions fully readable in the admin detail
+// view without touching the storage format itself (R14: prepare-only, no schema
+// migration). New (never-renamed) items have legacyId === id or unset, so the
+// fallback is a no-op for them.
 function collectRows(items: Item[], values: Record<string, unknown>, locale: string): Array<{ key: string; id: string; label: string; value: string }> {
   const out: Array<{ key: string; id: string; label: string; value: string }> = [];
   const lc = locale as 'en' | 'fil';
@@ -313,7 +322,8 @@ function collectRows(items: Item[], values: Record<string, unknown>, locale: str
         }
       }
     } else {
-      const primary = formatValue(values[item.id]);
+      const legacyId = item.legacyId && item.legacyId !== item.id ? item.legacyId : undefined;
+      const primary = formatValue(values[item.id]) || (legacyId ? formatValue(values[legacyId]) : '');
       if (primary !== '') {
         out.push({
           key: item.id,
@@ -323,7 +333,8 @@ function collectRows(items: Item[], values: Record<string, unknown>, locale: str
         });
       }
       const otherKey = `${item.id}_other`;
-      const otherVal = formatValue(values[otherKey]);
+      const legacyOtherKey = legacyId ? `${legacyId}_other` : undefined;
+      const otherVal = formatValue(values[otherKey]) || (legacyOtherKey ? formatValue(values[legacyOtherKey]) : '');
       if (otherVal !== '') {
         out.push({
           key: otherKey,
