@@ -61,6 +61,7 @@ ROW_FIELDS = [
     "skip",
     "validation",
     "messages",
+    "instructions",
 ]
 
 KINDS = {"item", "section_header", "note", "consent", "instruction", "disposition"}
@@ -80,6 +81,14 @@ class Row:
     skip: str = ""
     validation: str = ""
     messages: str = ""
+    # R19 (rev-1.4 close-out finding): build-only. build_tables.py's
+    # load_qsf_text severs any enumerator-instruction / section-intro
+    # paragraph baked into the SAME questionText HTML block as the item's
+    # own stem (see build_tables.py module docstring) -- the severed text
+    # lands here instead of being silently concatenated into `stem`.
+    # Paper-side rows never set this (paper's own instruction/note text
+    # already gets its own separate kind="instruction"/"note" Row).
+    instructions: str = ""
 
     def to_csv_row(self) -> dict:
         """Flatten to a dict of strings suitable for csv.DictWriter."""
