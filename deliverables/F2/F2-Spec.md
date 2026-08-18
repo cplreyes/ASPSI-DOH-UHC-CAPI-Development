@@ -137,28 +137,28 @@ is derived server-side).
 |---|---|---|---|---|---|---|---|---|
 | Q12 | Q12 | single | Y | Have you heard about Universal Health Care (UHC) prior to this survey? | Yes · No | — | No → Q31 | **SECTION** — skip spans Section B |
 | Q13 | Q13 | single | Y | Has there been an increase in equipment in this facility? | Yes · No | Q12 = Yes | No → Q15 (skips Q13.1) | OK — reworded; was a compound single+specify question through Apr-20 |
-| Q13.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q13 = Yes | — | **NEW in Aug 17** — `shouldShow` predicate not yet wired (flagged for Task 3.2) |
+| Q13.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q13 = Yes | — | **NEW in Aug 17** — ✅ `shouldShow` predicate wired (Task 3.2, 2026-08-19) |
 | Q14 | Q14 | long-text | conditional | What are these pieces of equipment? | (Specify the equipment) | only if Q13 = Yes | — | OK |
 | Q15 | Q15 | single | Y | Has there been an increase in supplies in this facility? | Yes · No | Q12 = Yes | No → Q17 (skips Q15.1) | OK — reworded |
-| Q15.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q15 = Yes | — | **NEW in Aug 17** — not yet wired |
+| Q15.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q15 = Yes | — | **NEW in Aug 17** — ✅ wired (Task 3.2, 2026-08-19) |
 | Q16 | Q16 | long-text | conditional | What are these supplies? | (Specify the supplies) | only if Q15 = Yes | — | OK |
 | Q17 | Q17 | single | Y | Have electronic medical records been used in this facility? | Yes · No | Q12 = Yes | No → Q18 (skips Q17.1) | OK — reworded |
-| Q17.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q17 = Yes | — | **NEW in Aug 17** — not yet wired |
+| Q17.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q17 = Yes | — | **NEW in Aug 17** — ✅ wired (Task 3.2, 2026-08-19) |
 | Q18 | Q18 | single | Y | Have there been changes in the referral system in this facility? | Yes · No | Q12 = Yes | No → Q19 (skips Q18.1) | OK — reworded |
-| Q18.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q18 = Yes | — | **NEW in Aug 17** — not yet wired |
+| Q18.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q18 = Yes | — | **NEW in Aug 17** — ✅ wired (Task 3.2, 2026-08-19) |
 | Q19 | Q19 | single | Y | Have there been changes in the facility staffing? | Yes · No | Q12 = Yes | No → Q20 (skips Q19.1) | OK — reworded |
-| Q19.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q19 = Yes | — | **NEW in Aug 17** — not yet wired |
+| Q19.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q19 = Yes | — | **NEW in Aug 17** — ✅ wired (Task 3.2, 2026-08-19) |
 | Q20 | Q20 | single | Y | Has there been an improvement in the clinical practice guidelines of this facility? | Yes · No | Q12 = Yes | No → Q21 (skips Q20.1) | OK — reworded |
-| Q20.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q20 = Yes | — | **NEW in Aug 17** — not yet wired |
+| Q20.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q20 = Yes | — | **NEW in Aug 17** — ✅ wired (Task 3.2, 2026-08-19) |
 | Q21 | Q21 | single | Y | Does this facility implement DOH licensing standards? | Yes · No | Q12 = Yes | No → Q22 (skips Q21.1) | OK — reworded |
-| Q21.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q21 = Yes | — | **NEW in Aug 17** — not yet wired |
+| Q21.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q21 = Yes | — | **NEW in Aug 17** — ✅ wired (Task 3.2, 2026-08-19) |
 | Q22 | Q22 | single | Y | Does this facility implement PhilHealth accreditation requirements? | Yes · No | Q12 = Yes | No → Q23 (skips Q22.1) | OK — reworded |
-| Q22.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q22 = Yes | — | **NEW in Aug 17** — not yet wired |
+| Q22.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q22 = Yes | — | **NEW in Aug 17** — ✅ wired (Task 3.2, 2026-08-19) |
 | Q23 | Q23 | single | Y | Does this facility implement service delivery protocols? | Yes · No | Q12 = Yes | No → Q24 (skips Q23.1) | OK — reworded |
-| Q23.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q23 = Yes | — | **NEW in Aug 17** — not yet wired |
+| Q23.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q23 = Yes | — | **NEW in Aug 17** — ✅ wired (Task 3.2, 2026-08-19) |
 | Q24 | Q24 | single | Y | Does this facility implement primary care quality measures? | Yes · No | Q12 = Yes | No → Q25 (skips Q24.1/Q24.2) | OK — reworded |
-| Q24.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q24 = Yes | — | **NEW in Aug 17** — not yet wired |
-| Q24.2 | — | multi + specify | conditional | If yes, what are the primary care quality measures are you implementing? | Client satisfaction survey · Dashboards · Other (specify) | only if Q24 = Yes | — | **NEW in Aug 17** — Q24's second sub-item (unique to Q24; no other B-battery item has a `.2`); not yet wired |
+| Q24.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q24 = Yes | — | **NEW in Aug 17** — ✅ wired (Task 3.2, 2026-08-19) |
+| Q24.2 | — | multi + specify | conditional | If yes, what are the primary care quality measures are you implementing? | Client satisfaction survey · Dashboards · Other (specify) | only if Q24 = Yes | — | **NEW in Aug 17** — Q24's second sub-item (unique to Q24; no other B-battery item has a `.2`); ✅ wired (Task 3.2, 2026-08-19) |
 | Q25 | Q25 | multi + specify | Y | Which of the following do you expect to change in your personal work as a health worker under UHC? | Salary · Standards to follow · I don't know · Number of patients · Preventative health care · Other (specify) · Working hours · Patients seek healthcare in different ways | Q12 = Yes | — | **SECTION** — Q25 selections drive Q26–Q30 conditionals |
 | Q26 | Q26 | single | conditional | How do you expect the following to change: Salary? | Higher · Lower · I don't know | only if Q25 includes "Salary" | — | OK |
 | Q27 | Q27 | single | conditional | How do you expect the following to change: Number of patients? | Higher · Lower · I don't know | only if Q25 includes "Number of patients" | — | OK |
