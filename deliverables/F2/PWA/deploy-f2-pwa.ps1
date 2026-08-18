@@ -66,7 +66,10 @@ $RequiredMarkers = @(
     @{ Name = "Facilities API call";       Pattern = '/admin/api/facilities';        Bundle = "admin" },
     @{ Name = "Matrix preamble render";    Pattern = 'italic text-muted-foreground'; Bundle = "admin" },
     @{ Name = "Q63 fee note (#1041)";      Pattern = 'negotiable';                   Bundle = "admin" },
-    @{ Name = "Q98/Q114 instr (#1042/3)";  Pattern = 'past 6 months';                Bundle = "admin" }
+    @{ Name = "Q98/Q114 instr (#1042/3)";  Pattern = 'past 6 months';                Bundle = "admin" },
+    # Gov masthead (RA layout, 2026-08-17): logo strip + PSA/SJREB clearance
+    # block live in the MAIN index chunk (App.tsx header), not the admin chunk.
+    @{ Name = "Gov masthead clearance";    Pattern = 'DOH-2651-02';                  Bundle = "index" }
 )
 
 function Say($msg, $color = "White") { Write-Host $msg -ForegroundColor $color }
@@ -110,7 +113,8 @@ function Test-Live {
 
     $bad = $false
     foreach ($m in $RequiredMarkers) {
-        if ($adminJs -like "*$($m.Pattern)*") { Pass "live: $($m.Name)" }
+        $hay = if ($m.Bundle -eq "index") { $indexJs } else { $adminJs }
+        if ($hay -like "*$($m.Pattern)*") { Pass "live: $($m.Name)" }
         else { Say "  FAIL  live bundle is MISSING $($m.Name)" "Red"; $bad = $true }
     }
 
@@ -171,10 +175,18 @@ Pass "facilities source module present"
 Say "`n== Building ==" "Cyan"
 Push-Location $AppDir
 try {
-    npm ci 2>&1 | Out-Null
+    # npm emits deprecation WARNINGS on stderr; under $ErrorActionPreference=Stop
+    # PowerShell 5.1 turns each redirected stderr line into a terminating
+    # NativeCommandError and kills the deploy mid-install (bit us 2026-08-17).
+    # cmd /c keeps npm's stderr out of PowerShell's error stream; $LASTEXITCODE
+    # still carries the real result.
+    $buildLog = Join-Path $env:TEMP "f2-deploy-build.log"
+    cmd /c "npm ci > `"$buildLog`" 2>&1"
+    if ($LASTEXITCODE -ne 0) { Get-Content $buildLog -Tail 15 | Write-Host; Fail "npm ci failed (full log: $buildLog)" }
     $env:VITE_F2_PROXY_URL = $ProxyUrl
-    npm run build 2>&1 | Select-Object -Last 3
-    if ($LASTEXITCODE -ne 0) { Fail "npm run build failed" }
+    cmd /c "npm run build > `"$buildLog`" 2>&1"
+    if ($LASTEXITCODE -ne 0) { Get-Content $buildLog -Tail 25 | Write-Host; Fail "npm run build failed (full log: $buildLog)" }
+    Get-Content $buildLog -Tail 3 | Write-Host
 } finally { Pop-Location }
 Pass "build completed"
 
@@ -184,9 +196,13 @@ $distAssets = Join-Path $AppDir "dist\assets"
 $adminFile  = Get-ChildItem $distAssets -Filter "admin-*.js" | Select-Object -First 1
 if (-not $adminFile) { Fail "no admin bundle in dist/assets" }
 $adminText  = Get-Content $adminFile.FullName -Raw
+$indexFile  = Get-ChildItem $distAssets -Filter "index-*.js" | Select-Object -First 1
+if (-not $indexFile) { Fail "no index bundle in dist/assets" }
+$indexText  = Get-Content $indexFile.FullName -Raw
 
 foreach ($m in $RequiredMarkers) {
-    if ($adminText -like "*$($m.Pattern)*") { Pass "built: $($m.Name)" }
+    $hay = if ($m.Bundle -eq "index") { $indexText } else { $adminText }
+    if ($hay -like "*$($m.Pattern)*") { Pass "built: $($m.Name)" }
     else { Fail "built bundle is MISSING $($m.Name).`nThis build would revert production. Deploy aborted - nothing was touched." }
 }
 

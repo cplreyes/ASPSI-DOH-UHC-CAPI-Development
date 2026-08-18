@@ -18,6 +18,7 @@ import { PendingCount } from '@/components/sync/PendingCount';
 import { DeliveryStatus } from '@/components/sync/DeliveryStatus';
 import { LanguageSwitcher } from '@/components/i18n/LanguageSwitcher';
 import { BroadcastBanner } from '@/components/chrome/BroadcastBanner';
+import { ClearanceBlock, GovLogos } from '@/components/chrome/GovBrand';
 import { KillSwitchOverlay } from '@/components/chrome/KillSwitchOverlay';
 import { SpecDriftOverlay } from '@/components/chrome/SpecDriftOverlay';
 import { LocaleProvider, useLocale } from '@/i18n/locale-context';
@@ -400,14 +401,19 @@ function AppShell() {
   return (
     <main className="mx-auto flex min-h-screen-dvh w-full max-w-screen-xl flex-col">
       <BroadcastBanner message={runtimeConfig.broadcast_message} />
-      <header className="flex items-center justify-between border-b px-6 py-3">
+      <header className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b px-6 py-3">
         <div className="flex flex-col">
           <h1 className="font-serif text-3xl font-medium tracking-tight">{t('chrome.appTitle')}</h1>
           <span className="font-mono text-xs leading-none text-muted-foreground">
             v{APP_VERSION} · spec {LOCAL_SPEC_VERSION}
           </span>
         </div>
+        {/* RA-approved masthead (2026-08-17): clearance block sits left of the
+            logo strip on wide screens; on narrow screens it wraps to its own
+            full-width row so the regulatory text stays visible on phones. */}
+        <ClearanceBlock className="order-last basis-full md:order-none md:ml-auto md:basis-auto" />
         <div className="flex items-center gap-3">
+          <GovLogos />
           <LanguageSwitcher />
           <PendingCount />
           {authStatus === 'enrolled' ? (
