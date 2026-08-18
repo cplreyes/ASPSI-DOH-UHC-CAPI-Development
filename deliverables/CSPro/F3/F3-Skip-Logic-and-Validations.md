@@ -1,4 +1,4 @@
-OK: banner ---
+---
 type: spec
 project: ASPSI-DOH-CAPI-CSPro-Development
 deliverable: F3 Patient Survey — CAPI logic spec
