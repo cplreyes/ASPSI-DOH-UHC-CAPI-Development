@@ -62,7 +62,26 @@ SURGICAL, line-anchored text edit (`surgical_rejoin_scoped_text` /
 `strip_item_keys`): find each affected key's own line, rename or delete it
 in place, repair a dangling trailing comma, then validate the whole result
 with `json.loads` and a removed/renamed key-set equality check before
-writing. Every other byte of the file is untouched.
+writing. Every untouched line is preserved byte-for-byte, INCLUDING its
+original line-ending bytes.
+
+Newline discipline (fix round 1, 2026-08-18 -- reviewer-caught): the real
+MAIN locale files are LF-only. `Path.read_text`/`write_text` default to
+universal-newline translation, which on Windows means a plain `write_text()`
+silently turns every `\n` in the file into `\r\n` on write -- even for lines
+this tool never touched -- flipping the whole file to CRLF (the documented
+2026-07-13 F2 incident, recurring). Every read/write of a real locale file in
+this module therefore passes `newline=""` (disables translation entirely: a
+read returns line endings exactly as stored, a write emits exactly what's in
+the string, no substitution either direction).
+
+Atomicity (fix round 1): `--apply` is plan-then-write, not
+plan-then-write-per-locale. All 7 locale files' plans, surgical texts, and
+removed/renamed key-set equality checks are computed and validated FIRST
+(`_prepare_cspro_write` / `_prepare_pwa_write`); only if every one of the 7
+passes does the tool write any of them (`_commit_write`). A validation
+failure on locale 5 of 7 aborts the whole instrument run with ZERO files
+written -- never a half-applied instrument.
 
 Usage:
     python rejoin_translations.py F1 --map maps/F1-renames.csv [--apply]
@@ -418,12 +437,13 @@ def surgical_rejoin_text_keys(text: str, moved: list):
 # --- report ----------------------------------------------------------------
 
 
-def _content_key(key: str) -> bool:
-    return key.startswith(("item:", "vs:", "val:", "record:"))
-
-
 def summarize_plan(plan: dict):
-    carried = sum(1 for k in plan["kept"] if _content_key(k) or ":" not in k) + len(plan["moved"])
+    """carried = every kept key that isn't the structural `_meta` marker,
+    plus every moved key -- computed directly from the plan (fix round 1:
+    a key-prefix heuristic here previously double-counted `_meta` as
+    carried, ~+7 across the fleet, and undercounted any PWA English-text
+    key that happens to contain a literal colon)."""
+    carried = sum(1 for k in plan["kept"] if k != "_meta") + len(plan["moved"])
     return carried, len(plan["fellback"])
 
 
@@ -481,28 +501,44 @@ def write_report(inst, mode, per_locale_plans: dict, new_rows: list, out_path: P
 # --- CLI ---------------------------------------------------------------
 
 
-def _apply_cspro(path: Path, plan: dict):
-    text = path.read_text(encoding="utf-8")
+def _prepare_cspro_write(path: Path, plan: dict) -> str:
+    """Compute + validate the post-plan surgical text for `path` WITHOUT
+    writing it (plan-then-write: see module docstring "Atomicity"). Raises
+    ValueError on any equality-gate mismatch or invalid JSON, so a caller
+    driving all 7 locales can abort the whole instrument before any file is
+    touched. `newline=""` disables newline translation on read (see module
+    docstring "Newline discipline")."""
+    text = path.read_text(encoding="utf-8", newline="")
     new_text, applied_moves, applied_drops = surgical_rejoin_scoped_text(text, plan["moved"], plan["fellback"])
     expected_moves = {k for k, _ in plan["moved"]}
     expected_drops = {k for k, _ in plan["fellback"]}
     if set(applied_moves) != expected_moves or set(applied_drops) != expected_drops:
-        raise SystemExit(
+        raise ValueError(
             f"{path}: surgical edit mismatch -- expected moves {expected_moves}, got {set(applied_moves)}; "
             f"expected drops {expected_drops}, got {set(applied_drops)}"
         )
     json.loads(new_text)  # validate before writing
-    path.write_text(new_text, encoding="utf-8")
+    return new_text
 
 
-def _apply_pwa(path: Path, plan: dict):
-    text = path.read_text(encoding="utf-8")
+def _prepare_pwa_write(path: Path, plan: dict) -> str:
+    """Same idea as _prepare_cspro_write for the PWA flat store."""
+    text = path.read_text(encoding="utf-8", newline="")
     new_text, applied = surgical_rejoin_text_keys(text, plan["moved"])
     expected = {k for k, _ in plan["moved"]}
     if set(applied) != expected:
-        raise SystemExit(f"{path}: surgical rename mismatch -- expected {expected}, applied {set(applied)}")
+        raise ValueError(f"{path}: surgical rename mismatch -- expected {expected}, applied {set(applied)}")
     json.loads(new_text)
-    path.write_text(new_text, encoding="utf-8")
+    return new_text
+
+
+def _commit_write(path: Path, new_text: str) -> None:
+    """The only place this module writes a real locale file. `newline=""`
+    disables write-side newline translation -- without it, Path.write_text
+    on Windows silently turns every `\\n` into `\\r\\n`, flipping an
+    LF-only fleet to CRLF even on lines this tool never touched (fix
+    round 1, reviewer-caught -- see module docstring)."""
+    path.write_text(new_text, encoding="utf-8", newline="")
 
 
 def main():
@@ -542,6 +578,7 @@ def _run_pwa(args):
         )
     rekey_map = load_pwa_rekey_map(args.map)
     per_locale_plans = {}
+    pending_writes = []  # [(path, new_text)] -- plan-then-write, see module docstring "Atomicity"
     for loc in LOCALES:
         path = args.pwa_dir / f"{loc}.json"
         if not path.exists():
@@ -550,7 +587,13 @@ def _run_pwa(args):
         plan = plan_pwa_rekey(data, rekey_map)
         per_locale_plans[loc] = plan
         if args.apply:
-            _apply_pwa(path, plan)
+            pending_writes.append((path, _prepare_pwa_write(path, plan)))
+
+    if args.apply:
+        for path, new_text in pending_writes:
+            _commit_write(path, new_text)
+            print(f"  wrote {path}")
+
     out_path = args.report or (args.data_dir / "reports" / f"{args.instrument}-translation-carryover.md")
     stats = write_report(args.instrument, "pwa-rekey", per_locale_plans, [], out_path, dry_run=not args.apply)
     print(f"{args.instrument} --pwa: carried {stats['carried']}, moved across {len(per_locale_plans)} locale file(s). report -> {out_path}")
@@ -574,6 +617,7 @@ def _run_cspro(args, stale: bool):
         mode_label = "rename"
 
     per_locale_plans = {}
+    pending_writes = []  # [(path, new_text)] -- plan-then-write, see module docstring "Atomicity"
     for loc in LOCALES:
         path = args.cspro_dir / args.instrument / "translations" / f"{loc}.json"
         if not path.exists():
@@ -583,7 +627,12 @@ def _run_cspro(args, stale: bool):
         plan = plan_stale_drop(data, stem_changed, option_changed) if stale else plan_rejoin(data, rename_map, stem_changed, option_changed)
         per_locale_plans[loc] = plan
         if args.apply:
-            _apply_cspro(path, plan)
+            pending_writes.append((path, _prepare_cspro_write(path, plan)))
+
+    if args.apply:
+        for path, new_text in pending_writes:
+            _commit_write(path, new_text)
+            print(f"  wrote {path}")
 
     out_path = args.report or (args.data_dir / "reports" / f"{args.instrument}-translation-carryover.md")
     stats = write_report(args.instrument, mode_label, per_locale_plans, new_rows, out_path, dry_run=not args.apply)

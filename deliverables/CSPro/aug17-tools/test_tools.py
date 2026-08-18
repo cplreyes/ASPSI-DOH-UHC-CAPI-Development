@@ -313,12 +313,16 @@ def test_order_diff_registration_requires_full_coverage():
 # --- Task 0.6: rejoin_translations.py ---------------------------------------
 
 from rejoin_translations import (
+    _commit_write,
+    _prepare_cspro_write,
+    _prepare_pwa_write,
     compute_stale_from_tables,
     plan_pwa_rekey,
     plan_rejoin,
     plan_stale_drop,
     rebuild_locale_dict,
     require_name_scoped,
+    summarize_plan,
     surgical_rejoin_scoped_text,
 )
 
@@ -449,3 +453,105 @@ def test_surgical_apply_renames_and_drops_without_reformatting():
     for line in raw_text.splitlines():
         if not any(f'"{k}"' in line for k in touched):
             assert line in new_text
+
+
+# --- fix round 1 (reviewer): newline discipline + atomicity ----------------
+#
+# Real MAIN locale files are LF-only. Path.read_text/write_text default to
+# universal-newline translation, which on Windows means write_text() alone
+# silently turns every "\n" into "\r\n" -- even on lines never touched by
+# the surgical edit -- flipping the whole file to CRLF (the documented
+# 2026-07-13 F2 incident, recurring). The tests above only ever exercised
+# the pure surgical_rejoin_* functions in memory; they never went through
+# an actual filesystem write, which is exactly why this escaped review.
+# These two tests drive the REAL _prepare_*_write / _commit_write path
+# against an on-disk LF-only file via tmp_path.
+
+
+def test_apply_write_path_preserves_lf_only_line_endings(tmp_path):
+    raw_text = (FIXTURES / "mini_fil_scoped.json").read_text(encoding="utf-8", newline="")
+    assert "\r" not in raw_text  # fixture itself must be LF-only for this test to mean anything
+
+    target = tmp_path / "fil.json"
+    target.write_bytes(raw_text.encode("utf-8"))  # write LF-only bytes verbatim, no translation
+
+    data = json.loads(raw_text)
+    rename_map = {"Q1_LIKES_TEA": "Q1_ENJOYS_TEA"}
+    plan = plan_rejoin(data, rename_map, stem_changed_names=set(), stale_val_codes={("Q1_LIKES_TEA", "2")})
+
+    new_text = _prepare_cspro_write(target, plan)
+    _commit_write(target, new_text)
+
+    written_bytes = target.read_bytes()
+    assert b"\r" not in written_bytes  # the fix-round-1 regression: default-newline write_text()
+                                        # turned every "\n" into "\r\n" on Windows
+
+    reparsed = json.loads(written_bytes.decode("utf-8"))
+    assert reparsed["item:Q1_ENJOYS_TEA"] == data["item:Q1_LIKES_TEA"]
+    assert "val:Q1_ENJOYS_TEA_VS1:2" not in reparsed  # dropped (stale-option)
+    assert reparsed["val:Q1_ENJOYS_TEA_VS1:1"] == data["val:Q1_LIKES_TEA_VS1:1"]
+    assert reparsed["item:Q2_COLOR"] == data["item:Q2_COLOR"]  # untouched
+    assert reparsed["_meta"] == data["_meta"]
+
+    # every line not carrying a moved/dropped key is BYTE-identical to the
+    # original, including its own line-ending byte(s)
+    touched = {k for k, _ in plan["moved"]} | {k for k, _ in plan["fellback"]}
+    orig_lines = raw_text.splitlines(keepends=True)
+    new_lines_set = set(new_text.splitlines(keepends=True))
+    for line in orig_lines:
+        if any(f'"{k}"' in line for k in touched):
+            continue
+        assert line in new_lines_set
+
+
+def test_pwa_apply_write_path_preserves_lf_only_line_endings(tmp_path):
+    raw_text = (
+        '{\n'
+        ' "Do you like invented tea? (fixture)": "Gusto mo ba ng tsaa? (fixture)",\n'
+        ' "Yes (fixture)": "Oo (fixture)"\n'
+        '}\n'
+    )
+    assert "\r" not in raw_text
+
+    target = tmp_path / "fil.json"
+    target.write_bytes(raw_text.encode("utf-8"))
+
+    data = json.loads(raw_text)
+    rekey_map = {"Do you like invented tea? (fixture)": "Do you enjoy invented tea? (fixture)"}
+    plan = plan_pwa_rekey(data, rekey_map)
+
+    new_text = _prepare_pwa_write(target, plan)
+    _commit_write(target, new_text)
+
+    written_bytes = target.read_bytes()
+    assert b"\r" not in written_bytes
+
+    reparsed = json.loads(written_bytes.decode("utf-8"))
+    assert reparsed["Do you enjoy invented tea? (fixture)"] == "Gusto mo ba ng tsaa? (fixture)"
+    assert reparsed["Yes (fixture)"] == "Oo (fixture)"  # unmapped -> byte-identical
+
+    touched = {k for k, _ in plan["moved"]}
+    orig_lines = raw_text.splitlines(keepends=True)
+    new_lines_set = set(new_text.splitlines(keepends=True))
+    for line in orig_lines:
+        if any(f'"{k}"' in line for k in touched):
+            continue
+        assert line in new_lines_set
+
+
+def test_summarize_plan_excludes_meta_and_counts_colon_keys():
+    # fix round 1: the old heuristic (startswith item:/vs:/val:/record: OR
+    # ":" not in key) counted "_meta" as carried (colon-free) and DROPPED
+    # any PWA English-text key containing a literal colon from the count.
+    plan = {
+        "kept": {
+            "_meta": {"format": "name-scoped-v2"},
+            "item:Q2_COLOR": "stem (fixture)",
+            "Note: please answer carefully (fixture)": "Paalala: sagutin nang mabuti (fixture)",
+        },
+        "moved": [("item:Q1_OLD", "item:Q1_NEW")],
+        "fellback": [],
+    }
+    carried, fellback = summarize_plan(plan)
+    assert carried == 3  # 2 kept (excluding _meta) + 1 moved
+    assert fellback == 0
