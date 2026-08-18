@@ -32,6 +32,39 @@ a leading `Q`, take the leading digit run, an optional trailing letter
 "10.1"). It is intentionally a single small regex, not a lookup table --
 robust to both CSPro dcf item names (`Q10_1_STEM`) and PWA item ids
 (`Q10_1`, `Q71a`) with no per-instrument special-casing.
+
+Stem/instruction split (CSPro mode, R19 -- rev-1.4 close-out finding)
+-----------------------------------------------------------------------
+A qsf item's `questionText.EN` is raw HTML, one or more `<p>` blocks.
+`generate_qsf.py` (the shipped build's own generator) bakes an enumerator-
+instruction paragraph (`<p class="instruction">...</p>`) and/or a plain
+section-intro paragraph into the SAME HTML block as the item's own printed
+stem -- established convention across generate_qsf.py (tickets #1055/#1048/
+#763/#776/#801/#1062/#1136-1137). The OLD `load_qsf_text` took the whole
+block, HTML-stripped it flat, and stored the concatenation as `stem` -- so a
+paper-vs-build STEM_DIFF was really diffing "paper's bare stem" against
+"build's stem + baked-in instruction/intro text", a pure representation
+artifact (confirmed on real F3 data: ~114 of 145 distinct F3 STEM_DIFF
+qnums were exactly this).
+
+Fix: `_split_qsf_paragraphs` splits the raw HTML into per-`<p>` text blocks
+(structural -- keys on the HTML's own paragraph tags, NOT generate_qsf.py's
+INSTRUCTIONS/SECTION_INTROS dicts, which this tool has no access to and
+shouldn't couple to). `_STEM_PARAGRAPH_RE` identifies the TRUE stem
+paragraph -- the one starting with the item's own printed number ("14. ",
+"9. ", "97.1 ", "38.1. " -- validated against all 371 real F3 qsf items:
+covers 106/109 multi-paragraph items with zero ambiguous multi-match
+cases). Critically, the stem paragraph is NOT always first (`Q4_NAME`'s
+real qsf: intro paragraph, then `class="instruction"` paragraph, then the
+numbered stem LAST) and NOT always un-classed (`Q9_GROUP`'s real qsf: the
+numbered stem is `<p>` with no class, followed by `class="instruction"`) --
+so this is structural detection by content shape, not by paragraph
+position or class attribute. Every OTHER paragraph becomes `instructions`
+(joined, exposed as a separate Row field -- see rowspec.py). A single-
+paragraph block, or a multi-paragraph block where NO paragraph matches the
+stem pattern (3 real F3 cases: the consent-script and build-banner blocks,
+which aren't real numbered items), degrades to the OLD whole-text-as-stem
+behavior -- never a guess.
 """
 from __future__ import annotations
 
