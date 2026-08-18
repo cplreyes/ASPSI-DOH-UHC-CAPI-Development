@@ -74,7 +74,12 @@ async function readVisibleSections(page: import('@playwright/test').Page, role: 
   await expect(radio).toBeVisible({ timeout: 10000 });
   await radio.check({ force: true });
   await expect(radio).toBeChecked();
-  await page.waitForTimeout(300);
+  // Section.tsx debounces onAutosave 500ms after the last field change
+  // (src/components/survey/Section.tsx:129) before merged/Q5 updates and the
+  // role-gated sidebar (shouldShowSection) can react -- 300ms was short of
+  // that window, so every cadre read back the same role-agnostic 7-section
+  // list (A,B,F,H,I,J,K) regardless of the radio actually being checked.
+  await page.waitForTimeout(900);
   const items = page.locator('aside').first().getByRole('button');
   const count = await items.count();
   const names: string[] = [];
@@ -145,7 +150,7 @@ for (const cadre of CADRES) {
     }
 
     await page.screenshot({
-      path: `docs/uat-fix-evidence-cadre-routing/${cadre.label}.png`,
+      path: `../../../../docs/uat-fix-evidence/2026-08-18-aug17-migration/F2/${cadre.label}.png`,
       fullPage: false,
     });
   });
