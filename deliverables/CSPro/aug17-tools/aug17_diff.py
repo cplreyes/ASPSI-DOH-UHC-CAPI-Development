@@ -142,21 +142,23 @@ CLASS_ENUM = (
 
 # Core categories per the task-0.4 brief, plus two join-mechanics extensions
 # the brief's own point (b)/(d) require (UNMATCHED_BUILD, CONSENT_DIFF), plus
-# VALIDATION_INFO (Task 3.4 R15) and MESSAGE_INFO (R18): the non-blocking
-# siblings of VALIDATION_DIFF/MESSAGE_DIFF for the "not both sides have
-# content" case -- see module docstring and `_compare_pair`.
+# VALIDATION_INFO (Task 3.4 R15), MESSAGE_INFO (R18), and INSTRUCTIONS_INFO
+# (R19): non-blocking, always-visible-when-present INFO siblings -- see
+# module docstring and `_compare_pair`.
 CATEGORIES = [
     "MISSING_IN_BUILD", "EXTRA_IN_BUILD", "STEM_DIFF", "OPTION_DIFF",
     "ORDER_DIFF", "SECTION_DIFF", "NOTE_DIFF", "CARDINALITY_DIFF",
     "SKIP_DIFF", "VALIDATION_DIFF", "VALIDATION_INFO", "MESSAGE_DIFF",
-    "MESSAGE_INFO", "DISPOSITION_DIFF", "CONSENT_DIFF", "UNMATCHED_BUILD",
+    "MESSAGE_INFO", "INSTRUCTIONS_INFO", "DISPOSITION_DIFF", "CONSENT_DIFF",
+    "UNMATCHED_BUILD",
 ]
 
 # Categories excluded from the exit-code gate this wave even when
 # unregistered (brief join-mechanics point (d): full consent conformance
-# is a Wave-1 task; R15/R18: VALIDATION_INFO/MESSAGE_INFO are visible-but-
-# non-blocking by design, not a deferred wave).
-NON_BLOCKING_CATEGORIES = {"CONSENT_DIFF", "VALIDATION_INFO", "MESSAGE_INFO"}
+# is a Wave-1 task; R15/R18/R19: VALIDATION_INFO/MESSAGE_INFO/
+# INSTRUCTIONS_INFO are visible-but-non-blocking by design, not a deferred
+# wave).
+NON_BLOCKING_CATEGORIES = {"CONSENT_DIFF", "VALIDATION_INFO", "MESSAGE_INFO", "INSTRUCTIONS_INFO"}
 
 
 # --- text normalization (transform #3; see module docstring) --------------
@@ -526,6 +528,17 @@ def _compare_pair(q: str, p: Row, b: Row) -> list:
     if _norm_paper_text(p.section) != _norm_build_section(b.section):
         out.append(Finding("SECTION_DIFF", q,
             f'paper section="{p.section}" | build ({b.item_name}) section="{b.section}"'))
+
+    if b.instructions:
+        # R19 (rev-1.4 close-out finding): build_tables.py's qsf stem/
+        # instruction split (see its module docstring) severs an
+        # enumerator-instruction / section-intro paragraph that used to be
+        # silently concatenated into `stem`. There is no paper-side field
+        # to diff it against (paper's own instruction/note text already
+        # gets its own separate kind="instruction"/"note" Row) -- this is
+        # purely a visibility channel, always non-blocking, never silent.
+        out.append(Finding("INSTRUCTIONS_INFO", q,
+            f'build ({b.item_name}) instructions="{b.instructions}"'))
 
     return out
 

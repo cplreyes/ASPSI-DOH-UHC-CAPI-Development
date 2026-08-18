@@ -292,6 +292,31 @@ def test_message_diff_paper_empty_is_info_not_blocking():
     assert blocking == 0
 
 
+# --- Task 3.4, R19 (rev-1.4 close-out finding): severed qsf instruction --
+# surfaces as a non-blocking INFO channel, never silently dropped.
+
+
+def test_build_instructions_surface_as_non_blocking_info():
+    paper = [Row(inst="F9", qnum="4", kind="item", stem="Invented item stem (fixture).",
+                 qtype="text", cardinality="single")]
+    build = [Row(inst="F9", qnum="4", item_name="Q4", kind="item", stem="Invented item stem (fixture).",
+                 qtype="text", cardinality="single",
+                 instructions="Invented severed instruction text (fixture).")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert any(f.category == "INSTRUCTIONS_INFO" and "Invented severed instruction" in f.detail
+               for f in findings)
+    assert blocking == 0
+
+
+def test_no_instructions_produces_no_instructions_info_finding():
+    paper = [Row(inst="F9", qnum="5", kind="item", stem="Invented item stem (fixture).",
+                 qtype="text", cardinality="single")]
+    build = [Row(inst="F9", qnum="5", item_name="Q5", kind="item", stem="Invented item stem (fixture).",
+                 qtype="text", cardinality="single", instructions="")]
+    findings, counts, blocking = diff_instrument("F9", paper, build, _empty_register())
+    assert not any(f.category == "INSTRUCTIONS_INFO" for f in findings)
+
+
 def test_disposition_diff():
     paper = [
         Row(inst="F9", kind="section_header", section="FIELD CONTROL", stem="FIELD CONTROL"),
