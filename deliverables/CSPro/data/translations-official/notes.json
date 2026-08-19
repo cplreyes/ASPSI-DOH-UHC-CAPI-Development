@@ -43,13 +43,13 @@
     "ILO": "(Saludsodenmi itan ti maipapan iti pannakaammoyo iti UHC, dagiti panagbalbaliw a naipatungpal iti daytoy a pasilidad sipud idi naipasa ti UHC Act idi 2019 ken no dagitoy a panagbalbaliw ket resulta ti UHC Act.) C"
    },
    "intro:51": {
-    "FIL": "Ang mga susunod na tanong na aming itatanong ay may kaugnayan sa YAKAP/Konsulta package",
-    "BCL": "An sunod na hapot ay manungod sa YAKAP/Konsulta package",
-    "BIS": "Ang mosunod nga mga pangutana may kalabotan sa YAKAP/Konsulta package",
-    "CEB": "Ang mo sunod nga mga pangutana magtuki mahitungod sa YAKAP/Konsulta package",
-    "WAR": "An sunod nga aton igpapakiana in may kalabutan han YAKAP/Konsulta package",
-    "HIL": "Ang masunod nga mga pamangkot nga aton ipangutana nagahisgot sa YAKAP/Konsulta nga package",
-    "ILO": "Dagiti sumaruno a saludsod nga isaludsodtayo ket mainaig iti pakete ti YAKAP/Konsulta"
+    "FIL": "Ang mga susunod na tanong na aming itatanong ay may kaugnayan sa YAKAP/Konsulta package. Mangyaring sagutin ayon sa iyong kaalaman. Maaari kang sumagot ng “Hindi ko alam” kung ikaw ay hindi sigurado.",
+    "BCL": "An sunod na hapot ay manungod sa YAKAP/Konsulta package. Pakisimbag an pinakatama. Pwede ka magsimbag ki “Dai ko aram” kun dai ka nakasiguro.",
+    "BIS": "Ang mosunod nga mga pangutana may kalabotan sa YAKAP/Konsulta package. Palihog tubag base sa imong nahibaluan. Mahimo ka motubag og “Wala ko kabalo” kung dili ka sigurado.",
+    "CEB": "Ang mo sunod nga mga pangutana magtuki mahitungod sa YAKAP/Konsulta package. Paki tubag sumala sa imong nahibaw-an. Pwede ka motubag og “Wala ko kahibalo” kung dili ka sigurado.",
+    "WAR": "An sunod nga aton igpapakiana in may kalabutan han YAKAP/Konsulta package. Alayon pagbaton kutob han imo nahibabaroan. Mahimo ka bumaton hin \" Diri ako maaram\" kun diri ka sigurado.",
+    "HIL": "Ang masunod nga mga pamangkot nga aton ipangutana nagahisgot sa YAKAP/Konsulta nga package. Palihog sabta ini sa pinakamaayo nga imo kahibalo. Pwede ka magbaton sang “Indi ko kabalo” kon indi ka sigurado.",
+    "ILO": "Dagiti sumaruno a saludsod nga isaludsodtayo ket mainaig iti pakete ti YAKAP/Konsulta. Pangngaasiyo ta sumungbatkayo iti kasayaatan a pannakaammoyo. Mabalin a sungbatam a “Diak ammo” no dika masigurado."
    },
    "intro:101": {
     "FIL": "Magtatanong na kami ngayon ng mga katanungan na may kaugnayan sa BUCAS center at GAMOT package",
@@ -64,10 +64,10 @@
     "FIL": "Magtatanong kami ngayon tungkol sa karanasan ng inyong pasilidad sa proseso ng pagkuha ng lisensya",
     "BCL": "An sunod na mga kahapotan manungod sa naeksperyensya sa licensing process kan pasilidad na ini",
     "BIS": "Karon mangutana mi bahin sa kasinatian sa inyong pasilidad sa proseso sa licensing",
-    "CEB": "Karon mangutana kami bahin sa inyong kasinatian sa pag proseso sa lisensya F",
+    "CEB": "Karon mangutana kami bahin sa inyong kasinatian sa pag proseso sa lisensya",
     "WAR": "Papakianhan ka namon yana mahitungod han iyo eksperyensya han pasilidad ha proseso han paglisensya",
     "HIL": "Mamangkot kami subong sang impormasyon parte sa eksperyensya sang imo pasilidad sa proseso sang pagkuha lisensya",
-    "ILO": "(Saludsodenmi itan kadakayo ti maipapan iti kapadasan ti pasilidadyo iti proseso ti panaglisensia.) F"
+    "ILO": "(Saludsodenmi itan kadakayo ti maipapan iti kapadasan ti pasilidadyo iti proseso ti panaglisensia.)"
    },
    "intro:135": {
     "FIL": "Ang susunod na set ng mga tanong ay tumatalakay sa proseso ng paghahatid ng serbisyo",
