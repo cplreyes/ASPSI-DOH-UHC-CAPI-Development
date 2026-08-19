@@ -35,6 +35,8 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+# Defaults to the deliverables/CSPro next to this tool. --base points it at another checkout,
+# which is needed while this tool lives in a worktree whose generators are behind main.
 CSPRO = Path(__file__).resolve().parent.parent
 QSF = {'F1': 'F1/FacilityHeadSurvey.ent.qsf',
        'F3': 'F3/PatientSurvey.ent.qsf',
@@ -192,7 +194,14 @@ def check(inst):
 
 
 def main():
-    names = [a.upper() for a in sys.argv[1:]] or ['F1', 'F3', 'F4']
+    global CSPRO
+    args = sys.argv[1:]
+    if '--base' in args:
+        i = args.index('--base')
+        CSPRO = Path(args[i + 1]).resolve()
+        del args[i:i + 2]
+        print(f'base: {CSPRO}')
+    names = [a.upper() for a in args] or ['F1', 'F3', 'F4']
     bad = [n for n in names if not check(n)]
     print(('\nR25 caption gate: PASS' if not bad else f'\nR25 caption gate: FAIL {bad}'))
     return 1 if bad else 0
