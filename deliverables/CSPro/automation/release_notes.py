@@ -8,12 +8,16 @@ notes grouped by change type (Added / Changed / Deprecated / Removed / Fixed / S
 an Unreleased section for working-tree bumps, linkable versions, ISO dates, and explicit
 BREAKING flags. Versioning follows SemVer (see VERSIONING.md).
 
+Also renders the PLAIN-LANGUAGE lane for field staff: WHATS-NEW.md + whats-new.html
+(portal shell), published to capi.asiansocial.org/projects/uhc-y2/whats-new/.
+
 Inputs:
   1. git history of versions.json: every commit where an instrument's version changed is
      a release (deploy date from the json `date` field; commit kept as provenance).
   2. Working-tree versions.json: a bumped-but-uncommitted version renders under Unreleased.
   3. automation/release-notes-extra.json: the CURATED notes, per "KEY x.y.z":
-       "F3 4.0.0": {"breaking": true, "Changed": ["..."], "Fixed": ["..."]}
+       "F3 4.0.0": {"breaking": true, "Changed": ["..."], "Fixed": ["..."],
+                    "whatsnew": ["plain-language line for field staff"]}
      (a plain list is accepted and rendered as Changed). These are the human notes the
      standard asks for -- commit subjects only fill in where no curated notes exist yet.
 
@@ -21,10 +25,13 @@ Usage:
   py release_notes.py regen
   py release_notes.py note F3 "Q45 skip restored after renumbering"            # -> Fixed
   py release_notes.py note F3 --type added "GAMOT block Q69-78" --breaking     # typed + flag
+  py release_notes.py whatsnew F3 "The app now matches the Aug-17 paper questionnaire"
+  py release_notes.py publish                                                  # portal scp
 
-stamp_version.py calls regen after every bump/set; its --notes text lands here typed by
-bump kind (patch->Fixed, minor->Added, major->Changed) unless --type overrides.
-RELEASE-NOTES.md is GENERATED -- never hand-edit it; edit the overlay instead.
+stamp_version.py calls regen + publish after every bump/set; its --notes text lands here
+typed by bump kind (patch->Fixed, minor->Added, major->Changed) unless --type overrides,
+and --whatsnew feeds the field-staff page. RELEASE-NOTES.md / WHATS-NEW.md / whats-new.html
+are GENERATED -- never hand-edit them; edit the overlay instead.
 F2 PWA is a separate lane: deliverables/F2/PWA/app/CHANGELOG.md (milestone-close workflow).
 """
 import json
@@ -176,6 +183,10 @@ def regen():
         '> `py automation/release_notes.py note F3 [--type fixed|added|...] [--breaking] "..."`',
         '> or `stamp_version.py bump F3 --notes "..."` (typed by bump kind). Entries without',
         "> curated notes fall back to their release commit's subject.",
+        ">",
+        "> Plain-language lane for field staff: `WHATS-NEW.md` + the portal page",
+        "> [capi.asiansocial.org/projects/uhc-y2/whats-new](https://capi.asiansocial.org/projects/uhc-y2/whats-new/)",
+        "> (`whatsnew` bullets in the same overlay; auto-published on every bump).",
     ]
     f2v = f2_version()
     if f2v:
@@ -212,9 +223,11 @@ def regen():
                          prev["sha"] if prev else None,
                          prev["version"] if prev else None, extra, url)
     OUT.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8", newline="\n")
+    render_whatsnew(releases, cur, extra, url)
     n = sum(len(v) for v in releases.values())
     print(f"[notes] {OUT.name}: {n} releases, {len(unreleased)} unreleased, "
           f"{sum(1 for k in ORDER if releases[k])} instruments")
+    publish()   # keep the portal page current; soft-fails, never blocks a bump/regen
     return True
 
 
@@ -238,15 +251,173 @@ def add_note(key, version, text, type_=None, breaking=None):
     print(f"[notes] {t} bullet recorded for {key.upper()} {version}")
 
 
+# ---------- What's New (plain-language lane) ----------
+# Same overlay, second audience: enumerators / supervisors / field staff. Each release
+# slot may carry "whatsnew": ["plain-language line", ...]. Rendered to WHATS-NEW.md and
+# whats-new.html (portal shell from automation/whatsnew_template.html), and published to
+# the CAPI portal at capi.asiansocial.org/projects/uhc-y2/whats-new/ on every bump.
+
+WN_MD = ROOT / "WHATS-NEW.md"
+WN_HTML = ROOT / "whats-new.html"
+WN_TEMPLATE = ROOT / "automation" / "whatsnew_template.html"
+WN_SERVER = "root@207.148.65.115"
+WN_REMOTE_DIR = "/opt/app/capi-www/projects/uhc-y2/whats-new"
+SSH_KEY = str(Path.home() / ".ssh" / "aspsi-csweb")
+MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+WN_STYLE = """<style>
+.wn-howto{border:1px solid #e2e2da;border-left:4px solid #e5b23b;border-radius:10px;
+  padding:14px 16px;margin:18px 0 22px;background:#fdfaf2;line-height:1.55}
+.wn-vers{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 26px}
+.wn-ver-card{border:1px solid #e2e2da;border-radius:10px;padding:10px 14px;min-width:150px;background:#fff}
+.wn-ver-card .k{font-size:.78rem;color:#6b7264}
+.wn-ver-card .v{font-weight:700;font-size:1.05rem;color:#046a38}
+.wn-ver-card .d{font-size:.75rem;color:#9aa093}
+.wn-item{border:1px solid #e2e2da;border-radius:12px;padding:16px 18px;margin:0 0 14px;background:#fff}
+.wn-item .wn-meta{font-size:.78rem;color:#6b7264;margin-bottom:2px}
+.wn-item h3{margin:0 0 8px;font-size:1.02rem}
+.wn-item ul{margin:0;padding-left:20px;line-height:1.6}
+.wn-vtag{font-weight:600;color:#046a38;font-size:.85em}
+.wn-badge{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;
+  background:#046a38;color:#fff;font-size:.7rem;font-weight:600;vertical-align:middle}
+.wn-foot{margin-top:26px;font-size:.85rem;color:#6b7264}
+</style>"""
+
+HOWTO = ("On the tablet: open CSEntry, remove the app, then Add Application and download it "
+         "again from CSWeb. (The three-dot Update menu is unreliable.) You are up to date "
+         "when the app list shows the version above.")
+
+
+def nice_date(iso):
+    try:
+        y, m, d = (int(x) for x in iso.split("-"))
+        return f"{MONTHS[m - 1]} {d}, {y}"
+    except (ValueError, IndexError):
+        return iso
+
+
+def wn_slot(extra, key, ver):
+    slot = extra.get(f"{key} {ver}")
+    if isinstance(slot, dict):
+        return list(slot.get("whatsnew", [])), bool(slot.get("breaking"))
+    return [], False
+
+
+def wn_feed(releases, extra):
+    feed = []
+    for k in ORDER:
+        for rel in releases[k]:
+            bullets, breaking = wn_slot(extra, k, rel["version"])
+            if bullets:
+                feed.append({"key": k, "version": rel["version"], "date": rel["date"],
+                             "bullets": bullets, "breaking": breaking})
+    feed.sort(key=lambda e: (e["date"], e["key"]), reverse=True)
+    return feed
+
+
+def render_whatsnew(releases, cur, extra, url):
+    import html as _html
+    esc = _html.escape
+    feed = wn_feed(releases, extra)
+    tech = f"{url}/blob/main/deliverables/CSPro/RELEASE-NOTES.md"
+
+    md = ["# What's new in the CAPI apps", "",
+          "Plain-language updates for enumerators, supervisors, and field staff.", "",
+          "**How to update:** " + HOWTO, "", "## Current versions", "",
+          "| App | Version | Date |", "|---|---|---|"]
+    for k in ORDER:
+        if k in cur:
+            md.append(f"| {NAMES[k]} ({k}) | v{cur[k]['version']} | {cur[k]['date']} |")
+    md += ["", "## Updates", ""]
+    for e in feed:
+        flag = " — big update, start fresh cases" if e["breaking"] else ""
+        md.append(f"### {nice_date(e['date'])} — {NAMES[e['key']]} ({e['key']}) v{e['version']}{flag}")
+        md += [f"- {b}" for b in e["bullets"]]
+        md.append("")
+    md.append(f"_Technical release notes: {tech}_")
+    WN_MD.write_text("\n".join(md).rstrip() + "\n", encoding="utf-8", newline="\n")
+
+    parts = [WN_STYLE,
+             '<div class="page-head"><div class="eyebrow">UHC Survey Year 2 &middot; CAPI apps</div>',
+             "<h1>What&rsquo;s new</h1>",
+             '<p class="lead">Plain-language updates for enumerators, supervisors, and field '
+             "staff &mdash; what changed in each app and what to do.</p></div>",
+             '<div class="wn-howto"><b>How to update:</b> ' + esc(HOWTO) + "</div>",
+             '<div class="wn-vers">']
+    for k in ORDER:
+        if k in cur:
+            parts.append(f'<div class="wn-ver-card"><div class="k">{esc(NAMES[k])} ({k})</div>'
+                         f'<div class="v">v{esc(cur[k]["version"])}</div>'
+                         f'<div class="d">{esc(nice_date(cur[k]["date"]))}</div></div>')
+    parts.append("</div>")
+    for e in feed:
+        badge = ('<span class="wn-badge">Big update &mdash; start fresh cases</span>'
+                 if e["breaking"] else "")
+        parts.append('<div class="wn-item"><div class="wn-meta">' + esc(nice_date(e["date"])) +
+                     "</div><h3>" + esc(f"{NAMES[e['key']]} ({e['key']})") +
+                     f' <span class="wn-vtag">v{esc(e["version"])}</span>' + badge + "</h3><ul>" +
+                     "".join(f"<li>{esc(b)}</li>" for b in e["bullets"]) + "</ul></div>")
+    parts.append(f'<p class="wn-foot">Looking for the technical detail? '
+                 f'<a href="{tech}">Full release notes on GitHub</a>.</p>')
+    page = WN_TEMPLATE.read_text(encoding="utf-8").replace("{{CONTENT}}", "\n".join(parts))
+    WN_HTML.write_text(page, encoding="utf-8", newline="\n")
+    print(f"[notes] whats-new: {len(feed)} entries -> {WN_MD.name} + {WN_HTML.name}")
+
+
+def add_whatsnew(key, version, text):
+    extra = load_extra()
+    slot = extra.setdefault(f"{key.upper()} {version}", {})
+    if isinstance(slot, list):
+        slot = {"Changed": slot}
+        extra[f"{key.upper()} {version}"] = slot
+    slot.setdefault("whatsnew", [])
+    if text not in slot["whatsnew"]:
+        slot["whatsnew"].append(text)
+    EXTRA.write_text(json.dumps(extra, indent=2, ensure_ascii=False) + "\n",
+                     encoding="utf-8", newline="\n")
+    print(f"[notes] whatsnew bullet recorded for {key.upper()} {version}")
+
+
+def publish():
+    """scp whats-new.html to the CAPI portal. Soft-fails with a warning (never blocks a bump)."""
+    if not WN_HTML.exists():
+        print("[notes] ! whats-new.html missing -- run regen first")
+        return False
+    if not Path(SSH_KEY).exists():
+        print("[notes] (portal publish skipped -- no ~/.ssh/aspsi-csweb key on this machine)")
+        return False
+    opts = ["-i", SSH_KEY, "-o", "BatchMode=yes", "-o", "ConnectTimeout=8"]
+    try:
+        mk = subprocess.run(["ssh", *opts, WN_SERVER, f"mkdir -p {WN_REMOTE_DIR}"],
+                            capture_output=True, text=True)
+        cp = subprocess.run(["scp", "-q", *opts, str(WN_HTML),
+                             f"{WN_SERVER}:{WN_REMOTE_DIR}/index.html"],
+                            capture_output=True, text=True)
+    except OSError as e:
+        print(f"[notes] ! portal publish failed ({e}) -- retry: py automation/release_notes.py publish")
+        return False
+    if mk.returncode == 0 and cp.returncode == 0:
+        print("[notes] published: capi.asiansocial.org/projects/uhc-y2/whats-new/")
+        return True
+    err = (cp.stderr or mk.stderr).strip().splitlines()
+    print(f"[notes] ! portal publish failed ({err[-1][:120] if err else 'unknown'}) "
+          "-- retry: py automation/release_notes.py publish")
+    return False
+
+
 def main():
     args = sys.argv[1:]
-    if not args or args[0] not in ("regen", "note"):
+    cmds = ("regen", "note", "whatsnew", "publish")
+    if not args or args[0] not in cmds:
         print(__doc__)
         sys.exit(1)
-    if args[0] == "note":
+    if args[0] == "publish":
+        sys.exit(0 if publish() else 1)
+    if args[0] in ("note", "whatsnew"):
         rest = args[1:]
         if not rest or rest[0].upper() not in ORDER:
-            print('usage: release_notes.py note F1|F3|F4|HUB [--type <t>] [--breaking] "text"')
+            print(f'usage: release_notes.py {args[0]} F1|F3|F4|HUB [--type <t>] [--breaking] "text"')
             sys.exit(1)
         key = rest[0].upper()
         type_ = rest[rest.index("--type") + 1] if "--type" in rest else None
@@ -256,10 +427,13 @@ def main():
             skip = {rest.index("--type"), rest.index("--type") + 1}
         words = [a for i, a in enumerate(rest) if i > 0 and i not in skip and a != "--breaking"]
         if not words:
-            print("note needs text")
+            print(f"{args[0]} needs text")
             sys.exit(1)
         cur = json.loads(VERSIONS.read_text(encoding="utf-8"))
-        add_note(key, cur[key]["version"], " ".join(words), type_, breaking)
+        if args[0] == "note":
+            add_note(key, cur[key]["version"], " ".join(words), type_, breaking)
+        else:
+            add_whatsnew(key, cur[key]["version"], " ".join(words))
     sys.exit(0 if regen() else 1)
 
 

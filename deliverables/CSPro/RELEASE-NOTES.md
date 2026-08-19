@@ -19,6 +19,10 @@ version SSOT, tracked since 2026-07-02 - earlier builds predate it).
 > or `stamp_version.py bump F3 --notes "..."` (typed by bump kind). Entries without
 > curated notes fall back to their release commit's subject.
 >
+> Plain-language lane for field staff: `WHATS-NEW.md` + the portal page
+> [capi.asiansocial.org/projects/uhc-y2/whats-new](https://capi.asiansocial.org/projects/uhc-y2/whats-new/)
+> (`whatsnew` bullets in the same overlay; auto-published on every bump).
+>
 > F2 PWA (separate lane): **v2.1.0** - notes in `deliverables/F2/PWA/app/CHANGELOG.md`
 > (written by the milestone-close workflow `uat-release-notes.yml`).
 

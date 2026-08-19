@@ -1,0 +1,30 @@
+# What's new in the CAPI apps
+
+Plain-language updates for enumerators, supervisors, and field staff.
+
+**How to update:** On the tablet: open CSEntry, remove the app, then Add Application and download it again from CSWeb. (The three-dot Update menu is unreliable.) You are up to date when the app list shows the version above.
+
+## Current versions
+
+| App | Version | Date |
+|---|---|---|
+| Facility Head Survey (F1) | v2.1.17 | 2026-08-18 |
+| Patient Survey (F3) | v4.0.0 | 2026-08-19 |
+| Household Survey (F4) | v3.0.1 | 2026-08-19 |
+| Supervisor Hub (HUB) | v1.1.5 | 2026-08-08 |
+
+## Updates
+
+### Aug 19, 2026 — Household Survey (F4) v3.0.0 — big update, start fresh cases
+- The Household Survey app now matches the updated (Aug 17) paper questionnaire - the hospital-bill questions (Q139-143) are restructured, a dug-well option was added to the water-source list, and the household roster gained Grandfather/Grandmother. Please start fresh cases after updating.
+
+### Aug 19, 2026 — Household Survey (F4) v3.0.1
+- Q142 item 6 no longer asks you to type anything - just tick Yes or No. 'Not applicable' on Q76 now shows in your chosen language instead of English.
+
+### Aug 19, 2026 — Patient Survey (F3) v4.0.0 — big update, start fresh cases
+- The Patient Survey app now matches the updated (Aug 17) paper questionnaire - new question order and numbering, new income brackets in Q18, and a new 'Quantified Free Service' payment option. Please start fresh cases after updating.
+
+### Aug 18, 2026 — Facility Head Survey (F1) v2.1.17
+- Translation fixes across the seven languages, including the Bicolano set. The bigger F1 update matching the Aug-17 paper questionnaire is coming - watch this page and #f1-uat.
+
+_Technical release notes: https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/blob/main/deliverables/CSPro/RELEASE-NOTES.md_
