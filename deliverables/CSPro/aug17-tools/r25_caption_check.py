@@ -129,16 +129,18 @@ def check(inst):
     texts = qsf_texts(CSPRO / QSF[inst])
     # build in a child process: each instrument ships its own generate_dcf/generate_fmf and
     # importing two of them in one interpreter collides in sys.modules.
+    # Write the fmf to stdout as explicit UTF-8 BYTES and decode it here. Letting Python pick
+    # an encoding fails on Windows: the generators' own diagnostics carry cp1252 em-dashes,
+    # and a utf-8 text-mode pipe dies on them before the fmf is ever read.
     code = ('import sys;sys.path.insert(0,r"%s");sys.path.insert(0,r"%s");'
             'import generate_fmf as g;r=g.build_fmf();'
-            'sys.stdout.write(r[0] if isinstance(r,tuple) else r)'
+            'sys.stdout.buffer.write((r[0] if isinstance(r,tuple) else r).encode("utf-8"))'
             % (CSPRO / inst, CSPRO))
-    p = subprocess.run([sys.executable, '-c', code], capture_output=True, text=True,
-                       encoding='utf-8')
+    p = subprocess.run([sys.executable, '-c', code], capture_output=True)
     if p.returncode != 0:
-        print(f'{inst}: build_fmf FAILED\n{p.stderr[-2000:]}')
+        print(f'{inst}: build_fmf FAILED\n{p.stderr.decode("utf-8", "replace")[-2000:]}')
         return False
-    groups = parse_fmf(p.stdout)
+    groups = parse_fmf(p.stdout.decode('utf-8'))
 
     noprompt, clashes, dup = [], [], defaultdict(int)
     kinds = defaultdict(int)
