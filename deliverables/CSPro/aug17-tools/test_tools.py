@@ -1594,6 +1594,42 @@ def test_format_register_row_carries_a_skip_diff_scope_marker():
     assert "[scope: SKIP_DIFF]" in line
 
 
+def test_end_to_end_emission_pipeline_stamps_the_scope_marker():
+    # Board task #9 (post-R20): confirms the marker survives the REAL
+    # generation path main() drives -- parse_skip_diff_findings /
+    # parse_matrix_rows / build_coverage_index / pick_covering_row --
+    # feeding on parsed diff.md/tier2-matrix.md TEXT, not hand-built finding/
+    # matrix_row dicts like the tests above. Closes any doubt that some
+    # OTHER code path (not format_register_row) might construct a row.
+    diff_text = (
+        "## SKIP_DIFF\n\n"
+        "- **UNREGISTERED** [7] paper skip=\"IF No GOTO <proceed to Q9> (fixture)\" "
+        "| build (Q7) skip=\"visible-if: v.Q6 === 'Yes' (fixture)\"\n\n"
+        "## STEM_DIFF\n\n"
+        "- some other finding (fixture)\n"
+    )
+    matrix_text = (
+        "| Rule | Expected behavior | Covering test | Status |\n"
+        "|---|---|---|---|\n"
+        "| Q7 visibility (fixture) | Shown only when Q6 = Yes (fixture) | "
+        "`shows Q7 when Q6 is Yes (fixture)` | PASS |\n"
+    )
+    findings = parse_skip_diff_findings(diff_text)
+    matrix_rows = parse_matrix_rows(matrix_text)
+    coverage = build_coverage_index(matrix_rows)
+    today = "2026-08-19"
+    emitted = []
+    for f in findings:
+        if f["registered"]:
+            continue
+        candidates = coverage.get(f["qnum"])
+        assert candidates, f"fixture setup bug: {f['qnum']} not covered"
+        row = pick_covering_row(f["qnum"], candidates)
+        emitted.append(format_register_row("F9", f["qnum"], f, row, today))
+    assert len(emitted) == 1
+    assert "[scope: SKIP_DIFF]" in emitted[0]
+
+
 def test_format_register_row_escapes_js_or_operator_safely():
     # Real-world catch: a build predicate containing "||" (e.g.
     # "isYes(v['Q87']) || isYes(v['Q88'])") would otherwise produce a
