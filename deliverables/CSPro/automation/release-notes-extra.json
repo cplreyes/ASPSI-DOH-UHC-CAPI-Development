@@ -95,8 +95,12 @@
     ]
   },
   "F1 3.0.0": {
-    "Fixed": [
+    "whatsnew": [
+      "MAJOR update. The Facility Head Survey app now matches the updated (Aug 17) paper questionnaire - renumbered end to end to Q1-Q153, with Section C rebuilt as a two-step battery (a Yes/No question, then 'If yes, was it a result of the UHC Act enacted in 2019?' on its own screen) and Sections D-H shifted by 13. New questions cover GAMOT medicine stock-outs, DOH Information System submissions, and Provincial Health Office protocols; the consent script now reads the full certificate and the SJREB/ASPSI contacts. Two routing bugs are closed - Q68-Q71 had no exit at all, and answering 'Yes' to Q137 used to skip the PHO questions. Please update the app and start fresh cases: v2 data does not line up with v3."
+    ],
+    "Changed": [
       "Aug-17 instrument rebuild, end to end. Renumbered to the 2026-08-17 printed questionnaire (Q1-Q153). Section C's 18 nine-option UHC9 items become a 23-pair two-step battery (Yes/No base + a Q<NN>.1 UHC-attribution probe on its own screen, seven with a .2 detail item); Sections D-H shift by -13. New content: the GAMOT stock-out block, the DOH-IS submission fan, the PHO protocol pair, and 18 probes. Consent gains the 4-paragraph certificate and SJREB/ASPSI contact block, byte-identical to F3/F4. Two routing defect-fixes: Q68-Q71 had NO exit at all (a 'haven't thought about it yet' respondent was walked through two other branches' questions) and Q137=Yes orphaned the Q139/Q140 PHO pair for every satisfied respondent. MAJOR version - the data shape breaks against v2.x."
-    ]
+    ],
+    "breaking": true
   }
 }

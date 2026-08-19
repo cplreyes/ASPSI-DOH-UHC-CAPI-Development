@@ -36,12 +36,12 @@ version SSOT, tracked since 2026-07-02 - earlier builds predate it).
 | HUB - Supervisor Hub | **v1.1.5** | 2026-08-08 |
 | F2 - Healthcare Worker Survey (PWA) | **v2.1.0** | see F2 CHANGELOG |
 
-## Unreleased
-
-- **F1 v3.0.0** (2026-08-19) - bumped in the working tree, not yet committed
-  - Fixed: Aug-17 instrument rebuild, end to end. Renumbered to the 2026-08-17 printed questionnaire (Q1-Q153). Section C's 18 nine-option UHC9 items become a 23-pair two-step battery (Yes/No base + a Q<NN>.1 UHC-attribution probe on its own screen, seven with a .2 detail item); Sections D-H shift by -13. New content: the GAMOT stock-out block, the DOH-IS submission fan, the PHO protocol pair, and 18 probes. Consent gains the 4-paragraph certificate and SJREB/ASPSI contact block, byte-identical to F3/F4. Two routing defect-fixes: Q68-Q71 had NO exit at all (a 'haven't thought about it yet' respondent was walked through two other branches' questions) and Q137=Yes orphaned the Q139/Q140 PHO pair for every satisfied respondent. MAJOR version - the data shape breaks against v2.x.
-
 ## F1 - Facility Head Survey
+
+### [v3.0.0](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/compare/af9f87f5c5c62463b9bf9025437c1db581e4c7fc...88249604fd4bdf378931ca788794956b807a38f3) - 2026-08-19 · MAJOR · **BREAKING** (data shape)
+#### Changed
+- Aug-17 instrument rebuild, end to end. Renumbered to the 2026-08-17 printed questionnaire (Q1-Q153). Section C's 18 nine-option UHC9 items become a 23-pair two-step battery (Yes/No base + a Q<NN>.1 UHC-attribution probe on its own screen, seven with a .2 detail item); Sections D-H shift by -13. New content: the GAMOT stock-out block, the DOH-IS submission fan, the PHO protocol pair, and 18 probes. Consent gains the 4-paragraph certificate and SJREB/ASPSI contact block, byte-identical to F3/F4. Two routing defect-fixes: Q68-Q71 had NO exit at all (a 'haven't thought about it yet' respondent was walked through two other branches' questions) and Q137=Yes orphaned the Q139/Q140 PHO pair for every satisfied respondent. MAJOR version - the data shape breaks against v2.x.
+_Release commit [`8824960`](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/commit/88249604fd4bdf378931ca788794956b807a38f3): aug17: F1 v3.0.0 deployed_
 
 ### [v2.1.17](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/compare/0a93fe0f2103b7093353607875626740d8f2a2da...af9f87f5c5c62463b9bf9025437c1db581e4c7fc) - 2026-08-18 · PATCH
 - aug17: F3 v4.0.0 deployed ([`af9f87f`](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/commit/af9f87f5c5c62463b9bf9025437c1db581e4c7fc))

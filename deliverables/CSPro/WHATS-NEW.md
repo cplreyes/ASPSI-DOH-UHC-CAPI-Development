@@ -24,6 +24,9 @@ Plain-language updates for enumerators, supervisors, and field staff.
 ### Aug 19, 2026 — Patient Survey (F3) v4.0.0 — big update, start fresh cases
 - The Patient Survey app now matches the updated (Aug 17) paper questionnaire - new question order and numbering, new income brackets in Q18, and a new 'Quantified Free Service' payment option. Please start fresh cases after updating.
 
+### Aug 19, 2026 — Facility Head Survey (F1) v3.0.0 — big update, start fresh cases
+- MAJOR update. The Facility Head Survey app now matches the updated (Aug 17) paper questionnaire - renumbered end to end to Q1-Q153, with Section C rebuilt as a two-step battery (a Yes/No question, then 'If yes, was it a result of the UHC Act enacted in 2019?' on its own screen) and Sections D-H shifted by 13. New questions cover GAMOT medicine stock-outs, DOH Information System submissions, and Provincial Health Office protocols; the consent script now reads the full certificate and the SJREB/ASPSI contacts. Two routing bugs are closed - Q68-Q71 had no exit at all, and answering 'Yes' to Q137 used to skip the PHO questions. Please update the app and start fresh cases: v2 data does not line up with v3.
+
 ### Aug 18, 2026 — Facility Head Survey (F1) v2.1.17
 - Translation fixes across the seven languages, including the Bicolano set. The bigger F1 update matching the Aug-17 paper questionnaire is coming - watch this page and #f1-uat.
 
