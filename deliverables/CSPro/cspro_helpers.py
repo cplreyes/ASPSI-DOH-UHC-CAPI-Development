@@ -835,6 +835,21 @@ def build_dictionary(dict_name, dict_label, records=None,
 CSPRO_LABEL_MAX = 255  # CSPro hard limit on any label (item/value/value-set/record).
 
 
+def _cap_text(t, max_len=CSPRO_LABEL_MAX):
+    """The exact string _truncate_long_labels would store for `t`.
+
+    Factored out so apply_translations can look a translation up under the capped key as
+    well as the full one - the two must stay in step, or #1182 comes back.
+    """
+    if not isinstance(t, str) or len(t) <= max_len:
+        return t
+    cut = t[:max_len - 3]
+    sp = cut.rfind(" ")
+    if sp > max_len * 0.6:
+        cut = cut[:sp]
+    return cut.rstrip(" ,;:-") + "..."
+
+
 def _truncate_long_labels(node, max_len=CSPRO_LABEL_MAX, hits=None):
     """Recursively cap every labels[].text at CSPro's max_len, truncating at a word
     boundary + '...'. CSPro rejects a dictionary outright if any label exceeds 255
@@ -864,11 +879,7 @@ def _truncate_long_labels(node, max_len=CSPRO_LABEL_MAX, hits=None):
             for lab in labs:
                 t = lab.get("text")
                 if isinstance(t, str) and len(t) > max_len:
-                    cut = t[:max_len - 3]
-                    sp = cut.rfind(" ")
-                    if sp > max_len * 0.6:
-                        cut = cut[:sp]
-                    lab["text"] = cut.rstrip(" ,;:-") + "..."
+                    lab["text"] = _cap_text(t, max_len)
                     hits.append((lab.get("language", "?"), len(t), lab["text"]))
         for k, v in node.items():
             _truncate_long_labels(v, max_len, hits)
@@ -876,6 +887,89 @@ def _truncate_long_labels(node, max_len=CSPRO_LABEL_MAX, hits=None):
         for x in node:
             _truncate_long_labels(x, max_len, hits)
     return hits
+
+
+# ============================================================
+# ON-FORM QUESTION CAPTIONS (R25, 2026-08-19)
+# ============================================================
+# CSEntry renders two panes: the CAPI question-text pane (from the .qsf, which follows the
+# language setting) and the form, whose every field carries an fmf `Text=` caption. Both
+# were derived from the same dictionary label, so the full ENGLISH question stem printed in
+# both - twice per screen in EN, and in a dialect the translated question above the full
+# English one. PSA/DOH flagged it; Carl approved this fix as ruling R25.
+#
+# Measured before the change (each generator's own build output vs its .qsf): 346 of F3's
+# 364 on-form captions and 299 of F4's 322 reproduced the qsf text verbatim. Also measured:
+# ZERO fields in either instrument lack qsf question text, which is what makes a
+# numeral-only caption safe - no screen is left without a readable prompt.
+#
+# The question therefore lives ONLY in the qsf pane and the form caption becomes a
+# language-neutral numeral tag. DICTIONARY labels are deliberately UNTOUCHED - they are the
+# variable labels in the exported data, the published codebook, the case tree and the CSWeb
+# case view. Display text and data labels diverge here on purpose, exactly as they already
+# did for the split components of #1006/#1142/#1201.
+#
+# ONE implementation, three callers (F1/F3/F4 generate_fmf). Do not copy it back into a
+# generator: this file's own history is the argument - the checkbox-base list had to live in
+# four places at once and shipped a silent multi-select data-loss regression twice (#529,
+# then #635/#639/#640) because one copy drifted out of step.
+
+# A printed question number at the head of a label: "1. ", "45.1 ", "97.2) ".
+_QNUM_LABEL_RE = re.compile(r"^\s*(\d+(?:\.\d+)*)\s*[.)]?\s+")
+# Other-specify / specify free-text trailers. These sit beside their parent question, so a
+# bare numeral would print identically twice on one screen; they get a distinct tag.
+_SPECIFY_SUFFIXES = ("_OTHER_TXT", "_SPECIFY", "_TXT")
+
+# DELIBERATELY NOT IMPLEMENTED: deriving the number from the FIELD NAME when the label has
+# none. It was tried and removed - across F3+F4 it fired on exactly two fields and was wrong
+# on both. F3 Q29_SEC_CLASS and F4 Q29_SOCIOECONOMIC_CLASS are the enumerator's
+# socioeconomic classification, which carries NO printed number; the "Q29_" prefix only
+# records that it follows Q29's asset battery. The fallback tagged the classification "29."
+# and put it on one screen beside Q29_WASHER, which is genuinely question 29 - two fields
+# labelled "29." side by side. The printed label prefix is the ONLY authority; a field that
+# needs a caption without one gets an explicit entry in its generator's SHORT_FORM_LABELS.
+
+
+def question_number(name, label):
+    """-> the printed question number for a field as a string ("36", "48.1"), or None.
+
+    None means "not a numbered question", and the caller keeps the full descriptive caption
+    unless an explicit short one is supplied. That class is the case key, the ICF read-aloud
+    screens, geographic/linkage fields, FIELD CONTROL admin fields, and the photo/GPS
+    capture fields - almost all of which carry a short admin label rather than a question."""
+    m = _QNUM_LABEL_RE.match(label or "")
+    return m.group(1) if m else None
+
+
+def question_caption(name, label, short_label=None):
+    """-> (caption, kind) for a field's on-form [Text] under R25.
+
+    kind is one of 'numeral' | 'specify' | 'component' | 'keep-full'; each generator
+    reports the census so the classification stays auditable from the build log.
+
+      component  an explicit designed short caption from the caller's SHORT_FORM_LABELS.
+                 It WINS over every other rule, and the numeral tag is prefixed when the
+                 label has one ("5. Month"). Two uses: a question split across two
+                 dictionary items that share a number and a screen (birth month/year,
+                 hours/minutes, amount/bracket), where a bare "5." would print twice; and
+                 an UNNUMBERED field whose label is a full-sentence question, which would
+                 otherwise keep a caption identical to its qsf text.
+      specify    "<n>. (specify)" - same reason, for the *_OTHER_TXT / *_SPECIFY trailers.
+      numeral    "<n>." - the ordinary case.
+      keep-full  no number and no override; the descriptive caption is kept verbatim.
+
+    A number REPEATED across SEPARATE screens is fine and deliberate (F3's Q115.1/115.2
+    batteries, F4's sixteen Q142 yes-no/amount pairs): only one of them renders per screen
+    and the qsf pane carries the discriminator ("...paid from this source?" vs "...Amount
+    in Pesos"). That was verified per field against the .qsf, not assumed."""
+    num = question_number(name, label)
+    if short_label:
+        return (f"{num}. {short_label}" if num else short_label), "component"
+    if num is None:
+        return label, "keep-full"
+    if name.endswith(_SPECIFY_SUFFIXES):
+        return f"{num}. (specify)", "specify"
+    return f"{num}.", "numeral"
 
 
 def write_dcf(dictionary, out_path):
@@ -953,14 +1047,63 @@ TRANSLATION_LANGUAGES = [
 ]
 
 
+def _value_pair_key(value):
+    """Stable identity for a value-set value: its CODES, never its wording.
+
+    Codes are the one thing an English relabel cannot move (the codebook/DDI
+    discipline), so translation keys built on them survive every rewording.
+    """
+    parts = []
+    for p in value.get("pairs", []) or []:
+        if "range" in p:
+            r = p["range"]
+            parts.append(f"{r[0]}..{r[1]}")
+        elif "value" in p:
+            parts.append(str(p["value"]))
+    if value.get("special"):
+        parts.append(f"special={value['special']}")
+    return ",".join(parts) if parts else "?"
+
+
+def walk_labeled_nodes(dictionary):
+    """Yield (key, node) for every labels-bearing node of a CSPro 8 dictionary.
+
+    THE key contract of the name-scoped translation map format (2026-08-17):
+    this one walker is shared by apply_translations(), the map migrator and the
+    poisoned-key scanner, so a key can never mean different things in different
+    tools. Key shapes:
+        dict:<NAME> | level:<NAME> | record:<NAME> | item:<NAME>
+        vs:<VALUE-SET-NAME> | val:<VALUE-SET-NAME>:<code[,code|lo..hi]>
+    """
+    def item_nodes(it):
+        yield f"item:{it.get('name', '?')}", it
+        for vs in it.get("valueSets", []) or []:
+            yield f"vs:{vs.get('name', '?')}", vs
+            for v in vs.get("values", []) or []:
+                yield f"val:{vs.get('name', '?')}:{_value_pair_key(v)}", v
+
+    yield f"dict:{dictionary.get('name', '?')}", dictionary
+    for lvl in dictionary.get("levels", []) or []:
+        yield f"level:{lvl.get('name', '?')}", lvl
+        for it in (lvl.get("ids") or {}).get("items", []) or []:
+            yield from item_nodes(it)
+        for rec in lvl.get("records", []) or []:
+            yield f"record:{rec.get('name', '?')}", rec
+            for it in rec.get("items", []) or []:
+                yield from item_nodes(it)
+
+
 def apply_translations(dictionary, translations_dir, languages=TRANSLATION_LANGUAGES):
     """Expand a single-language dictionary into a multi-language CSPro 8.0 dictionary.
 
-    Walks every `labels` list and replaces its single English entry with one
-    `{text, language}` entry per ACTIVE language. Translations are pulled from
-    `translations_dir/<file>.json`, keyed by the English label text; any key
-    missing from a map falls back to English. A language is active only if its
-    map file exists (EN is always active and first), so new locales are drop-in.
+    2026-08-17 re-key: maps are NAME-SCOPED (see walk_labeled_nodes), no longer
+    keyed on full English label text. The text keys silently orphaned a
+    translation on every English edit (#1182/#1213 — about half the measured
+    coverage gap), and a bare shared option key ("No" served 36 F1 value sets)
+    could not express per-question option wording (the #1222 wall). A name-
+    scoped key survives rewording, and every value-set option is independently
+    addressable. A missing key still means English fallback, verbatim. The
+    #1182 capped-key fallback is gone: name keys never hit the 255-char cap.
     Mutates and returns `dictionary`; prints a per-language coverage summary.
     """
     translations_dir = Path(translations_dir)
@@ -969,7 +1112,15 @@ def apply_translations(dictionary, translations_dir, languages=TRANSLATION_LANGU
         if fname is None:
             active.append((code, disp))
         elif (translations_dir / fname).exists():
-            maps[code] = json.loads((translations_dir / fname).read_text(encoding="utf-8"))
+            m = json.loads((translations_dir / fname).read_text(encoding="utf-8"))
+            m.pop("_meta", None)
+            legacy = [k for k in m if ":" not in k]
+            if legacy:
+                raise SystemExit(
+                    f"{fname}: {len(legacy)} legacy text-format keys (e.g. {legacy[0]!r}). "
+                    "Maps must be name-scoped — run data/translations-official/"
+                    "migrate_maps_namekeys.py or restore the intended map.")
+            maps[code] = m
             active.append((code, disp))
         else:
             skipped.append(code)
@@ -977,32 +1128,50 @@ def apply_translations(dictionary, translations_dir, languages=TRANSLATION_LANGU
     dictionary["languages"] = [{"name": c, "label": d} for c, d in active]
     counts = {c: [0, 0] for c in maps}   # code -> [matched, total]
 
-    def expand(node):
+    seen = set()
+    for key, node in walk_labeled_nodes(dictionary):
+        seen.add(id(node))
+        labs = node.get("labels")
+        if not (isinstance(labs, list) and labs and isinstance(labs[0], dict)
+                and "text" in labs[0]):
+            continue
+        en_text = labs[0]["text"]
+        new_labels = []
+        for code, _disp in active:
+            if code in maps:
+                counts[code][1] += 1
+                tr = maps[code].get(key)
+                if tr is not None:
+                    counts[code][0] += 1
+                else:
+                    tr = en_text
+                new_labels.append({"text": tr, "language": code})
+            else:
+                new_labels.append({"text": en_text, "language": code})
+        node["labels"] = new_labels
+
+    # Safety net: the walker must reach every labels node the old generic
+    # recursion reached — a structural addition that slips past it would ship
+    # silently English in all locales. A missed node is a hard error.
+    def _find_missed(node):
         if isinstance(node, dict):
             labs = node.get("labels")
-            if isinstance(labs, list) and labs and isinstance(labs[0], dict) and "text" in labs[0]:
-                en_text = labs[0]["text"]
-                new_labels = []
-                for code, _disp in active:
-                    if code in maps:
-                        counts[code][1] += 1
-                        tr = maps[code].get(en_text)
-                        if tr is not None:
-                            counts[code][0] += 1
-                        else:
-                            tr = en_text
-                        new_labels.append({"text": tr, "language": code})
-                    else:
-                        new_labels.append({"text": en_text, "language": code})
-                node["labels"] = new_labels
+            if (isinstance(labs, list) and labs and isinstance(labs[0], dict)
+                    and "text" in labs[0] and id(node) not in seen):
+                yield node
             for k, v in node.items():
                 if k != "labels":
-                    expand(v)
+                    yield from _find_missed(v)
         elif isinstance(node, list):
             for it in node:
-                expand(it)
+                yield from _find_missed(it)
 
-    expand(dictionary)
+    missed = list(_find_missed(dictionary))
+    if missed:
+        names = [m.get("name", "?") for m in missed[:5]]
+        raise SystemExit(
+            f"walk_labeled_nodes missed {len(missed)} labels node(s): {names} — "
+            "extend the walker (and re-run the migrator) before generating.")
 
     print(f"  Languages: {', '.join(c for c, _ in active)}"
           + (f"   (no map, skipped: {', '.join(skipped)})" if skipped else ""))
@@ -1010,15 +1179,6 @@ def apply_translations(dictionary, translations_dir, languages=TRANSLATION_LANGU
         matched, total = counts[code]
         pct = (100 * matched // total) if total else 0
         print(f"    {code}: {matched}/{total} labels translated ({pct}%)")
-
-    # #1099 note: a reworded English label silently orphans its translation keys and the
-    # row reverts to English with no warning (F4's Waray visit dates sat broken this way
-    # for six days). An automatic detector was prototyped and NOT kept: the locale files
-    # are shared across instruments, so ~1,700 keys legitimately belong to other
-    # dictionaries, and even a near-miss heuristic still flagged 163-232 false positives
-    # per instrument — noise at that level just trains people to ignore it. Until the
-    # locale files are split per instrument, the guard is procedural: re-key on every
-    # relabel (see _date_fmt's docstring), values verbatim.
     return dictionary
 
 

@@ -26,7 +26,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from generate_dcf import build_f4_dictionary
+from generate_dcf import build_f4_dictionary, apply_dcf_short_labels
 from cspro_helpers import _truncate_long_labels
 
 
@@ -83,7 +83,19 @@ HH_GPS_ITEMS = [
 
 
 _FORM_PLAN_STATIC = [
-    ("Interview status",   # #515: break-off control, first form (case-tree reachable)
+    # ICF FIRST, immediately after the case-key/QN form (Aly, 2026-08-14). This
+    # supersedes Shan's 2026-08-13 Suggested Layout, which put consent after the
+    # geo form.
+    #
+    # KNOWN AND ACCEPTED CONSEQUENCE: PROC BREAKOFF does `skip to
+    # ENUM_RESULT_FINAL_VISIT` for codes 5/6/7 (refused at door / not found /
+    # ineligible), so with consent AHEAD of the break-off control the enumerator
+    # now walks both read-aloud consent screens before they can close out a case
+    # that never started. Carl chose this over placing the ICF after BREAKOFF.
+    # Do not "fix" it back without checking with ASPSI first.
+    ("A. Informed Consent (Q1 gate)",
+     [("A_INFORMED_CONSENT", None)]),
+    ("Interview status",   # #515: break-off control (case-tree reachable)
      [("FIELD_CONTROL", {"names": FIELD_CONTROL_CASE_START})]),
     ("FC Geographic ID",
      # Single-number redesign (2026-06-11): household region/province/city are
@@ -94,8 +106,6 @@ _FORM_PLAN_STATIC = [
      [("FIELD_CONTROL", {"names": ["REGION_NAME", "PROVINCE_NAME", "CITY_NAME"]}),
       ("HOUSEHOLD_GEO_ID",
        {"exclude": ["REGION", "PROVINCE_HUC", "CITY_MUNICIPALITY"] + HH_GPS_ITEMS})]),
-    ("A. Informed Consent (Q1 gate)",
-     [("A_INFORMED_CONSENT", None)]),
     ("B. Respondent Profile",
      [("B_RESPONDENT_PROFILE", None)]),
     ("C. Household Roster - REPEATING (one member per row)",
@@ -385,7 +395,7 @@ _CHECKBOX_FIELDS = {
     "Q74_WHERE_REST", "Q77_WHY_GENERIC", "Q78_WHY_BRANDED", "Q82_DIFFICULTY_REASONS",
     "Q88_DIFF_PAYING", "Q102_VISIT_REASON", "Q103_CARE_TYPE", "Q106_FORGONE_WHY",
     "Q107_OTHER_ACTIONS", "Q109_TYPE",
-    "Q141_BILL_ITEMS", "Q143_HOW_PAID",   # #615/#616 Section M bill
+    "Q140_BILL_ITEMS",   # 1176-aug17: renumbered from Q141 (#615 lineage); Q143 is no longer a checkbox
     "Q196_FOREGONE", "Q202_WORRY_REASONS",   # #638/#668 Section O/Q (without this they render as DropDown/RadioButton = single-select data loss)
     "Q84_WHERE_ASSIST",   # #814
 }
@@ -591,6 +601,7 @@ def _emit_blocks(lines, item_objs):
 
 def build_fmf():
     dictionary = build_f4_dictionary()
+    apply_dcf_short_labels(dictionary)  # designed short captions (#1182), same as the .dcf
     _truncate_long_labels(dictionary)  # match the .dcf's 255-char label cap (CSPro max)
     global _ACTIVE_BLOCK_PLAN
     # Skip-awareness reads the CURRENT .ent.apc — the orchestrator (cspro_compile_driver.py
