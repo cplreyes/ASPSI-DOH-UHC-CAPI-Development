@@ -15,6 +15,12 @@ tags: [cspro, capi, fmf, designer, walkthrough]
 
 # F1 FMF Designer Walkthrough — E3-F1-001 close-out checklist
 
+> [!warning] SUPERSEDED — this walkthrough describes a workflow that no longer exists (banner added 2026-08-19, Task 2.6)
+> The whole premise of this file is hand-building 28 forms in CSPro Designer. Since Task 2.3, `F1/generate_fmf.py` **generates** `FacilityHeadSurvey.fmf` outright; Designer is now used only to compile and save, driven by `automation/cspro_compile_driver.py F1 --build --save`. The `inject_blocks.py` / `inject_icf.py` post-processors this checklist assumed are tombstoned.
+> Phase 10's four roster stubs (Forms 25–28) were never built and never could be: the `SEC_*` records are not emitted by `generate_dcf.py` (ruling R22, 2026-08-19).
+> Q-numbers below are Apr-20; the instrument was renumbered to Q1–Q153 on 2026-08-17.
+> Retained as the historical record of the E3-F1-001 pass. Do not work from it.
+
 > Pre-Designer prep so the FMF pass runs as a structured walkthrough instead of an open-ended exploration. **Every form's per-row spec lives in `F1-Form-Layout-Plan.md`** — this file is the WALK ORDER + per-form verify checklist + bug-list capture. Open `F1-Form-Layout-Plan.md` in a side pane while you work.
 
 ## Pre-flight (~5 min)
@@ -80,16 +86,19 @@ The plan groups forms by source record. Walk top-to-bottom — each form's check
 
 - [ ] **Form 24 — `H_HR`** — Q163–Q166 (Q166 nurse list uses `PENDING_DESIGN_Q166_NURSES_INCLUDE_AUDITS` default).
 
-### Phase 10 — Roster stubs (4 forms, ~10 min total — verify stub-only, no per-row design)
+### Phase 10 — Roster stubs — **VOID, never existed**
 
-- [ ] **Form 25 — `SEC_HOSP_CENSUS_STUB`** — empty roster (PENDING_DESIGN_SECONDARY_DATA_AS_STUBS).
-- [ ] **Form 26 — `SEC_HCW_ROSTER_STUB`** — empty roster.
-- [ ] **Form 27 — `SEC_YK_SERVICES_STUB`** — empty roster.
-- [ ] **Form 28 — `SEC_LAB_PRICES_STUB`** — empty roster.
+**Corrected 2026-08-19 (ruling R22).** These four steps could never have been performed: the
+`SEC_*` records are not emitted by `generate_dcf.py` (`build_secondary_data_stubs()` is defined
+but never called), so there was never a stub roster to place on a form. The built dictionary
+has 12 records, none of them `SEC_*`.
 
-> Verify stubs render without warnings; confirm no questions defined; mark for "fill at LSS-decides-secondary-data-shape" in deferred bug list.
+- ~~Form 25 — `SEC_HOSP_CENSUS_STUB`~~ — record never emitted.
+- ~~Form 26 — `SEC_HCW_ROSTER_STUB`~~ — record never emitted.
+- ~~Form 27 — `SEC_YK_SERVICES_STUB`~~ — record never emitted.
+- ~~Form 28 — `SEC_LAB_PRICES_STUB`~~ — record never emitted.
 
-## Per-form verify checklist (apply to each of 28 forms)
+## Per-form verify checklist (historical — applied to the 24 forms that exist)
 
 For every form in the walk, run this 7-point check. Notes inline; bugs to bug-list section below.
 

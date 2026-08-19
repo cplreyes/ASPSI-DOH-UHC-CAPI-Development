@@ -8,7 +8,7 @@ Plain-language updates for enumerators, supervisors, and field staff.
 
 | App | Version | Date |
 |---|---|---|
-| Facility Head Survey (F1) | v2.1.17 | 2026-08-18 |
+| Facility Head Survey (F1) | v3.0.0 | 2026-08-19 |
 | Patient Survey (F3) | v4.0.0 | 2026-08-19 |
 | Household Survey (F4) | v3.0.1 | 2026-08-19 |
 | Supervisor Hub (HUB) | v1.1.5 | 2026-08-08 |

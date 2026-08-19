@@ -12,9 +12,15 @@ tags: [cspro, capi, fmf, form-layout, f1]
 
 # F1 Facility Head Survey — Form-Layout Plan
 
+> [!warning] SUPERSEDED — historical planning artifact (banner added 2026-08-19, Task 2.6)
+> Two things in this file no longer describe the build.
+> **1. The .fmf is generated, not hand-built.** `F1/generate_fmf.py` (Task 2.3) derives the whole form file, replacing the hand-maintained `.fmf` and the `inject_blocks.py` / `inject_icf.py` post-processors this plan was written for. Form counts and per-form row budgets below are the *design intent* the generator implements, not a checklist anyone still walks.
+> **2. Forms 25–28 do not exist and never did.** The four `SEC_*` Secondary-Data records were never emitted by `generate_dcf.py` — `build_secondary_data_stubs()` is defined but is not called from the assembly, and the built dictionary has 12 records, none of them `SEC_*` (ruling R22, 2026-08-19). Every row below that plans a Secondary-Data form is planning something that has no record behind it.
+> **3. Q-numbers are Apr-20.** The instrument was renumbered to Q1–Q153 on 2026-08-17; see `F1-Skip-Logic-and-Validations.md` (rewritten Task 2.6) and `instruments-aug17-extract/maps/F1-renames.csv`.
+
 **Scope:** section-by-section form inventory for `FacilityHeadSurvey.fmf`, mapping each DCF record to concrete CSEntry forms. Built on top of [[../Form-Layout-Principles]] — read that first.
 
-**Source DCF:** 12 records / 664 items (Apr 21 build).
+**Source DCF:** 12 records / 664 items (Apr 21 build). **Current build: 12 records / 320 items** (Aug-17 rebuild, Task 2.2) — the count fell because the UHC9 per-option `_YES_OTHER_TXT` / `_NO_OTHER_TXT` fan-out retired with the two-step battery redesign.
 **Source spec:** [[F1-Skip-Logic-and-Validations]] for gates, skips, validations, and consent handling.
 
 ---
@@ -34,13 +40,13 @@ tags: [cspro, capi, fmf, form-layout, f1]
 | 8 | `F_DOH_LICENSING` | 7 (1 occ) | 2 forms | Q121 grid pattern |
 | 9 | `G_SERVICE_DELIVERY` | 8 (1 occ) | 4 forms | NBB / ZBB / LGU / Referral |
 | 10 | `H_HUMAN_RESOURCES` | 9 (1 occ) | 1 form | Q163–Q166 |
-| 11 | `SEC_HOSP_CENSUS` | J (roster) | 1 form (stub) | PENDING DESIGN |
-| 12 | `SEC_HCW_ROSTER` | K (roster) | 1 form (stub) | PENDING DESIGN |
-| 13 | `SEC_YK_SERVICES` | L (roster) | 1 form (stub) | PENDING DESIGN |
-| 14 | `SEC_LAB_PRICES` | M (roster) | 1 form (stub) | PENDING DESIGN |
+| 11 | `SEC_HOSP_CENSUS` | — | **NOT BUILT** | Never emitted (R22) |
+| 12 | `SEC_HCW_ROSTER` | — | **NOT BUILT** | Never emitted (R22) |
+| 13 | `SEC_YK_SERVICES` | — | **NOT BUILT** | Never emitted (R22) |
+| 14 | `SEC_LAB_PRICES` | — | **NOT BUILT** | Never emitted (R22) |
 | 15 | `FACILITYHEADSURVEY_REC` | 1 | (dictionary root; no form) | Container |
 
-**Total: ~28 forms** (4 stub-roster forms will firm up once secondary-data structure is decided — see §10).
+**Total: ~24 forms.** The four Secondary-Data rows above are planning residue: the records were never emitted, so no form was ever built for them and none is planned until ASPSI decides the annex's shape (see §10 and `F1-Skip-Logic-and-Validations.md` §5).
 
 ---
 
@@ -242,24 +248,30 @@ Apr 20 revision gave G four named subsections. One form each:
 | 1 | `Q163_…` | — | (populate from DCF when building) |
 | 2 | `Q164_…` | — | — |
 | 3 | `Q165_…` | — | — |
-| 4 | `Q166_PD_NURSES` | Checkbox list (select-all) | Uses `pd_nurse_options` per Bug #1 (excludes clinical/surgical audits) |
+| 4 | `Q166_PD_NURSES` (Aug-17: `Q153_PD_NURSES`) | Check Box (tick-all) | Uses the `PD_NURSES` literal per Bug #1 (excludes clinical/surgical audits) |
 
 **Row cost:** TBD · **Budget fit:** likely OK.
 
 ---
 
-### Forms 25–28 — Secondary Data rosters (stubs)
+### Forms 25–28 — Secondary Data rosters — **NEVER BUILT**
 
-All four are **PENDING DESIGN** (Bug #2). Each gets a placeholder form that opens the dictionary cleanly; structure firms up once Juvy/Kidd decide the shape (record-per-month vs flat, roster cadre × employment type).
+**Corrected 2026-08-19 (ruling R22).** This section planned four forms for records that do
+not exist. `build_secondary_data_stubs()` in `generate_dcf.py` is defined but never called, so
+no `SEC_*` record has ever reached the dictionary and no form was ever built. The columns
+below are the original design sketch, retained only so the eventual design has a starting
+point — they are **not** a description of anything that ships.
 
-| Form | Record | Planned roster columns | Status |
+| Form | Record | Sketched roster columns | Status |
 |---|---|---|---|
-| 25 | `SEC_HOSP_CENSUS` (J) | Month, admissions, discharges, bed-days (TBD) | Stub |
-| 26 | `SEC_HCW_ROSTER` (K) | Cadre, employment type, FT count, PT count (TBD) | Stub |
-| 27 | `SEC_YK_SERVICES` (L) | Service, availability Y/N, remarks (TBD) | Stub |
-| 28 | `SEC_LAB_PRICES` (M) | Procedure, procurement price, charged price (TBD) | Stub |
+| — | `SEC_HOSP_CENSUS` | Month, admissions, discharges, bed-days | Not built |
+| — | `SEC_HCW_ROSTER` | Cadre, employment type, FT count, PT count | Not built |
+| — | `SEC_YK_SERVICES` | Service, availability Y/N, remarks | Not built |
+| — | `SEC_LAB_PRICES` | Procedure, procurement price, charged price | Not built |
 
-**Form rule applies:** each roster is alone on its form (Principles §1.3). The form shell has `Add row` / `Remove row` controls; the grid scrolls alone.
+The open ask to ASPSI is sharper than "what shape should these take": the ICF read aloud to
+every respondent already promises "secondary data such as hospital census and staffing
+statistics", so today the consent script over-promises what the instrument collects.
 
 ---
 
@@ -302,11 +314,8 @@ All four are **PENDING DESIGN** (Bug #2). Each gets a placeholder form that open
 22 G3_LGU
 23 G4_REFERRAL
 24 H_HR                  ← Section H
-25 SEC_HOSP_CENSUS       ← secondary data (stubs)
-26 SEC_HCW_ROSTER
-27 SEC_YK_SERVICES
-28 SEC_LAB_PRICES
-29 CLOSING               ← disposition + submit
+   (no secondary-data forms — the SEC_* records were never emitted, R22)
+25 CLOSING               ← disposition + submit
 ```
 
 **Skip behavior at the form level:**

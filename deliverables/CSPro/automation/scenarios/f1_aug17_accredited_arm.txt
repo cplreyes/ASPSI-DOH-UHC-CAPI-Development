@@ -1,0 +1,226 @@
+# aug17 Task 2.6 — F1 ACCREDITED arm: the Q48 hybrid pair, the Q52 cascade, and
+# the Q65 -> Q72 exit.
+#
+# WHAT THIS PROVES (permanent regression scenario, do not delete):
+#   1. Q48 = No lands on the _NUM half of the Q49 hybrid pair
+#      (Q49_TRANCHE_INTERVAL_NUM, then Q49_TRANCHE_INTERVAL) -- the skip target is
+#      the pair's FIRST field, not the pair as a unit.
+#   2. Q52 = "None of the above" (code 90) reaches Q62 by CASCADE, not by a jump:
+#      with no difficulty ticked, wdHit = 0 on every one of Q53-Q61 and each
+#      self-skips to the next, the last landing on Q62. The paper prints a single
+#      "IF None of the above GOTO 62"; the build needs no rule of its own.
+#   3. Q65 -> Q72 (NOT Q79). Q65's postproc exits the accredited arm to the
+#      catchment block; the register row that once claimed Q79 was corrected in
+#      Task 2.4. This is the live confirmation.
+#
+# CHECK BOX COORDINATES ARE COMPUTED, NOT GUESSED. Eight observed popups in
+# f1_aug17_casestart_and_battery.txt / f1_aug17_nonaccredited_arm.txt fit two
+# exact rules, and every coordinate below is derived from them:
+#     tick_x = 767 + 14.1 * <item length>      (the value box is 14.1 px/char from
+#                                               x=723, and the popup opens 28 px to
+#                                               its right with a 16 px tick inset)
+#     tick_y = 1010 - (20 * <option count> + 27)   for a field scrolled to the
+#                                               bottom of a long form (Section D is
+#                                               74 fields, so every field here is)
+#     each further option is +20 px in y.
+# The rules were validated against Q35_2 (6/3), Q36 (20/10), Q66 (8/4), Q98 (12/6),
+# Q104 (8/4), Q131 (8/4), Q133 (10/5) and Q136 (10/5) before being used here.
+# NOTE the x rule assumes the popup FITS to the right of the value box; under a
+# locale with longer labels it shifts left instead (see f1_aug17_intro51_fil.txt).
+#
+# The case-start + Section C prefix is IDENTICAL to
+# f1_aug17_casestart_and_battery.txt.
+
+rmdata ../F1/desktest.csdb
+launch ../F1/FacilityHeadSurvey_desktest.pff
+
+# ---- FORM000 case key: RR PP MMM FF CCC (auto-advances at full width) ----
+casekey 04 03 400 02 001
+shot 010_after_casekey_expect_icf
+
+# ---- FORM001 ICF: ICF_PART1, ICF_PART2 (both len=1, "1 = Continue") ----
+note EXPECT consent screens render with the 4-paragraph certificate + contact block
+shot 020_icf_part1
+type 1
+shot 030_icf_part2
+type 1
+
+# ---- FORM002 geo + BREAKOFF. REGION/PROVINCE/CITY are protected (auto-derived). ----
+note EXPECT CLASSIFICATION first, then the cursor jumps straight to BARANGAY
+shot 040_expect_classification
+type 1
+shot 050_expect_barangay_picker
+click 1000 211
+shot 060_expect_breakoff
+note BREAKOFF = 1 Continue -> the form-2 to form-11 escape must NOT fire
+type 1
+shot 070_after_breakoff_expect_section_a
+
+# ---- FORM003 Section A ----
+type DR TEST HEAD
+key {ENTER}
+type CHIEF OF HOSPITAL
+key {ENTER}
+type test@aspsi.org
+key {ENTER}
+type 09171234567
+key {ENTER}
+type DR TEST HEAD
+key {ENTER}
+note Q2_FACILITY_ROLE is len=2 -> type the code zero-padded so it auto-advances
+type 01
+type 52
+type 1
+type 08
+type 00
+type 20
+type 00
+shot 080_end_of_section_a_expect_section_b
+
+# ---- FORM004 Section B: Q7 = 1 Public, Q8 = 3 (Level 2 hospital). ----
+note Q7=Public AND Q8 in 2,3,4 is what OPENS the Q139/Q140 PHO gate later (#386)
+type 1
+type 3
+shot 090_after_section_b_expect_q9
+
+# ---- FORM005 Section C: the two-step battery ----
+note Q9 heard of UHC = Yes
+type 1
+note Q10 = Yes -> its probe Q10_1_UHC_ATTRIB MUST be asked
+type 1
+shot 100_q10_yes_expect_probe_q10_1
+note probe answered 1 (not the Other code) so no specify box opens
+type 1
+shot 110_after_q10_probe_expect_q11
+note Q11 = No -> its probe MUST be skipped; next field must be Q12, not Q11_1
+type 2
+shot 120_q11_no_expect_q12_not_probe
+note Q12 = Yes -> probe, then the .2 detail item Q12_2_PHU_ROLE
+type 1
+shot 130_q12_probe
+type 1
+shot 140_q12_2_phu_role_detail
+type 1
+shot 150_after_q12_2_expect_q13
+note Q13 = 9 Not applicable -> same exit as No; probe AND Q13_2 both skipped
+type 9
+shot 160_q13_na_expect_q14
+note Q14..Q19 all No -> straight run, each skipping its probe and .2 item
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+shot 170_after_q19_expect_q20
+note Q20 = No -> MUST land on Q24, clearing the Q21/Q22/Q23 DOH-IS fan
+type 2
+shot 180_q20_no_expect_q24_not_q21
+note Q24..Q34 all No
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+shot 190_after_q34_expect_q35
+note Q35 = Yes -> probe, then Q35_2_PCQM_MEASURES (a Check Box .2 detail item)
+type 1
+shot 200_q35_probe
+type 1
+shot 210_expect_q35_2_checkbox
+
+note Q35_2 is a Check Box (tick-all). Typing the option code is INVALID input on a
+note  Check Box field (F4 task-1.9 failure #6 proved this is a real CSEntry
+note  constraint, not a scripting slip) -- click the tick-box glyph instead.
+note  Option 01 "Client satisfaction survey" sits at ~(851,923), coords read from
+note  this scenario's own 210_expect_q35_2_checkbox shot.
+click 851 923
+key {ENTER}
+shot 220_after_q35_2_expect_q36_checkbox
+
+note Q36_QUALITY_CHALL Check Box -- option 01 tick box at ~(1047,783), read from
+note  this scenario's own 220_after_q35_2_expect_q36_checkbox shot.
+click 1047 783
+key {ENTER}
+shot 230_after_q36_expect_q37_checkbox
+
+note Q37_ACCESS_CHALL Check Box -- its popup renders at the SAME anchor as Q36's,
+note  so option 01 is again at ~(1047,783) (confirmed in 230_after_q36 shot).
+click 1047 783
+key {ENTER}
+note ---- END OF SECTION C. Next field must be Q38_YK_ACCRED, whose screen carries
+note  the Section D intro text (intro:51) -- the R24 evidence requirement. ----
+shot 240_SECTION_D_INTRO_51_on_q38_yk_accred
+
+note ---- Q38 = 1 Yes (accredited). Walks the accredited block Q39-Q65. ----
+type 1
+shot 250_q38_yes_expect_q39
+note Q39 month = 06, year = 2023 (len 2 and 4, both full-width auto-advance)
+type 06
+type 2023
+shot 260_expect_q40_checkbox
+note Q40_YK_PACKAGE  len=20 opts=10. The x rule held exactly (predicted 1049,
+note  observed 1047) but the y rule did NOT: Section D has just STARTED, so the
+note  list is still scrolled to the top and Q40 sits at row y=272, not at the
+note  bottom-clamped 1010. Observed tick 01 at (1047,211).
+click 1047 211
+key {ENTER}
+shot 270_after_q40_expect_q41
+note Q41/Q42/Q43 registration options = 1
+type 1
+type 1
+type 1
+note Q44 capitation = 1700 exactly (NOT above it, so the >1700 soft confirm stays quiet)
+type 001700
+shot 280_expect_q45_checkbox
+note Q45_PERF_INDICATORS  len=16 opts=8 -> tick 01 at (991,374), located with the
+note  find_ticks.py helper (it detects the tick-box column in the run's own
+note  screenshot rather than guessing the y).
+click 991 374
+key {ENTER}
+note ---- Q46 = 1 Yes -> Q47 asked. ----
+type 1
+type 1
+note ---- Q48 = 2 No. MUST land on Q49_TRANCHE_INTERVAL_NUM, the _NUM half of the
+note  hybrid pair, skipping the Q48.1 delay-reason box. ----
+type 2
+shot 290_q48_no_expect_Q49_TRANCHE_INTERVAL_NUM
+type 0030
+type 1
+note Q50 accreditation wait pair
+type 0045
+type 1
+shot 300_expect_q51_checkbox
+note Q51_APPLY_REASON  len=12 opts=6 -> tick 01 at (935,694) (find_ticks.py).
+click 935 694
+key {ENTER}
+shot 310_expect_q52_checkbox
+note ---- Q52_ACCRED_DIFFICULT  len=20 opts=10. Tick the LAST option, code 90
+note  "None of the above", the 10th row, at (1047,894) (find_ticks.py: option 01
+note  is at y=714 and rows are 20 px apart, so option 10 = 714 + 9*20). MUST cascade through the
+note  whole Q53-Q61 chain and land on Q62. ----
+click 1047 894
+key {ENTER}
+shot 320_q52_none_expect_Q62_via_CASCADE
+note Q62_ENROLL_RESPONSIBILITY  len=14 opts=7 -> tick 01 at (963,843) (find_ticks.py).
+click 963 843
+key {ENTER}
+shot 330_expect_q63_checkbox
+note Q63_ENROLL_INITIATIVES  len=18 opts=9 -> tick 01 at (1019,803) (find_ticks.py).
+click 1019 803
+key {ENTER}
+note ---- Q64 = 1 Yes (challenges enrolling) -> Q65 asked. ----
+type 1
+shot 340_q64_yes_expect_q65_checkbox
+note Q65_ENROLL_CHALL_LIST  len=12 opts=6 -> tick 01 at (935,863) (find_ticks.py).
+click 935 863
+key {ENTER}
+note ---- MUST land on Q72_CATCHMENT_AREA, NOT Q79: Q65's postproc exits the
+note  accredited arm past the not-accredited block Q66-Q71. ----
+shot 350_q65_expect_Q72_NOT_Q79

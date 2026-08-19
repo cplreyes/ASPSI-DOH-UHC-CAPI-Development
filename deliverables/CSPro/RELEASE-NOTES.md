@@ -30,11 +30,16 @@ version SSOT, tracked since 2026-07-02 - earlier builds predate it).
 
 | Instrument | Version | Deployed |
 |---|---|---|
-| F1 - Facility Head Survey | **v2.1.17** | 2026-08-18 |
+| F1 - Facility Head Survey | **v3.0.0** | 2026-08-19 |
 | F3 - Patient Survey | **v4.0.0** | 2026-08-19 |
 | F4 - Household Survey | **v3.0.1** | 2026-08-19 |
 | HUB - Supervisor Hub | **v1.1.5** | 2026-08-08 |
 | F2 - Healthcare Worker Survey (PWA) | **v2.1.0** | see F2 CHANGELOG |
+
+## Unreleased
+
+- **F1 v3.0.0** (2026-08-19) - bumped in the working tree, not yet committed
+  - Fixed: Aug-17 instrument rebuild, end to end. Renumbered to the 2026-08-17 printed questionnaire (Q1-Q153). Section C's 18 nine-option UHC9 items become a 23-pair two-step battery (Yes/No base + a Q<NN>.1 UHC-attribution probe on its own screen, seven with a .2 detail item); Sections D-H shift by -13. New content: the GAMOT stock-out block, the DOH-IS submission fan, the PHO protocol pair, and 18 probes. Consent gains the 4-paragraph certificate and SJREB/ASPSI contact block, byte-identical to F3/F4. Two routing defect-fixes: Q68-Q71 had NO exit at all (a 'haven't thought about it yet' respondent was walked through two other branches' questions) and Q137=Yes orphaned the Q139/Q140 PHO pair for every satisfied respondent. MAJOR version - the data shape breaks against v2.x.
 
 ## F1 - Facility Head Survey
 

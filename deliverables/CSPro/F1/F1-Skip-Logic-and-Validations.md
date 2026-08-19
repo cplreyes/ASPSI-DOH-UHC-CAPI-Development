@@ -12,9 +12,10 @@ tags: [cspro, capi, skip-logic, validations, f1]
 
 # F1 Facility Head Survey — Skip Logic and Validations Spec
 
-> [!warning] SUPERSEDED — the generator is the source of truth (banner added 2026-06-27)
-> This spec (reviewed 2026-04-21) **trails the UAT-evolved generator.** For current behavior read the inline comments in `deliverables/CSPro/F1/generate_apc.py` / `generate_dcf.py` and the bound `.apc`. Do **not** "re-fix" code to match this doc — several departures are intentional UAT closures.
-> Known drift: **F1-QC-02** — §3.2 references `Q2_DESIGNATION` + `_OTHER_TXT`; the actual field is `Q2_FACILITY_ROLE` (11 options, no Other). Pending ASPSI rulings (do **not** change the build yet): **F1-LOGIC-02** Q152="Neither"(3) — §2 (fall through to Q153) vs §3.8 (skip) contradict; **F1-QC-01** Q63 stem "DAYS"→"month/s" + a 5th option (verbatim-wording sign-off).
+> [!warning] SUPERSEDED — the generator is the source of truth (banner added 2026-06-27, rewritten 2026-08-19 Task 2.6 for the Aug-17 instrument)
+> This spec **trails the UAT-evolved generator.** For current behavior read the inline comments in `deliverables/CSPro/F1/generate_apc.py` / `generate_dcf.py` and the bound `.apc`. Do **not** "re-fix" code to match this doc — several departures are intentional UAT closures.
+> **Numbering: this file was renumbered to the 2026-08-17 updated instrument (Q1–Q153) on 2026-08-19.** The frontmatter still names the Apr-20 PDF because that is the file the spec was originally written against; the Aug-17 set (`wiki/sources/Source - Updated Survey Instruments (2026-08-17).md`) is what the build now implements, and it is the authority for every Q-number below. F3 and F4's specs carry the same frontmatter/body split.
+> Known drift: **F1-QC-02** — §3.2 references `Q2_DESIGNATION` + `_OTHER_TXT`; the actual field is `Q2_FACILITY_ROLE` (11 options, no Other). **Section C is now a two-step battery** (Yes/No base + a `Q<NN>_1_UHC_ATTRIB` probe, seven of them with a further `.2` detail item) — 23 pairs replacing the pre-Aug-17 nine-option "UHC9" items; every base carries a real skip, not a display group (§2). **Secondary-Data records have never existed in the dcf** — see §1 Bug #2 and ruling R22.
 
 Source-of-truth for CSPro CAPI logic on `FacilityHeadSurvey.dcf`. Covers:
 
@@ -23,9 +24,9 @@ Source-of-truth for CSPro CAPI logic on `FacilityHeadSurvey.dcf`. Covers:
 3. **Cross-field validations** — HARD (block save), SOFT (warn-and-confirm), GATE (display-only conditional rendering).
 4. **CSPro logic templates** — paste-ready snippets for common patterns.
 
-All Q-numbers refer to the **Apr 20 printed questionnaire** (1–166); dcf item names follow the `Q{n}_*` convention.
+All Q-numbers refer to the **2026-08-17 updated questionnaire** (1–153); dcf item names follow the `Q{n}_*` convention. Sections: **A** Facility Head Profile Q1–Q6, **B** Facility Profile Q7–Q8, **C** UHC Implementation Q9–Q37, **D** YAKAP/Konsulta Q38–Q87, **E** BUCAS/GAMOT Q88–Q104, **F** DOH Licensing Q105–Q121, **G** Service Delivery Q122–Q149, **H** Human Resources for Health Q150–Q153.
 
-> **Item-count provenance.** The Apr 08 baseline had ~126 printed items. The Apr 20 DOH-submitted revision (driven by the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex G DOH Recommendations Matrix|Annex G remarks]]) added ~40 items — Q32–Q34 (EMR DOH IS / PhilHealth Dashboard submission + decision-making checklist), Q40–Q42 (explicit NBB / ZBB / no-copay), Section E expansion to BUCAS + GAMOT (Q101–Q117), and Section G's four named subsections (NBB Q135–137, ZBB Q138–140, LGU Q148–153, Referral Q154–162). Generator expansion (select-all per-option flags, `_OTHER_TXT` companions, secondary-data stub records) lifted the dcf to 11 records / 655 items on Apr 20. The Apr 21 GPS+photo capture pass added one further record — `REC_FACILITY_CAPTURE` (type Z, facility GPS + verification photo) — bringing the dcf to **12 records / 664 items**. See `wiki/analyses/Analysis - Apr 20 DCF Generator Audit.md` for the per-patch ledger.
+> **Item-count provenance.** The Apr 08 baseline had ~126 printed items; the Apr 20 DOH-submitted revision (driven by the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex G DOH Recommendations Matrix|Annex G remarks]]) added ~40. The **2026-08-17 rewrite** then renumbered the whole instrument to Q1–Q153: Section C's 18 nine-option UHC9 items became a 23-pair two-step battery (base + `Q<NN>_1_UHC_ATTRIB` probe, seven with a `.2` detail item), and Sections D–H shifted by −13. The current dcf is **12 records / 320 items** (Task 2.2 rebuild) — the item count fell because the UHC9 per-option `_YES_OTHER_TXT` / `_NO_OTHER_TXT` fan-out retired with the two-step redesign. `REC_FACILITY_CAPTURE` (type Z, facility GPS + verification photo) is one of the 12. See `deliverables/CSPro/instruments-aug17-extract/maps/F1-renames.csv` for the old→new item map and `aug17-approved-divergences.md` for every registered paper-vs-build divergence.
 
 ---
 
@@ -37,116 +38,199 @@ The original Apr 10 spec flagged six generator bugs. Five are now closed in code
 
 | # | Item | Status | Disposition |
 |---|---|---|---|
-| 1 | **Q166 PD_NURSES list** | PARTIAL — generator-implemented, pending ASPSI sign-off | `Q166_NURSES_INCLUDE_AUDITS = False` in `generate_dcf.py`; a dedicated `pd_nurse_options` list is emitted without "Clinical audits" / "Surgical audits". Still flagged `PENDING DESIGN` awaiting confirmation from ASPSI that the printed Q166 omission is intentional. |
-| 2 | **Secondary Data section** | PARTIAL — stubs present, structure open | `SECONDARY_DATA_AS_STUBS = True`; four empty-item records exist in the dcf (`SEC_HOSP_CENSUS`, `SEC_HCW_ROSTER`, `SEC_YK_SERVICES`, `SEC_LAB_PRICES`) so the dictionary opens. The internal structure (record-per-month vs flat, roster cadre × employment type) is still pending a Juvy/Kidd decision — see §5 Dispositions. |
-| 3 | **Q63 ACCRED_WAIT label/units mismatch** | OPEN — source bug, needs ASPSI | `Q63_USE_DAY_BUCKETS = False` (months kept as current default). Question stem says "days"; bucket labels are in months. Routed to Juvy/Kidd for a single-source fix to the printed questionnaire before Tranche 2. |
-| 4 | **Q31 EMR — `Not applicable` skip** | CLOSED | `Q31_NA_SKIPS = True`. Handled in CAPI `PROC Q31_EMR_USE` (§4.4 pattern) — NA routes to Q35 alongside the other UHC9 NA branches. |
-| 5 | **Informed-consent block** | CLOSED | No consent item in `FIELD_CONTROL` — the `CONSENT_GIVEN` flag was removed 2026-06-12 (not on the April-20 paper Field Control form). `RESP_NAME` / `RESP_POSITION` / `RESP_EMAIL` / `RESP_MOBILE` live at the top of `A_FACILITY_HEAD_PROFILE`. A respondent who declines is recorded via `BREAKOFF = Respondent withdrew` → `ENUM_RESULT_FINAL_VISIT = 3 (Refused)`, which aborts the interview. |
-| 6 | **Tenure ≥6 months pre-filter** | CLOSED-BY-DESIGN | Enforced in `PROC Q5_MONTHS_AT_FACILITY postproc` (§4.2), not as a separate screening item. Tenure below 6 months terminates and sets `ENUM_RESULT = Refused/Incomplete`. |
+| 1 | **Q153 PD_NURSES list** (Apr-20 Q166) | CLOSED by the Aug-17 paper | The printed Aug-17 nurse list omits "Clinical audits" / "Surgical audits", confirming the long-standing default; the `Q166_NURSES_INCLUDE_AUDITS` toggle was **retired** with that confirmation (`generate_dcf.py:1374`). The list ships from the `PD_NURSES` literal (`generate_dcf.py:1376`) as `Q153_PD_NURSES`, a Check Box with exclusivity on code 06. |
+| 2 | **Secondary Data section** | OPEN — nothing built; **no stub records exist** | **Corrected 2026-08-19 (ruling R22).** This row previously claimed four empty-item records (`SEC_HOSP_CENSUS`, `SEC_HCW_ROSTER`, `SEC_YK_SERVICES`, `SEC_LAB_PRICES`) "exist in the dcf". They do not, and never did. `SECONDARY_DATA_AS_STUBS = True` and `build_secondary_data_stubs()` both exist in `generate_dcf.py` (lines 116 and 1400), but **the function is never called from the assembly** — it is dead code, and the built dictionary has 12 records, none of them `SEC_*`. The whole annex (hospital census, HCW roster by cadre × employment type, YAKAP services, procurement vs charged prices, lab markup) is an open design question for ASPSI — see §5 Dispositions. Note the ICF read aloud to every respondent still promises "secondary data such as hospital census and staffing statistics", which the instrument does not collect; that gap is on the ASPSI clarification list. |
+| 3 | **Accreditation-wait label/units mismatch** (Apr-20 Q63) | CLOSED BY THE AUG-17 REWRITE | The Apr-20 item whose stem said "days" while its buckets were in months does not survive into the Aug-17 instrument, and the `Q63_USE_DAY_BUCKETS` toggle this row used to cite no longer exists in any generator. The nearest current items are the stock-out duration pair `Q101_STOCKOUT_DURATION` (day bands) and `Q102_STOCKOUT_AVG` (month bands), which are internally consistent and gated on each other (§2, Section E). |
+| 4 | **EMR — `Not applicable` skip** (Apr-20 Q31, now `Q20_EMR_USE`) | CLOSED — superseded by the two-step battery | `Q20_EMR_USE` is a Yes/No base in the Aug-17 two-step battery: `= 2 (No)` skips its probe **and** the Q21–Q23 DOH-IS fan, landing on `Q24_STAFFING_CHANGED` exactly as the paper prints. The constant is `Q20_NA_SKIPS = True` (`generate_dcf.py:121`; earlier revisions of this spec cited a `Q31_NA_SKIPS` that never existed under that name). There is no longer a separate "Not applicable" branch to reconcile — only `Q12` and `Q13` retain an NA code (9), and both are handled by the battery's `in 2,9` condition. |
+| 5 | **Informed-consent block** | CLOSED | No consent flag in `FIELD_CONTROL` — `CONSENT_GIVEN` was removed 2026-06-12. The ICF itself is a read-aloud script at the head of Section A (`ICF_PART1` / `ICF_PART2`), and since 2026-08-18 it carries the same 4-paragraph certificate + SJREB/ASPSI contact block as F3 and F4, byte-identical across the three instruments. `RESP_NAME` / `RESP_POSITION` / `RESP_EMAIL` / `RESP_MOBILE` live at the top of `A_FACILITY_HEAD_PROFILE`. A respondent who declines is recorded via `BREAKOFF` (see §4.14). |
+| 6 | **Tenure ≥6 months pre-filter** | CLOSED-BY-DESIGN | Enforced in `PROC Q5_MONTHS_AT_FACILITY postproc` (§4.2), not as a separate screening item. Tenure below 6 months sets `ENUM_RESULT_FINAL_VISIT = 4` (Refused/Incomplete) and calls `endlevel`. |
 
 ### B. Cosmetic / acceptable as-is
 
-- F1.txt has stray legacy prefixes like `Q40 52`, `Q43 64` — leftover from an older question-numbering scheme. Dcf correctly uses the printed 1–166 numbering. No action.
-- Hospital-only / PCF-only gating inside Q121 options is not encoded as separate items in the dcf — enforced via display logic (§3 below and `Q121_DYNAMIC_VALUE_SET = False` fallback), which is the right approach.
-- Respondent informed-consent contact block (`RESP_NAME` / `RESP_POSITION` / `RESP_EMAIL` / `RESP_MOBILE`) lives inside Section A rather than `FIELD_CONTROL` — intentional; generator comment notes "moved out of FIELD_CONTROL so it lives with the facility-head profile it describes."
+- Dcf item names carry the printed 1–153 Aug-17 numbering. The old Apr-20 numbers survive only in `maps/F1-renames.csv`; resolve forward through item **names**, never backward through the map (Task 2.4 carry 8).
+- Hospital-only / PCF-only gating inside `Q108_DOH_LIC_DIFFICULT` options **is** now encoded: `PROC Q108_DOH_LIC_DIFFICULT preproc` calls `setvalueset()` to swap between `Q108_DOH_LIC_DIFFICULT_PCF_VS1` and `_HOSP_VS1` on `Q8_SERVICE_LEVEL` (#385). The `Q121_DYNAMIC_VALUE_SET = False` fallback described in earlier revisions of this spec never existed as a constant and is not what ships.
+- Respondent contact block (`RESP_NAME` / `RESP_POSITION` / `RESP_EMAIL` / `RESP_MOBILE`) lives inside Section A rather than `FIELD_CONTROL` — intentional; generator comment notes "moved out of FIELD_CONTROL so it lives with the facility-head profile it describes."
 
 ---
 
 ## 2. Skip-logic table
 
-Format: **Trigger → Destination (skip range)**. Where the source has multiple "No / NA / I don't know / no plans" branches all going to the same target, they are collapsed into a single row.
+Format: **Trigger → Destination (skip range)**. Every row is the **build's** rule, read from
+`FacilityHeadSurvey.ent.apc` (generated by `generate_apc.py`). The paper prints the same
+routing in prose notation ("IF No GOTO <proceed to Q11>"); each notation divergence is
+registered in `instruments-aug17-extract/aug17-approved-divergences.md` under `SKIP_DIFF`
+and verified rule-by-rule in `reports/F1-tier2-matrix.md` (Task 2.6).
 
-### Section C — UHC Implementation
-
-| Q | Condition | Skip to |
-|---|---|---|
-| Q10 HAS_PRIMARY_PKG | = No (2) | Q12 (skip Q11) |
-| Q13 PUBLIC_HEALTH_UNIT | = No (2) **or** NA | Q16 (skip Q14, Q15) |
-| Q14 PHU_CREATED | ∈ {No-planned, No-no-plans, No-other, IDK, NA} (5–9) | Q16 (skip Q15) |
-| Q16 HEALTH_PROMO_UNIT | = No **or** NA | Q19 (skip Q17, Q18) |
-| Q17 HPU_CREATED | ∈ {5–9} | Q19 (skip Q18) |
-| Q19 NEW_ROLES | ∈ {5–9} | Q21 (skip Q20) |
-| Q21 NEW_DEPTS | ∈ {5–9} | Q23 (skip Q22) |
-| Q23 NEW_BUILDINGS | ∈ {5–9} | Q25 (skip Q24) |
-| Q25 NEW_ROOMS | ∈ {5–9} | Q27 (skip Q26) |
-| Q27 INC_EQUIPMENT | ∈ {5–9} | Q29 (skip Q28) |
-| Q29 INC_SUPPLIES | ∈ {5–9} | Q31 (skip Q30) |
-| Q31 EMR_USE | ∈ {5–8} (and NA per Bug #4) | Q35 (skip Q32, Q33, Q34) |
-| Q32 DATA_SUBMIT | = "No, not submitting" (4) | Q35 (skip Q33, Q34) |
-| Q35 STAFFING_CHANGED | = No | Q37 (skip Q36) |
-| Q37 REFERRAL_CHANGED | = No | Q39 (skip Q38) |
-
-### Section D — YAKAP / Konsulta
+### Field Control (case start)
 
 | Q | Condition | Skip to |
 |---|---|---|
-| **Q51 YK_ACCRED** | = No | **Q79** (skip Q52–Q78; non-accredited path) |
-| Q59 KNOW_PAY_FREQ | = No | Q61 (skip Q60) |
-| Q61 TRANCHE_DELAY | = No | Q62 (skip Q61.1 reason text) |
-| Q65 ACCRED_DIFFICULT | = "None of the above" only | Q75 (skip Q66–Q74) |
-| Q66–Q74 | Each is gated on the corresponding option being selected in Q65 (not a jump skip — display-time gate; see §3) | — |
-| Q77 ENROLL_CHALL | = No | Q85 (skip Q78) |
-| **Q79–Q84** | Only entered if Q51 = No | — |
-| Q80 INTEND_ACCRED | = "Yes, in process" / "Yes, not in process" (1, 2) | Q84 |
-|  | = "No, decided not to" (3) | Q82 |
-|  | = "No, tried and failed" (4) | Q83 |
-|  | = "No, haven't thought about it" (5) | Q81 |
-|  | = "I don't know" (6) | Q85 |
-| Q89 COSTING_DONE | = No | Q91 (skip Q90) |
-| Q90 COSTING_VIABLE | = Yes AND Q51 = Yes | Q91 |
-|  | = No AND Q51 = No | Q92 |
-|  | = I don't know | Q93 |
-| Q93 CHARGE_ADDL_CAP | = No | Q95 (skip Q94) |
-| Q95 RECEIVED_PAYMENTS | ∈ {Yes-all, Yes-some} | Q97 (skip Q96) |
-| Q97 PAYMENT_CHALL | = No | Q99 (skip Q98) |
-| Q99, Q100 | Only if Q51 = Yes; otherwise → Q101 | — |
+| BREAKOFF | = 1 Continue interview | (no skip — falls through to the geo/consent flow) |
+| BREAKOFF | in 2, 3, 4 (interview started, then stopped) | ENUM_RESULT_FINAL_VISIT — sets Refused / Postponed / Incomplete and CASE_DISPOSITION = 2 |
+| BREAKOFF | in 5, 6, 7 (interview never started — refused at the door, not found, ineligible) | ENUM_RESULT_FINAL_VISIT = 5 Replaced; the unit is substituted, and replacements are counted as BREAKOFF in 5,6,7 |
 
-### Section E — BUCAS / GAMOT
+This is the **only** leapfrog in the case-start region: `BREAKOFF` (form 2) jumps to
+`ENUM_RESULT_FINAL_VISIT` (form 11), the intended #744/#515 break-off escape. No other rule
+targets forms 0–4, and there are no backward skips (Task 2.3 §11 sweep, live-confirmed in
+Task 2.6's case-start reachability scenario).
 
-| Q | Condition | Skip to |
-|---|---|---|
-| **Q101 HEARD_BUCAS** | = No | **Q108** (skip Q102–Q107) |
-| Q102 HAS_BUCAS | = Yes | Q104 (skip Q103) |
-|  | = No | Q103 then Q108 (skip Q104–Q107) |
-|  | = I don't know | Q108 |
-| Q103 NO_BUCAS_REASON | (any answer) | Q108 |
-| Q104–Q107 | Only entered if Q102 = Yes | — |
-| Q107 BUCAS_DECONGEST | Only relevant if BUCAS center exists in area (Q102 = Yes) | — |
-| **Q108 HEARD_GAMOT** | = No | **Q112** (skip Q109–Q111) |
-| Q109 GAMOT_ACCRED | = Yes | Q111 (skip Q110) |
-|  | = No | Q110 then Q112 (skip Q111) |
-| Q110 NO_GAMOT_REASON | (any answer) | Q112 |
-| Q112 STOCKOUT | = No | Q118 (skip Q113–Q117) |
-| Q116 ADDR_STOCKOUT | Gated on Q108 = Yes AND Q109 = Yes | — |
-|  | = No or "Did not experience" | Q118 (skip Q117) |
-| Q117 ADDR_STOCKOUT_HOW | Gated on Q108 = Yes AND Q109 = Yes | — |
+### Section C — UHC Implementation (Q9–Q37): the two-step battery
 
-### Section F — DOH Licensing
+The Aug-17 rewrite replaced 18 nine-option "UHC9" items with a **two-step** structure: a
+Yes/No base, a `Q<NN>_1_UHC_ATTRIB` probe ("If yes, was it a result of the UHC Act enacted in
+2019?"), and for seven bases a further `.2` detail question. 23 pairs in all.
+
+**The gating is real skip logic, not display grouping.** CSEntry renders every field of a
+DisplayTogether screen regardless of skip or `noinput` logic (UAT R4, GH #371/#372), so Task
+2.3 put every probe on its **own screen** and Task 2.4 generated one skip rule per base
+(`generate_apc.two_step_skip_rules()`). Each base's target is the **next base in printed
+order** — which is what makes Q20 → Q24 fall out for free, since Q21–Q23 are the DOH-IS fan
+rather than battery bases. Only Q12 and Q13 carry a "Not applicable" code (9); they are the
+only two bases whose condition names a second value, and the table is checked against the
+dictionary at generation time by `_assert_two_step_codes` rather than trusted.
+
+Every row below skips that base's own probe (and its `.2` detail item, where one exists).
 
 | Q | Condition | Skip to |
 |---|---|---|
-| **Q118 DOH_LICENSED** | = No / Submitted-waiting / Don't know what licensing is (2, 3, 4) | **Q135** (skip Q119–Q134) |
-| Q121 DOH_LIC_DIFFICULT | = "None of the above" only | Q135 (skip Q122–Q134) |
-| Q122–Q134 | Each gated on corresponding option in Q121 | — |
-| **Q132, Q133, Q134** | Hospital-only — gated on Q8 SERVICE_LEVEL ∈ {Level 1, 2, 3 Hospital} AND corresponding Q121 option | — |
-| **Q130** | Primary-care-only — gated on Q8 = Primary Care Facility AND Q121 price-info option | — |
+| Q10 HAS_PRIMARY_PKG | = No (2) | Q11 |
+| Q11 PCB_LICENSING | = No (2) | Q12 |
+| Q12 PUBLIC_HEALTH_UNIT | in 2, 9 (No or Not applicable) | Q13 |
+| Q13 HEALTH_PROMO_UNIT | in 2, 9 (No or Not applicable) | Q14 |
+| Q14 NEW_ROLES | = No (2) | Q15 |
+| Q15 NEW_DEPTS | = No (2) | Q16 |
+| Q16 NEW_BUILDINGS | = No (2) | Q17 |
+| Q17 NEW_ROOMS | = No (2) | Q18 |
+| Q18 INC_EQUIPMENT | = No (2) | Q19 |
+| Q19 INC_SUPPLIES | = No (2) | Q20 |
+| Q20 EMR_USE | = No (2) | Q24 (skip Q21, Q22, Q23 — the DOH-IS fan) |
+| Q21 DATA_SUBMIT | = 4 (No, we are not submitting these data) | Q24 (skip Q22, Q23) |
+| Q24 STAFFING_CHANGED | = No (2) | Q25 |
+| Q25 REFERRAL_CHANGED | = No (2) | Q26 |
+| Q26 MOU_MOA | = No (2) | Q27 |
+| Q27 NBB | = No (2) | Q28 |
+| Q28 ZBB | = No (2) | Q29 |
+| Q29 NO_COPAY | = No (2) | Q30 |
+| Q30 WARD_ALLOC | = No (2) | Q31 |
+| Q31 CPG | = No (2) | Q32 |
+| Q32 DOH_LIC_STD | = No (2) | Q33 |
+| Q33 PHIC_ACCRED | = No (2) | Q34 |
+| Q34 SVC_DELIVERY_PROT | = No (2) | Q35 |
+| Q35 PCQM | = No (2) | Q36 |
 
-### Section G — Service Delivery
+### Section D — YAKAP / Konsulta (Q38–Q87)
+
+`Q38_YK_ACCRED` is the section's master gate and splits it into two arms that reconverge at
+Q79/Q80. **Accredited (Q38 = Yes)** walks Q39–Q65, then Q65 exits to Q72 and the costing block
+Q72–Q78 runs, landing on Q80. **Not accredited (Q38 = No)** jumps straight to Q66, walks the
+Q66–Q71 not-accredited block, and every tail of it lands on Q79 — which is itself
+accredited-gated the other way, and after it is answered exits the whole section to Q88.
 
 | Q | Condition | Skip to |
 |---|---|---|
-| Q135 NBB_CURR | = No | Q138 (skip Q136, Q137) |
-| Q138 ZBB_CURR | = No | Q141 (skip Q139, Q140) |
-| Q141 ALLOW_OOP_BASIC | = No | Q143 (skip Q142) |
-| Q145 MALASAKIT_PROVIDED | = Yes | Q146 → Q148 (skip Q147) |
-|  | = No | Q147 (skip Q146) |
-| Q148 LGU_SUPPORT | = No | Q152 (skip Q149, Q150, Q151) |
-| Q150 LGU_SATISFIED | = Yes | Q154 (skip Q151) |
-| Q152 PHO_PROTOCOL_CLARITY | entry gate: printed "only for respondents from public hospitals" — asked only if `Q7 = Public` AND `Q8 ∈ {Level 1/2/3 Hospital}`; every other profile skips Q152+Q153 → **Q154** (#386; surfaced by #822 — a Q148=No skip lands on Q152 whose gate then forwards non-public-hospital profiles to Q154) |
-| Q152 PHO_PROTOCOL_CLARITY | ∈ {Very Clear, Clear} | Q154 (skip Q153) — *implied; confirm with ASPSI* |
-| Q161 REF_SATISFACTION | ∈ {Very Satisfied, Satisfied} | Q163 (skip Q162) |
+| Q38 YK_ACCRED | = No (2) | Q66 (skip Q39–Q65, the accredited YAKAP block) |
+| Q46 KNOW_PAY_FREQ | = No (2) | Q48 (skip Q47) |
+| Q48 TRANCHE_DELAY | = No (2) | Q49 — lands on the `_NUM` half of the hybrid pair, `Q49_TRANCHE_INTERVAL_NUM` |
+| Q52 ACCRED_DIFFICULT | = "None of the above" (90) only | Q62 — reached by falling through the whole Q53–Q61 gate chain, not by a single jump (see below) |
+| Q53 WHY_DIFF_PREVENTIVE | Q52 option 01 not ticked | Q54 |
+| Q54 WHY_DIFF_LAB | Q52 option 02 not ticked | Q55 |
+| Q55 WHY_DIFF_MEDS | Q52 option 03 not ticked | Q56 |
+| Q56 WHY_DIFF_INFRA | Q52 option 04 not ticked | Q57 |
+| Q57 WHY_DIFF_EQUIPMENT | Q52 option 05 not ticked | Q58 |
+| Q58 WHY_DIFF_HR | Q52 option 06 not ticked | Q59 |
+| Q59 WHY_DIFF_HIS | Q52 option 07 not ticked | Q60 |
+| Q60 WHY_DIFF_DOCS | Q52 option 08 not ticked | Q61 |
+| Q61 WHY_DIFF_DOH_LIC | Q52 option 09 not ticked | Q62 |
+| Q64 ENROLL_CHALL | = No (2) | Q72 (skip Q65) |
+| Q65 ENROLL_CHALL_LIST | Q38 = Yes (accredited) | Q72 (skip Q66–Q71, the not-accredited block) |
+| Q66 NOT_ACCRED_REASON | Q38 ≠ No (belt-and-braces entry gate) | Q72 |
+| Q67 INTEND_ACCRED | in 1, 2 (Yes, in process / Yes, not yet in process) | Q71 |
+| Q67 INTEND_ACCRED | = 3 (No, decided not to) | Q69 |
+| Q67 INTEND_ACCRED | = 4 (No, tried and failed) | Q70 |
+| Q67 INTEND_ACCRED | = 5 (No, have not thought about it yet) | Q68 |
+| Q67 INTEND_ACCRED | = 6 (I don't know) | Q79 — **defect-fix**: the paper sends this to Q72, which is the accredited-only block a Q67 respondent can never be in |
+| Q68 KNOW_HOW_START | (unconditional — the Q67 = 5 tail) | Q79 |
+| Q69 DECIDED_NOT_REASON | (unconditional — the Q67 = 3 tail) | Q79 |
+| Q70 TRIED_FAILED_REASON | (unconditional — the Q67 = 4 tail) | Q79 |
+| Q71 PROCESS_CHALL | (unconditional — the Q67 in 1,2 tail; the not-accredited block ends here) | Q79 |
+| Q72 CATCHMENT_AREA | Q38 = No (entry gate on the accredited costing block) | Q79 |
+| Q76 COSTING_DONE | = No (2) | Q78 (skip Q77) |
+| Q77 COSTING_VIABLE | = No (2) | Q78 |
+| Q77 COSTING_VIABLE | in 1, 3 (Yes / I don't know) | Q80 |
+| Q79 MIN_CAP_VALUE_NONACC | Q38 ≠ No — entry gate; accredited facilities never see this item | Q80 |
+| Q79 MIN_CAP_VALUE_NONACC | (unconditional, once answered) | Q88 — the not-accredited arm exits Section D here |
+| Q80 CHARGE_ADDL_CAP | = No (2) | Q82 (skip Q81) |
+| Q82 RECEIVED_PAYMENTS | in 1, 2 (all expected payments / some but not all) | Q84 (skip Q83) |
+| Q84 PAYMENT_CHALL | = No (2) | Q86 (skip Q85) |
 
-### Section H — no skips
+**Q52 / Q108 "None of the above" is a cascade, not a jump.** The paper prints "IF None of the
+above GOTO Q62" (and Q122 for Q108). The build implements it as the *emergent* result of the
+per-topic gate chain: with no difficulty ticked, `wdHit = 0` on every one of Q53–Q61, so each
+self-skips to the next and the last one lands on Q62. Same routing, no separate rule.
+
+### Section E — BUCAS / GAMOT and stock-outs (Q88–Q104)
+
+| Q | Condition | Skip to |
+|---|---|---|
+| Q88 HEARD_BUCAS | = No (2) | Q95 (skip Q89–Q94, the whole BUCAS block) |
+| Q89 HAS_BUCAS | = 1 (Yes) | Q91 (skip Q90) |
+| Q89 HAS_BUCAS | = 3 (I don't know) | Q95 |
+| Q90 NO_BUCAS_REASON | ≠ 5 (anything but "Other") | Q95 — on 5 it falls through to the specify box first, which then resumes the same skip |
+| Q94 BUCAS_DECONGEST | Q89 ≠ Yes (entry gate: Q91–Q94 are for facilities that HAVE a BUCAS Center) | Q95 |
+| Q95 HEARD_GAMOT | = No (2) | Q99 (skip Q96, Q97, Q98) |
+| Q96 GAMOT_ACCRED | = Yes (1) | Q98 (skip Q97) |
+| Q97 NO_GAMOT_REASON | ≠ 5 (anything but "Other") | Q99 — same specify-box fall-through as Q90 |
+| Q99 STOCKOUT | = No (2) | Q105 (skip Q100–Q104, and with it the rest of Section E) |
+| Q102 STOCKOUT_AVG | Q101 ≠ 3 — entry gate; below 60 days the month band is implied by Q101 itself | Q103 |
+| Q103 ADDR_STOCKOUT | entry gate (#384): asked only when Q95 = Yes AND Q96 = Yes AND Q99 = Yes | Q105 |
+| Q103 ADDR_STOCKOUT | in 2, 3 (No / Did not experience stock-outs under GAMOT) | Q105 (skip Q104) |
+
+### Section F — DOH Licensing (Q105–Q121)
+
+| Q | Condition | Skip to |
+|---|---|---|
+| Q105 DOH_LICENSED | in 2, 3, 4 (No / submitted and waiting / don't know what DOH licensing is) | Q122 (skip Q106–Q121, the whole of Section F) |
+| Q108 DOH_LIC_DIFFICULT | = "None of the above" (90) only | Q122 — same cascade mechanism as Q52, via Q109–Q121 |
+| Q109 WHY_DIFF_PT_RIGHTS | Q108 option 01 not ticked | Q110 |
+| Q110 WHY_DIFF_PT_CARE | Q108 option 02 not ticked | Q111 |
+| Q111 WHY_DIFF_LEADERSHIP | Q108 option 03 not ticked | Q112 |
+| Q112 WHY_DIFF_HRM | Q108 option 04 not ticked | Q113 |
+| Q113 WHY_DIFF_INFO_MGMT | Q108 option 05 not ticked | Q114 |
+| Q114 WHY_DIFF_SAFE | Q108 option 06 not ticked | Q115 |
+| Q115 WHY_DIFF_PERF | Q108 option 07 not ticked | Q116 |
+| Q116 WHY_DIFF_PHYS_PLANT | Q108 option 08 not ticked | Q117 |
+| Q117 WHY_DIFF_PRICE_INFO | Q108 option **13** not ticked (PCF-only topic — the printed tail is reordered vs the gate's codes) | Q118 |
+| Q118 WHY_DIFF_EQUIPMENT | Q108 option **09** not ticked | Q119 |
+| Q119 WHY_DIFF_NAT_LAWS | Q108 option **10** not ticked | Q120 |
+| Q120 WHY_DIFF_EMERG_CART | Q108 option **11** not ticked (hospitals only) | Q121 |
+| Q121 WHY_DIFF_ADDONS | Q108 option **12** not ticked (hospitals only) | Q122 |
+
+The five bold codes are the F1-LOGIC-01 fix (2026-06-27, re-verified against the Aug-17 value
+set in Task 2.4): the printed follow-up tail is reordered relative to the gate's option codes,
+so a positional 1:1 mapping would invert the PCF-only / hospital-only gating. Q109–Q116 stay
+positional (01–08). The membership test is an aligned 2-character chunk scan, not `pos()` — a
+substring match across code boundaries had falsely opened the hospital-only batteries (#450).
+
+### Section G — Service Delivery (Q122–Q149)
+
+| Q | Condition | Skip to |
+|---|---|---|
+| Q122 NBB_CURR | = No (2) | Q125 (skip Q123, Q124) |
+| Q125 ZBB_CURR | = No (2) | Q128 (skip Q126, Q127) |
+| Q128 ALLOW_OOP_BASIC | = No (2) | Q130 (skip Q129) |
+| Q132 MALASAKIT_PROVIDED | = No (2) | Q134 (skip Q133) |
+| Q134 NO_MALASAKIT_WHY | Q132 = Yes — entry gate; the not-provided block does not apply | Q135 |
+| Q135 LGU_SUPPORT | = No (2) | Q139 (skip Q136, Q137, Q138) |
+| Q137 LGU_SATISFIED | = Yes (1) | Q139 (skip Q138) — **defect-fix**: the paper sends Yes to Q141, which orphans the Q139/Q140 PHO protocol pair for every satisfied respondent |
+| Q139 PHO_PROTOCOL_CLARITY | entry gate: asked only when Q7 = Public AND Q8 in Level 1/2/3 Hospital (#386) | Q141 (skip Q140) |
+| Q139 PHO_PROTOCOL_CLARITY | in 1, 2 (Very Clear / Clear) | Q141 (skip Q140) |
+| Q148 REF_SATISFACTION | in 1, 2 (Very Satisfied / Satisfied) | Q150 (skip Q149) |
+
+`Q148_REF_SATISFACTION` is built SELECT ONE despite the paper's "SELECT ALL THAT APPLY"
+banner: it is a mutually-exclusive 5-point scale whose top two options carry skips, so a Check
+Box base would make the skip untestable. Registered as a divergence.
+
+### Section H — Human Resources for Health (Q150–Q153): no skips
 
 ---
 
@@ -169,154 +253,186 @@ Categories: **HARD** = block save / reenter, **SOFT** = warn-and-confirm, **GATE
 
 ### 3.1.1 GPS capture block (`REC_FACILITY_CAPTURE`)
 
-Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator taps the capture-trigger item to fire the read. `REC_FACILITY_CAPTURE` is a type-Z off-form record — items are wired via `onfocus` in the .app, not placed on a data-entry form.
+**Corrected 2026-08-19.** There is no `FACILITY_CAPTURE_GPS` trigger item — earlier revisions
+of this spec described a button that was never built. Capture fires from
+`PROC FACILITY_GPS_LATITUDE onfocus`, guarded on `FACILITY_GPS_READTIME` being empty so it
+runs **once** and not on back-navigation. `ReadGPSReading()` (inlined from `Capture-Helpers.apc`
+into `PROC GLOBAL`) reuses a radio that `WarmUpGPS()` opened at the case key, so a fresh fix
+normally returns in 1–2 s; the 15 s budget only caps the no-signal case, and escalates to
+30/45/60 s on consecutive failed retries (#1209). `ReleaseGPS()` closes the radio after this,
+F1's only GPS block. On Windows desktop (`getos` 10–19) there is no radio and every field stays
+blank by design — desk-test runs flow straight past.
+
+GPS is the **last** form of the interview, after Section H. `REC_FACILITY_CAPTURE` is a type-Z
+off-form record; its items are wired by `onfocus`, not placed on a data-entry form.
 
 | Item | Rule | Severity |
 |---|---|---|
-| `FACILITY_CAPTURE_GPS` | Trigger; auto-resets to blank after each successful read (so the button re-arms for retry) | — |
-| `FACILITY_GPS_LATITUDE` | Alpha; after capture, `tonumber()` must be in `[4.5, 21.5]` (Philippine bounding box) | HARD |
-| `FACILITY_GPS_LONGITUDE` | After capture, `tonumber()` in `[116.5, 127.0]` | HARD |
-| `FACILITY_GPS_ALTITUDE` | Alpha; captured from `gps(altitude)`; no bounds enforced | — |
-| `FACILITY_GPS_ACCURACY` | Numeric, metres. Warn if `> 30` — re-read outdoors recommended | SOFT |
-| `FACILITY_GPS_SATELLITES` | Numeric. Warn if `< 4` (fix is below minimum for reliable lat/lon) | SOFT |
-| `FACILITY_GPS_READTIME` | Alpha UTC timestamp; must parse and be within `±24 h` of `DATE_OF_FINAL_VISIT_TO_THE_FACILITY` | SOFT |
-| `FACILITY_GPS_*` non-blank required | When `ENUM_RESULT_FINAL_VISIT = Completed` | HARD |
+| `FACILITY_GPS_LATITUDE` | Alpha; the capture trigger hangs off its `onfocus`. Protected read-only once `FACILITY_GPS_READTIME` is non-blank, so coordinates can never be typed | HARD — protect enforces |
+| `FACILITY_GPS_LONGITUDE` | Alpha; written by the same capture, protected alongside it | HARD — protect enforces |
+| `FACILITY_GPS_ALTITUDE` | Alpha, from `gps(altitude)`; no bounds enforced | — |
+| `FACILITY_GPS_ACCURACY` | Numeric metres. `ReadGPSReading` warns (msg 1004) when the fix is worse than the 20 m target, but still returns success — the enumerator decides whether to retry | SOFT |
+| `FACILITY_GPS_SATELLITES` | Numeric, from `gps(satellites)` | — |
+| `FACILITY_GPS_READTIME` | Numeric timestamp; doubles as the capture-once sentinel and the protect trigger | — |
+| Failed read | msg 1227 names the budget that elapsed; the radio flag is cleared but the radio is **not** closed, so a retry resumes the acquisition instead of cold-starting it | SOFT |
+
+> **Do not re-add a "photo last" ordering assert.** GPS moved to the end of the interview
+> deliberately; the older assertion that the photo is the final form was relaxed on purpose.
 
 ### 3.1.2 Verification photo (in `REC_FACILITY_CAPTURE`)
 
 | Item | Rule | Severity |
 |---|---|---|
-| `CAPTURE_VERIFICATION_PHOTO` | Trigger; auto-resets to blank after each successful capture | — |
-| `VERIFICATION_PHOTO_FILENAME` | Non-blank when `ENUM_RESULT_FINAL_VISIT = Completed`; 120-char alpha populated by `TakeVerificationPhoto()` | HARD |
-| Filename pattern | Matches `case-{QUESTIONNAIRE_NO}-verification.jpg` (enforced by the PROC that assigns it) | HARD |
-| File reachability | CSEntry attachment must sync to CSWeb before the case can be marked final; enforced by sync workflow, not dictionary validation | — |
+| `CAPTURE_VERIFICATION_PHOTO` | Gated at preproc on `ENUM_RESULT_FINAL_VISIT` in {1 Completed, 4 Incomplete} — a Postponed or Refused visit is not photographed, and any stale filename is cleared. Trigger auto-resets to `notappl` after each attempt | GATE |
+| `VERIFICATION_PHOTO_FILENAME` | `noinput` — display-only, filled by the camera trigger, never typed. Camera failure warns (msg 1007) rather than trapping the enumerator | SOFT |
+| Filename pattern | `case-{RRPPMMMFFCCC}-verification.jpg`, built from `REGION_CODE`, `PROVINCE_HUC_CODE`, `CITY_MUNICIPALITY_CODE`, `FACILITY_NO`, `CASE_SEQ` | HARD — assigned by the PROC |
+| `VERIFICATION_PHOTO_IMAGE` | The binary Image item. Photos sync to CSWeb **only** as binary Image dictionary items, off-form — the filename alone does not carry the picture | — |
 
-### 3.2 Section A — Facility Head Profile
-
-| Item | Rule | Severity |
-|---|---|---|
-| `Q3_AGE` | `18 ≤ age ≤ 90` | HARD |
-| `Q3_AGE > 75` | Warn ("Unusually old for an active facility head — confirm") | SOFT |
-| `Q5_YEARS_AT_FACILITY` | `0 ≤ y ≤ 60` | HARD |
-| `Q5_MONTHS_AT_FACILITY` | `0 ≤ m ≤ 11` | HARD |
-| **Tenure ≥ 6 months** | `Q5_YEARS_AT_FACILITY * 12 + Q5_MONTHS_AT_FACILITY ≥ 6` (per IR eligibility) | HARD — terminate interview if violated |
-| `Q5_YEARS_AT_FACILITY ≤ Q3_AGE − 18` | Can't have started working before age 18 | HARD |
-| `Q6_YEARS_HEALTH` | `0 ≤ y ≤ 70` | HARD |
-| `Q6_YEARS_HEALTH ≤ Q3_AGE − 18` | Same age-floor rule | HARD |
-| **Tenure consistency** | `Q5_total ≤ Q6_total` (years at this facility cannot exceed total years in any health-related role) | HARD |
-| `Q4_SEX` | Required, ∈ {1, 2} | HARD |
-| `Q2_DESIGNATION = "Other"` | `Q2_DESIGNATION_OTHER_TXT` is required, non-blank | HARD |
-
-### 3.3 Section B — Facility Profile
+### 3.2 Section A — Facility Head Profile (Q1–Q6)
 
 | Item | Rule | Severity |
 |---|---|---|
-| `Q7_OWNERSHIP` | Required | HARD |
-| `Q8_SERVICE_LEVEL` | Required; drives Q121 / Q130 / Q132–134 gates | HARD |
+| `Q3_AGE` | `≥ 18`; msg 1056 blocks below the floor | HARD |
+| `Q3_AGE` | `> 80` warns ("unusually old for an active facility head") without blocking | SOFT |
+| **Tenure ≥ 6 months** | `Q5_YEARS_AT_FACILITY * 12 + Q5_MONTHS_AT_FACILITY ≥ 6` (IR eligibility). Below it: msg 1075, `ENUM_RESULT_FINAL_VISIT = 4`, `endlevel` — the interview ends at Q5 | HARD — terminates the case |
+| `Q5_YEARS_AT_FACILITY` | `≤ Q3_AGE − 20` — cannot have run a facility before age 20 (msg 1076) | HARD |
+| `Q6_YEARS_HEALTH` | `≤ Q3_AGE − 20` (msg 1082) | HARD |
+| **Tenure consistency** | `Q5_total ≤ Q6_total` — years at this facility cannot exceed total years in any health-related role (msg 1081) | HARD |
+| `Q4_SEX` | Required, in {1, 2} | HARD |
+| `Q2_FACILITY_ROLE` | Required; 11 options, no "Other" (drift F1-QC-02 — this spec's older revisions named a `Q2_DESIGNATION` + `_OTHER_TXT` pair that does not exist) | HARD |
 
-### 3.4 Section C — UHC Implementation
-
-| Item | Rule | Severity |
-|---|---|---|
-| Q11 enabled | Q10 = Yes | GATE |
-| Q14, Q15 enabled | Q13 = Yes | GATE |
-| Q15 enabled | Q14 ∈ {1–4} ("Yes" branches) | GATE |
-| Q17, Q18 enabled | Q16 = Yes | GATE |
-| Q18 enabled | Q17 ∈ {1–4} | GATE |
-| Q20 enabled | Q19 ∈ {1–4} | GATE |
-| Q22 enabled | Q21 ∈ {1–4} | GATE |
-| Q24 enabled | Q23 ∈ {1–4} | GATE |
-| Q26 enabled | Q25 ∈ {1–4} | GATE |
-| Q28 enabled | Q27 ∈ {1–4} | GATE |
-| Q30 enabled | Q29 ∈ {1–4} | GATE |
-| Q33, Q34 enabled | Q32 ∈ {1, 2, 3} | GATE |
-| Q36 enabled | Q35 = Yes | GATE |
-| Q38 enabled | Q37 = Yes | GATE |
-| Q49, Q50 select-all | Cannot combine "I don't know" with substantive options | HARD |
-| Q49, Q50 select-all | Cannot combine "Other" without `_OTHER_TXT` filled | HARD |
-| All `Q*_OTHER_TXT` | Required if "Other" option selected | HARD |
-| All `Q*_YES_OTHER_TXT` | Required if main = 4 ("Yes, other reason") | HARD |
-| All `Q*_NO_OTHER_TXT` | Required if main = 7 ("No, other reason") | HARD |
-
-### 3.5 Section D — YAKAP / Konsulta
+### 3.3 Section B — Facility Profile (Q7–Q8)
 
 | Item | Rule | Severity |
 |---|---|---|
-| Q52–Q78 entered | Q51 = Yes | GATE |
-| Q79–Q84 entered | Q51 = No | GATE |
-| `Q52_YK_SINCE_YEAR` | `2019 ≤ year ≤ current_year` (UHC Act passed 2019) | HARD |
-| `Q52_YK_SINCE_MONTH` | `1 ≤ m ≤ 12` | HARD |
-| `Q52` not in future | `(year, month) ≤ (current_year, current_month)` | HARD |
-| Q52 vs head's career | Accreditation date should be after head turned 18 — `current_year - Q52_YK_SINCE_YEAR ≤ Q3_AGE - 18` | SOFT |
-| `Q57_CAPITATION_AMT` | `0 < amt ≤ 5000` (PHP) | HARD |
-| `Q57_CAPITATION_AMT > 1700` | Warn ("Above PhilHealth max — confirm") | SOFT |
-| Q60 enabled | Q59 = Yes | GATE |
-| Q61 reason text | Q61 = Yes | GATE |
-| **Q66–Q74 each** | Q65 has the corresponding option selected | GATE |
-| Q78 enabled | Q77 = Yes | GATE |
-| **Q80 routing** | See skip table; only one of Q81/Q82/Q83/Q84 should be answered per case | HARD |
-| `Q86_ELIGIBLE_PATIENTS` | `0 ≤ n ≤ 1,000,000` | HARD |
-| `Q87_REGISTERED_PATIENTS` | `0 ≤ n ≤ Q86_ELIGIBLE_PATIENTS` (registered cannot exceed eligible) | HARD |
-| `Q87 / Q86 > 1.0` | Block with reentry | HARD |
-| Q90 enabled | Q89 = Yes | GATE |
-| `Q91_MIN_CAP_VALUE_ACC` | `0 < amt ≤ 50000`; warn if `> 5000` | HARD / SOFT |
-| `Q92_MIN_CAP_VALUE_NONACC` | `0 < amt ≤ 50000`; warn if `> 5000` | HARD / SOFT |
-| Q94 enabled | Q93 = Yes | GATE |
-| Q96 enabled | Q95 ∈ {3, 4} (No options) | GATE |
-| Q98 enabled | Q97 = Yes | GATE |
-| Q99, Q100 enabled | Q51 = Yes | GATE |
+| `Q7_OWNERSHIP` | Required; with Q8 it drives the Q139/Q140 PHO gate | HARD |
+| `Q8_SERVICE_LEVEL` | Required; drives the Q108 value-set swap and the Q117/Q120/Q121 facility-type topics | HARD |
 
-### 3.6 Section E — BUCAS / GAMOT
+### 3.4 Section C — UHC Implementation (Q9–Q37)
+
+Every gate in this section is the two-step battery's own skip (§2), so the probe is
+unreachable rather than merely disabled — the distinction that matters on CSEntry, where a
+disabled field on a shared screen is still answerable.
 
 | Item | Rule | Severity |
 |---|---|---|
-| Q102–Q107 enabled | Q101 = Yes | GATE |
-| Q103 enabled | Q102 = No | GATE |
-| Q104–Q107 enabled | Q102 = Yes | GATE |
-| Q109–Q111 enabled | Q108 = Yes | GATE |
-| Q110 enabled | Q109 = No | GATE |
-| Q111 enabled | Q109 = Yes | GATE |
-| Q113–Q117 enabled | Q112 = Yes | GATE |
-| Q116, Q117 enabled | Q108 = Yes AND Q109 = Yes AND Q112 = Yes | GATE |
-| `Q114_STOCKOUT_DURATION` vs `Q115_STOCKOUT_AVG` | If `Q114 = "More than 60 days"`, `Q115` should not be `"Less than a month"` (contradiction) | HARD |
+| `Q10_1_UHC_ATTRIB` and every other `Q<NN>_1_UHC_ATTRIB` probe | Reached only when its base is answered Yes; each probe sits on its own screen | GATE |
+| Every `.2` detail item (Q12.2, Q13.2, Q14.2, Q15.2, Q16.2, Q17.2, Q18.2, Q19.2, Q35.2) | Reached only on its base's Yes path, immediately after the probe | GATE |
+| `Q21_DATA_SUBMIT`, `Q22_DATA_FREQ`, `Q23_DATA_REPORTS_USED` | The DOH-IS fan; reached only when `Q20_EMR_USE = Yes` | GATE |
+| `Q23_DATA_REPORTS_USED` | Check Box, at least one option required (msg 1251) | HARD |
+| `Q35_2_PCQM_MEASURES` | Check Box, at least one option required (msg 1253) | HARD |
+| `Q36_QUALITY_CHALL` | Check Box, at least one required (msg 1255); code 09 is exclusive and cannot be combined (msg 1256) | HARD |
+| All `Q*_OTHER_TXT` | Required, non-blank, when the parent's "Other" code is ticked; cleared and `noinput` otherwise | HARD |
 
-### 3.7 Section F — DOH Licensing
+### 3.5 Section D — YAKAP / Konsulta (Q38–Q87)
 
 | Item | Rule | Severity |
 |---|---|---|
-| Q119–Q134 enabled | Q118 = Yes (1) | GATE |
-| Q122–Q134 enabled | Corresponding Q121 option selected | GATE |
-| **Q132, Q133, Q134** enabled | Q8 ∈ {Level 1, 2, 3 Hospital} AND corresponding Q121 option | GATE |
-| **Q130** enabled | Q8 = Primary Care Facility AND Q121 price-info option | GATE |
-| Q121 hospital-only options selectable | Only if Q8 ∈ hospital levels | GATE |
-| Q121 PCF-only option selectable | Only if Q8 = Primary Care Facility | GATE |
+| Q39–Q65 entered | `Q38_YK_ACCRED = Yes` | GATE |
+| Q66–Q71 entered | `Q38_YK_ACCRED = No` | GATE |
+| Q72–Q78 entered | `Q38_YK_ACCRED = Yes` (the accredited costing block) | GATE |
+| `Q79_MIN_CAP_VALUE_NONACC` entered | `Q38_YK_ACCRED = No` only | GATE |
+| `Q39_YK_SINCE_YEAR` | `2019 ≤ year ≤ current_year` — the UHC Act passed in 2019 (msg 1066) | HARD |
+| `Q39_YK_SINCE_MONTH` | `1 ≤ m ≤ 12` (msg 1064); and not in the future when the year is the current year (msg 1065) | HARD |
+| `Q40_YK_PACKAGE` | Check Box, at least one required (msg 1261); code 09 "I don't know" exclusive (msg 1262); code 08 "All of the above" exclusive (msg 1263, #526) | HARD |
+| `Q44_CAPITATION_AMT` | `≤ 5000` PHP blocks (msg 1071) | HARD |
+| `Q44_CAPITATION_AMT` | `> 1700` PHP prompts "exceeds the PHP 1,700 PhilHealth max — confirm?" and re-enters on No | SOFT |
+| `Q45_PERF_INDICATORS` | Check Box, at least one required (msg 1265); code 07 exclusive (msg 1266); code 05 "No requirements" also exclusive (msg 1267, #1188) | HARD |
+| `Q47_PAY_FREQ` entered | `Q46_KNOW_PAY_FREQ = Yes` | GATE |
+| `Q49_TRANCHE_INTERVAL_NUM` / `Q49_TRANCHE_INTERVAL` | Hybrid pair — a Q48 = No skip lands on the `_NUM` half, which is the pair's first field | GATE |
+| `Q51_APPLY_REASON` | Required, non-blank (msg 1269) | HARD |
+| `Q52_ACCRED_DIFFICULT` | Check Box, at least one required (msg 1271); code 90 "None of the above" exclusive (msg 1272) | HARD |
+| **Q53–Q61 each** | Reached only when the matching `Q52_ACCRED_DIFFICULT` option is ticked — aligned 2-character chunk scan, not `pos()` (#450) | GATE |
+| Q53–Q61 each, when reached | Check Box, at least one option required (msgs 1067, 1320, 1322, 1324, 1326, 1072, …) | HARD |
+| `Q62_ENROLL_RESPONSIBILITY` | Check Box, at least one required (msg 1273); code 90 exclusive (msg 1274) | HARD |
+| `Q63_ENROLL_INITIATIVES` | Check Box, at least one required (msg 1276); code 90 exclusive (msg 1277) | HARD |
+| `Q65_ENROLL_CHALL_LIST` | Check Box, at least one required (msg 1079) | HARD |
+| `Q66_NOT_ACCRED_REASON` | Check Box, at least one required (msg 1132) | HARD |
+| **Q67 routing** | Exactly one of Q68 / Q69 / Q70 / Q71 is answered per case; every branch tail exits to Q79 | GATE |
+| `Q73_ELIGIBLE_PATIENTS` | `> 500,000` warns without blocking (msg 1093) | SOFT |
+| `Q74_REGISTERED_PATIENTS` | `≤ Q73_ELIGIBLE_PATIENTS` — registered cannot exceed eligible (msg 1094) | HARD |
+| `Q78_MIN_CAP_VALUE_ACC` | `> 0` and `< 1700` prompts "below the PHP 1,700 PhilHealth max — confirm?" and re-enters on No (#533) | SOFT |
+| `Q81_CHARGE_ADDL_CAP_REASONS` | Check Box, at least one required (msg 1280) | HARD |
+| `Q83_NOT_RECEIVED_REASONS` | Check Box, at least one required (msg 1282); code 90 exclusive (msg 1283) | HARD |
+| `Q85_PAYMENT_CHALL_LIST` | Check Box, at least one required (msg 1285); code 90 exclusive (msg 1286) | HARD |
+| `Q86_EXPAND_NEXT` | Check Box, at least one required (msg 1288); code 90 exclusive (msg 1289) | HARD |
+| `Q87_ADDL_FEATURES` | Free text gated on `Q86_EXPAND_NEXT` code 03 being ticked — cleared and `noinput` otherwise, required when it is (msg 1291). The one gated free-text item without an `_OTHER_TXT` suffix | HARD / GATE |
 
-### 3.8 Section G — Service Delivery
+### 3.6 Section E — BUCAS / GAMOT (Q88–Q104)
 
 | Item | Rule | Severity |
 |---|---|---|
-| Q136, Q137 enabled | Q135 = Yes | GATE |
-| Q139, Q140 enabled | Q138 = Yes | GATE |
-| Q142 enabled | Q141 = Yes | GATE |
-| Q146 enabled | Q145 = Yes | GATE |
-| Q147 enabled | Q145 = No | GATE |
-| Q149–Q151 enabled | Q148 = Yes | GATE |
-| Q151 enabled | Q150 = No | GATE |
-| Q152–Q153 enabled | `Q7 = Public` AND `Q8 ∈ {Level 1, 2, 3 Hospital}` | GATE (#386) |
-| Q153 enabled | Q152 ∈ {Unclear, Very Unclear} | GATE |
-| `Q154_NUM_REFERRED_OUT` | `0 ≤ n ≤ 100,000` (over 6 months); warn if `> 10,000` | HARD / SOFT |
-| Q162 enabled | Q161 ∈ {Neither, Dissatisfied, Very Dissatisfied} | GATE |
+| Q89–Q94 entered | `Q88_HEARD_BUCAS = Yes` | GATE |
+| `Q90_NO_BUCAS_REASON` entered | `Q89_HAS_BUCAS = No` | GATE |
+| Q91–Q94 entered | `Q89_HAS_BUCAS = Yes` — the facility actually has a BUCAS Center | GATE |
+| `Q91_BUCAS_SERVICES` | Check Box, at least one required (msg 1293) | HARD |
+| `Q92_BUCAS_FACTORS` | Check Box, at least one required (msg 1295) | HARD |
+| Q96–Q98 entered | `Q95_HEARD_GAMOT = Yes` | GATE |
+| `Q97_NO_GAMOT_REASON` entered | `Q96_GAMOT_ACCRED = No` | GATE |
+| `Q98_GAMOT_FACTORS` | Check Box, at least one required (msg 1100); entered when `Q96_GAMOT_ACCRED = Yes` | HARD / GATE |
+| Q100–Q104 entered | `Q99_STOCKOUT = Yes` | GATE |
+| `Q102_STOCKOUT_AVG` entered | `Q101_STOCKOUT_DURATION = 3` (more than 60 days) — below that the month band is already implied, so the item is skipped rather than asked redundantly | GATE |
+| Q103, Q104 entered | `Q95 = Yes` AND `Q96 = Yes` AND `Q99 = Yes` (#384, spec 3.6 gate) | GATE |
+| `Q104_ADDR_STOCKOUT_HOW` | Required, non-blank (msg 1010); entered only when `Q103_ADDR_STOCKOUT = Yes` | HARD / GATE |
 
-### 3.9 Cross-section consistency
+> **Open clarification (ASPSI item 5).** `Q102_STOCKOUT_AVG` duplicates `Q101_STOCKOUT_DURATION`'s
+> subject in month bands rather than day bands. The build's `Q101 ≠ 3` gate is the CAPI
+> team's reading — that Q102 only adds information for stock-outs longer than 60 days — and is
+> provisional pending ASPSI confirmation.
+
+### 3.7 Section F — DOH Licensing (Q105–Q121)
+
+| Item | Rule | Severity |
+|---|---|---|
+| Q106–Q121 entered | `Q105_DOH_LICENSED = Yes (1)` | GATE |
+| `Q108_DOH_LIC_DIFFICULT` value set | Swapped at preproc on `Q8_SERVICE_LEVEL`: `Q108_DOH_LIC_DIFFICULT_PCF_VS1` for a Primary Care Facility, `_HOSP_VS1` for Level 1/2/3 hospitals (#385) | GATE |
+| `Q108_DOH_LIC_DIFFICULT` | Check Box, at least one required (msg 1228); code 90 "None of the above" exclusive (msg 1229) | HARD |
+| **Q109–Q121 each** | Reached only when the matching `Q108_DOH_LIC_DIFFICULT` option is ticked; Q109–Q116 map positionally to codes 01–08, Q117–Q121 map to 13, 09, 10, 11, 12 respectively (F1-LOGIC-01) | GATE |
+| Q109–Q121 each, when reached | Check Box, at least one option required (msgs 1298, 1300, 1014, 1302, 1304, 1306, 1308, 1310, 1016, 1312, 1314, 1316, 1018) | HARD |
+| `Q117_WHY_DIFF_PRICE_INFO` | PCF-only topic — reachable only through Q108's PCF value set | GATE |
+| `Q120_WHY_DIFF_EMERG_CART`, `Q121_WHY_DIFF_ADDONS` | Hospital-only topics — reachable only through Q108's hospital value set | GATE |
+
+### 3.8 Section G — Service Delivery (Q122–Q149)
+
+| Item | Rule | Severity |
+|---|---|---|
+| Q123, Q124 entered | `Q122_NBB_CURR = Yes` | GATE |
+| `Q124_NBB_BARRIERS` | Check Box, at least one required (msg 1110); code 90 exclusive (msg 1230) | HARD |
+| Q126, Q127 entered | `Q125_ZBB_CURR = Yes` | GATE |
+| `Q127_ZBB_BARRIERS` | Check Box, at least one required (msg 1116); code 90 exclusive (msg 1231) | HARD |
+| `Q129_OOP_REASON` entered | `Q128_ALLOW_OOP_BASIC = Yes` | GATE |
+| `Q131_DIFFICULT_REASON` | Required, non-blank (msg 1124) | HARD |
+| `Q133_MALASAKIT_WHY` entered | `Q132_MALASAKIT_PROVIDED = Yes`; required when reached (msg 1128) | HARD / GATE |
+| `Q134_NO_MALASAKIT_WHY` entered | `Q132_MALASAKIT_PROVIDED = No`; required when reached (msg 1130) | HARD / GATE |
+| Q136–Q138 entered | `Q135_LGU_SUPPORT = Yes` | GATE |
+| `Q136_LGU_SUPPORT_FORMS` | Check Box, at least one required (msg 1232) | HARD |
+| `Q138_LGU_NOT_SAT_WHY` entered | `Q137_LGU_SATISFIED = No`; Check Box, at least one required (msg 1234); code 90 exclusive (msg 1235) | HARD / GATE |
+| Q139, Q140 entered | `Q7_OWNERSHIP = Public` AND `Q8_SERVICE_LEVEL` in Level 1/2/3 Hospital (#386) | GATE |
+| `Q140_UNCLEAR_PROTOCOL` entered | `Q139_PHO_PROTOCOL_CLARITY` in Unclear / Very Unclear | GATE |
+| `Q142_SEND_REFERRAL_HOW` | Check Box, at least one required (msg 1237) | HARD |
+| `Q143_REFERRAL_FORM_TYPE` | Check Box, at least one required (msg 1239); code 05 exclusive (msg 1240) | HARD |
+| `Q146_RECEIVE_REFERRAL_HOW` | Check Box, at least one required (msg 1028) | HARD |
+| `Q147_EXTERNAL_SERVICES_GO` | Check Box, at least one required (msg 1030); code 90 exclusive (msg 1242) | HARD |
+| `Q149_NOT_SATISFIED_WHY` entered | `Q148_REF_SATISFACTION` not in Very Satisfied / Satisfied; required when reached (msg 1032) | HARD / GATE |
+
+### 3.9 Section H — Human Resources for Health (Q150–Q153)
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q150_HR_CHALL` | Check Box, at least one required (msg 1243). The Aug-17 printed list has 5 options and no "I don't know" — ASPSI's #1126 request for one did not survive their own rewrite (clarification item 1) | HARD |
+| `Q152_PD_DOCTORS` | Check Box, at least one required (msg 1245); code 08 exclusive (msg 1246) | HARD |
+| `Q153_PD_NURSES` | Check Box, at least one required (msg 1248); code 06 exclusive (msg 1249). Ships without "Clinical audits" / "Surgical audits" per §1 Bug #1 | HARD |
+
+### 3.10 Cross-section consistency
 
 | Rule | Severity |
 |---|---|
-| If `Q118 = "I don't know what DOH licensing is"`, the Q65 option "DOH licensing requirements" should not be selected | SOFT (warn) |
-| If `Q51 = Yes`, no answers should be present for Q79–Q84 | HARD |
-| If `Q51 = No`, no answers should be present for Q52–Q78 | HARD |
-| If `Q102 = No`, no answers in Q104–Q107 | HARD |
-| If `Q109 = No`, no answers in Q111 | HARD |
-| Secondary data — full-time staff who left ≤ total full-time staff count (when secondary data record is added per Bug #2) | HARD |
+| If `Q105_DOH_LICENSED = "I don't know what DOH licensing is"`, the `Q52_ACCRED_DIFFICULT` option "DOH licensing requirements" should not be ticked | SOFT (warn) |
+| If `Q38_YK_ACCRED = Yes`, no answers should be present for Q66–Q71 or Q79 | HARD — enforced structurally by the Q65/Q66/Q79 entry gates |
+| If `Q38_YK_ACCRED = No`, no answers should be present for Q39–Q65 or Q72–Q78 | HARD — enforced structurally by the Q38 and Q72 gates |
+| If `Q89_HAS_BUCAS ≠ Yes`, no answers in Q91–Q94 | HARD — enforced by the Q94 entry gate |
+| If `Q96_GAMOT_ACCRED = No`, no answers in Q98 | HARD |
+| Secondary-data cross-checks (full-time staff who left ≤ total full-time staff) | NOT IMPLEMENTED — no secondary-data records exist; see §1 Bug #2 |
 
 ---
 
@@ -380,186 +496,279 @@ postproc
   endif;
 ```
 
-### 4.4 Section C — generic UHC9 skip pattern (apply to Q11–Q48 sub-questions)
+### 4.4 Section C — two-step battery gate (generated, one per base)
+
+The 23 gates are **generated**, not hand-written: `generate_apc.two_step_skip_rules()` walks
+`TWO_STEP_BATTERY` and emits one rule per base, targeting the next base in printed order.
+Do not hand-add rows to `SKIP_RULES` for this section.
 
 ```cspro
-{ Example: Q14 controls whether Q15 (PHU role) is asked. }
-PROC Q14_PHU_CREATED
-postproc
-  if Q14_PHU_CREATED in 5:9 then    { 5..9 = all No / IDK / NA branches }
-    skip to Q16_HEALTH_PROMO_UNIT;
-  endif;
-```
-
-For dichotomous yes/no skips:
-
-```cspro
+{ Generated shape — Q10's gate. The target is Q11 because Q11 is the next base. }
 PROC Q10_HAS_PRIMARY_PKG
 postproc
-  if Q10_HAS_PRIMARY_PKG = 2 then    { No }
-    skip to Q12_PCB_LICENSING;
+  if Q10_HAS_PRIMARY_PKG = 2 then    { No -> skip this base's own probe }
+    skip to Q11_PCB_LICENSING;
   endif;
 
-PROC Q13_PUBLIC_HEALTH_UNIT
+{ Q12 and Q13 are the only two bases with a 'Not applicable' code. }
+PROC Q12_PUBLIC_HEALTH_UNIT
 postproc
-  if Q13_PUBLIC_HEALTH_UNIT in 2,9 then  { No or NA }
-    skip to Q16_HEALTH_PROMO_UNIT;
+  if Q12_PUBLIC_HEALTH_UNIT in 2,9 then   { No or Not applicable }
+    skip to Q13_HEALTH_PROMO_UNIT;
+  endif;
+
+{ Q20's target is Q24, not Q21 — Q21-Q23 are the DOH-IS fan, not battery bases,
+  so leaving them out of TWO_STEP_BATTERY gives the paper's Q20 -> Q24 for free. }
+PROC Q20_EMR_USE
+postproc
+  if Q20_EMR_USE = 2 then
+    skip to Q24_STAFFING_CHANGED;
   endif;
 ```
 
-### 4.5 Section D — YAKAP master gate at Q51
+### 4.5 Section D — YAKAP master gate at Q38
 
 ```cspro
-PROC Q51_YK_ACCRED
+PROC Q38_YK_ACCRED
 postproc
-  if Q51_YK_ACCRED = 2 then  { Not accredited }
-    skip to Q79_NOT_ACCRED_REASON;
+  if Q38_YK_ACCRED = 2 then  { Not accredited -> the Q66-Q71 arm }
+    skip to Q66_NOT_ACCRED_REASON;
+  endif;
+
+{ The two arms reconverge through a pair of mirrored entry gates. }
+PROC Q65_ENROLL_CHALL_LIST
+postproc
+  if Q38_YK_ACCRED = 1 then   { accredited: Q66-Q71 are the not-accredited block }
+    skip to Q72_CATCHMENT_AREA;
+  endif;
+
+PROC Q72_CATCHMENT_AREA
+preproc
+  if Q38_YK_ACCRED = 2 then   { not-accredited: skip the accredited costing block }
+    skip to Q79_MIN_CAP_VALUE_NONACC;
+  endif;
+
+PROC Q79_MIN_CAP_VALUE_NONACC
+preproc
+  if Q38_YK_ACCRED <> 2 then  { accredited: Q79 is not for them }
+    skip to Q80_CHARGE_ADDL_CAP;
+  endif;
+postproc
+  skip to Q88_HEARD_BUCAS;    { not-accredited finished -> exit Section D }
+```
+
+### 4.6 Q39 accreditation date validation
+
+```cspro
+PROC Q39_YK_SINCE_YEAR
+postproc
+  if Q39_YK_SINCE_YEAR < 2019 or Q39_YK_SINCE_YEAR > currentYear then
+    errmsg(1066, currentYear);
+    reenter;
+  endif;
+
+PROC Q39_YK_SINCE_MONTH
+postproc
+  if Q39_YK_SINCE_MONTH < 1 or Q39_YK_SINCE_MONTH > 12 then
+    errmsg(1064);
+    reenter;
+  endif;
+  if Q39_YK_SINCE_YEAR = currentYear and Q39_YK_SINCE_MONTH > currentMonth then
+    errmsg(1065);
+    reenter;
   endif;
 ```
 
-### 4.6 Q52 accreditation date validation
+### 4.7 Q73 / Q74 patient-count consistency
 
 ```cspro
-PROC Q52_YK_SINCE_YEAR
+PROC Q73_ELIGIBLE_PATIENTS
 postproc
-  if Q52_YK_SINCE_YEAR < 2019 or Q52_YK_SINCE_YEAR > currentYear then
-    errmsg("YAKAP accreditation year must be between 2019 and %d.", currentYear);
-    reenter;
+  if Q73_ELIGIBLE_PATIENTS > 500000 then
+    errmsg(1093, Q73_ELIGIBLE_PATIENTS);   { soft — warns, does not reenter }
   endif;
 
-PROC Q52_YK_SINCE_MONTH
+PROC Q74_REGISTERED_PATIENTS
 postproc
-  if Q52_YK_SINCE_MONTH < 1 or Q52_YK_SINCE_MONTH > 12 then
-    errmsg("Month must be 1–12.");
-    reenter;
-  endif;
-  if Q52_YK_SINCE_YEAR = currentYear and Q52_YK_SINCE_MONTH > currentMonth then
-    errmsg("Accreditation date is in the future. Reenter.");
+  if Q74_REGISTERED_PATIENTS > Q73_ELIGIBLE_PATIENTS then
+    errmsg(1094, Q74_REGISTERED_PATIENTS, Q73_ELIGIBLE_PATIENTS);
     reenter;
   endif;
 ```
 
-### 4.7 Q86/Q87 consistency
+### 4.8 Q44 / Q78 capitation checks
 
 ```cspro
-PROC Q87_REGISTERED_PATIENTS
+PROC Q44_CAPITATION_AMT
 postproc
-  if Q87_REGISTERED_PATIENTS > Q86_ELIGIBLE_PATIENTS then
-    errmsg("Registered patients (%d) cannot exceed eligible patients (%d).",
-           Q87_REGISTERED_PATIENTS, Q86_ELIGIBLE_PATIENTS);
+  if Q44_CAPITATION_AMT > 5000 then
+    errmsg(1071, Q44_CAPITATION_AMT);
     reenter;
   endif;
-```
-
-### 4.8 Q57 capitation soft warning
-
-```cspro
-PROC Q57_CAPITATION_AMT
-postproc
-  if Q57_CAPITATION_AMT > 5000 then
-    errmsg("Capitation %d PHP is implausibly high. Reenter or confirm.", Q57_CAPITATION_AMT);
-    reenter;
+  if Q44_CAPITATION_AMT > 1700 then
+    if accept("Capitation %d exceeds the PHP 1,700 PhilHealth max. Confirm?", "Yes", "No") <> 1 then
+      reenter;
+    endif;
   endif;
-  if Q57_CAPITATION_AMT > 1700 then
-    if not accept("Capitation %d exceeds the PHP 1,700 PhilHealth max. Confirm?", "Yes", "No") = 1 then
+
+{ #533: Q78 is the minimum the facility would ACCEPT, so the suspicious direction
+  is BELOW the max, not above it. }
+PROC Q78_MIN_CAP_VALUE_ACC
+postproc
+  if Q78_MIN_CAP_VALUE_ACC > 0 and Q78_MIN_CAP_VALUE_ACC < 1700 then
+    if accept("Q78 minimum acceptable capitation is below the PHP 1,700 PhilHealth max - confirm?", "Yes", "No") <> 1 then
       reenter;
     endif;
   endif;
 ```
 
-### 4.9 Section F — Q121 facility-type-aware gating
+### 4.9 Section F — Q108 facility-type-aware value set
 
 ```cspro
-PROC Q121_DOH_LIC_DIFFICULT
+PROC Q108_DOH_LIC_DIFFICULT
 preproc
-  { Hide hospital-only options for non-hospital facilities }
-  if Q8_SERVICE_LEVEL = 1 then  { Primary Care Facility }
-    setvalueset(Q121_DOH_LIC_DIFFICULT, vs_q121_pcf);
-  else
-    setvalueset(Q121_DOH_LIC_DIFFICULT, vs_q121_hospital);
+  { #385: swap the whole value set rather than hiding options after the fact. }
+  if Q8_SERVICE_LEVEL = 1 then   { Primary Care Facility }
+    setvalueset(Q108_DOH_LIC_DIFFICULT, Q108_DOH_LIC_DIFFICULT_PCF_VS1);
+  else                           { Level 1/2/3 Hospital }
+    setvalueset(Q108_DOH_LIC_DIFFICULT, Q108_DOH_LIC_DIFFICULT_HOSP_VS1);
   endif;
 postproc
-  { "None of the above" → skip the why-difficult cluster }
-  if Q121_O14_NONE = 1 then
-    skip to Q135_NBB_CURR;
+  if length(strip(Q108_DOH_LIC_DIFFICULT)) = 0 then
+    errmsg(1228);
+    reenter;
+  endif;
+  { 'None of the above' (90) must stand alone. }
+  if pos("90", Q108_DOH_LIC_DIFFICULT) > 0 and length(strip(Q108_DOH_LIC_DIFFICULT)) > 2 then
+    errmsg(1229);
+    reenter;
   endif;
 ```
 
-### 4.10 Generic "why-difficult" gate (Q66–Q74, Q122–Q134)
+### 4.10 Generic "why-difficult" gate (Q53–Q61 on Q52, Q109–Q121 on Q108)
+
+Both batteries' gate fields are single Check Box items, so membership is an **aligned
+2-character chunk scan**, never `pos()`. `pos("10", ...)` substring-matches across code
+boundaries once the list carries 2-digit codes — ticking 01 + 02 packs `"0102"`, which
+contains `"10"` and falsely opened the hospitals-only batteries (#450). `do..while` +
+`[p:2]` + `tonumber` are the strict-Publish-safe forms.
 
 ```cspro
-PROC Q66_WHY_DIFF_66
+PROC Q53_WHY_DIFF_PREVENTIVE
 preproc
-  { Skip Q66 entirely if Q65 didn't flag this area }
-  if Q65_O01_ABILITY_TO_CONDUCT_PRE = 0 then
-    skip to next;
+  numeric wdN; numeric wdK; numeric wdP; numeric wdHit;
+  wdHit = 0;
+  wdN = length(strip(Q52_ACCRED_DIFFICULT)) / 2;
+  do wdK = 1 while wdK <= wdN
+    wdP = (wdK - 1) * 2 + 1;
+    if tonumber(Q52_ACCRED_DIFFICULT[wdP:2]) = 1 then wdHit = 1; endif;
+  enddo;
+  if wdHit = 0 then   { Q53 shown only if Q52 difficulty option 01 ticked }
+    skip to Q54_WHY_DIFF_LAB;
+  endif;
+postproc
+  if length(strip(Q53_WHY_DIFF_PREVENTIVE)) = 0 then
+    errmsg(1067);
+    reenter;
   endif;
 ```
 
-### 4.11 Section G — Q150 → Q154 jump
+The paper's "IF None of the above GOTO Q62" needs no rule of its own: with nothing ticked,
+`wdHit = 0` on all nine and the chain falls through to Q62. Q108 -> Q109-Q121 -> Q122 is the
+same shape, with the F1-LOGIC-01 code overrides for Q117-Q121.
+
+### 4.11 Section G — Q137 LGU-satisfaction skip (defect-fix)
 
 ```cspro
-PROC Q150_LGU_SATISFIED
+{ The paper sends Q137 = Yes to Q141, which ORPHANS Q139/Q140 - the PHO
+  protocol-clarity pair, which have nothing to do with LGU satisfaction. Under the
+  printed routing the only reliable way to reach Q139 is the no-LGU-support path
+  (Q135 No -> Q139), so every satisfied respondent silently loses two questions.
+  Retargeting to Q139 still skips Q138 ('why not satisfied'), which is all the
+  paper's skip was for. }
+PROC Q137_LGU_SATISFIED
 postproc
-  if Q150_LGU_SATISFIED = 1 then  { Yes }
-    skip to Q154_NUM_REFERRED_OUT;
+  if Q137_LGU_SATISFIED = 1 then  { Yes }
+    skip to Q139_PHO_PROTOCOL_CLARITY;
   endif;
 ```
 
-### 4.12 Section G — Q161 satisfaction skip
+### 4.12 Section G — Q139 PHO gate and Q148 satisfaction skip
 
 ```cspro
-PROC Q161_REF_SATISFACTION
+PROC Q139_PHO_PROTOCOL_CLARITY
+preproc
+  if not (Q7_OWNERSHIP = 1 and Q8_SERVICE_LEVEL in 2,3,4) then
+    skip to Q141_NUM_REFERRED_OUT;   { Q139/Q140 only for public hospitals (#386) }
+  endif;
 postproc
-  if Q161_REF_SATISFACTION in 1,2 then  { Very Satisfied / Satisfied }
-    skip to Q163_HR_CHALL;     { Section H starts here }
+  if Q139_PHO_PROTOCOL_CLARITY in 1,2 then   { Very Clear / Clear -> skip the why-unclear detail }
+    skip to Q141_NUM_REFERRED_OUT;
+  endif;
+
+PROC Q148_REF_SATISFACTION
+postproc
+  if Q148_REF_SATISFACTION in 1,2 then  { Very Satisfied / Satisfied }
+    skip to Q150_HR_CHALL;     { Section H starts here }
   endif;
 ```
 
 ### 4.13 "Other (specify)" enforcement (apply to every `Q*_OTHER_TXT`)
 
-```cspro
-PROC Q11_OTHER_TXT
-postproc
-  if Q11_PRIMARY_PKG_STATUS = 5 and length(strip(Q11_OTHER_TXT)) = 0 then
-    errmsg("'Other' was selected for Q11. Please specify.");
-    reenter;
-  endif;
-```
-
-For UHC9 items (`*_YES_OTHER_TXT` / `*_NO_OTHER_TXT`):
+Two shapes, depending on whether the parent is a Check Box or a single-coded item. Both
+**clear and `noinput`** the box when the parent's Other code is absent, so a stale value can
+never survive a back-navigation. Naming is always `Q<NN>_<STEM>_OTHER_TXT`.
 
 ```cspro
-PROC Q12_YES_OTHER_TXT
+{ Check Box parent - membership test on the packed code string. }
+PROC Q40_YK_PACKAGE_OTHER_TXT
+preproc
+  if pos("99", Q40_YK_PACKAGE) = 0 then
+    Q40_YK_PACKAGE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
 postproc
-  if Q12_PCB_LICENSING = 4 and length(strip(Q12_YES_OTHER_TXT)) = 0 then
-    errmsg("'Yes, other reason' was selected. Please specify.");
+  if pos("99", Q40_YK_PACKAGE) > 0 and length(strip(Q40_YK_PACKAGE_OTHER_TXT)) = 0 then
+    errmsg(1264);
     reenter;
   endif;
 
-PROC Q12_NO_OTHER_TXT
+{ Single-coded parent - equality test, and the parent's own skip resumes afterwards. }
+PROC Q90_OTHER_TXT
 postproc
-  if Q12_PCB_LICENSING = 7 and length(strip(Q12_NO_OTHER_TXT)) = 0 then
-    errmsg("'No, other reason' was selected. Please specify.");
+  if length(strip(Q90_OTHER_TXT)) = 0 then
+    errmsg(1292);
     reenter;
   endif;
+  skip to Q95_HEARD_GAMOT;             { specify captured -> resume the Q90 skip }
 ```
 
-### 4.14 Field Control — break-off terminator
+### 4.14 Field Control — break-off terminator and replacements
 
-The `CONSENT_GIVEN` item was removed 2026-06-12 (not on the April-20 paper Field Control form). Early termination — including consent refusal — runs through `BREAKOFF` at case start, which sets Result of Visit and the auto `CASE_DISPOSITION`.
+The `CONSENT_GIVEN` item was removed 2026-06-12. Early termination — including consent
+refusal — runs through `BREAKOFF` at case start, which sets Result of Visit and the auto
+`CASE_DISPOSITION`. Codes 5–7 are the **replacement** reasons (interview never started); the
+guard must list all seven or a revisit to the field silently erases them.
 
 ```cspro
 PROC BREAKOFF
+preproc
+  { The guard MUST list every valid code - anything outside it is silently reset to
+    Continue. Widened to 1..7 on 2026-07-14; leaving it at 1..4 would have erased every
+    replacement the moment the field was revisited. }
+  if not (BREAKOFF in 1, 2, 3, 4, 5, 6, 7) then BREAKOFF = 1; endif;
 postproc
-  if not (BREAKOFF in 1, 2, 3, 4) then BREAKOFF = 1; endif;   { default "Continue interview" }
-
   if BREAKOFF <> 1 then
-    if BREAKOFF = 2 then ENUM_RESULT_FINAL_VISIT = 3; endif;   { Respondent withdrew  -> Refused }
-    if BREAKOFF = 3 then ENUM_RESULT_FINAL_VISIT = 2; endif;   { Postponed / reschedule }
-    if BREAKOFF = 4 then ENUM_RESULT_FINAL_VISIT = 4; endif;   { Stop - other         -> Incomplete }
-    CASE_DISPOSITION = 2;                                      { Partial / not completed }
-    endlevel;                                                  { terminate — do not enter Section A }
+    { 2-4: the interview STARTED and then stopped. }
+    if BREAKOFF = 2 then ENUM_RESULT_FINAL_VISIT = 3; endif;   { withdrew  -> Refused }
+    if BREAKOFF = 3 then ENUM_RESULT_FINAL_VISIT = 2; endif;   { Postponed }
+    if BREAKOFF = 4 then ENUM_RESULT_FINAL_VISIT = 4; endif;   { Stop-other -> Incomplete }
+    { 5-7: the interview NEVER STARTED. Every such unit is replaced by a substitute,
+      so all three land on Replaced(5) and BREAKOFF keeps the reason.
+      Postponed(3) is NOT a replacement: that unit is revisited, not substituted. }
+    if BREAKOFF in 5, 6, 7 then ENUM_RESULT_FINAL_VISIT = 5; endif;   { Replaced }
+    CASE_DISPOSITION = 2;   { partial / not completed }
+    skip to ENUM_RESULT_FINAL_VISIT;
   endif;
 ```
 
@@ -593,60 +802,58 @@ onfocus
 
 ### 4.16 GPS capture and verification photo
 
-Include `Capture-Helpers.apc` in the form's .app:
+`Capture-Helpers.apc` and `PSGC-Cascade.apc` are **inlined into `PROC GLOBAL`** rather than
+`#include`d: CSPro forbids `#include` inside a PROC, and CSEntry forbids code before the first
+PROC. `generate_apc.py` does the inlining.
 
 ```cspro
-#include "../shared/Capture-Helpers.apc"
-```
-
-```cspro
-{ Facility GPS — fired on the capture-trigger item. }
-PROC FACILITY_CAPTURE_GPS
-onfocus
-  if ReadGPSReading(15, 20)   { radio warm since case start — WarmUpGPS() (2026-07-19) } then
-    FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
-    FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
-    FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
-    FACILITY_GPS_ACCURACY   = gps(accuracy);
-    FACILITY_GPS_SATELLITES = gps(satellites);
-    FACILITY_GPS_READTIME   = gps(readtime);
-  endif;
-  FACILITY_CAPTURE_GPS = notappl;   { reset trigger so button re-arms }
-
-{ Post-capture sanity checks — run on the lat/lon items themselves, not on the trigger. }
+{ Capture fires from the latitude field's onfocus - there is no separate trigger
+  item. Guarded on READTIME so it captures once and not on back-navigation. }
 PROC FACILITY_GPS_LATITUDE
-postproc
-  numeric lat;
-  lat = tonumber(FACILITY_GPS_LATITUDE);
-  if lat <> notappl and (lat < 4.5 or lat > 21.5) then
-    errmsg("Facility latitude %f is outside the Philippine bounding box — re-capture.", lat);
-    move to FACILITY_CAPTURE_GPS;
-  endif;
-
-PROC FACILITY_GPS_LONGITUDE
-postproc
-  numeric lon;
-  lon = tonumber(FACILITY_GPS_LONGITUDE);
-  if lon <> notappl and (lon < 116.5 or lon > 127.0) then
-    errmsg("Facility longitude %f is outside the Philippine bounding box — re-capture.", lon);
-    move to FACILITY_CAPTURE_GPS;
-  endif;
-
-{ Verification photo — fired on the capture-trigger. }
-PROC CAPTURE_VERIFICATION_PHOTO
 onfocus
-  string fn = "case-" + maketext("%06d", QUESTIONNAIRE_NO) + "-verification.jpg";
-  if TakeVerificationPhoto(fn) then
-    VERIFICATION_PHOTO_FILENAME = fn;
+  if length(strip(FACILITY_GPS_READTIME)) = 0 then
+    { 15 s budget: the radio has been warm since the case key (WarmUpGPS), so a
+      fresh fix normally arrives in ~1-2 s; 15 s only caps the no-signal case. }
+    if ReadGPSReading(15, 20) then
+      FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
+      FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
+      FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
+      FACILITY_GPS_ACCURACY   = gps(accuracy);
+      FACILITY_GPS_SATELLITES = gps(satellites);
+      FACILITY_GPS_READTIME   = maketext("%d", gps(readtime));
+    endif;
+  endif;
+  { Protect ONLY once captured - protecting a blank numeric (no fix / desktop)
+    triggers "protected field is out of range - value is NOTAPPL". }
+  if length(strip(FACILITY_GPS_READTIME)) > 0 then
+    protect(FACILITY_GPS_LATITUDE, true);
+    protect(FACILITY_GPS_LONGITUDE, true);
+    protect(FACILITY_GPS_ALTITUDE, true);
+    protect(FACILITY_GPS_ACCURACY, true);
+    protect(FACILITY_GPS_SATELLITES, true);
+    protect(FACILITY_GPS_READTIME, true);
+    ReleaseGPS();   { F1's only GPS block - close the radio once captured }
+  endif;
+
+{ #231 verification photo, at the END of the form. Conditional on the visit
+  outcome and soft-validated (warn, don't trap, on camera failure). }
+PROC CAPTURE_VERIFICATION_PHOTO
+preproc
+  if not (ENUM_RESULT_FINAL_VISIT in 1, 4) then
+    VERIFICATION_PHOTO_FILENAME = "";   { clear any stale name if outcome changed back }
+    noinput;
+  endif;
+onfocus
+  if length(strip(VERIFICATION_PHOTO_FILENAME)) = 0 then
+    string fn = "case-" + maketext("%02d%02d%03d%02d%03d", REGION_CODE, PROVINCE_HUC_CODE,
+                                   CITY_MUNICIPALITY_CODE, FACILITY_NO, CASE_SEQ) + "-verification.jpg";
+    if TakeVerificationPhoto(fn) then
+      VERIFICATION_PHOTO_FILENAME = fn;
+    else
+      errmsg(1007);
+    endif;
   endif;
   CAPTURE_VERIFICATION_PHOTO = notappl;
-
-PROC VERIFICATION_PHOTO_FILENAME
-postproc
-  if ENUM_RESULT_FINAL_VISIT = 1 and length(strip(VERIFICATION_PHOTO_FILENAME)) = 0 then
-    errmsg("Verification photo is required when the case is marked Completed.");
-    move to CAPTURE_VERIFICATION_PHOTO;
-  endif;
 ```
 
 ---
@@ -657,40 +864,84 @@ The case-control block (`SURVEY_CODE`, `DATE_STARTED`, `TIME_STARTED`, `INTERVIE
 
 ---
 
-## 5. Dispositions — Apr 13 LSS meeting + post-LSS E2-F1-009b
+## 5. Dispositions
 
-The six items previously held "open" are now dispositioned. Two still need ASPSI; four are closed in spec (generator constants listed so the reverse lookup works).
+Carried forward from the Apr 13 LSS meeting and post-LSS E2-F1-009b, re-read against the
+Aug-17 build on 2026-08-19. Generator constants are listed so the reverse lookup still works,
+even where the constant is now inert.
 
 ### Needs ASPSI
 
-1. **Q63 ACCRED_WAIT days vs months** (original Bug #3) — Printed stem says "days"; bucket labels are in months. **Route to Juvy/Kidd** before Tranche 2: either (a) ASPSI rewrites labels to day buckets (`<30`, `31–60`, `>60`) or (b) edits the question stem to months. Default if no response before bench-test: keep months (`Q63_USE_DAY_BUCKETS = False`).
-2. **Secondary data section structure** (original Bug #2) — Pages 30–34 (hospital census 6mo, HCW roster by cadre × employment type, YAKAP services, procurement vs charged prices, lab markup) still need a structural decision: record-per-month vs flat; separate CSPro app vs embedded records; paper-only collection vs CAPI. **Route to Juvy**. Default: empty stub records ship in the dcf (`SECONDARY_DATA_AS_STUBS = True`) so the dictionary opens and bench-test can proceed without the secondary-data path.
+1. **Secondary-data annex** (original Bug #2) — pages 30–34 of the printed instrument
+   (hospital census 6mo, HCW roster by cadre × employment type, YAKAP services, procurement
+   vs charged prices, lab markup) have **never been built**, in any form. `SECONDARY_DATA_AS_STUBS`
+   is inert; there are no `SEC_*` records in the dictionary and never were (ruling R22,
+   2026-08-19). A structural decision is needed before any module can be written: record-per-month
+   vs flat, separate CSPro app vs embedded records, paper-only vs CAPI. **Route to Juvy.**
+   Note that the ICF read aloud to every respondent already promises "secondary data such as
+   hospital census and staffing statistics" — so today the consent script over-promises what
+   the instrument collects, which is the sharper form of this ask.
+2. **`Q150_HR_CHALL` lost "I don't know"** — ASPSI's #1126 (2026-08-06) explicitly asked for
+   that option; the Aug-17 printed list, eleven days later, does not carry it. The paper is
+   newer so it wins and the build follows the printed 5-option list. ASPSI should confirm the
+   omission is intended rather than an oversight in their own rewrite.
+3. **`Q102_STOCKOUT_AVG`'s gate** — see §3.6. The `Q101 ≠ 3` condition is the CAPI team's
+   reading of two near-duplicate questions and is provisional.
 
 ### Spec-decision (ASPSI may override)
 
-3. **Eligibility termination behaviour** — `<6 months tenure` terminates the questionnaire at Q5 postproc and codes `ENUM_RESULT = Refused/Incomplete`. **Spec default**: terminate immediately (do not capture Sections B–H); enumerator re-screens at a different facility. PROC coded in §4.2.
-4. **Q31 EMR NA-skip** (original Bug #4) — `Q31_NA_SKIPS = True`. **Spec default**: NA routes to Q35 alongside the other UHC9 NA branches; treat the source omission as a printing bug and enforce parity in CAPI logic. Flag in field manual.
-5. **Q166 PD_NURSES audits omission** (original Bug #1) — `Q166_NURSES_INCLUDE_AUDITS = False`. **Spec default**: honour source; nurses' PD list ships without "Clinical audits" / "Surgical audits". Flag to ASPSI only if they surface it during Tranche 2 review.
-6. **Q121 hospital-only options** — `Q121_DYNAMIC_VALUE_SET = False`. **Spec default**: single shared value set; facility-type enforcement happens via GATE rules on Q130 (PCF-only) and Q132–Q134 (hospital-only). If pilot reveals enumerator confusion from irrelevant options appearing, revisit with `setvalueset()` at Q121 preproc (pattern documented in §4.9).
+4. **Eligibility termination behaviour** — under 6 months tenure ends the case at Q5 postproc
+   and codes `ENUM_RESULT_FINAL_VISIT = 4`. **Spec default**: terminate immediately (do not
+   capture Sections B–H); the enumerator re-screens at a different facility. PROC in §4.2.
+5. **`Q153_PD_NURSES` audits omission** (original Bug #1) — **closed**, not a spec default any
+   more: the Aug-17 printed list confirms the omission, and the `Q166_NURSES_INCLUDE_AUDITS`
+   toggle was retired with it.
+6. **Q67 = "I don't know" retarget** — the paper sends it to Q72, the accredited-only costing
+   block, which a Q67 respondent can never legitimately be in. The build sends it to Q79.
+   Registered as a defect-fix, not a divergence to reconcile back.
+7. **Q137 = Yes retarget** — see §4.11. The build sends it to Q139 rather than the paper's
+   Q141, so the PHO protocol pair stays reachable on every path.
+8. **Q68–Q71 exits** — under the printed routing these four Q67 branch tails had **no exit at
+   all**, so a "haven't thought about it" respondent was walked through two other branches'
+   questions. Each now ends with an unconditional skip to Q79.
 
 ---
 
 ## 6. Implementation order (recommended)
 
-1. **Dispositioned bugs in §1** — all six are already landed or stubbed in `generate_dcf.py`; current build (12 records / 664 items) is bench-testable without further generator work. Revisit Bug #2 (secondary-data structure) and Bug #3 (Q63 units) only after ASPSI response.
-2. **Open `FacilityHeadSurvey.dcf` in CSPro Designer**, validate the dictionary loads cleanly; inspect record layout (11 data records + root header, including the 4 `SEC_*` stubs and `REC_FACILITY_CAPTURE`).
-3. **Build the Form file** (`.fmf`) — one form per record A–H; skip the `SEC_*` stubs and the off-form `REC_FACILITY_CAPTURE` (its items are wired via `onfocus` triggers, not placed on a data-entry form).
-4. **Add PROC code** in this order:
-   1. Field Control consent terminator (§4.14) + PSGC cascade (§4.15) + GPS/photo capture (§4.16)
-   2. Section A eligibility at Q5 (§4.2) + tenure consistency at Q6 (§4.3)
-   3. Section C generic UHC9 skip pattern (§4.4)
-   4. Section D Q51 master gate (§4.5) + Q52 date (§4.6) + Q86/Q87 consistency (§4.7) + Q57 capitation (§4.8)
-   5. Section F Q121 facility-type gating (§4.9) + generic why-difficult gate (§4.10)
-   6. Section G skips (§4.11, §4.12)
-   7. Other-specify enforcement generics (§4.13)
-5. **Bench-test** with paper-walkthrough of 3 mock facility responses: one accredited Level-2 hospital, one non-accredited PCF, one terminated-on-tenure case. Verify the capture triggers fire correctly and the verification-photo filename lands next to the case data.
-6. **Pretest readiness** — bundle as PFF for CSEntry Android distribution. Confirm `shared/PSGC-Cascade.apc`, `shared/Capture-Helpers.apc`, and the PSGC external lookup dictionaries (`shared/psgc_*.dcf`) are packaged alongside the .app.
+The build is fully generated; this order describes what to re-run, not what to hand-build.
+
+1. **Regenerate** in dependency order — `generate_dcf.py` → `inject_scoped_option_labels.py`
+   → `generate_apc.py` → `generate_fmf.py` → copy → `optimize_capture_types.py`. One command
+   covers it: `py automation/cspro_compile_driver.py F1 --build`. Running `generate_apc.py`
+   without the following `generate_fmf.py` leaves the form file's block plan stale, and any
+   new or renamed item lands UNREACHABLE.
+2. **Compile** — `py automation/cspro_compile_driver.py F1 --build --save`, then
+   `py automation/csentry_verify.py F1` (a Designer "Compile Successful" alone does not prove
+   CSEntry will load it).
+3. **Static gates**, all four, before any device work: `preflight_validate.py`,
+   `verify_questions.py F1` (reachability, dead conditions, bad skips), `skip_boundary_check.py F1`,
+   `fmf_block_check.py`.
+4. **Tier-1 conformance** — `py aug17-tools/aug17_diff.py F1` must exit 0 with zero
+   unregistered divergences. Every intentional paper-vs-build departure needs a row in
+   `aug17-approved-divergences.md`, and every skip rule needs a verified row in
+   `reports/F1-tier2-matrix.md`.
+5. **Desk-test** the branch-heavy paths with `automation/csentry_runner.py`: the two-step
+   battery on both its Yes and No branches, the Q38 accredited / not-accredited split and its
+   Q65 and Q68–Q71 exits, the GAMOT and stock-out chain, and the Q139 PHO gate.
+6. **Package and deploy** — `stamp_version.py`, then `auto_deploy.py F1 --deploy`. Confirm the
+   **8 PSGC files** ride with the package (`auto_deploy.add_files`), and that
+   `facility_lookup.dat` / `.dcf` do **NOT**. `facility_lookup` was deliberately unbundled on
+   2026-06-10: its text-repo indexing infinite-loops Android CSEntry at app start — *that* is
+   the "always loading" trap, so re-adding the file re-creates the blocker rather than fixing
+   it. `cspro_compile_driver._ent_json` drops it from the `.ent` externals for the same reason
+   (see the comment at line 110), and the auto-fill it once served is gone with the
+   single-Questionnaire-Number redesign. The two files still sit in `F1/` only because
+   `data/facilities/build_facility_lookup.py` writes them there; they are not shipped.
 
 ---
 
-*This spec is generated from the Apr 20 2026 Annex F1 PDF and the current `generate_dcf.py` output (post-GPS/photo capture pass; the case-control block was removed 2026-06-12). Update both this file and `generate_dcf.py` whenever the questionnaire is revised.*
+*This spec describes the 2026-08-17 updated Annex F1 instrument as implemented by the current
+generators. It was renumbered from the Apr-20 questionnaire on 2026-08-19 (Task 2.6 of the
+Aug-17 CAPI migration). The generators remain the source of truth; update this file and
+`generate_apc.py` / `generate_dcf.py` together whenever the questionnaire is revised.*
