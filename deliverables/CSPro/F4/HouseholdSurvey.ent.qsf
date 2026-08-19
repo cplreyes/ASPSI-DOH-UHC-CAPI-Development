@@ -1389,82 +1389,101 @@ questions:
             <p>May kaugalingon bala kamo nga tubo/pipa, ukon ginabahinan ninyo sa komunidad?”</p>
           ILO: |
             <p>Adda kadi bukodmo a tubo/tubo, wenno makibingbingayka iti komunidadmo?</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q26_REFRIGERATOR
+  - name: HOUSEHOLDSURVEY_DICT.Q26_DUG_WELL_SHARE
     conditions:
       - questionText:
           EN: |
-            <p>26. Does the family own a refrigerator/freezer?</p>
+            <p>26. Do you have your own dug well, or do you share with your community?</p>
           FIL: |
-            <p>26. Does the family own a refrigerator/freezer?</p>
+            <p>26. Do you have your own dug well, or do you share with your community?</p>
           BCL: |
-            <p>26. Does the family own a refrigerator/freezer?</p>
+            <p>26. Do you have your own dug well, or do you share with your community?</p>
           BIS: |
-            <p>26. Does the family own a refrigerator/freezer?</p>
+            <p>26. Do you have your own dug well, or do you share with your community?</p>
           CEB: |
-            <p>26. Does the family own a refrigerator/freezer?</p>
+            <p>26. Do you have your own dug well, or do you share with your community?</p>
           WAR: |
-            <p>26. Does the family own a refrigerator/freezer?</p>
+            <p>26. Do you have your own dug well, or do you share with your community?</p>
           HIL: |
-            <p>26. Does the family own a refrigerator/freezer?</p>
+            <p>26. Do you have your own dug well, or do you share with your community?</p>
           ILO: |
-            <p>26. Does the family own a refrigerator/freezer?</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q27_TELEVISION
+            <p>26. Do you have your own dug well, or do you share with your community?</p>
+  - name: HOUSEHOLDSURVEY_DICT.Q27_REFRIGERATOR
     conditions:
       - questionText:
           EN: |
-            <p>27. Does the family own a television set?</p>
+            <p>27. Does the family own a refrigerator/freezer?</p>
           FIL: |
-            <p>27. Does the family own a television set?</p>
+            <p>27. Does the family own a refrigerator/freezer?</p>
           BCL: |
-            <p>27. Does the family own a television set?</p>
+            <p>27. Does the family own a refrigerator/freezer?</p>
           BIS: |
-            <p>27. Does the family own a television set?</p>
+            <p>27. Does the family own a refrigerator/freezer?</p>
           CEB: |
-            <p>27. Does the family own a television set?</p>
+            <p>27. Does the family own a refrigerator/freezer?</p>
           WAR: |
-            <p>27. Does the family own a television set?</p>
+            <p>27. Does the family own a refrigerator/freezer?</p>
           HIL: |
-            <p>27. Does the family own a television set?</p>
+            <p>27. Does the family own a refrigerator/freezer?</p>
           ILO: |
-            <p>27. Does the family own a television set?</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q28_WASHING_MACHINE
+            <p>27. Does the family own a refrigerator/freezer?</p>
+  - name: HOUSEHOLDSURVEY_DICT.Q28_TELEVISION
     conditions:
       - questionText:
           EN: |
-            <p>28. Does the family own a washing machine?</p>
+            <p>28. Does the family own a television set?</p>
           FIL: |
-            <p>28. Does the family own a washing machine?</p>
+            <p>28. Does the family own a television set?</p>
           BCL: |
-            <p>28. Does the family own a washing machine?</p>
+            <p>28. Does the family own a television set?</p>
           BIS: |
-            <p>28. Does the family own a washing machine?</p>
+            <p>28. Does the family own a television set?</p>
           CEB: |
-            <p>28. Does the family own a washing machine?</p>
+            <p>28. Does the family own a television set?</p>
           WAR: |
-            <p>28. Does the family own a washing machine?</p>
+            <p>28. Does the family own a television set?</p>
           HIL: |
-            <p>28. Does the family own a washing machine?</p>
+            <p>28. Does the family own a television set?</p>
           ILO: |
-            <p>28. Does the family own a washing machine?</p>
+            <p>28. Does the family own a television set?</p>
+  - name: HOUSEHOLDSURVEY_DICT.Q29_WASHING_MACHINE
+    conditions:
+      - questionText:
+          EN: |
+            <p>29. Does the family own a washing machine?</p><p class="instruction">Please choose one from the options I will mention.</p>
+          FIL: |
+            <p>29. Does the family own a washing machine?</p><p class="instruction">Please choose one from the options I will mention.</p>
+          BCL: |
+            <p>29. Does the family own a washing machine?</p><p class="instruction">Please choose one from the options I will mention.</p>
+          BIS: |
+            <p>29. Does the family own a washing machine?</p><p class="instruction">Please choose one from the options I will mention.</p>
+          CEB: |
+            <p>29. Does the family own a washing machine?</p><p class="instruction">Please choose one from the options I will mention.</p>
+          WAR: |
+            <p>29. Does the family own a washing machine?</p><p class="instruction">Please choose one from the options I will mention.</p>
+          HIL: |
+            <p>29. Does the family own a washing machine?</p><p class="instruction">Please choose one from the options I will mention.</p>
+          ILO: |
+            <p>29. Does the family own a washing machine?</p><p class="instruction">Please choose one from the options I will mention.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q29_SOCIOECONOMIC_CLASS
     conditions:
       - questionText:
           EN: |
-            <p>29. How would the socioeconomic class of your household be classified?</p><p class="instruction">Please choose one from the options I will mention.</p>
+            <p>How would the socioeconomic class of your household be classified?</p><p class="instruction">Please choose one from the options I will mention.</p>
           FIL: |
-            <p>29. How would the socioeconomic class of your household be classified?</p><p class="instruction">Please choose one from the options I will mention.</p>
+            <p>How would the socioeconomic class of your household be classified?</p><p class="instruction">Please choose one from the options I will mention.</p>
           BCL: |
-            <p>29. How would the socioeconomic class of your household be classified?</p><p class="instruction">Please choose one from the options I will mention.</p>
+            <p>How would the socioeconomic class of your household be classified?</p><p class="instruction">Please choose one from the options I will mention.</p>
           BIS: |
-            <p>29. How would the socioeconomic class of your household be classified?</p><p class="instruction">Please choose one from the options I will mention.</p>
+            <p>How would the socioeconomic class of your household be classified?</p><p class="instruction">Please choose one from the options I will mention.</p>
           CEB: |
-            <p>29. How would the socioeconomic class of your household be classified?</p><p class="instruction">Please choose one from the options I will mention.</p>
+            <p>How would the socioeconomic class of your household be classified?</p><p class="instruction">Please choose one from the options I will mention.</p>
           WAR: |
-            <p>29. How would the socioeconomic class of your household be classified?</p><p class="instruction">Please choose one from the options I will mention.</p>
+            <p>How would the socioeconomic class of your household be classified?</p><p class="instruction">Please choose one from the options I will mention.</p>
           HIL: |
-            <p>29. How would the socioeconomic class of your household be classified?</p><p class="instruction">Please choose one from the options I will mention.</p>
+            <p>How would the socioeconomic class of your household be classified?</p><p class="instruction">Please choose one from the options I will mention.</p>
           ILO: |
-            <p>29. How would the socioeconomic class of your household be classified?</p><p class="instruction">Please choose one from the options I will mention.</p>
+            <p>How would the socioeconomic class of your household be classified?</p><p class="instruction">Please choose one from the options I will mention.</p>
   - name: HOUSEHOLDSURVEY_DICT.MEMBER_LINE_NO
     conditions:
       - questionText:

@@ -10049,6 +10049,47 @@
                           "value": "2"
                         }
                       ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "None",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "None",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "None",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "None",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "None",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "None",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "None",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "None",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -10212,44 +10253,85 @@
                           "value": "2"
                         }
                       ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "None",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "None",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "None",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "None",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "None",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "None",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "None",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "None",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
                     }
                   ]
                 }
               ]
             },
             {
-              "name": "Q26_REFRIGERATOR",
+              "name": "Q26_DUG_WELL_SHARE",
               "labels": [
                 {
-                  "text": "26. Does the family own a refrigerator/freezer?",
+                  "text": "26. Do you have your own dug well, or do you share with your community?",
                   "language": "EN"
                 },
                 {
-                  "text": "26. Does the family own a refrigerator/freezer?",
+                  "text": "26. Do you have your own dug well, or do you share with your community?",
                   "language": "FIL"
                 },
                 {
-                  "text": "26. Does the family own a refrigerator/freezer?",
+                  "text": "26. Do you have your own dug well, or do you share with your community?",
                   "language": "BCL"
                 },
                 {
-                  "text": "26. Does the family own a refrigerator/freezer?",
+                  "text": "26. Do you have your own dug well, or do you share with your community?",
                   "language": "BIS"
                 },
                 {
-                  "text": "26. Does the family own a refrigerator/freezer?",
+                  "text": "26. Do you have your own dug well, or do you share with your community?",
                   "language": "CEB"
                 },
                 {
-                  "text": "26. Does the family own a refrigerator/freezer?",
+                  "text": "26. Do you have your own dug well, or do you share with your community?",
                   "language": "WAR"
                 },
                 {
-                  "text": "26. Does the family own a refrigerator/freezer?",
+                  "text": "26. Do you have your own dug well, or do you share with your community?",
                   "language": "HIL"
                 },
                 {
-                  "text": "26. Does the family own a refrigerator/freezer?",
+                  "text": "26. Do you have your own dug well, or do you share with your community?",
                   "language": "ILO"
                 }
               ],
@@ -10258,38 +10340,242 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q26_REFRIGERATOR_VS1",
+                  "name": "Q26_DUG_WELL_SHARE_VS1",
                   "labels": [
                     {
-                      "text": "26. Does the family own a refrigerator/freezer?",
+                      "text": "26. Do you have your own dug well, or do you share with your community?",
                       "language": "EN"
                     },
                     {
-                      "text": "Ang pamilya ba ay may pag-aari na refrigerator/freezer?",
+                      "text": "26. Do you have your own dug well, or do you share with your community?",
                       "language": "FIL"
                     },
                     {
-                      "text": "May ref/freezer ba?",
+                      "text": "26. Do you have your own dug well, or do you share with your community?",
                       "language": "BCL"
                     },
                     {
-                      "text": "Aduna ba moy kaugalingong ref o freezer?",
+                      "text": "26. Do you have your own dug well, or do you share with your community?",
                       "language": "BIS"
                     },
                     {
-                      "text": "Ang inyong pamilya ba adunay refrigerator/freezer?",
+                      "text": "26. Do you have your own dug well, or do you share with your community?",
                       "language": "CEB"
                     },
                     {
-                      "text": "Mayda ba refrigerator o freezer an pamilya?",
+                      "text": "26. Do you have your own dug well, or do you share with your community?",
                       "language": "WAR"
                     },
                     {
-                      "text": "May kaugalingon bala ang pamilya nga refrigerator/freezer?",
+                      "text": "26. Do you have your own dug well, or do you share with your community?",
                       "language": "HIL"
                     },
                     {
-                      "text": "Adda kadi refrigerator/freezer ti pamilia?",
+                      "text": "26. Do you have your own dug well, or do you share with your community?",
+                      "language": "ILO"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "I/we have our own",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "I/we have our own",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "I/we have our own",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "I/we have our own",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "I/we have our own",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "I/we have our own",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "I/we have our own",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "I/we have our own",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I/we share with our community",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "I/we share with our community",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "I/we share with our community",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "I/we share with our community",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "I/we share with our community",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "I/we share with our community",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "I/we share with our community",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "I/we share with our community",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "None",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "None",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "None",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "None",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "None",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "None",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "None",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "None",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q27_REFRIGERATOR",
+              "labels": [
+                {
+                  "text": "27. Does the family own a refrigerator/freezer?",
+                  "language": "EN"
+                },
+                {
+                  "text": "27. Does the family own a refrigerator/freezer?",
+                  "language": "FIL"
+                },
+                {
+                  "text": "27. Does the family own a refrigerator/freezer?",
+                  "language": "BCL"
+                },
+                {
+                  "text": "27. Does the family own a refrigerator/freezer?",
+                  "language": "BIS"
+                },
+                {
+                  "text": "27. Does the family own a refrigerator/freezer?",
+                  "language": "CEB"
+                },
+                {
+                  "text": "27. Does the family own a refrigerator/freezer?",
+                  "language": "WAR"
+                },
+                {
+                  "text": "27. Does the family own a refrigerator/freezer?",
+                  "language": "HIL"
+                },
+                {
+                  "text": "27. Does the family own a refrigerator/freezer?",
+                  "language": "ILO"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q27_REFRIGERATOR_VS1",
+                  "labels": [
+                    {
+                      "text": "27. Does the family own a refrigerator/freezer?",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "27. Does the family own a refrigerator/freezer?",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "27. Does the family own a refrigerator/freezer?",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "27. Does the family own a refrigerator/freezer?",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "27. Does the family own a refrigerator/freezer?",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "27. Does the family own a refrigerator/freezer?",
+                      "language": "WAR"
+                    },
+                    {
+                      "text": "27. Does the family own a refrigerator/freezer?",
+                      "language": "HIL"
+                    },
+                    {
+                      "text": "27. Does the family own a refrigerator/freezer?",
                       "language": "ILO"
                     }
                   ],
@@ -10381,38 +10667,38 @@
               ]
             },
             {
-              "name": "Q27_TELEVISION",
+              "name": "Q28_TELEVISION",
               "labels": [
                 {
-                  "text": "27. Does the family own a television set?",
+                  "text": "28. Does the family own a television set?",
                   "language": "EN"
                 },
                 {
-                  "text": "27. Does the family own a television set?",
+                  "text": "28. Does the family own a television set?",
                   "language": "FIL"
                 },
                 {
-                  "text": "27. Does the family own a television set?",
+                  "text": "28. Does the family own a television set?",
                   "language": "BCL"
                 },
                 {
-                  "text": "27. Does the family own a television set?",
+                  "text": "28. Does the family own a television set?",
                   "language": "BIS"
                 },
                 {
-                  "text": "27. Does the family own a television set?",
+                  "text": "28. Does the family own a television set?",
                   "language": "CEB"
                 },
                 {
-                  "text": "27. Does the family own a television set?",
+                  "text": "28. Does the family own a television set?",
                   "language": "WAR"
                 },
                 {
-                  "text": "27. Does the family own a television set?",
+                  "text": "28. Does the family own a television set?",
                   "language": "HIL"
                 },
                 {
-                  "text": "27. Does the family own a television set?",
+                  "text": "28. Does the family own a television set?",
                   "language": "ILO"
                 }
               ],
@@ -10421,38 +10707,38 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q27_TELEVISION_VS1",
+                  "name": "Q28_TELEVISION_VS1",
                   "labels": [
                     {
-                      "text": "27. Does the family own a television set?",
+                      "text": "28. Does the family own a television set?",
                       "language": "EN"
                     },
                     {
-                      "text": "Ang pamilya ba ay may pag-aari na telebisyon?",
+                      "text": "28. Does the family own a television set?",
                       "language": "FIL"
                     },
                     {
-                      "text": "May telebisyon ba?",
+                      "text": "28. Does the family own a television set?",
                       "language": "BCL"
                     },
                     {
-                      "text": "Aduna ba moy kaugalingong television?",
+                      "text": "28. Does the family own a television set?",
                       "language": "BIS"
                     },
                     {
-                      "text": "Ang inyong pamilya ba adunay telebisyon?",
+                      "text": "28. Does the family own a television set?",
                       "language": "CEB"
                     },
                     {
-                      "text": "Mayda ba telebisyon an pamilya?",
+                      "text": "28. Does the family own a television set?",
                       "language": "WAR"
                     },
                     {
-                      "text": "May kaugalingon bala ang pamilya nga telebisyon?\u201d",
+                      "text": "28. Does the family own a television set?",
                       "language": "HIL"
                     },
                     {
-                      "text": "Adda kadi telebision ti pamilia?",
+                      "text": "28. Does the family own a television set?",
                       "language": "ILO"
                     }
                   ],
@@ -10464,31 +10750,31 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Oo, mayroon kami",
+                          "text": "Yes, I/ we have",
                           "language": "FIL"
                         },
                         {
-                          "text": "Iyo, igwa",
+                          "text": "Yes, I/ we have",
                           "language": "BCL"
                         },
                         {
-                          "text": "Aduna mi kaugalingon",
+                          "text": "Yes, I/ we have",
                           "language": "BIS"
                         },
                         {
-                          "text": "Aduna ko/mi",
+                          "text": "Yes, I/ we have",
                           "language": "CEB"
                         },
                         {
-                          "text": "Oo, ako/ kami mayda",
+                          "text": "Yes, I/ we have",
                           "language": "WAR"
                         },
                         {
-                          "text": "Oo, may ara kami",
+                          "text": "Yes, I/ we have",
                           "language": "HIL"
                         },
                         {
-                          "text": "Wen, siak/ adda kadatayo",
+                          "text": "Yes, I/ we have",
                           "language": "ILO"
                         }
                       ],
@@ -10505,11 +10791,11 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi/wala kami",
+                          "text": "No, I/we don't have",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dai, wara",
+                          "text": "No, I/we don't have",
                           "language": "BCL"
                         },
                         {
@@ -10517,19 +10803,19 @@
                           "language": "BIS"
                         },
                         {
-                          "text": "Wala ko/mi",
+                          "text": "No, I/we don't have",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire, ako/kami waray",
+                          "text": "No, I/we don't have",
                           "language": "WAR"
                         },
                         {
-                          "text": "Wala kami sang amo sina",
+                          "text": "No, I/we don't have",
                           "language": "HIL"
                         },
                         {
-                          "text": "Saan, awan kaniak/kami",
+                          "text": "No, I/we don't have",
                           "language": "ILO"
                         }
                       ],
@@ -10544,38 +10830,38 @@
               ]
             },
             {
-              "name": "Q28_WASHING_MACHINE",
+              "name": "Q29_WASHING_MACHINE",
               "labels": [
                 {
-                  "text": "28. Does the family own a washing machine?",
+                  "text": "29. Does the family own a washing machine?",
                   "language": "EN"
                 },
                 {
-                  "text": "28. Does the family own a washing machine?",
+                  "text": "29. Does the family own a washing machine?",
                   "language": "FIL"
                 },
                 {
-                  "text": "28. Does the family own a washing machine?",
+                  "text": "29. Does the family own a washing machine?",
                   "language": "BCL"
                 },
                 {
-                  "text": "28. Does the family own a washing machine?",
+                  "text": "29. Does the family own a washing machine?",
                   "language": "BIS"
                 },
                 {
-                  "text": "28. Does the family own a washing machine?",
+                  "text": "29. Does the family own a washing machine?",
                   "language": "CEB"
                 },
                 {
-                  "text": "28. Does the family own a washing machine?",
+                  "text": "29. Does the family own a washing machine?",
                   "language": "WAR"
                 },
                 {
-                  "text": "28. Does the family own a washing machine?",
+                  "text": "29. Does the family own a washing machine?",
                   "language": "HIL"
                 },
                 {
-                  "text": "28. Does the family own a washing machine?",
+                  "text": "29. Does the family own a washing machine?",
                   "language": "ILO"
                 }
               ],
@@ -10584,38 +10870,38 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q28_WASHING_MACHINE_VS1",
+                  "name": "Q29_WASHING_MACHINE_VS1",
                   "labels": [
                     {
-                      "text": "28. Does the family own a washing machine?",
+                      "text": "29. Does the family own a washing machine?",
                       "language": "EN"
                     },
                     {
-                      "text": "Ang pamilya ba ay may pag-aari na washing machine?",
+                      "text": "29. Does the family own a washing machine?",
                       "language": "FIL"
                     },
                     {
-                      "text": "May igwa ba kamo ki washing machine?",
+                      "text": "29. Does the family own a washing machine?",
                       "language": "BCL"
                     },
                     {
-                      "text": "Aduna ba moy kaugalingong washing machine?",
+                      "text": "29. Does the family own a washing machine?",
                       "language": "BIS"
                     },
                     {
-                      "text": "Ang inyong pamilya ba adunay washing machine?",
+                      "text": "29. Does the family own a washing machine?",
                       "language": "CEB"
                     },
                     {
-                      "text": "Mayda ba washing machine an pamilya?",
+                      "text": "29. Does the family own a washing machine?",
                       "language": "WAR"
                     },
                     {
-                      "text": "May kaugalingon bala ang pamilya nga washing machine?\u201d",
+                      "text": "29. Does the family own a washing machine?",
                       "language": "HIL"
                     },
                     {
-                      "text": "(Adda kadi makina a paglaba ti pamilia?l",
+                      "text": "29. Does the family own a washing machine?",
                       "language": "ILO"
                     }
                   ],
@@ -10627,31 +10913,31 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Oo, mayroon kami",
+                          "text": "Yes, I/ we have",
                           "language": "FIL"
                         },
                         {
-                          "text": "Iyo, igwa",
+                          "text": "Yes, I/ we have",
                           "language": "BCL"
                         },
                         {
-                          "text": "Aduna mi kaugalingon",
+                          "text": "Yes, I/ we have",
                           "language": "BIS"
                         },
                         {
-                          "text": "Aduna ko/mi",
+                          "text": "Yes, I/ we have",
                           "language": "CEB"
                         },
                         {
-                          "text": "Oo, ako/ kami mayda",
+                          "text": "Yes, I/ we have",
                           "language": "WAR"
                         },
                         {
-                          "text": "Oo, may ara kami",
+                          "text": "Yes, I/ we have",
                           "language": "HIL"
                         },
                         {
-                          "text": "Wen, siak/ adda kadatayo",
+                          "text": "Yes, I/ we have",
                           "language": "ILO"
                         }
                       ],
@@ -10668,11 +10954,11 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi/wala kami",
+                          "text": "No, I/we don't have",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dai, wara",
+                          "text": "No, I/we don't have",
                           "language": "BCL"
                         },
                         {
@@ -10680,19 +10966,19 @@
                           "language": "BIS"
                         },
                         {
-                          "text": "Wala ko/mi",
+                          "text": "No, I/we don't have",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire, ako/kami waray",
+                          "text": "No, I/we don't have",
                           "language": "WAR"
                         },
                         {
-                          "text": "Wala kami sang amo sina",
+                          "text": "No, I/we don't have",
                           "language": "HIL"
                         },
                         {
-                          "text": "Saan, awan kaniak/kami",
+                          "text": "No, I/we don't have",
                           "language": "ILO"
                         }
                       ],
@@ -10710,35 +10996,35 @@
               "name": "Q29_SOCIOECONOMIC_CLASS",
               "labels": [
                 {
-                  "text": "29. How would the socioeconomic class of your household be classified?",
+                  "text": "How would the socioeconomic class of your household be classified?",
                   "language": "EN"
                 },
                 {
-                  "text": "29. How would the socioeconomic class of your household be classified?",
+                  "text": "How would the socioeconomic class of your household be classified?",
                   "language": "FIL"
                 },
                 {
-                  "text": "29. How would the socioeconomic class of your household be classified?",
+                  "text": "How would the socioeconomic class of your household be classified?",
                   "language": "BCL"
                 },
                 {
-                  "text": "29. How would the socioeconomic class of your household be classified?",
+                  "text": "How would the socioeconomic class of your household be classified?",
                   "language": "BIS"
                 },
                 {
-                  "text": "29. How would the socioeconomic class of your household be classified?",
+                  "text": "How would the socioeconomic class of your household be classified?",
                   "language": "CEB"
                 },
                 {
-                  "text": "29. How would the socioeconomic class of your household be classified?",
+                  "text": "How would the socioeconomic class of your household be classified?",
                   "language": "WAR"
                 },
                 {
-                  "text": "29. How would the socioeconomic class of your household be classified?",
+                  "text": "How would the socioeconomic class of your household be classified?",
                   "language": "HIL"
                 },
                 {
-                  "text": "29. How would the socioeconomic class of your household be classified?",
+                  "text": "How would the socioeconomic class of your household be classified?",
                   "language": "ILO"
                 }
               ],
@@ -10750,7 +11036,7 @@
                   "name": "Q29_SOCIOECONOMIC_CLASS_VS1",
                   "labels": [
                     {
-                      "text": "29. How would the socioeconomic class of your household be classified?",
+                      "text": "How would the socioeconomic class of your household be classified?",
                       "language": "EN"
                     },
                     {

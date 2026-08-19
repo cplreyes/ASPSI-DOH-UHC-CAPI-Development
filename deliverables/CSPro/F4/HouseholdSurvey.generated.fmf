@@ -60,7 +60,7 @@ Item=HH_ADDRESS
 Name=FORM004
 Label=B. Respondent Profile
 Level=1
-Size=806,1177
+Size=806,1207
   
 Item=RESPONDENT_NAME
 Item=Q2_BIRTH_MONTH
@@ -95,9 +95,10 @@ Item=Q23_WATER_SOURCE
 Item=Q23_WATER_OTHER_TXT
 Item=Q24_FAUCET_SHARE
 Item=Q25_TUBE_SHARE
-Item=Q26_REFRIGERATOR
-Item=Q27_TELEVISION
-Item=Q28_WASHING_MACHINE
+Item=Q26_DUG_WELL_SHARE
+Item=Q27_REFRIGERATOR
+Item=Q28_TELEVISION
+Item=Q29_WASHING_MACHINE
 Item=Q29_SOCIOECONOMIC_CLASS
   
 [EndForm]
@@ -1483,51 +1484,63 @@ Text=25. Do you have your own tube/pipe, or do you share with your community?
  
   
 [Field]
-Name=Q26_REFRIGERATOR
+Name=Q26_DUG_WELL_SHARE
 Position=350,1017,365,1037
-Item=Q26_REFRIGERATOR,HOUSEHOLDSURVEY_DICT
+Item=Q26_DUG_WELL_SHARE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=5
   
 [Text]
 Position=50,1020,330,1036
-Text=26. Does the family own a refrigerator/freezer?
+Text=26. Do you have your own dug well, or do you share with your community?
  
   
 [Field]
-Name=Q27_TELEVISION
+Name=Q27_REFRIGERATOR
 Position=350,1047,365,1067
-Item=Q27_TELEVISION,HOUSEHOLDSURVEY_DICT
+Item=Q27_REFRIGERATOR,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=5
   
 [Text]
 Position=50,1050,330,1066
-Text=27. Does the family own a television set?
+Text=27. Does the family own a refrigerator/freezer?
  
   
 [Field]
-Name=Q28_WASHING_MACHINE
+Name=Q28_TELEVISION
 Position=350,1077,365,1097
-Item=Q28_WASHING_MACHINE,HOUSEHOLDSURVEY_DICT
+Item=Q28_TELEVISION,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=5
   
 [Text]
 Position=50,1080,330,1096
-Text=28. Does the family own a washing machine?
+Text=28. Does the family own a television set?
  
   
 [Field]
-Name=Q29_SOCIOECONOMIC_CLASS
+Name=Q29_WASHING_MACHINE
 Position=350,1107,365,1127
-Item=Q29_SOCIOECONOMIC_CLASS,HOUSEHOLDSURVEY_DICT
+Item=Q29_WASHING_MACHINE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=5
   
 [Text]
 Position=50,1110,330,1126
-Text=29. How would the socioeconomic class of your household be classified?
+Text=29. Does the family own a washing machine?
+ 
+  
+[Field]
+Name=Q29_SOCIOECONOMIC_CLASS
+Position=350,1137,365,1157
+Item=Q29_SOCIOECONOMIC_CLASS,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=5
+  
+[Text]
+Position=50,1140,330,1156
+Text=How would the socioeconomic class of your household be classified?
  
   
 [Block]
@@ -1668,7 +1681,7 @@ Name=DG_BLK_22
 Label=Q29
 DisplayTogether=Yes
 Position=55
-Length=1
+Length=2
   
 [EndGroup]
   

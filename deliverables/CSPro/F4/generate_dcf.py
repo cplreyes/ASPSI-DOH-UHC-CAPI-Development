@@ -301,9 +301,13 @@ def build_section_b():
         ("Dug well",                "3"),
         ("Other (specify)",         "4"),
     ]
+    # 1176-aug17 (Task 1.7-1.8, controller-approved escalation #2, 2026-08-19): 'None'
+    # added -- paper's Q24/Q25/Q26 water-source-ownership triad all print a third
+    # option, same class as F3's own Q24/Q25/Q26 fix (F3-inventory.md 10.A).
     Q24_OWN_SHARE = [
         ("I/we have our own",             "1"),
         ("I/we share with our community", "2"),
+        ("None",                          "3"),
     ]
     Q26_HAVE = [
         ("Yes, I/ we have",     "1"),
@@ -407,17 +411,35 @@ def build_section_b():
         select_one("Q25_TUBE_SHARE",
                    "25. Do you have your own tube/pipe, or do you share with your community?",
                    Q24_OWN_SHARE, length=1),
-        select_one("Q26_REFRIGERATOR",
-                   "26. Does the family own a refrigerator/freezer?",
+        # 1176-aug17 (controller-approved escalation #2, 2026-08-19): the deployed
+        # build had NO item for the paper's Q26 ("own their dug well, or share with
+        # community?") -- Q26_REFRIGERATOR/Q27_TELEVISION/Q28_WASHING_MACHINE were
+        # silently carrying paper Q27/Q28/Q29's content one number early, exactly
+        # F3's own Q26 bug (already fixed there, Task 1.1). Inserted the missing
+        # item and renumbered the three shifted fields; Q30 (roster) onward were
+        # already correctly aligned so nothing past this point moves. See
+        # aug17-approved-divergences.md (F4 | Q26 dug-well item).
+        select_one("Q26_DUG_WELL_SHARE",
+                   "26. Do you have your own dug well, or do you share with your community?",
+                   Q24_OWN_SHARE, length=1),
+        select_one("Q27_REFRIGERATOR",
+                   "27. Does the family own a refrigerator/freezer?",
                    Q26_HAVE, length=1),
-        select_one("Q27_TELEVISION",
-                   "27. Does the family own a television set?",
+        select_one("Q28_TELEVISION",
+                   "28. Does the family own a television set?",
                    Q26_HAVE, length=1),
-        select_one("Q28_WASHING_MACHINE",
-                   "28. Does the family own a washing machine?",
+        select_one("Q29_WASHING_MACHINE",
+                   "29. Does the family own a washing machine?",
                    Q26_HAVE, length=1),
+        # aug17: no Aug-17 paper counterpart in the Q23-Q34 range -- kept as a CAPI-
+        # supplemental socioeconomic-class item (feeds the Q18-income context, no
+        # F4 soft-cross check exists for it, unlike F3's #631). Field name
+        # unchanged (avoids rippling any downstream reference); the paper-colliding
+        # "29." display prefix is dropped since Q29 is now legitimately Washing
+        # Machine, matching F3's Q29_SEC_CLASS precedent. Registered as a
+        # divergence (class=capi-adaptation), flagged for ASPSI confirmation.
         select_one("Q29_SOCIOECONOMIC_CLASS",
-                   "29. How would the socioeconomic class of your household be classified?",
+                   "How would the socioeconomic class of your household be classified?",
                    Q29_SEC, length=1),
     ]
     return record("B_RESPONDENT_PROFILE", "B. Respondent Profile", "D", items)
