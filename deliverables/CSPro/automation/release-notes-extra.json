@@ -112,5 +112,10 @@
     "Fixed": [
       "On-screen question de-duplication (R25): form field captions are now short question tags, so the question text appears once per screen instead of twice. Display only."
     ]
+  },
+  "F1 3.0.1": {
+    "Fixed": [
+      "On-screen question de-duplication (R25): form field captions are now short question tags, so the question text appears once per screen instead of twice. Display only."
+    ]
   }
 }

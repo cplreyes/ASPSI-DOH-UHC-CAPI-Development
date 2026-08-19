@@ -668,7 +668,7 @@ Form=4
   
 [Text]
 Position=50,150,330,166
-Text=1. What is your name? (Last Name, First Name, Middle Initial, Ext)
+Text=1.
  
   
 [Field]
@@ -680,7 +680,7 @@ Form=4
   
 [Text]
 Position=50,180,330,196
-Text=2. What is your official designation at this health facility?
+Text=2.
  
   
 [Field]
@@ -693,7 +693,7 @@ Form=4
   
 [Text]
 Position=50,210,330,226
-Text=2. What is your official designation at this health facility? — Other (specify) text
+Text=2. (specify)
  
   
 [Field]
@@ -705,7 +705,7 @@ Form=4
   
 [Text]
 Position=50,240,330,256
-Text=3. How old are you (in years), as of your last birthday?
+Text=3.
  
   
 [Field]
@@ -717,7 +717,7 @@ Form=4
   
 [Text]
 Position=50,270,330,286
-Text=4. What is your sex assigned at birth?
+Text=4.
  
   
 [Field]
@@ -729,7 +729,7 @@ Form=4
   
 [Text]
 Position=50,300,330,316
-Text=Number of Years
+Text=5. Number of Years
  
   
 [Field]
@@ -741,7 +741,7 @@ Form=4
   
 [Text]
 Position=50,330,330,346
-Text=Number of Months
+Text=5. Number of Months
  
   
 [Field]
@@ -753,7 +753,7 @@ Form=4
   
 [Text]
 Position=50,360,330,376
-Text=Number of Years
+Text=6. Number of Years
  
   
 [Field]
@@ -765,7 +765,7 @@ Form=4
   
 [Text]
 Position=50,390,330,406
-Text=Number of Months
+Text=6. Number of Months
  
   
 [Block]
@@ -821,7 +821,7 @@ Form=5
   
 [Text]
 Position=50,30,330,46
-Text=7. What type of ownership is this hospital?
+Text=7.
  
   
 [Field]
@@ -833,7 +833,7 @@ Form=5
   
 [Text]
 Position=50,60,330,76
-Text=8. What is the facility's service capacity level?
+Text=8.
  
   
 [Block]
@@ -861,7 +861,7 @@ Form=6
   
 [Text]
 Position=50,30,330,46
-Text=9. Have you heard about Universal Health Care (UHC) prior to this survey?
+Text=9.
  
   
 [Field]
@@ -873,7 +873,7 @@ Form=6
   
 [Text]
 Position=50,60,330,76
-Text=10. Does the facility have primary care packages?
+Text=10.
  
   
 [Field]
@@ -885,7 +885,7 @@ Form=6
   
 [Text]
 Position=50,90,330,106
-Text=10.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=10.1.
  
   
 [Field]
@@ -898,7 +898,7 @@ Form=6
   
 [Text]
 Position=50,120,330,136
-Text=10.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=10.1. (specify)
  
   
 [Field]
@@ -910,7 +910,7 @@ Form=6
   
 [Text]
 Position=50,150,330,166
-Text=11. Has the facility applied for a DOH primary care license?
+Text=11.
  
   
 [Field]
@@ -922,7 +922,7 @@ Form=6
   
 [Text]
 Position=50,180,330,196
-Text=11.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=11.1.
  
   
 [Field]
@@ -935,7 +935,7 @@ Form=6
   
 [Text]
 Position=50,210,330,226
-Text=11.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=11.1. (specify)
  
   
 [Field]
@@ -947,7 +947,7 @@ Form=6
   
 [Text]
 Position=50,240,330,256
-Text=12. Does the facility have a public health unit?
+Text=12.
  
   
 [Field]
@@ -959,7 +959,7 @@ Form=6
   
 [Text]
 Position=50,270,330,286
-Text=12.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=12.1.
  
   
 [Field]
@@ -972,7 +972,7 @@ Form=6
   
 [Text]
 Position=50,300,330,316
-Text=12.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=12.1. (specify)
  
   
 [Field]
@@ -984,7 +984,7 @@ Form=6
   
 [Text]
 Position=50,330,330,346
-Text=12.2. What is the main role of the public health unit?
+Text=12.2.
  
   
 [Field]
@@ -997,7 +997,7 @@ Form=6
   
 [Text]
 Position=50,360,330,376
-Text=12.2. What is the main role of the public health unit? — Other (specify) text
+Text=12.2. (specify)
  
   
 [Field]
@@ -1009,7 +1009,7 @@ Form=6
   
 [Text]
 Position=50,390,330,406
-Text=13. Does the facility have a health promotion unit?
+Text=13.
  
   
 [Field]
@@ -1021,7 +1021,7 @@ Form=6
   
 [Text]
 Position=50,420,330,436
-Text=13.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=13.1.
  
   
 [Field]
@@ -1034,7 +1034,7 @@ Form=6
   
 [Text]
 Position=50,450,330,466
-Text=13.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=13.1. (specify)
  
   
 [Field]
@@ -1046,7 +1046,7 @@ Form=6
   
 [Text]
 Position=50,480,330,496
-Text=13.2. What is the main role of the health promotion unit?
+Text=13.2.
  
   
 [Field]
@@ -1059,7 +1059,7 @@ Form=6
   
 [Text]
 Position=50,510,330,526
-Text=13.2. What is the main role of the health promotion unit? — Other (specify) text
+Text=13.2. (specify)
  
   
 [Field]
@@ -1071,7 +1071,7 @@ Form=6
   
 [Text]
 Position=50,540,330,556
-Text=14. Has there been establishment of new roles in the facility?
+Text=14.
  
   
 [Field]
@@ -1083,7 +1083,7 @@ Form=6
   
 [Text]
 Position=50,570,330,586
-Text=14.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=14.1.
  
   
 [Field]
@@ -1096,7 +1096,7 @@ Form=6
   
 [Text]
 Position=50,600,330,616
-Text=14.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=14.1. (specify)
  
   
 [Field]
@@ -1109,7 +1109,7 @@ Form=6
   
 [Text]
 Position=50,630,330,646
-Text=14.2. What is/are the new role/s established in this facility?
+Text=14.2.
  
   
 [Field]
@@ -1121,7 +1121,7 @@ Form=6
   
 [Text]
 Position=50,660,330,676
-Text=15. Has there been establishment of new departments in the facility?
+Text=15.
  
   
 [Field]
@@ -1133,7 +1133,7 @@ Form=6
   
 [Text]
 Position=50,690,330,706
-Text=15.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=15.1.
  
   
 [Field]
@@ -1146,7 +1146,7 @@ Form=6
   
 [Text]
 Position=50,720,330,736
-Text=15.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=15.1. (specify)
  
   
 [Field]
@@ -1159,7 +1159,7 @@ Form=6
   
 [Text]
 Position=50,750,330,766
-Text=15.2. What is/are the new department/s established in this facility?
+Text=15.2.
  
   
 [Field]
@@ -1171,7 +1171,7 @@ Form=6
   
 [Text]
 Position=50,780,330,796
-Text=16. Has there been construction of new buildings in this facility?
+Text=16.
  
   
 [Field]
@@ -1183,7 +1183,7 @@ Form=6
   
 [Text]
 Position=50,810,330,826
-Text=16.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=16.1.
  
   
 [Field]
@@ -1196,7 +1196,7 @@ Form=6
   
 [Text]
 Position=50,840,330,856
-Text=16.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=16.1. (specify)
  
   
 [Field]
@@ -1209,7 +1209,7 @@ Form=6
   
 [Text]
 Position=50,870,330,886
-Text=16.2. What is/are the building/s being used for?
+Text=16.2.
  
   
 [Field]
@@ -1221,7 +1221,7 @@ Form=6
   
 [Text]
 Position=50,900,330,916
-Text=17. Has there been construction of new rooms in this facility?
+Text=17.
  
   
 [Field]
@@ -1233,7 +1233,7 @@ Form=6
   
 [Text]
 Position=50,930,330,946
-Text=17.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=17.1.
  
   
 [Field]
@@ -1246,7 +1246,7 @@ Form=6
   
 [Text]
 Position=50,960,330,976
-Text=17.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=17.1. (specify)
  
   
 [Field]
@@ -1259,7 +1259,7 @@ Form=6
   
 [Text]
 Position=50,990,330,1006
-Text=17.2. What are the rooms being used for?
+Text=17.2.
  
   
 [Field]
@@ -1271,7 +1271,7 @@ Form=6
   
 [Text]
 Position=50,1020,330,1036
-Text=18. Has there been an increase in equipment in this facility?
+Text=18.
  
   
 [Field]
@@ -1283,7 +1283,7 @@ Form=6
   
 [Text]
 Position=50,1050,330,1066
-Text=18.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=18.1.
  
   
 [Field]
@@ -1296,7 +1296,7 @@ Form=6
   
 [Text]
 Position=50,1080,330,1096
-Text=18.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=18.1. (specify)
  
   
 [Field]
@@ -1309,7 +1309,7 @@ Form=6
   
 [Text]
 Position=50,1110,330,1126
-Text=18.2. If there was an increase in equipment, what are these pieces of equipment?
+Text=18.2.
  
   
 [Field]
@@ -1321,7 +1321,7 @@ Form=6
   
 [Text]
 Position=50,1140,330,1156
-Text=19. Has there been an increase in supplies in this facility?
+Text=19.
  
   
 [Field]
@@ -1333,7 +1333,7 @@ Form=6
   
 [Text]
 Position=50,1170,330,1186
-Text=19.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=19.1.
  
   
 [Field]
@@ -1346,7 +1346,7 @@ Form=6
   
 [Text]
 Position=50,1200,330,1216
-Text=19.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=19.1. (specify)
  
   
 [Field]
@@ -1359,7 +1359,7 @@ Form=6
   
 [Text]
 Position=50,1230,330,1246
-Text=19.2. If there was an increase in supplies, what are these?
+Text=19.2.
  
   
 [Field]
@@ -1371,7 +1371,7 @@ Form=6
   
 [Text]
 Position=50,1260,330,1276
-Text=20. Have electronic medical records been used in this facility?
+Text=20.
  
   
 [Field]
@@ -1383,7 +1383,7 @@ Form=6
   
 [Text]
 Position=50,1290,330,1306
-Text=20.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=20.1.
  
   
 [Field]
@@ -1396,7 +1396,7 @@ Form=6
   
 [Text]
 Position=50,1320,330,1336
-Text=20.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=20.1. (specify)
  
   
 [Field]
@@ -1408,7 +1408,7 @@ Form=6
   
 [Text]
 Position=50,1350,330,1366
-Text=21. Does your facility currently submit health and financial data to the DOH Information System and/or the PhilHealth Dashboard?
+Text=21.
  
   
 [Field]
@@ -1421,7 +1421,7 @@ Form=6
   
 [Text]
 Position=50,1380,330,1396
-Text=21. Does your facility currently submit health and financial data to the DOH Information System and/or the PhilHealth Dashboard? — Other (specify) text
+Text=21. (specify)
  
   
 [Field]
@@ -1433,7 +1433,7 @@ Form=6
   
 [Text]
 Position=50,1410,330,1426
-Text=22. If yes, how frequently has your facility submit these data?
+Text=22.
  
   
 [Field]
@@ -1446,7 +1446,7 @@ Form=6
   
 [Text]
 Position=50,1440,330,1456
-Text=22. If yes, how frequently has your facility submit these data? — Other (specify) text
+Text=22. (specify)
  
   
 [Field]
@@ -1458,7 +1458,7 @@ Form=6
   
 [Text]
 Position=50,1470,330,1486
-Text=23. Which of the submitted reports are actually used for decision-making?
+Text=23.
  
   
 [Field]
@@ -1471,7 +1471,7 @@ Form=6
   
 [Text]
 Position=50,1500,330,1516
-Text=23. Which of the submitted reports are actually used for decision-making? — Other (specify) text
+Text=23. (specify)
  
   
 [Field]
@@ -1483,7 +1483,7 @@ Form=6
   
 [Text]
 Position=50,1530,330,1546
-Text=24. Have there been changes in the facility staffing?
+Text=24.
  
   
 [Field]
@@ -1495,7 +1495,7 @@ Form=6
   
 [Text]
 Position=50,1560,330,1576
-Text=24.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=24.1.
  
   
 [Field]
@@ -1508,7 +1508,7 @@ Form=6
   
 [Text]
 Position=50,1590,330,1606
-Text=24.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=24.1. (specify)
  
   
 [Field]
@@ -1520,7 +1520,7 @@ Form=6
   
 [Text]
 Position=50,1620,330,1636
-Text=25. Have there been changes in the referral system in this facility?
+Text=25.
  
   
 [Field]
@@ -1532,7 +1532,7 @@ Form=6
   
 [Text]
 Position=50,1650,330,1666
-Text=25.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=25.1.
  
   
 [Field]
@@ -1545,7 +1545,7 @@ Form=6
   
 [Text]
 Position=50,1680,330,1696
-Text=25.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=25.1. (specify)
  
   
 [Field]
@@ -1557,7 +1557,7 @@ Form=6
   
 [Text]
 Position=50,1710,330,1726
-Text=26. Does this facility has MoU/MoA with other health facilities apart of the healthcare provider network?
+Text=26.
  
   
 [Field]
@@ -1569,7 +1569,7 @@ Form=6
   
 [Text]
 Position=50,1740,330,1756
-Text=26.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=26.1.
  
   
 [Field]
@@ -1582,7 +1582,7 @@ Form=6
   
 [Text]
 Position=50,1770,330,1786
-Text=26.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=26.1. (specify)
  
   
 [Field]
@@ -1594,7 +1594,7 @@ Form=6
   
 [Text]
 Position=50,1800,330,1816
-Text=27. Does this facility implement No Balance Billing (NBB)?
+Text=27.
  
   
 [Field]
@@ -1606,7 +1606,7 @@ Form=6
   
 [Text]
 Position=50,1830,330,1846
-Text=27.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=27.1.
  
   
 [Field]
@@ -1619,7 +1619,7 @@ Form=6
   
 [Text]
 Position=50,1860,330,1876
-Text=27.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=27.1. (specify)
  
   
 [Field]
@@ -1631,7 +1631,7 @@ Form=6
   
 [Text]
 Position=50,1890,330,1906
-Text=28. Does this facility implement Zero Balance Billing (ZBB)?
+Text=28.
  
   
 [Field]
@@ -1643,7 +1643,7 @@ Form=6
   
 [Text]
 Position=50,1920,330,1936
-Text=28.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=28.1.
  
   
 [Field]
@@ -1656,7 +1656,7 @@ Form=6
   
 [Text]
 Position=50,1950,330,1966
-Text=28.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=28.1. (specify)
  
   
 [Field]
@@ -1668,7 +1668,7 @@ Form=6
   
 [Text]
 Position=50,1980,330,1996
-Text=29. Does this facility implement no co-payment policy?
+Text=29.
  
   
 [Field]
@@ -1680,7 +1680,7 @@ Form=6
   
 [Text]
 Position=50,2010,330,2026
-Text=29.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=29.1.
  
   
 [Field]
@@ -1693,7 +1693,7 @@ Form=6
   
 [Text]
 Position=50,2040,330,2056
-Text=29.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=29.1. (specify)
  
   
 [Field]
@@ -1705,7 +1705,7 @@ Form=6
   
 [Text]
 Position=50,2070,330,2086
-Text=30. Does this facility implement ward accommodation allocation?
+Text=30.
  
   
 [Field]
@@ -1717,7 +1717,7 @@ Form=6
   
 [Text]
 Position=50,2100,330,2116
-Text=30.1. If yes, was it a result of the UHC Act enacted in 2019? (Under UHC, basic ward allocation is as follows: 90% for government general hospitals; 70% for government specialty hospitals, and 10% for private hospitals.)
+Text=30.1.
  
   
 [Field]
@@ -1730,7 +1730,7 @@ Form=6
   
 [Text]
 Position=50,2130,330,2146
-Text=30.1. If yes, was it a result of the UHC Act enacted in 2019? (Under UHC, basic ward allocation is as follows: 90% for government general hospitals; 70% for government specialty hospitals, and 10% for private hospitals.) — Other (specify) text
+Text=30.1. (specify)
  
   
 [Field]
@@ -1742,7 +1742,7 @@ Form=6
   
 [Text]
 Position=50,2160,330,2176
-Text=31. Has there been an improvement in the clinical practice guidelines of this facility?
+Text=31.
  
   
 [Field]
@@ -1754,7 +1754,7 @@ Form=6
   
 [Text]
 Position=50,2190,330,2206
-Text=31.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=31.1.
  
   
 [Field]
@@ -1767,7 +1767,7 @@ Form=6
   
 [Text]
 Position=50,2220,330,2236
-Text=31.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=31.1. (specify)
  
   
 [Field]
@@ -1779,7 +1779,7 @@ Form=6
   
 [Text]
 Position=50,2250,330,2266
-Text=32. Does this facility implement DOH licensing standards?
+Text=32.
  
   
 [Field]
@@ -1791,7 +1791,7 @@ Form=6
   
 [Text]
 Position=50,2280,330,2296
-Text=32.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=32.1.
  
   
 [Field]
@@ -1804,7 +1804,7 @@ Form=6
   
 [Text]
 Position=50,2310,330,2326
-Text=32.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=32.1. (specify)
  
   
 [Field]
@@ -1816,7 +1816,7 @@ Form=6
   
 [Text]
 Position=50,2340,330,2356
-Text=33. Does this facility implement PhilHealth accreditation requirements?
+Text=33.
  
   
 [Field]
@@ -1828,7 +1828,7 @@ Form=6
   
 [Text]
 Position=50,2370,330,2386
-Text=33.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=33.1.
  
   
 [Field]
@@ -1841,7 +1841,7 @@ Form=6
   
 [Text]
 Position=50,2400,330,2416
-Text=33.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=33.1. (specify)
  
   
 [Field]
@@ -1853,7 +1853,7 @@ Form=6
   
 [Text]
 Position=50,2430,330,2446
-Text=34. Does this facility implement service delivery protocols?
+Text=34.
  
   
 [Field]
@@ -1865,7 +1865,7 @@ Form=6
   
 [Text]
 Position=50,2460,330,2476
-Text=34.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=34.1.
  
   
 [Field]
@@ -1878,7 +1878,7 @@ Form=6
   
 [Text]
 Position=50,2490,330,2506
-Text=34.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=34.1. (specify)
  
   
 [Field]
@@ -1890,7 +1890,7 @@ Form=6
   
 [Text]
 Position=50,2520,330,2536
-Text=35. Does this facility implement primary care quality measures?
+Text=35.
  
   
 [Field]
@@ -1902,7 +1902,7 @@ Form=6
   
 [Text]
 Position=50,2550,330,2566
-Text=35.1. If yes, was it a result of the UHC Act enacted in 2019?
+Text=35.1.
  
   
 [Field]
@@ -1915,7 +1915,7 @@ Form=6
   
 [Text]
 Position=50,2580,330,2596
-Text=35.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (specify) text
+Text=35.1. (specify)
  
   
 [Field]
@@ -1927,7 +1927,7 @@ Form=6
   
 [Text]
 Position=50,2610,330,2626
-Text=35.2. If yes, what are the primary care quality measures are you implementing?
+Text=35.2.
  
   
 [Field]
@@ -1940,7 +1940,7 @@ Form=6
   
 [Text]
 Position=50,2640,330,2656
-Text=35.2. If yes, what are the primary care quality measures are you implementing? — Other (specify) text
+Text=35.2. (specify)
  
   
 [Field]
@@ -1952,7 +1952,7 @@ Form=6
   
 [Text]
 Position=50,2670,330,2686
-Text=36. What are the major challenges to improving the quality of patient care in your local area?
+Text=36.
  
   
 [Field]
@@ -1965,7 +1965,7 @@ Form=6
   
 [Text]
 Position=50,2700,330,2716
-Text=36. What are the major challenges to improving the quality of patient care in your local area? — Other (specify) text
+Text=36. (specify)
  
   
 [Field]
@@ -1977,7 +1977,7 @@ Form=6
   
 [Text]
 Position=50,2730,330,2746
-Text=37. What are the major challenges to improving the accessibility of patient care in your local area?
+Text=37.
  
   
 [Field]
@@ -1990,7 +1990,7 @@ Form=6
   
 [Text]
 Position=50,2760,330,2776
-Text=37. What are the major challenges to improving the accessibility of patient care in your local area? — Other (specify) text
+Text=37. (specify)
  
   
 [Block]
@@ -2648,7 +2648,7 @@ Form=7
   
 [Text]
 Position=50,30,330,46
-Text=38. Is the facility currently an accredited YAKAP/Konsulta provider?
+Text=38.
  
   
 [Field]
@@ -2660,7 +2660,7 @@ Form=7
   
 [Text]
 Position=50,60,330,76
-Text=39. If yes, since when? Month
+Text=39. Month
  
   
 [Field]
@@ -2672,7 +2672,7 @@ Form=7
   
 [Text]
 Position=50,90,330,106
-Text=39. If yes, since when? Year
+Text=39. Year
  
   
 [Field]
@@ -2684,7 +2684,7 @@ Form=7
   
 [Text]
 Position=50,120,330,136
-Text=40. If accredited, which of the following are included in the YAKAP/Konsulta package?
+Text=40.
  
   
 [Field]
@@ -2697,7 +2697,7 @@ Form=7
   
 [Text]
 Position=50,150,330,166
-Text=40. If accredited, which of the following are included in the YAKAP/Konsulta package? — Other (specify) text
+Text=40. (specify)
  
   
 [Field]
@@ -2709,7 +2709,7 @@ Form=7
   
 [Text]
 Position=50,180,330,196
-Text=41. Is it possible to register individual patients to YAKAP/Konsulta at this facility?
+Text=41.
  
   
 [Field]
@@ -2721,7 +2721,7 @@ Form=7
   
 [Text]
 Position=50,210,330,226
-Text=42. Is it possible to register whole families to YAKAP/Konsulta at this facility?
+Text=42.
  
   
 [Field]
@@ -2733,7 +2733,7 @@ Form=7
   
 [Text]
 Position=50,240,330,256
-Text=43. Is it possible to register both individual patients and their family members together to YAKAP/Konsulta at this facility?
+Text=43.
  
   
 [Field]
@@ -2745,7 +2745,7 @@ Form=7
   
 [Text]
 Position=50,270,330,286
-Text=44. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?
+Text=44.
  
   
 [Field]
@@ -2757,7 +2757,7 @@ Form=7
   
 [Text]
 Position=50,300,330,316
-Text=45. What are the performance indicators you need to meet to receive the second tranche payment?
+Text=45.
  
   
 [Field]
@@ -2770,7 +2770,7 @@ Form=7
   
 [Text]
 Position=50,330,330,346
-Text=45. What are the performance indicators you need to meet to receive the second tranche payment? — Other (specify) text
+Text=45. (specify)
  
   
 [Field]
@@ -2782,7 +2782,7 @@ Form=7
   
 [Text]
 Position=50,360,330,376
-Text=46. Do you know how often you can expect to receive payments from PhilHealth for the delivery of the YAKAP/Konsulta package?
+Text=46.
  
   
 [Field]
@@ -2794,7 +2794,7 @@ Form=7
   
 [Text]
 Position=50,390,330,406
-Text=47. How often should you be receiving payments?
+Text=47.
  
   
 [Field]
@@ -2806,7 +2806,7 @@ Form=7
   
 [Text]
 Position=50,420,330,436
-Text=48. Were there delays in receiving capitation tranches?
+Text=48.
  
   
 [Field]
@@ -2819,7 +2819,7 @@ Form=7
   
 [Text]
 Position=50,450,330,466
-Text=48.1. If yes, what was/were the reasons for the delay?
+Text=48.1.
  
   
 [Field]
@@ -2831,7 +2831,7 @@ Form=7
   
 [Text]
 Position=50,480,330,496
-Text=49. On average, how long is the typical time interval between tranches releases to the facility? — No. of Days
+Text=49. Number of days
  
   
 [Field]
@@ -2843,7 +2843,7 @@ Form=7
   
 [Text]
 Position=50,510,330,526
-Text=49. On average, how long is the typical time interval between tranches releases to the facility?
+Text=49. Days category
  
   
 [Field]
@@ -2855,7 +2855,7 @@ Form=7
   
 [Text]
 Position=50,540,330,556
-Text=50. How many days did you wait from application submission to accreditation approval? — No. of Days
+Text=50. Number of days
  
   
 [Field]
@@ -2867,7 +2867,7 @@ Form=7
   
 [Text]
 Position=50,570,330,586
-Text=50. How many days did you wait from application submission to accreditation approval?
+Text=50. Days category
  
   
 [Field]
@@ -2879,7 +2879,7 @@ Form=7
   
 [Text]
 Position=50,600,330,616
-Text=51. Why did you apply to become a YAKAP/Konsulta provider?
+Text=51.
  
   
 [Field]
@@ -2892,7 +2892,7 @@ Form=7
   
 [Text]
 Position=50,630,330,646
-Text=51. Why did you apply to become a YAKAP/Konsulta provider? — Other (specify) text
+Text=51. (specify)
  
   
 [Field]
@@ -2904,7 +2904,7 @@ Form=7
   
 [Text]
 Position=50,660,330,676
-Text=52. Which of the following requirements were difficult to comply with for accreditation?
+Text=52.
  
   
 [Field]
@@ -2916,7 +2916,7 @@ Form=7
   
 [Text]
 Position=50,690,330,706
-Text=53. Why was it difficult to comply with: Ability to conduct preventive/screening services and health education?
+Text=53.
  
   
 [Field]
@@ -2929,7 +2929,7 @@ Form=7
   
 [Text]
 Position=50,720,330,736
-Text=53. Why was it difficult to comply with: Ability to conduct preventive/screening services and health education? — Other (specify) text
+Text=53. (specify)
  
   
 [Field]
@@ -2941,7 +2941,7 @@ Form=7
   
 [Text]
 Position=50,750,330,766
-Text=54. Why was it difficult to comply with: Capability to provide services for required laboratory and radiologic services?
+Text=54.
  
   
 [Field]
@@ -2954,7 +2954,7 @@ Form=7
   
 [Text]
 Position=50,780,330,796
-Text=54. Why was it difficult to comply with: Capability to provide services for required laboratory and radiologic services? — Other (specify) text
+Text=54. (specify)
  
   
 [Field]
@@ -2966,7 +2966,7 @@ Form=7
   
 [Text]
 Position=50,810,330,826
-Text=55. Why was it difficult to comply with: Capability to dispense required medicines?
+Text=55.
  
   
 [Field]
@@ -2979,7 +2979,7 @@ Form=7
   
 [Text]
 Position=50,840,330,856
-Text=55. Why was it difficult to comply with: Capability to dispense required medicines? — Other (specify) text
+Text=55. (specify)
  
   
 [Field]
@@ -2991,7 +2991,7 @@ Form=7
   
 [Text]
 Position=50,870,330,886
-Text=56. Why was it difficult to comply with: General Infrastructure?
+Text=56.
  
   
 [Field]
@@ -3004,7 +3004,7 @@ Form=7
   
 [Text]
 Position=50,900,330,916
-Text=56. Why was it difficult to comply with: General Infrastructure? — Other (specify) text
+Text=56. (specify)
  
   
 [Field]
@@ -3016,7 +3016,7 @@ Form=7
   
 [Text]
 Position=50,930,330,946
-Text=57. Why was it difficult to comply with: Equipment and Supplies?
+Text=57.
  
   
 [Field]
@@ -3029,7 +3029,7 @@ Form=7
   
 [Text]
 Position=50,960,330,976
-Text=57. Why was it difficult to comply with: Equipment and Supplies? — Other (specify) text
+Text=57. (specify)
  
   
 [Field]
@@ -3041,7 +3041,7 @@ Form=7
   
 [Text]
 Position=50,990,330,1006
-Text=58. Why was it difficult to comply with: Human resource?
+Text=58.
  
   
 [Field]
@@ -3054,7 +3054,7 @@ Form=7
   
 [Text]
 Position=50,1020,330,1036
-Text=58. Why was it difficult to comply with: Human resource? — Other (specify) text
+Text=58. (specify)
  
   
 [Field]
@@ -3066,7 +3066,7 @@ Form=7
   
 [Text]
 Position=50,1050,330,1066
-Text=59. Why was it difficult to comply with: Functional Health Information System?
+Text=59.
  
   
 [Field]
@@ -3079,7 +3079,7 @@ Form=7
   
 [Text]
 Position=50,1080,330,1096
-Text=59. Why was it difficult to comply with: Functional Health Information System? — Other (specify) text
+Text=59. (specify)
  
   
 [Field]
@@ -3091,7 +3091,7 @@ Form=7
   
 [Text]
 Position=50,1110,330,1126
-Text=60. Why was it difficult to comply with: Documentary requirements?
+Text=60.
  
   
 [Field]
@@ -3104,7 +3104,7 @@ Form=7
   
 [Text]
 Position=50,1140,330,1156
-Text=60. Why was it difficult to comply with: Documentary requirements? — Other (specify) text
+Text=60. (specify)
  
   
 [Field]
@@ -3116,7 +3116,7 @@ Form=7
   
 [Text]
 Position=50,1170,330,1186
-Text=61. Why was it difficult to comply with: DOH Licensing requirements?
+Text=61.
  
   
 [Field]
@@ -3129,7 +3129,7 @@ Form=7
   
 [Text]
 Position=50,1200,330,1216
-Text=61. Why was it difficult to comply with: DOH Licensing requirements? — Other (specify) text
+Text=61. (specify)
  
   
 [Field]
@@ -3141,7 +3141,7 @@ Form=7
   
 [Text]
 Position=50,1230,330,1246
-Text=62. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta?
+Text=62.
  
   
 [Field]
@@ -3154,7 +3154,7 @@ Form=7
   
 [Text]
 Position=50,1260,330,1276
-Text=62. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta? — Other (specify) text
+Text=62. (specify)
  
   
 [Field]
@@ -3166,7 +3166,7 @@ Form=7
   
 [Text]
 Position=50,1290,330,1306
-Text=63. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta?
+Text=63.
  
   
 [Field]
@@ -3179,7 +3179,7 @@ Form=7
   
 [Text]
 Position=50,1320,330,1336
-Text=63. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta? — Other (specify) text
+Text=63. (specify)
  
   
 [Field]
@@ -3191,7 +3191,7 @@ Form=7
   
 [Text]
 Position=50,1350,330,1366
-Text=64. Did you experience any challenges in enrolling patients to YAKAP/Konsulta?
+Text=64.
  
   
 [Field]
@@ -3203,7 +3203,7 @@ Form=7
   
 [Text]
 Position=50,1380,330,1396
-Text=65. What are the challenges you have faced?
+Text=65.
  
   
 [Field]
@@ -3216,7 +3216,7 @@ Form=7
   
 [Text]
 Position=50,1410,330,1426
-Text=65. What are the challenges you have faced? — Other (specify) text
+Text=65. (specify)
  
   
 [Field]
@@ -3228,7 +3228,7 @@ Form=7
   
 [Text]
 Position=50,1440,330,1456
-Text=66. If not YAKAP/ Konsulta accredited, why are you not accredited?
+Text=66.
  
   
 [Field]
@@ -3241,7 +3241,7 @@ Form=7
   
 [Text]
 Position=50,1470,330,1486
-Text=66. If not YAKAP/ Konsulta accredited, why are you not accredited? — Other (specify) text
+Text=66. (specify)
  
   
 [Field]
@@ -3253,7 +3253,7 @@ Form=7
   
 [Text]
 Position=50,1500,330,1516
-Text=67. Are you intending to become a YAKAP/Konsulta provider?
+Text=67.
  
   
 [Field]
@@ -3265,7 +3265,7 @@ Form=7
   
 [Text]
 Position=50,1530,330,1546
-Text=68. If you decide to apply today, would you know how to start the process?
+Text=68.
  
   
 [Field]
@@ -3278,7 +3278,7 @@ Form=7
   
 [Text]
 Position=50,1560,330,1576
-Text=69. What was the deciding factor not to apply?
+Text=69.
  
   
 [Field]
@@ -3291,7 +3291,7 @@ Form=7
   
 [Text]
 Position=50,1590,330,1606
-Text=70. What went wrong with the application?
+Text=70.
  
   
 [Field]
@@ -3304,7 +3304,7 @@ Form=7
   
 [Text]
 Position=50,1620,330,1636
-Text=71. What are some challenges in the process, if any?
+Text=71.
  
   
 [Field]
@@ -3317,7 +3317,7 @@ Form=7
   
 [Text]
 Position=50,1650,330,1666
-Text=72. What areas do you consider as the facility's catchment area/s?
+Text=72.
  
   
 [Field]
@@ -3329,7 +3329,7 @@ Form=7
   
 [Text]
 Position=50,1680,330,1696
-Text=73. How many patients in your catchment area are eligible to register to this YAKAP/Konsulta provider?
+Text=73.
  
   
 [Field]
@@ -3341,7 +3341,7 @@ Form=7
   
 [Text]
 Position=50,1710,330,1726
-Text=74. How many eligible patients in your catchment area are already registered to this YAKAP/Konsulta provider?
+Text=74.
  
   
 [Field]
@@ -3353,7 +3353,7 @@ Form=7
   
 [Text]
 Position=50,1740,330,1756
-Text=75. The maximum per capita rate for YAKAP/Konsulta is Php 1,700 across private and public facilities (40% after first patient encounter, 60% based on registered catchment population by December). Based on your practice, is this enough?
+Text=75.
  
   
 [Field]
@@ -3365,7 +3365,7 @@ Form=7
   
 [Text]
 Position=50,1770,330,1786
-Text=76. Did you go through a costing exercise to figure out if this was viable for your facility?
+Text=76.
  
   
 [Field]
@@ -3377,7 +3377,7 @@ Form=7
   
 [Text]
 Position=50,1800,330,1816
-Text=77. Did the costing exercise show that Php 1,700 was viable for your facility?
+Text=77.
  
   
 [Field]
@@ -3389,7 +3389,7 @@ Form=7
   
 [Text]
 Position=50,1830,330,1846
-Text=78. What would be the minimum acceptable capitation value per patient per year for you as a YAKAP/ Konsulta provider?
+Text=78.
  
   
 [Field]
@@ -3401,7 +3401,7 @@ Form=7
   
 [Text]
 Position=50,1860,330,1876
-Text=79. What would be the minimum acceptable capitation value per patient per year for you to consider being a YAKAP/Konsulta provider?
+Text=79.
  
   
 [Field]
@@ -3413,7 +3413,7 @@ Form=7
   
 [Text]
 Position=50,1890,330,1906
-Text=80. Does your facility charge additional capitation fees?
+Text=80.
  
   
 [Field]
@@ -3425,7 +3425,7 @@ Form=7
   
 [Text]
 Position=50,1920,330,1936
-Text=81. What is/are the reason/s for the facility to charge additional capitation fees?
+Text=81.
  
   
 [Field]
@@ -3438,7 +3438,7 @@ Form=7
   
 [Text]
 Position=50,1950,330,1966
-Text=81. What is/are the reason/s for the facility to charge additional capitation fees? — Other (specify) text
+Text=81. (specify)
  
   
 [Field]
@@ -3450,7 +3450,7 @@ Form=7
   
 [Text]
 Position=50,1980,330,1996
-Text=82. Have you already received payments for patients enrolled?
+Text=82.
  
   
 [Field]
@@ -3462,7 +3462,7 @@ Form=7
   
 [Text]
 Position=50,2010,330,2026
-Text=83. Why not?
+Text=83.
  
   
 [Field]
@@ -3475,7 +3475,7 @@ Form=7
   
 [Text]
 Position=50,2040,330,2056
-Text=83. Why not? — Other (specify) text
+Text=83. (specify)
  
   
 [Field]
@@ -3487,7 +3487,7 @@ Form=7
   
 [Text]
 Position=50,2070,330,2086
-Text=84. Did you face any challenges in getting these payments?
+Text=84.
  
   
 [Field]
@@ -3499,7 +3499,7 @@ Form=7
   
 [Text]
 Position=50,2100,330,2116
-Text=85. What were these challenges?
+Text=85.
  
   
 [Field]
@@ -3512,7 +3512,7 @@ Form=7
   
 [Text]
 Position=50,2130,330,2146
-Text=85. What were these challenges? — Other (specify) text
+Text=85. (specify)
  
   
 [Field]
@@ -3524,7 +3524,7 @@ Form=7
   
 [Text]
 Position=50,2160,330,2176
-Text=86. If you were to expand the YAKAP/Konsulta package, what would you expand next?
+Text=86.
  
   
 [Field]
@@ -3537,7 +3537,7 @@ Form=7
   
 [Text]
 Position=50,2190,330,2206
-Text=86. If you were to expand the YAKAP/Konsulta package, what would you expand next? — Other (specify) text
+Text=86. (specify)
  
   
 [Field]
@@ -3550,7 +3550,7 @@ Form=7
   
 [Text]
 Position=50,2220,330,2236
-Text=87. What additional features would you add?
+Text=87.
  
   
 [Block]
@@ -4019,7 +4019,7 @@ Form=8
   
 [Text]
 Position=50,30,330,46
-Text=88. Have you heard about the Bagong Urgent Care and Ambulatory Service (BUCAS)?
+Text=88.
  
   
 [Field]
@@ -4031,7 +4031,7 @@ Form=8
   
 [Text]
 Position=50,60,330,76
-Text=89. Do you have a BUCAS Center?
+Text=89.
  
   
 [Field]
@@ -4043,7 +4043,7 @@ Form=8
   
 [Text]
 Position=50,90,330,106
-Text=90. If none, what is the primary reason?
+Text=90.
  
   
 [Field]
@@ -4056,7 +4056,7 @@ Form=8
   
 [Text]
 Position=50,120,330,136
-Text=90. If none, what is the primary reason? Other (specify)
+Text=90. (specify)
  
   
 [Field]
@@ -4068,7 +4068,7 @@ Form=8
   
 [Text]
 Position=50,150,330,166
-Text=91. What are the available services offered by your BUCAS Center?
+Text=91.
  
   
 [Field]
@@ -4081,7 +4081,7 @@ Form=8
   
 [Text]
 Position=50,180,330,196
-Text=91. What are the available services offered by your BUCAS Center? — Other (specify) text
+Text=91. (specify)
  
   
 [Field]
@@ -4093,7 +4093,7 @@ Form=8
   
 [Text]
 Position=50,210,330,226
-Text=92. In your assessment, what are the main factors affecting the utilization of BUCAS in your facility?
+Text=92.
  
   
 [Field]
@@ -4106,7 +4106,7 @@ Form=8
   
 [Text]
 Position=50,240,330,256
-Text=92. In your assessment, what are the main factors affecting the utilization of BUCAS in your facility? — Other (specify) text
+Text=92. (specify)
  
   
 [Field]
@@ -4119,7 +4119,7 @@ Form=8
   
 [Text]
 Position=50,270,330,286
-Text=93. What are the resources you need to support/sustain the BUCAS center?
+Text=93.
  
   
 [Field]
@@ -4131,7 +4131,7 @@ Form=8
   
 [Text]
 Position=50,300,330,316
-Text=94. Based on your experience, does the BUCAS Center decongest your health facility of patients?
+Text=94.
  
   
 [Field]
@@ -4143,7 +4143,7 @@ Form=8
   
 [Text]
 Position=50,330,330,346
-Text=95. Have you heard about the Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) package?
+Text=95.
  
   
 [Field]
@@ -4155,7 +4155,7 @@ Form=8
   
 [Text]
 Position=50,360,330,376
-Text=96. Is your facility an accredited GAMOT provider?
+Text=96.
  
   
 [Field]
@@ -4167,7 +4167,7 @@ Form=8
   
 [Text]
 Position=50,390,330,406
-Text=97. If no, what is the primary reason?
+Text=97.
  
   
 [Field]
@@ -4180,7 +4180,7 @@ Form=8
   
 [Text]
 Position=50,420,330,436
-Text=97. If no, what is the primary reason? Other (specify)
+Text=97. (specify)
  
   
 [Field]
@@ -4192,7 +4192,7 @@ Form=8
   
 [Text]
 Position=50,450,330,466
-Text=98. In your assessment, what are the main factors affecting the utilization of the GAMOT Program in your facility?
+Text=98.
  
   
 [Field]
@@ -4205,7 +4205,7 @@ Form=8
   
 [Text]
 Position=50,480,330,496
-Text=98. In your assessment, what are the main factors affecting the utilization of the GAMOT Program in your facility? — Other (specify) text
+Text=98. (specify)
  
   
 [Field]
@@ -4217,7 +4217,7 @@ Form=8
   
 [Text]
 Position=50,510,330,526
-Text=99. In the past 3 months, has this facility experienced a stock-out (zero supply) of any tracer essential medicines?
+Text=99.
  
   
 [Field]
@@ -4230,7 +4230,7 @@ Form=8
   
 [Text]
 Position=50,540,330,556
-Text=100. What specific medicines? (antihypertensives, antibiotics, etc.)
+Text=100.
  
   
 [Field]
@@ -4242,7 +4242,7 @@ Form=8
   
 [Text]
 Position=50,570,330,586
-Text=101. How many days did the stock-out last?
+Text=101.
  
   
 [Field]
@@ -4254,7 +4254,7 @@ Form=8
   
 [Text]
 Position=50,600,330,616
-Text=102. On average, how many months do these stock-outs last?
+Text=102.
  
   
 [Field]
@@ -4266,7 +4266,7 @@ Form=8
   
 [Text]
 Position=50,630,330,646
-Text=103. Did you do anything to address the medicine stock-outs in the GAMOT Package?
+Text=103.
  
   
 [Field]
@@ -4278,7 +4278,7 @@ Form=8
   
 [Text]
 Position=50,660,330,676
-Text=104. If yes, what did you do to address the medicine stock-outs in the GAMOT Package?
+Text=104.
  
   
 [Field]
@@ -4291,7 +4291,7 @@ Form=8
   
 [Text]
 Position=50,690,330,706
-Text=104. If yes, what did you do to address the medicine stock-outs in the GAMOT Package? — Other (specify) text
+Text=104. (specify)
  
   
 [Block]
@@ -4452,7 +4452,7 @@ Form=9
   
 [Text]
 Position=50,30,330,46
-Text=105. Is this facility DOH licensed?
+Text=105.
  
   
 [Field]
@@ -4464,7 +4464,7 @@ Form=9
   
 [Text]
 Position=50,60,330,76
-Text=106. When did you receive your DOH license from your most recent application?
+Text=106.
  
   
 [Field]
@@ -4476,7 +4476,7 @@ Form=9
   
 [Text]
 Position=50,90,330,106
-Text=107. How many days did it take you to receive the license? — No. of Days
+Text=107. Number of days
  
   
 [Field]
@@ -4488,7 +4488,7 @@ Form=9
   
 [Text]
 Position=50,120,330,136
-Text=107. How many days did it take you to receive the license?
+Text=107. Days category
  
   
 [Field]
@@ -4500,7 +4500,7 @@ Form=9
   
 [Text]
 Position=50,150,330,166
-Text=108. Which of the following requirements were difficult to comply with in the DOH licensing process?
+Text=108.
  
   
 [Field]
@@ -4512,7 +4512,7 @@ Form=9
   
 [Text]
 Position=50,180,330,196
-Text=109. Why was it difficult to comply with: Patient rights and organization ethics?
+Text=109.
  
   
 [Field]
@@ -4525,7 +4525,7 @@ Form=9
   
 [Text]
 Position=50,210,330,226
-Text=109. Why was it difficult to comply with: Patient rights and organization ethics? — Other (specify) text
+Text=109. (specify)
  
   
 [Field]
@@ -4537,7 +4537,7 @@ Form=9
   
 [Text]
 Position=50,240,330,256
-Text=110. Why was it difficult to comply with: Patient care?
+Text=110.
  
   
 [Field]
@@ -4550,7 +4550,7 @@ Form=9
   
 [Text]
 Position=50,270,330,286
-Text=110. Why was it difficult to comply with: Patient care? — Other (specify) text
+Text=110. (specify)
  
   
 [Field]
@@ -4562,7 +4562,7 @@ Form=9
   
 [Text]
 Position=50,300,330,316
-Text=111. Why was it difficult to comply with: Leadership and management?
+Text=111.
  
   
 [Field]
@@ -4575,7 +4575,7 @@ Form=9
   
 [Text]
 Position=50,330,330,346
-Text=111. Why was it difficult to comply with: Leadership and management? — Other (specify) text
+Text=111. (specify)
  
   
 [Field]
@@ -4587,7 +4587,7 @@ Form=9
   
 [Text]
 Position=50,360,330,376
-Text=112. Why was it difficult to comply with: Human resource management?
+Text=112.
  
   
 [Field]
@@ -4600,7 +4600,7 @@ Form=9
   
 [Text]
 Position=50,390,330,406
-Text=112. Why was it difficult to comply with: Human resource management? — Other (specify) text
+Text=112. (specify)
  
   
 [Field]
@@ -4612,7 +4612,7 @@ Form=9
   
 [Text]
 Position=50,420,330,436
-Text=113. Why was it difficult to comply with: Information management?
+Text=113.
  
   
 [Field]
@@ -4625,7 +4625,7 @@ Form=9
   
 [Text]
 Position=50,450,330,466
-Text=113. Why was it difficult to comply with: Information management? — Other (specify) text
+Text=113. (specify)
  
   
 [Field]
@@ -4637,7 +4637,7 @@ Form=9
   
 [Text]
 Position=50,480,330,496
-Text=114. Why was it difficult to comply with: Safe practice and environment?
+Text=114.
  
   
 [Field]
@@ -4650,7 +4650,7 @@ Form=9
   
 [Text]
 Position=50,510,330,526
-Text=114. Why was it difficult to comply with: Safe practice and environment? — Other (specify) text
+Text=114. (specify)
  
   
 [Field]
@@ -4662,7 +4662,7 @@ Form=9
   
 [Text]
 Position=50,540,330,556
-Text=115. Why was it difficult to comply with: Improving performance?
+Text=115.
  
   
 [Field]
@@ -4675,7 +4675,7 @@ Form=9
   
 [Text]
 Position=50,570,330,586
-Text=115. Why was it difficult to comply with: Improving performance? — Other (specify) text
+Text=115. (specify)
  
   
 [Field]
@@ -4687,7 +4687,7 @@ Form=9
   
 [Text]
 Position=50,600,330,616
-Text=116. Why was it difficult to comply with: Physical plant?
+Text=116.
  
   
 [Field]
@@ -4700,7 +4700,7 @@ Form=9
   
 [Text]
 Position=50,630,330,646
-Text=116. Why was it difficult to comply with: Physical plant? — Other (specify) text
+Text=116. (specify)
  
   
 [Field]
@@ -4712,7 +4712,7 @@ Form=9
   
 [Text]
 Position=50,660,330,676
-Text=117. Why was it difficult to comply with: Public access to price information?
+Text=117.
  
   
 [Field]
@@ -4725,7 +4725,7 @@ Form=9
   
 [Text]
 Position=50,690,330,706
-Text=117. Why was it difficult to comply with: Public access to price information? — Other (specify) text
+Text=117. (specify)
  
   
 [Field]
@@ -4737,7 +4737,7 @@ Form=9
   
 [Text]
 Position=50,720,330,736
-Text=118. Why was it difficult to comply with: Equipment and instruments?
+Text=118.
  
   
 [Field]
@@ -4750,7 +4750,7 @@ Form=9
   
 [Text]
 Position=50,750,330,766
-Text=118. Why was it difficult to comply with: Equipment and instruments? — Other (specify) text
+Text=118. (specify)
  
   
 [Field]
@@ -4762,7 +4762,7 @@ Form=9
   
 [Text]
 Position=50,780,330,796
-Text=119. Why was it difficult to comply with: National laws and DOH issuances implemented in hospitals and other health facilities?
+Text=119.
  
   
 [Field]
@@ -4775,7 +4775,7 @@ Form=9
   
 [Text]
 Position=50,810,330,826
-Text=119. Why was it difficult to comply with: National laws and DOH issuances implemented in hospitals and other health facilities? — Other (specify) text
+Text=119. (specify)
  
   
 [Field]
@@ -4787,7 +4787,7 @@ Form=9
   
 [Text]
 Position=50,840,330,856
-Text=120. Why was it difficult to comply with: Emergency Cart Contents?
+Text=120.
  
   
 [Field]
@@ -4800,7 +4800,7 @@ Form=9
   
 [Text]
 Position=50,870,330,886
-Text=120. Why was it difficult to comply with: Emergency Cart Contents? — Other (specify) text
+Text=120. (specify)
  
   
 [Field]
@@ -4812,7 +4812,7 @@ Form=9
   
 [Text]
 Position=50,900,330,916
-Text=121. Why was it difficult to comply with: Add-on services?
+Text=121.
  
   
 [Field]
@@ -4825,7 +4825,7 @@ Form=9
   
 [Text]
 Position=50,930,330,946
-Text=121. Why was it difficult to comply with: Add-on services? — Other (specify) text
+Text=121. (specify)
  
   
 [Block]
@@ -5049,7 +5049,7 @@ Form=10
   
 [Text]
 Position=50,30,330,46
-Text=122. Do you currently implement the No Balance Billing (NBB) for your patients?
+Text=122.
  
   
 [Field]
@@ -5061,7 +5061,7 @@ Form=10
   
 [Text]
 Position=50,60,330,76
-Text=123. Are you able to implement NBB for all patients, to the best of your knowledge, for the last 6 months?
+Text=123.
  
   
 [Field]
@@ -5073,7 +5073,7 @@ Form=10
   
 [Text]
 Position=50,90,330,106
-Text=124. In your view, what are some of the barriers to implementing NBB?
+Text=124.
  
   
 [Field]
@@ -5086,7 +5086,7 @@ Form=10
   
 [Text]
 Position=50,120,330,136
-Text=124. In your view, what are some of the barriers to implementing NBB? — Other (specify) text
+Text=124. (specify)
  
   
 [Field]
@@ -5098,7 +5098,7 @@ Form=10
   
 [Text]
 Position=50,150,330,166
-Text=125. Do you currently implement the Zero Balance Billing (ZBB) for your patients?
+Text=125.
  
   
 [Field]
@@ -5110,7 +5110,7 @@ Form=10
   
 [Text]
 Position=50,180,330,196
-Text=126. Are you able to implement ZBB for all patients, to the best of your knowledge, for the last six months?
+Text=126.
  
   
 [Field]
@@ -5122,7 +5122,7 @@ Form=10
   
 [Text]
 Position=50,210,330,226
-Text=127. In your view, what are some of the barriers to implementing ZBB?
+Text=127.
  
   
 [Field]
@@ -5135,7 +5135,7 @@ Form=10
   
 [Text]
 Position=50,240,330,256
-Text=127. In your view, what are some of the barriers to implementing ZBB? — Other (specify) text
+Text=127. (specify)
  
   
 [Field]
@@ -5147,7 +5147,7 @@ Form=10
   
 [Text]
 Position=50,270,330,286
-Text=128. Does the facility allow out-of-pocket (OOP) expenses for basic accommodation?
+Text=128.
  
   
 [Field]
@@ -5160,7 +5160,7 @@ Form=10
   
 [Text]
 Position=50,300,330,316
-Text=129. Why does the facility allow OOP expenses for basic accommodation? Specify the reason.
+Text=129.
  
   
 [Field]
@@ -5172,7 +5172,7 @@ Form=10
   
 [Text]
 Position=50,330,330,346
-Text=130. Which of the UHC benefits do you find most difficult to implement?
+Text=130.
  
   
 [Field]
@@ -5185,7 +5185,7 @@ Form=10
   
 [Text]
 Position=50,360,330,376
-Text=130. Which of the UHC benefits do you find most difficult to implement? Other (specify)
+Text=130. (specify)
  
   
 [Field]
@@ -5197,7 +5197,7 @@ Form=10
   
 [Text]
 Position=50,390,330,406
-Text=131. Why is this difficult to implement?
+Text=131.
  
   
 [Field]
@@ -5210,7 +5210,7 @@ Form=10
   
 [Text]
 Position=50,420,330,436
-Text=131. Why is this difficult to implement? — Other (specify) text
+Text=131. (specify)
  
   
 [Field]
@@ -5222,7 +5222,7 @@ Form=10
   
 [Text]
 Position=50,450,330,466
-Text=132. Has the facility been providing medical social welfare or assistance (e.g., through Malasakit Centers, MAIFIP)?
+Text=132.
  
   
 [Field]
@@ -5234,7 +5234,7 @@ Form=10
   
 [Text]
 Position=50,480,330,496
-Text=133. Why is the facility providing medical social welfare or assistance through Malasakit Centers or MAIFIP?
+Text=133.
  
   
 [Field]
@@ -5247,7 +5247,7 @@ Form=10
   
 [Text]
 Position=50,510,330,526
-Text=133. Why is the facility providing medical social welfare or assistance through Malasakit Centers or MAIFIP? — Other (specify) text
+Text=133. (specify)
  
   
 [Field]
@@ -5259,7 +5259,7 @@ Form=10
   
 [Text]
 Position=50,540,330,556
-Text=134. Why is the facility not providing medical social welfare or assistance through Malasakit Centers or MAIFIP?
+Text=134.
  
   
 [Field]
@@ -5272,7 +5272,7 @@ Form=10
   
 [Text]
 Position=50,570,330,586
-Text=134. Why is the facility not providing medical social welfare or assistance through Malasakit Centers or MAIFIP? — Other (specify) text
+Text=134. (specify)
  
   
 [Field]
@@ -5284,7 +5284,7 @@ Form=10
   
 [Text]
 Position=50,600,330,616
-Text=135. Do you receive any support from your LGU to implement UHC reforms?
+Text=135.
  
   
 [Field]
@@ -5296,7 +5296,7 @@ Form=10
   
 [Text]
 Position=50,630,330,646
-Text=136. What forms of support do you receive?
+Text=136.
  
   
 [Field]
@@ -5309,7 +5309,7 @@ Form=10
   
 [Text]
 Position=50,660,330,676
-Text=136. What forms of support do you receive? — Other (specify) text
+Text=136. (specify)
  
   
 [Field]
@@ -5321,7 +5321,7 @@ Form=10
   
 [Text]
 Position=50,690,330,706
-Text=137. Are you satisfied with the support you receive from your LGU?
+Text=137.
  
   
 [Field]
@@ -5333,7 +5333,7 @@ Form=10
   
 [Text]
 Position=50,720,330,736
-Text=138. Why not?
+Text=138.
  
   
 [Field]
@@ -5346,7 +5346,7 @@ Form=10
   
 [Text]
 Position=50,750,330,766
-Text=138. Why not? — Other (specify) text
+Text=138. (specify)
  
   
 [Field]
@@ -5358,7 +5358,7 @@ Form=10
   
 [Text]
 Position=50,780,330,796
-Text=139. How clear are the protocols regarding which decisions require Provincial Health Office (PHO) approval versus those you can decide at the facility level?
+Text=139.
  
   
 [Field]
@@ -5371,7 +5371,7 @@ Form=10
   
 [Text]
 Position=50,810,330,826
-Text=140. Which specific protocol that you consider as unclear?
+Text=140.
  
   
 [Field]
@@ -5383,7 +5383,7 @@ Form=10
   
 [Text]
 Position=50,840,330,856
-Text=141. In the past 6 months, how many patients were referred to a higher-level facility within the referral network?
+Text=141.
  
   
 [Field]
@@ -5395,7 +5395,7 @@ Form=10
   
 [Text]
 Position=50,870,330,886
-Text=142. What are the most common ways you send referrals to higher level facilities/specialists?
+Text=142.
  
   
 [Field]
@@ -5408,7 +5408,7 @@ Form=10
   
 [Text]
 Position=50,900,330,916
-Text=142. What are the most common ways you send referrals to higher level facilities/specialists? — Other (specify) text
+Text=142. (specify)
  
   
 [Field]
@@ -5420,7 +5420,7 @@ Form=10
   
 [Text]
 Position=50,930,330,946
-Text=143. What type of referral form do you use to send to higher level facilities?
+Text=143.
  
   
 [Field]
@@ -5433,7 +5433,7 @@ Form=10
   
 [Text]
 Position=50,960,330,976
-Text=143. What type of referral form do you use to send to higher level facilities? — Other (specify) text
+Text=143. (specify)
  
   
 [Field]
@@ -5445,7 +5445,7 @@ Form=10
   
 [Text]
 Position=50,990,330,1006
-Text=144. Do you have a network of specialist providers to refer patients to, if needed?
+Text=144.
  
   
 [Field]
@@ -5457,7 +5457,7 @@ Form=10
   
 [Text]
 Position=50,1020,330,1036
-Text=145. Considering all patients who come to your facility for the past 6 months, what is the proportion of patients referred by another facility compared to those who self-refer/walk-in?
+Text=145.
  
   
 [Field]
@@ -5469,7 +5469,7 @@ Form=10
   
 [Text]
 Position=50,1050,330,1066
-Text=146. Of those referred, which of the following are the most common ways you receive referrals from lower-level health facilities?
+Text=146.
  
   
 [Field]
@@ -5482,7 +5482,7 @@ Form=10
   
 [Text]
 Position=50,1080,330,1096
-Text=146. Of those referred, which of the following are the most common ways you receive referrals from lower-level health facilities? — Other (specify) text
+Text=146. (specify)
  
   
 [Field]
@@ -5494,7 +5494,7 @@ Form=10
   
 [Text]
 Position=50,1110,330,1126
-Text=147. Where do your patients go to get the services not available at this facility?
+Text=147.
  
   
 [Field]
@@ -5506,7 +5506,7 @@ Form=10
   
 [Text]
 Position=50,1140,330,1156
-Text=148. How would you rate your satisfaction with your current referral system?
+Text=148.
  
   
 [Field]
@@ -5518,7 +5518,7 @@ Form=10
   
 [Text]
 Position=50,1170,330,1186
-Text=149. Why are you not satisfied with the current referral system?
+Text=149.
  
   
 [Field]
@@ -5531,7 +5531,7 @@ Form=10
   
 [Text]
 Position=50,1200,330,1216
-Text=149. Why are you not satisfied with the current referral system? — Other (specify) text
+Text=149. (specify)
  
   
 [Block]
@@ -5825,7 +5825,7 @@ Form=11
   
 [Text]
 Position=50,30,330,46
-Text=150. What challenges in human resources do you have?
+Text=150.
  
   
 [Field]
@@ -5838,7 +5838,7 @@ Form=11
   
 [Text]
 Position=50,60,330,76
-Text=150. What challenges in human resources do you have? — Other (specify) text
+Text=150. (specify)
  
   
 [Field]
@@ -5851,7 +5851,7 @@ Form=11
   
 [Text]
 Position=50,90,330,106
-Text=151. What area do you find the most room for improvement in your staff?
+Text=151.
  
   
 [Field]
@@ -5863,7 +5863,7 @@ Form=11
   
 [Text]
 Position=50,120,330,136
-Text=152. What forms of professional development do you provide to your doctors?
+Text=152.
  
   
 [Field]
@@ -5876,7 +5876,7 @@ Form=11
   
 [Text]
 Position=50,150,330,166
-Text=152. What forms of professional development do you provide to your doctors? — Other (specify) text
+Text=152. (specify)
  
   
 [Field]
@@ -5888,7 +5888,7 @@ Form=11
   
 [Text]
 Position=50,180,330,196
-Text=153. What forms of professional development do you provide to your nurses?
+Text=153.
  
   
 [Field]
@@ -5901,7 +5901,7 @@ Form=11
   
 [Text]
 Position=50,210,330,226
-Text=153. What forms of professional development do you provide to your nurses? — Other (specify) text
+Text=153. (specify)
  
   
 [Block]

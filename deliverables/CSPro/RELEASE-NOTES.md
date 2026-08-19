@@ -30,7 +30,7 @@ version SSOT, tracked since 2026-07-02 - earlier builds predate it).
 
 | Instrument | Version | Deployed |
 |---|---|---|
-| F1 - Facility Head Survey | **v3.0.0** | 2026-08-19 |
+| F1 - Facility Head Survey | **v3.0.1** | 2026-08-19 |
 | F3 - Patient Survey | **v4.0.1** | 2026-08-19 |
 | F4 - Household Survey | **v3.0.2** | 2026-08-19 |
 | HUB - Supervisor Hub | **v1.1.5** | 2026-08-08 |
@@ -38,9 +38,7 @@ version SSOT, tracked since 2026-07-02 - earlier builds predate it).
 
 ## Unreleased
 
-- **F3 v4.0.1** (2026-08-19) - bumped in the working tree, not yet committed
-  - Fixed: On-screen question de-duplication (R25): form field captions are now short question tags, so the question text appears once per screen instead of twice. Display only.
-- **F4 v3.0.2** (2026-08-19) - bumped in the working tree, not yet committed
+- **F1 v3.0.1** (2026-08-19) - bumped in the working tree, not yet committed
   - Fixed: On-screen question de-duplication (R25): form field captions are now short question tags, so the question text appears once per screen instead of twice. Display only.
 
 ## F1 - Facility Head Survey
@@ -91,6 +89,11 @@ _Release commit [`451a560`](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Devel
 
 ## F3 - Patient Survey
 
+### [v4.0.1](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/compare/af9f87f5c5c62463b9bf9025437c1db581e4c7fc...b1652436dc6165316888bf0ab473778c91bafa6a) - 2026-08-19 · PATCH
+#### Fixed
+- On-screen question de-duplication (R25): form field captions are now short question tags, so the question text appears once per screen instead of twice. Display only.
+_Release commit [`b165243`](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/commit/b1652436dc6165316888bf0ab473778c91bafa6a): aug17: question de-duplication F3 v4.0.1 / F4 v3.0.2 (Task C1, R25)_
+
 ### [v4.0.0](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/compare/0a93fe0f2103b7093353607875626740d8f2a2da...af9f87f5c5c62463b9bf9025437c1db581e4c7fc) - 2026-08-19 · MAJOR · **BREAKING** (data shape)
 #### Changed
 - Aug-17 PAPI alignment (full re-key, MAJOR): renumbered instrument; Quantified Free Service payment source (Q98/Q113); Q18 income brackets; outpatient/inpatient blocks front-loaded
@@ -140,6 +143,11 @@ _Release commit [`b089212`](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Devel
 _Release commit [`451a560`](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/commit/451a5608255479822056382fddde990567d77bf2): feat(capi): CSEntry build versioning v1.0.1 + .csds deploy route; tabulation plan; R5 fix sweep_
 
 ## F4 - Household Survey
+
+### [v3.0.2](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/compare/1a2fb94f7b18f991229f9bd10ce76467b111123b...b1652436dc6165316888bf0ab473778c91bafa6a) - 2026-08-19 · PATCH
+#### Fixed
+- On-screen question de-duplication (R25): form field captions are now short question tags, so the question text appears once per screen instead of twice. Display only.
+_Release commit [`b165243`](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/commit/b1652436dc6165316888bf0ab473778c91bafa6a): aug17: question de-duplication F3 v4.0.1 / F4 v3.0.2 (Task C1, R25)_
 
 ### [v3.0.1](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/compare/b721e7bb389783136f79fd424b57dab6fe590abc...1a2fb94f7b18f991229f9bd10ce76467b111123b) - 2026-08-19 · PATCH
 #### Fixed

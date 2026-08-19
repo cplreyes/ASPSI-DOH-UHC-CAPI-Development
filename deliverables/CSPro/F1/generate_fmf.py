@@ -41,7 +41,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from generate_dcf import build_dictionary
-from cspro_helpers import _truncate_long_labels
+from cspro_helpers import _truncate_long_labels, question_caption
 
 
 DICT_LABEL = "FacilityHeadSurvey"
@@ -237,11 +237,32 @@ def _form_height(n_items):
 # exported data and the published codebook, and shortening them would leave Q5 and Q6 both
 # carrying a bare "Number of Months" in the dataset. Display text and data labels diverge
 # here on purpose.
+#
+# R25 (2026-08-19) GENERALISED THIS to every question field - cspro_helpers.question_caption
+# now reduces each one to its numeral tag. What survives here is the narrower job this table
+# always did: DISAMBIGUATING two items of ONE question that share a number AND a screen,
+# where a bare "5." would print twice. The tag is prefixed automatically, so an entry reads
+# "5. Number of Years" on device. Each entry is a MEASURED same-screen collision, found by
+# deriving captions per DisplayTogether block - do not add one speculatively.
+#
+# A number repeated across SEPARATE screens needs no entry: only one renders per screen and
+# the qsf pane discriminates.
 SHORT_FORM_LABELS = {
     "Q5_YEARS_AT_FACILITY":  "Number of Years",
     "Q5_MONTHS_AT_FACILITY": "Number of Months",
     "Q6_YEARS_HEALTH":       "Number of Years",
     "Q6_MONTHS_HEALTH":      "Number of Months",
+    # R25: the four remaining same-screen collisions in F1.
+    "Q39_YK_SINCE_MONTH":       "Month",
+    "Q39_YK_SINCE_YEAR":        "Year",
+    # Each of these three is an exact free-numeric entry sitting beside its coded bracket
+    # ("30 days and less" / "31-60 days" / "More than 60 days") on one screen.
+    "Q49_TRANCHE_INTERVAL_NUM": "Number of days",
+    "Q49_TRANCHE_INTERVAL":     "Days category",
+    "Q50_ACCRED_WAIT_NUM":      "Number of days",
+    "Q50_ACCRED_WAIT":          "Days category",
+    "Q107_LIC_DAYS_NUM":        "Number of days",
+    "Q107_LIC_DAYS":            "Days category",
 }
 
 
@@ -291,10 +312,21 @@ def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name, r
         if it["name"] in _CHECKBOX_FIELDS:   # alpha + value set rendered as a tick-list
             capture = "CheckBox"
             field_x2 = FIELD_RADIO_X2
-        # #1006: component fields use a SHORT on-form label so the question stem appears
-        # once per screen (in the question bar), not twice.
-        text = (SHORT_FORM_LABELS.get(it["name"])
-                or (it["labels"][0]["text"] if it.get("labels") else it["name"])).replace("\n", " ").replace("\r", " ")
+        # R25: the on-form caption is a NUMERAL TAG; the question itself lives only in the
+        # qsf pane, which follows the language setting. cspro_helpers.question_caption owns
+        # the rule for all three instruments.
+        raw = (it["labels"][0]["text"] if it.get("labels") else it["name"])
+        if roster:
+            # Roster captions are GRID COLUMN HEADERS and stay out of R25's scope: a column
+            # has no question pane of its own. F1 has no repeating record today, so this is
+            # inert - it is kept in step with F3/F4 should a roster ever be added.
+            text, kind = raw, "roster"
+        else:
+            text, kind = question_caption(it["name"], raw, SHORT_FORM_LABELS.get(it["name"]))
+        _CAPTION_KINDS[kind] = _CAPTION_KINDS.get(kind, 0) + 1
+        if kind == "keep-full":
+            _KEEP_FULL_FIELDS.append(it["name"])
+        text = text.replace("\n", " ").replace("\r", " ")
         # [Field]
         lines.append("[Field]")
         lines.append(f"Name={it['name']}")
@@ -404,6 +436,11 @@ _SUBQ_STARTS_SCREEN = True
 _CHECKBOX_TRAILERS = ("_OTHER_TXT",)  # gated texts that would otherwise share the screen
 MAX_CHUNK = 5                       # cap simple-question runs at ~5 per screen
 _ACTIVE_BLOCK_PLAN = []            # set per-build by build_fmf()
+# R25 caption census, reset per build. Printed by main() so the classification is auditable
+# from the build log: a jump in 'keep-full' means labels lost their printed question number
+# and questions are silently keeping their full stem on the form again.
+_CAPTION_KINDS = {}
+_KEEP_FULL_FIELDS = []
 
 
 def _qnum(item):
@@ -630,6 +667,8 @@ def _assert_form_invariants(forms):
 
 def build_fmf():
     dictionary = build_dictionary()
+    global _CAPTION_KINDS, _KEEP_FULL_FIELDS
+    _CAPTION_KINDS, _KEEP_FULL_FIELDS = {}, []   # reset: build_fmf is called by the gates too
     _truncate_long_labels(dictionary)  # match the .dcf's 255-char label cap (CSPro max)
     global _ACTIVE_BLOCK_PLAN, _CHECKBOX_FIELDS
     _CHECKBOX_FIELDS = _derive_checkbox_fields(dictionary)
@@ -755,6 +794,9 @@ def main():
     sys.stderr.write(f"Wrote {out_path} ({orphan_count} orphan items)\n")
     sys.stderr.write(f"  forms: {n_forms}  fields: {n_fields}  "
                      f"checkbox bases: {len(_CHECKBOX_FIELDS)}  blocks planned: {n_blocks}\n")
+    census = "  ".join(f"{k}={v}" for k, v in sorted(_CAPTION_KINDS.items()))
+    sys.stderr.write(f"  R25 captions: {census}\n")
+    sys.stderr.write(f"  keep-full (no question number): {len(_KEEP_FULL_FIELDS)}\n")
 
 
 if __name__ == "__main__":
