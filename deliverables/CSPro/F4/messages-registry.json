@@ -1,6 +1,6 @@
 {
   "_note": "Machine-managed by cspro_helpers.numberize_errmsgs() — do not hand-edit. Maps each errmsg text to its permanent message number; numbers are never reused or renumbered.",
-  "next": 1191,
+  "next": 1196,
   "messages": {
     "PSGC region lookup failed — verify psgc_region.dat is deployed": 1001,
     "GPS hardware unavailable — check tablet location permission.": 1002,
@@ -191,6 +191,11 @@
     "Q196: 'We do not forego care' cannot be combined with other answers - untick the others or untick this option.": 1187,
     "Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.": 1188,
     "No GPS fix after %d s. Move outdoors or beside a window, then re-enter this field to retry — each retry searches longer. You may also leave GPS blank and finish the case.": 1189,
-    "'Other' was selected for Q40_EDUCATION but no text was entered. Please specify.": 1190
+    "'Other' was selected for Q40_EDUCATION but no text was entered. Please specify.": 1190,
+    "Q18: an income amount was provided (%d PHP), so the bracket cannot be don't-know/refuse. Select the bracket that matches the amount (or re-enter the amount as -98/-99).": 1191,
+    "Q142: 'GOV_DONATION' was ticked 'Yes, specify:' -- please specify.": 1192,
+    "Q142: 'OTHER' was ticked 'Yes, specify:' -- please specify.": 1193,
+    "Select at least one option for Q140 before continuing.": 1194,
+    "'Other (specify)' was ticked for Q140 - please specify.": 1195
   }
 }

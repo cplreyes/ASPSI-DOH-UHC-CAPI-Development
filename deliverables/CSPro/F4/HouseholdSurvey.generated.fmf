@@ -576,7 +576,7 @@ Item=Q131_NBB_OOP
 Name=FORM038
 Label=M. ZBB / MAIFIP / Bill-Recall
 Level=1
-Size=806,637
+Size=806,1567
   
 Item=Q132_ZBB_HEARD
 Item=Q133_ZBB_SOURCE
@@ -589,14 +589,45 @@ Item=Q137_MAIFIP_SOURCE
 Item=Q137_MAIFIP_SOURCE_OTHER_TXT
 Item=Q138_MOST_EXPENSIVE
 Item=Q138_MOST_EXPENSIVE_OTHER_TXT
-Item=Q139_FINAL_AMOUNT_PHP
-Item=Q140_RECALL_BREAKDOWN
-Item=Q141_BILL_ITEMS
-Item=Q141_BILL_ITEMS_OTHER_TXT
-Item=Q141_1_NO_RECEIPT_AMT_PHP
-Item=Q142_RECALL_PAYMENT
-Item=Q143_HOW_PAID
-Item=Q143_HOW_PAID_OTHER_TXT
+Item=Q139_TOTAL_BILL_PHP
+Item=Q140_BILL_ITEMS
+Item=Q140_BILL_ITEMS_OTHER_TXT
+Item=Q141_RECALL_PAYMENT
+Item=Q142_SALARY_YN
+Item=Q142_SALARY_AMT_PHP
+Item=Q142_LOAN_YN
+Item=Q142_LOAN_AMT_PHP
+Item=Q142_SAVINGS_YN
+Item=Q142_SAVINGS_AMT_PHP
+Item=Q142_PRIV_DONATION_YN
+Item=Q142_PRIV_DONATION_AMT_PHP
+Item=Q142_MALASAKIT_YN
+Item=Q142_MALASAKIT_AMT_PHP
+Item=Q142_GOV_DONATION_YN
+Item=Q142_GOV_DONATION_TXT
+Item=Q142_GOV_DONATION_AMT_PHP
+Item=Q142_SALE_ASSETS_YN
+Item=Q142_SALE_ASSETS_AMT_PHP
+Item=Q142_PAID_OTHER_YN
+Item=Q142_PAID_OTHER_AMT_PHP
+Item=Q142_MAIFIP_YN
+Item=Q142_MAIFIP_AMT_PHP
+Item=Q142_PHILHEALTH_NBB_YN
+Item=Q142_PHILHEALTH_NBB_AMT_PHP
+Item=Q142_SSS_YN
+Item=Q142_SSS_AMT_PHP
+Item=Q142_GSIS_YN
+Item=Q142_GSIS_AMT_PHP
+Item=Q142_PRIVATE_INS_YN
+Item=Q142_PRIVATE_INS_AMT_PHP
+Item=Q142_HMO_YN
+Item=Q142_HMO_AMT_PHP
+Item=Q142_QFS_YN
+Item=Q142_QFS_AMT_PHP
+Item=Q142_OTHER_YN
+Item=Q142_OTHER_TXT
+Item=Q142_OTHER_AMT_PHP
+Item=Q143_NO_RECEIPT_AMT_PHP
   
 [EndForm]
   
@@ -4715,101 +4746,474 @@ Text=138. Most expensive charge — Other (specify) text
  
   
 [Field]
-Name=Q139_FINAL_AMOUNT_PHP
+Name=Q139_TOTAL_BILL_PHP
 Position=350,357,760,377
-Item=Q139_FINAL_AMOUNT_PHP,HOUSEHOLDSURVEY_DICT
+Item=Q139_TOTAL_BILL_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=39
   
 [Text]
 Position=50,360,330,376
-Text=139. From your most recent visit, what was the final amount you paid in cash at the hospital cashier upon discharge? (PHP)
+Text=139. From your most recent visit, what was the total amount of your hospital bill? (PHP)
  
   
 [Field]
-Name=Q140_RECALL_BREAKDOWN
+Name=Q140_BILL_ITEMS
 Position=350,387,365,407
-Item=Q140_RECALL_BREAKDOWN,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Item=Q140_BILL_ITEMS,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=39
   
 [Text]
 Position=50,390,330,406
-Text=140. From your most recent visit, do you recall the breakdown of the bill?
+Text=140. From your most recent visit, which of the following were included in the bill?
  
   
 [Field]
-Name=Q141_BILL_ITEMS
-Position=350,417,365,437
-Item=Q141_BILL_ITEMS,HOUSEHOLDSURVEY_DICT
-DataCaptureType=CheckBox
+Name=Q140_BILL_ITEMS_OTHER_TXT
+Position=350,417,760,437
+Item=Q140_BILL_ITEMS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
 Form=39
   
 [Text]
 Position=50,420,330,436
-Text=141. From your most recent visit, which of the following were included in the bill?
+Text=140. From your most recent visit, which of the following were included in the bill? — Other (specify) text
  
   
 [Field]
-Name=Q141_BILL_ITEMS_OTHER_TXT
-Position=350,447,760,467
-Item=Q141_BILL_ITEMS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=39
-  
-[Text]
-Position=50,450,330,466
-Text=141. Bill items — Other expenses (Specify) text
- 
-  
-[Field]
-Name=Q141_1_NO_RECEIPT_AMT_PHP
-Position=350,477,760,497
-Item=Q141_1_NO_RECEIPT_AMT_PHP,HOUSEHOLDSURVEY_DICT
-DataCaptureType=TextBox
-Form=39
-  
-[Text]
-Position=50,480,330,496
-Text=141.1. From your recent visit, how much was charged for services with no receipts provided (i.e. Professional fees)? (PHP)
- 
-  
-[Field]
-Name=Q142_RECALL_PAYMENT
-Position=350,507,365,527
-Item=Q142_RECALL_PAYMENT,HOUSEHOLDSURVEY_DICT
+Name=Q141_RECALL_PAYMENT
+Position=350,447,365,467
+Item=Q141_RECALL_PAYMENT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=39
   
 [Text]
-Position=50,510,330,526
-Text=142. From your most recent visit, do you recall how you paid for your bill?
+Position=50,450,330,466
+Text=141. Do you recall how you paid for your bill?
  
   
 [Field]
-Name=Q143_HOW_PAID
+Name=Q142_SALARY_YN
+Position=350,477,365,497
+Item=Q142_SALARY_YN,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=39
+  
+[Text]
+Position=50,480,330,496
+Text=142.1) Salary/income — paid from this source?
+ 
+  
+[Field]
+Name=Q142_SALARY_AMT_PHP
+Position=350,507,760,527
+Item=Q142_SALARY_AMT_PHP,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,510,330,526
+Text=142.1) Salary/income — Amount in Pesos (PHP)
+ 
+  
+[Field]
+Name=Q142_LOAN_YN
 Position=350,537,365,557
-Item=Q143_HOW_PAID,HOUSEHOLDSURVEY_DICT
-DataCaptureType=CheckBox
+Item=Q142_LOAN_YN,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
 Form=39
   
 [Text]
 Position=50,540,330,556
-Text=143. From your most recent visit, how did you pay?
+Text=142.2) Loan/Mortgage — paid from this source?
  
   
 [Field]
-Name=Q143_HOW_PAID_OTHER_TXT
+Name=Q142_LOAN_AMT_PHP
 Position=350,567,760,587
-Item=Q143_HOW_PAID_OTHER_TXT,HOUSEHOLDSURVEY_DICT
-UseUnicodeTextBox=Yes
+Item=Q142_LOAN_AMT_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=39
   
 [Text]
 Position=50,570,330,586
-Text=143. From your most recent visit, how did you pay? — Other (specify) text
+Text=142.2) Loan/Mortgage — Amount in Pesos (PHP)
+ 
+  
+[Field]
+Name=Q142_SAVINGS_YN
+Position=350,597,365,617
+Item=Q142_SAVINGS_YN,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=39
+  
+[Text]
+Position=50,600,330,616
+Text=142.3) Savings — paid from this source?
+ 
+  
+[Field]
+Name=Q142_SAVINGS_AMT_PHP
+Position=350,627,760,647
+Item=Q142_SAVINGS_AMT_PHP,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,630,330,646
+Text=142.3) Savings — Amount in Pesos (PHP)
+ 
+  
+[Field]
+Name=Q142_PRIV_DONATION_YN
+Position=350,657,365,677
+Item=Q142_PRIV_DONATION_YN,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=39
+  
+[Text]
+Position=50,660,330,676
+Text=142.4) Donation/Charity/Assistance from Private Organization — paid from this source?
+ 
+  
+[Field]
+Name=Q142_PRIV_DONATION_AMT_PHP
+Position=350,687,760,707
+Item=Q142_PRIV_DONATION_AMT_PHP,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,690,330,706
+Text=142.4) Donation/Charity/Assistance from Private Organization — Amount in Pesos (PHP)
+ 
+  
+[Field]
+Name=Q142_MALASAKIT_YN
+Position=350,717,365,737
+Item=Q142_MALASAKIT_YN,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=39
+  
+[Text]
+Position=50,720,330,736
+Text=142.5) Malasakit Center — paid from this source?
+ 
+  
+[Field]
+Name=Q142_MALASAKIT_AMT_PHP
+Position=350,747,760,767
+Item=Q142_MALASAKIT_AMT_PHP,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,750,330,766
+Text=142.5) Malasakit Center — Amount in Pesos (PHP)
+ 
+  
+[Field]
+Name=Q142_GOV_DONATION_YN
+Position=350,777,365,797
+Item=Q142_GOV_DONATION_YN,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=39
+  
+[Text]
+Position=50,780,330,796
+Text=142.6) Other Donation/Charity/Assistance from Government Organization — paid from this source?
+ 
+  
+[Field]
+Name=Q142_GOV_DONATION_TXT
+Position=350,807,760,827
+Item=Q142_GOV_DONATION_TXT,HOUSEHOLDSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,810,330,826
+Text=142.6) Other Donation/Charity/Assistance from Government Organization — specify text
+ 
+  
+[Field]
+Name=Q142_GOV_DONATION_AMT_PHP
+Position=350,837,760,857
+Item=Q142_GOV_DONATION_AMT_PHP,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,840,330,856
+Text=142.6) Other Donation/Charity/Assistance from Government Organization — Amount in Pesos (PHP)
+ 
+  
+[Field]
+Name=Q142_SALE_ASSETS_YN
+Position=350,867,365,887
+Item=Q142_SALE_ASSETS_YN,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=39
+  
+[Text]
+Position=50,870,330,886
+Text=142.7) Sale of Assets — paid from this source?
+ 
+  
+[Field]
+Name=Q142_SALE_ASSETS_AMT_PHP
+Position=350,897,760,917
+Item=Q142_SALE_ASSETS_AMT_PHP,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,900,330,916
+Text=142.7) Sale of Assets — Amount in Pesos (PHP)
+ 
+  
+[Field]
+Name=Q142_PAID_OTHER_YN
+Position=350,927,365,947
+Item=Q142_PAID_OTHER_YN,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=39
+  
+[Text]
+Position=50,930,330,946
+Text=142.8) Paid by someone else — paid from this source?
+ 
+  
+[Field]
+Name=Q142_PAID_OTHER_AMT_PHP
+Position=350,957,760,977
+Item=Q142_PAID_OTHER_AMT_PHP,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,960,330,976
+Text=142.8) Paid by someone else — Amount in Pesos (PHP)
+ 
+  
+[Field]
+Name=Q142_MAIFIP_YN
+Position=350,987,365,1007
+Item=Q142_MAIFIP_YN,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=39
+  
+[Text]
+Position=50,990,330,1006
+Text=142.9) MAIFIP — paid from this source?
+ 
+  
+[Field]
+Name=Q142_MAIFIP_AMT_PHP
+Position=350,1017,760,1037
+Item=Q142_MAIFIP_AMT_PHP,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,1020,330,1036
+Text=142.9) MAIFIP — Amount in Pesos (PHP)
+ 
+  
+[Field]
+Name=Q142_PHILHEALTH_NBB_YN
+Position=350,1047,365,1067
+Item=Q142_PHILHEALTH_NBB_YN,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=39
+  
+[Text]
+Position=50,1050,330,1066
+Text=142.10) PhilHealth/NBB — paid from this source?
+ 
+  
+[Field]
+Name=Q142_PHILHEALTH_NBB_AMT_PHP
+Position=350,1077,760,1097
+Item=Q142_PHILHEALTH_NBB_AMT_PHP,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,1080,330,1096
+Text=142.10) PhilHealth/NBB — Amount in Pesos (PHP)
+ 
+  
+[Field]
+Name=Q142_SSS_YN
+Position=350,1107,365,1127
+Item=Q142_SSS_YN,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=39
+  
+[Text]
+Position=50,1110,330,1126
+Text=142.11) SSS — paid from this source?
+ 
+  
+[Field]
+Name=Q142_SSS_AMT_PHP
+Position=350,1137,760,1157
+Item=Q142_SSS_AMT_PHP,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,1140,330,1156
+Text=142.11) SSS — Amount in Pesos (PHP)
+ 
+  
+[Field]
+Name=Q142_GSIS_YN
+Position=350,1167,365,1187
+Item=Q142_GSIS_YN,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=39
+  
+[Text]
+Position=50,1170,330,1186
+Text=142.12) GSIS — paid from this source?
+ 
+  
+[Field]
+Name=Q142_GSIS_AMT_PHP
+Position=350,1197,760,1217
+Item=Q142_GSIS_AMT_PHP,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,1200,330,1216
+Text=142.12) GSIS — Amount in Pesos (PHP)
+ 
+  
+[Field]
+Name=Q142_PRIVATE_INS_YN
+Position=350,1227,365,1247
+Item=Q142_PRIVATE_INS_YN,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=39
+  
+[Text]
+Position=50,1230,330,1246
+Text=142.13) Private Insurance — paid from this source?
+ 
+  
+[Field]
+Name=Q142_PRIVATE_INS_AMT_PHP
+Position=350,1257,760,1277
+Item=Q142_PRIVATE_INS_AMT_PHP,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,1260,330,1276
+Text=142.13) Private Insurance — Amount in Pesos (PHP)
+ 
+  
+[Field]
+Name=Q142_HMO_YN
+Position=350,1287,365,1307
+Item=Q142_HMO_YN,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=39
+  
+[Text]
+Position=50,1290,330,1306
+Text=142.14) HMO — paid from this source?
+ 
+  
+[Field]
+Name=Q142_HMO_AMT_PHP
+Position=350,1317,760,1337
+Item=Q142_HMO_AMT_PHP,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,1320,330,1336
+Text=142.14) HMO — Amount in Pesos (PHP)
+ 
+  
+[Field]
+Name=Q142_QFS_YN
+Position=350,1347,365,1367
+Item=Q142_QFS_YN,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=39
+  
+[Text]
+Position=50,1350,330,1366
+Text=142.15) Quantified Free Service — paid from this source?
+ 
+  
+[Field]
+Name=Q142_QFS_AMT_PHP
+Position=350,1377,760,1397
+Item=Q142_QFS_AMT_PHP,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,1380,330,1396
+Text=142.15) Quantified Free Service — Amount in Pesos (PHP)
+ 
+  
+[Field]
+Name=Q142_OTHER_YN
+Position=350,1407,365,1427
+Item=Q142_OTHER_YN,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=39
+  
+[Text]
+Position=50,1410,330,1426
+Text=142.16) Other (specify) — paid from this source?
+ 
+  
+[Field]
+Name=Q142_OTHER_TXT
+Position=350,1437,760,1457
+Item=Q142_OTHER_TXT,HOUSEHOLDSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,1440,330,1456
+Text=142.16) Other (specify) — specify text
+ 
+  
+[Field]
+Name=Q142_OTHER_AMT_PHP
+Position=350,1467,760,1487
+Item=Q142_OTHER_AMT_PHP,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,1470,330,1486
+Text=142.16) Other (specify) — Amount in Pesos (PHP)
+ 
+  
+[Field]
+Name=Q143_NO_RECEIPT_AMT_PHP
+Position=350,1497,760,1517
+Item=Q143_NO_RECEIPT_AMT_PHP,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=39
+  
+[Text]
+Position=50,1500,330,1516
+Text=143. From your recent visit, how much was charged for services with no receipts provided (i.e. Professional fees)? (PHP)
  
   
 [Block]
@@ -4891,51 +5295,275 @@ Length=1
   
 [Block]
 Name=DG_BLK_140
-Label=Q139-Q140
+Label=Q139
 DisplayTogether=Yes
 Position=22
-Length=2
+Length=1
   
 [Block]
 Name=DG_BLK_141
-Label=Q141
+Label=Q140
 DisplayTogether=Yes
-Position=25
+Position=24
 Length=1
   
 [Block]
 Name=DG_BLK_142
-Label=Q141
+Label=Q140
 DisplayTogether=Yes
-Position=27
+Position=26
 Length=1
   
 [Block]
 Name=DG_BLK_143
 Label=Q141
 DisplayTogether=Yes
-Position=29
+Position=28
 Length=1
   
 [Block]
 Name=DG_BLK_144
 Label=Q142
 DisplayTogether=Yes
-Position=31
+Position=30
 Length=1
   
 [Block]
 Name=DG_BLK_145
-Label=Q143
+Label=Q142
 DisplayTogether=Yes
-Position=33
+Position=32
 Length=1
   
 [Block]
 Name=DG_BLK_146
+Label=Q142
+DisplayTogether=Yes
+Position=34
+Length=1
+  
+[Block]
+Name=DG_BLK_147
+Label=Q142
+DisplayTogether=Yes
+Position=36
+Length=1
+  
+[Block]
+Name=DG_BLK_148
+Label=Q142
+DisplayTogether=Yes
+Position=38
+Length=1
+  
+[Block]
+Name=DG_BLK_149
+Label=Q142
+DisplayTogether=Yes
+Position=40
+Length=1
+  
+[Block]
+Name=DG_BLK_150
+Label=Q142
+DisplayTogether=Yes
+Position=42
+Length=1
+  
+[Block]
+Name=DG_BLK_151
+Label=Q142
+DisplayTogether=Yes
+Position=44
+Length=1
+  
+[Block]
+Name=DG_BLK_152
+Label=Q142
+DisplayTogether=Yes
+Position=46
+Length=1
+  
+[Block]
+Name=DG_BLK_153
+Label=Q142
+DisplayTogether=Yes
+Position=48
+Length=1
+  
+[Block]
+Name=DG_BLK_154
+Label=Q142
+DisplayTogether=Yes
+Position=50
+Length=1
+  
+[Block]
+Name=DG_BLK_155
+Label=Q142
+DisplayTogether=Yes
+Position=52
+Length=1
+  
+[Block]
+Name=DG_BLK_156
+Label=Q142
+DisplayTogether=Yes
+Position=54
+Length=1
+  
+[Block]
+Name=DG_BLK_157
+Label=Q142
+DisplayTogether=Yes
+Position=56
+Length=1
+  
+[Block]
+Name=DG_BLK_158
+Label=Q142
+DisplayTogether=Yes
+Position=58
+Length=1
+  
+[Block]
+Name=DG_BLK_159
+Label=Q142
+DisplayTogether=Yes
+Position=60
+Length=1
+  
+[Block]
+Name=DG_BLK_160
+Label=Q142
+DisplayTogether=Yes
+Position=62
+Length=1
+  
+[Block]
+Name=DG_BLK_161
+Label=Q142
+DisplayTogether=Yes
+Position=64
+Length=1
+  
+[Block]
+Name=DG_BLK_162
+Label=Q142
+DisplayTogether=Yes
+Position=66
+Length=1
+  
+[Block]
+Name=DG_BLK_163
+Label=Q142
+DisplayTogether=Yes
+Position=68
+Length=1
+  
+[Block]
+Name=DG_BLK_164
+Label=Q142
+DisplayTogether=Yes
+Position=70
+Length=1
+  
+[Block]
+Name=DG_BLK_165
+Label=Q142
+DisplayTogether=Yes
+Position=72
+Length=1
+  
+[Block]
+Name=DG_BLK_166
+Label=Q142
+DisplayTogether=Yes
+Position=74
+Length=1
+  
+[Block]
+Name=DG_BLK_167
+Label=Q142
+DisplayTogether=Yes
+Position=76
+Length=1
+  
+[Block]
+Name=DG_BLK_168
+Label=Q142
+DisplayTogether=Yes
+Position=78
+Length=1
+  
+[Block]
+Name=DG_BLK_169
+Label=Q142
+DisplayTogether=Yes
+Position=80
+Length=1
+  
+[Block]
+Name=DG_BLK_170
+Label=Q142
+DisplayTogether=Yes
+Position=82
+Length=1
+  
+[Block]
+Name=DG_BLK_171
+Label=Q142
+DisplayTogether=Yes
+Position=84
+Length=1
+  
+[Block]
+Name=DG_BLK_172
+Label=Q142
+DisplayTogether=Yes
+Position=86
+Length=1
+  
+[Block]
+Name=DG_BLK_173
+Label=Q142
+DisplayTogether=Yes
+Position=88
+Length=1
+  
+[Block]
+Name=DG_BLK_174
+Label=Q142
+DisplayTogether=Yes
+Position=90
+Length=1
+  
+[Block]
+Name=DG_BLK_175
+Label=Q142
+DisplayTogether=Yes
+Position=92
+Length=1
+  
+[Block]
+Name=DG_BLK_176
+Label=Q142
+DisplayTogether=Yes
+Position=94
+Length=1
+  
+[Block]
+Name=DG_BLK_177
+Label=Q142
+DisplayTogether=Yes
+Position=96
+Length=1
+  
+[Block]
+Name=DG_BLK_178
 Label=Q143
 DisplayTogether=Yes
-Position=35
+Position=98
 Length=1
   
 [EndGroup]
@@ -4983,7 +5611,7 @@ Form=40
   
 [Text]
 Position=50,90,330,106
-Text=Food item - During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)
+Text=Food item — spent to purchase, last week (PHP)
  
   
 [Field]
@@ -5064,7 +5692,7 @@ Form=42
   
 [Text]
 Position=50,90,330,106
-Text=Expenditure item - During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)
+Text=Expenditure item — spent to purchase, last week (PHP)
  
   
 [Field]
@@ -5124,7 +5752,7 @@ Form=43
   
 [Text]
 Position=50,90,330,106
-Text=Non-food item - During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)
+Text=Non-food item — spent to purchase, last month (PHP)
  
   
 [Field]
@@ -5184,7 +5812,7 @@ Form=44
   
 [Text]
 Position=50,90,330,106
-Text=Non-food item - During the last 6 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)
+Text=Non-food item — spent to purchase, last 6 months (PHP)
  
   
 [Field]
@@ -5244,7 +5872,7 @@ Form=45
   
 [Text]
 Position=50,90,330,106
-Text=Non-food item - During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)
+Text=Non-food item — spent to purchase, last 12 months (PHP)
  
   
 [Field]
@@ -5304,7 +5932,7 @@ Form=46
   
 [Text]
 Position=50,90,330,106
-Text=Health product or service - During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)
+Text=Health product/service — spent to purchase, last 12 months (PHP)
  
   
 [Field]
@@ -5385,7 +6013,7 @@ Form=48
   
 [Text]
 Position=50,90,330,106
-Text=Health product or service - During the last 6 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)
+Text=Health product/service — spent to purchase, last 6 months (PHP)
  
   
 [Field]
@@ -5466,7 +6094,7 @@ Form=50
   
 [Text]
 Position=50,90,330,106
-Text=Health product or service - During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer - do not read these codes aloud)
+Text=Health product/service — spent to purchase, last month (PHP)
  
   
 [Field]
@@ -5670,42 +6298,42 @@ Text=196. If your household chooses not to spend on health care for financial re
  
   
 [Block]
-Name=DG_BLK_147
+Name=DG_BLK_179
 Label=Q186-Q190
 DisplayTogether=Yes
 Position=0
 Length=5
   
 [Block]
-Name=DG_BLK_148
+Name=DG_BLK_180
 Label=Q191-Q194
 DisplayTogether=Yes
 Position=6
 Length=4
   
 [Block]
-Name=DG_BLK_149
+Name=DG_BLK_181
 Label=Q194
 DisplayTogether=Yes
 Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_150
+Name=DG_BLK_182
 Label=Q195
 DisplayTogether=Yes
 Position=13
 Length=1
   
 [Block]
-Name=DG_BLK_151
+Name=DG_BLK_183
 Label=Q196
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_BLK_152
+Name=DG_BLK_184
 Label=Q196
 DisplayTogether=Yes
 Position=17
@@ -5770,14 +6398,14 @@ Text=199. Other (Specify) — text
  
   
 [Block]
-Name=DG_BLK_153
+Name=DG_BLK_185
 Label=Q197-Q199
 DisplayTogether=Yes
 Position=0
 Length=3
   
 [Block]
-Name=DG_BLK_154
+Name=DG_BLK_186
 Label=Q199
 DisplayTogether=Yes
 Position=4
@@ -5842,28 +6470,28 @@ Text=202. Do any of the following reasons describe why you are worried about you
  
   
 [Block]
-Name=DG_BLK_155
+Name=DG_BLK_187
 Label=Q200
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_156
+Name=DG_BLK_188
 Label=Q201
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_157
+Name=DG_BLK_189
 Label=Q202
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_158
+Name=DG_BLK_190
 Label=Q202
 DisplayTogether=Yes
 Position=6

@@ -120,7 +120,7 @@ CHECKBOX = {"Q148_CONDITIONS",
             "Q88_DIFF_PAYING", "Q102_VISIT_REASON", "Q103_CARE_TYPE", "Q106_FORGONE_WHY",
             "Q84_WHERE_ASSIST",   # #814
             "Q107_OTHER_ACTIONS", "Q109_TYPE",
-            "Q141_BILL_ITEMS", "Q143_HOW_PAID",   # #615/#616 Section M bill
+            "Q140_BILL_ITEMS",   # 1176-aug17: renumbered from Q141 (#615 lineage); Q143 is no longer a checkbox
             "Q196_FOREGONE", "Q202_WORRY_REASONS"}   # #638/#668 Section O/Q tick-all (keep CheckBox, don't demote)
 DROPDOWN_MIN = 7   # >= this many coded options -> dropdown instead of radio
 

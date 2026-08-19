@@ -77,12 +77,17 @@ postproc
 { ---- Section G: branded/generic multi-branch (spec 2 Q76) ---- }
 PROC Q76_BRAND_OR_GEN
 postproc
-  { Q76 codes: 1 Branded / 2 Generic / 3 Both / 9 Not applicable.
-    (#646: 'Don't know the difference' code 4 removed — it contradicted Q75=Yes.
-    Its exit path is now carried solely by code 9.)
+  { Q76 codes: 1 Branded / 2 Generic / 3 Both / 4 Don't know the difference / 5 Not
+    applicable. (1176-aug17: #646 had removed 'Don't know the difference' as
+    contradicting Q75=Yes; the Aug-17 paper reprints it as its own option with its
+    own '<Proceed to Q79>' skip target, distinct from 'Not applicable' -- ASPSI's
+    resolution of the #646 blocked item. Both 4 and 5 now exit Section G, matching
+    the paper's two explicit skip notes. 'Not applicable' recoded 9 -> 5 (3.0.0
+    data-shape break, see generate_dcf.py Q76_BRAND_OR_GEN comment).
     Q77 (why-generic) asked for Generic+Both; Q78 (why-branded) for Branded+Both. (#536/#540) }
   if Q76_BRAND_OR_GEN = 1 then  skip to Q78_WHY_BRANDED; endif;  { Branded only -> why-branded (skip Q77) }
-  if Q76_BRAND_OR_GEN = 9 then  skip to Q79_REG_SOURCE;  endif;  { Not applicable (9) -> exit Section G }
+  if Q76_BRAND_OR_GEN = 4 then  skip to Q79_REG_SOURCE;  endif;  { Don't know the difference (4) -> exit Section G }
+  if Q76_BRAND_OR_GEN = 5 then  skip to Q79_REG_SOURCE;  endif;  { Not applicable (5) -> exit Section G }
   { Generic (2) or Both (3) fall through to Q77 why-generic }
 
 { Q78_WHY_BRANDED is now a Check Box base (#578) — its branded-only preproc gate

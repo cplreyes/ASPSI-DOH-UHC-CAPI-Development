@@ -40,9 +40,6 @@ Language = EN
 1046 "'Other (specify)' was ticked for Q134 - please specify."
 1047 Select at least one option for Q137 before continuing.
 1049 "'Other (specify)' was ticked for Q137 - please specify."
-1050 Select at least one option for Q141 before continuing.
-1051 Select at least one option for Q143 before continuing.
-1052 "'Other (specify)' was ticked for Q143 - please specify."
 1053 Select at least one option for Q196 before continuing.
 1054 "'Other (specify)' was ticked for Q196 - please specify."
 1055 Select at least one option for Q202 before continuing.
@@ -102,7 +99,6 @@ Language = EN
 1125 Children + seniors (%d) exceed household size (%d).
 1126 Member age must be 0-120.
 1127 Member is under 15 but civil status is not Single. Confirm.
-1128 Q18: an income amount was provided (%d PHP), so the bracket cannot be 'Refuse to answer'. Select the bracket that matches the amount (or re-enter the amount as -99 if the respondent refused).
 1129 Income bracket does not match the reported amount (%d PHP). Reconcile.
 1131 "'Other' was selected for Q101_CHECKUP_FREQ but no text was entered. Please specify."
 1132 "'Other' was selected for Q10_DISABILITY_TYPE but no text was entered. Please specify."
@@ -158,8 +154,12 @@ Language = EN
 1183 Q85: an exclusive option (None / I don't know) cannot be combined with other answers - untick the others or untick it.
 1184 Q88: an exclusive option (None / I don't know) cannot be combined with other answers - untick the others or untick it.
 1185 Q93: an exclusive option (None / I don't know) cannot be combined with other answers - untick the others or untick it.
-1186 "'Other (specify)' was ticked for Q141 - please specify."
 1187 Q196: 'We do not forego care' cannot be combined with other answers - untick the others or untick this option.
 1188 Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.
 1189 No GPS fix after %d s. Move outdoors or beside a window, then re-enter this field to retry — each retry searches longer. You may also leave GPS blank and finish the case.
 1190 "'Other' was selected for Q40_EDUCATION but no text was entered. Please specify."
+1191 Q18: an income amount was provided (%d PHP), so the bracket cannot be don't-know/refuse. Select the bracket that matches the amount (or re-enter the amount as -98/-99).
+1192 Q142: 'GOV_DONATION' was ticked 'Yes, specify:' -- please specify.
+1193 Q142: 'OTHER' was ticked 'Yes, specify:' -- please specify.
+1194 Select at least one option for Q140 before continuing.
+1195 "'Other (specify)' was ticked for Q140 - please specify."
