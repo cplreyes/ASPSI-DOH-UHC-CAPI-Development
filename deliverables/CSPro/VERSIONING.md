@@ -96,6 +96,7 @@ step, so the surfaces cannot drift. `show` must report no drift before any deplo
 
 | Date | F1 | F3 | F4 | HUB | Notes |
 |---|---|---|---|---|---|
+| 2026-08-19 | -- | v4.0.0 | -- | -- | F3 MAJOR: Q18 income-bracket recode (11-band 50k -> Aug-17's 7-band PSA classes, DK/RF 99/98->8/9, reverses R4/#631), Q10 civil-status paper-code permutation fix, and the missing Q26 dug-well item inserted (renumbers Q26/27/28) -- all declared data-shape breaks; plus the Q1_IS_PATIENT->PATIENT_TYPE skip-retarget defect-fix (Section G/H outpatient/inpatient routing was silently broken for the Q1=Yes path on every build from v3.1.8/2026-08-15 through v3.1.14). Deployed to CSWeb (auto_deploy.py, "successfully" popup confirmed). |
 | 2026-07-03 | v1.0.2 | v1.0.2 | v1.0.3 | v1.0.0 | Pretest sweep deploys via the `.csds` route: F1/F3 ship the 2026-07-02 #450-class pos() chunk-scan wave (v1.0.2); F4 v1.0.3 adds #824 Q56 no-benefits hard-exclusive + #827 Q90 skip flip (Yes→Q94; No→Q91–Q92→Q94 — reverses #652, matches skip-logic doc §I). Patch notes in all three UAT channels. |
 | 2026-07-02 | v1.0.1 | v1.0.1 | v1.0.1 | v1.0.0 | HUB versioning added (app list + menu footer), deployed via the new `supervisor-hub/LoginApp.csds`, device-verified (login → menu) + announced to #supervisor-uat. |
 | 2026-07-02 | v1.0.1 | v1.0.1 | v1.0.1 | — | Build footer moved to the QN (first) screen — dict-first placement had landed on F3's case-end cover block. Device-verified + announced. |
