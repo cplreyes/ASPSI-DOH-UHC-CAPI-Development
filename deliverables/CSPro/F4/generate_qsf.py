@@ -199,7 +199,10 @@ INSTRUCTIONS = {
          "example, yearly immunizations, manages hospital finances, etc. "
          + _READ_ONE),
     **dict.fromkeys([7, 11, 80, 81, 112], _DNR_ONE),
-    **dict.fromkeys([82, 88, 102, 103, 109, 143], _READ_ALL),
+    # 1176-aug17: 143 removed -- Q143 is now a plain no-receipt Amount
+    # field (renumbered from the old Q141_1_NO_RECEIPT_AMT_PHP sub-item),
+    # not a checkbox; it never needed a read-aloud/select-all note.
+    **dict.fromkeys([82, 88, 102, 103, 109], _READ_ALL),
     **dict.fromkeys([52, 53, 55, 56, 58, 59, 85, 91, 93, 94, 113, 121, 127,
                      128, 133, 134, 137], _DNR_ALL),
     **dict.fromkeys([10, 38], _PWD_CARD),
@@ -288,7 +291,10 @@ INSTRUCTIONS = {
     132: ("Note to enumerator [do not read]: This section is for Zero "
           "Balance Billing Awareness and Utilization. Ask all questions in "
           "this section unless a skip rule applies."),
-    141: ("IF RESPONDENT PROVIDES A RECEIPT, SELECT ALL THAT APPLY. IF NO "
+    # 1176-aug17: moved from key 141 -- the bill-items checklist this note
+    # describes is now Q140 (paper's own Aug-17 renumber); Q141 is a plain
+    # yes/no payment-recall gate with no comparable note.
+    140: ("IF RESPONDENT PROVIDES A RECEIPT, SELECT ALL THAT APPLY. IF NO "
           "RECEIPT WAS PROVIDED, READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY."),
     # Reference-period scripts attach to the FIRST item of each group (was wrongly on the
     # LAST item of the PREVIOUS group — #678/#680/#681/#682/#683). Paper (Annex F4 Apr-20,

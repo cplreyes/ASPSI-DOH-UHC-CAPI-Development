@@ -178,6 +178,25 @@ SCREENS = {
             "the study.",
 
             "Do you have any questions about the study or about what I have told you?",
+
+            # 1176-aug17 (Task 1.7, consent carry): F4's SCREENS carried ZERO ethics-contact
+            # content before this fix (verified: no Villarante/Claro/sjreb@doh.gov.ph anywhere
+            # in this tuple). F4-extract.md's own ethics-contact table (L62-79) is content-
+            # identical to F3's (same SJREB/DOH-Villarante/ASPSI-Claro rows) -- added verbatim,
+            # mirroring F3's SCREENS["F3"] fix (Task 1.1, 2026-08-18). generate_qsf.py's
+            # CONSENT_HTML is DEAD code (superseded 2026-06-12) -- NOT touched, per F3 precedent.
+            "If you have concerns or questions about your rights as a participant, you can "
+            "contact:",
+
+            "<b>Single Joint Research Ethics Board (SJREB) | Department of "
+            "Health</b><br/>Email: sjreb@doh.gov.ph<br/>Contact No.: (02) 8651-7800 "
+            "local 1326, 1328",
+
+            "<b>Department of Health</b><br/>Name: Lindsley Jeremiah D. Villarante<br/>"
+            "Email: ldvillarante@doh.gov.ph<br/>Tel: +63 (02) 8651-7800 local 1432",
+
+            "<b>Asian Social Project Services, Inc.</b><br/>Name: Paulyn Jean A. Claro<br/>"
+            "Email: inquiry.aspsi.doh.uhc.survey2@gmail.com<br/>Tel: +63 917 819 6884",
         ],
     ),
 }

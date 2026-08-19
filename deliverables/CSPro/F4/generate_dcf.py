@@ -275,14 +275,25 @@ def build_section_b():
         ("My aunt",                        "11"),
         ("Other (specify)",                "12"),
     ]
+    # 1176: aligned to the cleared PAPI questionnaire (F4_EN.txt Q18) - 11 brackets +
+    # DK/RF, replacing the 7 coarser CAPI-only brackets. The printed English's
+    # "150,000 - 199,000" is an arithmetic typo (every sibling ends _99,999 and the
+    # cleared Bicolano prints 199,999); corrected here, flagged on the ticket.
+    # RECODE BOUNDARY: deploys before 2026-08-18 carry the old 1-6(+7 refuse) scheme.
     Q18_BRACKET = [
-        ("Under 40,000",      "1"),
-        ("40,000 - 59,999",   "2"),
-        ("60,000 - 99,999",   "3"),
-        ("100,000 - 249,999", "4"),
-        ("250,000 - 499,999", "5"),
-        ("500,000 and over",  "6"),
-        ("Refuse to answer",  "7"),
+        ("Under 50,000",       "1"),
+        ("50,000 - 99,999",    "2"),
+        ("100,000 - 149,999",  "3"),
+        ("150,000 - 199,999",  "4"),
+        ("200,000 - 249,999",  "5"),
+        ("250,000 - 299,999",  "6"),
+        ("300,000 - 349,999",  "7"),
+        ("350,000 - 399,999",  "8"),
+        ("400,000 - 449,999",  "9"),
+        ("450,000 - 499,999",  "10"),
+        ("500,000 and above",  "11"),
+        ("I don't know",       "90"),
+        ("Refuse to answer",   "95"),
     ]
     Q23_WATER = [
         ("Faucet inside the house", "1"),
@@ -373,7 +384,7 @@ def build_section_b():
                 length=9),
         select_one("Q18_INCOME_BRACKET",
                    "18. Income bracket",
-                   Q18_BRACKET, length=1),
+                   Q18_BRACKET, length=2),
         numeric("Q19_HH_SIZE_TOTAL",
                 "19. How many total individuals (including children) live in your house now?",
                 length=3),
@@ -453,6 +464,14 @@ def build_section_c():
         ("Boarder",                     "10"),
         ("Domestic Helper",             "11"),
         ("Non-relative",                "12"),
+        # 1176-aug17: Aug-17 paper adds 'Grandfather/Grandmother' at ITS OWN code 13
+        # (F4-extract.md L539-540, {.mark}-highlighted as new). The build's code 13 is
+        # already live as 'Father-In-Law/Mother-In-Law' (#602, a CAPI-only supplemental
+        # not on the paper's original legend) — appended here at the next unused
+        # ascending code (15) per the standing #602 append-only convention (never
+        # renumber/collide with already-collected data). Recode paper-13 -> build-15
+        # documented in the rekey map + register.
+        ("Grandfather/Grandmother",     "15"),
     ]
     YN_01 = [
         ("No",  "0"),
@@ -948,10 +967,14 @@ def build_section_g():
         ("Branded",                        "1"),  # proceed to Q78
         ("Generic",                        "2"),
         ("Both branded and generic",       "3"),
-        # #646: 'Don't know the difference' (code 4) REMOVED — it contradicts Q75=Yes
-        # (Q76 is only asked when the respondent KNOWS the difference). Its old exit
-        # routing (code 4 -> Q79) is folded into code 9 below in PROC Q76_BRAND_OR_GEN.
-        ("Not applicable",                 "9"),  # proceed to Q79
+        # 1176-aug17: #646 removed 'Don't know the difference' as contradictory with
+        # Q75=Yes (Q76 only asked when the respondent knows the difference). The
+        # Aug-17 paper reprints both 'Don't know the difference' (4) and 'Not
+        # applicable' (5) as distinct options, each with its own '<Proceed to Q79>'
+        # skip target -- ASPSI's resolution of the #646 blocked item. Restored per
+        # paper; both codes still route to Q79 (see generate_apc.py SKIP_RULES).
+        ("Don't know the difference",      "4"),
+        ("Not applicable",                 "5"),  # proceed to Q79 (was "9" pre-aug17; recoded — 3.0.0 data-shape break)
     ]
     Q77_WHY_GENERIC = [
         ("Lower cost",                                 "1"),
@@ -960,8 +983,10 @@ def build_section_g():
         ("Given for free",                             "4"),
         ("More or as effective as branded medicine",   "5"),
         ("I don't know",                               "6"),
-        # #647: 'Not applicable' REMOVED — Q77 is only reached when the respondent
-        # bought generic (Q76 = Generic/Both), so a 'Not applicable' tick is contradictory.
+        # 1176-aug17: #647 removed 'Not applicable' as contradictory (Q77 only reached
+        # when the respondent bought generic). Aug-17 paper reprints it — ASPSI's
+        # resolution of the #647 blocked item. Restored per paper, before Other.
+        ("Not applicable",                             "7"),
         ("Other (Specify)",                            "8"),
     ]
     Q78_WHY_BRANDED = [
@@ -971,9 +996,11 @@ def build_section_g():
         ("Given for free",                                  "4"),
         ("Prefer branded over generic option",              "5"),
         ("I don't know",                                    "6"),
-        # #648: 'Not applicable' REMOVED — Q78 is only reached when the respondent
-        # bought branded (Q76 = Branded/Both), so a 'Not applicable' tick is contradictory.
+        # 1176-aug17: #648 removed 'Not applicable' as contradictory (Q78 only reached
+        # when the respondent bought branded). Aug-17 paper reprints it — ASPSI's
+        # resolution of the #648 blocked item. Restored per paper, before Other.
         # (The Q78 prompt's enumerator note is DOH-authored content — left unchanged; flagged.)
+        ("Not applicable",                                  "7"),
         ("Other (Specify)",                                 "8"),
     ]
     items = [
@@ -1589,27 +1616,58 @@ def build_section_m():
         # other_specify_procs (gate: Q138_MOST_EXPENSIVE = 9).
         ("Other (Specify)",   "9"),
     ]
-    Q141_BILL_ITEMS = [
-        ("Rooms <for inpatients only>",         "1"),
-        ("Doctor's Fee",                        "2"),
-        ("Diagnostic or laboratory procedure",  "3"),
-        ("Medical equipment or supplies",       "4"),
-        ("Medicines or drugs",                  "5"),
-        ("Non-medical expenses (e.g. hygiene kit)", "6"),
-        ("Other expenses",                      "7"),
+    # 1176-aug17 (Task 1.7 content pass, R21/task-1.7-1.8-brief): Q139-Q143
+    # rewritten from the Apr-20-era shape (Q139 final-cash-paid amount, Q140 yes/no
+    # breakdown-recall gate, Q141 bill-items checklist, Q141.1 no-receipt amount,
+    # Q142 yes/no payment-recall gate, Q143 10-item how-paid checklist) to the
+    # Aug-17 paper's restructured shape (Q139 total-bill amount, Q140 bill-items
+    # checklist w/ "Cannot recall", Q141 yes/no payment-recall gate [skip Q142 on
+    # No], Q142 16-source settlement matrix, Q143 no-receipt amount) -- a declared
+    # 3.0.0 data-shape break (renumbering within the module is sanctioned for this
+    # task only). Verified against normalized/F4-paper.csv + F4-extract.md
+    # L2093-2313 (Task 0.4 Q141-carry re-check).
+    Q140_BILL_ITEMS = [
+        ("Rooms <for inpatients only>",              "1"),
+        ("Doctor's Fee",                              "2"),
+        ("Diagnostic or laboratory procedure",        "3"),
+        ("Medical equipment or supplies",             "4"),
+        ("Medicines or drugs",                        "5"),
+        ("Non-medical expenses (e.g. hygiene kit)",   "6"),
+        # Paper now explicitly prints "(specify)" on this option (was bare "Other
+        # expenses" pre-aug17, hence the old CHECKBOX_OTHER_CODE="07" workaround) --
+        # _cb_codes's standard 'specif' detection now applies (-> 99), same as every
+        # other checkbox base in the instrument; the CHECKBOX_OTHER_CODE entry for
+        # this base is retired (generate_apc.py).
+        ("Other expenses (specify)",                  "7"),
+        ("Cannot recall",                             "8"),
     ]
-    Q143_HOW_PAID = [
-        ("Own income/ household income",              "01"),
-        ("PhilHealth",                                "02"),
-        ("Private insurance / HMO",                   "03"),
-        ("Loan",                                      "04"),
-        ("Sale of assets",                            "05"),
-        ("Donations from charities / NGOs",           "06"),
-        ("Donations from LGUs / LGU programs",        "07"),
-        ("National Government Agencies (DSWD, etc.)", "08"),
-        ("Paid by someone else",                      "09"),
-        ("Other (Specify)",                           "10"),
-    ]
+    # 142) 16-source hospital-bill settlement matrix (F4-extract.md L2124-2304). Each
+    # source is Yes/No(+specify for sources 6 & 16) tick + a gated Amount-in-Pesos
+    # field. Field names deliberately avoid a digit run immediately after the
+    # "Q142_" prefix (see _settlement_source's docstring below) so every source
+    # resolves to the bare build qnum "142", not a synthetic "142.NN" sub-qnum.
+
+    def _settlement_source(stem, label, has_specify, item_num):
+        """One Q142 settlement-matrix source: Yes/No(+specify) tickbox + gated PHP
+        amount. Non-"Q142_NN_" naming is deliberate -- build_tables.py's
+        derive_qnum regex (^Q(\\d+)([A-Za-z]?)(?:_(\\d+))?) would otherwise capture
+        a following "_NN" run as a synthetic "142.NN" sub-qnum per source (16 fake
+        sub-qnums instead of one bare "142"), fragmenting the countercheck register
+        into 16 rows instead of 1."""
+        yn_options = [("Yes, specify:", "1"), ("No", "2")] if has_specify else [("Yes", "1"), ("No", "2")]
+        items = [
+            select_one(f"Q142_{stem}_YN",
+                       f"142.{item_num}) {label} — paid from this source?",
+                       yn_options, length=1),
+        ]
+        if has_specify:
+            items.append(alpha(f"Q142_{stem}_TXT",
+                                f"142.{item_num}) {label} — specify text",
+                                length=120))
+        items.append(numeric(f"Q142_{stem}_AMT_PHP",
+                              f"142.{item_num}) {label} — Amount in Pesos (PHP)",
+                              length=8))
+        return items
     items = [
         yes_no_dk("Q132_ZBB_HEARD",
                   "132. Have you heard of the Zero Balance Billing (ZBB)?"),
@@ -1634,30 +1692,33 @@ def build_section_m():
                    Q138_MOST_EXPENSIVE, length=1),
         alpha("Q138_MOST_EXPENSIVE_OTHER_TXT",
               "138. Most expensive charge — Other (specify) text", length=120),
-        numeric("Q139_FINAL_AMOUNT_PHP",
-                "139. From your most recent visit, what was the final amount you paid in cash at the hospital cashier upon discharge? (PHP)",
+        numeric("Q139_TOTAL_BILL_PHP",
+                "139. From your most recent visit, what was the total amount of your hospital bill? (PHP)",
                 length=8),
-        yes_no("Q140_RECALL_BREAKDOWN",
-               "140. From your most recent visit, do you recall the breakdown of the bill?"),
-        # #615: select_all -> Check Box. 'Other expenses' (07) is NOT a 'specif' option
-        # (_cb_codes leaves it a normal code, not 99) and we don't rename it (verbatim
-        # English), so with_other_txt=False — the hand-declared Q141_BILL_ITEMS_OTHER_TXT
-        # below stays as the plain (ungated) free-text for it, exactly as before.
-        *checkbox_multiselect("Q141_BILL_ITEMS",
-                    "141. From your most recent visit, which of the following were included in the bill?",
-                    _cb_codes(Q141_BILL_ITEMS), with_other_txt=False),
-        alpha("Q141_BILL_ITEMS_OTHER_TXT",
-              "141. Bill items — Other expenses (Specify) text", length=120),
-        numeric("Q141_1_NO_RECEIPT_AMT_PHP",
-                "141.1. From your recent visit, how much was charged for services with no receipts provided (i.e. Professional fees)? (PHP)",
+        *checkbox_multiselect("Q140_BILL_ITEMS",
+                    "140. From your most recent visit, which of the following were included in the bill?",
+                    _cb_codes(Q140_BILL_ITEMS), with_other_txt=True),
+        yes_no("Q141_RECALL_PAYMENT",
+               "141. Do you recall how you paid for your bill?"),
+        *_settlement_source("SALARY",         "Salary/income", False, 1),
+        *_settlement_source("LOAN",           "Loan/Mortgage", False, 2),
+        *_settlement_source("SAVINGS",        "Savings", False, 3),
+        *_settlement_source("PRIV_DONATION",  "Donation/Charity/Assistance from Private Organization", False, 4),
+        *_settlement_source("MALASAKIT",      "Malasakit Center", False, 5),
+        *_settlement_source("GOV_DONATION",   "Other Donation/Charity/Assistance from Government Organization", True, 6),
+        *_settlement_source("SALE_ASSETS",    "Sale of Assets", False, 7),
+        *_settlement_source("PAID_OTHER",     "Paid by someone else", False, 8),
+        *_settlement_source("MAIFIP",         "MAIFIP", False, 9),
+        *_settlement_source("PHILHEALTH_NBB", "PhilHealth/NBB", False, 10),
+        *_settlement_source("SSS",            "SSS", False, 11),
+        *_settlement_source("GSIS",           "GSIS", False, 12),
+        *_settlement_source("PRIVATE_INS",    "Private Insurance", False, 13),
+        *_settlement_source("HMO",            "HMO", False, 14),
+        *_settlement_source("QFS",            "Quantified Free Service", False, 15),
+        *_settlement_source("OTHER",          "Other (specify)", True, 16),
+        numeric("Q143_NO_RECEIPT_AMT_PHP",
+                "143. From your recent visit, how much was charged for services with no receipts provided (i.e. Professional fees)? (PHP)",
                 length=8),
-        yes_no("Q142_RECALL_PAYMENT",
-               "142. From your most recent visit, do you recall how you paid for your bill?"),
-        # #616: select_all -> Check Box. 'Other (Specify)' (10 -> 99) gets a gated
-        # specify field via with_other_txt=True.
-        *checkbox_multiselect("Q143_HOW_PAID",
-                    "143. From your most recent visit, how did you pay?",
-                    _cb_codes(Q143_HOW_PAID), with_other_txt=True),
     ]
     return record("M_ZBB_MAIFIP_BILL",
                   "M. Zero Balance Billing (ZBB) Awareness + MAIFIP + Bill Breakdown",
@@ -2060,7 +2121,17 @@ DCF_SHORT_LABELS = {
     "N_NF12M_INKIND_PHP": "Non-food item — total value received in-kind or as gifts, last 12 months (PHP)",
     "N_H1M_INKIND_PHP":   "Health product/service — total value received in-kind or as gifts, last month (PHP)",
     "N_H6M_INKIND_PHP":   "Health product/service — total value received in-kind or as gifts, last 6 months (PHP)",
-    "N_H12M_INKIND_PHP":  "Health product/service — total value received in-kind or as gifts, last 12 months (PHP)",
+    "N_H12M_INKIND_PHP":  "Health product/service — total value received in-kind or as gifts, last 12 months (PHP)",    # 1182/1176 follow-on: once the roster prompts carry per-language translations, the
+    # translated LABELS would overrun the 255 cap too - give the purchased columns the
+    # same designed short captions so no language's dcf/fmf label is ever cut.
+    "N_FOOD_PURCHASED_PHP":  "Food item — spent to purchase, last week (PHP)",
+    "N_WKOTH_PURCHASED_PHP": "Expenditure item — spent to purchase, last week (PHP)",
+    "N_NF1M_PURCHASED_PHP":  "Non-food item — spent to purchase, last month (PHP)",
+    "N_NF6M_PURCHASED_PHP":  "Non-food item — spent to purchase, last 6 months (PHP)",
+    "N_NF12M_PURCHASED_PHP": "Non-food item — spent to purchase, last 12 months (PHP)",
+    "N_H1M_PURCHASED_PHP":   "Health product/service — spent to purchase, last month (PHP)",
+    "N_H6M_PURCHASED_PHP":   "Health product/service — spent to purchase, last 6 months (PHP)",
+    "N_H12M_PURCHASED_PHP":  "Health product/service — spent to purchase, last 12 months (PHP)",
 }
 
 
