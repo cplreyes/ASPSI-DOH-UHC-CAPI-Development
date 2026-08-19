@@ -1,6 +1,6 @@
 name: UAT Feedback
 description: Submit feedback from an ASPSI staff UAT session
-labels: ["uat-feedback"]
+labels: ["uat-feedback", "from-uat-round-7-2026-08"]
 body:
   - type: markdown
     attributes:

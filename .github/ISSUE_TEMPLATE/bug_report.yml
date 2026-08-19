@@ -1,6 +1,6 @@
 name: Bug Report
 description: Report a defect in the F2 PWA
-labels: ["bug"]
+labels: ["bug", "epic:f2-pwa", "from-uat-round-7-2026-08"]
 body:
   - type: markdown
     attributes:

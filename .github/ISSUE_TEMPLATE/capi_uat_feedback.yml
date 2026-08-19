@@ -1,7 +1,7 @@
 name: CAPI UAT Feedback (F1 / F3 / F4 / Hub)
-description: Report something you saw while testing the CSEntry CAPI surveys or the Supervisor & Enumerator Hub (Round 6)
-title: "[UAT R6][__] "
-labels: ["uat-feedback", "from-uat-round-6-2026-06"]
+description: Report something you saw while testing the CSEntry CAPI surveys or the Supervisor & Enumerator Hub (Round 7 — Aug-17 PAPI build)
+title: "[UAT R7][__] "
+labels: ["uat-feedback", "from-uat-round-7-2026-08"]
 body:
   - type: markdown
     attributes:
