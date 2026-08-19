@@ -3,16 +3,20 @@
 Written 2026-08-19 at Task 3.4 closure. Executes the one ordered move that ruling
 R14 deferred from 3.4. Grounded in review-verified facts, not assumptions:
 
-- **The live backend is the Apps Script project at `PWA/backend/src/Handlers.js`**
-  (clasp-managed). `apps-script/Spec.gs` is a never-deployed prototype (no
-  doPost/doGet) — its re-key was prepared+committed for reference only; deploying
-  it is NOT part of this cutover.
-- Handlers.js performs **no per-item id validation**: values land verbatim as one
-  `values_json` blob (Handlers.js:29). The ONLY stale-client gate is the
-  whole-submission `spec_version` comparison against `min_accepted_spec_version`
-  (Handlers.js:61-64). Until that floor is raised, an un-updated client's Apr-20
-  ids are accepted and silently commingled; after it is raised, that client gets
-  `E_SPEC_TOO_OLD` and must reload.
+- ⚠ CORRECTED 2026-08-19: **the live backend is f2-api** (Node/MySQL,
+  `PWA/server/`, `uhc-hcw.asiansocial.org/api`, live since the 2026-08-05
+  Model C migration, commit 43c2c40) — empirically confirmed via
+  `/api/health` → `{"service":"f2-api"}`. The Apps Script project
+  (`PWA/backend/`, Handlers.js) is a RETIRED kill-switch fallback with zero
+  traffic; `apps-script/Spec.gs` is a never-deployed prototype. Neither is
+  part of this cutover.
+- f2-api performs the same architecture this runbook assumed: no per-item id
+  validation (values stored as one values_json blob); the ONLY stale-client
+  gate is the whole-submission `spec_version` comparison against
+  `min_accepted_spec_version` (`server/src/handlers.ts:89-91`). Until that
+  floor is raised, an un-updated client's Apr-20 ids are accepted and
+  silently commingled; after it is raised, that client gets `E_SPEC_TOO_OLD`
+  and must reload.
 - PWA client stamps `LOCAL_SPEC_VERSION = '2026-08-19-m1'` (`src/lib/draft.ts`),
   with the RENAMED_VALUES draft-migration table carrying in-flight drafts across
   the re-key.
@@ -43,11 +47,19 @@ protection; the window should be minutes, not hours.
 4. **Verify live:** load the prod URL fresh (bypass SW cache), confirm the header
    build stamp/generation marker and one Section-B battery item render; submit a
    smoke response and confirm it lands with `spec_version = 2026-08-19-m1`.
-5. **Raise the floor (same sitting):** set `min_accepted_spec_version =
-   '2026-08-19-m1'` in the backend config and `clasp push` + deploy the Apps
-   Script project (established clasp lane). Verify: a stale client (or a curl
-   with the old spec_version) now receives `E_SPEC_TOO_OLD`; a fresh client
-   submits successfully.
+5. **Raise the floor (same sitting):** ⚠ CORRECTED 2026-08-19 during execution —
+   the live backend is **f2-api** (Node/MySQL, `PWA/server/`, serving
+   `uhc-hcw.asiansocial.org/api` since the 2026-08-05 Model C migration,
+   commit 43c2c40); the Apps Script project is a retired kill-switch fallback
+   and receives no traffic. The floor lives in MySQL: `f2_config` table,
+   `csweb_f2` DB (row DDL-seeded; `handlers.ts:89-91` reads it and rejects
+   lexicographically-older `spec_version` with `E_SPEC_TOO_OLD`). Raise it via
+   the box's docker-exec pattern:
+   `UPDATE f2_config SET v='2026-08-19-m1' WHERE k IN
+   ('min_accepted_spec_version','current_spec_version');`
+   (rollback: same statement with the prior value `2026-04-17-m1`). Verify: a
+   stale client (or a curl with the old spec_version) now receives
+   `E_SPEC_TOO_OLD`; a fresh client submits successfully.
 6. **Post-cutover:** refresh `locale-shots/` via the existing shot specs; commit
    (WT) `aug17: F2 v3 spec deployed`; Linear ANA-milestone checklist item for 3.5
    marked done; note the cutover timestamp here.
