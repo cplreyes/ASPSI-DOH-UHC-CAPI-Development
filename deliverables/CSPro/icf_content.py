@@ -70,6 +70,30 @@ SCREENS = {
             "in this study.",
 
             "Do you have any questions about the study or about what I have told you?",
+
+            # 1176-aug17 (Task 2.2, consent carry): F1's SCREENS carried ZERO
+            # ethics-contact content before this fix (verified: no Villarante/Claro/
+            # sjreb@doh.gov.ph anywhere in this tuple) — the last of the three
+            # instruments to get it. F1-extract.md's own ethics-contact table (L62-76)
+            # is content-identical to F3's and F4's (same SJREB / DOH-Villarante /
+            # ASPSI-Claro rows, same Year-2 `survey2` mailbox) — added verbatim,
+            # mirroring SCREENS["F3"] (Task 1.1) and SCREENS["F4"] (Task 1.7) so all
+            # three instruments render one identical block. generate_qsf.py's
+            # CONSENT_HTML is DEAD code (superseded 2026-06-12) — NOT touched, per the
+            # F3/F4 precedent. The paper's table heads the name cells "For:"; rendered
+            # here as "Name:" to match the two shipped instruments.
+            "If you have concerns or questions about your rights as a participant, you can "
+            "contact:",
+
+            "<b>Single Joint Research Ethics Board (SJREB) | Department of "
+            "Health</b><br/>Email: sjreb@doh.gov.ph<br/>Contact No.: (02) 8651-7800 "
+            "local 1326, 1328",
+
+            "<b>Department of Health</b><br/>Name: Lindsley Jeremiah D. Villarante<br/>"
+            "Email: ldvillarante@doh.gov.ph<br/>Tel: +63 (02) 8651-7800 local 1432",
+
+            "<b>Asian Social Project Services, Inc.</b><br/>Name: Paulyn Jean A. Claro<br/>"
+            "Email: inquiry.aspsi.doh.uhc.survey2@gmail.com<br/>Tel: +63 917 819 6884",
         ],
     ),
     "F3": (
