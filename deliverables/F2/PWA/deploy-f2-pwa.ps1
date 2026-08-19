@@ -70,6 +70,15 @@ $RequiredMarkers = @(
     # Gov masthead (RA layout, 2026-08-17): logo strip + PSA/SJREB clearance
     # block live in the MAIN index chunk (App.tsx header), not the admin chunk.
     @{ Name = "Gov masthead clearance";    Pattern = 'DOH-2651-02';                  Bundle = "index" }
+    # Aug-17 spec cutover (Task 3.5, 2026-08-19): Section B's "since UHC"
+    # awareness battery (Q17-Q24) is where a botched re-key would most likely
+    # surface -- this string is unique to Q18's label in items.ts. Empirically
+    # verified (dist/assets grep, this build) to land in the admin chunk, same
+    # as the other item-label markers above: ResponseDetail/ResponsesTab
+    # import items.ts statically, and Rollup places that shared module in the
+    # chunk that owns it. A build missing this means Section B's items either
+    # didn't re-key cleanly or fell out of items.ts entirely.
+    @{ Name = "Section B battery (Q18)";   Pattern = 'changes in the referral system'; Bundle = "admin" }
 )
 
 function Say($msg, $color = "White") { Write-Host $msg -ForegroundColor $color }
