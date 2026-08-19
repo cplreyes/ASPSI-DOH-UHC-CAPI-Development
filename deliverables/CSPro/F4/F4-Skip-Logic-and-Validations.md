@@ -47,7 +47,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 | 7 | **Q19 vs roster count** | `Q19_HH_SIZE_TOTAL` is the self-reported HH size; roster occurrences should equal Q19 (or Q19 − 1 if respondent is listed separately). | HARD post-roster rule (finding #1 already closed): `count(C_HOUSEHOLD_ROSTER) = Q19_HH_SIZE_TOTAL`. Implement in roster `postproc`. |
 | 8 | **Section N per-item "consumed" gate pattern** | 42 expenditure items use the three-column pattern `{Q}_CONSUMED` → `{Q}_PURCHASED_PHP` → `{Q}_INKIND_PHP`. Needs uniform gate: if `_CONSUMED = No`, both `_PURCHASED_PHP` and `_INKIND_PHP` must be 0 or blank. | Spec as HARD gate + PROC template in §4.9. |
 | 9 | **Section N subtotals** | Q157, Q177, Q182, Q185 are `_SUBTOTAL_TOTAL_PHP` auto-compute items. Must be computed (not entered) from their panel's `_PURCHASED_PHP + _INKIND_PHP` sum. | HARD: item is auto-set, enumerator cannot edit. PROC template in §4.9. |
-| 10 | **Section M bill-recall chain** | Q140_RECALL_BREAKDOWN + Q141_BILL_ITEMS + Q141.1_NO_RECEIPT_AMT + Q142_RECALL_PAYMENT + Q143_HOW_PAID form a recall chain: if Q140 = No, skip Q141/Q141.1; if Q142 = No, skip Q143. Also Q129 gates whether Section M applies at all (only HHs with confinement experience answer bill-recall). | Spec as skip-logic §2 Section M + PROC §4.8. |
+| 10 | **Section M bill-recall chain** — CURRENT (1176-aug17 renumber, fix round 1 2026-08-19): `Q138_MOST_EXPENSIVE` (most expensive charge) + `Q139_TOTAL_BILL_PHP` (total bill amount) + `Q140_BILL_ITEMS` (bill-items checklist) + `Q141_RECALL_PAYMENT` (Yes/No payment-recall gate) + `Q142` (16-source settlement matrix) + `Q143_NO_RECEIPT_AMT_PHP` (no-receipt amount) form the recall chain: `Q141 = No` skips the entire Q142 matrix straight to Q143. Q129 does **NOT** gate whether Section M applies (#699/#701 removed that gate — Q132-Q143 is asked of everyone regardless of confinement); Q129 = No/DK only skips Q130/Q131 (NBB hospital-type detail). The retired pre-1176 names (`Q140_RECALL_BREAKDOWN`, an old `Q141_BILL_ITEMS`/`Q141.1_NO_RECEIPT_AMT`, an old `Q142_RECALL_PAYMENT`, `Q143_HOW_PAID`) no longer exist in the build. | Spec as skip-logic §2 Section M + PROC §4.8. |
 | 11 | **Section M gate item is Q129 (in Section L)** | The HH-confinement gate that decides whether ZBB/MAIFIP/Bill questions apply lives at Q129 inside Section L (not at the top of M). Straightforward cross-section routing but must be explicit. | Spec in §2 routing preamble. |
 | 12 | **Q199 WTP open-ended amount** | Source captures "willingness-to-pay for consultation" as a PHP amount plus an "other" specify. | HARD: Q199 ≥ 0; `Q199_WTP_OTHER_TXT` required only when "Other" option ticked. |
 | 13 | **Q202 worry reasons — select-all capacity** | Only 3 options in dcf (`O01`–`O03`) plus `_OTHER_TXT`. Verify source has only 3; if more, generator needs to expand. | Verify against source PDF; flag if mismatch. |
@@ -140,7 +140,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 | Q62 PURCHASE_FREQ | = Never (5) | **Q69** (skip Q63–Q68 via the auto-answered `AREA_HAS_GAMOT` gate — never purchases → skip Rx/conditions/where/travel/ease) |
 | Q69 GAMOT_HEARD | = No | **Q75** (skip Q70–Q74 — never heard of GAMOT) |
 | Q72 GAMOT_OBTAINED | = No | **Q74** (skip ONLY Q73 meds list — Q74 "where did you get the rest" is still asked; #575 ASPSI ruling 2026-06-17, corrects an earlier spec draft that skipped both) |
-| Q75 BRAND_GEN_KNOWS | = No | **Q79** (skip Q76–Q78 — exit Section G) |
+| Q75 BRAND_GEN_KNOWS | (any answer) | No skip — falls through to Q76 unconditionally (#538, 2026-08-19 fix round 1 correction: this row previously claimed a Q75=No -> Q79 skip that neither paper nor the current build has; #538's own comment records that skip being REMOVED as a bug, "was wrongly exiting Section G") |
 | Q76 BRAND_OR_GEN | = Branded only | **Q78** (skip Q77 why-generic) |
 | Q76 BRAND_OR_GEN | = Generic only | **Q79** (skip Q78 why-branded; after Q77) |
 | Q76 BRAND_OR_GEN | = Don't know / Not applicable | **Q79** (exit Section G) |
@@ -434,7 +434,8 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | `Q74_WHERE_REST` select-all | ≥ 1 option ticked when enabled | HARD |
 | `Q74 = Other` | `Q74_WHERE_REST_OTHER_TXT` required | HARD |
 | `Q75_BRAND_GEN_KNOWS` | Required, ∈ {Yes, No} | HARD |
-| Q76–Q78 enabled | `Q75_BRAND_GEN_KNOWS = Yes` | GATE |
+| Q76 enabled | Always (fix round 1, 2026-08-19: Q76 is NOT gated on Q75 — falls through unconditionally per #538; the old "Q76-78 enabled when Q75=Yes" claim was stale/wrong) | GATE |
+| Q77/Q78 enabled | `Q76_BRAND_OR_GEN` answer (Generic/Both -> Q77; Branded/Both -> Q78) — gated on Q76's OWN answer, not Q75 | GATE |
 | `Q76_BRAND_OR_GEN` | Required when enabled, ∈ value set | HARD |
 | Q77 enabled | `Q76_BRAND_OR_GEN ∈ {Generic, Both}` | GATE |
 | Q78 enabled | `Q76_BRAND_OR_GEN ∈ {Branded, Both}` | GATE |
@@ -1061,10 +1062,10 @@ Disposition following the F3 pattern: genuine ASPSI asks vs spec-decisions.
 
 ### Spec-decision (ASPSI may override)
 
-4. **Q129 gates Section M bill-recall chain only, not ZBB/MAIFIP awareness** — Source prints ZBB awareness Q132–Q134 without an explicit gate; bill-recall Q138–Q143 is confinement-dependent by design. **Spec default**: ZBB/MAIFIP awareness asked regardless; bill chain gated on Q129 = Yes.
+4. **RESOLVED (fix round 1, 2026-08-19): Q129 does NOT gate the bill-recall chain.** #625/#626/#699/#701 (ASPSI ruling + "do what the testers said") removed the confinement gate entirely — ZBB/MAIFIP awareness (Q132-Q137) AND the bill-recall chain (Q138-Q143) are both asked of everyone regardless of `Q129_HH_CONFINED`. Q129 = No/DK only skips Q130/Q131 (NBB hospital-type/out-of-pocket detail). This item's original "bill chain gated on Q129 = Yes" spec-default is superseded, not current.
 5. **Q135 ZBB_OOP enumerator gate** — Source note limits Q135 to patients who visited a ZBB-eligible facility. No dcf flag captures "facility eligibility." **Spec default**: enumerator leaves Q135 blank if not applicable; PROC accepts blank.
 6. **Q130 hospital-type gate on Q131** — Source: NBB applies to public hospitals only. **Spec default**: if Q130 = Private, skip Q131. PROC coded in §4 (Section L).
-7. **Q141.1 NO_RECEIPT_AMT cap** — Capping at Q139 total bill is a consistency guardrail; source doesn't specify. **Spec default**: HARD cap at `Q141_1 ≤ Q139`.
+7. **`Q143_NO_RECEIPT_AMT_PHP` cap (renamed from the retired `Q141.1_NO_RECEIPT_AMT`, 1176-aug17)** — Capping at `Q139_TOTAL_BILL_PHP` (total bill amount, itself renamed from the retired `Q139_FINAL_AMOUNT_PHP`) is a consistency guardrail; source doesn't specify. **Spec default**: HARD cap at `Q143_NO_RECEIPT_AMT_PHP ≤ Q139_TOTAL_BILL_PHP` — implemented in `generate_apc.py` `PROC Q143_NO_RECEIPT_AMT_PHP`.
 8. **Catastrophic-expenditure SOFT warn threshold (3×)** — 3× monthly income is a common CHE plausibility threshold (SDG 3.8.2 uses 10% and 25% of capacity-to-pay). **Spec default**: SOFT warn at 3× for enumerator verification; not a CHE measurement — computed separately in analysis.
 
 ---
