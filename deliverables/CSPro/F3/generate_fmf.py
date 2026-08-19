@@ -29,7 +29,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from generate_dcf import build_f3_dictionary, _neutralise_facility_placeholder
-from cspro_helpers import _truncate_long_labels
+from cspro_helpers import _truncate_long_labels, question_caption
 
 
 DICT_LABEL = "PatientSurvey"
@@ -247,6 +247,16 @@ def _form_height(n_items):
 # The DICTIONARY labels are deliberately left long — they are the variable labels
 # in the exported data and the published codebook, and shortening them would leave
 # Q69 and Q72 both carrying a bare "Number of Minute(s)" in the dataset.
+#
+# R25 (2026-08-19) GENERALISED THIS to every question field — cspro_helpers.question_caption
+# now reduces each one to its numeral tag. What survives here is the narrower job this table
+# always did: DISAMBIGUATING two items of ONE question that share a number AND a screen,
+# where a bare "5." would print twice. The tag is prefixed automatically, so an entry reads
+# "5. Month" on device. Each entry below is a MEASURED same-screen collision (found by
+# deriving captions per DisplayTogether block, not by eye) — do not add one speculatively.
+#
+# A number repeated across SEPARATE screens needs no entry: only one renders per screen and
+# the qsf pane discriminates (checked field by field for the Q115.1/115.2 batteries).
 SHORT_FORM_LABELS = {
     "Q58_WAIT_DAYS":         "Number of Day(s)",
     "Q58_WAIT_MINUTES":      "Number of Minute(s)",
@@ -258,6 +268,27 @@ SHORT_FORM_LABELS = {
     "Q106_DAYS":             "Number of Day(s)",
     "Q150_TRAVEL_HH":        "Number of Hour(s)",     # #1201: Q69/Q72 parity
     "Q150_TRAVEL_MM":        "Number of Minute(s)",   # #1201
+    # R25: the three remaining same-screen collisions in F3.
+    "Q5_BIRTH_MONTH":        "Month",
+    "Q5_BIRTH_YEAR":         "Year",
+    "Q18_INCOME_AMOUNT":     "Approximate amount",
+    "Q18_INCOME_BRACKET":    "Income category",
+    # Q47 is four separate awareness items all printed "47." on one screen; the package
+    # each one asks about is the only thing that tells them apart.
+    "Q47_PHYSICIAN_CHECKUP": "Physician check-up",
+    "Q47_DIAGNOSTIC_TESTS":  "Diagnostic tests",
+    "Q47_HOSPITAL_CONF":     "Hospital confinement",
+    "Q47_OUTPATIENT_DRUGS":  "Outpatient drugs",
+    # R25, second use of this table: three fields carry NO printed question number but their
+    # label IS a full-sentence question, so without an entry here they would keep a caption
+    # identical to their qsf text - the exact duplication R25 exists to remove. (Measured:
+    # these are the only three in F3. Short admin labels like "Type of Patient" also match
+    # their qsf text but are three words, not a question, and are left alone.)
+    # SEC class is the enumerator's own classification, read off the Q24-Q29 asset battery;
+    # its "Q29_" name records only that it follows Q29 - it is not question 29.
+    "Q29_SEC_CLASS":         "Socioeconomic class",
+    "AREA_HAS_BUCAS":        "Area has a BUCAS center",
+    "AREA_HAS_GAMOT":        "Area has GAMOT",
 }
 
 
@@ -309,10 +340,21 @@ def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name, r
         if it["name"] in _CHECKBOX_FIELDS:   # alpha + value set rendered as a tick-list
             capture = "CheckBox"
             field_x2 = FIELD_RADIO_X2
-        # #1142/#1144/#1145/#1155: component fields use a SHORT on-form label so the
-        # question stem appears once per screen (in the question bar), not twice.
-        text = (SHORT_FORM_LABELS.get(it["name"])
-                or (it["labels"][0]["text"] if it.get("labels") else it["name"])).replace("\n", " ").replace("\r", " ")
+        # R25: the on-form caption is a NUMERAL TAG; the question itself lives only in the
+        # qsf pane, which follows the language setting. cspro_helpers.question_caption owns
+        # the rule for all three instruments.
+        raw = (it["labels"][0]["text"] if it.get("labels") else it["name"])
+        if roster:
+            # Roster captions are GRID COLUMN HEADERS and stay out of R25's scope: a column
+            # has no question pane of its own, so a numeral header would strip the only
+            # label it has. #1182's designed short captions are preserved by the same rule.
+            text, kind = raw, "roster"
+        else:
+            text, kind = question_caption(it["name"], raw, SHORT_FORM_LABELS.get(it["name"]))
+        _CAPTION_KINDS[kind] = _CAPTION_KINDS.get(kind, 0) + 1
+        if kind == "keep-full":
+            _KEEP_FULL_FIELDS.append(it["name"])
+        text = text.replace("\n", " ").replace("\r", " ")
         # [Field]
         lines.append("[Field]")
         lines.append(f"Name={it['name']}")
@@ -414,6 +456,11 @@ _CHECKBOX_TRAILERS = ("_OTHER_TXT", "_MEDICINES_TXT")  # gated texts that share 
 _OWN_SCREEN_FIELDS = {"ICF_PART1", "ICF_PART2"}
 MAX_CHUNK = 5                       # cap simple-question runs at ~5 per screen
 _ACTIVE_BLOCK_PLAN = []            # set per-build by build_fmf()
+# R25 caption census, reset per build. Printed by main() so the classification is auditable
+# from the build log: a jump in 'keep-full' means labels lost their printed question number
+# and questions are silently keeping their full stem on the form again.
+_CAPTION_KINDS = {}
+_KEEP_FULL_FIELDS = []
 
 
 def _qnum(item):
@@ -540,6 +587,8 @@ def _emit_blocks(lines, item_objs):
 
 def build_fmf():
     dictionary = build_f3_dictionary()
+    global _CAPTION_KINDS, _KEEP_FULL_FIELDS
+    _CAPTION_KINDS, _KEEP_FULL_FIELDS = {}, []   # reset: build_fmf is called by the gates too
     # #748/#730: neutralise the facility-name placeholder in the fmf field labels too. The
     # bold header (fmf label) can't render fills, so generate_dcf rewrites [facility_name_input]
     # -> "this facility" in the .dcf; the fmf was built from the RAW dictionary, so 6 labels
@@ -647,8 +696,19 @@ def build_fmf():
 def main():
     out_path = Path(__file__).parent / "PatientSurvey.generated.fmf"
     fmf_text, orphan_count = build_fmf()
-    out_path.write_text(fmf_text, encoding="utf-8")
+    # Write BYTES, not text. The lines above are joined with CRLF already, and a text-mode
+    # write on Windows translates every "\n" AGAIN -> "\r\r\n" on disk. CSPro tolerates
+    # that, but automation/optimize_capture_types.py then reads it back through universal
+    # newlines ("\r\r\n" -> "\n\n") and rewrites it, so the bound .fmf ends up with a BLANK
+    # LINE after every line and twice the size. Measured before this fix: this file carried
+    # 7,276 "\r\r\n" and PatientSurvey.fmf 14,552 CRLF - exactly 2x. The BOM is added here
+    # because optimize_capture_types reads utf-8-sig and writes the BOM back.
+    # (Ported from F1, Task 2.3; F4 carried the identical defect at 6,747 -> 13,494.)
+    out_path.write_bytes(b"\xef\xbb\xbf" + fmf_text.encode("utf-8"))
     sys.stderr.write(f"Wrote {out_path} ({orphan_count} orphan items)\n")
+    census = "  ".join(f"{k}={v}" for k, v in sorted(_CAPTION_KINDS.items()))
+    sys.stderr.write(f"  R25 captions: {census}\n")
+    sys.stderr.write(f"  keep-full (no question number): {len(_KEEP_FULL_FIELDS)}\n")
 
 
 if __name__ == "__main__":

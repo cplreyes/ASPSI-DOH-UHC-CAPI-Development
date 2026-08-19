@@ -889,6 +889,89 @@ def _truncate_long_labels(node, max_len=CSPRO_LABEL_MAX, hits=None):
     return hits
 
 
+# ============================================================
+# ON-FORM QUESTION CAPTIONS (R25, 2026-08-19)
+# ============================================================
+# CSEntry renders two panes: the CAPI question-text pane (from the .qsf, which follows the
+# language setting) and the form, whose every field carries an fmf `Text=` caption. Both
+# were derived from the same dictionary label, so the full ENGLISH question stem printed in
+# both - twice per screen in EN, and in a dialect the translated question above the full
+# English one. PSA/DOH flagged it; Carl approved this fix as ruling R25.
+#
+# Measured before the change (each generator's own build output vs its .qsf): 346 of F3's
+# 364 on-form captions and 299 of F4's 322 reproduced the qsf text verbatim. Also measured:
+# ZERO fields in either instrument lack qsf question text, which is what makes a
+# numeral-only caption safe - no screen is left without a readable prompt.
+#
+# The question therefore lives ONLY in the qsf pane and the form caption becomes a
+# language-neutral numeral tag. DICTIONARY labels are deliberately UNTOUCHED - they are the
+# variable labels in the exported data, the published codebook, the case tree and the CSWeb
+# case view. Display text and data labels diverge here on purpose, exactly as they already
+# did for the split components of #1006/#1142/#1201.
+#
+# ONE implementation, three callers (F1/F3/F4 generate_fmf). Do not copy it back into a
+# generator: this file's own history is the argument - the checkbox-base list had to live in
+# four places at once and shipped a silent multi-select data-loss regression twice (#529,
+# then #635/#639/#640) because one copy drifted out of step.
+
+# A printed question number at the head of a label: "1. ", "45.1 ", "97.2) ".
+_QNUM_LABEL_RE = re.compile(r"^\s*(\d+(?:\.\d+)*)\s*[.)]?\s+")
+# Other-specify / specify free-text trailers. These sit beside their parent question, so a
+# bare numeral would print identically twice on one screen; they get a distinct tag.
+_SPECIFY_SUFFIXES = ("_OTHER_TXT", "_SPECIFY", "_TXT")
+
+# DELIBERATELY NOT IMPLEMENTED: deriving the number from the FIELD NAME when the label has
+# none. It was tried and removed - across F3+F4 it fired on exactly two fields and was wrong
+# on both. F3 Q29_SEC_CLASS and F4 Q29_SOCIOECONOMIC_CLASS are the enumerator's
+# socioeconomic classification, which carries NO printed number; the "Q29_" prefix only
+# records that it follows Q29's asset battery. The fallback tagged the classification "29."
+# and put it on one screen beside Q29_WASHER, which is genuinely question 29 - two fields
+# labelled "29." side by side. The printed label prefix is the ONLY authority; a field that
+# needs a caption without one gets an explicit entry in its generator's SHORT_FORM_LABELS.
+
+
+def question_number(name, label):
+    """-> the printed question number for a field as a string ("36", "48.1"), or None.
+
+    None means "not a numbered question", and the caller keeps the full descriptive caption
+    unless an explicit short one is supplied. That class is the case key, the ICF read-aloud
+    screens, geographic/linkage fields, FIELD CONTROL admin fields, and the photo/GPS
+    capture fields - almost all of which carry a short admin label rather than a question."""
+    m = _QNUM_LABEL_RE.match(label or "")
+    return m.group(1) if m else None
+
+
+def question_caption(name, label, short_label=None):
+    """-> (caption, kind) for a field's on-form [Text] under R25.
+
+    kind is one of 'numeral' | 'specify' | 'component' | 'keep-full'; each generator
+    reports the census so the classification stays auditable from the build log.
+
+      component  an explicit designed short caption from the caller's SHORT_FORM_LABELS.
+                 It WINS over every other rule, and the numeral tag is prefixed when the
+                 label has one ("5. Month"). Two uses: a question split across two
+                 dictionary items that share a number and a screen (birth month/year,
+                 hours/minutes, amount/bracket), where a bare "5." would print twice; and
+                 an UNNUMBERED field whose label is a full-sentence question, which would
+                 otherwise keep a caption identical to its qsf text.
+      specify    "<n>. (specify)" - same reason, for the *_OTHER_TXT / *_SPECIFY trailers.
+      numeral    "<n>." - the ordinary case.
+      keep-full  no number and no override; the descriptive caption is kept verbatim.
+
+    A number REPEATED across SEPARATE screens is fine and deliberate (F3's Q115.1/115.2
+    batteries, F4's sixteen Q142 yes-no/amount pairs): only one of them renders per screen
+    and the qsf pane carries the discriminator ("...paid from this source?" vs "...Amount
+    in Pesos"). That was verified per field against the .qsf, not assumed."""
+    num = question_number(name, label)
+    if short_label:
+        return (f"{num}. {short_label}" if num else short_label), "component"
+    if num is None:
+        return label, "keep-full"
+    if name.endswith(_SPECIFY_SUFFIXES):
+        return f"{num}. (specify)", "specify"
+    return f"{num}.", "numeral"
+
+
 def write_dcf(dictionary, out_path):
     """Write a CSPro dictionary to a .dcf file and print diagnostics.
 

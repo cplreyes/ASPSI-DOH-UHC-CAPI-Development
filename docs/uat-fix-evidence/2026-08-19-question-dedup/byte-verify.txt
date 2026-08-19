@@ -1,0 +1,25 @@
+[F3] PASS
+    old caption ABSENT from fmf : True   'Text=1. Before we begin, to confirm, are you the patient?'
+    numeral tag PRESENT in fmf  : True   'Text=1.'
+    qsf question text INTACT    : True   'Before we begin, to confirm, are you the patient?'
+[F3] PASS
+    old caption ABSENT from fmf : True   'Text=2. Relationship � Other (specify) text'
+    numeral tag PRESENT in fmf  : True   'Text=2. (specify)'
+    qsf question text INTACT    : True   'What is your relationship to the patient?'
+[F4] PASS
+    old caption ABSENT from fmf : True   'Text=2. In what month were you born?'
+    numeral tag PRESENT in fmf  : True   'Text=2. Month'
+    qsf question text INTACT    : True   'In what month were you born?'
+[F4] PASS
+    old caption ABSENT from fmf : True   'Text=18. Income bracket'
+    numeral tag PRESENT in fmf  : True   'Text=18. Income category'
+    qsf question text INTACT    : True   'Income bracket'
+
+--- folded #16: line-separator shape of the served .fmf ---
+  [PASS] F1/FacilityHeadSurvey.fmf          CRCRLF=0  CRLF=6211  lines=6211  1:1=True
+  [PASS] F3/PatientSurvey.fmf               CRCRLF=0  CRLF=7276  lines=7276  1:1=True
+  [PASS] F4/HouseholdSurvey.fmf             CRCRLF=0  CRLF=6747  lines=6747  1:1=True
+
+BYTE-VERIFY: PASS
+
+exit=0

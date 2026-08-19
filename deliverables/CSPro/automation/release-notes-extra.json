@@ -102,5 +102,15 @@
       "Aug-17 instrument rebuild, end to end. Renumbered to the 2026-08-17 printed questionnaire (Q1-Q153). Section C's 18 nine-option UHC9 items become a 23-pair two-step battery (Yes/No base + a Q<NN>.1 UHC-attribution probe on its own screen, seven with a .2 detail item); Sections D-H shift by -13. New content: the GAMOT stock-out block, the DOH-IS submission fan, the PHO protocol pair, and 18 probes. Consent gains the 4-paragraph certificate and SJREB/ASPSI contact block, byte-identical to F3/F4. Two routing defect-fixes: Q68-Q71 had NO exit at all (a 'haven't thought about it yet' respondent was walked through two other branches' questions) and Q137=Yes orphaned the Q139/Q140 PHO pair for every satisfied respondent. MAJOR version - the data shape breaks against v2.x."
     ],
     "breaking": true
+  },
+  "F3 4.0.1": {
+    "Fixed": [
+      "On-screen question de-duplication (R25): form field captions are now short question tags, so the question text appears once per screen instead of twice. Display only."
+    ]
+  },
+  "F4 3.0.2": {
+    "Fixed": [
+      "On-screen question de-duplication (R25): form field captions are now short question tags, so the question text appears once per screen instead of twice. Display only."
+    ]
   }
 }

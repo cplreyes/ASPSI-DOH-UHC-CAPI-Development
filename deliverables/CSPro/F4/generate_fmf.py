@@ -27,7 +27,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from generate_dcf import build_f4_dictionary, apply_dcf_short_labels
-from cspro_helpers import _truncate_long_labels
+from cspro_helpers import _truncate_long_labels, question_caption
 
 
 DICT_LABEL = "HouseholdSurvey"
@@ -301,6 +301,44 @@ def _emit_form(lines, form_num, label, item_names, height, roster=None):
     lines.append("  ")
 
 
+# ------------------------------------------------------------------
+# R25 (2026-08-19) - designed short ON-FORM captions.
+# ------------------------------------------------------------------
+# Under R25 every question field's on-form caption collapses to its numeral tag and the
+# question itself lives only in the qsf pane (cspro_helpers.question_caption). This table
+# is the exception list, and it carries the two cases a bare numeral cannot express. F4 had
+# no such table before - F1 and F3 grew theirs as #1006/#1142/#1201.
+#
+# 1. TWO ITEMS OF ONE QUESTION ON ONE SCREEN. A bare "2." would print twice. Each entry
+#    below is a MEASURED same-screen collision - found by deriving captions per
+#    DisplayTogether block, not by eye. The tag is prefixed automatically ("2. Month").
+#    A number repeated across SEPARATE screens needs no entry: only one renders per screen
+#    and the qsf pane discriminates. That is why the sixteen Q142 yes-no/amount pairs are
+#    absent here - each sits on its own screen, over "...paid from this source?" vs
+#    "...Amount in Pesos".
+#
+# 2. NO PRINTED NUMBER, BUT THE LABEL IS A FULL-SENTENCE QUESTION. Without an entry these
+#    keep a caption identical to their qsf text - the exact duplication R25 removes. The
+#    socioeconomic class is the enumerator's own classification read off the asset battery;
+#    its "Q29_" name records only that it follows Q29, it is not question 29. Short admin
+#    labels ("Household Address", "Barangay") also match their qsf text but are labels
+#    rather than questions, and are deliberately left alone.
+#
+# DICTIONARY labels are untouched by all of this - they remain the exported variable labels
+# and the published codebook text.
+SHORT_FORM_LABELS = {
+    "Q2_BIRTH_MONTH":          "Month",
+    "Q2_BIRTH_YEAR":           "Year",
+    "Q18_INCOME_AMOUNT":       "Approximate amount",
+    "Q18_INCOME_BRACKET":      "Income category",
+    "Q67_TRAVEL_HH":           "Number of Hour(s)",     # F3 Q69/Q72/Q150 parity
+    "Q67_TRAVEL_MM":           "Number of Minute(s)",
+    "Q29_SOCIOECONOMIC_CLASS": "Socioeconomic class",
+    "AREA_HAS_BUCAS":          "Area has a BUCAS center",
+    "AREA_HAS_GAMOT":          "Area has GAMOT",
+}
+
+
 def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name, roster=None):
     lines.append("[Group]")
     # The roster record is required in the dcf (occurrences.required=True), and the
@@ -329,7 +367,22 @@ def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name, r
         if it["name"] in _CHECKBOX_FIELDS:   # alpha + value set rendered as a tick-list (#529)
             capture = "CheckBox"
             field_x2 = FIELD_RADIO_X2
-        text = (it["labels"][0]["text"] if it.get("labels") else it["name"]).replace("\n", " ").replace("\r", " ")
+        # R25: the on-form caption is a NUMERAL TAG; the question itself lives only in the
+        # qsf pane, which follows the language setting. cspro_helpers.question_caption owns
+        # the rule for all three instruments.
+        raw = (it["labels"][0]["text"] if it.get("labels") else it["name"])
+        if roster:
+            # Roster captions are GRID COLUMN HEADERS and stay out of R25's scope: a column
+            # has no question pane of its own, so a numeral header would strip the only
+            # label it has. That also preserves the #1182 Section-N short captions applied
+            # by apply_dcf_short_labels().
+            text, kind = raw, "roster"
+        else:
+            text, kind = question_caption(it["name"], raw, SHORT_FORM_LABELS.get(it["name"]))
+        _CAPTION_KINDS[kind] = _CAPTION_KINDS.get(kind, 0) + 1
+        if kind == "keep-full":
+            _KEEP_FULL_FIELDS.append(it["name"])
+        text = text.replace("\n", " ").replace("\r", " ")
         lines.append("[Field]")
         lines.append(f"Name={it['name']}")
         lines.append(f"Position={FIELD_X},{y},{field_x2},{y + FIELD_H}")
@@ -437,6 +490,11 @@ MAX_CHUNK = 5
 _RUN_BLOCK_CAP = 22     # a real multi-select up to ~22 options is one checklist screen;
                         # an amount matrix (run has _AMT siblings) or a longer run is chunked.
 _ACTIVE_BLOCK_PLAN = []
+# R25 caption census, reset per build. Printed by main() so the classification is auditable
+# from the build log: a jump in 'keep-full' means labels lost their printed question number
+# and questions are silently keeping their full stem on the form again.
+_CAPTION_KINDS = {}
+_KEEP_FULL_FIELDS = []
 
 
 def _qnum(item):
@@ -601,6 +659,8 @@ def _emit_blocks(lines, item_objs):
 
 def build_fmf():
     dictionary = build_f4_dictionary()
+    global _CAPTION_KINDS, _KEEP_FULL_FIELDS
+    _CAPTION_KINDS, _KEEP_FULL_FIELDS = {}, []   # reset: build_fmf is called by the gates too
     apply_dcf_short_labels(dictionary)  # designed short captions (#1182), same as the .dcf
     _truncate_long_labels(dictionary)  # match the .dcf's 255-char label cap (CSPro max)
     global _ACTIVE_BLOCK_PLAN
@@ -700,8 +760,19 @@ def build_fmf():
 def main():
     out_path = Path(__file__).parent / "HouseholdSurvey.generated.fmf"
     fmf_text, orphan_count = build_fmf()
-    out_path.write_text(fmf_text, encoding="utf-8")
+    # Write BYTES, not text. The lines above are joined with CRLF already, and a text-mode
+    # write on Windows translates every "\n" AGAIN -> "\r\r\n" on disk. CSPro tolerates
+    # that, but automation/optimize_capture_types.py then reads it back through universal
+    # newlines ("\r\r\n" -> "\n\n") and rewrites it, so the bound .fmf ends up with a BLANK
+    # LINE after every line and twice the size. Measured before this fix: this file carried
+    # 6,747 "\r\r\n" and HouseholdSurvey.fmf 13,494 CRLF - exactly 2x. The BOM is added here
+    # because optimize_capture_types reads utf-8-sig and writes the BOM back.
+    # (Ported from F1, Task 2.3; F3 carried the identical defect at 7,276 -> 14,552.)
+    out_path.write_bytes(b"\xef\xbb\xbf" + fmf_text.encode("utf-8"))
     sys.stderr.write(f"Wrote {out_path} ({orphan_count} orphan items)\n")
+    census = "  ".join(f"{k}={v}" for k, v in sorted(_CAPTION_KINDS.items()))
+    sys.stderr.write(f"  R25 captions: {census}\n")
+    sys.stderr.write(f"  keep-full (no question number): {len(_KEEP_FULL_FIELDS)}\n")
 
 
 if __name__ == "__main__":

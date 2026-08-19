@@ -31,10 +31,17 @@ version SSOT, tracked since 2026-07-02 - earlier builds predate it).
 | Instrument | Version | Deployed |
 |---|---|---|
 | F1 - Facility Head Survey | **v3.0.0** | 2026-08-19 |
-| F3 - Patient Survey | **v4.0.0** | 2026-08-19 |
-| F4 - Household Survey | **v3.0.1** | 2026-08-19 |
+| F3 - Patient Survey | **v4.0.1** | 2026-08-19 |
+| F4 - Household Survey | **v3.0.2** | 2026-08-19 |
 | HUB - Supervisor Hub | **v1.1.5** | 2026-08-08 |
 | F2 - Healthcare Worker Survey (PWA) | **v2.1.0** | see F2 CHANGELOG |
+
+## Unreleased
+
+- **F3 v4.0.1** (2026-08-19) - bumped in the working tree, not yet committed
+  - Fixed: On-screen question de-duplication (R25): form field captions are now short question tags, so the question text appears once per screen instead of twice. Display only.
+- **F4 v3.0.2** (2026-08-19) - bumped in the working tree, not yet committed
+  - Fixed: On-screen question de-duplication (R25): form field captions are now short question tags, so the question text appears once per screen instead of twice. Display only.
 
 ## F1 - Facility Head Survey
 
