@@ -42,55 +42,62 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 DCF = os.path.join(HERE, "FacilityHeadSurvey.dcf")
 
 # item name -> english option -> { language code: cleared translation }
+#
+# RE-KEYED 2026-08-19 (Task 2.3, Aug-17 migration). Eight of these ten items were renumbered
+# by the Aug-17 instrument; the old Apr-20 names below would have silently stopped matching
+# (the script reports NOT FOUND rather than failing, so the overrides would just quietly
+# stop applying). Mapped through instruments-aug17-extract/maps/F1-renames.csv:
+#
+#     Q9_UHC_HEARD             -> Q9_UHC_HEARD              (unchanged)
+#     Q10_HAS_PRIMARY_PKG      -> Q10_HAS_PRIMARY_PKG       (unchanged)
+#     Q16_HEALTH_PROMO_UNIT    -> Q13_HEALTH_PROMO_UNIT
+#     Q35_STAFFING_CHANGED     -> Q24_STAFFING_CHANGED
+#     Q138_ZBB_CURR            -> Q125_ZBB_CURR
+#     Q139_ZBB_ALL_PATIENTS    -> Q126_ZBB_ALL_PATIENTS
+#     Q141_ALLOW_OOP_BASIC     -> Q128_ALLOW_OOP_BASIC
+#     Q145_MALASAKIT_PROVIDED  -> Q132_MALASAKIT_PROVIDED
+#     Q148_LGU_SUPPORT         -> Q135_LGU_SUPPORT
+#     Q150_LGU_SATISFIED       -> Q137_LGU_SATISFIED
+#
+# All ten verified present in the rebuilt dictionary, each carrying a BCL label slot on its
+# EN "No" option. This override is still REQUIRED: the per-question values are NOT in
+# translations/bcl.json - after the rebuild, Q9/Q10 read "Dai" there and the eight renamed
+# items fall back to English "No" until Task 2.5 re-keys the locale files. Either way the
+# cleared source says "Dae" for these ten, and only this map says so.
 OVERRIDES = {
     item: {"No": {"BCL": "Dae"}}
     for item in (
         "Q9_UHC_HEARD",
         "Q10_HAS_PRIMARY_PKG",
-        "Q16_HEALTH_PROMO_UNIT",
-        "Q35_STAFFING_CHANGED",
-        "Q138_ZBB_CURR",
-        "Q139_ZBB_ALL_PATIENTS",
-        "Q141_ALLOW_OOP_BASIC",
-        "Q145_MALASAKIT_PROVIDED",
-        "Q148_LGU_SUPPORT",
-        "Q150_LGU_SATISFIED",
+        "Q13_HEALTH_PROMO_UNIT",
+        "Q24_STAFFING_CHANGED",
+        "Q125_ZBB_CURR",
+        "Q126_ZBB_ALL_PATIENTS",
+        "Q128_ALLOW_OOP_BASIC",
+        "Q132_MALASAKIT_PROVIDED",
+        "Q135_LGU_SUPPORT",
+        "Q137_LGU_SATISFIED",
     )
 }
 
-# ---- #1229 / #1230: the Section C implementation-status options -------------------
+# ---- #1229 / #1230: the Section C implementation-status options -- RETIRED 2026-08-19 ----
 #
-# Same shared-key problem, opposite shape. 22 Section C questions carry these two options,
-# and the build propagated **Q12's** wording to all of them - which is why the tablet
-# disagrees with the paper form nearly everywhere.
+# These three per-question exceptions (Q12_PCB_LICENSING, Q17_HPU_CREATED, Q21_NEW_DEPTS)
+# scoped two option labels out of the nine-option "UHC9" implementation-status set, because
+# the build had propagated Q12's Bikol wording to all 22 Section C questions carrying it.
 #
-# The cleared June-5 Bikol source actually says:
-#   "Yes, ... not due to the UHC Act"  -> one wording on 20 questions; Q12 and Q17 differ
-#   "No, ... plan to in the next 1-2 years" -> one wording on 19; Q12, Q17 and Q21 differ
+# The Aug-17 rebuild (Task 2.2) DELETED that structure. Section C is now a two-step battery:
+# a plain Yes/No base plus a separate "<N>.1. If yes, was it a result of the UHC Act?" probe
+# on a 6-option UHC_ATTRIB set whose option text is different wording entirely. Verified
+# against the rebuilt FacilityHeadSurvey.dcf: the two English strings these exceptions keyed
+# on --
+#     "Yes, this has been implemented or improved recently, but not due to the UHC Act"
+#     "No, this has not been implemented yet, but we plan to in the next 1-2 years"
+# -- now occur ZERO times in the dictionary. There is nothing left to scope.
 #
-# So the majority wording goes on the SHARED key in bcl.json (fixing 20 and 19 questions
-# in one move, and matching what the tester asked for), and only the genuine exceptions
-# are scoped here. Q17's "No" differs from Q12's by a trailing full stop; that is the
-# cleared source's own artifact and is kept verbatim rather than tidied.
-YES_OPT = "Yes, this has been implemented or improved recently, but not due to the UHC Act"
-NO_OPT = "No, this has not been implemented yet, but we plan to in the next 1-2 years"
-
-_SECTION_C_EXCEPTIONS = {
-    "Q12_PCB_LICENSING": {
-        YES_OPT: {"BCL": "Iyo, na implementar ini asin na-improve pero bako dahil sa UHC Act"},
-        NO_OPT: {"BCL": "Dae pa ini naimplementar pero igwang plano sa mga masunod na 1-2 taon"},
-    },
-    "Q17_HPU_CREATED": {
-        YES_OPT: {"BCL": "Iyo, na-implementar ini o na-improve pero bako dahil sa UHC Act"},
-        NO_OPT: {"BCL": "Dae pa ini naimplementar pero igwang plano sa mga masunod na 1-2 taon."},
-    },
-    "Q21_NEW_DEPTS": {
-        NO_OPT: {"BCL": "Dae pa ini naipatupad, pero igwang plano sa masunod na 1-2 taon"},
-    },
-}
-
-for _item, _spec in _SECTION_C_EXCEPTIONS.items():
-    OVERRIDES.setdefault(_item, {}).update(_spec)
+# The underlying problem is resolved rather than deferred: the 23 probes genuinely share ONE
+# option set now, so one shared translation key is the CORRECT representation - which is what
+# #1229/#1230 wanted and could not have while the wording was duplicated per question.
 
 
 def lab(node, code):

@@ -1,5 +1,20 @@
 #!/usr/bin/env python3
-r"""Insert the #1099 MM/DD/YYYY echo fields into F1's hand-maintained .fmf.
+r"""
+RETIRED 2026-08-19 - superseded by generate_fmf.py; kept for history.
+========================================================================
+F1's .fmf was hand-maintained, and this script was one of eleven idempotent post-processors
+that patched it by locating fields by NAME and geometry. The Aug-17 instrument renumber
+(Task 2.2) renamed ~112 of 320 dictionary items, invalidating those anchors, so F1 adopted
+the F3/F4 generator (Task 2.3). Do NOT run this file; do not delete it either - the WHY
+recorded below is the reason each invariant is worth preserving.
+
+WHERE THIS SCRIPT'S INVARIANT LIVES NOW
+---------------------------------------
+Obsolete on both sides. #1132 removed the DATE_*_DISP echo fields at ASPSI's request
+eleven days after #1099 added them, so the dictionary items are gone and there is
+nothing for a generator to place. See remove_date_display.py, its undo.
+========================================================================
+Insert the #1099 MM/DD/YYYY echo fields into F1's hand-maintained .fmf.
 
 F3/F4 build their .fmf from generate_fmf.py, so their DATE_*_DISP echo fields
 (read-only MM/DD/YYYY, computed in logic — Carl 2026-08-05) land automatically.
@@ -163,4 +178,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(
+        "RETIRED 2026-08-19 - superseded by F1/generate_fmf.py; this script must NOT be run.\n"
+        "It anchors on pre-Aug-17 field names and geometry, so against the current instrument\n"
+        "it would either abort or silently mis-place fields in a file that is now rebuilt from\n"
+        "the dictionary on every build. See the module docstring for the invariant it used to\n"
+        "enforce and where that invariant lives today.")

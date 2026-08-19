@@ -26,44 +26,39 @@ CASCADE = {"REGION", "PROVINCE_HUC", "CITY_MUNICIPALITY", "BARANGAY",
 # F1 Q49/Q50/Q53/Q58 (GH #377/#378/#379 — select-all -> Check Box redesign mirroring Q148).
 # 2026-06-16 (#529): the 13 F3 'Patient Survey' select_all -> Check Box conversions.
 CHECKBOX = {"Q148_CONDITIONS",
-            "Q49_QUALITY_CHALL", "Q50_ACCESS_CHALL",
-            "Q53_YK_PACKAGE", "Q58_PERF_INDICATORS",
-            # F1 #529/#542 select_all -> Check Box batch. These were added to the other
-            # four sync lists (generate_apc CHECKBOX_BASES, inject_blocks._CHECKBOX_FIELDS,
-            # fmf_checkbox_convert CONVERT, generate_dcf) but NEVER here — so optimize was
-            # silently DEMOTING the >=7-option ones (Q65/Q66-74/Q75/Q76/Q96) to single-
-            # select DropDown, a multi-select data-loss regression. (2026-06-16, found
-            # while deploying #586 Q144.) The <7-option ones (Q64/Q78/Q79/Q94/Q98/Q99/
-            # Q104/Q105/Q111) stayed CheckBox by the 'leave-as-is' rule but belong here too.
-            "Q64_APPLY_REASON", "Q75_ENROLL_RESPONSIBILITY", "Q76_ENROLL_INITIATIVES",
-            "Q78_ENROLL_CHALL_LIST", "Q79_NOT_ACCRED_REASON", "Q94_CHARGE_ADDL_CAP_REASONS",
-            "Q96_NOT_RECEIVED_REASONS", "Q98_PAYMENT_CHALL_LIST", "Q99_EXPAND_NEXT",
-            "Q65_ACCRED_DIFFICULT", "Q66_WHY_DIFF_PREVENTIVE", "Q67_WHY_DIFF_LAB",
-            "Q68_WHY_DIFF_MEDS", "Q69_WHY_DIFF_INFRA", "Q70_WHY_DIFF_EQUIPMENT",
-            "Q71_WHY_DIFF_HR", "Q72_WHY_DIFF_HIS", "Q73_WHY_DIFF_DOCS", "Q74_WHY_DIFF_DOH_LIC",
-            "Q104_BUCAS_SERVICES", "Q105_BUCAS_FACTORS", "Q111_GAMOT_FACTORS",
-            # F1 Section E/G DO-NOT-READ select-all -> Check Box
-            "Q117_ADDR_STOCKOUT_HOW", "Q151_LGU_NOT_SAT_WHY", "Q162_NOT_SATISFIED_WHY",
-            # F1 #636 Section C: Q34 reports-used select_all -> single Check Box.
-            "Q34_DATA_REPORTS_USED",
-            # F1 #576 Carl 'finish F1': 11 more Section G/H select_all -> Check Box.
-            # (#586: Q144_DIFFICULT_REASON re-converted to Check Box per the tester's
-            # PAPI screenshot. #734: Q160_EXTERNAL_SERVICES_GO NOW Check Box too — the R5
-            # tester supplied the PAPI screenshot the #576/#586 hold was waiting on.)
-            "Q144_DIFFICULT_REASON", "Q160_EXTERNAL_SERVICES_GO",
-            "Q137_NBB_BARRIERS", "Q140_ZBB_BARRIERS", "Q146_MALASAKIT_WHY",
-            "Q147_NO_MALASAKIT_WHY", "Q149_LGU_SUPPORT_FORMS", "Q155_SEND_REFERRAL_HOW",
-            "Q156_REFERRAL_FORM_TYPE", "Q159_RECEIVE_REFERRAL_HOW", "Q163_HR_CHALL",
-            "Q165_PD_DOCTORS", "Q166_PD_NURSES",
-            # F1 #567 parts 1 & 2: Section F DOH-licensing why-difficult battery
-            # (Q121 gate + Q122-134 per-topic "why"). Distinct names from F3/F4's
-            # Q121_ZBB_UNDERSTAND / Q122_PCP_* etc., so no cross-instrument collision.
-            "Q121_DOH_LIC_DIFFICULT",
-            "Q122_WHY_DIFF_PT_RIGHTS", "Q123_WHY_DIFF_PT_CARE", "Q124_WHY_DIFF_LEADERSHIP",
-            "Q125_WHY_DIFF_HRM", "Q126_WHY_DIFF_INFO_MGMT", "Q127_WHY_DIFF_SAFE",
-            "Q128_WHY_DIFF_PERF", "Q129_WHY_DIFF_PHYS_PLANT", "Q130_WHY_DIFF_PRICE_INFO",
-            "Q131_WHY_DIFF_EQUIPMENT", "Q132_WHY_DIFF_NAT_LAWS", "Q133_WHY_DIFF_EMERG_CART",
-            "Q134_WHY_DIFF_ADDONS",
+            # ---- F1, re-keyed 2026-08-19 (Task 2.3, Aug-17 migration) ----
+            # The Aug-17 renumber renamed 57 of F1's 58 multi-select bases, so every
+            # F1 entry below is new text for an unchanged field. Q35_2_PCQM_MEASURES is
+            # the one genuinely new base. Derived from FacilityHeadSurvey.dcf (a single
+            # `alpha` item carrying a value set is checkbox_multiselect's only shape) and
+            # checked for collisions against the F3/F4 dictionaries before writing.
+            #
+            # This is the list with a history of being MISSED when the other checkbox
+            # lists moved: an absent name here silently DEMOTES a >=7-option multi-select
+            # to a single-select DropDown, which is multi-select DATA LOSS (it happened to
+            # the F1 #529/#542 batch and again to F3 #635/#639/#640). F1's fmf-side list
+            # is now DERIVED from the dictionary in F1/generate_fmf.py, so this file is
+            # the only F1 copy left that can drift.
+            "Q23_DATA_REPORTS_USED", "Q35_2_PCQM_MEASURES", "Q36_QUALITY_CHALL",
+            "Q37_ACCESS_CHALL", "Q40_YK_PACKAGE", "Q45_PERF_INDICATORS",
+            "Q51_APPLY_REASON", "Q52_ACCRED_DIFFICULT", "Q53_WHY_DIFF_PREVENTIVE",
+            "Q54_WHY_DIFF_LAB", "Q55_WHY_DIFF_MEDS", "Q56_WHY_DIFF_INFRA",
+            "Q57_WHY_DIFF_EQUIPMENT", "Q58_WHY_DIFF_HR", "Q59_WHY_DIFF_HIS",
+            "Q60_WHY_DIFF_DOCS", "Q61_WHY_DIFF_DOH_LIC", "Q62_ENROLL_RESPONSIBILITY",
+            "Q63_ENROLL_INITIATIVES", "Q65_ENROLL_CHALL_LIST", "Q66_NOT_ACCRED_REASON",
+            "Q81_CHARGE_ADDL_CAP_REASONS", "Q83_NOT_RECEIVED_REASONS", "Q85_PAYMENT_CHALL_LIST",
+            "Q86_EXPAND_NEXT", "Q91_BUCAS_SERVICES", "Q92_BUCAS_FACTORS",
+            "Q98_GAMOT_FACTORS", "Q104_ADDR_STOCKOUT_HOW", "Q108_DOH_LIC_DIFFICULT",
+            "Q109_WHY_DIFF_PT_RIGHTS", "Q110_WHY_DIFF_PT_CARE", "Q111_WHY_DIFF_LEADERSHIP",
+            "Q112_WHY_DIFF_HRM", "Q113_WHY_DIFF_INFO_MGMT", "Q114_WHY_DIFF_SAFE",
+            "Q115_WHY_DIFF_PERF", "Q116_WHY_DIFF_PHYS_PLANT", "Q117_WHY_DIFF_PRICE_INFO",
+            "Q118_WHY_DIFF_EQUIPMENT", "Q119_WHY_DIFF_NAT_LAWS", "Q120_WHY_DIFF_EMERG_CART",
+            "Q121_WHY_DIFF_ADDONS", "Q124_NBB_BARRIERS", "Q127_ZBB_BARRIERS",
+            "Q131_DIFFICULT_REASON", "Q133_MALASAKIT_WHY", "Q134_NO_MALASAKIT_WHY",
+            "Q136_LGU_SUPPORT_FORMS", "Q138_LGU_NOT_SAT_WHY", "Q142_SEND_REFERRAL_HOW",
+            "Q143_REFERRAL_FORM_TYPE", "Q146_RECEIVE_REFERRAL_HOW", "Q147_EXTERNAL_SERVICES_GO",
+            "Q149_NOT_SATISFIED_WHY", "Q150_HR_CHALL", "Q152_PD_DOCTORS",
+            "Q153_PD_NURSES",
             # F3 #529 conversions
             "Q36_UHC_SOURCE", "Q37_UHC_UNDERSTAND", "Q46_BENEFITS", "Q65_WHY_NO_USUAL",
             "Q67_WHY_THIS_FACILITY", "Q76_KON_UNDERSTAND", "Q101_BUCAS_UNDERSTAND",

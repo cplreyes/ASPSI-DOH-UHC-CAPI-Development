@@ -1,5 +1,21 @@
 #!/usr/bin/env python3
-r"""Relocate F1's "Field Control" form to the CLOSING position — right before the
+r"""
+RETIRED 2026-08-19 - superseded by generate_fmf.py; kept for history.
+========================================================================
+F1's .fmf was hand-maintained, and this script was one of eleven idempotent post-processors
+that patched it by locating fields by NAME and geometry. The Aug-17 instrument renumber
+(Task 2.2) renamed ~112 of 320 dictionary items, invalidating those anchors, so F1 adopted
+the F3/F4 generator (Task 2.3). Do NOT run this file; do not delete it either - the WHY
+recorded below is the reason each invariant is worth preserving.
+
+WHERE THIS SCRIPT'S INVARIANT LIVES NOW
+---------------------------------------
+FORM_PLAN's order (Field Control -> Case Verification Photo -> Facility GPS), and
+generate_fmf._assert_form_invariants(), which fails the build if Field Control is
+not immediately before the photo. As here, there is deliberately NO 'photo must be
+last' assertion - GPS sits after it since #157.
+========================================================================
+Relocate F1's "Field Control" form to the CLOSING position — right before the
 Case Verification Photo — in the hand-maintained FacilityHeadSurvey.fmf.
 
 WHY THIS EXISTS (UAT R4 #622, 2026-06-20)
@@ -137,4 +153,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(
+        "RETIRED 2026-08-19 - superseded by F1/generate_fmf.py; this script must NOT be run.\n"
+        "It anchors on pre-Aug-17 field names and geometry, so against the current instrument\n"
+        "it would either abort or silently mis-place fields in a file that is now rebuilt from\n"
+        "the dictionary on every build. See the module docstring for the invariant it used to\n"
+        "enforce and where that invariant lives today.")

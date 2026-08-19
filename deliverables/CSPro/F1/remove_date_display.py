@@ -1,5 +1,20 @@
 #!/usr/bin/env python3
-r"""Reverse inject_date_display.py: remove the #1099 MM/DD/YYYY echo fields.
+r"""
+RETIRED 2026-08-19 - superseded by generate_fmf.py; kept for history.
+========================================================================
+F1's .fmf was hand-maintained, and this script was one of eleven idempotent post-processors
+that patched it by locating fields by NAME and geometry. The Aug-17 instrument renumber
+(Task 2.2) renamed ~112 of 320 dictionary items, invalidating those anchors, so F1 adopted
+the F3/F4 generator (Task 2.3). Do NOT run this file; do not delete it either - the WHY
+recorded below is the reason each invariant is worth preserving.
+
+WHERE THIS SCRIPT'S INVARIANT LIVES NOW
+---------------------------------------
+Obsolete on both sides - the undo half of the #1099/#1132 pair. The net state (no echo
+fields) is the dictionary's, and generate_fmf places exactly what the dictionary
+holds. See inject_date_display.py.
+========================================================================
+Reverse inject_date_display.py: remove the #1099 MM/DD/YYYY echo fields.
 
 #1132 retest (2026-08-10): ASPSI's reviewer circled both echo rows on-device as
 confusing (four date rows for two dates) and asked for their removal. The
@@ -98,4 +113,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(
+        "RETIRED 2026-08-19 - superseded by F1/generate_fmf.py; this script must NOT be run.\n"
+        "It anchors on pre-Aug-17 field names and geometry, so against the current instrument\n"
+        "it would either abort or silently mis-place fields in a file that is now rebuilt from\n"
+        "the dictionary on every build. See the module docstring for the invariant it used to\n"
+        "enforce and where that invariant lives today.")
