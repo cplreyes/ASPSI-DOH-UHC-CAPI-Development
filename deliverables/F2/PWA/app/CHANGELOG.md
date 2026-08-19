@@ -6,6 +6,12 @@ All notable changes to the F2 Healthcare Worker Survey PWA (HCW Survey side + Ad
 
 ---
 
+## Post-pretest — DOH/XJ review remediation (2026-08-19)
+
+### Other
+- [XJ Review · F4 Household] Tracking epic — PAPI-vs-CAPI findings ([#850](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/850))
+- [XJ Review · F2 HCW] Tracking epic — PAPI-vs-CAPI findings ([#849](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/849))
+
 ## v2.1.0 — R3 fix wave + Q35 partial-date + AS auto-deploy (2026-06-01)
 
 ### Fixed
