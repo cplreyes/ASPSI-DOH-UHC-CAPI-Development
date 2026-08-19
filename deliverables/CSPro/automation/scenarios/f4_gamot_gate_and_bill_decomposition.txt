@@ -1,0 +1,225 @@
+# aug17 Task 1.9: end-to-end case-start walkthrough exercising every section
+# gate named in the controller addendum -- dug-well renumber (Q22-Q29), the
+# GAMOT auto-answer gate (Q62=Never -> AREA_HAS_GAMOT -> Q69), the Section H
+# registered-only structural guard (Q45=No -> skip straight to Q89), the
+# Section I leapfrog class (Q89=No -> Q93), and the bill-recall module entry
+# (Q136/Q138/Q139/Q140, stopping before the Q141 receipt-branch fork -- see
+# f4_bill_receipt_branch.txt for both Q141 branches through Q142/Q143).
+#
+# Field order fully re-verified against CURRENT source (generate_dcf.py
+# build_section_a/b/c, HouseholdSurvey.fmf form list, HouseholdSurvey.dcf
+# JSON record order) after two prior scenario attempts failed on stale
+# assumptions inherited from pre-2026-07-14 scenario files:
+#   (1) attempt 1 assumed the OLD form order (case-key -> field-control ->
+#       geo-cascade -> GPS -> photo -> Section A) -- WRONG. Current order is
+#       case-key -> Section A (ICF_PART1/PART2, Q1) -> Interview status
+#       (BREAKOFF) -> FC Geographic ID (REGION/PROVINCE/CITY auto-derived +
+#       protected from the case key; only CLASSIFICATION/BARANGAY/HH_ADDRESS
+#       need input) -> Section B. GPS + verification photo moved to the very
+#       END of the form list (FORM055/FORM056, after Section Q closing).
+#   (2) attempt 2 fixed the prefix but missed that Section B now has
+#       Q6_CIVIL_STATUS inserted between Q5_GROUP and Q7_IS_PWD (an extra
+#       stray `key {ENTER}` landed blank on Q6, which then swallowed every
+#       following keystroke silently -- no runner-level error, just a stuck
+#       modal the script never dismissed). Fixed here: Section B's field
+#       list is now read directly from generate_dcf.py's build_section_b()
+#       items[] (RESPONDENT_NAME, Q2mo, Q2yr, Q2.1age, Q3sex, Q4lgbtqia,
+#       Q5group, [Q5_other skipped], Q6civilstatus, Q7pwd, [Q8/Q9/Q10
+#       skipped on Q7=No], Q11edu, [Q11_other skipped], Q12employment,
+#       Q13income, Q14ip, [Q15 skipped on Q14=No], Q16_4ps, Q17decision,
+#       [Q17_other skipped], Q18amount, Q18bracket, Q19/20/21).
+# Neither of these is a build defect -- both are documented, deliberate
+# reorders/insertions (the ICF-move mirrors F3's own 2026-08-14 change; the
+# Q6 insertion is a normal paper-aligned field, not a renumber-bug class
+# item like the Q26 dug-well fix). Recorded here for the next scenario
+# author's benefit, not as a concern for the task report.
+
+rmdata ../F4/desktest.csdb
+launch ../F4/HouseholdSurvey_desktest.pff
+
+# ---- case key (auto-advance at full width) ----
+casekey 01 02 800 01 001
+
+# ---- Section A: ICF_PART1, ICF_PART2 (both "1 Continue"), Q1 HH head = Yes ----
+type 1
+type 1
+note Q1 HH head = Yes
+type 1
+shot after_section_a
+
+# ---- Interview status: BREAKOFF = Continue (1) ----
+type 1
+
+# ---- FC Geographic ID: REGION/PROVINCE/CITY auto-derived+protected (no
+#      input needed); CLASSIFICATION = UHC IS (1) ----
+type 1
+note Barangay picker -> click first row (Adams - Adams), confirmed via probe screenshot
+click 1000 211
+type TESTADDRESS BULACAN
+key {ENTER}
+shot after_hh_address_expect_section_b
+
+# ---- Section B respondent profile (Q2-Q21), field order re-verified against source ----
+type JUANDELACRUZ
+key {ENTER}
+note Q2 birth month = 06, Q2 birth year = 1990, Q2.1 age confirm = 036
+type 06
+type 1990
+type 036
+note Q3 sex = Male (1)
+type 1
+note Q4 LGBTQIA = Yes (1) -> triggers Q5 group
+type 1
+note Q5 group = Lesbian (1) -- single-digit select-one, auto-advances, NO extra ENTER
+type 1
+shot b_after_q5_before_q6
+note Q6 civil status = Single/Never Married (1)
+type 1
+note Q7 PWD = No (2) -> skips Q8/Q9/Q10 to Q11
+type 2
+note Q11 education = 02 (avoid code 11 Other)
+type 02
+note Q12 employment = 1
+type 1
+note Q13 income source = 01
+type 01
+note Q14 IP member = No (2) -> skips Q15 to Q16
+type 2
+note Q16 4Ps = No (2)
+type 2
+note Q17 decision maker = 01 (Me, respondent) -- avoid code 12 Other
+type 01
+shot b_after_q17_before_q18
+
+# ---- Q18 income (valid, matching bracket 1 "Under 50,000") -> Q19/20/21 ----
+type 5000
+key {ENTER}
+note Q18 bracket = 01 (Under 50,000; Q18_INCOME_BRACKET is length=2, zero-padded -- a bare '1' pads to bracket 10 = 450k-499k, which is exactly the bug the FIRST version of this scenario hit) -- matches the 5000 amount, no HARD reject expected
+type 01
+shot b_after_q18
+note Q19 HH size = 1 (single-member household, keeps the roster short) -- Q19/Q20/Q21
+note  are all length=3 numerics; a full 3-digit type auto-advances, NO trailing ENTER
+note  needed (the 2nd version of this scenario had a stray ENTER here that blanked
+note  Q20_HH_CHILDREN, same bug class as the earlier Q6 stray-ENTER fix)
+type 001
+type 000
+type 000
+shot b_after_q21
+
+# ---- Q22-Q29: household characteristics incl. the Q26 dug-well insertion ----
+note Q22 electricity = Yes
+type 1
+note Q23 water source = Faucet inside the house (1)
+type 1
+note Q24 own/share faucet = Own (1)
+type 1
+note Q25 own/share tube = Own (1)
+type 1
+note Q26 DUG-WELL item (renumber evidence) -- own/share = Own (1)
+type 1
+shot b_q26_dugwell
+note Q27 refrigerator = No, Q28 television = No, Q29 washing machine = No
+type 2
+type 2
+type 2
+note Q29 socioeconomic class -- pick option 1
+type 1
+shot b_after_q29_appliances
+
+# ---- Section C roster (Q30-Q46), 1 member, fast-skip path ----
+type JUANDELACRUZ
+key {ENTER}
+note Q31 present = Present (1)
+type 1
+note Q32 age = 036 (3-digit, full width auto-advance)
+type 036
+note Q33 sex = Male (1)
+type 1
+note Q34 relationship = Head (01)
+type 01
+note Q35 has disability = No (0) -> skips Q36/Q37/Q38
+type 0
+note Q39 civil status = Single (1)
+type 1
+note Q40 education = 02 (avoid code 11 Other)
+type 02
+note Q41 employment = 1
+type 1
+note Q42 GSIS = No (02), Q43 SSS = No (02), Q44 Pag-ibig = No (02)
+type 02
+type 02
+type 02
+note Q45 PhilHealth registered = No (02) -> Q45.1/Q46 skipped, Q45.2 why-not asked; roster auto-ends after (Q19=1)
+type 02
+note Q45.2 why not registered = Difficult to register (01)
+type 01
+shot c_after_roster_q452
+
+# ---- Q47 HH private-insurance gate = No -> skip the whole priv-ins roster ----
+type 2
+shot c_after_q47
+
+# ---- Section D/E/F awareness gates, all No -> avoid every checkbox in D/E/F ----
+note Q51 UHC heard = No -> Q54
+type 2
+note Q54 YAKAP heard = No -> AREA_HAS_BUCAS (noinput, auto) -> Q57
+type 2
+note Q57 BUCAS heard = No -> Q62 (skips Q58-61)
+type 2
+shot f_before_q62
+
+# ---- Section G: Q62=Never fires the AREA_HAS_GAMOT auto-answer gate ----
+note Q62 purchase freq = Never (5) -> AREA_HAS_GAMOT (noinput,auto=1) -> lands on Q69, NOT Q63-68
+type 5
+shot g_after_q62_never
+note Q69 GAMOT heard = No (2) -> Q75 (skips Q70/Q71 checkboxes, Q72/Q73/Q74)
+type 2
+note Q75 knows branded/generic = No (2) -- #538 fix: falls through NORMALLY to Q76
+note  (does NOT skip Section G -- an earlier scenario draft wrongly assumed it did).
+type 2
+note Q76 branded/generic = Don't know the difference (4) -> skips Q77/Q78 checkboxes,
+note  routes straight to Q79_REG_SOURCE. Q79's OWN preproc gate (Q45_PHILHEALTH_REG(1)
+note  <>1, and Q45=No above) then silently redirects the WHOLE Section H to Q89 -- this
+note  is the Section H structural-guard row in the matrix. No typing needed for the
+note  Q79 guard itself, it fires automatically.
+type 4
+shot g_after_q76_expect_section_h_guard
+
+# ---- Section I: EXPECT field is now Q89_HAS_USUAL_FACILITY, Section H (Q79-88) never displayed ----
+shot i_at_q89_confirms_h_guard
+note Q89 has usual facility = No (2) -> skips Q89.1/Q90/Q91/Q92, lands on Q93 (Check Box)
+type 2
+shot i_before_q93_checkbox
+note Q93 WHY_NOT is a Check Box (tick-all) base -- typing the numeric code did NOT
+note  work (out-of-range on '1' -- codes are 2-digit '01'..'90' and the field is a
+note  genuine multi-select tick list, not a typed select-one). Probe: click the
+note  tick-box next to option 01 directly (coords read from the picker screenshot).
+click 964 325
+shot i_q93_after_click_probe
+note if the tick-box registered, the field should now show '01' filled and the
+note  >=1-option HARD validation should pass on advance; try ENTER to submit.
+key {ENTER}
+shot i_q93_after_click_and_enter
+
+note Q94 TRANSPORT (Check Box) -- tick-box coords read from this run's own
+note  i_q93_after_click_and_enter shot (option 01 Walk at approx 1104,334)
+click 1104 334
+key {ENTER}
+shot after_q94
+
+note Q95 travel time = 010 min (length=3, full-width auto-advance)
+type 010
+note Q96 travel cost = 00050 PHP (length=5, full-width auto-advance)
+type 00050
+note Q97 knows booking = No (2) -> skips Q98/Q99 to Q100
+type 2
+note Q100 leave work/school = No (2)
+type 2
+shot j_before_q101
+
+# ---- Section J (Q101-107), respondent-level, no roster ----
+note Q101 checkup freq = Never (6) -- NO skip rule on Q101 in current build (checked
+note  generate_apc.py directly -- the doc's old Q101=Never->Q105 row is stale), so
+note  Q102/Q103 checkboxes and Q104 ARE still asked regardless of this answer.
+type 6
+shot j_before_q102_checkbox

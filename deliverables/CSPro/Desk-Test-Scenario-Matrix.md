@@ -275,12 +275,17 @@ filling it then setting `CONSENT_GIVEN=2` fires the exact logic: errmsg "Respond
 ## F4.E Other branches + dynamic / special
 | ID | Setup → Input | Expected | Result | Shot |
 |---|---|---|---|---|
-| F4-DT-21 | `Q76_BRAND_OR_GEN = Branded(1)` | `SKIP→ Q78_WHY_BRANDED_O01` (skip Q77); 3/4 → Q79 | | |
-| F4-DT-22 | Awareness gate sample (`Q51_UHC_HEARD in 2,3`) | `SKIP→ Q54_YAKAP_HEARD` | | |
-| F4-DT-23 | Section M `Q129_HH_CONFINED = No(2)` | `SKIP→ Q144_CEREALS_CONSUMED` (skip Section M) | | |
-| F4-DT-24 | PSGC cascade `REGION→…→BARANGAY` | child value sets filter to parent | | |
-| F4-DT-25 🔌 | `CAPTURE_HH_GPS` | GPS into `LATITUDE/LONGITUDE/HH_GPS_*` (DEVICE-ONLY) | | |
-| F4-DT-26 📷 | `CAPTURE_VERIFICATION_PHOTO` | Camera → JPG (DEVICE-ONLY) | | |
+| F4-DT-21 | `Q76_BRAND_OR_GEN = Branded(1)` | `SKIP→ Q78_WHY_BRANDED` (bare Check Box base, no `_O01` suffix since #529 — this row's target name was stale); `4`/`5` → Q79 | **PASS 2026-08-19** (code-verified, Task 1.9) | |
+| F4-DT-22 | Awareness gate sample (`Q51_UHC_HEARD = 2`) | `SKIP→ Q54_YAKAP_HEARD` (code 3 "Don't know" doesn't exist on this item — the old `in 2,3` carried a dead code) | **PASS 2026-08-19** (runtime, Task 1.9, `scenarios/f4_gamot_gate_and_bill_decomposition.txt`) | |
+| F4-DT-23 | Section L `Q129_HH_CONFINED = No(2)` | `SKIP→ Q132_ZBB_HEARD` (skip ONLY Q130/Q131 NBB detail — **not** `Q144`; the confinement gate on the whole of Section M was REMOVED by #625/#626/#699/#701, this row's old target was stale/superseded) | **PASS 2026-08-19** (code-verified, Task 1.9 — not separately live-walked, see F4-tier2-matrix.md) | |
+| F4-DT-24 | PSGC cascade `REGION→…→BARANGAY` | Region/Province/City are now auto-derived + protected straight from the 12-digit case key (single-number redesign); only Barangay is still a manual picker, filtered by the derived city code | **PASS 2026-08-19** (runtime, Task 1.9) | |
+| F4-DT-25 🔌 | `CAPTURE_HH_GPS` | GPS into `LATITUDE/LONGITUDE/HH_GPS_*` (DEVICE-ONLY); form moved to the very end of the interview (after Section Q closing) in the current build | | |
+| F4-DT-26 📷 | `CAPTURE_VERIFICATION_PHOTO` | Camera → JPG (DEVICE-ONLY); form moved to the very end of the interview alongside GPS | | |
+| F4-DT-28 | Section G: `Q62_PURCHASE_FREQ = Never(5)` | `SKIP→ AREA_HAS_GAMOT` (auto-answered/noinput gate, #643/#797) `→ Q69_GAMOT_HEARD` directly, Q63-Q68 never shown | **PASS 2026-08-19** (runtime, Task 1.9, `f4-gamot-gate-q62-never-lands-q69.png`) | ✓ |
+| F4-DT-29 | Section H structural guard: primary respondent `Q45_PHILHEALTH_REG(1) = No(2)` | `SKIP→` the entire Section H block (Q79-Q88) never displays; lands on `Q89_HAS_USUAL_FACILITY` | **PASS 2026-08-19** (runtime, Task 1.9, `f4-section-h-guard-and-section-i-leapfrog-q89.png`) | ✓ |
+| F4-DT-30 | Section I leapfrog: `Q89_HAS_USUAL_FACILITY = No(2)` | `SKIP→ Q93_WHY_NOT` directly (Q89.1/Q90/Q91/Q92 all skipped) — F3-PATIENT_TYPE-class multi-skip reconvergence risk | **PASS 2026-08-19** (runtime, Task 1.9 — No/IDK branch only; Yes branch code-verified, not separately live-walked) | ✓ |
+| F4-DT-31 | Household characteristics: dug-well renumber `Q26_DUG_WELL_SHARE` | Displays as its own screen between Q25 (tube/pipe) and Q27 (refrigerator); Q27/Q28/Q29 (renumbered from Q26/Q27/Q28) all present, none dropped/duplicated | **PASS 2026-08-19** (runtime, Task 1.9, `f4-dugwell-q26-between-q25-and-q27.png`) | ✓ |
+| F4-DT-32 | Check Box (tick-all) interaction, `Q93_WHY_NOT` / `Q94_TRANSPORT` | Typing a numeric option code directly is INVALID (`out of range`) — the field requires a mouse click on the tick-box glyph; confirmed working via direct click, twice | **PASS 2026-08-19** (runtime, Task 1.9, `f4-section-i-q93-checkbox-tickall-confirmed.png`) | ✓ |
 
 ## F4.F Multi-language
 | ID | Setup → Input | Expected | Result | Shot |
