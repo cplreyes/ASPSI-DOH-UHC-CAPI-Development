@@ -863,8 +863,10 @@ SKIP_RULES = [
     ("Q72_GAMOT_OBTAINED",   "Q72_GAMOT_OBTAINED = 2",      "Q74_WHERE_REST"),
     # #538: REMOVED the Q75=No -> Q79 skip. Q75 ("know branded vs generic difference?") = No
     # must now fall through to Q76 (was wrongly exiting Section G). Q76 still terminates the
-    # section on its own (PROC Q76_BRAND_OR_GEN: code 9 'Not applicable' -> Q79; Branded ->
-    # Q78; Generic/Both -> Q77 -> Q78 -> Q79). No replacement skip needed — natural fall-through.
+    # section on its own (PROC Q76_BRAND_OR_GEN: codes 4 'Don't know the difference' and
+    # 5 'Not applicable' -> Q79 [1176-aug17 recode, was code 9 pre-aug17 -- comment fixed
+    # fix round 2, 2026-08-19]; Branded -> Q78; Generic/Both -> Q77 -> Q78 -> Q79). No
+    # replacement skip needed — natural fall-through.
     # Section H — PhilHealth / Insurance
     ("Q81_REG_DIFFICULTY",   "Q81_REG_DIFFICULTY = 2",      "Q83_KNOWS_ASSIST"),
     ("Q83_KNOWS_ASSIST",     "Q83_KNOWS_ASSIST = 2",        "Q85_BENEFITS"),   # #529: Q85 is now a Check Box base (was _O01)
@@ -981,7 +983,12 @@ postproc
 # is just the gating logic.
 Q142_MATRIX_SOURCES = [
     ("SALARY", False), ("LOAN", False), ("SAVINGS", False),
-    ("PRIV_DONATION", False), ("MALASAKIT", False), ("GOV_DONATION", True),
+    ("PRIV_DONATION", False), ("MALASAKIT", False),
+    # Fix round 2 (2026-08-19): item 6's "Yes, specify:" label is category-
+    # descriptive (Q133/Q134 no-visible-blank convention), not a real specify
+    # invitation -- has_specify=False, matching the ruling. Was wrongly True in
+    # the first pass.
+    ("GOV_DONATION", False),
     ("SALE_ASSETS", False), ("PAID_OTHER", False), ("MAIFIP", False),
     ("PHILHEALTH_NBB", False), ("SSS", False), ("GSIS", False),
     ("PRIVATE_INS", False), ("HMO", False), ("QFS", False), ("OTHER", True),

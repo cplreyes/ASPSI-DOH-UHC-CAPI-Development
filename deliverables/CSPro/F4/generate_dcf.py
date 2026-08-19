@@ -1727,7 +1727,14 @@ def build_section_m():
         *_settlement_source("SAVINGS",        "Savings", False, 3),
         *_settlement_source("PRIV_DONATION",  "Donation/Charity/Assistance from Private Organization", False, 4),
         *_settlement_source("MALASAKIT",      "Malasakit Center", False, 5),
-        *_settlement_source("GOV_DONATION",   "Other Donation/Charity/Assistance from Government Organization", True, 6),
+        # Fix round 2 (2026-08-19, controller ruling): item 6's "Yes, specify:"
+        # label is category-descriptive (same no-visible-blank convention as
+        # Q133/Q134's "Other (Specify)" elsewhere in this paper), NOT a real
+        # specify-text invitation like item 16's -- has_specify=False, matching
+        # the ruling ("item 6 NO specify-text"). Was wrongly built with
+        # has_specify=True in the first pass (the register row documented the
+        # correct intent while the code did not match it -- fixed here).
+        *_settlement_source("GOV_DONATION",   "Other Donation/Charity/Assistance from Government Organization", False, 6),
         *_settlement_source("SALE_ASSETS",    "Sale of Assets", False, 7),
         *_settlement_source("PAID_OTHER",     "Paid by someone else", False, 8),
         *_settlement_source("MAIFIP",         "MAIFIP", False, 9),

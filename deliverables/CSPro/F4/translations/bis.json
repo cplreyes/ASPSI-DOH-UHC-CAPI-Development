@@ -378,7 +378,7 @@
   "item:Q76_BRAND_OR_GEN": "Ang tambal ba nga imong napalit gawas sa GAMOT pharmacy kay branded o generic?",
   "vs:Q76_BRAND_OR_GEN_VS1": "Ang tambal ba nga imong napalit gawas sa GAMOT pharmacy kay branded o generic?",
   "val:Q76_BRAND_OR_GEN_VS1:3": "Pareho branded ug generic",
-  "val:Q76_BRAND_OR_GEN_VS1:9": "Dili applicable",
+  "val:Q76_BRAND_OR_GEN_VS1:5": "Dili applicable",
   "item:Q77_WHY_GENERIC": "Kung generic, nganong generic nga tambal man ang imong gipalit?",
   "vs:Q77_WHY_GENERIC_VS1": "Kung generic, nganong generic nga tambal man ang imong gipalit?",
   "val:Q77_WHY_GENERIC_VS1:01": "Mas ubos ang presyo",

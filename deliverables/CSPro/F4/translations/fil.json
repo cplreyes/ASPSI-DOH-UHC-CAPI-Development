@@ -375,7 +375,7 @@
   "item:Q76_BRAND_OR_GEN": "Ang (mga) gamot na binili mo sa labas ng GAMOT pharmacy ay branded ba o generic?",
   "vs:Q76_BRAND_OR_GEN_VS1": "Ang (mga) gamot na binili mo sa labas ng GAMOT pharmacy ay branded ba o generic?",
   "val:Q76_BRAND_OR_GEN_VS1:3": "Parehong branded at generic",
-  "val:Q76_BRAND_OR_GEN_VS1:9": "Hindi naaangkop",
+  "val:Q76_BRAND_OR_GEN_VS1:5": "Hindi naaangkop",
   "item:Q77_WHY_GENERIC": "Kung generic, bakit ka bumili ng generic na gamot?",
   "vs:Q77_WHY_GENERIC_VS1": "Kung generic, bakit ka bumili ng generic na gamot?",
   "val:Q77_WHY_GENERIC_VS1:01": "Mas mababang halaga",

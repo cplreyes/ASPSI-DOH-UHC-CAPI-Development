@@ -577,7 +577,7 @@ Item=Q131_NBB_OOP
 Name=FORM038
 Label=M. ZBB / MAIFIP / Bill-Recall
 Level=1
-Size=806,1567
+Size=806,1537
   
 Item=Q132_ZBB_HEARD
 Item=Q133_ZBB_SOURCE
@@ -605,7 +605,6 @@ Item=Q142_PRIV_DONATION_AMT_PHP
 Item=Q142_MALASAKIT_YN
 Item=Q142_MALASAKIT_AMT_PHP
 Item=Q142_GOV_DONATION_YN
-Item=Q142_GOV_DONATION_TXT
 Item=Q142_GOV_DONATION_AMT_PHP
 Item=Q142_SALE_ASSETS_YN
 Item=Q142_SALE_ASSETS_AMT_PHP
@@ -4940,292 +4939,279 @@ Text=142.6) Other Donation/Charity/Assistance from Government Organization — p
  
   
 [Field]
-Name=Q142_GOV_DONATION_TXT
-Position=350,807,760,827
-Item=Q142_GOV_DONATION_TXT,HOUSEHOLDSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=39
-  
-[Text]
-Position=50,810,330,826
-Text=142.6) Other Donation/Charity/Assistance from Government Organization — specify text
- 
-  
-[Field]
 Name=Q142_GOV_DONATION_AMT_PHP
-Position=350,837,760,857
+Position=350,807,760,827
 Item=Q142_GOV_DONATION_AMT_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=39
   
 [Text]
-Position=50,840,330,856
+Position=50,810,330,826
 Text=142.6) Other Donation/Charity/Assistance from Government Organization — Amount in Pesos (PHP)
  
   
 [Field]
 Name=Q142_SALE_ASSETS_YN
-Position=350,867,365,887
+Position=350,837,365,857
 Item=Q142_SALE_ASSETS_YN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=39
   
 [Text]
-Position=50,870,330,886
+Position=50,840,330,856
 Text=142.7) Sale of Assets — paid from this source?
  
   
 [Field]
 Name=Q142_SALE_ASSETS_AMT_PHP
-Position=350,897,760,917
+Position=350,867,760,887
 Item=Q142_SALE_ASSETS_AMT_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=39
   
 [Text]
-Position=50,900,330,916
+Position=50,870,330,886
 Text=142.7) Sale of Assets — Amount in Pesos (PHP)
  
   
 [Field]
 Name=Q142_PAID_OTHER_YN
-Position=350,927,365,947
+Position=350,897,365,917
 Item=Q142_PAID_OTHER_YN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=39
   
 [Text]
-Position=50,930,330,946
+Position=50,900,330,916
 Text=142.8) Paid by someone else — paid from this source?
  
   
 [Field]
 Name=Q142_PAID_OTHER_AMT_PHP
-Position=350,957,760,977
+Position=350,927,760,947
 Item=Q142_PAID_OTHER_AMT_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=39
   
 [Text]
-Position=50,960,330,976
+Position=50,930,330,946
 Text=142.8) Paid by someone else — Amount in Pesos (PHP)
  
   
 [Field]
 Name=Q142_MAIFIP_YN
-Position=350,987,365,1007
+Position=350,957,365,977
 Item=Q142_MAIFIP_YN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=39
   
 [Text]
-Position=50,990,330,1006
+Position=50,960,330,976
 Text=142.9) MAIFIP — paid from this source?
  
   
 [Field]
 Name=Q142_MAIFIP_AMT_PHP
-Position=350,1017,760,1037
+Position=350,987,760,1007
 Item=Q142_MAIFIP_AMT_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=39
   
 [Text]
-Position=50,1020,330,1036
+Position=50,990,330,1006
 Text=142.9) MAIFIP — Amount in Pesos (PHP)
  
   
 [Field]
 Name=Q142_PHILHEALTH_NBB_YN
-Position=350,1047,365,1067
+Position=350,1017,365,1037
 Item=Q142_PHILHEALTH_NBB_YN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=39
   
 [Text]
-Position=50,1050,330,1066
+Position=50,1020,330,1036
 Text=142.10) PhilHealth/NBB — paid from this source?
  
   
 [Field]
 Name=Q142_PHILHEALTH_NBB_AMT_PHP
-Position=350,1077,760,1097
+Position=350,1047,760,1067
 Item=Q142_PHILHEALTH_NBB_AMT_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=39
   
 [Text]
-Position=50,1080,330,1096
+Position=50,1050,330,1066
 Text=142.10) PhilHealth/NBB — Amount in Pesos (PHP)
  
   
 [Field]
 Name=Q142_SSS_YN
-Position=350,1107,365,1127
+Position=350,1077,365,1097
 Item=Q142_SSS_YN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=39
   
 [Text]
-Position=50,1110,330,1126
+Position=50,1080,330,1096
 Text=142.11) SSS — paid from this source?
  
   
 [Field]
 Name=Q142_SSS_AMT_PHP
-Position=350,1137,760,1157
+Position=350,1107,760,1127
 Item=Q142_SSS_AMT_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=39
   
 [Text]
-Position=50,1140,330,1156
+Position=50,1110,330,1126
 Text=142.11) SSS — Amount in Pesos (PHP)
  
   
 [Field]
 Name=Q142_GSIS_YN
-Position=350,1167,365,1187
+Position=350,1137,365,1157
 Item=Q142_GSIS_YN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=39
   
 [Text]
-Position=50,1170,330,1186
+Position=50,1140,330,1156
 Text=142.12) GSIS — paid from this source?
  
   
 [Field]
 Name=Q142_GSIS_AMT_PHP
-Position=350,1197,760,1217
+Position=350,1167,760,1187
 Item=Q142_GSIS_AMT_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=39
   
 [Text]
-Position=50,1200,330,1216
+Position=50,1170,330,1186
 Text=142.12) GSIS — Amount in Pesos (PHP)
  
   
 [Field]
 Name=Q142_PRIVATE_INS_YN
-Position=350,1227,365,1247
+Position=350,1197,365,1217
 Item=Q142_PRIVATE_INS_YN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=39
   
 [Text]
-Position=50,1230,330,1246
+Position=50,1200,330,1216
 Text=142.13) Private Insurance — paid from this source?
  
   
 [Field]
 Name=Q142_PRIVATE_INS_AMT_PHP
-Position=350,1257,760,1277
+Position=350,1227,760,1247
 Item=Q142_PRIVATE_INS_AMT_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=39
   
 [Text]
-Position=50,1260,330,1276
+Position=50,1230,330,1246
 Text=142.13) Private Insurance — Amount in Pesos (PHP)
  
   
 [Field]
 Name=Q142_HMO_YN
-Position=350,1287,365,1307
+Position=350,1257,365,1277
 Item=Q142_HMO_YN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=39
   
 [Text]
-Position=50,1290,330,1306
+Position=50,1260,330,1276
 Text=142.14) HMO — paid from this source?
  
   
 [Field]
 Name=Q142_HMO_AMT_PHP
-Position=350,1317,760,1337
+Position=350,1287,760,1307
 Item=Q142_HMO_AMT_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=39
   
 [Text]
-Position=50,1320,330,1336
+Position=50,1290,330,1306
 Text=142.14) HMO — Amount in Pesos (PHP)
  
   
 [Field]
 Name=Q142_QFS_YN
-Position=350,1347,365,1367
+Position=350,1317,365,1337
 Item=Q142_QFS_YN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=39
   
 [Text]
-Position=50,1350,330,1366
+Position=50,1320,330,1336
 Text=142.15) Quantified Free Service — paid from this source?
  
   
 [Field]
 Name=Q142_QFS_AMT_PHP
-Position=350,1377,760,1397
+Position=350,1347,760,1367
 Item=Q142_QFS_AMT_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=39
   
 [Text]
-Position=50,1380,330,1396
+Position=50,1350,330,1366
 Text=142.15) Quantified Free Service — Amount in Pesos (PHP)
  
   
 [Field]
 Name=Q142_OTHER_YN
-Position=350,1407,365,1427
+Position=350,1377,365,1397
 Item=Q142_OTHER_YN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=39
   
 [Text]
-Position=50,1410,330,1426
+Position=50,1380,330,1396
 Text=142.16) Other (specify) — paid from this source?
  
   
 [Field]
 Name=Q142_OTHER_TXT
-Position=350,1437,760,1457
+Position=350,1407,760,1427
 Item=Q142_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=39
   
 [Text]
-Position=50,1440,330,1456
+Position=50,1410,330,1426
 Text=142.16) Other (specify) — specify text
  
   
 [Field]
 Name=Q142_OTHER_AMT_PHP
-Position=350,1467,760,1487
+Position=350,1437,760,1457
 Item=Q142_OTHER_AMT_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=39
   
 [Text]
-Position=50,1470,330,1486
+Position=50,1440,330,1456
 Text=142.16) Other (specify) — Amount in Pesos (PHP)
  
   
 [Field]
 Name=Q143_NO_RECEIPT_AMT_PHP
-Position=350,1497,760,1517
+Position=350,1467,760,1487
 Item=Q143_NO_RECEIPT_AMT_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=39
   
 [Text]
-Position=50,1500,330,1516
+Position=50,1470,330,1486
 Text=143. From your recent visit, how much was charged for services with no receipts provided (i.e. Professional fees)? (PHP)
  
   
@@ -5567,16 +5553,9 @@ Length=1
   
 [Block]
 Name=DG_BLK_177
-Label=Q142
-DisplayTogether=Yes
-Position=96
-Length=1
-  
-[Block]
-Name=DG_BLK_178
 Label=Q143
 DisplayTogether=Yes
-Position=98
+Position=96
 Length=1
   
 [EndGroup]
@@ -6311,42 +6290,42 @@ Text=196. If your household chooses not to spend on health care for financial re
  
   
 [Block]
-Name=DG_BLK_179
+Name=DG_BLK_178
 Label=Q186-Q190
 DisplayTogether=Yes
 Position=0
 Length=5
   
 [Block]
-Name=DG_BLK_180
+Name=DG_BLK_179
 Label=Q191-Q194
 DisplayTogether=Yes
 Position=6
 Length=4
   
 [Block]
-Name=DG_BLK_181
+Name=DG_BLK_180
 Label=Q194
 DisplayTogether=Yes
 Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_182
+Name=DG_BLK_181
 Label=Q195
 DisplayTogether=Yes
 Position=13
 Length=1
   
 [Block]
-Name=DG_BLK_183
+Name=DG_BLK_182
 Label=Q196
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_BLK_184
+Name=DG_BLK_183
 Label=Q196
 DisplayTogether=Yes
 Position=17
@@ -6411,14 +6390,14 @@ Text=199. Other (Specify) — text
  
   
 [Block]
-Name=DG_BLK_185
+Name=DG_BLK_184
 Label=Q197-Q199
 DisplayTogether=Yes
 Position=0
 Length=3
   
 [Block]
-Name=DG_BLK_186
+Name=DG_BLK_185
 Label=Q199
 DisplayTogether=Yes
 Position=4
@@ -6483,28 +6462,28 @@ Text=202. Do any of the following reasons describe why you are worried about you
  
   
 [Block]
-Name=DG_BLK_187
+Name=DG_BLK_186
 Label=Q200
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_188
+Name=DG_BLK_187
 Label=Q201
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_189
+Name=DG_BLK_188
 Label=Q202
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_190
+Name=DG_BLK_189
 Label=Q202
 DisplayTogether=Yes
 Position=6

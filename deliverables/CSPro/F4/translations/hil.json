@@ -266,7 +266,7 @@
   "item:Q76_BRAND_OR_GEN": "Ang mga bulong nga imo ginbakal sa gwa sang GAMOT nga botika",
   "vs:Q76_BRAND_OR_GEN_VS1": "Ang mga bulong nga imo ginbakal sa gwa sang GAMOT nga botika",
   "val:Q76_BRAND_OR_GEN_VS1:3": "Branded kag generic nga bulong",
-  "val:Q76_BRAND_OR_GEN_VS1:9": "Wala nagakabagay",
+  "val:Q76_BRAND_OR_GEN_VS1:5": "Wala nagakabagay",
   "item:Q77_WHY_GENERIC": "Kon generic, ngaa ginbakal mo ang generic nga bulong?",
   "vs:Q77_WHY_GENERIC_VS1": "Kon generic, ngaa ginbakal mo ang generic nga bulong?",
   "val:Q77_WHY_GENERIC_VS1:01": "Mas barato",

@@ -404,7 +404,7 @@
   "item:Q76_BRAND_OR_GEN": "May binakal ka ba na bako sa GAMOT pharmacy na bulong branded man o generic?",
   "vs:Q76_BRAND_OR_GEN_VS1": "May binakal ka ba na bako sa GAMOT pharmacy na bulong branded man o generic?",
   "val:Q76_BRAND_OR_GEN_VS1:3": "Perehas branded o generic",
-  "val:Q76_BRAND_OR_GEN_VS1:9": "Dae angkop",
+  "val:Q76_BRAND_OR_GEN_VS1:5": "Dae angkop",
   "val:Q77_WHY_GENERIC_VS1:01": "Mas barato",
   "val:Q77_WHY_GENERIC_VS1:02": "Iyo an tigtao kan doctor",
   "val:Q77_WHY_GENERIC_VS1:03": "Madali makuha",

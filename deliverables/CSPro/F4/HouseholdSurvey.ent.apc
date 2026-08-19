@@ -1281,18 +1281,6 @@ preproc
     noinput;
   endif;
 
-PROC Q142_GOV_DONATION_TXT
-preproc
-  if Q142_GOV_DONATION_YN <> 1 then
-    Q142_GOV_DONATION_TXT = "";
-    noinput;
-  endif;
-postproc
-  if Q142_GOV_DONATION_YN = 1 and length(strip(Q142_GOV_DONATION_TXT)) = 0 then
-    errmsg(1192);
-    reenter;
-  endif;
-
 PROC Q142_GSIS_AMT_PHP
 preproc
   if Q142_GSIS_YN <> 1 then
@@ -3184,7 +3172,7 @@ postproc
 { ---- Section N subtotals — auto-compute + protect at follower (#9/#617, spec §4.9) ---- }
 { ---- Section N flat items (Q158/Q159): roster-parity amount gate + #677 (#832/#833) ---- }
 { ---- 'Other (specify)' enforcement — UHC9 dual-other ---- }
-{ ---- 'Other (specify)' enforcement — single-choice + select-all (auto-derived from dcf: 53 items) ---- }
+{ ---- 'Other (specify)' enforcement — single-choice + select-all (auto-derived from dcf: 54 items) ---- }
 PROC Q101_CHECKUP_FREQ_OTHER_TXT
 preproc
   if Q101_CHECKUP_FREQ <> 7 then

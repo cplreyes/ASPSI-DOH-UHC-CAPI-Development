@@ -26247,31 +26247,31 @@
                           "language": "EN"
                         },
                         {
-                          "text": "Not applicable",
+                          "text": "Hindi naaangkop",
                           "language": "FIL"
                         },
                         {
-                          "text": "Not applicable",
+                          "text": "Dae angkop",
                           "language": "BCL"
                         },
                         {
-                          "text": "Not applicable",
+                          "text": "Dili applicable",
                           "language": "BIS"
                         },
                         {
-                          "text": "Not applicable",
+                          "text": "Dili angay",
                           "language": "CEB"
                         },
                         {
-                          "text": "Not applicable",
+                          "text": "Dire aplikado",
                           "language": "WAR"
                         },
                         {
-                          "text": "Not applicable",
+                          "text": "Wala nagakabagay",
                           "language": "HIL"
                         },
                         {
-                          "text": "Not applicable",
+                          "text": "Saan nga agaplikar",
                           "language": "ILO"
                         }
                       ],
@@ -47997,35 +47997,35 @@
                     {
                       "labels": [
                         {
-                          "text": "Yes, specify:",
+                          "text": "Yes",
                           "language": "EN"
                         },
                         {
-                          "text": "Yes, specify:",
+                          "text": "Yes",
                           "language": "FIL"
                         },
                         {
-                          "text": "Yes, specify:",
+                          "text": "Yes",
                           "language": "BCL"
                         },
                         {
-                          "text": "Yes, specify:",
+                          "text": "Yes",
                           "language": "BIS"
                         },
                         {
-                          "text": "Yes, specify:",
+                          "text": "Yes",
                           "language": "CEB"
                         },
                         {
-                          "text": "Yes, specify:",
+                          "text": "Yes",
                           "language": "WAR"
                         },
                         {
-                          "text": "Yes, specify:",
+                          "text": "Yes",
                           "language": "HIL"
                         },
                         {
-                          "text": "Yes, specify:",
+                          "text": "Yes",
                           "language": "ILO"
                         }
                       ],
@@ -48079,45 +48079,6 @@
                   ]
                 }
               ]
-            },
-            {
-              "name": "Q142_GOV_DONATION_TXT",
-              "labels": [
-                {
-                  "text": "142.6) Other Donation/Charity/Assistance from Government Organization \u2014 specify text",
-                  "language": "EN"
-                },
-                {
-                  "text": "142.6) Other Donation/Charity/Assistance from Government Organization \u2014 specify text",
-                  "language": "FIL"
-                },
-                {
-                  "text": "142.6) Other Donation/Charity/Assistance from Government Organization \u2014 specify text",
-                  "language": "BCL"
-                },
-                {
-                  "text": "142.6) Other Donation/Charity/Assistance from Government Organization \u2014 specify text",
-                  "language": "BIS"
-                },
-                {
-                  "text": "142.6) Other Donation/Charity/Assistance from Government Organization \u2014 specify text",
-                  "language": "CEB"
-                },
-                {
-                  "text": "142.6) Other Donation/Charity/Assistance from Government Organization \u2014 specify text",
-                  "language": "WAR"
-                },
-                {
-                  "text": "142.6) Other Donation/Charity/Assistance from Government Organization \u2014 specify text",
-                  "language": "HIL"
-                },
-                {
-                  "text": "142.6) Other Donation/Charity/Assistance from Government Organization \u2014 specify text",
-                  "language": "ILO"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
             },
             {
               "name": "Q142_GOV_DONATION_AMT_PHP",
