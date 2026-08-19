@@ -64,13 +64,37 @@ protection; the window should be minutes, not hours.
    (WT) `aug17: F2 v3 spec deployed`; Linear ANA-milestone checklist item for 3.5
    marked done; note the cutover timestamp here.
 
+## Cutover timestamps (2026-08-19)
+
+- **PWA deployed**: `2026-08-19T01:06:34Z` (build-info.json `built_at`, sha
+  `9c2cebb2`; `deploy-f2-pwa.ps1 -Force` run by Carl after the sanctioned
+  automated path was classifier-denied). Live-verified via `-VerifyOnly`
+  (all 7 `$RequiredMarkers` present, incl. the new Section B one) shortly after.
+- **Floor raised**: shortly after the runbook correction above (commit
+  `ca626df`, `2026-08-19T01:29:08Z`) — Carl ran the `f2_config` UPDATE on the
+  box directly. Confirmed by Carl's own `SELECT` output: both
+  `min_accepted_spec_version` and `current_spec_version` = `2026-08-19-m1`;
+  `kill_switch` untouched (`false`). Dual-version window: ~23 minutes
+  (`01:06:34Z` → ~`01:29:08Z`).
+- **Stale-reject verify**: done at the unit level, not a live production
+  submission (no admin credentials available this session to clean up a
+  self-registered test case afterward, and self-register requires a real
+  facility — didn't want to write a synthetic row into a real facility's
+  data). `server/test/handlers.test.ts` — which imports and exercises the
+  exact `handleSubmit`/`getConfig` functions now live in `handlers.ts` —
+  passes both `rejects E_SPEC_TOO_OLD below min_accepted_spec_version (lexical
+  compare)` and `accepts a fresh submission with srv- id + ISO
+  server_timestamp` (16/16 tests green). Combined with Carl's direct DB read
+  above, this is the verification basis for Step 5's "same sitting" gate.
+
 ## Rollback
 
 - PWA: redeploy the previous build via `deploy-f2-pwa.ps1` from the pre-merge
   main (the script's marker rows guard against a stale-build accidental revert —
   a deliberate rollback must revert the marker row too).
-- Backend: lower `min_accepted_spec_version` back to the prior value (one-line
-  config + clasp deploy). Data written during the window keys on `spec_version`
+- Backend: lower `min_accepted_spec_version` back to the prior value — same
+  `f2_config` UPDATE, prior value `2026-04-17-m1` (NOT a clasp deploy; see the
+  CORRECTED note above). Data written during the window keys on `spec_version`
   per row, so post-hoc separation is always possible — nothing is destroyed
   either direction.
 
