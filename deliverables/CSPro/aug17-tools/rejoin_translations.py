@@ -17,11 +17,12 @@ Three independent modes, one shared plan shape ({"kept", "moved", "fellback"}):
        dict:<NAME> | level:<NAME> | record:<NAME> | item:<NAME>
        vs:<VALUE-SET-NAME> | val:<VALUE-SET-NAME>:<code[,code|lo..hi]>
      `vs:`/`val:` keys are matched by stripping a trailing `_VS<n>` suffix
-     off the embedded value-set name -- this is a STRING convention (every
-     value set observed in the fleet is named `<ITEM>_VS<n>`), not a DCF
-     lookup; a value-set name that doesn't follow the convention simply
-     never matches a rename row and stays untouched, which is the safe
-     failure mode.
+     off the embedded value-set name -- this is a STRING convention, not a
+     DCF lookup. Almost every value set in the fleet is named `<ITEM>_VS<n>`;
+     the #385 dynamic sets add a variant segment (`<ITEM>_<VARIANT>_VS<n>`)
+     and are handled by `rename_vs_base`'s one-segment retry. A value-set
+     name matching neither shape never matches a rename row and stays
+     untouched, which is the safe failure mode.
 
   2. --stale-from-tables mode -- for instruments WITHOUT a rename map (F3,
      F4). Reads the normalized paper/build tables produced by Task 0.2/0.3
@@ -149,6 +150,37 @@ def split_vs_suffix(name: str):
     return name, ""
 
 
+def rename_vs_base(base: str, rename_map: dict):
+    """Post-rename form of a value-set base name, or None if unmapped.
+
+    The fleet convention is `<ITEM>_VS<n>`, so the base IS an item name and a
+    direct lookup is the whole story -- for 170 of F1's 172 value sets. The
+    exceptions are the #385 DYNAMIC sets, named `<ITEM>_<VARIANT>_VS<n>`
+    (`Q108_DOH_LIC_DIFFICULT_HOSP_VS1` / `_PCF_VS1`, swapped by setvalueset on
+    the PCF/hospital branch). Their base is not an item name, so the direct
+    lookup misses and -- before this fell back to a variant-stripped retry --
+    the entire 13-option DOH-licensing compliance list fell back to English in
+    all 7 locales even though every one of its labels was carried through the
+    rename byte-identically (Task 2.5, measured: 24 `val:` + 2 `vs:` keys per
+    locale, ~2% coverage each).
+
+    Only ONE trailing segment is stripped, and only when the full base has no
+    row of its own. The failure mode of a wrong guess is unchanged from not
+    trying at all -- the moved key simply matches no label and that node shows
+    English -- while a guess that collides with a real key is still a hard
+    error in `_check_collisions`.
+    """
+    new = rename_map.get(base)
+    if new is not None:
+        return new
+    stem, sep, variant = base.rpartition("_")
+    if sep and stem and variant:
+        new_stem = rename_map.get(stem)
+        if new_stem is not None:
+            return f"{new_stem}_{variant}"
+    return None
+
+
 def plan_key_rename(key, rename_map, stem_changed_names, stale_val_codes):
     """Classify one raw key from a name-scoped CSPro locale file. Returns
     (action, detail):
@@ -169,7 +201,7 @@ def plan_key_rename(key, rename_map, stem_changed_names, stale_val_codes):
         return "moved", f"item:{new_name}"
     if key.startswith("vs:"):
         base, suffix = split_vs_suffix(key[len("vs:"):])
-        new_name = rename_map.get(base)
+        new_name = rename_vs_base(base, rename_map)
         if new_name is None:
             return "unmapped", None
         return "moved", f"vs:{new_name}{suffix}"
@@ -177,9 +209,11 @@ def plan_key_rename(key, rename_map, stem_changed_names, stale_val_codes):
         rest = key[len("val:"):]
         vs_name, code = rest.rsplit(":", 1)
         base, suffix = split_vs_suffix(vs_name)
-        new_name = rename_map.get(base)
+        new_name = rename_vs_base(base, rename_map)
         if new_name is None:
             return "unmapped", None
+        # staleness stays keyed on the FULL original base, per the
+        # `stale_val_codes` contract -- only the destination is resolved.
         if (base, code) in stale_val_codes:
             return "dropped", "renamed+reworded-option"
         return "moved", f"val:{new_name}{suffix}:{code}"

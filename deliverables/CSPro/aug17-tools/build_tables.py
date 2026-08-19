@@ -188,8 +188,20 @@ def derive_qnum(name: str) -> str:
     return q
 
 
+# Inline emphasis wraps a phrase INSIDE a sentence, so it must strip to
+# nothing; the block/structural tags around it must strip to a space or two
+# paragraphs run together into one word. Stripping every tag to a space put a
+# space before the question mark of any stem whose last emphasised word ends
+# the sentence -- `<b>doctors</b>?` -> "doctors ?" -- which is not a build
+# defect but reads as a STEM_DIFF against the paper's "doctors?" (Task 2.5,
+# on F1 Q152/Q153, when generate_qsf's PAPI emphasis was re-anchored to the
+# Aug-17 numbering and those two rules began matching again).
+_INLINE_TAG_RE = re.compile(r"</?(?:b|i|u|em|strong|span|sub|sup)\b[^>]*>", re.I)
+
+
 def strip_html(s: str) -> str:
-    s = re.sub(r"<[^>]+>", " ", s or "")
+    s = _INLINE_TAG_RE.sub("", s or "")
+    s = re.sub(r"<[^>]+>", " ", s)
     s = html.unescape(s)
     return re.sub(r"\s+", " ", s).strip()
 

@@ -677,6 +677,41 @@ def test_reworded_stem_drops_to_fellback():
     assert "val:Q1_LIKES_TEA_VS1:1" in moved_old_keys
 
 
+def test_variant_value_set_follows_its_item_rename():
+    # #385 dynamic sets are named <ITEM>_<VARIANT>_VS<n>, so the base is not an
+    # item name and the direct map lookup misses. Task 2.5 measured the cost on
+    # F1: the whole Q108 DOH-licensing compliance list fell back to English in
+    # all 7 locales while every one of its labels had carried through the
+    # rename byte-identically.
+    data = {
+        "_meta": {"format": "name-scoped-v2"},
+        "item:Q121_DOH_LIC_DIFFICULT": "…",
+        "vs:Q121_DOH_LIC_DIFFICULT_VS1": "…",
+        "vs:Q121_DOH_LIC_DIFFICULT_HOSP_VS1": "…",
+        "val:Q121_DOH_LIC_DIFFICULT_HOSP_VS1:01": "…",
+        "val:Q121_DOH_LIC_DIFFICULT_PCF_VS1:01": "…",
+    }
+    rename_map = {"Q121_DOH_LIC_DIFFICULT": "Q108_DOH_LIC_DIFFICULT"}
+    plan = plan_rejoin(data, rename_map, stem_changed_names=set(), stale_val_codes=set())
+    moved = dict(plan["moved"])
+    assert moved["vs:Q121_DOH_LIC_DIFFICULT_VS1"] == "vs:Q108_DOH_LIC_DIFFICULT_VS1"
+    assert moved["vs:Q121_DOH_LIC_DIFFICULT_HOSP_VS1"] == "vs:Q108_DOH_LIC_DIFFICULT_HOSP_VS1"
+    assert moved["val:Q121_DOH_LIC_DIFFICULT_HOSP_VS1:01"] == "val:Q108_DOH_LIC_DIFFICULT_HOSP_VS1:01"
+    assert moved["val:Q121_DOH_LIC_DIFFICULT_PCF_VS1:01"] == "val:Q108_DOH_LIC_DIFFICULT_PCF_VS1:01"
+    assert not plan["kept"].keys() - {"_meta"}
+
+
+def test_variant_retry_strips_only_one_segment():
+    # The retry must not chew through the name looking for any prefix that
+    # happens to be in the map: two unrelated segments left over means the
+    # guess is not a variant of that item, and an unmapped key that stays put
+    # is the safe outcome.
+    data = {"_meta": {"format": "name-scoped-v2"}, "vs:Q1_TEA_HOT_STRONG_VS1": "…"}
+    plan = plan_rejoin(data, {"Q1_TEA": "Q9_TEA"}, stem_changed_names=set(), stale_val_codes=set())
+    assert not plan["moved"]
+    assert "vs:Q1_TEA_HOT_STRONG_VS1" in plan["kept"]
+
+
 def test_unmapped_scoped_keys_untouched():
     data = _load_fixture("mini_fil_scoped.json")
     rename_map = {"Q1_LIKES_TEA": "Q1_ENJOYS_TEA"}  # Q2_COLOR / MINI_ROSTER absent from the map
