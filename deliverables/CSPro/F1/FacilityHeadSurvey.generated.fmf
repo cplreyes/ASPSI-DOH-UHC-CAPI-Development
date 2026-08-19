@@ -577,7 +577,7 @@ Text=City / Municipality (from PSGC)
 Name=BARANGAY
 Position=350,147,365,167
 Item=BARANGAY,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
+DataCaptureType=RadioButton
 Form=3
   
 [Text]
@@ -589,7 +589,7 @@ Text=Barangay
 Name=BREAKOFF
 Position=350,177,365,197
 Item=BREAKOFF,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
+DataCaptureType=RadioButton
 Form=3
   
 [Text]
@@ -675,7 +675,7 @@ Text=1. What is your name? (Last Name, First Name, Middle Initial, Ext)
 Name=Q2_FACILITY_ROLE
 Position=350,177,365,197
 Item=Q2_FACILITY_ROLE,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
+DataCaptureType=RadioButton
 Form=4
   
 [Text]
@@ -880,7 +880,7 @@ Text=10. Does the facility have primary care packages?
 Name=Q10_1_UHC_ATTRIB
 Position=350,87,365,107
 Item=Q10_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
+DataCaptureType=RadioButton
 Form=6
   
 [Text]
@@ -979,7 +979,7 @@ Text=12.1. If yes, was it a result of the UHC Act enacted in 2019? — Other (sp
 Name=Q12_2_PHU_ROLE
 Position=350,327,365,347
 Item=Q12_2_PHU_ROLE,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
+DataCaptureType=RadioButton
 Form=6
   
 [Text]
@@ -6018,7 +6018,7 @@ Text=Field Edited by
 Name=DATE_FIRST_VISITED_THE_FACILITY
 Position=350,147,760,167
 Item=DATE_FIRST_VISITED_THE_FACILITY,FACILITYHEADSURVEY_DICT
-DataCaptureType=Date,YYYYMMDD
+DataCaptureType=TextBox
 Form=12
   
 [Text]
@@ -6030,7 +6030,7 @@ Text=Date First Visited the Facility (MMDDYYYY)
 Name=DATE_OF_FINAL_VISIT_TO_THE_FACILITY
 Position=350,177,760,197
 Item=DATE_OF_FINAL_VISIT_TO_THE_FACILITY,FACILITYHEADSURVEY_DICT
-DataCaptureType=Date,YYYYMMDD
+DataCaptureType=TextBox
 Form=12
   
 [Text]

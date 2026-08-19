@@ -10,202 +10,182 @@ Language = EN
 1006 Geo prefix %07d not found in PSGC (no province or city/municipality matches). Check the Questionnaire Number.
 1007 Verification photo not captured (camera cancelled or unavailable). Re-enter this field to retry, or note the reason in your field report.
 1008 Final-visit date cannot be earlier than the first-visit date.
-1009 "'Additional features' was ticked in Q99 - please specify what you would add."
 1010 Select at least one option for Q104 before continuing.
 1011 "'Other (specify)' was ticked for Q104 - please specify."
-1012 Select at least one option for Q105 before continuing.
-1013 "'Other (specify)' was ticked for Q105 - please specify."
 1014 Select at least one option for Q111 before continuing.
 1015 "'Other (specify)' was ticked for Q111 - please specify."
 1016 Select at least one option for Q117 before continuing.
 1017 "'Other (specify)' was ticked for Q117 - please specify."
 1018 Select at least one option for Q121 before continuing.
-1020 Select at least one option for Q137 before continuing.
-1022 "'Other (specify)' was ticked for Q137 - please specify."
-1023 Select at least one option for Q140 before continuing.
-1025 "'Other (specify)' was ticked for Q140 - please specify."
-1026 Select at least one option for Q144 before continuing.
-1027 "'Other (specify)' was ticked for Q144 - please specify."
 1028 Select at least one option for Q146 before continuing.
 1029 "'Other (specify)' was ticked for Q146 - please specify."
 1030 Select at least one option for Q147 before continuing.
-1031 "'Other (specify)' was ticked for Q147 - please specify."
 1032 Select at least one option for Q149 before continuing.
 1033 "'Other (specify)' was ticked for Q149 - please specify."
-1034 Select at least one option for Q151 before continuing.
-1036 "'Other (specify)' was ticked for Q151 - please specify."
-1037 Select at least one option for Q155 before continuing.
-1038 "'Other (specify)' was ticked for Q155 - please specify."
-1039 Select at least one option for Q156 before continuing.
-1040 "'Other (specify)' was ticked for Q156 - please specify."
-1041 Select at least one option for Q159 before continuing.
-1042 "'Other (specify)' was ticked for Q159 - please specify."
-1043 Select at least one option for Q160 before continuing.
-1045 Select at least one option for Q162 before continuing.
-1046 "'Other (specify)' was ticked for Q162 - please specify."
-1047 Select at least one option for Q163 before continuing.
-1049 "'Other (specify)' was ticked for Q163 - please specify."
-1050 Select at least one option for Q165 before continuing.
-1051 "'Other (specify)' was ticked for Q165 - please specify."
-1052 Select at least one option for Q166 before continuing.
-1053 "'Other (specify)' was ticked for Q166 - please specify."
-1054 Select at least one option for Q34 before continuing.
-1055 "'Other (specify)' was ticked for Q34 - please specify."
 1056 Age (%d) is below 18 - a facility head must be an adult. Please re-enter.
 1057 Age (%d) is unusually high for a facility head - please confirm.
-1058 Select at least one option for Q49 before continuing.
-1060 "'Other (specify)' was ticked for Q49 — please specify."
-1061 Select at least one option for Q50 before continuing.
-1063 "'Other (specify)' was ticked for Q50 — please specify."
 1064 Month must be 1-12.
 1065 Accreditation date is in the future. Reenter.
 1066 YAKAP accreditation year must be between 2019 and %d.
 1067 Select at least one option for Q53 before continuing.
-1070 "'Other (specify)' was ticked for Q53 — please specify."
 1071 Capitation %d PHP is implausibly high. Reenter or confirm.
 1072 Select at least one option for Q58 before continuing.
-1074 "'Other (specify)' was ticked for Q58 — please specify."
 1075 Respondent must have >= 6 months in current position. End interview and code as Refused/Incomplete.
 1076 Years at facility (%d) exceeds working-age years available (%d). Reenter.
-1077 Select at least one option for Q64 before continuing.
-1078 "'Other (specify)' was ticked for Q64 — please specify."
 1079 Select at least one option for Q65 before continuing.
 1081 Years in any health-related role (%d mos) cannot be less than years at this facility (%d mos).
 1082 Years in health (%d) exceeds working-age years available (%d).
-1083 Select at least one option for Q75 before continuing.
-1085 "'Other (specify)' was ticked for Q75 - please specify."
-1086 Select at least one option for Q76 before continuing.
-1088 "'Other (specify)' was ticked for Q76 - please specify."
-1089 Select at least one option for Q78 before continuing.
-1090 "'Other (specify)' was ticked for Q78 - please specify."
-1091 Select at least one option for Q79 before continuing.
-1092 "'Other (specify)' was ticked for Q79 - please specify."
 1093 Eligible patients (%d) is unusually high for one provider's catchment — please confirm.
 1094 Registered patients (%d) cannot exceed eligible patients (%d).
-1095 Select at least one option for Q94 before continuing.
-1096 "'Other (specify)' was ticked for Q94 - please specify."
-1097 Select at least one option for Q96 before continuing.
-1099 "'Other (specify)' was ticked for Q96 - please specify."
 1100 Select at least one option for Q98 before continuing.
 1102 "'Other (specify)' was ticked for Q98 - please specify."
-1103 Select at least one option for Q99 before continuing.
-1105 "'Other (specify)' was ticked for Q99 - please specify."
-1106 Select at least one option for Q122 before continuing.
-1107 "'Other (specify)' was ticked for Q122 - please specify."
-1108 Select at least one option for Q123 before continuing.
-1109 "'Other (specify)' was ticked for Q123 - please specify."
 1110 Select at least one option for Q124 before continuing.
 1111 "'Other (specify)' was ticked for Q124 - please specify."
-1112 Select at least one option for Q125 before continuing.
-1113 "'Other (specify)' was ticked for Q125 - please specify."
-1114 Select at least one option for Q126 before continuing.
-1115 "'Other (specify)' was ticked for Q126 - please specify."
 1116 Select at least one option for Q127 before continuing.
 1117 "'Other (specify)' was ticked for Q127 - please specify."
-1118 Select at least one option for Q128 before continuing.
-1119 "'Other (specify)' was ticked for Q128 - please specify."
-1120 Select at least one option for Q129 before continuing.
-1121 "'Other (specify)' was ticked for Q129 - please specify."
-1122 Select at least one option for Q130 before continuing.
-1123 "'Other (specify)' was ticked for Q130 - please specify."
 1124 Select at least one option for Q131 before continuing.
 1125 "'Other (specify)' was ticked for Q131 - please specify."
-1126 Select at least one option for Q132 before continuing.
-1127 "'Other (specify)' was ticked for Q132 - please specify."
 1128 Select at least one option for Q133 before continuing.
 1129 "'Other (specify)' was ticked for Q133 - please specify."
 1130 Select at least one option for Q134 before continuing.
 1131 "'Other (specify)' was ticked for Q134 - please specify."
 1132 Select at least one option for Q66 before continuing.
 1133 "'Other (specify)' was ticked for Q66 - please specify."
-1134 Select at least one option for Q67 before continuing.
-1135 "'Other (specify)' was ticked for Q67 - please specify."
-1136 Select at least one option for Q68 before continuing.
-1137 "'Other (specify)' was ticked for Q68 - please specify."
-1138 Select at least one option for Q69 before continuing.
-1139 "'Other (specify)' was ticked for Q69 - please specify."
-1140 Select at least one option for Q70 before continuing.
-1141 "'Other (specify)' was ticked for Q70 - please specify."
-1142 Select at least one option for Q71 before continuing.
-1143 "'Other (specify)' was ticked for Q71 - please specify."
-1144 Select at least one option for Q72 before continuing.
-1145 "'Other (specify)' was ticked for Q72 - please specify."
-1146 Select at least one option for Q73 before continuing.
-1147 "'Other (specify)' was ticked for Q73 - please specify."
-1148 Select at least one option for Q74 before continuing.
-1149 "'Other (specify)' was ticked for Q74 - please specify."
-1150 "'No, other reason' was selected for Q12_PCB_LICENSING. Please specify."
-1151 "'Yes, other reason' was selected for Q12_PCB_LICENSING. Please specify."
-1152 "'No, other reason' was selected for Q14_PHU_CREATED. Please specify."
-1153 "'Yes, other reason' was selected for Q14_PHU_CREATED. Please specify."
-1154 "'No, other reason' was selected for Q17_HPU_CREATED. Please specify."
-1155 "'Yes, other reason' was selected for Q17_HPU_CREATED. Please specify."
-1156 "'No, other reason' was selected for Q19_NEW_ROLES. Please specify."
-1157 "'Yes, other reason' was selected for Q19_NEW_ROLES. Please specify."
-1158 "'No, other reason' was selected for Q21_NEW_DEPTS. Please specify."
-1159 "'Yes, other reason' was selected for Q21_NEW_DEPTS. Please specify."
-1160 "'No, other reason' was selected for Q23_NEW_BUILDINGS. Please specify."
-1161 "'Yes, other reason' was selected for Q23_NEW_BUILDINGS. Please specify."
-1162 "'No, other reason' was selected for Q25_NEW_ROOMS. Please specify."
-1163 "'Yes, other reason' was selected for Q25_NEW_ROOMS. Please specify."
-1164 "'No, other reason' was selected for Q27_INC_EQUIPMENT. Please specify."
-1165 "'Yes, other reason' was selected for Q27_INC_EQUIPMENT. Please specify."
-1166 "'No, other reason' was selected for Q29_INC_SUPPLIES. Please specify."
-1167 "'Yes, other reason' was selected for Q29_INC_SUPPLIES. Please specify."
-1168 "'No, other reason' was selected for Q31_EMR_USE. Please specify."
-1169 "'Yes, other reason' was selected for Q31_EMR_USE. Please specify."
-1170 "'No, other reason' was selected for Q36_STAFFING_UHC. Please specify."
-1171 "'Yes, other reason' was selected for Q36_STAFFING_UHC. Please specify."
-1172 "'No, other reason' was selected for Q38_REFERRAL_UHC. Please specify."
-1173 "'Yes, other reason' was selected for Q38_REFERRAL_UHC. Please specify."
-1174 "'No, other reason' was selected for Q39_MOU_MOA. Please specify."
-1175 "'Yes, other reason' was selected for Q39_MOU_MOA. Please specify."
-1176 "'No, other reason' was selected for Q40_NBB. Please specify."
-1177 "'Yes, other reason' was selected for Q40_NBB. Please specify."
-1178 "'No, other reason' was selected for Q41_ZBB. Please specify."
-1179 "'Yes, other reason' was selected for Q41_ZBB. Please specify."
-1180 "'No, other reason' was selected for Q42_NO_COPAY. Please specify."
-1181 "'Yes, other reason' was selected for Q42_NO_COPAY. Please specify."
-1182 "'No, other reason' was selected for Q43_WARD_ALLOC. Please specify."
-1183 "'Yes, other reason' was selected for Q43_WARD_ALLOC. Please specify."
-1184 "'No, other reason' was selected for Q44_CPG. Please specify."
-1185 "'Yes, other reason' was selected for Q44_CPG. Please specify."
-1186 "'No, other reason' was selected for Q45_DOH_LIC_STD. Please specify."
-1187 "'Yes, other reason' was selected for Q45_DOH_LIC_STD. Please specify."
-1188 "'No, other reason' was selected for Q46_PHIC_ACCRED. Please specify."
-1189 "'Yes, other reason' was selected for Q46_PHIC_ACCRED. Please specify."
-1190 "'No, other reason' was selected for Q47_SVC_DELIVERY_PROT. Please specify."
-1191 "'Yes, other reason' was selected for Q47_SVC_DELIVERY_PROT. Please specify."
-1192 "'No, other reason' was selected for Q48_PCQM. Please specify."
-1193 "'Yes, other reason' was selected for Q48_PCQM. Please specify."
-1196 An 'other' option was selected for Q11. Please specify.
-1197 An 'other' option was selected for Q143. Please specify.
-1198 An 'other' option was selected for Q15. Please specify.
-1199 An 'other' option was selected for Q18. Please specify.
-1200 An 'other' option was selected for Q33. Please specify.
 1202 An 'other' option was selected for Q2. Please specify.
-1203 Q103: 'Other (specify)' was selected. Please specify.
-1204 Q110: 'Other (specify)' was selected. Please specify.
-1205 Q121: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
-1206 Q137: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
-1207 Q140: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
-1208 Q151: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
-1209 Q156: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
-1210 Q160: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
-1211 Q163: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
-1212 Q165: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
-1213 Q166: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
-1214 Q49: 'I don't know' must be the only choice — untick it or the other options before continuing.
-1215 Q50: 'I don't know' must be the only choice — untick it or the other options before continuing.
-1216 Q53: 'I don't know' must be the only choice — untick it or the other options before continuing.
-1217 Q53: 'All of the above' must be the only choice — untick it or the other options before continuing.
-1218 Q58: 'I don't know' must be the only choice — untick it or the other options before continuing.
-1219 Q65: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
-1220 Q75: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
-1221 Q76: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
-1222 Q96: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
-1223 Q98: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
-1224 Q99: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
 1225 Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.
-1226 Q58: 'No requirements' must be the only choice — untick it or the other options before continuing.
 1227 No GPS fix after %d s. Move outdoors or beside a window, then re-enter this field to retry — each retry searches longer. You may also leave GPS blank and finish the case.
+1228 Select at least one option for Q108 before continuing.
+1229 Q108: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1230 Q124: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1231 Q127: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1232 Select at least one option for Q136 before continuing.
+1233 "'Other (specify)' was ticked for Q136 - please specify."
+1234 Select at least one option for Q138 before continuing.
+1235 Q138: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1236 "'Other (specify)' was ticked for Q138 - please specify."
+1237 Select at least one option for Q142 before continuing.
+1238 "'Other (specify)' was ticked for Q142 - please specify."
+1239 Select at least one option for Q143 before continuing.
+1240 Q143: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1241 "'Other (specify)' was ticked for Q143 - please specify."
+1242 Q147: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1243 Select at least one option for Q150 before continuing.
+1244 "'Other (specify)' was ticked for Q150 - please specify."
+1245 Select at least one option for Q152 before continuing.
+1246 Q152: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1247 "'Other (specify)' was ticked for Q152 - please specify."
+1248 Select at least one option for Q153 before continuing.
+1249 Q153: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1250 "'Other (specify)' was ticked for Q153 - please specify."
+1251 Select at least one option for Q23 before continuing.
+1252 "'Other (specify)' was ticked for Q23 - please specify."
+1253 Select at least one option for Q35 before continuing.
+1254 "'Other (specify)' was ticked for Q35 - please specify."
+1255 Select at least one option for Q36 before continuing.
+1256 Q36: 'I don't know' must be the only choice — untick it or the other options before continuing.
+1257 "'Other (specify)' was ticked for Q36 — please specify."
+1258 Select at least one option for Q37 before continuing.
+1259 Q37: 'I don't know' must be the only choice — untick it or the other options before continuing.
+1260 "'Other (specify)' was ticked for Q37 — please specify."
+1261 Select at least one option for Q40 before continuing.
+1262 Q40: 'I don't know' must be the only choice — untick it or the other options before continuing.
+1263 Q40: 'All of the above' must be the only choice — untick it or the other options before continuing.
+1264 "'Other (specify)' was ticked for Q40 — please specify."
+1265 Select at least one option for Q45 before continuing.
+1266 Q45: 'I don't know' must be the only choice — untick it or the other options before continuing.
+1267 Q45: 'No requirements' must be the only choice — untick it or the other options before continuing.
+1268 "'Other (specify)' was ticked for Q45 — please specify."
+1269 Select at least one option for Q51 before continuing.
+1270 "'Other (specify)' was ticked for Q51 — please specify."
+1271 Select at least one option for Q52 before continuing.
+1272 Q52: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1273 Select at least one option for Q62 before continuing.
+1274 Q62: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1275 "'Other (specify)' was ticked for Q62 - please specify."
+1276 Select at least one option for Q63 before continuing.
+1277 Q63: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1278 "'Other (specify)' was ticked for Q63 - please specify."
+1279 "'Other (specify)' was ticked for Q65 - please specify."
+1280 Select at least one option for Q81 before continuing.
+1281 "'Other (specify)' was ticked for Q81 - please specify."
+1282 Select at least one option for Q83 before continuing.
+1283 Q83: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1284 "'Other (specify)' was ticked for Q83 - please specify."
+1285 Select at least one option for Q85 before continuing.
+1286 Q85: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1287 "'Other (specify)' was ticked for Q85 - please specify."
+1288 Select at least one option for Q86 before continuing.
+1289 Q86: an exclusive option (None / No initiatives / Do not know) must be the only choice - untick it or the other options before continuing.
+1290 "'Other (specify)' was ticked for Q86 - please specify."
+1291 "'Additional features' was ticked in Q86 - please specify what you would add."
+1292 Q90: 'Other (specify)' was selected. Please specify.
+1293 Select at least one option for Q91 before continuing.
+1294 "'Other (specify)' was ticked for Q91 - please specify."
+1295 Select at least one option for Q92 before continuing.
+1296 "'Other (specify)' was ticked for Q92 - please specify."
+1297 Q97: 'Other (specify)' was selected. Please specify.
+1298 Select at least one option for Q109 before continuing.
+1299 "'Other (specify)' was ticked for Q109 - please specify."
+1300 Select at least one option for Q110 before continuing.
+1301 "'Other (specify)' was ticked for Q110 - please specify."
+1302 Select at least one option for Q112 before continuing.
+1303 "'Other (specify)' was ticked for Q112 - please specify."
+1304 Select at least one option for Q113 before continuing.
+1305 "'Other (specify)' was ticked for Q113 - please specify."
+1306 Select at least one option for Q114 before continuing.
+1307 "'Other (specify)' was ticked for Q114 - please specify."
+1308 Select at least one option for Q115 before continuing.
+1309 "'Other (specify)' was ticked for Q115 - please specify."
+1310 Select at least one option for Q116 before continuing.
+1311 "'Other (specify)' was ticked for Q116 - please specify."
+1312 Select at least one option for Q118 before continuing.
+1313 "'Other (specify)' was ticked for Q118 - please specify."
+1314 Select at least one option for Q119 before continuing.
+1315 "'Other (specify)' was ticked for Q119 - please specify."
+1316 Select at least one option for Q120 before continuing.
+1317 "'Other (specify)' was ticked for Q120 - please specify."
+1318 "'Other (specify)' was ticked for Q121 - please specify."
+1319 "'Other (specify)' was ticked for Q53 - please specify."
+1320 Select at least one option for Q54 before continuing.
+1321 "'Other (specify)' was ticked for Q54 - please specify."
+1322 Select at least one option for Q55 before continuing.
+1323 "'Other (specify)' was ticked for Q55 - please specify."
+1324 Select at least one option for Q56 before continuing.
+1325 "'Other (specify)' was ticked for Q56 - please specify."
+1326 Select at least one option for Q57 before continuing.
+1327 "'Other (specify)' was ticked for Q57 - please specify."
+1328 "'Other (specify)' was ticked for Q58 - please specify."
+1329 Select at least one option for Q59 before continuing.
+1330 "'Other (specify)' was ticked for Q59 - please specify."
+1331 Select at least one option for Q60 before continuing.
+1332 "'Other (specify)' was ticked for Q60 - please specify."
+1333 Select at least one option for Q61 before continuing.
+1334 "'Other (specify)' was ticked for Q61 - please specify."
+1335 An 'other' option was selected for Q10.1. Please specify.
+1336 An 'other' option was selected for Q11.1. Please specify.
+1337 An 'other' option was selected for Q12.1. Please specify.
+1338 An 'other' option was selected for Q12.2. Please specify.
+1339 An 'other' option was selected for Q130. Please specify.
+1340 An 'other' option was selected for Q13.1. Please specify.
+1341 An 'other' option was selected for Q13.2. Please specify.
+1342 An 'other' option was selected for Q14.1. Please specify.
+1343 An 'other' option was selected for Q15.1. Please specify.
+1344 An 'other' option was selected for Q16.1. Please specify.
+1345 An 'other' option was selected for Q17.1. Please specify.
+1346 An 'other' option was selected for Q18.1. Please specify.
+1347 An 'other' option was selected for Q19.1. Please specify.
+1348 An 'other' option was selected for Q20.1. Please specify.
+1349 An 'other' option was selected for Q21. Please specify.
+1350 An 'other' option was selected for Q22. Please specify.
+1351 An 'other' option was selected for Q24.1. Please specify.
+1352 An 'other' option was selected for Q25.1. Please specify.
+1353 An 'other' option was selected for Q26.1. Please specify.
+1354 An 'other' option was selected for Q27.1. Please specify.
+1355 An 'other' option was selected for Q28.1. Please specify.
+1356 An 'other' option was selected for Q29.1. Please specify.
+1357 An 'other' option was selected for Q30.1. Please specify.
+1358 An 'other' option was selected for Q31.1. Please specify.
+1359 An 'other' option was selected for Q32.1. Please specify.
+1360 An 'other' option was selected for Q33.1. Please specify.
+1361 An 'other' option was selected for Q34.1. Please specify.
+1362 An 'other' option was selected for Q35.1. Please specify.
