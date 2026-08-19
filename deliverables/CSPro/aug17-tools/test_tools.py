@@ -1,3 +1,4 @@
+import csv
 import json
 from pathlib import Path
 
@@ -13,6 +14,14 @@ from build_tables import (
     parse_items_ts,
     parse_pwa,
     split_qsf_stem_and_instructions,
+)
+from propose_renames import (
+    match_by_stem,
+    qnum_to_name_prefix,
+    rekey_item_name,
+    build_map_rows,
+    write_map,
+    write_unresolved_report,
 )
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -1832,3 +1841,157 @@ def test_summarize_plan_excludes_meta_and_counts_colon_keys():
     carried, fellback = summarize_plan(plan)
     assert carried == 3  # 2 kept (excluding _meta) + 1 moved
     assert fellback == 0
+
+
+# ============================================================================
+# propose_renames.py (Task 2.1) -- all fixture text is INVENTED (NDU: no
+# verbatim questionnaire content in committed code/tests/fixtures), inst="F9"
+# marks it as fixture-only per the project's established convention (see
+# test_compute_stale_from_tables_does_not_false_flag_extra_build_rows_stale).
+# ============================================================================
+
+
+def test_qnum_to_name_prefix_matches_build_tables_derive_qnum_inverse():
+    # Exactly the three shapes build_tables.derive_qnum documents: plain,
+    # decimal sub, letter sub.
+    assert qnum_to_name_prefix("5") == "Q5_"
+    assert qnum_to_name_prefix("10.1") == "Q10_1_"
+    assert qnum_to_name_prefix("71a") == "Q71A_"
+    assert qnum_to_name_prefix("") == ""
+
+
+def test_rekey_item_name_swaps_only_the_qnum_prefix():
+    assert rekey_item_name("Q12_WIDGET_COUNT", "12", "9") == "Q9_WIDGET_COUNT"
+    assert rekey_item_name("Q10_1_ATTRIB", "10.1", "24.2") == "Q24_2_ATTRIB"
+
+
+def test_rekey_item_name_falls_back_when_prefix_does_not_match():
+    # Defensive path: old_name doesn't actually start with the prefix its
+    # own qnum implies -- never silently mis-rename, just drop the suffix.
+    assert rekey_item_name("SOMETHING_ELSE", "12", "9") == "Q9"
+
+
+def test_propose_renames_matches_by_stem():
+    # Step 1 (brief, verbatim): identical normalized stems, different qnums
+    # -> one row old_name,new_name,renumbered-only; changed stem but unique
+    # fuzzy best-match (ratio >= 0.85) -> reworded flagged for review; no
+    # match -> left for hand resolution.
+    build_items = [
+        Row(inst="F9", qnum="12", item_name="Q12_WIDGET_COUNT", kind="item",
+            stem="12. How many widgets do you have (fixture)?"),
+        Row(inst="F9", qnum="20", item_name="Q20_BIKE_OWNED", kind="item",
+            stem="20. Do you currently own a bicycle for personal use (fixture)?"),
+        Row(inst="F9", qnum="30", item_name="Q30_OBSOLETE", kind="item",
+            stem="30. What is your favorite hobby outside of work (fixture)?"),
+    ]
+    paper_items = [
+        Row(inst="F9", qnum="9", kind="item",
+            stem="How many widgets do you have (fixture)?"),
+        Row(inst="F9", qnum="15", kind="item",
+            stem="Do you currently own a bicycle for household use (fixture)?"),
+    ]
+    matches, unresolved_old, unresolved_new = match_by_stem(build_items, paper_items)
+    by_old = {m.old.item_name: m for m in matches}
+
+    assert by_old["Q12_WIDGET_COUNT"].change_class == "renumbered-only"
+    assert by_old["Q12_WIDGET_COUNT"].new.qnum == "9"
+
+    assert by_old["Q20_BIKE_OWNED"].change_class == "reworded"
+    assert by_old["Q20_BIKE_OWNED"].new.qnum == "15"
+    assert by_old["Q20_BIKE_OWNED"].ratio >= 0.85
+
+    assert [b.item_name for b in unresolved_old] == ["Q30_OBSOLETE"]
+    assert unresolved_new == []
+
+
+def test_propose_renames_unchanged_when_stem_and_qnum_both_match():
+    build_items = [Row(inst="F9", qnum="7", item_name="Q7_SAME", kind="item",
+                        stem="7. Is this facility public or private (fixture)?")]
+    paper_items = [Row(inst="F9", qnum="7", kind="item",
+                        stem="Is this facility public or private (fixture)?")]
+    matches, unresolved_old, unresolved_new = match_by_stem(build_items, paper_items)
+    assert matches[0].change_class == "unchanged"
+    assert unresolved_old == []
+    assert unresolved_new == []
+
+
+def test_propose_renames_fuzzy_match_requires_uniqueness():
+    # Two paper candidates tied at the SAME ratio (>= 0.85) -- not a unique
+    # best match, so the old item is left unresolved rather than guessed.
+    old_stem = "40. Does the facility maintain a written policy on this fixture matter?"
+    build_items = [Row(inst="F9", qnum="40", item_name="Q40_POLICY", kind="item", stem=old_stem)]
+    stripped = old_stem.split(". ", 1)[1][:-1]  # drop "40. " prefix and trailing "?"
+    paper_items = [
+        Row(inst="F9", qnum="41", kind="item", stem=stripped + "X"),
+        Row(inst="F9", qnum="42", kind="item", stem=stripped + "Y"),
+    ]
+    matches, unresolved_old, unresolved_new = match_by_stem(build_items, paper_items)
+    assert matches == []
+    assert [b.item_name for b in unresolved_old] == ["Q40_POLICY"]
+    assert len(unresolved_new) == 2
+
+
+def test_propose_renames_exact_pass_claims_before_fuzzy_pass():
+    # An old item with an EXACT match must not be stolen by a fuzzy pass
+    # scoring against a different, already-claimed paper row.
+    build_items = [
+        Row(inst="F9", qnum="1", item_name="Q1_EXACT", kind="item",
+            stem="1. State your full name (fixture)."),
+        Row(inst="F9", qnum="2", item_name="Q2_CLOSE", kind="item",
+            stem="2. State your full legal name (fixture)."),
+    ]
+    paper_items = [
+        Row(inst="F9", qnum="1", kind="item", stem="State your full name (fixture)."),
+    ]
+    matches, unresolved_old, unresolved_new = match_by_stem(build_items, paper_items)
+    assert len(matches) == 1
+    assert matches[0].old.item_name == "Q1_EXACT"
+    assert matches[0].change_class == "unchanged"
+    assert [b.item_name for b in unresolved_old] == ["Q2_CLOSE"]
+
+
+def test_build_map_rows_emits_format_contract_columns():
+    build_items = [Row(inst="F9", qnum="12", item_name="Q12_WIDGET_COUNT", kind="item",
+                        stem="12. How many widgets do you have (fixture)?")]
+    paper_items = [Row(inst="F9", qnum="9", kind="item",
+                        stem="How many widgets do you have (fixture)?")]
+    matches, _, _ = match_by_stem(build_items, paper_items)
+    rows = build_map_rows(matches)
+    assert rows[0]["old_name"] == "Q12_WIDGET_COUNT"
+    assert rows[0]["new_name"] == "Q9_WIDGET_COUNT"
+    assert rows[0]["change_class"] == "renumbered-only"
+    assert rows[0]["stem_changed"] == ""  # only reworded rows flag stem_changed
+
+
+def test_build_map_rows_flags_stem_changed_for_reworded():
+    build_items = [Row(inst="F9", qnum="20", item_name="Q20_BIKE_OWNED", kind="item",
+                        stem="20. Do you currently own a bicycle for personal use (fixture)?")]
+    paper_items = [Row(inst="F9", qnum="15", kind="item",
+                        stem="Do you currently own a bicycle for household use (fixture)?")]
+    matches, _, _ = match_by_stem(build_items, paper_items)
+    rows = build_map_rows(matches)
+    assert rows[0]["change_class"] == "reworded"
+    assert rows[0]["stem_changed"] == "1"
+
+
+def test_write_map_round_trips_via_csv_dictreader(tmp_path):
+    rows = [{"old_name": "Q1_A", "new_name": "Q2_A", "change_class": "renumbered-only",
+             "old_qnum": "1", "new_qnum": "2", "stem_changed": "", "ratio": "", "note": ""}]
+    out_path = tmp_path / "F9-renames.csv"
+    write_map(rows, out_path)
+    with open(out_path, encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        read_back = list(reader)
+    assert read_back == rows
+
+
+def test_write_unresolved_report_lists_old_and_new_leftovers(tmp_path):
+    unresolved_old = [Row(inst="F9", qnum="30", item_name="Q30_OBSOLETE", kind="item",
+                           stem="30. What is your favorite hobby outside of work (fixture)?")]
+    unresolved_new = [Row(inst="F9", qnum="99", kind="item",
+                           stem="Brand-new fixture-only question with no old partner?")]
+    out_path = tmp_path / "F9-rename-unresolved.md"
+    write_unresolved_report("F9", [], unresolved_old, unresolved_new, out_path)
+    text = out_path.read_text(encoding="utf-8")
+    assert "Q30_OBSOLETE" in text
+    assert "Brand-new fixture-only question" in text
