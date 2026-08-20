@@ -682,6 +682,12 @@ CHECKBOX_EXTRA_STANDALONE = {
     # cross-boundary-safe: a false "07" needs a 0-ending code followed by a 7-starting
     # one, and none of Q196's codes (01-07, 99) end in 0.
     "Q196_FOREGONE": [("07", "We do not forego care")],
+    # #1300 (UAT R7, 2026-08-20): Q140 "Cannot recall" (07) -- recalling NOTHING about
+    # the bill is contradictory with naming specific bill items. Coded 07, not 90, so
+    # the generic exclusive branch never matched it (same class as Q196/07). pos() is
+    # cross-boundary-safe: a false "07" needs a 0-ending code followed by a 7-starting
+    # one, and none of Q140's codes (01-07, 99) end in 0.
+    "Q140_BILL_ITEMS": [("07", "Cannot recall")],
 }
 
 # #1098 (pretest 2026-08-05): bases whose 'Other (specify)' option is NOT 99-coded.
@@ -792,31 +798,31 @@ postproc
 { ---- Income amount must fall within reported bracket (spec 3.2, HARD) ---- }
 PROC Q18_INCOME_BRACKET
 postproc
+  { #1295 (UAT R7, 2026-08-20, supersedes #1176): paper's 7 PSA income-class bands
+    replace the 11-band 50k scheme; DK is now code 8 (was 90), RF is code 9 (was 95).
+    Boundaries verbatim from normalized/F4-paper.csv qnum=18 -- same shape as F3's R16
+    PROC. }
+  { DK (8) -- respondent can't even estimate household income. No bracket amount is
+    required; bypass the bracket<->amount reconciliation. }
+  if Q18_INCOME_BRACKET = 8 then
+    exit;
+  endif;
+  { bracket must contain Q18_INCOME_AMOUNT -- 7 PSA bands, boundaries verbatim from
+    the Aug-17 paper (12,030 / 24,060 / 48,120 / 84,210 / 144,360 / 240,600). RF (9)
+    falls through: with a real amount entered the bracket is derivable, so RF is a
+    HARD inconsistency (#813 lineage); with amount -98/-99 it is ok'd above (#793). }
   numeric a = Q18_INCOME_AMOUNT;
   numeric ok = 0;
   if a = -98 or a = -99 then ok = 1; endif;   { #793: -98 don't-know / -99 refused -> no bracket cross-check }
-  { #1176: brackets aligned to the cleared PAPI list (11 brackets + 90 DK / 95 RF).
-    Deploys before 2026-08-18 used the old 1-6(+7) scheme - recode boundary. }
-  if Q18_INCOME_BRACKET = 1  and a < 50000 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 2  and a >= 50000  and a <= 99999  then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 3  and a >= 100000 and a <= 149999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 4  and a >= 150000 and a <= 199999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 5  and a >= 200000 and a <= 249999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 6  and a >= 250000 and a <= 299999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 7  and a >= 300000 and a <= 349999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 8  and a >= 350000 and a <= 399999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 9  and a >= 400000 and a <= 449999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 10 and a >= 450000 and a <= 499999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 11 and a >= 500000 then ok = 1; endif;
-  { #813 (extended to DK per #1176): 90 don't-know / 95 refuse are only valid when the
-    amount itself was refused/unknown (-98/-99, already ok'd above per #793). With a
-    real amount entered the bracket is derivable, so DK/RF is a HARD inconsistency. }
+  if Q18_INCOME_BRACKET = 1 and a < 12030 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 2 and a >= 12030  and a <= 24060  then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 3 and a >= 24061  and a <= 48120  then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 4 and a >= 48121  and a <= 84210  then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 5 and a >= 84211  and a <= 144360 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 6 and a >= 144361 and a <= 240600 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 7 and a > 240600 then ok = 1; endif;
   if ok = 0 then
-    if Q18_INCOME_BRACKET = 90 or Q18_INCOME_BRACKET = 95 then
-      errmsg("Q18: an income amount was provided (%d PHP), so the bracket cannot be don't-know/refuse. Select the bracket that matches the amount (or re-enter the amount as -98/-99).", a);
-    else
-      errmsg("Income bracket does not match the reported amount (%d PHP). Reconcile.", a);
-    endif;
+    errmsg("Income bracket does not match the reported amount (%d PHP/month). Reconcile.", a);
     reenter;
   endif;
 """
@@ -1760,7 +1766,8 @@ DISPOSITION_PROCS = """\
   postponed / stopped visit reaches the closing form without walking every required
   question (R4 #515). CASE_DISPOSITION (off-form) is the completeness sentinel the
   Supervisor App + CSWeb exports read (R4 #561): 0 In Progress, 1 Completed, 2 Partial.
-  F4 result codes: 1 Completed, 2 Postponed, 3 Incomplete, 4 Withdraw. }
+  F4 result codes: 1 Completed, 2 Postponed, 3 Incomplete, 4 Withdraw, plus the
+  logic-only 5 Replaced (assigned below, never enumerator-picked -- #1301). }
 PROC BREAKOFF
 preproc
   { The guard MUST list every valid code — anything outside it is silently reset to
@@ -1783,6 +1790,17 @@ postproc
   endif;
 
 PROC ENUM_RESULT_FINAL_VISIT
+preproc
+  { #1301 (UAT R7, 2026-08-20): the enumerator picklist mirrors the paper's four
+    codes (ENUM_RESULT_FINAL_VISIT_PICK_VS1); the full set incl. 5 Replaced is active
+    only when the BREAKOFF flow assigned a replacement (or a stale Replaced value
+    persists after back-nav to BREAKOFF). Preproc re-fires on re-entry, so the swap
+    holds in both directions -- the F1 Q108 setvalueset pattern. }
+  if BREAKOFF in 5, 6, 7 or ENUM_RESULT_FINAL_VISIT = 5 then
+    setvalueset(ENUM_RESULT_FINAL_VISIT, ENUM_RESULT_FINAL_VISIT_VS1);
+  else
+    setvalueset(ENUM_RESULT_FINAL_VISIT, ENUM_RESULT_FINAL_VISIT_PICK_VS1);
+  endif;
 postproc
   { #561: classify from the final Result-of-Visit. F4 Completed = code 1 only. }
   if ENUM_RESULT_FINAL_VISIT = 1 then

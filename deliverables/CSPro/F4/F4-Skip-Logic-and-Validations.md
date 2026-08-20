@@ -64,7 +64,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 
 ### Routing preamble (whole-instrument)
 
-- **Break-off terminator.** `FIELD_CONTROL.BREAKOFF ≠ Continue` at the top of the interview → terminate; `ENUM_RESULT_FINAL_VISIT` is set from the break-off reason (2 Withdrew → `4 Withdraw Participation/Consent`; 3 Postponed → `2 Postponed`; 4 Stop-other → `3 Incomplete`) and `CASE_DISPOSITION = 2` (Partial / not completed). Entire questionnaire (A–Q) is suppressed. There is no `CONSENT_GIVEN` field — it was removed 2026-06-12.
+- **Break-off terminator.** `FIELD_CONTROL.BREAKOFF ≠ Continue` at the top of the interview → terminate; `ENUM_RESULT_FINAL_VISIT` is set from the break-off reason (2 Withdrew → `4 Withdraw Participation/Consent`; 3 Postponed → `2 Postponed`; 4 Stop-other → `3 Incomplete`; 5–7 never-started → `5 Replaced`, the ASPSI replacement protocol — BREAKOFF keeps the reason) and `CASE_DISPOSITION = 2` (Partial / not completed). Entire questionnaire (A–Q) is suppressed. There is no `CONSENT_GIVEN` field — it was removed 2026-06-12.
 - **Respondent-is-HH-head gate (Q1).** Q1 captures whether the respondent is the household head. Per source, if the respondent is not the HH head, some items may still be asked but flagged; no hard skip — handle as SOFT validation in §3.1.
 - **HH-confinement gate (Q129, Section L).** Q129 = Yes → Section M (ZBB/MAIFIP/Bill) fully asked. Q129 = No → Section M items Q132–Q143 are skipped (ZBB/MAIFIP awareness still asked per printed form; bill-recall chain Q138–Q143 is the confinement-dependent part). See Section M table below for the precise split.
 - **Roster expansion (Section C).** After B is complete, enumerator enters the roster loop for `count = Q19_HH_SIZE_TOTAL` members. Section J (Health-Seeking) also loops over the same roster per source — see sanity finding #2.
@@ -212,7 +212,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 | Q139 TOTAL_BILL_PHP | captured | No skip — falls through to Q140 |
 | Q140 BILL_ITEMS | select-all (Check Box) | No skip — falls through to Q141; `_OTHER_TXT` gated on the "Other expenses (specify)" option |
 | Q141 RECALL_PAYMENT | = No | **Q143** (skip the entire Q142 16-source settlement matrix — no recall of how the bill was paid) |
-| Q142 SETTLEMENT_MATRIX | each of 16 sources: independent Yes/No + amount (+ text for text-specify sources) | Falls through to **Q143** after the last source |
+| Q142 SETTLEMENT_MATRIX | each of 16 sources: independent Yes/No + amount (+ text for text-specify sources) | No skip; falls through to **Q143** after the last source |
 | Q143 NO_RECEIPT_AMT_PHP | must be `<= Q139_TOTAL_BILL_PHP` (HARD) | No skip — end of Section M, falls through to Q144 |
 
 ### Section N — Household Expenditures (WHO/SHA module)
@@ -222,7 +222,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 | Q | Condition | Skip to |
 |---|---|---|
 | `{Q}_CONSUMED` | = No | Next consumption item (skip `_PURCHASED_PHP`, `_INKIND_PHP` for this row) |
-| Q157 FOOD_SUBTOTAL | — | Auto-compute; enumerator cannot enter |
+| Q157 FOOD_SUBTOTAL | — | No skip; auto-compute, enumerator cannot enter |
 | Q177/Q182/Q185 HEALTH_SUBTOTAL | — | Auto-compute |
 
 ### Section O — Sources of Funds for Health
@@ -266,8 +266,8 @@ HARD = block save; SOFT = warn-and-confirm; GATE = display-only (items rendered 
 | `DATE_FIRST_VISITED`, `DATE_FINAL_VISIT` | Required, valid date ≤ today | HARD |
 | `DATE_FIRST_VISITED ≤ DATE_FINAL_VISIT` | Temporal ordering | HARD |
 | `TOTAL_NUMBER_OF_VISITS` | `1 ≤ n ≤ 10` (warn if > 3) | HARD + SOFT |
-| `ENUM_RESULT_FIRST_VISIT`, `ENUM_RESULT_FINAL_VISIT` | Required, ∈ value set | HARD |
-| `BREAKOFF` | Required; defaults to `1 — Continue interview`. If ≠ Continue → terminate; sets `ENUM_RESULT_FINAL_VISIT` (2 Withdrew → 4; 3 Postponed → 2; 4 Stop-other → 3 Incomplete) and `CASE_DISPOSITION = 2` | HARD |
+| `ENUM_RESULT_FIRST_VISIT`, `ENUM_RESULT_FINAL_VISIT` | Required, ∈ value set. Enumerator picklists show the paper's four codes only; `5 Replaced` is logic-assigned (BREAKOFF 5–7) and never enumerator-picked — FIRST's value set omits it, FINAL swaps to the full set via setvalueset() only on the replacement path (#1301, 2026-08-20) | HARD |
+| `BREAKOFF` | Required; defaults to `1 — Continue interview`. If ≠ Continue → terminate; sets `ENUM_RESULT_FINAL_VISIT` (2 Withdrew → 4; 3 Postponed → 2; 4 Stop-other → 3 Incomplete; 5–7 never-started → 5 Replaced) and `CASE_DISPOSITION = 2` | HARD |
 | `CASE_DISPOSITION` | Auto-written by logic, never typed: 0 In progress / 1 Completed / 2 Partial / not completed | — |
 | `HH_LISTING_NO` | Required, matches F3b listing form entry | HARD |
 | `REGION` → `PROVINCE_HUC` → `CITY_MUNICIPALITY` → `BARANGAY` | PSGC cascade enforced at pick-time by `PSGC-Cascade.apc` — each child's `onfocus` filters its value set to children of the chosen parent, so an inconsistent pair is unrepresentable | HARD — cascade enforces |
@@ -345,7 +345,7 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | Q25 enabled | `Q23_WATER_SOURCE ∈ {dug well, tube, spring}` codes | GATE |
 | `Q26_DUG_WELL_SHARE` | Required, ∈ value set (own/share) — inserted 2026-08-19, previously missing (see banner) | HARD |
 | `Q27_REFRIGERATOR`, `Q28_TELEVISION`, `Q29_WASHING_MACHINE` | Required, ∈ {Yes, No} — renumbered one place forward by the Q26 insertion above | HARD |
-| `Q29_SOCIOECONOMIC_CLASS` | Enumerator-selected (not auto-computed); no Aug-17 paper counterpart in this qnum range — CAPI-supplemental item, field name unchanged despite the Q29 numeric collision with `Q29_WASHING_MACHINE` above (registered as a capi-adaptation divergence) | SOFT |
+| `Q29_SOCIOECONOMIC_CLASS` | RETIRED from the tool 2026-08-20 (#1296, UAT R7 — no Aug-17 paper counterpart; ASPSI confirmed retire). Off-form: never asked, always blank from v3.1.0; dcf item retained to avoid a mid-round record-layout shift, full removal rides the next declared data-shape break | — |
 
 ### 3.4 Section C — Household Roster (per-member; see sanity #1 before build)
 
@@ -552,7 +552,7 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | **Bill-recall chain (Q138–Q143)** — asked of everyone, NOT gated on `Q129_HH_CONFINED` (#699/#701 — confinement gate removed) | | GATE |
 | `Q138_MOST_EXPENSIVE` | Required, ∈ value set (which charge type was most expensive) | HARD |
 | `Q139_TOTAL_BILL_PHP` | `0 ≤ amt ≤ 999,999,999` | HARD |
-| `Q140_BILL_ITEMS` select-all (Check Box) | ≥ 1 option; `_OTHER_TXT` on "Other expenses (specify)" | HARD |
+| `Q140_BILL_ITEMS` select-all (Check Box) | ≥ 1 option; `_OTHER_TXT` on "Other expenses (specify)"; "Cannot recall" (07) is EXCLUSIVE — hard reenter when ticked with any other option (#1300, 2026-08-20). Display order: Cannot recall before Other so the emitted codes ascend (#830) | HARD |
 | `Q141_RECALL_PAYMENT` | Required, ∈ {Yes, No} | HARD |
 | Q142 16-source matrix enabled | `Q141_RECALL_PAYMENT = Yes` | GATE |
 | `Q142_SOURCE_YN` (x16 sources) | Each source independently ∈ {Yes, No} | HARD |
@@ -668,14 +668,15 @@ The `CONSENT_GIVEN` item was removed 2026-06-12 (not on the April-20 paper Field
 ```cspro
 PROC BREAKOFF
 postproc
-  if not (BREAKOFF in 1, 2, 3, 4) then BREAKOFF = 1; endif;   { default "Continue" }
+  if not (BREAKOFF in 1, 2, 3, 4, 5, 6, 7) then BREAKOFF = 1; endif;   { default "Continue" }
 
   if BREAKOFF <> 1 then
     if BREAKOFF = 2 then ENUM_RESULT_FINAL_VISIT = 4; endif;   { Withdraw Participation/Consent }
     if BREAKOFF = 3 then ENUM_RESULT_FINAL_VISIT = 2; endif;   { Postponed }
     if BREAKOFF = 4 then ENUM_RESULT_FINAL_VISIT = 3; endif;   { Incomplete }
+    if BREAKOFF in 5, 6, 7 then ENUM_RESULT_FINAL_VISIT = 5; endif;   { Replaced (never-started; reason stays on BREAKOFF) }
     CASE_DISPOSITION = 2;                                      { Partial / not completed }
-    endlevel;                                                  { close interview; no data past here }
+    skip to ENUM_RESULT_FINAL_VISIT;                           { its postproc classifies + ends the case }
   endif;
 ```
 

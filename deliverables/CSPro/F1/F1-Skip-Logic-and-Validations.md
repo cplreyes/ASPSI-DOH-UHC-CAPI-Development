@@ -245,7 +245,7 @@ Categories: **HARD** = block save / reenter, **SOFT** = warn-and-confirm, **GATE
 | `DATE_FIRST_VISITED_THE_FACILITY` | Valid date (YYYYMMDD); `20260101 ≤ d ≤ today + 1` | HARD |
 | `DATE_OF_FINAL_VISIT_TO_THE_FACILITY` | Valid date; `≥ DATE_FIRST_VISITED_THE_FACILITY`; `≤ today + 1` | HARD |
 | `TOTAL_NUMBER_OF_VISITS` | `≥ 1` when `ENUM_RESULT_FIRST_VISIT` or `ENUM_RESULT_FINAL_VISIT = Completed` | HARD |
-| `BREAKOFF` | Required; defaults to `1 — Continue interview`. If ≠ Continue → terminate; sets `ENUM_RESULT_FINAL_VISIT` (2 Withdrew → 3 Refused; 3 Postponed → 2 Postponed; 4 Stop-other → 4 Incomplete) and `CASE_DISPOSITION = 2` | HARD |
+| `BREAKOFF` | Required; defaults to `1 — Continue interview`. If ≠ Continue → terminate; sets `ENUM_RESULT_FINAL_VISIT` (2 Withdrew → 3 Refused; 3 Postponed → 2 Postponed; 4 Stop-other → 4 Incomplete; 5–7 never-started → 5 Replaced). Enumerator picklists on the Result-of-Visit fields show the paper's four codes only; `5 Replaced` is logic-assigned and swaps in via setvalueset() only on the replacement path (#1290/#1301 class extension, 2026-08-20). Sets `CASE_DISPOSITION = 2` | HARD |
 | `CASE_DISPOSITION` | Auto-written by logic, never typed: 0 In progress / 1 Completed / 2 Partial / not completed | — |
 | `CLASSIFICATION`, `REGION`, `PROVINCE_HUC`, `CITY_MUNICIPALITY`, `BARANGAY` | Required, non-blank; must exist in the loaded PSGC external lookup dictionaries (`shared/psgc_*.dcf`) | HARD |
 | Child PSGC parent consistency | Enforced **at pick-time** by `PSGC-Cascade.apc` — `onfocus` on each child filters its value set to children of the chosen parent, so an inconsistent pair is unrepresentable | HARD — cascade enforces |

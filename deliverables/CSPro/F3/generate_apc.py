@@ -135,8 +135,8 @@ CUSTOM_VALIDATION = [
      "    Q124_MAIFIP_HEARD = 1;   { already availed MAIFIP in Q113 -> heard = Yes, not re-asked }\n"
      "    noinput;\n  endif;\n"
      "postproc\n"
-     "  if Q124_MAIFIP_HEARD in 2,3 then\n"
-     "    skip to Q130_REDUCED_SPEND;   { No / IDK (and did not avail) -> skip Q125-Q129 }\n  endif;"),
+     "  if Q124_MAIFIP_HEARD = 2 then\n"
+     "    skip to Q130_REDUCED_SPEND;   { No (and did not avail) -> skip Q125-Q129; IDK option removed per #1289 }\n  endif;"),
 ]
 
 # SOFT plausibility cross-field warnings (spec §3.5/3.6/3.7/3.9/3.10/3.12/3.13).
@@ -167,17 +167,9 @@ SOFT_CROSS = [
     ("Q17_INCOME_SOURCE",
      "  if (Q16_EMPLOYMENT = 4 or Q16_EMPLOYMENT = 5) and Q17_INCOME_SOURCE >= 1 and Q17_INCOME_SOURCE <= 5 then\n"
      "    errmsg(\"Q16 = unemployed but Q17 reports a paid-work income source — confirm.\");\n  endif;"),
-    ("Q29_SEC_CLASS",
-     # R16 (Aug-17 rewrite, 2026-08-18): Q18's income-bracket value set moved from the
-     # 11-band 50k scheme to the paper's 7 PSA income-class bands (DK=8, RF=9 — was
-     # 99/98). Re-bound to the new 7 real bands, same structural split as before
-     # (bottom 2 bands = "lowest"; remaining bands = "high") — SOFT confirm only. ASPSI
-     # may recalibrate the socio-economic-class income thresholds against the new
-     # brackets. DK(8)/RF(9) stay out-of-range so neither false-trips these bound tests.
-     "  if Q29_SEC_CLASS = 1 and Q18_INCOME_BRACKET >= 1 and Q18_INCOME_BRACKET <= 2 then\n"
-     "    errmsg(\"Q29 = socio-economic Class A/B but income is in the lowest bracket — confirm.\");\n  endif;\n"
-     "  if Q29_SEC_CLASS = 3 and Q18_INCOME_BRACKET >= 3 and Q18_INCOME_BRACKET <= 7 then\n"
-     "    errmsg(\"Q29 = socio-economic Class D/E but income is in a high bracket — confirm.\");\n  endif;"),
+    # Q29_SEC_CLASS SOFT cross-check RETIRED 2026-08-20 (#1286, UAT R7): the question
+    # was retired from the tool (off-form; no Aug-17 paper counterpart, ASPSI confirmed
+    # retire), so the field is never entered and the income-bound confirms are dead.
     # #782 (tester request, 2026-06-27): the Q97 and Q115 "final amount vs sum of OOP lines
     # ±10%" SOFT consistency warnings are REMOVED per the testers ("lift computation logic").
     # They were non-blocking errmsgs (spec §4 line 536) reading q92_oop()/q94_oop()/q96_oop()
@@ -1088,25 +1080,31 @@ onfocus
 #   Section E (Q53+, front-loaded to sit right after G/H per aug17 order:G,H) asked for
 #   both. Gate the FIRST item of G and of H.
 #   (Verify PATIENT_TYPE codes 1/2 against the dcf value set on first compile.)
-BRANCHING = """\
-{ ---- #164 Outpatient vs Inpatient branching ---- }
-PROC Q88_WHY_VISIT
-preproc
+# ANA-324 (2026-08-20): Q88's Outpatient gate lives here now instead of inside
+# BRANCHING. Q88 became a Check Box, so `_gen_checkbox_proc` emits `PROC Q88_WHY_VISIT`
+# itself (the select->=1 check); a second PROC of the same name in BRANCHING would be a
+# duplicate declaration and fail the Publish packager. Passing the gate through
+# CHECKBOX_CONVERT's `gate` slot puts this exact body back as that PROC's preproc --
+# identical condition, identical skip target, just a different home.
+Q88_OUTPATIENT_GATE = """\
   { #441: not Outpatient -> skip Section G to the START of Section H (Q105), NOT to
     what follows H. The old target jumped past Section H entirely, so INPATIENTS lost
     all of Section H. Q105's own gate (PATIENT_TYPE <> 2 -> skip past H) then decides:
     inpatient keeps H, a blank/other type falls through past it. }
   if PATIENT_TYPE <> 1 then    { not Outpatient -> skip Section G; land at Section H start }
     skip to Q105_REASON;
-  endif;
+  endif;"""
 
+BRANCHING = """\
+{ ---- #164 Outpatient vs Inpatient branching ---- }
 PROC Q105_REASON
 preproc
-  { aug17: target moved from Q116_NBB_HEARD (Section I) to Q53_HAS_PCP (Section E) --
-    G/H are now front-loaded immediately after Section D, ahead of E, per the paper's
-    two 'Note for CAPI Version' blocks (order:G,H). }
+  { #1305 (2026-08-20): target back to Q116_NBB_HEARD (Section I). The aug17 front-load
+    that had sent it to Q53_HAS_PCP (Section E) is reversed -- E and F are now asked
+    BEFORE G/H again, in the paper's printed order, so by the time a respondent reaches
+    H's gate Section E is already behind them and the next unanswered block is I. }
   if PATIENT_TYPE <> 2 then    { not Inpatient -> skip Section H entirely }
-    skip to Q53_HAS_PCP;
+    skip to Q116_NBB_HEARD;
   endif;
 """
 
@@ -1136,6 +1134,7 @@ CHECKBOX_BASES = {
     "Q59_SCHED_COMM", "Q61_CONSULT_COMM", "Q70_USUAL_TRANSPORT", "Q73_NEAREST_TRANSPORT",
     "Q75_KON_SOURCE", "Q82_KON_WHY_NOT_REG", "Q85_CONDITIONS", "Q86_VISIT_EVENTS",
     "Q87_OTHER_ACTIONS", "Q90_NOT_CONFINED", "Q93_LABS",
+    "Q88_WHY_VISIT",   # ANA-324: select_one -> Check Box (paper prints SELECT ALL THAT APPLY)
     # #690/#694 Section G/H select_all -> Check Box (tick-all)
     "Q100_BUCAS_SOURCE", "Q103_BUCAS_SERVICES", "Q114_NO_PH",
     # #696 Section K/L select_all -> Check Box (tick-all)
@@ -1224,6 +1223,11 @@ CHECKBOX_CONVERT = [
      "    errmsg(\"Q87: 'Did not seek other forms of care' cannot be combined with any other "
      'action — untick the others (or untick this) so only one applies, then continue.");\n'
      "    reenter;\n  endif;"),   # #715: code 06 is exclusive (HARD); 'Other (Specify)' (99)
+    # ANA-324: Q88 was a select_one radio since Apr-20 though the Aug-17 paper prints
+    # "SELECT ALL THAT APPLY" (F3-extract.md L1250). exclusive=False -- the list has no
+    # None / I-don't-know standalone to enforce. The gate is Q88's Outpatient branch,
+    # relocated from BRANCHING (see Q88_OUTPATIENT_GATE) so this PROC is declared once.
+    ("Q88_WHY_VISIT",            True,  False, Q88_OUTPATIENT_GATE),
     ("Q90_NOT_CONFINED",         True,  "06",  None),  # #673: 'Other (specify)' (99); no None/IDK
     # Q93 'None'(90) -> skip the Q94 lab-cost matrix (was PROC Q93_LABS_O17 skip, #448/#673).
     ("Q93_LABS",                 True,  True,  None,
@@ -1478,9 +1482,11 @@ SKIP_RULES = [
     ("Q43_KNOWS_ASSIST",     "Q43_KNOWS_ASSIST = 2",         "Q45_CATEGORY"),
     ("Q48_PREMIUM_PAY",      "Q48_PREMIUM_PAY = 3",          "Q51_OTHER_INSURANCE"),
     ("Q49_PREMIUM_DIFFICULT","Q49_PREMIUM_DIFFICULT = 2",    "Q51_OTHER_INSURANCE"),
-    # aug17: Section D is now immediately followed by G (front-load reorder, order:G,H) —
-    # was Q53_HAS_PCP (E's start) when D directly preceded E.
-    ("Q51_OTHER_INSURANCE",  "Q51_OTHER_INSURANCE = 2",      "Q88_WHY_VISIT"),
+    # #1305 (2026-08-20): front-load reversed, so D is once again immediately followed by
+    # E and this target goes back to E's start. This also restores agreement with the
+    # PAPER's own Q51 note, which reads "IF No GOTO <proceed to Q53>" — the front-load was
+    # the only reason the build ever pointed it at Q88.
+    ("Q51_OTHER_INSURANCE",  "Q51_OTHER_INSURANCE = 2",      "Q53_HAS_PCP"),
     # Section E — Primary Care Utilization
     ("Q53_HAS_PCP",          "Q53_HAS_PCP = 2",              "Q63_HAS_USUAL_FACILITY"),
     # Q66_SAME_AS_USUAL routing now lives in EXTRA_PROCS (Q63 usual-facility block, #418/#419).
@@ -1507,8 +1513,8 @@ SKIP_RULES = [
     # unaffected (an outpatient reaching either of these is never PATIENT_TYPE=2, so H's
     # gate would have sent them to the same place anyway -- these are the shortcut that
     # skips walking through H's gate check).
-    ("AREA_HAS_BUCAS",     "AREA_HAS_BUCAS = 2",                          "Q53_HAS_PCP"),            # #464: area has no BUCAS -> skip Q99-104 (mirrors Q99=No)
-    ("Q99_BUCAS_HEARD",    "Q99_BUCAS_HEARD = 2",                         "Q53_HAS_PCP"),            # No -> end of Section G (sanity #9; skip Q100-104)
+    ("AREA_HAS_BUCAS",     "AREA_HAS_BUCAS = 2",                          "Q116_NBB_HEARD"),        # #464: area has no BUCAS -> skip Q99-104 (mirrors Q99=No). #1305: back to Section I (front-load reversed)
+    ("Q99_BUCAS_HEARD",    "Q99_BUCAS_HEARD = 2",                         "Q116_NBB_HEARD"),        # No -> end of Section G (sanity #9; skip Q100-104). #1305: back to Section I
     ("Q102_BUCAS_ACCESSED","Q102_BUCAS_ACCESSED = 2",                     "Q104_WITHOUT_BUCAS"),     # No -> Q104 (skip Q103)
     # Section H — Inpatient Care
     ("Q108_MEDS_OUTSIDE",  "Q108_MEDS_OUTSIDE = 2",                       "Q110_LAB_OUTSIDE"),       # No -> skip meds-outside-cost
@@ -1516,11 +1522,11 @@ SKIP_RULES = [
     # aug17 {.mark}: paper adds an explicit Yes/No gate ahead of the 115.2 a)-g) breakdown
     # (F3-extract.md L2180/L2231) that the earlier build lacked (see Q1142_HAS_OTHER in
     # generate_dcf.py). No -> skip the whole breakdown + its Other-specify text, straight
-    # to whatever follows H -- E's start post-reorder (order:G,H; was Section I pre-reorder).
-    ("Q1142_HAS_OTHER",    "Q1142_HAS_OTHER = 2",                         "Q53_HAS_PCP"),            # No -> skip the 115.2 a)-g) breakdown entirely
+    # to whatever follows H -- Section I again, now that #1305 reversed the front-load.
+    ("Q1142_HAS_OTHER",    "Q1142_HAS_OTHER = 2",                         "Q116_NBB_HEARD"),        # No -> skip the 115.2 a)-g) breakdown entirely
     # Section I — Financial Risk Protection
-    ("Q116_NBB_HEARD",     "Q116_NBB_HEARD in 2,3",                       "Q119_ZBB_HEARD"),         # No / IDK -> skip Q117,Q118
-    ("Q119_ZBB_HEARD",     "Q119_ZBB_HEARD in 2,3",                       "Q124_MAIFIP_HEARD"),      # No / IDK -> skip Q120-123
+    ("Q116_NBB_HEARD",     "Q116_NBB_HEARD = 2",                       "Q119_ZBB_HEARD"),         # No -> skip Q117,Q118 (IDK option removed per #1289)
+    ("Q119_ZBB_HEARD",     "Q119_ZBB_HEARD = 2",                       "Q124_MAIFIP_HEARD"),      # No -> skip Q120-123 (IDK option removed per #1289)
     # Q124_MAIFIP_HEARD: moved to CUSTOM_VALIDATION (F3-LOGIC-01) — needs a preproc auto-set
     # (MAIFIP already availed in Q113 -> Yes) merged with the No/IDK -> Q130 skip.
     # Q126_MAIFIP_AVAILED routing now in EXTRA_PROCS (inpatient gate #479 + #482 No->Q129).
@@ -1624,6 +1630,17 @@ postproc
   endif;
 
 PROC ENUM_RESULT_FINAL_VISIT
+preproc
+  { #1290 (UAT R7, 2026-08-20): the enumerator picklist mirrors the paper's six
+    codes (ENUM_RESULT_FINAL_VISIT_PICK_VS1); the full set incl. 7 Replaced is active
+    only when the BREAKOFF flow assigned a replacement (or a stale Replaced value
+    persists after back-nav to BREAKOFF). Preproc re-fires on re-entry, so the swap
+    holds in both directions -- the F1 Q108 setvalueset pattern. }
+  if BREAKOFF in 5, 6, 7 or ENUM_RESULT_FINAL_VISIT = 7 then
+    setvalueset(ENUM_RESULT_FINAL_VISIT, ENUM_RESULT_FINAL_VISIT_VS1);
+  else
+    setvalueset(ENUM_RESULT_FINAL_VISIT, ENUM_RESULT_FINAL_VISIT_PICK_VS1);
+  endif;
 postproc
   { #561: classify from the final Result-of-Visit. Completed codes 1/2/5 -> Completed;
     3 Postponed, 4 Incomplete, 6 Withdraw -> Partial. }

@@ -688,47 +688,6 @@
                           "value": "4"
                         }
                       ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Replaced",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "5"
-                        }
-                      ]
                     }
                   ]
                 }
@@ -1013,6 +972,209 @@
                       "pairs": [
                         {
                           "value": "5"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "ENUM_RESULT_FINAL_VISIT_PICK_VS1",
+                  "labels": [
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "WAR"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "HIL"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "ILO"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Completed",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Postponed",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Incomplete",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Withdraw Participation/Consent",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Withdraw Participation/Consent",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Withdraw Participation/Consent",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Withdraw Participation/Consent",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Withdraw Participation/Consent",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Withdraw Participation/Consent",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Withdraw Participation/Consent",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Withdraw Participation/Consent",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
                         }
                       ]
                     }
@@ -3119,35 +3281,35 @@
                     {
                       "labels": [
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "EN"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "FIL"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "BCL"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "BIS"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "CEB"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "WAR"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "HIL"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "ILO"
                         }
                       ],
@@ -8714,35 +8876,35 @@
               "name": "Q18_INCOME_BRACKET",
               "labels": [
                 {
-                  "text": "18. Income bracket",
+                  "text": "18. Income category corresponding to the respondent's approximate household income",
                   "language": "EN"
                 },
                 {
-                  "text": "18. Income bracket",
+                  "text": "18. Income category corresponding to the respondent's approximate household income",
                   "language": "FIL"
                 },
                 {
-                  "text": "18. Income bracket",
+                  "text": "18. Income category corresponding to the respondent's approximate household income",
                   "language": "BCL"
                 },
                 {
-                  "text": "18. Income bracket",
+                  "text": "18. Income category corresponding to the respondent's approximate household income",
                   "language": "BIS"
                 },
                 {
-                  "text": "18. Income bracket",
+                  "text": "18. Income category corresponding to the respondent's approximate household income",
                   "language": "CEB"
                 },
                 {
-                  "text": "18. Income bracket",
+                  "text": "18. Income category corresponding to the respondent's approximate household income",
                   "language": "WAR"
                 },
                 {
-                  "text": "18. Income bracket",
+                  "text": "18. Income category corresponding to the respondent's approximate household income",
                   "language": "HIL"
                 },
                 {
-                  "text": "18. Income bracket",
+                  "text": "18. Income category corresponding to the respondent's approximate household income",
                   "language": "ILO"
                 }
               ],
@@ -8754,35 +8916,35 @@
                   "name": "Q18_INCOME_BRACKET_VS1",
                   "labels": [
                     {
-                      "text": "18. Income bracket",
+                      "text": "18. Income category corresponding to the respondent's approximate household income",
                       "language": "EN"
                     },
                     {
-                      "text": "18. Income bracket",
+                      "text": "18. Income category corresponding to the respondent's approximate household income",
                       "language": "FIL"
                     },
                     {
-                      "text": "18. Income bracket",
+                      "text": "18. Income category corresponding to the respondent's approximate household income",
                       "language": "BCL"
                     },
                     {
-                      "text": "18. Income bracket",
+                      "text": "18. Income category corresponding to the respondent's approximate household income",
                       "language": "BIS"
                     },
                     {
-                      "text": "18. Income bracket",
+                      "text": "18. Income category corresponding to the respondent's approximate household income",
                       "language": "CEB"
                     },
                     {
-                      "text": "18. Income bracket",
+                      "text": "18. Income category corresponding to the respondent's approximate household income",
                       "language": "WAR"
                     },
                     {
-                      "text": "18. Income bracket",
+                      "text": "18. Income category corresponding to the respondent's approximate household income",
                       "language": "HIL"
                     },
                     {
-                      "text": "18. Income bracket",
+                      "text": "18. Income category corresponding to the respondent's approximate household income",
                       "language": "ILO"
                     }
                   ],
@@ -8790,35 +8952,35 @@
                     {
                       "labels": [
                         {
-                          "text": "Under 50,000",
+                          "text": "< PhP12,030",
                           "language": "EN"
                         },
                         {
-                          "text": "Mas mababa sa 40,000",
+                          "text": "< PhP12,030",
                           "language": "FIL"
                         },
                         {
-                          "text": "Under 50,000",
+                          "text": "< PhP12,030",
                           "language": "BCL"
                         },
                         {
-                          "text": "Ubos sa 40,000",
+                          "text": "< PhP12,030",
                           "language": "BIS"
                         },
                         {
-                          "text": "Ubos sa 40,000",
+                          "text": "< PhP12,030",
                           "language": "CEB"
                         },
                         {
-                          "text": "Under 50,000",
+                          "text": "< PhP12,030",
                           "language": "WAR"
                         },
                         {
-                          "text": "Nubo sa 40,000",
+                          "text": "< PhP12,030",
                           "language": "HIL"
                         },
                         {
-                          "text": "Under 50,000",
+                          "text": "< PhP12,030",
                           "language": "ILO"
                         }
                       ],
@@ -8831,35 +8993,35 @@
                     {
                       "labels": [
                         {
-                          "text": "50,000 - 99,999",
+                          "text": "PhP12,030 to PhP24,060",
                           "language": "EN"
                         },
                         {
-                          "text": "50,000 - 99,999",
+                          "text": "PhP12,030 to PhP24,060",
                           "language": "FIL"
                         },
                         {
-                          "text": "50,000 - 99,999",
+                          "text": "PhP12,030 to PhP24,060",
                           "language": "BCL"
                         },
                         {
-                          "text": "50,000 - 99,999",
+                          "text": "PhP12,030 to PhP24,060",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili moubos sa 40,000 ug dili mulapas sa 59,999",
+                          "text": "PhP12,030 to PhP24,060",
                           "language": "CEB"
                         },
                         {
-                          "text": "50,000 - 99,999",
+                          "text": "PhP12,030 to PhP24,060",
                           "language": "WAR"
                         },
                         {
-                          "text": "50,000 - 99,999",
+                          "text": "PhP12,030 to PhP24,060",
                           "language": "HIL"
                         },
                         {
-                          "text": "50,000 - 99,999",
+                          "text": "PhP12,030 to PhP24,060",
                           "language": "ILO"
                         }
                       ],
@@ -8872,35 +9034,35 @@
                     {
                       "labels": [
                         {
-                          "text": "100,000 - 149,999",
+                          "text": "PhP24,061 to PhP48,120",
                           "language": "EN"
                         },
                         {
-                          "text": "100,000 - 149,999",
+                          "text": "PhP24,061 to PhP48,120",
                           "language": "FIL"
                         },
                         {
-                          "text": "100,000 - 149,999",
+                          "text": "PhP24,061 to PhP48,120",
                           "language": "BCL"
                         },
                         {
-                          "text": "100,000 - 149,999",
+                          "text": "PhP24,061 to PhP48,120",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili moubos sa 60,000 ug dili mulapas sa 99,999",
+                          "text": "PhP24,061 to PhP48,120",
                           "language": "CEB"
                         },
                         {
-                          "text": "100,000 - 149,999",
+                          "text": "PhP24,061 to PhP48,120",
                           "language": "WAR"
                         },
                         {
-                          "text": "100,000 - 149,999",
+                          "text": "PhP24,061 to PhP48,120",
                           "language": "HIL"
                         },
                         {
-                          "text": "100,000 - 149,999",
+                          "text": "PhP24,061 to PhP48,120",
                           "language": "ILO"
                         }
                       ],
@@ -8913,35 +9075,35 @@
                     {
                       "labels": [
                         {
-                          "text": "150,000 - 199,999",
+                          "text": "PhP48,121 to PhP84,210",
                           "language": "EN"
                         },
                         {
-                          "text": "150,000 - 199,999",
+                          "text": "PhP48,121 to PhP84,210",
                           "language": "FIL"
                         },
                         {
-                          "text": "150,000 - 199,999",
+                          "text": "PhP48,121 to PhP84,210",
                           "language": "BCL"
                         },
                         {
-                          "text": "150,000 - 199,999",
+                          "text": "PhP48,121 to PhP84,210",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili moubos sa 100,000 ug dili mulapas sa 249,999",
+                          "text": "PhP48,121 to PhP84,210",
                           "language": "CEB"
                         },
                         {
-                          "text": "150,000 - 199,999",
+                          "text": "PhP48,121 to PhP84,210",
                           "language": "WAR"
                         },
                         {
-                          "text": "150,000 - 199,999",
+                          "text": "PhP48,121 to PhP84,210",
                           "language": "HIL"
                         },
                         {
-                          "text": "150,000 - 199,999",
+                          "text": "PhP48,121 to PhP84,210",
                           "language": "ILO"
                         }
                       ],
@@ -8954,35 +9116,35 @@
                     {
                       "labels": [
                         {
-                          "text": "200,000 - 249,999",
+                          "text": "PhP84,211 to PhP144,360",
                           "language": "EN"
                         },
                         {
-                          "text": "200,000 - 249,999",
+                          "text": "PhP84,211 to PhP144,360",
                           "language": "FIL"
                         },
                         {
-                          "text": "200,000 - 249,999",
+                          "text": "PhP84,211 to PhP144,360",
                           "language": "BCL"
                         },
                         {
-                          "text": "200,000 - 249,999",
+                          "text": "PhP84,211 to PhP144,360",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili moubos sa 250,000 ug dili mulapas sa 499,999",
+                          "text": "PhP84,211 to PhP144,360",
                           "language": "CEB"
                         },
                         {
-                          "text": "200,000 - 249,999",
+                          "text": "PhP84,211 to PhP144,360",
                           "language": "WAR"
                         },
                         {
-                          "text": "200,000 - 249,999",
+                          "text": "PhP84,211 to PhP144,360",
                           "language": "HIL"
                         },
                         {
-                          "text": "200,000 - 249,999",
+                          "text": "PhP84,211 to PhP144,360",
                           "language": "ILO"
                         }
                       ],
@@ -8995,35 +9157,35 @@
                     {
                       "labels": [
                         {
-                          "text": "250,000 - 299,999",
+                          "text": "PhP144,361 to PhP240,600",
                           "language": "EN"
                         },
                         {
-                          "text": "500,000 pataas",
+                          "text": "PhP144,361 to PhP240,600",
                           "language": "FIL"
                         },
                         {
-                          "text": "250,000 - 299,999",
+                          "text": "PhP144,361 to PhP240,600",
                           "language": "BCL"
                         },
                         {
-                          "text": "500,000 pataas",
+                          "text": "PhP144,361 to PhP240,600",
                           "language": "BIS"
                         },
                         {
-                          "text": "500,000 pataas",
+                          "text": "PhP144,361 to PhP240,600",
                           "language": "CEB"
                         },
                         {
-                          "text": "500,000 ngan sobra",
+                          "text": "PhP144,361 to PhP240,600",
                           "language": "WAR"
                         },
                         {
-                          "text": "500,000 kag mas mataas",
+                          "text": "PhP144,361 to PhP240,600",
                           "language": "HIL"
                         },
                         {
-                          "text": "250,000 - 299,999",
+                          "text": "PhP144,361 to PhP240,600",
                           "language": "ILO"
                         }
                       ],
@@ -9036,35 +9198,35 @@
                     {
                       "labels": [
                         {
-                          "text": "300,000 - 349,999",
+                          "text": ">PhP240,600",
                           "language": "EN"
                         },
                         {
-                          "text": "Tumangging sumagot",
+                          "text": ">PhP240,600",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dai nag simbag",
+                          "text": ">PhP240,600",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili gustong motubag",
+                          "text": ">PhP240,600",
                           "language": "BIS"
                         },
                         {
-                          "text": "Nagdumili sa pagtubag",
+                          "text": ">PhP240,600",
                           "language": "CEB"
                         },
                         {
-                          "text": "300,000 - 349,999",
+                          "text": ">PhP240,600",
                           "language": "WAR"
                         },
                         {
-                          "text": "Nagpamalibad sa pag sabat",
+                          "text": ">PhP240,600",
                           "language": "HIL"
                         },
                         {
-                          "text": "300,000 - 349,999",
+                          "text": ">PhP240,600",
                           "language": "ILO"
                         }
                       ],
@@ -9077,35 +9239,35 @@
                     {
                       "labels": [
                         {
-                          "text": "350,000 - 399,999",
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
                           "language": "EN"
                         },
                         {
-                          "text": "350,000 - 399,999",
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
                           "language": "FIL"
                         },
                         {
-                          "text": "350,000 - 399,999",
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
                           "language": "BCL"
                         },
                         {
-                          "text": "350,000 - 399,999",
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
                           "language": "BIS"
                         },
                         {
-                          "text": "350,000 - 399,999",
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
                           "language": "CEB"
                         },
                         {
-                          "text": "350,000 - 399,999",
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
                           "language": "WAR"
                         },
                         {
-                          "text": "350,000 - 399,999",
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
                           "language": "HIL"
                         },
                         {
-                          "text": "350,000 - 399,999",
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
                           "language": "ILO"
                         }
                       ],
@@ -9118,205 +9280,41 @@
                     {
                       "labels": [
                         {
-                          "text": "400,000 - 449,999",
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
                           "language": "EN"
                         },
                         {
-                          "text": "400,000 - 449,999",
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
                           "language": "FIL"
                         },
                         {
-                          "text": "400,000 - 449,999",
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
                           "language": "BCL"
                         },
                         {
-                          "text": "400,000 - 449,999",
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
                           "language": "BIS"
                         },
                         {
-                          "text": "400,000 - 449,999",
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
                           "language": "CEB"
                         },
                         {
-                          "text": "400,000 - 449,999",
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
                           "language": "WAR"
                         },
                         {
-                          "text": "400,000 - 449,999",
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
                           "language": "HIL"
                         },
                         {
-                          "text": "400,000 - 449,999",
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
                           "language": "ILO"
                         }
                       ],
                       "pairs": [
                         {
                           "value": "9"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "450,000 - 499,999",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "450,000 - 499,999",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "450,000 - 499,999",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "450,000 - 499,999",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "450,000 - 499,999",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "450,000 - 499,999",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "450,000 - 499,999",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "450,000 - 499,999",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "10"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "500,000 and above",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "500,000 and above",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "500,000 and above",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "500,000 and above",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "500,000 and above",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "500,000 and above",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "500,000 and above",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "500,000 and above",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "11"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "I don't know",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "I don't know",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "I don't know",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "I don't know",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "I don't know",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "I don't know",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "I don't know",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "I don't know",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "90"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Refuse to answer",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Refuse to answer",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Refuse to answer",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Refuse to answer",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Refuse to answer",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Refuse to answer",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Refuse to answer",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "Refuse to answer",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "95"
                         }
                       ]
                     }
@@ -46617,47 +46615,6 @@
                     {
                       "labels": [
                         {
-                          "text": "Other expenses (specify)",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Other expenses (specify)",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Other expenses (specify)",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Other expenses (specify)",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Other expenses (specify)",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Other expenses (specify)",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Other expenses (specify)",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "Other expenses (specify)",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "99"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
                           "text": "Cannot recall",
                           "language": "EN"
                         },
@@ -46693,6 +46650,47 @@
                       "pairs": [
                         {
                           "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other expenses (specify)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Other expenses (specify)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Other expenses (specify)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Other expenses (specify)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Other expenses (specify)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Other expenses (specify)",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Other expenses (specify)",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Other expenses (specify)",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
                         }
                       ]
                     }

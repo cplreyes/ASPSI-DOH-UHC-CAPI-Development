@@ -110,8 +110,27 @@ def auto_other_specify_procs():
         if q is not None:
             by_q.setdefault(q, []).append(n)
 
+    def is_other_specify_label(lab):
+        """True only for a genuine "Other (specify)" option label.
+
+        #1302 (UAT R7, 2026-08-20): this used to be `"other" in lab.lower()`, which
+        matches any option that merely MENTIONS other. On F1 Q13.2 that made option 2
+        ("...collaborating and implementing with OTHER units...") a trigger for the
+        Other-specify box, so choosing a perfectly normal answer demanded a write-in
+        that could not be skipped. The same loose test would have fired on "Mother",
+        "Brother", "other government agencies" and "Other health care provider".
+
+        The rule is that the label must END on "Other", optionally followed by a
+        "(specify)" tail. \b makes "Mother"/"Brother" non-matches, and requiring it at
+        the END rejects "Other health care provider". This is the same disambiguation
+        the `_O\d+` flag path already applied below; it is hoisted here so every
+        derivation shares one definition instead of three divergent ones.
+        """
+        return bool(re.search(r"\bothers?\b[^A-Za-z]*(?:\(?\s*specif\w*\s*\)?)?\s*$",
+                              lab or "", re.IGNORECASE))
+
     def other_codes(m):
-        """The value-set codes on item `m` whose EN label mentions 'other'."""
+        """The value-set codes on item `m` that are a real "Other (specify)" option."""
         vss = items[m].get("valueSets") or []
         if not vss:
             return []
@@ -119,7 +138,7 @@ def auto_other_specify_procs():
         for v in vss[0].get("values", []):
             vlab = next((l.get("text", "") for l in v.get("labels", [])
                          if l.get("language") in (None, "EN")), "")
-            if "other" in vlab.lower() and v.get("pairs"):
+            if is_other_specify_label(vlab) and v.get("pairs"):
                 codes.append(v["pairs"][0].get("value"))
         return codes
 
@@ -178,7 +197,7 @@ def auto_other_specify_procs():
         siblings = by_q.get(q, [])
         flags = [m for m in siblings
                  if re.search(r"_O\d+$", m)
-                 and "other" in en_label(items[m]).lower()]
+                 and is_other_specify_label(en_label(items[m]))]
         if len(flags) > 1:
             # disambiguate: 'other' also appears inside unrelated option labels
             # ("other government agencies", "other health facilities") — the
@@ -214,7 +233,7 @@ def auto_other_specify_procs():
             for v in vss[0].get("values", []):
                 vlab = next((l.get("text", "") for l in v.get("labels", [])
                              if l.get("language") in (None, "EN")), "")
-                if "other" in vlab.lower() and v.get("pairs"):
+                if is_other_specify_label(vlab) and v.get("pairs"):
                     codes.append(v["pairs"][0].get("value"))
             if codes:
                 parents.append((m, codes))
@@ -1352,6 +1371,17 @@ postproc
   endif;""",
     "ENUM_RESULT_FINAL_VISIT": """\
 PROC ENUM_RESULT_FINAL_VISIT
+preproc
+  { #1290/#1301 class extension (UAT R7, 2026-08-20): the enumerator picklist mirrors
+    the paper's four codes (ENUM_RESULT_FINAL_VISIT_PICK_VS1); the full set incl. 5
+    Replaced is active only when the BREAKOFF flow assigned a replacement (or a stale
+    Replaced persists after back-nav to BREAKOFF). Preproc re-fires on re-entry, so
+    the swap holds in both directions -- the Q108 setvalueset pattern. }
+  if BREAKOFF in 5, 6, 7 or ENUM_RESULT_FINAL_VISIT = 5 then
+    setvalueset(ENUM_RESULT_FINAL_VISIT, ENUM_RESULT_FINAL_VISIT_VS1);
+  else
+    setvalueset(ENUM_RESULT_FINAL_VISIT, ENUM_RESULT_FINAL_VISIT_PICK_VS1);
+  endif;
 postproc
   { #744/#561: classify completeness from the final Result-of-Visit. Completed(1) -> Completed;
     Postponed(2) / Refused(3) / Incomplete(4) -> Partial. }

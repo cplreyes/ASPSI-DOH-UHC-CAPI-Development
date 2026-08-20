@@ -688,47 +688,6 @@
                           "value": "4"
                         }
                       ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Replaced",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "5"
-                        }
-                      ]
                     }
                   ]
                 }
@@ -1013,6 +972,209 @@
                       "pairs": [
                         {
                           "value": "5"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "ENUM_RESULT_FINAL_VISIT_PICK_VS1",
+                  "labels": [
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "WAR"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "HIL"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "ILO"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Completed",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Postponed",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Refused",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Refused",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Refused",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Refused",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Refused",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Refused",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Refused",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Refused",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Incomplete",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
                         }
                       ]
                     }
@@ -3158,35 +3320,35 @@
                     {
                       "labels": [
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "EN"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "FIL"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "BCL"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "BIS"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "CEB"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "WAR"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "HIL"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "ILO"
                         }
                       ],

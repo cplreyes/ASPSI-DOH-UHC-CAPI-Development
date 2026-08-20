@@ -26,7 +26,7 @@ from cspro_helpers import (
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, checkbox_multiselect, record,
     build_field_control, build_geo_id, build_dictionary, build_id_block, write_dcf,
-    derived_geo_code_items, ENUM_RESULT_OPTIONS_F4, BREAKOFF_OPTIONS,
+    derived_geo_code_items, ENUM_RESULT_OPTIONS_F4, REPLACED_CODE_F4, BREAKOFF_OPTIONS,
     apply_translations,
     _photo_block,
 )
@@ -114,7 +114,8 @@ def build_f4_field_control():
                                date_mmddyyyy=True,   # #1132/#1174 parity: typed MMDDYYYY, stored YYYYMMDD
                                extra_items=extra + derived_geo_code_items(),
                                date_label_entity="the Household",
-                               result_options=ENUM_RESULT_OPTIONS_F4)
+                               result_options=ENUM_RESULT_OPTIONS_F4,
+                               replaced_code=REPLACED_CODE_F4)
 
 
 # ============================================================
@@ -275,25 +276,23 @@ def build_section_b():
         ("My aunt",                        "11"),
         ("Other (specify)",                "12"),
     ]
-    # 1176: aligned to the cleared PAPI questionnaire (F4_EN.txt Q18) - 11 brackets +
-    # DK/RF, replacing the 7 coarser CAPI-only brackets. The printed English's
-    # "150,000 - 199,000" is an arithmetic typo (every sibling ends _99,999 and the
-    # cleared Bicolano prints 199,999); corrected here, flagged on the ticket.
-    # RECODE BOUNDARY: deploys before 2026-08-18 carry the old 1-6(+7 refuse) scheme.
+    # #1295 (UAT R7, 2026-08-20) -- SUPERSEDES the #1176 11-bracket list: the Aug-17
+    # F4 paper prints the PSA 7 income-class bands (normalized/F4-paper.csv qnum=18,
+    # enumerator note "Tick the income category..."), the same scheme F3 adopted under
+    # R16. Labels verbatim from the paper; DK=8 / RF=9 mirror F3 (the F4 paper prints
+    # no DK/RF codes on the bracket -- the amount's -98/-99 note needs a bracket
+    # escape, registered as capi-adaptation). RECODE BOUNDARY: deploys before
+    # 2026-08-20 carry the 01-11 + 90/95 scheme (and 2026-08-18's before that).
     Q18_BRACKET = [
-        ("Under 50,000",       "1"),
-        ("50,000 - 99,999",    "2"),
-        ("100,000 - 149,999",  "3"),
-        ("150,000 - 199,999",  "4"),
-        ("200,000 - 249,999",  "5"),
-        ("250,000 - 299,999",  "6"),
-        ("300,000 - 349,999",  "7"),
-        ("350,000 - 399,999",  "8"),
-        ("400,000 - 449,999",  "9"),
-        ("450,000 - 499,999",  "10"),
-        ("500,000 and above",  "11"),
-        ("I don't know",       "90"),
-        ("Refuse to answer",   "95"),
+        ("< PhP12,030",                             "1"),
+        ("PhP12,030 to PhP24,060",                  "2"),
+        ("PhP24,061 to PhP48,120",                  "3"),
+        ("PhP48,121 to PhP84,210",                  "4"),
+        ("PhP84,211 to PhP144,360",                 "5"),
+        ("PhP144,361 to PhP240,600",                "6"),
+        (">PhP240,600",                              "7"),
+        ("I don't know [DO NOT READ OUT LOUD]",     "8"),
+        ("Refuse to answer [DO NOT READ OUT LOUD]", "9"),
     ]
     Q23_WATER = [
         ("Faucet inside the house", "1"),
@@ -387,7 +386,10 @@ def build_section_b():
                 "18. In the past 6 months, what is your average monthly household income? Please specify in Philippine pesos.",
                 length=9),
         select_one("Q18_INCOME_BRACKET",
-                   "18. Income bracket",
+                   "18. Income category corresponding to the respondent's approximate household income",
+                   # length STAYS 2 (values 1-9 store right-justified): shrinking the
+                   # item would shift every later Section-B column mid-round. Values
+                   # match F3's R16 codes 1-9 exactly; only storage width differs.
                    Q18_BRACKET, length=2),
         numeric("Q19_HH_SIZE_TOTAL",
                 "19. How many total individuals (including children) live in your house now?",
@@ -1660,8 +1662,14 @@ def build_section_m():
         # _cb_codes's standard 'specif' detection now applies (-> 99), same as every
         # other checkbox base in the instrument; the CHECKBOX_OTHER_CODE entry for
         # this base is retired (generate_apc.py).
-        ("Other expenses (specify)",                  "7"),
+        # #1300 (UAT R7, 2026-08-20): "Cannot recall" moved ABOVE "Other (specify)" so
+        # the emitted codes ascend (01-06, 07 recall, 99 other) per the #830 checkbox
+        # rule -- previously 01-06, 99, 07. _cb_codes assigns positionally, so "Cannot
+        # recall" keeps code 07 and "Other" keeps 99: display-order change only,
+        # zero data-code changes (paper prints Other before Cannot recall; divergence
+        # registered, same call as F1 Q163 / #1126).
         ("Cannot recall",                             "8"),
+        ("Other expenses (specify)",                  "7"),
     ]
     # 142) 16-source hospital-bill settlement matrix (F4-extract.md L2124-2304). Each
     # source is Yes/No(+specify for sources 6 & 16) tick + a gated Amount-in-Pesos

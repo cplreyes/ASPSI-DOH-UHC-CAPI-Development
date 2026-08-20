@@ -73,6 +73,10 @@ CHECKBOX = {"Q148_CONDITIONS",
             "Q59_SCHED_COMM", "Q61_CONSULT_COMM", "Q70_USUAL_TRANSPORT", "Q73_NEAREST_TRANSPORT",
             "Q75_KON_SOURCE", "Q82_KON_WHY_NOT_REG", "Q85_CONDITIONS", "Q86_VISIT_EVENTS",
             "Q87_OTHER_ACTIONS", "Q90_NOT_CONFINED", "Q93_LABS",
+            # F3 ANA-324: Q88 select_one -> Check Box. It MUST be listed here or
+            # optimize_capture_types demotes it to DropDown (8 options >= DROPDOWN_MIN),
+            # which renders a multi-select alpha field as a single-pick list.
+            "Q88_WHY_VISIT",
             # F3 #690/#694 Section G/H select_all -> Check Box (tick-all).
             "Q100_BUCAS_SOURCE", "Q103_BUCAS_SERVICES", "Q114_NO_PH",
             # F3 #696 Section K/L select_all -> Check Box (tick-all).
@@ -119,6 +123,16 @@ CHECKBOX = {"Q148_CONDITIONS",
             "Q196_FOREGONE", "Q202_WORRY_REASONS"}   # #638/#668 Section O/Q tick-all (keep CheckBox, don't demote)
 DROPDOWN_MIN = 7   # >= this many coded options -> dropdown instead of radio
 
+# Fields that must stay RadioButton no matter how many options valueSets[0] holds.
+# #1310 (Aly, 2026-08-20): F3 ENUM_RESULT_FINAL_VISIT rendered as a DROPDOWN because
+# its FULL value set has 7 codes (>= DROPDOWN_MIN). But the enumerator never sees that
+# set -- a preproc swaps in ENUM_RESULT_FINAL_VISIT_PICK_VS1, which has 6 (no
+# "Replaced"). So the dropdown decision was made on a list nobody is shown, and the
+# field looked different from Result of FIRST Visit sitting right above it. F4/F1 were
+# unaffected only because their lists are shorter, which is exactly the kind of
+# accidental inconsistency worth pinning rather than leaving to option counts.
+FORCE_RADIO = {"ENUM_RESULT_FINAL_VISIT"}
+
 
 def field_meta(dcf_path):
     d = json.loads(Path(dcf_path).read_text(encoding="utf-8"))
@@ -142,6 +156,8 @@ def ideal(name, meta):
     m = meta.get(name) or {}
     if name in CHECKBOX:
         return "CheckBox"
+    if name in FORCE_RADIO:
+        return "RadioButton"   # #1310: decided on the PICK set the enumerator sees
     if name in CASCADE:
         return "DropDown"
     if m.get("vs", 0) >= DROPDOWN_MIN:

@@ -682,6 +682,17 @@ postproc
   endif;
 
 PROC ENUM_RESULT_FINAL_VISIT
+preproc
+  { #1290 (UAT R7, 2026-08-20): the enumerator picklist mirrors the paper's six
+    codes (ENUM_RESULT_FINAL_VISIT_PICK_VS1); the full set incl. 7 Replaced is active
+    only when the BREAKOFF flow assigned a replacement (or a stale Replaced value
+    persists after back-nav to BREAKOFF). Preproc re-fires on re-entry, so the swap
+    holds in both directions -- the F1 Q108 setvalueset pattern. }
+  if BREAKOFF in 5, 6, 7 or ENUM_RESULT_FINAL_VISIT = 7 then
+    setvalueset(ENUM_RESULT_FINAL_VISIT, ENUM_RESULT_FINAL_VISIT_VS1);
+  else
+    setvalueset(ENUM_RESULT_FINAL_VISIT, ENUM_RESULT_FINAL_VISIT_PICK_VS1);
+  endif;
 postproc
   { #561: classify from the final Result-of-Visit. Completed codes 1/2/5 -> Completed;
     3 Postponed, 4 Incomplete, 6 Withdraw -> Partial. }
@@ -714,23 +725,14 @@ postproc
 
 
 { ---- #164 Outpatient vs Inpatient branching ---- }
-PROC Q88_WHY_VISIT
-preproc
-  { #441: not Outpatient -> skip Section G to the START of Section H (Q105), NOT to
-    what follows H. The old target jumped past Section H entirely, so INPATIENTS lost
-    all of Section H. Q105's own gate (PATIENT_TYPE <> 2 -> skip past H) then decides:
-    inpatient keeps H, a blank/other type falls through past it. }
-  if PATIENT_TYPE <> 1 then    { not Outpatient -> skip Section G; land at Section H start }
-    skip to Q105_REASON;
-  endif;
-
 PROC Q105_REASON
 preproc
-  { aug17: target moved from Q116_NBB_HEARD (Section I) to Q53_HAS_PCP (Section E) --
-    G/H are now front-loaded immediately after Section D, ahead of E, per the paper's
-    two 'Note for CAPI Version' blocks (order:G,H). }
+  { #1305 (2026-08-20): target back to Q116_NBB_HEARD (Section I). The aug17 front-load
+    that had sent it to Q53_HAS_PCP (Section E) is reversed -- E and F are now asked
+    BEFORE G/H again, in the paper's printed order, so by the time a respondent reaches
+    H's gate Section E is already behind them and the next unanswered block is I. }
   if PATIENT_TYPE <> 2 then    { not Inpatient -> skip Section H entirely }
-    skip to Q53_HAS_PCP;
+    skip to Q116_NBB_HEARD;
   endif;
 
 
@@ -2372,6 +2374,47 @@ postproc
     reenter;
   endif;
 
+PROC Q88_WHY_VISIT
+preproc
+  { #441: not Outpatient -> skip Section G to the START of Section H (Q105), NOT to
+    what follows H. The old target jumped past Section H entirely, so INPATIENTS lost
+    all of Section H. Q105's own gate (PATIENT_TYPE <> 2 -> skip past H) then decides:
+    inpatient keeps H, a blank/other type falls through past it. }
+  if PATIENT_TYPE <> 1 then    { not Outpatient -> skip Section G; land at Section H start }
+    skip to Q105_REASON;
+  endif;
+postproc
+  if length(strip(Q88_WHY_VISIT)) = 0 then
+    errmsg(1281);
+    reenter;
+  endif;
+
+PROC Q88_WHY_VISIT_OTHER_TXT
+preproc
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q88_WHY_VISIT)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q88_WHY_VISIT[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
+    Q88_WHY_VISIT_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q88_WHY_VISIT)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q88_WHY_VISIT[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q88_WHY_VISIT_OTHER_TXT)) = 0 then
+    errmsg(1282);
+    reenter;
+  endif;
+
 PROC Q90_NOT_CONFINED
 postproc
   if length(strip(Q90_NOT_CONFINED)) = 0 then
@@ -3317,7 +3360,7 @@ postproc
 PROC Q51_OTHER_INSURANCE
 postproc
   if Q51_OTHER_INSURANCE = 2 then
-    skip to Q88_WHY_VISIT;
+    skip to Q53_HAS_PCP;
   endif;
 
 PROC Q53_HAS_PCP
@@ -3377,13 +3420,13 @@ postproc
 PROC AREA_HAS_BUCAS
 postproc
   if AREA_HAS_BUCAS = 2 then
-    skip to Q53_HAS_PCP;
+    skip to Q116_NBB_HEARD;
   endif;
 
 PROC Q99_BUCAS_HEARD
 postproc
   if Q99_BUCAS_HEARD = 2 then
-    skip to Q53_HAS_PCP;
+    skip to Q116_NBB_HEARD;
   endif;
 
 PROC Q102_BUCAS_ACCESSED
@@ -3407,18 +3450,18 @@ postproc
 PROC Q1142_HAS_OTHER
 postproc
   if Q1142_HAS_OTHER = 2 then
-    skip to Q53_HAS_PCP;
+    skip to Q116_NBB_HEARD;
   endif;
 
 PROC Q116_NBB_HEARD
 postproc
-  if Q116_NBB_HEARD in 2,3 then
+  if Q116_NBB_HEARD = 2 then
     skip to Q119_ZBB_HEARD;
   endif;
 
 PROC Q119_ZBB_HEARD
 postproc
-  if Q119_ZBB_HEARD in 2,3 then
+  if Q119_ZBB_HEARD = 2 then
     skip to Q124_MAIFIP_HEARD;
   endif;
 
@@ -3667,18 +3710,6 @@ preproc
 postproc
   if Q84_SERVICE_TYPE = 5 and length(strip(Q84_SERVICE_TYPE_OTHER_TXT)) = 0 then
     errmsg(1194);
-    reenter;
-  endif;
-
-PROC Q88_WHY_VISIT_OTHER_TXT
-preproc
-  if Q88_WHY_VISIT <> 8 then
-    Q88_WHY_VISIT_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q88_WHY_VISIT = 8 and length(strip(Q88_WHY_VISIT_OTHER_TXT)) = 0 then
-    errmsg(1195);
     reenter;
   endif;
 
@@ -4027,8 +4058,8 @@ preproc
     noinput;
   endif;
 postproc
-  if Q124_MAIFIP_HEARD in 2,3 then
-    skip to Q130_REDUCED_SPEND;   { No / IDK (and did not avail) -> skip Q125-Q129 }
+  if Q124_MAIFIP_HEARD = 2 then
+    skip to Q130_REDUCED_SPEND;   { No (and did not avail) -> skip Q125-Q129; IDK option removed per #1289 }
   endif;
 
 { ---- Soft plausibility cross-field warnings (spec §3.5-§3.13) ---- }
@@ -4054,15 +4085,6 @@ PROC Q17_INCOME_SOURCE
 postproc
   if (Q16_EMPLOYMENT = 4 or Q16_EMPLOYMENT = 5) and Q17_INCOME_SOURCE >= 1 and Q17_INCOME_SOURCE <= 5 then
     errmsg(1234);
-  endif;
-
-PROC Q29_SEC_CLASS
-postproc
-  if Q29_SEC_CLASS = 1 and Q18_INCOME_BRACKET >= 1 and Q18_INCOME_BRACKET <= 2 then
-    errmsg(1235);
-  endif;
-  if Q29_SEC_CLASS = 3 and Q18_INCOME_BRACKET >= 3 and Q18_INCOME_BRACKET <= 7 then
-    errmsg(1236);
   endif;
 
 { ============================================================================
