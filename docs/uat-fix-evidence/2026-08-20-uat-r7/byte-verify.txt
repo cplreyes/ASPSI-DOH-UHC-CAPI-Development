@@ -1,0 +1,56 @@
+UAT Round 7 — triage run 2026-08-20
+Server-side byte-verification of the packages CSWeb actually serves
+(pulled by scp from /opt/app/lamp/www/csweb/files/apps/, bz2-decompressed .pen,
+term search in UTF-16LE per the byte-verify convention).
+
+--- F4 HouseholdSurvey v3.1.0 --------------------------------------------
+entries: 13 | psgc files: 8 | review.html: True
+OK   version v3.1.0 (qsf footer, near end of pack = non-truncation signal)
+OK   PSA band label 'PhP12,030 to PhP24,060' present          (#1295)
+OK   old band label 'Under 50,000' ABSENT                     (#1295)
+OK   ENUM_RESULT_FINAL_VISIT_PICK value set present           (#1301)
+OK   Q140 exclusive hard-block errmsg present                 (#1300)
+RESULT: ALL PASS
+
+--- F3 PatientSurvey v4.1.0 ----------------------------------------------
+entries: 12 | psgc files: 8
+OK   version v4.1.0
+OK   ENUM_RESULT_FINAL_VISIT_PICK value set present           (#1290)
+OK   Section F intro text present                             (#1287 — already shipped)
+RESULT: ALL PASS
+
+--- F1 FacilityHeadSurvey v3.1.0 -----------------------------------------
+entries: 12 | psgc files: 8 | facility_lookup ABSENT: True
+OK   version v3.1.0
+OK   ENUM_RESULT_FINAL_VISIT_PICK value set present           (class extension)
+OK   question-text probe 'UHC Act enacted in 2019'
+RESULT: ALL PASS
+
+--- Structural verification (rebuilt .dcf, JSON) --------------------------
+F4 ENUM_RESULT_FIRST_VISIT_VS1        codes ['1','2','3','4']          (Replaced dropped)
+F4 ENUM_RESULT_FINAL_VISIT_VS1        codes ['1','2','3','4','5']      (full set stays index 0)
+F4 ENUM_RESULT_FINAL_VISIT_PICK_VS1   codes ['1','2','3','4']          (picker)
+F4 Q18_INCOME_BRACKET_VS1             codes ['1'..'9']                 (PSA 7 bands + DK 8 / RF 9)
+F4 Q140_BILL_ITEMS_VS1                codes ['01'..'06','07','99'] ASCENDING,
+                                      labels ... 'Cannot recall'(07), 'Other expenses (specify)'(99)
+F3 ENUM_RESULT_FIRST_VISIT_VS1        codes ['1'..'6']                 (Replaced dropped)
+F3 ENUM_RESULT_FINAL_VISIT_VS1        codes ['1'..'7'] / _PICK_VS1 ['1'..'6']
+F3 Q116/Q119/Q124 _VS1                codes ['1','2']                  (IDK removed, #1289)
+F1 ENUM_RESULT_FIRST_VISIT_VS1        codes ['1','2','3','4'] / FINAL full ['1'..'5'] + PICK ['1'..'4']
+F4 Q29_SOCIOECONOMIC_CLASS            absent from the .fmf (retired off-form, dcf item retained)
+F3 Q29_SEC_CLASS                      absent from the .fmf (same)
+
+--- Gate results (all instruments) ---------------------------------------
+aug17_diff Tier-1     F4 PASS exit 0 (568 registered) · F3 PASS exit 0 (460) · F1 PASS exit 0 (172)
+verify_questions      F1 321/321 · F3 375/375 · F4 333/333 — all PASS
+preflight_validate    ALL CLEAN (incl. "no setvalueset() on a non-field")
+fmf_block_check       OK on all three
+skip_boundary_check   OK on all three (1 known waiver each)
+r25_caption_check     F4 PASS (0 no-prompt, 0 collisions) · F3 PASS
+Designer compile      F4 06:52:21 · F3 08:10:40 · F1 08:14:58 — Successful, title bar verified
+csentry_verify        F1/F3/F4 PASS (no .ent.err)
+
+--- On-device evidence (itel pad 1, serial 091945939L000716) --------------
+Tier 1. The DEPLOYED packages were pulled from CSWeb and sideloaded into
+loudly-labeled "R7 EVIDENCE ..." folders; screenshots are of those builds.
+See the PNGs in this folder.
