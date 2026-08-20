@@ -1,0 +1,55 @@
+{
+  "release": "2026-08-20-psa-submission",
+  "purpose": "CAPI final version set handed to ASPSI for PSA submission",
+  "captured_utc": "2026-08-20T15:01:24+08:00",
+  "cspro": [
+    {
+      "instrument": "F1",
+      "app": "FacilityHeadSurvey",
+      "version": "3.1.5",
+      "file": "F1-FacilityHeadSurvey-v3.1.5.zip",
+      "bytes": 1624063,
+      "md5": "8de8b9a07a7be66bb8532a21e9ab28b8",
+      "sha256": "4b6e32e7fc9d3f99923998f3a306eb875c122e3587d7f491ad5def1a43ab1015",
+      "zip_entries": 12,
+      "psgc_files": 8,
+      "pen_bytes": 7600234,
+      "version_stamps_in_pen": 8
+    },
+    {
+      "instrument": "F3",
+      "app": "PatientSurvey",
+      "version": "6.0.2",
+      "file": "F3-PatientSurvey-v6.0.2.zip",
+      "bytes": 1685099,
+      "md5": "6ebb252d2011fc656891bff21943f23c",
+      "sha256": "7585852c947f20c676c9769b0d53ac6111d32bf923dc41c4b705e5e3c3f3cca7",
+      "zip_entries": 12,
+      "psgc_files": 8,
+      "pen_bytes": 7853640,
+      "version_stamps_in_pen": 8
+    },
+    {
+      "instrument": "F4",
+      "app": "HouseholdSurvey",
+      "version": "3.1.3",
+      "file": "F4-HouseholdSurvey-v3.1.3.zip",
+      "bytes": 1660484,
+      "md5": "52786da6607ce47b5e954099310c02e3",
+      "sha256": "e859ec553ec73b5354f15ca1a63e87855c04b4e59db1022f45a28197c806f7bb",
+      "zip_entries": 13,
+      "psgc_files": 8,
+      "pen_bytes": 7676821,
+      "version_stamps_in_pen": 8
+    }
+  ],
+  "f2_pwa": {
+    "instrument": "F2",
+    "app": "UHC Survey Y2 - Healthcare Worker (PWA)",
+    "version": "3.0.0",
+    "commit": "412896936c51c7351ce5b0eb15ccc3d285d294cc",
+    "url": "https://uhc-hcw.asiansocial.org",
+    "spec_version": "2026-08-20-m2",
+    "note": "Web app, not a downloadable package -- its identity is the deployed commit. Confirmed live from https://uhc-hcw.asiansocial.org/build-info.json."
+  }
+}
