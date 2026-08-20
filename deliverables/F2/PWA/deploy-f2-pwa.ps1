@@ -94,7 +94,15 @@ function Test-Live {
     } catch { Fail "site unreachable: $($_.Exception.Message)" }
     Pass "site responds"
 
-    if ($html -notmatch 'assets/(index-[A-Za-z0-9]+\.js)') { Fail "no index bundle referenced by index.html" }
+    # Hash charset MUST include - and _ : Vite hashes are base64url, so a perfectly
+    # good bundle can be named index-D5-gNd38.js. With a bare [A-Za-z0-9]+ this guard
+    # fails on roughly a third of builds and reports "no index bundle" for a deploy
+    # that in fact succeeded -- exactly what happened on 2026-08-20 (prod was serving
+    # index-D5-gNd38.js and was completely healthy). Because Fail aborts, it also
+    # skipped the admin-chunk checks below, so a regex typo silently downgraded the
+    # whole live verification. The admin matcher on the next block always had the
+    # right charset; this one had drifted.
+    if ($html -notmatch 'assets/(index-[A-Za-z0-9_-]+\.js)') { Fail "no index bundle referenced by index.html" }
     $indexName = $Matches[1]
     Say "        serving $indexName"
 
