@@ -45,8 +45,13 @@ function emitSectionConst(section: Section): string {
 // renderer falls back to the item's own id (see emitItem below). Kept as a
 // named function (rather than deleted outright) so a future gap, if the
 // paper ever reintroduces one, has an obvious place to land.
-function displayNumberFor(_id: string): string | undefined {
-  return undefined;
+// #1291 (UAT R7, 2026-08-20): ids are now machine-safe — parse-spec rewrites the
+// paper's sub-item dots to underscores because react-hook-form treats '.' as a
+// nested-path separator (see the note there). The printed number is restored here
+// for DISPLAY ONLY, so Q13_1 still shows as "Q13.1" on screen and in the review
+// list. This is exactly the gap-restoring role the function was kept alive for.
+function displayNumberFor(id: string): string | undefined {
+  return id.includes('_') && /^Q\d+(?:_\d+)+$/.test(id) ? id.replace(/_/g, '.') : undefined;
 }
 
 function emitItem(item: Item): string {

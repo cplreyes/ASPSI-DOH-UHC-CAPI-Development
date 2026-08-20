@@ -49,37 +49,37 @@ describe('shouldShow', () => {
     // visible) — the same shape repeats for Q15.1/Q17.1/.../Q24.1.
     describe('the .1/.2 UHC-attribution sub-items (new in Aug-17)', () => {
       it('hides Q13.1 when Q13 is No (two-step pair: base No → probe hidden)', () => {
-        expect(shouldShow('B', 'Q13.1', { Q12: 'Yes', Q13: 'No' })).toBe(false);
+        expect(shouldShow('B', 'Q13_1', { Q12: 'Yes', Q13: 'No' })).toBe(false);
       });
 
       it('shows Q13.1 when Q13 is Yes (two-step pair: base Yes → probe visible)', () => {
-        expect(shouldShow('B', 'Q13.1', { Q12: 'Yes', Q13: 'Yes' })).toBe(true);
+        expect(shouldShow('B', 'Q13_1', { Q12: 'Yes', Q13: 'Yes' })).toBe(true);
       });
 
       it('hides Q13.1 when Q13 is unanswered', () => {
-        expect(shouldShow('B', 'Q13.1', { Q12: 'Yes' })).toBe(false);
+        expect(shouldShow('B', 'Q13_1', { Q12: 'Yes' })).toBe(false);
       });
 
       it('hides Q13.1 when Q12 is No (outer Section-B gate still applies)', () => {
-        expect(shouldShow('B', 'Q13.1', { Q12: 'No', Q13: 'Yes' })).toBe(false);
+        expect(shouldShow('B', 'Q13_1', { Q12: 'No', Q13: 'Yes' })).toBe(false);
       });
 
       it('gates each sub-item on its own parent, not a sibling', () => {
-        expect(shouldShow('B', 'Q15.1', { Q12: 'Yes', Q15: 'Yes', Q17: 'No' })).toBe(true);
-        expect(shouldShow('B', 'Q17.1', { Q12: 'Yes', Q15: 'Yes', Q17: 'No' })).toBe(false);
-        expect(shouldShow('B', 'Q18.1', { Q12: 'Yes', Q18: 'Yes' })).toBe(true);
-        expect(shouldShow('B', 'Q19.1', { Q12: 'Yes', Q19: 'No' })).toBe(false);
-        expect(shouldShow('B', 'Q20.1', { Q12: 'Yes', Q20: 'Yes' })).toBe(true);
-        expect(shouldShow('B', 'Q21.1', { Q12: 'Yes', Q21: 'No' })).toBe(false);
-        expect(shouldShow('B', 'Q22.1', { Q12: 'Yes', Q22: 'Yes' })).toBe(true);
-        expect(shouldShow('B', 'Q23.1', { Q12: 'Yes', Q23: 'No' })).toBe(false);
+        expect(shouldShow('B', 'Q15_1', { Q12: 'Yes', Q15: 'Yes', Q17: 'No' })).toBe(true);
+        expect(shouldShow('B', 'Q17_1', { Q12: 'Yes', Q15: 'Yes', Q17: 'No' })).toBe(false);
+        expect(shouldShow('B', 'Q18_1', { Q12: 'Yes', Q18: 'Yes' })).toBe(true);
+        expect(shouldShow('B', 'Q19_1', { Q12: 'Yes', Q19: 'No' })).toBe(false);
+        expect(shouldShow('B', 'Q20_1', { Q12: 'Yes', Q20: 'Yes' })).toBe(true);
+        expect(shouldShow('B', 'Q21_1', { Q12: 'Yes', Q21: 'No' })).toBe(false);
+        expect(shouldShow('B', 'Q22_1', { Q12: 'Yes', Q22: 'Yes' })).toBe(true);
+        expect(shouldShow('B', 'Q23_1', { Q12: 'Yes', Q23: 'No' })).toBe(false);
       });
 
       it('Q24.1 and Q24.2 are independent siblings, both gated on Q24=Yes', () => {
-        expect(shouldShow('B', 'Q24.1', { Q12: 'Yes', Q24: 'Yes' })).toBe(true);
-        expect(shouldShow('B', 'Q24.2', { Q12: 'Yes', Q24: 'Yes' })).toBe(true);
-        expect(shouldShow('B', 'Q24.1', { Q12: 'Yes', Q24: 'No' })).toBe(false);
-        expect(shouldShow('B', 'Q24.2', { Q12: 'Yes', Q24: 'No' })).toBe(false);
+        expect(shouldShow('B', 'Q24_1', { Q12: 'Yes', Q24: 'Yes' })).toBe(true);
+        expect(shouldShow('B', 'Q24_2', { Q12: 'Yes', Q24: 'Yes' })).toBe(true);
+        expect(shouldShow('B', 'Q24_1', { Q12: 'Yes', Q24: 'No' })).toBe(false);
+        expect(shouldShow('B', 'Q24_2', { Q12: 'Yes', Q24: 'No' })).toBe(false);
       });
     });
 
@@ -317,10 +317,24 @@ describe('shouldShow', () => {
       expect(shouldShow('G', 'Q73', { Q72: 'Yes' })).toBe(false);
     });
 
-    it('shows Q89 when either Q87 or Q88 is Yes', () => {
-      expect(shouldShow('G', 'Q89', { Q87: 'Yes' })).toBe(true);
-      expect(shouldShow('G', 'Q89', { 'Q88': 'Yes' })).toBe(true);
-      expect(shouldShow('G', 'Q89', { Q87: 'No', 'Q88': 'No' })).toBe(false);
+    // #1293 (UAT R7): Q89 is gated on Q88 ALONE. The Aug-17 paper prints the
+    // skip on Q88 ("Yes / No <proceed to Q90>") and none on Q87, and Q89's
+    // "If yes" refers to the question directly above it.
+    it('shows Q89 only when Q88 is Yes', () => {
+      expect(shouldShow('G', 'Q89', { Q88: 'Yes' })).toBe(true);
+      expect(shouldShow('G', 'Q89', { Q88: 'No' })).toBe(false);
+      expect(shouldShow('G', 'Q89', {})).toBe(false);
+    });
+
+    // The cell the ticket was actually filed about, and the one the previous
+    // OR gate got wrong — it is asserted explicitly so it cannot regress.
+    it('#1293: Q88=No routes to Q90 even when Q87 was Yes', () => {
+      expect(shouldShow('G', 'Q89', { Q87: 'Yes', Q88: 'No' })).toBe(false);
+    });
+
+    it('#1293: Q87 alone never opens Q89', () => {
+      expect(shouldShow('G', 'Q89', { Q87: 'Yes' })).toBe(false);
+      expect(shouldShow('G', 'Q89', { Q87: 'No', Q88: 'No' })).toBe(false);
     });
   });
 

@@ -20,7 +20,19 @@ export const COMPLETED_CSID_KEY = 'f2_completed_csid';
 // attribution battery split into new Q13.1–Q24.2 sub-items, Section J ids
 // from the old Q109 onward shift down by one. Pre-m1 drafts/submissions use
 // the old ids; do not silently merge them against post-m1 data.
-export const LOCAL_SPEC_VERSION = '2026-08-19-m1';
+// m2 (2026-08-20, UAT R7 fix batch): the Section-B attribution sub-items are
+// re-keyed from the paper's dotted numbers to underscores (Q13.1 -> Q13_1 …
+// Q24.2 -> Q24_2) — see #1291. Under m1 those probes never stored a usable
+// value at all: react-hook-form read the dot as a nested path, so answering one
+// overwrote its PARENT stem instead (Q13 became an array). So there is no m1
+// sub-item data to preserve, and any m1 draft holding a corrupted parent should
+// be treated as suspect rather than merged. Also in m2: #1292 option ORDER now
+// follows the paper's column-major reading on 15 questions (values unchanged —
+// F2 stores option label text, not positional codes, so this is display-only),
+// and #1293 narrows Q89's gate to Q88=Yes.
+// Backend `min_accepted_spec_version` is deliberately NOT raised here — see the
+// note above; that only moves once the offline queue has drained.
+export const LOCAL_SPEC_VERSION = '2026-08-20-m2';
 
 export interface EnrollmentInfo {
   hcw_id: string;

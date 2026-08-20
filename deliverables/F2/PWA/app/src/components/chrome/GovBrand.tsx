@@ -28,18 +28,24 @@ export function ClearanceBlock({ className = '' }: { className?: string }) {
   );
 }
 
+// #1281 (UAT R7): at h-7/h-9 the wordmarks inside the strip rendered ~4px tall and
+// were unreadable. The reviewers asked for ~100px. That is the ceiling, not just a
+// preference: gov-logos.png is 520x107 and aspsi.png 346x214, so anything past ~107px
+// upscales and blurs — which would defeat the point. md+ therefore lands at exactly
+// 100px (essentially 1:1 for the gov strip), and the smaller steps keep the masthead
+// usable on phones, where a 100px strip would not fit beside the chrome controls.
 export function GovLogos({ className = '' }: { className?: string }) {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
+    <div className={`flex items-center gap-3 ${className}`}>
       <img
         src={govLogos}
         alt="Department of Health · Bagong Pilipinas — Sa Bagong Pilipinas, Bawat Buhay Mahalaga"
-        className="h-7 w-auto sm:h-9"
+        className="h-14 w-auto sm:h-20 md:h-[100px]"
       />
       <img
         src={aspsiLogo}
         alt="Asian Social Project Services, Inc."
-        className="h-7 w-auto sm:h-9"
+        className="h-14 w-auto sm:h-20 md:h-[100px]"
       />
     </div>
   );

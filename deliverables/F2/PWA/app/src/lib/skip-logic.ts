@@ -111,31 +111,33 @@ const predicates: Record<string, Record<string, Predicate>> = {
     Q22: (v) => v.Q12 === 'Yes',
     Q23: (v) => v.Q12 === 'Yes',
     Q24: (v) => v.Q12 === 'Yes',
-    // aug17 migration (Task 3.2, 2026-08-19): the eleven new `.1`/`.2`
-    // UHC-attribution sub-items (spec.md's Section-B rewrite, Task 3.1) —
-    // each shows only when its parent Yes/No stem was answered Yes. Ids are
-    // literal dots ('Q13.1'), matching `maps/F2-renames.csv` and the item id
-    // the spec's `pdf_q` column emits into `items.ts` — NOT underscores, so
-    // these keys must stay quoted strings (an unquoted `Q13.1:` is invalid
-    // JS). The generator's `loadConditionalItemKeys()` regex in
-    // parse-spec.ts doesn't match quoted dotted keys, so these don't get
-    // auto-detected as conditional via skip-logic.ts — harmless here because
-    // each `.1`/`.2` row's spec `required` column is already `conditional`,
-    // which independently makes isConditional() return true (see
-    // parse-spec.ts's isConditional(), condition 1).
-    'Q13.1': (v) => v.Q12 === 'Yes' && typeof v.Q13 === 'string' && v.Q13.startsWith('Yes'),
-    'Q15.1': (v) => v.Q12 === 'Yes' && typeof v.Q15 === 'string' && v.Q15.startsWith('Yes'),
-    'Q17.1': (v) => v.Q12 === 'Yes' && typeof v.Q17 === 'string' && v.Q17.startsWith('Yes'),
-    'Q18.1': (v) => v.Q12 === 'Yes' && typeof v.Q18 === 'string' && v.Q18.startsWith('Yes'),
-    'Q19.1': (v) => v.Q12 === 'Yes' && typeof v.Q19 === 'string' && v.Q19.startsWith('Yes'),
-    'Q20.1': (v) => v.Q12 === 'Yes' && typeof v.Q20 === 'string' && v.Q20.startsWith('Yes'),
-    'Q21.1': (v) => v.Q12 === 'Yes' && typeof v.Q21 === 'string' && v.Q21.startsWith('Yes'),
-    'Q22.1': (v) => v.Q12 === 'Yes' && typeof v.Q22 === 'string' && v.Q22.startsWith('Yes'),
-    'Q23.1': (v) => v.Q12 === 'Yes' && typeof v.Q23 === 'string' && v.Q23.startsWith('Yes'),
-    'Q24.1': (v) => v.Q12 === 'Yes' && typeof v.Q24 === 'string' && v.Q24.startsWith('Yes'),
+    // aug17 migration (Task 3.2, 2026-08-19): the eleven new UHC-attribution
+    // sub-items (spec.md's Section-B rewrite, Task 3.1) — each shows only when
+    // its parent Yes/No stem was answered Yes.
+    //
+    // #1291 (UAT R7, 2026-08-20): these keys WERE quoted literal dots
+    // ('Q13_1'), mirroring the paper's printed sub-item number. That is what
+    // broke the battery: react-hook-form parses '.' as a nested path, so the
+    // matching item id made register() address `values.Q13['1']` and destroy
+    // the parent's answer. Ids are now underscored (parse-spec.ts rewrites
+    // them; the printed number survives as displayNumber), so these keys are
+    // plain identifiers. A side benefit: `loadConditionalItemKeys()` in
+    // parse-spec.ts only matches UNQUOTED keys, so these eleven are now
+    // auto-detected as conditional from here too, instead of relying solely on
+    // each row's spec `required: conditional` column.
+    Q13_1: (v) => v.Q12 === 'Yes' && typeof v.Q13 === 'string' && v.Q13.startsWith('Yes'),
+    Q15_1: (v) => v.Q12 === 'Yes' && typeof v.Q15 === 'string' && v.Q15.startsWith('Yes'),
+    Q17_1: (v) => v.Q12 === 'Yes' && typeof v.Q17 === 'string' && v.Q17.startsWith('Yes'),
+    Q18_1: (v) => v.Q12 === 'Yes' && typeof v.Q18 === 'string' && v.Q18.startsWith('Yes'),
+    Q19_1: (v) => v.Q12 === 'Yes' && typeof v.Q19 === 'string' && v.Q19.startsWith('Yes'),
+    Q20_1: (v) => v.Q12 === 'Yes' && typeof v.Q20 === 'string' && v.Q20.startsWith('Yes'),
+    Q21_1: (v) => v.Q12 === 'Yes' && typeof v.Q21 === 'string' && v.Q21.startsWith('Yes'),
+    Q22_1: (v) => v.Q12 === 'Yes' && typeof v.Q22 === 'string' && v.Q22.startsWith('Yes'),
+    Q23_1: (v) => v.Q12 === 'Yes' && typeof v.Q23 === 'string' && v.Q23.startsWith('Yes'),
+    Q24_1: (v) => v.Q12 === 'Yes' && typeof v.Q24 === 'string' && v.Q24.startsWith('Yes'),
     // Q24's second sub-item (primary care quality measures) — same gate as
-    // Q24.1, both fire off Q24=Yes independently (not chained on each other).
-    'Q24.2': (v) => v.Q12 === 'Yes' && typeof v.Q24 === 'string' && v.Q24.startsWith('Yes'),
+    // Q24_1, both fire off Q24=Yes independently (not chained on each other).
+    Q24_2: (v) => v.Q12 === 'Yes' && typeof v.Q24 === 'string' && v.Q24.startsWith('Yes'),
     Q25: (v) => v.Q12 === 'Yes',
     // Q26–Q30 show only for their respective Q25 selection
     Q26: (v) => v.Q12 === 'Yes' && q25Includes(v, 'Salary'),
@@ -218,11 +220,26 @@ const predicates: Record<string, Record<string, Predicate>> = {
     Q71a: (v) => isYes(v.Q69),
     Q71b: (v) => isYes(v.Q70),
     Q73: (v) => v.Q72 === 'No',
-    // R6 #821: the paper's Q87 "No → Q90" skip is deliberately removed (UAT
-    // lead) — Q88 (NBB) is asked regardless of Q87's answer, and Q88's own
-    // answer drives the skip: Q89 keeps the OR gate below, so Q87=No &
-    // Q88=No lands on Q90.
-    Q89: (v) => isYes(v['Q87']) || isYes(v['Q88']),
+    // R6 #821 (still in force): Q88 (NBB) is asked regardless of Q87's answer.
+    // That half is unchanged — and it was never a departure from the Aug-17
+    // paper, which prints NO skip on Q87 (F2-inventory.md:152); only the
+    // Apr-20 sheet did.
+    //
+    // #1293 (UAT R7, 2026-08-20) — the gate below WAS `isYes(Q87) || isYes(Q88)`.
+    // The Aug-17 paper prints the skip on Q88 alone: "Q88 … Yes / No
+    // `<proceed to Q90>`" (F2-inventory.md:153), and Q89's "If yes, what
+    // situations?" refers to the question immediately above it. The OR gate
+    // therefore asked Q89 of a Q87=Yes / Q88=No respondent, whom the paper routes
+    // straight to Q90 — which is exactly what the reviewers filed. The spec was
+    // self-contradictory on this point (its Q88 row already carried `No → Q90`
+    // while its Q89 row carried the OR); the Q88 row and the paper agree, so the
+    // OR is the part that goes.
+    //
+    // ACCEPTED TRADE-OFF, disclosed on #1293: a Q87=Yes / Q88=No respondent no
+    // longer supplies a narrative, so a ZBB-only balance-billing account is not
+    // captured. The paper accepts that, and Q89 was a single undifferentiated box
+    // that could not be attributed to ZBB vs NBB anyway.
+    Q89: (v) => isYes(v['Q88']),
   },
   H: {
     // Q91='This has never happened to me' → skip Q92–Q95

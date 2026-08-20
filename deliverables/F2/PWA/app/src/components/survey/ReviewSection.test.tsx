@@ -131,13 +131,46 @@ describe('<ReviewSection>', () => {
       expect(screen.getByLabelText(/Why or why not/i)).toBeInTheDocument();
     });
 
-    it('does NOT block submission when feedback is left blank (survey data must never be lost)', () => {
-      const onSubmit = vi.fn();
+    // #1294 (UAT R7, 2026-08-20) SUPERSEDES the original #838 assertion here,
+    // which was `expect(Submit).toBeEnabled()` with feedback blank. The reviewers
+    // asked for the ease question to be required. #838's "never lose survey data"
+    // reasoning is preserved where it actually applies — the free-text "why" is
+    // still optional, and the ease question is a one-tap Yes/No.
+    it('#1294: blocks submission until the ease question is answered', () => {
       renderWithProviders(
         <ReviewSection
           values={baseValues}
           onEdit={vi.fn()}
-          onSubmit={onSubmit}
+          onSubmit={vi.fn()}
+          feedback={{ why: '' }}
+          onFeedbackChange={vi.fn()}
+        />,
+      );
+      expect(screen.getByRole('button', { name: /Submit/i })).toBeDisabled();
+      expect(screen.getByText(/Please answer this question before submitting/i)).toBeInTheDocument();
+    });
+
+    it('#1294: enables submission once the ease question is answered, with "why" left blank', () => {
+      renderWithProviders(
+        <ReviewSection
+          values={baseValues}
+          onEdit={vi.fn()}
+          onSubmit={vi.fn()}
+          feedback={{ easy: 0, why: '' }}
+          onFeedbackChange={vi.fn()}
+        />,
+      );
+      // "No" is a valid answer, and the open comment stays optional (#838).
+      expect(screen.getByRole('button', { name: /Submit/i })).toBeEnabled();
+    });
+
+    it('#1294: the paper-encoder path is never gated on feedback', () => {
+      renderWithProviders(
+        <ReviewSection
+          values={baseValues}
+          onEdit={vi.fn()}
+          onSubmit={vi.fn()}
+          mode="encoded"
           feedback={{ why: '' }}
           onFeedbackChange={vi.fn()}
         />,

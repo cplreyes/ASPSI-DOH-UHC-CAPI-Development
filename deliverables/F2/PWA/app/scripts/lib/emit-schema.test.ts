@@ -140,6 +140,10 @@ describe('emitSchema', () => {
     );
   });
 
+  // #1291 (UAT R7): parse-spec now rewrites dotted paper numbers to underscores,
+  // so an id like 'Q62.1' can no longer reach emitSchema from the real spec. This
+  // stays as defence in depth — emitSchema is a pure function and must still emit
+  // syntactically valid TypeScript if it is ever handed one.
   it('quotes keys that are not valid JS identifiers', () => {
     const result: ParseResult = {
       sections: [

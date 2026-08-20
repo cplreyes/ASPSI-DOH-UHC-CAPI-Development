@@ -117,6 +117,15 @@ export function ReviewSection({
   // R3 #305/3b: error-severity cross-field findings (e.g. PROF-01 tenure ≥
   // age − 20) are hard blocks — submission is disabled until corrected.
   const hasBlockingError = warnings.some((w) => w.severity === 'error');
+  // #1294 (UAT R7, 2026-08-20): the reviewers asked for the ease question to be
+  // required. This NARROWS #838's "deliberately optional" stance rather than
+  // reversing it: #838's reasoning was that blocking submit on feedback risks
+  // losing a real survey response, and that still holds for the free-text "why",
+  // which stays optional. The ease question is a two-option Yes/No chip pair, so
+  // requiring it costs one tap. Only applies where the block is actually shown
+  // (HCW self-administered path) — the paper encoder never sees this UI.
+  const feedbackIncomplete =
+    mode === 'hcw' && Boolean(onFeedbackChange) && feedback?.easy === undefined;
 
   return (
     <div className="mx-auto flex max-w-xl flex-col gap-6 p-6">
@@ -198,8 +207,13 @@ export function ReviewSection({
 
       {/* #838 — tool-usability feedback, HCW self-administered path only. The paper
           encoder never touches this UI, so asking them about it would be meaningless.
-          Deliberately OPTIONAL: blocking submit on a feedback field risks losing a
-          real survey response, which costs far more than a missing comment. */}
+          #838 made the whole block OPTIONAL because blocking submit on a feedback
+          field risks losing a real survey response, which costs far more than a
+          missing comment. #1294 (UAT R7, 2026-08-20) narrows that: the reviewers
+          asked for the ease question specifically, and it is a two-option Yes/No
+          chip pair, so requiring it costs one tap rather than an essay. The
+          free-text "why" below stays optional, which is where #838's reasoning
+          actually bites. */}
       {mode === 'hcw' && onFeedbackChange ? (
         <section aria-labelledby="feedback-heading" className="border-t border-border pt-5">
           <h2 id="feedback-heading" className="text-base font-medium text-foreground">
@@ -267,12 +281,17 @@ export function ReviewSection({
             {t('consent.gps_disclosure')}
           </p>
         ) : null}
-        <Button type="button" onClick={onSubmit} disabled={hasBlockingError}>
+        <Button type="button" onClick={onSubmit} disabled={hasBlockingError || feedbackIncomplete}>
           {t('review.submit')}
         </Button>
         {hasBlockingError ? (
           <p role="alert" className="text-xs text-destructive">
             {t('review.blockingError')}
+          </p>
+        ) : null}
+        {!hasBlockingError && feedbackIncomplete ? (
+          <p role="alert" className="text-xs text-destructive">
+            {t('feedback.easeRequired')}
           </p>
         ) : null}
       </div>

@@ -10,9 +10,9 @@ export const sectionASchema = z.object({
   Q2_other: z.string().optional(),
   Q3: z.enum(['Male', 'Female']),
   Q4: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(18).max(99),
-  Q5: z.enum(['Administrator', 'Midwife', 'Dentist', 'Physician/Doctor', 'Laboratory technician', 'Dentist aide', 'Physician assistant', 'Medical/ radiologic technologist', 'Barangay Health Worker', 'Nurse', 'Health promotion officer', 'Other (specify)', 'Nursing assistant', 'Nutrition action officer/coordinator/Nutritionist-Dietician', 'Pharmacist/Dispenser/Assistant Pharmacist', 'Physical Therapist']),
+  Q5: z.enum(['Administrator', 'Physician/Doctor', 'Physician assistant', 'Nurse', 'Nursing assistant', 'Pharmacist/Dispenser/Assistant Pharmacist', 'Midwife', 'Laboratory technician', 'Medical/ radiologic technologist', 'Health promotion officer', 'Nutrition action officer/coordinator/Nutritionist-Dietician', 'Physical Therapist', 'Dentist', 'Dentist aide', 'Barangay Health Worker', 'Other (specify)']),
   Q5_other: z.string().optional(),
-  Q6: z.enum(['No specialty', 'Nuclear Medicine', 'Physical and Rehabilitation Medicine', 'Anesthesia', 'Obstetrics and Gynecology', 'Psychiatry', 'Dermatology', 'Occupational Medicine', 'Public health', 'Emergency Medicine', 'Ophthalmology', 'Radiology', 'Family Medicine', 'Orthopedics', 'Research', 'General Surgery', 'Otorhinolaryngology (ENT)', 'Others (specify)', 'Internal Medicine', 'Pathology', 'Neurology', 'Pediatrics']).optional(),
+  Q6: z.enum(['No specialty', 'Anesthesia', 'Dermatology', 'Emergency Medicine', 'Family Medicine', 'General Surgery', 'Internal Medicine', 'Neurology', 'Nuclear Medicine', 'Obstetrics and Gynecology', 'Occupational Medicine', 'Ophthalmology', 'Orthopedics', 'Otorhinolaryngology (ENT)', 'Pathology', 'Pediatrics', 'Physical and Rehabilitation Medicine', 'Psychiatry', 'Public health', 'Radiology', 'Research', 'Others (specify)']).optional(),
   Q6_other: z.string().optional(),
   Q7: z.enum(['Yes', 'No']).optional(),
   Q8: z.enum(['I spend all of my time in private practice', 'I spend over half, but not all of my time in private practice', 'I spend my time equally in private and public practice', 'I spend over half, but not all of my time in public practice', 'I spend all of my time in public practice', 'I don\'t know']).optional(),
@@ -36,40 +36,40 @@ export type SectionAValues = z.infer<typeof sectionASchema>;
 export const sectionBSchema = z.object({
   Q12: z.enum(['Yes', 'No']),
   Q13: z.enum(['Yes', 'No']).optional(),
-  'Q13.1': z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
-  'Q13.1_other': z.string().optional(),
+  Q13_1: z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
+  Q13_1_other: z.string().optional(),
   Q14: z.string().optional(),
   Q15: z.enum(['Yes', 'No']).optional(),
-  'Q15.1': z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
-  'Q15.1_other': z.string().optional(),
+  Q15_1: z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
+  Q15_1_other: z.string().optional(),
   Q16: z.string().optional(),
   Q17: z.enum(['Yes', 'No']).optional(),
-  'Q17.1': z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
-  'Q17.1_other': z.string().optional(),
+  Q17_1: z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
+  Q17_1_other: z.string().optional(),
   Q18: z.enum(['Yes', 'No']).optional(),
-  'Q18.1': z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
-  'Q18.1_other': z.string().optional(),
+  Q18_1: z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
+  Q18_1_other: z.string().optional(),
   Q19: z.enum(['Yes', 'No']).optional(),
-  'Q19.1': z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
-  'Q19.1_other': z.string().optional(),
+  Q19_1: z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
+  Q19_1_other: z.string().optional(),
   Q20: z.enum(['Yes', 'No']).optional(),
-  'Q20.1': z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
-  'Q20.1_other': z.string().optional(),
+  Q20_1: z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
+  Q20_1_other: z.string().optional(),
   Q21: z.enum(['Yes', 'No']).optional(),
-  'Q21.1': z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
-  'Q21.1_other': z.string().optional(),
+  Q21_1: z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
+  Q21_1_other: z.string().optional(),
   Q22: z.enum(['Yes', 'No']).optional(),
-  'Q22.1': z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
-  'Q22.1_other': z.string().optional(),
+  Q22_1: z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
+  Q22_1_other: z.string().optional(),
   Q23: z.enum(['Yes', 'No']).optional(),
-  'Q23.1': z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
-  'Q23.1_other': z.string().optional(),
+  Q23_1: z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
+  Q23_1_other: z.string().optional(),
   Q24: z.enum(['Yes', 'No']).optional(),
-  'Q24.1': z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
-  'Q24.1_other': z.string().optional(),
-  'Q24.2': z.array(z.enum(['Client satisfaction survey', 'Dashboards', 'Other (specify)'])).optional(),
-  'Q24.2_other': z.string().optional(),
-  Q25: z.array(z.enum(['Salary', 'Standards to follow', 'I don\'t know', 'Number of patients', 'Preventative health care', 'Other (specify)', 'Working hours', 'Patients seek healthcare in different ways'])).optional(),
+  Q24_1: z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
+  Q24_1_other: z.string().optional(),
+  Q24_2: z.array(z.enum(['Client satisfaction survey', 'Dashboards', 'Other (specify)'])).optional(),
+  Q24_2_other: z.string().optional(),
+  Q25: z.array(z.enum(['Salary', 'Number of patients', 'Working hours', 'Standards to follow', 'Preventative health care', 'Patients seek healthcare in different ways', 'I don\'t know', 'Other (specify)'])).optional(),
   Q25_other: z.string().optional(),
   Q26: z.enum(['Higher', 'Lower', 'I don\'t know']).optional(),
   Q27: z.enum(['Higher', 'Lower', 'I don\'t know']).optional(),
@@ -77,38 +77,38 @@ export const sectionBSchema = z.object({
   Q29: z.enum(['More stringent', 'Less stringent', 'I don\'t know']).optional(),
   Q30: z.enum(['More', 'Less', 'I don\'t know']).optional(),
 }).superRefine((data, ctx) => {
-  if (data['Q13.1'] === 'Other (specify)' && !(typeof data['Q13.1_other'] === 'string' && data['Q13.1_other'].trim().length > 0)) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q13.1_other'], message: 'Please specify' });
+  if (data.Q13_1 === 'Other (specify)' && !(typeof data.Q13_1_other === 'string' && data.Q13_1_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q13_1_other'], message: 'Please specify' });
   }
-  if (data['Q15.1'] === 'Other (specify)' && !(typeof data['Q15.1_other'] === 'string' && data['Q15.1_other'].trim().length > 0)) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q15.1_other'], message: 'Please specify' });
+  if (data.Q15_1 === 'Other (specify)' && !(typeof data.Q15_1_other === 'string' && data.Q15_1_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q15_1_other'], message: 'Please specify' });
   }
-  if (data['Q17.1'] === 'Other (specify)' && !(typeof data['Q17.1_other'] === 'string' && data['Q17.1_other'].trim().length > 0)) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q17.1_other'], message: 'Please specify' });
+  if (data.Q17_1 === 'Other (specify)' && !(typeof data.Q17_1_other === 'string' && data.Q17_1_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q17_1_other'], message: 'Please specify' });
   }
-  if (data['Q18.1'] === 'Other (specify)' && !(typeof data['Q18.1_other'] === 'string' && data['Q18.1_other'].trim().length > 0)) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q18.1_other'], message: 'Please specify' });
+  if (data.Q18_1 === 'Other (specify)' && !(typeof data.Q18_1_other === 'string' && data.Q18_1_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q18_1_other'], message: 'Please specify' });
   }
-  if (data['Q19.1'] === 'Other (specify)' && !(typeof data['Q19.1_other'] === 'string' && data['Q19.1_other'].trim().length > 0)) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q19.1_other'], message: 'Please specify' });
+  if (data.Q19_1 === 'Other (specify)' && !(typeof data.Q19_1_other === 'string' && data.Q19_1_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q19_1_other'], message: 'Please specify' });
   }
-  if (data['Q20.1'] === 'Other (specify)' && !(typeof data['Q20.1_other'] === 'string' && data['Q20.1_other'].trim().length > 0)) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q20.1_other'], message: 'Please specify' });
+  if (data.Q20_1 === 'Other (specify)' && !(typeof data.Q20_1_other === 'string' && data.Q20_1_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q20_1_other'], message: 'Please specify' });
   }
-  if (data['Q21.1'] === 'Other (specify)' && !(typeof data['Q21.1_other'] === 'string' && data['Q21.1_other'].trim().length > 0)) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q21.1_other'], message: 'Please specify' });
+  if (data.Q21_1 === 'Other (specify)' && !(typeof data.Q21_1_other === 'string' && data.Q21_1_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q21_1_other'], message: 'Please specify' });
   }
-  if (data['Q22.1'] === 'Other (specify)' && !(typeof data['Q22.1_other'] === 'string' && data['Q22.1_other'].trim().length > 0)) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q22.1_other'], message: 'Please specify' });
+  if (data.Q22_1 === 'Other (specify)' && !(typeof data.Q22_1_other === 'string' && data.Q22_1_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q22_1_other'], message: 'Please specify' });
   }
-  if (data['Q23.1'] === 'Other (specify)' && !(typeof data['Q23.1_other'] === 'string' && data['Q23.1_other'].trim().length > 0)) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q23.1_other'], message: 'Please specify' });
+  if (data.Q23_1 === 'Other (specify)' && !(typeof data.Q23_1_other === 'string' && data.Q23_1_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q23_1_other'], message: 'Please specify' });
   }
-  if (data['Q24.1'] === 'Other (specify)' && !(typeof data['Q24.1_other'] === 'string' && data['Q24.1_other'].trim().length > 0)) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q24.1_other'], message: 'Please specify' });
+  if (data.Q24_1 === 'Other (specify)' && !(typeof data.Q24_1_other === 'string' && data.Q24_1_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q24_1_other'], message: 'Please specify' });
   }
-  if (Array.isArray(data['Q24.2']) && data['Q24.2'].includes('Other (specify)') && !(typeof data['Q24.2_other'] === 'string' && data['Q24.2_other'].trim().length > 0)) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q24.2_other'], message: 'Please specify' });
+  if (Array.isArray(data.Q24_2) && data.Q24_2.includes('Other (specify)') && !(typeof data.Q24_2_other === 'string' && data.Q24_2_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q24_2_other'], message: 'Please specify' });
   }
   if (Array.isArray(data.Q25) && data.Q25.includes('Other (specify)') && !(typeof data.Q25_other === 'string' && data.Q25_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q25_other'], message: 'Please specify' });
@@ -118,7 +118,7 @@ export type SectionBValues = z.infer<typeof sectionBSchema>;
 
 export const sectionCSchema = z.object({
   Q31: z.enum(['Yes', 'No']),
-  Q32: z.array(z.enum(['Pap smear', 'Chest X-ray', 'I don\'t know', 'Mammogram', 'Low-dose Chest CT scan', 'Lipid profile', 'Dental services', 'Thyroid function test', 'All of the above'])).optional(),
+  Q32: z.array(z.enum(['Pap smear', 'Mammogram', 'Lipid profile', 'Thyroid function test', 'Chest X-ray', 'Low-dose Chest CT scan', 'Dental services', 'All of the above', 'I don\'t know'])).optional(),
   Q33: z.enum(['It is possible to register individual patients to YAKAP/Konsulta', 'It is possible to register whole families to YAKAP/Konsulta', 'It is possible to register both individual patients and their family members together to YAKAP/Konsulta', 'None of the above are true', 'I don\'t know']).optional(),
   Q34: z.enum(['Yes', 'No', 'I don\'t know what PhilHealth YAKAP/Konsulta package accreditation is', 'Other (specify)']).optional(),
   Q34_other: z.string().optional(),
@@ -149,14 +149,14 @@ export type SectionCValues = z.infer<typeof sectionCSchema>;
 
 export const sectionDSchema = z.object({
   Q41: z.enum(['Yes', 'No']),
-  Q42: z.array(z.enum(['News', 'Health center/facility', 'Legislation', 'LGU/Barangay', 'Social Media', 'I don\'t know', 'Friends/Family', 'Other (specify)'])).optional(),
+  Q42: z.array(z.enum(['News', 'Legislation', 'Social Media', 'Friends/Family', 'Health center/facility', 'LGU/Barangay', 'I don\'t know', 'Other (specify)'])).optional(),
   Q42_other: z.string().optional(),
-  Q43: z.array(z.enum(['Patient does not pay any hospital bill', 'Patients should not be charged extra fees', 'PhilHealth will cover cost of treatment', 'Applies only to PhilHealth members and any public hospital', 'Medicine and service are already included', 'Applies only to PhilHealth members and any public and private hospital', 'No cash payment required upon discharge', 'I don\'t know', 'Applies only to PhilHealth members and DOH-run hospitals', 'Other (Specify)', 'Bills are settled between the hospital and PhilHealth'])).optional(),
+  Q43: z.array(z.enum(['Patient does not pay any hospital bill', 'PhilHealth will cover cost of treatment', 'Medicine and service are already included', 'No cash payment required upon discharge', 'Applies only to PhilHealth members and DOH-run hospitals', 'Bills are settled between the hospital and PhilHealth', 'Patients should not be charged extra fees', 'Applies only to PhilHealth members and any public hospital', 'Applies only to PhilHealth members and any public and private hospital', 'I don\'t know', 'Other (Specify)'])).optional(),
   Q43_other: z.string().optional(),
   Q44: z.enum(['Yes', 'No']),
-  Q45: z.array(z.enum(['News', 'Health center/facility', 'Legislation', 'LGU/Barangay', 'Social Media', 'I don\'t know', 'Friends/Family', 'Other (specify)'])).optional(),
+  Q45: z.array(z.enum(['News', 'Legislation', 'Social Media', 'Friends/Family', 'Health center/facility', 'LGU/Barangay', 'I don\'t know', 'Other (specify)'])).optional(),
   Q45_other: z.string().optional(),
-  Q46: z.array(z.enum(['Patient does not pay any hospital bill', 'Patients should not be charged extra fees', 'PhilHealth will cover cost of treatment', 'Applies only to PhilHealth members and any public hospital', 'Medicine and service are already included', 'Applies only to PhilHealth members and any public and private hospital', 'No cash payment required upon discharge', 'I don\'t know', 'Applies only to PhilHealth members and DOH-run hospitals', 'Other (Specify)', 'Bills are settled between the hospital and PhilHealth'])).optional(),
+  Q46: z.array(z.enum(['Patient does not pay any hospital bill', 'PhilHealth will cover cost of treatment', 'Medicine and service are already included', 'No cash payment required upon discharge', 'Applies only to PhilHealth members and DOH-run hospitals', 'Bills are settled between the hospital and PhilHealth', 'Patients should not be charged extra fees', 'Applies only to PhilHealth members and any public hospital', 'Applies only to PhilHealth members and any public and private hospital', 'I don\'t know', 'Other (Specify)'])).optional(),
   Q46_other: z.string().optional(),
   Q47: z.array(z.enum(['Lack/Insufficient medicines/supplies', 'Limited diagnostic services', 'High patient volume/workload', 'Documentation/compliance issues', 'ICT/system limitations', 'Patient-related concerns', 'Other (specify)', 'None'])).optional(),
   Q47_other: z.string().optional(),
@@ -182,14 +182,14 @@ export type SectionDValues = z.infer<typeof sectionDSchema>;
 export const sectionESchema = z.object({
   Q48: z.enum(['Yes', 'No']).optional(),
   Q49: z.enum(['Yes', 'No', 'I don\'t know']).optional(),
-  Q50: z.array(z.enum(['Patient awareness', 'Facility location and accessibility', 'Referral patterns', 'PhilHealth coverage and reimbursement', 'Availability of staff/services', 'Other (specify)'])).optional(),
+  Q50: z.array(z.enum(['Patient awareness', 'Referral patterns', 'Availability of staff/services', 'Facility location and accessibility', 'PhilHealth coverage and reimbursement', 'Other (specify)'])).optional(),
   Q50_other: z.string().optional(),
   Q51: z.enum(['Yes', 'No']).optional(),
   Q52: z.array(z.enum(['Improved access to care', 'Improved quality of care', 'Reduced patient congestion', 'No significant impact', 'Other (specify)'])).optional(),
   Q52_other: z.string().optional(),
   Q53: z.enum(['Yes', 'No']),
   Q54: z.enum(['Yes', 'No']).optional(),
-  Q55: z.array(z.enum(['Availability of GAMOT medicines', 'Pharmacy capacity', 'Patient awareness of the program', 'PhilHealth eligibility and reimbursement processes', 'Prescribing practices of physicians', 'Other (specify)'])).optional(),
+  Q55: z.array(z.enum(['Availability of GAMOT medicines', 'Patient awareness of the program', 'Prescribing practices of physicians', 'Pharmacy capacity', 'PhilHealth eligibility and reimbursement processes', 'Other (specify)'])).optional(),
   Q55_other: z.string().optional(),
 }).superRefine((data, ctx) => {
   if (Array.isArray(data.Q50) && data.Q50.includes('Other (specify)') && !(typeof data.Q50_other === 'string' && data.Q50_other.trim().length > 0)) {
@@ -205,13 +205,13 @@ export const sectionESchema = z.object({
 export type SectionEValues = z.infer<typeof sectionESchema>;
 
 export const sectionFSchema = z.object({
-  Q56: z.array(z.enum(['Physical referral slip', 'I don\'t know', 'E-referral', 'Not Applicable', 'Referring facility calls receiving facility', 'Other (specify)'])).min(1),
+  Q56: z.array(z.enum(['Physical referral slip', 'E-referral', 'Referring facility calls receiving facility', 'I don\'t know', 'Not Applicable', 'Other (specify)'])).min(1),
   Q56_other: z.string().optional(),
-  Q57: z.enum(['DOH standard referral form', 'No standard referral form', 'Facility\'s standard referral form', 'I don\'t know', 'Province\'s standard referral form', 'Not Applicable', 'City / LGU standard referral form', 'Other (specify)']),
+  Q57: z.enum(['DOH standard referral form', 'Facility\'s standard referral form', 'Province\'s standard referral form', 'City / LGU standard referral form', 'No standard referral form', 'I don\'t know', 'Not Applicable', 'Other (specify)']),
   Q57_other: z.string().optional(),
-  Q58: z.enum(['Yes', 'I\'ve never heard of it', 'No', 'I don\'t know']),
+  Q58: z.enum(['Yes', 'No', 'I\'ve never heard of it', 'I don\'t know']),
   Q59: z.enum(['Almost all patients are referred, very few walk-in/self-referred', 'Majority of patients are referred, some walk-in/self-referred', 'The proportion of referrals is about equal to walk-ins', 'Majority of patients walk-in/self-referred, some are referred', 'Almost all patients walk-in/self-referred, very few are referred', 'I am unsure about the typical ratio of referrals to walk-ins', 'I don\'t know', 'Not Applicable']),
-  Q60: z.array(z.enum(['Physical referral slip', 'I don\'t know', 'E-referral', 'Not Applicable', 'Referring facility calls receiving facility', 'Other (specify)'])).min(1),
+  Q60: z.array(z.enum(['Physical referral slip', 'E-referral', 'Referring facility calls receiving facility', 'I don\'t know', 'Not Applicable', 'Other (specify)'])).min(1),
   Q60_other: z.string().optional(),
   Q61: z.enum(['Very Satisfied: Minor improvements needed, patients are always referred appropriately', 'Satisfied: Some improvements needed, patients are generally referred appropriately', 'Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional', 'Dissatisfied: Moderate improvements needed, a number of patients are referred to the wrong specialists or do not receive appropriate follow-up care', 'Very Dissatisfied: Major improvements needed, many patients are referred to the wrong specialists or do not receive appropriate follow-up care', 'Not applicable']),
   Q62: z.array(z.enum(['Facilities are overcrowded or operating beyond capacity and do not accept the health care provider\'s patient referrals', 'The referral process is slow', 'There is poor coordination between our facility and referred facilities (e.g. We do not get information back from the facility about the patients we referred to them.)', 'Other (specify)'])).optional(),
@@ -273,7 +273,7 @@ export const sectionHSchema = z.object({
   Q93_other: z.string().optional(),
   Q94: z.enum(['We are short staffed, so I have to', 'I am capable of the task, I just haven\'t completed official certification yet', 'I think that someone of my role should be responsible for these tasks', 'Other (specify)']).optional(),
   Q94_other: z.string().optional(),
-  Q95: z.enum(['Agree but for medical tasks only', 'Agree for both medical and clerical tasks', 'Agree but for clerical tasks only', 'Disagree for both medical and clerical tasks']).optional(),
+  Q95: z.enum(['Agree but for medical tasks only', 'Agree but for clerical tasks only', 'Agree for both medical and clerical tasks', 'Disagree for both medical and clerical tasks']).optional(),
 }).superRefine((data, ctx) => {
   if (data.Q92 === 'Other (specify)' && !(typeof data.Q92_other === 'string' && data.Q92_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q92_other'], message: 'Please specify' });
@@ -289,7 +289,7 @@ export type SectionHValues = z.infer<typeof sectionHSchema>;
 
 export const sectionISchema = z.object({
   Q96: z.enum(['Yes', 'No']),
-  Q97: z.array(z.enum(['Insufficient support given', 'Support is not targeted', 'Hard to coordinate', 'Other (specify)'])).optional(),
+  Q97: z.array(z.enum(['Insufficient support given', 'Hard to coordinate', 'Support is not targeted', 'Other (specify)'])).optional(),
   Q97_other: z.string().optional(),
 }).superRefine((data, ctx) => {
   if (Array.isArray(data.Q97) && data.Q97.includes('Other (specify)') && !(typeof data.Q97_other === 'string' && data.Q97_other.trim().length > 0)) {
@@ -327,7 +327,7 @@ export const sectionJSchema = z.object({
   Q120: z.enum(['Always', 'Often', 'Sometimes', 'Seldom', 'Never']),
   Q121: z.enum(['Once or twice in the past month', 'Once or twice a week', 'Three or four days every week', 'Almost everyday', 'Everyday']).optional(),
   Q122: z.enum(['Yes, I\'ve thought about it and have definite plans to leave', 'Yes, I\'ve thought about it and am actively exploring other opportunities, but no firm plans yet', 'Yes, I\'ve thought about it, but I\'m not actively exploring nor have I made any firm plans yet', 'No, I haven\'t thought about it']),
-  Q123: z.array(z.enum(['Poor compensation', 'Moving to another part of the country', 'Lack of opportunities', 'Moving to another country', 'Burnt out', 'Other (specify)'])).optional(),
+  Q123: z.array(z.enum(['Poor compensation', 'Lack of opportunities', 'Burnt out', 'Moving to another part of the country', 'Moving to another country', 'Other (specify)'])).optional(),
   Q123_other: z.string().optional(),
   Q124: z.array(z.enum(['Transfer to a new facility with the same role', 'Change training/specialization within healthcare', 'Change profession', 'Take an extended leave from work', 'Take a position as a health worker in another country', 'Retire', 'Other (specify)'])).optional(),
   Q124_other: z.string().optional(),

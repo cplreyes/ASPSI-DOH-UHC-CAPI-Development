@@ -410,10 +410,13 @@ function AppShell() {
         </div>
         {/* RA-approved masthead (2026-08-17): clearance block sits left of the
             logo strip on wide screens; on narrow screens it wraps to its own
-            full-width row so the regulatory text stays visible on phones. */}
+            full-width row so the regulatory text stays visible on phones.
+            #1281 (UAT R7): the logo strip left the chrome-controls cluster and
+            became its own flex item — at its new readable size it would otherwise
+            squeeze the language switcher and buttons off the row. */}
+        <GovLogos className="order-last basis-full justify-center sm:order-none sm:basis-auto sm:justify-start" />
         <ClearanceBlock className="order-last basis-full md:order-none md:ml-auto md:basis-auto" />
         <div className="flex items-center gap-3">
-          <GovLogos />
           <LanguageSwitcher />
           <PendingCount />
           {authStatus === 'enrolled' ? (

@@ -142,6 +142,7 @@ export const ilo: EnBundle = {
     heading: 'Before you submit',
     note: 'This is about the survey tool itself, not your answers. It helps us improve it.',
     easeQuestion: 'Did you find the survey tool easy to use and navigate?',
+    easeRequired: 'Please answer this question before submitting.',
     yes: 'Yes',
     no: 'No',
     whyLabel: 'Why or why not?',

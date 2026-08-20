@@ -205,6 +205,9 @@ describe('<MultiSectionForm>', () => {
         onSubmit={onSubmit}
       />,
     );
+    // #1294 (UAT R7): the review screen's ease question is now required on the
+    // HCW path, so the real flow answers it before Submit becomes available.
+    await user.click(screen.getByRole('button', { name: /^Yes$/i }));
     await user.click(screen.getByRole('button', { name: /^submit$/i }));
     expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining(values));
   });

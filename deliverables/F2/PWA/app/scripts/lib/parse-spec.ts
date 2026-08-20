@@ -195,6 +195,19 @@ export function parseTableRows(body: string): RowFields[] {
         header.forEach((col, idx) => {
           row[normalizeHeader(col)] = cells[idx] ?? '';
         });
+        // #1291 (UAT R7): item ids must never contain '.'. react-hook-form reads a
+        // dot as a NESTED PATH separator, so an id taken verbatim from the paper's
+        // sub-item number ('Q13.1') makes register()/watch()/setValue() address
+        // `values.Q13['1']` instead of a flat key. That is destructive, not merely
+        // wrong: registering the probe DURING RENDER already overwrites the parent's
+        // answer string with an array, and the '_other' companion ('Q13.1_other' ->
+        // ['Q13','1_other']) overwrites it with an object. The parent's own gate then
+        // reads false and the probe unmounts — which is what testers saw as "you
+        // cannot select an answer, and the main answer is removed".
+        // Underscores match the sub-field convention already used below
+        // (`${row.pdf_q}_${i + 1}`) and the CSPro siblings' Q13_1 form. The printed
+        // number is preserved for display via displayNumberFor() in emit-items.ts.
+        if (row.pdf_q) row.pdf_q = row.pdf_q.replace(/\./g, '_');
         if (
           (!row.choices || row.choices === '') &&
           row.type === 'grid-single' &&
