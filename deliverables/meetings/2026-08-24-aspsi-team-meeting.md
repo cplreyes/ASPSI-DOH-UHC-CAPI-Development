@@ -64,15 +64,40 @@ Notes
       treat "can we just tweak this" as a version decision, not a small edit.
 
 Carry-over from Aug 10
-    - Roster, training dates — raised Aug 3 and Aug 10, both still open.
+    - Roster — raised Aug 3 and Aug 10, still open.
+    - Training dates — raised Aug 3 and Aug 10; ANSWERED today (see outcomes).
     - Translations: who supplies, by when. Still unanswered.
     - Parked data items were held to round close. Round 7 is open — this is the moment.
 
-For decision today
-    - Training dates + venue assignments  ← the one blocking real prep
-    - Translations: who supplies, by when (especially error messages)
-    - Parked data items: decide now, or hold to end of Round 7
-    - Roster: can I get the 147 names this week?
+----------------------------------------------------------------------
+MEETING OUTCOMES — Aug 24
+----------------------------------------------------------------------
 
-Dates
+Dates — ANSWERED
+    - TOT + Survey Training: week of September 07.
     - End of Project in the Contract — tentative end of November.
+
+PSA
+    - Submission sent Friday, Aug 21.
+
+DOH approval
+    - Training Design needs ~2 weeks for approval, ahead of Survey Training proper.
+      → For a Sept 07 start, that clock is already running.
+
+CAPI — on me
+    - Ship the updated version, finish all bugs.
+    - NEW FEATURE: automatic timestamp, start + finish.
+    - Performance Metrics meeting this week.
+
+Manuals
+    - To be tested.
+
+Organizational meeting this week
+    - Deployment assignments.
+    - Centralized secretariat, call center, institutional memory.
+
+Still open after today
+    - Roster — 147 names (22 FS + 125 SE). Training is now ~2 weeks out; still on 7 accounts.
+    - Translations — who supplies, by when. Error messages still 0%.
+    - Parked data items (F3 payment-source order · F4 Q18 brackets · -98/-99 gate ·
+      F2 Q120 scale + "None" on Q47/Q109).
