@@ -66,6 +66,7 @@ Promotion gates, channels and rollback: the `capi-devops` skill.
 - [ ] **Organizational meeting (this week)** — deployment assignments, centralized secretariat, call centre, institutional memory. Carl's input: what CAPI support the field actually needs during rollout. `status::todo` `priority::medium`
 - [ ] **Parked data items — decide or hold** — R7 is open, which is the window for the four data-shape decisions. Escalate once, record the answer, do not chase. `status::blocked-on-ASPSI` `priority::medium`
 - [ ] **Implement `/scrum` Mode D + Mode A** — the S014 retro action: close+archive+reset, and plan, as actual commands. Until it exists, the manual rule stands. `status::todo` `priority::medium` `estimate::0.5d`
+- [ ] **STAGING CSWeb — build it before fieldwork** *(decided 2026-08-24, Option A)* — second CSWeb instance on the same box: own vhost + own MySQL schema, so a fix can be installed from a real server and a case synced back **before** it reaches 147 enumerators. Must be a separate INSTANCE, not a second package name: CSWeb names data tables by dictionary (`DictionaryHelper.php:174`), so a same-server staging package would write test cases into the live `FACILITYHEADSURVEY_DICT`. Natural window is the Sept 07 training week, while nobody is collecting. Blocks on one Carl decision: the staging hostname (+ DNS). Options diagram: `deliverables/CSPro/capi-staging-options.png`. `status::todo` `priority::high` `estimate::1d`
 
 ## Definition of Done — Sprint 015
 
