@@ -38,9 +38,12 @@ protection; the window should be minutes, not hours.
    - Version stamp: `package.json` → 3.0.0; confirm `LOCAL_SPEC_VERSION = '2026-08-19-m1'`.
    - Add the new `$RequiredMarkers` row to `deploy-f2-pwa.ps1` probing the Section-B
      battery RENDER path (keep all existing rows).
-2. **DECISION POINT (Carl):** `deploy-f2-pwa.ps1` gates on `HEAD == origin/main`.
-   Either merge branch `integration/capi-ops` to main first (preferred:
-   the deployed build is then reproducible from main), or authorize `-Force`.
+2. ~~**DECISION POINT (Carl):** `deploy-f2-pwa.ps1` gates on `HEAD == origin/main`.
+   Either merge branch `integration/capi-ops` to main first (preferred: the
+   deployed build is then reproducible from main), or authorize `-Force`.~~
+   **RESOLVED 2026-08-25** — the branch landed and was retired, so `HEAD ==
+   origin/main` is now the normal state and the gate passes without `-Force`.
+   The deployed build is reproducible from main.
 3. **Deploy the PWA:** `npm run build`, then
    `powershell -File deliverables\F2\PWA\deploy-f2-pwa.ps1 -DryRun` → real run →
    post-deploy `-VerifyOnly`. (Prod = nginx `/opt/app/f2-www`; NEVER any other path.)

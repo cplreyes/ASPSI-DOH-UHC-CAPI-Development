@@ -49,13 +49,18 @@ $ProxyUrl  = "https://uhc-hcw.asiansocial.org"   # same origin; the worker serve
 # The invariant. Add a line here whenever a feature must never silently vanish.
 #
 # The mid-section notes (#1041/#1042/#1043) belong here for the SAME reason the
-# Facilities tab does, and it is not hypothetical: as of 2026-08-13 the matrix
-# preamble RENDER exists only on integration/capi-ops. origin/main's
-# MatrixQuestion.tsx contains no preamble block at all, while main's items.ts
-# DOES carry the note data -- so a build from main looks complete, ships the
-# notes as dead data, and silently reverts all three tickets. Testers have
-# re-filed this trio twice (#1179/#1180/#1181, then again 08-13) precisely
-# because each main-built deploy undoes it.
+# Facilities tab does, and it was not hypothetical. From 2026-08-13 to 2026-08-25
+# the matrix preamble RENDER existed ONLY on the integration branch: origin/main's
+# MatrixQuestion.tsx had no preamble block at all while main's items.ts DID carry
+# the note data -- so a build from main looked complete, shipped the notes as dead
+# data, and silently reverted all three tickets. Testers re-filed the trio twice
+# (#1179/#1180/#1181, then again 08-13) precisely because each main-built deploy
+# undid it.
+#
+# RESOLVED 2026-08-25: that branch landed, so main now carries the render and a
+# main-built deploy is correct. The marker below STAYS -- it is now a regression
+# guard rather than a divergence guard, and it is the only thing that would catch
+# the render going missing again.
 #
 # `italic text-muted-foreground` is the class on MatrixQuestion's preamble <p>
 # and appears nowhere else in the app, so it is a true render-path probe rather
