@@ -23,6 +23,14 @@ locked: 2026-08-24 (Monday kickoff, post-meeting)
 > and the next are the entire runway. Every item below answers one question: *does this make the
 > week of Sept 07 trainable?*
 
+## Sprint Goal
+
+> **Make the week of Sept 07 trainable.** Close UAT Round 7 to zero actionable, get every
+> tablet in the fleet onto the current build, scope the new start/finish timestamp before
+> building it, re-measure translation coverage against the Aug-17 English, and test the
+> manuals against what actually ships — so training runs on a stable, current, verified
+> build rather than on whatever each device happens to be holding.
+
 ## Build state at lock
 
 | | Submitted to PSA (frozen, tag `capi-psa-2026-08-20`) | Current DEV |
