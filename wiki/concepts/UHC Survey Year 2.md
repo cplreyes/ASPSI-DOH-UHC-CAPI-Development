@@ -1,7 +1,7 @@
 ---
 type: concept
 tags: [survey, uhc, methodology]
-source_count: 10
+source_count: 11
 ---
 
 # UHC Survey Year 2
@@ -22,6 +22,13 @@ Generate evidence on how Filipinos and health facilities experience the UHC roll
 | Data collection | SurveyCTO | [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro\|CSPro]] / CAPI |
 | Sample (facilities) | ~1,135 | 1,521 (914 RHUs + 607 hospitals) |
 | New indicators | — | BUCAS, GAMOT, NBB, ZBB awareness; catastrophic health expenditure (CHE) |
+
+> [!info] Instrument generations
+> The Apr 20 2026 submission (Annex F1–F4, linked below) was the accepted build baseline through the pretest.
+> On **2026-08-17** DOH/ASPSI delivered the **updated instrument set** —
+> [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Updated Survey Instruments (2026-08-17)|Source - Updated Survey Instruments (2026-08-17)]] —
+> which supersedes Apr 20 as the questionnaire reference (F1/F2 renumbered; F3/F4 surgically edited; GAMOT
+> module added across all four). The CAPI builds will be updated against it.
 
 ## Four Survey Modules
 
@@ -55,3 +62,4 @@ Full official schedule: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/conce
 - (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - IDinsight UHC Survey 2024 Final Report]]) — Year 1 baseline; indicator continuity reference; documents the SurveyCTO → CSPro stack switch context
 - (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - DOH TOR UHC Survey Year 2]]) — master procurement TOR (REI No. 2025-001); ABC PhP 60M; 9-month timeline; deliverable/tranche structure
 - (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - ASPSI Proposal Approach and Methodology]]) — winning technical proposal; sampling design, CAPI workflow, team composition (147.75 PM total), field deployment plan
+- (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Updated Survey Instruments (2026-08-17)]]) — the updated Aug 17 instrument set superseding the Apr 20 questionnaires as the build reference

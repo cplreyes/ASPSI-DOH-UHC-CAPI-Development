@@ -7,6 +7,13 @@ tags: [capi, survey-design, doh-comments, parked-decision, f1-facility, f2-hcw, 
 
 # Source - DOH June Questionnaire Comments (PARKED) 2026-06-19
 
+> [!info] Resolution — the Aug 17 updated instruments close this cycle (2026-08-18)
+> The consolidated updated instruments ([[Source - Updated Survey Instruments (2026-08-17)]]) are the outcome
+> of the park-and-wait posture: **F1's two-step conversion and F2's two-step preliminaries were ADOPTED**
+> (both as highlighted new attribution batteries); **F3's expenditure-block/FIES restructure and the F4
+> PIDS/DHS-format rework were NOT adopted** (F3/F4 keep their numbering with content-level edits). The Apr 20
+> baseline remains what the deployed CAPI builds implement until the update task against the Aug 17 set runs.
+
 **Email chain, forwarded by Kidd (`aspsi.doh.uhc.survey2@gmail.com`) → Carl (`clreyes6@up.edu.ph`), 2026-06-19**, embedding the Jun 11–19 Myra↔Kidd↔DOH exchange + the linked Google Doc comment matrix **"XJ_Comments_F1-F3"** (DOH reviewer **Xylee "XJ" Javier** / OAAED / HCFinancing / WHO-PHL / ADB comments on the **April 8** tools). Fetched + analyzed 2026-06-28 via the UP-account connector.
 
 ## The decision that governs the build: PARK EVERYTHING

@@ -7,6 +7,14 @@ tags: [questionnaire, facility-head, f1, survey-instrument, ingest-batch-apr20]
 
 # Source — Annex F1: Facility Head Survey Questionnaire
 
+> [!warning] Superseded as instrument reference — 2026-08-17
+> The updated Aug 17 instrument set ([[Source - Updated Survey Instruments (2026-08-17)]]) supersedes this
+> Apr 20 version as the questionnaire reference. **F1 was renumbered and restructured** (Q1–Q153 + 33 decimal
+> sub-questions; two-step UHC-attribution battery added; Secondary Data module moved out of the questionnaire
+> body — annex-packaged in the PAPI, still kept in the CAPI per Carl 2026-08-18) — the section/question
+> numbers on this page no longer match the new instrument. The deployed CAPI build still implements this Apr 20
+> baseline until the update task runs.
+
 Facility Head Survey Questionnaire for [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]], **37 pages, 166 main-survey items** (up from ~126 in the Apr 08 baseline). Targets facility heads or authorized representatives (municipal/city health officers, chiefs of hospital, etc.) who have held their position for at least 6 months.
 
 **Version:** Apr 20 2026 Revised Inception Report submission. Supersedes Apr 08 baseline.

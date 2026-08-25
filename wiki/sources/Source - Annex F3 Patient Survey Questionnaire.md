@@ -7,6 +7,14 @@ tags: [questionnaire, patient, f3, survey-instrument, ingest-batch-apr20]
 
 # Source — Annex F3: Patient Survey Questionnaire
 
+> [!warning] Superseded as instrument reference — 2026-08-17
+> The updated Aug 17 instrument set ([[Source - Updated Survey Instruments (2026-08-17)]]) supersedes this
+> Apr 20 version as the questionnaire reference. F3's **numbering is stable** (Q1–Q178 + Q38.1/Q38.2 retained)
+> and it was retitled "In-Patient and Out-Patient Survey Questionnaire"; changes are surgical highlighted edits
+> (Quantified Free Service payment source, income bands under Q18, option additions) plus explicit CAPI notes
+> to front-load the outpatient/inpatient blocks. The deployed build implements this baseline until the update
+> task runs.
+
 Patient Survey Questionnaire for [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]], **178 numbered items**. Face-to-face CAPI interview with **inpatients and outpatients** at sampled health facilities (Annex G #15 expanded scope beyond outpatient-only).
 
 **Version:** Apr 20 2026 Revised Inception Report submission (+36 KB vs Apr 08). Supersedes Apr 08 baseline.

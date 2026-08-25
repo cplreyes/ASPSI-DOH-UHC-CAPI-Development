@@ -39,7 +39,7 @@ protection; the window should be minutes, not hours.
    - Add the new `$RequiredMarkers` row to `deploy-f2-pwa.ps1` probing the Section-B
      battery RENDER path (keep all existing rows).
 2. **DECISION POINT (Carl):** `deploy-f2-pwa.ps1` gates on `HEAD == origin/main`.
-   Either merge branch `worktree-f2-productivity-panel` to main first (preferred:
+   Either merge branch `integration/capi-ops` to main first (preferred:
    the deployed build is then reproducible from main), or authorize `-Force`.
 3. **Deploy the PWA:** `npm run build`, then
    `powershell -File deliverables\F2\PWA\deploy-f2-pwa.ps1 -DryRun` → real run →

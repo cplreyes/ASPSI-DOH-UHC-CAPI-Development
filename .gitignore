@@ -168,6 +168,10 @@ wiki/analyses/Analysis - Pretest Findings vs the CAPI Build.md
 # June-5 translated questionnaires, so the raw extraction output stays local.
 deliverables/CSPro/translations-paper-extract/
 
+# Aug-17 updated-instrument extraction + inventories (2026-08-18) — verbatim
+# derivatives of the NDU-sensitive raw/ sources, same policy as above.
+deliverables/CSPro/instruments-aug17-extract/
+
 # capi-portal: build output and the workstation-only source tree (ported pages,
 # 113 crosswalk screenshots, manuals, questionnaires). The build is derived;
 # src/ lives in the main checkout and reaches worktrees via junction.

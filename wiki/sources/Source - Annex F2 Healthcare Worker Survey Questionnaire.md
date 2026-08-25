@@ -8,6 +8,13 @@ tags: [questionnaire, healthcare-worker, f2, survey-instrument, ingest-batch-apr
 
 # Source — Annex F2: Healthcare Worker Survey Questionnaire
 
+> [!warning] Superseded as instrument reference — 2026-08-17
+> The updated Aug 17 instrument set ([[Source - Updated Survey Instruments (2026-08-17)]]) supersedes this
+> Apr 20 version as the questionnaire reference. **F2 was renumbered** (Q1–Q124 continuous — the Q108 gap is
+> gone — plus 13 sub-items), gained a Section-B two-step UHC-attribution battery, and its cadre routing was
+> rewritten (pharmacists enter at E2; Section G is physicians/dentists only). The PWA and the Apr 20 rev
+> spec/skip-logic/validation docs below are stale against the new version until the update task runs.
+
 Healthcare Worker Survey Questionnaire for [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]], **125 numbered slots, 124 actual items** (last is Q125; Q108 is a PDF numbering gap — Section J's grid lift jumps Q107 → Q109; earlier grids reuse sub-item numbering).
 
 > [!warning] Build/administration model superseded — 2026-04-17

@@ -7,6 +7,14 @@ tags: [questionnaire, household, f4, survey-instrument, ingest-batch-apr20, comm
 
 # Source — Annex F4: Household Survey Questionnaire
 
+> [!warning] Superseded as instrument reference — 2026-08-17
+> The updated Aug 17 instrument set ([[Source - Updated Survey Instruments (2026-08-17)]]) supersedes this
+> Apr 20 version as the questionnaire reference. F4's **numbering is stable** (Q1–Q202 + 4 decimal subs;
+> Q45.1/Q45.2 retained) — the feared PIDS/DHS-format restructure did **not** happen. Changes are content-level:
+> the Q139–Q143 hospital-bill decomposition module was rewritten (fully highlighted, incl. the 16-source Q142
+> matrix), a GAMOT block (Q69–Q78) was inserted unlettered, and roster code 13 (Grandfather/Grandmother) was
+> appended. The deployed build implements this baseline until the update task runs.
+
 Household Survey Questionnaire for [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]], **202 numbered items**. New for Year 2 — captures population-level UHC awareness and household expenditure. **Community survey** administered to household head or main decision-maker via **interval sampling starting from patient HH → neighbor HHs** (Annex G #6, #13).
 
 **Version:** Apr 20 2026 Revised Inception Report submission (−33 KB vs Apr 08 — net trim despite new household-expenditure module). Supersedes Apr 08 baseline.
