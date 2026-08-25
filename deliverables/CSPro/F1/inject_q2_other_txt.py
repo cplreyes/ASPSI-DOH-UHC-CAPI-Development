@@ -1,5 +1,22 @@
 #!/usr/bin/env python3
-"""Inject the Q2 "Other (specify)" free-text field into F1's static
+"""
+RETIRED 2026-08-19 - superseded by generate_fmf.py; kept for history.
+========================================================================
+F1's .fmf was hand-maintained, and this script was one of eleven idempotent post-processors
+that patched it by locating fields by NAME and geometry. The Aug-17 instrument renumber
+(Task 2.2) renamed ~112 of 320 dictionary items, invalidating those anchors, so F1 adopted
+the F3/F4 generator (Task 2.3). Do NOT run this file; do not delete it either - the WHY
+recorded below is the reason each invariant is worth preserving.
+
+WHERE THIS SCRIPT'S INVARIANT LIVES NOW
+---------------------------------------
+Nothing to inject: Q2_OTHER_TXT is an ordinary generated field, placed in dictionary
+order immediately after Q2_FACILITY_ROLE because that is where generate_dcf emits it.
+The canonical pipeline order this file used to document now lives in
+F1/generate_fmf.py's module docstring and, executably, in
+automation/cspro_compile_driver.build_instrument().
+========================================================================
+Inject the Q2 "Other (specify)" free-text field into F1's static
 FacilityHeadSurvey.fmf.
 
 WHY THIS EXISTS
@@ -31,21 +48,21 @@ and its ordinal is read off the anchor [Field] -- never hardcoded, because
 inject_gps_end.py's #157 move renumbers the forms (the profile form is FORM002
 before the GPS move and FORM003 after it, or vice versa depending on order).
 
-Idempotent: re-running is a no-op once Item=Q2_OTHER_TXT is on the form, so it
-is safe to leave in the F1 .fmf pipeline. Run it BEFORE the block/end-of-form
-injectors, i.e.:
+THE F1 PIPELINE THIS FILE USED TO DOCUMENT IS SUPERSEDED. The nine-step
+inject_*-ordered sequence that lived here is gone; the canonical order is now four steps,
+run for every instrument by automation/cspro_compile_driver.build_instrument():
 
-    python generate_dcf.py
-    python inject_case_key.py
-    python inject_q2_other_txt.py      <-- here
-    python inject_blocks.py
-    python inject_breakoff.py
-    python inject_field_control_end.py
-    python inject_gps_end.py
-    python generate_apc.py
-    python generate_qsf.py
+    python generate_dcf.py                            # dictionary
+    python inject_scoped_option_labels.py --apply     # F1-only .dcf post-processor (#1222)
+    python generate_apc.py                            # CAPI logic
+    python generate_fmf.py                            # forms  <-- reads the .apc above
+    #   then: copy FacilityHeadSurvey.generated.fmf -> FacilityHeadSurvey.fmf
+    #         python ../automation/optimize_capture_types.py F1
 
-Run:  python inject_q2_other_txt.py
+or simply:  py automation/cspro_compile_driver.py F1 --build
+
+generate_fmf.py MUST run after generate_apc.py - it reads the .apc for skip sources/targets
+and noinput gates, and warns loudly if that file is stale.
 """
 import json
 import sys
@@ -241,4 +258,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(
+        "RETIRED 2026-08-19 - superseded by F1/generate_fmf.py; this script must NOT be run.\n"
+        "It anchors on pre-Aug-17 field names and geometry, so against the current instrument\n"
+        "it would either abort or silently mis-place fields in a file that is now rebuilt from\n"
+        "the dictionary on every build. See the module docstring for the invariant it used to\n"
+        "enforce and where that invariant lives today.")

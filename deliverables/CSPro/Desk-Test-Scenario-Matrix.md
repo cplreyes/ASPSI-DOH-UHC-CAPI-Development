@@ -146,49 +146,81 @@ filling it then setting `CONSENT_GIVEN=2` fires the exact logic: errmsg "Respond
 | F1-DT-03 | Tenure: `Q5_YEARS_AT_FACILITY=0`, `Q5_MONTHS_AT_FACILITY=3` (<6 mo) | `T` — "≥6 months required", coded Refused/Incomplete, `endlevel` | | |
 
 ## F1.C Range & cross-field validations
-| ID | Setup → Input | Expected | Result | Shot |
-|---|---|---|---|---|
-| F1-DT-04 | `Q3_AGE=30`, `Q5_YEARS_AT_FACILITY=15` (>AGE−18=12) | `R` — "years at facility exceeds working-age years" | | |
-| F1-DT-05 | `Q6` health-role months < `Q5` facility tenure months | `R` — "years in health < years at facility" | | |
-| F1-DT-06 | `Q6_YEARS_HEALTH > Q3_AGE−18` | `R` — exceeds working-age years | | |
-| F1-DT-07 | `Q52_YK_SINCE_YEAR = 2015` (<2019) | `R` — "year must be 2019..currentYear" | | |
-| F1-DT-08 | `Q52_YK_SINCE_YEAR=currentYear`, `Q52_YK_SINCE_MONTH=currentMonth+1` | `R` — "accreditation date in the future" | | |
-| F1-DT-09 | `Q87_REGISTERED_PATIENTS > Q86_ELIGIBLE_PATIENTS` | `R` — "registered cannot exceed eligible" | | |
-| F1-DT-10 | `Q57_CAPITATION_AMT = 6000` (>5000) | `R` — "implausibly high" | | |
-| F1-DT-11 | `Q57_CAPITATION_AMT = 2000` (>1700, ≤5000) | `S` — accept-confirm prompt (Yes proceeds, No reenters) | | |
 
-## F1.D Signature branch — Q121 DOH-licensing option logic
-| ID | Setup → Input | Expected | Result | Shot |
-|---|---|---|---|---|
-| F1-DT-12 | `Q8_SERVICE_LEVEL=1` (Primary Care) → reach Q121 | `NOINPUT` — O10/O11/O12 (hospital-only) hidden | | |
-| F1-DT-13 | `Q8_SERVICE_LEVEL≠1` (hospital) → reach Q121 | `NOINPUT` — O13 (primary-care-only, public price info) hidden | | |
-| F1-DT-14 | `Q121_DOH_LIC_DIFFICULT_O14 = 1` ("None of the above") | `SKIP→ Q135_NBB_CURR` (skip the why-difficult cluster) | | |
-| F1-DT-15 | `Q65_ACCRED_DIFFICULT_O01=0` → reach Q66 cluster | `SKIP→` first field after Q66's cluster (gate not flagged) | | |
-| F1-DT-16 | `Q121_DOH_LIC_DIFFICULT_O01=1` → reach Q122 cluster | Q122 cluster is SHOWN (gate flagged) | | |
+Renumbered to the Aug-17 instrument on 2026-08-19 (Task 2.6). The Apr-20 numbers these
+rows used to carry (Q52 accreditation date, Q57 capitation, Q86/Q87 patient counts) are
+now Q39, Q44 and Q73/Q74; `Q3_AGE`'s working-age floor is `AGE-20`, not `AGE-18`.
 
-## F1.E Routing & table-driven skips (representative)
 | ID | Setup → Input | Expected | Result | Shot |
 |---|---|---|---|---|
-| F1-DT-17 | `Q10_HAS_PRIMARY_PKG = No(2)` | `SKIP→ Q12_PCB_LICENSING` | | |
-| F1-DT-18 | `Q80_INTEND_ACCRED` = each of 1/2/3/4/5/6 | 1,2→Q84 · 3→Q82 · 4→Q83 · 5→Q81 · 6→Q85 (5-way routing) | | |
-| F1-DT-19 | `Q90_COSTING_VIABLE=1` & `Q51_YK_ACCRED=1` | `SKIP→ Q91_MIN_CAP_VALUE_ACC` | | |
-| F1-DT-20 | `Q102_HAS_BUCAS = I-don't-know(3)` | `SKIP→ Q108_HEARD_GAMOT` | | |
-| F1-DT-21 | `Q145_MALASAKIT_PROVIDED=No(2)` | `SKIP→ Q147_NO_MALASAKIT_WHY_O01`; (Yes path skips Q147→Q148) | | |
-| F1-DT-22 | `Q31_EMR_USE in 5:8 or =9` | `SKIP→ Q35_STAFFING_CHANGED` | | |
+| F1-DT-04 | `Q3_AGE=30`, `Q5_YEARS_AT_FACILITY=15` (>AGE−20=10) | `R` — msg 1076 "years at facility exceeds working-age years" | | |
+| F1-DT-05 | `Q6` health-role months < `Q5` facility tenure months | `R` — msg 1081 "years in health < years at facility" | | |
+| F1-DT-06 | `Q6_YEARS_HEALTH > Q3_AGE−20` | `R` — msg 1082, exceeds working-age years | | |
+| F1-DT-07 | `Q39_YK_SINCE_YEAR = 2015` (<2019) | `R` — msg 1066 "year must be 2019..currentYear" | | |
+| F1-DT-08 | `Q39_YK_SINCE_YEAR=currentYear`, `Q39_YK_SINCE_MONTH=currentMonth+1` | `R` — msg 1065 "accreditation date in the future" | | |
+| F1-DT-09 | `Q74_REGISTERED_PATIENTS > Q73_ELIGIBLE_PATIENTS` | `R` — msg 1094 "registered cannot exceed eligible" | | |
+| F1-DT-10 | `Q44_CAPITATION_AMT = 6000` (>5000) | `R` — msg 1071 "implausibly high" | | |
+| F1-DT-11 | `Q44_CAPITATION_AMT = 2000` (>1700, ≤5000) | `S` — accept-confirm prompt (Yes proceeds, No reenters) | | |
+| F1-DT-11b | `Q78_MIN_CAP_VALUE_ACC = 1200` (>0, <1700) | `S` — #533 confirm: Q78 is the minimum the facility would ACCEPT, so BELOW the max is the suspicious direction | | |
+
+## F1.D Signature branch — Q108 DOH-licensing option logic
+
+| ID | Setup → Input | Expected | Result | Shot |
+|---|---|---|---|---|
+| F1-DT-12 | `Q8_SERVICE_LEVEL=1` (Primary Care) → reach Q108 | Value set swapped to `Q108_DOH_LIC_DIFFICULT_PCF_VS1` — hospital-only topics not offered at all (#385) | | |
+| F1-DT-13 | `Q8_SERVICE_LEVEL≠1` (hospital) → reach Q108 | Value set swapped to `_HOSP_VS1` — the PCF-only public-price-information topic not offered | | |
+| F1-DT-14 | `Q108_DOH_LIC_DIFFICULT` = "None of the above" (90) only | `SKIP→ Q122_NBB_CURR` by CASCADE through Q109–Q121, not a single jump | **PASS (mechanism) 2026-08-19** — the identical cascade is live-proven at its Q52 twin | `f1-q48-no-lands-q49-num-and-q52-none-cascades-to-q62.png` |
+| F1-DT-15 | `Q52_ACCRED_DIFFICULT` option 01 not ticked → reach Q53 | `SKIP→ Q54` (aligned 2-char chunk scan finds no hit) | **PASS 2026-08-19** (runtime) | same shot as F1-DT-14 |
+| F1-DT-16 | `Q108_DOH_LIC_DIFFICULT` option 01 ticked → reach Q109 | Q109 is SHOWN (gate flagged) | | |
+
+## F1.E Routing & table-driven skips
+
+| ID | Setup → Input | Expected | Result | Shot |
+|---|---|---|---|---|
+| F1-DT-17 | `Q10_HAS_PRIMARY_PKG = No(2)` | `SKIP→ Q11_PCB_LICENSING` (past its own probe) | **PASS 2026-08-19** (runtime) | `f1-battery-q11-no-skips-probe-lands-q12.png` |
+| F1-DT-18 | `Q67_INTEND_ACCRED` = each of 1/2/3/4/5/6 | 1,2→Q71 · 3→Q69 · 4→Q70 · 5→Q68 · 6→**Q79** (defect-fix; paper said Q72) | **PASS (branch 5) 2026-08-19** (runtime); other branches code-verified | `f1-q67-5-q68-tail-lands-q79-not-q69-defectfix.png` |
+| F1-DT-19 | `Q77_COSTING_VIABLE=1` (Yes) | `SKIP→ Q80_CHARGE_ADDL_CAP` | | |
+| F1-DT-20 | `Q89_HAS_BUCAS = I-don't-know(3)` | `SKIP→ Q95_HEARD_GAMOT` | | |
+| F1-DT-21 | `Q132_MALASAKIT_PROVIDED=No(2)` | `SKIP→ Q134_NO_MALASAKIT_WHY`; the Yes path asks Q133 and Q134 then self-skips to Q135 | **PASS (Yes path) 2026-08-19** (runtime) | `f1-q137-yes-lands-q139-pho-gate-open-defectfix.png` |
+| F1-DT-22 | `Q20_EMR_USE = No(2)` | `SKIP→ Q24_STAFFING_CHANGED` — clears the Q21–Q23 DOH-IS fan for free | **PASS 2026-08-19** (runtime) | `f1-q20-no-lands-q24-doh-is-fan-cleared.png` |
 
 ## F1.F Dynamic / special
+
 | ID | Setup → Input | Expected | Result | Shot |
 |---|---|---|---|---|
-| F1-DT-23 | Focus `REGION` → pick a region → `PROVINCE_HUC` → `CITY_MUNICIPALITY` → `BARANGAY` | PSGC cascade — each child value set filters to children of the chosen parent | | |
-| F1-DT-24 | UHC9 dual-other: select code 4/7 but leave `*_OTHER_TXT` blank | `R` — "please specify" | | |
-| F1-DT-25 🔌 | Trigger `FACILITY_CAPTURE_GPS` | GPS fix into `FACILITY_GPS_*` (DEVICE-ONLY) | | |
-| F1-DT-26 📷 | Trigger `CAPTURE_VERIFICATION_PHOTO` | Camera → JPG saved, filename set (DEVICE-ONLY) | | |
+| F1-DT-23 | Case key → `BARANGAY` picker | REGION/PROVINCE/CITY are derived from the 12-digit case key and `protect()`ed; only CLASSIFICATION and BARANGAY need input | **PASS 2026-08-19** (runtime) | `f1-casestart-breakoff-continue-lands-section-a.png` |
+| F1-DT-24 | Other-specify: tick the parent's Other code but leave `Q<NN>_<STEM>_OTHER_TXT` blank | `R` — "please specify"; the box is cleared and `noinput` when Other is not ticked | | |
+| F1-DT-25 🔌 | Reach `FACILITY_GPS_LATITUDE` (the LAST form, after the photo) | GPS fix captured on its `onfocus`, then all six fields protected; there is no separate `FACILITY_CAPTURE_GPS` trigger item (DEVICE-ONLY — desktop `getos` 10-19 is a documented no-op) | | |
+| F1-DT-26 📷 | Reach `CAPTURE_VERIFICATION_PHOTO` with `ENUM_RESULT_FINAL_VISIT` in 1,4 | Camera → JPG saved, filename set; a Postponed/Refused visit is NOT photographed (DEVICE-ONLY) | | |
 
 ## F1.G Multi-language
+
 | ID | Setup → Input | Expected | Result | Shot |
 |---|---|---|---|---|
 | F1-DT-27 | Launch `Language=WAR` → focus `SURVEY_TEAM_LEADER_S_NAME` | Question bar = "Ngaran han Survey Team Leader" | | |
-| F1-DT-28 | Switch through EN/BCL/BIS/CEB/WAR/HIL | Question text follows language (EN fallback where untranslated); `LANGUAGE_USED` records it | | |
+| F1-DT-28 | Switch through EN/FIL/BCL/BIS/CEB/WAR/HIL/ILO | Question text follows language (EN fallback where untranslated — see F1-DT-35); `LANGUAGE_USED` records it | | |
+
+## F1.H Aug-17 migration proofs (Task 2.6, 2026-08-19)
+
+Four permanent scenarios: `f1_aug17_casestart_and_battery.txt`, `f1_aug17_intro51_fil.txt`,
+`f1_aug17_nonaccredited_arm.txt`, `f1_aug17_accredited_arm.txt`. All shots below live in
+`docs/uat-fix-evidence/2026-08-19-aug17-migration/F1/`.
+
+| ID | Setup → Input | Expected | Result | Shot |
+|---|---|---|---|---|
+| F1-DT-29 | Case start, `BREAKOFF = 1 Continue` | The form-2 → form-11 break-off escape does NOT fire; Section A follows immediately | **PASS (runtime)** | `f1-casestart-breakoff-continue-lands-section-a.png` |
+| F1-DT-30 | Two-step battery, base = Yes | The `Q<NN>_1_UHC_ATTRIB` probe IS asked, on its own screen; a `.2` detail follows where one exists | **PASS (runtime)** | `f1-battery-q12-yes-asks-probe-then-q12-2-detail.png` |
+| F1-DT-31 | Two-step battery, base = No | The probe is skipped entirely — the behaviour the whole own-screen design rests on | **PASS (runtime)** | `f1-battery-q11-no-skips-probe-lands-q12.png` |
+| F1-DT-32 | `Q13_HEALTH_PROMO_UNIT = 9` (Not applicable) | Same exit as No — the `in 2,9` condition; Q12 and Q13 are the only two bases with an NA code | **PASS (runtime)** | shot trail step 050, `f1_aug17_casestart_and_battery` |
+| F1-DT-33 | `Q38_YK_ACCRED = No(2)` | Leaps the whole accredited block Q39–Q65 to Q66 | **PASS (runtime)** | `f1-q38-no-leaps-q39-q65-lands-q66.png` |
+| F1-DT-34 | `Q65_ENROLL_CHALL_LIST` answered on the accredited arm | `SKIP→ Q72_CATCHMENT_AREA`, **not** Q79 (a register row that once said Q79 was corrected in Task 2.4) | **PASS (runtime)** | `f1-q65-exits-accredited-arm-to-q72-not-q79.png` |
+| F1-DT-35 | Launch `Language=FIL`, reach `Q38_YK_ACCRED` | The Section D intro (intro:51) renders ALL THREE translated sentences — the ruling-R24 evidence for commit `fe4f14c` | **PASS (runtime)** | `f1-intro51-section-d-intro-FIL-three-sentences-R24.png` |
+| F1-DT-36 | Reach `Q88_HEARD_BUCAS` | Reads the BUCAS awareness question, NOT the capitation paragraph the Task-2.5 re-key had put there | **PASS (runtime)** | `f1-q79-exits-to-q88-and-q88-reads-BUCAS-text.png` |
+| F1-DT-37 | `Q101_STOCKOUT_DURATION = 3` (more than 60 days) | `Q102_STOCKOUT_AVG` IS asked; codes 1 and 2 skip it (that branch code-verified only) | **PASS (asks branch, runtime)** | `f1-q101-over60days-asks-q102-stockout-avg.png` |
+| F1-DT-38 | `Q105_DOH_LICENSED = 02` (No) | Leaps the whole of Section F (Q106–Q121) to Q122 | **PASS (runtime)** | `f1-q105-no-leaps-whole-section-f-lands-q122.png` |
+| F1-DT-39 | `Q137_LGU_SATISFIED = Yes`, with `Q7=Public` and `Q8=Level 2 hospital` | `SKIP→ Q139`, **not** the paper's Q141 — the defect-fix that keeps the PHO pair reachable; and the #386 PHO gate is open on this profile | **PASS (runtime)** | `f1-q137-yes-lands-q139-pho-gate-open-defectfix.png` |
+| F1-DT-40 | `Q48_TRANCHE_DELAY = No(2)` | Lands on `Q49_TRANCHE_INTERVAL_NUM` — the `_NUM` half of the hybrid pair | **PASS (runtime)** | `f1-q48-no-lands-q49-num-and-q52-none-cascades-to-q62.png` |
+| F1-DT-41 | Check Box field: type the option code, then try `{SPACE}` | BOTH are invalid input. Only a coordinate click on the tick-box glyph works. `tick_x = 767 + 14.1*<item length>` is exact; the y must be read per screen, and a locale with longer labels shifts the popup left | **PASS (negative, runtime ×2)** | shot trail, `f1_aug17_nonaccredited_arm` steps 113–116 |
 
 ---
 
@@ -275,12 +307,17 @@ filling it then setting `CONSENT_GIVEN=2` fires the exact logic: errmsg "Respond
 ## F4.E Other branches + dynamic / special
 | ID | Setup → Input | Expected | Result | Shot |
 |---|---|---|---|---|
-| F4-DT-21 | `Q76_BRAND_OR_GEN = Branded(1)` | `SKIP→ Q78_WHY_BRANDED_O01` (skip Q77); 3/4 → Q79 | | |
-| F4-DT-22 | Awareness gate sample (`Q51_UHC_HEARD in 2,3`) | `SKIP→ Q54_YAKAP_HEARD` | | |
-| F4-DT-23 | Section M `Q129_HH_CONFINED = No(2)` | `SKIP→ Q144_CEREALS_CONSUMED` (skip Section M) | | |
-| F4-DT-24 | PSGC cascade `REGION→…→BARANGAY` | child value sets filter to parent | | |
-| F4-DT-25 🔌 | `CAPTURE_HH_GPS` | GPS into `LATITUDE/LONGITUDE/HH_GPS_*` (DEVICE-ONLY) | | |
-| F4-DT-26 📷 | `CAPTURE_VERIFICATION_PHOTO` | Camera → JPG (DEVICE-ONLY) | | |
+| F4-DT-21 | `Q76_BRAND_OR_GEN = Branded(1)` | `SKIP→ Q78_WHY_BRANDED` (bare Check Box base, no `_O01` suffix since #529 — this row's target name was stale); `4`/`5` → Q79 | **PASS 2026-08-19** (code-verified, Task 1.9) | |
+| F4-DT-22 | Awareness gate sample (`Q51_UHC_HEARD = 2`) | `SKIP→ Q54_YAKAP_HEARD` (code 3 "Don't know" doesn't exist on this item — the old `in 2,3` carried a dead code) | **PASS 2026-08-19** (runtime, Task 1.9, `scenarios/f4_gamot_gate_and_bill_decomposition.txt`) | |
+| F4-DT-23 | Section L `Q129_HH_CONFINED = No(2)` | `SKIP→ Q132_ZBB_HEARD` (skip ONLY Q130/Q131 NBB detail — **not** `Q144`; the confinement gate on the whole of Section M was REMOVED by #625/#626/#699/#701, this row's old target was stale/superseded) | **PASS 2026-08-19** (code-verified, Task 1.9 — not separately live-walked, see F4-tier2-matrix.md) | |
+| F4-DT-24 | PSGC cascade `REGION→…→BARANGAY` | Region/Province/City are now auto-derived + protected straight from the 12-digit case key (single-number redesign); only Barangay is still a manual picker, filtered by the derived city code | **PASS 2026-08-19** (runtime, Task 1.9) | |
+| F4-DT-25 🔌 | `CAPTURE_HH_GPS` | GPS into `LATITUDE/LONGITUDE/HH_GPS_*` (DEVICE-ONLY); form moved to the very end of the interview (after Section Q closing) in the current build | | |
+| F4-DT-26 📷 | `CAPTURE_VERIFICATION_PHOTO` | Camera → JPG (DEVICE-ONLY); form moved to the very end of the interview alongside GPS | | |
+| F4-DT-28 | Section G: `Q62_PURCHASE_FREQ = Never(5)` | `SKIP→ AREA_HAS_GAMOT` (auto-answered/noinput gate, #643/#797) `→ Q69_GAMOT_HEARD` directly, Q63-Q68 never shown | **PASS 2026-08-19** (runtime, Task 1.9, `f4-gamot-gate-q62-never-lands-q69.png`) | ✓ |
+| F4-DT-29 | Section H structural guard: primary respondent `Q45_PHILHEALTH_REG(1) = No(2)` | `SKIP→` the entire Section H block (Q79-Q88) never displays; lands on `Q89_HAS_USUAL_FACILITY` | **PASS 2026-08-19** (runtime, Task 1.9, `f4-section-h-guard-and-section-i-leapfrog-q89.png`) | ✓ |
+| F4-DT-30 | Section I leapfrog: `Q89_HAS_USUAL_FACILITY = No(2)` | `SKIP→ Q93_WHY_NOT` directly (Q89.1/Q90/Q91/Q92 all skipped) — F3-PATIENT_TYPE-class multi-skip reconvergence risk | **PASS 2026-08-19** (runtime, Task 1.9 — No/IDK branch only; Yes branch code-verified, not separately live-walked) | ✓ |
+| F4-DT-31 | Household characteristics: dug-well renumber `Q26_DUG_WELL_SHARE` | Displays as its own screen between Q25 (tube/pipe) and Q27 (refrigerator); Q27/Q28/Q29 (renumbered from Q26/Q27/Q28) all present, none dropped/duplicated | **PASS 2026-08-19** (runtime, Task 1.9, `f4-dugwell-q26-between-q25-and-q27.png`) | ✓ |
+| F4-DT-32 | Check Box (tick-all) interaction, `Q93_WHY_NOT` / `Q94_TRANSPORT` | Typing a numeric option code directly is INVALID (`out of range`) — the field requires a mouse click on the tick-box glyph; confirmed working via direct click, twice | **PASS 2026-08-19** (runtime, Task 1.9, `f4-section-i-q93-checkbox-tickall-confirmed.png`) | ✓ |
 
 ## F4.F Multi-language
 | ID | Setup → Input | Expected | Result | Shot |

@@ -12,22 +12,26 @@
     "version in the latest #f<n>-uat patch note.",
     "Bump with:  py automation/stamp_version.py bump F3 [--minor|--major]   (default = patch;",
     "updates this file, re-stamps the .pff, regenerates the .qsf - one atomic step, no drift).",
-    "Check with: stamp_version.py show"
+    "Check with: stamp_version.py show",
+    "CHANNEL (2026-08-20, after the PSA submission): each instrument carries a \"channel\". \"release\" = a build fit to present as the submitted instrument; anything else (\"dev\") stamps a [DEV] marker into the .pff Description and the cover build footer, so a work-in-progress app is obvious in the CSEntry app list and on screen. The submitted set is F1 v3.1.5 / F2 v3.0.0 / F3 v6.0.2 / F4 v3.1.3, git tag capi-psa-2026-08-20. Set channel back to \"release\" only for a build that is genuinely going out as an official version."
   ],
   "F1": {
     "app": "Facility Head Survey",
-    "version": "2.1.2",
-    "date": "2026-08-14"
+    "version": "4.0.0",
+    "date": "2026-08-24",
+    "channel": "dev"
   },
   "F3": {
     "app": "Patient Survey",
-    "version": "3.1.2",
-    "date": "2026-08-14"
+    "version": "6.0.3",
+    "date": "2026-08-20",
+    "channel": "dev"
   },
   "F4": {
     "app": "Household Survey",
-    "version": "2.1.2",
-    "date": "2026-08-14"
+    "version": "3.1.4",
+    "date": "2026-08-20",
+    "channel": "dev"
   },
   "HUB": {
     "app": "Supervisor Hub",

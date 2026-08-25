@@ -11,9 +11,9 @@ tags: [cspro, capi, skip-logic, validations, f4, household]
 
 # F4 Household Survey — Skip Logic and Validations Spec
 
-> [!warning] SUPERSEDED — the generator is the source of truth (banner added 2026-06-27)
+> [!warning] SUPERSEDED — the generator is the source of truth (banner added 2026-06-27, refreshed 2026-08-19 Task 1.9)
 > This spec **trails the UAT-evolved generator** (F4-DOC-01). For current behavior read the inline comments in `deliverables/CSPro/F4/generate_apc.py` / `generate_dcf.py` and the bound `.apc`. Do **not** "re-fix" code to match this doc — the departures below are intentional UAT closures.
-> Intentional, undocumented departures: `CONSENT_GIVEN` removed (→ BREAKOFF disposition); single 12-digit PSGC case key; **Q138–Q143 bill-recall asked of everyone** (#699/#701); Q195 is a 6-band % (not 0–100); Q105=No→Q107; Q90 routing flipped to this doc's §Section-I table by #827 on 2026-07-03 (Yes→Q94; No→Q91–Q92→Q94; the paper prints Yes→Q91 / No→Q96 — both directions deliberately depart; supersedes #652). One pending ASPSI ruling: **F4-VAL-01** Q141.1 no-receipt gate (recommend drop the gate; cap check stays).
+> Intentional, undocumented departures: `CONSENT_GIVEN` removed (→ BREAKOFF disposition); single 12-digit PSGC case key; **Q138–Q143 bill-recall asked of everyone** (#699/#701, confinement gate on Q129 REMOVED — Q129=No/DK now routes straight to Q132, same as Q129=Yes, not to Q144); Q195 is a 6-band % (not 0–100); Q105=No→Q107; Q90 routing flipped to this doc's §Section-I table by #827 on 2026-07-03 (Yes→Q94; No→Q91–Q92→Q94; the paper prints Yes→Q91 / No→Q96 — both directions deliberately depart; supersedes #652); Q72=No skips ONLY Q73 — Q74 ("where did you get the rest") is still asked (#575, ASPSI 2026-06-17 — an earlier spec draft said Q75, ASPSI confirmed Q74 is correct). **1176-aug17 Section M renumber**: the bill-recall field names below are CURRENT (`Q140_BILL_ITEMS` = bill-items checklist, `Q141_RECALL_PAYMENT` = recall-how-paid Yes/No gate, `Q142` = 16-source settlement matrix `Q142_<SOURCE>_YN/_AMT_PHP/_TXT`, `Q143_NO_RECEIPT_AMT_PHP` = no-receipt amount) — the retired pre-1176 names (`Q140_RECALL_BREAKDOWN`, an old `Q141_BILL_ITEMS`/`Q141.1_NO_RECEIPT_AMT_PHP`, an old `Q142_RECALL_PAYMENT`, `Q143_HOW_PAID`) no longer exist in the build. **Dug-well item (2026-08-19, controller-approved escalation #2)**: `Q26_DUG_WELL_SHARE` was inserted (previously missing — the deployed build silently carried paper Q27/Q28/Q29's appliance-ownership content one number early); `Q27_REFRIGERATOR`/`Q28_TELEVISION`/`Q29_WASHING_MACHINE` are the renumbered targets. One pending ASPSI ruling: **F4-VAL-01** Q141.1 no-receipt gate (recommend drop the gate; cap check stays) — superseded by the 1176-aug17 rename; the surviving cap-check item is `Q143_NO_RECEIPT_AMT_PHP`.
 >
 > **Section N flattened to Option-C rosters (2026-07-03, F4 v1.1.0 LIVE).** Everything below that describes Section N (Q144–Q185) as flat per-question `Q<n>_CONSUMED`/`_PURCHASED_PHP`/`_INKIND_PHP` triplets (the "42 items, three-column" framing in §1 #8/#9, §2, §3.15, and the flat-sum subtotal snippets in §4.9/§4.10) is **SUPERSEDED**: each recall block is now a fixed-occurrence repeating record (`N_FOOD_ROSTER`, `N_NF1M/NF6M/NF12M_ROSTER`, `N_H12M/H6M/H1M_ROSTER`) with generic per-row fields `N_<blk>_CONSUMED/_PURCHASED_PHP/_INKIND_PHP` and the item identity in an auto-filled `N_<blk>_ITEM` label. The retired flat `Q144_*`..`Q156_*` / `Q160_*`..`Q184_*` field names no longer exist; only Q158/Q159 stay flat (record P), and Q157/Q177/Q182/Q185 are CAPI-computed subtotal records summing their roster's `_CONSUMED`=1 rows (excluding `-98`/`-99`). Per-item gate + #677 consumed-needs-an-amount now fire per roster occurrence. Flat→roster occurrence crosswalk: see `deliverables/data-harmonization/codebook.md` CHANGELOG v0.6. Source of truth = `generate_dcf.py` `build_section_n` + `generate_apc.py` `section_n_fanout_procs`.
 
@@ -47,7 +47,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 | 7 | **Q19 vs roster count** | `Q19_HH_SIZE_TOTAL` is the self-reported HH size; roster occurrences should equal Q19 (or Q19 − 1 if respondent is listed separately). | HARD post-roster rule (finding #1 already closed): `count(C_HOUSEHOLD_ROSTER) = Q19_HH_SIZE_TOTAL`. Implement in roster `postproc`. |
 | 8 | **Section N per-item "consumed" gate pattern** | 42 expenditure items use the three-column pattern `{Q}_CONSUMED` → `{Q}_PURCHASED_PHP` → `{Q}_INKIND_PHP`. Needs uniform gate: if `_CONSUMED = No`, both `_PURCHASED_PHP` and `_INKIND_PHP` must be 0 or blank. | Spec as HARD gate + PROC template in §4.9. |
 | 9 | **Section N subtotals** | Q157, Q177, Q182, Q185 are `_SUBTOTAL_TOTAL_PHP` auto-compute items. Must be computed (not entered) from their panel's `_PURCHASED_PHP + _INKIND_PHP` sum. | HARD: item is auto-set, enumerator cannot edit. PROC template in §4.9. |
-| 10 | **Section M bill-recall chain** | Q140_RECALL_BREAKDOWN + Q141_BILL_ITEMS + Q141.1_NO_RECEIPT_AMT + Q142_RECALL_PAYMENT + Q143_HOW_PAID form a recall chain: if Q140 = No, skip Q141/Q141.1; if Q142 = No, skip Q143. Also Q129 gates whether Section M applies at all (only HHs with confinement experience answer bill-recall). | Spec as skip-logic §2 Section M + PROC §4.8. |
+| 10 | **Section M bill-recall chain** — CURRENT (1176-aug17 renumber, fix round 1 2026-08-19): `Q138_MOST_EXPENSIVE` (most expensive charge) + `Q139_TOTAL_BILL_PHP` (total bill amount) + `Q140_BILL_ITEMS` (bill-items checklist) + `Q141_RECALL_PAYMENT` (Yes/No payment-recall gate) + `Q142` (16-source settlement matrix) + `Q143_NO_RECEIPT_AMT_PHP` (no-receipt amount) form the recall chain: `Q141 = No` skips the entire Q142 matrix straight to Q143. Q129 does **NOT** gate whether Section M applies (#699/#701 removed that gate — Q132-Q143 is asked of everyone regardless of confinement); Q129 = No/DK only skips Q130/Q131 (NBB hospital-type detail). The retired pre-1176 names (`Q140_RECALL_BREAKDOWN`, an old `Q141_BILL_ITEMS`/`Q141.1_NO_RECEIPT_AMT`, an old `Q142_RECALL_PAYMENT`, `Q143_HOW_PAID`) no longer exist in the build. | Spec as skip-logic §2 Section M + PROC §4.8. |
 | 11 | **Section M gate item is Q129 (in Section L)** | The HH-confinement gate that decides whether ZBB/MAIFIP/Bill questions apply lives at Q129 inside Section L (not at the top of M). Straightforward cross-section routing but must be explicit. | Spec in §2 routing preamble. |
 | 12 | **Q199 WTP open-ended amount** | Source captures "willingness-to-pay for consultation" as a PHP amount plus an "other" specify. | HARD: Q199 ≥ 0; `Q199_WTP_OTHER_TXT` required only when "Other" option ticked. |
 | 13 | **Q202 worry reasons — select-all capacity** | Only 3 options in dcf (`O01`–`O03`) plus `_OTHER_TXT`. Verify source has only 3; if more, generator needs to expand. | Verify against source PDF; flag if mismatch. |
@@ -64,7 +64,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 
 ### Routing preamble (whole-instrument)
 
-- **Break-off terminator.** `FIELD_CONTROL.BREAKOFF ≠ Continue` at the top of the interview → terminate; `ENUM_RESULT_FINAL_VISIT` is set from the break-off reason (2 Withdrew → `4 Withdraw Participation/Consent`; 3 Postponed → `2 Postponed`; 4 Stop-other → `3 Incomplete`) and `CASE_DISPOSITION = 2` (Partial / not completed). Entire questionnaire (A–Q) is suppressed. There is no `CONSENT_GIVEN` field — it was removed 2026-06-12.
+- **Break-off terminator.** `FIELD_CONTROL.BREAKOFF ≠ Continue` at the top of the interview → terminate; `ENUM_RESULT_FINAL_VISIT` is set from the break-off reason (2 Withdrew → `4 Withdraw Participation/Consent`; 3 Postponed → `2 Postponed`; 4 Stop-other → `3 Incomplete`; 5–7 never-started → `5 Replaced`, the ASPSI replacement protocol — BREAKOFF keeps the reason) and `CASE_DISPOSITION = 2` (Partial / not completed). Entire questionnaire (A–Q) is suppressed. There is no `CONSENT_GIVEN` field — it was removed 2026-06-12.
 - **Respondent-is-HH-head gate (Q1).** Q1 captures whether the respondent is the household head. Per source, if the respondent is not the HH head, some items may still be asked but flagged; no hard skip — handle as SOFT validation in §3.1.
 - **HH-confinement gate (Q129, Section L).** Q129 = Yes → Section M (ZBB/MAIFIP/Bill) fully asked. Q129 = No → Section M items Q132–Q143 are skipped (ZBB/MAIFIP awareness still asked per printed form; bill-recall chain Q138–Q143 is the confinement-dependent part). See Section M table below for the precise split.
 - **Roster expansion (Section C).** After B is complete, enumerator enters the roster loop for `count = Q19_HH_SIZE_TOTAL` members. Section J (Health-Seeking) also loops over the same roster per source — see sanity finding #2.
@@ -86,7 +86,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 | Q14 IP_MEMBER | = No | **Q16** (skip Q15 IP group specify) |
 | Q22 ELECTRICITY | — | No skip; socio-economic class battery continues |
 | Q23 WATER_SOURCE | Piped/faucet options | Q24 asked; other sources → **Q25** (skip Q24 faucet-share) |
-| Q23 WATER_SOURCE | Dug well / tube well / spring options | Q25 asked; other sources → **Q26** (skip Q25 tube-share) |
+| Q23 WATER_SOURCE | captured | No skip in paper or build — Q24, Q25, Q26 (own/share faucet, tube/pipe, dug well) are each asked sequentially regardless of Q23; the GATE claims at §3.3 for Q24/Q25 predate a build where no such preproc exists (fixed there too) |
 
 ### Section C — Household Roster (per-member loop; repeats for each of Q19 members)
 
@@ -137,10 +137,10 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 
 | Q | Condition | Skip to |
 |---|---|---|
-| Q62 PURCHASE_FREQ | = Never (5) | **Q69** (skip Q63–Q68 — never purchases → skip Rx/conditions/where/travel/ease) |
+| Q62 PURCHASE_FREQ | = Never (5) | **Q69** (skip Q63–Q68 via the auto-answered `AREA_HAS_GAMOT` gate — never purchases → skip Rx/conditions/where/travel/ease) |
 | Q69 GAMOT_HEARD | = No | **Q75** (skip Q70–Q74 — never heard of GAMOT) |
-| Q72 GAMOT_OBTAINED | = No | **Q75** (skip Q73 meds list, Q74 where-rest) |
-| Q75 BRAND_GEN_KNOWS | = No | **Q79** (skip Q76–Q78 — exit Section G) |
+| Q72 GAMOT_OBTAINED | = No | **Q74** (skip ONLY Q73 meds list — Q74 "where did you get the rest" is still asked; #575 ASPSI ruling 2026-06-17, corrects an earlier spec draft that skipped both) |
+| Q75 BRAND_GEN_KNOWS | (any answer) | No skip — falls through to Q76 unconditionally (#538, 2026-08-19 fix round 1 correction: this row previously claimed a Q75=No -> Q79 skip that neither paper nor the current build has; #538's own comment records that skip being REMOVED as a bug, "was wrongly exiting Section G") |
 | Q76 BRAND_OR_GEN | = Branded only | **Q78** (skip Q77 why-generic) |
 | Q76 BRAND_OR_GEN | = Generic only | **Q79** (skip Q78 why-branded; after Q77) |
 | Q76 BRAND_OR_GEN | = Don't know / Not applicable | **Q79** (exit Section G) |
@@ -162,7 +162,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 | Q | Condition | Skip to |
 |---|---|---|
 | Q89 HAS_USUAL_FACILITY | = Yes | Q89.1 facility name captured, proceed to Q90 |
-| Q89 HAS_USUAL_FACILITY | = No | **Q93** (skip Q89.1, Q90, Q91, Q92 — no usual facility → go straight to why-not reasons) |
+| Q89 HAS_USUAL_FACILITY | = No / Don't know | **Q93** (skip Q89.1, Q90, Q91, Q92 — no usual facility → go straight to why-not reasons; #650 widened Don't-know to route the same as No, was previously falling through to Q90 and asking questions that presume a usual facility exists) |
 | Q90 IS_USUAL_FOR_GENERAL | = Yes | **Q94** (skip Q91 why-went, Q92 facility type, Q93 why-not — they use usual facility for general care, proceed to transport) |
 | Q90 IS_USUAL_FOR_GENERAL | = No | Q91, Q92 asked; Q93 skipped |
 | Q97 KNOWS_BOOKING | = No | **Q100** (skip Q98, Q99 phone advice — doesn't know booking → phone questions moot) |
@@ -182,8 +182,8 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 | Q | Condition | Skip to |
 |---|---|---|
 | Q108 REFERRED | = No | **Q126** (skip Q109–Q125 — jumps straight to Section L NBB) |
-| Q112 VISITED | = Yes | **Q114** (skip Q113 why-not) |
-| Q112 VISITED | = No, not planning **or** Not yet, planning | Q113 asked; after Q113 → **Q114** |
+| Q112 VISITED | = Yes **or** Not yet, planning to | **Q114** (skip Q113 why-not) |
+| Q112 VISITED | = No, not planning | Q113 (why-not, Check Box) asked; after Q113 (any answer, including Other+specify) → **Q126** (skip Q114–Q125 entirely — the whole referral-experience tail belongs to the Yes/Not-yet branch, not reachable from the not-planning branch) |
 | Q112 VISITED | ≠ Yes | **Q117 + Q118 skipped** — both asked only when Q112 = Yes; after Q116 → **Q119** (#816) |
 | Q117 SPECIALIST_FOLLOWUP | any answer | **Q118 always follows** — the paper (Annex F4 p.18) filters Q118 on Q112 = Yes only, not on Q117 (#1207 removed the earlier Q117 = No → Q119 skip) |
 | Q119 PCF_REFERRAL | = Yes | **Q120** PCP-knows, then Q122 discussed-places (skip Q121 why-hospital) |
@@ -195,23 +195,25 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 | Q | Condition | Skip to |
 |---|---|---|
 | Q126 NBB_HEARD | = No / Don't know | **Q129** (skip Q127 sources, Q128 understanding) |
-| Q129 HH_CONFINED | = No | **Q144** (skip Q130, Q131 NBB utilization; skip Q132–Q143 bill-recall tail of Section M — proceed straight to Section N) |
-| Q130 HOSPITAL_TYPE | = Public (per source) | Q131 NBB_OOP asked (NBB applies to public only per program design) |
-| Q130 HOSPITAL_TYPE | = Private | **Q132** (skip Q131 — NBB doesn't apply to private) |
+| Q129 HH_CONFINED | = No / Don't know | **Q132** (skip ONLY Q130, Q131 NBB utilization — does NOT skip the rest of Section M; #625/#626 ASPSI ruling 2026-06-17 keeps Q132–Q143 asked of everyone regardless of confinement) |
+| Q130 HOSPITAL_TYPE | = DOH-retained (code 2) | Q131 NBB_OOP asked (#661 Carl go/no-go 2026-06-20 — NBB scoped to DOH-retained only, not "public" generally) |
+| Q130 HOSPITAL_TYPE | = Public **or** Private | **Q132** (skip Q131 — NBB out-of-pocket doesn't apply outside DOH-retained facilities) |
 
 ### Section M — ZBB / MAIFIP / Bill Recall
 
-> Section M only runs when `Q129_HH_CONFINED = Yes`. The ZBB awareness sub-block (Q132–Q134) is asked regardless of confinement per source; bill-recall (Q138–Q143) is strictly confinement-dependent.
+> **Confinement gate REMOVED (#699/#701, 2026-06-18 — "do what the testers said").** Section M (Q132–Q143) is asked of EVERYONE regardless of `Q129_HH_CONFINED` — the ZBB/MAIFIP awareness sub-block (Q132–Q137) was always confinement-independent per source, and the bill-recall chain (Q138–Q143) is now confinement-independent too (an earlier draft of this spec gated it on `Q129 = Yes`; superseded). Field names below are the CURRENT (1176-aug17) ones — see banner.
 
 | Q | Condition | Skip to |
 |---|---|---|
 | Q132 ZBB_HEARD | = No / Don't know | **Q136** (skip Q133 sources, Q134 understanding, Q135 ZBB-OOP) |
 | Q135 ZBB_OOP | captured only if ZBB-eligible facility visited | Per source note — enumerator gate |
 | Q136 MAIFIP_HEARD | = No / Don't know | **Q138** (skip Q137 sources) |
-| Q138 MOST_EXPENSIVE | captured | No skip |
-| Q140 RECALL_BREAKDOWN | = No | **Q142** (skip Q141 bill-items, Q141.1 no-receipt-amount) |
-| Q141 BILL_ITEMS | select-all | No skip; Q141.1 conditional on presence of "no receipt" option |
-| Q142 RECALL_PAYMENT | = No | **Q144** (skip Q143 how-paid — end of Section M) |
+| Q138 MOST_EXPENSIVE | captured | No skip — falls through to Q139 |
+| Q139 TOTAL_BILL_PHP | captured | No skip — falls through to Q140 |
+| Q140 BILL_ITEMS | select-all (Check Box) | No skip — falls through to Q141; `_OTHER_TXT` gated on the "Other expenses (specify)" option |
+| Q141 RECALL_PAYMENT | = No | **Q143** (skip the entire Q142 16-source settlement matrix — no recall of how the bill was paid) |
+| Q142 SETTLEMENT_MATRIX | each of 16 sources: independent Yes/No + amount (+ text for text-specify sources) | No skip; falls through to **Q143** after the last source |
+| Q143 NO_RECEIPT_AMT_PHP | must be `<= Q139_TOTAL_BILL_PHP` (HARD) | No skip — end of Section M, falls through to Q144 |
 
 ### Section N — Household Expenditures (WHO/SHA module)
 
@@ -220,7 +222,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 | Q | Condition | Skip to |
 |---|---|---|
 | `{Q}_CONSUMED` | = No | Next consumption item (skip `_PURCHASED_PHP`, `_INKIND_PHP` for this row) |
-| Q157 FOOD_SUBTOTAL | — | Auto-compute; enumerator cannot enter |
+| Q157 FOOD_SUBTOTAL | — | No skip; auto-compute, enumerator cannot enter |
 | Q177/Q182/Q185 HEALTH_SUBTOTAL | — | Auto-compute |
 
 ### Section O — Sources of Funds for Health
@@ -264,8 +266,8 @@ HARD = block save; SOFT = warn-and-confirm; GATE = display-only (items rendered 
 | `DATE_FIRST_VISITED`, `DATE_FINAL_VISIT` | Required, valid date ≤ today | HARD |
 | `DATE_FIRST_VISITED ≤ DATE_FINAL_VISIT` | Temporal ordering | HARD |
 | `TOTAL_NUMBER_OF_VISITS` | `1 ≤ n ≤ 10` (warn if > 3) | HARD + SOFT |
-| `ENUM_RESULT_FIRST_VISIT`, `ENUM_RESULT_FINAL_VISIT` | Required, ∈ value set | HARD |
-| `BREAKOFF` | Required; defaults to `1 — Continue interview`. If ≠ Continue → terminate; sets `ENUM_RESULT_FINAL_VISIT` (2 Withdrew → 4; 3 Postponed → 2; 4 Stop-other → 3 Incomplete) and `CASE_DISPOSITION = 2` | HARD |
+| `ENUM_RESULT_FIRST_VISIT`, `ENUM_RESULT_FINAL_VISIT` | Required, ∈ value set. Enumerator picklists show the paper's four codes only; `5 Replaced` is logic-assigned (BREAKOFF 5–7) and never enumerator-picked — FIRST's value set omits it, FINAL swaps to the full set via setvalueset() only on the replacement path (#1301, 2026-08-20) | HARD |
+| `BREAKOFF` | Required; defaults to `1 — Continue interview`. If ≠ Continue → terminate; sets `ENUM_RESULT_FINAL_VISIT` (2 Withdrew → 4; 3 Postponed → 2; 4 Stop-other → 3 Incomplete; 5–7 never-started → 5 Replaced) and `CASE_DISPOSITION = 2` | HARD |
 | `CASE_DISPOSITION` | Auto-written by logic, never typed: 0 In progress / 1 Completed / 2 Partial / not completed | — |
 | `HH_LISTING_NO` | Required, matches F3b listing form entry | HARD |
 | `REGION` → `PROVINCE_HUC` → `CITY_MUNICIPALITY` → `BARANGAY` | PSGC cascade enforced at pick-time by `PSGC-Cascade.apc` — each child's `onfocus` filters its value set to children of the chosen parent, so an inconsistent pair is unrepresentable | HARD — cascade enforces |
@@ -341,8 +343,9 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | `Q23 = Other` | `Q23_WATER_OTHER_TXT` required | HARD |
 | Q24 enabled | `Q23_WATER_SOURCE ∈ {piped, faucet}` codes | GATE |
 | Q25 enabled | `Q23_WATER_SOURCE ∈ {dug well, tube, spring}` codes | GATE |
-| `Q26_REFRIGERATOR`, `Q27_TELEVISION`, `Q28_WASHING_MACHINE` | Required, ∈ {Yes, No} | HARD |
-| `Q29_SOCIOECONOMIC_CLASS` | Auto-classified from Q22–Q28 (enumerator confirms) | SOFT |
+| `Q26_DUG_WELL_SHARE` | Required, ∈ value set (own/share) — inserted 2026-08-19, previously missing (see banner) | HARD |
+| `Q27_REFRIGERATOR`, `Q28_TELEVISION`, `Q29_WASHING_MACHINE` | Required, ∈ {Yes, No} — renumbered one place forward by the Q26 insertion above | HARD |
+| `Q29_SOCIOECONOMIC_CLASS` | RETIRED from the tool 2026-08-20 (#1296, UAT R7 — no Aug-17 paper counterpart; ASPSI confirmed retire). Off-form: never asked, always blank from v3.1.0; dcf item retained to avoid a mid-round record-layout shift, full removal rides the next declared data-shape break | — |
 
 ### 3.4 Section C — Household Roster (per-member; see sanity #1 before build)
 
@@ -431,7 +434,8 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | `Q74_WHERE_REST` select-all | ≥ 1 option ticked when enabled | HARD |
 | `Q74 = Other` | `Q74_WHERE_REST_OTHER_TXT` required | HARD |
 | `Q75_BRAND_GEN_KNOWS` | Required, ∈ {Yes, No} | HARD |
-| Q76–Q78 enabled | `Q75_BRAND_GEN_KNOWS = Yes` | GATE |
+| Q76 enabled | Always (fix round 1, 2026-08-19: Q76 is NOT gated on Q75 — falls through unconditionally per #538; the old "Q76-78 enabled when Q75=Yes" claim was stale/wrong) | GATE |
+| Q77/Q78 enabled | `Q76_BRAND_OR_GEN` answer (Generic/Both -> Q77; Branded/Both -> Q78) — gated on Q76's OWN answer, not Q75 | GATE |
 | `Q76_BRAND_OR_GEN` | Required when enabled, ∈ value set | HARD |
 | Q77 enabled | `Q76_BRAND_OR_GEN ∈ {Generic, Both}` | GATE |
 | Q78 enabled | `Q76_BRAND_OR_GEN ∈ {Branded, Both}` | GATE |
@@ -545,17 +549,15 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 | `Q136_MAIFIP_HEARD` | Required, ∈ {Yes, No, Don't know} | HARD |
 | Q137 enabled | `Q136 = Yes` | GATE |
 | `Q137_MAIFIP_SOURCE` | Select-all; "Don't know" mutex; `_OTHER_TXT` on Other | HARD |
-| **Bill-recall chain (Q138–Q143)** — all enabled only when `Q129_HH_CONFINED = Yes` | | GATE |
-| `Q138_MOST_EXPENSIVE` | Required when enabled, non-blank (free-text description of most expensive confinement) | HARD |
-| `Q139_FINAL_AMOUNT_PHP` | `0 ≤ amt ≤ 999,999,999` when enabled | HARD |
-| `Q140_RECALL_BREAKDOWN` | Required when enabled, ∈ {Yes, No} | HARD |
-| Q141, Q141.1 enabled | `Q140 = Yes` | GATE |
-| `Q141_BILL_ITEMS` select-all | ≥ 1 option when enabled; `_OTHER_TXT` on Other | HARD |
-| Q141.1 enabled | `Q141_BILL_ITEMS` includes "no receipt" row | GATE |
-| `Q141_1_NO_RECEIPT_AMT_PHP` | `0 ≤ amt ≤ Q139_FINAL_AMOUNT_PHP` when enabled | HARD |
-| `Q142_RECALL_PAYMENT` | Required when `Q129 = Yes`, ∈ {Yes, No} | HARD |
-| Q143 enabled | `Q142 = Yes` | GATE |
-| `Q143_HOW_PAID` select-all | ≥ 1 option when enabled; `_OTHER_TXT` on Other | HARD |
+| **Bill-recall chain (Q138–Q143)** — asked of everyone, NOT gated on `Q129_HH_CONFINED` (#699/#701 — confinement gate removed) | | GATE |
+| `Q138_MOST_EXPENSIVE` | Required, ∈ value set (which charge type was most expensive) | HARD |
+| `Q139_TOTAL_BILL_PHP` | `0 ≤ amt ≤ 999,999,999` | HARD |
+| `Q140_BILL_ITEMS` select-all (Check Box) | ≥ 1 option; `_OTHER_TXT` on "Other expenses (specify)"; "Cannot recall" (07) is EXCLUSIVE — hard reenter when ticked with any other option (#1300, 2026-08-20). Display order: Cannot recall before Other so the emitted codes ascend (#830) | HARD |
+| `Q141_RECALL_PAYMENT` | Required, ∈ {Yes, No} | HARD |
+| Q142 16-source matrix enabled | `Q141_RECALL_PAYMENT = Yes` | GATE |
+| `Q142_SOURCE_YN` (x16 sources) | Each source independently ∈ {Yes, No} | HARD |
+| `Q142_SOURCE_AMT_PHP` / `_TXT` | Required, `>= 0` (amount) / non-blank (text-specify sources) when that source's own `_YN = Yes` | HARD |
+| `Q143_NO_RECEIPT_AMT_PHP` | `0 ≤ amt ≤ Q139_TOTAL_BILL_PHP` | HARD |
 
 ### 3.15 Section N — Household Expenditures (WHO/SHA)
 
@@ -666,14 +668,15 @@ The `CONSENT_GIVEN` item was removed 2026-06-12 (not on the April-20 paper Field
 ```cspro
 PROC BREAKOFF
 postproc
-  if not (BREAKOFF in 1, 2, 3, 4) then BREAKOFF = 1; endif;   { default "Continue" }
+  if not (BREAKOFF in 1, 2, 3, 4, 5, 6, 7) then BREAKOFF = 1; endif;   { default "Continue" }
 
   if BREAKOFF <> 1 then
     if BREAKOFF = 2 then ENUM_RESULT_FINAL_VISIT = 4; endif;   { Withdraw Participation/Consent }
     if BREAKOFF = 3 then ENUM_RESULT_FINAL_VISIT = 2; endif;   { Postponed }
     if BREAKOFF = 4 then ENUM_RESULT_FINAL_VISIT = 3; endif;   { Incomplete }
+    if BREAKOFF in 5, 6, 7 then ENUM_RESULT_FINAL_VISIT = 5; endif;   { Replaced (never-started; reason stays on BREAKOFF) }
     CASE_DISPOSITION = 2;                                      { Partial / not completed }
-    endlevel;                                                  { close interview; no data past here }
+    skip to ENUM_RESULT_FINAL_VISIT;                           { its postproc classifies + ends the case }
   endif;
 ```
 
@@ -879,7 +882,8 @@ preproc
 
 PROC Q51_UHC_HEARD      { repeat for Q54_YAKAP_HEARD, Q57_BUCAS_HEARD }
 postproc
-  if Q51_UHC_HEARD in 2,3 then        { No / Don't know }
+  if Q51_UHC_HEARD = 2 then           { No — value set is Yes(1)/No(2) only, no Don't-know
+                                         code; an earlier "in 2,3" carried a dead code 3 }
     skip to Q54_YAKAP_HEARD;          { jump to next section's gate }
   endif;
 
@@ -895,14 +899,29 @@ postproc
 ```cspro
 PROC Q89_HAS_USUAL_FACILITY
 postproc
-  if Q89_HAS_USUAL_FACILITY = 2 then  { No usual facility }
-    skip to Q93_WHY_NOT_O01;          { skip Q89.1, Q90, Q91, Q92 → go to why-not }
+  if Q89_HAS_USUAL_FACILITY = 2 or Q89_HAS_USUAL_FACILITY = 3 then  { No / Don't know —
+                                         #650 routes IDK the same as No }
+    skip to Q93_WHY_NOT;               { skip Q89.1, Q90, Q91, Q92 → go to why-not
+                                          (bare Check Box base, no _O01 suffix since #529) }
   endif;
 
 PROC Q90_IS_USUAL_FOR_GENERAL
 postproc
-  if Q90_IS_USUAL_FOR_GENERAL = 1 then { Yes — usual is used for general care }
-    skip to Q94_TRANSPORT_O01;          { skip Q91, Q92, Q93 }
+  if Q90_IS_USUAL_FOR_GENERAL = 1 then { Yes — usual is used for general care;
+                                          #827 (2026-07-03) flipped this direction,
+                                          supersedes #652 }
+    skip to Q94_TRANSPORT;              { skip Q91, Q92, Q93 }
+  endif;
+  { No (=2) falls through to Q91, Q92; Q93's own preproc gate (below) then self-skips
+    past Q93 on this path too, since Q89 was Yes to even reach Q90. }
+
+PROC Q93_WHY_NOT
+preproc
+  { #624/#650: Q93 applies when Q89=No(2) OR Q89=IDK(3) — both mean no established
+    usual facility. The Q89=Yes/Q90=No path (Q91→Q92) falls through to here, so skip
+    Q93 for everyone EXCEPT the Q89 No/IDK respondents. }
+  if Q89_HAS_USUAL_FACILITY <> 2 and Q89_HAS_USUAL_FACILITY <> 3 then
+    skip to Q94_TRANSPORT;
   endif;
 
 PROC Q97_KNOWS_BOOKING
@@ -912,34 +931,47 @@ postproc
   endif;
 ```
 
-### 4.8 Section M bill-recall chain (gated on Q129)
+### 4.8 Section M bill-recall chain (1176-aug17 renumber; NOT gated on Q129)
 
 ```cspro
+{ #699/#701 (2026-06-18): the Q129-gated skip of the ENTIRE bill-recall chain was
+  REMOVED. Q129 = No/Don't-know now only skips Q130/Q131 (NBB hospital-type/out-
+  of-pocket) — Q132 onward (ZBB/MAIFIP/bill-recall) is asked of everyone. }
 PROC Q129_HH_CONFINED
 postproc
-  if Q129_HH_CONFINED = 2 then        { No confinement in HH }
-    skip to Q144_CEREALS_CONSUMED;    { skip Section M entirely → go to Section N }
+  if Q129_HH_CONFINED = 2 or Q129_HH_CONFINED = 3 then  { No / Don't know }
+    skip to Q132_ZBB_HEARD;           { skip ONLY Q130/Q131 NBB detail — Section M
+                                         continues for everyone }
   endif;
 
-PROC Q140_RECALL_BREAKDOWN
+PROC Q130_HOSPITAL_TYPE
 postproc
-  if Q140_RECALL_BREAKDOWN = 2 then   { No breakdown }
-    skip to Q142_RECALL_PAYMENT;      { skip Q141 bill items, Q141.1 }
+  { #661 (Carl go/no-go 2026-06-20): NBB out-of-pocket (Q131) applies ONLY to
+    DOH-retained hospitals (code 2), not "public" generally. }
+  if Q130_HOSPITAL_TYPE <> 2 then
+    skip to Q132_ZBB_HEARD;
   endif;
 
-PROC Q141_1_NO_RECEIPT_AMT_PHP
+PROC Q141_RECALL_PAYMENT
 postproc
-  { Cap at Q139 final amount }
-  if Q141_1_NO_RECEIPT_AMT_PHP > Q139_FINAL_AMOUNT_PHP then
+  if Q141_RECALL_PAYMENT = 2 then     { No — doesn't recall how the bill was paid }
+    skip to Q143_NO_RECEIPT_AMT_PHP;  { skip the entire Q142 16-source settlement matrix }
+  endif;
+
+{ Q142 16-source settlement matrix (1176-aug17): one YN/AMT_PHP(/TXT) triple per
+  source (salary, savings, borrowed, PhilHealth, NBB, MAIFIP, ZBB, GAMOT, family,
+  employer, insurance, LGU/NGO, sold assets, pawned assets, other x2), each gated
+  independently on its own _YN flag. Generated by generate_apc.py's
+  Q142_MATRIX_SOURCES / _q142_source_procs — see that file for the per-source
+  PROCs (16 sources x up to 3 PROCs each; too long to usefully paste verbatim here). }
+
+PROC Q143_NO_RECEIPT_AMT_PHP
+postproc
+  { Cap at Q139 total bill amount }
+  if Q143_NO_RECEIPT_AMT_PHP > Q139_TOTAL_BILL_PHP then
     errmsg("No-receipt amount (%d) exceeds total bill (%d). Verify.",
-           Q141_1_NO_RECEIPT_AMT_PHP, Q139_FINAL_AMOUNT_PHP);
+           Q143_NO_RECEIPT_AMT_PHP, Q139_TOTAL_BILL_PHP);
     reenter;
-  endif;
-
-PROC Q142_RECALL_PAYMENT
-postproc
-  if Q142_RECALL_PAYMENT = 2 then     { No payment recall }
-    skip to Q144_CEREALS_CONSUMED;    { end Section M → Section N }
   endif;
 ```
 
@@ -1031,10 +1063,10 @@ Disposition following the F3 pattern: genuine ASPSI asks vs spec-decisions.
 
 ### Spec-decision (ASPSI may override)
 
-4. **Q129 gates Section M bill-recall chain only, not ZBB/MAIFIP awareness** — Source prints ZBB awareness Q132–Q134 without an explicit gate; bill-recall Q138–Q143 is confinement-dependent by design. **Spec default**: ZBB/MAIFIP awareness asked regardless; bill chain gated on Q129 = Yes.
+4. **RESOLVED (fix round 1, 2026-08-19): Q129 does NOT gate the bill-recall chain.** #625/#626/#699/#701 (ASPSI ruling + "do what the testers said") removed the confinement gate entirely — ZBB/MAIFIP awareness (Q132-Q137) AND the bill-recall chain (Q138-Q143) are both asked of everyone regardless of `Q129_HH_CONFINED`. Q129 = No/DK only skips Q130/Q131 (NBB hospital-type/out-of-pocket detail). This item's original "bill chain gated on Q129 = Yes" spec-default is superseded, not current.
 5. **Q135 ZBB_OOP enumerator gate** — Source note limits Q135 to patients who visited a ZBB-eligible facility. No dcf flag captures "facility eligibility." **Spec default**: enumerator leaves Q135 blank if not applicable; PROC accepts blank.
 6. **Q130 hospital-type gate on Q131** — Source: NBB applies to public hospitals only. **Spec default**: if Q130 = Private, skip Q131. PROC coded in §4 (Section L).
-7. **Q141.1 NO_RECEIPT_AMT cap** — Capping at Q139 total bill is a consistency guardrail; source doesn't specify. **Spec default**: HARD cap at `Q141_1 ≤ Q139`.
+7. **`Q143_NO_RECEIPT_AMT_PHP` cap (renamed from the retired `Q141.1_NO_RECEIPT_AMT`, 1176-aug17)** — Capping at `Q139_TOTAL_BILL_PHP` (total bill amount, itself renamed from the retired `Q139_FINAL_AMOUNT_PHP`) is a consistency guardrail; source doesn't specify. **Spec default**: HARD cap at `Q143_NO_RECEIPT_AMT_PHP ≤ Q139_TOTAL_BILL_PHP` — implemented in `generate_apc.py` `PROC Q143_NO_RECEIPT_AMT_PHP`.
 8. **Catastrophic-expenditure SOFT warn threshold (3×)** — 3× monthly income is a common CHE plausibility threshold (SDG 3.8.2 uses 10% and 25% of capacity-to-pay). **Spec default**: SOFT warn at 3× for enumerator verification; not a CHE measurement — computed separately in analysis.
 
 ---

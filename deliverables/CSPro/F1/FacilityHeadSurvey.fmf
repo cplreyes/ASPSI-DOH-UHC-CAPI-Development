@@ -13,13 +13,25 @@ File=.\FacilityHeadSurvey.dcf
 Name=FORM000
 Label=Case Key (Facility Head ID)
 Level=1
-Size=607,74
+Size=806,300
   
 Item=QUESTIONNAIRE_NUMBER
   
 [EndForm]
+  
 [Form]
 Name=FORM001
+Label=Introduction and Informed Consent
+Level=1
+Size=806,300
+  
+Item=ICF_PART1
+Item=ICF_PART2
+  
+[EndForm]
+  
+[Form]
+Name=FORM002
 Label=Health Facility and Geographic Identification
 Level=1
 Size=806,300
@@ -32,22 +44,12 @@ Item=BARANGAY
 Item=BREAKOFF
   
 [EndForm]
-[Form]
-Name=FORM_ICF
-Label=Introduction and Informed Consent
-Level=1
-Size=806,300
-  
-Item=ICF_PART1
-Item=ICF_PART2
-  
-[EndForm]
   
 [Form]
-Name=FORM002
+Name=FORM003
 Label=A. Facility Head Profile
 Level=1
-Size=1154,420
+Size=806,457
   
 Item=RESP_NAME
 Item=RESP_POSITION
@@ -64,8 +66,9 @@ Item=Q6_YEARS_HEALTH
 Item=Q6_MONTHS_HEALTH
   
 [EndForm]
+  
 [Form]
-Name=FORM003
+Name=FORM004
 Label=B. Facility Profile
 Level=1
 Size=806,300
@@ -74,324 +77,333 @@ Item=Q7_OWNERSHIP
 Item=Q8_SERVICE_LEVEL
   
 [EndForm]
+  
 [Form]
-Name=FORM004
+Name=FORM005
 Label=C. Universal Health Care (UHC) Implementation
 Level=1
-Size=2703,3690
+Size=806,2827
   
 Item=Q9_UHC_HEARD
 Item=Q10_HAS_PRIMARY_PKG
-Item=Q11_PRIMARY_PKG_STATUS
-Item=Q11_OTHER_TXT
-Item=Q12_PCB_LICENSING
-Item=Q12_PCB_LICENSING_YES_OTHER_TXT
-Item=Q12_PCB_LICENSING_NO_OTHER_TXT
-Item=Q13_PUBLIC_HEALTH_UNIT
-Item=Q14_PHU_CREATED
-Item=Q14_PHU_CREATED_YES_OTHER_TXT
-Item=Q14_PHU_CREATED_NO_OTHER_TXT
-Item=Q15_PHU_ROLE
-Item=Q15_OTHER_TXT
-Item=Q16_HEALTH_PROMO_UNIT
-Item=Q17_HPU_CREATED
-Item=Q17_HPU_CREATED_YES_OTHER_TXT
-Item=Q17_HPU_CREATED_NO_OTHER_TXT
-Item=Q18_HPU_ROLE
-Item=Q18_OTHER_TXT
-Item=Q19_NEW_ROLES
-Item=Q19_NEW_ROLES_YES_OTHER_TXT
-Item=Q19_NEW_ROLES_NO_OTHER_TXT
-Item=Q20_NEW_ROLES_LIST
-Item=Q21_NEW_DEPTS
-Item=Q21_NEW_DEPTS_YES_OTHER_TXT
-Item=Q21_NEW_DEPTS_NO_OTHER_TXT
-Item=Q22_NEW_DEPTS_LIST
-Item=Q23_NEW_BUILDINGS
-Item=Q23_NEW_BUILDINGS_YES_OTHER_TXT
-Item=Q23_NEW_BUILDINGS_NO_OTHER_TXT
-Item=Q24_NEW_BUILDINGS_PURPOSE
-Item=Q25_NEW_ROOMS
-Item=Q25_NEW_ROOMS_YES_OTHER_TXT
-Item=Q25_NEW_ROOMS_NO_OTHER_TXT
-Item=Q26_NEW_ROOMS_PURPOSE
-Item=Q27_INC_EQUIPMENT
-Item=Q27_INC_EQUIPMENT_YES_OTHER_TXT
-Item=Q27_INC_EQUIPMENT_NO_OTHER_TXT
-Item=Q28_INC_EQUIPMENT_LIST
-Item=Q29_INC_SUPPLIES
-Item=Q29_INC_SUPPLIES_YES_OTHER_TXT
-Item=Q29_INC_SUPPLIES_NO_OTHER_TXT
-Item=Q30_INC_SUPPLIES_LIST
-Item=Q31_EMR_USE
-Item=Q31_EMR_USE_YES_OTHER_TXT
-Item=Q31_EMR_USE_NO_OTHER_TXT
-Item=Q32_DATA_SUBMIT
-Item=Q33_DATA_FREQ
-Item=Q33_OTHER_TXT
-Item=Q34_DATA_REPORTS_USED
-Item=Q34_DATA_REPORTS_USED_OTHER_TXT
-Item=Q35_STAFFING_CHANGED
-Item=Q36_STAFFING_UHC
-Item=Q36_STAFFING_UHC_YES_OTHER_TXT
-Item=Q36_STAFFING_UHC_NO_OTHER_TXT
-Item=Q37_REFERRAL_CHANGED
-Item=Q38_REFERRAL_UHC
-Item=Q38_REFERRAL_UHC_YES_OTHER_TXT
-Item=Q38_REFERRAL_UHC_NO_OTHER_TXT
-Item=Q39_MOU_MOA
-Item=Q39_MOU_MOA_YES_OTHER_TXT
-Item=Q39_MOU_MOA_NO_OTHER_TXT
-Item=Q40_NBB
-Item=Q40_NBB_YES_OTHER_TXT
-Item=Q40_NBB_NO_OTHER_TXT
-Item=Q41_ZBB
-Item=Q41_ZBB_YES_OTHER_TXT
-Item=Q41_ZBB_NO_OTHER_TXT
-Item=Q42_NO_COPAY
-Item=Q42_NO_COPAY_YES_OTHER_TXT
-Item=Q42_NO_COPAY_NO_OTHER_TXT
-Item=Q43_WARD_ALLOC
-Item=Q43_WARD_ALLOC_YES_OTHER_TXT
-Item=Q43_WARD_ALLOC_NO_OTHER_TXT
-Item=Q44_CPG
-Item=Q44_CPG_YES_OTHER_TXT
-Item=Q44_CPG_NO_OTHER_TXT
-Item=Q45_DOH_LIC_STD
-Item=Q45_DOH_LIC_STD_YES_OTHER_TXT
-Item=Q45_DOH_LIC_STD_NO_OTHER_TXT
-Item=Q46_PHIC_ACCRED
-Item=Q46_PHIC_ACCRED_YES_OTHER_TXT
-Item=Q46_PHIC_ACCRED_NO_OTHER_TXT
-Item=Q47_SVC_DELIVERY_PROT
-Item=Q47_SVC_DELIVERY_PROT_YES_OTHER_TXT
-Item=Q47_SVC_DELIVERY_PROT_NO_OTHER_TXT
-Item=Q48_PCQM
-Item=Q48_PCQM_YES_OTHER_TXT
-Item=Q48_PCQM_NO_OTHER_TXT
-Item=Q49_QUALITY_CHALL
-Item=Q49_QUALITY_CHALL_OTHER_TXT
-Item=Q50_ACCESS_CHALL
-Item=Q50_ACCESS_CHALL_OTHER_TXT
+Item=Q10_1_UHC_ATTRIB
+Item=Q10_1_UHC_ATTRIB_OTHER_TXT
+Item=Q11_PCB_LICENSING
+Item=Q11_1_UHC_ATTRIB
+Item=Q11_1_UHC_ATTRIB_OTHER_TXT
+Item=Q12_PUBLIC_HEALTH_UNIT
+Item=Q12_1_UHC_ATTRIB
+Item=Q12_1_UHC_ATTRIB_OTHER_TXT
+Item=Q12_2_PHU_ROLE
+Item=Q12_2_PHU_ROLE_OTHER_TXT
+Item=Q13_HEALTH_PROMO_UNIT
+Item=Q13_1_UHC_ATTRIB
+Item=Q13_1_UHC_ATTRIB_OTHER_TXT
+Item=Q13_2_HPU_ROLE
+Item=Q13_2_HPU_ROLE_OTHER_TXT
+Item=Q14_NEW_ROLES
+Item=Q14_1_UHC_ATTRIB
+Item=Q14_1_UHC_ATTRIB_OTHER_TXT
+Item=Q14_2_NEW_ROLES_LIST
+Item=Q15_NEW_DEPTS
+Item=Q15_1_UHC_ATTRIB
+Item=Q15_1_UHC_ATTRIB_OTHER_TXT
+Item=Q15_2_NEW_DEPTS_LIST
+Item=Q16_NEW_BUILDINGS
+Item=Q16_1_UHC_ATTRIB
+Item=Q16_1_UHC_ATTRIB_OTHER_TXT
+Item=Q16_2_NEW_BUILDINGS_PURPOSE
+Item=Q17_NEW_ROOMS
+Item=Q17_1_UHC_ATTRIB
+Item=Q17_1_UHC_ATTRIB_OTHER_TXT
+Item=Q17_2_NEW_ROOMS_PURPOSE
+Item=Q18_INC_EQUIPMENT
+Item=Q18_1_UHC_ATTRIB
+Item=Q18_1_UHC_ATTRIB_OTHER_TXT
+Item=Q18_2_INC_EQUIPMENT_LIST
+Item=Q19_INC_SUPPLIES
+Item=Q19_1_UHC_ATTRIB
+Item=Q19_1_UHC_ATTRIB_OTHER_TXT
+Item=Q19_2_INC_SUPPLIES_LIST
+Item=Q20_EMR_USE
+Item=Q20_1_UHC_ATTRIB
+Item=Q20_1_UHC_ATTRIB_OTHER_TXT
+Item=Q21_DATA_SUBMIT
+Item=Q21_OTHER_TXT
+Item=Q22_DATA_FREQ
+Item=Q22_OTHER_TXT
+Item=Q23_DATA_REPORTS_USED
+Item=Q23_DATA_REPORTS_USED_OTHER_TXT
+Item=Q24_STAFFING_CHANGED
+Item=Q24_1_UHC_ATTRIB
+Item=Q24_1_UHC_ATTRIB_OTHER_TXT
+Item=Q25_REFERRAL_CHANGED
+Item=Q25_1_UHC_ATTRIB
+Item=Q25_1_UHC_ATTRIB_OTHER_TXT
+Item=Q26_MOU_MOA
+Item=Q26_1_UHC_ATTRIB
+Item=Q26_1_UHC_ATTRIB_OTHER_TXT
+Item=Q27_NBB
+Item=Q27_1_UHC_ATTRIB
+Item=Q27_1_UHC_ATTRIB_OTHER_TXT
+Item=Q28_ZBB
+Item=Q28_1_UHC_ATTRIB
+Item=Q28_1_UHC_ATTRIB_OTHER_TXT
+Item=Q29_NO_COPAY
+Item=Q29_1_UHC_ATTRIB
+Item=Q29_1_UHC_ATTRIB_OTHER_TXT
+Item=Q30_WARD_ALLOC
+Item=Q30_1_UHC_ATTRIB
+Item=Q30_1_UHC_ATTRIB_OTHER_TXT
+Item=Q31_CPG
+Item=Q31_1_UHC_ATTRIB
+Item=Q31_1_UHC_ATTRIB_OTHER_TXT
+Item=Q32_DOH_LIC_STD
+Item=Q32_1_UHC_ATTRIB
+Item=Q32_1_UHC_ATTRIB_OTHER_TXT
+Item=Q33_PHIC_ACCRED
+Item=Q33_1_UHC_ATTRIB
+Item=Q33_1_UHC_ATTRIB_OTHER_TXT
+Item=Q34_SVC_DELIVERY_PROT
+Item=Q34_1_UHC_ATTRIB
+Item=Q34_1_UHC_ATTRIB_OTHER_TXT
+Item=Q35_PCQM
+Item=Q35_1_UHC_ATTRIB
+Item=Q35_1_UHC_ATTRIB_OTHER_TXT
+Item=Q35_2_PCQM_MEASURES
+Item=Q35_2_PCQM_MEASURES_OTHER_TXT
+Item=Q36_QUALITY_CHALL
+Item=Q36_QUALITY_CHALL_OTHER_TXT
+Item=Q37_ACCESS_CHALL
+Item=Q37_ACCESS_CHALL_OTHER_TXT
   
 [EndForm]
-[Form]
-Name=FORM005
-Label=D. YAKAP / Konsulta Package
-Level=1
-Size=2438,5970
   
-Item=Q51_YK_ACCRED
-Item=Q52_YK_SINCE_MONTH
-Item=Q52_YK_SINCE_YEAR
-Item=Q53_YK_PACKAGE
-Item=Q53_YK_PACKAGE_OTHER_TXT
-Item=Q54_YK_REG_INDIV
-Item=Q55_YK_REG_FAM
-Item=Q56_YK_REG_BOTH
-Item=Q57_CAPITATION_AMT
-Item=Q58_PERF_INDICATORS
-Item=Q58_PERF_INDICATORS_OTHER_TXT
-Item=Q59_KNOW_PAY_FREQ
-Item=Q60_PAY_FREQ
-Item=Q61_TRANCHE_DELAY
-Item=Q61_DELAY_REASON
-Item=Q62_TRANCHE_INTERVAL
-Item=Q63_ACCRED_WAIT
-Item=Q64_APPLY_REASON
-Item=Q64_APPLY_REASON_OTHER_TXT
-Item=Q65_ACCRED_DIFFICULT
-Item=Q66_WHY_DIFF_PREVENTIVE
-Item=Q66_WHY_DIFF_PREVENTIVE_OTHER_TXT
-Item=Q67_WHY_DIFF_LAB
-Item=Q67_WHY_DIFF_LAB_OTHER_TXT
-Item=Q68_WHY_DIFF_MEDS
-Item=Q68_WHY_DIFF_MEDS_OTHER_TXT
-Item=Q69_WHY_DIFF_INFRA
-Item=Q69_WHY_DIFF_INFRA_OTHER_TXT
-Item=Q70_WHY_DIFF_EQUIPMENT
-Item=Q70_WHY_DIFF_EQUIPMENT_OTHER_TXT
-Item=Q71_WHY_DIFF_HR
-Item=Q71_WHY_DIFF_HR_OTHER_TXT
-Item=Q72_WHY_DIFF_HIS
-Item=Q72_WHY_DIFF_HIS_OTHER_TXT
-Item=Q73_WHY_DIFF_DOCS
-Item=Q73_WHY_DIFF_DOCS_OTHER_TXT
-Item=Q74_WHY_DIFF_DOH_LIC
-Item=Q74_WHY_DIFF_DOH_LIC_OTHER_TXT
-Item=Q75_ENROLL_RESPONSIBILITY
-Item=Q75_ENROLL_RESPONSIBILITY_OTHER_TXT
-Item=Q76_ENROLL_INITIATIVES
-Item=Q76_ENROLL_INITIATIVES_OTHER_TXT
-Item=Q77_ENROLL_CHALL
-Item=Q78_ENROLL_CHALL_LIST
-Item=Q78_ENROLL_CHALL_LIST_OTHER_TXT
-Item=Q79_NOT_ACCRED_REASON
-Item=Q79_NOT_ACCRED_REASON_OTHER_TXT
-Item=Q80_INTEND_ACCRED
-Item=Q81_KNOW_HOW_START
-Item=Q82_DECIDED_NOT_REASON
-Item=Q83_TRIED_FAILED_REASON
-Item=Q84_PROCESS_CHALL
-Item=Q85_CATCHMENT_AREA
-Item=Q86_ELIGIBLE_PATIENTS
-Item=Q87_REGISTERED_PATIENTS
-Item=Q88_IS_1700_ENOUGH
-Item=Q89_COSTING_DONE
-Item=Q90_COSTING_VIABLE
-Item=Q91_MIN_CAP_VALUE_ACC
-Item=Q92_MIN_CAP_VALUE_NONACC
-Item=Q93_CHARGE_ADDL_CAP
-Item=Q94_CHARGE_ADDL_CAP_REASONS
-Item=Q94_CHARGE_ADDL_CAP_REASONS_OTHER_TXT
-Item=Q95_RECEIVED_PAYMENTS
-Item=Q96_NOT_RECEIVED_REASONS
-Item=Q96_NOT_RECEIVED_REASONS_OTHER_TXT
-Item=Q97_PAYMENT_CHALL
-Item=Q98_PAYMENT_CHALL_LIST
-Item=Q98_PAYMENT_CHALL_LIST_OTHER_TXT
-Item=Q99_EXPAND_NEXT
-Item=Q99_EXPAND_NEXT_OTHER_TXT
-Item=Q100_ADDL_FEATURES
-  
-[EndForm]
 [Form]
 Name=FORM006
-Label=E. Awareness on Expanded Health Programs (BUCAS and GAMOT)
+Label=D. YAKAP/Konsulta Package
 Level=1
-Size=2500,1230
+Size=806,2287
   
-Item=Q101_HEARD_BUCAS
-Item=Q102_HAS_BUCAS
-Item=Q103_NO_BUCAS_REASON
-Item=Q103_OTHER_TXT
-Item=Q104_BUCAS_SERVICES
-Item=Q104_BUCAS_SERVICES_OTHER_TXT
-Item=Q105_BUCAS_FACTORS
-Item=Q105_BUCAS_FACTORS_OTHER_TXT
-Item=Q106_BUCAS_RESOURCES_NEEDED
-Item=Q107_BUCAS_DECONGEST
-Item=Q108_HEARD_GAMOT
-Item=Q109_GAMOT_ACCRED
-Item=Q110_NO_GAMOT_REASON
-Item=Q110_OTHER_TXT
-Item=Q111_GAMOT_FACTORS
-Item=Q111_GAMOT_FACTORS_OTHER_TXT
-Item=Q112_STOCKOUT
-Item=Q113_STOCKOUT_MEDS
-Item=Q114_STOCKOUT_DURATION
-Item=Q115_STOCKOUT_AVG
-Item=Q116_ADDR_STOCKOUT
-Item=Q117_ADDR_STOCKOUT_HOW
-Item=Q117_ADDR_STOCKOUT_HOW_OTHER_TXT
+Item=Q38_YK_ACCRED
+Item=Q39_YK_SINCE_MONTH
+Item=Q39_YK_SINCE_YEAR
+Item=Q40_YK_PACKAGE
+Item=Q40_YK_PACKAGE_OTHER_TXT
+Item=Q41_YK_REG_INDIV
+Item=Q42_YK_REG_FAM
+Item=Q43_YK_REG_BOTH
+Item=Q44_CAPITATION_AMT
+Item=Q45_PERF_INDICATORS
+Item=Q45_PERF_INDICATORS_OTHER_TXT
+Item=Q46_KNOW_PAY_FREQ
+Item=Q47_PAY_FREQ
+Item=Q48_TRANCHE_DELAY
+Item=Q48_1_DELAY_REASON
+Item=Q49_TRANCHE_INTERVAL_NUM
+Item=Q49_TRANCHE_INTERVAL
+Item=Q50_ACCRED_WAIT_NUM
+Item=Q50_ACCRED_WAIT
+Item=Q51_APPLY_REASON
+Item=Q51_APPLY_REASON_OTHER_TXT
+Item=Q52_ACCRED_DIFFICULT
+Item=Q53_WHY_DIFF_PREVENTIVE
+Item=Q53_WHY_DIFF_PREVENTIVE_OTHER_TXT
+Item=Q54_WHY_DIFF_LAB
+Item=Q54_WHY_DIFF_LAB_OTHER_TXT
+Item=Q55_WHY_DIFF_MEDS
+Item=Q55_WHY_DIFF_MEDS_OTHER_TXT
+Item=Q56_WHY_DIFF_INFRA
+Item=Q56_WHY_DIFF_INFRA_OTHER_TXT
+Item=Q57_WHY_DIFF_EQUIPMENT
+Item=Q57_WHY_DIFF_EQUIPMENT_OTHER_TXT
+Item=Q58_WHY_DIFF_HR
+Item=Q58_WHY_DIFF_HR_OTHER_TXT
+Item=Q59_WHY_DIFF_HIS
+Item=Q59_WHY_DIFF_HIS_OTHER_TXT
+Item=Q60_WHY_DIFF_DOCS
+Item=Q60_WHY_DIFF_DOCS_OTHER_TXT
+Item=Q61_WHY_DIFF_DOH_LIC
+Item=Q61_WHY_DIFF_DOH_LIC_OTHER_TXT
+Item=Q62_ENROLL_RESPONSIBILITY
+Item=Q62_ENROLL_RESPONSIBILITY_OTHER_TXT
+Item=Q63_ENROLL_INITIATIVES
+Item=Q63_ENROLL_INITIATIVES_OTHER_TXT
+Item=Q64_ENROLL_CHALL
+Item=Q65_ENROLL_CHALL_LIST
+Item=Q65_ENROLL_CHALL_LIST_OTHER_TXT
+Item=Q66_NOT_ACCRED_REASON
+Item=Q66_NOT_ACCRED_REASON_OTHER_TXT
+Item=Q67_INTEND_ACCRED
+Item=Q68_KNOW_HOW_START
+Item=Q69_DECIDED_NOT_REASON
+Item=Q70_TRIED_FAILED_REASON
+Item=Q71_PROCESS_CHALL
+Item=Q72_CATCHMENT_AREA
+Item=Q73_ELIGIBLE_PATIENTS
+Item=Q74_REGISTERED_PATIENTS
+Item=Q75_IS_1700_ENOUGH
+Item=Q76_COSTING_DONE
+Item=Q77_COSTING_VIABLE
+Item=Q78_MIN_CAP_VALUE_ACC
+Item=Q79_MIN_CAP_VALUE_NONACC
+Item=Q80_CHARGE_ADDL_CAP
+Item=Q81_CHARGE_ADDL_CAP_REASONS
+Item=Q81_CHARGE_ADDL_CAP_REASONS_OTHER_TXT
+Item=Q82_RECEIVED_PAYMENTS
+Item=Q83_NOT_RECEIVED_REASONS
+Item=Q83_NOT_RECEIVED_REASONS_OTHER_TXT
+Item=Q84_PAYMENT_CHALL
+Item=Q85_PAYMENT_CHALL_LIST
+Item=Q85_PAYMENT_CHALL_LIST_OTHER_TXT
+Item=Q86_EXPAND_NEXT
+Item=Q86_EXPAND_NEXT_OTHER_TXT
+Item=Q87_ADDL_FEATURES
   
 [EndForm]
+  
 [Form]
 Name=FORM007
-Label=F. DOH Licensing: Status and Barriers
+Label=E. Awareness on Expanded Health Programs (BUCAS and GAMOT)
 Level=1
-Size=2086,4440
+Size=806,757
   
-Item=Q118_DOH_LICENSED
-Item=Q119_LIC_RECEIVED_WHEN
-Item=Q120_LIC_DAYS
-Item=Q121_DOH_LIC_DIFFICULT
-Item=Q122_WHY_DIFF_PT_RIGHTS
-Item=Q122_WHY_DIFF_PT_RIGHTS_OTHER_TXT
-Item=Q123_WHY_DIFF_PT_CARE
-Item=Q123_WHY_DIFF_PT_CARE_OTHER_TXT
-Item=Q124_WHY_DIFF_LEADERSHIP
-Item=Q124_WHY_DIFF_LEADERSHIP_OTHER_TXT
-Item=Q125_WHY_DIFF_HRM
-Item=Q125_WHY_DIFF_HRM_OTHER_TXT
-Item=Q126_WHY_DIFF_INFO_MGMT
-Item=Q126_WHY_DIFF_INFO_MGMT_OTHER_TXT
-Item=Q127_WHY_DIFF_SAFE
-Item=Q127_WHY_DIFF_SAFE_OTHER_TXT
-Item=Q128_WHY_DIFF_PERF
-Item=Q128_WHY_DIFF_PERF_OTHER_TXT
-Item=Q129_WHY_DIFF_PHYS_PLANT
-Item=Q129_WHY_DIFF_PHYS_PLANT_OTHER_TXT
-Item=Q130_WHY_DIFF_PRICE_INFO
-Item=Q130_WHY_DIFF_PRICE_INFO_OTHER_TXT
-Item=Q131_WHY_DIFF_EQUIPMENT
-Item=Q131_WHY_DIFF_EQUIPMENT_OTHER_TXT
-Item=Q132_WHY_DIFF_NAT_LAWS
-Item=Q132_WHY_DIFF_NAT_LAWS_OTHER_TXT
-Item=Q133_WHY_DIFF_EMERG_CART
-Item=Q133_WHY_DIFF_EMERG_CART_OTHER_TXT
-Item=Q134_WHY_DIFF_ADDONS
-Item=Q134_WHY_DIFF_ADDONS_OTHER_TXT
+Item=Q88_HEARD_BUCAS
+Item=Q89_HAS_BUCAS
+Item=Q90_NO_BUCAS_REASON
+Item=Q90_OTHER_TXT
+Item=Q91_BUCAS_SERVICES
+Item=Q91_BUCAS_SERVICES_OTHER_TXT
+Item=Q92_BUCAS_FACTORS
+Item=Q92_BUCAS_FACTORS_OTHER_TXT
+Item=Q93_BUCAS_RESOURCES_NEEDED
+Item=Q94_BUCAS_DECONGEST
+Item=Q95_HEARD_GAMOT
+Item=Q96_GAMOT_ACCRED
+Item=Q97_NO_GAMOT_REASON
+Item=Q97_OTHER_TXT
+Item=Q98_GAMOT_FACTORS
+Item=Q98_GAMOT_FACTORS_OTHER_TXT
+Item=Q99_STOCKOUT
+Item=Q100_STOCKOUT_MEDS
+Item=Q101_STOCKOUT_DURATION
+Item=Q102_STOCKOUT_AVG
+Item=Q103_ADDR_STOCKOUT
+Item=Q104_ADDR_STOCKOUT_HOW
+Item=Q104_ADDR_STOCKOUT_HOW_OTHER_TXT
   
 [EndForm]
+  
 [Form]
 Name=FORM008
-Label=G. Service Delivery Process
+Label=F. DOH Licensing: Status and Barriers to Licensing
 Level=1
-Size=2625,2790
+Size=806,997
   
-Item=Q135_NBB_CURR
-Item=Q136_NBB_ALL_PATIENTS
-Item=Q137_NBB_BARRIERS
-Item=Q137_NBB_BARRIERS_OTHER_TXT
-Item=Q138_ZBB_CURR
-Item=Q139_ZBB_ALL_PATIENTS
-Item=Q140_ZBB_BARRIERS
-Item=Q140_ZBB_BARRIERS_OTHER_TXT
-Item=Q141_ALLOW_OOP_BASIC
-Item=Q142_OOP_REASON
-Item=Q143_DIFFICULT_BENEFIT
-Item=Q143_OTHER_TXT
-Item=Q144_DIFFICULT_REASON
-Item=Q144_DIFFICULT_REASON_OTHER_TXT
-Item=Q145_MALASAKIT_PROVIDED
-Item=Q146_MALASAKIT_WHY
-Item=Q146_MALASAKIT_WHY_OTHER_TXT
-Item=Q147_NO_MALASAKIT_WHY
-Item=Q147_NO_MALASAKIT_WHY_OTHER_TXT
-Item=Q148_LGU_SUPPORT
-Item=Q149_LGU_SUPPORT_FORMS
-Item=Q149_LGU_SUPPORT_FORMS_OTHER_TXT
-Item=Q150_LGU_SATISFIED
-Item=Q151_LGU_NOT_SAT_WHY
-Item=Q151_LGU_NOT_SAT_WHY_OTHER_TXT
-Item=Q152_PHO_PROTOCOL_CLARITY
-Item=Q153_UNCLEAR_PROTOCOL
-Item=Q154_NUM_REFERRED_OUT
-Item=Q155_SEND_REFERRAL_HOW
-Item=Q155_SEND_REFERRAL_HOW_OTHER_TXT
-Item=Q156_REFERRAL_FORM_TYPE
-Item=Q156_REFERRAL_FORM_TYPE_OTHER_TXT
-Item=Q157_SPECIALIST_NETWORK
-Item=Q158_REF_PROPORTION
-Item=Q159_RECEIVE_REFERRAL_HOW
-Item=Q159_RECEIVE_REFERRAL_HOW_OTHER_TXT
-Item=Q160_EXTERNAL_SERVICES_GO
-Item=Q161_REF_SATISFACTION
-Item=Q162_NOT_SATISFIED_WHY
-Item=Q162_NOT_SATISFIED_WHY_OTHER_TXT
+Item=Q105_DOH_LICENSED
+Item=Q106_LIC_RECEIVED_WHEN
+Item=Q107_LIC_DAYS_NUM
+Item=Q107_LIC_DAYS
+Item=Q108_DOH_LIC_DIFFICULT
+Item=Q109_WHY_DIFF_PT_RIGHTS
+Item=Q109_WHY_DIFF_PT_RIGHTS_OTHER_TXT
+Item=Q110_WHY_DIFF_PT_CARE
+Item=Q110_WHY_DIFF_PT_CARE_OTHER_TXT
+Item=Q111_WHY_DIFF_LEADERSHIP
+Item=Q111_WHY_DIFF_LEADERSHIP_OTHER_TXT
+Item=Q112_WHY_DIFF_HRM
+Item=Q112_WHY_DIFF_HRM_OTHER_TXT
+Item=Q113_WHY_DIFF_INFO_MGMT
+Item=Q113_WHY_DIFF_INFO_MGMT_OTHER_TXT
+Item=Q114_WHY_DIFF_SAFE
+Item=Q114_WHY_DIFF_SAFE_OTHER_TXT
+Item=Q115_WHY_DIFF_PERF
+Item=Q115_WHY_DIFF_PERF_OTHER_TXT
+Item=Q116_WHY_DIFF_PHYS_PLANT
+Item=Q116_WHY_DIFF_PHYS_PLANT_OTHER_TXT
+Item=Q117_WHY_DIFF_PRICE_INFO
+Item=Q117_WHY_DIFF_PRICE_INFO_OTHER_TXT
+Item=Q118_WHY_DIFF_EQUIPMENT
+Item=Q118_WHY_DIFF_EQUIPMENT_OTHER_TXT
+Item=Q119_WHY_DIFF_NAT_LAWS
+Item=Q119_WHY_DIFF_NAT_LAWS_OTHER_TXT
+Item=Q120_WHY_DIFF_EMERG_CART
+Item=Q120_WHY_DIFF_EMERG_CART_OTHER_TXT
+Item=Q121_WHY_DIFF_ADDONS
+Item=Q121_WHY_DIFF_ADDONS_OTHER_TXT
   
 [EndForm]
+  
 [Form]
 Name=FORM009
-Label=H. Human Resources for Health
+Label=G. Service Delivery Process
 Level=1
-Size=2476,780
+Size=806,1267
   
-Item=Q163_HR_CHALL
-Item=Q163_HR_CHALL_OTHER_TXT
-Item=Q164_IMPROVEMENT_AREA
-Item=Q165_PD_DOCTORS
-Item=Q165_PD_DOCTORS_OTHER_TXT
-Item=Q166_PD_NURSES
-Item=Q166_PD_NURSES_OTHER_TXT
+Item=Q122_NBB_CURR
+Item=Q123_NBB_ALL_PATIENTS
+Item=Q124_NBB_BARRIERS
+Item=Q124_NBB_BARRIERS_OTHER_TXT
+Item=Q125_ZBB_CURR
+Item=Q126_ZBB_ALL_PATIENTS
+Item=Q127_ZBB_BARRIERS
+Item=Q127_ZBB_BARRIERS_OTHER_TXT
+Item=Q128_ALLOW_OOP_BASIC
+Item=Q129_OOP_REASON
+Item=Q130_DIFFICULT_BENEFIT
+Item=Q130_OTHER_TXT
+Item=Q131_DIFFICULT_REASON
+Item=Q131_DIFFICULT_REASON_OTHER_TXT
+Item=Q132_MALASAKIT_PROVIDED
+Item=Q133_MALASAKIT_WHY
+Item=Q133_MALASAKIT_WHY_OTHER_TXT
+Item=Q134_NO_MALASAKIT_WHY
+Item=Q134_NO_MALASAKIT_WHY_OTHER_TXT
+Item=Q135_LGU_SUPPORT
+Item=Q136_LGU_SUPPORT_FORMS
+Item=Q136_LGU_SUPPORT_FORMS_OTHER_TXT
+Item=Q137_LGU_SATISFIED
+Item=Q138_LGU_NOT_SAT_WHY
+Item=Q138_LGU_NOT_SAT_WHY_OTHER_TXT
+Item=Q139_PHO_PROTOCOL_CLARITY
+Item=Q140_UNCLEAR_PROTOCOL
+Item=Q141_NUM_REFERRED_OUT
+Item=Q142_SEND_REFERRAL_HOW
+Item=Q142_SEND_REFERRAL_HOW_OTHER_TXT
+Item=Q143_REFERRAL_FORM_TYPE
+Item=Q143_REFERRAL_FORM_TYPE_OTHER_TXT
+Item=Q144_SPECIALIST_NETWORK
+Item=Q145_REF_PROPORTION
+Item=Q146_RECEIVE_REFERRAL_HOW
+Item=Q146_RECEIVE_REFERRAL_HOW_OTHER_TXT
+Item=Q147_EXTERNAL_SERVICES_GO
+Item=Q148_REF_SATISFACTION
+Item=Q149_NOT_SATISFIED_WHY
+Item=Q149_NOT_SATISFIED_WHY_OTHER_TXT
   
 [EndForm]
+  
 [Form]
 Name=FORM010
+Label=H. Human Resources for Health
+Level=1
+Size=806,300
+  
+Item=Q150_HR_CHALL
+Item=Q150_HR_CHALL_OTHER_TXT
+Item=Q151_IMPROVEMENT_AREA
+Item=Q152_PD_DOCTORS
+Item=Q152_PD_DOCTORS_OTHER_TXT
+Item=Q153_PD_NURSES
+Item=Q153_PD_NURSES_OTHER_TXT
+  
+[EndForm]
+  
+[Form]
+Name=FORM011
 Label=Field Control
 Level=1
-Size=806,330
+Size=806,337
   
 Item=SURVEY_TEAM_LEADER_S_NAME
 Item=ENUMERATOR_S_NAME
@@ -404,21 +416,23 @@ Item=ENUM_RESULT_FIRST_VISIT
 Item=ENUM_RESULT_FINAL_VISIT
   
 [EndForm]
+  
 [Form]
-Name=FORM011
+Name=FORM012
 Label=Case Verification Photo
 Level=1
-Size=1454,180
+Size=806,300
   
 Item=VERIFICATION_PHOTO_FILENAME
 Item=CAPTURE_VERIFICATION_PHOTO
   
 [EndForm]
+  
 [Form]
-Name=FORM012
+Name=FORM013
 Label=Facility GPS
 Level=1
-Size=1222,300
+Size=806,300
   
 Item=FACILITY_GPS_LATITUDE
 Item=FACILITY_GPS_LONGITUDE
@@ -442,128 +456,47 @@ Max=1
   
 [Field]
 Name=QUESTIONNAIRE_NUMBER
-Position=413,29,582,49
+Position=350,27,760,47
 Item=QUESTIONNAIRE_NUMBER,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=1
   
 [Text]
-Position=50,30,387,46
+Position=50,30,330,46
 Text=Questionnaire Number (12-digit: RR-PP-MMM-FF-CCC)
  
+  
 [EndGroup]
-[Group]
-Required=Yes
-Name=HEALTH_FACILITY_AND_GEOGRAPHIC_IDENTIFICATION_FORM
-Label=Health Facility and Geographic Identification
-Form=2
-Max=1
   
-[Field]
-Name=CLASSIFICATION
-Position=177,27,192,47
-Item=CLASSIFICATION,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=2
-  
-[Text]
-Position=50,30,134,46
-Text=Classification
- 
-  
-[Field]
-Name=REGION_NAME
-Position=177,57,700,77
-Item=REGION_NAME,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=2
-  
-[Text]
-Position=50,60,95,76
-Text=Region
- 
-  
-[Field]
-Name=PROVINCE_NAME
-Position=177,87,700,107
-Item=PROVINCE_NAME,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=2
-  
-[Text]
-Position=50,90,145,106
-Text=Province / HUC
- 
-  
-[Field]
-Name=CITY_NAME
-Position=177,117,700,137
-Item=CITY_NAME,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=2
-  
-[Text]
-Position=50,120,163,136
-Text=City / Municipality
- 
-  
-[Field]
-Name=BARANGAY
-Position=177,147,318,167
-Item=BARANGAY,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=2
-  
-[Text]
-Position=50,150,111,166
-Text=Barangay
- 
-  
-[Field]
-Name=BREAKOFF
-Position=177,177,192,197
-Item=BREAKOFF,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=2
-  
-[Text]
-Position=50,180,149,196
-Text=Interview status
- 
-[EndGroup]
 [Group]
 Required=Yes
 Name=A_INFORMED_CONSENT_FORM
 Label=Introduction and Informed Consent
-Form=3
+Form=2
 Max=1
-  
   
 [Field]
 Name=ICF_PART1
-Position=354,27,369,47
+Position=350,27,365,47
 Item=ICF_PART1,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=3
+Form=2
   
 [Text]
-Position=50,30,317,46
-Text=Informed Consent - read aloud (screen 1 of 2)
+Position=50,30,330,46
+Text=Informed Consent — read-aloud, screen 1 of 2 (study, coverage, the ask)
  
   
 [Field]
 Name=ICF_PART2
-Position=354,57,369,77
+Position=350,57,365,77
 Item=ICF_PART2,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=3
+Form=2
   
 [Text]
-Position=50,60,317,76
-Text=Informed Consent - read aloud (screen 2 of 2)
+Position=50,60,330,76
+Text=Informed Consent — read-aloud, screen 2 of 2 (privacy, risks, voluntariness)
  
   
 [Block]
@@ -584,211 +517,294 @@ Length=1
   
 [Group]
 Required=Yes
+Name=HEALTH_FACILITY_AND_GEOGRAPHIC_IDENTIFICATION_FORM
+Label=Health Facility and Geographic Identification
+Form=3
+Max=1
+  
+[Field]
+Name=CLASSIFICATION
+Position=350,27,365,47
+Item=CLASSIFICATION,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=3
+  
+[Text]
+Position=50,30,330,46
+Text=Classification
+ 
+  
+[Field]
+Name=REGION_NAME
+Position=350,57,760,77
+Item=REGION_NAME,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=3
+  
+[Text]
+Position=50,60,330,76
+Text=Region (from PSGC)
+ 
+  
+[Field]
+Name=PROVINCE_NAME
+Position=350,87,760,107
+Item=PROVINCE_NAME,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=3
+  
+[Text]
+Position=50,90,330,106
+Text=Province / HUC (from PSGC)
+ 
+  
+[Field]
+Name=CITY_NAME
+Position=350,117,760,137
+Item=CITY_NAME,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=3
+  
+[Text]
+Position=50,120,330,136
+Text=City / Municipality (from PSGC)
+ 
+  
+[Field]
+Name=BARANGAY
+Position=350,147,365,167
+Item=BARANGAY,FACILITYHEADSURVEY_DICT
+DataCaptureType=DropDown
+Form=3
+  
+[Text]
+Position=50,150,330,166
+Text=Barangay
+ 
+  
+[Field]
+Name=BREAKOFF
+Position=350,177,365,197
+Item=BREAKOFF,FACILITYHEADSURVEY_DICT
+DataCaptureType=DropDown
+Form=3
+  
+[Text]
+Position=50,180,330,196
+Text=Interview status (leave as Continue unless ending the interview early)
+ 
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
 Name=A_FACILITY_HEAD_PROFILE_FORM
 Label=A. Facility Head Profile
 Form=4
 Max=1
   
-  
 [Field]
 Name=RESP_NAME
-Position=760,27,1410,47
+Position=350,27,760,47
 Item=RESP_NAME,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=4
   
 [Text]
-Position=50,30,256,46
+Position=50,30,330,46
 Text=Respondent name and signature
  
   
 [Field]
 Name=RESP_POSITION
-Position=760,57,1410,77
+Position=350,57,760,77
 Item=RESP_POSITION,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=4
   
 [Text]
-Position=50,60,226,76
+Position=50,60,330,76
 Text=Respondent position / office
  
   
 [Field]
 Name=RESP_EMAIL
-Position=760,87,1250,107
+Position=350,87,760,107
 Item=RESP_EMAIL,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=4
   
 [Text]
-Position=50,90,218,106
+Position=50,90,330,106
 Text=Respondent email address
  
   
 [Field]
 Name=RESP_MOBILE
-Position=760,117,930,137
+Position=350,117,760,137
 Item=RESP_MOBILE,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=4
   
 [Text]
-Position=50,120,226,136
+Position=50,120,330,136
 Text=Respondent mobile number
  
   
 [Field]
 Name=Q1_NAME
-Position=760,147,1410,167
+Position=350,147,760,167
 Item=Q1_NAME,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=4
   
 [Text]
-Position=50,150,466,166
-Text=1. What is your name? (Last Name, First Name, Middle Initial, Ext)
+Position=50,150,330,166
+Text=1.
  
-  
   
 [Field]
 Name=Q2_FACILITY_ROLE
-Position=760,177,789,197
+Position=350,177,365,197
 Item=Q2_FACILITY_ROLE,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
 Form=4
   
 [Text]
-Position=50,180,409,196
-Text=2. What is your official designation at this health facility?
+Position=50,180,330,196
+Text=2.
  
   
 [Field]
 Name=Q2_OTHER_TXT
-Position=760,207,1410,227
+Position=350,207,760,227
 Item=Q2_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=4
   
 [Text]
-Position=50,210,549,226
-Text=2. What is your official designation at this health facility? — Other (specify) text
+Position=50,210,330,226
+Text=2. (specify)
  
   
 [Field]
 Name=Q3_AGE
-Position=760,237,789,257
+Position=350,237,760,257
 Item=Q3_AGE,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=4
   
 [Text]
-Position=50,240,391,256
-Text=3. How old are you (in years), as of your last birthday?
+Position=50,240,330,256
+Text=3.
  
   
 [Field]
 Name=Q4_SEX
-Position=760,267,775,287
+Position=350,267,365,287
 Item=Q4_SEX,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=4
   
 [Text]
-Position=50,270,287,286
-Text=4. What is your sex assigned at birth?
+Position=50,270,330,286
+Text=4.
  
   
 [Field]
 Name=Q5_YEARS_AT_FACILITY
-Position=760,297,789,317
+Position=350,297,760,317
 Item=Q5_YEARS_AT_FACILITY,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=4
   
 [Text]
-Position=50,300,155,316
-Text=Number of Years
+Position=50,300,330,316
+Text=5. Number of Years
  
-  
   
 [Field]
 Name=Q5_MONTHS_AT_FACILITY
-Position=760,327,789,347
+Position=350,327,760,347
 Item=Q5_MONTHS_AT_FACILITY,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=4
   
 [Text]
-Position=50,330,165,346
-Text=Number of Months
+Position=50,330,330,346
+Text=5. Number of Months
  
   
 [Field]
 Name=Q6_YEARS_HEALTH
-Position=760,357,789,377
+Position=350,357,760,377
 Item=Q6_YEARS_HEALTH,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=4
   
 [Text]
-Position=50,360,155,376
-Text=Number of Years
+Position=50,360,330,376
+Text=6. Number of Years
  
   
 [Field]
 Name=Q6_MONTHS_HEALTH
-Position=760,387,789,407
+Position=350,387,760,407
 Item=Q6_MONTHS_HEALTH,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=4
   
 [Text]
-Position=50,390,165,406
-Text=Number of Months
+Position=50,390,330,406
+Text=6. Number of Months
  
+  
 [Block]
-Name=DG_A_FACILITY_HEAD_PROFILE_FORM_0
+Name=DG_BLK_0
 Label=Q1
 DisplayTogether=Yes
 Position=0
 Length=5
   
 [Block]
-Name=DG_A_FACILITY_HEAD_PROFILE_FORM_1
+Name=DG_BLK_1
 Label=Q2
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_A_FACILITY_HEAD_PROFILE_FORM_2
+Name=DG_BLK_2
 Label=Q2
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_A_FACILITY_HEAD_PROFILE_FORM_3
+Name=DG_BLK_3
 Label=Q3-Q6
 DisplayTogether=Yes
 Position=10
 Length=5
   
 [Block]
-Name=DG_A_FACILITY_HEAD_PROFILE_FORM_4
+Name=DG_BLK_4
 Label=Q6
 DisplayTogether=Yes
 Position=16
 Length=1
   
 [EndGroup]
+  
 [Group]
 Required=Yes
 Name=B_FACILITY_PROFILE_FORM
@@ -796,38 +812,39 @@ Label=B. Facility Profile
 Form=5
 Max=1
   
-  
 [Field]
 Name=Q7_OWNERSHIP
-Position=354,27,369,47
+Position=350,27,365,47
 Item=Q7_OWNERSHIP,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=5
   
 [Text]
-Position=50,30,317,46
-Text=7. What type of ownership is this hospital?
+Position=50,30,330,46
+Text=7.
  
   
 [Field]
 Name=Q8_SERVICE_LEVEL
-Position=354,57,369,77
+Position=350,57,365,77
 Item=Q8_SERVICE_LEVEL,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=5
   
 [Text]
-Position=50,60,340,76
-Text=8. What is the facility's service capacity level?
+Position=50,60,330,76
+Text=8.
  
+  
 [Block]
-Name=DG_B_FACILITY_PROFILE_FORM_5
+Name=DG_BLK_5
 Label=Q7-Q8
 DisplayTogether=Yes
 Position=0
 Length=2
   
 [EndGroup]
+  
 [Group]
 Required=Yes
 Name=C_UHC_IMPLEMENTATION_FORM
@@ -835,3324 +852,3157 @@ Label=C. Universal Health Care (UHC) Implementation
 Form=6
 Max=1
   
-  
 [Field]
 Name=Q9_UHC_HEARD
-Position=1695,27,1710,47
+Position=350,27,365,47
 Item=Q9_UHC_HEARD,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=6
   
 [Text]
-Position=50,30,515,46
-Text=9. Have you heard about Universal Health Care (UHC) prior to this survey?
+Position=50,30,330,46
+Text=9.
  
   
 [Field]
 Name=Q10_HAS_PRIMARY_PKG
-Position=1695,57,1710,77
+Position=350,57,365,77
 Item=Q10_HAS_PRIMARY_PKG,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=6
   
 [Text]
-Position=50,60,365,76
-Text=10. Does the facility have primary care packages?
+Position=50,60,330,76
+Text=10.
  
   
-  
 [Field]
-Name=Q11_PRIMARY_PKG_STATUS
-Position=1695,87,1724,107
-Item=Q11_PRIMARY_PKG_STATUS,FACILITYHEADSURVEY_DICT
+Name=Q10_1_UHC_ATTRIB
+Position=350,87,365,107
+Item=Q10_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
 Form=6
   
 [Text]
-Position=50,90,470,106
-Text=11. If yes, specify its implementation status relative to the UHC Act.
+Position=50,90,330,106
+Text=10.1.
  
   
-  
 [Field]
-Name=Q11_OTHER_TXT
-Position=1695,117,2665,137
-Item=Q11_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q10_1_UHC_ATTRIB_OTHER_TXT
+Position=350,117,760,137
+Item=Q10_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,120,610,136
-Text=11. If yes, specify its implementation status relative to the UHC Act. — Other (specify) text
+Position=50,120,330,136
+Text=10.1. (specify)
  
   
-  
 [Field]
-Name=Q12_PCB_LICENSING
-Position=1695,147,1710,167
-Item=Q12_PCB_LICENSING,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,150,880,166
-Text=12. Has the facility applied for DOH primary care licensing since the UHC Act was passed in 2019 and was it a result of the UHC Act?
- 
-  
-  
-[Field]
-Name=Q12_PCB_LICENSING_YES_OTHER_TXT
-Position=1695,177,2665,197
-Item=Q12_PCB_LICENSING_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,180,1048,196
-Text=12. Has the facility applied for DOH primary care licensing since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
- 
-  
-  
-[Field]
-Name=Q12_PCB_LICENSING_NO_OTHER_TXT
-Position=1695,207,2665,227
-Item=Q12_PCB_LICENSING_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,210,1043,226
-Text=12. Has the facility applied for DOH primary care licensing since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
- 
-  
-  
-[Field]
-Name=Q13_PUBLIC_HEALTH_UNIT
-Position=1695,237,1710,257
-Item=Q13_PUBLIC_HEALTH_UNIT,FACILITYHEADSURVEY_DICT
+Name=Q11_PCB_LICENSING
+Position=350,147,365,167
+Item=Q11_PCB_LICENSING,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=6
   
 [Text]
-Position=50,240,374,256
-Text=13. Do you have a public health unit at this facility?
+Position=50,150,330,166
+Text=11.
  
   
-  
 [Field]
-Name=Q14_PHU_CREATED
-Position=1695,267,1710,287
-Item=Q14_PHU_CREATED,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,270,1034,286
-Text=14. If yes, has the creation of a public health unit at this facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
- 
-  
-  
-[Field]
-Name=Q14_PHU_CREATED_YES_OTHER_TXT
-Position=1695,297,2665,317
-Item=Q14_PHU_CREATED_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,300,1202,316
-Text=14. If yes, has the creation of a public health unit at this facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
- 
-  
-  
-[Field]
-Name=Q14_PHU_CREATED_NO_OTHER_TXT
-Position=1695,327,2665,347
-Item=Q14_PHU_CREATED_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,330,1197,346
-Text=14. If yes, has the creation of a public health unit at this facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
- 
-  
-  
-[Field]
-Name=Q15_PHU_ROLE
-Position=1695,357,1724,377
-Item=Q15_PHU_ROLE,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,360,371,376
-Text=15. What is the main role of the public health unit?
- 
-  
-  
-[Field]
-Name=Q15_OTHER_TXT
-Position=1695,387,2665,407
-Item=Q15_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,390,511,406
-Text=15. What is the main role of the public health unit? — Other (specify) text
- 
-  
-  
-[Field]
-Name=Q16_HEALTH_PROMO_UNIT
-Position=1695,417,1710,437
-Item=Q16_HEALTH_PROMO_UNIT,FACILITYHEADSURVEY_DICT
+Name=Q11_1_UHC_ATTRIB
+Position=350,177,365,197
+Item=Q11_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=6
   
 [Text]
-Position=50,420,400,436
-Text=16. Do you have a health promotion unit at this facility?
+Position=50,180,330,196
+Text=11.1.
  
   
-  
 [Field]
-Name=Q17_HPU_CREATED
-Position=1695,447,1710,467
-Item=Q17_HPU_CREATED,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,450,1060,466
-Text=17. If yes, has the creation of a health promotion unit at this facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
- 
-  
-  
-[Field]
-Name=Q17_HPU_CREATED_YES_OTHER_TXT
-Position=1695,477,2665,497
-Item=Q17_HPU_CREATED_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q11_1_UHC_ATTRIB_OTHER_TXT
+Position=350,207,760,227
+Item=Q11_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,480,1228,496
-Text=17. If yes, has the creation of a health promotion unit at this facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
+Position=50,210,330,226
+Text=11.1. (specify)
  
   
-  
 [Field]
-Name=Q17_HPU_CREATED_NO_OTHER_TXT
-Position=1695,507,2665,527
-Item=Q17_HPU_CREATED_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,510,1223,526
-Text=17. If yes, has the creation of a health promotion unit at this facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
- 
-  
-  
-[Field]
-Name=Q18_HPU_ROLE
-Position=1695,537,1724,557
-Item=Q18_HPU_ROLE,FACILITYHEADSURVEY_DICT
+Name=Q12_PUBLIC_HEALTH_UNIT
+Position=350,237,365,257
+Item=Q12_PUBLIC_HEALTH_UNIT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=6
   
 [Text]
-Position=50,540,397,556
-Text=18. What is the main role of the health promotion unit?
+Position=50,240,330,256
+Text=12.
  
   
-  
 [Field]
-Name=Q18_OTHER_TXT
-Position=1695,567,2665,587
-Item=Q18_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,570,537,586
-Text=18. What is the main role of the health promotion unit? — Other (specify) text
- 
-  
-  
-[Field]
-Name=Q19_NEW_ROLES
-Position=1695,597,1710,617
-Item=Q19_NEW_ROLES,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,600,967,616
-Text=19. Has the establishment of new roles in the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
- 
-  
-  
-[Field]
-Name=Q19_NEW_ROLES_YES_OTHER_TXT
-Position=1695,627,2665,647
-Item=Q19_NEW_ROLES_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,630,1135,646
-Text=19. Has the establishment of new roles in the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
- 
-  
-  
-[Field]
-Name=Q19_NEW_ROLES_NO_OTHER_TXT
-Position=1695,657,2665,677
-Item=Q19_NEW_ROLES_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,660,1130,676
-Text=19. Has the establishment of new roles in the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
- 
-  
-  
-[Field]
-Name=Q20_NEW_ROLES_LIST
-Position=1695,687,3625,707
-Item=Q20_NEW_ROLES_LIST,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,690,410,706
-Text=20. What is/are the new role/s established in this facility?
- 
-  
-  
-[Field]
-Name=Q21_NEW_DEPTS
-Position=1695,717,1710,737
-Item=Q21_NEW_DEPTS,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,720,1015,736
-Text=21. Has the establishment of new departments in the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
- 
-  
-  
-[Field]
-Name=Q21_NEW_DEPTS_YES_OTHER_TXT
-Position=1695,747,2665,767
-Item=Q21_NEW_DEPTS_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,750,1183,766
-Text=21. Has the establishment of new departments in the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
- 
-  
-  
-[Field]
-Name=Q21_NEW_DEPTS_NO_OTHER_TXT
-Position=1695,777,2665,797
-Item=Q21_NEW_DEPTS_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,780,1178,796
-Text=21. Has the establishment of new departments in the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
- 
-  
-  
-[Field]
-Name=Q22_NEW_DEPTS_LIST
-Position=1695,807,3625,827
-Item=Q22_NEW_DEPTS_LIST,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,810,458,826
-Text=22. What is/are the new department/s established in this facility?
- 
-  
-  
-[Field]
-Name=Q23_NEW_BUILDINGS
-Position=1695,837,1710,857
-Item=Q23_NEW_BUILDINGS,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,840,1033,856
-Text=23. Has the construction of new building/s in this health facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
- 
-  
-  
-[Field]
-Name=Q23_NEW_BUILDINGS_YES_OTHER_TXT
-Position=1695,867,2665,887
-Item=Q23_NEW_BUILDINGS_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,870,1201,886
-Text=23. Has the construction of new building/s in this health facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
- 
-  
-  
-[Field]
-Name=Q23_NEW_BUILDINGS_NO_OTHER_TXT
-Position=1695,897,2665,917
-Item=Q23_NEW_BUILDINGS_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,900,1196,916
-Text=23. Has the construction of new building/s in this health facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
- 
-  
-  
-[Field]
-Name=Q24_NEW_BUILDINGS_PURPOSE
-Position=1695,927,3625,947
-Item=Q24_NEW_BUILDINGS_PURPOSE,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,930,337,946
-Text=24. What is/are the building/s being used for?
- 
-  
-  
-[Field]
-Name=Q25_NEW_ROOMS
-Position=1695,957,1710,977
-Item=Q25_NEW_ROOMS,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,960,1010,976
-Text=25. Has the construction of new rooms in this health facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
- 
-  
-  
-[Field]
-Name=Q25_NEW_ROOMS_YES_OTHER_TXT
-Position=1695,987,2665,1007
-Item=Q25_NEW_ROOMS_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,990,1178,1006
-Text=25. Has the construction of new rooms in this health facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
- 
-  
-  
-[Field]
-Name=Q25_NEW_ROOMS_NO_OTHER_TXT
-Position=1695,1017,2665,1037
-Item=Q25_NEW_ROOMS_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,1020,1173,1036
-Text=25. Has the construction of new rooms in this health facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
- 
-  
-  
-[Field]
-Name=Q26_NEW_ROOMS_PURPOSE
-Position=1695,1047,3625,1067
-Item=Q26_NEW_ROOMS_PURPOSE,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,1050,300,1066
-Text=26. What are the rooms being used for?
- 
-  
-  
-[Field]
-Name=Q27_INC_EQUIPMENT
-Position=1695,1077,1710,1097
-Item=Q27_INC_EQUIPMENT,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,1080,853,1096
-Text=27. Has the increase in equipment been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
- 
-  
-  
-[Field]
-Name=Q27_INC_EQUIPMENT_YES_OTHER_TXT
-Position=1695,1107,2665,1127
-Item=Q27_INC_EQUIPMENT_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,1110,1021,1126
-Text=27. Has the increase in equipment been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
- 
-  
-  
-[Field]
-Name=Q27_INC_EQUIPMENT_NO_OTHER_TXT
-Position=1695,1137,2665,1157
-Item=Q27_INC_EQUIPMENT_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,1140,1016,1156
-Text=27. Has the increase in equipment been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
- 
-  
-  
-[Field]
-Name=Q28_INC_EQUIPMENT_LIST
-Position=1695,1167,3625,1187
-Item=Q28_INC_EQUIPMENT_LIST,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,1170,555,1186
-Text=28. If there was an increase in equipment, what are these pieces of equipment?
- 
-  
-  
-[Field]
-Name=Q29_INC_SUPPLIES
-Position=1695,1197,1710,1217
-Item=Q29_INC_SUPPLIES,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,1200,837,1216
-Text=29. Has the increase in supplies been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
- 
-  
-  
-[Field]
-Name=Q29_INC_SUPPLIES_YES_OTHER_TXT
-Position=1695,1227,2665,1247
-Item=Q29_INC_SUPPLIES_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,1230,1005,1246
-Text=29. Has the increase in supplies been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
- 
-  
-  
-[Field]
-Name=Q29_INC_SUPPLIES_NO_OTHER_TXT
-Position=1695,1257,2665,1277
-Item=Q29_INC_SUPPLIES_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,1260,1000,1276
-Text=29. Has the increase in supplies been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
- 
-  
-  
-[Field]
-Name=Q30_INC_SUPPLIES_LIST
-Position=1695,1287,3625,1307
-Item=Q30_INC_SUPPLIES_LIST,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,1290,406,1306
-Text=30. If there was an increase in supplies, what are these?
- 
-  
-  
-[Field]
-Name=Q31_EMR_USE
-Position=1695,1317,1710,1337
-Item=Q31_EMR_USE,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,1320,1008,1336
-Text=31. Has the use of electronic medical records at the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
- 
-  
-  
-[Field]
-Name=Q31_EMR_USE_YES_OTHER_TXT
-Position=1695,1347,2665,1367
-Item=Q31_EMR_USE_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,1350,1176,1366
-Text=31. Has the use of electronic medical records at the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
- 
-  
-  
-[Field]
-Name=Q31_EMR_USE_NO_OTHER_TXT
-Position=1695,1377,2665,1397
-Item=Q31_EMR_USE_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,1380,1171,1396
-Text=31. Has the use of electronic medical records at the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
- 
-  
-  
-[Field]
-Name=Q32_DATA_SUBMIT
-Position=1695,1407,1724,1427
-Item=Q32_DATA_SUBMIT,FACILITYHEADSURVEY_DICT
+Name=Q12_1_UHC_ATTRIB
+Position=350,267,365,287
+Item=Q12_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=6
   
 [Text]
-Position=50,1410,868,1426
-Text=32. Does your facility currently submit health and financial data to the DOH Information System and/or the PhilHealth Dashboard?
+Position=50,270,330,286
+Text=12.1.
  
   
-  
 [Field]
-Name=Q33_DATA_FREQ
-Position=1695,1437,1724,1457
-Item=Q33_DATA_FREQ,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=6
-  
-[Text]
-Position=50,1440,425,1456
-Text=33. If yes, how frequent has your facility submit these data?
- 
-  
-  
-[Field]
-Name=Q33_OTHER_TXT
-Position=1695,1467,2665,1487
-Item=Q33_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q12_1_UHC_ATTRIB_OTHER_TXT
+Position=350,297,760,317
+Item=Q12_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,1470,565,1486
-Text=33. If yes, how frequent has your facility submit these data? — Other (specify) text
+Position=50,300,330,316
+Text=12.1. (specify)
  
   
+[Field]
+Name=Q12_2_PHU_ROLE
+Position=350,327,365,347
+Item=Q12_2_PHU_ROLE,FACILITYHEADSURVEY_DICT
+DataCaptureType=DropDown
+Form=6
+  
+[Text]
+Position=50,330,330,346
+Text=12.2.
+ 
   
 [Field]
-Name=Q34_DATA_REPORTS_USED
-Position=1695,1497,2032,1517
-Item=Q34_DATA_REPORTS_USED,FACILITYHEADSURVEY_DICT
+Name=Q12_2_PHU_ROLE_OTHER_TXT
+Position=350,357,760,377
+Item=Q12_2_PHU_ROLE_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,360,330,376
+Text=12.2. (specify)
+ 
+  
+[Field]
+Name=Q13_HEALTH_PROMO_UNIT
+Position=350,387,365,407
+Item=Q13_HEALTH_PROMO_UNIT,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,390,330,406
+Text=13.
+ 
+  
+[Field]
+Name=Q13_1_UHC_ATTRIB
+Position=350,417,365,437
+Item=Q13_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,420,330,436
+Text=13.1.
+ 
+  
+[Field]
+Name=Q13_1_UHC_ATTRIB_OTHER_TXT
+Position=350,447,760,467
+Item=Q13_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,450,330,466
+Text=13.1. (specify)
+ 
+  
+[Field]
+Name=Q13_2_HPU_ROLE
+Position=350,477,365,497
+Item=Q13_2_HPU_ROLE,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,480,330,496
+Text=13.2.
+ 
+  
+[Field]
+Name=Q13_2_HPU_ROLE_OTHER_TXT
+Position=350,507,760,527
+Item=Q13_2_HPU_ROLE_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,510,330,526
+Text=13.2. (specify)
+ 
+  
+[Field]
+Name=Q14_NEW_ROLES
+Position=350,537,365,557
+Item=Q14_NEW_ROLES,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,540,330,556
+Text=14.
+ 
+  
+[Field]
+Name=Q14_1_UHC_ATTRIB
+Position=350,567,365,587
+Item=Q14_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,570,330,586
+Text=14.1.
+ 
+  
+[Field]
+Name=Q14_1_UHC_ATTRIB_OTHER_TXT
+Position=350,597,760,617
+Item=Q14_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,600,330,616
+Text=14.1. (specify)
+ 
+  
+[Field]
+Name=Q14_2_NEW_ROLES_LIST
+Position=350,627,760,647
+Item=Q14_2_NEW_ROLES_LIST,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,630,330,646
+Text=14.2.
+ 
+  
+[Field]
+Name=Q15_NEW_DEPTS
+Position=350,657,365,677
+Item=Q15_NEW_DEPTS,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,660,330,676
+Text=15.
+ 
+  
+[Field]
+Name=Q15_1_UHC_ATTRIB
+Position=350,687,365,707
+Item=Q15_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,690,330,706
+Text=15.1.
+ 
+  
+[Field]
+Name=Q15_1_UHC_ATTRIB_OTHER_TXT
+Position=350,717,760,737
+Item=Q15_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,720,330,736
+Text=15.1. (specify)
+ 
+  
+[Field]
+Name=Q15_2_NEW_DEPTS_LIST
+Position=350,747,760,767
+Item=Q15_2_NEW_DEPTS_LIST,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,750,330,766
+Text=15.2.
+ 
+  
+[Field]
+Name=Q16_NEW_BUILDINGS
+Position=350,777,365,797
+Item=Q16_NEW_BUILDINGS,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,780,330,796
+Text=16.
+ 
+  
+[Field]
+Name=Q16_1_UHC_ATTRIB
+Position=350,807,365,827
+Item=Q16_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,810,330,826
+Text=16.1.
+ 
+  
+[Field]
+Name=Q16_1_UHC_ATTRIB_OTHER_TXT
+Position=350,837,760,857
+Item=Q16_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,840,330,856
+Text=16.1. (specify)
+ 
+  
+[Field]
+Name=Q16_2_NEW_BUILDINGS_PURPOSE
+Position=350,867,760,887
+Item=Q16_2_NEW_BUILDINGS_PURPOSE,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,870,330,886
+Text=16.2.
+ 
+  
+[Field]
+Name=Q17_NEW_ROOMS
+Position=350,897,365,917
+Item=Q17_NEW_ROOMS,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,900,330,916
+Text=17.
+ 
+  
+[Field]
+Name=Q17_1_UHC_ATTRIB
+Position=350,927,365,947
+Item=Q17_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,930,330,946
+Text=17.1.
+ 
+  
+[Field]
+Name=Q17_1_UHC_ATTRIB_OTHER_TXT
+Position=350,957,760,977
+Item=Q17_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,960,330,976
+Text=17.1. (specify)
+ 
+  
+[Field]
+Name=Q17_2_NEW_ROOMS_PURPOSE
+Position=350,987,760,1007
+Item=Q17_2_NEW_ROOMS_PURPOSE,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,990,330,1006
+Text=17.2.
+ 
+  
+[Field]
+Name=Q18_INC_EQUIPMENT
+Position=350,1017,365,1037
+Item=Q18_INC_EQUIPMENT,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,1020,330,1036
+Text=18.
+ 
+  
+[Field]
+Name=Q18_1_UHC_ATTRIB
+Position=350,1047,365,1067
+Item=Q18_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,1050,330,1066
+Text=18.1.
+ 
+  
+[Field]
+Name=Q18_1_UHC_ATTRIB_OTHER_TXT
+Position=350,1077,760,1097
+Item=Q18_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,1080,330,1096
+Text=18.1. (specify)
+ 
+  
+[Field]
+Name=Q18_2_INC_EQUIPMENT_LIST
+Position=350,1107,760,1127
+Item=Q18_2_INC_EQUIPMENT_LIST,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,1110,330,1126
+Text=18.2.
+ 
+  
+[Field]
+Name=Q19_INC_SUPPLIES
+Position=350,1137,365,1157
+Item=Q19_INC_SUPPLIES,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,1140,330,1156
+Text=19.
+ 
+  
+[Field]
+Name=Q19_1_UHC_ATTRIB
+Position=350,1167,365,1187
+Item=Q19_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,1170,330,1186
+Text=19.1.
+ 
+  
+[Field]
+Name=Q19_1_UHC_ATTRIB_OTHER_TXT
+Position=350,1197,760,1217
+Item=Q19_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,1200,330,1216
+Text=19.1. (specify)
+ 
+  
+[Field]
+Name=Q19_2_INC_SUPPLIES_LIST
+Position=350,1227,760,1247
+Item=Q19_2_INC_SUPPLIES_LIST,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,1230,330,1246
+Text=19.2.
+ 
+  
+[Field]
+Name=Q20_EMR_USE
+Position=350,1257,365,1277
+Item=Q20_EMR_USE,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,1260,330,1276
+Text=20.
+ 
+  
+[Field]
+Name=Q20_1_UHC_ATTRIB
+Position=350,1287,365,1307
+Item=Q20_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,1290,330,1306
+Text=20.1.
+ 
+  
+[Field]
+Name=Q20_1_UHC_ATTRIB_OTHER_TXT
+Position=350,1317,760,1337
+Item=Q20_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,1320,330,1336
+Text=20.1. (specify)
+ 
+  
+[Field]
+Name=Q21_DATA_SUBMIT
+Position=350,1347,365,1367
+Item=Q21_DATA_SUBMIT,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,1350,330,1366
+Text=21.
+ 
+  
+[Field]
+Name=Q21_OTHER_TXT
+Position=350,1377,760,1397
+Item=Q21_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,1380,330,1396
+Text=21. (specify)
+ 
+  
+[Field]
+Name=Q22_DATA_FREQ
+Position=350,1407,365,1427
+Item=Q22_DATA_FREQ,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,1410,330,1426
+Text=22.
+ 
+  
+[Field]
+Name=Q22_OTHER_TXT
+Position=350,1437,760,1457
+Item=Q22_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,1440,330,1456
+Text=22. (specify)
+ 
+  
+[Field]
+Name=Q23_DATA_REPORTS_USED
+Position=350,1467,365,1487
+Item=Q23_DATA_REPORTS_USED,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=6
   
 [Text]
-Position=50,1500,516,1516
-Text=34. Which of the submitted reports are actually used for decision-making?
+Position=50,1470,330,1486
+Text=23.
  
   
-  
 [Field]
-Name=Q34_DATA_REPORTS_USED_OTHER_TXT
-Position=1695,1857,2665,1877
-Item=Q34_DATA_REPORTS_USED_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q23_DATA_REPORTS_USED_OTHER_TXT
+Position=350,1497,760,1517
+Item=Q23_DATA_REPORTS_USED_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,1860,656,1876
-Text=34. Which of the submitted reports are actually used for decision-making? — Other (specify) text
+Position=50,1500,330,1516
+Text=23. (specify)
  
   
-  
 [Field]
-Name=Q35_STAFFING_CHANGED
-Position=1695,1887,1710,1907
-Item=Q35_STAFFING_CHANGED,FACILITYHEADSURVEY_DICT
+Name=Q24_STAFFING_CHANGED
+Position=350,1527,365,1547
+Item=Q24_STAFFING_CHANGED,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=6
   
 [Text]
-Position=50,1890,447,1906
-Text=35. Have there been changes in the facility staffing since 2019?
+Position=50,1530,330,1546
+Text=24.
  
   
-  
 [Field]
-Name=Q36_STAFFING_UHC
-Position=1695,1917,1710,1937
-Item=Q36_STAFFING_UHC,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,1920,839,1936
-Text=36. Have the changes in staffing been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
- 
-  
-  
-[Field]
-Name=Q36_STAFFING_UHC_YES_OTHER_TXT
-Position=1695,1947,2665,1967
-Item=Q36_STAFFING_UHC_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,1950,1007,1966
-Text=36. Have the changes in staffing been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
- 
-  
-  
-[Field]
-Name=Q36_STAFFING_UHC_NO_OTHER_TXT
-Position=1695,1977,2665,1997
-Item=Q36_STAFFING_UHC_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,1980,1002,1996
-Text=36. Have the changes in staffing been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
- 
-  
-  
-[Field]
-Name=Q37_REFERRAL_CHANGED
-Position=1695,2007,1710,2027
-Item=Q37_REFERRAL_CHANGED,FACILITYHEADSURVEY_DICT
+Name=Q24_1_UHC_ATTRIB
+Position=350,1557,365,1577
+Item=Q24_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=6
   
 [Text]
-Position=50,2010,449,2026
-Text=37. Have there been changes in the referral system since 2019?
+Position=50,1560,330,1576
+Text=24.1.
  
   
-  
 [Field]
-Name=Q38_REFERRAL_UHC
-Position=1695,2037,1710,2057
-Item=Q38_REFERRAL_UHC,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,2040,1056,2056
-Text=38. Have the changes to the referral system (inbound or outbound) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
- 
-  
-  
-[Field]
-Name=Q38_REFERRAL_UHC_YES_OTHER_TXT
-Position=1695,2067,2665,2087
-Item=Q38_REFERRAL_UHC_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q24_1_UHC_ATTRIB_OTHER_TXT
+Position=350,1587,760,1607
+Item=Q24_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,2070,1224,2086
-Text=38. Have the changes to the referral system (inbound or outbound) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
+Position=50,1590,330,1606
+Text=24.1. (specify)
  
   
+[Field]
+Name=Q25_REFERRAL_CHANGED
+Position=350,1617,365,1637
+Item=Q25_REFERRAL_CHANGED,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,1620,330,1636
+Text=25.
+ 
   
 [Field]
-Name=Q38_REFERRAL_UHC_NO_OTHER_TXT
-Position=1695,2097,2665,2117
-Item=Q38_REFERRAL_UHC_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q25_1_UHC_ATTRIB
+Position=350,1647,365,1667
+Item=Q25_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,1650,330,1666
+Text=25.1.
+ 
+  
+[Field]
+Name=Q25_1_UHC_ATTRIB_OTHER_TXT
+Position=350,1677,760,1697
+Item=Q25_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,2100,1219,2116
-Text=38. Have the changes to the referral system (inbound or outbound) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
+Position=50,1680,330,1696
+Text=25.1. (specify)
  
   
-  
 [Field]
-Name=Q39_MOU_MOA
-Position=1695,2127,1710,2147
-Item=Q39_MOU_MOA,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
+Name=Q26_MOU_MOA
+Position=350,1707,365,1727
+Item=Q26_MOU_MOA,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
 Form=6
   
 [Text]
-Position=50,2130,1513,2146
-Text=39. Has the Memorandum of Understanding (MoU) / Agreement (MoA) with other health facilities as part of the healthcare provider network been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
+Position=50,1710,330,1726
+Text=26.
  
   
+[Field]
+Name=Q26_1_UHC_ATTRIB
+Position=350,1737,365,1757
+Item=Q26_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,1740,330,1756
+Text=26.1.
+ 
   
 [Field]
-Name=Q39_MOU_MOA_YES_OTHER_TXT
-Position=1695,2157,2665,2177
-Item=Q39_MOU_MOA_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q26_1_UHC_ATTRIB_OTHER_TXT
+Position=350,1767,760,1787
+Item=Q26_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,2160,1681,2176
-Text=39. Has the Memorandum of Understanding (MoU) / Agreement (MoA) with other health facilities as part of the healthcare provider network been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
+Position=50,1770,330,1786
+Text=26.1. (specify)
  
   
+[Field]
+Name=Q27_NBB
+Position=350,1797,365,1817
+Item=Q27_NBB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,1800,330,1816
+Text=27.
+ 
   
 [Field]
-Name=Q39_MOU_MOA_NO_OTHER_TXT
-Position=1695,2187,2665,2207
-Item=Q39_MOU_MOA_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q27_1_UHC_ATTRIB
+Position=350,1827,365,1847
+Item=Q27_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,1830,330,1846
+Text=27.1.
+ 
+  
+[Field]
+Name=Q27_1_UHC_ATTRIB_OTHER_TXT
+Position=350,1857,760,1877
+Item=Q27_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,2190,1676,2206
-Text=39. Has the Memorandum of Understanding (MoU) / Agreement (MoA) with other health facilities as part of the healthcare provider network been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
+Position=50,1860,330,1876
+Text=27.1. (specify)
  
   
-  
 [Field]
-Name=Q40_NBB
-Position=1695,2217,1710,2237
-Item=Q40_NBB,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
+Name=Q28_ZBB
+Position=350,1887,365,1907
+Item=Q28_ZBB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
 Form=6
   
 [Text]
-Position=50,2220,865,2236
-Text=40. Has the no balance billing (NBB) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
+Position=50,1890,330,1906
+Text=28.
  
   
+[Field]
+Name=Q28_1_UHC_ATTRIB
+Position=350,1917,365,1937
+Item=Q28_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,1920,330,1936
+Text=28.1.
+ 
   
 [Field]
-Name=Q40_NBB_YES_OTHER_TXT
-Position=1695,2247,2665,2267
-Item=Q40_NBB_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q28_1_UHC_ATTRIB_OTHER_TXT
+Position=350,1947,760,1967
+Item=Q28_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,2250,1033,2266
-Text=40. Has the no balance billing (NBB) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
+Position=50,1950,330,1966
+Text=28.1. (specify)
  
   
+[Field]
+Name=Q29_NO_COPAY
+Position=350,1977,365,1997
+Item=Q29_NO_COPAY,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,1980,330,1996
+Text=29.
+ 
   
 [Field]
-Name=Q40_NBB_NO_OTHER_TXT
-Position=1695,2277,2665,2297
-Item=Q40_NBB_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q29_1_UHC_ATTRIB
+Position=350,2007,365,2027
+Item=Q29_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,2010,330,2026
+Text=29.1.
+ 
+  
+[Field]
+Name=Q29_1_UHC_ATTRIB_OTHER_TXT
+Position=350,2037,760,2057
+Item=Q29_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,2280,1028,2296
-Text=40. Has the no balance billing (NBB) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
+Position=50,2040,330,2056
+Text=29.1. (specify)
  
   
-  
 [Field]
-Name=Q41_ZBB
-Position=1695,2307,1710,2327
-Item=Q41_ZBB,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
+Name=Q30_WARD_ALLOC
+Position=350,2067,365,2087
+Item=Q30_WARD_ALLOC,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
 Form=6
   
 [Text]
-Position=50,2310,875,2326
-Text=41. Has the zero balance billing (ZBB) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
+Position=50,2070,330,2086
+Text=30.
  
   
+[Field]
+Name=Q30_1_UHC_ATTRIB
+Position=350,2097,365,2117
+Item=Q30_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,2100,330,2116
+Text=30.1.
+ 
   
 [Field]
-Name=Q41_ZBB_YES_OTHER_TXT
-Position=1695,2337,2665,2357
-Item=Q41_ZBB_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q30_1_UHC_ATTRIB_OTHER_TXT
+Position=350,2127,760,2147
+Item=Q30_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,2340,1043,2356
-Text=41. Has the zero balance billing (ZBB) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
+Position=50,2130,330,2146
+Text=30.1. (specify)
  
   
+[Field]
+Name=Q31_CPG
+Position=350,2157,365,2177
+Item=Q31_CPG,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,2160,330,2176
+Text=31.
+ 
   
 [Field]
-Name=Q41_ZBB_NO_OTHER_TXT
-Position=1695,2367,2665,2387
-Item=Q41_ZBB_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q31_1_UHC_ATTRIB
+Position=350,2187,365,2207
+Item=Q31_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,2190,330,2206
+Text=31.1.
+ 
+  
+[Field]
+Name=Q31_1_UHC_ATTRIB_OTHER_TXT
+Position=350,2217,760,2237
+Item=Q31_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,2370,1038,2386
-Text=41. Has the zero balance billing (ZBB) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
+Position=50,2220,330,2236
+Text=31.1. (specify)
  
   
-  
 [Field]
-Name=Q42_NO_COPAY
-Position=1695,2397,1710,2417
-Item=Q42_NO_COPAY,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
+Name=Q32_DOH_LIC_STD
+Position=350,2247,365,2267
+Item=Q32_DOH_LIC_STD,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
 Form=6
   
 [Text]
-Position=50,2400,847,2416
-Text=42. Has the no co-payment policy been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
+Position=50,2250,330,2266
+Text=32.
  
   
+[Field]
+Name=Q32_1_UHC_ATTRIB
+Position=350,2277,365,2297
+Item=Q32_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,2280,330,2296
+Text=32.1.
+ 
   
 [Field]
-Name=Q42_NO_COPAY_YES_OTHER_TXT
-Position=1695,2427,2665,2447
-Item=Q42_NO_COPAY_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q32_1_UHC_ATTRIB_OTHER_TXT
+Position=350,2307,760,2327
+Item=Q32_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,2430,1015,2446
-Text=42. Has the no co-payment policy been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
+Position=50,2310,330,2326
+Text=32.1. (specify)
  
   
+[Field]
+Name=Q33_PHIC_ACCRED
+Position=350,2337,365,2357
+Item=Q33_PHIC_ACCRED,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,2340,330,2356
+Text=33.
+ 
   
 [Field]
-Name=Q42_NO_COPAY_NO_OTHER_TXT
-Position=1695,2457,2665,2477
-Item=Q42_NO_COPAY_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q33_1_UHC_ATTRIB
+Position=350,2367,365,2387
+Item=Q33_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,2370,330,2386
+Text=33.1.
+ 
+  
+[Field]
+Name=Q33_1_UHC_ATTRIB_OTHER_TXT
+Position=350,2397,760,2417
+Item=Q33_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,2460,1010,2476
-Text=42. Has the no co-payment policy been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
+Position=50,2400,330,2416
+Text=33.1. (specify)
  
   
-  
 [Field]
-Name=Q43_WARD_ALLOC
-Position=1695,2487,1710,2507
-Item=Q43_WARD_ALLOC,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
+Name=Q34_SVC_DELIVERY_PROT
+Position=350,2427,365,2447
+Item=Q34_SVC_DELIVERY_PROT,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
 Form=6
   
 [Text]
-Position=50,2490,1010,2506
-Text=43. Has the health facility been implementing ward accommodation allocation since the UHC Act was passed in 2019 and was it a result of the UHC Act?
+Position=50,2430,330,2446
+Text=34.
  
   
+[Field]
+Name=Q34_1_UHC_ATTRIB
+Position=350,2457,365,2477
+Item=Q34_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,2460,330,2476
+Text=34.1.
+ 
   
 [Field]
-Name=Q43_WARD_ALLOC_YES_OTHER_TXT
-Position=1695,2517,2665,2537
-Item=Q43_WARD_ALLOC_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q34_1_UHC_ATTRIB_OTHER_TXT
+Position=350,2487,760,2507
+Item=Q34_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,2520,1178,2536
-Text=43. Has the health facility been implementing ward accommodation allocation since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
+Position=50,2490,330,2506
+Text=34.1. (specify)
  
   
+[Field]
+Name=Q35_PCQM
+Position=350,2517,365,2537
+Item=Q35_PCQM,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,2520,330,2536
+Text=35.
+ 
   
 [Field]
-Name=Q43_WARD_ALLOC_NO_OTHER_TXT
-Position=1695,2547,2665,2567
-Item=Q43_WARD_ALLOC_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q35_1_UHC_ATTRIB
+Position=350,2547,365,2567
+Item=Q35_1_UHC_ATTRIB,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=6
+  
+[Text]
+Position=50,2550,330,2566
+Text=35.1.
+ 
+  
+[Field]
+Name=Q35_1_UHC_ATTRIB_OTHER_TXT
+Position=350,2577,760,2597
+Item=Q35_1_UHC_ATTRIB_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,2550,1173,2566
-Text=43. Has the health facility been implementing ward accommodation allocation since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
+Position=50,2580,330,2596
+Text=35.1. (specify)
  
   
-  
 [Field]
-Name=Q44_CPG
-Position=1695,2577,1710,2597
-Item=Q44_CPG,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,2580,955,2596
-Text=44. Have the improved clinical practice guidelines been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
- 
-  
-  
-[Field]
-Name=Q44_CPG_YES_OTHER_TXT
-Position=1695,2607,2665,2627
-Item=Q44_CPG_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,2610,1123,2626
-Text=44. Have the improved clinical practice guidelines been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
- 
-  
-  
-[Field]
-Name=Q44_CPG_NO_OTHER_TXT
-Position=1695,2637,2665,2657
-Item=Q44_CPG_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,2640,1118,2656
-Text=44. Have the improved clinical practice guidelines been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
- 
-  
-  
-[Field]
-Name=Q45_DOH_LIC_STD
-Position=1695,2667,1710,2687
-Item=Q45_DOH_LIC_STD,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,2670,874,2686
-Text=45. Have the DOH licensing standards been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
- 
-  
-  
-[Field]
-Name=Q45_DOH_LIC_STD_YES_OTHER_TXT
-Position=1695,2697,2665,2717
-Item=Q45_DOH_LIC_STD_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,2700,1042,2716
-Text=45. Have the DOH licensing standards been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
- 
-  
-  
-[Field]
-Name=Q45_DOH_LIC_STD_NO_OTHER_TXT
-Position=1695,2727,2665,2747
-Item=Q45_DOH_LIC_STD_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,2730,1037,2746
-Text=45. Have the DOH licensing standards been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
- 
-  
-  
-[Field]
-Name=Q46_PHIC_ACCRED
-Position=1695,2757,1710,2777
-Item=Q46_PHIC_ACCRED,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,2760,961,2776
-Text=46. Have the PhilHealth accreditation requirements been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
- 
-  
-  
-[Field]
-Name=Q46_PHIC_ACCRED_YES_OTHER_TXT
-Position=1695,2787,2665,2807
-Item=Q46_PHIC_ACCRED_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,2790,1129,2806
-Text=46. Have the PhilHealth accreditation requirements been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
- 
-  
-  
-[Field]
-Name=Q46_PHIC_ACCRED_NO_OTHER_TXT
-Position=1695,2817,2665,2837
-Item=Q46_PHIC_ACCRED_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,2820,1124,2836
-Text=46. Have the PhilHealth accreditation requirements been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
- 
-  
-  
-[Field]
-Name=Q47_SVC_DELIVERY_PROT
-Position=1695,2847,1710,2867
-Item=Q47_SVC_DELIVERY_PROT,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,2850,882,2866
-Text=47. Have the service delivery protocols been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
- 
-  
-  
-[Field]
-Name=Q47_SVC_DELIVERY_PROT_YES_OTHER_TXT
-Position=1695,2877,2665,2897
-Item=Q47_SVC_DELIVERY_PROT_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,2880,1050,2896
-Text=47. Have the service delivery protocols been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
- 
-  
-  
-[Field]
-Name=Q47_SVC_DELIVERY_PROT_NO_OTHER_TXT
-Position=1695,2907,2665,2927
-Item=Q47_SVC_DELIVERY_PROT_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,2910,1045,2926
-Text=47. Have the service delivery protocols been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
- 
-  
-  
-[Field]
-Name=Q48_PCQM
-Position=1695,2937,1710,2957
-Item=Q48_PCQM,FACILITYHEADSURVEY_DICT
-DataCaptureType=DropDown
-Form=6
-  
-[Text]
-Position=50,2940,913,2956
-Text=48. Have the primary care quality measures been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?
- 
-  
-  
-[Field]
-Name=Q48_PCQM_YES_OTHER_TXT
-Position=1695,2967,2665,2987
-Item=Q48_PCQM_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,2970,1081,2986
-Text=48. Have the primary care quality measures been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — Yes, other (specify) text
- 
-  
-  
-[Field]
-Name=Q48_PCQM_NO_OTHER_TXT
-Position=1695,2997,2665,3017
-Item=Q48_PCQM_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=6
-  
-[Text]
-Position=50,3000,1076,3016
-Text=48. Have the primary care quality measures been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text
- 
-  
-  
-[Field]
-Name=Q49_QUALITY_CHALL
-Position=1695,3027,1976,3047
-Item=Q49_QUALITY_CHALL,FACILITYHEADSURVEY_DICT
+Name=Q35_2_PCQM_MEASURES
+Position=350,2607,365,2627
+Item=Q35_2_PCQM_MEASURES,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=6
   
 [Text]
-Position=50,3030,643,3046
-Text=49. What are the major challenges to improving the quality of patient care in your local area?
+Position=50,2610,330,2626
+Text=35.2.
  
   
-  
 [Field]
-Name=Q49_QUALITY_CHALL_OTHER_TXT
-Position=1695,3327,2665,3347
-Item=Q49_QUALITY_CHALL_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q35_2_PCQM_MEASURES_OTHER_TXT
+Position=350,2637,760,2657
+Item=Q35_2_PCQM_MEASURES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,3330,783,3346
-Text=49. What are the major challenges to improving the quality of patient care in your local area? — Other (specify) text
+Position=50,2640,330,2656
+Text=35.2. (specify)
  
   
-  
 [Field]
-Name=Q50_ACCESS_CHALL
-Position=1695,3357,1976,3377
-Item=Q50_ACCESS_CHALL,FACILITYHEADSURVEY_DICT
+Name=Q36_QUALITY_CHALL
+Position=350,2667,365,2687
+Item=Q36_QUALITY_CHALL,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=6
   
 [Text]
-Position=50,3360,677,3376
-Text=50. What are the major challenges to improving the accessibility of patient care in your local area?
+Position=50,2670,330,2686
+Text=36.
  
   
-  
 [Field]
-Name=Q50_ACCESS_CHALL_OTHER_TXT
-Position=1695,3657,2665,3677
-Item=Q50_ACCESS_CHALL_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q36_QUALITY_CHALL_OTHER_TXT
+Position=350,2697,760,2717
+Item=Q36_QUALITY_CHALL_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=6
   
 [Text]
-Position=50,3660,817,3676
-Text=50. What are the major challenges to improving the accessibility of patient care in your local area? — Other (specify) text
+Position=50,2700,330,2716
+Text=36. (specify)
  
+  
+[Field]
+Name=Q37_ACCESS_CHALL
+Position=350,2727,365,2747
+Item=Q37_ACCESS_CHALL,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
+Form=6
+  
+[Text]
+Position=50,2730,330,2746
+Text=37.
+ 
+  
+[Field]
+Name=Q37_ACCESS_CHALL_OTHER_TXT
+Position=350,2757,760,2777
+Item=Q37_ACCESS_CHALL_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=6
+  
+[Text]
+Position=50,2760,330,2776
+Text=37. (specify)
+ 
+  
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_6
+Name=DG_BLK_6
 Label=Q9-Q10
 DisplayTogether=Yes
 Position=0
 Length=2
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_7
-Label=Q11
+Name=DG_BLK_7
+Label=Q10.1
 DisplayTogether=Yes
 Position=3
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_8
-Label=Q11
+Name=DG_BLK_8
+Label=Q10.1
 DisplayTogether=Yes
 Position=5
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_9
-Label=Q12
+Name=DG_BLK_9
+Label=Q11
 DisplayTogether=Yes
 Position=7
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_10
-Label=Q12
+Name=DG_BLK_10
+Label=Q11.1
 DisplayTogether=Yes
 Position=9
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_11
-Label=Q12
+Name=DG_BLK_11
+Label=Q11.1
 DisplayTogether=Yes
 Position=11
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_12
-Label=Q13
+Name=DG_BLK_12
+Label=Q12
 DisplayTogether=Yes
 Position=13
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_13
-Label=Q14
+Name=DG_BLK_13
+Label=Q12.1
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_14
-Label=Q14
+Name=DG_BLK_14
+Label=Q12.1
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_15
-Label=Q14
+Name=DG_BLK_15
+Label=Q12.2
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_16
-Label=Q15
+Name=DG_BLK_16
+Label=Q12.2
 DisplayTogether=Yes
 Position=21
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_17
-Label=Q15
+Name=DG_BLK_17
+Label=Q13
 DisplayTogether=Yes
 Position=23
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_18
-Label=Q16
+Name=DG_BLK_18
+Label=Q13.1
 DisplayTogether=Yes
 Position=25
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_19
-Label=Q17
+Name=DG_BLK_19
+Label=Q13.1
 DisplayTogether=Yes
 Position=27
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_20
-Label=Q17
+Name=DG_BLK_20
+Label=Q13.2
 DisplayTogether=Yes
 Position=29
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_21
-Label=Q17
+Name=DG_BLK_21
+Label=Q13.2
 DisplayTogether=Yes
 Position=31
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_22
-Label=Q18
+Name=DG_BLK_22
+Label=Q14
 DisplayTogether=Yes
 Position=33
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_23
-Label=Q18
+Name=DG_BLK_23
+Label=Q14.1
 DisplayTogether=Yes
 Position=35
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_24
-Label=Q19
+Name=DG_BLK_24
+Label=Q14.1
 DisplayTogether=Yes
 Position=37
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_25
-Label=Q19
+Name=DG_BLK_25
+Label=Q14.2
 DisplayTogether=Yes
 Position=39
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_26
-Label=Q19
+Name=DG_BLK_26
+Label=Q15
 DisplayTogether=Yes
 Position=41
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_27
-Label=Q20
+Name=DG_BLK_27
+Label=Q15.1
 DisplayTogether=Yes
 Position=43
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_28
-Label=Q21
+Name=DG_BLK_28
+Label=Q15.1
 DisplayTogether=Yes
 Position=45
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_29
-Label=Q21
+Name=DG_BLK_29
+Label=Q15.2
 DisplayTogether=Yes
 Position=47
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_30
-Label=Q21
+Name=DG_BLK_30
+Label=Q16
 DisplayTogether=Yes
 Position=49
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_31
-Label=Q22
+Name=DG_BLK_31
+Label=Q16.1
 DisplayTogether=Yes
 Position=51
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_32
-Label=Q23
+Name=DG_BLK_32
+Label=Q16.1
 DisplayTogether=Yes
 Position=53
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_33
-Label=Q23
+Name=DG_BLK_33
+Label=Q16.2
 DisplayTogether=Yes
 Position=55
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_34
-Label=Q23
+Name=DG_BLK_34
+Label=Q17
 DisplayTogether=Yes
 Position=57
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_35
-Label=Q24
+Name=DG_BLK_35
+Label=Q17.1
 DisplayTogether=Yes
 Position=59
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_36
-Label=Q25
+Name=DG_BLK_36
+Label=Q17.1
 DisplayTogether=Yes
 Position=61
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_37
-Label=Q25
+Name=DG_BLK_37
+Label=Q17.2
 DisplayTogether=Yes
 Position=63
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_38
-Label=Q25
+Name=DG_BLK_38
+Label=Q18
 DisplayTogether=Yes
 Position=65
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_39
-Label=Q26
+Name=DG_BLK_39
+Label=Q18.1
 DisplayTogether=Yes
 Position=67
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_40
-Label=Q27
+Name=DG_BLK_40
+Label=Q18.1
 DisplayTogether=Yes
 Position=69
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_41
-Label=Q27
+Name=DG_BLK_41
+Label=Q18.2
 DisplayTogether=Yes
 Position=71
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_42
-Label=Q27
+Name=DG_BLK_42
+Label=Q19
 DisplayTogether=Yes
 Position=73
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_43
-Label=Q28
+Name=DG_BLK_43
+Label=Q19.1
 DisplayTogether=Yes
 Position=75
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_44
-Label=Q29
+Name=DG_BLK_44
+Label=Q19.1
 DisplayTogether=Yes
 Position=77
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_45
-Label=Q29
+Name=DG_BLK_45
+Label=Q19.2
 DisplayTogether=Yes
 Position=79
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_46
-Label=Q29
+Name=DG_BLK_46
+Label=Q20
 DisplayTogether=Yes
 Position=81
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_47
-Label=Q30
+Name=DG_BLK_47
+Label=Q20.1
 DisplayTogether=Yes
 Position=83
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_48
-Label=Q31
+Name=DG_BLK_48
+Label=Q20.1
 DisplayTogether=Yes
 Position=85
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_49
-Label=Q31
+Name=DG_BLK_49
+Label=Q21
 DisplayTogether=Yes
 Position=87
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_50
-Label=Q31
+Name=DG_BLK_50
+Label=Q21
 DisplayTogether=Yes
 Position=89
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_51
-Label=Q32
+Name=DG_BLK_51
+Label=Q22
 DisplayTogether=Yes
 Position=91
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_52
-Label=Q33
+Name=DG_BLK_52
+Label=Q22
 DisplayTogether=Yes
 Position=93
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_53
-Label=Q33
+Name=DG_BLK_53
+Label=Q23
 DisplayTogether=Yes
 Position=95
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_54
-Label=Q34
+Name=DG_BLK_54
+Label=Q23
 DisplayTogether=Yes
 Position=97
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_55
-Label=Q34
+Name=DG_BLK_55
+Label=Q24
 DisplayTogether=Yes
 Position=99
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_56
-Label=Q35
+Name=DG_BLK_56
+Label=Q24.1
 DisplayTogether=Yes
 Position=101
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_57
-Label=Q36
+Name=DG_BLK_57
+Label=Q24.1
 DisplayTogether=Yes
 Position=103
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_58
-Label=Q36
+Name=DG_BLK_58
+Label=Q25
 DisplayTogether=Yes
 Position=105
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_59
-Label=Q36
+Name=DG_BLK_59
+Label=Q25.1
 DisplayTogether=Yes
 Position=107
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_60
-Label=Q37
+Name=DG_BLK_60
+Label=Q25.1
 DisplayTogether=Yes
 Position=109
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_61
-Label=Q38
+Name=DG_BLK_61
+Label=Q26
 DisplayTogether=Yes
 Position=111
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_62
-Label=Q38
+Name=DG_BLK_62
+Label=Q26.1
 DisplayTogether=Yes
 Position=113
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_63
-Label=Q38
+Name=DG_BLK_63
+Label=Q26.1
 DisplayTogether=Yes
 Position=115
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_64
-Label=Q39
+Name=DG_BLK_64
+Label=Q27
 DisplayTogether=Yes
 Position=117
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_65
-Label=Q39
+Name=DG_BLK_65
+Label=Q27.1
 DisplayTogether=Yes
 Position=119
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_66
-Label=Q39
+Name=DG_BLK_66
+Label=Q27.1
 DisplayTogether=Yes
 Position=121
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_67
-Label=Q40
+Name=DG_BLK_67
+Label=Q28
 DisplayTogether=Yes
 Position=123
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_68
-Label=Q40
+Name=DG_BLK_68
+Label=Q28.1
 DisplayTogether=Yes
 Position=125
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_69
-Label=Q40
+Name=DG_BLK_69
+Label=Q28.1
 DisplayTogether=Yes
 Position=127
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_70
-Label=Q41
+Name=DG_BLK_70
+Label=Q29
 DisplayTogether=Yes
 Position=129
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_71
-Label=Q41
+Name=DG_BLK_71
+Label=Q29.1
 DisplayTogether=Yes
 Position=131
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_72
-Label=Q41
+Name=DG_BLK_72
+Label=Q29.1
 DisplayTogether=Yes
 Position=133
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_73
-Label=Q42
+Name=DG_BLK_73
+Label=Q30
 DisplayTogether=Yes
 Position=135
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_74
-Label=Q42
+Name=DG_BLK_74
+Label=Q30.1
 DisplayTogether=Yes
 Position=137
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_75
-Label=Q42
+Name=DG_BLK_75
+Label=Q30.1
 DisplayTogether=Yes
 Position=139
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_76
-Label=Q43
+Name=DG_BLK_76
+Label=Q31
 DisplayTogether=Yes
 Position=141
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_77
-Label=Q43
+Name=DG_BLK_77
+Label=Q31.1
 DisplayTogether=Yes
 Position=143
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_78
-Label=Q43
+Name=DG_BLK_78
+Label=Q31.1
 DisplayTogether=Yes
 Position=145
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_79
-Label=Q44
+Name=DG_BLK_79
+Label=Q32
 DisplayTogether=Yes
 Position=147
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_80
-Label=Q44
+Name=DG_BLK_80
+Label=Q32.1
 DisplayTogether=Yes
 Position=149
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_81
-Label=Q44
+Name=DG_BLK_81
+Label=Q32.1
 DisplayTogether=Yes
 Position=151
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_82
-Label=Q45
+Name=DG_BLK_82
+Label=Q33
 DisplayTogether=Yes
 Position=153
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_83
-Label=Q45
+Name=DG_BLK_83
+Label=Q33.1
 DisplayTogether=Yes
 Position=155
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_84
-Label=Q45
+Name=DG_BLK_84
+Label=Q33.1
 DisplayTogether=Yes
 Position=157
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_85
-Label=Q46
+Name=DG_BLK_85
+Label=Q34
 DisplayTogether=Yes
 Position=159
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_86
-Label=Q46
+Name=DG_BLK_86
+Label=Q34.1
 DisplayTogether=Yes
 Position=161
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_87
-Label=Q46
+Name=DG_BLK_87
+Label=Q34.1
 DisplayTogether=Yes
 Position=163
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_88
-Label=Q47
+Name=DG_BLK_88
+Label=Q35
 DisplayTogether=Yes
 Position=165
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_89
-Label=Q47
+Name=DG_BLK_89
+Label=Q35.1
 DisplayTogether=Yes
 Position=167
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_90
-Label=Q47
+Name=DG_BLK_90
+Label=Q35.1
 DisplayTogether=Yes
 Position=169
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_91
-Label=Q48
+Name=DG_BLK_91
+Label=Q35.2
 DisplayTogether=Yes
 Position=171
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_92
-Label=Q48
+Name=DG_BLK_92
+Label=Q35.2
 DisplayTogether=Yes
 Position=173
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_93
-Label=Q48
+Name=DG_BLK_93
+Label=Q36
 DisplayTogether=Yes
 Position=175
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_94
-Label=Q49
+Name=DG_BLK_94
+Label=Q36
 DisplayTogether=Yes
 Position=177
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_95
-Label=Q49
+Name=DG_BLK_95
+Label=Q37
 DisplayTogether=Yes
 Position=179
 Length=1
   
 [Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_96
-Label=Q50
+Name=DG_BLK_96
+Label=Q37
 DisplayTogether=Yes
 Position=181
 Length=1
   
-[Block]
-Name=DG_C_UHC_IMPLEMENTATION_FORM_97
-Label=Q50
-DisplayTogether=Yes
-Position=183
-Length=1
-  
 [EndGroup]
+  
 [Group]
 Required=Yes
 Name=D_YAKAP_KONSULTA_FORM
-Label=D. YAKAP / Konsulta Package
+Label=D. YAKAP/Konsulta Package
 Form=7
 Max=1
   
-  
 [Field]
-Name=Q51_YK_ACCRED
-Position=1564,27,1579,47
-Item=Q51_YK_ACCRED,FACILITYHEADSURVEY_DICT
+Name=Q38_YK_ACCRED
+Position=350,27,365,47
+Item=Q38_YK_ACCRED,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,30,444,46
-Text=51. Are you currently an accredited YAKAP/Konsulta provider?
+Position=50,30,330,46
+Text=38.
  
   
-  
 [Field]
-Name=Q52_YK_SINCE_MONTH
-Position=1564,57,1593,77
-Item=Q52_YK_SINCE_MONTH,FACILITYHEADSURVEY_DICT
+Name=Q39_YK_SINCE_MONTH
+Position=350,57,760,77
+Item=Q39_YK_SINCE_MONTH,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,60,236,76
-Text=52. If yes, since when? Month
+Position=50,60,330,76
+Text=39. Month
  
   
 [Field]
-Name=Q52_YK_SINCE_YEAR
-Position=1564,87,1621,107
-Item=Q52_YK_SINCE_YEAR,FACILITYHEADSURVEY_DICT
+Name=Q39_YK_SINCE_YEAR
+Position=350,87,760,107
+Item=Q39_YK_SINCE_YEAR,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,90,226,106
-Text=52. If yes, since when? Year
+Position=50,90,330,106
+Text=39. Year
  
   
-  
 [Field]
-Name=Q53_YK_PACKAGE
-Position=1564,117,1845,137
-Item=Q53_YK_PACKAGE,FACILITYHEADSURVEY_DICT
+Name=Q40_YK_PACKAGE
+Position=350,117,365,137
+Item=Q40_YK_PACKAGE,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,120,597,136
-Text=53. If accredited, which of the following are included in the YAKAP/Konsulta package?
+Position=50,120,330,136
+Text=40.
  
   
-  
 [Field]
-Name=Q53_YK_PACKAGE_OTHER_TXT
-Position=1564,417,2534,437
-Item=Q53_YK_PACKAGE_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q40_YK_PACKAGE_OTHER_TXT
+Position=350,147,760,167
+Item=Q40_YK_PACKAGE_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,420,737,436
-Text=53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Other (specify) text
+Position=50,150,330,166
+Text=40. (specify)
  
   
-  
 [Field]
-Name=Q54_YK_REG_INDIV
-Position=1564,447,1579,467
-Item=Q54_YK_REG_INDIV,FACILITYHEADSURVEY_DICT
+Name=Q41_YK_REG_INDIV
+Position=350,177,365,197
+Item=Q41_YK_REG_INDIV,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,450,558,466
-Text=54. Is it possible to register individual patients to YAKAP/Konsulta at this facility?
+Position=50,180,330,196
+Text=41.
  
   
 [Field]
-Name=Q55_YK_REG_FAM
-Position=1564,477,1579,497
-Item=Q55_YK_REG_FAM,FACILITYHEADSURVEY_DICT
+Name=Q42_YK_REG_FAM
+Position=350,207,365,227
+Item=Q42_YK_REG_FAM,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,480,534,496
-Text=55. Is it possible to register whole families to YAKAP/Konsulta at this facility?
+Position=50,210,330,226
+Text=42.
  
   
 [Field]
-Name=Q56_YK_REG_BOTH
-Position=1564,507,1579,527
-Item=Q56_YK_REG_BOTH,FACILITYHEADSURVEY_DICT
+Name=Q43_YK_REG_BOTH
+Position=350,237,365,257
+Item=Q43_YK_REG_BOTH,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,510,845,526
-Text=56. Is it only possible to register both individual patients and their family members together to YAKAP/Konsulta at this facility?
+Position=50,240,330,256
+Text=43.
  
   
 [Field]
-Name=Q57_CAPITATION_AMT
-Position=1564,537,1649,557
-Item=Q57_CAPITATION_AMT,FACILITYHEADSURVEY_DICT
+Name=Q44_CAPITATION_AMT
+Position=350,267,760,287
+Item=Q44_CAPITATION_AMT,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,540,1348,556
-Text=57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?
+Position=50,270,330,286
+Text=44.
  
   
-  
 [Field]
-Name=Q58_PERF_INDICATORS
-Position=1564,567,1789,587
-Item=Q58_PERF_INDICATORS,FACILITYHEADSURVEY_DICT
+Name=Q45_PERF_INDICATORS
+Position=350,297,365,317
+Item=Q45_PERF_INDICATORS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,570,679,586
-Text=58. What are the performance indicators you need to meet to receive the second tranche payment?
+Position=50,300,330,316
+Text=45.
  
   
-  
 [Field]
-Name=Q58_PERF_INDICATORS_OTHER_TXT
-Position=1564,807,2534,827
-Item=Q58_PERF_INDICATORS_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q45_PERF_INDICATORS_OTHER_TXT
+Position=350,327,760,347
+Item=Q45_PERF_INDICATORS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,810,819,826
-Text=58. What are the performance indicators you need to meet to receive the second tranche payment? — Other (specify) text
+Position=50,330,330,346
+Text=45. (specify)
  
   
-  
 [Field]
-Name=Q59_KNOW_PAY_FREQ
-Position=1564,837,1579,857
-Item=Q59_KNOW_PAY_FREQ,FACILITYHEADSURVEY_DICT
+Name=Q46_KNOW_PAY_FREQ
+Position=350,357,365,377
+Item=Q46_KNOW_PAY_FREQ,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,840,870,856
-Text=59. Do you know how often you can expect to receive payments from PhilHealth for the delivery of the YAKAP/Konsulta package?
+Position=50,360,330,376
+Text=46.
  
   
-  
 [Field]
-Name=Q60_PAY_FREQ
-Position=1564,867,1593,887
-Item=Q60_PAY_FREQ,FACILITYHEADSURVEY_DICT
+Name=Q47_PAY_FREQ
+Position=350,387,365,407
+Item=Q47_PAY_FREQ,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,870,365,886
-Text=60. How often should you be receiving payments?
+Position=50,390,330,406
+Text=47.
  
   
-  
 [Field]
-Name=Q61_TRANCHE_DELAY
-Position=1564,897,1579,917
-Item=Q61_TRANCHE_DELAY,FACILITYHEADSURVEY_DICT
+Name=Q48_TRANCHE_DELAY
+Position=350,417,365,437
+Item=Q48_TRANCHE_DELAY,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,900,400,916
-Text=61. Were there delays in receiving capitation tranches?
+Position=50,420,330,436
+Text=48.
  
   
-  
 [Field]
-Name=Q61_DELAY_REASON
-Position=1564,927,3494,947
-Item=Q61_DELAY_REASON,FACILITYHEADSURVEY_DICT
+Name=Q48_1_DELAY_REASON
+Position=350,447,760,467
+Item=Q48_1_DELAY_REASON,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,930,389,946
-Text=61.1. If yes, what was/were the reasons for the delay?
+Position=50,450,330,466
+Text=48.1.
  
   
+[Field]
+Name=Q49_TRANCHE_INTERVAL_NUM
+Position=350,477,760,497
+Item=Q49_TRANCHE_INTERVAL_NUM,FACILITYHEADSURVEY_DICT
+DataCaptureType=TextBox
+Form=7
+  
+[Text]
+Position=50,480,330,496
+Text=49. Number of days
+ 
   
 [Field]
-Name=Q62_TRANCHE_INTERVAL
-Position=1564,957,1593,977
-Item=Q62_TRANCHE_INTERVAL,FACILITYHEADSURVEY_DICT
+Name=Q49_TRANCHE_INTERVAL
+Position=350,507,365,527
+Item=Q49_TRANCHE_INTERVAL,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,960,649,976
-Text=62. On average, how long is the typical time interval between tranches releases to the facility?
+Position=50,510,330,526
+Text=49. Days category
  
   
 [Field]
-Name=Q63_ACCRED_WAIT
-Position=1564,987,1593,1007
-Item=Q63_ACCRED_WAIT,FACILITYHEADSURVEY_DICT
+Name=Q50_ACCRED_WAIT_NUM
+Position=350,537,760,557
+Item=Q50_ACCRED_WAIT_NUM,FACILITYHEADSURVEY_DICT
+DataCaptureType=TextBox
+Form=7
+  
+[Text]
+Position=50,540,330,556
+Text=50. Number of days
+ 
+  
+[Field]
+Name=Q50_ACCRED_WAIT
+Position=350,567,365,587
+Item=Q50_ACCRED_WAIT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,990,628,1006
-Text=63. How many month/s did you wait from application submission to accreditation approval?
+Position=50,570,330,586
+Text=50. Days category
  
   
-  
 [Field]
-Name=Q64_APPLY_REASON
-Position=1564,1017,1733,1037
-Item=Q64_APPLY_REASON,FACILITYHEADSURVEY_DICT
+Name=Q51_APPLY_REASON
+Position=350,597,365,617
+Item=Q51_APPLY_REASON,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,1020,445,1036
-Text=64. Why did you apply to become a YAKAP/Konsulta provider?
+Position=50,600,330,616
+Text=51.
  
   
-  
 [Field]
-Name=Q64_APPLY_REASON_OTHER_TXT
-Position=1564,1197,2534,1217
-Item=Q64_APPLY_REASON_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q51_APPLY_REASON_OTHER_TXT
+Position=350,627,760,647
+Item=Q51_APPLY_REASON_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,1200,585,1216
-Text=64. Why did you apply to become a YAKAP/Konsulta provider? — Other (specify) text
+Position=50,630,330,646
+Text=51. (specify)
  
   
-  
 [Field]
-Name=Q65_ACCRED_DIFFICULT
-Position=1564,1227,1845,1247
-Item=Q65_ACCRED_DIFFICULT,FACILITYHEADSURVEY_DICT
+Name=Q52_ACCRED_DIFFICULT
+Position=350,657,365,677
+Item=Q52_ACCRED_DIFFICULT,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,1230,603,1246
-Text=65. Which of the following requirements were difficult to comply with for accreditation?
+Position=50,660,330,676
+Text=52.
  
   
-  
 [Field]
-Name=Q66_WHY_DIFF_PREVENTIVE
-Position=1564,1527,1761,1547
-Item=Q66_WHY_DIFF_PREVENTIVE,FACILITYHEADSURVEY_DICT
+Name=Q53_WHY_DIFF_PREVENTIVE
+Position=350,687,365,707
+Item=Q53_WHY_DIFF_PREVENTIVE,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,1530,829,1546
-Text=66. Why was it difficult to comply with the following? Ability to conduct preventive/screening services and health education
+Position=50,690,330,706
+Text=53.
  
   
-  
 [Field]
-Name=Q66_WHY_DIFF_PREVENTIVE_OTHER_TXT
-Position=1564,1737,2534,1757
-Item=Q66_WHY_DIFF_PREVENTIVE_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q53_WHY_DIFF_PREVENTIVE_OTHER_TXT
+Position=350,717,760,737
+Item=Q53_WHY_DIFF_PREVENTIVE_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,1740,969,1756
-Text=66. Why was it difficult to comply with the following? Ability to conduct preventive/screening services and health education — Other (specify) text
+Position=50,720,330,736
+Text=53. (specify)
  
   
-  
 [Field]
-Name=Q67_WHY_DIFF_LAB
-Position=1564,1767,1761,1787
-Item=Q67_WHY_DIFF_LAB,FACILITYHEADSURVEY_DICT
+Name=Q54_WHY_DIFF_LAB
+Position=350,747,365,767
+Item=Q54_WHY_DIFF_LAB,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,1770,874,1786
-Text=67. Why was it difficult to comply with the following? Capability to provide services for required laboratory and radiologic services
+Position=50,750,330,766
+Text=54.
  
   
-  
 [Field]
-Name=Q67_WHY_DIFF_LAB_OTHER_TXT
-Position=1564,1977,2534,1997
-Item=Q67_WHY_DIFF_LAB_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q54_WHY_DIFF_LAB_OTHER_TXT
+Position=350,777,760,797
+Item=Q54_WHY_DIFF_LAB_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,1980,1014,1996
-Text=67. Why was it difficult to comply with the following? Capability to provide services for required laboratory and radiologic services — Other (specify) text
+Position=50,780,330,796
+Text=54. (specify)
  
   
-  
 [Field]
-Name=Q68_WHY_DIFF_MEDS
-Position=1564,2007,1761,2027
-Item=Q68_WHY_DIFF_MEDS,FACILITYHEADSURVEY_DICT
+Name=Q55_WHY_DIFF_MEDS
+Position=350,807,365,827
+Item=Q55_WHY_DIFF_MEDS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,2010,655,2026
-Text=68. Why was it difficult to comply with the following? Capability to dispense required medicines
+Position=50,810,330,826
+Text=55.
  
   
-  
 [Field]
-Name=Q68_WHY_DIFF_MEDS_OTHER_TXT
-Position=1564,2217,2534,2237
-Item=Q68_WHY_DIFF_MEDS_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q55_WHY_DIFF_MEDS_OTHER_TXT
+Position=350,837,760,857
+Item=Q55_WHY_DIFF_MEDS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,2220,795,2236
-Text=68. Why was it difficult to comply with the following? Capability to dispense required medicines — Other (specify) text
+Position=50,840,330,856
+Text=55. (specify)
  
   
-  
 [Field]
-Name=Q69_WHY_DIFF_INFRA
-Position=1564,2247,1761,2267
-Item=Q69_WHY_DIFF_INFRA,FACILITYHEADSURVEY_DICT
+Name=Q56_WHY_DIFF_INFRA
+Position=350,867,365,887
+Item=Q56_WHY_DIFF_INFRA,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,2250,527,2266
-Text=69. Why was it difficult to comply with the following? General Infrastructure
+Position=50,870,330,886
+Text=56.
  
   
-  
 [Field]
-Name=Q69_WHY_DIFF_INFRA_OTHER_TXT
-Position=1564,2457,2534,2477
-Item=Q69_WHY_DIFF_INFRA_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q56_WHY_DIFF_INFRA_OTHER_TXT
+Position=350,897,760,917
+Item=Q56_WHY_DIFF_INFRA_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,2460,667,2476
-Text=69. Why was it difficult to comply with the following? General Infrastructure — Other (specify) text
+Position=50,900,330,916
+Text=56. (specify)
  
   
-  
 [Field]
-Name=Q70_WHY_DIFF_EQUIPMENT
-Position=1564,2487,1761,2507
-Item=Q70_WHY_DIFF_EQUIPMENT,FACILITYHEADSURVEY_DICT
+Name=Q57_WHY_DIFF_EQUIPMENT
+Position=350,927,365,947
+Item=Q57_WHY_DIFF_EQUIPMENT,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,2490,543,2506
-Text=70. Why was it difficult to comply with the following? Equipment and Supplies
+Position=50,930,330,946
+Text=57.
  
   
-  
 [Field]
-Name=Q70_WHY_DIFF_EQUIPMENT_OTHER_TXT
-Position=1564,2697,2534,2717
-Item=Q70_WHY_DIFF_EQUIPMENT_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q57_WHY_DIFF_EQUIPMENT_OTHER_TXT
+Position=350,957,760,977
+Item=Q57_WHY_DIFF_EQUIPMENT_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,2700,683,2716
-Text=70. Why was it difficult to comply with the following? Equipment and Supplies — Other (specify) text
+Position=50,960,330,976
+Text=57. (specify)
  
   
-  
 [Field]
-Name=Q71_WHY_DIFF_HR
-Position=1564,2727,1761,2747
-Item=Q71_WHY_DIFF_HR,FACILITYHEADSURVEY_DICT
+Name=Q58_WHY_DIFF_HR
+Position=350,987,365,1007
+Item=Q58_WHY_DIFF_HR,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,2730,492,2746
-Text=71. Why was it difficult to comply with the following? Human resource
+Position=50,990,330,1006
+Text=58.
  
   
-  
 [Field]
-Name=Q71_WHY_DIFF_HR_OTHER_TXT
-Position=1564,2937,2534,2957
-Item=Q71_WHY_DIFF_HR_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q58_WHY_DIFF_HR_OTHER_TXT
+Position=350,1017,760,1037
+Item=Q58_WHY_DIFF_HR_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,2940,632,2956
-Text=71. Why was it difficult to comply with the following? Human resource — Other (specify) text
+Position=50,1020,330,1036
+Text=58. (specify)
  
   
-  
 [Field]
-Name=Q72_WHY_DIFF_HIS
-Position=1564,2967,1761,2987
-Item=Q72_WHY_DIFF_HIS,FACILITYHEADSURVEY_DICT
+Name=Q59_WHY_DIFF_HIS
+Position=350,1047,365,1067
+Item=Q59_WHY_DIFF_HIS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,2970,627,2986
-Text=72. Why was it difficult to comply with the following? Functional Health Information System
+Position=50,1050,330,1066
+Text=59.
  
   
-  
 [Field]
-Name=Q72_WHY_DIFF_HIS_OTHER_TXT
-Position=1564,3177,2534,3197
-Item=Q72_WHY_DIFF_HIS_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q59_WHY_DIFF_HIS_OTHER_TXT
+Position=350,1077,760,1097
+Item=Q59_WHY_DIFF_HIS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,3180,767,3196
-Text=72. Why was it difficult to comply with the following? Functional Health Information System — Other (specify) text
+Position=50,1080,330,1096
+Text=59. (specify)
  
   
-  
 [Field]
-Name=Q73_WHY_DIFF_DOCS
-Position=1564,3207,1761,3227
-Item=Q73_WHY_DIFF_DOCS,FACILITYHEADSURVEY_DICT
+Name=Q60_WHY_DIFF_DOCS
+Position=350,1107,365,1127
+Item=Q60_WHY_DIFF_DOCS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,3210,560,3226
-Text=73. Why was it difficult to comply with the following? Documentary requirements
+Position=50,1110,330,1126
+Text=60.
  
   
-  
 [Field]
-Name=Q73_WHY_DIFF_DOCS_OTHER_TXT
-Position=1564,3417,2534,3437
-Item=Q73_WHY_DIFF_DOCS_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q60_WHY_DIFF_DOCS_OTHER_TXT
+Position=350,1137,760,1157
+Item=Q60_WHY_DIFF_DOCS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,3420,700,3436
-Text=73. Why was it difficult to comply with the following? Documentary requirements — Other (specify) text
+Position=50,1140,330,1156
+Text=60. (specify)
  
   
-  
 [Field]
-Name=Q74_WHY_DIFF_DOH_LIC
-Position=1564,3447,1761,3467
-Item=Q74_WHY_DIFF_DOH_LIC,FACILITYHEADSURVEY_DICT
+Name=Q61_WHY_DIFF_DOH_LIC
+Position=350,1167,365,1187
+Item=Q61_WHY_DIFF_DOH_LIC,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,3450,569,3466
-Text=74. Why was it difficult to comply with the following? DOH Licensing requirements
+Position=50,1170,330,1186
+Text=61.
  
   
-  
 [Field]
-Name=Q74_WHY_DIFF_DOH_LIC_OTHER_TXT
-Position=1564,3657,2534,3677
-Item=Q74_WHY_DIFF_DOH_LIC_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q61_WHY_DIFF_DOH_LIC_OTHER_TXT
+Position=350,1197,760,1217
+Item=Q61_WHY_DIFF_DOH_LIC_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,3660,709,3676
-Text=74. Why was it difficult to comply with the following? DOH Licensing requirements — Other (specify) text
+Position=50,1200,330,1216
+Text=61. (specify)
  
   
-  
 [Field]
-Name=Q75_ENROLL_RESPONSIBILITY
-Position=1564,3687,1761,3707
-Item=Q75_ENROLL_RESPONSIBILITY,FACILITYHEADSURVEY_DICT
+Name=Q62_ENROLL_RESPONSIBILITY
+Position=350,1227,365,1247
+Item=Q62_ENROLL_RESPONSIBILITY,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,3690,663,3706
-Text=75. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta?
+Position=50,1230,330,1246
+Text=62.
  
   
-  
 [Field]
-Name=Q75_ENROLL_RESPONSIBILITY_OTHER_TXT
-Position=1564,3897,2534,3917
-Item=Q75_ENROLL_RESPONSIBILITY_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q62_ENROLL_RESPONSIBILITY_OTHER_TXT
+Position=350,1257,760,1277
+Item=Q62_ENROLL_RESPONSIBILITY_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,3900,803,3916
-Text=75. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta? — Other (specify) text
+Position=50,1260,330,1276
+Text=62. (specify)
  
   
-  
 [Field]
-Name=Q76_ENROLL_INITIATIVES
-Position=1564,3927,1817,3947
-Item=Q76_ENROLL_INITIATIVES,FACILITYHEADSURVEY_DICT
+Name=Q63_ENROLL_INITIATIVES
+Position=350,1287,365,1307
+Item=Q63_ENROLL_INITIATIVES,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,3930,702,3946
-Text=76. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta?
+Position=50,1290,330,1306
+Text=63.
  
   
-  
 [Field]
-Name=Q76_ENROLL_INITIATIVES_OTHER_TXT
-Position=1564,4197,2534,4217
-Item=Q76_ENROLL_INITIATIVES_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q63_ENROLL_INITIATIVES_OTHER_TXT
+Position=350,1317,760,1337
+Item=Q63_ENROLL_INITIATIVES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,4200,842,4216
-Text=76. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta? — Other (specify) text
+Position=50,1320,330,1336
+Text=63. (specify)
  
   
-  
 [Field]
-Name=Q77_ENROLL_CHALL
-Position=1564,4227,1579,4247
-Item=Q77_ENROLL_CHALL,FACILITYHEADSURVEY_DICT
+Name=Q64_ENROLL_CHALL
+Position=350,1347,365,1367
+Item=Q64_ENROLL_CHALL,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,4230,558,4246
-Text=77. Did you experience any challenges in enrolling patients to YAKAP/Konsulta?
+Position=50,1350,330,1366
+Text=64.
  
   
-  
 [Field]
-Name=Q78_ENROLL_CHALL_LIST
-Position=1564,4257,1733,4277
-Item=Q78_ENROLL_CHALL_LIST,FACILITYHEADSURVEY_DICT
+Name=Q65_ENROLL_CHALL_LIST
+Position=350,1377,365,1397
+Item=Q65_ENROLL_CHALL_LIST,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,4260,336,4276
-Text=78. What are the challenges you have faced?
+Position=50,1380,330,1396
+Text=65.
  
   
-  
 [Field]
-Name=Q78_ENROLL_CHALL_LIST_OTHER_TXT
-Position=1564,4437,2534,4457
-Item=Q78_ENROLL_CHALL_LIST_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q65_ENROLL_CHALL_LIST_OTHER_TXT
+Position=350,1407,760,1427
+Item=Q65_ENROLL_CHALL_LIST_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,4440,476,4456
-Text=78. What are the challenges you have faced? — Other (specify) text
+Position=50,1410,330,1426
+Text=65. (specify)
  
   
-  
 [Field]
-Name=Q79_NOT_ACCRED_REASON
-Position=1564,4467,1677,4487
-Item=Q79_NOT_ACCRED_REASON,FACILITYHEADSURVEY_DICT
+Name=Q66_NOT_ACCRED_REASON
+Position=350,1437,365,1457
+Item=Q66_NOT_ACCRED_REASON,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,4470,491,4486
-Text=79. If not YAKAP/ KONSULTA accredited, why are you not accredited?
+Position=50,1440,330,1456
+Text=66.
  
   
-  
 [Field]
-Name=Q79_NOT_ACCRED_REASON_OTHER_TXT
-Position=1564,4587,2534,4607
-Item=Q79_NOT_ACCRED_REASON_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q66_NOT_ACCRED_REASON_OTHER_TXT
+Position=350,1467,760,1487
+Item=Q66_NOT_ACCRED_REASON_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,4590,631,4606
-Text=79. If not YAKAP/ KONSULTA accredited, why are you not accredited? — Other (specify) text
+Position=50,1470,330,1486
+Text=66. (specify)
  
   
-  
 [Field]
-Name=Q80_INTEND_ACCRED
-Position=1564,4617,1593,4637
-Item=Q80_INTEND_ACCRED,FACILITYHEADSURVEY_DICT
+Name=Q67_INTEND_ACCRED
+Position=350,1497,365,1517
+Item=Q67_INTEND_ACCRED,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,4620,440,4636
-Text=80. Are you intending to become a YAKAP/Konsulta provider?
+Position=50,1500,330,1516
+Text=67.
  
   
-  
 [Field]
-Name=Q81_KNOW_HOW_START
-Position=1564,4647,1579,4667
-Item=Q81_KNOW_HOW_START,FACILITYHEADSURVEY_DICT
+Name=Q68_KNOW_HOW_START
+Position=350,1527,365,1547
+Item=Q68_KNOW_HOW_START,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,4650,522,4666
-Text=81. If you decide to apply today, would you know how to start the process?
+Position=50,1530,330,1546
+Text=68.
  
   
-  
 [Field]
-Name=Q82_DECIDED_NOT_REASON
-Position=1564,4677,3494,4697
-Item=Q82_DECIDED_NOT_REASON,FACILITYHEADSURVEY_DICT
+Name=Q69_DECIDED_NOT_REASON
+Position=350,1557,760,1577
+Item=Q69_DECIDED_NOT_REASON,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,4680,344,4696
-Text=82. What was the deciding factor not to apply?
+Position=50,1560,330,1576
+Text=69.
  
   
-  
 [Field]
-Name=Q83_TRIED_FAILED_REASON
-Position=1564,4707,3494,4727
-Item=Q83_TRIED_FAILED_REASON,FACILITYHEADSURVEY_DICT
+Name=Q70_TRIED_FAILED_REASON
+Position=350,1587,760,1607
+Item=Q70_TRIED_FAILED_REASON,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,4710,322,4726
-Text=83. What went wrong with the application?
+Position=50,1590,330,1606
+Text=70.
  
   
-  
 [Field]
-Name=Q84_PROCESS_CHALL
-Position=1564,4737,3494,4757
-Item=Q84_PROCESS_CHALL,FACILITYHEADSURVEY_DICT
+Name=Q71_PROCESS_CHALL
+Position=350,1617,760,1637
+Item=Q71_PROCESS_CHALL,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,4740,384,4756
-Text=84. What are some challenges in the process, if any?
+Position=50,1620,330,1636
+Text=71.
  
   
-  
 [Field]
-Name=Q85_CATCHMENT_AREA
-Position=1564,4767,3494,4787
-Item=Q85_CATCHMENT_AREA,FACILITYHEADSURVEY_DICT
+Name=Q72_CATCHMENT_AREA
+Position=350,1647,760,1667
+Item=Q72_CATCHMENT_AREA,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,4770,467,4786
-Text=85. What areas do you consider as the facility's catchment area/s?
+Position=50,1650,330,1666
+Text=72.
  
   
-  
 [Field]
-Name=Q86_ELIGIBLE_PATIENTS
-Position=1564,4797,1663,4817
-Item=Q86_ELIGIBLE_PATIENTS,FACILITYHEADSURVEY_DICT
+Name=Q73_ELIGIBLE_PATIENTS
+Position=350,1677,760,1697
+Item=Q73_ELIGIBLE_PATIENTS,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,4800,703,4816
-Text=86. How many patients in your catchment area are eligible to register to this YAKAP/Konsulta provider?
+Position=50,1680,330,1696
+Text=73.
  
   
 [Field]
-Name=Q87_REGISTERED_PATIENTS
-Position=1564,4827,1663,4847
-Item=Q87_REGISTERED_PATIENTS,FACILITYHEADSURVEY_DICT
+Name=Q74_REGISTERED_PATIENTS
+Position=350,1707,760,1727
+Item=Q74_REGISTERED_PATIENTS,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,4830,755,4846
-Text=87. How many eligible patients in your catchment area are already registered to this YAKAP/Konsulta provider?
+Position=50,1710,330,1726
+Text=74.
  
   
 [Field]
-Name=Q88_IS_1700_ENOUGH
-Position=1564,4857,1579,4877
-Item=Q88_IS_1700_ENOUGH,FACILITYHEADSURVEY_DICT
+Name=Q75_IS_1700_ENOUGH
+Position=350,1737,365,1757
+Item=Q75_IS_1700_ENOUGH,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,4860,1550,4876
-Text=88. The maximum per capita rate for YAKAP/Konsulta is Php 1,700 across private and public facilities (40% after first patient encounter, 60% based on registered catchment population by December). Based on your practice, is this enough?
+Position=50,1740,330,1756
+Text=75.
  
   
 [Field]
-Name=Q89_COSTING_DONE
-Position=1564,4887,1579,4907
-Item=Q89_COSTING_DONE,FACILITYHEADSURVEY_DICT
+Name=Q76_COSTING_DONE
+Position=350,1767,365,1787
+Item=Q76_COSTING_DONE,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,4890,610,4906
-Text=89. Did you go through a costing exercise to figure out if this was viable for your facility?
+Position=50,1770,330,1786
+Text=76.
  
   
-  
 [Field]
-Name=Q90_COSTING_VIABLE
-Position=1564,4917,1579,4937
-Item=Q90_COSTING_VIABLE,FACILITYHEADSURVEY_DICT
+Name=Q77_COSTING_VIABLE
+Position=350,1797,365,1817
+Item=Q77_COSTING_VIABLE,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,4920,533,4936
-Text=90. Did the costing exercise show that Php 1,700 was viable for your facility?
+Position=50,1800,330,1816
+Text=77.
  
   
-  
 [Field]
-Name=Q91_MIN_CAP_VALUE_ACC
-Position=1564,4947,1649,4967
-Item=Q91_MIN_CAP_VALUE_ACC,FACILITYHEADSURVEY_DICT
+Name=Q78_MIN_CAP_VALUE_ACC
+Position=350,1827,760,1847
+Item=Q78_MIN_CAP_VALUE_ACC,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,4950,816,4966
-Text=91. What would be the minimum acceptable capitation value per patient per year for you as a YAKAP/Konsulta provider?
+Position=50,1830,330,1846
+Text=78.
  
   
-  
 [Field]
-Name=Q92_MIN_CAP_VALUE_NONACC
-Position=1564,4977,1649,4997
-Item=Q92_MIN_CAP_VALUE_NONACC,FACILITYHEADSURVEY_DICT
+Name=Q79_MIN_CAP_VALUE_NONACC
+Position=350,1857,760,1877
+Item=Q79_MIN_CAP_VALUE_NONACC,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,4980,912,4996
-Text=92. What would be the minimum acceptable capitation value per patient per year for you to consider being a YAKAP/Konsulta provider?
+Position=50,1860,330,1876
+Text=79.
  
   
-  
 [Field]
-Name=Q93_CHARGE_ADDL_CAP
-Position=1564,5007,1579,5027
-Item=Q93_CHARGE_ADDL_CAP,FACILITYHEADSURVEY_DICT
+Name=Q80_CHARGE_ADDL_CAP
+Position=350,1887,365,1907
+Item=Q80_CHARGE_ADDL_CAP,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,5010,402,5026
-Text=93. Does your facility charge additional capitation fees?
+Position=50,1890,330,1906
+Text=80.
  
   
-  
 [Field]
-Name=Q94_CHARGE_ADDL_CAP_REASONS
-Position=1564,5037,1733,5057
-Item=Q94_CHARGE_ADDL_CAP_REASONS,FACILITYHEADSURVEY_DICT
+Name=Q81_CHARGE_ADDL_CAP_REASONS
+Position=350,1917,365,1937
+Item=Q81_CHARGE_ADDL_CAP_REASONS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,5040,553,5056
-Text=94. What is/are the reason/s for the facility to charge additional capitation fees?
+Position=50,1920,330,1936
+Text=81.
  
   
-  
 [Field]
-Name=Q94_CHARGE_ADDL_CAP_REASONS_OTHER_TXT
-Position=1564,5217,2534,5237
-Item=Q94_CHARGE_ADDL_CAP_REASONS_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q81_CHARGE_ADDL_CAP_REASONS_OTHER_TXT
+Position=350,1947,760,1967
+Item=Q81_CHARGE_ADDL_CAP_REASONS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,5220,693,5236
-Text=94. What is/are the reason/s for the facility to charge additional capitation fees? — Other (specify) text
+Position=50,1950,330,1966
+Text=81. (specify)
  
   
-  
 [Field]
-Name=Q95_RECEIVED_PAYMENTS
-Position=1564,5247,1593,5267
-Item=Q95_RECEIVED_PAYMENTS,FACILITYHEADSURVEY_DICT
+Name=Q82_RECEIVED_PAYMENTS
+Position=350,1977,365,1997
+Item=Q82_RECEIVED_PAYMENTS,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,5250,447,5266
-Text=95. Have you already received payments for patients enrolled?
+Position=50,1980,330,1996
+Text=82.
  
   
-  
 [Field]
-Name=Q96_NOT_RECEIVED_REASONS
-Position=1564,5277,1761,5297
-Item=Q96_NOT_RECEIVED_REASONS,FACILITYHEADSURVEY_DICT
+Name=Q83_NOT_RECEIVED_REASONS
+Position=350,2007,365,2027
+Item=Q83_NOT_RECEIVED_REASONS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,5280,132,5296
-Text=96. Why not?
+Position=50,2010,330,2026
+Text=83.
  
   
-  
 [Field]
-Name=Q96_NOT_RECEIVED_REASONS_OTHER_TXT
-Position=1564,5487,2534,5507
-Item=Q96_NOT_RECEIVED_REASONS_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q83_NOT_RECEIVED_REASONS_OTHER_TXT
+Position=350,2037,760,2057
+Item=Q83_NOT_RECEIVED_REASONS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,5490,272,5506
-Text=96. Why not? — Other (specify) text
+Position=50,2040,330,2056
+Text=83. (specify)
  
   
-  
 [Field]
-Name=Q97_PAYMENT_CHALL
-Position=1564,5517,1579,5537
-Item=Q97_PAYMENT_CHALL,FACILITYHEADSURVEY_DICT
+Name=Q84_PAYMENT_CHALL
+Position=350,2067,365,2087
+Item=Q84_PAYMENT_CHALL,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=7
   
 [Text]
-Position=50,5520,426,5536
-Text=97. Did you face any challenges in getting these payments?
+Position=50,2070,330,2086
+Text=84.
  
   
-  
 [Field]
-Name=Q98_PAYMENT_CHALL_LIST
-Position=1564,5547,1733,5567
-Item=Q98_PAYMENT_CHALL_LIST,FACILITYHEADSURVEY_DICT
+Name=Q85_PAYMENT_CHALL_LIST
+Position=350,2097,365,2117
+Item=Q85_PAYMENT_CHALL_LIST,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,5550,260,5566
-Text=98. What were these challenges?
+Position=50,2100,330,2116
+Text=85.
  
   
-  
 [Field]
-Name=Q98_PAYMENT_CHALL_LIST_OTHER_TXT
-Position=1564,5727,2534,5747
-Item=Q98_PAYMENT_CHALL_LIST_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q85_PAYMENT_CHALL_LIST_OTHER_TXT
+Position=350,2127,760,2147
+Item=Q85_PAYMENT_CHALL_LIST_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,5730,400,5746
-Text=98. What were these challenges? — Other (specify) text
+Position=50,2130,330,2146
+Text=85. (specify)
  
   
-  
 [Field]
-Name=Q99_EXPAND_NEXT
-Position=1564,5757,1705,5777
-Item=Q99_EXPAND_NEXT,FACILITYHEADSURVEY_DICT
+Name=Q86_EXPAND_NEXT
+Position=350,2157,365,2177
+Item=Q86_EXPAND_NEXT,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,5760,601,5776
-Text=99. If you were to expand the YAKAP/Konsulta package, what would you expand next?
+Position=50,2160,330,2176
+Text=86.
  
   
-  
 [Field]
-Name=Q99_EXPAND_NEXT_OTHER_TXT
-Position=1564,5907,2534,5927
-Item=Q99_EXPAND_NEXT_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q86_EXPAND_NEXT_OTHER_TXT
+Position=350,2187,760,2207
+Item=Q86_EXPAND_NEXT_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,5910,741,5926
-Text=99. If you were to expand the YAKAP/Konsulta package, what would you expand next? — Other (specify) text
+Position=50,2190,330,2206
+Text=86. (specify)
  
   
-  
 [Field]
-Name=Q100_ADDL_FEATURES
-Position=1564,5937,3494,5957
-Item=Q100_ADDL_FEATURES,FACILITYHEADSURVEY_DICT
+Name=Q87_ADDL_FEATURES
+Position=350,2217,760,2237
+Item=Q87_ADDL_FEATURES,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,5940,341,5956
-Text=100. What additional features would you add?
+Position=50,2220,330,2236
+Text=87.
  
+  
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_98
-Label=Q51
+Name=DG_BLK_97
+Label=Q38
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_99
-Label=Q52
+Name=DG_BLK_98
+Label=Q39
 DisplayTogether=Yes
 Position=2
 Length=2
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_100
-Label=Q53
+Name=DG_BLK_99
+Label=Q40
 DisplayTogether=Yes
 Position=5
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_101
-Label=Q53
+Name=DG_BLK_100
+Label=Q40
 DisplayTogether=Yes
 Position=7
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_102
-Label=Q54-Q57
+Name=DG_BLK_101
+Label=Q41-Q44
 DisplayTogether=Yes
 Position=9
 Length=4
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_103
-Label=Q58
+Name=DG_BLK_102
+Label=Q45
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_104
-Label=Q58
+Name=DG_BLK_103
+Label=Q45
 DisplayTogether=Yes
 Position=16
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_105
-Label=Q59
+Name=DG_BLK_104
+Label=Q46
 DisplayTogether=Yes
 Position=18
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_106
-Label=Q60
+Name=DG_BLK_105
+Label=Q47
 DisplayTogether=Yes
 Position=20
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_107
-Label=Q61
+Name=DG_BLK_106
+Label=Q48
 DisplayTogether=Yes
 Position=22
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_108
-Label=Q61
+Name=DG_BLK_107
+Label=Q48.1
 DisplayTogether=Yes
 Position=24
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_109
-Label=Q62-Q63
+Name=DG_BLK_108
+Label=Q49-Q50
 DisplayTogether=Yes
 Position=26
-Length=2
+Length=4
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_110
-Label=Q64
-DisplayTogether=Yes
-Position=29
-Length=1
-  
-[Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_111
-Label=Q64
+Name=DG_BLK_109
+Label=Q51
 DisplayTogether=Yes
 Position=31
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_112
-Label=Q65
+Name=DG_BLK_110
+Label=Q51
 DisplayTogether=Yes
 Position=33
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_113
-Label=Q66
+Name=DG_BLK_111
+Label=Q52
 DisplayTogether=Yes
 Position=35
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_114
-Label=Q66
+Name=DG_BLK_112
+Label=Q53
 DisplayTogether=Yes
 Position=37
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_115
-Label=Q67
+Name=DG_BLK_113
+Label=Q53
 DisplayTogether=Yes
 Position=39
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_116
-Label=Q67
+Name=DG_BLK_114
+Label=Q54
 DisplayTogether=Yes
 Position=41
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_117
-Label=Q68
+Name=DG_BLK_115
+Label=Q54
 DisplayTogether=Yes
 Position=43
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_118
-Label=Q68
+Name=DG_BLK_116
+Label=Q55
 DisplayTogether=Yes
 Position=45
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_119
-Label=Q69
+Name=DG_BLK_117
+Label=Q55
 DisplayTogether=Yes
 Position=47
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_120
-Label=Q69
+Name=DG_BLK_118
+Label=Q56
 DisplayTogether=Yes
 Position=49
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_121
-Label=Q70
+Name=DG_BLK_119
+Label=Q56
 DisplayTogether=Yes
 Position=51
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_122
-Label=Q70
+Name=DG_BLK_120
+Label=Q57
 DisplayTogether=Yes
 Position=53
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_123
-Label=Q71
+Name=DG_BLK_121
+Label=Q57
 DisplayTogether=Yes
 Position=55
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_124
-Label=Q71
+Name=DG_BLK_122
+Label=Q58
 DisplayTogether=Yes
 Position=57
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_125
-Label=Q72
+Name=DG_BLK_123
+Label=Q58
 DisplayTogether=Yes
 Position=59
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_126
-Label=Q72
+Name=DG_BLK_124
+Label=Q59
 DisplayTogether=Yes
 Position=61
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_127
-Label=Q73
+Name=DG_BLK_125
+Label=Q59
 DisplayTogether=Yes
 Position=63
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_128
-Label=Q73
+Name=DG_BLK_126
+Label=Q60
 DisplayTogether=Yes
 Position=65
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_129
-Label=Q74
+Name=DG_BLK_127
+Label=Q60
 DisplayTogether=Yes
 Position=67
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_130
-Label=Q74
+Name=DG_BLK_128
+Label=Q61
 DisplayTogether=Yes
 Position=69
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_131
-Label=Q75
+Name=DG_BLK_129
+Label=Q61
 DisplayTogether=Yes
 Position=71
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_132
-Label=Q75
+Name=DG_BLK_130
+Label=Q62
 DisplayTogether=Yes
 Position=73
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_133
-Label=Q76
+Name=DG_BLK_131
+Label=Q62
 DisplayTogether=Yes
 Position=75
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_134
-Label=Q76
+Name=DG_BLK_132
+Label=Q63
 DisplayTogether=Yes
 Position=77
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_135
-Label=Q77
+Name=DG_BLK_133
+Label=Q63
 DisplayTogether=Yes
 Position=79
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_136
-Label=Q78
+Name=DG_BLK_134
+Label=Q64
 DisplayTogether=Yes
 Position=81
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_137
-Label=Q78
+Name=DG_BLK_135
+Label=Q65
 DisplayTogether=Yes
 Position=83
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_138
-Label=Q79
+Name=DG_BLK_136
+Label=Q65
 DisplayTogether=Yes
 Position=85
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_139
-Label=Q79
+Name=DG_BLK_137
+Label=Q66
 DisplayTogether=Yes
 Position=87
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_140
-Label=Q80
+Name=DG_BLK_138
+Label=Q66
 DisplayTogether=Yes
 Position=89
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_141
-Label=Q81
+Name=DG_BLK_139
+Label=Q67
 DisplayTogether=Yes
 Position=91
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_142
-Label=Q82
+Name=DG_BLK_140
+Label=Q68
 DisplayTogether=Yes
 Position=93
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_143
-Label=Q83
+Name=DG_BLK_141
+Label=Q69
 DisplayTogether=Yes
 Position=95
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_144
-Label=Q84
+Name=DG_BLK_142
+Label=Q70
 DisplayTogether=Yes
 Position=97
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_145
-Label=Q85
+Name=DG_BLK_143
+Label=Q71
 DisplayTogether=Yes
 Position=99
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_146
-Label=Q86-Q89
+Name=DG_BLK_144
+Label=Q72
 DisplayTogether=Yes
 Position=101
-Length=4
-  
-[Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_147
-Label=Q90
-DisplayTogether=Yes
-Position=106
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_148
-Label=Q91
+Name=DG_BLK_145
+Label=Q73-Q76
+DisplayTogether=Yes
+Position=103
+Length=4
+  
+[Block]
+Name=DG_BLK_146
+Label=Q77
 DisplayTogether=Yes
 Position=108
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_149
-Label=Q92
+Name=DG_BLK_147
+Label=Q78
 DisplayTogether=Yes
 Position=110
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_150
-Label=Q93
+Name=DG_BLK_148
+Label=Q79
 DisplayTogether=Yes
 Position=112
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_151
-Label=Q94
+Name=DG_BLK_149
+Label=Q80
 DisplayTogether=Yes
 Position=114
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_152
-Label=Q94
+Name=DG_BLK_150
+Label=Q81
 DisplayTogether=Yes
 Position=116
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_153
-Label=Q95
+Name=DG_BLK_151
+Label=Q81
 DisplayTogether=Yes
 Position=118
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_154
-Label=Q96
+Name=DG_BLK_152
+Label=Q82
 DisplayTogether=Yes
 Position=120
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_155
-Label=Q96
+Name=DG_BLK_153
+Label=Q83
 DisplayTogether=Yes
 Position=122
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_156
-Label=Q97
+Name=DG_BLK_154
+Label=Q83
 DisplayTogether=Yes
 Position=124
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_157
-Label=Q98
+Name=DG_BLK_155
+Label=Q84
 DisplayTogether=Yes
 Position=126
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_158
-Label=Q98
+Name=DG_BLK_156
+Label=Q85
 DisplayTogether=Yes
 Position=128
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_159
-Label=Q99
+Name=DG_BLK_157
+Label=Q85
 DisplayTogether=Yes
 Position=130
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_160
-Label=Q99
+Name=DG_BLK_158
+Label=Q86
 DisplayTogether=Yes
 Position=132
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_161
-Label=Q100
+Name=DG_BLK_159
+Label=Q86
 DisplayTogether=Yes
 Position=134
 Length=1
   
+[Block]
+Name=DG_BLK_160
+Label=Q87
+DisplayTogether=Yes
+Position=136
+Length=1
+  
 [EndGroup]
+  
 [Group]
 Required=Yes
 Name=E_BUCAS_GAMOT_FORM
@@ -4160,1054 +4010,1029 @@ Label=E. Awareness on Expanded Health Programs (BUCAS and GAMOT)
 Form=8
 Max=1
   
-  
 [Field]
-Name=Q101_HEARD_BUCAS
-Position=1130,27,1145,47
-Item=Q101_HEARD_BUCAS,FACILITYHEADSURVEY_DICT
+Name=Q88_HEARD_BUCAS
+Position=350,27,365,47
+Item=Q88_HEARD_BUCAS,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=8
   
 [Text]
-Position=50,30,598,46
-Text=101. Have you heard about the Bagong Urgent Care and Ambulatory Service (BUCAS)?
+Position=50,30,330,46
+Text=88.
  
   
-  
 [Field]
-Name=Q102_HAS_BUCAS
-Position=1130,57,1145,77
-Item=Q102_HAS_BUCAS,FACILITYHEADSURVEY_DICT
+Name=Q89_HAS_BUCAS
+Position=350,57,365,77
+Item=Q89_HAS_BUCAS,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=8
   
 [Text]
-Position=50,60,273,76
-Text=102. Do you have a BUCAS Center?
+Position=50,60,330,76
+Text=89.
  
   
-  
 [Field]
-Name=Q103_NO_BUCAS_REASON
-Position=1130,87,1159,107
-Item=Q103_NO_BUCAS_REASON,FACILITYHEADSURVEY_DICT
+Name=Q90_NO_BUCAS_REASON
+Position=350,87,365,107
+Item=Q90_NO_BUCAS_REASON,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=8
   
 [Text]
-Position=50,90,308,106
-Text=103. If none, what is the primary reason?
+Position=50,90,330,106
+Text=90.
  
   
-  
 [Field]
-Name=Q103_OTHER_TXT
-Position=1130,117,2100,137
-Item=Q103_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q90_OTHER_TXT
+Position=350,117,760,137
+Item=Q90_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=8
   
 [Text]
-Position=50,120,403,136
-Text=103. If none, what is the primary reason? Other (specify)
+Position=50,120,330,136
+Text=90. (specify)
  
   
-  
 [Field]
-Name=Q104_BUCAS_SERVICES
-Position=1130,147,1271,167
-Item=Q104_BUCAS_SERVICES,FACILITYHEADSURVEY_DICT
+Name=Q91_BUCAS_SERVICES
+Position=350,147,365,167
+Item=Q91_BUCAS_SERVICES,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=8
   
 [Text]
-Position=50,150,482,166
-Text=104. What are the available services offered by your BUCAS Center?
+Position=50,150,330,166
+Text=91.
  
   
-  
 [Field]
-Name=Q104_BUCAS_SERVICES_OTHER_TXT
-Position=1130,297,2100,317
-Item=Q104_BUCAS_SERVICES_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q91_BUCAS_SERVICES_OTHER_TXT
+Position=350,177,760,197
+Item=Q91_BUCAS_SERVICES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=8
   
 [Text]
-Position=50,300,622,316
-Text=104. What are the available services offered by your BUCAS Center? — Other (specify) text
+Position=50,180,330,196
+Text=91. (specify)
  
   
-  
 [Field]
-Name=Q105_BUCAS_FACTORS
-Position=1130,327,1299,347
-Item=Q105_BUCAS_FACTORS,FACILITYHEADSURVEY_DICT
+Name=Q92_BUCAS_FACTORS
+Position=350,207,365,227
+Item=Q92_BUCAS_FACTORS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=8
   
 [Text]
-Position=50,330,686,346
-Text=105. In your assessment, what are the main factors affecting the utilization of BUCAS in your facility?
+Position=50,210,330,226
+Text=92.
  
   
-  
 [Field]
-Name=Q105_BUCAS_FACTORS_OTHER_TXT
-Position=1130,507,2100,527
-Item=Q105_BUCAS_FACTORS_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q92_BUCAS_FACTORS_OTHER_TXT
+Position=350,237,760,257
+Item=Q92_BUCAS_FACTORS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=8
   
 [Text]
-Position=50,510,826,526
-Text=105. In your assessment, what are the main factors affecting the utilization of BUCAS in your facility? — Other (specify) text
+Position=50,240,330,256
+Text=92. (specify)
  
   
-  
 [Field]
-Name=Q106_BUCAS_RESOURCES_NEEDED
-Position=1130,537,3060,557
-Item=Q106_BUCAS_RESOURCES_NEEDED,FACILITYHEADSURVEY_DICT
+Name=Q93_BUCAS_RESOURCES_NEEDED
+Position=350,267,760,287
+Item=Q93_BUCAS_RESOURCES_NEEDED,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=8
   
 [Text]
-Position=50,540,529,556
-Text=106. What are the resources you need to support/sustain the BUCAS center?
+Position=50,270,330,286
+Text=93.
  
   
 [Field]
-Name=Q107_BUCAS_DECONGEST
-Position=1130,567,1145,587
-Item=Q107_BUCAS_DECONGEST,FACILITYHEADSURVEY_DICT
+Name=Q94_BUCAS_DECONGEST
+Position=350,297,365,317
+Item=Q94_BUCAS_DECONGEST,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=8
   
 [Text]
-Position=50,570,672,586
-Text=107. Based on your experience, does the BUCAS Center decongest your health facility of patients?
+Position=50,300,330,316
+Text=94.
  
   
-  
 [Field]
-Name=Q108_HEARD_GAMOT
-Position=1130,597,1145,617
-Item=Q108_HEARD_GAMOT,FACILITYHEADSURVEY_DICT
+Name=Q95_HEARD_GAMOT
+Position=350,327,365,347
+Item=Q95_HEARD_GAMOT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=8
   
 [Text]
-Position=50,600,787,616
-Text=108. Have you heard about the Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) package?
+Position=50,330,330,346
+Text=95.
  
   
-  
 [Field]
-Name=Q109_GAMOT_ACCRED
-Position=1130,627,1145,647
-Item=Q109_GAMOT_ACCRED,FACILITYHEADSURVEY_DICT
+Name=Q96_GAMOT_ACCRED
+Position=350,357,365,377
+Item=Q96_GAMOT_ACCRED,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=8
   
 [Text]
-Position=50,630,375,646
-Text=109. Is your facility an accredited GAMOT provider?
+Position=50,360,330,376
+Text=96.
  
   
-  
 [Field]
-Name=Q110_NO_GAMOT_REASON
-Position=1130,657,1159,677
-Item=Q110_NO_GAMOT_REASON,FACILITYHEADSURVEY_DICT
+Name=Q97_NO_GAMOT_REASON
+Position=350,387,365,407
+Item=Q97_NO_GAMOT_REASON,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=8
   
 [Text]
-Position=50,660,292,676
-Text=110. If no, what is the primary reason?
+Position=50,390,330,406
+Text=97.
  
   
-  
 [Field]
-Name=Q110_OTHER_TXT
-Position=1130,687,2100,707
-Item=Q110_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q97_OTHER_TXT
+Position=350,417,760,437
+Item=Q97_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=8
   
 [Text]
-Position=50,690,387,706
-Text=110. If no, what is the primary reason? Other (specify)
+Position=50,420,330,436
+Text=97. (specify)
  
   
-  
 [Field]
-Name=Q111_GAMOT_FACTORS
-Position=1130,717,1299,737
-Item=Q111_GAMOT_FACTORS,FACILITYHEADSURVEY_DICT
+Name=Q98_GAMOT_FACTORS
+Position=350,447,365,467
+Item=Q98_GAMOT_FACTORS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=8
   
 [Text]
-Position=50,720,772,736
-Text=111. In your assessment, what are the main factors affecting the utilization of the GAMOT Program in your facility?
+Position=50,450,330,466
+Text=98.
  
   
-  
 [Field]
-Name=Q111_GAMOT_FACTORS_OTHER_TXT
-Position=1130,897,2100,917
-Item=Q111_GAMOT_FACTORS_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q98_GAMOT_FACTORS_OTHER_TXT
+Position=350,477,760,497
+Item=Q98_GAMOT_FACTORS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=8
   
 [Text]
-Position=50,900,912,916
-Text=111. In your assessment, what are the main factors affecting the utilization of the GAMOT Program in your facility? — Other (specify) text
+Position=50,480,330,496
+Text=98. (specify)
  
   
-  
 [Field]
-Name=Q112_STOCKOUT
-Position=1130,927,1145,947
-Item=Q112_STOCKOUT,FACILITYHEADSURVEY_DICT
+Name=Q99_STOCKOUT
+Position=350,507,365,527
+Item=Q99_STOCKOUT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=8
   
 [Text]
-Position=50,930,770,946
-Text=112. In the past 3 months, has this facility experienced a stock-out (zero supply) of any tracer essential medicines?
+Position=50,510,330,526
+Text=99.
  
   
-  
 [Field]
-Name=Q113_STOCKOUT_MEDS
-Position=1130,957,3060,977
-Item=Q113_STOCKOUT_MEDS,FACILITYHEADSURVEY_DICT
+Name=Q100_STOCKOUT_MEDS
+Position=350,537,760,557
+Item=Q100_STOCKOUT_MEDS,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=8
   
 [Text]
-Position=50,960,468,976
-Text=113. What specific medicines? (antihypertensives, antibiotics, etc.)
+Position=50,540,330,556
+Text=100.
  
   
 [Field]
-Name=Q114_STOCKOUT_DURATION
-Position=1130,987,1159,1007
-Item=Q114_STOCKOUT_DURATION,FACILITYHEADSURVEY_DICT
+Name=Q101_STOCKOUT_DURATION
+Position=350,567,365,587
+Item=Q101_STOCKOUT_DURATION,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=8
   
 [Text]
-Position=50,990,321,1006
-Text=114. How many days did the stock-out last?
+Position=50,570,330,586
+Text=101.
  
   
 [Field]
-Name=Q115_STOCKOUT_AVG
-Position=1130,1017,1159,1037
-Item=Q115_STOCKOUT_AVG,FACILITYHEADSURVEY_DICT
+Name=Q102_STOCKOUT_AVG
+Position=350,597,365,617
+Item=Q102_STOCKOUT_AVG,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=8
   
 [Text]
-Position=50,1020,435,1036
-Text=115. On average, how many months do these stock-outs last?
+Position=50,600,330,616
+Text=102.
  
   
 [Field]
-Name=Q116_ADDR_STOCKOUT
-Position=1130,1047,1159,1067
-Item=Q116_ADDR_STOCKOUT,FACILITYHEADSURVEY_DICT
+Name=Q103_ADDR_STOCKOUT
+Position=350,627,365,647
+Item=Q103_ADDR_STOCKOUT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=8
   
 [Text]
-Position=50,1050,587,1066
-Text=116. Did you do anything to address the medicine stock-outs in the GAMOT Package?
+Position=50,630,330,646
+Text=103.
  
   
-  
 [Field]
-Name=Q117_ADDR_STOCKOUT_HOW
-Position=1130,1077,1243,1097
-Item=Q117_ADDR_STOCKOUT_HOW,FACILITYHEADSURVEY_DICT
+Name=Q104_ADDR_STOCKOUT_HOW
+Position=350,657,365,677
+Item=Q104_ADDR_STOCKOUT_HOW,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=8
   
 [Text]
-Position=50,1080,603,1096
-Text=117. If yes, what did you do to address the medicine stock-outs in the GAMOT Package?
+Position=50,660,330,676
+Text=104.
  
   
-  
 [Field]
-Name=Q117_ADDR_STOCKOUT_HOW_OTHER_TXT
-Position=1130,1197,2100,1217
-Item=Q117_ADDR_STOCKOUT_HOW_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q104_ADDR_STOCKOUT_HOW_OTHER_TXT
+Position=350,687,760,707
+Item=Q104_ADDR_STOCKOUT_HOW_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=8
   
 [Text]
-Position=50,1200,743,1216
-Text=117. If yes, what did you do to address the medicine stock-outs in the GAMOT Package? — Other (specify) text
+Position=50,690,330,706
+Text=104. (specify)
  
+  
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_162
-Label=Q101
+Name=DG_BLK_161
+Label=Q88
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_163
-Label=Q102
+Name=DG_BLK_162
+Label=Q89
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_164
-Label=Q103
+Name=DG_BLK_163
+Label=Q90
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_165
-Label=Q103
+Name=DG_BLK_164
+Label=Q90
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_166
-Label=Q104
+Name=DG_BLK_165
+Label=Q91
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_167
-Label=Q104
+Name=DG_BLK_166
+Label=Q91
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_168
-Label=Q105
+Name=DG_BLK_167
+Label=Q92
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_169
-Label=Q105
+Name=DG_BLK_168
+Label=Q92
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_170
-Label=Q106-Q107
+Name=DG_BLK_169
+Label=Q93-Q94
 DisplayTogether=Yes
 Position=16
 Length=2
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_171
-Label=Q108
+Name=DG_BLK_170
+Label=Q95
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_172
-Label=Q109
+Name=DG_BLK_171
+Label=Q96
 DisplayTogether=Yes
 Position=21
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_173
-Label=Q110
+Name=DG_BLK_172
+Label=Q97
 DisplayTogether=Yes
 Position=23
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_174
-Label=Q110
+Name=DG_BLK_173
+Label=Q97
 DisplayTogether=Yes
 Position=25
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_175
-Label=Q111
+Name=DG_BLK_174
+Label=Q98
 DisplayTogether=Yes
 Position=27
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_176
-Label=Q111
+Name=DG_BLK_175
+Label=Q98
 DisplayTogether=Yes
 Position=29
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_177
-Label=Q112
+Name=DG_BLK_176
+Label=Q99
 DisplayTogether=Yes
 Position=31
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_178
-Label=Q113-Q116
+Name=DG_BLK_177
+Label=Q100-Q102
 DisplayTogether=Yes
 Position=33
-Length=4
+Length=3
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_179
-Label=Q117
-DisplayTogether=Yes
-Position=38
-Length=1
-  
-[Block]
-Name=DG_E_BUCAS_GAMOT_FORM_180
-Label=Q117
-DisplayTogether=Yes
-Position=40
-Length=1
-  
-[EndGroup]
-[Group]
-Required=Yes
-Name=F_DOH_LICENSING_FORM
-Label=F. DOH Licensing: Status and Barriers
-Form=9
-Max=1
-  
-  
-[Field]
-Name=Q118_DOH_LICENSED
-Position=1211,27,1240,47
-Item=Q118_DOH_LICENSED,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,30,258,46
-Text=118. Is this facility DOH licensed?
- 
-  
-  
-[Field]
-Name=Q119_LIC_RECEIVED_WHEN
-Position=1211,57,1240,77
-Item=Q119_LIC_RECEIVED_WHEN,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,60,557,76
-Text=119. When did you receive your DOH license from your most recent application?
- 
-  
-[Field]
-Name=Q120_LIC_DAYS
-Position=1211,87,1240,107
-Item=Q120_LIC_DAYS,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,90,421,106
-Text=120. How many days did it take you to receive the license?
- 
-  
-  
-[Field]
-Name=Q121_DOH_LIC_DIFFICULT
-Position=1211,117,1604,137
-Item=Q121_DOH_LIC_DIFFICULT,FACILITYHEADSURVEY_DICT
-DataCaptureType=CheckBox
-Form=9
-  
-[Text]
-Position=50,120,687,136
-Text=121. Which of the following requirements were difficult to comply with in the DOH licensing process?
- 
-  
-  
-[Field]
-Name=Q122_WHY_DIFF_PT_RIGHTS
-Position=1211,537,1464,557
-Item=Q122_WHY_DIFF_PT_RIGHTS,FACILITYHEADSURVEY_DICT
-DataCaptureType=CheckBox
-Form=9
-  
-[Text]
-Position=50,540,632,556
-Text=122. Why was it difficult to comply with the following? Patient rights and organization ethics
- 
-  
-  
-[Field]
-Name=Q122_WHY_DIFF_PT_RIGHTS_OTHER_TXT
-Position=1211,807,2181,827
-Item=Q122_WHY_DIFF_PT_RIGHTS_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,810,772,826
-Text=122. Why was it difficult to comply with the following? Patient rights and organization ethics — Other (specify) text
- 
-  
-  
-[Field]
-Name=Q123_WHY_DIFF_PT_CARE
-Position=1211,837,1464,857
-Item=Q123_WHY_DIFF_PT_CARE,FACILITYHEADSURVEY_DICT
-DataCaptureType=CheckBox
-Form=9
-  
-[Text]
-Position=50,840,472,856
-Text=123. Why was it difficult to comply with the following? Patient care
- 
-  
-  
-[Field]
-Name=Q123_WHY_DIFF_PT_CARE_OTHER_TXT
-Position=1211,1107,2181,1127
-Item=Q123_WHY_DIFF_PT_CARE_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,1110,612,1126
-Text=123. Why was it difficult to comply with the following? Patient care — Other (specify) text
- 
-  
-  
-[Field]
-Name=Q124_WHY_DIFF_LEADERSHIP
-Position=1211,1137,1464,1157
-Item=Q124_WHY_DIFF_LEADERSHIP,FACILITYHEADSURVEY_DICT
-DataCaptureType=CheckBox
-Form=9
-  
-[Text]
-Position=50,1140,582,1156
-Text=124. Why was it difficult to comply with the following? Leadership and management
- 
-  
-  
-[Field]
-Name=Q124_WHY_DIFF_LEADERSHIP_OTHER_TXT
-Position=1211,1407,2181,1427
-Item=Q124_WHY_DIFF_LEADERSHIP_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,1410,722,1426
-Text=124. Why was it difficult to comply with the following? Leadership and management — Other (specify) text
- 
-  
-  
-[Field]
-Name=Q125_WHY_DIFF_HRM
-Position=1211,1437,1464,1457
-Item=Q125_WHY_DIFF_HRM,FACILITYHEADSURVEY_DICT
-DataCaptureType=CheckBox
-Form=9
-  
-[Text]
-Position=50,1440,587,1456
-Text=125. Why was it difficult to comply with the following? Human resource management
- 
-  
-  
-[Field]
-Name=Q125_WHY_DIFF_HRM_OTHER_TXT
-Position=1211,1707,2181,1727
-Item=Q125_WHY_DIFF_HRM_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,1710,727,1726
-Text=125. Why was it difficult to comply with the following? Human resource management — Other (specify) text
- 
-  
-  
-[Field]
-Name=Q126_WHY_DIFF_INFO_MGMT
-Position=1211,1737,1464,1757
-Item=Q126_WHY_DIFF_INFO_MGMT,FACILITYHEADSURVEY_DICT
-DataCaptureType=CheckBox
-Form=9
-  
-[Text]
-Position=50,1740,556,1756
-Text=126. Why was it difficult to comply with the following? Information management
- 
-  
-  
-[Field]
-Name=Q126_WHY_DIFF_INFO_MGMT_OTHER_TXT
-Position=1211,2007,2181,2027
-Item=Q126_WHY_DIFF_INFO_MGMT_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,2010,696,2026
-Text=126. Why was it difficult to comply with the following? Information management — Other (specify) text
- 
-  
-  
-[Field]
-Name=Q127_WHY_DIFF_SAFE
-Position=1211,2037,1464,2057
-Item=Q127_WHY_DIFF_SAFE,FACILITYHEADSURVEY_DICT
-DataCaptureType=CheckBox
-Form=9
-  
-[Text]
-Position=50,2040,591,2056
-Text=127. Why was it difficult to comply with the following? Safe practice and environment
- 
-  
-  
-[Field]
-Name=Q127_WHY_DIFF_SAFE_OTHER_TXT
-Position=1211,2307,2181,2327
-Item=Q127_WHY_DIFF_SAFE_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,2310,731,2326
-Text=127. Why was it difficult to comply with the following? Safe practice and environment — Other (specify) text
- 
-  
-  
-[Field]
-Name=Q128_WHY_DIFF_PERF
-Position=1211,2337,1464,2357
-Item=Q128_WHY_DIFF_PERF,FACILITYHEADSURVEY_DICT
-DataCaptureType=CheckBox
-Form=9
-  
-[Text]
-Position=50,2340,544,2356
-Text=128. Why was it difficult to comply with the following? Improving performance
- 
-  
-  
-[Field]
-Name=Q128_WHY_DIFF_PERF_OTHER_TXT
-Position=1211,2607,2181,2627
-Item=Q128_WHY_DIFF_PERF_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,2610,684,2626
-Text=128. Why was it difficult to comply with the following? Improving performance — Other (specify) text
- 
-  
-  
-[Field]
-Name=Q129_WHY_DIFF_PHYS_PLANT
-Position=1211,2637,1464,2657
-Item=Q129_WHY_DIFF_PHYS_PLANT,FACILITYHEADSURVEY_DICT
-DataCaptureType=CheckBox
-Form=9
-  
-[Text]
-Position=50,2640,484,2656
-Text=129. Why was it difficult to comply with the following? Physical plant
- 
-  
-  
-[Field]
-Name=Q129_WHY_DIFF_PHYS_PLANT_OTHER_TXT
-Position=1211,2907,2181,2927
-Item=Q129_WHY_DIFF_PHYS_PLANT_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,2910,624,2926
-Text=129. Why was it difficult to comply with the following? Physical plant — Other (specify) text
- 
-  
-  
-[Field]
-Name=Q130_WHY_DIFF_PRICE_INFO
-Position=1211,2937,1464,2957
-Item=Q130_WHY_DIFF_PRICE_INFO,FACILITYHEADSURVEY_DICT
-DataCaptureType=CheckBox
-Form=9
-  
-[Text]
-Position=50,2940,610,2956
-Text=130. Why was it difficult to comply with the following? Public access to price information
- 
-  
-  
-[Field]
-Name=Q130_WHY_DIFF_PRICE_INFO_OTHER_TXT
-Position=1211,3207,2181,3227
-Item=Q130_WHY_DIFF_PRICE_INFO_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,3210,750,3226
-Text=130. Why was it difficult to comply with the following? Public access to price information — Other (specify) text
- 
-  
-  
-[Field]
-Name=Q131_WHY_DIFF_EQUIPMENT
-Position=1211,3237,1464,3257
-Item=Q131_WHY_DIFF_EQUIPMENT,FACILITYHEADSURVEY_DICT
-DataCaptureType=CheckBox
-Form=9
-  
-[Text]
-Position=50,3240,568,3256
-Text=131. Why was it difficult to comply with the following? Equipment and instruments
- 
-  
-  
-[Field]
-Name=Q131_WHY_DIFF_EQUIPMENT_OTHER_TXT
-Position=1211,3507,2181,3527
-Item=Q131_WHY_DIFF_EQUIPMENT_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,3510,708,3526
-Text=131. Why was it difficult to comply with the following? Equipment and instruments — Other (specify) text
- 
-  
-  
-[Field]
-Name=Q132_WHY_DIFF_NAT_LAWS
-Position=1211,3537,1464,3557
-Item=Q132_WHY_DIFF_NAT_LAWS,FACILITYHEADSURVEY_DICT
-DataCaptureType=CheckBox
-Form=9
-  
-[Text]
-Position=50,3540,936,3556
-Text=132. Why was it difficult to comply with the following? National laws and DOH issuances implemented in hospitals and other health facilities
- 
-  
-  
-[Field]
-Name=Q132_WHY_DIFF_NAT_LAWS_OTHER_TXT
-Position=1211,3807,2181,3827
-Item=Q132_WHY_DIFF_NAT_LAWS_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,3810,1076,3826
-Text=132. Why was it difficult to comply with the following? National laws and DOH issuances implemented in hospitals and other health facilities — Other (specify) text
- 
-  
-  
-[Field]
-Name=Q133_WHY_DIFF_EMERG_CART
-Position=1211,3837,1464,3857
-Item=Q133_WHY_DIFF_EMERG_CART,FACILITYHEADSURVEY_DICT
-DataCaptureType=CheckBox
-Form=9
-  
-[Text]
-Position=50,3840,555,3856
-Text=133. Why was it difficult to comply with the following? Emergency Cart Contents
- 
-  
-  
-[Field]
-Name=Q133_WHY_DIFF_EMERG_CART_OTHER_TXT
-Position=1211,4107,2181,4127
-Item=Q133_WHY_DIFF_EMERG_CART_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,4110,695,4126
-Text=133. Why was it difficult to comply with the following? Emergency Cart Contents — Other (specify) text
- 
-  
-  
-[Field]
-Name=Q134_WHY_DIFF_ADDONS
-Position=1211,4137,1464,4157
-Item=Q134_WHY_DIFF_ADDONS,FACILITYHEADSURVEY_DICT
-DataCaptureType=CheckBox
-Form=9
-  
-[Text]
-Position=50,4140,495,4156
-Text=134. Why was it difficult to comply with the following? Add-on services
- 
-  
-  
-[Field]
-Name=Q134_WHY_DIFF_ADDONS_OTHER_TXT
-Position=1211,4407,2181,4427
-Item=Q134_WHY_DIFF_ADDONS_OTHER_TXT,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=9
-  
-[Text]
-Position=50,4410,635,4426
-Text=134. Why was it difficult to comply with the following? Add-on services — Other (specify) text
- 
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_181
-Label=Q118
-DisplayTogether=Yes
-Position=0
-Length=1
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_182
-Label=Q119-Q120
-DisplayTogether=Yes
-Position=2
-Length=2
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_183
-Label=Q121
-DisplayTogether=Yes
-Position=5
-Length=1
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_184
-Label=Q122
-DisplayTogether=Yes
-Position=7
-Length=1
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_185
-Label=Q122
-DisplayTogether=Yes
-Position=9
-Length=1
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_186
-Label=Q123
-DisplayTogether=Yes
-Position=11
-Length=1
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_187
-Label=Q123
-DisplayTogether=Yes
-Position=13
-Length=1
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_188
-Label=Q124
-DisplayTogether=Yes
-Position=15
-Length=1
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_189
-Label=Q124
-DisplayTogether=Yes
-Position=17
-Length=1
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_190
-Label=Q125
-DisplayTogether=Yes
-Position=19
-Length=1
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_191
-Label=Q125
-DisplayTogether=Yes
-Position=21
-Length=1
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_192
-Label=Q126
-DisplayTogether=Yes
-Position=23
-Length=1
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_193
-Label=Q126
-DisplayTogether=Yes
-Position=25
-Length=1
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_194
-Label=Q127
-DisplayTogether=Yes
-Position=27
-Length=1
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_195
-Label=Q127
-DisplayTogether=Yes
-Position=29
-Length=1
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_196
-Label=Q128
-DisplayTogether=Yes
-Position=31
-Length=1
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_197
-Label=Q128
-DisplayTogether=Yes
-Position=33
-Length=1
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_198
-Label=Q129
-DisplayTogether=Yes
-Position=35
-Length=1
-  
-[Block]
-Name=DG_F_DOH_LICENSING_FORM_199
-Label=Q129
+Name=DG_BLK_178
+Label=Q103
 DisplayTogether=Yes
 Position=37
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_200
-Label=Q130
+Name=DG_BLK_179
+Label=Q104
 DisplayTogether=Yes
 Position=39
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_201
-Label=Q130
+Name=DG_BLK_180
+Label=Q104
 DisplayTogether=Yes
 Position=41
 Length=1
   
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=F_DOH_LICENSING_FORM
+Label=F. DOH Licensing: Status and Barriers to Licensing
+Form=9
+Max=1
+  
+[Field]
+Name=Q105_DOH_LICENSED
+Position=350,27,365,47
+Item=Q105_DOH_LICENSED,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=9
+  
+[Text]
+Position=50,30,330,46
+Text=105.
+ 
+  
+[Field]
+Name=Q106_LIC_RECEIVED_WHEN
+Position=350,57,365,77
+Item=Q106_LIC_RECEIVED_WHEN,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=9
+  
+[Text]
+Position=50,60,330,76
+Text=106.
+ 
+  
+[Field]
+Name=Q107_LIC_DAYS_NUM
+Position=350,87,760,107
+Item=Q107_LIC_DAYS_NUM,FACILITYHEADSURVEY_DICT
+DataCaptureType=TextBox
+Form=9
+  
+[Text]
+Position=50,90,330,106
+Text=107. Number of days
+ 
+  
+[Field]
+Name=Q107_LIC_DAYS
+Position=350,117,365,137
+Item=Q107_LIC_DAYS,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=9
+  
+[Text]
+Position=50,120,330,136
+Text=107. Days category
+ 
+  
+[Field]
+Name=Q108_DOH_LIC_DIFFICULT
+Position=350,147,365,167
+Item=Q108_DOH_LIC_DIFFICULT,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
+Form=9
+  
+[Text]
+Position=50,150,330,166
+Text=108.
+ 
+  
+[Field]
+Name=Q109_WHY_DIFF_PT_RIGHTS
+Position=350,177,365,197
+Item=Q109_WHY_DIFF_PT_RIGHTS,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
+Form=9
+  
+[Text]
+Position=50,180,330,196
+Text=109.
+ 
+  
+[Field]
+Name=Q109_WHY_DIFF_PT_RIGHTS_OTHER_TXT
+Position=350,207,760,227
+Item=Q109_WHY_DIFF_PT_RIGHTS_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=9
+  
+[Text]
+Position=50,210,330,226
+Text=109. (specify)
+ 
+  
+[Field]
+Name=Q110_WHY_DIFF_PT_CARE
+Position=350,237,365,257
+Item=Q110_WHY_DIFF_PT_CARE,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
+Form=9
+  
+[Text]
+Position=50,240,330,256
+Text=110.
+ 
+  
+[Field]
+Name=Q110_WHY_DIFF_PT_CARE_OTHER_TXT
+Position=350,267,760,287
+Item=Q110_WHY_DIFF_PT_CARE_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=9
+  
+[Text]
+Position=50,270,330,286
+Text=110. (specify)
+ 
+  
+[Field]
+Name=Q111_WHY_DIFF_LEADERSHIP
+Position=350,297,365,317
+Item=Q111_WHY_DIFF_LEADERSHIP,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
+Form=9
+  
+[Text]
+Position=50,300,330,316
+Text=111.
+ 
+  
+[Field]
+Name=Q111_WHY_DIFF_LEADERSHIP_OTHER_TXT
+Position=350,327,760,347
+Item=Q111_WHY_DIFF_LEADERSHIP_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=9
+  
+[Text]
+Position=50,330,330,346
+Text=111. (specify)
+ 
+  
+[Field]
+Name=Q112_WHY_DIFF_HRM
+Position=350,357,365,377
+Item=Q112_WHY_DIFF_HRM,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
+Form=9
+  
+[Text]
+Position=50,360,330,376
+Text=112.
+ 
+  
+[Field]
+Name=Q112_WHY_DIFF_HRM_OTHER_TXT
+Position=350,387,760,407
+Item=Q112_WHY_DIFF_HRM_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=9
+  
+[Text]
+Position=50,390,330,406
+Text=112. (specify)
+ 
+  
+[Field]
+Name=Q113_WHY_DIFF_INFO_MGMT
+Position=350,417,365,437
+Item=Q113_WHY_DIFF_INFO_MGMT,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
+Form=9
+  
+[Text]
+Position=50,420,330,436
+Text=113.
+ 
+  
+[Field]
+Name=Q113_WHY_DIFF_INFO_MGMT_OTHER_TXT
+Position=350,447,760,467
+Item=Q113_WHY_DIFF_INFO_MGMT_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=9
+  
+[Text]
+Position=50,450,330,466
+Text=113. (specify)
+ 
+  
+[Field]
+Name=Q114_WHY_DIFF_SAFE
+Position=350,477,365,497
+Item=Q114_WHY_DIFF_SAFE,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
+Form=9
+  
+[Text]
+Position=50,480,330,496
+Text=114.
+ 
+  
+[Field]
+Name=Q114_WHY_DIFF_SAFE_OTHER_TXT
+Position=350,507,760,527
+Item=Q114_WHY_DIFF_SAFE_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=9
+  
+[Text]
+Position=50,510,330,526
+Text=114. (specify)
+ 
+  
+[Field]
+Name=Q115_WHY_DIFF_PERF
+Position=350,537,365,557
+Item=Q115_WHY_DIFF_PERF,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
+Form=9
+  
+[Text]
+Position=50,540,330,556
+Text=115.
+ 
+  
+[Field]
+Name=Q115_WHY_DIFF_PERF_OTHER_TXT
+Position=350,567,760,587
+Item=Q115_WHY_DIFF_PERF_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=9
+  
+[Text]
+Position=50,570,330,586
+Text=115. (specify)
+ 
+  
+[Field]
+Name=Q116_WHY_DIFF_PHYS_PLANT
+Position=350,597,365,617
+Item=Q116_WHY_DIFF_PHYS_PLANT,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
+Form=9
+  
+[Text]
+Position=50,600,330,616
+Text=116.
+ 
+  
+[Field]
+Name=Q116_WHY_DIFF_PHYS_PLANT_OTHER_TXT
+Position=350,627,760,647
+Item=Q116_WHY_DIFF_PHYS_PLANT_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=9
+  
+[Text]
+Position=50,630,330,646
+Text=116. (specify)
+ 
+  
+[Field]
+Name=Q117_WHY_DIFF_PRICE_INFO
+Position=350,657,365,677
+Item=Q117_WHY_DIFF_PRICE_INFO,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
+Form=9
+  
+[Text]
+Position=50,660,330,676
+Text=117.
+ 
+  
+[Field]
+Name=Q117_WHY_DIFF_PRICE_INFO_OTHER_TXT
+Position=350,687,760,707
+Item=Q117_WHY_DIFF_PRICE_INFO_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=9
+  
+[Text]
+Position=50,690,330,706
+Text=117. (specify)
+ 
+  
+[Field]
+Name=Q118_WHY_DIFF_EQUIPMENT
+Position=350,717,365,737
+Item=Q118_WHY_DIFF_EQUIPMENT,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
+Form=9
+  
+[Text]
+Position=50,720,330,736
+Text=118.
+ 
+  
+[Field]
+Name=Q118_WHY_DIFF_EQUIPMENT_OTHER_TXT
+Position=350,747,760,767
+Item=Q118_WHY_DIFF_EQUIPMENT_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=9
+  
+[Text]
+Position=50,750,330,766
+Text=118. (specify)
+ 
+  
+[Field]
+Name=Q119_WHY_DIFF_NAT_LAWS
+Position=350,777,365,797
+Item=Q119_WHY_DIFF_NAT_LAWS,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
+Form=9
+  
+[Text]
+Position=50,780,330,796
+Text=119.
+ 
+  
+[Field]
+Name=Q119_WHY_DIFF_NAT_LAWS_OTHER_TXT
+Position=350,807,760,827
+Item=Q119_WHY_DIFF_NAT_LAWS_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=9
+  
+[Text]
+Position=50,810,330,826
+Text=119. (specify)
+ 
+  
+[Field]
+Name=Q120_WHY_DIFF_EMERG_CART
+Position=350,837,365,857
+Item=Q120_WHY_DIFF_EMERG_CART,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
+Form=9
+  
+[Text]
+Position=50,840,330,856
+Text=120.
+ 
+  
+[Field]
+Name=Q120_WHY_DIFF_EMERG_CART_OTHER_TXT
+Position=350,867,760,887
+Item=Q120_WHY_DIFF_EMERG_CART_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=9
+  
+[Text]
+Position=50,870,330,886
+Text=120. (specify)
+ 
+  
+[Field]
+Name=Q121_WHY_DIFF_ADDONS
+Position=350,897,365,917
+Item=Q121_WHY_DIFF_ADDONS,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
+Form=9
+  
+[Text]
+Position=50,900,330,916
+Text=121.
+ 
+  
+[Field]
+Name=Q121_WHY_DIFF_ADDONS_OTHER_TXT
+Position=350,927,760,947
+Item=Q121_WHY_DIFF_ADDONS_OTHER_TXT,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=9
+  
+[Text]
+Position=50,930,330,946
+Text=121. (specify)
+ 
+  
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_202
-Label=Q131
+Name=DG_BLK_181
+Label=Q105
 DisplayTogether=Yes
-Position=43
+Position=0
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_203
-Label=Q131
+Name=DG_BLK_182
+Label=Q106-Q107
 DisplayTogether=Yes
-Position=45
+Position=2
+Length=3
+  
+[Block]
+Name=DG_BLK_183
+Label=Q108
+DisplayTogether=Yes
+Position=6
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_204
-Label=Q132
+Name=DG_BLK_184
+Label=Q109
 DisplayTogether=Yes
-Position=47
+Position=8
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_205
-Label=Q132
+Name=DG_BLK_185
+Label=Q109
 DisplayTogether=Yes
-Position=49
+Position=10
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_206
-Label=Q133
+Name=DG_BLK_186
+Label=Q110
 DisplayTogether=Yes
-Position=51
+Position=12
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_207
-Label=Q133
+Name=DG_BLK_187
+Label=Q110
 DisplayTogether=Yes
-Position=53
+Position=14
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_208
-Label=Q134
+Name=DG_BLK_188
+Label=Q111
 DisplayTogether=Yes
-Position=55
+Position=16
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_209
-Label=Q134
+Name=DG_BLK_189
+Label=Q111
 DisplayTogether=Yes
-Position=57
+Position=18
+Length=1
+  
+[Block]
+Name=DG_BLK_190
+Label=Q112
+DisplayTogether=Yes
+Position=20
+Length=1
+  
+[Block]
+Name=DG_BLK_191
+Label=Q112
+DisplayTogether=Yes
+Position=22
+Length=1
+  
+[Block]
+Name=DG_BLK_192
+Label=Q113
+DisplayTogether=Yes
+Position=24
+Length=1
+  
+[Block]
+Name=DG_BLK_193
+Label=Q113
+DisplayTogether=Yes
+Position=26
+Length=1
+  
+[Block]
+Name=DG_BLK_194
+Label=Q114
+DisplayTogether=Yes
+Position=28
+Length=1
+  
+[Block]
+Name=DG_BLK_195
+Label=Q114
+DisplayTogether=Yes
+Position=30
+Length=1
+  
+[Block]
+Name=DG_BLK_196
+Label=Q115
+DisplayTogether=Yes
+Position=32
+Length=1
+  
+[Block]
+Name=DG_BLK_197
+Label=Q115
+DisplayTogether=Yes
+Position=34
+Length=1
+  
+[Block]
+Name=DG_BLK_198
+Label=Q116
+DisplayTogether=Yes
+Position=36
+Length=1
+  
+[Block]
+Name=DG_BLK_199
+Label=Q116
+DisplayTogether=Yes
+Position=38
+Length=1
+  
+[Block]
+Name=DG_BLK_200
+Label=Q117
+DisplayTogether=Yes
+Position=40
+Length=1
+  
+[Block]
+Name=DG_BLK_201
+Label=Q117
+DisplayTogether=Yes
+Position=42
+Length=1
+  
+[Block]
+Name=DG_BLK_202
+Label=Q118
+DisplayTogether=Yes
+Position=44
+Length=1
+  
+[Block]
+Name=DG_BLK_203
+Label=Q118
+DisplayTogether=Yes
+Position=46
+Length=1
+  
+[Block]
+Name=DG_BLK_204
+Label=Q119
+DisplayTogether=Yes
+Position=48
+Length=1
+  
+[Block]
+Name=DG_BLK_205
+Label=Q119
+DisplayTogether=Yes
+Position=50
+Length=1
+  
+[Block]
+Name=DG_BLK_206
+Label=Q120
+DisplayTogether=Yes
+Position=52
+Length=1
+  
+[Block]
+Name=DG_BLK_207
+Label=Q120
+DisplayTogether=Yes
+Position=54
+Length=1
+  
+[Block]
+Name=DG_BLK_208
+Label=Q121
+DisplayTogether=Yes
+Position=56
+Length=1
+  
+[Block]
+Name=DG_BLK_209
+Label=Q121
+DisplayTogether=Yes
+Position=58
 Length=1
   
 [EndGroup]
+  
 [Group]
 Required=Yes
 Name=G_SERVICE_DELIVERY_FORM
@@ -5215,812 +5040,775 @@ Label=G. Service Delivery Process
 Form=10
 Max=1
   
-  
 [Field]
-Name=Q135_NBB_CURR
-Position=1204,27,1219,47
-Item=Q135_NBB_CURR,FACILITYHEADSURVEY_DICT
+Name=Q122_NBB_CURR
+Position=350,27,365,47
+Item=Q122_NBB_CURR,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,30,567,46
-Text=135. Do you currently implement the "no balance billing" policy for your patients?
+Position=50,30,330,46
+Text=122.
  
   
-  
 [Field]
-Name=Q136_NBB_ALL_PATIENTS
-Position=1204,57,1219,77
-Item=Q136_NBB_ALL_PATIENTS,FACILITYHEADSURVEY_DICT
+Name=Q123_NBB_ALL_PATIENTS
+Position=350,57,365,77
+Item=Q123_NBB_ALL_PATIENTS,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,60,695,76
-Text=136. Are you able to implement it for all patients, to the best of your knowledge, for the last 6 months?
+Position=50,60,330,76
+Text=123.
  
   
-  
 [Field]
-Name=Q137_NBB_BARRIERS
-Position=1204,87,1429,107
-Item=Q137_NBB_BARRIERS,FACILITYHEADSURVEY_DICT
+Name=Q124_NBB_BARRIERS
+Position=350,87,365,107
+Item=Q124_NBB_BARRIERS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,90,692,106
-Text=137. In your view, what are some of the barriers to implementing the no balance billing (NBB) policy?
+Position=50,90,330,106
+Text=124.
  
   
-  
 [Field]
-Name=Q137_NBB_BARRIERS_OTHER_TXT
-Position=1204,327,2174,347
-Item=Q137_NBB_BARRIERS_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q124_NBB_BARRIERS_OTHER_TXT
+Position=350,117,760,137
+Item=Q124_NBB_BARRIERS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,330,832,346
-Text=137. In your view, what are some of the barriers to implementing the no balance billing (NBB) policy? — Other (specify) text
+Position=50,120,330,136
+Text=124. (specify)
  
   
-  
 [Field]
-Name=Q138_ZBB_CURR
-Position=1204,357,1219,377
-Item=Q138_ZBB_CURR,FACILITYHEADSURVEY_DICT
+Name=Q125_ZBB_CURR
+Position=350,147,365,167
+Item=Q125_ZBB_CURR,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,360,581,376
-Text=138. Do you currently implement the "Zero Balance Billing" policy for your patients?
+Position=50,150,330,166
+Text=125.
  
   
-  
 [Field]
-Name=Q139_ZBB_ALL_PATIENTS
-Position=1204,387,1219,407
-Item=Q139_ZBB_ALL_PATIENTS,FACILITYHEADSURVEY_DICT
+Name=Q126_ZBB_ALL_PATIENTS
+Position=350,177,365,197
+Item=Q126_ZBB_ALL_PATIENTS,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,390,902,406
-Text=139. If currently implementing ZBB, are you able to implement it for all patients, to the best of your knowledge, for the last six months?
+Position=50,180,330,196
+Text=126.
  
   
-  
 [Field]
-Name=Q140_ZBB_BARRIERS
-Position=1204,417,1429,437
-Item=Q140_ZBB_BARRIERS,FACILITYHEADSURVEY_DICT
+Name=Q127_ZBB_BARRIERS
+Position=350,207,365,227
+Item=Q127_ZBB_BARRIERS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,420,677,436
-Text=140. In your view, what are some of the barriers to implementing the "zero balance billing" policy?
+Position=50,210,330,226
+Text=127.
  
   
-  
 [Field]
-Name=Q140_ZBB_BARRIERS_OTHER_TXT
-Position=1204,657,2174,677
-Item=Q140_ZBB_BARRIERS_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q127_ZBB_BARRIERS_OTHER_TXT
+Position=350,237,760,257
+Item=Q127_ZBB_BARRIERS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,660,817,676
-Text=140. In your view, what are some of the barriers to implementing the "zero balance billing" policy? — Other (specify) text
+Position=50,240,330,256
+Text=127. (specify)
  
   
-  
 [Field]
-Name=Q141_ALLOW_OOP_BASIC
-Position=1204,687,1219,707
-Item=Q141_ALLOW_OOP_BASIC,FACILITYHEADSURVEY_DICT
+Name=Q128_ALLOW_OOP_BASIC
+Position=350,267,365,287
+Item=Q128_ALLOW_OOP_BASIC,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,690,582,706
-Text=141. Does the facility allow out-of-pocket (OOP) expenses for basic accommodation?
+Position=50,270,330,286
+Text=128.
  
   
-  
 [Field]
-Name=Q142_OOP_REASON
-Position=1204,717,3134,737
-Item=Q142_OOP_REASON,FACILITYHEADSURVEY_DICT
+Name=Q129_OOP_REASON
+Position=350,297,760,317
+Item=Q129_OOP_REASON,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,720,653,736
-Text=142. Why does the facility allow OOP expenses for basic accommodation? Specify your reason.
+Position=50,300,330,316
+Text=129.
  
   
-  
 [Field]
-Name=Q143_DIFFICULT_BENEFIT
-Position=1204,747,1233,767
-Item=Q143_DIFFICULT_BENEFIT,FACILITYHEADSURVEY_DICT
+Name=Q130_DIFFICULT_BENEFIT
+Position=350,327,365,347
+Item=Q130_DIFFICULT_BENEFIT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,750,500,766
-Text=143. Which of the UHC benefits do you find most difficult to implement?
+Position=50,330,330,346
+Text=130.
  
   
-  
 [Field]
-Name=Q143_OTHER_TXT
-Position=1204,777,2174,797
-Item=Q143_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q130_OTHER_TXT
+Position=350,357,760,377
+Item=Q130_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,780,595,796
-Text=143. Which of the UHC benefits do you find most difficult to implement? Other (specify)
+Position=50,360,330,376
+Text=130. (specify)
  
   
-  
 [Field]
-Name=Q144_DIFFICULT_REASON
-Position=1204,807,1317,827
-Item=Q144_DIFFICULT_REASON,FACILITYHEADSURVEY_DICT
+Name=Q131_DIFFICULT_REASON
+Position=350,387,365,407
+Item=Q131_DIFFICULT_REASON,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,810,294,826
-Text=144. Why is this difficult to implement?
+Position=50,390,330,406
+Text=131.
  
   
-  
 [Field]
-Name=Q144_DIFFICULT_REASON_OTHER_TXT
-Position=1204,837,2174,857
-Item=Q144_DIFFICULT_REASON_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q131_DIFFICULT_REASON_OTHER_TXT
+Position=350,417,760,437
+Item=Q131_DIFFICULT_REASON_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,840,434,856
-Text=144. Why is this difficult to implement? — Other (specify) text
+Position=50,420,330,436
+Text=131. (specify)
  
   
-  
 [Field]
-Name=Q145_MALASAKIT_PROVIDED
-Position=1204,957,1219,977
-Item=Q145_MALASAKIT_PROVIDED,FACILITYHEADSURVEY_DICT
+Name=Q132_MALASAKIT_PROVIDED
+Position=350,447,365,467
+Item=Q132_MALASAKIT_PROVIDED,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,960,776,976
-Text=145. Has the facility been providing medical social welfare or assistance (e.g., through Malasakit Centers, MAIFIP)?
+Position=50,450,330,466
+Text=132.
  
   
-  
 [Field]
-Name=Q146_MALASAKIT_WHY
-Position=1204,987,1345,1007
-Item=Q146_MALASAKIT_WHY,FACILITYHEADSURVEY_DICT
+Name=Q133_MALASAKIT_WHY
+Position=350,477,365,497
+Item=Q133_MALASAKIT_WHY,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,990,732,1006
-Text=146. Why is the facility providing medical social welfare or assistance through Malasakit Centers or MAIFIP?
+Position=50,480,330,496
+Text=133.
  
   
-  
 [Field]
-Name=Q146_MALASAKIT_WHY_OTHER_TXT
-Position=1204,1137,2174,1157
-Item=Q146_MALASAKIT_WHY_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q133_MALASAKIT_WHY_OTHER_TXT
+Position=350,507,760,527
+Item=Q133_MALASAKIT_WHY_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1140,872,1156
-Text=146. Why is the facility providing medical social welfare or assistance through Malasakit Centers or MAIFIP? — Other (specify) text
+Position=50,510,330,526
+Text=133. (specify)
  
   
-  
 [Field]
-Name=Q147_NO_MALASAKIT_WHY
-Position=1204,1167,1345,1187
-Item=Q147_NO_MALASAKIT_WHY,FACILITYHEADSURVEY_DICT
+Name=Q134_NO_MALASAKIT_WHY
+Position=350,537,365,557
+Item=Q134_NO_MALASAKIT_WHY,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,1170,756,1186
-Text=147. Why is the facility not providing medical social welfare or assistance through Malasakit Centers or MAIFIP?
+Position=50,540,330,556
+Text=134.
  
   
-  
 [Field]
-Name=Q147_NO_MALASAKIT_WHY_OTHER_TXT
-Position=1204,1317,2174,1337
-Item=Q147_NO_MALASAKIT_WHY_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q134_NO_MALASAKIT_WHY_OTHER_TXT
+Position=350,567,760,587
+Item=Q134_NO_MALASAKIT_WHY_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1320,896,1336
-Text=147. Why is the facility not providing medical social welfare or assistance through Malasakit Centers or MAIFIP? — Other (specify) text
+Position=50,570,330,586
+Text=134. (specify)
  
   
-  
 [Field]
-Name=Q148_LGU_SUPPORT
-Position=1204,1347,1219,1367
-Item=Q148_LGU_SUPPORT,FACILITYHEADSURVEY_DICT
+Name=Q135_LGU_SUPPORT
+Position=350,597,365,617
+Item=Q135_LGU_SUPPORT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1350,527,1366
-Text=148. Do you receive any support from your LGU to implement UHC reforms?
+Position=50,600,330,616
+Text=135.
  
   
-  
 [Field]
-Name=Q149_LGU_SUPPORT_FORMS
-Position=1204,1377,1345,1397
-Item=Q149_LGU_SUPPORT_FORMS,FACILITYHEADSURVEY_DICT
+Name=Q136_LGU_SUPPORT_FORMS
+Position=350,627,365,647
+Item=Q136_LGU_SUPPORT_FORMS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,1380,324,1396
-Text=149. What forms of support do you receive?
+Position=50,630,330,646
+Text=136.
  
   
-  
 [Field]
-Name=Q149_LGU_SUPPORT_FORMS_OTHER_TXT
-Position=1204,1527,2174,1547
-Item=Q149_LGU_SUPPORT_FORMS_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q136_LGU_SUPPORT_FORMS_OTHER_TXT
+Position=350,657,760,677
+Item=Q136_LGU_SUPPORT_FORMS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1530,464,1546
-Text=149. What forms of support do you receive? — Other (specify) text
+Position=50,660,330,676
+Text=136. (specify)
  
   
-  
 [Field]
-Name=Q150_LGU_SATISFIED
-Position=1204,1557,1219,1577
-Item=Q150_LGU_SATISFIED,FACILITYHEADSURVEY_DICT
+Name=Q137_LGU_SATISFIED
+Position=350,687,365,707
+Item=Q137_LGU_SATISFIED,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1560,472,1576
-Text=150. Are you satisfied with the support you receive from your LGU?
+Position=50,690,330,706
+Text=137.
  
   
-  
 [Field]
-Name=Q151_LGU_NOT_SAT_WHY
-Position=1204,1587,1345,1607
-Item=Q151_LGU_NOT_SAT_WHY,FACILITYHEADSURVEY_DICT
+Name=Q138_LGU_NOT_SAT_WHY
+Position=350,717,365,737
+Item=Q138_LGU_NOT_SAT_WHY,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,1590,139,1606
-Text=151. Why not?
+Position=50,720,330,736
+Text=138.
  
   
-  
 [Field]
-Name=Q151_LGU_NOT_SAT_WHY_OTHER_TXT
-Position=1204,1737,2174,1757
-Item=Q151_LGU_NOT_SAT_WHY_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q138_LGU_NOT_SAT_WHY_OTHER_TXT
+Position=350,747,760,767
+Item=Q138_LGU_NOT_SAT_WHY_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1740,279,1756
-Text=151. Why not? — Other (specify) text
+Position=50,750,330,766
+Text=138. (specify)
  
   
-  
 [Field]
-Name=Q152_PHO_PROTOCOL_CLARITY
-Position=1204,1767,1233,1787
-Item=Q152_PHO_PROTOCOL_CLARITY,FACILITYHEADSURVEY_DICT
+Name=Q139_PHO_PROTOCOL_CLARITY
+Position=350,777,365,797
+Item=Q139_PHO_PROTOCOL_CLARITY,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1770,1001,1786
-Text=152. How clear are the protocols regarding which decisions require Provincial Health Office approval versus those you can decide at the facility level?
+Position=50,780,330,796
+Text=139.
  
   
-  
 [Field]
-Name=Q153_UNCLEAR_PROTOCOL
-Position=1204,1797,3134,1817
-Item=Q153_UNCLEAR_PROTOCOL,FACILITYHEADSURVEY_DICT
+Name=Q140_UNCLEAR_PROTOCOL
+Position=350,807,760,827
+Item=Q140_UNCLEAR_PROTOCOL,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1800,418,1816
-Text=153. Which specific protocol that you consider as unclear?
+Position=50,810,330,826
+Text=140.
  
   
-  
 [Field]
-Name=Q154_NUM_REFERRED_OUT
-Position=1204,1827,1289,1847
-Item=Q154_NUM_REFERRED_OUT,FACILITYHEADSURVEY_DICT
+Name=Q141_NUM_REFERRED_OUT
+Position=350,837,760,857
+Item=Q141_NUM_REFERRED_OUT,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1830,760,1846
-Text=154. In the past 6 months, how many patients were referred to a higher-level facility within the referral network?
+Position=50,840,330,856
+Text=141.
  
   
-  
 [Field]
-Name=Q155_SEND_REFERRAL_HOW
-Position=1204,1857,1317,1877
-Item=Q155_SEND_REFERRAL_HOW,FACILITYHEADSURVEY_DICT
+Name=Q142_SEND_REFERRAL_HOW
+Position=350,867,365,887
+Item=Q142_SEND_REFERRAL_HOW,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,1860,638,1876
-Text=155. What are the most common ways you send referrals to higher level facilities/specialists?
+Position=50,870,330,886
+Text=142.
  
   
-  
 [Field]
-Name=Q155_SEND_REFERRAL_HOW_OTHER_TXT
-Position=1204,1977,2174,1997
-Item=Q155_SEND_REFERRAL_HOW_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q142_SEND_REFERRAL_HOW_OTHER_TXT
+Position=350,897,760,917
+Item=Q142_SEND_REFERRAL_HOW_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1980,778,1996
-Text=155. What are the most common ways you send referrals to higher level facilities/specialists? — Other (specify) text
+Position=50,900,330,916
+Text=142. (specify)
  
   
-  
 [Field]
-Name=Q156_REFERRAL_FORM_TYPE
-Position=1204,2007,1373,2027
-Item=Q156_REFERRAL_FORM_TYPE,FACILITYHEADSURVEY_DICT
+Name=Q143_REFERRAL_FORM_TYPE
+Position=350,927,365,947
+Item=Q143_REFERRAL_FORM_TYPE,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,2010,527,2026
-Text=156. What type of referral form do you use to send to higher level facilities?
+Position=50,930,330,946
+Text=143.
  
   
-  
 [Field]
-Name=Q156_REFERRAL_FORM_TYPE_OTHER_TXT
-Position=1204,2187,2174,2207
-Item=Q156_REFERRAL_FORM_TYPE_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q143_REFERRAL_FORM_TYPE_OTHER_TXT
+Position=350,957,760,977
+Item=Q143_REFERRAL_FORM_TYPE_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,2190,667,2206
-Text=156. What type of referral form do you use to send to higher level facilities? — Other (specify) text
+Position=50,960,330,976
+Text=143. (specify)
  
   
-  
 [Field]
-Name=Q157_SPECIALIST_NETWORK
-Position=1204,2217,1233,2237
-Item=Q157_SPECIALIST_NETWORK,FACILITYHEADSURVEY_DICT
+Name=Q144_SPECIALIST_NETWORK
+Position=350,987,365,1007
+Item=Q144_SPECIALIST_NETWORK,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2220,563,2236
-Text=157. Do you have a network of specialist providers to refer patients to, if needed?
+Position=50,990,330,1006
+Text=144.
  
   
 [Field]
-Name=Q158_REF_PROPORTION
-Position=1204,2247,1233,2267
-Item=Q158_REF_PROPORTION,FACILITYHEADSURVEY_DICT
+Name=Q145_REF_PROPORTION
+Position=350,1017,365,1037
+Item=Q145_REF_PROPORTION,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2250,1190,2266
-Text=158. Considering all patients who come to your facility for the past 6 months, what is the proportion of patients referred by another facility compared to those who self-refer/walk-in?
+Position=50,1020,330,1036
+Text=145.
  
   
-  
 [Field]
-Name=Q159_RECEIVE_REFERRAL_HOW
-Position=1204,2277,1317,2297
-Item=Q159_RECEIVE_REFERRAL_HOW,FACILITYHEADSURVEY_DICT
+Name=Q146_RECEIVE_REFERRAL_HOW
+Position=350,1047,365,1067
+Item=Q146_RECEIVE_REFERRAL_HOW,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,2280,865,2296
-Text=159. Of those referred, which of the following are the most common ways you receive referrals from lower-level health facilities?
+Position=50,1050,330,1066
+Text=146.
  
   
-  
 [Field]
-Name=Q159_RECEIVE_REFERRAL_HOW_OTHER_TXT
-Position=1204,2397,2174,2417
-Item=Q159_RECEIVE_REFERRAL_HOW_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q146_RECEIVE_REFERRAL_HOW_OTHER_TXT
+Position=350,1077,760,1097
+Item=Q146_RECEIVE_REFERRAL_HOW_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,2400,1005,2416
-Text=159. Of those referred, which of the following are the most common ways you receive referrals from lower-level health facilities? — Other (specify) text
+Position=50,1080,330,1096
+Text=146. (specify)
  
   
-  
 [Field]
-Name=Q160_EXTERNAL_SERVICES_GO
-Position=1204,2427,1345,2447
-Item=Q160_EXTERNAL_SERVICES_GO,FACILITYHEADSURVEY_DICT
+Name=Q147_EXTERNAL_SERVICES_GO
+Position=350,1107,365,1127
+Item=Q147_EXTERNAL_SERVICES_GO,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,2430,549,2446
-Text=160. Where do your patients go to get the services not available at this facility?
+Position=50,1110,330,1126
+Text=147.
  
   
-  
 [Field]
-Name=Q161_REF_SATISFACTION
-Position=1204,2607,1233,2627
-Item=Q161_REF_SATISFACTION,FACILITYHEADSURVEY_DICT
+Name=Q148_REF_SATISFACTION
+Position=350,1137,365,1157
+Item=Q148_REF_SATISFACTION,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2610,531,2626
-Text=161. How would you rate your satisfaction with your current referral system?
+Position=50,1140,330,1156
+Text=148.
  
   
-  
 [Field]
-Name=Q162_NOT_SATISFIED_WHY
-Position=1204,2637,1317,2657
-Item=Q162_NOT_SATISFIED_WHY,FACILITYHEADSURVEY_DICT
+Name=Q149_NOT_SATISFIED_WHY
+Position=350,1167,365,1187
+Item=Q149_NOT_SATISFIED_WHY,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,2640,449,2656
-Text=162. Why are you not satisfied with the current referral system?
+Position=50,1170,330,1186
+Text=149.
  
   
-  
 [Field]
-Name=Q162_NOT_SATISFIED_WHY_OTHER_TXT
-Position=1204,2757,2174,2777
-Item=Q162_NOT_SATISFIED_WHY_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q149_NOT_SATISFIED_WHY_OTHER_TXT
+Position=350,1197,760,1217
+Item=Q149_NOT_SATISFIED_WHY_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,2760,589,2776
-Text=162. Why are you not satisfied with the current referral system? — Other (specify) text
+Position=50,1200,330,1216
+Text=149. (specify)
  
+  
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_210
-Label=Q135
+Name=DG_BLK_210
+Label=Q122
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_211
-Label=Q136
+Name=DG_BLK_211
+Label=Q123
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_212
-Label=Q137
+Name=DG_BLK_212
+Label=Q124
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_213
-Label=Q137
+Name=DG_BLK_213
+Label=Q124
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_214
-Label=Q138
+Name=DG_BLK_214
+Label=Q125
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_215
-Label=Q139
+Name=DG_BLK_215
+Label=Q126
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_216
-Label=Q140
+Name=DG_BLK_216
+Label=Q127
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_217
-Label=Q140
+Name=DG_BLK_217
+Label=Q127
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_218
-Label=Q141
+Name=DG_BLK_218
+Label=Q128
 DisplayTogether=Yes
 Position=16
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_219
-Label=Q142
+Name=DG_BLK_219
+Label=Q129
 DisplayTogether=Yes
 Position=18
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_220
-Label=Q143
+Name=DG_BLK_220
+Label=Q130
 DisplayTogether=Yes
 Position=20
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_221
-Label=Q143
+Name=DG_BLK_221
+Label=Q130
 DisplayTogether=Yes
 Position=22
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_222
-Label=Q144
+Name=DG_BLK_222
+Label=Q131
 DisplayTogether=Yes
 Position=24
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_223
-Label=Q144
+Name=DG_BLK_223
+Label=Q131
 DisplayTogether=Yes
 Position=26
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_224
-Label=Q145
+Name=DG_BLK_224
+Label=Q132
 DisplayTogether=Yes
 Position=28
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_225
-Label=Q146
+Name=DG_BLK_225
+Label=Q133
 DisplayTogether=Yes
 Position=30
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_226
-Label=Q146
+Name=DG_BLK_226
+Label=Q133
 DisplayTogether=Yes
 Position=32
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_227
-Label=Q147
+Name=DG_BLK_227
+Label=Q134
 DisplayTogether=Yes
 Position=34
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_228
-Label=Q147
+Name=DG_BLK_228
+Label=Q134
 DisplayTogether=Yes
 Position=36
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_229
-Label=Q148
+Name=DG_BLK_229
+Label=Q135
 DisplayTogether=Yes
 Position=38
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_230
-Label=Q149
+Name=DG_BLK_230
+Label=Q136
 DisplayTogether=Yes
 Position=40
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_231
-Label=Q149
+Name=DG_BLK_231
+Label=Q136
 DisplayTogether=Yes
 Position=42
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_232
-Label=Q150
+Name=DG_BLK_232
+Label=Q137
 DisplayTogether=Yes
 Position=44
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_233
-Label=Q151
+Name=DG_BLK_233
+Label=Q138
 DisplayTogether=Yes
 Position=46
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_234
-Label=Q151
+Name=DG_BLK_234
+Label=Q138
 DisplayTogether=Yes
 Position=48
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_235
-Label=Q152
+Name=DG_BLK_235
+Label=Q139
 DisplayTogether=Yes
 Position=50
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_236
-Label=Q153
+Name=DG_BLK_236
+Label=Q140
 DisplayTogether=Yes
 Position=52
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_237
-Label=Q154
+Name=DG_BLK_237
+Label=Q141
 DisplayTogether=Yes
 Position=54
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_238
-Label=Q155
+Name=DG_BLK_238
+Label=Q142
 DisplayTogether=Yes
 Position=56
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_239
-Label=Q155
+Name=DG_BLK_239
+Label=Q142
 DisplayTogether=Yes
 Position=58
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_240
-Label=Q156
+Name=DG_BLK_240
+Label=Q143
 DisplayTogether=Yes
 Position=60
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_241
-Label=Q156
+Name=DG_BLK_241
+Label=Q143
 DisplayTogether=Yes
 Position=62
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_242
-Label=Q157-Q158
+Name=DG_BLK_242
+Label=Q144-Q145
 DisplayTogether=Yes
 Position=64
 Length=2
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_243
-Label=Q159
+Name=DG_BLK_243
+Label=Q146
 DisplayTogether=Yes
 Position=67
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_244
-Label=Q159
+Name=DG_BLK_244
+Label=Q146
 DisplayTogether=Yes
 Position=69
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_245
-Label=Q160
+Name=DG_BLK_245
+Label=Q147
 DisplayTogether=Yes
 Position=71
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_246
-Label=Q161
+Name=DG_BLK_246
+Label=Q148
 DisplayTogether=Yes
 Position=73
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_247
-Label=Q162
+Name=DG_BLK_247
+Label=Q149
 DisplayTogether=Yes
 Position=75
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_248
-Label=Q162
+Name=DG_BLK_248
+Label=Q149
 DisplayTogether=Yes
 Position=77
 Length=1
   
 [EndGroup]
+  
 [Group]
 Required=Yes
 Name=H_HUMAN_RESOURCES_FORM
@@ -6028,157 +5816,151 @@ Label=H. Human Resources for Health
 Form=11
 Max=1
   
-  
 [Field]
-Name=Q163_HR_CHALL
-Position=1202,27,1371,47
-Item=Q163_HR_CHALL,FACILITYHEADSURVEY_DICT
+Name=Q150_HR_CHALL
+Position=350,27,365,47
+Item=Q150_HR_CHALL,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=11
   
 [Text]
-Position=50,30,404,46
-Text=163. What challenges in human resources do you have?
+Position=50,30,330,46
+Text=150.
  
   
-  
-  
 [Field]
-Name=Q163_HR_CHALL_OTHER_TXT
-Position=1202,57,2172,77
-Item=Q163_HR_CHALL_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q150_HR_CHALL_OTHER_TXT
+Position=350,57,760,77
+Item=Q150_HR_CHALL_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=11
   
 [Text]
-Position=50,60,544,76
-Text=163. What challenges in human resources do you have? — Other (specify) text
+Position=50,60,330,76
+Text=150. (specify)
  
   
 [Field]
-Name=Q164_IMPROVEMENT_AREA
-Position=1202,207,3132,227
-Item=Q164_IMPROVEMENT_AREA,FACILITYHEADSURVEY_DICT
+Name=Q151_IMPROVEMENT_AREA
+Position=350,87,760,107
+Item=Q151_IMPROVEMENT_AREA,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=11
   
 [Text]
-Position=50,210,510,226
-Text=164. What area do you find the most room for improvement in your staff?
+Position=50,90,330,106
+Text=151.
  
   
-  
 [Field]
-Name=Q165_PD_DOCTORS
-Position=1202,237,1455,257
-Item=Q165_PD_DOCTORS,FACILITYHEADSURVEY_DICT
+Name=Q152_PD_DOCTORS
+Position=350,117,365,137
+Item=Q152_PD_DOCTORS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=11
   
 [Text]
-Position=50,240,540,256
-Text=165. What forms of professional development do you provide to your doctors?
+Position=50,120,330,136
+Text=152.
  
   
-  
 [Field]
-Name=Q165_PD_DOCTORS_OTHER_TXT
-Position=1202,507,2172,527
-Item=Q165_PD_DOCTORS_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q152_PD_DOCTORS_OTHER_TXT
+Position=350,147,760,167
+Item=Q152_PD_DOCTORS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=11
   
 [Text]
-Position=50,510,680,526
-Text=165. What forms of professional development do you provide to your doctors? — Other (specify) text
+Position=50,150,330,166
+Text=152. (specify)
  
   
-  
 [Field]
-Name=Q166_PD_NURSES
-Position=1202,537,1399,557
-Item=Q166_PD_NURSES,FACILITYHEADSURVEY_DICT
+Name=Q153_PD_NURSES
+Position=350,177,365,197
+Item=Q153_PD_NURSES,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
 Form=11
   
 [Text]
-Position=50,540,535,556
-Text=166. What forms of professional development do you provide to your nurses?
+Position=50,180,330,196
+Text=153.
  
   
-  
 [Field]
-Name=Q166_PD_NURSES_OTHER_TXT
-Position=1202,747,2172,767
-Item=Q166_PD_NURSES_OTHER_TXT,FACILITYHEADSURVEY_DICT
+Name=Q153_PD_NURSES_OTHER_TXT
+Position=350,207,760,227
+Item=Q153_PD_NURSES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=11
   
 [Text]
-Position=50,750,675,766
-Text=166. What forms of professional development do you provide to your nurses? — Other (specify) text
+Position=50,210,330,226
+Text=153. (specify)
  
+  
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_249
-Label=Q163
+Name=DG_BLK_249
+Label=Q150
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_250
-Label=Q163
+Name=DG_BLK_250
+Label=Q150
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_251
-Label=Q164
+Name=DG_BLK_251
+Label=Q151
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_252
-Label=Q165
+Name=DG_BLK_252
+Label=Q152
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_253
-Label=Q165
+Name=DG_BLK_253
+Label=Q152
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_254
-Label=Q166
+Name=DG_BLK_254
+Label=Q153
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_255
-Label=Q166
+Name=DG_BLK_255
+Label=Q153
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [EndGroup]
+  
 [Group]
 Required=Yes
 Name=FIELD_CONTROL_FORM
 Label=Field Control
 Form=12
 Max=1
-  
   
 [Field]
 Name=SURVEY_TEAM_LEADER_S_NAME
@@ -6189,7 +5971,7 @@ DataCaptureType=TextBox
 Form=12
   
 [Text]
-Position=50,30,233,46
+Position=50,30,330,46
 Text=Survey Team Leader's Name
  
   
@@ -6202,7 +5984,7 @@ DataCaptureType=TextBox
 Form=12
   
 [Text]
-Position=50,60,174,76
+Position=50,60,330,76
 Text=Enumerator's Name
  
   
@@ -6215,7 +5997,7 @@ DataCaptureType=TextBox
 Form=12
   
 [Text]
-Position=50,90,166,106
+Position=50,90,330,106
 Text=Field Validated by
  
   
@@ -6228,44 +6010,43 @@ DataCaptureType=TextBox
 Form=12
   
 [Text]
-Position=50,120,145,136
+Position=50,120,330,136
 Text=Field Edited by
  
   
-  
 [Field]
 Name=DATE_FIRST_VISITED_THE_FACILITY
-Position=350,147,463,167
+Position=350,147,760,167
 Item=DATE_FIRST_VISITED_THE_FACILITY,FACILITYHEADSURVEY_DICT
 DataCaptureType=Date,YYYYMMDD
 Form=12
   
 [Text]
-Position=50,150,315,166
+Position=50,150,330,166
 Text=Date First Visited the Facility (MMDDYYYY)
  
   
 [Field]
 Name=DATE_OF_FINAL_VISIT_TO_THE_FACILITY
-Position=350,177,463,197
+Position=350,177,760,197
 Item=DATE_OF_FINAL_VISIT_TO_THE_FACILITY,FACILITYHEADSURVEY_DICT
 DataCaptureType=Date,YYYYMMDD
 Form=12
   
 [Text]
-Position=50,180,336,196
+Position=50,180,330,196
 Text=Date of Final Visit to the Facility (MMDDYYYY)
  
   
 [Field]
 Name=TOTAL_NUMBER_OF_VISITS
-Position=350,207,393,227
+Position=350,207,760,227
 Item=TOTAL_NUMBER_OF_VISITS,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=12
   
 [Text]
-Position=50,210,189,226
+Position=50,210,330,226
 Text=Total Number of Visits
  
   
@@ -6277,7 +6058,7 @@ DataCaptureType=RadioButton
 Form=12
   
 [Text]
-Position=50,240,167,256
+Position=50,240,330,256
 Text=Result of First Visit
  
   
@@ -6289,9 +6070,10 @@ DataCaptureType=RadioButton
 Form=12
   
 [Text]
-Position=50,270,172,286
+Position=50,270,330,286
 Text=Result of Final Visit
  
+  
 [Block]
 Name=INTERVIEW_STAFF_BLOCK
 Label=Interview Staff
@@ -6307,6 +6089,7 @@ Position=5
 Length=5
   
 [EndGroup]
+  
 [Group]
 Required=Yes
 Name=CASE_VERIFICATION_FORM
@@ -6316,29 +6099,31 @@ Max=1
   
 [Field]
 Name=VERIFICATION_PHOTO_FILENAME
-Position=242,27,1212,47
+Position=350,27,760,47
 Item=VERIFICATION_PHOTO_FILENAME,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=13
   
 [Text]
-Position=50,30,228,46
+Position=50,30,330,46
 Text=Verification Photo Filename
  
   
 [Field]
 Name=CAPTURE_VERIFICATION_PHOTO
-Position=242,57,257,77
+Position=350,57,365,77
 Item=CAPTURE_VERIFICATION_PHOTO,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
 Form=13
   
 [Text]
-Position=50,60,199,76
+Position=50,60,330,76
 Text=Take Verification Photo
  
+  
 [EndGroup]
+  
 [Group]
 Required=Yes
 Name=REC_FACILITY_CAPTURE_FORM
@@ -6348,78 +6133,79 @@ Max=1
   
 [Field]
 Name=FACILITY_GPS_LATITUDE
-Position=242,27,348,47
+Position=350,27,760,47
 Item=FACILITY_GPS_LATITUDE,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=14
   
 [Text]
-Position=50,30,134,46
+Position=50,30,330,46
 Text=GPS Latitude
  
   
 [Field]
 Name=FACILITY_GPS_LONGITUDE
-Position=242,57,348,77
+Position=350,57,760,77
 Item=FACILITY_GPS_LONGITUDE,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=14
   
 [Text]
-Position=50,60,146,76
+Position=50,60,330,76
 Text=GPS Longitude
  
   
 [Field]
 Name=FACILITY_GPS_ALTITUDE
-Position=242,87,332,107
+Position=350,87,760,107
 Item=FACILITY_GPS_ALTITUDE,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=14
   
 [Text]
-Position=50,90,155,106
+Position=50,90,330,106
 Text=GPS Altitude (m)
  
   
 [Field]
 Name=FACILITY_GPS_ACCURACY
-Position=242,117,285,137
+Position=350,117,760,137
 Item=FACILITY_GPS_ACCURACY,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=14
   
 [Text]
-Position=50,120,164,136
+Position=50,120,330,136
 Text=GPS Accuracy (m)
  
   
 [Field]
 Name=FACILITY_GPS_SATELLITES
-Position=242,147,271,167
+Position=350,147,760,167
 Item=FACILITY_GPS_SATELLITES,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
 Form=14
   
 [Text]
-Position=50,150,141,166
+Position=50,150,330,166
 Text=GPS Satellites
  
   
 [Field]
 Name=FACILITY_GPS_READTIME
-Position=242,177,404,197
+Position=350,177,760,197
 Item=FACILITY_GPS_READTIME,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=14
   
 [Text]
-Position=50,180,189,196
+Position=50,180,330,196
 Text=GPS Read Time (UTC)
  
+  
 [EndGroup]
   

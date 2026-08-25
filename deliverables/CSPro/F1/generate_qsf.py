@@ -29,6 +29,13 @@ OUT = HERE / "FacilityHeadSurvey.ent.qsf"
 # can sit at case-end on the form (v1.0.1). Same string in every language — UI chrome, not
 # questionnaire text.
 _BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F1"]
+# Non-production marker (2026-08-20). versions.json carries a "channel" per instrument;
+# anything other than "release" prints a banner under the build line so a work-in-progress
+# build is unmistakable on the cover screen, not just in the app list. The submitted set
+# is tagged capi-psa-2026-08-20.
+_DEV = (_BUILD.get("channel", "release") != "release")
+_DEV_BANNER = ('<p class="instruction"><b>DEV BUILD - NOT THE VERSION SUBMITTED TO PSA.</b> '
+               'For testing only.</p>') if _DEV else ""
 # #1191 (PSA/SJREB, 2026-08-11): survey-tool details required on the CAPI tool. The
 # clearance block is defined once in ../icf_content.py — the ICF screens carry the
 # same block, and two copies of a cleared reference number would eventually diverge.
@@ -36,6 +43,11 @@ import sys as _sys
 _sys.path.insert(0, str(HERE.parent))
 import icf_content as _icf
 from notes_lookup import translate_note
+# #1306: needed to tell a field whose caption is its label verbatim (question text would
+# echo it) from one with a designed short caption (no echo). Same-folder import, the way
+# generate_fmf already imports generate_dcf.
+from cspro_helpers import caption_duplicates_question as _cap_dup
+from generate_fmf import SHORT_FORM_LABELS as _SHORT
 # #1190: DOH Seal / ASPSI / Bagong Pilipinas / Bawat Buhay Mahalaga on the first
 # page — ASPSI sits second, in the "attached agency" slot, per ASPSI's reference
 # image on #1190 (Shan, 2026-08-11). Data-URI so the image travels inside the qsf
@@ -47,6 +59,7 @@ _LOGO_HTML = f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>
 
 BUILD_FOOTER = (_LOGO_HTML
                 + f'<p class="instruction">Build: F1 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+                + _DEV_BANNER   # non-production channel marker (blank on a release build)
                 + _icf.clearance_html("F1"))
 
 STYLES = """styles:
@@ -85,9 +98,8 @@ def _p(cls, text):
 # ------------------------------------------------------------------
 # PAPI emphasis (#1104 / #1105 / #1119 / #1128 / #1130)
 # ------------------------------------------------------------------
-# The paper questionnaire underlines the subject of each Section C
-# "been implemented" question and bolds the compliance area in Q122-Q134;
-# the CAPI rendered them flat. ASPSI asked for parity.
+# The paper questionnaire emphasises a phrase inside some question stems and
+# the CAPI rendered them flat; ASPSI asked for parity.
 #
 # Applied to the ENGLISH rendering only. The 7 translated locales keep their
 # current (unemphasised) wording until the next re-key batch - adding markup
@@ -97,43 +109,61 @@ def _p(cls, text):
 #
 # Phrases are DERIVED from the label, never transcribed: each pattern is
 # anchored, and a label that doesn't match is returned unchanged.
+#
+# AUG-17 (Task 2.5). Four of the six Apr-20 patterns are RETIRED, not re-keyed,
+# because the questions they emphasised no longer exist in that form: the
+# Aug-17 paper carries exactly two {.underline} spans in the whole document
+# (the ICF name blank and Q128), having moved to bolding whole stems, and the
+# Q19-Q48 "Has the <subject> been implemented since ..." battery was reworded
+# into plain Yes/No bases with a separate attribution probe. The retired rules
+# matched ZERO of the 320 rebuilt labels, so keeping them would have been dead
+# code claiming to do something. Retired: Q12 primary-care-licensing,
+# Q14/Q17 unit-creation, the "been implemented" battery, Q43 ward allocation.
 _EMPH_PATTERNS = [
-    # #1185: Section C's Q12/Q14/Q17 use different stems than the Q19-48 battery
-    # ("Has the facility applied for ..." / "If yes, has the creation of ...")
-    # so the anchored rules below never matched them. Underline spans confirmed
-    # against the ASPSI-marked paper (ticket #1185).
-    (re.compile(r"^(<p>12\. Has the )(facility applied for DOH primary care licensing)( since )"), "u"),
-    (re.compile(r"^(<p>1[47]\. If yes, has the )(creation of an? (?:public health|health promotion) unit)( at this facility )"), "u"),
-    # Q19-Q48 battery: "NN. Has/Have the <subject> been implemented since ..."
-    (re.compile(r"^(<p>\d+\. (?:Has|Have) the )(.+?)( been implemented )"), "u"),
-    # Q43 is worded differently: "... has the health facility been implementing
-    # <subject> since ..." - anchor it separately rather than force the rule above.
-    (re.compile(r"^(<p>43\. Has the health facility been implementing )(.+?)( since )"), "u"),
-    # Q122-Q134: "NN. Why was it difficult to comply with: <area>?" - the paper
-    # bolds the area INCLUDING its question mark.
+    # "NN. Why was it difficult to comply with: <area>?" - the paper bolds the
+    # area INCLUDING its question mark. Number-agnostic, so the Aug-17 renumber
+    # did not touch it; it now serves BOTH compliance batteries (Q53-Q61
+    # accreditation and Q109-Q121 DOH licensing), which print the same stem.
     (re.compile(r"^(<p>\d+\. Why was it difficult to comply with: )(.+?)(</p>)"), "b"),
-    # Q165/Q166: bold the staff group.
-    (re.compile(r"^(<p>16[56]\. What forms of professional development do you "
+    # Q152/Q153 (was Q165/Q166): bold the staff group.
+    (re.compile(r"^(<p>15[23]\. What forms of professional development do you "
                 r"provide to your )(doctors|nurses)(\?)"), "b"),
+    # Q128: the ONE content underline the Aug-17 paper still carries (the only
+    # other {.underline} span in the document is the ICF's data-collector-name
+    # blank). Added at Task 2.5 rather than carried - the Apr-20 rules that
+    # covered other questions were retired because their questions were
+    # reworded away, and this span is newly marked.
+    (re.compile(r"^(<p>\d+\. Does the facility allow )"
+                r"(out-of-pocket \(OOP\) expenses)( for basic accommodation)"), "u"),
 ]
+
+# Q75 (was Q88) carries TWO bolds in one stem, which the single-span loop below
+# cannot express, so it gets its own anchored rule.
+#
+# #1189 handled this by hard-coding the whole 448-char Apr-20 paper stem here,
+# because it exceeded the dcf's 255-char label cap and so could not be derived
+# from the label. That override is GONE, for two reasons. It was keyed on the
+# literal prefix "<p>88. ", and Aug-17's Q88 is "Have you heard about the
+# Bagong Urgent Care and Ambulatory Service (BUCAS)?" - it would have replaced
+# that question's text with the capitation paragraph, in English and in every
+# locale falling back to English. And it is no longer needed: Aug-17 condensed
+# the stem to 236 chars, so the dcf label now carries the full text itself and
+# the emphasis can be derived from it like every other rule here.
+_CAPITATION_RE = re.compile(
+    r"^(<p>\d+\. The maximum per capita rate for YAKAP/Konsulta is )"
+    r"(Php 1,700)"
+    r"(.*?)"
+    r"(Based on your practice, is this enough\?)"
+    r"(</p>)$")
 
 
 def _emphasize(html):
     """Wrap the PAPI-emphasised phrase in <u>/<b>. First matching pattern wins;
     a label matching none is returned untouched."""
-    # #1189: the EN question text for Q88 is the VERBATIM paper stem (448 chars
-    # — over the dcf label cap, so it cannot derive from the label; the dcf
-    # keeps the condensed <=255 string that the locale translations key to).
-    # Both paper bolds included. Locales falling back to English get this too.
-    if html.startswith("<p>88. "):
-        return ("<p>88. The maximum per capita rate amount for YAKAP/Konsulta "
-                "is at Php <b>1,700</b> across private and public facilities. "
-                "According to PhilHealth, 40% of the capitation amount will be "
-                "released as the first tranche after the first patient "
-                "encounter. The remaining 60% will be released based on the "
-                "size of the registered catchment population by December and "
-                "performance targets that year. <b>Based on your practice, is "
-                "this enough?</b></p>")
+    m = _CAPITATION_RE.match(html)
+    if m:
+        return (m.group(1) + f"<b>{m.group(2)}</b>" + m.group(3)
+                + f"<b>{m.group(4)}</b>" + m.group(5))
     for rx, tag in _EMPH_PATTERNS:
         m = rx.search(html)
         if m:
@@ -150,65 +180,26 @@ def _emphasize(html):
 # reads PART I aloud from the question-text bar, then records Yes/No
 # (No → endlevel per PROC CONSENT_GIVEN).
 # ------------------------------------------------------------------
-CONSENT_HTML = "".join([
-    _p("heading2", "Informed Consent Form"),
-    _p("instruction",
-       "This informed consent form must be obtained before conducting the interview. "
-       "You are required to read this entire consent form aloud exactly as written. "
-       "After reading this form to the respondent, you must complete and sign the "
-       "verification consent form."),
-    _p("heading3", "PART I: Information about the study"),
-    _p("normal",
-       "Hello, my name is __________________ (data collector name). I work for Asian "
-       "Social Project Services, Inc. (ASPSI). I am here to invite you to participate "
-       "in a study about the Universal Health Care (UHC) and packages of programs like "
-       "Yaman ng Kalusugan Program (YAKAP), No Balance Billing (NBB), Zero Balance "
-       "Billing (ZBB), Bagong Urgent Care and Ambulatory Services (BUCAS), and "
-       "Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT). The "
-       "Department of Health funded this study. Please let me tell you more about the "
-       "study."),
-    _p("normal",
-       "This study aims to generate evidence on the overall experience of the general "
-       "public to support continuous monitoring, evaluation, and learning of the "
-       "implementation of the UHC Act and its Implementing Rules and Regulations (IRR)."),
-    _p("normal",
-       "Would you like to participate as a respondent in the study? The interview may "
-       "last for more or less than an hour."),
-    _p("normal",
-       "We are committed to protecting your privacy. If you choose to participate, we "
-       "will never include your name in information shared with the government or in "
-       "any reports. Your name will be kept separately from your answers in a private, "
-       "secure location. For this interview, it is also important to respect other "
-       "people’s privacy and not tell anyone else what we talked about today. With all "
-       "research, there’s a small chance that someone else might get to see your data. "
-       "We try our best to prevent that, but if it happens, we’ll tell you as soon as "
-       "possible."),
-    _p("normal",
-       "Aside from this, there are no other risks to you if you take part in this "
-       "study. As a benefit of the research, the knowledge gained may help the "
-       "government and DOH better support your healthcare needs. You are free to "
-       "decline participation or to stop at any time. Choosing not to participate will "
-       "not result in any penalty, and you will not have to pay anything to take part "
-       "in this study."),
-    _p("normal",
-       "Do you have any questions about the study or about what I have told you?"),
-    _p("normal",
-       "If you have concerns or questions about your rights as a participant, you can "
-       "contact:"),
-    _p("normal",
-       "<b>Single Joint Research Ethics Board (SJREB) at the Philippines Department of "
-       "Health</b><br/>Email: sjreb.doh@gmail.com<br/>National Tel: (02) 651-7800 "
-       "local 1328<br/>Tel: +63 936 992 5513"),
-    _p("normal",
-       "<b>Department of Health</b><br/>Name: Lindsley Jeremiah D. Villarante<br/>"
-       "Email: ldvillarante@doh.gov.ph<br/>Tel: +63 (02) 8651-7800 local 1432"),
-    _p("normal",
-       "<b>Asian Social Project Services, Inc.</b><br/>Name: Paulyn Jean A. Claro<br/>"
-       "Email: aspsiglobal@gmail.com<br/>Tel: +63 917 819 6884"),
-    _p("instruction",
-       "Record the respondent’s decision: 1 = Yes (consent given — continue the "
-       "interview); 2 = No (consent refused — the interview ends)."),
-])
+# CONSENT_HTML REMOVED 2026-08-20 (ANA-322).
+#
+# It held the Annex H consent script as the CAPI question text for CONSENT_GIVEN.
+# CONSENT_GIVEN itself was removed 2026-06-12, so nothing has emitted this string
+# since -- it sat here unreferenced for over two months.
+#
+# Deleted outright rather than kept as commented-out reference text, because the
+# F1 and F4 copies still carried STALE ETHICS CONTACT DETAILS (superseded SJREB /
+# ASPSI email and phone). That is not merely untidy: it has already cost real work.
+# An implementer once corrected this dead copy believing it was the live consent
+# text, and the compiled build still shipped with no ethics-contact block at all --
+# recorded in the F3 consent-certificate row of
+# instruments-aug17-extract/aug17-approved-divergences.md. Leaving wrong contact
+# details in the tree, even inert, keeps that trap armed for the next reader.
+#
+# THE LIVE CONSENT SCRIPT IS ../icf_content.py -> SCREENS['F1'], rendered by
+# build_screen_html() and wired below via OVERRIDES["ICF_PART1"/"ICF_PART2"].
+# Edit it there. Git history holds the removed Annex H wording if it is ever
+# wanted for reference.
+# ------------------------------------------------------------------
 
 # Item-name → question-text HTML. Overrides win over the dcf-label default
 # and are emitted identically for every declared language (English fallback
@@ -216,8 +207,8 @@ CONSENT_HTML = "".join([
 # CONSENT_GIVEN removed 2026-06-12 — no consent DECISION is captured on the CAPI, and
 # that has not changed. What DID change (2026-08-13): ASPSI sent "Suggested Layout
 # (CSEntry).docx", putting the consent SCRIPT back on the device as two read-aloud
-# screens with the clearance block. Its wording supersedes CONSENT_HTML above (which
-# remains unemitted, kept only as the Annex H reference). Text: ../icf_content.py.
+# screens with the clearance block. Text: ../icf_content.py. (The old, unemitted
+# CONSENT_HTML block that this superseded was removed 2026-08-20, ANA-322.)
 OVERRIDES = {
     "ICF_PART1": _icf.build_screen_html("F1", 1, _LOGO_HTML),
     "ICF_PART2": _icf.build_screen_html("F1", 2, _LOGO_HTML),
@@ -225,79 +216,143 @@ OVERRIDES = {
 
 
 # ------------------------------------------------------------------
-# Per-question enumerator instructions + section read-aloud intros,
-# transcribed from Annex F1 (Apr 20 deliverable). Keyed by paper question
-# number: the intro attaches once to the first Q<n>_* item; the instruction
-# (blue Instruction style) to every Q<n>_* item except other-specify *_TXT
-# fields. Paper-only navigation notes (<proceed to Qx>) are omitted — CAPI
-# logic automates the routing. English-only, like the consent override.
+# Per-question enumerator instructions + section read-aloud intros.
+#
+# KEYED BY AUG-17 PAPER QUESTION NUMBER (re-keyed from the Apr 20 deliverable
+# by Task 2.5). An INT key applies to the whole question family -- the base and
+# its "N.1"/"N.2" sub-questions; a "N.M" STRING key overrides that family
+# default for one sub-question, and may be None to say the sub-question carries
+# no instruction of its own. The intro attaches once to the first Q<n>_* item;
+# the instruction (blue Instruction style) to every Q<n>_* item except
+# other-specify *_TXT fields. Paper-only navigation notes (<proceed to Qx>) are
+# omitted -- CAPI logic automates the routing. English-only, like the consent
+# override.
+#
+# Provenance is recorded because the Apr-20 numbering COLLIDES with real Aug-17
+# questions -- an unremapped key does not fail, it silently attaches the wrong
+# note to the wrong screen. 75 of these rows are the instruction the Aug-17
+# paper itself prints at that question (instruments-aug17-extract/F1-extract.md);
+# 31 are the Apr-20 instruction carried to the renamed question where the Aug-17
+# paper prints none. Where the two disagree the paper wins, with the two stated
+# exceptions marked at their rows (52, 148).
 # ------------------------------------------------------------------
 _READ_ONE = "READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY."
 _READ_ALL = "READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY."
 _DNR_ALL = "DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY."
 _DNR_UNPROMPTED = ("DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER "
                    "OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.")
-_PROBE = ("DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO "
-          "PROBE. Has this been implemented? / Do you have this? Was this "
-          "implemented before or after 2019? Was this implemented because of "
-          "UHC? Do you plan to implement it in the next 1-2 years?")
+# RETIRED by #1303 (UAT R7, 2026-08-20) — the Apr-20 probe guide. Kept here,
+# unused, as the record of what the two-step battery bases used to display:
+#   "DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE.
+#    Has this been implemented? / Do you have this? Was this implemented before
+#    or after 2019? Was this implemented because of UHC? Do you plan to
+#    implement it in the next 1-2 years?"
+# The Aug-17 redesign turned the last three guide questions into the "N.1"
+# attribution question's own stem and options, so showing this on the base
+# screen asked the next screen's question a screen early.
+# New at Aug-17: the two-step split gives every "N.1" attribution probe its own
+# screen, and the paper prints this bare form on them -- no "READ OPTIONS OUT
+# LOUD", because the enumerator is classifying an answer already given.
+_SELECT_ONE = "SELECT ONE ANSWER ONLY."
 
 INSTRUCTIONS = {
-    **dict.fromkeys([12, 14, 17, 19, 21, 23, 25, 27, 29, 31, 36, 38, 39, 40,
-                     41, 42, 44, 45, 46, 47, 48], _PROBE),
-    # #387: Q157/Q158 are select-one. #576: Q161 is single-select (rating scale) —
-    # moved out of _READ_ALL so its instruction reads "SELECT ONE ANSWER ONLY".
-    **dict.fromkeys([15, 18, 32, 60, 95, 103, 110, 157, 158, 161], _READ_ONE),
-    **dict.fromkeys([34, 53, 75, 76, 78, 79, 99, 104, 105, 111, 121, 137, 140,
-                     146, 147, 149, 156, 159, 163, 165, 166], _READ_ALL),
-    **dict.fromkeys([64, 66, 67, 68, 69, 70, 71, 72, 73, 74, 94, 96, 98, 117,
-                     122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132,
-                     133, 134, 151, 162], _DNR_ALL),
-    **dict.fromkeys([49, 50], _DNR_UNPROMPTED),
-    43: ("Under UHC, basic ward allocation is as follows: 90% for government "
-         "general hospitals; 70% for government specialty hospitals, and 10% "
-         "for private hospitals. " + _PROBE),
-    # #1109: the capitation definition. #1011 stripped it OUT of the Q57 question text
-    # (testers: it is the paper's italic enumerator note, not part of the spoken question)
-    # but nothing put it back anywhere, so it was simply lost - the enumerator had no
-    # definition at all. #1109 asks for it as a blue note, which is what this class is.
-    # Wording verbatim from the paper (raw/Project-Deliverable-1/F1.txt); only the outer
-    # parentheses are dropped, since they existed to set it off INSIDE the question and
-    # every other note here (43/58/65/88) reads as a plain sentence.
-    57: ("Capitation is the amount per year per registered patient for delivering "
+    # The 23 two-step battery BASES carry NO note.
+    #
+    # #1303 (UAT R7, 2026-08-20) — ASPSI's answer to the question this build
+    # parked on the clarification list (item 2.5). These bases used to show the
+    # Apr-20 probe guide (_PROBE, now retired below), which was carried forward
+    # through the Aug-17 migration pending a ruling. The reviewers' point is
+    # exactly the one the list raised: the redesign SPLIT each item into a plain
+    # Yes/No base plus its own "N.1" attribution question, and that question now
+    # asks outright what the guide told the enumerator to probe for — "was it a
+    # result of the UHC Act enacted in 2019?", with "planned within the next 1-2
+    # years" sitting in its option list. So the guide restated, on the base
+    # screen, the very question the next screen asks. The Aug-17 paper prints no
+    # note on these bases either, so bare is also the faithful rendering.
+    #
+    # Explicit None rather than an absent key: an absent key falls through to the
+    # family default and would put some other note back on them (the same reason
+    # the "N.2" family below is pinned to None).
+    **dict.fromkeys([11, 14, 15, 16, 17, 18, 19, 20, 26, 27, 28, 29, 31, 32,
+                     33, 34, 35], None),
+    # The attribution probes. 10.1 is the one question the paper omits it on;
+    # its text is identical to the other 22, so leaving it bare would be a
+    # defect rather than fidelity.
+    **dict.fromkeys(["10.1", "11.1", "12.1", "13.1", "14.1", "15.1", "16.1",
+                     "17.1", "18.1", "19.1", "20.1", "24.1", "25.1", "26.1",
+                     "27.1", "28.1", "29.1", "30.1", "31.1", "32.1", "33.1",
+                     "34.1", "35.1"], _SELECT_ONE),
+    # 148 keeps SELECT ONE against the paper's SELECT ALL: the paper prints a
+    # 5-point satisfaction scale as a tick-all list, the dictionary is SELECT
+    # ONE (registered divergence), and telling the enumerator to multi-select a
+    # single-select field is the worse of the two errors.
+    **dict.fromkeys(["12.2", "13.2", 21, 47, 82, 90, 97, 144, 145, 148], _READ_ONE),
+    **dict.fromkeys([23, 40, 62, 63, 65, 66, 86, 91, 92, 98, 108, 124, 127,
+                     133, 134, 136, 143, 146, 150, 152, 153], _READ_ALL),
+    **dict.fromkeys([51, 53, 54, 55, 56, 57, 58, 59, 60, 61, 81, 83, 85, 104,
+                     109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119,
+                     120, 121, 138, 149], _DNR_ALL),
+    **dict.fromkeys([36, 37], _DNR_UNPROMPTED),
+    # The "N.2" detail questions under a _PROBE base. None, not absent: an
+    # absent key falls through to the family default and would put the probe
+    # guide on "what are the new roles/departments/rooms", which the Apr-20
+    # build never did and the paper does not ask for.
+    **dict.fromkeys(["14.2", "15.2", "16.2", "17.2", "18.2", "19.2", "35.2"], None),
+    # 30's Apr-20 note also carried the ward-allocation definition. That text is
+    # now printed inside Q30.1's own stem, so it is already in the dcf label and
+    # repeating it here would show it twice on adjacent screens -- the #1189
+    # lesson. The probe guide that remained is retired with the rest (#1303), so
+    # Q30's base is now bare like its 22 siblings.
+    30: None,
+    # #1109: the capitation definition. #1011 stripped it OUT of the question text
+    # (testers: it is the paper's italic enumerator note, not part of the spoken
+    # question) but nothing put it back anywhere, so it was simply lost - the
+    # enumerator had no definition at all. #1109 asks for it as a blue note, which
+    # is what this class is. Wording verbatim from the paper; only the outer
+    # parentheses are dropped, since they existed to set it off INSIDE the question
+    # and every other note here reads as a plain sentence.
+    44: ("Capitation is the amount per year per registered patient for delivering "
          "the YAKAP/Konsulta package services."),
-    58: ("Performance indicators are the defined set of healthcare goods and "
+    45: ("Performance indicators are the defined set of healthcare goods and "
          "services to be provided for each enrolled patient to receive the "
          "full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL "
          "THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. "
          "RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO "
          "ANSWERING THIS QUESTION."),
-    65: ("These are the requirements for YAKAP/Konsulta accreditation "
+    # The paper prints this definition AND the read-aloud note at 52; the note
+    # extractor only captures the latter, so this row stays hand-held.
+    52: ("These are the requirements for YAKAP/Konsulta accreditation "
          "outlined by DOH. " + _READ_ALL),
-    # (#1189: the old 88 entry is gone — the tranche mechanics now live verbatim
-    # inside the full Q88 stem emitted by _emphasize; a note here would duplicate.)
-    155: ("Our focus is specifically on referrals external to the facility, "
+    142: ("Our focus is specifically on referrals external to the facility, "
           "excluding internal referrals. " + _READ_ALL),
 }
 
+# Section starts re-anchored to Aug-17 (Apr-20 51/101/118/135/163 ->
+# 38/88/105/122/150). Confirmed twice over: through maps/F1-renames.csv, and
+# independently against the first question number after each section header in
+# normalized/F1-paper.csv.
 SECTION_INTROS = {
     1: "We would like to ask some of your personal information relevant to the survey.",
     7: "Next, we will be asking questions about this health facility.",
     9: ("We will now ask about your awareness of UHC, the changes that have "
         "been implemented in this facility since the UHC Act was passed in "
         "2019 and if these changes were a result of the UHC Act."),
-    51: ("The next questions we will ask relate to the YAKAP/Konsulta "
+    38: ("The next questions we will ask relate to the YAKAP/Konsulta "
          "package. Please answer to the best of your knowledge. You may "
          "answer “I don't know” if you are unsure."),
-    101: "We will now ask questions related to BUCAS center and GAMOT package.",
-    118: "We will now ask you about your facility’s experience with the licensing process.",
-    135: ("The next set of questions covers the service delivery process. "
+    88: "We will now ask questions related to BUCAS center and GAMOT package.",
+    105: "We will now ask you about your facility’s experience with the licensing process.",
+    122: ("The next set of questions covers the service delivery process. "
           "This section covers the implementation of NBB and ZBB, LGU "
           "support, and the Referral System."),
-    163: "We will now proceed to the last section of this survey, which focuses on human resources.",
+    150: "We will now proceed to the last section of this survey, which focuses on human resources.",
 }
 
 _QNUM = re.compile(r"^Q(\d{1,3})_")
+# "Q12_1_UHC_ATTRIB" -> sub-question "12.1". The second group matches a SINGLE
+# digit followed by another underscore, so an ordinary stem is never mistaken
+# for a sub-question number.
+_SUBNUM = re.compile(r"^Q(\d{1,3})_(\d)_")
 
 
 def _esc(t):
@@ -325,7 +380,15 @@ def question_extras(nm, intro_used):
             intro = SECTION_INTROS[tgt]
             intro_used.add(tgt)
             break
-    instr = INSTRUCTIONS.get(q)
+    # Sub-question first, then the question family. A "N.M" row that is
+    # present-but-None deliberately blanks the family default for that one
+    # sub-question, which is why this tests membership rather than truthiness.
+    sm = _SUBNUM.match(nm)
+    subkey = f"{sm.group(1)}.{sm.group(2)}" if sm else None
+    if subkey is not None and subkey in INSTRUCTIONS:
+        instr = INSTRUCTIONS[subkey]
+    else:
+        instr = INSTRUCTIONS.get(q)
     if not instr or nm.endswith("_TXT"):
         instr = None
     return intro, instr
@@ -386,6 +449,11 @@ def main():
                     # resolved PER LANGUAGE - see note_html()
                     pre, post = note_html(intro_en, instr_en, lnm)
                     body = ov or (pre + txt + post)
+                    # #1306: unnumbered field -> its caption already prints this exact
+                    # label, so the question pane would echo it. Keep any real intro or
+                    # instruction, drop the echo.
+                    if not ov and _cap_dup(nm, en, _SHORT.get(nm)):
+                        body = pre + post
                     lines += [f"          {lnm}: |", f"            {body}"]
                 n += 1
     lines.append("...")

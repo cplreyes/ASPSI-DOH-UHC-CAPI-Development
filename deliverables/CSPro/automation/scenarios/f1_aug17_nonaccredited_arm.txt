@@ -1,0 +1,263 @@
+# aug17 Task 2.6 — F1 NOT-ACCREDITED arm + Section E + Section G.
+#
+# WHAT THIS PROVES (permanent regression scenario, do not delete):
+#   1. Q38 = No leaps the entire accredited block Q39-Q65 to Q66_NOT_ACCRED_REASON.
+#   2. Q67 = 5 "No, have not thought about it yet" -> Q68, and Q68's UNCONDITIONAL
+#      tail -> Q79. Task 2.4 found Q68-Q71 had NO exit at all under the printed
+#      routing, so a "haven't thought about it" respondent was walked through two
+#      OTHER branches' questions. This is the live proof of that defect-fix.
+#   3. Q79's own two-sided gate: entered only when Q38 = No, then an unconditional
+#      exit to Q88 that skips the accredited payment block Q80-Q87.
+#   4. Q88 renders the BUCAS question text, NOT the capitation paragraph (the
+#      re-key corruption fixed in Task 2.5 — carry 3 asks for this specific check).
+#   5. The BUCAS -> GAMOT -> stock-out chain, including the Q102 gate
+#      (Q101 = 3 "more than 60 days" is the ONLY value that asks Q102).
+#   6. Q105 = No leaps the whole of Section F (Q106-Q121) to Q122.
+#   7. The Q139/Q140 PHO gate: Q7 = Public AND Q8 in Level 1/2/3 Hospital is what
+#      OPENS it (#386); Section B above answers 1 and 3 precisely for this.
+#   8. Q137 = Yes -> Q139, the second Task-2.4 defect-fix (the paper sent it to
+#      Q141, orphaning the PHO pair for every satisfied respondent).
+#
+# The case-start + Section C prefix is IDENTICAL to
+# f1_aug17_casestart_and_battery.txt so the Check Box popup coordinates it
+# established stay valid; see that file for the entry-mechanics notes.
+
+rmdata ../F1/desktest.csdb
+launch ../F1/FacilityHeadSurvey_desktest.pff
+
+# ---- FORM000 case key: RR PP MMM FF CCC (auto-advances at full width) ----
+casekey 04 03 400 02 001
+shot 010_after_casekey_expect_icf
+
+# ---- FORM001 ICF: ICF_PART1, ICF_PART2 (both len=1, "1 = Continue") ----
+note EXPECT consent screens render with the 4-paragraph certificate + contact block
+shot 020_icf_part1
+type 1
+shot 030_icf_part2
+type 1
+
+# ---- FORM002 geo + BREAKOFF. REGION/PROVINCE/CITY are protected (auto-derived). ----
+note EXPECT CLASSIFICATION first, then the cursor jumps straight to BARANGAY
+shot 040_expect_classification
+type 1
+shot 050_expect_barangay_picker
+click 1000 211
+shot 060_expect_breakoff
+note BREAKOFF = 1 Continue -> the form-2 to form-11 escape must NOT fire
+type 1
+shot 070_after_breakoff_expect_section_a
+
+# ---- FORM003 Section A ----
+type DR TEST HEAD
+key {ENTER}
+type CHIEF OF HOSPITAL
+key {ENTER}
+type test@aspsi.org
+key {ENTER}
+type 09171234567
+key {ENTER}
+type DR TEST HEAD
+key {ENTER}
+note Q2_FACILITY_ROLE is len=2 -> type the code zero-padded so it auto-advances
+type 01
+type 52
+type 1
+type 08
+type 00
+type 20
+type 00
+shot 080_end_of_section_a_expect_section_b
+
+# ---- FORM004 Section B: Q7 = 1 Public, Q8 = 3 (Level 2 hospital). ----
+note Q7=Public AND Q8 in 2,3,4 is what OPENS the Q139/Q140 PHO gate later (#386)
+type 1
+type 3
+shot 090_after_section_b_expect_q9
+
+# ---- FORM005 Section C: the two-step battery ----
+note Q9 heard of UHC = Yes
+type 1
+note Q10 = Yes -> its probe Q10_1_UHC_ATTRIB MUST be asked
+type 1
+shot 100_q10_yes_expect_probe_q10_1
+note probe answered 1 (not the Other code) so no specify box opens
+type 1
+shot 110_after_q10_probe_expect_q11
+note Q11 = No -> its probe MUST be skipped; next field must be Q12, not Q11_1
+type 2
+shot 120_q11_no_expect_q12_not_probe
+note Q12 = Yes -> probe, then the .2 detail item Q12_2_PHU_ROLE
+type 1
+shot 130_q12_probe
+type 1
+shot 140_q12_2_phu_role_detail
+type 1
+shot 150_after_q12_2_expect_q13
+note Q13 = 9 Not applicable -> same exit as No; probe AND Q13_2 both skipped
+type 9
+shot 160_q13_na_expect_q14
+note Q14..Q19 all No -> straight run, each skipping its probe and .2 item
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+shot 170_after_q19_expect_q20
+note Q20 = No -> MUST land on Q24, clearing the Q21/Q22/Q23 DOH-IS fan
+type 2
+shot 180_q20_no_expect_q24_not_q21
+note Q24..Q34 all No
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+shot 190_after_q34_expect_q35
+note Q35 = Yes -> probe, then Q35_2_PCQM_MEASURES (a Check Box .2 detail item)
+type 1
+shot 200_q35_probe
+type 1
+shot 210_expect_q35_2_checkbox
+
+note Q35_2 is a Check Box (tick-all). Typing the option code is INVALID input on a
+note  Check Box field (F4 task-1.9 failure #6 proved this is a real CSEntry
+note  constraint, not a scripting slip) -- click the tick-box glyph instead.
+note  Option 01 "Client satisfaction survey" sits at ~(851,923), coords read from
+note  this scenario's own 210_expect_q35_2_checkbox shot.
+click 851 923
+key {ENTER}
+shot 220_after_q35_2_expect_q36_checkbox
+
+note Q36_QUALITY_CHALL Check Box -- option 01 tick box at ~(1047,783), read from
+note  this scenario's own 220_after_q35_2_expect_q36_checkbox shot.
+click 1047 783
+key {ENTER}
+shot 230_after_q36_expect_q37_checkbox
+
+note Q37_ACCESS_CHALL Check Box -- its popup renders at the SAME anchor as Q36's,
+note  so option 01 is again at ~(1047,783) (confirmed in 230_after_q36 shot).
+click 1047 783
+key {ENTER}
+note ---- END OF SECTION C. Next field must be Q38_YK_ACCRED, whose screen carries
+note  the Section D intro text (intro:51) -- the R24 evidence requirement. ----
+shot 240_SECTION_D_INTRO_51_on_q38_yk_accred
+
+note ---- Q38 = 2 (No, not accredited). MUST land on Q66_NOT_ACCRED_REASON,
+note  skipping Q39-Q65 entirely. ----
+type 2
+shot 250_q38_no_expect_q66_not_q39
+
+note Q66_NOT_ACCRED_REASON Check Box -- option 01 "Difficult process" tick box at
+note  ~(879,903), read from this scenario's own 250_q38_no shot.
+click 879 903
+key {ENTER}
+shot 260_after_q66_expect_q67
+note ---- Q67 = 5 "No, have not thought about it yet". MUST land on Q68 only. ----
+type 5
+shot 270_q67_5_expect_q68
+note ---- Q68 answered -> UNCONDITIONAL tail. MUST land on Q79, NOT Q69/Q70/Q71
+note  (those belong to the Q67 = 3 / 4 / 1-2 branches). Before Task 2.4 this exit
+note  did not exist at all. ----
+type 1
+shot 280_q68_tail_expect_q79_not_q69
+note ---- Q79 = 1500 PHP (len 6, zero-padded so it auto-advances). Its postproc is
+note  an unconditional exit to Q88, skipping the accredited payment block Q80-Q87. ----
+type 001500
+shot 290_q79_expect_q88_and_BUCAS_QUESTION_TEXT
+note ---- Q88 = 2 No. Closes the whole BUCAS block Q89-Q94 -> Q95. ----
+type 2
+shot 300_q88_no_expect_q95_skip_bucas_block
+note ---- Q95 = 1 Yes (heard of GAMOT) -> Q96. ----
+type 1
+note ---- Q96 = 1 Yes (GAMOT accredited) -> skips Q97 -> Q98 factors. ----
+type 1
+shot 310_q96_yes_expect_q98_skip_q97
+
+note Q98_GAMOT_FACTORS Check Box -- option 01 tick at ~(936,544), read from this
+note  scenario's own 310_q96_yes shot.
+click 936 544
+key {ENTER}
+note ---- Q99 = 1 Yes (stock-out in the past 3 months) -> the stock-out block. ----
+type 1
+shot 320_q99_yes_expect_q100
+type PARACETAMOL AMLODIPINE
+key {ENTER}
+note ---- Q101 = 03 "more than 60 days". This is the ONLY value that asks Q102;
+note  codes 1 and 2 (<= 60 days) skip it because the month band is already implied.
+note  MUST land on Q102, not Q103. ----
+type 03
+shot 330_q101_3_expect_q102_ASKED
+type 01
+note ---- Q103 = 01 Yes. Its entry gate needs Q95=Yes AND Q96=Yes AND Q99=Yes, all
+note  true on this path, so Q103 is reachable and Q104 follows. ----
+shot 340_after_q102_expect_q103
+type 01
+shot 350_q103_yes_expect_q104_checkbox
+
+note ---- Q104_ADDR_STOCKOUT_HOW Check Box.
+note  NEGATIVE FINDING (probed in this scenario, 2026-08-19): {SPACE} does NOT
+note  toggle the focused tick row -- the field stayed empty and the HARD msg-1010
+note  "Select at least one option for Q104" fired. This EXTENDS F4 task-1.9's
+note  finding (which only ruled out typing the option code): a coordinate click on
+note  the tick-box glyph is the ONLY way to drive a Check Box from this runner.
+note  Option 01 "Resorted to alternative procurement" tick at ~(880,774). ----
+click 880 774
+key {ENTER}
+note ---- Q105 = 02 No (not DOH-licensed). MUST leap the WHOLE of Section F
+note  (Q106-Q121, including the Q108 gate and its 13-item why-difficult chain)
+note  and land on Q122. ----
+type 02
+shot 370_q105_no_expect_q122_skip_all_section_F
+note ---- Section G. Q122 = 2 No -> Q125 (skips Q123/Q124). ----
+type 2
+note ---- Q125 = 2 No -> Q128 (skips Q126/Q127). Q128 carries the re-keyed
+note  question text checked in Task 2.5 carry 3. ----
+type 2
+shot 380_q125_no_expect_q128_and_its_TEXT
+note ---- Q128 = 2 No -> Q130 (skips Q129). ----
+type 2
+shot 390_q128_no_expect_q130_skip_q129
+type 01
+shot 400_expect_q131_checkbox
+
+note Q131_DIFFICULT_REASON Check Box -- option 01 tick at ~(880,504).
+click 880 504
+key {ENTER}
+note ---- Q132 = 1 Yes (Malasakit provided) -> Q133. Q134 then self-skips on its
+note  own entry gate (Q132 = 1 means the not-provided block does not apply). ----
+type 1
+shot 410_q132_yes_expect_q133_checkbox
+
+note Q133_MALASAKIT_WHY Check Box -- option 01 tick at ~(907,584).
+click 907 584
+key {ENTER}
+note ---- MUST land on Q135, NOT Q134: Q134's own entry gate self-skips it when
+note  Q132 = Yes. ----
+shot 420_after_q133_expect_q135_skip_q134
+note ---- Q135 = 1 Yes (LGU support) -> Q136 forms of support. ----
+type 1
+shot 430_q135_yes_expect_q136_checkbox
+
+note Q136_LGU_SUPPORT_FORMS Check Box -- option 01 tick at ~(907,734).
+click 907 734
+key {ENTER}
+note ---- Q137 = 1 Yes (satisfied with LGU support). DEFECT-FIX PROOF: the printed
+note  paper sends Yes to Q141, which ORPHANS the Q139/Q140 PHO protocol pair for
+note  every satisfied respondent. The build retargets it to Q139, still skipping
+note  Q138 ("why not satisfied") which is all the paper's skip was for.
+note  MUST land on Q139, NOT Q141. ----
+type 1
+shot 440_q137_yes_expect_Q139_NOT_q141_DEFECT_FIX
+note ---- Q139 PHO GATE PROOF: this item is asked only when Q7 = Public AND
+note  Q8 in Level 1/2/3 Hospital (#386). Section B answered 1 and 3, so the gate is
+note  OPEN and Q139 is reachable. Answer 01 Very Clear -> in 1,2 -> skips the
+note  Q140 why-unclear detail -> Q141. ----
+type 01
+shot 450_q139_veryclear_expect_q141_skip_q140

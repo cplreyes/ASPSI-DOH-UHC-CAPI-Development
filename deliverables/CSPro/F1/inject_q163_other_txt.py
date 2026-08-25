@@ -1,5 +1,21 @@
 #!/usr/bin/env python3
-r"""Restore Q163_HR_CHALL_OTHER_TXT's form field in F1's hand-maintained .fmf.
+r"""
+RETIRED 2026-08-19 - superseded by generate_fmf.py; kept for history.
+========================================================================
+F1's .fmf was hand-maintained, and this script was one of eleven idempotent post-processors
+that patched it by locating fields by NAME and geometry. The Aug-17 instrument renumber
+(Task 2.2) renamed ~112 of 320 dictionary items, invalidating those anchors, so F1 adopted
+the F3/F4 generator (Task 2.3). Do NOT run this file; do not delete it either - the WHY
+recorded below is the reason each invariant is worth preserving.
+
+WHERE THIS SCRIPT'S INVARIANT LIVES NOW
+---------------------------------------
+Nothing to restore: the field is now Q150_HR_CHALL_OTHER_TXT (Aug-17 renumber) and is
+an ordinary generated field. The failure mode this repaired - a Designer compile+save
+silently deleting a form field it judged an orphan - cannot persist, because the .fmf
+is rebuilt from the dictionary on every build.
+========================================================================
+Restore Q163_HR_CHALL_OTHER_TXT's form field in F1's hand-maintained .fmf.
 
 2026-08-05 (#1037): while the dictionary was transiently missing the
 Q163_HR_CHALL_OTHER_TXT item (the checkbox_multiselect specify-detection only
@@ -87,4 +103,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(
+        "RETIRED 2026-08-19 - superseded by F1/generate_fmf.py; this script must NOT be run.\n"
+        "It anchors on pre-Aug-17 field names and geometry, so against the current instrument\n"
+        "it would either abort or silently mis-place fields in a file that is now rebuilt from\n"
+        "the dictionary on every build. See the module docstring for the invariant it used to\n"
+        "enforce and where that invariant lives today.")

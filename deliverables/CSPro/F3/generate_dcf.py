@@ -26,7 +26,7 @@ from cspro_helpers import (
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, checkbox_multiselect, uhc9_item, record,
     build_field_control, build_geo_id, build_dictionary, build_id_block, write_dcf,
-    derived_geo_code_items, ENUM_RESULT_OPTIONS_F3, BREAKOFF_OPTIONS,
+    derived_geo_code_items, ENUM_RESULT_OPTIONS_F3, REPLACED_CODE_F3, BREAKOFF_OPTIONS,
     apply_translations,
     _gps_fields, _photo_block,
 )
@@ -205,7 +205,8 @@ def build_f3_field_control():
                                date_mmddyyyy=True,
                                extra_items=extra + derived_geo_code_items(),
                                date_label_entity="the Patient",
-                               result_options=ENUM_RESULT_OPTIONS_F3)
+                               result_options=ENUM_RESULT_OPTIONS_F3,
+                               replaced_code=REPLACED_CODE_F3)
 
 
 # ============================================================
@@ -289,14 +290,18 @@ def build_section_b():
         ("Asexual",          "7"),
         ("Other (specify)",  "8"),
     ]
+    # aug17 (Task 0.6 finding, Ruling in task-0.6 review): paper permutes the code/label
+    # pairing vs. the deployed build (paper code 2 = Divorced, not Married). Paper codes
+    # WIN per Carl's declared data-shape break -- F3 -> 4.0.0. Reordered to match
+    # normalized/F3-paper.csv qnum=10 verbatim.
     Q10_CIVIL_STATUS = [
         ("Single / Never Married",   "1"),
-        ("Married",                  "2"),
-        ("Common law / Live-in",     "3"),
-        ("Widowed",                  "4"),
-        ("Divorced",                 "5"),
-        ("Separated",                "6"),
-        ("Annulled",                 "7"),
+        ("Divorced",                 "2"),
+        ("Married",                  "3"),
+        ("Separated",                "4"),
+        ("Common law / Live-in",     "5"),
+        ("Annulled",                 "6"),
+        ("Widowed",                  "7"),
         ("Not reported",             "8"),
     ]
     Q13_PWD_CARD = [
@@ -362,28 +367,25 @@ def build_section_b():
         # codes unchanged (NA=98, DK=99) so no data / consistency-check impact.
         ("Not Applicable",                                     "98"),
     ]
-    # #631 (ASPSI updated questionnaire, 2026-06-17): income categories revised to
-    # 11 contiguous 50k bands (was 6 uneven bands). 2-digit codes (field length 2).
-    # NOTE: the tester's printed "150,000 - 199,000" is a transcription typo —
-    # corrected to 199,999 to keep the bands contiguous and non-overlapping with the
-    # 200,000 band (every other band ends in 9,999). Flagged for ASPSI confirmation.
+    # R16 (Aug-17 rewrite, 2026-08-18) — REVERSES R4/#631: the Aug-17 paper prints 7
+    # PSA income-class bands, NOT the deployed 11 round-50k bands. Paper wins; a
+    # declared data-shape break (F3 -> 4.0.0). Labels/codes VERBATIM from
+    # normalized/F3-paper.csv qnum=18 (WT aug17-tools extract) — 1-digit codes, no
+    # zero-fill. DK is now code 8 (was 99); Refuse is now code 9 (was 98). Both stay
+    # out-of-range so the bracket<->amount cross-check bypasses them (PROC
+    # Q18_INCOME_BRACKET in generate_apc.py). The Q29_SEC_CLASS SOFT cross-check was
+    # RETIRED with the question on 2026-08-20 (#1286, UAT R7 -- Q29_SEC_CLASS is now
+    # off-form). See aug17-approved-divergences.md (F3 | Q18).
     Q18_BRACKET = [
-        ("Under 50,000",      "01"),
-        ("50,000 - 99,999",   "02"),
-        ("100,000 - 149,999", "03"),
-        ("150,000 - 199,999", "04"),
-        ("200,000 - 249,999", "05"),
-        ("250,000 - 299,999", "06"),
-        ("300,000 - 349,999", "07"),
-        ("350,000 - 399,999", "08"),
-        ("400,000 - 449,999", "09"),
-        ("450,000 - 499,999", "10"),
-        ("500,000 and above", "11"),
-        # #1048 (pretest 2026-08-04): paper carries both missing-value options with the
-        # do-not-read tag. DK keeps its deployed code 99 (#398); Refuse is NEW on 98 —
-        # both out-of-range so the bracket<->amount + SEC cross-checks bypass them.
-        ("I don't know [DO NOT READ OUT LOUD]",     "99"),
-        ("Refuse to answer [DO NOT READ OUT LOUD]", "98"),
+        ("< PhP12,030",                             "1"),
+        ("PhP12,030 to PhP24,060",                  "2"),
+        ("PhP24,061 to PhP48,120",                  "3"),
+        ("PhP48,121 to PhP84,210",                  "4"),
+        ("PhP84,211 to PhP144,360",                 "5"),
+        ("PhP144,361 to PhP240,600",                "6"),
+        (">PhP240,600",                              "7"),
+        ("I don't know [DO NOT READ OUT LOUD]",     "8"),
+        ("Refuse to answer [DO NOT READ OUT LOUD]", "9"),
     ]
     Q23_WATER = [
         ("Faucet inside the house", "1"),
@@ -394,6 +396,9 @@ def build_section_b():
     Q24_OWN_SHARE = [
         ("I/we have our own",            "1"),
         ("I/we share with our community","2"),
+        # aug17: 'None' added to the water-source ownership questions (Q24/Q25/Q26)
+        # {.mark} F3-inventory.md §10.A (L427,431,435).
+        ("None",                         "3"),
     ]
     Q26_HAVE = [
         ("Yes, I/ we have",     "1"),
@@ -447,7 +452,12 @@ def build_section_b():
                    "8. Is the patient part of the LGBTQIA+ community? (e.g., gay, lesbian, bisexual, etc.). It is fine if not comfortable answering.",
                    Q8_LGBTQIA, length=1),
         select_one("Q9_GROUP",
-                   "9. Which group does the patient identify with?", Q9_GROUP, length=1),
+                   # aug17 Task 1.5: paper (F3-extract.md L261) prints "It is fine if not
+                   # comfortable answering." on Q9's own stem, same as Q8's caveat -- the
+                   # build had dropped it while Q9's own INSTRUCTIONS[9]=_READ_ONE note
+                   # still fires separately. Restored verbatim from paper.
+                   "9. Which group does the patient identify with? It is fine if not "
+                   "comfortable answering.", Q9_GROUP, length=1),
         alpha("Q9_GROUP_OTHER_TXT",
               "9. Group identity — Other (specify) text", length=120),
         select_one("Q10_CIVIL_STATUS",
@@ -481,7 +491,7 @@ def build_section_b():
                 length=8),
         select_one("Q18_INCOME_BRACKET",
                    "18. Income category corresponding to the respondent's approximate household income",
-                   Q18_BRACKET, length=2),   # #631: 11 brackets -> 2-digit codes
+                   Q18_BRACKET, length=1),   # R16: 9 codes (7 real + DK/RF), 1-digit no zero-fill
         numeric("Q19_HH_SIZE",
                 "19. How many total individuals (including children) live in the patient's house now?",
                 length=2),
@@ -503,14 +513,29 @@ def build_section_b():
         select_one("Q25_TUBE_OWN",
                    "25. Does the patient have their own tube/pipe, or do they share with their community?",
                    Q24_OWN_SHARE, length=1),
-        select_one("Q26_REFRIGERATOR",
-                   "26. Does the patient's family own a refrigerator/freezer?", Q26_HAVE, length=1),
-        select_one("Q27_TELEVISION",
-                   "27. Does the patient's family own a television set?", Q26_HAVE, length=1),
-        select_one("Q28_WASHER",
-                   "28. Does the patient's family own a washing machine?", Q26_HAVE, length=1),
+        # aug17 (found during the Q24/Q25/Q26 'None'-option content pass, 2026-08-18):
+        # the deployed build had NO item for the paper's Q26 ('own their dug well, or
+        # share with community?') -- Q26_REFRIGERATOR/Q27_TELEVISION/Q28_WASHER were
+        # silently carrying paper Q27/Q28/Q29's content one number early. Inserted the
+        # missing item and renumbered the three shifted fields; Q30 (IP) onward were
+        # already correctly aligned so nothing past this point moves. See
+        # aug17-approved-divergences.md (F3 | Q26 dug-well item).
+        select_one("Q26_WELL_OWN",
+                   "26. Does the patient have their own dug well, or do they share with their community?",
+                   Q24_OWN_SHARE, length=1),
+        select_one("Q27_REFRIGERATOR",
+                   "27. Does the patient's family own a refrigerator/freezer?", Q26_HAVE, length=1),
+        select_one("Q28_TELEVISION",
+                   "28. Does the patient's family own a television set?", Q26_HAVE, length=1),
+        select_one("Q29_WASHER",
+                   "29. Does the patient's family own a washing machine?", Q26_HAVE, length=1),
+        # aug17: this item has no Aug-17 paper counterpart (Q23-Q34 range) -- kept as a
+        # CAPI-supplemental socioeconomic-class item (feeds the Q18-income soft-consistency
+        # check, #631). Field name unchanged to avoid rippling the PROC/VALIDATION_PROCS
+        # references; the paper-colliding '29.' display prefix is dropped since Q29 is now
+        # legitimately Washer. Registered as a divergence (class=capi-adaptation).
         select_one("Q29_SEC_CLASS",
-                   "29. How would the socioeconomic class of the patient's household be classified?",
+                   "How would the socioeconomic class of the patient's household be classified?",
                    Q29_SEC, length=1),
         select_one("Q30_IP",
                    "30. Is the patient member of Indigenous People (IP) community, "
@@ -1231,7 +1256,11 @@ def build_section_g():
         ("GSIS",                                                               "12"),
         ("Private Insurance",                                                  "13"),
         ("HMO",                                                                "14"),
-        ("Other (specify)",                                                    "15"),
+        # aug17 {.mark}: new payment source (F3-inventory.md §10.B, L1687-1689). Renumbered
+        # sequentially after the paper's own duplicate-15 typo (defect-fix, already registered
+        # by Task 0.4) -- 15=QFS, 16=Other, matching how Q113's equivalent was already correct.
+        ("Quantified Free Service",                                            "15"),
+        ("Other (specify)",                                                    "16"),
     ]
     Q100_BUCAS_SOURCE = [
         ("News",                       "1"),
@@ -1269,11 +1298,31 @@ def build_section_g():
         ("Other (specify)",                         "6"),   # #1065: paper label; code + specify gate unchanged
     ]
     items = [
-        select_one("Q88_WHY_VISIT",
-                   "88. Why are you visiting [FACILITY_NAME_INPUT] for consultation/advice or treatment?",
-                   Q88_WHY_VISIT, length=1),
-        alpha("Q88_WHY_VISIT_OTHER_TXT",
-              "88. Why visit — Other (specify) text", length=120),
+        # ANA-324 (2026-08-20): select_one -> Check Box (tick-all). The Aug-17 paper
+        # prints "SELECT ALL THAT APPLY" on Q88 (F3-extract.md L1250); the build had
+        # carried it as a single-choice radio since Apr-20, so a patient visiting for
+        # more than one reason could only record one of them. Same conversion the
+        # other 13 F3 tick-lists already use.
+        #
+        # #830: _cb_codes re-codes the 7 real reasons 1..7 -> 01..07 and
+        # "Other (specify)" -> 99. Those ASCEND, which is the rule a checkbox list has
+        # to satisfy -- CSPro slices the field by fixed code width, so a descending or
+        # ragged list decodes ticks onto the wrong options.
+        #
+        # DATA SHAPE CHANGES: numeric(1) -> alpha(16). That moves every item after it
+        # in the record, so it is a MAJOR bump and old .csdb files are not compatible.
+        # Safe to do now: no F3 case has been created or modified on CSWeb since
+        # 2026-07-27 (verified against cspro_sync_history), so there is no collected
+        # data to migrate.
+        #
+        # The hand-declared _OTHER_TXT is gone on purpose -- checkbox_multiselect emits
+        # it from with_other_txt, and declaring both makes a duplicate dictionary item.
+        # The label keeps "[FACILITY_NAME_INPUT]" (the neutralised fill token) and does
+        # NOT gain "Select all that apply." -- that directive is added to the qsf
+        # instruction set instead, so it renders once, not twice (#1189).
+        *checkbox_multiselect("Q88_WHY_VISIT",
+                    "88. Why are you visiting [FACILITY_NAME_INPUT] for consultation/advice or treatment?",
+                    _cb_codes(Q88_WHY_VISIT), with_other_txt=True),
         yes_no("Q89_ADVISED_ADMIT",
                "89. Were you advised for hospitalization / to be admitted in the hospital?"),
         *checkbox_multiselect("Q90_NOT_CONFINED",   # #673: select_all -> Check Box (tick-all)
@@ -1378,8 +1427,11 @@ def build_section_g():
     # Q971_OTHER_TXT on code 04.
     # #1208: same 'none' escape as Q97.1, appended AFTER the paper's a)-f) items so the
     # codes still ascend (01..06, 90); filtered out of the amount roster below.
+    # aug17 {.mark}: paper's exact wording for this negative option (F3-extract.md L1553)
+    # is "No, did not pay for any other expenses" -- relabeled from the earlier "g) None"
+    # placeholder while keeping the established g)-lettering convention (#1208 follow-up).
     Q972_SOURCES = ([(label, f"{int(code):02d}") for label, code in Q972_EXPENSES]
-                    + [("g) None", "90")])   # #1208 follow-up: ASPSI's spec letters it g), matching a)-f)
+                    + [("g) No, did not pay for any other expenses", "90")])
     # #1208 follow-up (ASPSI 2026-08-13): final question wording, matching their screenshot.
     # The italic "If yes, indicate the amount spent." emits as the blue instruction note via
     # generate_qsf (_IF_YES_AMOUNT, keyed to 972), not as part of this label.
@@ -1552,12 +1604,17 @@ def build_section_h():
         ("Malasakit Center",                                               "05"),
         ("Other Donation/Charity/Assistance from Government Organization", "06"),
         ("MAIFIP",                                                         "07"),
-        ("PhilHealth",                                                     "08"),
+        # aug17 {.mark}: relabeled "PhilHealth" -> "PhilHealth/NBB" (F3-inventory.md §10.C,
+        # L2034). Code 08 unchanged -- every apc pos("08", Q113_SOURCES) reference still fires.
+        ("PhilHealth/NBB",                                                 "08"),
         ("SSS",                                                            "09"),
         ("GSIS",                                                           "10"),
         ("Private Insurance",                                              "11"),
         ("HMO",                                                            "12"),
-        ("Other (specify)",                                                "13"),
+        # aug17 {.mark}: new payment source (F3-inventory.md §10.B, L2079-2081), already
+        # correctly numbered in the paper (13=QFS, 14=Other, no duplicate-number defect here).
+        ("Quantified Free Service",                                        "13"),
+        ("Other (specify)",                                                "14"),
     ]
     Q114_NO_PH = [
         ("Not a PhilHealth member",                                                            "1"),
@@ -1675,6 +1732,19 @@ def build_section_h():
                              length=9))
     items.append(alpha("Q1141_OTHER_TXT",
                        "115.1 Other expenses — specify text", length=120))
+    # aug17 {.mark}: paper adds a standalone 'None' checkbox after the a)-f) items
+    # (F3-extract.md L2173) — the inpatient twin of Q971's 'None' escape. The flat
+    # yes_no-per-item matrix already lets every component be answered 'No' individually
+    # (this item is informational, not a skip target), so it's captured plainly.
+    items.append(yes_no("Q1141_NONE",
+                        "115.1 Other items included in the bill — None"))
+    # aug17 {.mark}: paper wraps the whole 115.2 block in an explicit Yes/No gate
+    # (F3-extract.md L2180 'Yes <indicate the amount spent>' / L2231 'No') that the
+    # earlier build lacked. Q1142_HAS_OTHER is the new gate; the skip that hides the
+    # a)-g) breakdown on 'No' lives in generate_apc.py's SKIP_RULES (Task 1.2).
+    items.append(yes_no("Q1142_HAS_OTHER",
+                        "115.2 Did you pay for any other expenses during your confinement "
+                        "that were not included in the hospital bill?"))
     # Q115.2 other expenses NOT included in bill — 7 items with amount
     for label, code in Q1142_NOT_IN_BILL:
         items.append(yes_no(f"Q1142_{code}",
@@ -1729,17 +1799,14 @@ def build_section_i():
     Q116_HEARD = [
         ("Yes",          "1"),
         ("No",           "2"),  # proceed to Q119
-        ("I don't know", "3"),  # proceed to Q119
     ]
     Q119_HEARD = [
         ("Yes",          "1"),
         ("No",           "2"),  # proceed to Q124
-        ("I don't know", "3"),  # proceed to Q124
     ]
     Q124_HEARD = [
         ("Yes",          "1"),
         ("No",           "2"),  # proceed to Q130
-        ("I don't know", "3"),  # proceed to Q130
     ]
     SOURCE_8 = [
         ("News",                     "1"),
@@ -1951,10 +2018,15 @@ def build_section_k():
         ("Dental",                                                       "16"),
         ("ENT (problem with ear/nose/throat)",                           "17"),
         ("Allergy",                                                      "18"),
-        ("No condition - Regular check-up only",                         "19"),
-        # 'Other' uses code 99 (not 20) so pos("99",...) on the concatenated Check Box
-        # string can't false-match across code boundaries — no valid code starts with 9.
-        ("Other (Specify)",                                              "99"),
+        # aug17: paper's Q148 coding list (F3-extract.md L2546-2565) is 01-18 (same as Q85's
+        # condition list minus 'No condition - Regular check-up only', which never appears in
+        # Q148's coding at all — it doesn't make sense for a medication/condition mapping) plus
+        # {.mark} '19-Other (Specify)' as the Year-2 addition. Dropped the old build-only 'No
+        # condition' item (was 19) and moved Other from its old anti-collision code 99 to the
+        # paper's real 19 — the old collision this avoided (pos("19",...) false-matching a
+        # 01+99 pairing) can no longer occur once no code starts with '9' except 19 itself; the
+        # PROC still uses an aligned chunk scan (not pos()) for the code-19 check regardless.
+        ("Other (Specify)",                                              "19"),
     ]
     Q149_WHERE_BUY = [
         ("Public Hospital",                                              "1"),
@@ -2319,6 +2391,22 @@ def build_f3_dictionary():
         build_section_b(),
         build_section_c(),
         build_section_d(),
+        # #1305 (2026-08-20): the aug17 front-load is REVERSED -- sections run in the
+        # paper's PRINTED order again, A,B,C,D,E,F,G,H,I,...
+        #
+        # The Aug-17 paper carries two "Note for CAPI Version" blocks (F3-extract.md
+        # L1237/L1808) asking for outpatient/inpatient care to be front-loaded ahead of
+        # primary-care utilization, and from 2026-08-19 the build did exactly that. UAT
+        # R7 #1305 reported the resulting tablet/booklet mismatch and Carl ruled for the
+        # printed order, so those two notes are deliberately NOT implemented. That is now
+        # a registered divergence in instruments-aug17-extract/aug17-approved-divergences.md
+        # (the order:G,H / order:E,F / note:F / note:G rows) -- do NOT "restore" the
+        # front-load from the paper notes alone without checking with Carl first.
+        #
+        # Reversing this moves RECORDS, so it is a data-shape change (MAJOR bump), and it
+        # un-does the four skip retargets the front-load required -- see generate_apc.py:
+        # Q51 back to Q53_HAS_PCP, and AREA_HAS_BUCAS / Q99_BUCAS_HEARD / Q1142_HAS_OTHER
+        # plus the PROC Q105_REASON gate back to Q116_NBB_HEARD.
         build_section_e(),
         build_section_f(),
         *build_section_g(),   # Option B fan-out: G splits around 6 cost-matrix rosters (Q92/Q94/Q96/Q97.1/Q97.2/Q98)
@@ -2330,7 +2418,12 @@ def build_f3_dictionary():
     ]
     return build_dictionary(
         dict_name="PATIENTSURVEY_DICT",
-        dict_label="PatientSurvey",
+        # aug17: the paper retitles itself "In-Patient and Out-Patient Survey
+        # Questionnaire" (F3-inventory.md §1, running title L3/L123) -- applied here
+        # (the rendered dictionary label) and to BUILD_FOOTER below. versions.json's
+        # app display name STAYS "Patient Survey" for fleet continuity (registered
+        # class=formatting, aug17-approved-divergences.md).
+        dict_label="In-Patient and Out-Patient Survey Questionnaire",
         id_items=build_id_block(single_questionnaire_number=True),
         records=records,
     )

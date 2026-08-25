@@ -70,6 +70,30 @@ SCREENS = {
             "in this study.",
 
             "Do you have any questions about the study or about what I have told you?",
+
+            # 1176-aug17 (Task 2.2, consent carry): F1's SCREENS carried ZERO
+            # ethics-contact content before this fix (verified: no Villarante/Claro/
+            # sjreb@doh.gov.ph anywhere in this tuple) — the last of the three
+            # instruments to get it. F1-extract.md's own ethics-contact table (L62-76)
+            # is content-identical to F3's and F4's (same SJREB / DOH-Villarante /
+            # ASPSI-Claro rows, same Year-2 `survey2` mailbox) — added verbatim,
+            # mirroring SCREENS["F3"] (Task 1.1) and SCREENS["F4"] (Task 1.7) so all
+            # three instruments render one identical block. generate_qsf.py's
+            # CONSENT_HTML is DEAD code (superseded 2026-06-12) — NOT touched, per the
+            # F3/F4 precedent. The paper's table heads the name cells "For:"; rendered
+            # here as "Name:" to match the two shipped instruments.
+            "If you have concerns or questions about your rights as a participant, you can "
+            "contact:",
+
+            "<b>Single Joint Research Ethics Board (SJREB) | Department of "
+            "Health</b><br/>Email: sjreb@doh.gov.ph<br/>Contact No.: (02) 8651-7800 "
+            "local 1326, 1328",
+
+            "<b>Department of Health</b><br/>Name: Lindsley Jeremiah D. Villarante<br/>"
+            "Email: ldvillarante@doh.gov.ph<br/>Tel: +63 (02) 8651-7800 local 1432",
+
+            "<b>Asian Social Project Services, Inc.</b><br/>Name: Paulyn Jean A. Claro<br/>"
+            "Email: inquiry.aspsi.doh.uhc.survey2@gmail.com<br/>Tel: +63 917 819 6884",
         ],
     ),
     "F3": (
@@ -115,6 +139,25 @@ SCREENS = {
             "be in the study.",
 
             "Do you have any questions about the study or about what I have told you?",
+
+            # aug17 (Task 1.1 fix round 1, 2026-08-18): the paper's ethics-contact table
+            # (F3-extract.md L64-81) was missing from the live consent screens entirely --
+            # the earlier fix landed in generate_qsf.py's CONSENT_HTML, which is dead code
+            # (superseded 2026-06-12, kept only as an Annex H reference; the real F3 ICF
+            # renders via SCREENS here -> build_screen_html -> OVERRIDES). Verbatim from the
+            # paper's Office/Email/Contact No. table.
+            "If you have concerns or questions about your rights as a participant, you can "
+            "contact:",
+
+            "<b>Single Joint Research Ethics Board (SJREB) | Department of "
+            "Health</b><br/>Email: sjreb@doh.gov.ph<br/>Contact No.: (02) 8651-7800 "
+            "local 1326, 1328",
+
+            "<b>Department of Health</b><br/>Name: Lindsley Jeremiah D. Villarante<br/>"
+            "Email: ldvillarante@doh.gov.ph<br/>Tel: +63 (02) 8651-7800 local 1432",
+
+            "<b>Asian Social Project Services, Inc.</b><br/>Name: Paulyn Jean A. Claro<br/>"
+            "Email: inquiry.aspsi.doh.uhc.survey2@gmail.com<br/>Tel: +63 917 819 6884",
         ],
     ),
     "F4": (
@@ -159,6 +202,25 @@ SCREENS = {
             "the study.",
 
             "Do you have any questions about the study or about what I have told you?",
+
+            # 1176-aug17 (Task 1.7, consent carry): F4's SCREENS carried ZERO ethics-contact
+            # content before this fix (verified: no Villarante/Claro/sjreb@doh.gov.ph anywhere
+            # in this tuple). F4-extract.md's own ethics-contact table (L62-79) is content-
+            # identical to F3's (same SJREB/DOH-Villarante/ASPSI-Claro rows) -- added verbatim,
+            # mirroring F3's SCREENS["F3"] fix (Task 1.1, 2026-08-18). generate_qsf.py's
+            # CONSENT_HTML is DEAD code (superseded 2026-06-12) -- NOT touched, per F3 precedent.
+            "If you have concerns or questions about your rights as a participant, you can "
+            "contact:",
+
+            "<b>Single Joint Research Ethics Board (SJREB) | Department of "
+            "Health</b><br/>Email: sjreb@doh.gov.ph<br/>Contact No.: (02) 8651-7800 "
+            "local 1326, 1328",
+
+            "<b>Department of Health</b><br/>Name: Lindsley Jeremiah D. Villarante<br/>"
+            "Email: ldvillarante@doh.gov.ph<br/>Tel: +63 (02) 8651-7800 local 1432",
+
+            "<b>Asian Social Project Services, Inc.</b><br/>Name: Paulyn Jean A. Claro<br/>"
+            "Email: inquiry.aspsi.doh.uhc.survey2@gmail.com<br/>Tel: +63 917 819 6884",
         ],
     ),
 }
@@ -178,9 +240,35 @@ ITEM_LABELS = {
 CONTINUE_OPTIONS = [("Continue", "1")]
 
 
+# 1190 (PSA comment): PSA Board Resolution No. 01 s. 2017-084 requires the reference
+# year in the title of a statistical survey. Rendered wherever the clearance block
+# renders -- the cover footer and both ICF screens, in all three instruments (3 screens
+# x 8 locales = 24 sites each). Regulatory metadata, so it is NOT translated: every
+# locale renders the identical string, exactly like the clearance numbers below it.
+#
+# 1304 (UAT R7, 2026-08-20): ASPSI replaced the whole line. It used to read
+#     Universal Health Care (UHC) Survey-Year 2 - Reference Year 2026
+# i.e. the registered title (Survey Manual / SSRCS submission) plus a separately
+# LABELLED reference-year element taken from the DOH-2651 clearance period. Asked
+# whether to replace the line outright or keep that element alongside the new title,
+# ASPSI answered "Replace the whole line", so the labelled element is gone.
+#
+# That still satisfies Board Res. 01 s.2017-084, which requires the reference year
+# IN THE TITLE -- and 2026 now sits inside the title itself. The separate element was
+# belt-and-braces, never the compliance hook, so dropping it costs nothing.
+#
+# The "2026- Year 2" spacing (space BEFORE the hyphen, none after) is ASPSI's own and
+# is reproduced VERBATIM on purpose. We flagged it as a possible typo on #1304 and
+# offered "2026 - Year 2"; they replaced the line without amending it. On a PSA-cleared
+# instrument, matching the string the client supplied beats tidying it. One word from
+# ASPSI flips it -- do not "correct" the spacing unprompted.
+SURVEY_TITLE_HTML = ('<p class="instruction"><b>Universal Health Care (UHC) '
+                     'Survey 2026- Year 2</b></p>')
+
+
 def clearance_html(instrument):
-    """The PSA/SJREB clearance block that sits at the foot of both ICF screens."""
-    return ('<p class="instruction">PSA SSRCS Clearance No. '
+    """Survey title (reference year inside it, #1190/#1304) + PSA/SJREB clearance."""
+    return (SURVEY_TITLE_HTML + '<p class="instruction">PSA SSRCS Clearance No. '
             f'{CLEARANCE_NO[instrument]} &middot; issued July 2026 &middot; valid until '
             '31 July 2027<br/>SJREB: ICF ver. 07/25/2026 &middot; Translated '
             'Questionnaire ver. 06/05/2026</p>')

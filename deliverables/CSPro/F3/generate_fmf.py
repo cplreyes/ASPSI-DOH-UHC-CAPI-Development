@@ -101,16 +101,26 @@ FORM_PLAN = [
      [("FIELD_CONTROL", {"names": ["REGION_NAME", "PROVINCE_NAME", "CITY_NAME"]}),
       ("PATIENT_GEO_ID", {"exclude": ["REGION", "PROVINCE_HUC", "CITY_MUNICIPALITY"]})]),
     ("B. Patient Profile",
-     [("B_PATIENT_PROFILE", None)]),
+     [("B_PATIENT_PROFILE", {"exclude": ["Q29_SEC_CLASS"]})]),   # 1286: retired off-form (dcf item retained)
     ("C. UHC Awareness",
      [("C_UHC_AWARENESS", None)]),
     ("D. PhilHealth Registration",
      [("D_PHILHEALTH_REG", None)]),
-    # aug17 front-load reorder (order:G,H): G/H moved here, immediately after D and ahead
-    # of E, per the paper's two "Note for CAPI Version" blocks (F3-extract.md L1237/L1808
-    # -- outpatient/inpatient care front-loaded before primary care utilization when
-    # administered in the RHU/hospital OPD). Internal G/H interleave order (roster fan-out)
-    # is UNCHANGED -- only their position relative to E/F moved.
+    ("E. Primary Care + YAKAP/Konsulta",
+     [("E_PRIMARY_CARE", None)]),
+    ("F. Health-Seeking",
+     [("F_HEALTH_SEEKING", None)]),
+    # #1305 (2026-08-20): the aug17 front-load is REVERSED — E and F are asked BEFORE
+    # G/H again, so the screens run in the paper's printed order A,B,C,D,E,F,G,H,I,...
+    # The Aug-17 paper's two "Note for CAPI Version" blocks (F3-extract.md L1237/L1808)
+    # ask for outpatient/inpatient to be front-loaded ahead of primary-care utilization;
+    # UAT R7 #1305 reported the tablet/booklet mismatch that produced and Carl ruled for
+    # the printed order, so those notes are deliberately NOT implemented. Registered in
+    # instruments-aug17-extract/aug17-approved-divergences.md — do NOT re-apply the
+    # front-load from the paper notes alone.
+    #
+    # Internal G/H interleave order (roster fan-out) is UNCHANGED — only their position
+    # relative to E/F moved back.
     #
     # Option B fan-out (2026-06-19): Section G is split around SIX cost-matrix rosters.
     # Each tick-list ends a host fragment; its roster grid renders next; then the next
@@ -161,10 +171,6 @@ FORM_PLAN = [
      [("Q113_PAY_ROSTER", None)]),
     ("H. Inpatient Care (cont. 4)",
      [("H_INPATIENT_CARE_5", None)]),
-    ("E. Primary Care + YAKAP/Konsulta",
-     [("E_PRIMARY_CARE", None)]),
-    ("F. Health-Seeking",
-     [("F_HEALTH_SEEKING", None)]),
     ("I. Financial Risk",
      [("I_FINANCIAL_RISK", None)]),
     ("J. Satisfaction",
@@ -199,7 +205,14 @@ FORM_PLAN = [
 
 # Binary/computed items deliberately kept OFF every form (so the orphan check below
 # does not flag them). VERIFICATION_PHOTO_IMAGE holds the synced photo bytes.
-_OFF_FORM_ITEMS = {"VERIFICATION_PHOTO_IMAGE", "CASE_DISPOSITION"}  # #561: off-form completeness sentinel
+_OFF_FORM_ITEMS = {
+    "VERIFICATION_PHOTO_IMAGE", "CASE_DISPOSITION",  # #561: off-form completeness sentinel
+    # #1286 (UAT R7, 2026-08-20): socioeconomic-class question retired from the tool
+    # (no Aug-17 paper counterpart; ASPSI confirmed retire). The dcf item is RETAINED
+    # off-form -- deleting it would shift every later Section-B column mid-round; full
+    # removal rides the next declared data-shape break.
+    "Q29_SEC_CLASS",
+}
 
 
 def _filter_items(items, spec):
@@ -286,7 +299,6 @@ SHORT_FORM_LABELS = {
     # their qsf text but are three words, not a question, and are left alone.)
     # SEC class is the enumerator's own classification, read off the Q24-Q29 asset battery;
     # its "Q29_" name records only that it follows Q29 - it is not question 29.
-    "Q29_SEC_CLASS":         "Socioeconomic class",
     "AREA_HAS_BUCAS":        "Area has a BUCAS center",
     "AREA_HAS_GAMOT":        "Area has GAMOT",
 }

@@ -56,7 +56,10 @@ SYNC_DIRECTION = "put"
 
 # base = file stem; ent_name = the .ent "name" (uppercase, no suffix).
 SPECS = {
-    "F1": {"dir": "F1", "base": "FacilityHeadSurvey", "ent_name": "FACILITYHEADSURVEY", "has_fmf_gen": False},
+    # F1 gained generate_fmf.py on 2026-08-19 (Task 2.3): its .fmf was hand-maintained
+    # + patched by eleven inject_*.py post-processors until the Aug-17 renumber invalidated
+    # every name they anchored on. Now generated like F3/F4.
+    "F1": {"dir": "F1", "base": "FacilityHeadSurvey", "ent_name": "FACILITYHEADSURVEY", "has_fmf_gen": True},
     "F3": {"dir": "F3", "base": "PatientSurvey",       "ent_name": "PATIENTSURVEY",      "has_fmf_gen": True},
     "F4": {"dir": "F4", "base": "HouseholdSurvey",     "ent_name": "HOUSEHOLDSURVEY",    "has_fmf_gen": True},
     "SV": {"dir": "SV", "base": "SupervisorApp",       "ent_name": "SUPERVISORAPP",      "has_fmf_gen": True},
@@ -88,7 +91,8 @@ def _run(cmd, cwd):
     r = subprocess.run(cmd, cwd=str(cwd), capture_output=True, text=True)
     out = (r.stdout or "") + (r.stderr or "")
     for line in out.splitlines():
-        if any(k in line for k in ("Wrote", "Capped", "WARNING", "orphan", "Error", "error", "ALL CLEAN", "FAIL")):
+        if any(k in line for k in ("Wrote", "Capped", "WARNING", "orphan", "Error", "error",
+                                   "ALL CLEAN", "FAIL", "APPLIED", "NOT FOUND")):
             print(f"      {line.strip()}")
     return r.returncode, out
 
@@ -140,10 +144,24 @@ def build_instrument(key):
     print(f"[build {key}] regenerate -> bind")
     _kill_cspro()  # avoid stale-in-memory / file locks while regenerating
 
-    # 1. run generators present in the instrument dir (dcf first; apc; then fmf)
-    for gen in ("generate_dcf.py", "generate_apc.py", "generate_fmf.py"):
+    # 1. run generators present in the instrument dir, in dependency order:
+    #    dcf -> its post-processors -> apc -> fmf. Scripts that are absent are skipped, so
+    #    this one sequence serves every instrument.
+    #
+    #    inject_scoped_option_labels.py (F1, #1222) is a .dcf POST-processor, not a
+    #    generator: it rewrites ten per-question Bikol option labels that no shared
+    #    translation key can express. It must run immediately after generate_dcf.py, and it
+    #    DEFAULTS TO A DRY RUN -- without --apply it prints "N label(s) to change" and exits
+    #    0 having written nothing, which reads exactly like success. Running it by hand was
+    #    a documented trap: "regenerating F1's dcf without re-running
+    #    inject_scoped_option_labels.py silently drops the Dae overrides". Wiring it in here
+    #    is what closes that trap (2026-08-19, Task 2.3).
+    for gen, extra in (("generate_dcf.py", []),
+                       ("inject_scoped_option_labels.py", ["--apply"]),
+                       ("generate_apc.py", []),
+                       ("generate_fmf.py", [])):
         if (p["dir"] / gen).exists():
-            rc, _ = _run([sys.executable, gen], p["dir"])
+            rc, _ = _run([sys.executable, gen, *extra], p["dir"])
             if rc != 0:
                 print(f"    !! {gen} exited {rc}")
 

@@ -1,5 +1,20 @@
 #!/usr/bin/env python3
-"""Shorten the ON-FORM labels of split month/year components in F1's static
+"""
+RETIRED 2026-08-19 - superseded by generate_fmf.py; kept for history.
+========================================================================
+F1's .fmf was hand-maintained, and this script was one of eleven idempotent post-processors
+that patched it by locating fields by NAME and geometry. The Aug-17 instrument renumber
+(Task 2.2) renamed ~112 of 320 dictionary items, invalidating those anchors, so F1 adopted
+the F3/F4 generator (Task 2.3). Do NOT run this file; do not delete it either - the WHY
+recorded below is the reason each invariant is worth preserving.
+
+WHERE THIS SCRIPT'S INVARIANT LIVES NOW
+---------------------------------------
+generate_fmf.SHORT_FORM_LABELS, applied in _emit_group() when it writes each field's
+[Text]. The dictionary labels are still deliberately left long, and Option B (blocking
+each pair onto one screen) is still declined - both are recorded at that constant.
+========================================================================
+Shorten the ON-FORM labels of split month/year components in F1's static
 FacilityHeadSurvey.fmf.  (Pretest finding #1006, Option A.)
 
 WHY THIS EXISTS
@@ -129,4 +144,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(
+        "RETIRED 2026-08-19 - superseded by F1/generate_fmf.py; this script must NOT be run.\n"
+        "It anchors on pre-Aug-17 field names and geometry, so against the current instrument\n"
+        "it would either abort or silently mis-place fields in a file that is now rebuilt from\n"
+        "the dictionary on every build. See the module docstring for the invariant it used to\n"
+        "enforce and where that invariant lives today.")

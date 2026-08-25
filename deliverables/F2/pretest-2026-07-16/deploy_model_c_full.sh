@@ -19,8 +19,13 @@
 # build on next load. Run when no enumerator is mid-sync.
 # =============================================================================
 set -euo pipefail
-SRV="/c/Users/analy/Documents/analytiflow/1_Projects/aspsi-f2-staging-wt/deliverables/F2/PWA/server"
-APP="/c/Users/analy/Documents/analytiflow/1_Projects/aspsi-f2-staging-wt/deliverables/F2/PWA/app"
+# Self-locating since 2026-08-25. These paths used to be hard-coded into the
+# aspsi-f2-staging-wt worktree, which sits on the `staging` branch -- 140 commits
+# BEHIND main. Building prod from it is exactly the stale-source failure that
+# deploy-f2-pwa.ps1 was written to prevent, only here it was unguarded.
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
+SRV="$REPO/deliverables/F2/PWA/server"
+APP="$REPO/deliverables/F2/PWA/app"
 KEY="/c/Users/analy/.ssh/aspsi-csweb"
 HOST="root@207.148.65.115"
 ORIGIN="https://uhc-hcw.asiansocial.org"

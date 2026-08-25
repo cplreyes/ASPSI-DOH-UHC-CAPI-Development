@@ -1,5 +1,22 @@
 #!/usr/bin/env python3
-"""Inject the case-key entry form into F1's static FacilityHeadSurvey.fmf.
+"""
+RETIRED 2026-08-19 - superseded by generate_fmf.py; kept for history.
+========================================================================
+F1's .fmf was hand-maintained, and this script was one of eleven idempotent post-processors
+that patched it by locating fields by NAME and geometry. The Aug-17 instrument renumber
+(Task 2.2) renamed ~112 of 320 dictionary items, invalidating those anchors, so F1 adopted
+the F3/F4 generator (Task 2.3). Do NOT run this file; do not delete it either - the WHY
+recorded below is the reason each invariant is worth preserving.
+
+WHERE THIS SCRIPT'S INVARIANT LIVES NOW
+---------------------------------------
+The case-key form is FORM000 / IDS0_FORM in generate_fmf.build_fmf(), emitted from
+level['ids'] before every other form. The vestigial empty level-1 container form
+this script had to strip and renumber around is never emitted at all: generate_dcf
+drops the FACILITYHEADSURVEY_REC record, and every Form= ordinal is computed from
+position rather than patched.
+========================================================================
+Inject the case-key entry form into F1's static FacilityHeadSurvey.fmf.
 
 WHY THIS EXISTS
 ---------------
@@ -192,4 +209,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(
+        "RETIRED 2026-08-19 - superseded by F1/generate_fmf.py; this script must NOT be run.\n"
+        "It anchors on pre-Aug-17 field names and geometry, so against the current instrument\n"
+        "it would either abort or silently mis-place fields in a file that is now rebuilt from\n"
+        "the dictionary on every build. See the module docstring for the invariant it used to\n"
+        "enforce and where that invariant lives today.")

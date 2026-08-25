@@ -2,31 +2,58 @@
 generate_dcf.py — F1 Facility Head Survey CSPro Data Dictionary generator.
 
 Emits FacilityHeadSurvey.dcf in CSPro 8.0 JSON dictionary format from the
-Apr 20 2026 Annex F1 questionnaire (Revised Inception Report submission;
-supersedes the Apr 08 baseline).
+**Aug 17 2026** Annex F1 questionnaire, which supersedes the Apr 20 2026 Revised
+Inception Report submission this file previously encoded.
 
 Authority sources (in priority order):
-  1. raw/Project-Deliverable-1_Apr20-submitted/Annex F1_Facility Head Survey
-     Questionnaire_UHC Year 2.pdf                                   (printed)
-  2. deliverables/CSPro/F1/inputs/F1_clean.txt                       (text extract)
-  3. deliverables/CSPro/F1/F1-Skip-Logic-and-Validations.md          (logic spec)
-  4. raw/CSPro-Data-Dictionary/FacilityHeadSurvey.dcf                (Carl's manual
-     scaffold — authoritative for FIELD_CONTROL, GEO_ID, Q1-Q8 item names + value
-     set labels; this generator extends it for Q9-Q166 + secondary data.)
+  1. raw/Survey-Instruments-2026-08-17/F1-Facility Head Survey Questionnaire_
+     UHC Year 2_Aug18.docx                                          (printed)
+  2. deliverables/CSPro/instruments-aug17-extract/normalized/F1-paper.csv
+     + F1-extract.md                        (pandoc extraction of the above)
+  3. deliverables/CSPro/instruments-aug17-extract/F1-inventory.md    (structure)
+  4. deliverables/CSPro/F1/F1-Skip-Logic-and-Validations.md          (logic spec)
 
-Naming convention: Q{n}_DESCRIPTOR in UPPER_SNAKE. Item names for Q9-Q166
-follow F1-Skip-Logic-and-Validations.md so the validation-rule references
-in that doc keep working without rename churn.
+The Aug-17 rewrite RENUMBERED and RESTRUCTURED F1 (Q1-Q166 -> Q1-Q153 plus 33
+decimal sub-questions):
 
-Closed design decisions: the 6 `PENDING_DESIGN_*` constants near the top of
-this file encode final defaults confirmed under E2-F1-009b. The prefix is
-kept for grep-ability; treat the values as closed, not pending.
+  - Section C's combined "has X been implemented since 2019 AND was it a result
+    of the UHC Act" items are SPLIT into a two-step battery — a plain Yes/No base
+    plus a `.1` UHC-attribution probe (see `two_step`). The 9-option
+    `uhc9_item()` shape is retired from F1 entirely.
+  - Sections D-H are a uniform -13 renumber of the old Q51-Q166, with per-item
+    rewordings. Q48.1 (formerly the "61.1" dcf-vs-qsf divergence) is now a real
+    printed sub-question, and Q49/Q50/Q107 gain a numeric "No. of Days"
+    companion alongside their day-band select.
+  - Consent + Secondary Data stubs are RETAINED although the Aug-17 paper moved
+    them to an annex (Carl ruling 2026-08-18; registered `system-item` in
+    instruments-aug17-extract/aug17-approved-divergences.md).
+
+Naming convention: Q{n}_DESCRIPTOR in UPPER_SNAKE; a decimal sub-question `n.m`
+becomes `Q{n}_{m}_DESCRIPTOR`; other-specify companions are `<base>_OTHER_TXT`.
+Old->new item names live in instruments-aug17-extract/maps/F1-renames.csv (Task
+2.1) — that map is what the Task 2.5 translation re-key joins on, so any rename
+made here MUST be reflected there.
+
+Two deliberate, instrument-wide policies behind this rebuild:
+
+  * Option TEXT is verbatim from the paper (modulo pandoc extraction artifacts:
+    `--` for a dash, `\\'` for an apostrophe, `{.mark}`/`{.underline}` spans).
+    Trailing enumerator directives ("READ OPTIONS OUT LOUD. SELECT ALL THAT
+    APPLY.") and `<gate clauses>` are NOT part of a dictionary label — they
+    render from generate_qsf's INSTRUCTIONS map, per the standing split.
+  * Option CODES and option ORDER are the build's own, held stable across the
+    renumber. The F1 paper prints bare `☐` checkboxes with NO printed code
+    numbers, so the extractor's 1..N codes are positional artifacts of a
+    multi-column table read, not authority (verified: several "order changes"
+    are just a column-major vs row-major reading of the same printed grid).
+    Holding codes stable keeps already-collected pretest data valid and lets the
+    Task 2.5 re-key recover per-option translations, whose map keys are
+    `val:<VALUE-SET>:<code>`. Option membership DOES follow the paper.
 
 Run:
     python generate_dcf.py        # writes FacilityHeadSurvey.dcf next to this file
 """
 
-import json
 import sys
 from pathlib import Path
 
@@ -37,11 +64,12 @@ from icf_content import (
     CONTINUE_OPTIONS as ICF_CONTINUE_OPTIONS,
 )
 from cspro_helpers import (
-    YES_NO, YES_NO_DK, YES_NO_NA, UHC9_OPTIONS, FREQUENCY, WHY_DIFF_OPTIONS,
+    YES_NO, YES_NO_DK, YES_NO_NA, FREQUENCY, WHY_DIFF_OPTIONS,
     _value_set, numeric, alpha, yes_no, yes_no_dk, yes_no_na,
-    select_one, select_all, checkbox_multiselect, uhc9_item, record, build_geo_id,
-    _gps_fields, _photo_block, _case_control_items, derived_geo_code_items,
-    apply_translations, ENUM_RESULT_OPTIONS_F1, BREAKOFF_OPTIONS,
+    select_one, checkbox_multiselect, record, build_geo_id,
+    _gps_fields, _photo_block, derived_geo_code_items,
+    apply_translations, write_dcf, ENUM_RESULT_OPTIONS_F1, REPLACED_CODE_F1,
+    BREAKOFF_OPTIONS,
 )
 
 
@@ -50,8 +78,8 @@ def _cb_codes(options):
     options -> 01,02,...; 'Other (specify)' -> 99; a standalone exclusive option
     ('None…', 'No initiatives', 'I don't know') -> 90. Fixed-width 2-char codes in
     the 9x range for specials so pos() membership tests can't false-match (matches
-    the Q49/Q50/Q53/Q58 convention). The 01.. order is preserved, so gate logic that
-    references option N stays valid (e.g. Q66-74 gated on Q65 difficulty N)."""
+    the Q36/Q37/Q40/Q45 convention). The 01.. order is preserved, so gate logic that
+    references option N stays valid (e.g. Q53-61 gated on Q52 difficulty N)."""
     out, n = [], 0
     for text, _ in options:
         low = text.strip().lower()
@@ -65,41 +93,107 @@ def _cb_codes(options):
             out.append((text, f"{n:02d}"))
     return out
 
+
 # ============================================================
-# 2. PENDING DESIGN DECISIONS — flip these when ASPSI confirms
+# 2. CLOSED DESIGN DECISIONS
 # ============================================================
-# These 6 items have NOT been decided as of 2026-04-14 (the technical design review
-# meeting did not actually cover them, contrary to the scrum log entry
-# that has now been corrected).
+# What used to be a 6-entry PENDING_DESIGN block. Three of the six are now
+# closed by the Aug-17 paper itself and their toggles are gone:
+#
+#   * Q63 ACCRED_WAIT day-vs-month buckets — the Aug-17 paper (new Q50) prints
+#     "How many days..." WITH day bands AND a numeric No. of Days write-in, so
+#     the months reading (#527, from the Apr-20 paper) no longer applies.
+#   * Q166 PD_NURSES audits — Aug-17 Q153 prints the nurse list without
+#     "Clinical audits"/"Surgical audits", confirming the long-standing default.
+#   * Q121 dynamic value set — shipped; new Q108 keeps the facility-type value
+#     sets the .apc swaps via setvalueset().
+#
+# The two below stay because they are LOGIC defaults, not dictionary shape, and
+# the dictionary has no opinion on them.
 
-PENDING_DESIGN = "TODO: PENDING DESIGN DECISION"
-
-# (1) Q63 ACCRED_WAIT — printed text says "How many DAYS did you wait..."
-#     but bucket labels are in MONTHS. Default: keep months until ASPSI confirms.
-Q63_USE_DAY_BUCKETS = False
-
-# (2) Secondary data structure — separate dcf records vs separate CSPro
-#     app vs paper-only collection. Default: emit empty stub records so
-#     the dictionary opens, but no items inside.
+# Secondary data structure — separate dcf records vs separate CSPro app vs
+# paper-only collection. Default: emit empty stub records so the dictionary
+# opens, but no items inside. RETAINED for Aug-17 (Carl ruling 2026-08-18).
 SECONDARY_DATA_AS_STUBS = True
 
-# (3) NBB split — already two separate UHC9 items (Q40 NBB, Q41 ZBB).
-#     The pending question is whether to also split by facility tier.
-NBB_SPLIT_BY_TIER = False
+# Q20 EMR_USE — should "Not applicable" route onward like the other NA branches?
+# Skip-logic doc says yes; the printed question omits it. Encoded in PROC, not
+# the dictionary.
+Q20_NA_SKIPS = True
 
-# (4) Q31 EMR_USE — should "Not applicable" route to Q35 like the other
-#     UHC9 NA branches? Skip-logic doc says yes; printed Q31 omits it.
-#     Default: treat NA as a skip (encoded in PROC, not the dictionary).
-Q31_NA_SKIPS = True
 
-# (5) Q166 PD_NURSES — printed list omits "Clinical audits" and
-#     "Surgical audits". Default: build a separate nurse list without them.
-Q166_NURSES_INCLUDE_AUDITS = False
+# ============================================================
+# 2b. SECTION C — the UHC-attribution two-step battery
+# ============================================================
+# The Aug-17 Section C asks 23 topics as a PAIR: a plain Yes/No base ("Does the
+# facility have X?") immediately followed by a `.1` probe ("If yes, was it a
+# result of the UHC Act enacted in 2019?"). The Apr-20 instrument fused both
+# halves into ONE 9-option `uhc9_item`; splitting them is the single largest
+# structural change in this rebuild.
+#
+# The probe's option set is NOT uniform across its 23 repetitions — the paper
+# prints three different lists (F1-inventory.md §9 anomaly 4). Emitting one
+# shared constant everywhere would silently invent options the respondent was
+# never offered, so each shape is its own constant and each probe names the one
+# its own paper row prints:
+#
+#   UHC_ATTRIB       6 options   — 18 probes (the common case)
+#   UHC_ATTRIB_NA    7 options   — Q10.1 only (adds "Not applicable")
+#   UHC_ATTRIB_NOPLAN 5 options  — Q27.1/Q28.1/Q29.1 (drop "Not yet implemented
+#                                  but planned...", which reads oddly against a
+#                                  policy the facility either applies or doesn't)
+#
+# Codes are inherited from the Apr-20 `Q11_PRIMARY_PKG_STATUS` value set (the one
+# old item that already carried exactly this list) so its captured data and its
+# per-option translations survive the re-key: 1-4 substantive, 5 Other, 8 I don't
+# know, 9 Not applicable. Ascending in every shape.
+_UHC_ATTRIB_CORE = [
+    ("Implemented as a direct result of the UHC Act",                                "1"),
+    ("Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act", "2"),
+    ("Newly implemented or improved independent of UHC Act",                         "3"),
+]
+_UHC_ATTRIB_PLANNED = ("Not yet implemented but planned within the next 1-2 years",  "4")
+_UHC_ATTRIB_TAIL = [
+    ("Other (specify)", "5"),
+    ("I don't know",    "8"),
+]
 
-# (6) Q121 DOH_LIC_DIFFICULT — dynamic value set by facility type vs
-#     enforce via skip on Q132/Q133/Q134. Default: single value set + skip.
-Q121_DYNAMIC_VALUE_SET = False
+UHC_ATTRIB         = _UHC_ATTRIB_CORE + [_UHC_ATTRIB_PLANNED] + _UHC_ATTRIB_TAIL
+UHC_ATTRIB_NA      = UHC_ATTRIB + [("Not applicable", "9")]
+UHC_ATTRIB_NOPLAN  = _UHC_ATTRIB_CORE + _UHC_ATTRIB_TAIL
 
+# The probe stem, identical on 21 of the 23 rows. Q10.1 prints it without the
+# trailing "SELECT ONE ANSWER ONLY." directive (which is enumerator furniture and
+# never enters a dict label anyway, so the two are identical HERE); Q30.1 appends
+# a policy parenthetical and therefore passes its own text.
+UHC_ATTRIB_STEM = "If yes, was it a result of the UHC Act enacted in 2019?"
+
+
+def two_step(base_name, base_label, probe_qnum, options=YES_NO,
+             probe_options=UHC_ATTRIB, probe_label=None):
+    """One Section-C attribution pair: the Yes/No base + its `.1` UHC probe.
+
+    `probe_qnum` is the printed sub-number ("10.1"), which fixes the probe's item
+    name at Q<NN>_1_UHC_ATTRIB — uniform across all 23 repetitions on purpose:
+    they are literally the same question asked 23 times, and a uniform name lets
+    the battery be selected, gated and tabulated as one block. (This supersedes
+    the per-topic probe names F1-renames.csv proposed for the 5 probes that carry
+    an Apr-20 predecessor; the map is updated to match, since Task 2.5's re-key
+    joins on it.)
+
+    Emits the base, the probe, and — when the probe's own option list offers
+    "Other (specify)" — the probe's gated free-text companion.
+    """
+    probe = f"Q{probe_qnum.replace('.', '_')}_UHC_ATTRIB"
+    label = f"{probe_qnum}. {probe_label or UHC_ATTRIB_STEM}"
+    items = [
+        numeric(base_name, base_label, length=1, value_set_options=options),
+        select_one(probe, label, probe_options, length=1),
+    ]
+    if any("specif" in t.lower() for t, _ in probe_options):
+        items.append(alpha(f"{probe}_OTHER_TXT",
+                           f"{label} — Other (specify) text", length=120))
+    return items
 
 
 # ============================================================
@@ -110,6 +204,7 @@ def build_field_control():
     # Field Control = exactly the paper FIELD CONTROL block (2026-06-12).
     # Case-start operational metadata (interviewer/timestamps/AAPOR) removed;
     # instrument identity comes from the installed questionnaire.
+    # Aug-17: the paper's FIELD CONTROL table is UNCHANGED, so this record is too.
     items = [
         # Header — preserves exact item names from Carl's scaffold so
         # any prior PROC code keeps working.
@@ -134,8 +229,12 @@ def build_field_control():
         numeric("TOTAL_NUMBER_OF_VISITS",       "Total Number of Visits",                       length=3),
         # Result-of-Visit codes come from cspro_helpers (ENUM_RESULT_OPTIONS_F1) so F1 cannot
         # drift from F3/F4 — "Replaced" (5) was added there 2026-07-14 and lands here for free.
+        # #1290/#1301 class extension (UAT R7, 2026-08-20): the paper's FIELD CONTROL
+        # code list has four codes; 5 "Replaced" is logic-assigned (PROC BREAKOFF 5-7),
+        # never an enumerator pick, so FIRST VISIT's picklist drops it outright.
         numeric("ENUM_RESULT_FIRST_VISIT",      "Result of First Visit",                        length=1,
-                value_set_options=ENUM_RESULT_OPTIONS_F1),
+                value_set_options=[o for o in ENUM_RESULT_OPTIONS_F1
+                                   if o[1] != REPLACED_CODE_F1]),
         numeric("ENUM_RESULT_FINAL_VISIT",      "Result of Final Visit",                        length=1,
                 value_set_options=ENUM_RESULT_OPTIONS_F1),
         # #744 break-off control — ported from the F3/F4 Cluster-5 pattern. Lives on the
@@ -168,6 +267,15 @@ def build_field_control():
     # ^ single-number redesign (2026-06-10): REGION_CODE/PROVINCE_HUC_CODE/
     #   CITY_MUNICIPALITY_CODE/FACILITY_NO/CASE_SEQ (derived from QUESTIONNAIRE_NUMBER)
     #   + REGION_NAME/PROVINCE_NAME/CITY_NAME (read-only PSGC names) live here now.
+    # #1290/#1301 class extension: FINAL VISIT keeps the FULL set at valueSets[0]
+    # (synced-case labels, verify_questions and optimize_capture_types read index 0)
+    # and gains a picker set without Replaced; the apc preproc selects between them
+    # via setvalueset() (the F1 Q108 pattern).
+    for _it in items:
+        if _it.get("name") == "ENUM_RESULT_FINAL_VISIT":
+            _it["valueSets"].append(_value_set(
+                "ENUM_RESULT_FINAL_VISIT_PICK", "Result of Final Visit",
+                [o for o in ENUM_RESULT_OPTIONS_F1 if o[1] != REPLACED_CODE_F1]))
     return record("FIELD_CONTROL", "Field Control", "A", items)
 
 
@@ -180,6 +288,10 @@ def build_field_control():
 # so this record is new here; record type "C" was the next free letter (A/B/Z/2-9 taken).
 # No consent DECISION is captured: the layout shows no Yes/No control and CONSENT_GIVEN
 # stays removed (2026-06-12). Text lives in ../icf_content.py.
+#
+# Aug-17: the paper moved the consent form to an annex; the CAPI keeps it (Carl ruling
+# 2026-08-18). The Aug-17 ethics-contact table WAS missing from SCREENS["F1"] and is
+# added there in this task — see icf_content.py.
 
 def build_section_icf():
     return record(
@@ -192,22 +304,21 @@ def build_section_icf():
 # ============================================================
 # 5. RECORD BUILDERS — Section A. Facility Head Profile (Q1-Q6)
 # ============================================================
-# Item names match Carl's manual scaffold exactly so existing references survive.
+# Q1-Q6 keep their numbers AND their item names across the Aug-17 renumber.
 
 def build_section_a():
-    # #1005 (pretest finding, 2026-08-03): the printed Annex F1 Q2 grid carries
-    # THIRTEEN options, laid out in a 3-column table read column-major (down col 1,
-    # then col 2, then col 3). This list stopped one row into column 3, so it
-    # dropped "Rural Health Physician" and "Other (specify)" — a facility head who
-    # is a Rural Health Physician had no correct code to give.
+    # #1005 (pretest finding, 2026-08-03): the printed Q2 grid carries THIRTEEN
+    # options, laid out in a 3-column table read column-major (down col 1, then
+    # col 2, then col 3). An earlier list stopped one row into column 3 and
+    # dropped "Rural Health Physician" and "Other (specify)".
     # Codes 1-11 are UNCHANGED so pretest data already collected stays valid; the
     # two recovered options take fresh codes (12, and 99 for Other per the house
     # convention used by _cb_codes and auto_other_specify_procs).
-    # Option 1 also carried a paraphrase ("Rural / Urban Health Unit Head");
-    # restored to the printed wording. Closes the F1-QC-02 drift recorded in
-    # F1-Skip-Logic-and-Validations.md ("11 options, no Other").
+    # Aug-17: same 13 options, same order; option text taken verbatim from the
+    # Aug-17 grid (which spells "Rural Health Unit/ Health Center Head" and
+    # "Administrative Officer/ Assistant" with no space before the slash).
     Q2_ROLES = [
-        ("Rural Health Unit / Health Center Head", "1"),
+        ("Rural Health Unit/ Health Center Head", "1"),
         ("Physician",                           "2"),
         ("Chief of Hospital",                   "3"),
         ("Medical Director",                    "4"),
@@ -215,15 +326,16 @@ def build_section_a():
         ("Nurse",                               "6"),
         ("Municipal / City Health Officer",     "7"),
         ("Medical Officer",                     "8"),
-        ("Administrative Officer / Assistant",  "9"),
+        ("Administrative Officer/ Assistant",   "9"),
         ("Midwife",                            "10"),
         ("Health Promotion / Nutrition Officer","11"),
         ("Rural Health Physician",             "12"),
         ("Other (specify)",                    "99"),
     ]
     items = [
-        # Respondent contact block — moved out of FIELD_CONTROL so it lives
-        # with the facility-head profile it describes.
+        # Respondent contact block — the paper consent form's signature block
+        # (Name & Signature / Position, Office / Email / Mobile). Lives with the
+        # facility-head profile it describes rather than in FIELD_CONTROL.
         alpha("RESP_NAME",     "Respondent name and signature", length=80),
         alpha("RESP_POSITION", "Respondent position / office",  length=80),
         alpha("RESP_EMAIL",    "Respondent email address",      length=60),
@@ -249,7 +361,8 @@ def build_section_a():
                 length=2),
         numeric("Q4_SEX", "4. What is your sex assigned at birth?", length=1,
                 value_set_options=[("Male", "1"), ("Female", "2")]),
-        # Q5 + Q6: tenure as years + months (questionnaire splits these into sub-fields)
+        # Q5 + Q6: tenure as years + months (the paper prints one question with two
+        # boxed sub-fields; the dictionary keeps two CSPro items).
         numeric("Q5_YEARS_AT_FACILITY",
                 "5. In your current position, how many months/years have you worked at this health facility? Number of Years",
                 length=2),
@@ -287,20 +400,14 @@ def build_section_b():
 
 
 # ============================================================
-# 7. RECORD BUILDERS — Section C. UHC Implementation (Q9-Q50)
+# 7. RECORD BUILDERS — Section C. UHC Implementation (Q9-Q37 + 32 subs)
 # ============================================================
+# Aug-17 restructure: was Q9-Q50 as 42 flat items (20 of them fused
+# base+attribution `uhc9_item`s); now Q9-Q37 with 23 two-step pairs, 8 follow-up
+# `.2` items and the new Q35.2 multi-select.
 
 def build_section_c():
-    Q11_PKG_STATUS = [
-        ("Implemented as a direct result of the UHC Act (i.e. YAKAP/Konsulta)", "1"),
-        ("Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act", "2"),
-        ("Newly implemented or improved independent of UHC Act", "3"),
-        ("Not yet implemented but planned within the next 1-2 years", "4"),
-        ("Other (specify)", "5"),
-        ("I don't know", "8"),
-        ("Not applicable", "9"),
-    ]
-    Q15_PHU_ROLE = [
+    Q12_2_PHU_ROLE = [
         ("Health promotion and education",            "1"),
         ("Disease surveillance report",               "2"),
         ("Referral and patient navigation",           "3"),
@@ -309,7 +416,7 @@ def build_section_c():
         ("I don't know",                              "8"),
         ("Not applicable",                            "9"),
     ]
-    Q18_HPU_ROLE = [
+    Q13_2_HPU_ROLE = [
         ("Leading health education and awareness campaigns (e.g., raising awareness about public health initiatives of DOH, disseminating information about health)",          "1"),
         ("Conducting and coordinating health screening and promotion activities (e.g., collaborating and implementing with other units and program coordinators to promote healthy lifestyles and preventive care)","2"),
         ("Advocacy and policy formation (e.g., research, campaigns, collaboration with policymakers)",                             "3"),
@@ -317,13 +424,17 @@ def build_section_c():
         ("Other (specify)",                                           "5"),
         ("I don't know",                                              "8"),
     ]
-    Q32_DATA_SUBMIT = [
+    # Aug-17 adds a fifth option, "Other (specify)", to the DOH-IS / PhilHealth
+    # Dashboard submission question (F1-extract.md L520-535). Takes the next free
+    # code; codes 1-4 are untouched.
+    Q21_DATA_SUBMIT = [
         ("Yes, to DOH Information System only",                "1"),
         ("Yes, to PhilHealth Dashboard only",                  "2"),
         ("Yes, to both DOH Information System and PhilHealth Dashboard", "3"),
         ("No, we are not submitting these data",               "4"),
+        ("Other (specify)",                                    "5"),
     ]
-    Q34_REPORTS = [
+    Q23_REPORTS = [
         ("OPD/IPD census and morbidity reports", "1"),
         ("Maternal, newborn, child, and adolescent health (MNCAH) reports", "2"),
         ("Notifiable diseases / surveillance reports", "3"),
@@ -337,11 +448,32 @@ def build_section_c():
         ("Facility performance scorecards / quality reports", "11"),
         ("Other (specify)", "12"),
     ]
-    # Q49/Q50 redesigned to a TRUE Check Box multi-select (GH #377/#378/#379,
-    # mirrors F3 Q148): codes are fixed-width 2-digit so CSEntry's Check Box
-    # capture can slice the concatenated field by code width, and 'Other' uses
-    # the high non-prefixing code 99 (no valid code starts with 9) so pos("99",..)
-    # on the concatenated string can't false-match across code boundaries.
+    # Q35.2 — genuinely new at Aug-17 (F1-inventory.md §9 anomaly 2: printed
+    # "35.2" without its terminal period, which is why the extractor files it
+    # under a duplicate qnum "35"). A real multi-select with no Apr-20
+    # counterpart, so it gets its own item rather than joining the .1 probe loop.
+    # #1311 (2026-08-24): the list above shipped as a 3-entry PLACEHOLDER — the Aug-17
+    # extract never carried the printed options. DOH's printed Aug-17 list has 10, and it
+    # does NOT contain "Dashboards", so this is a REPLACEMENT of the option set, not an
+    # addition. Source codes here are placeholders: _cb_codes() re-codes to fixed-width
+    # 01..09 for the real options + 99 for Other (ascending, per the #830 rule).
+    Q35_2_MEASURES = [
+        ("Patient or Client satisfaction survey",               "1"),
+        ("Patient Feedback and Complaints Management System",   "2"),
+        ("Patient Rights and Responsibilities Policy",          "3"),
+        ("Regular Quality or Management Review Meetings",       "4"),
+        ("Routine monitoring of quality/performance indicators", "5"),
+        ("Quality Assurance Plan (QAP)",                        "6"),
+        ("Continuous Quality Improvement (CQI) Program",        "7"),
+        ("Staff Quality Improvement and Competency Training",   "8"),
+        ("Clinical audit or case review activities",            "9"),
+        ("Other (specify)",                                     "10"),
+    ]
+    # Q36/Q37 are TRUE Check Box multi-selects (GH #377/#378/#379, mirrors F3
+    # Q148): codes are fixed-width 2-digit so CSEntry's Check Box capture can
+    # slice the concatenated field by code width, and 'Other' uses the high
+    # non-prefixing code 99 (no valid code starts with 9) so pos("99",..) on the
+    # concatenated string can't false-match across code boundaries.
     QUALITY_ACCESS_CHALLENGES = [
         ("Limited resources (e.g., shortages in healthcare personnel/manpower, medical equipment, essential supplies, or funding)", "01"),
         ("Challenging quality standards (e.g., high standards that are difficult to achieve)", "02"),
@@ -356,111 +488,150 @@ def build_section_c():
     ]
 
     items = []
-    items.append(yes_no("Q9_UHC_HEARD", "9. Have you heard about Universal Health Care (UHC) prior to this survey?"))
-    items.append(yes_no("Q10_HAS_PRIMARY_PKG", "10. Does the facility have primary care packages?"))
-    items.append(select_one("Q11_PRIMARY_PKG_STATUS",
-                            "11. If yes, specify its implementation status relative to the UHC Act.",
-                            Q11_PKG_STATUS))
-    items.append(alpha("Q11_OTHER_TXT", "11. If yes, specify its implementation status relative to the UHC Act. — Other (specify) text", length=120))
-    items.extend(uhc9_item("Q12_PCB_LICENSING",
-                           "12. Has the facility applied for DOH primary care licensing since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.append(yes_no_na("Q13_PUBLIC_HEALTH_UNIT", "13. Do you have a public health unit at this facility?"))
-    items.extend(uhc9_item("Q14_PHU_CREATED",
-                           "14. If yes, has the creation of a public health unit at this facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.append(select_one("Q15_PHU_ROLE", "15. What is the main role of the public health unit?", Q15_PHU_ROLE))
-    items.append(alpha("Q15_OTHER_TXT", "15. What is the main role of the public health unit? — Other (specify) text", length=120))
-    items.append(yes_no_na("Q16_HEALTH_PROMO_UNIT", "16. Do you have a health promotion unit at this facility?"))
-    items.extend(uhc9_item("Q17_HPU_CREATED",
-                           "17. If yes, has the creation of a health promotion unit at this facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.append(select_one("Q18_HPU_ROLE", "18. What is the main role of the health promotion unit?", Q18_HPU_ROLE))
-    items.append(alpha("Q18_OTHER_TXT", "18. What is the main role of the health promotion unit? — Other (specify) text", length=120))
-    items.extend(uhc9_item("Q19_NEW_ROLES",
-                           "19. Has the establishment of new roles in the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.append(alpha("Q20_NEW_ROLES_LIST", "20. What is/are the new role/s established in this facility?", length=240))
-    items.extend(uhc9_item("Q21_NEW_DEPTS",
-                           "21. Has the establishment of new departments in the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.append(alpha("Q22_NEW_DEPTS_LIST", "22. What is/are the new department/s established in this facility?", length=240))
-    items.extend(uhc9_item("Q23_NEW_BUILDINGS",
-                           "23. Has the construction of new building/s in this health facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.append(alpha("Q24_NEW_BUILDINGS_PURPOSE", "24. What is/are the building/s being used for?", length=240))
-    items.extend(uhc9_item("Q25_NEW_ROOMS",
-                           "25. Has the construction of new rooms in this health facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.append(alpha("Q26_NEW_ROOMS_PURPOSE", "26. What are the rooms being used for?", length=240))
-    items.extend(uhc9_item("Q27_INC_EQUIPMENT",
-                           "27. Has the increase in equipment been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.append(alpha("Q28_INC_EQUIPMENT_LIST", "28. If there was an increase in equipment, what are these pieces of equipment?", length=240))
-    items.extend(uhc9_item("Q29_INC_SUPPLIES",
-                           "29. Has the increase in supplies been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.append(alpha("Q30_INC_SUPPLIES_LIST", "30. If there was an increase in supplies, what are these?", length=240))
-    items.extend(uhc9_item("Q31_EMR_USE",
-                           "31. Has the use of electronic medical records at the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.append(select_one("Q32_DATA_SUBMIT",
-                            "32. Does your facility currently submit health and financial data to the DOH Information System and/or the PhilHealth Dashboard?",
-                            Q32_DATA_SUBMIT))
-    items.append(select_one("Q33_DATA_FREQ",
-                            "33. If yes, how frequent has your facility submit these data?",
-                            FREQUENCY))
-    items.append(alpha("Q33_OTHER_TXT", "33. If yes, how frequent has your facility submit these data? — Other (specify) text", length=120))
-    items.extend(checkbox_multiselect("Q34_DATA_REPORTS_USED",
-                            "34. Which of the submitted reports are actually used for decision-making?",
-                            _cb_codes(Q34_REPORTS)))
-    items.append(yes_no("Q35_STAFFING_CHANGED", "35. Have there been changes in the facility staffing since 2019?"))
-    items.extend(uhc9_item("Q36_STAFFING_UHC",
-                           "36. Have the changes in staffing been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.append(yes_no("Q37_REFERRAL_CHANGED", "37. Have there been changes in the referral system since 2019?"))
-    items.extend(uhc9_item("Q38_REFERRAL_UHC",
-                           "38. Have the changes to the referral system (inbound or outbound) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.extend(uhc9_item("Q39_MOU_MOA",
-                           "39. Has the Memorandum of Understanding (MoU) / Agreement (MoA) with other health facilities as part of the healthcare provider network been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.extend(uhc9_item("Q40_NBB",
-                           "40. Has the no balance billing (NBB) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.extend(uhc9_item("Q41_ZBB",
-                           "41. Has the zero balance billing (ZBB) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.extend(uhc9_item("Q42_NO_COPAY",
-                           "42. Has the no co-payment policy been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    # Q43 — verbatim text exceeds CSPro's 255-char label limit (327 chars with
-    # ward-allocation parenthetical, +28 for the uhc9_item OTHER_TXT suffix).
-    # Parenthetical is enumerator context, not the question itself, so dropped here.
-    items.extend(uhc9_item("Q43_WARD_ALLOC",
-                           "43. Has the health facility been implementing ward accommodation allocation since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.extend(uhc9_item("Q44_CPG",
-                           "44. Have the improved clinical practice guidelines been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.extend(uhc9_item("Q45_DOH_LIC_STD",
-                           "45. Have the DOH licensing standards been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.extend(uhc9_item("Q46_PHIC_ACCRED",
-                           "46. Have the PhilHealth accreditation requirements been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.extend(uhc9_item("Q47_SVC_DELIVERY_PROT",
-                           "47. Have the service delivery protocols been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.extend(uhc9_item("Q48_PCQM",
-                           "48. Have the primary care quality measures been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    # Q49/Q50 — TRUE Check Box multi-select (GH #377/#378/#379): ONE alpha field of
-    # concatenated 2-digit option codes (tick-list on one screen) + a gated
-    # _OTHER_TXT, replacing the N Yes/No radios of select_all(). Mirrors F3 Q148.
-    items.extend(checkbox_multiselect("Q49_QUALITY_CHALL",
-                            "49. What are the major challenges to improving the quality of patient care in your local area?",
+    items.append(yes_no("Q9_UHC_HEARD",
+                        "9. Have you heard about Universal Health Care (UHC) prior to this survey?"))
+    # --- the two-step battery (23 base/probe pairs) -------------------------
+    items.extend(two_step("Q10_HAS_PRIMARY_PKG",
+                          "10. Does the facility have primary care packages?",
+                          "10.1", probe_options=UHC_ATTRIB_NA))
+    items.extend(two_step("Q11_PCB_LICENSING",
+                          "11. Has the facility applied for a DOH primary care license?",
+                          "11.1"))
+    items.extend(two_step("Q12_PUBLIC_HEALTH_UNIT",
+                          "12. Does the facility have a public health unit?",
+                          "12.1", options=YES_NO_NA))
+    items.append(select_one("Q12_2_PHU_ROLE",
+                            "12.2. What is the main role of the public health unit?",
+                            Q12_2_PHU_ROLE, length=1))
+    items.append(alpha("Q12_2_PHU_ROLE_OTHER_TXT",
+                       "12.2. What is the main role of the public health unit? — Other (specify) text",
+                       length=120))
+    items.extend(two_step("Q13_HEALTH_PROMO_UNIT",
+                          "13. Does the facility have a health promotion unit?",
+                          "13.1", options=YES_NO_NA))
+    items.append(select_one("Q13_2_HPU_ROLE",
+                            "13.2. What is the main role of the health promotion unit?",
+                            Q13_2_HPU_ROLE, length=1))
+    items.append(alpha("Q13_2_HPU_ROLE_OTHER_TXT",
+                       "13.2. What is the main role of the health promotion unit? — Other (specify) text",
+                       length=120))
+    items.extend(two_step("Q14_NEW_ROLES",
+                          "14. Has there been establishment of new roles in the facility?",
+                          "14.1"))
+    items.append(alpha("Q14_2_NEW_ROLES_LIST",
+                       "14.2. What is/are the new role/s established in this facility?", length=240))
+    items.extend(two_step("Q15_NEW_DEPTS",
+                          "15. Has there been establishment of new departments in the facility?",
+                          "15.1"))
+    items.append(alpha("Q15_2_NEW_DEPTS_LIST",
+                       "15.2. What is/are the new department/s established in this facility?", length=240))
+    items.extend(two_step("Q16_NEW_BUILDINGS",
+                          "16. Has there been construction of new buildings in this facility?",
+                          "16.1"))
+    items.append(alpha("Q16_2_NEW_BUILDINGS_PURPOSE",
+                       "16.2. What is/are the building/s being used for?", length=240))
+    items.extend(two_step("Q17_NEW_ROOMS",
+                          "17. Has there been construction of new rooms in this facility?",
+                          "17.1"))
+    items.append(alpha("Q17_2_NEW_ROOMS_PURPOSE",
+                       "17.2. What are the rooms being used for?", length=240))
+    items.extend(two_step("Q18_INC_EQUIPMENT",
+                          "18. Has there been an increase in equipment in this facility?",
+                          "18.1"))
+    items.append(alpha("Q18_2_INC_EQUIPMENT_LIST",
+                       "18.2. If there was an increase in equipment, what are these pieces of equipment?",
+                       length=240))
+    items.extend(two_step("Q19_INC_SUPPLIES",
+                          "19. Has there been an increase in supplies in this facility?",
+                          "19.1"))
+    items.append(alpha("Q19_2_INC_SUPPLIES_LIST",
+                       "19.2. If there was an increase in supplies, what are these?", length=240))
+    items.extend(two_step("Q20_EMR_USE",
+                          "20. Have electronic medical records been used in this facility?",
+                          "20.1"))
+    # --- DOH Information System / PhilHealth Dashboard block ---------------
+    items.append(select_one("Q21_DATA_SUBMIT",
+                            "21. Does your facility currently submit health and financial data to the DOH Information System and/or the PhilHealth Dashboard?",
+                            Q21_DATA_SUBMIT, length=1))
+    items.append(alpha("Q21_OTHER_TXT",
+                       "21. Does your facility currently submit health and financial data to the DOH Information System and/or the PhilHealth Dashboard? — Other (specify) text",
+                       length=120))
+    items.append(select_one("Q22_DATA_FREQ",
+                            "22. If yes, how frequently has your facility submit these data?",
+                            FREQUENCY, length=1))
+    items.append(alpha("Q22_OTHER_TXT",
+                       "22. If yes, how frequently has your facility submit these data? — Other (specify) text",
+                       length=120))
+    items.extend(checkbox_multiselect("Q23_DATA_REPORTS_USED",
+                            "23. Which of the submitted reports are actually used for decision-making?",
+                            _cb_codes(Q23_REPORTS)))
+    # --- the battery resumes ------------------------------------------------
+    items.extend(two_step("Q24_STAFFING_CHANGED",
+                          "24. Have there been changes in the facility staffing?",
+                          "24.1"))
+    items.extend(two_step("Q25_REFERRAL_CHANGED",
+                          "25. Have there been changes in the referral system in this facility?",
+                          "25.1"))
+    items.extend(two_step("Q26_MOU_MOA",
+                          "26. Does this facility has MoU/MoA with other health facilities apart of the healthcare provider network?",
+                          "26.1"))
+    items.extend(two_step("Q27_NBB",
+                          "27. Does this facility implement No Balance Billing (NBB)?",
+                          "27.1", probe_options=UHC_ATTRIB_NOPLAN))
+    items.extend(two_step("Q28_ZBB",
+                          "28. Does this facility implement Zero Balance Billing (ZBB)?",
+                          "28.1", probe_options=UHC_ATTRIB_NOPLAN))
+    items.extend(two_step("Q29_NO_COPAY",
+                          "29. Does this facility implement no co-payment policy?",
+                          "29.1", probe_options=UHC_ATTRIB_NOPLAN))
+    # Q30.1 is the one probe whose printed stem differs: it appends the UHC ward
+    # allocation percentages as respondent-facing context (F1-inventory.md §5).
+    items.extend(two_step("Q30_WARD_ALLOC",
+                          "30. Does this facility implement ward accommodation allocation?",
+                          "30.1",
+                          probe_label=UHC_ATTRIB_STEM + " (Under UHC, basic ward allocation is as follows: 90% for government general hospitals; 70% for government specialty hospitals, and 10% for private hospitals.)"))
+    items.extend(two_step("Q31_CPG",
+                          "31. Has there been an improvement in the clinical practice guidelines of this facility?",
+                          "31.1"))
+    items.extend(two_step("Q32_DOH_LIC_STD",
+                          "32. Does this facility implement DOH licensing standards?",
+                          "32.1"))
+    items.extend(two_step("Q33_PHIC_ACCRED",
+                          "33. Does this facility implement PhilHealth accreditation requirements?",
+                          "33.1"))
+    items.extend(two_step("Q34_SVC_DELIVERY_PROT",
+                          "34. Does this facility implement service delivery protocols?",
+                          "34.1"))
+    items.extend(two_step("Q35_PCQM",
+                          "35. Does this facility implement primary care quality measures?",
+                          "35.1"))
+    items.extend(checkbox_multiselect("Q35_2_PCQM_MEASURES",
+                            "35.2. If yes, what are the primary care quality measures are you implementing?",
+                            _cb_codes(Q35_2_MEASURES)))
+    # --- section tail: the two challenge tick-lists -------------------------
+    items.extend(checkbox_multiselect("Q36_QUALITY_CHALL",
+                            "36. What are the major challenges to improving the quality of patient care in your local area?",
                             QUALITY_ACCESS_CHALLENGES))
-    items.extend(checkbox_multiselect("Q50_ACCESS_CHALL",
-                            "50. What are the major challenges to improving the accessibility of patient care in your local area?",
+    items.extend(checkbox_multiselect("Q37_ACCESS_CHALL",
+                            "37. What are the major challenges to improving the accessibility of patient care in your local area?",
                             QUALITY_ACCESS_CHALLENGES))
     return record("C_UHC_IMPLEMENTATION", "C. Universal Health Care (UHC) Implementation", "4", items)
 
 
 # ============================================================
-# 8. RECORD BUILDERS — Section D. YAKAP / Konsulta (Q51-Q100)
+# 8. RECORD BUILDERS — Section D. YAKAP / Konsulta (Q38-Q87)
 # ============================================================
+# Aug-17: was Q51-Q100. Straight -13 renumber plus the Q48.1 sub-question and the
+# Q49/Q50 numeric+band split.
 
 def build_section_d():
-    # Q53 redesigned to a TRUE Check Box multi-select (GH #377/#378/#379, mirrors
-    # F3 Q148): fixed-width 2-digit codes; 'Other' -> high non-prefixing code 99.
-    Q53_PACKAGE = [
+    Q40_PACKAGE = [
         ("Pap smear", "01"), ("Mammogram", "02"), ("Lipid profile", "03"),
         ("Thyroid function test", "04"), ("Chest X-ray", "05"),
         ("Low-dose CT scan", "06"), ("Dental services", "07"),
         ("All of the above", "08"), ("I don't know", "09"), ("Other (specify)", "99"),
     ]
-    # Q58 redesigned to a TRUE Check Box multi-select (GH #377/#378/#379, mirrors
-    # F3 Q148): fixed-width 2-digit codes; 'Other' -> high non-prefixing code 99.
-    Q58_PERF = [
+    Q45_PERF = [
         ("Beneficiaries consulted a primary care doctor", "01"),
         ("Utilization of laboratory services", "02"),
         ("Beneficiaries received antibiotics as prescribed by their primary care doctor", "03"),
@@ -470,22 +641,22 @@ def build_section_d():
         ("I don't know", "07"),
         ("Other (specify)", "99"),
     ]
-    Q60_PAY_FREQ = [
+    Q47_PAY_FREQ = [
         ("Monthly", "1"), ("Quarterly", "2"), ("Semi-annually", "3"), ("Annually", "4"),
     ]
-    Q62_TRANCHE_INTERVAL = [
-        ("Less than a month", "1"), ("1-2 months", "2"), ("3-4 months", "3"),
-        ("5-6 months", "4"), ("More than six months", "5"),
+    # Aug-17 replaced the Apr-20 MONTH buckets on both of these with the same
+    # three DAY bands, each preceded by a numeric "No. of Days:" write-in and an
+    # enumerator note ("Tick the category that corresponds to the respondent's
+    # answer") — F1-inventory.md §6 "Hybrid numeric-plus-band structure". Both
+    # halves are captured: the numeric companion is the new `_NUM` item, the band
+    # keeps the carried item name. This closes the old Q63 day-vs-month
+    # PENDING_DESIGN (#527) — the paper now says days in both stem and bands.
+    DAY_BANDS = [
+        ("30 days and less", "1"),
+        ("31-60 days",       "2"),
+        ("More than 60 days", "3"),
     ]
-    # Q63 — resolved 2026-06-20 (#527) to MONTHS per the authoritative Apr-20 paper, which
-    # reads "How many month/s did you wait..." with months buckets (question text + buckets
-    # agree). The old "days" wording + [PENDING DESIGN] placeholder was a stale-version
-    # artifact (Apr-08) that was leaking on-screen to enumerators.
-    Q63_BUCKETS = Q62_TRANCHE_INTERVAL  # months buckets, matches the paper
-
-    # checkbox_multiselect (#529): fixed-width 2-char codes, Other=99 (matches the
-    # Q49/Q50/Q53/Q58 checkbox convention so pos("99",field) can't false-match).
-    Q64_REASONS = [
+    Q51_REASONS = [
         ("Incentives (i.e., facility receives capitation/payment for registered patients)", "01"),
         ("Aligns with facility's mission (i.e., goals of UHC are aligned with the facility)", "02"),
         ("Encouraged by LGU", "03"),
@@ -493,7 +664,7 @@ def build_section_d():
         ("To improve the services of the facilities", "05"),
         ("Other (specify)", "99"),
     ]
-    Q65_DIFFICULT = [
+    Q52_DIFFICULT = [
         ("Ability to conduct preventive/screening services and health education", "1"),
         ("Capability to provide services for required laboratory and radiologic services", "2"),
         ("Capability to dispense required medicines", "3"),
@@ -505,7 +676,7 @@ def build_section_d():
         ("DOH licensing requirements", "9"),
         ("None of the above", "10"),
     ]
-    Q75_RESPONSIBILITY = [
+    Q62_RESPONSIBILITY = [
         ("Patients' own initiative", "1"),
         ("Facility", "2"),
         ("LGU", "3"),
@@ -514,7 +685,7 @@ def build_section_d():
         ("I don't know", "6"),
         ("Other (specify)", "7"),
     ]
-    Q76_INITIATIVES = [
+    Q63_INITIATIVES = [
         ("On-site Enrollment (e.g., offering patient enrollment at the health facility)", "1"),
         ("LGU Outreach (e.g., involvement in LGU outreach activities, such as ongoing nutrition programs)", "2"),
         ("Facility Outreach (e.g., engaging in outreach efforts directly from the facility)", "3"),
@@ -525,7 +696,7 @@ def build_section_d():
         ("No initiatives", "8"),
         ("Other (specify)", "9"),
     ]
-    Q78_ENROLL_CHALL = [
+    Q65_ENROLL_CHALL = [
         ("Lack of patient awareness (i.e., patients are unaware of YAKAP/Konsulta, its benefits, and registration process)", "1"),
         ("Lack of patient willingness (i.e., patient is hesitant to provide personal information or has concerns about data security)", "2"),
         ("Lack of resources (e.g., not enough manpower to conduct information campaigns or outreaches to enroll patients to YAKAP/Konsulta)", "3"),
@@ -533,13 +704,13 @@ def build_section_d():
         ("Technical / system issues of PhilHealth (e.g., data loss, errors, or platform accessibility problems)", "5"),
         ("Other (specify)", "6"),
     ]
-    Q79_NOT_ACCRED = [
+    Q66_NOT_ACCRED = [
         ("Difficult process", "1"),
         ("No time", "2"),
         ("Ongoing application", "3"),
         ("Other (specify)", "4"),
     ]
-    Q80_INTEND = [
+    Q67_INTEND = [
         ("Yes, already in process",                "1"),
         ("Yes, not yet in process",                "2"),
         ("No, decided not to",                     "3"),
@@ -547,24 +718,23 @@ def build_section_d():
         ("No, haven't thought about it yet",       "5"),
         ("I don't know",                           "6"),
     ]
-    Q94_ADDL_CAP_REASONS = [
+    Q81_ADDL_CAP_REASONS = [
         ("To cover expenses related to building maintenance, equipment, and non-clinical staff", "1"),
-        ("A patient’s care costs exceed the predetermined fixed payment", "2"),
+        ("A patient's care costs exceed the predetermined fixed payment", "2"),
         ("Services excluded from capitation coverage", "3"),
         ("Provide preventive care that may not be adequately compensated under a basic capitation plan", "4"),
         ("Offset losses", "5"),
-        ("Other (specify)", "6"),
+        ("Other (Specify)", "6"),      # Aug-17 prints a capital S on this one
     ]
-    Q95_RECEIVED = [
-        # #1113: the paper's "<proceed to Q97>" navigation note removed - CAPI
-        # automates the routing, so printing it in an answer option is paper-only
-        # furniture. The Q95 -> Q97 skip itself is unchanged (see generate_apc).
+    Q82_RECEIVED = [
+        # #1113: the paper's "<proceed to Q84>" navigation note stays OUT of the
+        # answer option — CAPI automates the routing (see generate_apc).
         ("Yes, we have received all expected payments",         "1"),
         ("Yes, we have received some but not all expected payments yet",     "2"),
         ("No, we have not received any expected payments yet", "3"),
         ("No, we have not expected any payments yet",      "4"),
     ]
-    Q96_NOT_RECEIVED = [
+    Q83_NOT_RECEIVED = [
         ("Delays in PhilHealth processing", "1"),
         ("Delays in facility's tracking of patient enrollment", "2"),
         ("Difficulties in verifying patient enrollment (PhilHealth)", "3"),
@@ -573,15 +743,18 @@ def build_section_d():
         ("I don't know", "6"),
         ("Other (specify)", "7"),
     ]
-    Q98_PAY_CHALL = [
+    Q85_PAY_CHALL = [
         ("Delayed payment process", "1"),
         ("Unclear criteria for capitation", "2"),
         ("Difficult to meet criteria for capitation", "3"),
+        # Aug-17 prints "Philhealth" here; kept as the instrument-wide "PhilHealth"
+        # spelling used in ~20 other option labels (casing-only, registered
+        # `formatting` — the same call as F3 Q71's punctuation normalization).
         ("PhilHealth process to apply for payments is difficult/unclear", "4"),
         ("I don't know", "5"),
         ("Other (specify)", "6"),
     ]
-    Q99_EXPAND = [
+    Q86_EXPAND = [
         # #1116: PAPI wording ("The current ... offered"). Wording only - no
         # option is missing or added; codes unchanged.
         ("The current list of medicines and drugs offered", "1"),
@@ -592,202 +765,211 @@ def build_section_d():
     ]
 
     items = []
-    items.append(yes_no("Q51_YK_ACCRED", "51. Are you currently an accredited YAKAP/Konsulta provider?"))
-    items.append(numeric("Q52_YK_SINCE_MONTH", "52. If yes, since when? Month", length=2))
-    items.append(numeric("Q52_YK_SINCE_YEAR",  "52. If yes, since when? Year",  length=4))
-    # Q53 — TRUE Check Box multi-select (GH #377/#378/#379). Mirrors F3 Q148.
-    items.extend(checkbox_multiselect("Q53_YK_PACKAGE",
-                            "53. If accredited, which of the following are included in the YAKAP/Konsulta package?",
-                            Q53_PACKAGE))
-    items.append(yes_no_dk("Q54_YK_REG_INDIV",
-                           "54. Is it possible to register individual patients to YAKAP/Konsulta at this facility?"))
-    items.append(yes_no_dk("Q55_YK_REG_FAM",
-                           "55. Is it possible to register whole families to YAKAP/Konsulta at this facility?"))
-    items.append(yes_no_dk("Q56_YK_REG_BOTH",
-                           "56. Is it only possible to register both individual patients and their family members together to YAKAP/Konsulta at this facility?"))
-    items.append(numeric("Q57_CAPITATION_AMT",
-                         # #1011: the "(Capitation is ...)" definition is the paper's italic
+    items.append(yes_no("Q38_YK_ACCRED",
+                        "38. Is the facility currently an accredited YAKAP/Konsulta provider?"))
+    items.append(numeric("Q39_YK_SINCE_MONTH", "39. If yes, since when? Month", length=2))
+    items.append(numeric("Q39_YK_SINCE_YEAR",  "39. If yes, since when? Year",  length=4))
+    items.extend(checkbox_multiselect("Q40_YK_PACKAGE",
+                            "40. If accredited, which of the following are included in the YAKAP/Konsulta package?",
+                            Q40_PACKAGE))
+    items.append(yes_no_dk("Q41_YK_REG_INDIV",
+                           "41. Is it possible to register individual patients to YAKAP/Konsulta at this facility?"))
+    items.append(yes_no_dk("Q42_YK_REG_FAM",
+                           "42. Is it possible to register whole families to YAKAP/Konsulta at this facility?"))
+    # Aug-17 drops the Apr-20 "Is it ONLY possible..." framing.
+    items.append(yes_no_dk("Q43_YK_REG_BOTH",
+                           "43. Is it possible to register both individual patients and their family members together to YAKAP/Konsulta at this facility?"))
+    items.append(numeric("Q44_CAPITATION_AMT",
+                         # #1011: the "(Capitation is ...)" definition is the paper's
                          # enumerator note — testers want it OFF the CAPI question text.
-                         "57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?",
+                         "44. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?",
                          length=6))
-    # Q58 — TRUE Check Box multi-select (GH #377/#378/#379). Mirrors F3 Q148.
-    items.extend(checkbox_multiselect("Q58_PERF_INDICATORS",
-                            "58. What are the performance indicators you need to meet to receive the second tranche payment?",
-                            Q58_PERF))
-    items.append(yes_no("Q59_KNOW_PAY_FREQ",
-                        "59. Do you know how often you can expect to receive payments from PhilHealth for the delivery of the YAKAP/Konsulta package?"))
-    items.append(select_one("Q60_PAY_FREQ",
-                            "60. How often should you be receiving payments?",
-                            Q60_PAY_FREQ))
-    items.append(yes_no("Q61_TRANCHE_DELAY", "61. Were there delays in receiving capitation tranches?"))
-    items.append(alpha("Q61_DELAY_REASON",
-                       "61.1. If yes, what was/were the reasons for the delay?", length=240))
-    items.append(select_one("Q62_TRANCHE_INTERVAL",
-                            "62. On average, how long is the typical time interval between tranches releases to the facility?",
-                            Q62_TRANCHE_INTERVAL))
-    items.append(select_one("Q63_ACCRED_WAIT",
-                            "63. How many month/s did you wait from application submission to accreditation approval?",
-                            Q63_BUCKETS))
-    items.extend(checkbox_multiselect("Q64_APPLY_REASON",
-                            "64. Why did you apply to become a YAKAP/Konsulta provider?",
-                            Q64_REASONS))
-    items.extend(checkbox_multiselect("Q65_ACCRED_DIFFICULT",
-                            "65. Which of the following requirements were difficult to comply with for accreditation?",
-                            _cb_codes(Q65_DIFFICULT), with_other_txt=False))
-    # Q66-Q74 = nine "why difficult" select-alls, gated on Q65 in PROC.
-    Q66_74_TOPICS = [
+    items.extend(checkbox_multiselect("Q45_PERF_INDICATORS",
+                            "45. What are the performance indicators you need to meet to receive the second tranche payment?",
+                            Q45_PERF))
+    items.append(yes_no("Q46_KNOW_PAY_FREQ",
+                        "46. Do you know how often you can expect to receive payments from PhilHealth for the delivery of the YAKAP/Konsulta package?"))
+    items.append(select_one("Q47_PAY_FREQ",
+                            "47. How often should you be receiving payments?",
+                            Q47_PAY_FREQ, length=1))
+    items.append(yes_no("Q48_TRANCHE_DELAY", "48. Were there delays in receiving capitation tranches?"))
+    # Aug-17 prints this as a genuine sub-question "48.1", which RESOLVES the
+    # catalogued Q61 dcf-vs-qsf "61.1" divergence: the item is now numbered as a
+    # sub-question in the dictionary too, matching what the qsf always showed.
+    items.append(alpha("Q48_1_DELAY_REASON",
+                       "48.1. If yes, what was/were the reasons for the delay?", length=240))
+    items.append(numeric("Q49_TRANCHE_INTERVAL_NUM",
+                         "49. On average, how long is the typical time interval between tranches releases to the facility? — No. of Days",
+                         length=4))
+    items.append(select_one("Q49_TRANCHE_INTERVAL",
+                            "49. On average, how long is the typical time interval between tranches releases to the facility?",
+                            DAY_BANDS, length=1))
+    items.append(numeric("Q50_ACCRED_WAIT_NUM",
+                         "50. How many days did you wait from application submission to accreditation approval? — No. of Days",
+                         length=4))
+    items.append(select_one("Q50_ACCRED_WAIT",
+                            "50. How many days did you wait from application submission to accreditation approval?",
+                            DAY_BANDS, length=1))
+    items.extend(checkbox_multiselect("Q51_APPLY_REASON",
+                            "51. Why did you apply to become a YAKAP/Konsulta provider?",
+                            Q51_REASONS))
+    items.extend(checkbox_multiselect("Q52_ACCRED_DIFFICULT",
+                            "52. Which of the following requirements were difficult to comply with for accreditation?",
+                            _cb_codes(Q52_DIFFICULT), with_other_txt=False))
+    # Q53-Q61 = nine "why difficult" tick-lists, gated per-option on Q52 in PROC.
+    Q53_61_TOPICS = [
         # #1015: paper/sample format — short stem "comply with:" + the one component
         # (the "the following?" phrasing read as redundant with a single component).
-        ("Q66_WHY_DIFF_PREVENTIVE",  "66. Why was it difficult to comply with: Ability to conduct preventive/screening services and health education?"),
-        ("Q67_WHY_DIFF_LAB",         "67. Why was it difficult to comply with: Capability to provide services for required laboratory and radiologic services?"),
-        ("Q68_WHY_DIFF_MEDS",        "68. Why was it difficult to comply with: Capability to dispense required medicines?"),
-        ("Q69_WHY_DIFF_INFRA",       "69. Why was it difficult to comply with: General Infrastructure?"),
-        ("Q70_WHY_DIFF_EQUIPMENT",   "70. Why was it difficult to comply with: Equipment and Supplies?"),
-        ("Q71_WHY_DIFF_HR",          "71. Why was it difficult to comply with: Human resource?"),
-        ("Q72_WHY_DIFF_HIS",         "72. Why was it difficult to comply with: Functional Health Information System?"),
-        ("Q73_WHY_DIFF_DOCS",        "73. Why was it difficult to comply with: Documentary requirements?"),
-        ("Q74_WHY_DIFF_DOH_LIC",     "74. Why was it difficult to comply with: DOH Licensing requirements?"),
+        ("Q53_WHY_DIFF_PREVENTIVE",  "53. Why was it difficult to comply with: Ability to conduct preventive/screening services and health education?"),
+        ("Q54_WHY_DIFF_LAB",         "54. Why was it difficult to comply with: Capability to provide services for required laboratory and radiologic services?"),
+        ("Q55_WHY_DIFF_MEDS",        "55. Why was it difficult to comply with: Capability to dispense required medicines?"),
+        ("Q56_WHY_DIFF_INFRA",       "56. Why was it difficult to comply with: General Infrastructure?"),
+        ("Q57_WHY_DIFF_EQUIPMENT",   "57. Why was it difficult to comply with: Equipment and Supplies?"),
+        ("Q58_WHY_DIFF_HR",          "58. Why was it difficult to comply with: Human resource?"),
+        ("Q59_WHY_DIFF_HIS",         "59. Why was it difficult to comply with: Functional Health Information System?"),
+        ("Q60_WHY_DIFF_DOCS",        "60. Why was it difficult to comply with: Documentary requirements?"),
+        ("Q61_WHY_DIFF_DOH_LIC",     "61. Why was it difficult to comply with: DOH Licensing requirements?"),
     ]
-    for prefix, label in Q66_74_TOPICS:
+    for prefix, label in Q53_61_TOPICS:
         items.extend(checkbox_multiselect(prefix, label, _cb_codes(WHY_DIFF_OPTIONS[:6] + [WHY_DIFF_OPTIONS[8]])))
-    items.extend(checkbox_multiselect("Q75_ENROLL_RESPONSIBILITY",
-                            "75. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta?",
-                            _cb_codes(Q75_RESPONSIBILITY)))
-    items.extend(checkbox_multiselect("Q76_ENROLL_INITIATIVES",
-                            "76. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta?",
-                            _cb_codes(Q76_INITIATIVES)))
-    items.append(yes_no("Q77_ENROLL_CHALL",
-                        "77. Did you experience any challenges in enrolling patients to YAKAP/Konsulta?"))
-    items.extend(checkbox_multiselect("Q78_ENROLL_CHALL_LIST",
-                            "78. What are the challenges you have faced?",
-                            _cb_codes(Q78_ENROLL_CHALL)))
-    items.extend(checkbox_multiselect("Q79_NOT_ACCRED_REASON",
-                            "79. If not YAKAP/ KONSULTA accredited, why are you not accredited?",
-                            _cb_codes(Q79_NOT_ACCRED)))
-    items.append(select_one("Q80_INTEND_ACCRED",
-                            "80. Are you intending to become a YAKAP/Konsulta provider?",
-                            Q80_INTEND))
-    items.append(yes_no("Q81_KNOW_HOW_START",
-                        "81. If you decide to apply today, would you know how to start the process?"))
-    items.append(alpha("Q82_DECIDED_NOT_REASON",
-                       "82. What was the deciding factor not to apply?", length=240))
-    items.append(alpha("Q83_TRIED_FAILED_REASON",
-                       "83. What went wrong with the application?", length=240))
-    items.append(alpha("Q84_PROCESS_CHALL",
-                       "84. What are some challenges in the process, if any?", length=240))
-    items.append(alpha("Q85_CATCHMENT_AREA",
-                       "85. What areas do you consider as the facility's catchment area/s?", length=240))
-    items.append(numeric("Q86_ELIGIBLE_PATIENTS",
-                         "86. How many patients in your catchment area are eligible to register to this YAKAP/Konsulta provider?",
+    items.extend(checkbox_multiselect("Q62_ENROLL_RESPONSIBILITY",
+                            "62. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta?",
+                            _cb_codes(Q62_RESPONSIBILITY)))
+    items.extend(checkbox_multiselect("Q63_ENROLL_INITIATIVES",
+                            "63. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta?",
+                            _cb_codes(Q63_INITIATIVES)))
+    items.append(yes_no("Q64_ENROLL_CHALL",
+                        "64. Did you experience any challenges in enrolling patients to YAKAP/Konsulta?"))
+    items.extend(checkbox_multiselect("Q65_ENROLL_CHALL_LIST",
+                            "65. What are the challenges you have faced?",
+                            _cb_codes(Q65_ENROLL_CHALL)))
+    items.extend(checkbox_multiselect("Q66_NOT_ACCRED_REASON",
+                            "66. If not YAKAP/ Konsulta accredited, why are you not accredited?",
+                            _cb_codes(Q66_NOT_ACCRED)))
+    items.append(select_one("Q67_INTEND_ACCRED",
+                            "67. Are you intending to become a YAKAP/Konsulta provider?",
+                            Q67_INTEND, length=1))
+    items.append(yes_no("Q68_KNOW_HOW_START",
+                        "68. If you decide to apply today, would you know how to start the process?"))
+    items.append(alpha("Q69_DECIDED_NOT_REASON",
+                       "69. What was the deciding factor not to apply?", length=240))
+    items.append(alpha("Q70_TRIED_FAILED_REASON",
+                       "70. What went wrong with the application?", length=240))
+    items.append(alpha("Q71_PROCESS_CHALL",
+                       "71. What are some challenges in the process, if any?", length=240))
+    items.append(alpha("Q72_CATCHMENT_AREA",
+                       "72. What areas do you consider as the facility's catchment area/s?", length=240))
+    items.append(numeric("Q73_ELIGIBLE_PATIENTS",
+                         "73. How many patients in your catchment area are eligible to register to this YAKAP/Konsulta provider?",
                          length=7))
-    items.append(numeric("Q87_REGISTERED_PATIENTS",
-                         "87. How many eligible patients in your catchment area are already registered to this YAKAP/Konsulta provider?",
+    items.append(numeric("Q74_REGISTERED_PATIENTS",
+                         "74. How many eligible patients in your catchment area are already registered to this YAKAP/Konsulta provider?",
                          length=7))
-    # Q88 — verbatim text is 448 chars, well over CSPro's 255-char label limit.
+    # Q75 — verbatim text is 448 chars, well over CSPro's 255-char label limit.
     # #1189 round 2: the v1.3.2 attempt put the full stem HERE and the Designer
-    # round-trip hard-cut it at 255 chars (no warning — F1 writes its dcf raw).
-    # The #1019/#1074 architecture is the right one: label stays CONDENSED
-    # (<=255, matches the 5 locale translation keys verbatim); the FULL paper
-    # stem renders from generate_qsf's Q88 branch in the uncapped question area.
-    items.append(yes_no_dk("Q88_IS_1700_ENOUGH",
-                           "88. The maximum per capita rate for YAKAP/Konsulta is Php 1,700 across private and public facilities (40% after first patient encounter, 60% based on registered catchment population by December). Based on your practice, is this enough?"))
-    items.append(yes_no_dk("Q89_COSTING_DONE",
-                           "89. Did you go through a costing exercise to figure out if this was viable for your facility?"))
-    items.append(yes_no_dk("Q90_COSTING_VIABLE",
-                           "90. Did the costing exercise show that Php 1,700 was viable for your facility?"))
-    items.append(numeric("Q91_MIN_CAP_VALUE_ACC",
-                         "91. What would be the minimum acceptable capitation value per patient per year for you as a YAKAP/Konsulta provider?",
+    # round-trip hard-cut it at 255 chars. The #1019/#1074 architecture is the
+    # right one: label stays CONDENSED (<=255, and it is the translation key);
+    # the FULL paper stem renders from generate_qsf's uncapped question area.
+    items.append(yes_no_dk("Q75_IS_1700_ENOUGH",
+                           "75. The maximum per capita rate for YAKAP/Konsulta is Php 1,700 across private and public facilities (40% after first patient encounter, 60% based on registered catchment population by December). Based on your practice, is this enough?"))
+    items.append(yes_no_dk("Q76_COSTING_DONE",
+                           "76. Did you go through a costing exercise to figure out if this was viable for your facility?"))
+    items.append(yes_no_dk("Q77_COSTING_VIABLE",
+                           "77. Did the costing exercise show that Php 1,700 was viable for your facility?"))
+    items.append(numeric("Q78_MIN_CAP_VALUE_ACC",
+                         "78. What would be the minimum acceptable capitation value per patient per year for you as a YAKAP/ Konsulta provider?",
                          length=6))
-    items.append(numeric("Q92_MIN_CAP_VALUE_NONACC",
-                         "92. What would be the minimum acceptable capitation value per patient per year for you to consider being a YAKAP/Konsulta provider?",
+    items.append(numeric("Q79_MIN_CAP_VALUE_NONACC",
+                         "79. What would be the minimum acceptable capitation value per patient per year for you to consider being a YAKAP/Konsulta provider?",
                          length=6))
-    items.append(yes_no("Q93_CHARGE_ADDL_CAP", "93. Does your facility charge additional capitation fees?"))
-    items.extend(checkbox_multiselect("Q94_CHARGE_ADDL_CAP_REASONS",
-                            "94. What is/are the reason/s for the facility to charge additional capitation fees?",
-                            _cb_codes(Q94_ADDL_CAP_REASONS)))
-    items.append(select_one("Q95_RECEIVED_PAYMENTS",
-                            "95. Have you already received payments for patients enrolled?",
-                            Q95_RECEIVED))
-    items.extend(checkbox_multiselect("Q96_NOT_RECEIVED_REASONS",
-                            "96. Why not?",
-                            _cb_codes(Q96_NOT_RECEIVED)))
-    items.append(yes_no("Q97_PAYMENT_CHALL", "97. Did you face any challenges in getting these payments?"))
-    items.extend(checkbox_multiselect("Q98_PAYMENT_CHALL_LIST",
-                            "98. What were these challenges?",
-                            _cb_codes(Q98_PAY_CHALL)))
-    items.extend(checkbox_multiselect("Q99_EXPAND_NEXT",
-                            "99. If you were to expand the YAKAP/Konsulta package, what would you expand next?",
-                            _cb_codes(Q99_EXPAND)))
-    items.append(alpha("Q100_ADDL_FEATURES",
-                       "100. What additional features would you add?", length=240))
-    return record("D_YAKAP_KONSULTA", "D. YAKAP / Konsulta Package", "5", items)
+    items.append(yes_no("Q80_CHARGE_ADDL_CAP", "80. Does your facility charge additional capitation fees?"))
+    items.extend(checkbox_multiselect("Q81_CHARGE_ADDL_CAP_REASONS",
+                            "81. What is/are the reason/s for the facility to charge additional capitation fees?",
+                            _cb_codes(Q81_ADDL_CAP_REASONS)))
+    items.append(select_one("Q82_RECEIVED_PAYMENTS",
+                            "82. Have you already received payments for patients enrolled?",
+                            Q82_RECEIVED, length=1))
+    items.extend(checkbox_multiselect("Q83_NOT_RECEIVED_REASONS",
+                            "83. Why not?",
+                            _cb_codes(Q83_NOT_RECEIVED)))
+    items.append(yes_no("Q84_PAYMENT_CHALL", "84. Did you face any challenges in getting these payments?"))
+    items.extend(checkbox_multiselect("Q85_PAYMENT_CHALL_LIST",
+                            "85. What were these challenges?",
+                            _cb_codes(Q85_PAY_CHALL)))
+    items.extend(checkbox_multiselect("Q86_EXPAND_NEXT",
+                            "86. If you were to expand the YAKAP/Konsulta package, what would you expand next?",
+                            _cb_codes(Q86_EXPAND)))
+    items.append(alpha("Q87_ADDL_FEATURES",
+                       "87. What additional features would you add?", length=240))
+    return record("D_YAKAP_KONSULTA", "D. YAKAP/Konsulta Package", "5", items)
 
 
 # ============================================================
-# 9. RECORD BUILDERS — Section E. BUCAS / GAMOT (Q101-Q117)
+# 9. RECORD BUILDERS — Section E. BUCAS / GAMOT (Q88-Q104)
 # ============================================================
+# Aug-17: was Q101-Q117. Straight -13 renumber; option sets unchanged.
 
 def build_section_e():
     # #1023 (pretest): paper order is column-major — Not applicable precedes
     # Others (specify). Display order only; codes 1-5/99 UNCHANGED (data-safe).
-    Q103_REASON = [
+    Q90_REASON = [
         ("Proposal not yet submitted",            "1"),
         ("Limited information on establishment process", "2"),
         ("Did not meet standard requirements",    "3"),
         ("Awaiting assessment or approval",       "4"),
         ("Not applicable",                       "99"),
-        ("Other (specify)",                       "5"),
+        ("Others (specify)",                      "5"),
     ]
-    Q104_SERVICES = [
+    Q91_SERVICES = [
         ("Urgent care and consultation",         "1"),
         ("Minor surgical procedures",            "2"),
         ("Diagnostic and laboratory services",   "3"),
         ("Reproductive and special health services", "4"),
         ("Other (specify)",                      "5"),
     ]
-    Q105_FACTORS = [
+    Q92_FACTORS = [
         ("Patient awareness",                       "1"),
         ("Facility location and accessibility",     "2"),
         ("Referral patterns",                       "3"),
         ("PhilHealth coverage and reimbursement",   "4"),
         ("Availability of staff/services",          "5"),
-        ("Other (specify)",                         "6"),
+        ("Others (specify)",                        "6"),
     ]
-    # #1024 (pretest): same column-major order fix as Q103. Codes unchanged.
-    Q110_REASON = [
+    # #1024 (pretest): same column-major order fix as Q90. Codes unchanged.
+    Q97_REASON = [
         ("Application not yet submitted",         "1"),
         ("Limited information on accreditation process", "2"),
         ("Did not meet accreditation requirements","3"),
         ("Awaiting assessment or approval",       "4"),
         ("Not applicable",                       "99"),
-        ("Other (specify)",                       "5"),
+        ("Others (specify)",                      "5"),
     ]
-    Q111_FACTORS = [
+    Q98_FACTORS = [
         ("Availability of GAMOT medicines",                    "1"),
         ("Pharmacy capacity",                                  "2"),
         ("Patient awareness of the program",                   "3"),
         ("PhilHealth eligibility and reimbursement processes", "4"),
         ("Prescribing practices of physicians",                "5"),
-        ("Other (specify)",                                    "6"),
+        ("Others (specify)",                                   "6"),
     ]
-    Q114_DURATION = [
+    Q101_DURATION = [
         ("30 days and less", "1"),
         ("31-60 days",        "2"),
         ("More than 60 days", "3"),
     ]
-    Q115_AVG = [
-        ("Less than a month", "1"),
+    Q102_AVG = [
+        ("less than a month", "1"),
         ("1-2 months",        "2"),
         ("3-4 months",        "3"),
         ("5-6 months",        "4"),
-        ("More than 6 months","5"),
+        ("more than 6 months","5"),
     ]
-    Q116_ADDR = [
+    Q103_ADDR = [
         ("Yes",                                             "1"),
         ("No",                                              "2"),
         ("Did not experience stock outs of medicines under the GAMOT package",     "3"),  # #737: full label per paper
     ]
-    Q117_HOW = [
+    Q104_HOW = [
         ("Resorted to alternative procurement", "1"),
         ("Active inventory monitoring",         "2"),
         ("Improve forecasting and quantification", "3"),
@@ -795,75 +977,77 @@ def build_section_e():
     ]
 
     items = []
-    items.append(yes_no("Q101_HEARD_BUCAS",
-                        "101. Have you heard about the Bagong Urgent Care and Ambulatory Service (BUCAS)?"))
-    items.append(yes_no_dk("Q102_HAS_BUCAS", "102. Do you have a BUCAS Center?"))
-    items.append(select_one("Q103_NO_BUCAS_REASON",
-                            "103. If none, what is the primary reason?", Q103_REASON))
-    items.append(alpha("Q103_OTHER_TXT",
-                       "103. If none, what is the primary reason? Other (specify)", length=120))
-    items.extend(checkbox_multiselect("Q104_BUCAS_SERVICES",
-                            "104. What are the available services offered by your BUCAS Center?",
-                            _cb_codes(Q104_SERVICES)))
-    items.extend(checkbox_multiselect("Q105_BUCAS_FACTORS",
-                            "105. In your assessment, what are the main factors affecting the utilization of BUCAS in your facility?",
-                            _cb_codes(Q105_FACTORS)))
-    items.append(alpha("Q106_BUCAS_RESOURCES_NEEDED",
-                       "106. What are the resources you need to support/sustain the BUCAS center?",
+    items.append(yes_no("Q88_HEARD_BUCAS",
+                        "88. Have you heard about the Bagong Urgent Care and Ambulatory Service (BUCAS)?"))
+    items.append(yes_no_dk("Q89_HAS_BUCAS", "89. Do you have a BUCAS Center?"))
+    items.append(select_one("Q90_NO_BUCAS_REASON",
+                            "90. If none, what is the primary reason?", Q90_REASON))
+    items.append(alpha("Q90_OTHER_TXT",
+                       "90. If none, what is the primary reason? Other (specify)", length=120))
+    items.extend(checkbox_multiselect("Q91_BUCAS_SERVICES",
+                            "91. What are the available services offered by your BUCAS Center?",
+                            _cb_codes(Q91_SERVICES)))
+    items.extend(checkbox_multiselect("Q92_BUCAS_FACTORS",
+                            "92. In your assessment, what are the main factors affecting the utilization of BUCAS in your facility?",
+                            _cb_codes(Q92_FACTORS)))
+    items.append(alpha("Q93_BUCAS_RESOURCES_NEEDED",
+                       "93. What are the resources you need to support/sustain the BUCAS center?",
                        length=240))
-    items.append(yes_no("Q107_BUCAS_DECONGEST",
-                        "107. Based on your experience, does the BUCAS Center decongest your health facility of patients?"))
-    items.append(yes_no("Q108_HEARD_GAMOT",
-                        "108. Have you heard about the Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) package?"))
-    items.append(yes_no("Q109_GAMOT_ACCRED", "109. Is your facility an accredited GAMOT provider?"))
-    items.append(select_one("Q110_NO_GAMOT_REASON",
-                            "110. If no, what is the primary reason?", Q110_REASON))
-    items.append(alpha("Q110_OTHER_TXT",
-                       "110. If no, what is the primary reason? Other (specify)", length=120))
-    items.extend(checkbox_multiselect("Q111_GAMOT_FACTORS",
-                            "111. In your assessment, what are the main factors affecting the utilization of the GAMOT Program in your facility?",
-                            _cb_codes(Q111_FACTORS)))
-    items.append(yes_no("Q112_STOCKOUT",
-                        "112. In the past 3 months, has this facility experienced a stock-out (zero supply) of any tracer essential medicines?"))
-    items.append(alpha("Q113_STOCKOUT_MEDS",
-                       "113. What specific medicines? (antihypertensives, antibiotics, etc.)", length=240))
-    items.append(select_one("Q114_STOCKOUT_DURATION",
-                            "114. How many days did the stock-out last?", Q114_DURATION))
-    items.append(select_one("Q115_STOCKOUT_AVG",
-                            "115. On average, how many months do these stock-outs last?", Q115_AVG))
-    items.append(select_one("Q116_ADDR_STOCKOUT",
-                            "116. Did you do anything to address the medicine stock-outs in the GAMOT Package?",
-                            Q116_ADDR))
-    items.extend(checkbox_multiselect("Q117_ADDR_STOCKOUT_HOW",
-                            "117. If yes, what did you do to address the medicine stock-outs in the GAMOT Package?",
-                            _cb_codes(Q117_HOW)))
+    items.append(yes_no("Q94_BUCAS_DECONGEST",
+                        "94. Based on your experience, does the BUCAS Center decongest your health facility of patients?"))
+    items.append(yes_no("Q95_HEARD_GAMOT",
+                        "95. Have you heard about the Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) package?"))
+    items.append(yes_no("Q96_GAMOT_ACCRED", "96. Is your facility an accredited GAMOT provider?"))
+    items.append(select_one("Q97_NO_GAMOT_REASON",
+                            "97. If no, what is the primary reason?", Q97_REASON))
+    items.append(alpha("Q97_OTHER_TXT",
+                       "97. If no, what is the primary reason? Other (specify)", length=120))
+    items.extend(checkbox_multiselect("Q98_GAMOT_FACTORS",
+                            "98. In your assessment, what are the main factors affecting the utilization of the GAMOT Program in your facility?",
+                            _cb_codes(Q98_FACTORS)))
+    items.append(yes_no("Q99_STOCKOUT",
+                        "99. In the past 3 months, has this facility experienced a stock-out (zero supply) of any tracer essential medicines?"))
+    items.append(alpha("Q100_STOCKOUT_MEDS",
+                       "100. What specific medicines? (antihypertensives, antibiotics, etc.)", length=240))
+    items.append(select_one("Q101_STOCKOUT_DURATION",
+                            "101. How many days did the stock-out last?", Q101_DURATION))
+    items.append(select_one("Q102_STOCKOUT_AVG",
+                            "102. On average, how many months do these stock-outs last?", Q102_AVG))
+    items.append(select_one("Q103_ADDR_STOCKOUT",
+                            "103. Did you do anything to address the medicine stock-outs in the GAMOT Package?",
+                            Q103_ADDR))
+    items.extend(checkbox_multiselect("Q104_ADDR_STOCKOUT_HOW",
+                            "104. If yes, what did you do to address the medicine stock-outs in the GAMOT Package?",
+                            _cb_codes(Q104_HOW)))
     return record("E_BUCAS_GAMOT", "E. Awareness on Expanded Health Programs (BUCAS and GAMOT)", "6", items)
 
 
 # ============================================================
-# 10. RECORD BUILDERS — Section F. DOH Licensing (Q118-Q134)
+# 10. RECORD BUILDERS — Section F. DOH Licensing (Q105-Q121)
 # ============================================================
+# Aug-17: was Q118-Q134. Straight -13 renumber; Q107 gains the numeric No.-of-Days
+# companion (same hybrid structure as Q49/Q50).
 
 def build_section_f():
-    Q118_LICENSED = [
+    Q105_LICENSED = [
         ("Yes",                                              "1"),
         ("No",                                               "2"),
-        ("No, but submitted requirements and waiting",       "3"),
+        ("No, but have submitted requirements and waiting for license", "3"),
         ("I don't know what DOH licensing is",               "4"),
     ]
-    Q119_WHEN = [
+    Q106_WHEN = [
         ("Within the last 1 to 3 months",     "1"),
         ("Within the last 4 to 6 months",     "2"),
         ("Over 6 months but within 1 year",   "3"),
         ("More than 1 year ago",              "4"),
         ("I don't know",                      "5"),
     ]
-    Q120_DAYS = [
+    Q107_DAYS = [
         ("30 days and less", "1"),
         ("31-60 days",        "2"),
         ("More than 60 days", "3"),
     ]
-    Q121_DIFFICULT = [
+    Q108_DIFFICULT = [
         ("Patient rights and organization ethics",                  "1"),
         ("Patient care",                                            "2"),
         ("Leadership and management",                               "3"),
@@ -885,78 +1069,85 @@ def build_section_f():
     ]
 
     items = []
-    items.append(select_one("Q118_DOH_LICENSED", "118. Is this facility DOH licensed?", Q118_LICENSED))
-    items.append(select_one("Q119_LIC_RECEIVED_WHEN",
-                            "119. When did you receive your DOH license from your most recent application?",
-                            Q119_WHEN))
-    items.append(select_one("Q120_LIC_DAYS",
-                            "120. How many days did it take you to receive the license?", Q120_DAYS))
-    # #385: Q121 is now a single Check Box field, but its options are facility-type
-    # specific (confirmed against the printed F1 questionnaire & spec §4.9):
+    items.append(select_one("Q105_DOH_LICENSED", "105. Is this facility DOH licensed?", Q105_LICENSED))
+    items.append(select_one("Q106_LIC_RECEIVED_WHEN",
+                            "106. When did you receive your DOH license from your most recent application?",
+                            Q106_WHEN))
+    items.append(numeric("Q107_LIC_DAYS_NUM",
+                         "107. How many days did it take you to receive the license? — No. of Days",
+                         length=4))
+    items.append(select_one("Q107_LIC_DAYS",
+                            "107. How many days did it take you to receive the license?", Q107_DAYS))
+    # #385: Q108 is a single Check Box field, but its options are facility-type
+    # specific (confirmed against the printed questionnaire & spec §4.9):
     #   - codes 10/11/12 (National laws & DOH issuances, Emergency cart contents,
     #     Add-on services) are HOSPITAL-ONLY  -> hide for a PCF (Q8_SERVICE_LEVEL = 1)
     #   - code 13 (Public access to price information) is PCF-ONLY -> hide for a hospital
     #   - code 90 (None of the above) is the exclusive option -> keep in BOTH sets.
-    # Because Q121 is one Check Box (no per-option _O## fields to `noinput`), the correct
-    # CSPro pattern is a dynamic value set swapped at Q121's preproc via setvalueset()
+    # Because Q108 is one Check Box (no per-option _O## fields to `noinput`), the correct
+    # CSPro pattern is a dynamic value set swapped at Q108's preproc via setvalueset()
     # keyed on Q8_SERVICE_LEVEL (the apc gate lives in generate_apc.py's CHECKBOX_CONVERT_A).
     # We keep the default _VS1 (all 14 options) as valueSets[0] so the field length (28)
     # and verify_questions' first-value-set scan are unchanged, and append two
     # facility-specific value sets the apc selects between.
-    _q121_coded = _cb_codes(Q121_DIFFICULT)
-    Q121_HOSPITAL_ONLY = {"10", "11", "12"}   # National laws, Emergency cart, Add-on services
-    Q121_PCF_ONLY = {"13"}                     # Public access to price information
-    items.extend(checkbox_multiselect("Q121_DOH_LIC_DIFFICULT",
-                            "121. Which of the following requirements were difficult to comply with in the DOH licensing process?",
-                            _q121_coded, with_other_txt=False))
-    _q121_field = items[-1]   # the Check Box alpha field checkbox_multiselect just appended
-    _q121_label = "121. Which of the following requirements were difficult to comply with in the DOH licensing process?"
+    _q108_coded = _cb_codes(Q108_DIFFICULT)
+    Q108_HOSPITAL_ONLY = {"10", "11", "12"}   # National laws, Emergency cart, Add-on services
+    Q108_PCF_ONLY = {"13"}                     # Public access to price information
+    items.extend(checkbox_multiselect("Q108_DOH_LIC_DIFFICULT",
+                            "108. Which of the following requirements were difficult to comply with in the DOH licensing process?",
+                            _q108_coded, with_other_txt=False))
+    _q108_field = items[-1]   # the Check Box alpha field checkbox_multiselect just appended
+    _q108_label = "108. Which of the following requirements were difficult to comply with in the DOH licensing process?"
     # PCF set: drop the hospital-only options (10/11/12); keep PCF-only (13) + exclusive (90).
-    _q121_field["valueSets"].append(_value_set(
-        "Q121_DOH_LIC_DIFFICULT_PCF", _q121_label,
-        [(t, c) for t, c in _q121_coded if c not in Q121_HOSPITAL_ONLY]))
+    _q108_field["valueSets"].append(_value_set(
+        "Q108_DOH_LIC_DIFFICULT_PCF", _q108_label,
+        [(t, c) for t, c in _q108_coded if c not in Q108_HOSPITAL_ONLY]))
     # Hospital set: drop the PCF-only option (13); keep hospital-only (10/11/12) + exclusive (90).
-    _q121_field["valueSets"].append(_value_set(
-        "Q121_DOH_LIC_DIFFICULT_HOSP", _q121_label,
-        [(t, c) for t, c in _q121_coded if c not in Q121_PCF_ONLY]))
-    # Q122-Q134 = thirteen "why difficult for X" Check Box multi-selects, gated on Q121.
-    Q122_134_TOPICS = [
-        # #1016: same short-stem format as Q66-74 (#1015).
-        ("Q122_WHY_DIFF_PT_RIGHTS",  "122. Why was it difficult to comply with: Patient rights and organization ethics?"),
-        ("Q123_WHY_DIFF_PT_CARE",    "123. Why was it difficult to comply with: Patient care?"),
-        ("Q124_WHY_DIFF_LEADERSHIP", "124. Why was it difficult to comply with: Leadership and management?"),
-        ("Q125_WHY_DIFF_HRM",        "125. Why was it difficult to comply with: Human resource management?"),
-        ("Q126_WHY_DIFF_INFO_MGMT",  "126. Why was it difficult to comply with: Information management?"),
-        ("Q127_WHY_DIFF_SAFE",       "127. Why was it difficult to comply with: Safe practice and environment?"),
-        ("Q128_WHY_DIFF_PERF",       "128. Why was it difficult to comply with: Improving performance?"),
-        ("Q129_WHY_DIFF_PHYS_PLANT", "129. Why was it difficult to comply with: Physical plant?"),
-        ("Q130_WHY_DIFF_PRICE_INFO", "130. Why was it difficult to comply with: Public access to price information?"),
-        ("Q131_WHY_DIFF_EQUIPMENT",  "131. Why was it difficult to comply with: Equipment and instruments?"),
-        ("Q132_WHY_DIFF_NAT_LAWS",   "132. Why was it difficult to comply with: National laws and DOH issuances implemented in hospitals and other health facilities?"),
-        ("Q133_WHY_DIFF_EMERG_CART", "133. Why was it difficult to comply with: Emergency Cart Contents?"),
-        ("Q134_WHY_DIFF_ADDONS",     "134. Why was it difficult to comply with: Add-on services?"),
+    _q108_field["valueSets"].append(_value_set(
+        "Q108_DOH_LIC_DIFFICULT_HOSP", _q108_label,
+        [(t, c) for t, c in _q108_coded if c not in Q108_PCF_ONLY]))
+    # Q109-Q121 = thirteen "why difficult for X" Check Box multi-selects, gated on Q108.
+    # NOTE the printed order: Q117 is "Public access to price information", inserted
+    # mid-sequence rather than after Q116 (F1-inventory.md §9 anomaly 1). The Aug-17
+    # paper keeps that ordering, so the build keeps it too.
+    Q109_121_TOPICS = [
+        # #1016: same short-stem format as Q53-61 (#1015).
+        ("Q109_WHY_DIFF_PT_RIGHTS",  "109. Why was it difficult to comply with: Patient rights and organization ethics?"),
+        ("Q110_WHY_DIFF_PT_CARE",    "110. Why was it difficult to comply with: Patient care?"),
+        ("Q111_WHY_DIFF_LEADERSHIP", "111. Why was it difficult to comply with: Leadership and management?"),
+        ("Q112_WHY_DIFF_HRM",        "112. Why was it difficult to comply with: Human resource management?"),
+        ("Q113_WHY_DIFF_INFO_MGMT",  "113. Why was it difficult to comply with: Information management?"),
+        ("Q114_WHY_DIFF_SAFE",       "114. Why was it difficult to comply with: Safe practice and environment?"),
+        ("Q115_WHY_DIFF_PERF",       "115. Why was it difficult to comply with: Improving performance?"),
+        ("Q116_WHY_DIFF_PHYS_PLANT", "116. Why was it difficult to comply with: Physical plant?"),
+        ("Q117_WHY_DIFF_PRICE_INFO", "117. Why was it difficult to comply with: Public access to price information?"),
+        ("Q118_WHY_DIFF_EQUIPMENT",  "118. Why was it difficult to comply with: Equipment and instruments?"),
+        ("Q119_WHY_DIFF_NAT_LAWS",   "119. Why was it difficult to comply with: National laws and DOH issuances implemented in hospitals and other health facilities?"),
+        ("Q120_WHY_DIFF_EMERG_CART", "120. Why was it difficult to comply with: Emergency Cart Contents?"),
+        ("Q121_WHY_DIFF_ADDONS",     "121. Why was it difficult to comply with: Add-on services?"),
     ]
-    # #1192/#1193: the paper's option lists are NOT identical across Q122-134 —
-    # Q124 and Q125 carry extra options the shared list lacks. Appended AFTER
+    # #1192/#1193: the paper's option lists are NOT identical across this battery —
+    # Q111 and Q112 carry extra options the shared list lacks. Appended AFTER
     # "Lack of space" so they take the next sequential codes (09/10) and land
     # before Other(99): ascending codes preserved (checkbox rule, #830), and no
-    # existing code moves mid-round.
-    Q124_EXTRAS = [("Frequent changes to guidelines and policies", "x"),
+    # existing code moves mid-round. Aug-17 keeps both extras.
+    Q111_EXTRAS = [("Frequent changes to guidelines and policies", "x"),
                    ("Resistance to change of staff", "x")]
-    Q125_EXTRAS = [("Staff are resistant to change", "x")]
-    for prefix, label in Q122_134_TOPICS:
+    Q112_EXTRAS = [("Staff are resistant to change", "x")]
+    for prefix, label in Q109_121_TOPICS:
         opts = list(WHY_DIFF_OPTIONS)
-        extras = {"Q124_WHY_DIFF_LEADERSHIP": Q124_EXTRAS,
-                  "Q125_WHY_DIFF_HRM": Q125_EXTRAS}.get(prefix, [])
+        extras = {"Q111_WHY_DIFF_LEADERSHIP": Q111_EXTRAS,
+                  "Q112_WHY_DIFF_HRM": Q112_EXTRAS}.get(prefix, [])
         if extras:
             opts = opts[:-1] + extras + opts[-1:]   # keep Other (specify) last
         items.extend(checkbox_multiselect(prefix, label, _cb_codes(opts)))
-    return record("F_DOH_LICENSING", "F. DOH Licensing: Status and Barriers", "7", items)
+    return record("F_DOH_LICENSING", "F. DOH Licensing: Status and Barriers to Licensing", "7", items)
 
 
 # ============================================================
-# 11. RECORD BUILDERS — Section G. Service Delivery (Q135-Q162)
+# 11. RECORD BUILDERS — Section G. Service Delivery (Q122-Q149)
 # ============================================================
+# Aug-17: was Q135-Q162. Straight -13 renumber with NBB/ZBB stem rewordings.
 
 def build_section_g():
     NBB_ZBB_BARRIERS = [
@@ -965,67 +1156,70 @@ def build_section_g():
         ("Patients do not go through the process of availing it",      "3"),
         # #1026/#1027 kept the paper's trailing "and/or" here verbatim. #1121
         # (ASPSI 2026-08-06) lists the option WITHOUT it, so the dangling
-        # conjunction goes. Shared list -> applies to Q137 (NBB) and Q140 (ZBB).
+        # conjunction goes. Shared list -> applies to Q124 (NBB) and Q127 (ZBB).
+        # Aug-17 REPRINTS the malformed cell (Q124 keeps the dangling "and/or";
+        # Q127 additionally duplicates the merged option — F1-inventory.md §10) —
+        # the ASPSI-confirmed clean list stands.
         ("Insufficient PhilHealth support value",                      "4"),
         ("Insufficient other sources (e.g. MAIFIP, DSWD, PCSO) (late payments applicable for MAIFIP)", "5"),
         ("PhilHealth delayed payment",                                 "6"),
         ("None of the above",                                          "7"),
         ("Other (specify)",                                            "8"),
     ]
-    Q143_DIFFICULT_BENEFIT = [
+    Q130_DIFFICULT_BENEFIT = [
         ("PhilHealth/financial protection benefits",                                "1"),
         ("Establishment of health care provider networks (HCPNs) (i.e., referral system)","2"),
         ("Human resources for health reforms",                                      "3"),
         ("Other (specify)",                                                         "4"),
     ]
-    Q144_REASONS = [
+    Q131_REASONS = [
         ("The implementation of UHC benefits is heavily reliant on LGU decisions", "1"),
         ("Not enough funding/budget",                           "2"),
         ("Technical/system issues of PhilHealth (e.g., data loss, errors, or platform accessibility problems)",               "3"),
         ("Other (specify)",                                     "4"),
     ]
-    Q146_MALASAKIT_WHY = [
+    Q133_MALASAKIT_WHY = [
         ("Streamline access to medical and financial aid for indigent and financially incapacitated patients", "1"),
         ("Reduce out-of-pocket expenses",                                        "2"),
         ("Eliminate the need to travel to multiple government agencies",         "3"),
         ("Foster a more compassionate approach to healthcare",                   "4"),
         ("Other (specify)",                                                      "5"),
     ]
-    Q147_NO_MALASAKIT_WHY = [
+    Q134_NO_MALASAKIT_WHY = [
         ("Limited budget",                              "1"),
         ("Stringent eligibility requirements",          "2"),
         ("Incomplete documentation from patients",      "3"),
         ("High patient volume leading to service bottlenecks",   "4"),
         ("Other (specify)",                             "5"),
     ]
-    Q149_LGU_FORMS = [
+    Q136_LGU_FORMS = [
         ("Financial assistance",            "1"),
         ("Technical assistance",            "2"),
         ("Medical supplies and equipment",  "3"),
         ("Manpower support",                "4"),
         ("Other (specify)",                 "5"),
     ]
-    Q151_NOT_SAT_WHY = [
+    Q138_NOT_SAT_WHY = [
         ("Insufficient",                                          "1"),
         ("Hard to coordinate",                                    "2"),
         ("Support given is not aligned with the needs of the facility",           "3"),
         ("I don't know",                                          "4"),
         ("Other (specify)",                                       "5"),
     ]
-    Q152_CLARITY = [
+    Q139_CLARITY = [
         ("Very Clear",  "1"),
         ("Clear",       "2"),
         ("Neither",     "3"),
         ("Unclear",     "4"),
-        ("Very Unclear","5"),
+        ("Very unclear","5"),
     ]
-    Q155_SEND_REF = [
+    Q142_SEND_REF = [
         ("Physical referral slip",                  "1"),
         ("E-referral",                              "2"),
         ("Referring facility calls receiving facility", "3"),
         ("Other (specify)",                         "4"),
     ]
-    Q156_FORM_TYPE = [
+    Q143_FORM_TYPE = [
         ("DOH standard referral form",      "1"),
         ("Facility's standard referral form","2"),
         ("Province's standard referral form","3"),
@@ -1033,13 +1227,13 @@ def build_section_g():
         ("No standard referral form",       "5"),
         ("Other (specify)",                 "6"),
     ]
-    Q157_NETWORK = [
+    Q144_NETWORK = [
         ("Yes",                "1"),
         ("No",                 "2"),
         ("I've never heard of it","3"),
         ("I don't know",       "4"),
     ]
-    Q158_PROPORTION = [
+    Q145_PROPORTION = [
         ("Almost all patients are referred, very few walk-in/self-referred",    "1"),
         ("Majority of patients are referred, some walk-in/self- referred",                       "2"),
         ("The proportion of referrals is about equal to walk-ins",       "3"),
@@ -1047,41 +1241,39 @@ def build_section_g():
         ("Almost all patients walk-in/self-referred, very few are referred",                 "5"),
         ("I am unsure about the typical ratio of referrals to walk-ins",                        "6"),
     ]
-    Q159_RECEIVE_REF = [
+    Q146_RECEIVE_REF = [
         ("Physical referral slip",                          "1"),
         ("E-referral",                                      "2"),
         ("Referring facility calls receiving facility",     "3"),
         ("Other (specify)",                                 "4"),
     ]
-    # #734 (R5): Q160 -> Check Box multi-select per the tester's PAPI screenshot showing
-    # checkboxes — resolves the #576/#586 "no PAPI evidence either way, flagged for ASPSI"
-    # hold on the same basis #586 used to convert Q144. Hand-coded, NOT _cb_codes: "Other
-    # private facility"/"Other public facility" legitimately start with "Other" and _cb_codes
-    # would mis-recode both to 99 (3-way collision). 'Other, (specify)' -> 99 (with_other_txt);
-    # 'I don't know' -> 90 (exclusive), 'Other (specify)' -> 99. #830: the value set MUST
-    # ascend by code (..., 90, 99). A descending tail (99 then 90) was the ONLY thing that
-    # set Q160 apart from every other F1 checkbox, and it broke CSEntry's checkbox
-    # re-validation on partial-save resume (WARNING: Out of range -> forced re-entry ->
-    # apparent data loss). Ascending order (90=DK before 99=Other) matches all other
-    # multi-selects, which survive the same resume.
-    Q160_EXTERNAL = [
+    # #734 (R5): Q147 -> Check Box multi-select per the tester's PAPI screenshot showing
+    # checkboxes — resolves the #576/#586 "no PAPI evidence either way" hold on the same
+    # basis #586 used to convert Q131. Hand-coded, NOT _cb_codes: "Other private facility"/
+    # "Other public facility" legitimately start with "Other" and _cb_codes would mis-recode
+    # both to 99 (3-way collision). 'Other, (specify)' -> 99 (with_other_txt); 'I don't know'
+    # -> 90 (exclusive). #830: the value set MUST ascend by code (..., 90, 99). A descending
+    # tail (99 then 90) was the ONLY thing that set this field apart from every other F1
+    # checkbox, and it broke CSEntry's checkbox re-validation on partial-save resume
+    # (WARNING: Out of range -> forced re-entry -> apparent data loss).
+    Q147_EXTERNAL = [
         ("External laboratory",     "01"),
         ("Other private facility",  "02"),
         ("Other public facility (e.g., urban/rural health centers, barangay health centers, city/municipal health offices)", "03"),   # #1034 verbatim
         ("I don't know",            "90"),
-        ("Other (specify)",         "99"),
+        ("Other, (specify)",        "99"),
     ]
-    Q161_SATISFACTION = [
+    Q148_SATISFACTION = [
         # #1035: paper-verbatim rating descriptions (codes unchanged).
-        # (paper's inner double quotes swapped to singles — embedded " in a value-set
-        #  label crashed the CSDeploy pen packager: "fatal error ... could not recover")
+        # (paper's inner double quotes swapped to singles — an embedded " in a value-set
+        #  label crashes the CSDeploy pen packager: "fatal error ... could not recover")
         ("Very Satisfied: No improvements needed, 'patients are always referred appropriately'", "1"),
         ("Satisfied: Minor improvements needed, patients are generally referred appropriately",    "2"),
         ("Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional",      "3"),
         ("Dissatisfied: Moderate improvements needed, a number of patients are referred to the wrong specialists or do not receive appropriate follow-up care", "4"),
         ("Very Dissatisfied: Major improvements needed, many patients are referred to the wrong specialists or do not receive appropriate follow-up care",      "5"),
     ]
-    Q162_NOT_SAT = [
+    Q149_NOT_SAT = [
         ("Facilities are overcrowded/overcapacity and do not accept our patient referrals", "1"),
         ("The referral process is slow",                                     "2"),
         ("There is poor coordination between our facility and referred facilities",                         "3"),
@@ -1089,110 +1281,109 @@ def build_section_g():
     ]
 
     items = []
-    items.append(yes_no("Q135_NBB_CURR",
-                        "135. Do you currently implement the \"no balance billing\" policy for your patients?"))
-    items.append(yes_no("Q136_NBB_ALL_PATIENTS",
-                        "136. Are you able to implement it for all patients, to the best of your knowledge, for the last 6 months?"))
-    items.extend(checkbox_multiselect("Q137_NBB_BARRIERS",
-                            "137. In your view, what are some of the barriers to implementing the no balance billing (NBB) policy?",
+    items.append(yes_no("Q122_NBB_CURR",
+                        "122. Do you currently implement the No Balance Billing (NBB) for your patients?"))
+    items.append(yes_no("Q123_NBB_ALL_PATIENTS",
+                        "123. Are you able to implement NBB for all patients, to the best of your knowledge, for the last 6 months?"))
+    items.extend(checkbox_multiselect("Q124_NBB_BARRIERS",
+                            "124. In your view, what are some of the barriers to implementing NBB?",
                             _cb_codes(NBB_ZBB_BARRIERS)))
-    items.append(yes_no("Q138_ZBB_CURR",
-                        "138. Do you currently implement the \"Zero Balance Billing\" policy for your patients?"))
-    items.append(yes_no("Q139_ZBB_ALL_PATIENTS",
-                        "139. If currently implementing ZBB, are you able to implement it for all patients, to the best of your knowledge, for the last six months?"))
-    items.extend(checkbox_multiselect("Q140_ZBB_BARRIERS",
-                            "140. In your view, what are some of the barriers to implementing the \"zero balance billing\" policy?",
+    items.append(yes_no("Q125_ZBB_CURR",
+                        "125. Do you currently implement the Zero Balance Billing (ZBB) for your patients?"))
+    items.append(yes_no("Q126_ZBB_ALL_PATIENTS",
+                        "126. Are you able to implement ZBB for all patients, to the best of your knowledge, for the last six months?"))
+    items.extend(checkbox_multiselect("Q127_ZBB_BARRIERS",
+                            "127. In your view, what are some of the barriers to implementing ZBB?",
                             _cb_codes(NBB_ZBB_BARRIERS)))
-    items.append(yes_no("Q141_ALLOW_OOP_BASIC",
-                        "141. Does the facility allow out-of-pocket (OOP) expenses for basic accommodation?"))
-    items.append(alpha("Q142_OOP_REASON",
-                       "142. Why does the facility allow OOP expenses for basic accommodation? Specify your reason.",
+    items.append(yes_no("Q128_ALLOW_OOP_BASIC",
+                        "128. Does the facility allow out-of-pocket (OOP) expenses for basic accommodation?"))
+    items.append(alpha("Q129_OOP_REASON",
+                       "129. Why does the facility allow OOP expenses for basic accommodation? Specify the reason.",
                        length=240))
-    items.append(select_one("Q143_DIFFICULT_BENEFIT",
-                            "143. Which of the UHC benefits do you find most difficult to implement?",
-                            Q143_DIFFICULT_BENEFIT))
-    items.append(alpha("Q143_OTHER_TXT",
-                       "143. Which of the UHC benefits do you find most difficult to implement? Other (specify)",
+    items.append(select_one("Q130_DIFFICULT_BENEFIT",
+                            "130. Which of the UHC benefits do you find most difficult to implement?",
+                            Q130_DIFFICULT_BENEFIT))
+    items.append(alpha("Q130_OTHER_TXT",
+                       "130. Which of the UHC benefits do you find most difficult to implement? Other (specify)",
                        length=120))
-    items.extend(checkbox_multiselect("Q144_DIFFICULT_REASON",
-                            "144. Why is this difficult to implement?", _cb_codes(Q144_REASONS)))
-    items.append(yes_no("Q145_MALASAKIT_PROVIDED",
-                        "145. Has the facility been providing medical social welfare or assistance (e.g., through Malasakit Centers, MAIFIP)?"))
-    items.extend(checkbox_multiselect("Q146_MALASAKIT_WHY",
-                            "146. Why is the facility providing medical social welfare or assistance through Malasakit Centers or MAIFIP?",
-                            _cb_codes(Q146_MALASAKIT_WHY)))
-    items.extend(checkbox_multiselect("Q147_NO_MALASAKIT_WHY",
-                            "147. Why is the facility not providing medical social welfare or assistance through Malasakit Centers or MAIFIP?",
-                            _cb_codes(Q147_NO_MALASAKIT_WHY)))
-    items.append(yes_no("Q148_LGU_SUPPORT",
-                        "148. Do you receive any support from your LGU to implement UHC reforms?"))
-    items.extend(checkbox_multiselect("Q149_LGU_SUPPORT_FORMS",
-                            "149. What forms of support do you receive?", _cb_codes(Q149_LGU_FORMS)))
-    items.append(yes_no("Q150_LGU_SATISFIED",
-                        "150. Are you satisfied with the support you receive from your LGU?"))
-    items.extend(checkbox_multiselect("Q151_LGU_NOT_SAT_WHY",
-                            "151. Why not?", _cb_codes(Q151_NOT_SAT_WHY)))
-    items.append(select_one("Q152_PHO_PROTOCOL_CLARITY",
-                            "152. How clear are the protocols regarding which decisions require Provincial Health Office approval versus those you can decide at the facility level?",
-                            Q152_CLARITY))
-    items.append(alpha("Q153_UNCLEAR_PROTOCOL",
-                       "153. Which specific protocol that you consider as unclear?", length=240))
-    items.append(numeric("Q154_NUM_REFERRED_OUT",
-                         "154. In the past 6 months, how many patients were referred to a higher-level facility within the referral network?",
+    items.extend(checkbox_multiselect("Q131_DIFFICULT_REASON",
+                            "131. Why is this difficult to implement?", _cb_codes(Q131_REASONS)))
+    items.append(yes_no("Q132_MALASAKIT_PROVIDED",
+                        "132. Has the facility been providing medical social welfare or assistance (e.g., through Malasakit Centers, MAIFIP)?"))
+    items.extend(checkbox_multiselect("Q133_MALASAKIT_WHY",
+                            "133. Why is the facility providing medical social welfare or assistance through Malasakit Centers or MAIFIP?",
+                            _cb_codes(Q133_MALASAKIT_WHY)))
+    items.extend(checkbox_multiselect("Q134_NO_MALASAKIT_WHY",
+                            "134. Why is the facility not providing medical social welfare or assistance through Malasakit Centers or MAIFIP?",
+                            _cb_codes(Q134_NO_MALASAKIT_WHY)))
+    items.append(yes_no("Q135_LGU_SUPPORT",
+                        "135. Do you receive any support from your LGU to implement UHC reforms?"))
+    items.extend(checkbox_multiselect("Q136_LGU_SUPPORT_FORMS",
+                            "136. What forms of support do you receive?", _cb_codes(Q136_LGU_FORMS)))
+    items.append(yes_no("Q137_LGU_SATISFIED",
+                        "137. Are you satisfied with the support you receive from your LGU?"))
+    items.extend(checkbox_multiselect("Q138_LGU_NOT_SAT_WHY",
+                            "138. Why not?", _cb_codes(Q138_NOT_SAT_WHY)))
+    items.append(select_one("Q139_PHO_PROTOCOL_CLARITY",
+                            "139. How clear are the protocols regarding which decisions require Provincial Health Office (PHO) approval versus those you can decide at the facility level?",
+                            Q139_CLARITY))
+    items.append(alpha("Q140_UNCLEAR_PROTOCOL",
+                       "140. Which specific protocol that you consider as unclear?", length=240))
+    items.append(numeric("Q141_NUM_REFERRED_OUT",
+                         "141. In the past 6 months, how many patients were referred to a higher-level facility within the referral network?",
                          length=6))
-    items.extend(checkbox_multiselect("Q155_SEND_REFERRAL_HOW",
-                            "155. What are the most common ways you send referrals to higher level facilities/specialists?",
-                            _cb_codes(Q155_SEND_REF)))
-    items.extend(checkbox_multiselect("Q156_REFERRAL_FORM_TYPE",
-                            "156. What type of referral form do you use to send to higher level facilities?",
-                            _cb_codes(Q156_FORM_TYPE)))
-    items.append(select_one("Q157_SPECIALIST_NETWORK",
-                            "157. Do you have a network of specialist providers to refer patients to, if needed?",
-                            Q157_NETWORK))
-    items.append(select_one("Q158_REF_PROPORTION",
-                            "158. Considering all patients who come to your facility for the past 6 months, what is the proportion of patients referred by another facility compared to those who self-refer/walk-in?",
-                            Q158_PROPORTION))
-    items.extend(checkbox_multiselect("Q159_RECEIVE_REFERRAL_HOW",
-                            "159. Of those referred, which of the following are the most common ways you receive referrals from lower-level health facilities?",
-                            _cb_codes(Q159_RECEIVE_REF)))
-    # with_other_txt=False: 'Other (specify)' stays a tickable checkbox option (99) with no
+    items.extend(checkbox_multiselect("Q142_SEND_REFERRAL_HOW",
+                            "142. What are the most common ways you send referrals to higher level facilities/specialists?",
+                            _cb_codes(Q142_SEND_REF)))
+    items.extend(checkbox_multiselect("Q143_REFERRAL_FORM_TYPE",
+                            "143. What type of referral form do you use to send to higher level facilities?",
+                            _cb_codes(Q143_FORM_TYPE)))
+    items.append(select_one("Q144_SPECIALIST_NETWORK",
+                            "144. Do you have a network of specialist providers to refer patients to, if needed?",
+                            Q144_NETWORK))
+    items.append(select_one("Q145_REF_PROPORTION",
+                            "145. Considering all patients who come to your facility for the past 6 months, what is the proportion of patients referred by another facility compared to those who self-refer/walk-in?",
+                            Q145_PROPORTION))
+    items.extend(checkbox_multiselect("Q146_RECEIVE_REFERRAL_HOW",
+                            "146. Of those referred, which of the following are the most common ways you receive referrals from lower-level health facilities?",
+                            _cb_codes(Q146_RECEIVE_REF)))
+    # with_other_txt=False: 'Other, (specify)' stays a tickable checkbox option (99) with no
     # companion free-text box — matching the prior select_one (which also captured no specify
     # text). F1's hand-fmf + inject_blocks re-block EXISTING fields only; a new _OTHER_TXT item
     # would orphan (UNREACHABLE) without a hand-added form field. Specify-text capture is a
     # separate small follow-up if ASPSI wants it (#734 comment).
-    items.extend(checkbox_multiselect("Q160_EXTERNAL_SERVICES_GO",
-                            "160. Where do your patients go to get the services not available at this facility?",
-                            Q160_EXTERNAL, with_other_txt=False))
-    items.append(select_one("Q161_REF_SATISFACTION",
-                            "161. How would you rate your satisfaction with your current referral system?",
-                            Q161_SATISFACTION))
-    items.extend(checkbox_multiselect("Q162_NOT_SATISFIED_WHY",
-                            "162. Why are you not satisfied with the current referral system?",
-                            _cb_codes(Q162_NOT_SAT)))
+    items.extend(checkbox_multiselect("Q147_EXTERNAL_SERVICES_GO",
+                            "147. Where do your patients go to get the services not available at this facility?",
+                            Q147_EXTERNAL, with_other_txt=False))
+    items.append(select_one("Q148_REF_SATISFACTION",
+                            "148. How would you rate your satisfaction with your current referral system?",
+                            Q148_SATISFACTION))
+    items.extend(checkbox_multiselect("Q149_NOT_SATISFIED_WHY",
+                            "149. Why are you not satisfied with the current referral system?",
+                            _cb_codes(Q149_NOT_SAT)))
     return record("G_SERVICE_DELIVERY", "G. Service Delivery Process", "8", items)
 
 
 # ============================================================
-# 12. RECORD BUILDERS — Section H. Human Resources (Q163-Q166)
+# 12. RECORD BUILDERS — Section H. Human Resources (Q150-Q153)
 # ============================================================
+# Aug-17: was Q163-Q166. Straight -13 renumber.
 
 def build_section_h():
-    Q163_CHALL = [
+    Q150_CHALL = [
         # #1037: code 3 was a copy-paste DUP of code 2 (should be Retention — live
-        # regression in v1.2.3); "Multi-tasking" was missing entirely; paper order
-        # puts Other before I-don't-know. Codes 1-3 + Other(5) unchanged;
-        # Multi-tasking takes 4 and I-don't-know moves 4 -> 6 (noted in codebook).
+        # regression in v1.2.3); "Multi-tasking" was missing entirely. Codes 1-4 and
+        # Other are unchanged from the corrected list.
+        # Aug-17: the printed list is FIVE options — the "I don't know" that #1126
+        # added from ASPSI's 2026-08-06 list is NOT on the Aug-17 paper, so it is
+        # dropped here. Every surviving option keeps its code (01-04, 99); only the
+        # exclusive 90 disappears with its option. Flagged for ASPSI in the Task 2.2
+        # report since it reverses a request they made 11 days before this paper.
         ("Understaffing",                    "1"),
         ("Skills mismatch / lack of skills", "2"),
         ("Retention / high staff turnover",  "3"),
         ("Multi-tasking",                    "4"),
-        # #1126: ASPSI's list puts "I don't know" BEFORE "Other (specify)".
-        # Only the display ORDER swaps - _cb_codes still maps Other->99 and
-        # I-don't-know->90, so no captured value changes meaning. Bonus: the
-        # emitted value set is now in ASCENDING code order (...90, 99) instead
-        # of 99 then 90 - the non-ascending state behind the #830 data-loss bug.
-        ("I don't know",                     "5"),
-        ("Other (specify)",                  "6"),
+        ("Other (specify)",                  "5"),
     ]
     PD_DOCTORS = [
         ("Clinical audits",                                          "1"),
@@ -1205,40 +1396,40 @@ def build_section_h():
         ("No forms of professional development are provided to our doctors",  "8"),   # #1038 verbatim
         ("Other (specify)",                                          "9"),
     ]
-    # Q166 — PENDING DESIGN: nurse list omits audits per printed text. Default
-    # respects that, but flag retains "Clinical/Surgical audits" toggle.
-    if Q166_NURSES_INCLUDE_AUDITS:
-        PD_NURSES = PD_DOCTORS
-    else:
-        PD_NURSES = [
-            ("Quality assurance meetings",                               "1"),
-            ("Seminars, conferences, workshops",                         "2"),
-            ("Support for independent professional development: scholarships",    "3"),   # #1039 verbatim
-            ("Support for independent professional development: research grants", "4"),   # #1039 verbatim
-            ("LGU/DOH led workshops/initiatives",                        "5"),
-            ("No forms of professional development are provided to our nurses",   "6"),   # #1039 verbatim
-            ("Other (specify)",                                          "7"),
-        ]
+    # Aug-17 Q153 CONFIRMS the long-standing default: the printed nurse list omits
+    # "Clinical audits" and "Surgical audits". The old Q166_NURSES_INCLUDE_AUDITS
+    # toggle is retired with this confirmation.
+    PD_NURSES = [
+        ("Quality assurance meetings",                               "1"),
+        ("Seminars, conferences, workshops",                         "2"),
+        ("Support for independent professional development: scholarships",    "3"),   # #1039 verbatim
+        ("Support for independent professional development: research grants", "4"),   # #1039 verbatim
+        ("LGU/DOH led workshops/initiatives",                        "5"),
+        ("No forms of professional development are provided to our nurses",   "6"),   # #1039 verbatim
+        ("Other (specify)",                                          "7"),
+    ]
 
     items = []
-    items.extend(checkbox_multiselect("Q163_HR_CHALL",
-                            "163. What challenges in human resources do you have?", _cb_codes(Q163_CHALL)))
-    items.append(alpha("Q164_IMPROVEMENT_AREA",
-                       "164. What area do you find the most room for improvement in your staff?", length=240))
-    items.extend(checkbox_multiselect("Q165_PD_DOCTORS",
-                            "165. What forms of professional development do you provide to your doctors?",
+    items.extend(checkbox_multiselect("Q150_HR_CHALL",
+                            "150. What challenges in human resources do you have?", _cb_codes(Q150_CHALL)))
+    items.append(alpha("Q151_IMPROVEMENT_AREA",
+                       "151. What area do you find the most room for improvement in your staff?", length=240))
+    items.extend(checkbox_multiselect("Q152_PD_DOCTORS",
+                            "152. What forms of professional development do you provide to your doctors?",
                             _cb_codes(PD_DOCTORS)))
-    # #388: the internal "[PENDING DESIGN…]" flag was leaking into the on-screen label.
-    # The default (omit audits) already matches the printed questionnaire, so the displayed
-    # text is now clean; the toggle + comment retain the ASPSI-confirm note in source only.
-    items.extend(checkbox_multiselect("Q166_PD_NURSES",
-                            "166. What forms of professional development do you provide to your nurses?",
+    items.extend(checkbox_multiselect("Q153_PD_NURSES",
+                            "153. What forms of professional development do you provide to your nurses?",
                             _cb_codes(PD_NURSES)))
     return record("H_HUMAN_RESOURCES", "H. Human Resources for Health", "9", items)
 
+
 def build_secondary_data_stubs():
     """Bug #2 — secondary data records. Structure is PENDING DESIGN so we emit
-    empty stubs that exist in the dictionary but contain no items yet."""
+    empty stubs that exist in the dictionary but contain no items yet.
+
+    RETAINED for Aug-17 unchanged: the paper moved Secondary Data to an annex, but
+    the consent script still promises it and Carl's 2026-08-18 ruling keeps both in
+    the CAPI (registered `system-item`)."""
     if not SECONDARY_DATA_AS_STUBS:
         raise NotImplementedError("Non-stub secondary data structure not yet decided")
     return [
@@ -1324,14 +1515,11 @@ def main():
     out_path = Path(__file__).parent / "FacilityHeadSurvey.dcf"
     dictionary = build_dictionary()
     dictionary = apply_translations(dictionary, Path(__file__).parent / "translations")
-    out_path.write_text(json.dumps(dictionary, indent=2), encoding="utf-8")
-
-    # Diagnostics
-    record_count = len(dictionary["levels"][0]["records"])
-    item_count = sum(len(r["items"]) for r in dictionary["levels"][0]["records"])
-    print(f"Wrote {out_path}")
-    print(f"  Records: {record_count}")
-    print(f"  Items:   {item_count}")
+    # write_dcf (shared, F3/F4 parity) replaces F1's own raw json.dumps: byte-for-byte
+    # the same output, plus it NAMES any label it has to cut at CSPro's 255-char cap.
+    # F1 previously wrote raw, which is how the #1189 Q88 over-cap label reached the
+    # Designer unnoticed and got silently hard-cut on round-trip.
+    write_dcf(dictionary, out_path)
 
 
 if __name__ == "__main__":

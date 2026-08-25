@@ -27,6 +27,15 @@ _NOTES_PATH = (Path(__file__).parent / "data" / "translations-official" / "notes
 _BY_ENGLISH = None
 
 
+def _canon(s):
+    """Whitespace- AND quote-normalized key. generate_qsf authors curly quotes
+    (facility’s, “I don't know”) while the extracted notes store straight ones -
+    an exact-string lookup missed on that alone and silently fell back to English
+    (#1235/#1256, the #1213 orphan class in the notes layer)."""
+    s = s.replace("’", "'").replace("‘", "'").replace("“", '"').replace("”", '"')
+    return " ".join(s.split())
+
+
 def _load():
     """-> {english_note: {locale: translation}}, keyed like apply_translations."""
     global _BY_ENGLISH
@@ -42,7 +51,7 @@ def _load():
             en = english.get(key)
             if not en:
                 continue
-            slot = _BY_ENGLISH.setdefault(" ".join(en.split()), {})
+            slot = _BY_ENGLISH.setdefault(_canon(en), {})
             for lg, txt in per_lang.items():
                 # First writer wins: the same note recurs across instruments and the
                 # values agree; a later blank must never clear an earlier good one.
@@ -58,7 +67,7 @@ def translate_note(english, lang):
     """
     if not english or lang in (None, "", "EN"):
         return english
-    return _load().get(" ".join(english.split()), {}).get(lang, english)
+    return _load().get(_canon(english), {}).get(lang, english)
 
 
 def coverage():

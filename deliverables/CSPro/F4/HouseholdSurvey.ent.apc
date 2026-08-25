@@ -487,7 +487,8 @@ onfocus
   postponed / stopped visit reaches the closing form without walking every required
   question (R4 #515). CASE_DISPOSITION (off-form) is the completeness sentinel the
   Supervisor App + CSWeb exports read (R4 #561): 0 In Progress, 1 Completed, 2 Partial.
-  F4 result codes: 1 Completed, 2 Postponed, 3 Incomplete, 4 Withdraw. }
+  F4 result codes: 1 Completed, 2 Postponed, 3 Incomplete, 4 Withdraw, plus the
+  logic-only 5 Replaced (assigned below, never enumerator-picked -- #1301). }
 PROC BREAKOFF
 preproc
   { The guard MUST list every valid code — anything outside it is silently reset to
@@ -510,6 +511,17 @@ postproc
   endif;
 
 PROC ENUM_RESULT_FINAL_VISIT
+preproc
+  { #1301 (UAT R7, 2026-08-20): the enumerator picklist mirrors the paper's four
+    codes (ENUM_RESULT_FINAL_VISIT_PICK_VS1); the full set incl. 5 Replaced is active
+    only when the BREAKOFF flow assigned a replacement (or a stale Replaced value
+    persists after back-nav to BREAKOFF). Preproc re-fires on re-entry, so the swap
+    holds in both directions -- the F1 Q108 setvalueset pattern. }
+  if BREAKOFF in 5, 6, 7 or ENUM_RESULT_FINAL_VISIT = 5 then
+    setvalueset(ENUM_RESULT_FINAL_VISIT, ENUM_RESULT_FINAL_VISIT_VS1);
+  else
+    setvalueset(ENUM_RESULT_FINAL_VISIT, ENUM_RESULT_FINAL_VISIT_PICK_VS1);
+  endif;
 postproc
   { #561: classify from the final Result-of-Visit. F4 Completed = code 1 only. }
   if ENUM_RESULT_FINAL_VISIT = 1 then
@@ -1256,13 +1268,146 @@ preproc
   srv_res = htmldialog("review.html", inputData := srv_j);
 
 
-{ ---- Bill-recall cap (spec 4.8): no-receipt amount cannot exceed total bill ---- }
-PROC Q141_1_NO_RECEIPT_AMT_PHP
+{ ---- Bill-recall cap (spec 4.8): no-receipt amount cannot exceed total bill ----
+  1176-aug17: field names updated for the Q139/Q143 renumber (Q141_1_NO_RECEIPT_
+  AMT_PHP -> Q143_NO_RECEIPT_AMT_PHP; Q139_FINAL_AMOUNT_PHP -> Q139_TOTAL_BILL_PHP,
+  content also changed from "cash paid at discharge" to "total hospital bill" --
+  same cap relationship still holds: a professional fee charged with no receipt
+  can't exceed the bill it was part of). ---- }
+PROC Q143_NO_RECEIPT_AMT_PHP
 postproc
-  if Q141_1_NO_RECEIPT_AMT_PHP > Q139_FINAL_AMOUNT_PHP then
+  if Q143_NO_RECEIPT_AMT_PHP > Q139_TOTAL_BILL_PHP then
     errmsg(1011,
-           Q141_1_NO_RECEIPT_AMT_PHP, Q139_FINAL_AMOUNT_PHP);
+           Q143_NO_RECEIPT_AMT_PHP, Q139_TOTAL_BILL_PHP);
     reenter;
+  endif;
+
+
+{ ---- 1176-aug17: Q142 16-source settlement matrix -- gate each
+  source's Amount (and specify text, sources 6/16) on its own Yes/No
+  tick ---- }
+PROC Q142_GOV_DONATION_AMT_PHP
+preproc
+  if Q142_GOV_DONATION_YN <> 1 then
+    Q142_GOV_DONATION_AMT_PHP = notappl;
+    noinput;
+  endif;
+
+PROC Q142_GSIS_AMT_PHP
+preproc
+  if Q142_GSIS_YN <> 1 then
+    Q142_GSIS_AMT_PHP = notappl;
+    noinput;
+  endif;
+
+PROC Q142_HMO_AMT_PHP
+preproc
+  if Q142_HMO_YN <> 1 then
+    Q142_HMO_AMT_PHP = notappl;
+    noinput;
+  endif;
+
+PROC Q142_LOAN_AMT_PHP
+preproc
+  if Q142_LOAN_YN <> 1 then
+    Q142_LOAN_AMT_PHP = notappl;
+    noinput;
+  endif;
+
+PROC Q142_MAIFIP_AMT_PHP
+preproc
+  if Q142_MAIFIP_YN <> 1 then
+    Q142_MAIFIP_AMT_PHP = notappl;
+    noinput;
+  endif;
+
+PROC Q142_MALASAKIT_AMT_PHP
+preproc
+  if Q142_MALASAKIT_YN <> 1 then
+    Q142_MALASAKIT_AMT_PHP = notappl;
+    noinput;
+  endif;
+
+PROC Q142_OTHER_AMT_PHP
+preproc
+  if Q142_OTHER_YN <> 1 then
+    Q142_OTHER_AMT_PHP = notappl;
+    noinput;
+  endif;
+
+PROC Q142_OTHER_TXT
+preproc
+  if Q142_OTHER_YN <> 1 then
+    Q142_OTHER_TXT = "";
+    noinput;
+  endif;
+postproc
+  if Q142_OTHER_YN = 1 and length(strip(Q142_OTHER_TXT)) = 0 then
+    errmsg(1193);
+    reenter;
+  endif;
+
+PROC Q142_PAID_OTHER_AMT_PHP
+preproc
+  if Q142_PAID_OTHER_YN <> 1 then
+    Q142_PAID_OTHER_AMT_PHP = notappl;
+    noinput;
+  endif;
+
+PROC Q142_PHILHEALTH_NBB_AMT_PHP
+preproc
+  if Q142_PHILHEALTH_NBB_YN <> 1 then
+    Q142_PHILHEALTH_NBB_AMT_PHP = notappl;
+    noinput;
+  endif;
+
+PROC Q142_PRIVATE_INS_AMT_PHP
+preproc
+  if Q142_PRIVATE_INS_YN <> 1 then
+    Q142_PRIVATE_INS_AMT_PHP = notappl;
+    noinput;
+  endif;
+
+PROC Q142_PRIV_DONATION_AMT_PHP
+preproc
+  if Q142_PRIV_DONATION_YN <> 1 then
+    Q142_PRIV_DONATION_AMT_PHP = notappl;
+    noinput;
+  endif;
+
+PROC Q142_QFS_AMT_PHP
+preproc
+  if Q142_QFS_YN <> 1 then
+    Q142_QFS_AMT_PHP = notappl;
+    noinput;
+  endif;
+
+PROC Q142_SALARY_AMT_PHP
+preproc
+  if Q142_SALARY_YN <> 1 then
+    Q142_SALARY_AMT_PHP = notappl;
+    noinput;
+  endif;
+
+PROC Q142_SALE_ASSETS_AMT_PHP
+preproc
+  if Q142_SALE_ASSETS_YN <> 1 then
+    Q142_SALE_ASSETS_AMT_PHP = notappl;
+    noinput;
+  endif;
+
+PROC Q142_SAVINGS_AMT_PHP
+preproc
+  if Q142_SAVINGS_YN <> 1 then
+    Q142_SAVINGS_AMT_PHP = notappl;
+    noinput;
+  endif;
+
+PROC Q142_SSS_AMT_PHP
+preproc
+  if Q142_SSS_YN <> 1 then
+    Q142_SSS_AMT_PHP = notappl;
+    noinput;
   endif;
 
 
@@ -1345,12 +1490,17 @@ postproc
 { ---- Section G: branded/generic multi-branch (spec 2 Q76) ---- }
 PROC Q76_BRAND_OR_GEN
 postproc
-  { Q76 codes: 1 Branded / 2 Generic / 3 Both / 9 Not applicable.
-    (#646: 'Don't know the difference' code 4 removed — it contradicted Q75=Yes.
-    Its exit path is now carried solely by code 9.)
+  { Q76 codes: 1 Branded / 2 Generic / 3 Both / 4 Don't know the difference / 5 Not
+    applicable. (1176-aug17: #646 had removed 'Don't know the difference' as
+    contradicting Q75=Yes; the Aug-17 paper reprints it as its own option with its
+    own '<Proceed to Q79>' skip target, distinct from 'Not applicable' -- ASPSI's
+    resolution of the #646 blocked item. Both 4 and 5 now exit Section G, matching
+    the paper's two explicit skip notes. 'Not applicable' recoded 9 -> 5 (3.0.0
+    data-shape break, see generate_dcf.py Q76_BRAND_OR_GEN comment).
     Q77 (why-generic) asked for Generic+Both; Q78 (why-branded) for Branded+Both. (#536/#540) }
   if Q76_BRAND_OR_GEN = 1 then  skip to Q78_WHY_BRANDED; endif;  { Branded only -> why-branded (skip Q77) }
-  if Q76_BRAND_OR_GEN = 9 then  skip to Q79_REG_SOURCE;  endif;  { Not applicable (9) -> exit Section G }
+  if Q76_BRAND_OR_GEN = 4 then  skip to Q79_REG_SOURCE;  endif;  { Don't know the difference (4) -> exit Section G }
+  if Q76_BRAND_OR_GEN = 5 then  skip to Q79_REG_SOURCE;  endif;  { Not applicable (5) -> exit Section G }
   { Generic (2) or Both (3) fall through to Q77 why-generic }
 
 { Q78_WHY_BRANDED is now a Check Box base (#578) — its branded-only preproc gate
@@ -1858,69 +2008,40 @@ postproc
     reenter;
   endif;
 
-PROC Q141_BILL_ITEMS
+PROC Q140_BILL_ITEMS
 postproc
-  if length(strip(Q141_BILL_ITEMS)) = 0 then
-    errmsg(1050);
+  if length(strip(Q140_BILL_ITEMS)) = 0 then
+    errmsg(1194);
+    reenter;
+  endif;
+  if pos("07", Q140_BILL_ITEMS) > 0 and length(strip(Q140_BILL_ITEMS)) > 2 then
+    errmsg(1196);
     reenter;
   endif;
 
-PROC Q141_BILL_ITEMS_OTHER_TXT
+PROC Q140_BILL_ITEMS_OTHER_TXT
 preproc
   numeric otN; numeric otK; numeric otP; numeric otHit;
   otHit = 0;
-  otN = length(strip(Q141_BILL_ITEMS)) / 2;
+  otN = length(strip(Q140_BILL_ITEMS)) / 2;
   do otK = 1 while otK <= otN
     otP = (otK - 1) * 2 + 1;
-    if tonumber(Q141_BILL_ITEMS[otP:2]) = 7 then otHit = 1; endif;
+    if tonumber(Q140_BILL_ITEMS[otP:2]) = 99 then otHit = 1; endif;
   enddo;
   if otHit = 0 then
-    Q141_BILL_ITEMS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    Q140_BILL_ITEMS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
     noinput;
   endif;
 postproc
   numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
   otHit2 = 0;
-  otN2 = length(strip(Q141_BILL_ITEMS)) / 2;
+  otN2 = length(strip(Q140_BILL_ITEMS)) / 2;
   do otK2 = 1 while otK2 <= otN2
     otP2 = (otK2 - 1) * 2 + 1;
-    if tonumber(Q141_BILL_ITEMS[otP2:2]) = 7 then otHit2 = 1; endif;
+    if tonumber(Q140_BILL_ITEMS[otP2:2]) = 99 then otHit2 = 1; endif;
   enddo;
-  if otHit2 = 1 and length(strip(Q141_BILL_ITEMS_OTHER_TXT)) = 0 then
-    errmsg(1186);
-    reenter;
-  endif;
-
-PROC Q143_HOW_PAID
-postproc
-  if length(strip(Q143_HOW_PAID)) = 0 then
-    errmsg(1051);
-    reenter;
-  endif;
-
-PROC Q143_HOW_PAID_OTHER_TXT
-preproc
-  numeric otN; numeric otK; numeric otP; numeric otHit;
-  otHit = 0;
-  otN = length(strip(Q143_HOW_PAID)) / 2;
-  do otK = 1 while otK <= otN
-    otP = (otK - 1) * 2 + 1;
-    if tonumber(Q143_HOW_PAID[otP:2]) = 99 then otHit = 1; endif;
-  enddo;
-  if otHit = 0 then
-    Q143_HOW_PAID_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
-    noinput;
-  endif;
-postproc
-  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
-  otHit2 = 0;
-  otN2 = length(strip(Q143_HOW_PAID)) / 2;
-  do otK2 = 1 while otK2 <= otN2
-    otP2 = (otK2 - 1) * 2 + 1;
-    if tonumber(Q143_HOW_PAID[otP2:2]) = 99 then otHit2 = 1; endif;
-  enddo;
-  if otHit2 = 1 and length(strip(Q143_HOW_PAID_OTHER_TXT)) = 0 then
-    errmsg(1052);
+  if otHit2 = 1 and length(strip(Q140_BILL_ITEMS_OTHER_TXT)) = 0 then
+    errmsg(1195);
     reenter;
   endif;
 
@@ -2847,24 +2968,31 @@ postproc
 { ---- Income amount must fall within reported bracket (spec 3.2, HARD) ---- }
 PROC Q18_INCOME_BRACKET
 postproc
+  { #1295 (UAT R7, 2026-08-20, supersedes #1176): paper's 7 PSA income-class bands
+    replace the 11-band 50k scheme; DK is now code 8 (was 90), RF is code 9 (was 95).
+    Boundaries verbatim from normalized/F4-paper.csv qnum=18 -- same shape as F3's R16
+    PROC. }
+  { DK (8) -- respondent can't even estimate household income. No bracket amount is
+    required; bypass the bracket<->amount reconciliation. }
+  if Q18_INCOME_BRACKET = 8 then
+    exit;
+  endif;
+  { bracket must contain Q18_INCOME_AMOUNT -- 7 PSA bands, boundaries verbatim from
+    the Aug-17 paper (12,030 / 24,060 / 48,120 / 84,210 / 144,360 / 240,600). RF (9)
+    falls through: with a real amount entered the bracket is derivable, so RF is a
+    HARD inconsistency (#813 lineage); with amount -98/-99 it is ok'd above (#793). }
   numeric a = Q18_INCOME_AMOUNT;
   numeric ok = 0;
   if a = -98 or a = -99 then ok = 1; endif;   { #793: -98 don't-know / -99 refused -> no bracket cross-check }
-  if Q18_INCOME_BRACKET = 1 and a < 40000 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 2 and a >= 40000 and a <= 59999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 3 and a >= 60000 and a <= 99999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 4 and a >= 100000 and a <= 249999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 5 and a >= 250000 and a <= 499999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 6 and a >= 500000 then ok = 1; endif;
-  { #813: bracket 7 (Refuse) is only valid when the amount itself was refused/unknown
-    (-98/-99, already ok'd above per #793). With a real amount entered the bracket is
-    derivable, so refusing it is a HARD inconsistency. }
+  if Q18_INCOME_BRACKET = 1 and a < 12030 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 2 and a >= 12030  and a <= 24060  then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 3 and a >= 24061  and a <= 48120  then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 4 and a >= 48121  and a <= 84210  then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 5 and a >= 84211  and a <= 144360 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 6 and a >= 144361 and a <= 240600 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 7 and a > 240600 then ok = 1; endif;
   if ok = 0 then
-    if Q18_INCOME_BRACKET = 7 then
-      errmsg(1128, a);
-    else
-      errmsg(1129, a);
-    endif;
+    errmsg(1197, a);
     reenter;
   endif;
 
@@ -3032,16 +3160,10 @@ postproc
     skip to Q138_MOST_EXPENSIVE;
   endif;
 
-PROC Q140_RECALL_BREAKDOWN
+PROC Q141_RECALL_PAYMENT
 postproc
-  if Q140_RECALL_BREAKDOWN = 2 then
-    skip to Q142_RECALL_PAYMENT;
-  endif;
-
-PROC Q142_RECALL_PAYMENT
-postproc
-  if Q142_RECALL_PAYMENT = 2 then
-    skip to N_FOOD_ITEM(1);
+  if Q141_RECALL_PAYMENT = 2 then
+    skip to Q143_NO_RECEIPT_AMT_PHP;
   endif;
 
 PROC Q195_INCOME_PCT

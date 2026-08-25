@@ -77,3 +77,121 @@ The extraction is a sound **reference**. It is *not* yet safe to apply wholesale
 Because of 1–4, treat this as the reference to **check against and copy from**, with a
 diff reviewed before anything reaches a deployed instrument. A bulk apply on a plausible
 heuristic is exactly what corrupted 25 locale values on 2026-08-12.
+
+---
+
+## Applying this reference to the tool (added 2026-08-14)
+
+The warning above — *"treat this as the reference to check against and copy from, with a
+diff reviewed before anything reaches a deployed instrument"* — was tested and proved right.
+A bulk pass proposed 1,680 repairs; an adversarial audit (13 reviewers) rejected **850 of
+the 1,245 question stems, 68%**. The failures were not stylistic:
+
+| class | what went wrong |
+|---|---|
+| sub-field targets | roster cells, amount boxes, Month/Year/Hours/Minutes, auto-computed totals and Other-(Specify) text boxes all inherit a label starting with the parent question's number, so they were captioned with the whole question |
+| merged questions | one proposal carrying two questions, a section heading, or roster column headers |
+| shared text | one text written to several genuinely different sibling questions (worst: the F3 115.1/115.2 blocks) |
+| surviving directives | an enumerator directive left in the stem, which now double-prints against the notes layer |
+| English debris | the tail of the English question left in front of the translation |
+| destructive values | `Medical Officer` → `/`; an option → `(`; a trim that cut the `DO` of `DOH` |
+
+### What changed
+
+**`stem_validator.py`** — a structural gate every proposal must pass. The posture is
+**precision over recall**: a translation ships only if it can be *proven* clean, and
+anything else is left on English fallback, which is the documented behaviour for a missing
+translation and is always safe. A smaller provably-correct set beats a larger plausible one.
+
+`fix_translations.py` now runs every stem through `validate()` and every option through
+`validate_option()`, drops any text claimed by two questions, and delegates directive
+detection to the validator.
+
+**One real bug was fixed in directive detection.** The old rule required a caps run to
+*begin* with a directive word, so an acronym sitting in front hid the directive completely:
+
+```
+"... ng zero balance billing (ZBB) READ OPTIONS OUT LOUD, SELECT ALL THAT APPLY"
+                              ^ run starts here, "(ZBB)" is not an opener -> missed
+```
+
+The rule now scans for the opener directly and requires three consecutive caps words *from*
+it — which still refuses to fire on an acronym list (`MAIFIP, DSWD, PCSO`), the false
+positive that destroys real content. Fixing this also surfaced doubled directives that had
+been invisible.
+
+### Effect
+
+| | proposed | after validation |
+|---|---|---|
+| stems | 1,245 | **300** |
+| options | 67 | **6** |
+| trims | 368 | **5** (the rest already shipped) |
+
+A re-audit of the validated set put the stem reject rate at roughly **4%**, down from 68%.
+
+### The recall that is deliberately given up
+
+Of ~2,160 skipped stems, **1,852 are sub-fields** — never legitimate targets, so not a loss
+at all. The genuine gaps are ~125 questions with no cleared translation (ASPSI content, not
+recoverable here), plus smaller buckets rejected for binding, English debris or ambiguity.
+Those stay English on purpose.
+
+### Still true
+
+Everything in "Known limitations" above still applies to the *raw* extraction. The validator
+does not clean the PDFs; it refuses what they got wrong. `option_confidence: "positional"`
+is still never applied, and an empty entry still means "could not split safely", not "no
+translation exists".
+
+---
+
+## Cleaning what was already stored (#1279, 2026-08-15)
+
+The validator above stops bad text being **written**. It never looked at what was **already
+in the maps**, so defects that predate it kept reaching respondents. Byte-checking the
+deployed builds found them:
+
+```
+F3 Q147 [CEB]  "PLEASE LIST DOWN ALL MEDICINES THAT YOU TOOK FOR THE HEALTH CONDITION"
+F4 Q36  [HIL]  "... ang klase sang disabilidad? 0-No 1-Yes 0Indi 1-Oo"
+F3 Q30  [CEB]  "DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. Ang pasyente ba
+                miyembro sa Indigenous People (IP) community ..."
+F1 Q54  [ILO]  "... ti kangrunaan a kangrunaan a mangipapaay ..."   ("the main main provider")
+```
+
+`clean_existing.py` removes those spans and keeps the surviving translation. A key is
+removed only when nothing survives — and **removal, not an empty string**, is what makes
+`apply_translations` fall back to English; an empty value renders blank.
+
+### Four mistakes worth remembering
+
+The first version proposed 94 trims and **163 key removals**. Almost all of those removals
+were wrong, for reasons that are easy to repeat:
+
+1. **A directive usually LEADS the value.** Cutting at the first marker and keeping the head
+   discarded the whole translation. `DIRECTIVE_PHRASE` also matches only the first words, so
+   cutting at `READ OPTIONS` left `OUT LOUD. SELECT ALL THAT APPLY. Ano sa mga masunod ...`
+   behind. Fix: remove **every** marker span and keep the residue.
+2. **Brackets are not always notes.** Filipino wraps ordinary translations in `[...]` and
+   Ilocano in `(...)` — an editorial convention this README already documented. Treating
+   every bracket as a routing note deleted correct labels like
+   `[Inirekomenda ng kaibigan/pamilya]` outright. A bracket is a note only when it *reads*
+   like one; otherwise it is unwrapped.
+3. **Option labels are not questions.** A minimum-length rule and a "must end in sentence
+   punctuation" rule are right for a question stem and wrong for a value-set label, which is
+   often one or two words with no punctuation. Applying both to everything threw away 83
+   good Filipino option labels. The rules are now scoped by key type.
+4. **An ALL-CAPS directive does not always run to the end of the string.** Assuming it did
+   was only true for trailing directives.
+
+### The audit, and what it gave back
+
+10 reviewers audited the 261-change diff. Their most valuable output was not the rejections
+but the **recoveries**: for most drops they judged needless, a reviewer supplied the exact
+translation that should have been kept.
+
+That text is **not taken on faith**. `apply_1279.py` accepts a reviewer's replacement only
+if it is a pure **deletion** of the stored value — every word present, in the same order.
+A paraphrase, a spelling correction or an invented phrase cannot pass, which keeps the same
+guarantee the rest of the pipeline gives: nothing is composed, only removed.

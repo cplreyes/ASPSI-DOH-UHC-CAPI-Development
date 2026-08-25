@@ -12,8 +12,6 @@ Language = EN
 1008 Q45 = Senior citizen but patient age (%d) is under 60 — confirm.
 1009 Q147: list the medications taken (type 'None' if the patient takes none) — required.
 1010 Q156: list the medicines obtained from GAMOT — required when Q155 = Yes.
-1011 Tick at least one medical condition (or 'No condition - Regular check-up only').
-1013 "'Other (specify)' was ticked for Q148 — please specify."
 1014 Select at least one option for Q100 before continuing.
 1016 "'Other (specify)' was ticked for Q100 - please specify."
 1017 Select at least one option for Q101 before continuing.
@@ -159,7 +157,6 @@ Language = EN
 1192 "'Other' was selected for Q71_NEAREST_TYPE but no text was entered. Please specify."
 1193 "'Other' was selected for Q83_VISIT_REASON but no text was entered. Please specify."
 1194 "'Other' was selected for Q84_SERVICE_TYPE but no text was entered. Please specify."
-1195 "'Other' was selected for Q88_WHY_VISIT but no text was entered. Please specify."
 1196 "'Other' was selected for Q9_GROUP but no text was entered. Please specify."
 1197 "'Q1141_1' was selected — enter its amount (must be greater than 0)."
 1198 "'Q1141_2' was selected — enter its amount (must be greater than 0)."
@@ -199,8 +196,6 @@ Language = EN
 1232 Patient would recommend (Q143=Yes) yet rated overall quality dissatisfied (Q144) — confirm.
 1233 Patient would NOT recommend (Q143=No) yet rated overall quality satisfied (Q144) — confirm.
 1234 Q16 = unemployed but Q17 reports a paid-work income source — confirm.
-1235 Q29 = socio-economic Class A/B but income is in the lowest bracket — confirm.
-1236 Q29 = socio-economic Class D/E but income is in a high bracket — confirm.
 1238 Q18_INCOME_AMOUNT must be between 0 and 99999999 (or -98 don't-know / -99 refused).
 1239 Q100: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
 1240 Q103: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.
@@ -238,3 +233,7 @@ Language = EN
 1276 97.1 'None' must be the only choice — untick it or the other items before continuing.
 1277 97.2 Tick at least one expense item, or tick 'None' if there were no out-of-bill expenses.
 1278 97.2 'None' must be the only choice — untick it or the other expense items before continuing.
+1279 Tick at least one medical condition.
+1280 "'Other (Specify)' was ticked for Q148 — please specify."
+1281 Select at least one option for Q88 before continuing.
+1282 "'Other (specify)' was ticked for Q88 - please specify."

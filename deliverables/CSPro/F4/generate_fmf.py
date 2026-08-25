@@ -107,7 +107,7 @@ _FORM_PLAN_STATIC = [
       ("HOUSEHOLD_GEO_ID",
        {"exclude": ["REGION", "PROVINCE_HUC", "CITY_MUNICIPALITY"] + HH_GPS_ITEMS})]),
     ("B. Respondent Profile",
-     [("B_RESPONDENT_PROFILE", None)]),
+     [("B_RESPONDENT_PROFILE", {"exclude": ["Q29_SOCIOECONOMIC_CLASS"]})]),   # 1296: retired off-form (dcf item retained)
     ("C. Household Roster - REPEATING (one member per row)",
      [("C_HOUSEHOLD_ROSTER", None)]),
     ("C. HH Private Insurance Gate (Q47)",
@@ -195,7 +195,14 @@ _FORM_PLAN_STATIC = [
 
 # Binary/computed items deliberately kept OFF every form (so the orphan check below
 # does not flag them). VERIFICATION_PHOTO_IMAGE holds the synced photo bytes.
-_OFF_FORM_ITEMS = {"VERIFICATION_PHOTO_IMAGE", "CASE_DISPOSITION"}  # #561: off-form completeness sentinel
+_OFF_FORM_ITEMS = {
+    "VERIFICATION_PHOTO_IMAGE", "CASE_DISPOSITION",  # #561: off-form completeness sentinel
+    # #1296 (UAT R7, 2026-08-20): socioeconomic-class question retired from the tool
+    # (no Aug-17 paper counterpart; ASPSI confirmed retire via the ticket). The dcf
+    # item is RETAINED off-form -- deleting it would shift every later Section-B
+    # column mid-round; full removal rides the next major/data-shape break.
+    "Q29_SOCIOECONOMIC_CLASS",
+}
 
 # Marker entry in _FORM_PLAN_STATIC that build_form_plan expands into the column-wise
 # Section C forms (kept as a normal record entry so the rest of the plan reads naturally).
@@ -333,7 +340,6 @@ SHORT_FORM_LABELS = {
     "Q18_INCOME_BRACKET":      "Income category",
     "Q67_TRAVEL_HH":           "Number of Hour(s)",     # F3 Q69/Q72/Q150 parity
     "Q67_TRAVEL_MM":           "Number of Minute(s)",
-    "Q29_SOCIOECONOMIC_CLASS": "Socioeconomic class",
     "AREA_HAS_BUCAS":          "Area has a BUCAS center",
     "AREA_HAS_GAMOT":          "Area has GAMOT",
 }

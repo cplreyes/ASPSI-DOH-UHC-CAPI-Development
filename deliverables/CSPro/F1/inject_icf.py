@@ -1,5 +1,22 @@
 #!/usr/bin/env python3
-r"""Inject the Informed Consent read-aloud form into F1's static FacilityHeadSurvey.fmf.
+r"""
+RETIRED 2026-08-19 - superseded by generate_fmf.py; kept for history.
+========================================================================
+F1's .fmf was hand-maintained, and this script was one of eleven idempotent post-processors
+that patched it by locating fields by NAME and geometry. The Aug-17 instrument renumber
+(Task 2.2) renamed ~112 of 320 dictionary items, invalidating those anchors, so F1 adopted
+the F3/F4 generator (Task 2.3). Do NOT run this file; do not delete it either - the WHY
+recorded below is the reason each invariant is worth preserving.
+
+WHERE THIS SCRIPT'S INVARIANT LIVES NOW
+---------------------------------------
+FORM_PLAN's first entry ('Introduction and Informed Consent'), which puts the two
+consent screens at ordinal 2 - immediately after the case key, ahead of the geo
+form - exactly as this script's INSERT_AT=1 did. The deliberate ICF_BLK_* block
+naming is in derive_block_plan(); the whole-file Form= renumber is unnecessary
+because generate_fmf derives every ordinal from position.
+========================================================================
+Inject the Informed Consent read-aloud form into F1's static FacilityHeadSurvey.fmf.
 
 WHY THIS EXISTS
 ---------------
@@ -14,10 +31,22 @@ WHAT IT DOES
 ------------
 1. Removes any previously injected ICF [Form] and [Group] (so re-running is safe and
    always rebuilds from the current dictionary rather than layering edits).
-2. Inserts the ICF [Form] as the THIRD form — after FORM000 (case key) and FORM001
-   (facility + geographic ID), before "A. Facility Head Profile". This matches F3/F4,
-   where A_INFORMED_CONSENT sits after the geo form and before the first content
-   section.
+2. Inserts the ICF [Form] as the SECOND form — immediately after FORM000 (the case
+   key / QUESTIONNAIRE_NUMBER), before FORM001 (facility + geographic ID). Aly asked
+   on 2026-08-14 for the ICF to sit directly after the Questionnaire Number, and
+   F3/F4 were moved to the same slot in the same pass (their generate_fmf.py FORM_PLAN
+   now lists A. Informed Consent first, and automation/reorder_icf_form.py moves it in
+   their live .fmf). This SUPERSEDES Shan's 2026-08-13 "Suggested Layout (CSEntry)",
+   which put consent after the geo form — both are ASPSI, so confirm with them before
+   moving it again.
+
+   KNOWN AND ACCEPTED CONSEQUENCE: FORM001 carries BREAKOFF, and PROC BREAKOFF does
+   `skip to ENUM_RESULT_FINAL_VISIT` for codes 5/6/7 (refused at door / not found /
+   ineligible). With consent now AHEAD of that control, the enumerator walks both
+   read-aloud consent screens before they can close out a case that never started.
+   Carl was shown a rendered comparison of the alternatives
+   (deliverables/CSPro/decisions/2026-08-14-icf-placement.png) and chose this over the
+   variant that preserved the break-off escape. Do not revert without asking ASPSI.
 3. Inserts the matching [Group] at the same ordinal position.
 4. Renumbers EVERY `Form=` in the file. A [Group]'s (and its [Field]s') `Form=N` is the
    1-BASED ORDINAL of the form section, not an id — inserting a form mid-list silently
@@ -56,7 +85,7 @@ GROUP_NAME = "A_INFORMED_CONSENT_FORM"
 FORM_NAME = "FORM_ICF"
 FORM_LABEL = "Introduction and Informed Consent"
 ICF_FIELDS = ("ICF_PART1", "ICF_PART2")
-INSERT_AT = 2          # 0-based: third form, after the case-key and geo forms
+INSERT_AT = 1          # 0-based: second form, immediately after the case key / QN
 
 # On-form field captions. The read-aloud script itself is question text (.qsf), not a
 # form caption — these just name the screen. ASCII only: the .fmf is UTF-8 with a BOM
@@ -158,4 +187,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(
+        "RETIRED 2026-08-19 - superseded by F1/generate_fmf.py; this script must NOT be run.\n"
+        "It anchors on pre-Aug-17 field names and geometry, so against the current instrument\n"
+        "it would either abort or silently mis-place fields in a file that is now rebuilt from\n"
+        "the dictionary on every build. See the module docstring for the invariant it used to\n"
+        "enforce and where that invariant lives today.")

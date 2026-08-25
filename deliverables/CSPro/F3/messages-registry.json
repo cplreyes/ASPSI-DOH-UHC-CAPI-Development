@@ -1,6 +1,6 @@
 {
   "_note": "Machine-managed by cspro_helpers.numberize_errmsgs() — do not hand-edit. Maps each errmsg text to its permanent message number; numbers are never reused or renumbered.",
-  "next": 1275,
+  "next": 1283,
   "messages": {
     "PSGC region lookup failed — verify psgc_region.dat is deployed": 1001,
     "GPS hardware unavailable — check tablet location permission.": 1002,
@@ -270,11 +270,19 @@
     "Q93: an exclusive option (None / I don't know) must be the only choice - untick it or the other options before continuing.": 1266,
     "107. 'Don't know' must be the only payment source — untick it or the other sources before continuing.": 1267,
     "Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.": 1268,
-    "No GPS fix after %d s. Move outdoors or beside a window, then re-enter this field to retry — each retry searches longer. You may also leave GPS blank and finish the case.": 1269,
-    "97.1 Tick at least one item included in the bill, or tick 'None' if nothing else was billed.": 1270,
-    "97.1 'None' must be the only choice — untick it or the other items before continuing.": 1271,
-    "97.2 Tick at least one expense item, or tick 'None' if there were no out-of-bill expenses.": 1272,
-    "97.2 'None' must be the only choice — untick it or the other expense items before continuing.": 1273,
-    "109. 'Don't know' must be the only payment source — untick it or the other sources before continuing.": 1274
+    "109. 'Don't know' must be the only payment source — untick it or the other sources before continuing.": 1269,
+    "No GPS fix after %d s. Move outdoors or beside a window, then re-enter this field to retry — each retry searches longer. You may also leave GPS blank and finish the case.": 1270,
+    "97.1 Tick at least one item included in the bill, or tick 'None of the above' if nothing else was billed.": 1271,
+    "97.1 'None of the above' must be the only choice — untick it or the other items before continuing.": 1272,
+    "97.2 Tick at least one expense item, or tick 'None of the above' if there were no out-of-bill expenses.": 1273,
+    "97.2 'None of the above' must be the only choice — untick it or the other expense items before continuing.": 1274,
+    "97.1 Tick at least one item included in the bill, or tick 'None' if nothing else was billed.": 1275,
+    "97.1 'None' must be the only choice — untick it or the other items before continuing.": 1276,
+    "97.2 Tick at least one expense item, or tick 'None' if there were no out-of-bill expenses.": 1277,
+    "97.2 'None' must be the only choice — untick it or the other expense items before continuing.": 1278,
+    "Tick at least one medical condition.": 1279,
+    "'Other (Specify)' was ticked for Q148 — please specify.": 1280,
+    "Select at least one option for Q88 before continuing.": 1281,
+    "'Other (specify)' was ticked for Q88 - please specify.": 1282
   }
 }

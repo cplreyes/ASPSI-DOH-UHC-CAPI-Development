@@ -1,5 +1,23 @@
 #!/usr/bin/env python3
-r"""F1 form tooling: convert select-all option-field groups -> single Check Box
+r"""
+RETIRED 2026-08-19 - superseded by generate_fmf.py; kept for history.
+========================================================================
+F1's .fmf was hand-maintained, and this script was one of eleven idempotent post-processors
+that patched it by locating fields by NAME and geometry. The Aug-17 instrument renumber
+(Task 2.2) renamed ~112 of 320 dictionary items, invalidating those anchors, so F1 adopted
+the F3/F4 generator (Task 2.3). Do NOT run this file; do not delete it either - the WHY
+recorded below is the reason each invariant is worth preserving.
+
+WHERE THIS SCRIPT'S INVARIANT LIVES NOW
+---------------------------------------
+Nothing left to convert. This script rewrote a stale form whose <BASE>_O01..On option
+fields no longer matched a dictionary that had collapsed them into one
+checkbox_multiselect item. generate_fmf places whatever the dictionary holds, so the
+form and the dictionary cannot drift apart; _CHECKBOX_FIELDS (derived) gives each
+base DataCaptureType=CheckBox, and the _OTHER_TXT companions this script had to
+preserve or synthesize are ordinary generated fields.
+========================================================================
+F1 form tooling: convert select-all option-field groups -> single Check Box
 fields IN the hand-maintained FacilityHeadSurvey.fmf.
 
 WHY THIS EXISTS
@@ -261,4 +279,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(
+        "RETIRED 2026-08-19 - superseded by F1/generate_fmf.py; this script must NOT be run.\n"
+        "It anchors on pre-Aug-17 field names and geometry, so against the current instrument\n"
+        "it would either abort or silently mis-place fields in a file that is now rebuilt from\n"
+        "the dictionary on every build. See the module docstring for the invariant it used to\n"
+        "enforce and where that invariant lives today.")

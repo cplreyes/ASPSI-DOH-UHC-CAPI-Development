@@ -26,7 +26,7 @@ from cspro_helpers import (
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, checkbox_multiselect, record,
     build_field_control, build_geo_id, build_dictionary, build_id_block, write_dcf,
-    derived_geo_code_items, ENUM_RESULT_OPTIONS_F4, BREAKOFF_OPTIONS,
+    derived_geo_code_items, ENUM_RESULT_OPTIONS_F4, REPLACED_CODE_F4, BREAKOFF_OPTIONS,
     apply_translations,
     _photo_block,
 )
@@ -114,7 +114,8 @@ def build_f4_field_control():
                                date_mmddyyyy=True,   # #1132/#1174 parity: typed MMDDYYYY, stored YYYYMMDD
                                extra_items=extra + derived_geo_code_items(),
                                date_label_entity="the Household",
-                               result_options=ENUM_RESULT_OPTIONS_F4)
+                               result_options=ENUM_RESULT_OPTIONS_F4,
+                               replaced_code=REPLACED_CODE_F4)
 
 
 # ============================================================
@@ -275,14 +276,23 @@ def build_section_b():
         ("My aunt",                        "11"),
         ("Other (specify)",                "12"),
     ]
+    # #1295 (UAT R7, 2026-08-20) -- SUPERSEDES the #1176 11-bracket list: the Aug-17
+    # F4 paper prints the PSA 7 income-class bands (normalized/F4-paper.csv qnum=18,
+    # enumerator note "Tick the income category..."), the same scheme F3 adopted under
+    # R16. Labels verbatim from the paper; DK=8 / RF=9 mirror F3 (the F4 paper prints
+    # no DK/RF codes on the bracket -- the amount's -98/-99 note needs a bracket
+    # escape, registered as capi-adaptation). RECODE BOUNDARY: deploys before
+    # 2026-08-20 carry the 01-11 + 90/95 scheme (and 2026-08-18's before that).
     Q18_BRACKET = [
-        ("Under 40,000",      "1"),
-        ("40,000 - 59,999",   "2"),
-        ("60,000 - 99,999",   "3"),
-        ("100,000 - 249,999", "4"),
-        ("250,000 - 499,999", "5"),
-        ("500,000 and over",  "6"),
-        ("Refuse to answer",  "7"),
+        ("< PhP12,030",                             "1"),
+        ("PhP12,030 to PhP24,060",                  "2"),
+        ("PhP24,061 to PhP48,120",                  "3"),
+        ("PhP48,121 to PhP84,210",                  "4"),
+        ("PhP84,211 to PhP144,360",                 "5"),
+        ("PhP144,361 to PhP240,600",                "6"),
+        (">PhP240,600",                              "7"),
+        ("I don't know [DO NOT READ OUT LOUD]",     "8"),
+        ("Refuse to answer [DO NOT READ OUT LOUD]", "9"),
     ]
     Q23_WATER = [
         ("Faucet inside the house", "1"),
@@ -290,9 +300,13 @@ def build_section_b():
         ("Dug well",                "3"),
         ("Other (specify)",         "4"),
     ]
+    # 1176-aug17 (Task 1.7-1.8, controller-approved escalation #2, 2026-08-19): 'None'
+    # added -- paper's Q24/Q25/Q26 water-source-ownership triad all print a third
+    # option, same class as F3's own Q24/Q25/Q26 fix (F3-inventory.md 10.A).
     Q24_OWN_SHARE = [
         ("I/we have our own",             "1"),
         ("I/we share with our community", "2"),
+        ("None",                          "3"),
     ]
     Q26_HAVE = [
         ("Yes, I/ we have",     "1"),
@@ -372,8 +386,11 @@ def build_section_b():
                 "18. In the past 6 months, what is your average monthly household income? Please specify in Philippine pesos.",
                 length=9),
         select_one("Q18_INCOME_BRACKET",
-                   "18. Income bracket",
-                   Q18_BRACKET, length=1),
+                   "18. Income category corresponding to the respondent's approximate household income",
+                   # length STAYS 2 (values 1-9 store right-justified): shrinking the
+                   # item would shift every later Section-B column mid-round. Values
+                   # match F3's R16 codes 1-9 exactly; only storage width differs.
+                   Q18_BRACKET, length=2),
         numeric("Q19_HH_SIZE_TOTAL",
                 "19. How many total individuals (including children) live in your house now?",
                 length=3),
@@ -396,17 +413,35 @@ def build_section_b():
         select_one("Q25_TUBE_SHARE",
                    "25. Do you have your own tube/pipe, or do you share with your community?",
                    Q24_OWN_SHARE, length=1),
-        select_one("Q26_REFRIGERATOR",
-                   "26. Does the family own a refrigerator/freezer?",
+        # 1176-aug17 (controller-approved escalation #2, 2026-08-19): the deployed
+        # build had NO item for the paper's Q26 ("own their dug well, or share with
+        # community?") -- Q26_REFRIGERATOR/Q27_TELEVISION/Q28_WASHING_MACHINE were
+        # silently carrying paper Q27/Q28/Q29's content one number early, exactly
+        # F3's own Q26 bug (already fixed there, Task 1.1). Inserted the missing
+        # item and renumbered the three shifted fields; Q30 (roster) onward were
+        # already correctly aligned so nothing past this point moves. See
+        # aug17-approved-divergences.md (F4 | Q26 dug-well item).
+        select_one("Q26_DUG_WELL_SHARE",
+                   "26. Do you have your own dug well, or do you share with your community?",
+                   Q24_OWN_SHARE, length=1),
+        select_one("Q27_REFRIGERATOR",
+                   "27. Does the family own a refrigerator/freezer?",
                    Q26_HAVE, length=1),
-        select_one("Q27_TELEVISION",
-                   "27. Does the family own a television set?",
+        select_one("Q28_TELEVISION",
+                   "28. Does the family own a television set?",
                    Q26_HAVE, length=1),
-        select_one("Q28_WASHING_MACHINE",
-                   "28. Does the family own a washing machine?",
+        select_one("Q29_WASHING_MACHINE",
+                   "29. Does the family own a washing machine?",
                    Q26_HAVE, length=1),
+        # aug17: no Aug-17 paper counterpart in the Q23-Q34 range -- kept as a CAPI-
+        # supplemental socioeconomic-class item (feeds the Q18-income context, no
+        # F4 soft-cross check exists for it, unlike F3's #631). Field name
+        # unchanged (avoids rippling any downstream reference); the paper-colliding
+        # "29." display prefix is dropped since Q29 is now legitimately Washing
+        # Machine, matching F3's Q29_SEC_CLASS precedent. Registered as a
+        # divergence (class=capi-adaptation), flagged for ASPSI confirmation.
         select_one("Q29_SOCIOECONOMIC_CLASS",
-                   "29. How would the socioeconomic class of your household be classified?",
+                   "How would the socioeconomic class of your household be classified?",
                    Q29_SEC, length=1),
     ]
     return record("B_RESPONDENT_PROFILE", "B. Respondent Profile", "D", items)
@@ -453,6 +488,14 @@ def build_section_c():
         ("Boarder",                     "10"),
         ("Domestic Helper",             "11"),
         ("Non-relative",                "12"),
+        # 1176-aug17: Aug-17 paper adds 'Grandfather/Grandmother' at ITS OWN code 13
+        # (F4-extract.md L539-540, {.mark}-highlighted as new). The build's code 13 is
+        # already live as 'Father-In-Law/Mother-In-Law' (#602, a CAPI-only supplemental
+        # not on the paper's original legend) — appended here at the next unused
+        # ascending code (15) per the standing #602 append-only convention (never
+        # renumber/collide with already-collected data). Recode paper-13 -> build-15
+        # documented in the rekey map + register.
+        ("Grandfather/Grandmother",     "15"),
     ]
     YN_01 = [
         ("No",  "0"),
@@ -948,10 +991,14 @@ def build_section_g():
         ("Branded",                        "1"),  # proceed to Q78
         ("Generic",                        "2"),
         ("Both branded and generic",       "3"),
-        # #646: 'Don't know the difference' (code 4) REMOVED — it contradicts Q75=Yes
-        # (Q76 is only asked when the respondent KNOWS the difference). Its old exit
-        # routing (code 4 -> Q79) is folded into code 9 below in PROC Q76_BRAND_OR_GEN.
-        ("Not applicable",                 "9"),  # proceed to Q79
+        # 1176-aug17: #646 removed 'Don't know the difference' as contradictory with
+        # Q75=Yes (Q76 only asked when the respondent knows the difference). The
+        # Aug-17 paper reprints both 'Don't know the difference' (4) and 'Not
+        # applicable' (5) as distinct options, each with its own '<Proceed to Q79>'
+        # skip target -- ASPSI's resolution of the #646 blocked item. Restored per
+        # paper; both codes still route to Q79 (see generate_apc.py SKIP_RULES).
+        ("Don't know the difference",      "4"),
+        ("Not applicable",                 "5"),  # proceed to Q79 (was "9" pre-aug17; recoded — 3.0.0 data-shape break)
     ]
     Q77_WHY_GENERIC = [
         ("Lower cost",                                 "1"),
@@ -960,8 +1007,10 @@ def build_section_g():
         ("Given for free",                             "4"),
         ("More or as effective as branded medicine",   "5"),
         ("I don't know",                               "6"),
-        # #647: 'Not applicable' REMOVED — Q77 is only reached when the respondent
-        # bought generic (Q76 = Generic/Both), so a 'Not applicable' tick is contradictory.
+        # 1176-aug17: #647 removed 'Not applicable' as contradictory (Q77 only reached
+        # when the respondent bought generic). Aug-17 paper reprints it — ASPSI's
+        # resolution of the #647 blocked item. Restored per paper, before Other.
+        ("Not applicable",                             "7"),
         ("Other (Specify)",                            "8"),
     ]
     Q78_WHY_BRANDED = [
@@ -971,9 +1020,11 @@ def build_section_g():
         ("Given for free",                                  "4"),
         ("Prefer branded over generic option",              "5"),
         ("I don't know",                                    "6"),
-        # #648: 'Not applicable' REMOVED — Q78 is only reached when the respondent
-        # bought branded (Q76 = Branded/Both), so a 'Not applicable' tick is contradictory.
+        # 1176-aug17: #648 removed 'Not applicable' as contradictory (Q78 only reached
+        # when the respondent bought branded). Aug-17 paper reprints it — ASPSI's
+        # resolution of the #648 blocked item. Restored per paper, before Other.
         # (The Q78 prompt's enumerator note is DOH-authored content — left unchanged; flagged.)
+        ("Not applicable",                                  "7"),
         ("Other (Specify)",                                 "8"),
     ]
     items = [
@@ -1589,27 +1640,64 @@ def build_section_m():
         # other_specify_procs (gate: Q138_MOST_EXPENSIVE = 9).
         ("Other (Specify)",   "9"),
     ]
-    Q141_BILL_ITEMS = [
-        ("Rooms <for inpatients only>",         "1"),
-        ("Doctor's Fee",                        "2"),
-        ("Diagnostic or laboratory procedure",  "3"),
-        ("Medical equipment or supplies",       "4"),
-        ("Medicines or drugs",                  "5"),
-        ("Non-medical expenses (e.g. hygiene kit)", "6"),
-        ("Other expenses",                      "7"),
+    # 1176-aug17 (Task 1.7 content pass, R21/task-1.7-1.8-brief): Q139-Q143
+    # rewritten from the Apr-20-era shape (Q139 final-cash-paid amount, Q140 yes/no
+    # breakdown-recall gate, Q141 bill-items checklist, Q141.1 no-receipt amount,
+    # Q142 yes/no payment-recall gate, Q143 10-item how-paid checklist) to the
+    # Aug-17 paper's restructured shape (Q139 total-bill amount, Q140 bill-items
+    # checklist w/ "Cannot recall", Q141 yes/no payment-recall gate [skip Q142 on
+    # No], Q142 16-source settlement matrix, Q143 no-receipt amount) -- a declared
+    # 3.0.0 data-shape break (renumbering within the module is sanctioned for this
+    # task only). Verified against normalized/F4-paper.csv + F4-extract.md
+    # L2093-2313 (Task 0.4 Q141-carry re-check).
+    Q140_BILL_ITEMS = [
+        ("Rooms <for inpatients only>",              "1"),
+        ("Doctor's Fee",                              "2"),
+        ("Diagnostic or laboratory procedure",        "3"),
+        ("Medical equipment or supplies",             "4"),
+        ("Medicines or drugs",                        "5"),
+        ("Non-medical expenses (e.g. hygiene kit)",   "6"),
+        # Paper now explicitly prints "(specify)" on this option (was bare "Other
+        # expenses" pre-aug17, hence the old CHECKBOX_OTHER_CODE="07" workaround) --
+        # _cb_codes's standard 'specif' detection now applies (-> 99), same as every
+        # other checkbox base in the instrument; the CHECKBOX_OTHER_CODE entry for
+        # this base is retired (generate_apc.py).
+        # #1300 (UAT R7, 2026-08-20): "Cannot recall" moved ABOVE "Other (specify)" so
+        # the emitted codes ascend (01-06, 07 recall, 99 other) per the #830 checkbox
+        # rule -- previously 01-06, 99, 07. _cb_codes assigns positionally, so "Cannot
+        # recall" keeps code 07 and "Other" keeps 99: display-order change only,
+        # zero data-code changes (paper prints Other before Cannot recall; divergence
+        # registered, same call as F1 Q163 / #1126).
+        ("Cannot recall",                             "8"),
+        ("Other expenses (specify)",                  "7"),
     ]
-    Q143_HOW_PAID = [
-        ("Own income/ household income",              "01"),
-        ("PhilHealth",                                "02"),
-        ("Private insurance / HMO",                   "03"),
-        ("Loan",                                      "04"),
-        ("Sale of assets",                            "05"),
-        ("Donations from charities / NGOs",           "06"),
-        ("Donations from LGUs / LGU programs",        "07"),
-        ("National Government Agencies (DSWD, etc.)", "08"),
-        ("Paid by someone else",                      "09"),
-        ("Other (Specify)",                           "10"),
-    ]
+    # 142) 16-source hospital-bill settlement matrix (F4-extract.md L2124-2304). Each
+    # source is Yes/No(+specify for sources 6 & 16) tick + a gated Amount-in-Pesos
+    # field. Field names deliberately avoid a digit run immediately after the
+    # "Q142_" prefix (see _settlement_source's docstring below) so every source
+    # resolves to the bare build qnum "142", not a synthetic "142.NN" sub-qnum.
+
+    def _settlement_source(stem, label, has_specify, item_num):
+        """One Q142 settlement-matrix source: Yes/No(+specify) tickbox + gated PHP
+        amount. Non-"Q142_NN_" naming is deliberate -- build_tables.py's
+        derive_qnum regex (^Q(\\d+)([A-Za-z]?)(?:_(\\d+))?) would otherwise capture
+        a following "_NN" run as a synthetic "142.NN" sub-qnum per source (16 fake
+        sub-qnums instead of one bare "142"), fragmenting the countercheck register
+        into 16 rows instead of 1."""
+        yn_options = [("Yes, specify:", "1"), ("No", "2")] if has_specify else [("Yes", "1"), ("No", "2")]
+        items = [
+            select_one(f"Q142_{stem}_YN",
+                       f"142.{item_num}) {label} — paid from this source?",
+                       yn_options, length=1),
+        ]
+        if has_specify:
+            items.append(alpha(f"Q142_{stem}_TXT",
+                                f"142.{item_num}) {label} — specify text",
+                                length=120))
+        items.append(numeric(f"Q142_{stem}_AMT_PHP",
+                              f"142.{item_num}) {label} — Amount in Pesos (PHP)",
+                              length=8))
+        return items
     items = [
         yes_no_dk("Q132_ZBB_HEARD",
                   "132. Have you heard of the Zero Balance Billing (ZBB)?"),
@@ -1634,30 +1722,40 @@ def build_section_m():
                    Q138_MOST_EXPENSIVE, length=1),
         alpha("Q138_MOST_EXPENSIVE_OTHER_TXT",
               "138. Most expensive charge — Other (specify) text", length=120),
-        numeric("Q139_FINAL_AMOUNT_PHP",
-                "139. From your most recent visit, what was the final amount you paid in cash at the hospital cashier upon discharge? (PHP)",
+        numeric("Q139_TOTAL_BILL_PHP",
+                "139. From your most recent visit, what was the total amount of your hospital bill? (PHP)",
                 length=8),
-        yes_no("Q140_RECALL_BREAKDOWN",
-               "140. From your most recent visit, do you recall the breakdown of the bill?"),
-        # #615: select_all -> Check Box. 'Other expenses' (07) is NOT a 'specif' option
-        # (_cb_codes leaves it a normal code, not 99) and we don't rename it (verbatim
-        # English), so with_other_txt=False — the hand-declared Q141_BILL_ITEMS_OTHER_TXT
-        # below stays as the plain (ungated) free-text for it, exactly as before.
-        *checkbox_multiselect("Q141_BILL_ITEMS",
-                    "141. From your most recent visit, which of the following were included in the bill?",
-                    _cb_codes(Q141_BILL_ITEMS), with_other_txt=False),
-        alpha("Q141_BILL_ITEMS_OTHER_TXT",
-              "141. Bill items — Other expenses (Specify) text", length=120),
-        numeric("Q141_1_NO_RECEIPT_AMT_PHP",
-                "141.1. From your recent visit, how much was charged for services with no receipts provided (i.e. Professional fees)? (PHP)",
+        *checkbox_multiselect("Q140_BILL_ITEMS",
+                    "140. From your most recent visit, which of the following were included in the bill?",
+                    _cb_codes(Q140_BILL_ITEMS), with_other_txt=True),
+        yes_no("Q141_RECALL_PAYMENT",
+               "141. Do you recall how you paid for your bill?"),
+        *_settlement_source("SALARY",         "Salary/income", False, 1),
+        *_settlement_source("LOAN",           "Loan/Mortgage", False, 2),
+        *_settlement_source("SAVINGS",        "Savings", False, 3),
+        *_settlement_source("PRIV_DONATION",  "Donation/Charity/Assistance from Private Organization", False, 4),
+        *_settlement_source("MALASAKIT",      "Malasakit Center", False, 5),
+        # Fix round 2 (2026-08-19, controller ruling): item 6's "Yes, specify:"
+        # label is category-descriptive (same no-visible-blank convention as
+        # Q133/Q134's "Other (Specify)" elsewhere in this paper), NOT a real
+        # specify-text invitation like item 16's -- has_specify=False, matching
+        # the ruling ("item 6 NO specify-text"). Was wrongly built with
+        # has_specify=True in the first pass (the register row documented the
+        # correct intent while the code did not match it -- fixed here).
+        *_settlement_source("GOV_DONATION",   "Other Donation/Charity/Assistance from Government Organization", False, 6),
+        *_settlement_source("SALE_ASSETS",    "Sale of Assets", False, 7),
+        *_settlement_source("PAID_OTHER",     "Paid by someone else", False, 8),
+        *_settlement_source("MAIFIP",         "MAIFIP", False, 9),
+        *_settlement_source("PHILHEALTH_NBB", "PhilHealth/NBB", False, 10),
+        *_settlement_source("SSS",            "SSS", False, 11),
+        *_settlement_source("GSIS",           "GSIS", False, 12),
+        *_settlement_source("PRIVATE_INS",    "Private Insurance", False, 13),
+        *_settlement_source("HMO",            "HMO", False, 14),
+        *_settlement_source("QFS",            "Quantified Free Service", False, 15),
+        *_settlement_source("OTHER",          "Other (specify)", True, 16),
+        numeric("Q143_NO_RECEIPT_AMT_PHP",
+                "143. From your recent visit, how much was charged for services with no receipts provided (i.e. Professional fees)? (PHP)",
                 length=8),
-        yes_no("Q142_RECALL_PAYMENT",
-               "142. From your most recent visit, do you recall how you paid for your bill?"),
-        # #616: select_all -> Check Box. 'Other (Specify)' (10 -> 99) gets a gated
-        # specify field via with_other_txt=True.
-        *checkbox_multiselect("Q143_HOW_PAID",
-                    "143. From your most recent visit, how did you pay?",
-                    _cb_codes(Q143_HOW_PAID), with_other_txt=True),
     ]
     return record("M_ZBB_MAIFIP_BILL",
                   "M. Zero Balance Billing (ZBB) Awareness + MAIFIP + Bill Breakdown",
@@ -2046,6 +2144,55 @@ def build_section_q():
 # ASSEMBLE THE DICTIONARY
 # ============================================================
 
+# 1182: the 8 Section-N in-kind value prompts overrun CSPro's 255-char label cap, so
+# write_dcf's last-resort truncation cut them mid-sentence on every build - and the cut
+# text is what the case tree / roster caption shows. The FULL prompt still reaches the
+# CAPI question bar: generate_qsf builds the dictionary in-memory and never caps (its
+# #741 note). These are designed DCF/FMF display captions, not cuts; generate_qsf must
+# NOT apply them.
+DCF_SHORT_LABELS = {
+    "N_FOOD_INKIND_PHP":  "Food item — total value produced/received in-kind or as gifts, last week (PHP)",
+    "N_WKOTH_INKIND_PHP": "Expenditure item — total value received in-kind or as gifts, last week (PHP)",
+    "N_NF1M_INKIND_PHP":  "Non-food item — total value received in-kind or as gifts, last month (PHP)",
+    "N_NF6M_INKIND_PHP":  "Non-food item — total value received in-kind or as gifts, last 6 months (PHP)",
+    "N_NF12M_INKIND_PHP": "Non-food item — total value received in-kind or as gifts, last 12 months (PHP)",
+    "N_H1M_INKIND_PHP":   "Health product/service — total value received in-kind or as gifts, last month (PHP)",
+    "N_H6M_INKIND_PHP":   "Health product/service — total value received in-kind or as gifts, last 6 months (PHP)",
+    "N_H12M_INKIND_PHP":  "Health product/service — total value received in-kind or as gifts, last 12 months (PHP)",    # 1182/1176 follow-on: once the roster prompts carry per-language translations, the
+    # translated LABELS would overrun the 255 cap too - give the purchased columns the
+    # same designed short captions so no language's dcf/fmf label is ever cut.
+    "N_FOOD_PURCHASED_PHP":  "Food item — spent to purchase, last week (PHP)",
+    "N_WKOTH_PURCHASED_PHP": "Expenditure item — spent to purchase, last week (PHP)",
+    "N_NF1M_PURCHASED_PHP":  "Non-food item — spent to purchase, last month (PHP)",
+    "N_NF6M_PURCHASED_PHP":  "Non-food item — spent to purchase, last 6 months (PHP)",
+    "N_NF12M_PURCHASED_PHP": "Non-food item — spent to purchase, last 12 months (PHP)",
+    "N_H1M_PURCHASED_PHP":   "Health product/service — spent to purchase, last month (PHP)",
+    "N_H6M_PURCHASED_PHP":   "Health product/service — spent to purchase, last 6 months (PHP)",
+    "N_H12M_PURCHASED_PHP":  "Health product/service — spent to purchase, last 12 months (PHP)",
+}
+
+
+def apply_dcf_short_labels(dictionary):
+    """Swap in the designed short display captions (dcf/fmf surfaces only)."""
+    def walk(o):
+        if isinstance(o, dict):
+            yield o
+            for v in o.values():
+                yield from walk(v)
+        elif isinstance(o, list):
+            for v in o:
+                yield from walk(v)
+    hits = 0
+    for node in walk(dictionary):
+        if isinstance(node, dict) and node.get("name") in DCF_SHORT_LABELS and node.get("labels"):
+            for lab in node["labels"]:
+                lab["text"] = DCF_SHORT_LABELS[node["name"]]
+            hits += 1
+    if hits != len(DCF_SHORT_LABELS):
+        raise SystemExit(f"apply_dcf_short_labels: expected {len(DCF_SHORT_LABELS)} items, hit {hits}")
+    return hits
+
+
 def build_f4_dictionary():
     records = [
         build_f4_field_control(),
@@ -2086,6 +2233,7 @@ def main():
     # silently resets the .dcf to English). Auto-discovers locales by file
     # existence in translations/; F4 has bcl/bis/ceb/war (no hil/fil).
     dictionary = apply_translations(dictionary, Path(__file__).parent / "translations")
+    apply_dcf_short_labels(dictionary)
     write_dcf(dictionary, out_path)
 
 

@@ -505,7 +505,7 @@ CHECKBOX_BASES = {
     "Q70_GAMOT_SOURCE", "Q71_GAMOT_UNDERSTAND",   # #573/#574
     "Q127_NBB_SOURCE", "Q128_NBB_UNDERSTAND", "Q133_ZBB_SOURCE", "Q134_ZBB_UNDERSTAND",
     "Q137_MAIFIP_SOURCE",
-    "Q141_BILL_ITEMS", "Q143_HOW_PAID",   # #615/#616 Section M bill select_all -> Check Box
+    "Q140_BILL_ITEMS",   # 1176-aug17: renumbered from Q141 (#615 lineage); Q143 is no longer a checkbox
     "Q196_FOREGONE",   # #638 Section O foregone-care select_all -> Check Box
     # #577-585/#588/#590-591: 10 more 'Household Survey' select_all -> Check Box (tick-all)
     "Q74_WHERE_REST", "Q77_WHY_GENERIC", "Q78_WHY_BRANDED", "Q82_DIFFICULTY_REASONS",
@@ -560,8 +560,7 @@ CHECKBOX_CONVERT = [
     ("Q106_FORGONE_WHY",         True,  True,  None),   # #584: 'I don't know' (90) exclusive; 'Other (Specify)' (99). Skip-target from Q105=2 (skip rule repointed to bare base)
     ("Q107_OTHER_ACTIONS",       True,  True,  None),   # #655: 'Did not seek other forms of care' is now 90-coded exclusive (was substantive per #584 — tester FAIL: tickable alongside real actions; if you sought nothing else, no action co-applies); soft-warn if combined. 'Other (Specify)' (99). Skip-target from Q105=2 chains via the bare base
     ("Q109_TYPE",                True,  True,  None),   # #588: 'None of the above' (11->90) exclusive; 'Other (Specify)' (12->99)
-    ("Q141_BILL_ITEMS",          True,  False, None),   # #615/#1098: 'Other expenses' keeps paper code 07 (CHECKBOX_OTHER_CODE) — _OTHER_TXT now gated on 07 (was ungated; prompted even when unticked)
-    ("Q143_HOW_PAID",            True,  False, None),   # #616: 'Other (Specify)' (10->99); no None/IDK exclusive; reached via Q142=Yes (Q142=No skips to Q144)
+    ("Q140_BILL_ITEMS",          True,  False, None),   # 1176-aug17: renumbered from Q141 (#615/#1098 lineage). Paper now explicitly prints "(specify)" on this option, so it takes the DEFAULT 99-code via _cb_codes's standard 'specif' detection — the old CHECKBOX_OTHER_CODE="07" workaround is retired.
     ("Q196_FOREGONE",            True,  False, None),   # #638: 'Other (please specify)' (99); 'We do not forego care' (07) stays ordinary (no 90 exclusive). Reached only when Q195=None (#637 skip routes other Q195 answers to Q197)
     ("Q202_WORRY_REASONS",       True,  False, None),   # #668: 3 reasons + #686 'Other (Specify)' (99, has_other) -> emit gated _OTHER_TXT; no None/IDK exclusive
 ]
@@ -683,6 +682,12 @@ CHECKBOX_EXTRA_STANDALONE = {
     # cross-boundary-safe: a false "07" needs a 0-ending code followed by a 7-starting
     # one, and none of Q196's codes (01-07, 99) end in 0.
     "Q196_FOREGONE": [("07", "We do not forego care")],
+    # #1300 (UAT R7, 2026-08-20): Q140 "Cannot recall" (07) -- recalling NOTHING about
+    # the bill is contradictory with naming specific bill items. Coded 07, not 90, so
+    # the generic exclusive branch never matched it (same class as Q196/07). pos() is
+    # cross-boundary-safe: a false "07" needs a 0-ending code followed by a 7-starting
+    # one, and none of Q140's codes (01-07, 99) end in 0.
+    "Q140_BILL_ITEMS": [("07", "Cannot recall")],
 }
 
 # #1098 (pretest 2026-08-05): bases whose 'Other (specify)' option is NOT 99-coded.
@@ -691,7 +696,10 @@ CHECKBOX_EXTRA_STANDALONE = {
 # specify box prompted even when 07 wasn't ticked. Gate on the real code instead
 # of recoding 07->99 (zero data-code changes mid-pretest).
 CHECKBOX_OTHER_CODE = {
-    "Q141_BILL_ITEMS": "07",
+    # 1176-aug17: Q140_BILL_ITEMS (renumbered from Q141) no longer needs an entry
+    # here -- its "Other expenses (specify)" option now takes the default 99 code
+    # (see CHECKBOX_CONVERT comment above). Dict kept (not deleted) for the next
+    # base that needs a non-99 Other code; currently empty.
 }
 
 CHECKBOX_MULTISELECT_PROCS = {}
@@ -790,24 +798,31 @@ postproc
 { ---- Income amount must fall within reported bracket (spec 3.2, HARD) ---- }
 PROC Q18_INCOME_BRACKET
 postproc
+  { #1295 (UAT R7, 2026-08-20, supersedes #1176): paper's 7 PSA income-class bands
+    replace the 11-band 50k scheme; DK is now code 8 (was 90), RF is code 9 (was 95).
+    Boundaries verbatim from normalized/F4-paper.csv qnum=18 -- same shape as F3's R16
+    PROC. }
+  { DK (8) -- respondent can't even estimate household income. No bracket amount is
+    required; bypass the bracket<->amount reconciliation. }
+  if Q18_INCOME_BRACKET = 8 then
+    exit;
+  endif;
+  { bracket must contain Q18_INCOME_AMOUNT -- 7 PSA bands, boundaries verbatim from
+    the Aug-17 paper (12,030 / 24,060 / 48,120 / 84,210 / 144,360 / 240,600). RF (9)
+    falls through: with a real amount entered the bracket is derivable, so RF is a
+    HARD inconsistency (#813 lineage); with amount -98/-99 it is ok'd above (#793). }
   numeric a = Q18_INCOME_AMOUNT;
   numeric ok = 0;
   if a = -98 or a = -99 then ok = 1; endif;   { #793: -98 don't-know / -99 refused -> no bracket cross-check }
-  if Q18_INCOME_BRACKET = 1 and a < 40000 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 2 and a >= 40000 and a <= 59999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 3 and a >= 60000 and a <= 99999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 4 and a >= 100000 and a <= 249999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 5 and a >= 250000 and a <= 499999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 6 and a >= 500000 then ok = 1; endif;
-  { #813: bracket 7 (Refuse) is only valid when the amount itself was refused/unknown
-    (-98/-99, already ok'd above per #793). With a real amount entered the bracket is
-    derivable, so refusing it is a HARD inconsistency. }
+  if Q18_INCOME_BRACKET = 1 and a < 12030 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 2 and a >= 12030  and a <= 24060  then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 3 and a >= 24061  and a <= 48120  then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 4 and a >= 48121  and a <= 84210  then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 5 and a >= 84211  and a <= 144360 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 6 and a >= 144361 and a <= 240600 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 7 and a > 240600 then ok = 1; endif;
   if ok = 0 then
-    if Q18_INCOME_BRACKET = 7 then
-      errmsg("Q18: an income amount was provided (%d PHP), so the bracket cannot be 'Refuse to answer'. Select the bracket that matches the amount (or re-enter the amount as -99 if the respondent refused).", a);
-    else
-      errmsg("Income bracket does not match the reported amount (%d PHP). Reconcile.", a);
-    endif;
+    errmsg("Income bracket does not match the reported amount (%d PHP/month). Reconcile.", a);
     reenter;
   endif;
 """
@@ -854,8 +869,10 @@ SKIP_RULES = [
     ("Q72_GAMOT_OBTAINED",   "Q72_GAMOT_OBTAINED = 2",      "Q74_WHERE_REST"),
     # #538: REMOVED the Q75=No -> Q79 skip. Q75 ("know branded vs generic difference?") = No
     # must now fall through to Q76 (was wrongly exiting Section G). Q76 still terminates the
-    # section on its own (PROC Q76_BRAND_OR_GEN: code 9 'Not applicable' -> Q79; Branded ->
-    # Q78; Generic/Both -> Q77 -> Q78 -> Q79). No replacement skip needed — natural fall-through.
+    # section on its own (PROC Q76_BRAND_OR_GEN: codes 4 'Don't know the difference' and
+    # 5 'Not applicable' -> Q79 [1176-aug17 recode, was code 9 pre-aug17 -- comment fixed
+    # fix round 2, 2026-08-19]; Branded -> Q78; Generic/Both -> Q77 -> Q78 -> Q79). No
+    # replacement skip needed — natural fall-through.
     # Section H — PhilHealth / Insurance
     ("Q81_REG_DIFFICULTY",   "Q81_REG_DIFFICULTY = 2",      "Q83_KNOWS_ASSIST"),
     ("Q83_KNOWS_ASSIST",     "Q83_KNOWS_ASSIST = 2",        "Q85_BENEFITS"),   # #529: Q85 is now a Check Box base (was _O01)
@@ -931,8 +948,11 @@ SKIP_RULES = [
     # respondent-facing routing skip was missing so No/DK fell through to the source list.
     ("Q132_ZBB_HEARD",       "Q132_ZBB_HEARD = 2 or Q132_ZBB_HEARD = 3",     "Q136_MAIFIP_HEARD"),
     ("Q136_MAIFIP_HEARD",    "Q136_MAIFIP_HEARD = 2 or Q136_MAIFIP_HEARD = 3", "Q138_MOST_EXPENSIVE"),
-    ("Q140_RECALL_BREAKDOWN","Q140_RECALL_BREAKDOWN = 2",   "Q142_RECALL_PAYMENT"),    # no breakdown -> skip Q141/Q141.1
-    ("Q142_RECALL_PAYMENT",  "Q142_RECALL_PAYMENT = 2",     "N_FOOD_ITEM(1)"),  # no payment -> skip Q143 -> Section N food grid row 1 (Option C 2026-07-03; explicit occurrence — the skip source is outside the roster)
+    # 1176-aug17: Q140/Q142's old yes/no-gate roles are gone (Q140 is now the bill-
+    # items checklist, Q142 is the settlement matrix). Paper's own skip note moves
+    # to the new Q141 payment-recall gate: "IF No GOTO <proceed to Q143>" -- skips
+    # the entire 16-source matrix straight to the no-receipt amount.
+    ("Q141_RECALL_PAYMENT",  "Q141_RECALL_PAYMENT = 2",     "Q143_NO_RECEIPT_AMT_PHP"),
     # Section O #637: Q195 = any willing-to-set-aside answer (Less than 1%/1-3%/4-6%/
     # More than 6%/Don't know = codes 2-6) bypasses Q196 (the "what care would you
     # forego" item) -> Q197. Only Q195 = "None" (1) falls through to Q196. (Already
@@ -947,15 +967,78 @@ SKIP_RULES = [
 ]
 
 BILL_VALIDATION = """\
-{ ---- Bill-recall cap (spec 4.8): no-receipt amount cannot exceed total bill ---- }
-PROC Q141_1_NO_RECEIPT_AMT_PHP
+{ ---- Bill-recall cap (spec 4.8): no-receipt amount cannot exceed total bill ----
+  1176-aug17: field names updated for the Q139/Q143 renumber (Q141_1_NO_RECEIPT_
+  AMT_PHP -> Q143_NO_RECEIPT_AMT_PHP; Q139_FINAL_AMOUNT_PHP -> Q139_TOTAL_BILL_PHP,
+  content also changed from "cash paid at discharge" to "total hospital bill" --
+  same cap relationship still holds: a professional fee charged with no receipt
+  can't exceed the bill it was part of). ---- }
+PROC Q143_NO_RECEIPT_AMT_PHP
 postproc
-  if Q141_1_NO_RECEIPT_AMT_PHP > Q139_FINAL_AMOUNT_PHP then
+  if Q143_NO_RECEIPT_AMT_PHP > Q139_TOTAL_BILL_PHP then
     errmsg("No-receipt amount (%d) exceeds total bill (%d). Verify.",
-           Q141_1_NO_RECEIPT_AMT_PHP, Q139_FINAL_AMOUNT_PHP);
+           Q143_NO_RECEIPT_AMT_PHP, Q139_TOTAL_BILL_PHP);
     reenter;
   endif;
 """
+
+# 1176-aug17: Q142 16-source settlement matrix -- each source's Amount (and, for
+# sources 6/16, specify text) is only enterable when its own Yes/No tick = Yes
+# (code 1). (stem, has_specify) mirrors generate_dcf.py's Q142_SOURCES list --
+# kept in sync by hand; the DCF is the source of truth for field existence, this
+# is just the gating logic.
+Q142_MATRIX_SOURCES = [
+    ("SALARY", False), ("LOAN", False), ("SAVINGS", False),
+    ("PRIV_DONATION", False), ("MALASAKIT", False),
+    # Fix round 2 (2026-08-19): item 6's "Yes, specify:" label is category-
+    # descriptive (Q133/Q134 no-visible-blank convention), not a real specify
+    # invitation -- has_specify=False, matching the ruling. Was wrongly True in
+    # the first pass.
+    ("GOV_DONATION", False),
+    ("SALE_ASSETS", False), ("PAID_OTHER", False), ("MAIFIP", False),
+    ("PHILHEALTH_NBB", False), ("SSS", False), ("GSIS", False),
+    ("PRIVATE_INS", False), ("HMO", False), ("QFS", False), ("OTHER", True),
+]
+
+
+def _q142_source_procs(stem, has_specify):
+    yn = f"Q142_{stem}_YN"
+    amt = f"Q142_{stem}_AMT_PHP"
+    procs = {
+        amt: (f"PROC {amt}\n"
+              f"preproc\n"
+              f"  if {yn} <> 1 then\n"
+              f"    {amt} = notappl;\n"
+              f"    noinput;\n"
+              f"  endif;"),
+    }
+    if has_specify:
+        txt = f"Q142_{stem}_TXT"
+        procs[txt] = (f"PROC {txt}\n"
+                       f"preproc\n"
+                       f"  if {yn} <> 1 then\n"
+                       f'    {txt} = "";\n'
+                       f"    noinput;\n"
+                       f"  endif;\n"
+                       f"postproc\n"
+                       f"  if {yn} = 1 and length(strip({txt})) = 0 then\n"
+                       f'    errmsg("Q142: \'{stem}\' was ticked \'Yes, specify:\' -- please specify.");\n'
+                       f"    reenter;\n"
+                       f"  endif;")
+    return procs
+
+
+_Q142_MATRIX_PROCS_DICT = {}
+for _stem, _has_specify in Q142_MATRIX_SOURCES:
+    _Q142_MATRIX_PROCS_DICT.update(_q142_source_procs(_stem, _has_specify))
+
+Q142_MATRIX_PROCS = ("{ ---- 1176-aug17: Q142 16-source settlement matrix -- gate each\n"
+                     "  source's Amount (and specify text, sources 6/16) on its own Yes/No\n"
+                     "  tick ---- }\n"
+                     + "\n\n".join(_Q142_MATRIX_PROCS_DICT[k] for k in sorted(_Q142_MATRIX_PROCS_DICT))
+                     + "\n")
+
+Q142_MATRIX_COVERED = set(_Q142_MATRIX_PROCS_DICT)
 
 TODO_NOTE = """\
 { ============================================================================
@@ -1683,7 +1766,8 @@ DISPOSITION_PROCS = """\
   postponed / stopped visit reaches the closing form without walking every required
   question (R4 #515). CASE_DISPOSITION (off-form) is the completeness sentinel the
   Supervisor App + CSWeb exports read (R4 #561): 0 In Progress, 1 Completed, 2 Partial.
-  F4 result codes: 1 Completed, 2 Postponed, 3 Incomplete, 4 Withdraw. }
+  F4 result codes: 1 Completed, 2 Postponed, 3 Incomplete, 4 Withdraw, plus the
+  logic-only 5 Replaced (assigned below, never enumerator-picked -- #1301). }
 PROC BREAKOFF
 preproc
   { The guard MUST list every valid code — anything outside it is silently reset to
@@ -1706,6 +1790,17 @@ postproc
   endif;
 
 PROC ENUM_RESULT_FINAL_VISIT
+preproc
+  { #1301 (UAT R7, 2026-08-20): the enumerator picklist mirrors the paper's four
+    codes (ENUM_RESULT_FINAL_VISIT_PICK_VS1); the full set incl. 5 Replaced is active
+    only when the BREAKOFF flow assigned a replacement (or a stale Replaced value
+    persists after back-nav to BREAKOFF). Preproc re-fires on re-entry, so the swap
+    holds in both directions -- the F1 Q108 setvalueset pattern. }
+  if BREAKOFF in 5, 6, 7 or ENUM_RESULT_FINAL_VISIT = 5 then
+    setvalueset(ENUM_RESULT_FINAL_VISIT, ENUM_RESULT_FINAL_VISIT_VS1);
+  else
+    setvalueset(ENUM_RESULT_FINAL_VISIT, ENUM_RESULT_FINAL_VISIT_PICK_VS1);
+  endif;
 postproc
   { #561: classify from the final Result-of-Visit. F4 Completed = code 1 only. }
   if ENUM_RESULT_FINAL_VISIT = 1 then
@@ -1738,7 +1833,7 @@ def main():
              section_n_food_roster_procs(), "",
              section_n_fanout_procs(), "",
              section_n_review_proc(), "",
-             BILL_VALIDATION, "", EXTRA_PROCS, "", VALIDATION_PROCS, ""]
+             BILL_VALIDATION, "", Q142_MATRIX_PROCS, "", EXTRA_PROCS, "", VALIDATION_PROCS, ""]
     covered = {"BREAKOFF", "ENUM_RESULT_FINAL_VISIT", "CASE_DISPOSITION",  # #515/#561 disposition PROCs
                "AREA_HAS_BUCAS", "AREA_HAS_GAMOT",  # #796/#797 auto-answer + noinput (EXTRA_PROCS)
                "MEMBER_LINE_NO", "Q34_RELATIONSHIP", "Q35_HAS_DISABILITY",
@@ -1766,10 +1861,11 @@ def main():
                "N_WKOTH_AMT_STATUS",
                "Q186_CURRENT_INCOME",   # Section N recap htmldialog fires from its preproc
                "Q49_PRIVATE_INS", "C_HOUSEHOLD_ROSTER_FORM", "Q47_HH_HAS_PRIVATE_INS",
-               "Q141_1_NO_RECEIPT_AMT_PHP",
-               # (#615's ungated-_OTHER_TXT workaround removed by #1098: Q141's specify
-               # box is now a gated Check Box _OTHER_TXT via CHECKBOX_OTHER_CODE=07,
-               # so CHECKBOX_COVERED carries Q141_BILL_ITEMS_OTHER_TXT.)
+               "Q143_NO_RECEIPT_AMT_PHP",   # BILL_VALIDATION (renamed from Q141_1_NO_RECEIPT_AMT_PHP, 1176-aug17)
+               # (#615's ungated-_OTHER_TXT workaround removed by #1098, now moot: Q140's
+               # specify box takes the default 99 code, gated via CHECKBOX_COVERED same as
+               # every other checkbox base's _OTHER_TXT.)
+               *Q142_MATRIX_COVERED,   # 1176-aug17: 16-source settlement-matrix gate PROCs (below)
                "Q1_IS_HH_HEAD",  # EXTRA_PROCS (#520 soft confirm)
                "Q135_ZBB_OOP",  # EXTRA_PROCS (#664 DOH-retained gate)
                "Q76_BRAND_OR_GEN", "Q79_REG_SOURCE",  # EXTRA_PROCS (Q78_WHY_BRANDED now a Check Box base, covered via CHECKBOX_COVERED)

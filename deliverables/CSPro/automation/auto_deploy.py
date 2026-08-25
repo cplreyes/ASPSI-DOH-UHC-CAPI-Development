@@ -21,7 +21,15 @@ from pathlib import Path
 import win32gui, win32con
 from pywinauto import Desktop, keyboard
 
-ROOT = Path(r"C:\Users\analy\Documents\analytiflow\1_Projects\ASPSI-DOH-CAPI-CSPro-Development\deliverables\CSPro")
+# Resolve from THIS FILE, never a hardcoded checkout path (2026-08-14). The old
+# absolute constant pointed at the main checkout, so a deploy driven from any other
+# tree (a worktree, a release clone) pulled the .pen/.pff from that tree while these
+# PSGC files still came from the main checkout. CSPro then makes every path relative
+# to the two roots' COMMON ANCESTOR, and the package ships NESTED:
+#     aspsi-reconcile-wt/deliverables/CSPro/F3/PatientSurvey.pen
+#     ASPSI-DOH-CAPI-CSPro-Development/deliverables/CSPro/F3/psgc_region.dat
+# instead of the flat layout CSEntry expects. Caught on the 2026-08-14 ICF deploy.
+ROOT = Path(__file__).resolve().parent.parent      # .../deliverables/CSPro
 INSTRUMENTS = {
     "F1": "FacilityHeadSurvey",
     "F3": "PatientSurvey",
@@ -31,14 +39,33 @@ INSTRUMENTS = {
 }
 PSGC = [f"psgc_{lvl}.{ext}" for lvl in ("region", "province", "city", "barangay")
         for ext in ("dcf", "dat")]
-EXPECTED_URL = "https://csweb.asiansocial.org/csweb/api"
+# 2026-08-08 migration: csweb.asiansocial.org is being retired; capi is the
+# canonical sync endpoint. Both hosts still answer, so old installs keep
+# working until every tablet has re-added the app.
+EXPECTED_URL = "https://capi.asiansocial.org/csweb/api"
+LEGACY_URLS = ("https://csweb.asiansocial.org/csweb/api",)
 OUT = Path(__file__).resolve().parent / "shots" / "deploy"
 
 
 def deploy_dialogs():
     # bare title = unsaved spec; "<PackageName> - CSPro Deploy Application" = loaded .csds
-    return [w for w in Desktop(backend="win32").windows()
-            if (w.window_text() or "").endswith("CSPro Deploy Application")]
+    # Desktop().windows() wraps EVERY top-level handle in one pass and raises
+    # InvalidWindowHandle when any window dies mid-enumeration (a flickering
+    # window makes that reproducible, seen 2026-08-17). Enumerate handles
+    # ourselves and wrap individually, skipping the dead ones - same race-safe
+    # stance as _get_picker().
+    import win32gui
+    from pywinauto.controls.hwndwrapper import HwndWrapper
+    handles = []
+    win32gui.EnumWindows(lambda h, _: (handles.append(h), True)[1], None)
+    out = []
+    for h in handles:
+        try:
+            if (win32gui.GetWindowText(h) or "").endswith("CSPro Deploy Application"):
+                out.append(HwndWrapper(h))
+        except Exception:
+            continue
+    return out
 
 
 def package_name(dd):
@@ -65,11 +92,48 @@ def btn(dd, text):
     return None
 
 
+def _csweb_url_edit(dd):
+    """The Deploy-To CSWeb edit: the only Edit whose value is an http(s) URL ending
+    in /csweb/api. Matching on content rather than control order, which is not stable
+    across dialog states."""
+    for c in dd.descendants():
+        if c.friendly_class_name() != "Edit":
+            continue
+        v = (c.window_text() or "").strip().rstrip("/")
+        if v.startswith("http") and v.endswith("/csweb/api"):
+            return c
+    return None
+
+
 def csweb_target_ok(dd):
     for c in dd.descendants():
         if c.friendly_class_name() == "Edit" and (c.window_text() or "").strip() == EXPECTED_URL:
             return True
     return False
+
+
+def ensure_csweb_target(dd):
+    """Point the dialog at EXPECTED_URL. Returns (ok, note).
+
+    This exists because the three deploy dialogs are parked long-term with whatever URL
+    was last typed into them — during the 2026-08-08 csweb->capi migration that was the
+    host being retired, so re-publishing without rewriting the field would have shipped
+    packages still pointing at it."""
+    if csweb_target_ok(dd):
+        return True, "already " + EXPECTED_URL
+    e = _csweb_url_edit(dd)
+    if e is None:
+        return False, "CSWeb URL edit not found - set it by hand before deploying"
+    was = (e.window_text() or "").strip()
+    try:
+        e.set_focus()
+        e.set_edit_text(EXPECTED_URL)
+    except Exception as exc:
+        return False, f"could not rewrite URL ({exc})"
+    now = (e.window_text() or "").strip()
+    if now != EXPECTED_URL:
+        return False, f"URL rewrite did not stick (reads {now!r})"
+    return True, f"rewrote {was} -> {EXPECTED_URL}"
 
 
 def restore(dd):
@@ -279,7 +343,12 @@ def deploy_one(inst, do_deploy, skip_add=False):
         return False
     print(f"[{inst}] locked dialog hwnd={dd.handle}  Package name='{want}'  (verified)")
     restore(dd)
-    if not csweb_target_ok(dd):
+    # 2026-08-08 csweb->capi migration: the parked dialogs still held the retired host,
+    # so CHECKING alone would have blocked every re-publish. Rewrite it, then re-verify;
+    # only refuse to deploy if the rewrite could not be made to stick.
+    ok, note = ensure_csweb_target(dd)
+    print(f"   CSWeb target: {note}")
+    if not ok:
         print(f"   ! WARNING: CSWeb target URL != {EXPECTED_URL} -- not auto-deploying; check the dialog")
         do_deploy = False
     base = ROOT / inst
@@ -345,7 +414,8 @@ def check_one(inst):
     if not dd:
         print(f"[{inst}] NO dialog with Package name '{want}'  (open it in Designer)")
         return False
-    url = csweb_target_ok(dd)
+    url, url_note = ensure_csweb_target(dd)
+    print(f"   CSWeb target: {url_note}")
     print(f"[{inst}] dialog hwnd={dd.handle}  Package name='{want}' (verified)  "
           f"CSWeb target {'OK' if url else 'MISMATCH'}")
     return True

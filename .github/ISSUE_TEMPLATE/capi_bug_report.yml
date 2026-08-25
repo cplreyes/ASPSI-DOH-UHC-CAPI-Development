@@ -1,6 +1,6 @@
 name: CAPI Bug Report (F1 / F3 / F4)
 description: Report a defect found while desk-testing or running the CSPro/CSEntry CAPI instruments
-labels: ["bug"]
+labels: ["bug", "from-uat-round-7-2026-08"]
 body:
   - type: markdown
     attributes:

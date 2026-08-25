@@ -186,5 +186,25 @@ deliverables/CSWeb/capi-portal/src/
 # Sanitize (env-var the password) before ever tracking it.
 /deliverables/CSWeb/auth/labtest.sh
 
+# Office lock/temp files (created while a workbook is open)
+~$*
+
+# Cleared-questionnaire CORPUS extracted from the [FOR DOH ONLY] Deliverable No. 2 PDFs
+# (2026-08-14). Same policy as translations-paper-extract/ above: this repo is PUBLIC and
+# these are verbatim reproductions of the DOH/SJREB-cleared instruments, so the raw dumps
+# and the bulk derived reports stay local. The TOOLING in that folder (*.py, README.md) is
+# secret-free and IS tracked, as is notes.json — its content already ships inside the
+# tracked .qsf, so ignoring it would protect nothing.
+/deliverables/CSPro/data/translations-official/text/
+/deliverables/CSPro/data/translations-official/classes/
+/deliverables/CSPro/data/translations-official/official_translations.json
+/deliverables/CSPro/data/translations-official/verbatim_report.json
+/deliverables/CSPro/data/translations-official/safe_to_apply.json
+/deliverables/CSPro/data/translations-official/apply_diff.json
+/deliverables/CSPro/data/translations-official/poisoned_keys.json
+/deliverables/CSPro/data/translations-official/poisoned2.json
+/deliverables/CSPro/data/translations-official/join_ok.json
+/deliverables/CSPro/data/translations-official/FINDINGS.md
+/deliverables/CSPro/data/translations-official/TICKET-COUNTER-CHECK.md
 # f2-api server compiled output — rebuildable from src via tsc; never commit.
 /deliverables/F2/PWA/server/dist/

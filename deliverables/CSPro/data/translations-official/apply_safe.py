@@ -4,24 +4,20 @@ r"""Write the verified-safe cleared translations into the instrument translation
 Fills strings the tablet currently renders in English, using the DOH-cleared June-5
 wording verbatim. Nothing is authored here.
 
-THE CONSTRAINT THAT SHAPES THIS SCRIPT
---------------------------------------
-apply_translations() keys on the FULL English label text of each label node
-(cspro_helpers.apply_translations). For a value-set option the label is the BARE option
-text (cspro_helpers._value_set), so a key like "No" is shared by EVERY value set in that
-instrument - 36 of them in F1. A key therefore cannot carry two different translations.
+2026-08-17 v2 — NAME-SCOPED KEYS. The old applier keyed on full English label text,
+where a bare option key ("No") was shared by every value set in the instrument (36 in
+F1), so per-question wording could not be expressed and 32 cleared keys had to be
+skipped as conflicting (ILO Yes/No among them — the #1222 wall). The maps are now
+name-scoped (cspro_helpers.walk_labeled_nodes):
 
-So an option fix is only safe when every question proposing it proposes the SAME wording.
-Where the cleared source disagrees across questions (the Dai/Dae split behind #1222), the
-key is SKIPPED and reported: expressing it needs per-question keys, i.e. a generator
-change, not a translation-map edit.
+    stem   -> item:<ITEM> and vs:<ITEM>_VS1 (the value-set label mirrors the item label)
+    option -> val:<VS>:<code>, resolved from the safe entry's (item, index) against the
+              PRE-APPLY source dictionary, with the entry's English asserted against the
+              value's English label — a moved option is a skip, never a silent mis-write
 
-Also skipped: keys that already hold a real translation. RECOVERABLE means the tablet
-shows English, so such a key means the audit and the map disagree - not something to
-overwrite silently.
-
-Formatting is preserved per file (indent width, CRLF, insertion order). A blind re-dump
-produced ~2,700 lines of diff noise on 2026-08-13 and buried the real change.
+Still skipped: keys already holding a DIFFERENT translation (the audit said English
+renders, so map-vs-audit disagreement is surfaced, not overwritten), and proposals
+equal to the English. Idempotent: already-applied entries count as `already_same`.
 
     python apply_safe.py                 # dry run - report only
     python apply_safe.py --apply         # write the maps
@@ -32,10 +28,19 @@ import io
 import json
 import os
 import re
-from collections import Counter, OrderedDict, defaultdict
+import sys
+from collections import Counter, OrderedDict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CSPRO = os.path.abspath(os.path.join(HERE, "..", ".."))
+sys.path.insert(0, CSPRO)
+sys.path.insert(0, HERE)
+from cspro_helpers import walk_labeled_nodes, _value_pair_key  # noqa: E402
+from migrate_maps_namekeys import capture_source_dict  # noqa: E402
+
+if hasattr(sys.stdout, "buffer") and (sys.stdout.encoding or "").lower() != "utf-8":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", line_buffering=True)
+
 SAFE = os.path.join(HERE, "safe_to_apply.json")
 
 
@@ -60,6 +65,54 @@ def save_map(path, data, indent, crlf):
         fh.write("\n")
 
 
+def build_resolver(inst):
+    """(entry) -> list of name-scoped keys, using the pre-apply source dictionary."""
+    src = capture_source_dict(inst, "generate_dcf.py")
+    all_keys = set()
+    for key, _node in walk_labeled_nodes(src):
+        all_keys.add(key)
+    items = {}
+    for lvl in src.get("levels", []):
+        pool = list((lvl.get("ids") or {}).get("items", []) or [])
+        for rec in lvl.get("records", []) or []:
+            pool.extend(rec.get("items", []) or [])
+        for it in pool:
+            items[it.get("name")] = it
+
+    def resolve(entry):
+        item = items.get(entry.get("item"))
+        if item is None:
+            return None, f"item {entry.get('item')!r} not in dictionary"
+        if entry.get("kind") == "stem":
+            keys = [k for k in (f"item:{entry['item']}", f"vs:{entry['item']}_VS1")
+                    if k in all_keys]
+            return (keys or None), (None if keys else "no stem keys in dictionary")
+        # option
+        vss = item.get("valueSets") or []
+        if not vss:
+            return None, "item has no value set"
+        vs = vss[0]
+        values = vs.get("values") or []
+        idx = entry.get("index")
+        cand = None
+        if isinstance(idx, int) and 0 <= idx < len(values):
+            v = values[idx]
+            v_en = (v.get("labels") or [{}])[0].get("text", "")
+            if norm(v_en).casefold() == norm(entry.get("english")).casefold():
+                cand = v
+        if cand is None:      # index drifted — fall back to a UNIQUE English match
+            hits = [v for v in values
+                    if norm((v.get("labels") or [{}])[0].get("text", "")).casefold()
+                    == norm(entry.get("english")).casefold()]
+            if len(hits) == 1:
+                cand = hits[0]
+        if cand is None:
+            return None, "option not found by index or unique English match"
+        return [f"val:{vs.get('name')}:{_value_pair_key(cand)}"], None
+
+    return resolve
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true")
@@ -74,6 +127,7 @@ def main():
     for inst in sorted(safe):
         if a.only and inst != a.only:
             continue
+        resolve = build_resolver(inst)
         tdir = os.path.join(CSPRO, inst, "translations")
         for lg in sorted(safe[inst]):
             path = os.path.join(tdir, lg.lower() + ".json")
@@ -82,35 +136,41 @@ def main():
                 continue
             m, indent, crlf = load_map(path)
 
-            # group proposals by the key apply_translations will actually look up
-            proposals = defaultdict(list)
-            for e in safe[inst][lg]:
-                proposals[e["english"]].append(e)
-
             writes, skips = OrderedDict(), []
-            for key, entries in proposals.items():
-                vals = {norm(e["apply"]) for e in entries if norm(e["apply"])}
-                if not vals:
+            proposed = {}                       # key -> value (conflict guard)
+            for e in safe[inst][lg]:
+                val = norm(e.get("apply"))
+                if not val:
                     continue
-                if len(vals) > 1:
-                    skips.append({"key": key, "reason": "conflicting wording across "
-                                  f"{len(entries)} questions - needs per-question keys",
-                                  "values": sorted(vals)[:4],
-                                  "questions": sorted({e["q"] for e in entries})[:8]})
-                    grand["skip_conflict"] += 1
-                    continue
-                val = vals.pop()
-                cur = m.get(key)
-                if cur is not None and norm(cur) != norm(key):
-                    skips.append({"key": key, "reason": "map already holds a translation",
-                                  "current": cur, "proposed": val})
-                    grand["skip_existing"] += 1
-                    continue
-                if norm(val) == norm(key):
+                if val.casefold() == norm(e.get("english")).casefold():
                     grand["skip_same_as_english"] += 1
                     continue
-                writes[key] = val
-                grand["write"] += 1
+                keys, why = resolve(e)
+                if not keys:
+                    skips.append({"entry": {k: e.get(k) for k in ("item", "kind", "index", "q")},
+                                  "reason": why})
+                    grand["skip_unresolved"] += 1
+                    continue
+                for key in keys:
+                    if key in proposed and proposed[key] != val:
+                        skips.append({"key": key, "reason": "two safe entries propose "
+                                      "different wording for the same node",
+                                      "values": [proposed[key], val]})
+                        grand["skip_conflict"] += 1
+                        continue
+                    proposed[key] = val
+                    cur = m.get(key)
+                    if cur is not None:
+                        if norm(cur) == val:
+                            grand["already_same"] += 1
+                        else:
+                            skips.append({"key": key, "reason": "map already holds a "
+                                          "different translation", "current": cur,
+                                          "proposed": val})
+                            grand["skip_existing"] += 1
+                        continue
+                    writes[key] = val
+                    grand["write"] += 1
 
             diff_out.setdefault(inst, {})[lg] = {
                 "writes": writes, "skips": skips,
@@ -125,9 +185,10 @@ def main():
                 save_map(path, m, indent, crlf)
 
     print(f"\n{'APPLIED' if a.apply else 'DRY RUN'} - "
-          f"write {grand['write']}, "
-          f"skip(conflict) {grand['skip_conflict']}, "
+          f"write {grand['write']}, already-same {grand['already_same']}, "
           f"skip(existing) {grand['skip_existing']}, "
+          f"skip(conflict) {grand['skip_conflict']}, "
+          f"skip(unresolved) {grand['skip_unresolved']}, "
           f"skip(same as English) {grand['skip_same_as_english']}")
     with io.open(a.report, "w", encoding="utf-8") as fh:
         json.dump(diff_out, fh, ensure_ascii=False, indent=1)

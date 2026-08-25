@@ -10,7 +10,7 @@
 # Step 0 — ship (run LOCALLY, Git Bash). The server changed at P4 (kill_switch
 # gate on /exec + facilities barangay), so the f2-api package re-ships too:
 #
-#   cd /c/Users/analy/Documents/analytiflow/1_Projects/aspsi-f2-staging-wt/deliverables/F2/PWA/server
+#   cd <repo>/deliverables/F2/PWA/server
 #   npx tsc -p tsconfig.json
 #   tar czf - package.json package-lock.json dist ddl deploy/Dockerfile \
 #     | ssh -i /c/Users/analy/.ssh/aspsi-csweb root@207.148.65.115 \

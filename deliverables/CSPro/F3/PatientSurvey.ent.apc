@@ -682,6 +682,17 @@ postproc
   endif;
 
 PROC ENUM_RESULT_FINAL_VISIT
+preproc
+  { #1290 (UAT R7, 2026-08-20): the enumerator picklist mirrors the paper's six
+    codes (ENUM_RESULT_FINAL_VISIT_PICK_VS1); the full set incl. 7 Replaced is active
+    only when the BREAKOFF flow assigned a replacement (or a stale Replaced value
+    persists after back-nav to BREAKOFF). Preproc re-fires on re-entry, so the swap
+    holds in both directions -- the F1 Q108 setvalueset pattern. }
+  if BREAKOFF in 5, 6, 7 or ENUM_RESULT_FINAL_VISIT = 7 then
+    setvalueset(ENUM_RESULT_FINAL_VISIT, ENUM_RESULT_FINAL_VISIT_VS1);
+  else
+    setvalueset(ENUM_RESULT_FINAL_VISIT, ENUM_RESULT_FINAL_VISIT_PICK_VS1);
+  endif;
 postproc
   { #561: classify from the final Result-of-Visit. Completed codes 1/2/5 -> Completed;
     3 Postponed, 4 Incomplete, 6 Withdraw -> Partial. }
@@ -714,18 +725,12 @@ postproc
 
 
 { ---- #164 Outpatient vs Inpatient branching ---- }
-PROC Q88_WHY_VISIT
-preproc
-  { #441: not Outpatient -> skip Section G to the START of Section H (Q105), NOT to Q116.
-    The old target (Q116) jumped past Section H entirely, so INPATIENTS lost all of Section H.
-    Q105's own gate (PATIENT_TYPE <> 2 -> skip to Q116) then decides: inpatient keeps H,
-    a blank/other type falls through to Q116. }
-  if PATIENT_TYPE <> 1 then    { not Outpatient -> skip Section G; land at Section H start }
-    skip to Q105_REASON;
-  endif;
-
 PROC Q105_REASON
 preproc
+  { #1305 (2026-08-20): target back to Q116_NBB_HEARD (Section I). The aug17 front-load
+    that had sent it to Q53_HAS_PCP (Section E) is reversed -- E and F are now asked
+    BEFORE G/H again, in the paper's printed order, so by the time a respondent reaches
+    H's gate Section E is already behind them and the next unanswered block is I. }
   if PATIENT_TYPE <> 2 then    { not Inpatient -> skip Section H entirely }
     skip to Q116_NBB_HEARD;
   endif;
@@ -733,8 +738,9 @@ preproc
 
 { ---- Q98 payment-matrix 'Other (specify)' gates: Option B fan-out (#689, 2026-06-19)
   re-pointed these from the old flat Q98_PAY_06 / Q98_PAY_15 flags (now removed) to
-  pos("06"/"15", Q98_SOURCES). The gated-text PROCs are emitted by Q98_ROSTER_PROCS
-  (build_roster_procs gated_texts=...), not here. ---- }
+  pos("06"/"16", Q98_SOURCES) -- code 16 since aug17 inserted 'Quantified Free Service'
+  at 15 and pushed 'Other (specify)' to 16. The gated-text PROCs are emitted by
+  Q98_ROSTER_PROCS (build_roster_procs gated_texts=...), not here. ---- }
 
 { ---- #558/#694 (R4): Q114 (why no PhilHealth) gate ----
   Q114 is now a Check Box base (select_all -> tick-all); the PhilHealth-availed gate
@@ -926,36 +932,45 @@ postproc
   concatenated 2-digit condition codes (CSEntry Check Box). The old 20 Yes/No items are
   gone, so these are hand-written (the select-all auto-gen no longer sees an _O run for
   Q148). 2026-07-02 #450-class fix: the '19' membership test chunk-scans — pos("19", ...)
-  DID false-match across code boundaries (01+99 packs "0199", which contains "19"). ---- }
+  DID false-match across code boundaries (01+99 packs "0199", which contains "19").
+  aug17: paper's Q148 coding has no 'No condition' item at all (dropped from the build,
+  its old exclusivity rule removed with it) and moves 'Other (Specify)' from the old
+  anti-collision code 99 onto the paper's real code 19 — kept the aligned-chunk scan
+  (not pos()) for the 19 test as a matter of established codebase caution, even though
+  the specific 01+99 collision this originally guarded against can't recur once no
+  remaining code starts with '9' except 19 itself. ---- }
 PROC Q148_CONDITIONS
 postproc
-  numeric qcN; numeric qcK; numeric qcP; numeric qcHit19;
   if length(strip(Q148_CONDITIONS)) = 0 then
-    errmsg(1011);
-    reenter;
-  endif;
-  { exclusivity (HARD — #1166): 'No condition - Regular check-up only' (19) must stand alone.
-    Aligned 2-char chunk scan, NOT pos(): codes 01 + 99 pack to "0199", which contains "19". }
-  qcHit19 = 0;
-  qcN = length(strip(Q148_CONDITIONS)) / 2;
-  do qcK = 1 while qcK <= qcN
-    qcP = (qcK - 1) * 2 + 1;
-    if tonumber(Q148_CONDITIONS[qcP:2]) = 19 then qcHit19 = 1; endif;
-  enddo;
-  if qcHit19 = 1 and length(strip(Q148_CONDITIONS)) > 2 then
-    errmsg(1264);
+    errmsg(1279);
     reenter;
   endif;
 
 PROC Q148_CONDITIONS_OTHER_TXT
 preproc
-  if pos("99", Q148_CONDITIONS) = 0 then
-    Q148_CONDITIONS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+  numeric qotN; numeric qotK; numeric qotP; numeric qotHit19;
+  qotHit19 = 0;
+  qotN = length(strip(Q148_CONDITIONS)) / 2;
+  do qotK = 1 while qotK <= qotN
+    qotP = (qotK - 1) * 2 + 1;
+    if tonumber(Q148_CONDITIONS[qotP:2]) = 19 then qotHit19 = 1; endif;
+  enddo;
+  if qotHit19 = 0 then
+    Q148_CONDITIONS_OTHER_TXT = "";   { gated: 'Other (Specify)' (19) not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("99", Q148_CONDITIONS) > 0 and length(strip(Q148_CONDITIONS_OTHER_TXT)) = 0 then
-    errmsg(1013);
+  { qotHit19 from preproc doesn't persist to postproc across a re-entry cycle in every
+    CSPro execution path -- recompute defensively rather than trust it survives. }
+  numeric qotN2; numeric qotK2; numeric qotP2; numeric qotHit19b;
+  qotHit19b = 0;
+  qotN2 = length(strip(Q148_CONDITIONS)) / 2;
+  do qotK2 = 1 while qotK2 <= qotN2
+    qotP2 = (qotK2 - 1) * 2 + 1;
+    if tonumber(Q148_CONDITIONS[qotP2:2]) = 19 then qotHit19b = 1; endif;
+  enddo;
+  if qotHit19b = 1 and length(strip(Q148_CONDITIONS_OTHER_TXT)) = 0 then
+    errmsg(1280);
     reenter;
   endif;
 
@@ -2359,6 +2374,47 @@ postproc
     reenter;
   endif;
 
+PROC Q88_WHY_VISIT
+preproc
+  { #441: not Outpatient -> skip Section G to the START of Section H (Q105), NOT to
+    what follows H. The old target jumped past Section H entirely, so INPATIENTS lost
+    all of Section H. Q105's own gate (PATIENT_TYPE <> 2 -> skip past H) then decides:
+    inpatient keeps H, a blank/other type falls through past it. }
+  if PATIENT_TYPE <> 1 then    { not Outpatient -> skip Section G; land at Section H start }
+    skip to Q105_REASON;
+  endif;
+postproc
+  if length(strip(Q88_WHY_VISIT)) = 0 then
+    errmsg(1281);
+    reenter;
+  endif;
+
+PROC Q88_WHY_VISIT_OTHER_TXT
+preproc
+  numeric otN; numeric otK; numeric otP; numeric otHit;
+  otHit = 0;
+  otN = length(strip(Q88_WHY_VISIT)) / 2;
+  do otK = 1 while otK <= otN
+    otP = (otK - 1) * 2 + 1;
+    if tonumber(Q88_WHY_VISIT[otP:2]) = 99 then otHit = 1; endif;
+  enddo;
+  if otHit = 0 then
+    Q88_WHY_VISIT_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  numeric otN2; numeric otK2; numeric otP2; numeric otHit2;
+  otHit2 = 0;
+  otN2 = length(strip(Q88_WHY_VISIT)) / 2;
+  do otK2 = 1 while otK2 <= otN2
+    otP2 = (otK2 - 1) * 2 + 1;
+    if tonumber(Q88_WHY_VISIT[otP2:2]) = 99 then otHit2 = 1; endif;
+  enddo;
+  if otHit2 = 1 and length(strip(Q88_WHY_VISIT_OTHER_TXT)) = 0 then
+    errmsg(1282);
+    reenter;
+  endif;
+
 PROC Q90_NOT_CONFINED
 postproc
   if length(strip(Q90_NOT_CONFINED)) = 0 then
@@ -2466,26 +2522,26 @@ postproc
 
 PROC Q18_INCOME_BRACKET
 postproc
-  { #398: 'Don't know' (99) — respondent can't even estimate household income.
-    No bracket amount is required; bypass the bracket<->amount reconciliation. }
-  if Q18_INCOME_BRACKET = 99 then
+  { R16 (Aug-17 rewrite, 2026-08-18, reverses R4/#631): paper's 7 PSA income-class
+    bands replace the deployed 11-band 50k scheme; DK is now code 8 (was 99), RF is
+    code 9 (was 98). Boundaries verbatim from normalized/F3-paper.csv qnum=18. }
+  { DK (8) — respondent can't even estimate household income. No bracket amount is
+    required; bypass the bracket<->amount reconciliation. }
+  if Q18_INCOME_BRACKET = 8 then
     exit;
   endif;
-  { bracket must contain Q18_INCOME_AMOUNT — #631: 11 contiguous 50k bands }
+  { bracket must contain Q18_INCOME_AMOUNT — R16: 7 PSA bands, boundaries verbatim
+    from the Aug-17 paper (12,030 / 24,060 / 48,120 / 84,210 / 144,360 / 240,600) }
   numeric a = Q18_INCOME_AMOUNT;
   numeric ok = 0;
   if a = -98 or a = -99 then ok = 1; endif;   { #761: -98 don't-know / -99 refused -> no bracket cross-check }
-  if Q18_INCOME_BRACKET = 1  and a < 50000 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 2  and a >= 50000  and a <= 99999  then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 3  and a >= 100000 and a <= 149999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 4  and a >= 150000 and a <= 199999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 5  and a >= 200000 and a <= 249999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 6  and a >= 250000 and a <= 299999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 7  and a >= 300000 and a <= 349999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 8  and a >= 350000 and a <= 399999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 9  and a >= 400000 and a <= 449999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 10 and a >= 450000 and a <= 499999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 11 and a >= 500000 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 1 and a < 12030 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 2 and a >= 12030  and a <= 24060  then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 3 and a >= 24061  and a <= 48120  then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 4 and a >= 48121  and a <= 84210  then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 5 and a >= 84211  and a <= 144360 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 6 and a >= 144361 and a <= 240600 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 7 and a > 240600 then ok = 1; endif;
   if ok = 0 then
     errmsg(1127, a);
     reenter;
@@ -2520,9 +2576,9 @@ postproc
     reenter;
   endif;
 
-PROC Q28_WASHER
+PROC Q29_WASHER
 postproc
-  if Q22_ELECTRICITY = 2 and (Q26_REFRIGERATOR = 1 or Q27_TELEVISION = 1 or Q28_WASHER = 1) then
+  if Q22_ELECTRICITY = 2 and (Q27_REFRIGERATOR = 1 or Q28_TELEVISION = 1 or Q29_WASHER = 1) then
     errmsg(1133);
   endif;
 
@@ -2912,7 +2968,7 @@ preproc
   gt = 0; gn = length(strip(Q98_SOURCES)) / 2;
   do gk = 1 while gk <= gn
     gp = (gk - 1) * 2 + 1;
-    if Q98_SOURCES[gp:2] = "15" then gt = 1; endif;
+    if Q98_SOURCES[gp:2] = "16" then gt = 1; endif;
   enddo;
   if gt = 0 then
     Q98_OTHER_TXT = "";   { not ticked -> not enterable }
@@ -2923,7 +2979,7 @@ postproc
   ht = 0; hn = length(strip(Q98_SOURCES)) / 2;
   do hk = 1 while hk <= hn
     hp = (hk - 1) * 2 + 1;
-    if Q98_SOURCES[hp:2] = "15" then ht = 1; endif;
+    if Q98_SOURCES[hp:2] = "16" then ht = 1; endif;
   enddo;
   if ht = 1 and length(strip(Q98_OTHER_TXT)) = 0 then
     errmsg(1155);
@@ -3203,7 +3259,7 @@ preproc
   gt = 0; gn = length(strip(Q113_SOURCES)) / 2;
   do gk = 1 while gk <= gn
     gp = (gk - 1) * 2 + 1;
-    if Q113_SOURCES[gp:2] = "13" then gt = 1; endif;
+    if Q113_SOURCES[gp:2] = "14" then gt = 1; endif;
   enddo;
   if gt = 0 then
     Q113_PAY_OTHER_TXT = "";   { not ticked -> not enterable }
@@ -3214,7 +3270,7 @@ postproc
   ht = 0; hn = length(strip(Q113_SOURCES)) / 2;
   do hk = 1 while hk <= hn
     hp = (hk - 1) * 2 + 1;
-    if Q113_SOURCES[hp:2] = "13" then ht = 1; endif;
+    if Q113_SOURCES[hp:2] = "14" then ht = 1; endif;
   enddo;
   if ht = 1 and length(strip(Q113_PAY_OTHER_TXT)) = 0 then
     errmsg(1174);
@@ -3226,7 +3282,7 @@ postproc
 PROC Q1_IS_PATIENT
 postproc
   if Q1_IS_PATIENT = 1 then
-    skip to Q4_NAME;
+    skip to PATIENT_TYPE;
   endif;
 
 PROC Q8_LGBTQIA
@@ -3391,15 +3447,21 @@ postproc
     skip to Q113_SOURCES;
   endif;
 
+PROC Q1142_HAS_OTHER
+postproc
+  if Q1142_HAS_OTHER = 2 then
+    skip to Q116_NBB_HEARD;
+  endif;
+
 PROC Q116_NBB_HEARD
 postproc
-  if Q116_NBB_HEARD in 2,3 then
+  if Q116_NBB_HEARD = 2 then
     skip to Q119_ZBB_HEARD;
   endif;
 
 PROC Q119_ZBB_HEARD
 postproc
-  if Q119_ZBB_HEARD in 2,3 then
+  if Q119_ZBB_HEARD = 2 then
     skip to Q124_MAIFIP_HEARD;
   endif;
 
@@ -3648,18 +3710,6 @@ preproc
 postproc
   if Q84_SERVICE_TYPE = 5 and length(strip(Q84_SERVICE_TYPE_OTHER_TXT)) = 0 then
     errmsg(1194);
-    reenter;
-  endif;
-
-PROC Q88_WHY_VISIT_OTHER_TXT
-preproc
-  if Q88_WHY_VISIT <> 8 then
-    Q88_WHY_VISIT_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q88_WHY_VISIT = 8 and length(strip(Q88_WHY_VISIT_OTHER_TXT)) = 0 then
-    errmsg(1195);
     reenter;
   endif;
 
@@ -4008,8 +4058,8 @@ preproc
     noinput;
   endif;
 postproc
-  if Q124_MAIFIP_HEARD in 2,3 then
-    skip to Q130_REDUCED_SPEND;   { No / IDK (and did not avail) -> skip Q125-Q129 }
+  if Q124_MAIFIP_HEARD = 2 then
+    skip to Q130_REDUCED_SPEND;   { No (and did not avail) -> skip Q125-Q129; IDK option removed per #1289 }
   endif;
 
 { ---- Soft plausibility cross-field warnings (spec §3.5-§3.13) ---- }
@@ -4035,15 +4085,6 @@ PROC Q17_INCOME_SOURCE
 postproc
   if (Q16_EMPLOYMENT = 4 or Q16_EMPLOYMENT = 5) and Q17_INCOME_SOURCE >= 1 and Q17_INCOME_SOURCE <= 5 then
     errmsg(1234);
-  endif;
-
-PROC Q29_SEC_CLASS
-postproc
-  if Q29_SEC_CLASS = 1 and Q18_INCOME_BRACKET >= 1 and Q18_INCOME_BRACKET <= 2 then
-    errmsg(1235);
-  endif;
-  if Q29_SEC_CLASS = 3 and Q18_INCOME_BRACKET >= 3 and Q18_INCOME_BRACKET <= 11 then
-    errmsg(1236);
   endif;
 
 { ============================================================================
