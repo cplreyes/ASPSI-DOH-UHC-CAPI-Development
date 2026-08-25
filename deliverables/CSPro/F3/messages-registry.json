@@ -1,6 +1,6 @@
 {
   "_note": "Machine-managed by cspro_helpers.numberize_errmsgs() — do not hand-edit. Maps each errmsg text to its permanent message number; numbers are never reused or renumbered.",
-  "next": 1281,
+  "next": 1283,
   "messages": {
     "PSGC region lookup failed — verify psgc_region.dat is deployed": 1001,
     "GPS hardware unavailable — check tablet location permission.": 1002,
@@ -281,6 +281,8 @@
     "97.2 Tick at least one expense item, or tick 'None' if there were no out-of-bill expenses.": 1277,
     "97.2 'None' must be the only choice — untick it or the other expense items before continuing.": 1278,
     "Tick at least one medical condition.": 1279,
-    "'Other (Specify)' was ticked for Q148 — please specify.": 1280
+    "'Other (Specify)' was ticked for Q148 — please specify.": 1280,
+    "Select at least one option for Q88 before continuing.": 1281,
+    "'Other (specify)' was ticked for Q88 - please specify.": 1282
   }
 }

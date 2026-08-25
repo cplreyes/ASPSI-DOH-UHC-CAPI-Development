@@ -117,5 +117,11 @@
     "Fixed": [
       "On-screen question de-duplication (R25): form field captions are now short question tags, so the question text appears once per screen instead of twice. Display only."
     ]
+  },
+  "F1 4.0.0": {
+    "Changed": [
+      "Q35.2 primary-care quality measures: replaced the 3-entry placeholder option list with DOH's printed 10-option list (#1311). Checkbox field length 6 -> 20; stored codes re-map."
+    ],
+    "breaking": true
   }
 }

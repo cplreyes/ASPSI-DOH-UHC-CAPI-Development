@@ -26,7 +26,7 @@ from cspro_helpers import (
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, checkbox_multiselect, uhc9_item, record,
     build_field_control, build_geo_id, build_dictionary, build_id_block, write_dcf,
-    derived_geo_code_items, ENUM_RESULT_OPTIONS_F3, BREAKOFF_OPTIONS,
+    derived_geo_code_items, ENUM_RESULT_OPTIONS_F3, REPLACED_CODE_F3, BREAKOFF_OPTIONS,
     apply_translations,
     _gps_fields, _photo_block,
 )
@@ -205,7 +205,8 @@ def build_f3_field_control():
                                date_mmddyyyy=True,
                                extra_items=extra + derived_geo_code_items(),
                                date_label_entity="the Patient",
-                               result_options=ENUM_RESULT_OPTIONS_F3)
+                               result_options=ENUM_RESULT_OPTIONS_F3,
+                               replaced_code=REPLACED_CODE_F3)
 
 
 # ============================================================
@@ -371,9 +372,10 @@ def build_section_b():
     # declared data-shape break (F3 -> 4.0.0). Labels/codes VERBATIM from
     # normalized/F3-paper.csv qnum=18 (WT aug17-tools extract) — 1-digit codes, no
     # zero-fill. DK is now code 8 (was 99); Refuse is now code 9 (was 98). Both stay
-    # out-of-range so the bracket<->amount + SEC cross-checks bypass them (PROC
-    # Q18_INCOME_BRACKET / SOFT_CROSS Q29_SEC_CLASS in generate_apc.py, both updated
-    # to match). See aug17-approved-divergences.md (F3 | Q18).
+    # out-of-range so the bracket<->amount cross-check bypasses them (PROC
+    # Q18_INCOME_BRACKET in generate_apc.py). The Q29_SEC_CLASS SOFT cross-check was
+    # RETIRED with the question on 2026-08-20 (#1286, UAT R7 -- Q29_SEC_CLASS is now
+    # off-form). See aug17-approved-divergences.md (F3 | Q18).
     Q18_BRACKET = [
         ("< PhP12,030",                             "1"),
         ("PhP12,030 to PhP24,060",                  "2"),
@@ -1296,11 +1298,31 @@ def build_section_g():
         ("Other (specify)",                         "6"),   # #1065: paper label; code + specify gate unchanged
     ]
     items = [
-        select_one("Q88_WHY_VISIT",
-                   "88. Why are you visiting [FACILITY_NAME_INPUT] for consultation/advice or treatment?",
-                   Q88_WHY_VISIT, length=1),
-        alpha("Q88_WHY_VISIT_OTHER_TXT",
-              "88. Why visit — Other (specify) text", length=120),
+        # ANA-324 (2026-08-20): select_one -> Check Box (tick-all). The Aug-17 paper
+        # prints "SELECT ALL THAT APPLY" on Q88 (F3-extract.md L1250); the build had
+        # carried it as a single-choice radio since Apr-20, so a patient visiting for
+        # more than one reason could only record one of them. Same conversion the
+        # other 13 F3 tick-lists already use.
+        #
+        # #830: _cb_codes re-codes the 7 real reasons 1..7 -> 01..07 and
+        # "Other (specify)" -> 99. Those ASCEND, which is the rule a checkbox list has
+        # to satisfy -- CSPro slices the field by fixed code width, so a descending or
+        # ragged list decodes ticks onto the wrong options.
+        #
+        # DATA SHAPE CHANGES: numeric(1) -> alpha(16). That moves every item after it
+        # in the record, so it is a MAJOR bump and old .csdb files are not compatible.
+        # Safe to do now: no F3 case has been created or modified on CSWeb since
+        # 2026-07-27 (verified against cspro_sync_history), so there is no collected
+        # data to migrate.
+        #
+        # The hand-declared _OTHER_TXT is gone on purpose -- checkbox_multiselect emits
+        # it from with_other_txt, and declaring both makes a duplicate dictionary item.
+        # The label keeps "[FACILITY_NAME_INPUT]" (the neutralised fill token) and does
+        # NOT gain "Select all that apply." -- that directive is added to the qsf
+        # instruction set instead, so it renders once, not twice (#1189).
+        *checkbox_multiselect("Q88_WHY_VISIT",
+                    "88. Why are you visiting [FACILITY_NAME_INPUT] for consultation/advice or treatment?",
+                    _cb_codes(Q88_WHY_VISIT), with_other_txt=True),
         yes_no("Q89_ADVISED_ADMIT",
                "89. Were you advised for hospitalization / to be admitted in the hospital?"),
         *checkbox_multiselect("Q90_NOT_CONFINED",   # #673: select_all -> Check Box (tick-all)
@@ -1777,17 +1799,14 @@ def build_section_i():
     Q116_HEARD = [
         ("Yes",          "1"),
         ("No",           "2"),  # proceed to Q119
-        ("I don't know", "3"),  # proceed to Q119
     ]
     Q119_HEARD = [
         ("Yes",          "1"),
         ("No",           "2"),  # proceed to Q124
-        ("I don't know", "3"),  # proceed to Q124
     ]
     Q124_HEARD = [
         ("Yes",          "1"),
         ("No",           "2"),  # proceed to Q130
-        ("I don't know", "3"),  # proceed to Q130
     ]
     SOURCE_8 = [
         ("News",                     "1"),
@@ -2372,16 +2391,26 @@ def build_f3_dictionary():
         build_section_b(),
         build_section_c(),
         build_section_d(),
-        # aug17 front-load reorder (order:G,H): G/H moved here, immediately after D and
-        # ahead of E, per the paper's two "Note for CAPI Version" blocks (F3-extract.md
-        # L1237/L1808 -- outpatient/inpatient care front-loaded before primary care
-        # utilization when administered in the RHU/hospital). PROC order in
-        # generate_apc.py did NOT need to move, only skip targets (Q88/Q105 gates +
-        # Q51/AREA_HAS_BUCAS/Q99_BUCAS_HEARD/Q1142_HAS_OTHER retargets).
-        *build_section_g(),   # Option B fan-out: G splits around 6 cost-matrix rosters (Q92/Q94/Q96/Q97.1/Q97.2/Q98)
-        *build_section_h(),   # Option B fan-out: H splits around 4 cost-matrix rosters (Q107/Q109/Q112/Q113)
+        # #1305 (2026-08-20): the aug17 front-load is REVERSED -- sections run in the
+        # paper's PRINTED order again, A,B,C,D,E,F,G,H,I,...
+        #
+        # The Aug-17 paper carries two "Note for CAPI Version" blocks (F3-extract.md
+        # L1237/L1808) asking for outpatient/inpatient care to be front-loaded ahead of
+        # primary-care utilization, and from 2026-08-19 the build did exactly that. UAT
+        # R7 #1305 reported the resulting tablet/booklet mismatch and Carl ruled for the
+        # printed order, so those two notes are deliberately NOT implemented. That is now
+        # a registered divergence in instruments-aug17-extract/aug17-approved-divergences.md
+        # (the order:G,H / order:E,F / note:F / note:G rows) -- do NOT "restore" the
+        # front-load from the paper notes alone without checking with Carl first.
+        #
+        # Reversing this moves RECORDS, so it is a data-shape change (MAJOR bump), and it
+        # un-does the four skip retargets the front-load required -- see generate_apc.py:
+        # Q51 back to Q53_HAS_PCP, and AREA_HAS_BUCAS / Q99_BUCAS_HEARD / Q1142_HAS_OTHER
+        # plus the PROC Q105_REASON gate back to Q116_NBB_HEARD.
         build_section_e(),
         build_section_f(),
+        *build_section_g(),   # Option B fan-out: G splits around 6 cost-matrix rosters (Q92/Q94/Q96/Q97.1/Q97.2/Q98)
+        *build_section_h(),   # Option B fan-out: H splits around 4 cost-matrix rosters (Q107/Q109/Q112/Q113)
         build_section_i(),
         build_section_j(),
         build_section_k(),

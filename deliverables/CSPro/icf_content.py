@@ -241,16 +241,33 @@ CONTINUE_OPTIONS = [("Continue", "1")]
 
 
 # 1190 (PSA comment): PSA Board Resolution No. 01 s. 2017-084 requires the reference
-# year in the title of a statistical survey. The registered title is ASPSI's own
-# "Universal Health Care (UHC) Survey-Year 2" (Survey Manual, SSRCS submission); the
-# reference year comes from the DOH-2651 clearance period. Rendered wherever the
-# clearance block renders: the cover footer and both ICF screens, all instruments.
+# year in the title of a statistical survey. Rendered wherever the clearance block
+# renders -- the cover footer and both ICF screens, in all three instruments (3 screens
+# x 8 locales = 24 sites each). Regulatory metadata, so it is NOT translated: every
+# locale renders the identical string, exactly like the clearance numbers below it.
+#
+# 1304 (UAT R7, 2026-08-20): ASPSI replaced the whole line. It used to read
+#     Universal Health Care (UHC) Survey-Year 2 - Reference Year 2026
+# i.e. the registered title (Survey Manual / SSRCS submission) plus a separately
+# LABELLED reference-year element taken from the DOH-2651 clearance period. Asked
+# whether to replace the line outright or keep that element alongside the new title,
+# ASPSI answered "Replace the whole line", so the labelled element is gone.
+#
+# That still satisfies Board Res. 01 s.2017-084, which requires the reference year
+# IN THE TITLE -- and 2026 now sits inside the title itself. The separate element was
+# belt-and-braces, never the compliance hook, so dropping it costs nothing.
+#
+# The "2026- Year 2" spacing (space BEFORE the hyphen, none after) is ASPSI's own and
+# is reproduced VERBATIM on purpose. We flagged it as a possible typo on #1304 and
+# offered "2026 - Year 2"; they replaced the line without amending it. On a PSA-cleared
+# instrument, matching the string the client supplied beats tidying it. One word from
+# ASPSI flips it -- do not "correct" the spacing unprompted.
 SURVEY_TITLE_HTML = ('<p class="instruction"><b>Universal Health Care (UHC) '
-                     'Survey-Year 2</b> &middot; Reference Year 2026</p>')
+                     'Survey 2026- Year 2</b></p>')
 
 
 def clearance_html(instrument):
-    """Survey title (with reference year, #1190) + the PSA/SJREB clearance block."""
+    """Survey title (reference year inside it, #1190/#1304) + PSA/SJREB clearance."""
     return (SURVEY_TITLE_HTML + '<p class="instruction">PSA SSRCS Clearance No. '
             f'{CLEARANCE_NO[instrument]} &middot; issued July 2026 &middot; valid until '
             '31 July 2027<br/>SJREB: ICF ver. 07/25/2026 &middot; Translated '

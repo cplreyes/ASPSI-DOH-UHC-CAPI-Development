@@ -688,47 +688,6 @@
                           "value": "4"
                         }
                       ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Replaced",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "HIL"
-                        },
-                        {
-                          "text": "Replaced",
-                          "language": "ILO"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "5"
-                        }
-                      ]
                     }
                   ]
                 }
@@ -1013,6 +972,209 @@
                       "pairs": [
                         {
                           "value": "5"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "ENUM_RESULT_FINAL_VISIT_PICK_VS1",
+                  "labels": [
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "WAR"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "HIL"
+                    },
+                    {
+                      "text": "Result of Final Visit",
+                      "language": "ILO"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Completed",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Postponed",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Postponed",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Refused",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Refused",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Refused",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Refused",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Refused",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Refused",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Refused",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Refused",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Incomplete",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Incomplete",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
                         }
                       ]
                     }
@@ -3158,35 +3320,35 @@
                     {
                       "labels": [
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "EN"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "FIL"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "BCL"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "BIS"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "CEB"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "WAR"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "HIL"
                         },
                         {
-                          "text": "Take verification photo",
+                          "text": "Continue",
                           "language": "ILO"
                         }
                       ],
@@ -5368,7 +5530,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -5531,7 +5693,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -7607,7 +7769,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -13782,7 +13944,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -19915,7 +20077,7 @@
                 }
               ],
               "contentType": "alpha",
-              "length": 6,
+              "length": 20,
               "valueSets": [
                 {
                   "name": "Q35_2_PCQM_MEASURES_VS1",
@@ -19957,35 +20119,35 @@
                     {
                       "labels": [
                         {
-                          "text": "Client satisfaction survey",
+                          "text": "Patient or Client satisfaction survey",
                           "language": "EN"
                         },
                         {
-                          "text": "Client satisfaction survey",
+                          "text": "Patient or Client satisfaction survey",
                           "language": "FIL"
                         },
                         {
-                          "text": "Client satisfaction survey",
+                          "text": "Patient or Client satisfaction survey",
                           "language": "BCL"
                         },
                         {
-                          "text": "Client satisfaction survey",
+                          "text": "Patient or Client satisfaction survey",
                           "language": "BIS"
                         },
                         {
-                          "text": "Client satisfaction survey",
+                          "text": "Patient or Client satisfaction survey",
                           "language": "CEB"
                         },
                         {
-                          "text": "Client satisfaction survey",
+                          "text": "Patient or Client satisfaction survey",
                           "language": "WAR"
                         },
                         {
-                          "text": "Client satisfaction survey",
+                          "text": "Patient or Client satisfaction survey",
                           "language": "HIL"
                         },
                         {
-                          "text": "Client satisfaction survey",
+                          "text": "Patient or Client satisfaction survey",
                           "language": "ILO"
                         }
                       ],
@@ -19998,41 +20160,328 @@
                     {
                       "labels": [
                         {
-                          "text": "Dashboards",
+                          "text": "Patient Feedback and Complaints Management System",
                           "language": "EN"
                         },
                         {
-                          "text": "Dashboards",
+                          "text": "Patient Feedback and Complaints Management System",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dashboards",
+                          "text": "Patient Feedback and Complaints Management System",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dashboards",
+                          "text": "Patient Feedback and Complaints Management System",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dashboards",
+                          "text": "Patient Feedback and Complaints Management System",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dashboards",
+                          "text": "Patient Feedback and Complaints Management System",
                           "language": "WAR"
                         },
                         {
-                          "text": "Dashboards",
+                          "text": "Patient Feedback and Complaints Management System",
                           "language": "HIL"
                         },
                         {
-                          "text": "Dashboards",
+                          "text": "Patient Feedback and Complaints Management System",
                           "language": "ILO"
                         }
                       ],
                       "pairs": [
                         {
                           "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Patient Rights and Responsibilities Policy",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Patient Rights and Responsibilities Policy",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Patient Rights and Responsibilities Policy",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Patient Rights and Responsibilities Policy",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Patient Rights and Responsibilities Policy",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Patient Rights and Responsibilities Policy",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Patient Rights and Responsibilities Policy",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Patient Rights and Responsibilities Policy",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Regular Quality or Management Review Meetings",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Regular Quality or Management Review Meetings",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Regular Quality or Management Review Meetings",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Regular Quality or Management Review Meetings",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Regular Quality or Management Review Meetings",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Regular Quality or Management Review Meetings",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Regular Quality or Management Review Meetings",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Regular Quality or Management Review Meetings",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Routine monitoring of quality/performance indicators",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Routine monitoring of quality/performance indicators",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Routine monitoring of quality/performance indicators",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Routine monitoring of quality/performance indicators",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Routine monitoring of quality/performance indicators",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Routine monitoring of quality/performance indicators",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Routine monitoring of quality/performance indicators",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Routine monitoring of quality/performance indicators",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Quality Assurance Plan (QAP)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Quality Assurance Plan (QAP)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Quality Assurance Plan (QAP)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Quality Assurance Plan (QAP)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Quality Assurance Plan (QAP)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Quality Assurance Plan (QAP)",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Quality Assurance Plan (QAP)",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Quality Assurance Plan (QAP)",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Continuous Quality Improvement (CQI) Program",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Continuous Quality Improvement (CQI) Program",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Continuous Quality Improvement (CQI) Program",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Continuous Quality Improvement (CQI) Program",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Continuous Quality Improvement (CQI) Program",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Continuous Quality Improvement (CQI) Program",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Continuous Quality Improvement (CQI) Program",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Continuous Quality Improvement (CQI) Program",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Staff Quality Improvement and Competency Training",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Staff Quality Improvement and Competency Training",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Staff Quality Improvement and Competency Training",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Staff Quality Improvement and Competency Training",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Staff Quality Improvement and Competency Training",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Staff Quality Improvement and Competency Training",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Staff Quality Improvement and Competency Training",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Staff Quality Improvement and Competency Training",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Clinical audit or case review activities",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Clinical audit or case review activities",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Clinical audit or case review activities",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Clinical audit or case review activities",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Clinical audit or case review activities",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Clinical audit or case review activities",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Clinical audit or case review activities",
+                          "language": "HIL"
+                        },
+                        {
+                          "text": "Clinical audit or case review activities",
+                          "language": "ILO"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
                         }
                       ]
                     },
@@ -47745,7 +48194,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -47908,7 +48357,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -48518,7 +48967,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -49287,7 +49736,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -50098,7 +50547,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {
@@ -50585,7 +51034,7 @@
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dai",
                           "language": "BCL"
                         },
                         {

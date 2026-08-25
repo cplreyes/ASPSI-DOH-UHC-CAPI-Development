@@ -68,7 +68,8 @@ from cspro_helpers import (
     _value_set, numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, checkbox_multiselect, record, build_geo_id,
     _gps_fields, _photo_block, derived_geo_code_items,
-    apply_translations, write_dcf, ENUM_RESULT_OPTIONS_F1, BREAKOFF_OPTIONS,
+    apply_translations, write_dcf, ENUM_RESULT_OPTIONS_F1, REPLACED_CODE_F1,
+    BREAKOFF_OPTIONS,
 )
 
 
@@ -228,8 +229,12 @@ def build_field_control():
         numeric("TOTAL_NUMBER_OF_VISITS",       "Total Number of Visits",                       length=3),
         # Result-of-Visit codes come from cspro_helpers (ENUM_RESULT_OPTIONS_F1) so F1 cannot
         # drift from F3/F4 — "Replaced" (5) was added there 2026-07-14 and lands here for free.
+        # #1290/#1301 class extension (UAT R7, 2026-08-20): the paper's FIELD CONTROL
+        # code list has four codes; 5 "Replaced" is logic-assigned (PROC BREAKOFF 5-7),
+        # never an enumerator pick, so FIRST VISIT's picklist drops it outright.
         numeric("ENUM_RESULT_FIRST_VISIT",      "Result of First Visit",                        length=1,
-                value_set_options=ENUM_RESULT_OPTIONS_F1),
+                value_set_options=[o for o in ENUM_RESULT_OPTIONS_F1
+                                   if o[1] != REPLACED_CODE_F1]),
         numeric("ENUM_RESULT_FINAL_VISIT",      "Result of Final Visit",                        length=1,
                 value_set_options=ENUM_RESULT_OPTIONS_F1),
         # #744 break-off control — ported from the F3/F4 Cluster-5 pattern. Lives on the
@@ -262,6 +267,15 @@ def build_field_control():
     # ^ single-number redesign (2026-06-10): REGION_CODE/PROVINCE_HUC_CODE/
     #   CITY_MUNICIPALITY_CODE/FACILITY_NO/CASE_SEQ (derived from QUESTIONNAIRE_NUMBER)
     #   + REGION_NAME/PROVINCE_NAME/CITY_NAME (read-only PSGC names) live here now.
+    # #1290/#1301 class extension: FINAL VISIT keeps the FULL set at valueSets[0]
+    # (synced-case labels, verify_questions and optimize_capture_types read index 0)
+    # and gains a picker set without Replaced; the apc preproc selects between them
+    # via setvalueset() (the F1 Q108 pattern).
+    for _it in items:
+        if _it.get("name") == "ENUM_RESULT_FINAL_VISIT":
+            _it["valueSets"].append(_value_set(
+                "ENUM_RESULT_FINAL_VISIT_PICK", "Result of Final Visit",
+                [o for o in ENUM_RESULT_OPTIONS_F1 if o[1] != REPLACED_CODE_F1]))
     return record("FIELD_CONTROL", "Field Control", "A", items)
 
 
@@ -438,10 +452,22 @@ def build_section_c():
     # "35.2" without its terminal period, which is why the extractor files it
     # under a duplicate qnum "35"). A real multi-select with no Apr-20
     # counterpart, so it gets its own item rather than joining the .1 probe loop.
+    # #1311 (2026-08-24): the list above shipped as a 3-entry PLACEHOLDER — the Aug-17
+    # extract never carried the printed options. DOH's printed Aug-17 list has 10, and it
+    # does NOT contain "Dashboards", so this is a REPLACEMENT of the option set, not an
+    # addition. Source codes here are placeholders: _cb_codes() re-codes to fixed-width
+    # 01..09 for the real options + 99 for Other (ascending, per the #830 rule).
     Q35_2_MEASURES = [
-        ("Client satisfaction survey", "1"),
-        ("Dashboards",                 "2"),
-        ("Other (specify)",            "3"),
+        ("Patient or Client satisfaction survey",               "1"),
+        ("Patient Feedback and Complaints Management System",   "2"),
+        ("Patient Rights and Responsibilities Policy",          "3"),
+        ("Regular Quality or Management Review Meetings",       "4"),
+        ("Routine monitoring of quality/performance indicators", "5"),
+        ("Quality Assurance Plan (QAP)",                        "6"),
+        ("Continuous Quality Improvement (CQI) Program",        "7"),
+        ("Staff Quality Improvement and Competency Training",   "8"),
+        ("Clinical audit or case review activities",            "9"),
+        ("Other (specify)",                                     "10"),
     ]
     # Q36/Q37 are TRUE Check Box multi-selects (GH #377/#378/#379, mirrors F3
     # Q148): codes are fixed-width 2-digit so CSEntry's Check Box capture can

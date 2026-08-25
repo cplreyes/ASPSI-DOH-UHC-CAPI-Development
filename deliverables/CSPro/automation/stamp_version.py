@@ -65,8 +65,20 @@ def load():
     return json.loads(VERSIONS.read_text(encoding="utf-8"))
 
 
+def channel_tag(v, key):
+    """" [DEV]" for a non-production channel, "" for a release build.
+
+    Added 2026-08-20 once the PSA submission set was tagged (capi-psa-2026-08-20). A
+    SemVer pre-release suffix was rejected deliberately: `bump` parses the version with
+    int(x) per dot-segment, so "3.1.6-dev" would raise. Keeping the channel in its own
+    field leaves the arithmetic untouched and still reaches the two surfaces a person
+    reads -- the app-list entry and the on-screen build footer."""
+    return "" if (v[key].get("channel", "release") == "release") else " [DEV]"
+
+
 def description(v, key):
-    return f"{v[key]['app']} ({key}) - v{v[key]['version']} ({v[key]['date']})"
+    return (f"{v[key]['app']} ({key}) - v{v[key]['version']} ({v[key]['date']})"
+            f"{channel_tag(v, key)}")
 
 
 def qsf_marker(v, key):

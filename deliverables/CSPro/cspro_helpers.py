@@ -407,7 +407,8 @@ def _date_fmt(mmddyyyy):
 
 
 def build_field_control(survey_code, extra_items=None, date_label_entity="the Facility",
-                        result_options=None, date_display=False, date_mmddyyyy=False):
+                        result_options=None, date_display=False, date_mmddyyyy=False,
+                        replaced_code=None):
     """Build a FIELD_CONTROL record (record type "A").
 
     Parameters
@@ -435,8 +436,19 @@ def build_field_control(survey_code, extra_items=None, date_label_entity="the Fa
 
     result_options : list, optional
         Per-instrument Result-of-Visit value set. Defaults to the F1 codes.
+    replaced_code : str, optional
+        The instrument's logic-assigned "Replaced" code (REPLACED_CODE_F1/F3/F4).
+        #1290/#1301 (UAT R7, 2026-08-20): the paper's FIELD CONTROL code list does
+        not print "Replaced" -- it is assigned by PROC BREAKOFF (codes 5-7), never an
+        enumerator pick. When set: FIRST VISIT's value set drops it outright (no logic
+        path assigns it there), and FINAL VISIT keeps the FULL set at valueSets[0]
+        (synced-case labels, verify_questions and optimize_capture_types all read
+        index 0) plus a picker set without it, selected at runtime by the field's
+        preproc via setvalueset() -- the F1 Q108 pattern.
     """
     results = result_options or ENUM_RESULT_OPTIONS
+    picker = ([(t, c) for t, c in results if c != replaced_code]
+              if replaced_code else results)
     items = _case_control_items(survey_code) + [
         alpha("SURVEY_TEAM_LEADER_S_NAME", "Survey Team Leader's Name",   length=50),
         alpha("ENUMERATOR_S_NAME",         "Enumerator's Name",           length=50),
@@ -457,7 +469,7 @@ def build_field_control(survey_code, extra_items=None, date_label_entity="the Fa
                  "Date of Final Visit (MM/DD/YYYY)", length=10)] if date_display else []),
         numeric("TOTAL_NUMBER_OF_VISITS",  "Total Number of Visits",      length=3),
         numeric("ENUM_RESULT_FIRST_VISIT", "Result of First Visit",       length=1,
-                value_set_options=results),
+                value_set_options=picker),
         numeric("ENUM_RESULT_FINAL_VISIT", "Result of Final Visit",       length=1,
                 value_set_options=results),
         # §15.E — language used for the interview (captured via getlanguage()
@@ -466,6 +478,11 @@ def build_field_control(survey_code, extra_items=None, date_label_entity="the Fa
     ]
     if extra_items:
         items.extend(extra_items)
+    if replaced_code:
+        for _it in items:
+            if _it.get("name") == "ENUM_RESULT_FINAL_VISIT":
+                _it["valueSets"].append(_value_set(
+                    "ENUM_RESULT_FINAL_VISIT_PICK", "Result of Final Visit", picker))
     return record("FIELD_CONTROL", "Field Control", "A", items)
 
 
@@ -536,7 +553,22 @@ def _photo_block(prefix=""):
     list of dict
         [IMAGE_BINARY, FILENAME_ALPHA, CAPTURE_TRIGGER]
     """
-    capture_vs = [("Take verification photo", "1")]
+    # #1306 retest (Aly, 2026-08-20, on v3.1.4): this option used to read "Take
+    # verification photo" -- the FIELD's own caption ("Take Verification Photo")
+    # again in lower case, so the screen looked like it repeated itself. It was the
+    # last instance she found after the caption/question-text de-duplication.
+    #
+    # DIFFERENT mechanism from that fix: there it was the caption vs the question
+    # text; here it is the caption vs the single option rendered underneath it.
+    # Audited across all three dictionaries -- this is the ONLY field in F1/F3/F4
+    # whose option restates its caption, and all three come from this helper.
+    #
+    # "Continue" matches the house pattern on the ICF screens
+    # (icf_content.CONTINUE_OPTIONS) and is the more accurate verb: the camera
+    # fires from this field's onfocus, not from the option, so the option is just
+    # the enumerator acknowledging and moving on. The caption above still names the
+    # action. Code stays "1" -- label-only, no data impact.
+    capture_vs = [("Continue", "1")]
     return [
         image(f"{prefix}VERIFICATION_PHOTO_IMAGE",
               "Verification Photo (binary; syncs to CSWeb)"),
@@ -970,6 +1002,32 @@ def question_caption(name, label, short_label=None):
     if name.endswith(_SPECIFY_SUFFIXES):
         return f"{num}. (specify)", "specify"
     return f"{num}.", "numeral"
+
+
+def caption_duplicates_question(name, label, short_label=None, is_roster=False):
+    """True when a field's on-form caption IS its label verbatim (#1306/#1307/#1309).
+
+    CSEntry paints the qsf question text and the field's [Text] caption on the same
+    screen. question_caption() returns kind "keep-full" for an unnumbered field with no
+    designed short caption, meaning the caption is the label itself -- and such a field
+    has no qsf override either, so its question text is that same label. The enumerator
+    then sees the string twice.
+
+    The test is deliberately caption == label rather than kind == "keep-full": it states
+    the actual condition that causes the doubling, so a future caption rule that happens
+    to return the label under some other kind is still caught.
+
+    Callers drop the echoed label from the QUESTION PANE and keep the caption -- the
+    section navigator renders captions, so suppressing those instead would leave it
+    showing blank rows."""
+    if is_roster:
+        # generate_fmf's roster branch keeps the RAW label as the caption (grid column
+        # headers) instead of the R25 numeral tag, so question_caption() does not
+        # describe what is actually rendered here -- the caption IS the label, and the
+        # question pane repeats it. #1307 retest (Aly, 2026-08-20): Section C screens.
+        return True
+    caption, _kind = question_caption(name, label, short_label)
+    return caption.strip() == (label or "").strip()
 
 
 def write_dcf(dictionary, out_path):

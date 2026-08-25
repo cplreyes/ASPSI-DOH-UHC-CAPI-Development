@@ -5,8 +5,8 @@ implementer: Asian Social Project Services, Inc. (ASPSI)
 data_programmer: Carl Patrick L. Reyes
 qa_tester: Shan (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
-engagement_window: November 2025 – August 2026
-last_updated: 2026-07-20
+engagement_window: November 2025 – November 2026 (contract end tentative; training week of Sept 07)
+last_updated: 2026-08-24
 ---
 
 # Product Backlog — UHC Survey Year 2 CAPI Development
@@ -20,6 +20,21 @@ last_updated: 2026-07-20
 ---
 
 ## 1. Status at a Glance
+
+### Update — 2026-08-24 (PSA submission SENT · Aug-17 instruments migrated · training dated week of Sept 07 · S014 closed late, S015 locked)
+
+**The engagement passed its biggest milestone since the pretest: the CAPI instrument set was frozen, tagged, and submitted to PSA on 2026-08-21.** The submitted set is **F1 v3.1.5 · F2 v3.0.0 · F3 v6.0.2 · F4 v3.1.3** (git tag `capi-psa-2026-08-20`), preserved two ways — **sources tagged** so the build can be reproduced, and the **exact installable packages archived** so it can be redeployed without a rebuild. The version that went to PSA can therefore be put back on a tablet at any point, which is also the entire rollback story: CSWeb holds one package slot per instrument, so restoring an older build means redeploying the archived package. Every build after the freeze carries a **DEV BUILD — NOT THE VERSION SUBMITTED TO PSA** banner in the CSEntry app list and on the cover screen, so an in-flight build cannot be mistaken for the submitted one. The promotion model behind this — five environments, gates G0–G7, channel vs environment, two-artifact freeze — is captured in the `capi-devops` skill.
+
+**Getting there took the Aug-17 instrument migration**: all four instruments rebuilt against DOH's Aug-17 questionnaire set, with **F1 and F2 renumbered** (question IDs moved, not merely wording). Alongside it, a Bicolano translation wave of ~30 tickets surfaced two *systemic* defects rather than typos — an enumerator directive printing twice across 6 locales (365 stored values), and **257 stored translations still carrying instructions, answer codes or routing notes inside the translated text**, which enumerators would have read aloud in the field. **UAT Round 7 opened 2026-08-19** against the Aug-17 PAPI; **23 findings closed 08-20** across all four instruments, including F3's section order restored to the printed sequence. Earlier in the month: the **CSWeb console unification** (one shell, one URL space, permission-accurate nav), the F2 Admin Facilities page brought onto main, and the cover logo strip (#1190).
+
+**Training now has a date — the week of September 07** (TOT + Survey Training; ASPSI team meeting 2026-08-24). That reframes the whole programme: the project is **T-2 weeks from a training room**. DOH also confirmed the **Training Design needs roughly two weeks for approval** ahead of training proper, so that clock is already running. Two new work items landed from the same meeting: an **automatic start/finish timestamp** feature, and **manuals to be tested** against the current build — material, because the Aug-17 renumbering moved question IDs and any manual citing old numbers is now wrong in a training room.
+
+**Scrum trued 2026-08-24.** Sprint 014 closed **LATE at Day 32 of a 5-day window** — the container failed while delivery stayed healthy, so roughly 4½ weeks of major work (console unification, the translation wave, the Aug-17 migration, the PSA submission) happened outside any sprint. Root cause found and recorded rather than repeated: `/scrum` implements the kickoff and mid-sprint modes, but **Modes A (plan) and D (close) have been stubbed "Pass 2" since April** — the one ceremony that ends a sprint had no tooling, so it never ran. Implementing them is the S014 retro action. **Sprint 015 is locked** as the training runway (2026-08-24 → 08-28): close UAT R7 to zero, get the whole fleet onto the current build, scope the timestamp feature, re-measure translation coverage, and test the manuals.
+
+**Still blocked on ASPSI:**
+- **Enumerator roster — 147 accounts** (22 FS + 125 SE). Asked Aug 3, Aug 10 and Aug 24; still provisioned for 7. Day 2 of training has every trainee signing in and installing simultaneously, which 7 logins cannot support. Names in a list is sufficient.
+- **Translation supply.** The Aug-17 English rewrite **voided the previously reported coverage percentages** — old translations were re-keyed where they still matched, but anything DOH reworded is untranslated again, so coverage must be re-measured before any figure is quoted. Unchanged: **error and validation messages remain 0% translated** in all three CSPro instruments.
+- **Four parked data-shape decisions** — F3 payment-source option order (Q92/Q96/Q107/Q109) · F4 Q18 income brackets 7→13 · the -98/-99 don't-know/refused gate · F2 Q120 scale and the "None" option on Q47/Q109. Each moves stored codes, the codebook, or the committed tabulations, so none can be taken unilaterally. UAT Round 7 is the window to settle them.
 
 ### Update — 2026-07-20 (the real "Field Control" bug fixed: F3 v1.1.5 · UAT record clean · S013 closed, S014 locked)
 

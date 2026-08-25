@@ -3,7 +3,7 @@ epic: 3
 title: CAPI Application Development (CSPro + CSEntry / PWA)
 phase: per-instrument
 status: in-progress
-last_updated: 2026-06-28
+last_updated: 2026-08-24
 ---
 
 # Epic 3 — CAPI Application Development (CSPro + CSEntry / PWA)
@@ -16,6 +16,8 @@ Per-instrument application build workstream. Turns the validated data dictionary
 **Current state:** **F2 PWA in production v2.1.0** (7 PSA-target languages; UAT Rounds 1–3 closed). **F1/F3/F4 multi-language CAPI apps built** (generator-driven .dcf/.apc/.fmf/.qsf), **deployed to CSWeb**, in **UAT Round 5 on-device bug-burndown**. The **Supervisor hub** (one login → role menu → Bluetooth assignment/collection between tablets → CSWeb relay → live coverage reports → offline EA map) is **built, deployed, and device-verified on two tablets**, with a live training guide at csweb.asiansocial.org/docs/hub-guide.html.
 
 > **Status update 2026-06-28:** F1/F3/F4 moved from 'pending Designer sign-off' to 'built + deployed + in UAT R5'. F2 is at **v2.1.0** (older text may say v1.1.1). The Supervisor hub Phase-2 is **built** (older text may say 'deferred').
+
+> **Status update 2026-08-24:** **The instrument set was frozen and submitted to PSA on 2026-08-21** — F1 v3.1.5 · F2 v3.0.0 · F3 v6.0.2 · F4 v3.1.3, git tag capi-psa-2026-08-20, preserved two ways: tagged sources (reproduce) plus archived installable packages (redeploy without a rebuild). All four were rebuilt against the **Aug-17 questionnaire set**, with F1 and F2 renumbered. Post-freeze builds run on a **DEV channel** carrying an on-screen “NOT THE VERSION SUBMITTED TO PSA” banner (current: F1 v3.1.6 · F3 v6.0.3 · F4 v3.1.4). The promotion lifecycle is now codified in the capi-devops skill (five environments, gates G0–G7, channel vs environment, two-artifact freeze). **Note on E3-RELEASE-001:** the gap it was specified to close in July — version *numbers* stamped but the built artifact never preserved — is closed by the archived-package half of this freeze; re-scope or retire it rather than building it as originally written.
 
 ## Status snapshot (2026-05-18)
 

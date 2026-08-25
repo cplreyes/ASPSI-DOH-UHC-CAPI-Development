@@ -1,6 +1,6 @@
 {
   "_note": "Machine-managed by cspro_helpers.numberize_errmsgs() — do not hand-edit. Maps each errmsg text to its permanent message number; numbers are never reused or renumbered.",
-  "next": 1196,
+  "next": 1198,
   "messages": {
     "PSGC region lookup failed — verify psgc_region.dat is deployed": 1001,
     "GPS hardware unavailable — check tablet location permission.": 1002,
@@ -196,6 +196,8 @@
     "Q142: 'GOV_DONATION' was ticked 'Yes, specify:' -- please specify.": 1192,
     "Q142: 'OTHER' was ticked 'Yes, specify:' -- please specify.": 1193,
     "Select at least one option for Q140 before continuing.": 1194,
-    "'Other (specify)' was ticked for Q140 - please specify.": 1195
+    "'Other (specify)' was ticked for Q140 - please specify.": 1195,
+    "Q140: 'Cannot recall' cannot be combined with other answers - untick the others or untick this option.": 1196,
+    "Income bracket does not match the reported amount (%d PHP/month). Reconcile.": 1197
   }
 }

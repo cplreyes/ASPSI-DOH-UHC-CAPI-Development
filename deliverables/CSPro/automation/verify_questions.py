@@ -38,6 +38,12 @@ KNOWN_OFFFORM = {
     # #561 completeness sentinel (F3): set in logic at case open / closing / break-off,
     # never entered on a form — read by the Supervisor App to tell complete from partial.
     "CASE_DISPOSITION",
+    # #1286/#1296 (UAT R7, 2026-08-20): socioeconomic-class question retired from
+    # the tool (no Aug-17 paper counterpart; ASPSI confirmed retire). The dcf items
+    # are RETAINED off-form to avoid a mid-round record-layout shift -- never asked,
+    # always blank; full dcf removal rides the next declared data-shape break.
+    "Q29_SOCIOECONOMIC_CLASS",  # F4
+    "Q29_SEC_CLASS",            # F3 (same retirement, F3 batch)
 }
 
 

@@ -29,6 +29,13 @@ OUT = HERE / "FacilityHeadSurvey.ent.qsf"
 # can sit at case-end on the form (v1.0.1). Same string in every language — UI chrome, not
 # questionnaire text.
 _BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F1"]
+# Non-production marker (2026-08-20). versions.json carries a "channel" per instrument;
+# anything other than "release" prints a banner under the build line so a work-in-progress
+# build is unmistakable on the cover screen, not just in the app list. The submitted set
+# is tagged capi-psa-2026-08-20.
+_DEV = (_BUILD.get("channel", "release") != "release")
+_DEV_BANNER = ('<p class="instruction"><b>DEV BUILD - NOT THE VERSION SUBMITTED TO PSA.</b> '
+               'For testing only.</p>') if _DEV else ""
 # #1191 (PSA/SJREB, 2026-08-11): survey-tool details required on the CAPI tool. The
 # clearance block is defined once in ../icf_content.py — the ICF screens carry the
 # same block, and two copies of a cleared reference number would eventually diverge.
@@ -36,6 +43,11 @@ import sys as _sys
 _sys.path.insert(0, str(HERE.parent))
 import icf_content as _icf
 from notes_lookup import translate_note
+# #1306: needed to tell a field whose caption is its label verbatim (question text would
+# echo it) from one with a designed short caption (no echo). Same-folder import, the way
+# generate_fmf already imports generate_dcf.
+from cspro_helpers import caption_duplicates_question as _cap_dup
+from generate_fmf import SHORT_FORM_LABELS as _SHORT
 # #1190: DOH Seal / ASPSI / Bagong Pilipinas / Bawat Buhay Mahalaga on the first
 # page — ASPSI sits second, in the "attached agency" slot, per ASPSI's reference
 # image on #1190 (Shan, 2026-08-11). Data-URI so the image travels inside the qsf
@@ -47,6 +59,7 @@ _LOGO_HTML = f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>
 
 BUILD_FOOTER = (_LOGO_HTML
                 + f'<p class="instruction">Build: F1 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+                + _DEV_BANNER   # non-production channel marker (blank on a release build)
                 + _icf.clearance_html("F1"))
 
 STYLES = """styles:
@@ -167,65 +180,26 @@ def _emphasize(html):
 # reads PART I aloud from the question-text bar, then records Yes/No
 # (No → endlevel per PROC CONSENT_GIVEN).
 # ------------------------------------------------------------------
-CONSENT_HTML = "".join([
-    _p("heading2", "Informed Consent Form"),
-    _p("instruction",
-       "This informed consent form must be obtained before conducting the interview. "
-       "You are required to read this entire consent form aloud exactly as written. "
-       "After reading this form to the respondent, you must complete and sign the "
-       "verification consent form."),
-    _p("heading3", "PART I: Information about the study"),
-    _p("normal",
-       "Hello, my name is __________________ (data collector name). I work for Asian "
-       "Social Project Services, Inc. (ASPSI). I am here to invite you to participate "
-       "in a study about the Universal Health Care (UHC) and packages of programs like "
-       "Yaman ng Kalusugan Program (YAKAP), No Balance Billing (NBB), Zero Balance "
-       "Billing (ZBB), Bagong Urgent Care and Ambulatory Services (BUCAS), and "
-       "Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT). The "
-       "Department of Health funded this study. Please let me tell you more about the "
-       "study."),
-    _p("normal",
-       "This study aims to generate evidence on the overall experience of the general "
-       "public to support continuous monitoring, evaluation, and learning of the "
-       "implementation of the UHC Act and its Implementing Rules and Regulations (IRR)."),
-    _p("normal",
-       "Would you like to participate as a respondent in the study? The interview may "
-       "last for more or less than an hour."),
-    _p("normal",
-       "We are committed to protecting your privacy. If you choose to participate, we "
-       "will never include your name in information shared with the government or in "
-       "any reports. Your name will be kept separately from your answers in a private, "
-       "secure location. For this interview, it is also important to respect other "
-       "people’s privacy and not tell anyone else what we talked about today. With all "
-       "research, there’s a small chance that someone else might get to see your data. "
-       "We try our best to prevent that, but if it happens, we’ll tell you as soon as "
-       "possible."),
-    _p("normal",
-       "Aside from this, there are no other risks to you if you take part in this "
-       "study. As a benefit of the research, the knowledge gained may help the "
-       "government and DOH better support your healthcare needs. You are free to "
-       "decline participation or to stop at any time. Choosing not to participate will "
-       "not result in any penalty, and you will not have to pay anything to take part "
-       "in this study."),
-    _p("normal",
-       "Do you have any questions about the study or about what I have told you?"),
-    _p("normal",
-       "If you have concerns or questions about your rights as a participant, you can "
-       "contact:"),
-    _p("normal",
-       "<b>Single Joint Research Ethics Board (SJREB) at the Philippines Department of "
-       "Health</b><br/>Email: sjreb.doh@gmail.com<br/>National Tel: (02) 651-7800 "
-       "local 1328<br/>Tel: +63 936 992 5513"),
-    _p("normal",
-       "<b>Department of Health</b><br/>Name: Lindsley Jeremiah D. Villarante<br/>"
-       "Email: ldvillarante@doh.gov.ph<br/>Tel: +63 (02) 8651-7800 local 1432"),
-    _p("normal",
-       "<b>Asian Social Project Services, Inc.</b><br/>Name: Paulyn Jean A. Claro<br/>"
-       "Email: aspsiglobal@gmail.com<br/>Tel: +63 917 819 6884"),
-    _p("instruction",
-       "Record the respondent’s decision: 1 = Yes (consent given — continue the "
-       "interview); 2 = No (consent refused — the interview ends)."),
-])
+# CONSENT_HTML REMOVED 2026-08-20 (ANA-322).
+#
+# It held the Annex H consent script as the CAPI question text for CONSENT_GIVEN.
+# CONSENT_GIVEN itself was removed 2026-06-12, so nothing has emitted this string
+# since -- it sat here unreferenced for over two months.
+#
+# Deleted outright rather than kept as commented-out reference text, because the
+# F1 and F4 copies still carried STALE ETHICS CONTACT DETAILS (superseded SJREB /
+# ASPSI email and phone). That is not merely untidy: it has already cost real work.
+# An implementer once corrected this dead copy believing it was the live consent
+# text, and the compiled build still shipped with no ethics-contact block at all --
+# recorded in the F3 consent-certificate row of
+# instruments-aug17-extract/aug17-approved-divergences.md. Leaving wrong contact
+# details in the tree, even inert, keeps that trap armed for the next reader.
+#
+# THE LIVE CONSENT SCRIPT IS ../icf_content.py -> SCREENS['F1'], rendered by
+# build_screen_html() and wired below via OVERRIDES["ICF_PART1"/"ICF_PART2"].
+# Edit it there. Git history holds the removed Annex H wording if it is ever
+# wanted for reference.
+# ------------------------------------------------------------------
 
 # Item-name → question-text HTML. Overrides win over the dcf-label default
 # and are emitted identically for every declared language (English fallback
@@ -233,8 +207,8 @@ CONSENT_HTML = "".join([
 # CONSENT_GIVEN removed 2026-06-12 — no consent DECISION is captured on the CAPI, and
 # that has not changed. What DID change (2026-08-13): ASPSI sent "Suggested Layout
 # (CSEntry).docx", putting the consent SCRIPT back on the device as two read-aloud
-# screens with the clearance block. Its wording supersedes CONSENT_HTML above (which
-# remains unemitted, kept only as the Annex H reference). Text: ../icf_content.py.
+# screens with the clearance block. Text: ../icf_content.py. (The old, unemitted
+# CONSENT_HTML block that this superseded was removed 2026-08-20, ANA-322.)
 OVERRIDES = {
     "ICF_PART1": _icf.build_screen_html("F1", 1, _LOGO_HTML),
     "ICF_PART2": _icf.build_screen_html("F1", 2, _LOGO_HTML),
@@ -267,22 +241,40 @@ _READ_ALL = "READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY."
 _DNR_ALL = "DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY."
 _DNR_UNPROMPTED = ("DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER "
                    "OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.")
-_PROBE = ("DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO "
-          "PROBE. Has this been implemented? / Do you have this? Was this "
-          "implemented before or after 2019? Was this implemented because of "
-          "UHC? Do you plan to implement it in the next 1-2 years?")
+# RETIRED by #1303 (UAT R7, 2026-08-20) — the Apr-20 probe guide. Kept here,
+# unused, as the record of what the two-step battery bases used to display:
+#   "DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE.
+#    Has this been implemented? / Do you have this? Was this implemented before
+#    or after 2019? Was this implemented because of UHC? Do you plan to
+#    implement it in the next 1-2 years?"
+# The Aug-17 redesign turned the last three guide questions into the "N.1"
+# attribution question's own stem and options, so showing this on the base
+# screen asked the next screen's question a screen early.
 # New at Aug-17: the two-step split gives every "N.1" attribution probe its own
 # screen, and the paper prints this bare form on them -- no "READ OPTIONS OUT
 # LOUD", because the enumerator is classifying an answer already given.
 _SELECT_ONE = "SELECT ONE ANSWER ONLY."
 
 INSTRUCTIONS = {
-    # The 23 two-step battery BASES. The Aug-17 paper prints no note on them;
-    # this is the Apr-20 probe guide carried forward. Two of its guide
-    # questions are now asked outright by the "N.1" probe, so whether ASPSI
-    # still wants the full guide here is on the clarification list (2.5).
+    # The 23 two-step battery BASES carry NO note.
+    #
+    # #1303 (UAT R7, 2026-08-20) — ASPSI's answer to the question this build
+    # parked on the clarification list (item 2.5). These bases used to show the
+    # Apr-20 probe guide (_PROBE, now retired below), which was carried forward
+    # through the Aug-17 migration pending a ruling. The reviewers' point is
+    # exactly the one the list raised: the redesign SPLIT each item into a plain
+    # Yes/No base plus its own "N.1" attribution question, and that question now
+    # asks outright what the guide told the enumerator to probe for — "was it a
+    # result of the UHC Act enacted in 2019?", with "planned within the next 1-2
+    # years" sitting in its option list. So the guide restated, on the base
+    # screen, the very question the next screen asks. The Aug-17 paper prints no
+    # note on these bases either, so bare is also the faithful rendering.
+    #
+    # Explicit None rather than an absent key: an absent key falls through to the
+    # family default and would put some other note back on them (the same reason
+    # the "N.2" family below is pinned to None).
     **dict.fromkeys([11, 14, 15, 16, 17, 18, 19, 20, 26, 27, 28, 29, 31, 32,
-                     33, 34, 35], _PROBE),
+                     33, 34, 35], None),
     # The attribution probes. 10.1 is the one question the paper omits it on;
     # its text is identical to the other 22, so leaving it bare would be a
     # defect rather than fidelity.
@@ -309,8 +301,9 @@ INSTRUCTIONS = {
     # 30's Apr-20 note also carried the ward-allocation definition. That text is
     # now printed inside Q30.1's own stem, so it is already in the dcf label and
     # repeating it here would show it twice on adjacent screens -- the #1189
-    # lesson. Only the probe guide remains.
-    30: _PROBE,
+    # lesson. The probe guide that remained is retired with the rest (#1303), so
+    # Q30's base is now bare like its 22 siblings.
+    30: None,
     # #1109: the capitation definition. #1011 stripped it OUT of the question text
     # (testers: it is the paper's italic enumerator note, not part of the spoken
     # question) but nothing put it back anywhere, so it was simply lost - the
@@ -456,6 +449,11 @@ def main():
                     # resolved PER LANGUAGE - see note_html()
                     pre, post = note_html(intro_en, instr_en, lnm)
                     body = ov or (pre + txt + post)
+                    # #1306: unnumbered field -> its caption already prints this exact
+                    # label, so the question pane would echo it. Keep any real intro or
+                    # instruction, drop the echo.
+                    if not ov and _cap_dup(nm, en, _SHORT.get(nm)):
+                        body = pre + post
                     lines += [f"          {lnm}: |", f"            {body}"]
                 n += 1
     lines.append("...")

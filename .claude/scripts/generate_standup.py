@@ -23,6 +23,7 @@ import argparse
 import io
 import os
 import re
+import subprocess
 import sys
 import traceback
 from datetime import date, datetime, timedelta, timezone
@@ -63,6 +64,15 @@ RISK_ROW = re.compile(r"^\|\s*(?P<name>[^|]+?)\s*\|\s*(?P<likelihood>[^|]+?)\s*\
 # E0-SCRUM-SYNC: log.md newer than sprint-current.md by more than this many
 # days → the sprint board has gone stale relative to logged work. Fire a canary.
 DRIFT_DAYS = 2.0
+
+# Worktree-drift canary thresholds (added 2026-08-25). A linked worktree that
+# outlives its purpose stops matching its own name and diverges in BOTH
+# directions — the state that can neither be fast-forwarded nor dropped. The July
+# `worktree-f2-productivity-panel` reached 87 ahead / 52 behind over six weeks
+# before anyone looked, and while it sat there `main` could not build a correct
+# F2 PWA. Either threshold alone is enough to warrant a look.
+WORKTREE_AGE_DAYS = 14
+WORKTREE_AHEAD_MAX = 20
 
 
 def today_manila() -> date:
@@ -168,6 +178,81 @@ def scrum_state_drift(repo: Path, threshold: float = DRIFT_DAYS) -> dict | None:
         "log_date": datetime.fromtimestamp(log_mtime, MANILA).date().isoformat(),
         "sprint_date": datetime.fromtimestamp(sprint_mtime, MANILA).date().isoformat(),
     }
+
+
+def worktree_drift(repo: Path, age_days: int = WORKTREE_AGE_DAYS,
+                   ahead_max: int = WORKTREE_AHEAD_MAX) -> list[dict]:
+    """Worktree-drift canary (built 2026-08-25, after the six-week cleanup).
+
+    Long-lived worktrees rot silently. `worktree-f2-productivity-panel` was cut
+    2026-07-14 for one Sync-Dashboard panel, did that job, and was still alive
+    six weeks later at 87 ahead / 52 behind with a name matching none of its
+    contents — and, far worse, `main` could not build a correct F2 PWA the whole
+    time because the matrix-preamble render existed only on that branch.
+
+    Nothing detected it. The rules went into the capi-devops skill, but a rule
+    with no enforcement point is a note — the same lesson S014 taught about the
+    sprint close. So this is the enforcement point: a line in the standup you
+    already read every morning.
+
+    Flags a linked worktree (never the main checkout) when EITHER holds:
+      * its branch is more than ``ahead_max`` commits ahead of main, or
+      * its last commit is older than ``age_days`` days.
+
+    Reports ``behind`` too, since two-way divergence is the state that can be
+    neither fast-forwarded nor dropped. Silent when git is unavailable — a
+    standup must never fail because of a canary.
+    """
+    def git(*args: str) -> str | None:
+        try:
+            r = subprocess.run(["git", "-C", str(repo), *args],
+                               capture_output=True, text=True, timeout=20)
+        except (OSError, subprocess.SubprocessError):
+            return None
+        return r.stdout.strip() if r.returncode == 0 else None
+
+    listing = git("worktree", "list", "--porcelain")
+    if not listing:
+        return []
+
+    # --porcelain emits stanzas: "worktree <path>" ... "branch refs/heads/<name>"
+    entries: list[tuple[str, str]] = []
+    path = None
+    for line in listing.splitlines():
+        if line.startswith("worktree "):
+            path = line[len("worktree "):].strip()
+        elif line.startswith("branch ") and path:
+            entries.append((path, line[len("branch refs/heads/"):].strip()))
+            path = None
+
+    main_path = str(repo).replace("\\", "/").rstrip("/")
+    out: list[dict] = []
+    for wt_path, branch in entries:
+        norm = wt_path.replace("\\", "/").rstrip("/")
+        if norm == main_path or branch in ("main", "master"):
+            continue  # the main checkout is not a drifting worktree
+
+        counts = git("rev-list", "--left-right", "--count", f"main...{branch}")
+        behind = ahead = 0
+        if counts:
+            parts = counts.split()
+            if len(parts) == 2 and all(p.isdigit() for p in parts):
+                behind, ahead = int(parts[0]), int(parts[1])
+
+        last = git("log", "-1", "--format=%ct", branch)
+        age = None
+        if last and last.isdigit():
+            age = int((datetime.now(MANILA).timestamp() - int(last)) / 86400)
+
+        if ahead > ahead_max or (age is not None and age > age_days):
+            out.append({
+                "name": Path(norm).name,
+                "branch": branch,
+                "ahead": ahead,
+                "behind": behind,
+                "age_days": age,
+            })
+    return out
 
 
 def scan_file_activity(repo: Path, since: datetime, upper: datetime | None = None) -> dict[str, list[str]]:
@@ -331,6 +416,18 @@ def render_standup(ctx: dict) -> str:
             f"**Sync `sprint-current.md`** — fold the logged outcomes into the board "
             f"— before trusting today's Sprint Board / Today columns. "
             f"_(E0-SCRUM-SYNC canary.)_"
+        )
+    for wt in ctx.get("worktree_drift") or []:
+        age = f"{wt['age_days']}d since its last commit" if wt["age_days"] is not None else "age unknown"
+        two_way = (" This is **two-way divergence** — it can neither be fast-forwarded "
+                   "nor dropped, and it only gets worse." if wt["behind"] else "")
+        out.append("")
+        out.append(
+            f"> [!warning] Worktree drift — `{wt['name']}` (`{wt['branch']}`) is "
+            f"**{wt['ahead']} ahead / {wt['behind']} behind** main, {age}."
+            f"{two_way} Land it or kill it. Check first whether anything lives ONLY "
+            f"here — a branch can be holding the one copy of a working feature. "
+            f"_(Worktree-hygiene canary; see the capi-devops skill.)_"
         )
     out.append("")
     out.append("---")
@@ -526,6 +623,14 @@ def main(argv: list[str] | None = None) -> int:
             log(repo, f"sprint-drift: log.md {drift['delta_days']}d newer than "
                       f"sprint-current.md (log {drift['log_date']} vs board {drift['sprint_date']})")
 
+        # Worktree-hygiene canary — live runs only, same reason as above (a
+        # backfill would report today's worktrees against a historical date).
+        wt_drift = [] if is_backfill else worktree_drift(repo)
+        for wt in wt_drift:
+            log(repo, f"worktree-drift: {wt['name']} ({wt['branch']}) "
+                      f"{wt['ahead']} ahead / {wt['behind']} behind main, "
+                      f"age {wt['age_days']}d")
+
         day, total, _rem = sprint_day
         at_risk: list[dict] = []
         if day is not None and total is not None and day > total / 2:
@@ -576,6 +681,7 @@ def main(argv: list[str] | None = None) -> int:
             "at_risk": at_risk,
             "is_backfill": is_backfill,
             "scrum_drift": drift,
+            "worktree_drift": wt_drift,
         }
 
         content = render_standup(ctx)

@@ -31,6 +31,13 @@ OUT = HERE / "HouseholdSurvey.ent.qsf"
 # can sit at case-end on the form (v1.0.1). Same string in every language — UI chrome, not
 # questionnaire text.
 _BUILD = json.loads((HERE.parent / "versions.json").read_text(encoding="utf-8"))["F4"]
+# Non-production marker (2026-08-20). versions.json carries a "channel" per instrument;
+# anything other than "release" prints a banner under the build line so a work-in-progress
+# build is unmistakable on the cover screen, not just in the app list. The submitted set
+# is tagged capi-psa-2026-08-20.
+_DEV = (_BUILD.get("channel", "release") != "release")
+_DEV_BANNER = ('<p class="instruction"><b>DEV BUILD - NOT THE VERSION SUBMITTED TO PSA.</b> '
+               'For testing only.</p>') if _DEV else ""
 # #1191 (PSA/SJREB, 2026-08-11): survey-tool details required on the CAPI tool. The
 # clearance block is defined once in ../icf_content.py — the ICF screens carry the
 # same block, and two copies of a cleared reference number would eventually diverge.
@@ -38,6 +45,9 @@ import sys as _sys
 _sys.path.insert(0, str(HERE.parent))
 import icf_content as _icf
 from notes_lookup import translate_note
+# #1307: see F1 -- tells a verbatim-label caption from a designed short caption.
+from cspro_helpers import caption_duplicates_question as _cap_dup
+from generate_fmf import SHORT_FORM_LABELS as _SHORT
 
 # #1190: brand-book main logo sequence on the first page — see F1/generate_qsf.py.
 import base64 as _b64
@@ -46,6 +56,7 @@ _LOGO_HTML = f'<p><img src="data:image/png;base64,{_LOGO_B64}" width="512"/></p>
 
 BUILD_FOOTER = (_LOGO_HTML
                 + f'<p class="instruction">Build: F4 v{_BUILD["version"]} ({_BUILD["date"]})</p>'
+                + _DEV_BANNER   # non-production channel marker (blank on a release build)
                 + _icf.clearance_html("F4"))
 
 STYLES = """styles:
@@ -88,68 +99,26 @@ def _p(cls, text):
 # reads PART I aloud from the question-text bar, then records Yes/No
 # (No → endlevel per PROC CONSENT_GIVEN).
 # ------------------------------------------------------------------
-CONSENT_HTML = "".join([
-    _p("heading2", "Informed Consent Form"),
-    _p("instruction",
-       "This informed consent form is to be obtained before conducting the interview. "
-       "You must read this entire consent form aloud exactly as written. After you "
-       "have read this form to the respondent, you must complete and sign the "
-       "verification consent form."),
-    _p("heading3", "PART I: Information about the study"),
-    _p("normal",
-       "Hello, my name is __________________ (data collector’s name). I work for Asian "
-       "Social Project Services, Inc. (ASPSI). I am here to ask you to participate in "
-       "a study about the Universal Health Care (UHC) and packages of programs like "
-       "Yaman ng Kalusugan Program (YAKAP), No Balance Billing (NBB), Zero Balance "
-       "Billing (ZBB), Bagong Urgent Care and Ambulatory Services (BUCAS) center, and "
-       "Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT). The "
-       "Department of Health funded this study. Please let me tell you more about the "
-       "study."),
-    _p("normal",
-       "This study aims to generate evidence on the overall experience of the general "
-       "public to support continuous monitoring, evaluation, and learning of the "
-       "implementation of the UHC Act and its Implementing Rules and Regulations (IRR)."),
-    _p("normal",
-       "Would you like to participate as a respondent in the study? The interview may "
-       "last for more or less than an hour."),
-    _p("normal",
-       "We are committed to protecting your privacy. If you choose to participate, we "
-       "will never share your family’s or child’s personal information outside of the "
-       "study team. We will never include your name in information shared with the "
-       "government or in any reports. Your name will be kept separately from your "
-       "answers in a private, secure location. For this interview, it is also "
-       "important to respect other people’s privacy and not tell anyone else what we "
-       "talked about today. With all research, there’s a small chance that someone "
-       "else might get to see your data. We do our best to prevent that, but if it "
-       "happens, we’ll let you know as soon as possible."),
-    _p("normal",
-       "Aside from this, there are no other risks to you if you take part in this "
-       "study. As a benefit of the research, the knowledge gained may help the "
-       "government and DOH better support your healthcare needs. We shall also provide "
-       "Php 100 as a token of appreciation for the time you’ve shared with us."),
-    _p("normal",
-       "Nothing bad will happen if you do not want to be in this study. You can decide "
-       "to stop the interview at any time. You will never have to pay anything to be "
-       "in the study."),
-    _p("normal",
-       "Do you have any questions about the study or about what I have told you?"),
-    _p("normal",
-       "If you have concerns or questions about your rights as a participant, you can "
-       "contact:"),
-    _p("normal",
-       "<b>Single Joint Research Ethics Board (SJREB) at the Philippines Department of "
-       "Health</b><br/>Email: sjreb@doh.gov.ph<br/>National Tel: (02) 8651-7800 "
-       "local 1326, 1328"),
-    _p("normal",
-       "<b>Department of Health</b><br/>Name: Lindsley Jeremiah D. Villarante<br/>"
-       "Email: ldvillarante@doh.gov.ph<br/>Tel: +63 (02) 8651-7800 local 1432"),
-    _p("normal",
-       "<b>Asian Social Project Services, Inc.</b><br/>Name: Paulyn Jean A. Claro<br/>"
-       "Email: aspsiglobal@gmail.com<br/>Tel: +63 917 819 6884"),
-    _p("instruction",
-       "Record the respondent’s decision: 1 = Yes (consent given — continue the "
-       "interview); 2 = No (consent refused — the interview ends)."),
-])
+# CONSENT_HTML REMOVED 2026-08-20 (ANA-322).
+#
+# It held the Annex H consent script as the CAPI question text for CONSENT_GIVEN.
+# CONSENT_GIVEN itself was removed 2026-06-12, so nothing has emitted this string
+# since -- it sat here unreferenced for over two months.
+#
+# Deleted outright rather than kept as commented-out reference text, because the
+# F1 and F4 copies still carried STALE ETHICS CONTACT DETAILS (superseded SJREB /
+# ASPSI email and phone). That is not merely untidy: it has already cost real work.
+# An implementer once corrected this dead copy believing it was the live consent
+# text, and the compiled build still shipped with no ethics-contact block at all --
+# recorded in the F3 consent-certificate row of
+# instruments-aug17-extract/aug17-approved-divergences.md. Leaving wrong contact
+# details in the tree, even inert, keeps that trap armed for the next reader.
+#
+# THE LIVE CONSENT SCRIPT IS ../icf_content.py -> SCREENS['F4'], rendered by
+# build_screen_html() and wired below via OVERRIDES["ICF_PART1"/"ICF_PART2"].
+# Edit it there. Git history holds the removed Annex H wording if it is ever
+# wanted for reference.
+# ------------------------------------------------------------------
 
 # Item-name → question-text HTML. Overrides win over the dcf-label default
 # and are emitted identically for every declared language (English fallback
@@ -157,8 +126,8 @@ CONSENT_HTML = "".join([
 # CONSENT_GIVEN removed 2026-06-12 — no consent DECISION is captured on the CAPI, and
 # that has not changed. What DID change (2026-08-13): ASPSI sent "Suggested Layout
 # (CSEntry).docx", putting the consent SCRIPT back on the device as two read-aloud
-# screens with the clearance block. Its wording supersedes CONSENT_HTML above (which
-# remains unemitted, kept only as the Annex H reference). Text: ../icf_content.py.
+# screens with the clearance block. Text: ../icf_content.py. (The old, unemitted
+# CONSENT_HTML block that this superseded was removed 2026-08-20, ANA-322.)
 OVERRIDES = {
     "ICF_PART1": _icf.build_screen_html("F4", 1, _LOGO_HTML),
     "ICF_PART2": _icf.build_screen_html("F4", 2, _LOGO_HTML),
@@ -587,6 +556,11 @@ def main():
                 for lnm, _ in langs:
                     pre, post = note_html(intro_en, instr_en, lnm)   # per LANGUAGE
                     body = ov or (pre + _html(labmap.get(lnm) or en) + post)
+                    # #1307: unnumbered field -> the caption already prints this label;
+                    # keep intro/instruction, drop the echoed label.
+                    if not ov and _cap_dup(nm, en, _SHORT.get(nm),
+                                           (rec.get("occurrences") or {}).get("maximum", 1) > 1):
+                        body = pre + post
                     body = _pipe_member_name(nm, body)   # Section C name/line piping
                     if cc:
                         body = body + f'<p class="instruction">{cc}</p>'

@@ -3,7 +3,7 @@ epic: 7
 title: Training and Documentation
 phase: cross-cutting
 status: in-progress
-last_updated: 2026-06-28
+last_updated: 2026-08-24
 ---
 
 # Epic 7 — Training and Documentation
@@ -16,6 +16,8 @@ Training materials, fieldwork manuals, in-app help, and reference documentation 
 **Current state:** **In Progress.** Survey Manual CSPro section + enumerator/STL/HCW training decks + CSEntry enumerator field guide **drafted**. The **Supervisor-hub training guide is LIVE** at csweb.asiansocial.org/docs/hub-guide.html. Pending: **Kidd's (RA) review** on the Survey Manual; enumerator-guide on-device screenshots; finalization for **D5**.
 
 > **Status update 2026-06-28:** moved from 'Not Started' to **In Progress** — substantial docs drafted and the Supervisor-hub training guide is live. Remaining is finalization for D5 + Kidd's manual review.
+
+> **Status update 2026-08-24:** **Training is dated — the week of September 07** (TOT + Survey Training; ASPSI meeting 2026-08-24), which puts the project two weeks out. DOH confirmed the **Training Design needs roughly two weeks for approval** ahead of training proper, so that clock is already running. New from the same meeting: **the manuals must be tested against the current build** — material rather than cosmetic, because the Aug-17 renumbering moved question IDs and any manual or tool guide citing old numbers will be wrong in front of trainees. CAPI Manual remains ~98% (remainder = ASPSI contacts §H). Both items are committed in Sprint 015. Still open: the 147-account enumerator roster, without which Day 2 — everyone signing in and installing at once — cannot run.
 
 ## Task conventions
 

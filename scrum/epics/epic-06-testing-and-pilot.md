@@ -3,7 +3,7 @@ epic: 6
 title: Testing and Pilot
 phase: per-track
 status: in-progress
-last_updated: 2026-06-28
+last_updated: 2026-08-24
 ---
 
 # Epic 6 — Testing and Pilot
@@ -16,6 +16,8 @@ Pre-production verification and limited-scale field pilot before full rollout. C
 **In Progress.** F2 PWA tested (Vitest unit + Playwright E2E; UAT Rounds 1–3 closed, 13 bugs fixed). CAPI: F1/F3/F4 desk-tested and currently in **UAT Round 5 on-device bug-burndown**; pretest-readiness + go/no-go assessed 2026-06-27. The **pretest with real respondents is BLOCKED on SJREB ethics clearance** (E0-020, ASPSI/PI lane).
 
 > **Status update 2026-06-28:** moved from 'Not Started' to **In Progress** — F2 UAT closed and CAPI UAT is active (Round 5). The only blocker to the real respondent pretest is SJREB clearance.
+
+> **Status update 2026-08-24:** Pretest **complete**; the engagement has moved past it. **UAT Round 7 opened 2026-08-19** against the Aug-17 PAPI set (trackers #1282–#1285) — 23 findings closed on 08-20 across all four instruments, including F3’s section order restored to the printed sequence. #1311 (F1 Q35.2) and #1312 (F2 Q24.2) were filed 08-24 and are open. Pretest-era registers closed 2026-08-19. **Live risk carried into Sprint 015:** four R7 tickets traced to **stale apps rather than real defects**, so the fleet must be confirmed on the current build (remove + re-add, not the Update menu) before training — a training room installing a stale build would reproduce that failure at scale.
 
 ## Task conventions
 

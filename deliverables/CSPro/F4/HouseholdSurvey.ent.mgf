@@ -99,7 +99,6 @@ Language = EN
 1125 Children + seniors (%d) exceed household size (%d).
 1126 Member age must be 0-120.
 1127 Member is under 15 but civil status is not Single. Confirm.
-1129 Income bracket does not match the reported amount (%d PHP). Reconcile.
 1131 "'Other' was selected for Q101_CHECKUP_FREQ but no text was entered. Please specify."
 1132 "'Other' was selected for Q10_DISABILITY_TYPE but no text was entered. Please specify."
 1133 "'Other' was selected for Q110_SPECIALIST but no text was entered. Please specify."
@@ -158,7 +157,8 @@ Language = EN
 1188 Type the date as MMDDYYYY - for example 08092026 for 9 August 2026.
 1189 No GPS fix after %d s. Move outdoors or beside a window, then re-enter this field to retry — each retry searches longer. You may also leave GPS blank and finish the case.
 1190 "'Other' was selected for Q40_EDUCATION but no text was entered. Please specify."
-1191 Q18: an income amount was provided (%d PHP), so the bracket cannot be don't-know/refuse. Select the bracket that matches the amount (or re-enter the amount as -98/-99).
 1193 Q142: 'OTHER' was ticked 'Yes, specify:' -- please specify.
 1194 Select at least one option for Q140 before continuing.
 1195 "'Other (specify)' was ticked for Q140 - please specify."
+1196 Q140: 'Cannot recall' cannot be combined with other answers - untick the others or untick this option.
+1197 Income bracket does not match the reported amount (%d PHP/month). Reconcile.

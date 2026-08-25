@@ -60,7 +60,7 @@ Item=HH_ADDRESS
 Name=FORM004
 Label=B. Respondent Profile
 Level=1
-Size=806,1207
+Size=806,1177
   
 Item=RESPONDENT_NAME
 Item=Q2_BIRTH_MONTH
@@ -99,7 +99,6 @@ Item=Q26_DUG_WELL_SHARE
 Item=Q27_REFRIGERATOR
 Item=Q28_TELEVISION
 Item=Q29_WASHING_MACHINE
-Item=Q29_SOCIOECONOMIC_CLASS
   
 [EndForm]
   
@@ -1530,18 +1529,6 @@ Position=50,1110,330,1126
 Text=29.
  
   
-[Field]
-Name=Q29_SOCIOECONOMIC_CLASS
-Position=350,1137,365,1157
-Item=Q29_SOCIOECONOMIC_CLASS,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=5
-  
-[Text]
-Position=50,1140,330,1156
-Text=Socioeconomic class
- 
-  
 [Block]
 Name=DG_BLK_3
 Label=Q2-Q3
@@ -1674,13 +1661,6 @@ Label=Q24-Q28
 DisplayTogether=Yes
 Position=49
 Length=5
-  
-[Block]
-Name=DG_BLK_22
-Label=Q29
-DisplayTogether=Yes
-Position=55
-Length=2
   
 [EndGroup]
   

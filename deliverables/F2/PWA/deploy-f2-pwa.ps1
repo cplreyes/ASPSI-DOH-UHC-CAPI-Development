@@ -50,7 +50,7 @@ $ProxyUrl  = "https://uhc-hcw.asiansocial.org"   # same origin; the worker serve
 #
 # The mid-section notes (#1041/#1042/#1043) belong here for the SAME reason the
 # Facilities tab does, and it is not hypothetical: as of 2026-08-13 the matrix
-# preamble RENDER exists only on worktree-f2-productivity-panel. origin/main's
+# preamble RENDER exists only on integration/capi-ops. origin/main's
 # MatrixQuestion.tsx contains no preamble block at all, while main's items.ts
 # DOES carry the note data -- so a build from main looks complete, ships the
 # notes as dead data, and silently reverts all three tickets. Testers have

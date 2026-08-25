@@ -576,6 +576,17 @@ postproc
   endif;
 
 PROC ENUM_RESULT_FINAL_VISIT
+preproc
+  { #1290/#1301 class extension (UAT R7, 2026-08-20): the enumerator picklist mirrors
+    the paper's four codes (ENUM_RESULT_FINAL_VISIT_PICK_VS1); the full set incl. 5
+    Replaced is active only when the BREAKOFF flow assigned a replacement (or a stale
+    Replaced persists after back-nav to BREAKOFF). Preproc re-fires on re-entry, so
+    the swap holds in both directions -- the Q108 setvalueset pattern. }
+  if BREAKOFF in 5, 6, 7 or ENUM_RESULT_FINAL_VISIT = 5 then
+    setvalueset(ENUM_RESULT_FINAL_VISIT, ENUM_RESULT_FINAL_VISIT_VS1);
+  else
+    setvalueset(ENUM_RESULT_FINAL_VISIT, ENUM_RESULT_FINAL_VISIT_PICK_VS1);
+  endif;
 postproc
   { #744/#561: classify completeness from the final Result-of-Visit. Completed(1) -> Completed;
     Postponed(2) / Refused(3) / Incomplete(4) -> Partial. }
@@ -2580,12 +2591,12 @@ postproc
 
 PROC Q13_2_HPU_ROLE_OTHER_TXT
 preproc
-  if not (Q13_2_HPU_ROLE = 2 or Q13_2_HPU_ROLE = 5) then
+  if not (Q13_2_HPU_ROLE = 5) then
     Q13_2_HPU_ROLE_OTHER_TXT = "";   { skip + clear: no 'other' option chosen }
     noinput;
   endif;
 postproc
-  if (Q13_2_HPU_ROLE = 2 or Q13_2_HPU_ROLE = 5) and length(strip(Q13_2_HPU_ROLE_OTHER_TXT)) = 0 then
+  if (Q13_2_HPU_ROLE = 5) and length(strip(Q13_2_HPU_ROLE_OTHER_TXT)) = 0 then
     errmsg(1341);
     reenter;
   endif;

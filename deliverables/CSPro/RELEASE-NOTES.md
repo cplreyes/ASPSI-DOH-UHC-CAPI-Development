@@ -30,18 +30,25 @@ version SSOT, tracked since 2026-07-02 - earlier builds predate it).
 
 | Instrument | Version | Deployed |
 |---|---|---|
-| F1 - Facility Head Survey | **v3.0.1** | 2026-08-19 |
-| F3 - Patient Survey | **v4.0.1** | 2026-08-19 |
-| F4 - Household Survey | **v3.0.2** | 2026-08-19 |
+| F1 - Facility Head Survey | **v4.0.0** | 2026-08-24 |
+| F3 - Patient Survey | **v6.0.3** | 2026-08-20 |
+| F4 - Household Survey | **v3.1.4** | 2026-08-20 |
 | HUB - Supervisor Hub | **v1.1.5** | 2026-08-08 |
 | F2 - Healthcare Worker Survey (PWA) | **v2.1.0** | see F2 CHANGELOG |
 
 ## Unreleased
 
-- **F1 v3.0.1** (2026-08-19) - bumped in the working tree, not yet committed
-  - Fixed: On-screen question de-duplication (R25): form field captions are now short question tags, so the question text appears once per screen instead of twice. Display only.
+- **F1 v4.0.0** (2026-08-24) - bumped in the working tree, not yet committed · **BREAKING** (data shape)
+  - Changed: Q35.2 primary-care quality measures: replaced the 3-entry placeholder option list with DOH's printed 10-option list ([#1311](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/1311)). Checkbox field length 6 -> 20; stored codes re-map.
+- **F3 v6.0.3** (2026-08-20) - bumped in the working tree, not yet committed
+- **F4 v3.1.4** (2026-08-20) - bumped in the working tree, not yet committed
 
 ## F1 - Facility Head Survey
+
+### [v3.0.1](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/compare/88249604fd4bdf378931ca788794956b807a38f3...f64ca0f960f78c3f8fea0299f65e01c6322f1d6f) - 2026-08-19 · PATCH
+#### Fixed
+- On-screen question de-duplication (R25): form field captions are now short question tags, so the question text appears once per screen instead of twice. Display only.
+_Release commit [`f64ca0f`](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/commit/f64ca0f960f78c3f8fea0299f65e01c6322f1d6f): aug17: question de-duplication F1 v3.0.1 (Task C1, R25)_
 
 ### [v3.0.0](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/compare/af9f87f5c5c62463b9bf9025437c1db581e4c7fc...88249604fd4bdf378931ca788794956b807a38f3) - 2026-08-19 · MAJOR · **BREAKING** (data shape)
 #### Changed

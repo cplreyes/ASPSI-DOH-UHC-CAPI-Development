@@ -3,7 +3,7 @@
 # P4 local leg — runs on Carl's machine (Git Bash), AFTER p4-box-steps.sh.
 # Needs: wrangler auth (the same login used for `wrangler deploy`), ssh key.
 #
-#   cd /c/Users/analy/Documents/analytiflow/1_Projects/aspsi-f2-staging-wt/deliverables/F2/PWA/server
+#   cd <repo>/deliverables/F2/PWA/server
 #   bash deploy/p4-local-kv-r2.sh
 #
 # Two independent copies, both expected to be SMALL at UAT scale (possibly 0):
