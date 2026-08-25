@@ -67,7 +67,7 @@ export const sectionBSchema = z.object({
   Q24: z.enum(['Yes', 'No']).optional(),
   Q24_1: z.enum(['Implemented as a direct result of the UHC Act', 'Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act', 'Newly implemented or improved independent of UHC Act', 'Not yet implemented but planned within the next 1-2 years', 'Other (specify)', 'I don\'t know']).optional(),
   Q24_1_other: z.string().optional(),
-  Q24_2: z.array(z.enum(['Client satisfaction survey', 'Dashboards', 'Other (specify)'])).optional(),
+  Q24_2: z.array(z.enum(['Patient or Client satisfaction survey', 'Patient Feedback and Complaints Management System', 'Patient Rights and Responsibilities Policy', 'Regular Quality or Management Review Meetings', 'Routine monitoring of quality/performance indicators', 'Quality Assurance Plan (QAP)', 'Continuous Quality Improvement (CQI) Program', 'Staff Quality Improvement and Competency Training', 'Clinical audit or case review activities', 'Other (specify)'])).optional(),
   Q24_2_other: z.string().optional(),
   Q25: z.array(z.enum(['Salary', 'Number of patients', 'Working hours', 'Standards to follow', 'Preventative health care', 'Patients seek healthcare in different ways', 'I don\'t know', 'Other (specify)'])).optional(),
   Q25_other: z.string().optional(),

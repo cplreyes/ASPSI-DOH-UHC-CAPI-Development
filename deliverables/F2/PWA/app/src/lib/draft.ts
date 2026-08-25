@@ -32,7 +32,13 @@ export const COMPLETED_CSID_KEY = 'f2_completed_csid';
 // and #1293 narrows Q89's gate to Q88=Yes.
 // Backend `min_accepted_spec_version` is deliberately NOT raised here — see the
 // note above; that only moves once the offline queue has drained.
-export const LOCAL_SPEC_VERSION = '2026-08-20-m2';
+// m3 (2026-08-25, UAT R7 #1312 + #1313): Q24.2's 3-entry placeholder option
+// list replaced with DOH's printed 10 options (schema enum widened; the one
+// surviving label is renamed and migrated by RENAMED_VALUES below, 'Dashboards'
+// has no successor and is flagged by the schema for re-pick). Consent Part I
+// text synced to the Aug-17 paper (#1313) — text only, no payload change.
+// No m2 submission carries Q24_2 in the field, so nothing to migrate server-side.
+export const LOCAL_SPEC_VERSION = '2026-08-25-m3';
 
 export interface EnrollmentInfo {
   hcw_id: string;
@@ -77,6 +83,11 @@ const RENAMED_VALUES: Record<string, Record<string, string>> = {
       'Nutrition action officer/coordinator/Nutritionist-Dietician',
     'Pharmacist/Dispenser or Assistant Pharmacist': 'Pharmacist/Dispenser/Assistant Pharmacist',
   },
+  // #1312 (2026-08-25): Q24.2's 3-entry placeholder list replaced with DOH's
+  // 10 options. The one survivor is renamed; 'Dashboards' has no successor and
+  // is left for the schema to flag (the respondent re-picks). Multi values are
+  // arrays — mapped element-wise below.
+  Q24_2: { 'Client satisfaction survey': 'Patient or Client satisfaction survey' },
 };
 
 export async function loadDraft(id: string): Promise<DraftRow | undefined> {
@@ -85,6 +96,7 @@ export async function loadDraft(id: string): Promise<DraftRow | undefined> {
   for (const [field, map] of Object.entries(RENAMED_VALUES)) {
     const v = row.values[field];
     if (typeof v === 'string' && map[v] !== undefined) row.values[field] = map[v];
+    else if (Array.isArray(v)) row.values[field] = v.map((x) => (typeof x === 'string' && map[x] !== undefined ? map[x] : x));
   }
   return row;
 }

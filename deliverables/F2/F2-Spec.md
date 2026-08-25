@@ -93,6 +93,11 @@ Captured by the PWA's cover block, not part of the body spec below:
   — the raffle mention was already current; the SJREB email/phone and ASPSI
   email in `contactsBody` were stale and are now synced to the Aug-17
   printed contact table.
+  **#1313 (2026-08-25):** Part I substance re-synced to the Aug-17 paper —
+  "requests your participation", the ~1-hour duration, and the topics-covered
+  sentence were missing; added to `consent.infoStudy`/`consent.infoBenefits`
+  (EN master; the 7 locales carry the EN text pending a cleared translation).
+  Self-admin phrasing retained per the registered `capi-adaptation`.
 
 The Aug 17 doc still prints an interviewer-style cover block (consent-read-
 aloud, FIELD CONTROL block, enumerator sign-offs, HEALTH FACILITY AND
@@ -158,7 +163,7 @@ is derived server-side).
 | Q23.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q23 = Yes | — | **NEW in Aug 17** — ✅ wired (Task 3.2, 2026-08-19) |
 | Q24 | Q24 | single | Y | Does this facility implement primary care quality measures? | Yes · No | Q12 = Yes | No → Q25 (skips Q24.1/Q24.2) | OK — reworded |
 | Q24.1 | — | single + specify | conditional | If yes, was it a result of the UHC Act enacted in 2019? | *[UHC-attribution set]* | only if Q24 = Yes | — | **NEW in Aug 17** — ✅ wired (Task 3.2, 2026-08-19) |
-| Q24.2 | — | multi + specify | conditional | If yes, what are the primary care quality measures are you implementing? | Client satisfaction survey · Dashboards · Other (specify) | only if Q24 = Yes | — | **NEW in Aug 17** — Q24's second sub-item (unique to Q24; no other B-battery item has a `.2`); ✅ wired (Task 3.2, 2026-08-19) |
+| Q24.2 | — | multi + specify | conditional | If yes, what are the primary care quality measures are you implementing? | Patient or Client satisfaction survey · Patient Feedback and Complaints Management System · Patient Rights and Responsibilities Policy · Regular Quality or Management Review Meetings · Routine monitoring of quality/performance indicators · Quality Assurance Plan (QAP) · Continuous Quality Improvement (CQI) Program · Staff Quality Improvement and Competency Training · Clinical audit or case review activities · Other (specify) | only if Q24 = Yes | — | **NEW in Aug 17** — Q24's second sub-item (unique to Q24; no other B-battery item has a `.2`); ✅ wired (Task 3.2, 2026-08-19). **#1312 (2026-08-25):** the 3-entry list (Client satisfaction survey · Dashboards · Other) was a placeholder carried in from the Aug-17 rewrite; replaced with DOH's printed 10 options (same list as F1 Q35.2, #1311). No stored data affected — Q24.2 did not exist before v3.0.0 and no v3.0.0 response carries it |
 | Q25 | Q25 | multi + specify | Y | Which of the following do you expect to change in your personal work as a health worker under UHC? | Salary · Number of patients · Working hours · Standards to follow · Preventative health care · Patients seek healthcare in different ways · I don't know · Other (specify) | Q12 = Yes | — | **SECTION** — Q25 selections drive Q26–Q30 conditionals |
 | Q26 | Q26 | single | conditional | How do you expect the following to change: Salary? | Higher · Lower · I don't know | only if Q25 includes "Salary" | — | OK |
 | Q27 | Q27 | single | conditional | How do you expect the following to change: Number of patients? | Higher · Lower · I don't know | only if Q25 includes "Number of patients" | — | OK |
