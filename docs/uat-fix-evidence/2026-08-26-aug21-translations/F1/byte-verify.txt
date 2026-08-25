@@ -1,0 +1,26 @@
+--- F1 byte-verify C:/Users/analy/tmp/FacilityHeadSurvey-4.1.0.zip ---
+pen bytes: 7484165
+OK   FIL item:Q75_IS_1700_ENOUGH: 'Ang pinakamataas na halaga ng per capita rate para sa YAKAP/'
+OK   FIL val:Q75_IS_1700_ENOUGH_VS1:3: 'Hindi ko alam'
+OK   FIL item:Q1_NAME: 'Ano ang iyong pangalan? (Last Name, First Name, Middle Initi'
+OK   BCL item:Q75_IS_1700_ENOUGH: 'An maximum na per capita rate amount para sa YAKAP/Konsulta '
+OK   BCL val:Q75_IS_1700_ENOUGH_VS1:3: 'Dai aram'
+OK   BCL item:Q1_NAME: 'Ano an saimong Pangaran? (Apelyido, Ngaran, Middle Initial, '
+SKIP BIS item:Q75_IS_1700_ENOUGH (no map value - English fallback)
+OK   BIS val:Q75_IS_1700_ENOUGH_VS1:3: 'Wala ko kahibalo'
+OK   BIS item:Q1_NAME: 'Unsa ang imohang pangalan (Apelyido, Unang Pangalan, apelyid'
+OK   CEB item:Q75_IS_1700_ENOUGH: 'Ang maximum nga per capita rate para sa YAKAP/Konsulta kay P'
+OK   CEB val:Q75_IS_1700_ENOUGH_VS1:3: 'Wala ko kahibalo'
+OK   CEB item:Q1_NAME: 'Unsa imong pangalan? (Apelyido, Pangalan, Middle Initial, EX'
+SKIP WAR item:Q75_IS_1700_ENOUGH (no map value - English fallback)
+OK   WAR val:Q75_IS_1700_ENOUGH_VS1:3: 'Dire ako maaram'
+OK   WAR item:Q1_NAME: 'Ano it imo ngaran? (Apelyido, Siyahan nga ngaran, Butnga, Du'
+OK   HIL item:Q75_IS_1700_ENOUGH: 'Ang maximum nga per capita rate amount para sa YAKAP/Konsult'
+OK   HIL val:Q75_IS_1700_ENOUGH_VS1:3: 'Wala ko Kabalo'
+OK   HIL item:Q1_NAME: 'Ano ang imo ngalan? (Last Name, First Name, Middle Initial, '
+SKIP ILO item:Q75_IS_1700_ENOUGH (no map value - English fallback)
+OK   ILO val:Q75_IS_1700_ENOUGH_VS1:3: 'San a amo'
+OK   ILO item:Q1_NAME: '(Ania ti naganmo? (Apellido, Umuna a Nagan, Tengnga nga Inis'
+OK   footer version (non-truncation signal): 'v4.1.0'
+OK   occurs 1x (want 1x): 'sa masunod sa masunod'
+RESULT: ALL PASS
