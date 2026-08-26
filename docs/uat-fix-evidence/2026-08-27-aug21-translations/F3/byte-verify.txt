@@ -1,0 +1,75 @@
+--- F3 byte-verify C:\Users\analy\AppData\Local\Temp\PatientSurvey.zip ---
+pen bytes: 7833546
+baseline (pre-wave) maps: ..\..\.superpowers\sdd\2026-08-25-aug21-translations\task-40\before\deliverables\CSPro\F3\translations
+SKIP FIL item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+OK   FIL item:Q972_SOURCES [wave-changed]: 'Nagbayad ka ba ng iba pang nagastos sa iyong OPD visit na hi'
+SKIP FIL val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+OK   FIL item:Q1142_HAS_OTHER [wave-changed]: 'Nagbayad ka ba ng iba pang gastusin sa panahon ng iyong conf'
+OK   FIL item:Q66_SAME_AS_USUAL [wave-changed] [dcf-rendered]: 'ang pasilidad na ito ba na karaniwang pinupuntahan mo ay par'
+OK   FIL item:Q98_SOURCES [wave-changed]: 'Gumamit ka ba ng alinman sa mga sumusunod para bayaran ang m'
+OK   FIL val:Q107_SOURCES_VS1:05 [wave-changed]: 'Libre, sagot ng PhilHealth'
+SKIP BCL item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+OK   BCL item:Q972_SOURCES [wave-changed]: 'Nagbayad ka din ba ki iba pang expenses hali sa OPD na dai n'
+OK   BCL val:Q972_SOURCES_VS1:90 [wave-changed]: 'Dai, dai kami nagbayad kan iba pang gastos'
+SKIP BCL item:Q1142_HAS_OTHER (no map value - English fallback)
+OK   BCL item:Q66_SAME_AS_USUAL [wave-changed] [dcf-rendered]: 'an pasilidad na ini facility na pirmi mo na tigadumanan para'
+OK   BCL item:Q98_SOURCES [wave-changed]: 'Ginamit mo ba an mga ini para mabaydan an saimong pagpabulon'
+OK   BCL val:Q107_SOURCES_VS1:05 [wave-changed]: 'Libre, charge sa Philhealth'
+SKIP BIS item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+OK   BIS item:Q972_SOURCES [wave-changed]: 'Nagbayad ba ka og uban pang gasto panahon sa imong OPD visit'
+SKIP BIS val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+OK   BIS item:Q1142_HAS_OTHER [wave-changed]: 'Nagbayad ba ka og uban pang gasto panahon sa imong confineme'
+OK   BIS item:Q66_SAME_AS_USUAL [wave-changed] [dcf-rendered]: 'Ang kini nga pasilidad ba mao ang pasilidad nga imong kasaga'
+OK   BIS item:Q98_SOURCES [wave-changed]: 'Asa sa mga mosunod ang imong gikuhaan aron makabayad sa medi'
+OK   BIS val:Q107_SOURCES_VS1:05 [wave-changed]: 'Libre, charge sa PhilHealth'
+SKIP CEB item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+SKIP CEB item:Q972_SOURCES (no map value - English fallback)
+SKIP CEB val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+SKIP CEB item:Q1142_HAS_OTHER (no map value - English fallback)
+OK   CEB item:Q66_SAME_AS_USUAL [wave-changed] [dcf-rendered]: 'Ang kini nga pasilidad ba ang pasilidad nga kasagaran nimong'
+OK   CEB item:Q98_SOURCES [wave-changed]: 'Migamit ba ka og bisan hain ani nga mga mosunod para mobayad'
+OK   CEB val:Q107_SOURCES_VS1:05 [wave-changed]: 'Libre, gisingil sa PhilHealth'
+SKIP WAR item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+OK   WAR item:Q972_SOURCES [wave-changed]: 'May iba pa ba kamo nga ginbaydan han iyo pagbisita ha OPD ng'
+SKIP WAR val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+OK   WAR item:Q1142_HAS_OTHER [wave-changed]: 'Mayda ka ba ginbaydan nga iba pa nga gastos durante han imo '
+OK   WAR item:Q66_SAME_AS_USUAL [wave-changed] [dcf-rendered]: 'An ini nga pasilidad ba an pasilidad nga kasagaran mo ginkak'
+OK   WAR item:Q98_SOURCES [wave-changed]: 'Gingamit mo ba an bisan hain han masunod ha pagbayad han mga'
+OK   WAR val:Q107_SOURCES_VS1:05 [wave-changed]: 'Libre, babaydan hit Philhealth'
+SKIP HIL item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+SKIP HIL item:Q972_SOURCES (no map value - English fallback)
+SKIP HIL val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+SKIP HIL item:Q1142_HAS_OTHER (no map value - English fallback)
+OK   HIL item:Q66_SAME_AS_USUAL [wave-changed] [dcf-rendered]: 'Ang ini nga pasilidad bala ang pasilidad nga ginakadtuan mo '
+OK   HIL item:Q98_SOURCES [wave-changed]: 'Naggamit ka bala sang bisan ano sa masunod para bayaran ang '
+OK   HIL val:Q107_SOURCES_VS1:05 [wave-changed]: 'Libre, i-charge sa PhilHealth'
+SKIP ILO item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+OK   ILO item:Q972_SOURCES [wave-changed]: 'Binayadam kadi ti aniaman a sabali pay a gastos bayat ti pan'
+SKIP ILO val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+OK   ILO item:Q1142_HAS_OTHER [wave-changed]: 'Nabayadam kadi ti aniaman a sabali pay a gastos bayat ti pan'
+OK   ILO item:Q66_SAME_AS_USUAL [wave-changed] [dcf-rendered]: 'Ti kadi daytoy a pasilidad ti pasilidad a gagangay a papanam'
+OK   ILO item:Q98_SOURCES [wave-changed]: 'Inusarmo kadi ti aniaman kadagiti sumaganad a pangbayad kada'
+OK   ILO val:Q107_SOURCES_VS1:05 [wave-changed]: 'Libre, singir iti PhilHealth'
+OK   footer version (non-truncation signal): 'v6.1.0'
+OK   occurs 0x (want 0x): 'kangrunaan a kangrunaan a'
+OK   FIL has >=1 wave-changed probe present in the served pack
+OK   BCL has >=1 wave-changed probe present in the served pack
+OK   BIS has >=1 wave-changed probe present in the served pack
+OK   CEB has >=1 wave-changed probe present in the served pack
+OK   WAR has >=1 wave-changed probe present in the served pack
+OK   HIL has >=1 wave-changed probe present in the served pack
+OK   ILO has >=1 wave-changed probe present in the served pack
+RESULT: ALL PASS
+
+--- English/dialect-phrase probe (PatientSurvey.zip, 7833546 pen bytes) ---
+members: package.csds, package.json, PatientSurvey.pen, PatientSurvey.pff, psgc_barangay.dat, psgc_barangay.dcf, psgc_city.dat, psgc_city.dcf, psgc_province.dat, psgc_province.dcf, psgc_region.dat, psgc_region.dcf
+packages for the following health services -> FOUND
+were NOT included in the outpatient bill -> FOUND
+No, did not pay for any other expenses -> FOUND
+daytoy a pasilidad -> FOUND
+ini nga pasilidad -> FOUND
+
+--- served PatientSurvey.pff (from the deployed package) ---
+[Run Information]
+Description=Patient Survey (F3) - v6.1.0 (2026-08-27) [DEV]
+Application=.\PatientSurvey.ent
