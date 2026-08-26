@@ -237,7 +237,7 @@ the intervening fields were unanswered — has **no starting material in-tree**:
 Producing one means re-running the desk walk to a partial save first, and whether CSEntry then
 allows the jump is itself untested.
 
-### Rendering defects the tablet frames expose (pre-existing — no wave-4 write touched either key)
+### Rendering defects the tablet pass surfaced (pre-existing — no wave-4 write touched either key)
 
 Both are **map-content** problems (not paper-side): the extract carried neighbouring text into
 the value. They are visible on the tablet because it renders the same bytes as the desk build.
