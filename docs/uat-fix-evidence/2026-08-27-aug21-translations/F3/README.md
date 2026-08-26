@@ -178,7 +178,7 @@ expanded, and `adb push`ed into
 | file | what it shows |
 |---|---|
 | `00-app-list-f3-6.1.0.png` | CSEntry's app list on the AVD showing `Patient Survey (F3) - v6.1.0 (2026-08-27) [DEV]` beside the old `v3.1.11 (2026-08-17)` install — sideloaded from the DEPLOYED `PatientSurvey.zip` |
-| `f3_q8_hil_tablet.png` | Q8 (`Q8_LGBTQIA`) in **Hiligaynon**: `Huo / Wala / Not Comfortable to Answer / Wala kabalo / Nagbalibad sa pagsabat` |
+| `f3_q8_hil_tablet.png` | Q8 (`Q8_LGBTQIA`) in **Hiligaynon**: `Huo` / `Wala` / **`Not Comfortable to Answer` — English fallback, code 3** / `Wala kabalo` / `Nagbalibad sa pagsabat`. Four of the five options render Hiligaynon; code 3 is the one code the HIL write set did not carry, so the build correctly prints the English source (write-set table below) |
 | `f3_q8_war_tablet.png` | Q8 in **Waray**: full stem `Nag-iidentify ba an pasyente komo parte han LGBTQIA+ community? …`, the directive `BASAHA HA MAKUSOG AN MGA OPSYON. PILI MA USA LA NA BATON`, and `Oo / Waray / Dire Komportable ha Pagbaton / Dire ako maaram / Pagdumiri pagbaton` |
 | `f3_icf_hil_tablet.png` | ICF screen 1 (`ICF_PART1`) in **Hiligaynon** on the tablet — the consent prose *and* the `Translated Questionnaire ver. 08/21/2026` stamp in one frame (the tablet pane is tall enough, so the desk pass's two-frame split is not needed here) |
 | `f3_icf_war_tablet.png` | the same screen in **Waray** — `Kumusta, an akon ngaran amo hi …`, same 08/21/2026 stamp |
@@ -213,15 +213,76 @@ Q47's stem and 97.2 in both locales stay covered by this folder's **desk** frame
 byte-for-byte. `f3_q972_hil` was always going to render English anyway — see the gap table
 above: `item:Q972_SOURCES` has no HIL value, an accepted hold.
 
-### Two rendering defects the tablet frames expose (HIL, not introduced by this deploy)
+#### Spec device-evidence item — status, for the controller
 
-Both are map-content problems, visible on the tablet because it renders the same bytes. Neither
-key is in this wave's F3 write set, so both predate v6.1.0:
+The plan's Verification item 3 (*device evidence from the deployed package*) is satisfied
 
-- `val:PATIENT_TYPE_VS1:1/2` in HIL render as `nga serbisyo` / `kag` — fragments, not the
-  Outpatient / Inpatient labels.
-- `item:Q7_SEX` in HIL renders `your Ano ang sekswalidad sang pasiente sang pagkabata?` — an
-  English anchor head (`your`) left on the front of the value.
+- for the **package**: the app-list frame plus on-device `.pen` md5 == served, above; and
+- for **two wave-changed keys per locale**: `val:Q8_LGBTQIA_VS1:*` in HIL and WAR.
 
-Neither is in the Q47 / 97.x / 115.x set this wave was about; they are recorded here so the
-next translation pass (Task 45's worklist) can pick them up.
+It is **not** satisfied for the two keys the task named. **Q47 and 97.2 have no tablet frame
+in any locale**; for those two keys the proof is the desk frames plus `byte-verify.txt`.
+Standing rule (8) permits the substitution and it is recorded here, in the patch note
+(`### Tablet pass (Task 43) — substitution deviation record`) and in `log.md`; **ratifying it,
+or ordering a re-shoot, is the controller's call — this task does not close it.**
+
+Cost of closing it: one AVD session of roughly 60–90 minutes of screenshot-guided tapping.
+Q47 sits ~50 coded fields in and 97.2 ~110, and every coded field needs its own tap because
+CSEntry on Android ignores hardware-keyboard input on them (text and numeric fields do accept
+`adb shell input text`). The one idea that might have been cheaper — push a saved deep case to
+the device, reopen it, and use the case tree, since the forward jump was refused only because
+the intervening fields were unanswered — has **no starting material in-tree**: Task 41's
+`F3/desktest_hil.csdb` and `F3/desktest_war.csdb` both hold **0 cases**
+(`select count(*) from cases` = 0 on each), because those runs were killed before save.
+Producing one means re-running the desk walk to a partial save first, and whether CSEntry then
+allows the jump is itself untested.
+
+### Rendering defects the tablet frames expose (pre-existing — no wave-4 write touched either key)
+
+Both are **map-content** problems (not paper-side): the extract carried neighbouring text into
+the value. They are visible on the tablet because it renders the same bytes as the desk build.
+Both predate v6.1.0, on two independent checks:
+
+- `aug21_apply_diff_F3_applied.json` has **no** `PATIENT_TYPE` / `Q7_SEX` key in any bucket
+  (`writes`, `replaced`, `overridden`, `unmatched`, `flagged_skipped`, `already_same`) of any
+  of the seven locale blocks; and
+- the values are byte-identical to the pre-wave maps in
+  `.superpowers/sdd/2026-08-25-aug21-translations/task-40/before/deliverables/CSPro/F3/translations/`.
+
+**`PATIENT_TYPE` is not a Hiligaynon-only problem.** The HIL pair is what made it visible — it
+was seen on the AVD during the Task-43 walk, at the case's Outpatient selection; **no committed
+frame in this folder shows that screen**, so the table below is read off the build, not off a
+picture. The per-locale check that followed the sighting found the same class in **six of the
+seven** locales. Every string below is in the DEPLOYED package: read out of
+`F3/PatientSurvey.dcf` and confirmed present in the served `.pen` (bz2-decompressed, UTF-16LE
+`bytes.find`, the same 1 720 407-byte zip `byte-verify.txt` probed):
+
+| locale | code 1 (English `Outpatient`) | code 2 (English `Inpatient`) |
+|---|---|---|
+| FIL | `mentioned facility)` | `visit ng pasyente` |
+| BCL | `mentioned facility)` | English fallback (`Inpatient`) |
+| BIS | `mentioned facility)` | `visit sa pasyente` |
+| CEB | `mentioned facility)` | English fallback (`Inpatient`) |
+| WAR | English fallback (`Outpatient`) | English fallback (`Inpatient`) |
+| **HIL** | **`nga serbisyo`** | **`kag`** |
+| ILO | `mentioned facility)` | `This section is for respondents in` |
+
+Why this one is the serious one: `PATIENT_TYPE` **routes the whole case** — Outpatient sends it
+through Section G, Inpatient through Section H — so an enumerator working in any language but
+Waray is choosing between two fragments on a field that decides the rest of the interview. No
+data is corrupted (the stored codes are 1 / 2 and the routing logic is untouched; the field label
+itself, `item:PATIENT_TYPE`, is English everywhere except WAR), but it is the most user-visible
+string defect in the build, so it is called out in the patch note's Slack block as well as in its
+findings list.
+
+`item:Q7_SEX` is HIL-only: it renders `your Ano ang sekswalidad sang pasiente sang pagkabata?` —
+an English anchor head (`your`) left on the front of the value. The other six locales are clean.
+
+Remediation is deliberately **not** a Task-43 change (this task writes evidence, and the wave's
+apply is closed — wave rule 2 forbids a `remediate_scan --write` after an apply). The sanctioned
+route is a locale-scoped `keep: null` in `data/translations-official/aug21-overrides.json` for
+`val:PATIENT_TYPE_VS1:1` / `:2` in the six locales and for `item:Q7_SEX` in HIL — `keep:null`
+never writes, so the build falls back to the English `Outpatient` / `Inpatient`, which is strictly
+better than a fragment — plus an extractor rule so the next extract cannot re-introduce them.
+Neither key is in the Q47 / 97.x / 115.x set this wave was about; both are recorded here, in the
+patch note and in `log.md` for Task 45's worklist.
