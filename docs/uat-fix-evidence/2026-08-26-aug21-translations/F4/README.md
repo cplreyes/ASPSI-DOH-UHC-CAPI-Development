@@ -80,7 +80,8 @@ as a `keep` override on the flagged span, never as a hand edit of a map.
 sits on seven WAR value sets and occurs **once** in the served pen. A row-inheritance repair is
 therefore invisible to a substring count whenever the wrong string was a neighbour's correct one —
 which is every row above. `dcf-removal-proof-3.2.3.txt` is the structural half of the proof, and the
-nine `0x` counts in `byte-verify-3.2.3.txt` are the discriminators that only v3.2.2 could satisfy.
+seven `0x` counts in `byte-verify-3.2.3.txt` are the discriminators: five are v3.2.2 values that
+this build removes or reverts, and two are the superseded version stamps.
 
 **No case was opened on v3.2.3.** The app-list shot plus the on-device `.pen` md5 (equal to the
 served one) and the `.pff` Description are the device evidence; the per-row proof is the built
