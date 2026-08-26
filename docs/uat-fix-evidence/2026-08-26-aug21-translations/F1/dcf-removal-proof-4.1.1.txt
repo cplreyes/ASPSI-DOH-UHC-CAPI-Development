@@ -1,0 +1,24 @@
+--- F1 built-dictionary label check C:/Users/analy/Documents/analytiflow/1_Projects/ASPSI-DOH-CAPI-CSPro-Development\deliverables\CSPro\F1\FacilityHeadSurvey.dcf ---
+languages: ['EN', 'FIL', 'BCL', 'BIS', 'CEB', 'WAR', 'HIL', 'ILO']
+
+== REMOVED rows: the locale's label must now BE the English one ==
+OK   FIL val:Q45_PERF_INDICATORS_VS1:04 renders the ENGLISH label 'Beneficiaries received noncommunicable disease (NCD) medicine as prescribed by their primary care doctor' (built: 'Beneficiaries received noncommunicable disease (NCD) medicine as prescribed by their primary care doctor')
+OK   BCL val:Q83_NOT_RECEIVED_REASONS_VS1:03 renders the ENGLISH label 'Difficulties in verifying patient enrollment (PhilHealth)' (built: 'Difficulties in verifying patient enrollment (PhilHealth)')
+
+== ACCEPTED flagged span: the label must be the override text ==
+OK   BCL val:Q83_NOT_RECEIVED_REASONS_VS1:02 carries the accepted span 'Pagka-antala sa tracking kan patient enrollment' (built: 'Pagka-antala sa tracking kan patient enrollment')
+
+== KEPT siblings: the code that OWNS the translation still carries it ==
+OK   BCL val:Q83_NOT_RECEIVED_REASONS_VS1:02  EN="Delays in facility's tracking of patient enrollment"  BCL='Pagka-antala sa tracking kan patient enrollment'
+OK   FIL val:Q45_PERF_INDICATORS_VS1:03  EN='Beneficiaries received antibiotics as prescribed by their primary care doctor'  FIL='Ang mga benepisyaryo ay nakatanggap ng antibiotics ayon sa reseta ng kanilang primary care doctor'
+
+== no value set of the built dictionary has two codes with the same label ==
+OK   FIL: 0 duplicate-label value set(s)
+OK   BCL: 0 duplicate-label value set(s)
+OK   BIS: 0 duplicate-label value set(s)
+OK   CEB: 0 duplicate-label value set(s)
+OK   WAR: 0 duplicate-label value set(s)
+OK   HIL: 0 duplicate-label value set(s)
+OK   ILO: 0 duplicate-label value set(s)
+
+BUILT-DICTIONARY RESULT: ALL PASS
