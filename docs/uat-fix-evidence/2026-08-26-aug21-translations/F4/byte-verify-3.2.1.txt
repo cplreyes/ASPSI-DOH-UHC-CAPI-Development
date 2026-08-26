@@ -1,0 +1,111 @@
+--- F4 byte-verify C:/Users/analy/tmp/HouseholdSurvey-3.2.1.zip ---
+pen bytes: 7687451
+baseline (pre-wave) maps: C:/Users/analy/Documents/analytiflow/1_Projects/ASPSI-DOH-CAPI-CSPro-Development/.superpowers/sdd/2026-08-25-aug21-translations/task-28/before/deliverables/CSPro/F4/translations
+SKIP FIL item:Q30_NAME (no map value - English fallback)
+SKIP FIL item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP FIL item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+SKIP FIL item:Q40_EDUCATION (no map value - English fallback)
+SKIP FIL item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   FIL item:Q69_GAMOT_HEARD [wave-changed]: 'Narinig mo na ba ang Guaranteed and Accessible Medications f'
+OK   FIL item:Q101_CHECKUP_FREQ [unchanged-since-baseline]: 'Gaano kadalas ka o ang miyembro ng iyong sambahayan ay nagpa'
+OK   FIL item:Q92_FACILITY_TYPE [wave-changed]: 'Ano ang uri ng pasilidad na madalas mong pinupuntahan? Is yo'
+OK   FIL item:Q27_REFRIGERATOR [wave-changed]: 'Ang pamilya ba ay may pag-aari na refrigerator/freezer?'
+OK   FIL vs:Q27_REFRIGERATOR_VS1 [wave-changed]: 'Ang pamilya ba ay may pag-aari na refrigerator/freezer?'
+OK   FIL val:Q78_WHY_BRANDED_VS1:05 [wave-changed]: 'Mas gusto ang branded kaysa sa generic na opsyon'
+OK   FIL val:Q140_BILL_ITEMS_VS1:04 [wave-changed]: '[Kagamitang medikal o supplies]'
+OK   FIL val:Q76_BRAND_OR_GEN_VS1:4 [wave-changed]: 'Hindi alam ang pagkakaiba'
+OK   BCL item:Q30_NAME [wave-changed]: 'Ngaran (Pakisurat an completong ngaran kan miembro kan pamil'
+SKIP BCL item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP BCL item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+SKIP BCL item:Q40_EDUCATION (no map value - English fallback)
+SKIP BCL item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   BCL item:Q69_GAMOT_HEARD [wave-changed]: 'Nadangog mo na an Guaranteed and Accessible Medications for '
+OK   BCL item:Q101_CHECKUP_FREQ [unchanged-since-baseline]: 'Pira ka beses ka o miembro kan saimong pamilya nagpapa gener'
+OK   BCL item:Q92_FACILITY_TYPE [wave-changed]: 'Anong klaseng pasilidad an nakasanayan mo na tigdudumanan? I'
+OK   BCL item:Q27_REFRIGERATOR [wave-changed]: 'May ref/freezer ba?'
+OK   BCL vs:Q27_REFRIGERATOR_VS1 [wave-changed]: 'May ref/freezer ba?'
+OK   BCL val:Q78_WHY_BRANDED_VS1:05 [wave-changed]: 'Mas muya an branded kesa generic'
+OK   BCL val:Q140_BILL_ITEMS_VS1:04 [wave-changed]: 'Medical equipment o supplies'
+OK   BCL val:Q76_BRAND_OR_GEN_VS1:4 [wave-changed]: 'Dai ko aram na may pagkakaiba palan'
+OK   BIS item:Q30_NAME [wave-changed]: 'Ngalan (Isulat ang kompleto nga ngalan sa miyembro sa panima'
+SKIP BIS item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP BIS item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   BIS item:Q40_EDUCATION [wave-changed]: 'Pinakataas nga Naabot sa Pag-eskwela'
+SKIP BIS item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   BIS item:Q69_GAMOT_HEARD [unchanged-since-baseline]: 'Nakadungog na ba ka bahin sa Guaranteed and Accessible Medic'
+OK   BIS item:Q101_CHECKUP_FREQ [unchanged-since-baseline]: 'Kasagaran, kapila ka o ang ubang miyembro sa imong pamilya m'
+OK   BIS item:Q92_FACILITY_TYPE [wave-changed]: 'Unsa nga klase sa pasilidad ang imong kasagarang adtoan? Is '
+OK   BIS item:Q27_REFRIGERATOR [wave-changed]: 'Aduna ba moy kaugalingong ref o freezer?'
+OK   BIS vs:Q27_REFRIGERATOR_VS1 [wave-changed]: 'Aduna ba moy kaugalingong ref o freezer?'
+OK   BIS val:Q78_WHY_BRANDED_VS1:05 [wave-changed]: 'Mas gusto ang branded kaysa generic'
+OK   BIS val:Q140_BILL_ITEMS_VS1:04 [wave-changed]: 'Medical equipment o supplies'
+OK   BIS val:Q76_BRAND_OR_GEN_VS1:4 [wave-changed]: 'Wala kahibalo sa kalainan'
+OK   CEB item:Q30_NAME [wave-changed]: 'Ngalan (Isulat ang kumpletong ngalan sa miyembro sa panimala'
+SKIP CEB item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP CEB item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   CEB item:Q40_EDUCATION [wave-changed]: 'Naabot nga edukasyon'
+SKIP CEB item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   CEB item:Q69_GAMOT_HEARD [unchanged-since-baseline]: 'Nakadungog na ba ka bahin sa Guaranteed and Accessible Medic'
+OK   CEB item:Q101_CHECKUP_FREQ [unchanged-since-baseline]: 'Unsa ka sagad ka/kamo sa inyong panimalay magpa-general chec'
+SKIP CEB item:Q92_FACILITY_TYPE (no map value - English fallback)
+OK   CEB item:Q27_REFRIGERATOR [wave-changed]: 'Ang inyong pamilya ba adunay refrigerator/freezer?'
+OK   CEB vs:Q27_REFRIGERATOR_VS1 [wave-changed]: 'Ang inyong pamilya ba adunay refrigerator/freezer?'
+OK   CEB val:Q78_WHY_BRANDED_VS1:05 [wave-changed]: 'Mas gusto ang branded kaysa generic'
+OK   CEB val:Q140_BILL_ITEMS_VS1:04 [wave-changed]: 'Medikal nga kagamitan o suplay'
+OK   CEB val:Q76_BRAND_OR_GEN_VS1:4 [wave-changed]: 'Wala kahibalo sa kalahian'
+OK   WAR item:Q30_NAME [wave-changed]: 'Ngaran (Isurat an kompleto nga ngaran hit HH nga miyembro)'
+SKIP WAR item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP WAR item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   WAR item:Q40_EDUCATION [wave-changed]: 'Pinakahitaas nga edukasyon nga natapos'
+SKIP WAR item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   WAR item:Q69_GAMOT_HEARD [unchanged-since-baseline]: 'Nakabati ka na ba han Guaranteed and Accessible Medications '
+OK   WAR item:Q101_CHECKUP_FREQ [unchanged-since-baseline]: 'Mationan-o kaagsob nga ikaw/imo kapamilya in mayda general c'
+OK   WAR item:Q92_FACILITY_TYPE [wave-changed]: 'Ano an klase hin pasilidad nga iyo kasagaran kadtuan? Is you'
+SKIP WAR item:Q27_REFRIGERATOR (no map value - English fallback)
+SKIP WAR vs:Q27_REFRIGERATOR_VS1 (no map value - English fallback)
+OK   WAR val:Q78_WHY_BRANDED_VS1:05 [wave-changed]: 'Mas gusto it may tatak kaysa ha generic nga opsyon'
+OK   WAR val:Q140_BILL_ITEMS_VS1:04 [wave-changed]: 'Mga gamit o mga suplay ha medisina'
+OK   WAR val:Q76_BRAND_OR_GEN_VS1:4 [wave-changed]: 'Dire maaram an pag kakaiba'
+OK   HIL item:Q30_NAME [wave-changed]: 'Ngalan (Isulat ang bug-os nga ngalan sang miembro sang panim'
+SKIP HIL item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP HIL item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+SKIP HIL item:Q40_EDUCATION (no map value - English fallback)
+SKIP HIL item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   HIL item:Q69_GAMOT_HEARD [wave-changed]: 'Nakahibalo ka bala sang Guaranteed and Accessible Medication'
+OK   HIL item:Q101_CHECKUP_FREQ [unchanged-since-baseline]: 'Ano ka kamasami nga naga‑pa check‑up ikaw ukon ang miyembro '
+SKIP HIL item:Q92_FACILITY_TYPE (no map value - English fallback)
+OK   HIL item:Q27_REFRIGERATOR [wave-changed]: 'May kaugalingon bala ang pamilya nga refrigerator/freezer?'
+OK   HIL vs:Q27_REFRIGERATOR_VS1 [wave-changed]: 'May kaugalingon bala ang pamilya nga refrigerator/freezer?'
+OK   HIL val:Q78_WHY_BRANDED_VS1:05 [wave-changed]: 'Mas ginapilian ang branded kaysa generic nga opsyon'
+OK   HIL val:Q140_BILL_ITEMS_VS1:04 [wave-changed]: 'Mga medical equipment ukon supplies'
+OK   HIL val:Q76_BRAND_OR_GEN_VS1:4 [wave-changed]: 'Wala ko kabalo sang kinalain'
+OK   ILO item:Q30_NAME [wave-changed]: 'Nagan (Isurat ti kompleto a nagan ti kameng ti HH)'
+SKIP ILO item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP ILO item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   ILO item:Q40_EDUCATION [wave-changed]: '(Nakompleto ti kangatuan a tukad ti edukasion)'
+SKIP ILO item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   ILO item:Q69_GAMOT_HEARD [wave-changed]: 'Nangngegyo kadin ti Guaranteed and Accessible Medications fo'
+OK   ILO item:Q101_CHECKUP_FREQ [unchanged-since-baseline]: 'Kasano kasansan nga addaanka/ti kameng ti sangakabbalayanmo '
+OK   ILO item:Q92_FACILITY_TYPE [wave-changed]: 'Ania ti kita ti pasilidad a gagangay a papanam?) Is your usu'
+OK   ILO item:Q27_REFRIGERATOR [wave-changed]: 'Adda kadi refrigerator/freezer ti pamilia?'
+OK   ILO vs:Q27_REFRIGERATOR_VS1 [wave-changed]: 'Adda kadi refrigerator/freezer ti pamilia?'
+OK   ILO val:Q78_WHY_BRANDED_VS1:05 [wave-changed]: 'Kaykayat ti branded ngem ti generic a pagpilian'
+OK   ILO val:Q140_BILL_ITEMS_VS1:04 [wave-changed]: 'Medikal nga alikamen wenno suplay'
+OK   ILO val:Q76_BRAND_OR_GEN_VS1:4 [wave-changed]: 'Dimo ammo ti nagdumaan'
+OK   footer version (non-truncation signal): 'v3.2.1'
+OK   occurs 0x (want 0x): '26. Mayda ba refrigerator o freezer an pamilya?'
+OK   occurs 0x (want 0x): '27. Mayda ba telebisyon an pamilya?'
+OK   occurs 0x (want 0x): '28. Mayda ba washing machine an pamilya?'
+OK   occurs 0x (want 0x): '67. Ano an mga medisina nga kasagaran'
+OK   occurs 0x (want 0x): '69. Nakabati ka na ba han Guaranteed'
+OK   occurs 0x (want 0x): '101. Mationan-o kaagsob'
+OK   occurs 0x (want 0x): 'v3.2.0'
+OK   occurs 2x (want 2x): '53. Ano an iyo ginkukuhaan'
+OK   FIL has >=1 wave-changed probe present in the served pack
+OK   BCL has >=1 wave-changed probe present in the served pack
+OK   BIS has >=1 wave-changed probe present in the served pack
+OK   CEB has >=1 wave-changed probe present in the served pack
+OK   WAR has >=1 wave-changed probe present in the served pack
+OK   HIL has >=1 wave-changed probe present in the served pack
+OK   ILO has >=1 wave-changed probe present in the served pack
+RESULT: ALL PASS
