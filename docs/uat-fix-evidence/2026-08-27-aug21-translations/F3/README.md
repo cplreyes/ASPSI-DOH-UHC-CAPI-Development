@@ -159,3 +159,69 @@ The `c)` in that one option is the **English** label: the Aug-21 English 97.2 le
 `a)`–`f)` and the English alignment kept the letters, so a locale that has no value for one option
 shows a lettered line among unlettered translated ones. That is an English-side convention from the
 alignment tasks, not something this wave introduced; it is flagged here because the frame shows it.
+
+## Tablet pass — the DEPLOYED package on the `capi_tablet` AVD (Task 43)
+
+The frames above are **desk** frames from the locally compiled build. The frames below come
+from the package CSWeb actually serves: `PatientSurvey.zip` was pulled from
+`/opt/app/lamp/www/csweb/files/apps/` (the same 1 720 407 bytes `byte-verify.txt` probed),
+expanded, and `adb push`ed into
+`/storage/emulated/0/Android/data/gov.census.cspro.csentry/files/csentry/PatientSurvey/`.
+
+| | |
+|---|---|
+| served `.pen` md5 (from the pulled zip) | `2bf5dfdec6f104229afabce2c57d390e` |
+| on-device `.pen` md5 (`adb shell md5sum`) | `2bf5dfdec6f104229afabce2c57d390e` — **identical**, so these frames are the deployed bytes |
+| served `.pff` Description | `Patient Survey (F3) - v6.1.0 (2026-08-27) [DEV]` |
+| case | a NEW throwaway case (`040340302001`, `RHU BINAN`, Outpatient) started after `am force-stop gov.census.cspro.csentry`; **never saved, never synced** — the emulator was killed with the case still open |
+
+| file | what it shows |
+|---|---|
+| `00-app-list-f3-6.1.0.png` | CSEntry's app list on the AVD showing `Patient Survey (F3) - v6.1.0 (2026-08-27) [DEV]` beside the old `v3.1.11 (2026-08-17)` install — sideloaded from the DEPLOYED `PatientSurvey.zip` |
+| `f3_q8_hil_tablet.png` | Q8 (`Q8_LGBTQIA`) in **Hiligaynon**: `Huo / Wala / Not Comfortable to Answer / Wala kabalo / Nagbalibad sa pagsabat` |
+| `f3_q8_war_tablet.png` | Q8 in **Waray**: full stem `Nag-iidentify ba an pasyente komo parte han LGBTQIA+ community? …`, the directive `BASAHA HA MAKUSOG AN MGA OPSYON. PILI MA USA LA NA BATON`, and `Oo / Waray / Dire Komportable ha Pagbaton / Dire ako maaram / Pagdumiri pagbaton` |
+| `f3_icf_hil_tablet.png` | ICF screen 1 (`ICF_PART1`) in **Hiligaynon** on the tablet — the consent prose *and* the `Translated Questionnaire ver. 08/21/2026` stamp in one frame (the tablet pane is tall enough, so the desk pass's two-frame split is not needed here) |
+| `f3_icf_war_tablet.png` | the same screen in **Waray** — `Kumusta, an akon ngaran amo hi …`, same 08/21/2026 stamp |
+
+### Why Q8 and not Q47 / 97.2 — substitution, stated
+
+The tablet plan asked for Q47 and 97.2 in HIL and WAR. Both sit deep in the questionnaire
+(Q47 ≈ 50 fields in, 97.2 ≈ 110). CSEntry on Android takes **no keyboard input on coded
+fields** — every one needs a screenshot-guided tap on its radio row — and CSPro refuses a
+**forward** jump in the case tree: tapping `38.` while sitting on Q10 returns
+`WARNING: Out of range! Please enter a valid value for Q10_CIVIL_STATUS`. At the 30-minute
+navigation cap (05:26 → 05:58 device clock) the walk had reached Q10, so the shots were taken
+from the wave-changed keys that *were* reachable, per the standing rule. Backward tree jumps
+**are** allowed, which is how Q8 and the ICF screens were revisited in each language.
+
+The substitute is not arbitrary: `Q8_LGBTQIA`'s value set is wave-changed in **both** locales
+in this wave's own applied write set,
+`.superpowers/sdd/2026-08-25-aug21-translations/task-40/evidence/aug21_apply_diff_F3_applied.json`:
+
+| locale | codes written this wave | what the frame shows |
+|---|---|---|
+| HIL | `val:Q8_LGBTQIA_VS1:` **1, 2, 4, 5** (not 3) | the four written options render Hiligaynon; code 3 correctly still prints the English `Not Comfortable to Answer` — the frame is a live confirmation of the write set, gap included |
+| WAR | `val:Q8_LGBTQIA_VS1:` **2, 3, 4, 5** | all five options render Waray |
+
+The two ICF frames are **supplementary**, not substitutes: `ICF_PART1` came from the ICF
+import of Tasks 25/26 and is not in this wave's write set. They are kept because they are the
+cheapest on-device proof that the deployed package carries per-language consent text and the
+`08/21/2026` questionnaire stamp.
+
+Q47's stem and 97.2 in both locales stay covered by this folder's **desk** frames
+(`f3_q971_*.png`, `f3_q972_*.png`) and by `byte-verify.txt`, which probes the deployed `.pen`
+byte-for-byte. `f3_q972_hil` was always going to render English anyway — see the gap table
+above: `item:Q972_SOURCES` has no HIL value, an accepted hold.
+
+### Two rendering defects the tablet frames expose (HIL, not introduced by this deploy)
+
+Both are map-content problems, visible on the tablet because it renders the same bytes. Neither
+key is in this wave's F3 write set, so both predate v6.1.0:
+
+- `val:PATIENT_TYPE_VS1:1/2` in HIL render as `nga serbisyo` / `kag` — fragments, not the
+  Outpatient / Inpatient labels.
+- `item:Q7_SEX` in HIL renders `your Ano ang sekswalidad sang pasiente sang pagkabata?` — an
+  English anchor head (`your`) left on the front of the value.
+
+Neither is in the Q47 / 97.x / 115.x set this wave was about; they are recorded here so the
+next translation pass (Task 45's worklist) can pick them up.
