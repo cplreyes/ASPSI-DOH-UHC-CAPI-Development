@@ -1,0 +1,104 @@
+--- F4 byte-verify C:/Users/analy/tmp/HouseholdSurvey-3.2.2.zip ---
+pen bytes: 7686711
+baseline (pre-wave) maps: C:/Users/analy/Documents/analytiflow/1_Projects/ASPSI-DOH-CAPI-CSPro-Development/.superpowers/sdd/2026-08-25-aug21-translations/task-28/before/deliverables/CSPro/F4/translations
+SKIP FIL item:Q30_NAME (no map value - English fallback)
+SKIP FIL item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP FIL item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+SKIP FIL item:Q40_EDUCATION (no map value - English fallback)
+SKIP FIL item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   FIL item:Q69_GAMOT_HEARD [wave-changed]: 'Narinig mo na ba ang Guaranteed and Accessible Medications f'
+OK   FIL item:Q101_CHECKUP_FREQ [unchanged-since-baseline]: 'Gaano kadalas ka o ang miyembro ng iyong sambahayan ay nagpa'
+OK   FIL item:Q92_FACILITY_TYPE [wave-changed]: 'Ano ang uri ng pasilidad na madalas mong pinupuntahan? Is yo'
+OK   FIL item:Q3_SEX [wave-changed]: 'Ano po ang inyong kasarian nang ipinanganak?'
+OK   FIL val:Q3_SEX_VS1:1 [unchanged-since-baseline]: 'Lalaki'
+OK   FIL val:Q3_SEX_VS1:2 [unchanged-since-baseline]: 'Babae'
+OK   FIL val:Q140_BILL_ITEMS_VS1:04 [wave-changed]: 'Kagamitang medikal o supplies'
+OK   BCL item:Q30_NAME [wave-changed]: 'Ngaran (Pakisurat an completong ngaran kan miembro kan pamil'
+SKIP BCL item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP BCL item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+SKIP BCL item:Q40_EDUCATION (no map value - English fallback)
+SKIP BCL item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   BCL item:Q69_GAMOT_HEARD [wave-changed]: 'Nadangog mo na an Guaranteed and Accessible Medications for '
+OK   BCL item:Q101_CHECKUP_FREQ [unchanged-since-baseline]: 'Pira ka beses ka o miembro kan saimong pamilya nagpapa gener'
+OK   BCL item:Q92_FACILITY_TYPE [wave-changed]: 'Anong klaseng pasilidad an nakasanayan mo na tigdudumanan? I'
+OK   BCL item:Q3_SEX [unchanged-since-baseline]: 'Ano an saimong kasarian kan ika pinangaki?'
+OK   BCL val:Q3_SEX_VS1:1 [unchanged-since-baseline]: 'Lalake'
+OK   BCL val:Q3_SEX_VS1:2 [unchanged-since-baseline]: 'Babaye'
+OK   BCL val:Q140_BILL_ITEMS_VS1:04 [wave-changed]: 'Medical equipment o supplies'
+OK   BIS item:Q30_NAME [wave-changed]: 'Ngalan (Isulat ang kompleto nga ngalan sa miyembro sa panima'
+SKIP BIS item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP BIS item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   BIS item:Q40_EDUCATION [wave-changed]: 'Pinakataas nga Naabot sa Pag-eskwela'
+SKIP BIS item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   BIS item:Q69_GAMOT_HEARD [unchanged-since-baseline]: 'Nakadungog na ba ka bahin sa Guaranteed and Accessible Medic'
+OK   BIS item:Q101_CHECKUP_FREQ [unchanged-since-baseline]: 'Kasagaran, kapila ka o ang ubang miyembro sa imong pamilya m'
+OK   BIS item:Q92_FACILITY_TYPE [wave-changed]: 'Unsa nga klase sa pasilidad ang imong kasagarang adtoan? Is '
+OK   BIS item:Q3_SEX [unchanged-since-baseline]: 'Unsa ang imong sekso sa pagkatawo?'
+OK   BIS val:Q3_SEX_VS1:1 [unchanged-since-baseline]: 'Lalake'
+OK   BIS val:Q3_SEX_VS1:2 [unchanged-since-baseline]: 'Babaye'
+OK   BIS val:Q140_BILL_ITEMS_VS1:04 [wave-changed]: 'Medical equipment o supplies'
+OK   CEB item:Q30_NAME [wave-changed]: 'Ngalan (Isulat ang kumpletong ngalan sa miyembro sa panimala'
+SKIP CEB item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP CEB item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   CEB item:Q40_EDUCATION [wave-changed]: 'Naabot nga edukasyon'
+SKIP CEB item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   CEB item:Q69_GAMOT_HEARD [unchanged-since-baseline]: 'Nakadungog na ba ka bahin sa Guaranteed and Accessible Medic'
+OK   CEB item:Q101_CHECKUP_FREQ [unchanged-since-baseline]: 'Unsa ka sagad ka/kamo sa inyong panimalay magpa-general chec'
+SKIP CEB item:Q92_FACILITY_TYPE (no map value - English fallback)
+OK   CEB item:Q3_SEX [unchanged-since-baseline]: 'Unsa ang imong sex sa pagkahimugso?'
+OK   CEB val:Q3_SEX_VS1:1 [unchanged-since-baseline]: 'Lalaki'
+OK   CEB val:Q3_SEX_VS1:2 [unchanged-since-baseline]: 'Babae'
+OK   CEB val:Q140_BILL_ITEMS_VS1:04 [wave-changed]: 'Medikal nga kagamitan o suplay'
+OK   WAR item:Q30_NAME [wave-changed]: 'Ngaran (Isurat an kompleto nga ngaran hit HH nga miyembro)'
+SKIP WAR item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP WAR item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   WAR item:Q40_EDUCATION [wave-changed]: 'Pinakahitaas nga edukasyon nga natapos'
+SKIP WAR item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   WAR item:Q69_GAMOT_HEARD [unchanged-since-baseline]: 'Nakabati ka na ba han Guaranteed and Accessible Medications '
+OK   WAR item:Q101_CHECKUP_FREQ [unchanged-since-baseline]: 'Mationan-o kaagsob nga ikaw/imo kapamilya in mayda general c'
+OK   WAR item:Q92_FACILITY_TYPE [wave-changed]: 'Ano an klase hin pasilidad nga iyo kasagaran kadtuan? Is you'
+OK   WAR item:Q3_SEX [unchanged-since-baseline]: 'Ano an imo sekso han imo pagkatawo?'
+OK   WAR val:Q3_SEX_VS1:1 [unchanged-since-baseline]: 'Lalaki'
+OK   WAR val:Q3_SEX_VS1:2 [unchanged-since-baseline]: 'Babayi'
+OK   WAR val:Q140_BILL_ITEMS_VS1:04 [wave-changed]: 'Mga gamit o mga suplay ha medisina'
+OK   HIL item:Q30_NAME [wave-changed]: 'Ngalan (Isulat ang bug-os nga ngalan sang miembro sang panim'
+SKIP HIL item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP HIL item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+SKIP HIL item:Q40_EDUCATION (no map value - English fallback)
+SKIP HIL item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   HIL item:Q69_GAMOT_HEARD [wave-changed]: 'Nakahibalo ka bala sang Guaranteed and Accessible Medication'
+OK   HIL item:Q101_CHECKUP_FREQ [unchanged-since-baseline]: 'Ano ka kamasami nga naga‑pa check‑up ikaw ukon ang miyembro '
+SKIP HIL item:Q92_FACILITY_TYPE (no map value - English fallback)
+OK   HIL item:Q3_SEX [unchanged-since-baseline]: 'Ano ang sekswalidad sang pasiente sang pagkabata?'
+OK   HIL val:Q3_SEX_VS1:1 [unchanged-since-baseline]: 'Lalaki'
+OK   HIL val:Q3_SEX_VS1:2 [unchanged-since-baseline]: 'Babaye'
+OK   HIL val:Q140_BILL_ITEMS_VS1:04 [wave-changed]: 'Mga medical equipment ukon supplies'
+OK   ILO item:Q30_NAME [wave-changed]: 'Nagan (Isurat ti kompleto a nagan ti kameng ti HH)'
+SKIP ILO item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP ILO item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   ILO item:Q40_EDUCATION [wave-changed]: '(Nakompleto ti kangatuan a tukad ti edukasion)'
+SKIP ILO item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   ILO item:Q69_GAMOT_HEARD [wave-changed]: 'Nangngegyo kadin ti Guaranteed and Accessible Medications fo'
+OK   ILO item:Q101_CHECKUP_FREQ [unchanged-since-baseline]: 'Kasano kasansan nga addaanka/ti kameng ti sangakabbalayanmo '
+OK   ILO item:Q92_FACILITY_TYPE [wave-changed]: 'Ania ti kita ti pasilidad a gagangay a papanam?) Is your usu'
+OK   ILO item:Q3_SEX [unchanged-since-baseline]: 'Ania ti seksom iti pannakayanakmo?'
+OK   ILO val:Q3_SEX_VS1:1 [unchanged-since-baseline]: 'Lalaki'
+OK   ILO val:Q3_SEX_VS1:2 [unchanged-since-baseline]: 'Babae'
+OK   ILO val:Q140_BILL_ITEMS_VS1:04 [wave-changed]: 'Medikal nga alikamen wenno suplay'
+OK   footer version (non-truncation signal): 'v3.2.2'
+OK   occurs 0x (want 0x): '[Lalaki]'
+OK   occurs 0x (want 0x): '[Babae]'
+OK   occurs 0x (want 0x): '[Ano po ang inyong kasarian nang ipinanganak?]'
+OK   occurs 0x (want 0x): '[Kagamitang medikal o supplies]'
+OK   occurs 1x (want 1x): 'Lalaki'
+OK   occurs 1x (want 1x): 'Babae'
+OK   occurs 0x (want 0x): 'v3.2.1'
+OK   occurs 0x (want 0x): 'v3.2.0'
+OK   FIL has >=1 wave-changed probe present in the served pack
+OK   BCL has >=1 wave-changed probe present in the served pack
+OK   BIS has >=1 wave-changed probe present in the served pack
+OK   CEB has >=1 wave-changed probe present in the served pack
+OK   WAR has >=1 wave-changed probe present in the served pack
+OK   HIL has >=1 wave-changed probe present in the served pack
+OK   ILO has >=1 wave-changed probe present in the served pack
+RESULT: ALL PASS
