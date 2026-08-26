@@ -1,0 +1,47 @@
+HouseholdSurvey.dcf languages: ['EN', 'FIL', 'BCL', 'BIS', 'CEB', 'WAR', 'HIL', 'ILO']
+
+== REMOVED rows: the locale's label must now equal the English one ==
+  OK   fil/Q45_2_WHY_NOT_REG_VS1:02  EN="Don't see value in registering"  FIL="Don't see value in registering"
+  OK   fil/Q45_2_WHY_NOT_REG_VS1:03  EN="Don't know how to register"  FIL="Don't know how to register"
+  OK   ilo/Q45_2_WHY_NOT_REG_VS1:08  EN='No valid ID to register'  ILO='No valid ID to register'
+  OK   war/Q128_NBB_UNDERSTAND_VS1:05  EN='Medicine and service are already included'  WAR='Medicine and service are already included'
+  OK   war/Q134_ZBB_UNDERSTAND_VS1:05  EN='Medicine and service are already included'  WAR='Medicine and service are already included'
+  OK   war/Q52_UHC_SOURCE_VS1:06  EN='LGU/Barangay'  WAR='LGU/Barangay'
+  OK   war/Q55_YAKAP_SOURCE_VS1:06  EN='LGU/Barangay'  WAR='LGU/Barangay'
+  OK   war/Q58_BUCAS_SOURCE_VS1:06  EN='LGU/Barangay'  WAR='LGU/Barangay'
+  OK   war/Q70_GAMOT_SOURCE_VS1:06  EN='LGU/Barangay'  WAR='LGU/Barangay'
+  OK   war/Q127_NBB_SOURCE_VS1:06  EN='LGU/Barangay'  WAR='LGU/Barangay'
+  OK   war/Q133_ZBB_SOURCE_VS1:06  EN='LGU/Barangay'  WAR='LGU/Barangay'
+  OK   war/Q137_MAIFIP_SOURCE_VS1:06  EN='LGU/Barangay'  WAR='LGU/Barangay'
+  OK   war/Q13_INCOME_SOURCE_VS1:02  EN='Working for private household'  WAR='Working for private household'
+
+== KEPT siblings: the correct code still carries the translation ==
+  OK   fil/Q45_2_WHY_NOT_REG_VS1:01  EN='Difficult to register'  FIL='Mahirap magparehistro'
+  OK   ilo/Q45_2_WHY_NOT_REG_VS1:01  EN='Difficult to register'  ILO='Narigat ti agparehistro'
+  OK   war/Q45_2_WHY_NOT_REG_VS1:01  EN='Difficult to register'  WAR='Makuri an pagparehistro'
+  OK   fil/Q45_2_WHY_NOT_REG_VS1:07  EN='No time to register'  FIL='Walang oras para magparehistro'
+  OK   ilo/Q45_2_WHY_NOT_REG_VS1:07  EN='No time to register'  ILO='Awan ti oras nga agparehistro'
+  OK   war/Q45_2_WHY_NOT_REG_VS1:07  EN='No time to register'  WAR='Waray oras para magparehistro'
+  OK   fil/Q128_NBB_UNDERSTAND_VS1:03  EN='PhilHealth will cover cost of treatment'  FIL='Sinasaklaw ng PhilHealth ang gastos sa paggamot'
+  OK   ilo/Q128_NBB_UNDERSTAND_VS1:03  EN='PhilHealth will cover cost of treatment'  ILO='Saklawen ti PhilHealth ti gastos iti pannakaagas'
+  OK   war/Q128_NBB_UNDERSTAND_VS1:03  EN='PhilHealth will cover cost of treatment'  WAR='Mababayaran han PhilHealth an gastos han pagtambal'
+  OK   fil/Q134_ZBB_UNDERSTAND_VS1:03  EN='PhilHealth will cover cost of treatment'  FIL='Sinasaklaw ng PhilHealth ang gastos sa paggamot'
+  OK   ilo/Q134_ZBB_UNDERSTAND_VS1:03  EN='PhilHealth will cover cost of treatment'  ILO='Saklawen ti PhilHealth ti gastos iti pannakaagas'
+  OK   war/Q134_ZBB_UNDERSTAND_VS1:03  EN='PhilHealth will cover cost of treatment'  WAR='Mababayaran han PhilHealth an gastos han pagtambal'
+  OK   fil/Q13_INCOME_SOURCE_VS1:03  EN='Working for government'  FIL='Nagtatrabaho sa gobyerno'
+  OK   ilo/Q13_INCOME_SOURCE_VS1:03  EN='Working for government'  ILO='Agtrabaho para iti gobierno'
+  OK   war/Q13_INCOME_SOURCE_VS1:03  EN='Working for government'  WAR='Pagtrabaho ha gobyerno'
+  OK   fil/Q52_UHC_SOURCE_VS1:02  EN='Legislation'  FIL='Batas'
+  OK   ilo/Q52_UHC_SOURCE_VS1:02  EN='Legislation'  ILO='Lehislasion'
+  OK   war/Q52_UHC_SOURCE_VS1:02  EN='Legislation'  WAR='Balaud'
+
+== no two codes of any F4 value set share a translated label ==
+  OK   fil: 0 duplicate-label value set(s)
+  OK   bcl: 0 duplicate-label value set(s)
+  OK   bis: 0 duplicate-label value set(s)
+  OK   ceb: 0 duplicate-label value set(s)
+  OK   war: 0 duplicate-label value set(s)
+  OK   hil: 0 duplicate-label value set(s)
+  OK   ilo: 0 duplicate-label value set(s)
+
+RESULT: ALL PASS

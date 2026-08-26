@@ -1,0 +1,129 @@
+--- F4 byte-verify C:/Users/analy/tmp/task49/HouseholdSurvey.zip ---
+pen bytes: 7684507
+baseline (pre-wave) maps: C:/Users/analy/Documents/analytiflow/1_Projects/ASPSI-DOH-CAPI-CSPro-Development/.superpowers/sdd/2026-08-25-aug21-translations/task-48/baseline/F4
+SKIP FIL item:Q30_NAME (no map value - English fallback)
+SKIP FIL item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP FIL item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+SKIP FIL item:Q40_EDUCATION (no map value - English fallback)
+SKIP FIL item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   FIL val:Q45_2_WHY_NOT_REG_VS1:01 [wave-changed]: 'Mahirap magparehistro'
+SKIP FIL val:Q45_2_WHY_NOT_REG_VS1:02 (no map value - English fallback)
+SKIP FIL val:Q45_2_WHY_NOT_REG_VS1:03 (no map value - English fallback)
+OK   FIL val:Q45_2_WHY_NOT_REG_VS1:07 [wave-changed]: 'Walang oras para magparehistro'
+SKIP FIL val:Q45_2_WHY_NOT_REG_VS1:08 (no map value - English fallback)
+OK   FIL val:Q128_NBB_UNDERSTAND_VS1:03 [wave-changed]: 'Sinasaklaw ng PhilHealth ang gastos sa paggamot'
+OK   FIL val:Q128_NBB_UNDERSTAND_VS1:05 [unchanged-since-baseline]: 'Kasama na ang gamot at serbisyo'
+OK   FIL val:Q134_ZBB_UNDERSTAND_VS1:05 [unchanged-since-baseline]: 'Kasama na ang gamot at serbisyo'
+OK   FIL val:Q13_INCOME_SOURCE_VS1:02 [unchanged-since-baseline]: 'Nagtatrabaho sa pribadong sambahayan'
+OK   FIL val:Q52_UHC_SOURCE_VS1:06 [unchanged-since-baseline]: 'Socia Media'
+OK   BCL item:Q30_NAME [wave-changed]: 'Ngaran (Pakisurat an completong ngaran kan miembro kan pamil'
+SKIP BCL item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP BCL item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+SKIP BCL item:Q40_EDUCATION (no map value - English fallback)
+SKIP BCL item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   BCL val:Q45_2_WHY_NOT_REG_VS1:01 [wave-changed]: 'Dipisil magrehistro'
+OK   BCL val:Q45_2_WHY_NOT_REG_VS1:02 [wave-changed]: 'Dai kaipuhan ang pag parehistro'
+OK   BCL val:Q45_2_WHY_NOT_REG_VS1:03 [wave-changed]: 'Dai aram kun pano'
+OK   BCL val:Q45_2_WHY_NOT_REG_VS1:07 [wave-changed]: 'Warang oras para mgparehistro'
+OK   BCL val:Q45_2_WHY_NOT_REG_VS1:08 [wave-changed]: 'Wara ki Id para sa pagparehistro'
+OK   BCL val:Q128_NBB_UNDERSTAND_VS1:03 [unchanged-since-baseline]: 'An Philhealth iccover gabos an treatment'
+OK   BCL val:Q128_NBB_UNDERSTAND_VS1:05 [unchanged-since-baseline]: 'Kabilang na an mga gamot asin serbisyo'
+OK   BCL val:Q134_ZBB_UNDERSTAND_VS1:05 [unchanged-since-baseline]: 'Kabilang na an mga gamot asin serbisyo'
+OK   BCL val:Q13_INCOME_SOURCE_VS1:02 [unchanged-since-baseline]: 'Pribadong harong/PAMILYA'
+SKIP BCL val:Q52_UHC_SOURCE_VS1:06 (no map value - English fallback)
+OK   BIS item:Q30_NAME [wave-changed]: 'Ngalan (Isulat ang kompleto nga ngalan sa miyembro sa panima'
+SKIP BIS item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP BIS item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   BIS item:Q40_EDUCATION [wave-changed]: 'Pinakataas nga Naabot sa Pag-eskwela'
+SKIP BIS item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP BIS val:Q45_2_WHY_NOT_REG_VS1:01 (no map value - English fallback)
+SKIP BIS val:Q45_2_WHY_NOT_REG_VS1:02 (no map value - English fallback)
+SKIP BIS val:Q45_2_WHY_NOT_REG_VS1:03 (no map value - English fallback)
+SKIP BIS val:Q45_2_WHY_NOT_REG_VS1:07 (no map value - English fallback)
+SKIP BIS val:Q45_2_WHY_NOT_REG_VS1:08 (no map value - English fallback)
+OK   BIS val:Q128_NBB_UNDERSTAND_VS1:03 [unchanged-since-baseline]: 'Ang PhilHealth maoy mo-cover sa gasto sa pagtambal'
+OK   BIS val:Q128_NBB_UNDERSTAND_VS1:05 [unchanged-since-baseline]: 'Apil na ang tambal ug serbisyo'
+OK   BIS val:Q134_ZBB_UNDERSTAND_VS1:05 [unchanged-since-baseline]: 'Apil na ang tambal ug serbisyo'
+OK   BIS val:Q13_INCOME_SOURCE_VS1:02 [unchanged-since-baseline]: 'Nagtrabaho sa pribadong panimalay'
+SKIP BIS val:Q52_UHC_SOURCE_VS1:06 (no map value - English fallback)
+OK   CEB item:Q30_NAME [wave-changed]: 'Ngalan (Isulat ang kumpletong ngalan sa miyembro sa panimala'
+SKIP CEB item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP CEB item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   CEB item:Q40_EDUCATION [wave-changed]: 'Naabot nga edukasyon'
+SKIP CEB item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   CEB val:Q45_2_WHY_NOT_REG_VS1:01 [unchanged-since-baseline]: 'lisod magparehistro'
+OK   CEB val:Q45_2_WHY_NOT_REG_VS1:02 [unchanged-since-baseline]: 'wala ko kakita og bili/kaayuhan sa pagparehistro'
+OK   CEB val:Q45_2_WHY_NOT_REG_VS1:03 [unchanged-since-baseline]: 'Dili ko kabalo unsaon pagparehistro'
+OK   CEB val:Q45_2_WHY_NOT_REG_VS1:07 [unchanged-since-baseline]: 'Walay panahon sa pagparehistro'
+OK   CEB val:Q45_2_WHY_NOT_REG_VS1:08 [unchanged-since-baseline]: 'Walay valid nga ID para magparehistro'
+OK   CEB val:Q128_NBB_UNDERSTAND_VS1:03 [unchanged-since-baseline]: 'Ang PhilHealth ang mobayad sa gasto sa pagtambal'
+OK   CEB val:Q128_NBB_UNDERSTAND_VS1:05 [unchanged-since-baseline]: 'Apil na ang tambal ug serbisyo'
+OK   CEB val:Q134_ZBB_UNDERSTAND_VS1:05 [unchanged-since-baseline]: 'Apil na ang tambal ug serbisyo'
+OK   CEB val:Q13_INCOME_SOURCE_VS1:02 [unchanged-since-baseline]: 'Nagtrabaho sa pribado nga panimalay'
+SKIP CEB val:Q52_UHC_SOURCE_VS1:06 (no map value - English fallback)
+OK   WAR item:Q30_NAME [wave-changed]: 'Ngaran (Isurat an kompleto nga ngaran hit HH nga miyembro)'
+SKIP WAR item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP WAR item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   WAR item:Q40_EDUCATION [wave-changed]: 'Pinakahitaas nga edukasyon nga natapos'
+SKIP WAR item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   WAR val:Q45_2_WHY_NOT_REG_VS1:01 [wave-changed]: 'Makuri an pagparehistro'
+OK   WAR val:Q45_2_WHY_NOT_REG_VS1:02 [wave-changed]: 'Dire ko nakikita an ka importante han pagparehistro'
+OK   WAR val:Q45_2_WHY_NOT_REG_VS1:03 [wave-changed]: 'Dire ako maaram magparehistro'
+OK   WAR val:Q45_2_WHY_NOT_REG_VS1:07 [wave-changed]: 'Waray oras para magparehistro'
+OK   WAR val:Q45_2_WHY_NOT_REG_VS1:08 [wave-changed]: 'Waray balido nga ID para magparehistro'
+OK   WAR val:Q128_NBB_UNDERSTAND_VS1:03 [wave-changed]: 'Mababayaran han PhilHealth an gastos han pagtambal'
+SKIP WAR val:Q128_NBB_UNDERSTAND_VS1:05 (no map value - English fallback)
+SKIP WAR val:Q134_ZBB_UNDERSTAND_VS1:05 (no map value - English fallback)
+SKIP WAR val:Q13_INCOME_SOURCE_VS1:02 (no map value - English fallback)
+SKIP WAR val:Q52_UHC_SOURCE_VS1:06 (no map value - English fallback)
+OK   HIL item:Q30_NAME [wave-changed]: 'Ngalan (Isulat ang bug-os nga ngalan sang miembro sang panim'
+SKIP HIL item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP HIL item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+SKIP HIL item:Q40_EDUCATION (no map value - English fallback)
+SKIP HIL item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   HIL val:Q45_2_WHY_NOT_REG_VS1:01 [wave-changed]: 'Mabudlay magrehistro'
+OK   HIL val:Q45_2_WHY_NOT_REG_VS1:02 [wave-changed]: 'Wala ko may nakita ang kaimportante sang pagrehistro'
+OK   HIL val:Q45_2_WHY_NOT_REG_VS1:03 [wave-changed]: 'Wala kabalo paano magparehistro'
+OK   HIL val:Q45_2_WHY_NOT_REG_VS1:07 [wave-changed]: 'Wala sang oras magparehistro'
+OK   HIL val:Q45_2_WHY_NOT_REG_VS1:08 [wave-changed]: 'Wala sang valid nga ID para magrehistro'
+OK   HIL val:Q128_NBB_UNDERSTAND_VS1:03 [unchanged-since-baseline]: 'Ang PhilHealth ang magabayad sang gasto sang pagpabulong'
+OK   HIL val:Q128_NBB_UNDERSTAND_VS1:05 [unchanged-since-baseline]: 'Ang bulong kag serbisyo yara na sa package'
+OK   HIL val:Q134_ZBB_UNDERSTAND_VS1:05 [unchanged-since-baseline]: 'Ang bulong kag serbisyo yara na sa package'
+OK   HIL val:Q13_INCOME_SOURCE_VS1:02 [unchanged-since-baseline]: 'Nagatrabaho para sa pribado nga panimalay'
+SKIP HIL val:Q52_UHC_SOURCE_VS1:06 (no map value - English fallback)
+OK   ILO item:Q30_NAME [wave-changed]: 'Nagan (Isurat ti kompleto a nagan ti kameng ti HH)'
+SKIP ILO item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP ILO item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   ILO item:Q40_EDUCATION [wave-changed]: '(Nakompleto ti kangatuan a tukad ti edukasion)'
+SKIP ILO item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   ILO val:Q45_2_WHY_NOT_REG_VS1:01 [wave-changed]: 'Narigat ti agparehistro'
+OK   ILO val:Q45_2_WHY_NOT_REG_VS1:02 [wave-changed]: 'Dika makita ti pateg ti panagrehistro'
+OK   ILO val:Q45_2_WHY_NOT_REG_VS1:03 [wave-changed]: 'Diak ammo ti agparehistro'
+OK   ILO val:Q45_2_WHY_NOT_REG_VS1:07 [wave-changed]: 'Awan ti oras nga agparehistro'
+SKIP ILO val:Q45_2_WHY_NOT_REG_VS1:08 (no map value - English fallback)
+OK   ILO val:Q128_NBB_UNDERSTAND_VS1:03 [wave-changed]: 'Saklawen ti PhilHealth ti gastos iti pannakaagas'
+OK   ILO val:Q128_NBB_UNDERSTAND_VS1:05 [unchanged-since-baseline]: 'Nairamanen ti agas ken serbisio'
+OK   ILO val:Q134_ZBB_UNDERSTAND_VS1:05 [unchanged-since-baseline]: 'Nairamanen ti agas ken serbisio'
+OK   ILO val:Q13_INCOME_SOURCE_VS1:02 [unchanged-since-baseline]: 'Agtrabaho para iti pribado a sangakabbalayan'
+SKIP ILO val:Q52_UHC_SOURCE_VS1:06 (no map value - English fallback)
+OK   footer version (non-truncation signal): 'v3.2.3'
+OK   occurs 1x (want 1x): 'Mahirap magparehistro'
+OK   occurs 1x (want 1x): 'Awan ti oras nga agparehistro'
+OK   occurs 1x (want 1x): 'Mababayaran han PhilHealth an gastos han pagtambal'
+OK   occurs 1x (want 1x): 'Balaud'
+OK   occurs 1x (want 1x): 'Pagtrabaho ha gobyerno'
+OK   occurs 0x (want 0x): 'Iba pa nga parag-ataman han panlawas Health center/pasilidad'
+OK   occurs 0x (want 0x): 'Wala kami sang amo sina'
+OK   occurs 0x (want 0x): 'Sadino ti nangalaam kadagiti nabati nga agas? Pilien amin nga agaplikar.'
+OK   occurs 0x (want 0x): 'Oo, igspecify Kantidad ha Pisos'
+OK   occurs 0x (want 0x): 'Dire ako nahinunumdom in'
+OK   occurs 0x (want 0x): 'v3.2.2'
+OK   occurs 0x (want 0x): 'v3.2.1'
+OK   FIL has >=1 wave-changed probe present in the served pack
+OK   BCL has >=1 wave-changed probe present in the served pack
+OK   BIS has >=1 wave-changed probe present in the served pack
+OK   CEB has >=1 wave-changed probe present in the served pack
+OK   WAR has >=1 wave-changed probe present in the served pack
+OK   HIL has >=1 wave-changed probe present in the served pack
+OK   ILO has >=1 wave-changed probe present in the served pack
+RESULT: ALL PASS
