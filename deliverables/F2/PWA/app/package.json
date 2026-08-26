@@ -15,6 +15,7 @@
     "typecheck": "tsc -b",
     "gen:icons": "node scripts/gen-icons.mjs",
     "generate": "tsx scripts/generate.ts",
+    "dump:english": "tsx scripts/dump-english-strings.ts",
     "audit:pwa": "lighthouse http://localhost:4173 --only-categories=pwa --chrome-flags=\"--headless=new\" --output=json --output-path=./lighthouse-pwa.json --quiet",
     "audit:a11y": "lighthouse https://f2-pwa-staging.pages.dev --only-categories=accessibility --chrome-flags=\"--headless=new\" --output=html --output-path=./lighthouse-a11y.html --quiet",
     "audit:bundle": "node scripts/audit-bundle.mjs",

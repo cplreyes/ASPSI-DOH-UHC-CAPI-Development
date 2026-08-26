@@ -38,7 +38,14 @@ export const COMPLETED_CSID_KEY = 'f2_completed_csid';
 // has no successor and is flagged by the schema for re-pick). Consent Part I
 // text synced to the Aug-17 paper (#1313) — text only, no payload change.
 // No m2 submission carries Q24_2 in the field, so nothing to migrate server-side.
-export const LOCAL_SPEC_VERSION = '2026-08-25-m3';
+// m4 (2026-08-26, ASPSI revised Deliverable 2 Aug-21): the seven dialect maps under
+// spec/translations re-imported from the Aug-21 translated questionnaires (Aug-21 wins
+// over the June-5/Aug-17 values except the tracked aug21-overrides.json entries) via
+// scripts/apply-paper-translations.py — text only, no payload/schema change; option
+// values stay English. English source unchanged (Aug-24 English == build), so items.ts
+// differs in dialect strings ONLY: no ids, no enums, no schema change. Nothing to
+// migrate; the stamp moves so a submission records which translation set the HCW saw.
+export const LOCAL_SPEC_VERSION = '2026-08-26-m4';
 
 export interface EnrollmentInfo {
   hcw_id: string;

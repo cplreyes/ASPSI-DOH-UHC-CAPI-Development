@@ -1,0 +1,3885 @@
+{
+ "source": "spec/F2-Spec.md",
+ "count": 393,
+ "strings": [
+  {
+   "text": "Healthcare Worker Profile",
+   "kinds": [
+    "section.title"
+   ],
+   "ids": [
+    "A"
+   ]
+  },
+  {
+   "text": "The following questions ask about your profile. Please put your answer/s in the space provided or check the box of your answer.",
+   "kinds": [
+    "section.preamble"
+   ],
+   "ids": [
+    "A"
+   ]
+  },
+  {
+   "text": "What is your name?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q1"
+   ]
+  },
+  {
+   "text": "Last Name",
+   "kinds": [
+    "subField.label"
+   ],
+   "ids": [
+    "Q1_1"
+   ]
+  },
+  {
+   "text": "First Name",
+   "kinds": [
+    "subField.label"
+   ],
+   "ids": [
+    "Q1_2"
+   ]
+  },
+  {
+   "text": "Middle Initial",
+   "kinds": [
+    "subField.label"
+   ],
+   "ids": [
+    "Q1_3"
+   ]
+  },
+  {
+   "text": "What type of employment do you have at this health facility?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q2"
+   ]
+  },
+  {
+   "text": "Definitions —\n1. Regular Employment: Employees perform tasks necessary or desirable to the employer's main business, usually after a probationary period. They enjoy full security of tenure.\n2. Probationary Employment: A trial period (maximum of 6 months) to determine if the employee meets the standards for regularization.\n3. Casual Employment: Work is not essential to the main business and is usually for a short period. If a casual employee works for at least one year, they may become regular.\n4. Project-based (Project Employment): Employment is fixed for a specific project or undertaking, with the end date determined by the completion of that project.\n5. Seasonal Employment: Work is only performed during specific, recurring times of the year, such as holidays or harvest seasons.\n6. Fixed-Term Employment: The contract specifies a set duration for the employment, agreed upon by both parties.\n7. Other (Job Order): worker is classified as a contractual worker or contract of service personnel, hired for a short-term, specific piece of work.",
+   "kinds": [
+    "item.help"
+   ],
+   "ids": [
+    "Q2"
+   ]
+  },
+  {
+   "text": "Regular",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q2"
+   ]
+  },
+  {
+   "text": "Casual",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q2"
+   ]
+  },
+  {
+   "text": "Seasonal",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q2"
+   ]
+  },
+  {
+   "text": "Probationary",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q2"
+   ]
+  },
+  {
+   "text": "Project-based",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q2"
+   ]
+  },
+  {
+   "text": "Fixed-term",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q2"
+   ]
+  },
+  {
+   "text": "Other (specify)",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q2",
+    "Q5",
+    "Q13_1",
+    "Q15_1",
+    "Q17_1",
+    "Q18_1",
+    "Q19_1",
+    "Q20_1",
+    "Q21_1",
+    "Q22_1",
+    "Q23_1",
+    "Q24_1",
+    "Q24_2",
+    "Q25",
+    "Q34",
+    "Q36",
+    "Q37",
+    "Q39",
+    "Q42",
+    "Q45",
+    "Q47",
+    "Q50",
+    "Q52",
+    "Q55",
+    "Q56",
+    "Q57",
+    "Q60",
+    "Q62",
+    "Q92",
+    "Q93",
+    "Q94",
+    "Q97",
+    "Q109",
+    "Q110",
+    "Q112",
+    "Q123",
+    "Q124"
+   ]
+  },
+  {
+   "text": "What is your sex at birth?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q3"
+   ]
+  },
+  {
+   "text": "Male",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q3"
+   ]
+  },
+  {
+   "text": "Female",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q3"
+   ]
+  },
+  {
+   "text": "How old are you as of your last birthday (in years)?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q4"
+   ]
+  },
+  {
+   "text": "What is your role at this health facility?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q5"
+   ]
+  },
+  {
+   "text": "Administrator",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q5"
+   ]
+  },
+  {
+   "text": "Physician/Doctor",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q5"
+   ]
+  },
+  {
+   "text": "Physician assistant",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q5"
+   ]
+  },
+  {
+   "text": "Nurse",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q5"
+   ]
+  },
+  {
+   "text": "Nursing assistant",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q5"
+   ]
+  },
+  {
+   "text": "Pharmacist/Dispenser/Assistant Pharmacist",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q5"
+   ]
+  },
+  {
+   "text": "Midwife",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q5"
+   ]
+  },
+  {
+   "text": "Laboratory technician",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q5"
+   ]
+  },
+  {
+   "text": "Medical/ radiologic technologist",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q5"
+   ]
+  },
+  {
+   "text": "Health promotion officer",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q5"
+   ]
+  },
+  {
+   "text": "Nutrition action officer/coordinator/Nutritionist-Dietician",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q5"
+   ]
+  },
+  {
+   "text": "Physical Therapist",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q5"
+   ]
+  },
+  {
+   "text": "Dentist",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q5"
+   ]
+  },
+  {
+   "text": "Dentist aide",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q5"
+   ]
+  },
+  {
+   "text": "Barangay Health Worker",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q5"
+   ]
+  },
+  {
+   "text": "What is your specialty, if any?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "No specialty",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Anesthesia",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Dermatology",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Emergency Medicine",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Family Medicine",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "General Surgery",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Internal Medicine",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Neurology",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Nuclear Medicine",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Obstetrics and Gynecology",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Occupational Medicine",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Ophthalmology",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Orthopedics",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Otorhinolaryngology (ENT)",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Pathology",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Pediatrics",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Physical and Rehabilitation Medicine",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Psychiatry",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Public health",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Radiology",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Research",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Others (specify)",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q6"
+   ]
+  },
+  {
+   "text": "Do you practice at any private facility/ clinic?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q7"
+   ]
+  },
+  {
+   "text": "Yes",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q7",
+    "Q12",
+    "Q13",
+    "Q15",
+    "Q17",
+    "Q18",
+    "Q19",
+    "Q20",
+    "Q21",
+    "Q22",
+    "Q23",
+    "Q24",
+    "Q31",
+    "Q34",
+    "Q38",
+    "Q41",
+    "Q44",
+    "Q48",
+    "Q49",
+    "Q51",
+    "Q53",
+    "Q54",
+    "Q58",
+    "Q63",
+    "Q64",
+    "Q66",
+    "Q67",
+    "Q69",
+    "Q70",
+    "Q72",
+    "Q87",
+    "Q88",
+    "Q96",
+    "FB1",
+    "FB2"
+   ]
+  },
+  {
+   "text": "No",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q7",
+    "Q12",
+    "Q13",
+    "Q15",
+    "Q17",
+    "Q18",
+    "Q19",
+    "Q20",
+    "Q21",
+    "Q22",
+    "Q23",
+    "Q24",
+    "Q31",
+    "Q34",
+    "Q38",
+    "Q41",
+    "Q44",
+    "Q48",
+    "Q49",
+    "Q51",
+    "Q53",
+    "Q54",
+    "Q58",
+    "Q63",
+    "Q64",
+    "Q66",
+    "Q67",
+    "Q69",
+    "Q70",
+    "Q72",
+    "Q87",
+    "Q88",
+    "Q96",
+    "FB1",
+    "FB2"
+   ]
+  },
+  {
+   "text": "How do you divide your time between public and private practice?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q8"
+   ]
+  },
+  {
+   "text": "I spend all of my time in private practice",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q8"
+   ]
+  },
+  {
+   "text": "I spend over half, but not all of my time in private practice",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q8"
+   ]
+  },
+  {
+   "text": "I spend my time equally in private and public practice",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q8"
+   ]
+  },
+  {
+   "text": "I spend over half, but not all of my time in public practice",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q8"
+   ]
+  },
+  {
+   "text": "I spend all of my time in public practice",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q8"
+   ]
+  },
+  {
+   "text": "I don't know",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q8",
+    "Q13_1",
+    "Q15_1",
+    "Q17_1",
+    "Q18_1",
+    "Q19_1",
+    "Q20_1",
+    "Q21_1",
+    "Q22_1",
+    "Q23_1",
+    "Q24_1",
+    "Q25",
+    "Q26",
+    "Q27",
+    "Q28",
+    "Q29",
+    "Q30",
+    "Q32",
+    "Q33",
+    "Q42",
+    "Q43",
+    "Q45",
+    "Q46",
+    "Q49",
+    "Q56",
+    "Q57",
+    "Q58",
+    "Q59",
+    "Q60"
+   ]
+  },
+  {
+   "text": "In your current position, how many (months/years) have you worked at this health facility?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q9"
+   ]
+  },
+  {
+   "text": "Year(s)",
+   "kinds": [
+    "subField.label"
+   ],
+   "ids": [
+    "Q9_1"
+   ]
+  },
+  {
+   "text": "Month(s)",
+   "kinds": [
+    "subField.label"
+   ],
+   "ids": [
+    "Q9_2"
+   ]
+  },
+  {
+   "text": "How many days in a week do you work at this health facility?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q10"
+   ]
+  },
+  {
+   "text": "On average, how many hours do you work per day?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q11"
+   ]
+  },
+  {
+   "text": "According to DOLE, typically full-time is 8 hours per day, part-time is less than that.",
+   "kinds": [
+    "item.help"
+   ],
+   "ids": [
+    "Q11"
+   ]
+  },
+  {
+   "text": "Universal Health Care (UHC) Awareness",
+   "kinds": [
+    "section.title"
+   ],
+   "ids": [
+    "B"
+   ]
+  },
+  {
+   "text": "The following questions ask about your awareness of UHC and the changes which may have occurred due to its implementation. Please check the box/es of your answer.",
+   "kinds": [
+    "section.preamble"
+   ],
+   "ids": [
+    "B"
+   ]
+  },
+  {
+   "text": "Have you heard about Universal Health Care (UHC) prior to this survey?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q12"
+   ]
+  },
+  {
+   "text": "Has there been an increase in equipment in this facility?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q13"
+   ]
+  },
+  {
+   "text": "If yes, was it a result of the UHC Act enacted in 2019?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q13_1",
+    "Q15_1",
+    "Q17_1",
+    "Q18_1",
+    "Q19_1",
+    "Q20_1",
+    "Q21_1",
+    "Q22_1",
+    "Q23_1",
+    "Q24_1"
+   ]
+  },
+  {
+   "text": "Implemented as a direct result of the UHC Act",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q13_1",
+    "Q15_1",
+    "Q17_1",
+    "Q18_1",
+    "Q19_1",
+    "Q20_1",
+    "Q21_1",
+    "Q22_1",
+    "Q23_1",
+    "Q24_1"
+   ]
+  },
+  {
+   "text": "Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q13_1",
+    "Q15_1",
+    "Q17_1",
+    "Q18_1",
+    "Q19_1",
+    "Q20_1",
+    "Q21_1",
+    "Q22_1",
+    "Q23_1",
+    "Q24_1"
+   ]
+  },
+  {
+   "text": "Newly implemented or improved independent of UHC Act",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q13_1",
+    "Q15_1",
+    "Q17_1",
+    "Q18_1",
+    "Q19_1",
+    "Q20_1",
+    "Q21_1",
+    "Q22_1",
+    "Q23_1",
+    "Q24_1"
+   ]
+  },
+  {
+   "text": "Not yet implemented but planned within the next 1-2 years",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q13_1",
+    "Q15_1",
+    "Q17_1",
+    "Q18_1",
+    "Q19_1",
+    "Q20_1",
+    "Q21_1",
+    "Q22_1",
+    "Q23_1",
+    "Q24_1"
+   ]
+  },
+  {
+   "text": "What are these pieces of equipment?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q14"
+   ]
+  },
+  {
+   "text": "Has there been an increase in supplies in this facility?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q15"
+   ]
+  },
+  {
+   "text": "What are these supplies?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q16"
+   ]
+  },
+  {
+   "text": "Have electronic medical records been used in this facility?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q17"
+   ]
+  },
+  {
+   "text": "Have there been changes in the referral system in this facility?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q18"
+   ]
+  },
+  {
+   "text": "Have there been changes in the facility staffing?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q19"
+   ]
+  },
+  {
+   "text": "Has there been an improvement in the clinical practice guidelines of this facility?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q20"
+   ]
+  },
+  {
+   "text": "Does this facility implement DOH licensing standards?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q21"
+   ]
+  },
+  {
+   "text": "Does this facility implement PhilHealth accreditation requirements?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q22"
+   ]
+  },
+  {
+   "text": "Does this facility implement service delivery protocols?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q23"
+   ]
+  },
+  {
+   "text": "Does this facility implement primary care quality measures?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q24"
+   ]
+  },
+  {
+   "text": "If yes, what are the primary care quality measures are you implementing?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q24_2"
+   ]
+  },
+  {
+   "text": "Patient or Client satisfaction survey",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q24_2"
+   ]
+  },
+  {
+   "text": "Patient Feedback and Complaints Management System",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q24_2"
+   ]
+  },
+  {
+   "text": "Patient Rights and Responsibilities Policy",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q24_2"
+   ]
+  },
+  {
+   "text": "Regular Quality or Management Review Meetings",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q24_2"
+   ]
+  },
+  {
+   "text": "Routine monitoring of quality/performance indicators",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q24_2"
+   ]
+  },
+  {
+   "text": "Quality Assurance Plan (QAP)",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q24_2"
+   ]
+  },
+  {
+   "text": "Continuous Quality Improvement (CQI) Program",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q24_2"
+   ]
+  },
+  {
+   "text": "Staff Quality Improvement and Competency Training",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q24_2"
+   ]
+  },
+  {
+   "text": "Clinical audit or case review activities",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q24_2"
+   ]
+  },
+  {
+   "text": "Which of the following do you expect to change in your personal work as a health worker under UHC?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q25"
+   ]
+  },
+  {
+   "text": "Salary",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q25"
+   ]
+  },
+  {
+   "text": "Number of patients",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q25"
+   ]
+  },
+  {
+   "text": "Working hours",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q25"
+   ]
+  },
+  {
+   "text": "Standards to follow",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q25"
+   ]
+  },
+  {
+   "text": "Preventative health care",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q25"
+   ]
+  },
+  {
+   "text": "Patients seek healthcare in different ways",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q25"
+   ]
+  },
+  {
+   "text": "How do you expect the following to change: Salary?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q26"
+   ]
+  },
+  {
+   "text": "Higher",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q26",
+    "Q27"
+   ]
+  },
+  {
+   "text": "Lower",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q26",
+    "Q27"
+   ]
+  },
+  {
+   "text": "How do you expect the following to change: Number of patients?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q27"
+   ]
+  },
+  {
+   "text": "How do you expect the following to change: Working hours?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q28"
+   ]
+  },
+  {
+   "text": "Longer",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q28"
+   ]
+  },
+  {
+   "text": "Shorter",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q28"
+   ]
+  },
+  {
+   "text": "How do you expect the following to change: Standards to follow?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q29"
+   ]
+  },
+  {
+   "text": "More stringent",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q29"
+   ]
+  },
+  {
+   "text": "Less stringent",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q29"
+   ]
+  },
+  {
+   "text": "How do you expect the following to change: Preventive healthcare?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q30"
+   ]
+  },
+  {
+   "text": "More",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q30"
+   ]
+  },
+  {
+   "text": "Less",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q30"
+   ]
+  },
+  {
+   "text": "YAKAP/Konsulta Package",
+   "kinds": [
+    "section.title"
+   ],
+   "ids": [
+    "C"
+   ]
+  },
+  {
+   "text": "The following questions ask about your awareness YAKAP/Konsulta package of Philhealth. Please check the box/es of your answer.",
+   "kinds": [
+    "section.preamble"
+   ],
+   "ids": [
+    "C"
+   ]
+  },
+  {
+   "text": "Have you heard of the PhilHealth YAKAP/Konsulta package?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q31"
+   ]
+  },
+  {
+   "text": "Which of the following are included in the YAKAP/Konsulta package?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q32"
+   ]
+  },
+  {
+   "text": "Pap smear",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q32"
+   ]
+  },
+  {
+   "text": "Mammogram",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q32"
+   ]
+  },
+  {
+   "text": "Lipid profile",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q32"
+   ]
+  },
+  {
+   "text": "Thyroid function test",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q32"
+   ]
+  },
+  {
+   "text": "Chest X-ray",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q32"
+   ]
+  },
+  {
+   "text": "Low-dose Chest CT scan",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q32"
+   ]
+  },
+  {
+   "text": "Dental services",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q32"
+   ]
+  },
+  {
+   "text": "All of the above",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q32"
+   ]
+  },
+  {
+   "text": "Which of the following statements is true with regard to registering patients to YAKAP/Konsulta?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q33"
+   ]
+  },
+  {
+   "text": "It is possible to register individual patients to YAKAP/Konsulta",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q33"
+   ]
+  },
+  {
+   "text": "It is possible to register whole families to YAKAP/Konsulta",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q33"
+   ]
+  },
+  {
+   "text": "It is possible to register both individual patients and their family members together to YAKAP/Konsulta",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q33"
+   ]
+  },
+  {
+   "text": "None of the above are true",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q33"
+   ]
+  },
+  {
+   "text": "Are you part of a health facility that is an accredited PhilHealth YAKAP/ Konsulta provider?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q34"
+   ]
+  },
+  {
+   "text": "I don't know what PhilHealth YAKAP/Konsulta package accreditation is",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q34"
+   ]
+  },
+  {
+   "text": "Since when?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q35"
+   ]
+  },
+  {
+   "text": "Year is required. Leave month or day blank if you don't recall them.",
+   "kinds": [
+    "item.help"
+   ],
+   "ids": [
+    "Q35"
+   ]
+  },
+  {
+   "text": "Why is your facility applying to become an accredited YAKAP/Konsulta provider?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q36"
+   ]
+  },
+  {
+   "text": "Predictable revenue due to capitation",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q36",
+    "Q39"
+   ]
+  },
+  {
+   "text": "YAKAP is more comprehensive",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q36",
+    "Q39"
+   ]
+  },
+  {
+   "text": "High volume of patients",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q36",
+    "Q39"
+   ]
+  },
+  {
+   "text": "Why is your facility not accredited?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q37"
+   ]
+  },
+  {
+   "text": "No time",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q37"
+   ]
+  },
+  {
+   "text": "Ongoing application",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q37"
+   ]
+  },
+  {
+   "text": "Under UHC, there is a thrust towards primary health care. Part of this is the implementation of the YAKAP/Konsulta or primary care package. Would your facility consider becoming accredited as a YAKAP/Konsulta or primary care provider?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q38"
+   ]
+  },
+  {
+   "text": "Not a physician/dentist",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q38"
+   ]
+  },
+  {
+   "text": "Why would your facility consider it?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q39"
+   ]
+  },
+  {
+   "text": "What might convince your facility to become a primary care provider?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q40"
+   ]
+  },
+  {
+   "text": "Awareness on No Balance Billing (NBB) and Zero Balance Billing (ZBB)",
+   "kinds": [
+    "section.title"
+   ],
+   "ids": [
+    "D"
+   ]
+  },
+  {
+   "text": "The following questions ask about No Balance Billing (NBB) and Zero Balance Billing (ZBB). Please check the box/es of your answer.",
+   "kinds": [
+    "section.preamble"
+   ],
+   "ids": [
+    "D"
+   ]
+  },
+  {
+   "text": "Have you heard about the No Balance Billing (NBB)?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q41"
+   ]
+  },
+  {
+   "text": "What are your sources of information about NBB?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q42"
+   ]
+  },
+  {
+   "text": "News",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q42",
+    "Q45"
+   ]
+  },
+  {
+   "text": "Legislation",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q42",
+    "Q45"
+   ]
+  },
+  {
+   "text": "Social Media",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q42",
+    "Q45"
+   ]
+  },
+  {
+   "text": "Friends/Family",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q42",
+    "Q45"
+   ]
+  },
+  {
+   "text": "Health center/facility",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q42",
+    "Q45"
+   ]
+  },
+  {
+   "text": "LGU/Barangay",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q42",
+    "Q45"
+   ]
+  },
+  {
+   "text": "What is your understanding about the No Balance Billing (NBB)?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q43"
+   ]
+  },
+  {
+   "text": "Patient does not pay any hospital bill",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q43",
+    "Q46"
+   ]
+  },
+  {
+   "text": "PhilHealth will cover cost of treatment",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q43",
+    "Q46"
+   ]
+  },
+  {
+   "text": "Medicine and service are already included",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q43",
+    "Q46"
+   ]
+  },
+  {
+   "text": "No cash payment required upon discharge",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q43",
+    "Q46"
+   ]
+  },
+  {
+   "text": "Applies only to PhilHealth members and DOH-run hospitals",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q43",
+    "Q46"
+   ]
+  },
+  {
+   "text": "Bills are settled between the hospital and PhilHealth",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q43",
+    "Q46"
+   ]
+  },
+  {
+   "text": "Patients should not be charged extra fees",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q43",
+    "Q46"
+   ]
+  },
+  {
+   "text": "Applies only to PhilHealth members and any public hospital",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q43",
+    "Q46"
+   ]
+  },
+  {
+   "text": "Applies only to PhilHealth members and any public and private hospital",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q43",
+    "Q46"
+   ]
+  },
+  {
+   "text": "Other (Specify)",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q43",
+    "Q46"
+   ]
+  },
+  {
+   "text": "Have you heard about the Zero Balance Billing (ZBB)?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q44"
+   ]
+  },
+  {
+   "text": "What are your sources of information about ZBB?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q45"
+   ]
+  },
+  {
+   "text": "What is your understanding about the Zero Balance Billing (ZBB)?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q46"
+   ]
+  },
+  {
+   "text": "What challenges do you commonly encounter for patients covered by ZBB?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q47"
+   ]
+  },
+  {
+   "text": "Lack/Insufficient medicines/supplies",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q47"
+   ]
+  },
+  {
+   "text": "Limited diagnostic services",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q47"
+   ]
+  },
+  {
+   "text": "High patient volume/workload",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q47"
+   ]
+  },
+  {
+   "text": "Documentation/compliance issues",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q47"
+   ]
+  },
+  {
+   "text": "ICT/system limitations",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q47"
+   ]
+  },
+  {
+   "text": "Patient-related concerns",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q47"
+   ]
+  },
+  {
+   "text": "None",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q47",
+    "Q109",
+    "Q111"
+   ]
+  },
+  {
+   "text": "Awareness on Expanded Health Programs (BUCAS and GAMOT)",
+   "kinds": [
+    "section.title"
+   ],
+   "ids": [
+    "E"
+   ]
+  },
+  {
+   "text": "The following questions ask about awareness of BUCAS center and GAMOT package. Please check the box/es of your answer.",
+   "kinds": [
+    "section.preamble"
+   ],
+   "ids": [
+    "E"
+   ]
+  },
+  {
+   "text": "Have you heard about the Bagong Urgent Care and Ambulatory Service (BUCAS) center?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q48"
+   ]
+  },
+  {
+   "text": "Do you have a BUCAS Center?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q49"
+   ]
+  },
+  {
+   "text": "In your assessment, what are the main factors affecting the utilization of BUCAS in your facility?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q50"
+   ]
+  },
+  {
+   "text": "Patient awareness",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q50"
+   ]
+  },
+  {
+   "text": "Referral patterns",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q50"
+   ]
+  },
+  {
+   "text": "Availability of staff/services",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q50"
+   ]
+  },
+  {
+   "text": "Facility location and accessibility",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q50"
+   ]
+  },
+  {
+   "text": "PhilHealth coverage and reimbursement",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q50"
+   ]
+  },
+  {
+   "text": "Do you feel BUCAS improves patient management efficiently?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q51"
+   ]
+  },
+  {
+   "text": "In your opinion, BUCAS Centers have:",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q52"
+   ]
+  },
+  {
+   "text": "Improved access to care",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q52"
+   ]
+  },
+  {
+   "text": "Improved quality of care",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q52"
+   ]
+  },
+  {
+   "text": "Reduced patient congestion",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q52"
+   ]
+  },
+  {
+   "text": "No significant impact",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q52"
+   ]
+  },
+  {
+   "text": "Have you heard about the Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) package?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q53"
+   ]
+  },
+  {
+   "text": "Is your facility an accredited GAMOT provider?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q54"
+   ]
+  },
+  {
+   "text": "In your assessment, what are the main factors affecting the utilization of the GAMOT package in your facility?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q55"
+   ]
+  },
+  {
+   "text": "Availability of GAMOT medicines",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q55"
+   ]
+  },
+  {
+   "text": "Patient awareness of the program",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q55"
+   ]
+  },
+  {
+   "text": "Prescribing practices of physicians",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q55"
+   ]
+  },
+  {
+   "text": "Pharmacy capacity",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q55"
+   ]
+  },
+  {
+   "text": "PhilHealth eligibility and reimbursement processes",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q55"
+   ]
+  },
+  {
+   "text": "Outbound & Inbound Referrals and Satisfaction",
+   "kinds": [
+    "section.title"
+   ],
+   "ids": [
+    "F"
+   ]
+  },
+  {
+   "text": "The following questions will ask about your outbound and inbound referrals as well as your satisfaction with the referral system. Please check the box/es of your answer.",
+   "kinds": [
+    "section.preamble"
+   ],
+   "ids": [
+    "F"
+   ]
+  },
+  {
+   "text": "What is/are the most common way/s you send referrals to higher level facilities?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q56"
+   ]
+  },
+  {
+   "text": "Physical referral slip",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q56",
+    "Q60"
+   ]
+  },
+  {
+   "text": "E-referral",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q56",
+    "Q60"
+   ]
+  },
+  {
+   "text": "Referring facility calls receiving facility",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q56",
+    "Q60"
+   ]
+  },
+  {
+   "text": "Not Applicable",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q56",
+    "Q57",
+    "Q59",
+    "Q60"
+   ]
+  },
+  {
+   "text": "What type of referral form do you use to send to higher level facilities?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q57"
+   ]
+  },
+  {
+   "text": "DOH standard referral form",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q57"
+   ]
+  },
+  {
+   "text": "Facility's standard referral form",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q57"
+   ]
+  },
+  {
+   "text": "Province's standard referral form",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q57"
+   ]
+  },
+  {
+   "text": "City / LGU standard referral form",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q57"
+   ]
+  },
+  {
+   "text": "No standard referral form",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q57"
+   ]
+  },
+  {
+   "text": "Do you have a network of specialist providers to refer patients to, if needed?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q58"
+   ]
+  },
+  {
+   "text": "I've never heard of it",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q58"
+   ]
+  },
+  {
+   "text": "Considering all patients who come to this facility for the past 6 months, what proportion of patients coming to this facility are referred from another facility compared to walk-ins?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q59"
+   ]
+  },
+  {
+   "text": "Almost all patients are referred, very few walk-in/self-referred",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q59"
+   ]
+  },
+  {
+   "text": "Majority of patients are referred, some walk-in/self-referred",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q59"
+   ]
+  },
+  {
+   "text": "The proportion of referrals is about equal to walk-ins",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q59"
+   ]
+  },
+  {
+   "text": "Majority of patients walk-in/self-referred, some are referred",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q59"
+   ]
+  },
+  {
+   "text": "Almost all patients walk-in/self-referred, very few are referred",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q59"
+   ]
+  },
+  {
+   "text": "I am unsure about the typical ratio of referrals to walk-ins",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q59"
+   ]
+  },
+  {
+   "text": "Of those referred, what is/are the most common way/s you receive referrals from lower-level facilities?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q60"
+   ]
+  },
+  {
+   "text": "How would you rate your satisfaction with your current referral system?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q61"
+   ]
+  },
+  {
+   "text": "Very Satisfied: Minor improvements needed, patients are always referred appropriately",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q61"
+   ]
+  },
+  {
+   "text": "Satisfied: Some improvements needed, patients are generally referred appropriately",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q61"
+   ]
+  },
+  {
+   "text": "Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q61"
+   ]
+  },
+  {
+   "text": "Dissatisfied: Moderate improvements needed, a number of patients are referred to the wrong specialists or do not receive appropriate follow-up care",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q61"
+   ]
+  },
+  {
+   "text": "Very Dissatisfied: Major improvements needed, many patients are referred to the wrong specialists or do not receive appropriate follow-up care",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q61"
+   ]
+  },
+  {
+   "text": "Not applicable",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q61"
+   ]
+  },
+  {
+   "text": "Why are you not satisfied with the current referral system?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q62"
+   ]
+  },
+  {
+   "text": "Facilities are overcrowded or operating beyond capacity and do not accept the health care provider's patient referrals",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q62"
+   ]
+  },
+  {
+   "text": "The referral process is slow",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q62"
+   ]
+  },
+  {
+   "text": "There is poor coordination between our facility and referred facilities (e.g. We do not get information back from the facility about the patients we referred to them.)",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q62"
+   ]
+  },
+  {
+   "text": "Knowledge, Attitude, And Practices (KAP) on Professional Setting, Charging, And Reimbursement",
+   "kinds": [
+    "section.title"
+   ],
+   "ids": [
+    "G"
+   ]
+  },
+  {
+   "text": "This section contains questions about your knowledge, attitudes, and practices on professional setting, charging, and reimbursements. Please put your answer in the space provided or check the box/es of your answer.",
+   "kinds": [
+    "section.preamble"
+   ],
+   "ids": [
+    "G"
+   ]
+  },
+  {
+   "text": "Are you aware of the facility-level professional fee policies in setting your professional fees?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q63"
+   ]
+  },
+  {
+   "text": "If yes, do you consider them in setting your professional fees?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q64"
+   ]
+  },
+  {
+   "text": "If no, why not?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q65",
+    "Q68",
+    "Q73"
+   ]
+  },
+  {
+   "text": "Are you aware of the PhilHealth coverage rules in setting your professional fees?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q66"
+   ]
+  },
+  {
+   "text": "Do you consider these in setting professional fees?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q67"
+   ]
+  },
+  {
+   "text": "Do you know the implications of the ZBB policy for professional fee charging?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q69"
+   ]
+  },
+  {
+   "text": "Do you know the implications of the NBB policy for professional fee charging?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q70"
+   ]
+  },
+  {
+   "text": "If yes, what are the implications?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q71a",
+    "Q71b"
+   ]
+  },
+  {
+   "text": "For those who answered 'Yes' in Q69 (ZBB)",
+   "kinds": [
+    "item.help"
+   ],
+   "ids": [
+    "Q71a"
+   ]
+  },
+  {
+   "text": "For those who answered 'Yes' in Q70 (NBB)",
+   "kinds": [
+    "item.help"
+   ],
+   "ids": [
+    "Q71b"
+   ]
+  },
+  {
+   "text": "Are you familiar with the Relative Value Unit (RVU)-based pricing?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q72"
+   ]
+  },
+  {
+   "text": "Aside from above policies, what other factors do you consider in setting your professional fee?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q74"
+   ]
+  },
+  {
+   "text": "On a scale of 1-5 with 5 as highest, how fair is your professional fee reimbursement compared to colleagues in other specialties with similar years of training who practice in facilities which are not ZBB accredited?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q75"
+   ]
+  },
+  {
+   "text": "1",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q75",
+    "Q76",
+    "Q77",
+    "Q78",
+    "Q79",
+    "Q80",
+    "Q81"
+   ]
+  },
+  {
+   "text": "2",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q75",
+    "Q76",
+    "Q77",
+    "Q78",
+    "Q79",
+    "Q80",
+    "Q81"
+   ]
+  },
+  {
+   "text": "3",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q75",
+    "Q76",
+    "Q77",
+    "Q78",
+    "Q79",
+    "Q80",
+    "Q81"
+   ]
+  },
+  {
+   "text": "4",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q75",
+    "Q76",
+    "Q77",
+    "Q78",
+    "Q79",
+    "Q80",
+    "Q81"
+   ]
+  },
+  {
+   "text": "5",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q75",
+    "Q76",
+    "Q77",
+    "Q78",
+    "Q79",
+    "Q80",
+    "Q81"
+   ]
+  },
+  {
+   "text": "On a scale of 1-5 with 5 as highest, how fair is your professional fee reimbursement compared to colleagues in other specialties with similar years of training who practice in facilities which are not NBB accredited?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q76"
+   ]
+  },
+  {
+   "text": "On a scale of 1-5 with 5 as highest, how adequate is your professional fee given your specialization and expertise?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q77"
+   ]
+  },
+  {
+   "text": "On a scale of 1-5 with 5 as highest, do you agree that the current reimbursement rates accurately reflect the complexity and cognitive effort required for your most frequent procedures?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q78"
+   ]
+  },
+  {
+   "text": "On a scale of 1-5 with 5 as highest, does your professional fee compensate for the medico-legal risks associated with your specific field?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q79"
+   ]
+  },
+  {
+   "text": "On a scale of 1-5 with 5 as highest, do reimbursement rates influence your practice's pricing strategy?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q80"
+   ]
+  },
+  {
+   "text": "On a scale of 1-5 with 5 as highest, how acceptable is the professional fee regulation or standardization under UHC?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q81"
+   ]
+  },
+  {
+   "text": "What is your opinion on the policy of charging different professional fees based on the patient's ability to pay?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q82"
+   ]
+  },
+  {
+   "text": "How often do you charge your patients?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q83"
+   ]
+  },
+  {
+   "text": "Never",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q83",
+    "Q84",
+    "Q85",
+    "Q113",
+    "Q114",
+    "Q115",
+    "Q116",
+    "Q117",
+    "Q118",
+    "Q119",
+    "Q120"
+   ]
+  },
+  {
+   "text": "Rarely",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q83",
+    "Q84",
+    "Q85"
+   ]
+  },
+  {
+   "text": "Sometimes",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q83",
+    "Q84",
+    "Q85",
+    "Q113",
+    "Q114",
+    "Q115",
+    "Q116",
+    "Q117",
+    "Q118",
+    "Q119",
+    "Q120"
+   ]
+  },
+  {
+   "text": "Often",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q83",
+    "Q84",
+    "Q85",
+    "Q113",
+    "Q114",
+    "Q115",
+    "Q116",
+    "Q117",
+    "Q118",
+    "Q119",
+    "Q120"
+   ]
+  },
+  {
+   "text": "Always",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q83",
+    "Q84",
+    "Q85",
+    "Q113",
+    "Q114",
+    "Q115",
+    "Q116",
+    "Q117",
+    "Q118",
+    "Q119",
+    "Q120"
+   ]
+  },
+  {
+   "text": "How often do you waive your professional fee?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q84"
+   ]
+  },
+  {
+   "text": "How often do you give discounts/adjustments on your professional fee?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q85"
+   ]
+  },
+  {
+   "text": "What coping strategies have you adapted when reimbursement is perceived as insufficient?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q86"
+   ]
+  },
+  {
+   "text": "Have you experienced professional fee balance billing despite the insurance/ZBB?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q87"
+   ]
+  },
+  {
+   "text": "Have you experienced professional fee balance billing despite the insurance/NBB?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q88"
+   ]
+  },
+  {
+   "text": "If yes, what are those situations?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q89"
+   ]
+  },
+  {
+   "text": "What challenges do you face in maintaining fair and sustainable professional fees?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q90"
+   ]
+  },
+  {
+   "text": "Task Sharing",
+   "kinds": [
+    "section.title"
+   ],
+   "ids": [
+    "H"
+   ]
+  },
+  {
+   "text": "We understand that in a health facility, it's often necessary to perform tasks outside of your job description to ensure that high quality patient care is maintained. These questions ask about instances when this happens in your day-to-day work. All information here will be kept confidential and anonymous. Please check the box of your answer.",
+   "kinds": [
+    "section.preamble"
+   ],
+   "ids": [
+    "H"
+   ]
+  },
+  {
+   "text": "In your day-to-day work, how often do you have to perform tasks that should be performed by a different role?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q91"
+   ]
+  },
+  {
+   "text": "Everyday",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q91",
+    "Q121"
+   ]
+  },
+  {
+   "text": "More than once a week, but not everyday",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q91"
+   ]
+  },
+  {
+   "text": "Around once a week",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q91"
+   ]
+  },
+  {
+   "text": "Less than once a week, but at least once a month",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q91"
+   ]
+  },
+  {
+   "text": "Very rarely (can think of a few times only)",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q91"
+   ]
+  },
+  {
+   "text": "This has never happened to me",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q91"
+   ]
+  },
+  {
+   "text": "When this happens, which of the following best applies to you?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q92"
+   ]
+  },
+  {
+   "text": "I typically have to take on tasks that should be performed by only staff / more junior health care providers to me",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q92"
+   ]
+  },
+  {
+   "text": "I typically have to take on tasks that should be performed only by staff / more senior health care providers to me",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q92"
+   ]
+  },
+  {
+   "text": "I have to take on tasks that should be performed by staff that are not health workers (e.g., cleaners, drivers, IT)",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q92"
+   ]
+  },
+  {
+   "text": "What are the most common tasks you do in your daily work that you could delegate to a more junior staff or different staff member?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q93"
+   ]
+  },
+  {
+   "text": "Patient assessments",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q93"
+   ]
+  },
+  {
+   "text": "Clinical tasks (e.g. taking vital signs, drawing blood, hanging medicines)",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q93"
+   ]
+  },
+  {
+   "text": "Patient self-care support (e.g., cleaning patients, assisting with toilet)",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q93"
+   ]
+  },
+  {
+   "text": "Explaining treatment plans to patients and relatives",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q93"
+   ]
+  },
+  {
+   "text": "Administrative tasks (e.g. writing notes, requesting tests, encoding)",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q93"
+   ]
+  },
+  {
+   "text": "Which best explains why you take on these tasks?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q94"
+   ]
+  },
+  {
+   "text": "We are short staffed, so I have to",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q94"
+   ]
+  },
+  {
+   "text": "I am capable of the task, I just haven't completed official certification yet",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q94"
+   ]
+  },
+  {
+   "text": "I think that someone of my role should be responsible for these tasks",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q94"
+   ]
+  },
+  {
+   "text": "Do you agree or disagree with this statement: I think it's okay that health workers share tasks across roles even if they are beyond their job description.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q95"
+   ]
+  },
+  {
+   "text": "Agree but for medical tasks only",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q95"
+   ]
+  },
+  {
+   "text": "Agree but for clerical tasks only",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q95"
+   ]
+  },
+  {
+   "text": "Agree for both medical and clerical tasks",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q95"
+   ]
+  },
+  {
+   "text": "Disagree for both medical and clerical tasks",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q95"
+   ]
+  },
+  {
+   "text": "Facility Support",
+   "kinds": [
+    "section.title"
+   ],
+   "ids": [
+    "I"
+   ]
+  },
+  {
+   "text": "These questions ask about your satisfaction with the support you receive from your facility. Please place your answer in the space provided or check the box of your answer.",
+   "kinds": [
+    "section.preamble"
+   ],
+   "ids": [
+    "I"
+   ]
+  },
+  {
+   "text": "Are you satisfied with the support you receive from your facility to implement UHC reforms?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q96"
+   ]
+  },
+  {
+   "text": "Why not?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q97"
+   ]
+  },
+  {
+   "text": "Insufficient support given",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q97"
+   ]
+  },
+  {
+   "text": "Hard to coordinate",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q97"
+   ]
+  },
+  {
+   "text": "Support is not targeted",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q97"
+   ]
+  },
+  {
+   "text": "Job Satisfaction",
+   "kinds": [
+    "section.title"
+   ],
+   "ids": [
+    "J"
+   ]
+  },
+  {
+   "text": "The final section focuses on your satisfaction about your compensation, working environment, and professional development. Please check the box of your answer.",
+   "kinds": [
+    "section.preamble"
+   ],
+   "ids": [
+    "J"
+   ]
+  },
+  {
+   "text": "I am compensated fairly.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q98"
+   ]
+  },
+  {
+   "text": "Strongly Agree",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q98",
+    "Q99",
+    "Q100",
+    "Q101",
+    "Q102",
+    "Q103",
+    "Q104",
+    "Q105",
+    "Q106",
+    "Q107"
+   ]
+  },
+  {
+   "text": "Agree",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q98",
+    "Q99",
+    "Q100",
+    "Q101",
+    "Q102",
+    "Q103",
+    "Q104",
+    "Q105",
+    "Q106",
+    "Q107"
+   ]
+  },
+  {
+   "text": "Neither Agree nor Disagree",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q98",
+    "Q99",
+    "Q100",
+    "Q101",
+    "Q102",
+    "Q103",
+    "Q104",
+    "Q105",
+    "Q106",
+    "Q107"
+   ]
+  },
+  {
+   "text": "Disagree",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q98",
+    "Q99",
+    "Q100",
+    "Q101",
+    "Q102",
+    "Q103",
+    "Q104",
+    "Q105",
+    "Q106",
+    "Q107"
+   ]
+  },
+  {
+   "text": "Strongly Disagree",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q98",
+    "Q99",
+    "Q100",
+    "Q101",
+    "Q102",
+    "Q103",
+    "Q104",
+    "Q105",
+    "Q106",
+    "Q107"
+   ]
+  },
+  {
+   "text": "All of my salary payments have arrived on time.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q99"
+   ]
+  },
+  {
+   "text": "All of my salary payments have arrived in the correct amount.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q100"
+   ]
+  },
+  {
+   "text": "The working environment is a fully supportive one.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q101"
+   ]
+  },
+  {
+   "text": "I am treated fairly at the workplace.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q102"
+   ]
+  },
+  {
+   "text": "My colleagues treat me with respect.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q103"
+   ]
+  },
+  {
+   "text": "My department/unit/practice provides a supportive environment for everyone regardless of background, beliefs, or identity.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q104"
+   ]
+  },
+  {
+   "text": "I have access to the resources I need to do my job well.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q105"
+   ]
+  },
+  {
+   "text": "In this post, I am given opportunities to develop my leadership skills relevant for my stage of training.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q106"
+   ]
+  },
+  {
+   "text": "I am satisfied with the professional development opportunities I have in my job.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q107"
+   ]
+  },
+  {
+   "text": "In addition to your salary, what other benefits as an accredited healthcare provider do you receive?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q108"
+   ]
+  },
+  {
+   "text": "What additional resources do you need to perform well in this job?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q109"
+   ]
+  },
+  {
+   "text": "Professional development opportunities",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q109"
+   ]
+  },
+  {
+   "text": "Better compensation policies",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q109"
+   ]
+  },
+  {
+   "text": "Better equipment / facilities",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q109"
+   ]
+  },
+  {
+   "text": "What opportunities to develop leadership skill/s would be useful to you?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q110"
+   ]
+  },
+  {
+   "text": "Seminars, conferences, workshops",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q110",
+    "Q111",
+    "Q112"
+   ]
+  },
+  {
+   "text": "Supervisory trainings",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q110"
+   ]
+  },
+  {
+   "text": "More training related to my job post",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q110"
+   ]
+  },
+  {
+   "text": "Which of the following professional development opportunity/ies is/are currently provided to you by your facility? Check all that apply",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q111"
+   ]
+  },
+  {
+   "text": "Clinical audits",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q111",
+    "Q112"
+   ]
+  },
+  {
+   "text": "Surgical audits",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q111",
+    "Q112"
+   ]
+  },
+  {
+   "text": "Quality assurance meetings",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q111",
+    "Q112"
+   ]
+  },
+  {
+   "text": "Support for independent professional development: scholarships",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q111",
+    "Q112"
+   ]
+  },
+  {
+   "text": "Support for independent professional development: research grants",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q111",
+    "Q112"
+   ]
+  },
+  {
+   "text": "Which of the following professional development opportunity/ies would be most useful to you?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q112"
+   ]
+  },
+  {
+   "text": "In the past month, I have worked beyond my scheduled hours.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q113"
+   ]
+  },
+  {
+   "text": "Seldom",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q113",
+    "Q114",
+    "Q115",
+    "Q116",
+    "Q117",
+    "Q118",
+    "Q119",
+    "Q120"
+   ]
+  },
+  {
+   "text": "I have been compensated for working overtime.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q114"
+   ]
+  },
+  {
+   "text": "My work is emotionally exhausting.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q115"
+   ]
+  },
+  {
+   "text": "My work frustrates me.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q116"
+   ]
+  },
+  {
+   "text": "I feel worn out at the end of a working day.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q117"
+   ]
+  },
+  {
+   "text": "I feel exhausted every morning at the thought of another day at work.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q118"
+   ]
+  },
+  {
+   "text": "I feel that every working hour is tiring for me.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q119"
+   ]
+  },
+  {
+   "text": "I have enough energy for family and friends during leisure time.",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q120"
+   ]
+  },
+  {
+   "text": "I have worked overtime for:",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q121"
+   ]
+  },
+  {
+   "text": "Once or twice in the past month",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q121"
+   ]
+  },
+  {
+   "text": "Once or twice a week",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q121"
+   ]
+  },
+  {
+   "text": "Three or four days every week",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q121"
+   ]
+  },
+  {
+   "text": "Almost everyday",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q121"
+   ]
+  },
+  {
+   "text": "Have you considered leaving this facility?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q122"
+   ]
+  },
+  {
+   "text": "Yes, I've thought about it and have definite plans to leave",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q122"
+   ]
+  },
+  {
+   "text": "Yes, I've thought about it and am actively exploring other opportunities, but no firm plans yet",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q122"
+   ]
+  },
+  {
+   "text": "Yes, I've thought about it, but I'm not actively exploring nor have I made any firm plans yet",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q122"
+   ]
+  },
+  {
+   "text": "No, I haven't thought about it",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q122"
+   ]
+  },
+  {
+   "text": "Why are you planning on leaving this facility?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q123"
+   ]
+  },
+  {
+   "text": "Poor compensation",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q123"
+   ]
+  },
+  {
+   "text": "Lack of opportunities",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q123"
+   ]
+  },
+  {
+   "text": "Burnt out",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q123"
+   ]
+  },
+  {
+   "text": "Moving to another part of the country",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q123"
+   ]
+  },
+  {
+   "text": "Moving to another country",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q123"
+   ]
+  },
+  {
+   "text": "What are you planning to do after leaving this facility?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "Q124"
+   ]
+  },
+  {
+   "text": "Transfer to a new facility with the same role",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q124"
+   ]
+  },
+  {
+   "text": "Change training/specialization within healthcare",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q124"
+   ]
+  },
+  {
+   "text": "Change profession",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q124"
+   ]
+  },
+  {
+   "text": "Take an extended leave from work",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q124"
+   ]
+  },
+  {
+   "text": "Take a position as a health worker in another country",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q124"
+   ]
+  },
+  {
+   "text": "Retire",
+   "kinds": [
+    "choice.label"
+   ],
+   "ids": [
+    "Q124"
+   ]
+  },
+  {
+   "text": "Questionnaire Feedback",
+   "kinds": [
+    "section.title"
+   ],
+   "ids": [
+    "K"
+   ]
+  },
+  {
+   "text": "Thank you for completing the survey! Before you submit, please answer a few short questions about the questionnaire itself. Your feedback will help us improve it.",
+   "kinds": [
+    "section.preamble"
+   ],
+   "ids": [
+    "K"
+   ]
+  },
+  {
+   "text": "Was the questionnaire comprehensive?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "FB1"
+   ]
+  },
+  {
+   "text": "Did we adequately cover the topic?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "FB2"
+   ]
+  },
+  {
+   "text": "Are there any questions you expected that we would ask and that we didn't?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "FB3"
+   ]
+  },
+  {
+   "text": "Are there any questions you feel may be too sensitive or that may affect the response rate that we should consider deleting?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "FB4"
+   ]
+  },
+  {
+   "text": "Was the questionnaire too long, too short, or about right?",
+   "kinds": [
+    "item.label"
+   ],
+   "ids": [
+    "FB5"
+   ]
+  }
+ ],
+ "_generated_by": "npm run dump:english - never hand-edit"
+}

@@ -1,5 +1,6 @@
 // Tagalog bundle — app chrome DRAFT (machine-assisted, pending ASPSI QC). Survey content is NOT here; it lives in spec/translations/fil.json.
 import type { EnBundle } from './en';
+import { consentAug21 } from './consent.aug21';
 
 export const fil: EnBundle = {
   chrome: {
@@ -195,6 +196,8 @@ export const fil: EnBundle = {
     startOver: 'Start over',
     gps_disclosure:
       'Kapag nagsumite ka, itatala ang lokasyon ng iyong device upang mai-mapa ng DOH ang mga sagot sa mga pasilidad. Kung tatanggihan mo ang prompt para sa lokasyon, isusumite pa rin ang iyong mga sagot nang walang coordinates.',
+    // Aug-21 consent import: the paper's Part-I paragraphs win; absent keys stay English.
+    ...consentAug21.fil,
   },
   matrix: {
     statementHeader: 'Pahayag',

@@ -3,6 +3,7 @@
 // lives in spec/translations/hil.json. App-furniture strings (buttons, sync,
 // errors) are not in the ASPSI questionnaire docs, so they show English until QC.
 import type { EnBundle } from './en';
+import { consentAug21 } from './consent.aug21';
 
 export const hil: EnBundle = {
   chrome: {
@@ -196,6 +197,8 @@ export const hil: EnBundle = {
     startOver: 'Start over',
     gps_disclosure:
       'When you submit, your device location will be recorded so DOH can map responses to facilities. If you decline the location prompt, your answers are still submitted without coordinates.',
+    // Aug-21 consent import: the paper's Part-I paragraphs win; absent keys stay English.
+    ...consentAug21.hil,
   },
   matrix: {
     statementHeader: 'Statement',

@@ -1,5 +1,6 @@
 // Bisaya bundle — app chrome DRAFT (machine-assisted, pending ASPSI QC). Survey content is NOT here; it lives in spec/translations/bis.json.
 import type { EnBundle } from './en';
+import { consentAug21 } from './consent.aug21';
 
 export const bis: EnBundle = {
   chrome: {
@@ -195,6 +196,8 @@ export const bis: EnBundle = {
     startOver: 'Start over',
     gps_disclosure:
       'Kung mopasa ka, irekord ang lokasyon sa imong device aron ma-map sa DOH ang mga tubag ngadto sa mga pasilidad. Kung dili nimo dawaton ang location prompt, ipasa gihapon ang imong mga tubag nga walay coordinates.',
+    // Aug-21 consent import: the paper's Part-I paragraphs win; absent keys stay English.
+    ...consentAug21.bis,
   },
   matrix: {
     statementHeader: 'Pamahayag',

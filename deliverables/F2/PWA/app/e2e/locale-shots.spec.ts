@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { installMockBackend, defaultState } from './fixtures/mock-backend';
 import * as fs from 'fs';
 
@@ -54,15 +54,32 @@ test('capture Section A in every locale', async ({ page }) => {
   const outdir = 'locale-shots';
   fs.mkdirSync(outdir, { recursive: true });
   for (const loc of SUPPORTED_LOCALES) {
-    await page.evaluate((l) => localStorage.setItem('f2_locale', l), loc);
+    await page.evaluate((l) => {
+      localStorage.setItem('f2_locale', l);
+      // The consent gate is a per-CASE gate (#808): once `en` — the first locale in
+      // this loop — consents, every later locale resumes that same draft and the
+      // screen never shows again, so a consent assertion placed below would silently
+      // never run. Dropping the draft id starts a fresh case for `fil`, which is the
+      // locale whose consent screen we capture and assert.
+      if (l === 'fil') {
+        localStorage.removeItem('f2_current_draft_id');
+        localStorage.removeItem('f2_completed_csid');
+      }
+    }, loc);
     await page.reload();
     await page.getByRole('heading', { level: 2 }).first().waitFor({ timeout: 10000 });
     await page.waitForTimeout(600);
-    // The ICF consent gate precedes Section A. Capture it once (fil) as evidence
-    // that the consent body renders English in a dialect locale, then pass it.
+    // The ICF consent gate precedes Section A. Capture it once (fil) and assert the
+    // Part-I paragraphs render in Filipino (Aug-21 consent import), then pass it.
+    // Unconditional for the captured locale: if the consent gate did not render,
+    // this FAILS instead of silently skipping the evidence below (a `1 passed` run
+    // that asserted nothing about the consent screen).
+    if (loc === 'fil') await expect(page.getByRole('radio')).toHaveCount(2);
     const consentRadio = page.getByRole('radio').first();
     if ((await consentRadio.count()) > 0 && (await page.getByRole('radio').count()) === 2) {
       if (loc === 'fil') {
+        await expect(page.getByText(/requests your participation/)).toHaveCount(0);
+        await expect(page.getByText(/Layunin ng pag-?\s?aaral na ito/)).toBeVisible();
         await page.screenshot({ path: `${outdir}/f2_consent_${loc}.png`, fullPage: false });
       }
       await consentRadio.check();

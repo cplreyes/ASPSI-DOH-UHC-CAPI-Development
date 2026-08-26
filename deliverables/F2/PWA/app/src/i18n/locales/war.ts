@@ -3,6 +3,7 @@
 // lives in spec/translations/war.json. App-furniture strings (buttons, sync,
 // errors) are not in the ASPSI questionnaire docs, so they show English until QC.
 import type { EnBundle } from './en';
+import { consentAug21 } from './consent.aug21';
 
 export const war: EnBundle = {
   chrome: {
@@ -196,6 +197,8 @@ export const war: EnBundle = {
     startOver: 'Start over',
     gps_disclosure:
       'When you submit, your device location will be recorded so DOH can map responses to facilities. If you decline the location prompt, your answers are still submitted without coordinates.',
+    // Aug-21 consent import: the paper's Part-I paragraphs win; absent keys stay English.
+    ...consentAug21.war,
   },
   matrix: {
     statementHeader: 'Statement',
