@@ -7,7 +7,13 @@ Join   = EXACT English string against spec/english-strings.json (the six fields
          applyTranslations() localizes). Question-number joins are NOT used
          (2026-08-13 row-misalignment scar).
 Rule   = overrides first: aug21-overrides.json["F2"][loc][english] = {"keep": text|null}
-         -> keep text (written if it differs from the map) or null (never write).
+         -> keep text (written if it differs from the map) or null (never write), or
+         {"remove": true} -> the key is DELETED from THIS locale's map so the English
+         option renders (Task 51 fix round 1; the same semantic Task 49 gave F1/F3/F4).
+         It is the only lever for a row whose paper carries no honest candidate: `keep`
+         only ever writes, `keep: null` only declines to write a value the map may already
+         hold, and --retire deletes from all seven maps at once. A removal is counted only
+         when there was something to delete, so re-running the wave reports remove 0.
          Otherwise Aug-21 wins: absent -> write; equal -> already_same; different -> replace.
          An override for a key the extract never produced is seeded after the extract
          loop (action "override_seeded") so a hand-corrected value is not lost just
@@ -49,7 +55,7 @@ DEFAULT_OVERRIDES = os.path.join(ROOT, "deliverables", "CSPro", "data", "transla
 DEFAULT_REPORT = os.path.join(DEFAULT_EXTRACT, "apply-report.json")
 LOCALES = ["fil", "ceb", "bis", "ilo", "hil", "war", "bcl"]
 ACTIONS = ["unmatched", "override", "override_seeded", "skip_same_as_english",
-           "already_same", "write", "replace", "retire"]
+           "already_same", "write", "replace", "remove", "retire"]
 _RESIDUE = re.compile(r"\s+\d{1,3}(?:\.\d{1,2})?\s*$")
 _DOT_TAIL = re.compile(r"\s+\d{1,3}\.\s+\S.*$")
 _EN_ENDS_DIGIT = re.compile(r"\d\s*$")
@@ -104,6 +110,10 @@ def load_f2_overrides(path, loc):
 
 
 def decide(en, tr, current, english_set, overrides_loc):
+    if (overrides_loc.get(en) or {}).get("remove"):
+        # Runs before the anchor check on purpose: a removal only ever DELETES, so it cannot
+        # create an orphan key — and a key that is no longer an English anchor is one.
+        return "remove", None
     if en not in english_set:
         return "unmatched", None
     if en in overrides_loc:                       # overrides win over every other rule
@@ -123,8 +133,22 @@ def apply_locale(extract, current, english_set, overrides_loc, retire=()):
     new = OrderedDict(current)
     counts = {a: 0 for a in ACTIONS}
     rows = []
+
+    def remove(en):
+        """Delete an overridden key so the English renders. Counted only when there IS
+        something to delete, so a replay of the same overrides reports remove 0 (wave rule 4)."""
+        if en not in new:
+            return
+        counts["remove"] += 1
+        rows.append({"en": en, "action": "remove", "was": new.get(en), "now": None,
+                     "reason": (overrides_loc or {})[en].get("reason")})
+        del new[en]
+
     for en, tr in extract.items():
         action, val = decide(en, tr, current, english_set, overrides_loc)
+        if action == "remove":
+            remove(en)
+            continue
         counts[action] += 1
         if action in ("write", "replace"):
             rows.append({"en": en, "action": action, "was": current.get(en), "now": val})
@@ -140,6 +164,9 @@ def apply_locale(extract, current, english_set, overrides_loc, retire=()):
     # not be lost because the extractor missed that cell. keep:null still never writes.
     for en, ent in (overrides_loc or {}).items():
         if en in extract:
+            continue
+        if ent.get("remove"):                    # same duty: a missed cell must not save the row
+            remove(en)
             continue
         keep = ent.get("keep")
         if not keep or not keep.strip():         # null/"" -> never write
@@ -175,7 +202,8 @@ def main(argv=None):
     report = {"source": "raw/Survey-Instruments-2026-08-21/Translations", "provenance": "aug21",
               "mode": "APPLY" if a.apply else "DRY RUN", "retire": retire, "locales": {}}
     print(f"{'APPLIED' if a.apply else 'DRY RUN'}  anchors={len(english_set)}")
-    print("locale  unmatched  override  seeded  same-as-en  already  write  replace  retire  saved")
+    print("locale  unmatched  override  seeded  same-as-en  already  write  replace  "
+          "remove  retire  saved")
     for loc in LOCALES:
         src = os.path.join(a.extract_dir, f"{loc}.json")
         skipped = None
@@ -194,11 +222,12 @@ def main(argv=None):
         c = counts
         print(f"{loc:6}  {c['unmatched']:9}  {c['override']:8}  {c['override_seeded']:6}  "
               f"{c['skip_same_as_english']:10}  {c['already_same']:7}  {c['write']:5}  "
-              f"{c['replace']:7}  {c['retire']:6}  "
+              f"{c['replace']:7}  {c['remove']:6}  {c['retire']:6}  "
               f"{'yes' if (a.apply and changed) else ('would' if changed else 'no')}"
               f"{'  (no extract)' if skipped else ''}")
         report["locales"][loc] = {"counts": counts, "rows": rows, "changed": changed,
                                   "retired": [r["en"] for r in rows if r["action"] == "retire"],
+                                  "removed": [r["en"] for r in rows if r["action"] == "remove"],
                                   "unmatched": sorted(k for k in extract if k not in english_set)}
         if skipped:
             report["locales"][loc]["skipped"] = skipped

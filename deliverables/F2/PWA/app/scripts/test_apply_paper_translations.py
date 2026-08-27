@@ -56,7 +56,7 @@ def test_apply_locale_preserves_order_and_appends():
     assert new["No"] == "Wala"
     assert counts == {"unmatched": 1, "override": 0, "override_seeded": 0,
                       "skip_same_as_english": 0, "already_same": 1, "write": 1,
-                      "replace": 1, "retire": 0}
+                      "replace": 1, "remove": 0, "retire": 0}
     assert {"en": "No", "action": "replace", "was": "Hindi", "now": "Wala"} in rows
 
 
@@ -97,6 +97,91 @@ def test_apply_locale_never_writes_an_empty_override():
                                          "Yes": {"keep": "  ", "reason": "blank cell"}})
     assert dict(new) == cur                       # untouched, and "Yes" was not seeded
     assert counts["override"] == 1 and counts["override_seeded"] == 0
+
+
+# --- the `remove` override (Task 51 fix round 1) --------------------------------------
+# `keep: null` only ever DECLINES to write, so it cannot clear a wrong value the map already
+# holds, and `--retire` deletes the key from all seven maps at once. Neither can express "this
+# ONE locale has no honest candidate on the paper - render the English option instead", which
+# is the shape F1/F3/F4 clear with `remove: true` (Task 49, ledger rule 10: English beats
+# wrong). The F2 override block is already locale-nested, so the entry is per-locale by
+# construction.
+
+def test_decide_remove_override_beats_every_other_rule():
+    cur = {"No": "Hindi"}
+    ov = {"No": {"remove": True, "reason": "one paper string against both rows"}}
+    assert m.decide("No", "Wala", cur, EN, ov) == ("remove", None)
+    # a key that is not even an English anchor is still removable: deleting never creates
+    # an orphan, and an orphan is exactly what such a key would be.
+    assert m.decide("Gone from the build", "x", cur, EN,
+                    {"Gone from the build": {"remove": True, "reason": "r"}}) == ("remove", None)
+
+
+def test_apply_locale_remove_deletes_the_key_and_writes_nothing():
+    cur = {"Yes": "Oo", "No": "Hindi"}
+    ov = {"No": {"remove": True, "reason": "English beats wrong"}}
+    new, counts, rows = m.apply_locale({"No": "Wala"}, cur, EN, ov)
+    assert list(new) == ["Yes"]                      # the Aug-21 value was NOT written
+    assert counts["remove"] == 1 and counts["override"] == 0 and counts["replace"] == 0
+    assert {"en": "No", "action": "remove", "was": "Hindi", "now": None,
+            "reason": "English beats wrong"} in rows
+
+
+def test_apply_locale_remove_reaches_a_key_the_extract_never_produced():
+    """Same duty as override seeding: the extractor missing the cell must not save the row."""
+    cur = {"No": "Hindi"}
+    new, counts, rows = m.apply_locale({}, cur, EN, {"No": {"remove": True, "reason": "r"}})
+    assert "No" not in new and counts["remove"] == 1
+    assert [r["action"] for r in rows] == ["remove"]
+
+
+def test_apply_locale_remove_is_replayable():
+    """Rule 4 of the wave: a re-run writes 0 and removes 0. A remove is counted only when
+    there is something to delete, so the second run's report reads 0, not 1."""
+    cur = {"Yes": "Oo"}
+    new, counts, rows = m.apply_locale({"No": "Wala"}, cur, EN,
+                                       {"No": {"remove": True, "reason": "r"}})
+    assert dict(new) == cur and counts["remove"] == 0 and rows == []
+
+
+def test_main_remove_is_per_locale_where_retire_is_all_seven(tmp_path, monkeypatch, capsys):
+    """The whole reason the semantic exists: --retire would take the six correct values with it."""
+    tdir = tmp_path / "translations"
+    extract = tmp_path / "extract"
+    tdir.mkdir(); extract.mkdir()
+    for loc in ("fil", "ceb"):
+        _write(str(extract / f"{loc}.json"), {"No": "paper value"})
+        _write(str(tdir / f"{loc}.json"), {"Yes": "Oo", "No": f"{loc} wrong-but-live"},
+               newline="\r\n")
+    eng = tmp_path / "english-strings.json"
+    _write(str(eng), {"source": "t", "count": 2, "strings": [{"text": t} for t in ["Yes", "No"]]})
+    ovr = tmp_path / "aug21-overrides.json"
+    _write(str(ovr), {"F2": {"fil": {"No": {"remove": True, "reason": "no candidate"}}}})
+    report = tmp_path / "apply-report.json"
+    monkeypatch.setattr(m, "TDIR", str(tdir))
+    monkeypatch.setattr(m, "ENGLISH_STRINGS", str(eng))
+    argv = ["--extract-dir", str(extract), "--overrides", str(ovr), "--report", str(report)]
+
+    before = io.open(tdir / "fil.json", encoding="utf-8", newline="").read()
+    assert m.main(argv) == 0                                  # dry run deletes nothing
+    assert io.open(tdir / "fil.json", encoding="utf-8", newline="").read() == before
+
+    assert m.main(argv + ["--apply"]) == 0
+    fil, _ = m.load_map(str(tdir / "fil.json"))
+    ceb, _ = m.load_map(str(tdir / "ceb.json"))
+    assert dict(fil) == {"Yes": "Oo"}                         # removed here
+    assert ceb["No"] == "paper value"                         # and only here
+    rep = json.load(io.open(report, encoding="utf-8"))
+    assert rep["locales"]["fil"]["counts"]["remove"] == 1
+    assert rep["locales"]["ceb"]["counts"]["remove"] == 0
+    assert rep["locales"]["fil"]["removed"] == ["No"]
+    raw = io.open(tdir / "fil.json", encoding="utf-8", newline="").read()
+    assert "\r\n" in raw and raw.count("\n") == raw.count("\r\n")   # CRLF survived the delete
+
+    assert m.main(argv + ["--apply"]) == 0                    # replay: nothing left to do
+    rep = json.load(io.open(report, encoding="utf-8"))
+    assert rep["locales"]["fil"]["changed"] is False
+    assert rep["locales"]["fil"]["counts"]["remove"] == 0
 
 
 def test_apply_locale_retire_removes_stale_keys():
