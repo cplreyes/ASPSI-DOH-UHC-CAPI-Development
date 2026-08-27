@@ -16,14 +16,14 @@ originals rather than in a new folder, suffixed with the version they prove
 | ↳ F1 v4.1.0 (superseded) | v4.1.0 | 2026-08-26 | same folder | `00-deploy-result.png`, `01-app-list-v4.1.0.png` | [`byte-verify.txt`](../2026-08-26-aug21-translations/F1/byte-verify.txt) — **ALL PASS** (7 locales probed in the served pen; `sa masunod sa masunod` present 1× as expected) |
 | **F2** Healthcare Worker (PWA) | spec **`2026-08-27-m5`** | 2026-08-27 | [`../2026-08-26-aug21-translations/F2/`](../2026-08-26-aug21-translations/F2/README.md) | `f2_secA_en.png` + `f2_secA_{fil,ceb,bis,ilo,hil,war,bcl}.png`, `f2_consent_fil.png` (all re-shot on m5), `map-delta-m5.txt`, `served-content-m5.txt` | n/a — the PWA has no packaged artefact. Proof is the Playwright locale run against the **production build** (`vite preview`), spec stamp `2026-08-27-m5` visible in the seven shots whose capture includes the masthead (`f2_secA_en.png` and `f2_secA_fil.png` do not), plus a string check on the bundle PROD actually serves and `build-info.json` sha == HEAD (`ce05b931`, the fix round; `fb91241a` was the first m5 deploy) |
 | ↳ F2 spec `2026-08-26-m4` (superseded) | `2026-08-26-m4` | 2026-08-26 | same folder | the m4 shots are the same files, replaced in place | the m4 record is the §m4 half of that README; the only value m5 changes is Q57 `war` |
-| **F4** Household | **v3.2.3** | 2026-08-26 | [`../2026-08-26-aug21-translations/F4/`](../2026-08-26-aug21-translations/F4/README.md) | `00-app-list-f4-3.2.3.png`, `00-deploy-result-3.2.3.png`, and from v3.2.2: `f4_q2_1_age_{en,fil,ceb}.png` | [`byte-verify-3.2.3.txt`](../2026-08-26-aug21-translations/F4/byte-verify-3.2.3.txt) — **ALL PASS** (12 counts, 7 of them 0×) + [`dcf-removal-proof-3.2.3.txt`](../2026-08-26-aug21-translations/F4/dcf-removal-proof-3.2.3.txt) |
+| **F4** Household | **v3.2.3** | 2026-08-27 | [`../2026-08-26-aug21-translations/F4/`](../2026-08-26-aug21-translations/F4/README.md) | `00-app-list-f4-3.2.3.png`, `00-deploy-result-3.2.3.png`, and from v3.2.2: `f4_q2_1_age_{en,fil,ceb}.png` | [`byte-verify-3.2.3.txt`](../2026-08-26-aug21-translations/F4/byte-verify-3.2.3.txt) — **ALL PASS** (12 counts, 7 of them 0×) + [`dcf-removal-proof-3.2.3.txt`](../2026-08-26-aug21-translations/F4/dcf-removal-proof-3.2.3.txt) |
 | **F3** Patient | **v6.1.2** | 2026-08-27 | [`F3/`](F3/README.md) | `00-deploy-result-6.1.2.png`, `01-app-list-v6.1.2.png`, `02-compile-successful-6.1.2.png`, and from v6.1.0: `f3_q8_{hil,war}_tablet.png`, `f3_icf_{hil,war}_tablet.png`, `f3_q97{1,2}_{hil,war}.png`, `f3_q115{1,2}_war.png`, `f3_q66_hil.png` | [`F3/byte-verify-6.1.2.txt`](F3/byte-verify-6.1.2.txt) — **ALL PASS** (4 measured counts, `[Mahirap magparehistro]` 0×, both CEB `*_SOURCE_VS1:06` probes present) + [`F3/dcf-label-proof-6.1.2.txt`](F3/dcf-label-proof-6.1.2.txt) — per-code proof for the 21 removed **and** the 7 written rows, and no duplicate option label in 213 value sets × 8 languages |
 | ↳ F3 v6.1.1 (superseded) | v6.1.1 | 2026-08-27 | same folder | `00-deploy-result-6.1.1.png`, `01-app-list-v6.1.1.png` | [`F3/byte-verify-6.1.1.txt`](F3/byte-verify-6.1.1.txt) — **ALL PASS**. Same rendered text as v6.1.2; the seven Cebuano `LGU/Barangay` rows were DELETED (English label) instead of written |
 | ↳ F3 v6.1.0 (superseded) | v6.1.0 | 2026-08-27 | same folder | `00-app-list-f3-6.1.0.png`, `00-deploy-result.png` | [`F3/byte-verify.txt`](F3/byte-verify.txt) — **ALL PASS**, plus a phrase probe on the served `PatientSurvey.zip` (`daytoy a pasilidad`, `ini nga pasilidad` FOUND) |
 
-F4 also carries `byte-verify.txt` (v3.2.0) and `byte-verify-3.2.1.txt` with their app-list and
-deploy frames. Both builds were superseded the same day; **v3.2.2 is the shipped one** and its
-`-3.2.2` files are the ones to read.
+F4's folder also carries `byte-verify.txt` (v3.2.0), `byte-verify-3.2.1.txt` and
+`byte-verify-3.2.2.txt` with their app-list and deploy frames. All three were superseded;
+**v3.2.3 is the shipped one** and its `-3.2.3` files are the ones to read.
 
 ## What each folder proves
 
@@ -76,5 +76,11 @@ the same spec stamp `2026-08-27-m5`; see the F2 folder's *m5 fix round 1* sectio
   `…/2026-08-27-f2-m5-aug21-translations.md`, `…/2026-08-27-f4-v3.2.3-aug21-translations.md`,
   `…/2026-08-27-f3-v6.1.2-aug21-translations.md`
 * ASPSI-facing summary:
-  `deliverables/CSPro/patch-notes/2026-08-27-aug21-translations-status-for-aspsi.md`
+  `deliverables/CSPro/patch-notes/2026-08-27-aug21-translations-status-for-aspsi.md` — carries
+  an *Update 27 Aug (afternoon)* section with the four shipped versions and the six corrected
+  instances in ASPSI's own terms
+* Translator worklist, re-exported after the repair from the re-run extracts:
+  `deliverables/CSPro/translator-worklist-aug21.xlsx` / `.csv` — 13,276 rows, seven sheets;
+  the 35 deleted rows read `removed:` in the `held` sheet and the 76 `duplicate-label` +
+  4 `sibling-run` rows the extractor now refuses are in the `worklist` sheet
 * Wiki: `wiki/sources/Source - Revised Deliverable 2 Translated Questionnaires (Aug 21).md`
