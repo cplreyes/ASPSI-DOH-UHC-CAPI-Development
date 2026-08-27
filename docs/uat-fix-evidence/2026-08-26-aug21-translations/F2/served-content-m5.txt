@@ -1,0 +1,6 @@
+﻿served admin bundle chars: 692097
+contains '2026-08-27-m5'                 : True
+contains '2026-08-26-m4'                 : False
+contains the GLUED war Q57 value         : False
+contains the CORRECTED war Q57 value     : True
+contains war DOH row                     : True
