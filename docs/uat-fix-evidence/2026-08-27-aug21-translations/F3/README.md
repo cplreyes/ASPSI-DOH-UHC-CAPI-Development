@@ -64,7 +64,7 @@ proof is the **Deploy record** above; device proof is task 43's.
 |---|---|---|---|
 | `automation/scenarios/f3_aug21_bill_detail_war.txt` | `F3/PatientSurvey_WAR.pff` | WAR | Outpatient walk → 97.1 / 97.2 |
 | `automation/scenarios/f3_aug21_bill_detail_war_ip.txt` | `F3/PatientSurvey_WAR.pff` | WAR | Inpatient walk → 115.1 / 115.2 |
-| `automation/scenarios/f3_aug21_bill_detail_hil.txt` **(new)** | `F3/PatientSurvey_desktest_HIL.pff` **(new)** | HIL | ICF screen 1, Q66, 97.1 / 97.2 |
+| `automation/scenarios/f3_aug21_bill_detail_hil.txt` **(new)** | `F3/PatientSurvey_desktest_HIL.pff` **(new)** — moved to `automation/scenarios/` in v6.1.1, paths rewired | HIL | ICF screen 1, Q66, 97.1 / 97.2 |
 
 97.x and 115.x cannot share one walk: `Q88_OUTPATIENT_GATE` sends an Inpatient case past the
 whole of Section G, and `Q105_REASON` sends an Outpatient case past the whole of Section H.
