@@ -1,0 +1,16 @@
+4780c4780
+<                   "text": "5. In your current position, how many months/years have you worked at this health facility? Number of Years",
+---
+>                   "text": "Iti agdama a posisionmo, mano a bulan/tawen ti panagtrabahom iti daytoy a pasilidad ti salun-at? Bilang ti Tawen",
+4820c4820
+<                   "text": "5. In your current position, how many months/years have you worked at this health facility? Number of Months",
+---
+>                   "text": "Iti agdama a posisionmo, mano a bulan/tawen ti panagtrabahom iti daytoy a pasilidad ti salun-at? Bilang ti Bulan",
+4860c4860
+<                   "text": "6. How many years have you worked in health-related position? Number of Years",
+---
+>                   "text": "Mano a tawen a nagtrabahoka iti posision a mainaig iti salun-at? Bilang ti Tawen",
+4900c4900
+<                   "text": "6. How many years have you worked in health-related position? Number of Months",
+---
+>                   "text": "Mano a tawen a nagtrabahoka iti posision a mainaig iti salun-at? Bilang ti Bulan",
