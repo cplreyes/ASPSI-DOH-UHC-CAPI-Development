@@ -1,0 +1,30 @@
+Delta of the seven live F2 maps against BOTH baselines:
+  fix1-before/ = the state fix round 1 started from (what m5 deployed)
+  before/      = the pre-wave m4 maps Task 51 started from
+
+######## vs fix1-before (m5 as deployed)
+==== fil added 0 removed 1 changed 0  (crlf=302 lone-lf=0)
+   - 'Disagree for both medical and clerical tasks'
+       was: 'Sumasang-ayon, ngunit para lamang sa mga gawaing klerikal'
+==== ceb: no copy in this baseline (untouched in that round)
+==== bis: no copy in this baseline (untouched in that round)
+==== ilo: no copy in this baseline (untouched in that round)
+==== hil: no copy in this baseline (untouched in that round)
+==== war: no copy in this baseline (untouched in that round)
+==== bcl: no copy in this baseline (untouched in that round)
+TOTAL delta rows vs fix1-before (m5 as deployed): 1
+
+######## vs before (m4)
+==== fil added 0 removed 1 changed 0  (crlf=302 lone-lf=0)
+   - 'Disagree for both medical and clerical tasks'
+       was: 'Sumasang-ayon, ngunit para lamang sa mga gawaing klerikal'
+==== ceb added 0 removed 0 changed 0  (crlf=308 lone-lf=0)
+==== bis added 0 removed 0 changed 0  (crlf=305 lone-lf=0)
+==== ilo added 0 removed 0 changed 0  (crlf=313 lone-lf=0)
+==== hil added 0 removed 0 changed 0  (crlf=294 lone-lf=0)
+==== war added 0 removed 0 changed 1  (crlf=320 lone-lf=0)
+   ~ 'City / LGU standard referral form'
+       before: 'Syudad / LGU surundon nga porma han pagrefer DOH nga surundon nga porma han pagrefer'
+       after : 'Syudad / LGU surundon nga porma han pagrefer'
+==== bcl added 0 removed 0 changed 0  (crlf=305 lone-lf=0)
+TOTAL delta rows vs before (m4): 2

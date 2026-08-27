@@ -1,0 +1,18 @@
+build-info.json HTTP 200
+{
+    "branch":  "main",
+    "built_at":  "2026-08-27T03:16:13.9251268Z",
+    "matches_main":  true,
+    "admin_bundle":  "admin-Bxu9VVRp.js",
+    "sha":  "ce05b931e4244ed9c7b00b6ada4f9b1f3092c6b1"
+}
+
+served admin bundle: admin-Bxu9VVRp.js chars 692033
+occurrences of the AGREE Tagalog string     : 1  (was 2 before this fix, must be 1)
+contains '2026-08-27-m5'                    : True
+contains the English Disagree option label  : True
+the glued war Q57 value is GONE             : True
+the corrected war Q57 value is served       : True
+sibling locale value still present (ceb)    : True
+sibling locale value still present (war)    : True
+sibling locale value still present (bcl)    : True
