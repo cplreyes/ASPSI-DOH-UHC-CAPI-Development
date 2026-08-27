@@ -1,0 +1,114 @@
+--- F1 byte-verify C:/Users/analy/.claude/jobs/9f225161/tmp/f1-d2/served/FacilityHeadSurvey.zip ---
+pen bytes: 7488327
+OK   FIL item:Q75_IS_1700_ENOUGH: 'Ang pinakamataas na halaga ng per capita rate para sa YAKAP/'
+OK   FIL val:Q75_IS_1700_ENOUGH_VS1:3: 'Hindi ko alam'
+OK   FIL item:Q1_NAME: 'Ano ang iyong pangalan? (Last Name, First Name, Middle Initi'
+OK   FIL item:Q20_EMR_USE: 'Nagamit na ba ang mga electronic medical records sa pasilida'
+OK   FIL item:Q123_NBB_ALL_PATIENTS: 'Sa abot ng iyong kaalaman, naipapatupad ba ang NBB para sa l'
+SKIP FIL item:Q49_TRANCHE_INTERVAL_NUM (no map value - English fallback)
+SKIP FIL item:Q50_ACCRED_WAIT_NUM (no map value - English fallback)
+SKIP FIL item:Q53_WHY_DIFF_PREVENTIVE (no map value - English fallback)
+OK   FIL item:Q54_WHY_DIFF_LAB: 'Bakit naging mahirap sunurin ang sumusunod: Capability to pr'
+OK   FIL item:Q61_WHY_DIFF_DOH_LIC: 'Bakit naging mahirap sunurin ang sumusunod? DOH Licensing re'
+OK   FIL val:Q62_ENROLL_RESPONSIBILITY_VS1:02: 'Pasilidad'
+OK   FIL val:Q62_ENROLL_RESPONSIBILITY_VS1:90: 'Hindi ko alam'
+OK   FIL val:Q65_ENROLL_CHALL_LIST_VS1:02: 'Kakulangan sa kagustuhan ng mga pasyente (hal., nag-aalangan'
+OK   FIL item:Q75_IS_1700_ENOUGH: 'Ang pinakamataas na halaga ng per capita rate para sa YAKAP/'
+OK   FIL item:Q98_GAMOT_FACTORS: 'Sa inyong pagsusuri, ano ang mga pangunahing salik na nakaka'
+OK   BCL item:Q75_IS_1700_ENOUGH: 'An maximum na per capita rate amount para sa YAKAP/Konsulta '
+OK   BCL val:Q75_IS_1700_ENOUGH_VS1:3: 'Dai aram'
+OK   BCL item:Q1_NAME: 'Ano an saimong Pangaran? (Apelyido, Ngaran, Middle Initial, '
+OK   BCL item:Q20_EMR_USE: 'An electronic medical records ay tigagamit na sa pasilidad n'
+OK   BCL item:Q123_NBB_ALL_PATIENTS: 'Napag implementar mo ba an NBB sa saimong pasyente sa nakaag'
+SKIP BCL item:Q49_TRANCHE_INTERVAL_NUM (no map value - English fallback)
+SKIP BCL item:Q50_ACCRED_WAIT_NUM (no map value - English fallback)
+OK   BCL item:Q53_WHY_DIFF_PREVENTIVE: 'Nata ta dipisil ini gibuhon o sunudon: Ability to conduct pr'
+OK   BCL item:Q54_WHY_DIFF_LAB: 'Nata ta dipisil ini gibuhon o sunudon: Capability to provide'
+OK   BCL item:Q61_WHY_DIFF_DOH_LIC: 'Nata ta dipisil ini gibuhon o sunudon: DOH Licensing require'
+OK   BCL val:Q62_ENROLL_RESPONSIBILITY_VS1:02: 'Pasilidad'
+OK   BCL val:Q62_ENROLL_RESPONSIBILITY_VS1:90: 'Dai aram'
+OK   BCL val:Q65_ENROLL_CHALL_LIST_VS1:02: 'Kulang sa kahandaan an pasyente (I.e., an pasyente ay may pa'
+OK   BCL item:Q75_IS_1700_ENOUGH: 'An maximum na per capita rate amount para sa YAKAP/Konsulta '
+OK   BCL item:Q98_GAMOT_FACTORS: 'Sa saimong pagsusuri. Ano an pangunahing dahilan na nakakaap'
+SKIP BIS item:Q75_IS_1700_ENOUGH (no map value - English fallback)
+OK   BIS val:Q75_IS_1700_ENOUGH_VS1:3: 'Wala ko kahibalo'
+OK   BIS item:Q1_NAME: 'Unsa ang imohang pangalan (Apelyido, Unang Pangalan, apelyid'
+OK   BIS item:Q20_EMR_USE: 'Nakagamit na ba og electrical medical records ang kini nga p'
+OK   BIS item:Q123_NBB_ALL_PATIENTS: 'Sumala sa imong nahibaluan nag-implementar ba kamo og NBB pa'
+SKIP BIS item:Q49_TRANCHE_INTERVAL_NUM (no map value - English fallback)
+SKIP BIS item:Q50_ACCRED_WAIT_NUM (no map value - English fallback)
+OK   BIS item:Q53_WHY_DIFF_PREVENTIVE: 'Ngano nga lisod ang pag-comply sa: Ability to conduct preven'
+OK   BIS item:Q54_WHY_DIFF_LAB: 'Ngano nga lisod ang pag-comply sa: Capability to provide ser'
+OK   BIS item:Q61_WHY_DIFF_DOH_LIC: 'Ngano nga lisod ang pag-comply sa: DOH Licensing requirement'
+OK   BIS val:Q62_ENROLL_RESPONSIBILITY_VS1:02: 'Sa pasilidad'
+OK   BIS val:Q62_ENROLL_RESPONSIBILITY_VS1:90: 'Wala ko kahibalo'
+OK   BIS val:Q65_ENROLL_CHALL_LIST_VS1:02: 'Kakulang sa kaandam sa pasyente (pananglitan, nagduha-duha a'
+SKIP BIS item:Q75_IS_1700_ENOUGH (no map value - English fallback)
+OK   BIS item:Q98_GAMOT_FACTORS: 'Sa imong pag-assess, unsa ang mga nag-unang hinungdan nga na'
+OK   CEB item:Q75_IS_1700_ENOUGH: 'Ang maximum nga per capita rate para sa YAKAP/Konsulta kay P'
+OK   CEB val:Q75_IS_1700_ENOUGH_VS1:3: 'Wala ko kahibalo'
+OK   CEB item:Q1_NAME: 'Unsa imong pangalan? (Apelyido, Pangalan, Middle Initial, EX'
+OK   CEB item:Q20_EMR_USE: 'Nakagamit na ba og electronic medical records dinhi sa pasil'
+OK   CEB item:Q123_NBB_ALL_PATIENTS: 'Sumala sa imong nahibal-an, naka-implementar ba kamo og NBB '
+SKIP CEB item:Q49_TRANCHE_INTERVAL_NUM (no map value - English fallback)
+SKIP CEB item:Q50_ACCRED_WAIT_NUM (no map value - English fallback)
+OK   CEB item:Q53_WHY_DIFF_PREVENTIVE: 'Nganong lisod tumanon: Ability to conduct preventive/screeni'
+OK   CEB item:Q54_WHY_DIFF_LAB: 'Nganong lisod tumanon: Capability to provide services for re'
+SKIP CEB item:Q61_WHY_DIFF_DOH_LIC (no map value - English fallback)
+OK   CEB val:Q62_ENROLL_RESPONSIBILITY_VS1:02: 'Pasilidad'
+OK   CEB val:Q62_ENROLL_RESPONSIBILITY_VS1:90: 'Wala ko kahibalo'
+OK   CEB val:Q65_ENROLL_CHALL_LIST_VS1:02: 'Kulang sa pag-uyon sa pasyente (I.e. ang pasyente magduha-du'
+OK   CEB item:Q75_IS_1700_ENOUGH: 'Ang maximum nga per capita rate para sa YAKAP/Konsulta kay P'
+OK   CEB item:Q98_GAMOT_FACTORS: 'Sa imong pagtimbang/pagtan-aw, unsa ang mga nag-unang hinung'
+SKIP WAR item:Q75_IS_1700_ENOUGH (no map value - English fallback)
+OK   WAR val:Q75_IS_1700_ENOUGH_VS1:3: 'Dire ako maaram'
+OK   WAR item:Q1_NAME: 'Ano it imo ngaran? (Apelyido, Siyahan nga ngaran, Butnga, Du'
+OK   WAR item:Q20_EMR_USE: 'Nagamit ba ini nga pasilidad hin elektroniko medikal nga mga'
+OK   WAR item:Q123_NBB_ALL_PATIENTS: 'Nakakahimo ba kamo hin pagpatuman han NBB para han ngatanan '
+SKIP WAR item:Q49_TRANCHE_INTERVAL_NUM (no map value - English fallback)
+SKIP WAR item:Q50_ACCRED_WAIT_NUM (no map value - English fallback)
+OK   WAR item:Q53_WHY_DIFF_PREVENTIVE: 'Kay ano nga makuri an pagsunod han: Ability to conduct preve'
+OK   WAR item:Q54_WHY_DIFF_LAB: 'Kay ano nga makuri an pagsunod han: Capability to provide se'
+OK   WAR item:Q61_WHY_DIFF_DOH_LIC: 'Kay ano nga makuri an pagsunod han: DOH Licensing requiremen'
+OK   WAR val:Q62_ENROLL_RESPONSIBILITY_VS1:02: 'Pasilidad'
+OK   WAR val:Q62_ENROLL_RESPONSIBILITY_VS1:90: 'Dire ako maaram'
+OK   WAR val:Q65_ENROLL_CHALL_LIST_VS1:02: 'Kakulang hin kaandam han pasyente (i.e., an pasyente nag-aal'
+SKIP WAR item:Q75_IS_1700_ENOUGH (no map value - English fallback)
+OK   WAR item:Q98_GAMOT_FACTORS: 'Ha iyo pag-usisa, ano an mga panguna nga nakakaapekto han pa'
+OK   HIL item:Q75_IS_1700_ENOUGH: 'Ang maximum nga per capita rate amount para sa YAKAP/Konsult'
+OK   HIL val:Q75_IS_1700_ENOUGH_VS1:3: 'Wala ko Kabalo'
+OK   HIL item:Q1_NAME: 'Ano ang imo ngalan? (Last Name, First Name, Middle Initial, '
+OK   HIL item:Q20_EMR_USE: 'Ginagamit bala ang electronic medical records okun mga kompy'
+OK   HIL item:Q123_NBB_ALL_PATIENTS: 'Sa pagkahibalo ninyo, nahimo bala ninyo nga mapatuman ang NB'
+SKIP HIL item:Q49_TRANCHE_INTERVAL_NUM (no map value - English fallback)
+SKIP HIL item:Q50_ACCRED_WAIT_NUM (no map value - English fallback)
+OK   HIL item:Q53_WHY_DIFF_PREVENTIVE: 'Ngaa budlay ang pagsunod sa: Ability to conduct preventive/s'
+OK   HIL item:Q54_WHY_DIFF_LAB: 'Ngaa budlay ang pagsunod sa: Capability to provide services '
+OK   HIL item:Q61_WHY_DIFF_DOH_LIC: 'Ngaa budlay ang pagsunod sa: DOH Licensing requirements'
+SKIP HIL val:Q62_ENROLL_RESPONSIBILITY_VS1:02 (no map value - English fallback)
+OK   HIL val:Q62_ENROLL_RESPONSIBILITY_VS1:90: 'Wala ko Kabalo'
+OK   HIL val:Q65_ENROLL_CHALL_LIST_VS1:02: 'Indi handa ang pasyente (nagapangduha-duha sa paghatag sang '
+OK   HIL item:Q75_IS_1700_ENOUGH: 'Ang maximum nga per capita rate amount para sa YAKAP/Konsult'
+OK   HIL item:Q98_GAMOT_FACTORS: 'Sa imo pag-assess, ano ang mga pangunahon nga rason nga naga'
+OK   ILO item:Q75_IS_1700_ENOUGH: 'Ti maximum per capita rate amount para iti YAKAP/Konsulta ke'
+OK   ILO val:Q75_IS_1700_ENOUGH_VS1:3: 'San a amo'
+OK   ILO item:Q1_NAME: 'Ania ti naganmo? (Apellido, Umuna a Nagan, Tengnga nga Inisi'
+OK   ILO item:Q20_EMR_USE: 'Nausar kadi dagiti elektroniko a medikal a rekord iti daytoy'
+OK   ILO item:Q123_NBB_ALL_PATIENTS: 'Kabaelam kadi nga implementaren ti NBB para kadagiti amin a '
+OK   ILO item:Q49_TRANCHE_INTERVAL_NUM: 'Iti promedio, kasano kabayag ti gagangay a nagbaetan ti pann'
+OK   ILO item:Q50_ACCRED_WAIT_NUM: 'Mano nga adlaw ti inur-uraymo manipud iti pannakaipatulod ti'
+OK   ILO item:Q53_WHY_DIFF_PREVENTIVE: 'Apay a narigat ti agtungpal kadagiti: Kabaelan ti mangisayan'
+OK   ILO item:Q54_WHY_DIFF_LAB: 'Apay a narigat ti agtungpal kadagiti: Kabaelan ti mangipaay '
+OK   ILO item:Q61_WHY_DIFF_DOH_LIC: 'Apay a narigat ti agtungpal kadagiti: Dagiti kasapulan iti L'
+OK   ILO val:Q62_ENROLL_RESPONSIBILITY_VS1:02: 'Dagiti pasilidad'
+OK   ILO val:Q62_ENROLL_RESPONSIBILITY_VS1:90: 'Saan ko nga ammo'
+OK   ILO val:Q65_ENROLL_CHALL_LIST_VS1:02: 'Awan ti kinatulok ti pasiente (i.e., agduadua ti pasiente a '
+OK   ILO item:Q75_IS_1700_ENOUGH: 'Ti maximum per capita rate amount para iti YAKAP/Konsulta ke'
+OK   ILO item:Q98_GAMOT_FACTORS: 'Iti assessment-yo, ania dagiti kangrunaan a makaapektar iti '
+OK   footer version (non-truncation signal): 'v4.1.6'
+OK   occurs 0x (want 0x): 'Month, Day, Year'
+OK   occurs 0x (want 0x): 'ken/wenno)'
+OK   occurs 0x (want 0x): 'b(Pannakaammo'
+OK   occurs 16x (want 16x): 'Apay a narigat ti agtungpal kadagiti: '
+OK   occurs 8x (want 8x): 'v4.1.6 (2026-08-27)'
+RESULT: ALL PASS

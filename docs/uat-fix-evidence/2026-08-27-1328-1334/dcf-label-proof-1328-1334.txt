@@ -1,0 +1,172 @@
+F1 .dcf label diff: v4.1.5 (before) -> v4.1.6 (after)  [name or valueset:code / language]  was -> now
+Generated from the built .dcf files (item, value-set and option labels); .apc byte-identical (md5 f548f8e81b4defd3897f559f419a31fe).
+
+[Q49_TRANCHE_INTERVAL_NUM / ILO]
+  was: '49. On average, how long is the typical time interval between tranches releases to the facility? — No. of Days'
+  now: 'Iti promedio, kasano kabayag ti gagangay a nagbaetan ti pannakairuar dagiti tranche iti pasilidad? — No. of Days'
+
+[Q50_ACCRED_WAIT_NUM / ILO]
+  was: '50. How many days did you wait from application submission to accreditation approval? — No. of Days'
+  now: 'Mano nga adlaw ti inur-uraymo manipud iti pannakaipatulod ti aplikasion agingga iti pannakaanamong ti akreditasion? — No. of Days'
+
+[Q53_WHY_DIFF_PREVENTIVE / ILO]
+  was: '(Apay a narigat ti agtungpal kadagiti:) Ability to conduct preventive/screening services and health education? (Kabaelan ti mangisayangkat kadagiti serbisio ti preventive/screening ken edukasion iti salun-at?)'
+  now: 'Apay a narigat ti agtungpal kadagiti: Kabaelan ti mangisayangkat kadagiti serbisio ti preventive/screening ken edukasion iti salun-at?'
+
+[Q53_WHY_DIFF_PREVENTIVE_VS1 / ILO]
+  was: '(Apay a narigat ti agtungpal kadagiti:) Ability to conduct preventive/screening services and health education? (Kabaelan ti mangisayangkat kadagiti serbisio ti preventive/screening ken edukasion iti salun-at?)'
+  now: 'Apay a narigat ti agtungpal kadagiti: Kabaelan ti mangisayangkat kadagiti serbisio ti preventive/screening ken edukasion iti salun-at?'
+
+[Q54_WHY_DIFF_LAB / ILO]
+  was: '54. Why was it difficult to comply with: Capability to provide services for required laboratory and radiologic services?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Kabaelan ti mangipaay kadagiti serbisio para kadagiti kasapulan a serbisio ti laboratorio ken radiologic?'
+
+[Q54_WHY_DIFF_LAB_VS1 / ILO]
+  was: '54. Why was it difficult to comply with: Capability to provide services for required laboratory and radiologic services?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Kabaelan ti mangipaay kadagiti serbisio para kadagiti kasapulan a serbisio ti laboratorio ken radiologic?'
+
+[Q55_WHY_DIFF_MEDS / ILO]
+  was: '55. Why was it difficult to comply with: Capability to dispense required medicines?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Kabaelan ti mangidispensar kadagiti kasapulan nga agas?'
+
+[Q55_WHY_DIFF_MEDS_VS1 / ILO]
+  was: '55. Why was it difficult to comply with: Capability to dispense required medicines?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Kabaelan ti mangidispensar kadagiti kasapulan nga agas?'
+
+[Q56_WHY_DIFF_INFRA / ILO]
+  was: '56. Why was it difficult to comply with: General Infrastructure?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Sapasap nga Imprastruktura?'
+
+[Q56_WHY_DIFF_INFRA_VS1 / ILO]
+  was: '56. Why was it difficult to comply with: General Infrastructure?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Sapasap nga Imprastruktura?'
+
+[Q57_WHY_DIFF_EQUIPMENT / ILO]
+  was: '57. Why was it difficult to comply with: Equipment and Supplies?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Alikamen ken Suplay?'
+
+[Q57_WHY_DIFF_EQUIPMENT_VS1 / ILO]
+  was: '57. Why was it difficult to comply with: Equipment and Supplies?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Alikamen ken Suplay?'
+
+[Q58_WHY_DIFF_HR / ILO]
+  was: '58. Why was it difficult to comply with: Human resource?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Human resource?'
+
+[Q58_WHY_DIFF_HR_VS1 / ILO]
+  was: '58. Why was it difficult to comply with: Human resource?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Human resource?'
+
+[Q59_WHY_DIFF_HIS / ILO]
+  was: '59. Why was it difficult to comply with: Functional Health Information System?'
+  now: 'Apay a narigat ti agtungpal kadagiti sumaganad: Functional Health Information System?'
+
+[Q59_WHY_DIFF_HIS_VS1 / ILO]
+  was: '59. Why was it difficult to comply with: Functional Health Information System?'
+  now: 'Apay a narigat ti agtungpal kadagiti sumaganad: Functional Health Information System?'
+
+[Q60_WHY_DIFF_DOCS / ILO]
+  was: '60. Why was it difficult to comply with: Documentary requirements?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Dagiti kasapulan iti dokumentario?'
+
+[Q60_WHY_DIFF_DOCS_VS1 / ILO]
+  was: '60. Why was it difficult to comply with: Documentary requirements?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Dagiti kasapulan iti dokumentario?'
+
+[Q61_WHY_DIFF_DOH_LIC / ILO]
+  was: '61. Why was it difficult to comply with: DOH Licensing requirements?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Dagiti kasapulan iti Lisensia ti DOH?'
+
+[Q61_WHY_DIFF_DOH_LIC_VS1 / ILO]
+  was: '61. Why was it difficult to comply with: DOH Licensing requirements?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Dagiti kasapulan iti Lisensia ti DOH?'
+
+[Q62_ENROLL_RESPONSIBILITY_VS1:02 / BCL]
+  was: 'Month, Day, Year'
+  now: 'Pasilidad'
+
+[Q62_ENROLL_RESPONSIBILITY_VS1:02 / BIS]
+  was: 'Month, Day, Year'
+  now: 'Sa pasilidad'
+
+[Q62_ENROLL_RESPONSIBILITY_VS1:02 / CEB]
+  was: 'Month, Day, Year'
+  now: 'Pasilidad'
+
+[Q62_ENROLL_RESPONSIBILITY_VS1:02 / FIL]
+  was: 'Month, Day, Year'
+  now: 'Pasilidad'
+
+[Q62_ENROLL_RESPONSIBILITY_VS1:02 / HIL]
+  was: 'Month, Day, Year'
+  now: 'Facility'
+
+[Q62_ENROLL_RESPONSIBILITY_VS1:02 / ILO]
+  was: 'Month, Day, Year'
+  now: 'Dagiti pasilidad'
+
+[Q62_ENROLL_RESPONSIBILITY_VS1:02 / WAR]
+  was: 'Pasilidad LGU'
+  now: 'Pasilidad'
+
+[Q62_ENROLL_RESPONSIBILITY_VS1:05 / BCL]
+  was: 'support value'
+  now: 'PhilHealth'
+
+[Q62_ENROLL_RESPONSIBILITY_VS1:05 / BIS]
+  was: 'ug/o'
+  now: 'PhilHealth'
+
+[Q62_ENROLL_RESPONSIBILITY_VS1:05 / CEB]
+  was: 'Dashboard lang'
+  now: 'PhilHealth'
+
+[Q62_ENROLL_RESPONSIBILITY_VS1:05 / FIL]
+  was: 'Dashboard lamang'
+  now: 'PhilHealth'
+
+[Q62_ENROLL_RESPONSIBILITY_VS1:05 / HIL]
+  was: 'kag/ukon'
+  now: 'PhilHealth'
+
+[Q62_ENROLL_RESPONSIBILITY_VS1:05 / ILO]
+  was: 'ken/wenno)'
+  now: 'PhilHealth'
+
+[Q62_ENROLL_RESPONSIBILITY_VS1:05 / WAR]
+  was: 'ngan/o'
+  now: 'PhilHealth'
+
+[Q62_ENROLL_RESPONSIBILITY_VS1:90 / ILO]
+  was: 'San a amo'
+  now: 'Saan ko nga ammo'
+
+[Q65_ENROLL_CHALL_LIST_VS1:02 / ILO]
+  was: 'Lack of patient willingness (i.e., patient is hesitant to provide personal information or has concerns about data security)'
+  now: 'Awan ti kinatulok ti pasiente (i.e., agduadua ti pasiente a mangipaay iti personal nga impormasion wenno addaan kadagiti pakaseknan maipapan iti seguridad ti datos)'
+
+[Q65_ENROLL_CHALL_LIST_VS1:03 / ILO]
+  was: 'Kurang dagiti rekurso (e.g., saan nga umdas a puersa ti tao a mangisayangkat kadagiti kampania ti impormasion wenno outreach tapno maipalista dagiti pasiente iti YAKAP/Konsulta) .'
+  now: 'Kurang dagiti rekurso (e.g., saan nga umdas a puersa ti tao a mangisayangkat kadagiti kampania ti impormasion wenno outreach tapno maipalista dagiti pasiente iti YAKAP/Konsulta)'
+
+[Q75_IS_1700_ENOUGH / ILO]
+  was: '75. The maximum per capita rate amount for YAKAP/Konsulta is at Php 1,700 across private and public facilities (40% after first patient encounter, 60% based on registered catchment population by December). Based on your practice, is this enough?'
+  now: 'Ti maximum per capita rate amount para iti YAKAP/Konsulta ket Php 1,700 iti ballasiw dagiti pribado ken publiko a pasilidad (40% kalpasan ti umuna a patient encounter, 60% inton Disiembre). Maibatay iti praktismo, umdasen kadi daytoy?'
+
+[Q75_IS_1700_ENOUGH_VS1 / ILO]
+  was: '75. The maximum per capita rate amount for YAKAP/Konsulta is at Php 1,700 across private and public facilities (40% after first patient encounter, 60% based on registered catchment population by December). Based on your practice, is this enough?'
+  now: 'Ti maximum per capita rate amount para iti YAKAP/Konsulta ket Php 1,700 iti ballasiw dagiti pribado ken publiko a pasilidad (40% kalpasan ti umuna a patient encounter, 60% inton Disiembre). Maibatay iti praktismo, umdasen kadi daytoy?'
+
+[Q98_GAMOT_FACTORS / ILO]
+  was: '98. In your assessment, what are the main factors affecting the utilization of the GAMOT Program in your facility?'
+  now: 'Iti assessment-yo, ania dagiti kangrunaan a makaapektar iti pannakausar ti GAMOT Program iti pasilidadyo?'
+
+[Q98_GAMOT_FACTORS_VS1 / ILO]
+  was: '98. In your assessment, what are the main factors affecting the utilization of the GAMOT Program in your facility?'
+  now: 'Iti assessment-yo, ania dagiti kangrunaan a makaapektar iti pannakausar ti GAMOT Program iti pasilidadyo?'
+
+[Q98_GAMOT_FACTORS_VS1:03 / ILO]
+  was: 'b(Pannakaammo ti pasiente iti programa)'
+  now: 'Pannakaammo ti pasiente iti programa'
+
+TOTAL changed labels: 42 (24 item/value-set stems, 18 option rows)

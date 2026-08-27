@@ -1,0 +1,49 @@
+# #1334 (Q98, F1 v4.1.6) and #1336 #1337 #1339 #1341 #1342 (Sections F-G, F1 v4.1.7) proofs on the Ilocano desk pff,
+# via the dormant desk-test pilot jump: F1_PILOT_JUMP=Q88_HEARD_BUCAS at generate_apc time emits a PROC Q1_NAME
+# postproc "skip to Q88_HEARD_BUCAS". DESK ONLY - the apc is regenerated WITHOUT the env and md5-checked against
+# the deployed build (f548f8e81b4defd3897f559f419a31fe) before anything is published.
+# Sections A-D are blank here; the routing that matters (Q95/Q96 -> Q98; Q99=No -> Q105 -> Q106 -> Q107 -> Q108 -> Q109;
+# Q128=Yes -> Q129; Q132=No -> Q134; Q143) does not read them.
+#
+# Section A carries FOUR respondent fields (name, position, email, mobile) BEFORE Q1_NAME - the jump is on Q1.
+# Check Box popups: SPACE/DOWN do not tick - click the box glyph; geometry per the Section D walk (runs 1-6):
+# popup beside the field row (first box y = row_y - (10*n-2); box x = 767 + 14*len), clamped near the window bottom
+# (last box y~963), left-shifted to x~418 when the option texts are long. Run 1 here is exploratory.
+
+rmdata ../F1/desktest_ilo.csdb
+launch ../F1/FacilityHeadSurvey_desktest_ILO.pff
+
+casekey 04 03 400 02 001
+shot 010_icf
+type 1
+type 1
+shot 020_classification
+type 1
+shot 030_barangay
+click 1000 211
+shot 040_breakoff
+type 1
+shot 050_section_a
+type DR TEST HEAD
+key {ENTER}
+type CHIEF OF HOSPITAL
+key {ENTER}
+type test@aspsi.org
+key {ENTER}
+type 09171234567
+key {ENTER}
+note Q1_NAME postproc carries the pilot jump -> Q88
+type DR TEST HEAD
+key {ENTER}
+shot 060_expect_q88
+note Q88 heard BUCAS = 1, Q89 has BUCAS = 2 No -> Q90 reason (len 2) = 01 -> skip to Q95
+type 1
+shot 070_q89
+type 2
+shot 080_q90
+type 01
+shot 090_q95
+type 1
+shot 100_q96
+type 1
+shot 1334_q98_stem_ILO

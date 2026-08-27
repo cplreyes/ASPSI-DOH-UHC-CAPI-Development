@@ -1,0 +1,20 @@
+Served package record — F1 v4.1.6 (2026-08-27)
+source: root@207.148.65.115:/opt/app/lamp/www/csweb/files/apps/FacilityHeadSurvey.zip (scp, BatchMode)
+fetched: 2026-08-27 16:14 MPST
+zip md5: 48d7e62bd0efcd74688fa864ee3aaea5  size: 1636740 bytes
+pff Description: Facility Head Survey (F1) - v4.1.6 (2026-08-27) [DEV]
+contents:
+  1273803  FacilityHeadSurvey.pen
+  413  FacilityHeadSurvey.pff
+  1644  package.csds
+  1644  package.json
+  4243448  psgc_barangay.dat
+  1769  psgc_barangay.dcf
+  167476  psgc_city.dat
+  1792  psgc_city.dcf
+  11819  psgc_province.dat
+  1787  psgc_province.dcf
+  1818  psgc_region.dat
+  1755  psgc_region.dcf
+working-tree .apc md5: f548f8e81b4defd3897f559f419a31fe (byte-identical to v4.1.1-4.1.5)
+deploy: publish gate new CSDeploy pid 9500 (16:10:22); auto_deploy.py F1 8/8 PSGC files, target https://capi.asiansocial.org/csweb/api verified; Application Deployed Successfully 16:12
