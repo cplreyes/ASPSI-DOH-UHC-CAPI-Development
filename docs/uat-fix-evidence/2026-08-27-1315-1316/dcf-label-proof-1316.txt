@@ -1,0 +1,48 @@
+1554c1554
+<                           "text": "mentioned facility)",
+---
+>                           "text": "Outpatient",
+1558c1558
+<                           "text": "mentioned facility)",
+---
+>                           "text": "Outpatient",
+1562c1562
+<                           "text": "mentioned facility)",
+---
+>                           "text": "Outpatient",
+1566c1566
+<                           "text": "mentioned facility)",
+---
+>                           "text": "Outpatient",
+1574c1574
+<                           "text": "nga serbisyo",
+---
+>                           "text": "Outpatient",
+1578c1578
+<                           "text": "mentioned facility)",
+---
+>                           "text": "Outpatient",
+1595c1595
+<                           "text": "visit ng pasyente",
+---
+>                           "text": "Inpatient",
+1603c1603
+<                           "text": "visit sa pasyente",
+---
+>                           "text": "Inpatient",
+1615c1615
+<                           "text": "kag",
+---
+>                           "text": "Inpatient",
+1619c1619
+<                           "text": "This section is for respondents in",
+---
+>                           "text": "Inpatient",
+6449c6449
+<                   "text": "your Ano ang sekswalidad sang pasiente sang pagkabata?",
+---
+>                   "text": "7. What is the patient's sex at birth?",
+6489c6489
+<                       "text": "your Ano ang sekswalidad sang pasiente sang pagkabata?",
+---
+>                       "text": "7. What is the patient's sex at birth?",

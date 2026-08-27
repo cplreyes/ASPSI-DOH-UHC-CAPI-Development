@@ -1,0 +1,27 @@
+3502c3502
+<   if Q1141_1 <> 1 then
+---
+>   if Q1141_6 <> 1 then
+3507c3507
+<   if Q1141_1 = 1 and length(strip(Q1141_OTHER_TXT)) = 0 then
+---
+>   if Q1141_6 = 1 and length(strip(Q1141_OTHER_TXT)) = 0 then
+postproc
+  if Q105_REASON = 5 and length(strip(Q105_REASON_OTHER_TXT)) = 0 then
+    errmsg(1176);
+    reenter;
+  endif;
+
+PROC Q1141_OTHER_TXT
+preproc
+  if Q1141_6 <> 1 then
+    Q1141_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
+postproc
+  if Q1141_6 = 1 and length(strip(Q1141_OTHER_TXT)) = 0 then
+    errmsg(1177);
+    reenter;
+  endif;
+
+PROC Q1142_OTHER_TXT

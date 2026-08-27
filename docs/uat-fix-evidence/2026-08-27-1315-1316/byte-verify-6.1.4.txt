@@ -1,0 +1,48 @@
+--- F3 byte-verify C:/Users/analy/.claude/jobs/9f225161/tmp/fix-1315-1316/served614/PatientSurvey.zip ---
+pen bytes: 7833492
+SKIP FIL item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+OK   FIL item:Q972_SOURCES: 'Nagbayad ka ba ng iba pang nagastos sa iyong OPD visit na hi'
+SKIP FIL val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+OK   FIL item:Q1142_HAS_OTHER: 'Nagbayad ka ba ng iba pang gastusin sa panahon ng iyong conf'
+OK   FIL item:Q66_SAME_AS_USUAL [dcf-rendered]: 'ang pasilidad na ito ba na karaniwang pinupuntahan mo ay par'
+OK   FIL item:Q66_SAME_AS_USUAL [dcf-rendered]: 'ang pasilidad na ito ba na karaniwang pinupuntahan mo ay par'
+SKIP BCL item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+OK   BCL item:Q972_SOURCES: 'Nagbayad ka din ba ki iba pang expenses hali sa OPD na dai n'
+OK   BCL val:Q972_SOURCES_VS1:90: 'Dai, dai kami nagbayad kan iba pang gastos'
+SKIP BCL item:Q1142_HAS_OTHER (no map value - English fallback)
+OK   BCL item:Q66_SAME_AS_USUAL [dcf-rendered]: 'an pasilidad na ini facility na pirmi mo na tigadumanan para'
+OK   BCL item:Q66_SAME_AS_USUAL [dcf-rendered]: 'an pasilidad na ini facility na pirmi mo na tigadumanan para'
+SKIP BIS item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+OK   BIS item:Q972_SOURCES: 'Nagbayad ba ka og uban pang gasto panahon sa imong OPD visit'
+SKIP BIS val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+OK   BIS item:Q1142_HAS_OTHER: 'Nagbayad ba ka og uban pang gasto panahon sa imong confineme'
+OK   BIS item:Q66_SAME_AS_USUAL [dcf-rendered]: 'Ang kini nga pasilidad ba mao ang pasilidad nga imong kasaga'
+OK   BIS item:Q66_SAME_AS_USUAL [dcf-rendered]: 'Ang kini nga pasilidad ba mao ang pasilidad nga imong kasaga'
+SKIP CEB item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+SKIP CEB item:Q972_SOURCES (no map value - English fallback)
+SKIP CEB val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+SKIP CEB item:Q1142_HAS_OTHER (no map value - English fallback)
+OK   CEB item:Q66_SAME_AS_USUAL [dcf-rendered]: 'Ang kini nga pasilidad ba ang pasilidad nga kasagaran nimong'
+OK   CEB item:Q66_SAME_AS_USUAL [dcf-rendered]: 'Ang kini nga pasilidad ba ang pasilidad nga kasagaran nimong'
+SKIP WAR item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+OK   WAR item:Q972_SOURCES: 'May iba pa ba kamo nga ginbaydan han iyo pagbisita ha OPD ng'
+SKIP WAR val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+OK   WAR item:Q1142_HAS_OTHER: 'Mayda ka ba ginbaydan nga iba pa nga gastos durante han imo '
+OK   WAR item:Q66_SAME_AS_USUAL [dcf-rendered]: 'An ini nga pasilidad ba an pasilidad nga kasagaran mo ginkak'
+OK   WAR item:Q66_SAME_AS_USUAL [dcf-rendered]: 'An ini nga pasilidad ba an pasilidad nga kasagaran mo ginkak'
+SKIP HIL item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+SKIP HIL item:Q972_SOURCES (no map value - English fallback)
+SKIP HIL val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+SKIP HIL item:Q1142_HAS_OTHER (no map value - English fallback)
+OK   HIL item:Q66_SAME_AS_USUAL [dcf-rendered]: 'Ang ini nga pasilidad bala ang pasilidad nga ginakadtuan mo '
+OK   HIL item:Q66_SAME_AS_USUAL [dcf-rendered]: 'Ang ini nga pasilidad bala ang pasilidad nga ginakadtuan mo '
+SKIP ILO item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+OK   ILO item:Q972_SOURCES: 'Binayadam kadi ti aniaman a sabali pay a gastos bayat ti pan'
+SKIP ILO val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+OK   ILO item:Q1142_HAS_OTHER: 'Nabayadam kadi ti aniaman a sabali pay a gastos bayat ti pan'
+OK   ILO item:Q66_SAME_AS_USUAL [dcf-rendered]: 'Ti kadi daytoy a pasilidad ti pasilidad a gagangay a papanam'
+OK   ILO item:Q66_SAME_AS_USUAL [dcf-rendered]: 'Ti kadi daytoy a pasilidad ti pasilidad a gagangay a papanam'
+OK   footer version (non-truncation signal): 'v6.1.4'
+OK   occurs 0x (want 0x): 'mentioned facility)'
+OK   occurs 0x (want 0x): 'your Ano ang sekswalidad'
+RESULT: ALL PASS

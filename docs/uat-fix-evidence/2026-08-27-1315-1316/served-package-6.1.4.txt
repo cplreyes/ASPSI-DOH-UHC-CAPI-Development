@@ -1,0 +1,5 @@
+served PatientSurvey.zip 018e40a90eb491f84c1f3ee7a4bc7866 1720059 bytes, pulled 2026-08-27 13:13 MNL from /opt/app/lamp/www/csweb/files/apps/
+pff Description=Patient Survey (F3) - v6.1.4 (2026-08-27) [DEV]
+generated: apc md5 a0fb214b7868753260bb71737b2da5df  dcf md5 64c543fddd1675a4735bb8baee07e4f4
+6.1.3 (13:02 MNL, zip md5 1ab147467f5a5d5779b76a2dc01cbbd0) was superseded within the hour: its byte-verify found the HIL vs:Q7_SEX_VS1 twin of the removed item label still carrying the fragment; 6.1.4 removes it too.
+F1/F4 apc+dcf md5 unchanged after the shared cspro_helpers.py fix (f548f8e8… / 5272876e… / e5fcb0f1… / 2106ed7b…)
