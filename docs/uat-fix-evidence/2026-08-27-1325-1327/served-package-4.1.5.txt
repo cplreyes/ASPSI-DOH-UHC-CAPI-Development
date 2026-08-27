@@ -1,0 +1,4 @@
+served FacilityHeadSurvey.zip ececd8094e20573cb1d1fe69034c0c5d 1635522 bytes, pulled 2026-08-27 15:00 MNL
+pff Description=Facility Head Survey (F1) - v4.1.5 (2026-08-27) [DEV]
+generated: apc md5 f548f8e81b4defd3897f559f419a31fe (UNCHANGED since 4.1.1)  dcf md5 98af39cf69155367b39a75fc8c368428 (+5 ILO labels: Q39 month/year, Q44 stem, Q45 stem item + value-set label)
+F3/F4 untouched

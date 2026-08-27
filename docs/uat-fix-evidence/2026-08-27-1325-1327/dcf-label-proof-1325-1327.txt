@@ -1,0 +1,20 @@
+21869c21869
+<                   "text": "No wen, manipud kaano?) Month (Bulan ) Year (Taw en",
+---
+>                   "text": "No wen, manipud kaano? Bulan",
+21909c21909
+<                   "text": "39. If yes, since when? Year",
+---
+>                   "text": "No wen, manipud kaano? Tawen",
+23090c23090
+<                   "text": "44. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?",
+---
+>                   "text": "Maibatay iti ammom, ania ti capitation amount ti YAKAP/Konsulta package?",
+23130c23130
+<                   "text": "45. What are the performance indicators you need to meet to receive the second tranche payment?",
+---
+>                   "text": "Ania dagiti performance indicators a kasapulam a matungpal tapno maawatmo ti maikadua a tranche payment?",
+23169c23169
+<                       "text": "(Ania dagiti performance indicators a kasapulam a matungpal tapno maawatmo ti maikadua a tranche payment?) Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full...",
+---
+>                       "text": "Ania dagiti performance indicators a kasapulam a matungpal tapno maawatmo ti maikadua a tranche payment?",
