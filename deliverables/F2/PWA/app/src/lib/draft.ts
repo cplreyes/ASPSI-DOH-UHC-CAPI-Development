@@ -45,7 +45,15 @@ export const COMPLETED_CSID_KEY = 'f2_completed_csid';
 // values stay English. English source unchanged (Aug-24 English == build), so items.ts
 // differs in dialect strings ONLY: no ids, no enums, no schema change. Nothing to
 // migrate; the stamp moves so a submission records which translation set the HCW saw.
-export const LOCAL_SPEC_VERSION = '2026-08-26-m4';
+// m5 (2026-08-27, Aug-21 wave fix round): the m4 import shipped one row-inheritance
+// defect — the Aug-21 papers print a 2-column option grid, so the PDF text layer returned
+// both English rows first and both translations after them as one block, and Q57's
+// `City / LGU standard referral form` took the whole block: `Syudad / LGU surundon nga
+// porma han pagrefer DOH nga surundon nga porma han pagrefer` (war). The extractor now
+// holds such a span instead of writing it, the whole wave was re-applied from the m3
+// baseline, and the row falls back to its correct pre-wave value. ONE dialect string
+// changes; no other locale, no id, no enum, no schema, nothing to migrate.
+export const LOCAL_SPEC_VERSION = '2026-08-27-m5';
 
 export interface EnrollmentInfo {
   hcw_id: string;
