@@ -1,15 +1,18 @@
-# Aug-21 translations — F3 fix evidence (wave 4, v6.1.0 → v6.1.1)
+# Aug-21 translations — F3 fix evidence (wave 4, v6.1.0 → v6.1.2)
 
 **Driver:** ASPSI Aug-21 revised instruments (`raw/Survey-Instruments-2026-08-21`).
-**Ships as:** Patient Survey (F3) **v6.1.1** — DEV channel, not the PSA submission set
+**Ships as:** Patient Survey (F3) **v6.1.2** — DEV channel, not the PSA submission set
 (that stays frozen at tag `capi-psa-2026-08-20`).
-**Deployed:** v6.1.0 at 2026-08-27 00:47 +08, **v6.1.1 at 2026-08-27 08:38 +08**, both to
-`capi.asiansocial.org/csweb/api`.
+**Deployed:** v6.1.0 at 2026-08-27 00:47 +08, v6.1.1 at 2026-08-27 08:38 +08,
+**v6.1.2 at 2026-08-27 09:28 +08**, all to `capi.asiansocial.org/csweb/api`.
 
-> **v6.1.1 is the shipped build.** It repairs the row-inheritance defect class Task 48 traced
+> **v6.1.2 is the shipped build** (v6.1.1 was superseded 50 minutes later — same words on
+> the tablet, written instead of inherited; see the last section).
+> **v6.1.1** repaired the row-inheritance defect class Task 48 traced
 > to the papers' two-column option grids: 29 option labels across six locales that carried a
 > NEIGHBOURING row's translation. The v6.1.0 material below is kept as the wave record; read
-> the **v6.1.1 patch** section at the end first, and prefer the `-6.1.1` files.
+> the **v6.1.1 patch** and then the **v6.1.2 patch** section at the end first, and prefer the
+> `-6.1.2` files (the `-6.1.1` ones stand where v6.1.2 did not re-measure them).
 
 > The desk frames below were taken 2026-08-26 23:28–23:54 +08, four minutes before
 > midnight; the deploy landed after it. The folder is dated from `versions.json` `F3.date`,
@@ -337,8 +340,8 @@ The 29th is the Bikol `Common law / Live-in` correction — `F3_BCL.txt` line 37
 `☐ Common law / Live-in Live-in`, and the hold that had suppressed it was the direct cause of
 two duplicate rows.
 
-The seven CEB `:06` rows are deleted rather than written with the paper's own `LGU/Barangay`
-for a measured reason: that string **is** the English label, so writing it grows the
+**Superseded by v6.1.2 — see the last section of this file.** The seven CEB `:06` rows were
+deleted rather than written with the paper's own `LGU/Barangay`, for a measured reason: that string **is** the English label, so writing it grows the
 poisoned-key scan's `SELF_ECHO` reason by 6 (and `IS_OTHER_EN` by 1 — Q36's English carries a
 stray space, `LGU/ Barangay`) and `run_aug21_gates.ps1` gate 1 fails. Deleting renders the same
 text from the dictionary and leaves the gap honestly on the translator worklist.
@@ -403,3 +406,50 @@ rows were rendering another option's words.
   removed with the other three; the span is a worklist item.
 * **`PATIENT_TYPE` and HIL `item:Q7_SEX`** (the v6.1.0 section above) are a different class —
   dangling tails, not row inheritance — and are **not** fixed here.
+
+
+---
+
+# v6.1.2 patch — the seven Cebuano `LGU/Barangay` rows are WRITTEN (2026-08-27 09:28 +08)
+
+**Why.** Controller ruling 2026-08-27 06:30 (b) said those seven rows must **write** the paper's
+`LGU/Barangay`. v6.1.1 deleted the keys instead, so the English label rendered the same words —
+the right text by an unauthorised mechanism, and the review flagged it. The blocker was real:
+writing a value that equals an English label grows `scan_poisoned_keys.py`'s `SELF_ECHO` (and
+`IS_OTHER_EN` on Q36, whose English carries a stray space, `LGU/ Barangay`), and gate 1 of
+`run_aug21_gates.ps1` refuses the wave when a reason grows.
+
+**What changed in the tooling.** `scan_poisoned_keys.py` gained a reasoned, per-key,
+**value-pinned** waiver file — `data/translations-official/scan_waivers.json` — restricted by its
+validator to `SELF_ECHO` / `IS_OTHER_EN`; every other detector (`DOUBLED`, `EN_FRAGMENT`,
+`WRONG_Q_CLEARED`, `GLUED_CLEARED`, `STALE_KEY`) is a corruption class and can never be waived.
+Each entry names the map value it covers and cites the paper line, so a value that drifts off the
+paper is flagged again. Waived rows print under `--- waived ---` on every scan (the gate script
+echoes them), and a waiver that covers nothing prints as `STALE WAIVER`. The file ships with
+**exactly seven** entries, all F3/ceb.
+
+**What changed in the build.** The whole F3 wave was re-applied from the proven pre-wave baseline
+with the seven overrides flipped from `remove: true` back to `keep: "LGU/Barangay"`. The delta
+against the live v6.1.1 maps is **7 rows in one locale and nothing else**.
+
+| | |
+|---|---|
+| package | `PatientSurvey.zip` 1 720 219 bytes, md5 `21fb4b31528c5dee09e76362926999d3`, server mtime 2026-08-27 01:28:28 UTC = **09:28:28 +08** |
+| served `.pff` Description | `Patient Survey (F3) - v6.1.2 (2026-08-27) [DEV]` |
+| compile | `Compile Successful at 09:25:52` — `02-compile-successful-6.1.2.png` |
+| deploy dialog | `Application Deployed Successfully` — `00-deploy-result-6.1.2.png` |
+| byte-verify | `byte-verify-6.1.2.txt` — **RESULT: ALL PASS**, exit 0. The two CEB probes now read `OK CEB val:Q36_UHC_SOURCE_VS1:06 [wave-changed]: 'LGU/Barangay'` (they were `SKIP … English fallback` in v6.1.1) |
+| per-code proof | `dcf-label-proof-6.1.2.txt` — **BUILT-DICTIONARY RESULT: ALL PASS**: the 21 removed rows still render English, the seven written rows carry `LGU/Barangay`, every kept sibling keeps its translation, and no value set in any of the eight languages has two codes with the same label (213 × 8) |
+| device | `01-app-list-v6.1.2.png` — `Patient Survey (F3) - v6.1.2 (2026-08-27) [DEV]`; on-device `.pen` md5 `44c59760fcc86d6dbec815524ceed55e` == the `.pen` inside the served zip == `package.json`'s signature. No case opened, nothing synced |
+
+**Coverage** (built `.dcf`, a label equal to its English is not counted): CEB **1247 → 1248**,
+every other locale unchanged, total **8396 → 8397**. Only Q36 moves the number, because on the
+other six questions the paper's Cebuano and the English are the same string — which is the whole
+reason this row needed a waiver rather than an ordinary import.
+
+**A `--count` note that is easy to misread.** `LGU/Barangay` occurs **1×** in the v6.1.2 `.pen`
+and occurred 7× in v6.1.1's. Nothing was lost: the `.pen` pools its string table, and the count
+is a per-LANGUAGE/pool fact, not a per-code one. The distinct-string set of the two pens is
+identical (4 256 strings each) apart from the cover-image blob that carries the version stamp;
+the seven per-code labels are proven in `dcf-label-proof-6.1.2.txt`, over the very `.dcf`
+Designer compiled this `.pen` from.
