@@ -49,7 +49,11 @@ bundle; a locale missing a paragraph falls back to English.
 
 **Ships as:** spec `2026-08-27-m5` (DEV channel), commit `fb91241a`, deployed 2026-08-27
 02:29 UTC / 10:29 MNL. `build-info.json` live: sha `fb91241a1e13ff1a5e897bb1c363033a863a9861`
-== `git rev-parse HEAD`, `matches_main: true`; `deploy-f2-pwa.ps1 -VerifyOnly` exit 0.
+== `git rev-parse HEAD` at deploy time, `matches_main: true`; `deploy-f2-pwa.ps1 -VerifyOnly`
+exit 0. `fb91241a` is the **application** commit and is what PROD is serving; the commits
+after it in this wave add only evidence (PNGs and markdown, this file included) and change
+nothing `vite build` reads, so a live sha of `fb91241a` under a later `main` is correct, not
+drift. The next code change re-deploys and moves it.
 
 **What was wrong in m4.** The Aug-21 papers lay an option grid out in two columns, so the PDF
 text layer returns both boxed ENGLISH rows first and both translations after them as one
