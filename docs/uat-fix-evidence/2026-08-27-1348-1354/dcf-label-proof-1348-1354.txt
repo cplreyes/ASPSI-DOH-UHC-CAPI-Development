@@ -1,0 +1,184 @@
+F1 .dcf label diff: v4.1.7 (before) -> v4.1.8 (after)  [name or valueset:code / language]  was -> now
+Generated from the built .dcf files (item, value-set and option labels); .apc byte-identical (md5 f548f8e81b4defd3897f559f419a31fe).
+
+[Q107_LIC_DAYS_NUM / CEB]
+  was: '107. How many days did it take you to receive the license? — No. of Days'
+  now: 'Pila ka adlaw ang imong giabot sa pagkuha sa lisensya? — No. of Days'
+
+[Q109_WHY_DIFF_PT_RIGHTS / CEB]
+  was: '109. Why was it difficult to comply with: Patient rights and organization ethics?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Mga katungod sa pasyente ug organization ethics?'
+
+[Q109_WHY_DIFF_PT_RIGHTS_VS1 / CEB]
+  was: '109. Why was it difficult to comply with: Patient rights and organization ethics?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Mga katungod sa pasyente ug organization ethics?'
+
+[Q110_WHY_DIFF_PT_CARE / CEB]
+  was: '110. Why was it difficult to comply with: Patient care?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Pag-atiman sa pasyente?'
+
+[Q110_WHY_DIFF_PT_CARE_VS1 / CEB]
+  was: '110. Why was it difficult to comply with: Patient care?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Pag-atiman sa pasyente?'
+
+[Q111_WHY_DIFF_LEADERSHIP / CEB]
+  was: '111. Why was it difficult to comply with: Leadership and management?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Pagpamuno ug pagdumala?'
+
+[Q111_WHY_DIFF_LEADERSHIP_VS1 / CEB]
+  was: '111. Why was it difficult to comply with: Leadership and management?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Pagpamuno ug pagdumala?'
+
+[Q112_WHY_DIFF_HRM / CEB]
+  was: '112. Why was it difficult to comply with: Human resource management?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Pagdumala sa mga kawani?'
+
+[Q112_WHY_DIFF_HRM_VS1 / CEB]
+  was: '112. Why was it difficult to comply with: Human resource management?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Pagdumala sa mga kawani?'
+
+[Q113_WHY_DIFF_INFO_MGMT / CEB]
+  was: '113. Why was it difficult to comply with: Information management?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Pagdumala sa impormasyon?'
+
+[Q113_WHY_DIFF_INFO_MGMT_VS1 / CEB]
+  was: '113. Why was it difficult to comply with: Information management?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Pagdumala sa impormasyon?'
+
+[Q114_WHY_DIFF_SAFE / CEB]
+  was: '114. Why was it difficult to comply with: Safe practice and environment?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Luwas nga pamaagi ug palibot?'
+
+[Q114_WHY_DIFF_SAFE_VS1 / CEB]
+  was: '114. Why was it difficult to comply with: Safe practice and environment?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Luwas nga pamaagi ug palibot?'
+
+[Q115_WHY_DIFF_PERF / CEB]
+  was: '115. Why was it difficult to comply with: Improving performance?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Pag-usbaw sa trabaho?'
+
+[Q115_WHY_DIFF_PERF_VS1 / CEB]
+  was: '115. Why was it difficult to comply with: Improving performance?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Pag-usbaw sa trabaho?'
+
+[Q116_WHY_DIFF_PHYS_PLANT / CEB]
+  was: '116. Why was it difficult to comply with: Physical plant?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Physical plant?'
+
+[Q116_WHY_DIFF_PHYS_PLANT_VS1 / CEB]
+  was: '116. Why was it difficult to comply with: Physical plant?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Physical plant?'
+
+[Q117_WHY_DIFF_PRICE_INFO / CEB]
+  was: '117. Why was it difficult to comply with: Public access to price information?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Impormasyon sa presyo bukas sa publiko?'
+
+[Q117_WHY_DIFF_PRICE_INFO_VS1 / CEB]
+  was: '117. Why was it difficult to comply with: Public access to price information?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Impormasyon sa presyo bukas sa publiko?'
+
+[Q118_WHY_DIFF_EQUIPMENT / CEB]
+  was: '118. Why was it difficult to comply with: Equipment and instruments?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Mga ekipo ug instrumento?'
+
+[Q118_WHY_DIFF_EQUIPMENT_VS1 / CEB]
+  was: '118. Why was it difficult to comply with: Equipment and instruments?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Mga ekipo ug instrumento?'
+
+[Q119_WHY_DIFF_NAT_LAWS / CEB]
+  was: '119. Why was it difficult to comply with: National laws and DOH issuances implemented in hospitals and other health facilities?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Mga balaod sa nasud ug mando sa DOH nga gisunod sa mga ospital ug ubang health facility?'
+
+[Q119_WHY_DIFF_NAT_LAWS_VS1 / CEB]
+  was: '119. Why was it difficult to comply with: National laws and DOH issuances implemented in hospitals and other health facilities?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Mga balaod sa nasud ug mando sa DOH nga gisunod sa mga ospital ug ubang health facility?'
+
+[Q120_WHY_DIFF_EMERG_CART / CEB]
+  was: '120. Why was it difficult to comply with: Emergency Cart Contents?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Sulod sa emergency cart?'
+
+[Q120_WHY_DIFF_EMERG_CART_VS1 / CEB]
+  was: '120. Why was it difficult to comply with: Emergency Cart Contents?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Sulod sa emergency cart?'
+
+[Q121_WHY_DIFF_ADDONS / CEB]
+  was: '121. Why was it difficult to comply with: Add-on services?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Dugang nga mga serbisyo?'
+
+[Q121_WHY_DIFF_ADDONS_VS1 / CEB]
+  was: '121. Why was it difficult to comply with: Add-on services?'
+  now: 'Nganong lisud ang pagsunod sa mga mosunod: Dugang nga mga serbisyo?'
+
+[Q53_WHY_DIFF_PREVENTIVE / CEB]
+  was: 'Nganong lisod tumanon: Ability to conduct preventive/screening services and health education? Abilidad sa pagpahigayon ug preventive/screening services ug health education?'
+  now: 'Nganong lisod tumanon: Abilidad sa pagpahigayon ug preventive/screening services ug health education?'
+
+[Q53_WHY_DIFF_PREVENTIVE_VS1 / CEB]
+  was: 'Nganong lisod tumanon: Ability to conduct preventive/screening services and health education? Abilidad sa pagpahigayon ug preventive/screening services ug health education?'
+  now: 'Nganong lisod tumanon: Abilidad sa pagpahigayon ug preventive/screening services ug health education?'
+
+[Q54_WHY_DIFF_LAB / CEB]
+  was: 'Nganong lisod tumanon: Capability to provide services for required laboratory and radiologic services? Kapabilidad sa paghatag ug mga serbisyo nga gikinahanglan sa laboratory ug radiologic services?'
+  now: 'Nganong lisod tumanon: Kapabilidad sa paghatag ug mga serbisyo nga gikinahanglan sa laboratory ug radiologic services?'
+
+[Q54_WHY_DIFF_LAB_VS1 / CEB]
+  was: 'Nganong lisod tumanon: Capability to provide services for required laboratory and radiologic services? Kapabilidad sa paghatag ug mga serbisyo nga gikinahanglan sa laboratory ug radiologic services?'
+  now: 'Nganong lisod tumanon: Kapabilidad sa paghatag ug mga serbisyo nga gikinahanglan sa laboratory ug radiologic services?'
+
+[Q55_WHY_DIFF_MEDS / CEB]
+  was: 'Nganong lisod tumanon: Capability to dispense required medicines? Kapabilidad sa paghatag ug gikinahanglan nga mga medisina?'
+  now: 'Nganong lisod tumanon: Kapabilidad sa paghatag ug gikinahanglan nga mga medisina?'
+
+[Q55_WHY_DIFF_MEDS_VS1 / CEB]
+  was: 'Nganong lisod tumanon: Capability to dispense required medicines? Kapabilidad sa paghatag ug gikinahanglan nga mga medisina?'
+  now: 'Nganong lisod tumanon: Kapabilidad sa paghatag ug gikinahanglan nga mga medisina?'
+
+[Q56_WHY_DIFF_INFRA / CEB]
+  was: '56. Why was it difficult to comply with: General Infrastructure?'
+  now: 'Nganong lisod tumanon: General Infrastructure?'
+
+[Q56_WHY_DIFF_INFRA_VS1 / CEB]
+  was: '56. Why was it difficult to comply with: General Infrastructure?'
+  now: 'Nganong lisod tumanon: General Infrastructure?'
+
+[Q57_WHY_DIFF_EQUIPMENT / CEB]
+  was: '57. Why was it difficult to comply with: Equipment and Supplies?'
+  now: 'Nganong lisod tumanon: Mga ekipo ug suplays?'
+
+[Q57_WHY_DIFF_EQUIPMENT_VS1 / CEB]
+  was: '57. Why was it difficult to comply with: Equipment and Supplies?'
+  now: 'Nganong lisod tumanon: Mga ekipo ug suplays?'
+
+[Q58_WHY_DIFF_HR / CEB]
+  was: '58. Why was it difficult to comply with: Human resource?'
+  now: 'Nganong lisod tumanon: Human Resource?'
+
+[Q58_WHY_DIFF_HR_VS1 / CEB]
+  was: '58. Why was it difficult to comply with: Human resource?'
+  now: 'Nganong lisod tumanon: Human Resource?'
+
+[Q59_WHY_DIFF_HIS / CEB]
+  was: 'Nganong lisod tumanon: Functional Health Information System? Magamit nga Health Information System?'
+  now: 'Nganong lisod tumanon: Magamit nga Health Information System?'
+
+[Q59_WHY_DIFF_HIS_VS1 / CEB]
+  was: 'Nganong lisod tumanon: Functional Health Information System? Magamit nga Health Information System?'
+  now: 'Nganong lisod tumanon: Magamit nga Health Information System?'
+
+[Q60_WHY_DIFF_DOCS / CEB]
+  was: '60. Why was it difficult to comply with: Documentary requirements?'
+  now: 'Nganong lisod tumanon: Documentary requirements?'
+
+[Q60_WHY_DIFF_DOCS_VS1 / CEB]
+  was: '60. Why was it difficult to comply with: Documentary requirements?'
+  now: 'Nganong lisod tumanon: Documentary requirements?'
+
+[Q61_WHY_DIFF_DOH_LIC / CEB]
+  was: '61. Why was it difficult to comply with: DOH Licensing requirements?'
+  now: 'Nganong lisod tumanon: DOH Licensing requirements?'
+
+[Q61_WHY_DIFF_DOH_LIC_VS1 / CEB]
+  was: '61. Why was it difficult to comply with: DOH Licensing requirements?'
+  now: 'Nganong lisod tumanon: DOH Licensing requirements?'
+
+TOTAL changed labels: 45 (45 item/value-set stems, 0 option rows)
