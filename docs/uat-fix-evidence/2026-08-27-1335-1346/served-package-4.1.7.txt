@@ -1,0 +1,20 @@
+Served package record — F1 v4.1.7 (2026-08-27)
+source: root@207.148.65.115:/opt/app/lamp/www/csweb/files/apps/FacilityHeadSurvey.zip (scp, BatchMode)
+fetched: 2026-08-27 17:12 MPST
+zip md5: d77b06ce8135211aa5505e453b83f14e  size: 1635969 bytes  (server mtime 17:11:30; .pen 17:10:48)
+pff Description: Facility Head Survey (F1) - v4.1.7 (2026-08-27) [DEV]
+contents:
+  1273690  FacilityHeadSurvey.pen
+  413  FacilityHeadSurvey.pff
+  1644  package.csds
+  1644  package.json
+  4243448  psgc_barangay.dat
+  1769  psgc_barangay.dcf
+  167476  psgc_city.dat
+  1792  psgc_city.dcf
+  11819  psgc_province.dat
+  1787  psgc_province.dcf
+  1818  psgc_region.dat
+  1755  psgc_region.dcf
+working-tree .apc md5: f548f8e81b4defd3897f559f419a31fe (byte-identical to v4.1.1-4.1.6; pilot-jump apc used for desk proof was regenerated clean before this publish)
+deploy: publish gate new CSDeploy pid 7840 (17:09:31); auto_deploy.py F1 8/8 PSGC files, target https://capi.asiansocial.org/csweb/api verified; Deploy clicked 17:10:49 - the driver lost the dialog handle right after the click (InvalidWindowHandle), the server shows the new package at 17:10:48-17:11:30

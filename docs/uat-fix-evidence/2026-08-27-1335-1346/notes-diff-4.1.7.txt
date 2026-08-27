@@ -1,0 +1,14 @@
+notes.json rebuild diff - extract_notes.py --source raw/Survey-Instruments-2026-08-21/Translations --provenance aug21 (2026-08-27, F1 v4.1.7)
+before = notes.json as of the 2026-08-26 Aug-21 build; after = current. Only translation CELLS change behaviour; English def: registrations are English-only (translate_note falls back to English).
+
+[F1] English note keys registered: 4 -> ['def:142', 'def:44', 'def:45', 'def:52']
+   const:_READ_ONE/CEB: '' -> 'BASAHA UG KUSOG. PILI UG USDA KA TUBAG LAMANG'
+   def:44/CEB: None -> 'Capitation mao ang kantidad kada tuig kada pasyente alang sa paghatag sa mga serbisyo sa YAKAP/Konsulta package.'
+   def:45/CEB: None -> 'Performance indicators mao ang tanan nga mga healthcare goods ug services nga ihatag alang sa matag pasyente aron makadawat sa full capitation payment. AYAW BASAHA UG KUSOG ANG MGA TUBAG. PILIA ANG TANAN TUBAG NGA IHATAG SA RESPONDENT NGA DILI I PROMPT. DILI PWEDE ANG RESPONDENT NGA MAGPANGITA OG REPERENSYA SA DI PA MOTUBAG NIINING PANGUTANA.'
+   def:52/CEB: None -> 'Mao kini ang mga requirements para sa YAKAP/Konsulta accreditation sa DOH. BASAHA UG KUSOG ANG MGA TUBAG. PILIA ANG TANAN NGA MO APPLY'
+
+[F3] English note keys registered: 12 -> ['def:141', 'def:142', 'def:152', 'def:19', 'def:33', 'def:35', 'def:38', 'def:4', 'def:53', 'def:71', 'def:83', 'def:99']
+
+[F4] English note keys registered: 25 -> ['def:1', 'def:101', 'def:108', 'def:12', 'def:126', 'def:132', 'def:140', 'def:160', 'def:168', 'def:17', 'def:170', 'def:19', 'def:197', 'def:30', 'def:51', 'def:54', 'def:57', 'def:62', 'def:67', 'def:69', 'def:79', 'def:89', 'def:95', 'def:96', 'def:97']
+
+TOTAL translation cells changed: 4

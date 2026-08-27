@@ -1,0 +1,135 @@
+# #1334 (Q98, F1 v4.1.6) and #1336 #1337 #1339 #1341 #1342 (Sections F-G, F1 v4.1.7) proofs on the Ilocano desk pff,
+# via the dormant desk-test pilot jump: F1_PILOT_JUMP=Q88_HEARD_BUCAS at generate_apc time emits a PROC Q1_NAME
+# postproc "skip to Q88_HEARD_BUCAS". DESK ONLY - the apc is regenerated WITHOUT the env and md5-checked against
+# the deployed build (f548f8e81b4defd3897f559f419a31fe) before anything is published.
+# Sections A-D are blank here; the routing that matters (Q95/Q96 -> Q98; Q99=No -> Q105 -> Q106 -> Q107 -> Q108 -> Q109;
+# Q128=Yes -> Q129; Q132=No -> Q134; Q143) does not read them.
+#
+# Section A carries FOUR respondent fields (name, position, email, mobile) BEFORE Q1_NAME - the jump is on Q1.
+# Check Box popups: SPACE/DOWN do not tick - click the box glyph; geometry per the Section D walk (runs 1-6):
+# popup beside the field row (first box y = row_y - (10*n-2); box x = 767 + 14*len), clamped near the window bottom
+# (last box y~963), left-shifted to x~418 when the option texts are long. Run 1 here is exploratory.
+
+rmdata ../F1/desktest_ilo.csdb
+launch ../F1/FacilityHeadSurvey_desktest_ILO.pff
+
+casekey 04 03 400 02 001
+shot 010_icf
+type 1
+type 1
+shot 020_classification
+type 1
+shot 030_barangay
+click 1000 211
+shot 040_breakoff
+type 1
+shot 050_section_a
+type DR TEST HEAD
+key {ENTER}
+type CHIEF OF HOSPITAL
+key {ENTER}
+type test@aspsi.org
+key {ENTER}
+type 09171234567
+key {ENTER}
+note Q1_NAME postproc carries the pilot jump -> Q88
+type DR TEST HEAD
+key {ENTER}
+shot 060_expect_q88
+note Q88 heard BUCAS = 1, Q89 has BUCAS = 2 No -> Q90 reason (len 2) = 01 -> skip to Q95
+type 1
+shot 070_q89
+type 2
+shot 080_q90
+type 01
+shot 090_q95
+type 1
+shot 100_q96
+type 1
+shot 1334_q98_stem_ILO
+note Q98 (6 options, len 12): first box (937,544) read from run 1 shot 033; tick 01
+note focus click on empty form area first (Slack desktop toasts can steal the foreground between steps)
+click 1700 200
+click 937 544
+key {ENTER}
+shot fg_010_q99
+note Q99 stock-out = 2 No -> skip to Q105
+type 2
+shot fg_020_expect_q105
+note Q105 DOH licensed (len 2) = 01 Yes
+type 01
+shot fg_030_q106
+type 01
+shot 1336_q107_num_ILO
+note Q107 No. of Days (len 4) auto-advances
+type 0030
+shot fg_040_q107_band
+type 01
+shot fg_050_q108_checkbox
+note Q108 (13 rows, len 28): after the jump the form starts at Q105, so Q108 sits at row y=302 and its popup renders at the TOP
+note  (run 3 shot 047): boxes at x=1159 from y=211. Tick 01 -> Q109 opens
+click 1700 200
+click 1159 211
+key {ENTER}
+shot 1337_q109_stem_ILO
+note Q109 (9 options, len 18, row y=332): first box (1019,244); tick 01 -> Q110-Q121 skipped (not ticked in Q108)
+click 1700 200
+click 1019 244
+key {ENTER}
+shot fg_060_after_q109
+note Q122 NBB current = 1, Q123 all patients = 1
+type 1
+shot fg_070_q123
+type 1
+shot fg_080_expect_q124_or_q125
+note Q124 NBB barriers (8 options, len 16): the form now starts at Q122, Q124 row y=242 and its popup is clamped to the top - boxes at x=992 from y=211 (run 4 shot 059); tick 01
+click 1700 200
+click 992 211
+key {ENTER}
+shot fg_090_q125
+note Q125 ZBB current = 1, Q126 all patients = 1 -> Q127 popup (row y=362, len 16, 8 options): first box (991,284)
+type 1
+shot fg_100_q126
+type 1
+shot fg_110_q127_checkbox
+click 1700 200
+click 991 284
+key {ENTER}
+shot fg_120_q128
+note Q128 allow OOP = 1 Yes -> Q129 (alpha 240)
+type 1
+shot 1339_q129_ILO
+type HIGH DEMAND
+key {ENTER}
+shot fg_130_q130
+note Q130 (len 2) = 01
+type 01
+shot fg_140_after_q130
+note Q131 (if asked) is a Check Box (row y=542, len 8, 4 options): first box (879,504); tick 01
+click 1700 200
+click 879 504
+key {ENTER}
+shot fg_150_expect_q132
+note Q132 Malasakit provided = 2 No -> Q134
+type 2
+shot 1341_q134_ILO
+note Q134 (5 options, len 10, row y=692): first box (907,644) (run 5 shot 084); tick 01
+click 1700 200
+click 907 644
+key {ENTER}
+shot fg_160_q135
+note Q135 LGU support = 2 No
+type 2
+shot fg_170_after_q135
+note Q139 PHO protocol clarity (len 2) = 01 (whatever field is current, shots tell)
+type 01
+shot fg_180_after_q139
+type REFERRAL PROTOCOL
+key {ENTER}
+shot fg_190_after_q140
+type 01
+shot fg_200_expect_q142_checkbox
+note Q142: run 6 shot 097 shows that typing the code (01) into the Check Box field ticked option 01 by itself - no click needed
+note  (the computed box (879,903) was right and would have UN-ticked it). ENTER -> Q143 popup
+key {ENTER}
+shot 1342_q143_ILO

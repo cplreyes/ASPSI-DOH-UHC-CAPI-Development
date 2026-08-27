@@ -1,0 +1,152 @@
+F1 .dcf label diff: v4.1.6 (before) -> v4.1.7 (after)  [name or valueset:code / language]  was -> now
+Generated from the built .dcf files (item, value-set and option labels); .apc byte-identical (md5 f548f8e81b4defd3897f559f419a31fe).
+
+[Q101_STOCKOUT_DURATION_VS1:1 / CEB]
+  was: '30 ka adlaw ug paubos'
+  now: 'Ubos sa 30 ka adlaw'
+
+[Q107_LIC_DAYS_NUM / ILO]
+  was: '107. How many days did it take you to receive the license? — No. of Days'
+  now: 'Mano nga aldaw ti kasapulan tapno maawatmo ti lisensia? — No. of Days'
+
+[Q109_WHY_DIFF_PT_RIGHTS / ILO]
+  was: '109. Why was it difficult to comply with: Patient rights and organization ethics?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Karbengan ti pasiente ken etika ti organisasion?'
+
+[Q109_WHY_DIFF_PT_RIGHTS_VS1 / ILO]
+  was: '109. Why was it difficult to comply with: Patient rights and organization ethics?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Karbengan ti pasiente ken etika ti organisasion?'
+
+[Q110_WHY_DIFF_PT_CARE / ILO]
+  was: '110. Why was it difficult to comply with: Patient care?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Panangtaripato iti pasiente?'
+
+[Q110_WHY_DIFF_PT_CARE_VS1 / ILO]
+  was: '110. Why was it difficult to comply with: Patient care?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Panangtaripato iti pasiente?'
+
+[Q111_WHY_DIFF_LEADERSHIP / ILO]
+  was: '111. Why was it difficult to comply with: Leadership and management?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Panangidadaulo ken panangtarawidwid?'
+
+[Q111_WHY_DIFF_LEADERSHIP_VS1 / ILO]
+  was: '111. Why was it difficult to comply with: Leadership and management?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Panangidadaulo ken panangtarawidwid?'
+
+[Q112_WHY_DIFF_HRM / ILO]
+  was: '(Apay a narigat ti agtungpal kadagiti:) Human resource management? (Panagmanehar ti rekurso ti tao?)'
+  now: 'Apay a narigat ti agtungpal kadagiti: Panagmanehar ti rekurso ti tao?'
+
+[Q112_WHY_DIFF_HRM_VS1 / ILO]
+  was: '(Apay a narigat ti agtungpal kadagiti:) Human resource management? (Panagmanehar ti rekurso ti tao?)'
+  now: 'Apay a narigat ti agtungpal kadagiti: Panagmanehar ti rekurso ti tao?'
+
+[Q113_WHY_DIFF_INFO_MGMT / ILO]
+  was: '113. Why was it difficult to comply with: Information management?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Panagmanehar ti impormasion?'
+
+[Q113_WHY_DIFF_INFO_MGMT_VS1 / ILO]
+  was: '113. Why was it difficult to comply with: Information management?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Panagmanehar ti impormasion?'
+
+[Q114_WHY_DIFF_SAFE / ILO]
+  was: '114. Why was it difficult to comply with: Safe practice and environment?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Natalged nga aramid ken aglawlaw?'
+
+[Q114_WHY_DIFF_SAFE_VS1 / ILO]
+  was: '114. Why was it difficult to comply with: Safe practice and environment?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Natalged nga aramid ken aglawlaw?'
+
+[Q115_WHY_DIFF_PERF / ILO]
+  was: '(Apay a narigat ti agtungpal kadagiti:) Improving performance? (Panagpasayaat ti panagaramid?)'
+  now: 'Apay a narigat ti agtungpal kadagiti: Panagpasayaat ti panagaramid?'
+
+[Q115_WHY_DIFF_PERF_VS1 / ILO]
+  was: '(Apay a narigat ti agtungpal kadagiti:) Improving performance? (Panagpasayaat ti panagaramid?)'
+  now: 'Apay a narigat ti agtungpal kadagiti: Panagpasayaat ti panagaramid?'
+
+[Q116_WHY_DIFF_PHYS_PLANT / ILO]
+  was: '116. Why was it difficult to comply with: Physical plant?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Physical plant?'
+
+[Q116_WHY_DIFF_PHYS_PLANT_VS1 / ILO]
+  was: '116. Why was it difficult to comply with: Physical plant?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Physical plant?'
+
+[Q117_WHY_DIFF_PRICE_INFO / ILO]
+  was: '(Apay a narigat ti agtungpal kadagiti:) Public access to price information? (Ti pannakagun-od ti publiko iti impormasion ti presio?)'
+  now: 'Apay a narigat ti agtungpal kadagiti: Ti pannakagun-od ti publiko iti impormasion ti presio?'
+
+[Q117_WHY_DIFF_PRICE_INFO_VS1 / ILO]
+  was: '(Apay a narigat ti agtungpal kadagiti:) Public access to price information? (Ti pannakagun-od ti publiko iti impormasion ti presio?)'
+  now: 'Apay a narigat ti agtungpal kadagiti: Ti pannakagun-od ti publiko iti impormasion ti presio?'
+
+[Q118_WHY_DIFF_EQUIPMENT / ILO]
+  was: '118. Why was it difficult to comply with: Equipment and instruments?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Equipment and instruments?'
+
+[Q118_WHY_DIFF_EQUIPMENT_VS1 / ILO]
+  was: '118. Why was it difficult to comply with: Equipment and instruments?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Equipment and instruments?'
+
+[Q119_WHY_DIFF_NAT_LAWS / ILO]
+  was: '119. Why was it difficult to comply with: National laws and DOH issuances implemented in hospitals and other health facilities?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Nasional a linteg ken DOH issuances a naipatungpal kadagiti ospital ken dadduma pay a pasilidad ti salun-at?'
+
+[Q119_WHY_DIFF_NAT_LAWS_VS1 / ILO]
+  was: '119. Why was it difficult to comply with: National laws and DOH issuances implemented in hospitals and other health facilities?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Nasional a linteg ken DOH issuances a naipatungpal kadagiti ospital ken dadduma pay a pasilidad ti salun-at?'
+
+[Q120_WHY_DIFF_EMERG_CART / ILO]
+  was: '(Apay a narigat ti agtungpal kadagiti:) Emergency Cart Contents? (Linaon ti Kariton ti Emergency?)'
+  now: 'Apay a narigat ti agtungpal kadagiti: Linaon ti Kariton ti Emergency?'
+
+[Q120_WHY_DIFF_EMERG_CART_VS1 / ILO]
+  was: '(Apay a narigat ti agtungpal kadagiti:) Emergency Cart Contents? (Linaon ti Kariton ti Emergency?)'
+  now: 'Apay a narigat ti agtungpal kadagiti: Linaon ti Kariton ti Emergency?'
+
+[Q121_WHY_DIFF_ADDONS / ILO]
+  was: '121. Why was it difficult to comply with: Add-on services?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Dagiti serbisio nga add-on?'
+
+[Q121_WHY_DIFF_ADDONS_VS1 / ILO]
+  was: '121. Why was it difficult to comply with: Add-on services?'
+  now: 'Apay a narigat ti agtungpal kadagiti: Dagiti serbisio nga add-on?'
+
+[Q129_OOP_REASON / ILO]
+  was: '129. Why does the facility allow OOP expenses for basic accommodation? Specify the reason.'
+  now: 'Apay nga ipalubos ti pasilidad dagiti gastos ti OOP para iti kangrunaan a pagdagusan? Ibagam ti rasonmo.'
+
+[Q134_NO_MALASAKIT_WHY / ILO]
+  was: '134. Why is the facility not providing medical social welfare or assistance through Malasakit Centers or MAIFIP?'
+  now: 'Apay a saan a mangipapaay ti pasilidad iti medical social welfare wenno tulong babaen kadagiti Malasakit Centers wenno MAIFIP?'
+
+[Q143_REFERRAL_FORM_TYPE / ILO]
+  was: '143. What type of referral form do you use to send to higher level facilities?'
+  now: 'Ania a kita ti referral form ti usarem a mangipatulod kadagiti nangatngato a lebel a pasilidad?'
+
+[Q143_REFERRAL_FORM_TYPE_VS1 / ILO]
+  was: '143. What type of referral form do you use to send to higher level facilities?'
+  now: 'Ania a kita ti referral form ti usarem a mangipatulod kadagiti nangatngato a lebel a pasilidad?'
+
+[Q44_CAPITATION_AMT / CEB]
+  was: '44. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package?'
+  now: 'Base sa imong kaugalingon nga kahibalo, unsa ang capitation amount sa YAKAP/Konsulta package?'
+
+[Q45_PERF_INDICATORS / CEB]
+  was: '45. What are the performance indicators you need to meet to receive the second tranche payment?'
+  now: 'Unsa ang mga performance indicators nga gikinahanglan para maabot ug madawat ang second tranche payment?'
+
+[Q45_PERF_INDICATORS_VS1 / CEB]
+  was: 'Unsa ang mga performance indicators nga gikinahanglan para maabot ug madawat ang second tranche payment? Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full...'
+  now: 'Unsa ang mga performance indicators nga gikinahanglan para maabot ug madawat ang second tranche payment?'
+
+[Q49_TRANCHE_INTERVAL_NUM / CEB]
+  was: '49. On average, how long is the typical time interval between tranches releases to the facility? — No. of Days'
+  now: 'Kasagaran, unsa man kadugay ang time interval tali sa pag release sa tranches ngadto sa pasilidad? — No. of Days'
+
+[Q50_ACCRED_WAIT_NUM / CEB]
+  was: '50. How many days did you wait from application submission to accreditation approval? — No. of Days'
+  now: 'Pila ka adlaw ang inyo gihuwat gikan sa pag sumite sa application ngadto sa accreditation approval? — No. of Days'
+
+TOTAL changed labels: 37 (36 item/value-set stems, 1 option rows)
