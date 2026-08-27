@@ -1,0 +1,8 @@
+21133c21133
+<                   "text": "37. What are the major challenges to improving the accessibility of patient care in your local area?",
+---
+>                   "text": "Ania dagiti kangrunaan a karit iti panangpasayaat iti pannakagun-od iti pannakaaywan ti pasiente iti lokal a lugaryo?",
+21172c21172
+<                       "text": "37. What are the major challenges to improving the accessibility of patient care in your local area?",
+---
+>                       "text": "Ania dagiti kangrunaan a karit iti panangpasayaat iti pannakagun-od iti pannakaaywan ti pasiente iti lokal a lugaryo?",

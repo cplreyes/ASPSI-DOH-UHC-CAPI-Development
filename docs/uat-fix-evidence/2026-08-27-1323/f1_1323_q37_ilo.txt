@@ -1,0 +1,158 @@
+# #1323 proof (2026-08-27, F1 v4.1.4 maps): Ilocano Q37 stem must read in Ilocano
+# ('Ania dagiti kangrunaan a karit ...'), not English. Opening walk = f1_aug17_casestart_and_battery.txt
+# verbatim down to the Q37 Check Box screen, on an ILO desk pff.
+# aug17 Task 2.6 — F1 case-start reachability sweep + Section C two-step battery.
+#
+# WHAT THIS PROVES (permanent regression scenario, do not delete):
+#   1. Case-start form order and the ONE intended leapfrog. Current F1 form order
+#      (read from FacilityHeadSurvey.fmf, not assumed):
+#        FORM000 case key -> FORM001 ICF (ICF_PART1, ICF_PART2)
+#        -> FORM002 geo + BREAKOFF (CLASSIFICATION, REGION_NAME*, PROVINCE_NAME*,
+#           CITY_NAME*, BARANGAY, BREAKOFF)   * auto-derived from the case key and
+#           protect()ed, so entry skips them
+#        -> FORM003 Section A -> FORM004 Section B -> FORM005 Section C ...
+#        -> FORM010 Section H -> FORM011 Field Control -> FORM012 photo
+#        -> FORM013 Facility GPS (LAST — GPS deliberately moved after the photo)
+#      BREAKOFF (form 2) -> ENUM_RESULT_FINAL_VISIT (form 11) is the only leapfrog
+#      (#744/#515 break-off escape). This run takes BREAKOFF = 1 Continue, so the
+#      escape must NOT fire and Section A must follow immediately.
+#   2. The two-step battery, BOTH branches. A base answered No must advance PAST
+#      its Q<NN>_1_UHC_ATTRIB probe; a base answered Yes must ask it. This is the
+#      behaviour the whole own-screen design rests on (Task 2.3 carry 8 / 2.4 carry 4).
+#   3. Q13 = 9 "Not applicable" takes the same exit as No (the `in 2,9` condition —
+#      Q12 and Q13 are the only two bases with an NA code).
+#   4. Q20 = No lands on Q24, clearing the Q21-Q23 DOH-IS fan for free.
+#   5. Q35 = Yes reaches the .2 detail item (Q35_2_PCQM_MEASURES).
+#   6. The Section D intro screen (intro:51) renders on Q38_YK_ACCRED — the R24
+#      evidence requirement for the guarded translation-lane text in fe4f14c.
+#
+# ENTRY MECHANICS (verified against the dcf, not guessed):
+#   - every Section C base and probe is len=1 numeric -> a single typed digit fills
+#     the field and auto-advances; do NOT add a trailing {ENTER} (it would land on
+#     the NEXT field — the F4 task-1.9 failure #4 class).
+#   - alpha fields need an explicit {ENTER}.
+#   - Q36/Q37 are Check Box (tick-all) fields: they CANNOT be driven by typing the
+#     option code (F4 task-1.9 failure #6 established this is genuinely invalid
+#     input, not a scripting slip). They need a click on the tick-box glyph.
+#   - BARANGAY is a filtered picker -> click the first row.
+
+rmdata ../F1/desktest_ilo.csdb
+launch ../F1/FacilityHeadSurvey_desktest_ILO.pff
+
+# ---- FORM000 case key: RR PP MMM FF CCC (auto-advances at full width) ----
+casekey 04 03 400 02 001
+shot 010_after_casekey_expect_icf
+
+# ---- FORM001 ICF: ICF_PART1, ICF_PART2 (both len=1, "1 = Continue") ----
+note EXPECT consent screens render with the 4-paragraph certificate + contact block
+shot 020_icf_part1
+type 1
+shot 030_icf_part2
+type 1
+
+# ---- FORM002 geo + BREAKOFF. REGION/PROVINCE/CITY are protected (auto-derived). ----
+note EXPECT CLASSIFICATION first, then the cursor jumps straight to BARANGAY
+shot 040_expect_classification
+type 1
+shot 050_expect_barangay_picker
+click 1000 211
+shot 060_expect_breakoff
+note BREAKOFF = 1 Continue -> the form-2 to form-11 escape must NOT fire
+type 1
+shot 070_after_breakoff_expect_section_a
+
+# ---- FORM003 Section A ----
+type DR TEST HEAD
+key {ENTER}
+type CHIEF OF HOSPITAL
+key {ENTER}
+type test@aspsi.org
+key {ENTER}
+type 09171234567
+key {ENTER}
+type DR TEST HEAD
+key {ENTER}
+note Q2_FACILITY_ROLE is len=2 -> type the code zero-padded so it auto-advances
+type 01
+type 52
+type 1
+type 08
+type 00
+type 20
+type 00
+shot 080_end_of_section_a_expect_section_b
+
+# ---- FORM004 Section B: Q7 = 1 Public, Q8 = 3 (Level 2 hospital). ----
+note Q7=Public AND Q8 in 2,3,4 is what OPENS the Q139/Q140 PHO gate later (#386)
+type 1
+type 3
+shot 090_after_section_b_expect_q9
+
+# ---- FORM005 Section C: the two-step battery ----
+note Q9 heard of UHC = Yes
+type 1
+note Q10 = Yes -> its probe Q10_1_UHC_ATTRIB MUST be asked
+type 1
+shot 100_q10_yes_expect_probe_q10_1
+note probe answered 1 (not the Other code) so no specify box opens
+type 1
+shot 110_after_q10_probe_expect_q11
+note Q11 = No -> its probe MUST be skipped; next field must be Q12, not Q11_1
+type 2
+shot 120_q11_no_expect_q12_not_probe
+note Q12 = Yes -> probe, then the .2 detail item Q12_2_PHU_ROLE
+type 1
+shot 130_q12_probe
+type 1
+shot 140_q12_2_phu_role_detail
+type 1
+shot 150_after_q12_2_expect_q13
+note Q13 = 9 Not applicable -> same exit as No; probe AND Q13_2 both skipped
+type 9
+shot 160_q13_na_expect_q14
+note Q14..Q19 all No -> straight run, each skipping its probe and .2 item
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+shot 170_after_q19_expect_q20
+note Q20 = No -> MUST land on Q24, clearing the Q21/Q22/Q23 DOH-IS fan
+type 2
+shot 180_q20_no_expect_q24_not_q21
+note Q24..Q34 all No
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+shot 190_after_q34_expect_q35
+note Q35 = Yes -> probe, then Q35_2_PCQM_MEASURES (a Check Box .2 detail item)
+type 1
+shot 200_q35_probe
+type 1
+shot 210_expect_q35_2_checkbox
+
+note Q35_2 is a Check Box (tick-all). Typing the option code is INVALID input on a
+note  Check Box field (F4 task-1.9 failure #6 proved this is a real CSEntry
+note  constraint, not a scripting slip) -- click the tick-box glyph instead.
+note  Option 01 "Client satisfaction survey" sits at ~(851,923), coords read from
+note  this scenario's own 210_expect_q35_2_checkbox shot.
+note ILO layout: the Q35.2 popup renders at the SAME anchor as Q36/Q37 (read off this scenario's own 082 shot, run 1)
+click 1047 783
+key {ENTER}
+shot 220_after_q35_2_expect_q36_checkbox
+
+note Q36_QUALITY_CHALL Check Box -- option 01 tick box at ~(1047,783), read from
+note  this scenario's own 220_after_q35_2_expect_q36_checkbox shot.
+click 1047 783
+key {ENTER}
+shot 230_after_q36_expect_q37_checkbox
+shot 1323_q37_stem_ILO
