@@ -1,9 +1,15 @@
-# Aug-21 translations — F3 fix evidence (wave 4, v6.1.0)
+# Aug-21 translations — F3 fix evidence (wave 4, v6.1.0 → v6.1.1)
 
 **Driver:** ASPSI Aug-21 revised instruments (`raw/Survey-Instruments-2026-08-21`).
-**Ships as:** Patient Survey (F3) v6.1.0 — DEV channel, not the PSA submission set
+**Ships as:** Patient Survey (F3) **v6.1.1** — DEV channel, not the PSA submission set
 (that stays frozen at tag `capi-psa-2026-08-20`).
-**Deployed:** 2026-08-27 00:47 +08 to `capi.asiansocial.org/csweb/api`.
+**Deployed:** v6.1.0 at 2026-08-27 00:47 +08, **v6.1.1 at 2026-08-27 08:38 +08**, both to
+`capi.asiansocial.org/csweb/api`.
+
+> **v6.1.1 is the shipped build.** It repairs the row-inheritance defect class Task 48 traced
+> to the papers' two-column option grids: 29 option labels across six locales that carried a
+> NEIGHBOURING row's translation. The v6.1.0 material below is kept as the wave record; read
+> the **v6.1.1 patch** section at the end first, and prefer the `-6.1.1` files.
 
 > The desk frames below were taken 2026-08-26 23:28–23:54 +08, four minutes before
 > midnight; the deploy landed after it. The folder is dated from `versions.json` `F3.date`,
@@ -286,3 +292,114 @@ never writes, so the build falls back to the English `Outpatient` / `Inpatient`,
 better than a fragment — plus an extractor rule so the next extract cannot re-introduce them.
 Neither key is in the Q47 / 97.x / 115.x set this wave was about; both are recorded here, in the
 patch note and in `log.md` for Task 45's worklist.
+
+
+---
+
+# v6.1.1 patch — the row-inheritance repair (2026-08-27 08:38 +08)
+
+**What it is.** Task 48 measured that several Aug-21 papers lay an option grid out in two
+columns, so `pdf_text()` returns both boxed ENGLISH rows first and both translations after
+them as one block. The first row's span is then box-to-box and therefore empty, and the whole
+block falls to the second row — one option ends up carrying its neighbour's translation. The
+extractor now HOLDS those rows (`sibling-run` / `duplicate-label`) and `apply_aug21.py` carries
+a permanent gate, but neither repairs what is already on a tablet. This build does.
+
+The seven Cebuano `*_SOURCE_VS1` questions are the headline case: `F3_CEB.txt` prints
+
+```
+☐ Legislation
+☐ LGU/ Barangay
+Balaod
+LGU/Barangay
+```
+
+`LGU/ Barangay` is a proper noun the paper leaves untranslated, so the anchor matches its own
+echo, the span for code 06 is bounded to code 02's `Balaod`, and **v6.1.0 shipped `Balaod`
+("Legislation") on the LGU/Barangay option of all seven questions**.
+
+## The 29 rows, by locale
+
+| locale | rows | keys |
+|---|---|---|
+| CEB | 8 | `val:Q{36_UHC,75_KON,100_BUCAS,117_NBB,120_ZBB,125_MAIFIP,153_GAMOT}_SOURCE_VS1:06` (was `Balaod`) + `val:Q10_CIVIL_STATUS_VS1:6` (was `Bulag sa kapikas` = Separated's text) |
+| BCL | 9 + 1 | `Q2_RELATIONSHIP_VS1:02,03` (`Aki`), `:08,09` (`Apo`), `:16,17` (`Pamangkin`), `Q10_CIVIL_STATUS_VS1:6` (`Hiwalay`), `Q98_PAY_SRC_VS1:15` / `Q113_PAY_SRC_VS1:13` (`Iba pa (ispecify)`); **and `Q10_CIVIL_STATUS_VS1:5` CORRECTED** `Diborsyado` → `Live-in` |
+| HIL | 5 | `Q34_WHO_DECIDES_VS1:08,09,10` (all read `Tatay sang Pasyente` = the patient's FATHER), `Q10_CIVIL_STATUS_VS1:2` (`Kasado`), `:4` (`Balo`) |
+| WAR | 2 | `Q10_CIVIL_STATUS_VS1:2` (`Minyo`), `:6` (`Nagbulag`) |
+| FIL | 2 | `Q38_2_WHY_NOT_REG_VS1:02,03` (both `[Mahirap magparehistro]` = code 01's text) |
+| BIS | 1 | `Q10_CIVIL_STATUS_VS1:6` (`Separada/Separado`) |
+| ILO | 1 | `Q38_2_WHY_NOT_REG_VS1:08` (`Awan ti oras nga agparehistro` = code 07's text) |
+
+28 of the 29 are **deletions**: the Aug-21 paper carries no distinct translation for the row,
+so the key is removed from the map and CSEntry renders the **English** option label. An English
+option beats a wrong one, and a wrong one here means two options a respondent cannot tell apart.
+The 29th is the Bikol `Common law / Live-in` correction — `F3_BCL.txt` line 377 prints
+`☐ Common law / Live-in Live-in`, and the hold that had suppressed it was the direct cause of
+two duplicate rows.
+
+The seven CEB `:06` rows are deleted rather than written with the paper's own `LGU/Barangay`
+for a measured reason: that string **is** the English label, so writing it grows the
+poisoned-key scan's `SELF_ECHO` reason by 6 (and `IS_OTHER_EN` by 1 — Q36's English carries a
+stray space, `LGU/ Barangay`) and `run_aug21_gates.ps1` gate 1 fails. Deleting renders the same
+text from the dictionary and leaves the gap honestly on the translator worklist.
+
+## Proof
+
+| | |
+|---|---|
+| package | `PatientSurvey.zip` 1 720 432 bytes, md5 `ea467e2bf1e14306c751745f52a0087a`, server mtime 2026-08-27 00:38:03 UTC = **08:38:03 +08** |
+| served `.pff` Description | `Patient Survey (F3) - v6.1.1 (2026-08-27) [DEV]` |
+| deploy dialog | `Application Deployed Successfully` — `00-deploy-result-6.1.1.png` |
+| byte-verify | `byte-verify-6.1.1.txt` — **RESULT: ALL PASS**, exit 0 |
+| per-code proof | `dcf-removal-proof-6.1.1.txt` — **BUILT-DICTIONARY RESULT: ALL PASS** |
+| device | `01-app-list-v6.1.1.png`; on-device `.pen` md5 `0b1826681b4a2f00dbe19fa48816abea` == the `.pen` inside the served zip == `package.json`'s signature. No case opened, nothing synced |
+
+### Why there is a second proof file
+
+The `.pen`'s string table is **pooled**, so a `--count` is a per-LANGUAGE fact, not a per-code
+one: 14 map keys still carry `Balaod` (7 BIS + 7 CEB, all on code 02, where it is correct) and
+the pen holds **2**. A `--count "Balaod" 0` would therefore be a lie, and a `7` would be a
+different lie. `dcf-removal-proof-6.1.1.txt` gives the per-CODE evidence instead, over the
+`PatientSurvey.dcf` Designer compiled this `.pen` from: every removed row's locale label **is**
+the English label, every kept sibling still carries its own translation, and **no value set, in
+any of the eight languages, has two codes with the same label** (213 value sets × 8).
+
+`byte-verify-6.1.1.txt` carries `--baseline` against the **pre-wave** maps
+(`git show HEAD:F3/translations/*.json`), not against v6.1.0: the tool fails unless every locale
+has ≥1 wave-changed probe **present**, and 28 of this patch's 29 rows are deletions, which cannot
+be present. Its four counts are all measured off this served pen —
+`Balaod` 2×, `LGU/Barangay` 7×, `[Mahirap magparehistro]` **0×** (the one true discriminator:
+v6.1.0 shipped it, this build does not) and `Live-in` 3×. The two `--probe` rows on the CEB
+`*_SOURCE_VS1:06` keys come back `SKIP … (no map value - English fallback)`, which is precisely
+the intended post-removal state.
+
+## Coverage (v6.1.0 → v6.1.1)
+
+Translated labels in the built `.dcf` (a label that equals its English is not counted):
+
+| locale | v6.1.0 | v6.1.1 | delta |
+|---|---|---|---|
+| FIL | 1310 | 1308 | −2 |
+| BCL | 1166 | 1157 | −9 |
+| BIS | 1198 | 1197 | −1 |
+| CEB | 1255 | 1247 | −8 |
+| WAR | 1265 | 1263 | −2 |
+| HIL | 1015 | 1010 | −5 |
+| ILO | 1215 | 1214 | −1 |
+| **total** | **8424** | **8396** | **−28** |
+
+Exactly the 28 deleted rows and nothing else — coverage falls **on purpose**, because those
+rows were rendering another option's words.
+
+## Known, and on the translator worklist
+
+* **Bikol `Aki` / `Apo` / `Pamangkin`** are the correct Bikol words for *child*, *grandchild*
+  and *nephew-or-niece*; Bikol has no gendered term, so the paper prints one string against
+  both rows. Both rows now render English until a translator supplies `Aki (lalaki)` /
+  `Aki (babae)`.
+* **Cebuano `Annulled` has a real span the schema could not take.** `F3_CEB.txt:428` prints
+  `Annulled / gipa-walay bisa ang kasal`, but `val:Q10_CIVIL_STATUS_VS1:6` needs a REMOVAL in
+  BCL/BIS/WAR and a KEEP in CEB, and `aug21-overrides.json` allows one entry per key. CEB is
+  removed with the other three; the span is a worklist item.
+* **`PATIENT_TYPE` and HIL `item:Q7_SEX`** (the v6.1.0 section above) are a different class —
+  dangling tails, not row inheritance — and are **not** fixed here.

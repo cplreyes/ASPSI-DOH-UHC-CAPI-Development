@@ -1,0 +1,49 @@
+--- F3 built-dictionary proof: C:\Users\analy\Documents\analytiflow\1_Projects\ASPSI-DOH-CAPI-CSPro-Development\deliverables\CSPro\F3\PatientSurvey.dcf ---
+
+1. removed rows render the ENGLISH label
+   OK   bcl/val:Q10_CIVIL_STATUS_VS1:6: EN='Annulled' BCL='Annulled'  (v6.1.0 shipped 'Hiwalay')
+   OK   bis/val:Q10_CIVIL_STATUS_VS1:6: EN='Annulled' BIS='Annulled'  (v6.1.0 shipped 'Separada/Separado')
+   OK   ceb/val:Q10_CIVIL_STATUS_VS1:6: EN='Annulled' CEB='Annulled'  (v6.1.0 shipped 'Bulag sa kapikas')
+   OK   war/val:Q10_CIVIL_STATUS_VS1:6: EN='Annulled' WAR='Annulled'  (v6.1.0 shipped 'Nagbulag')
+   OK   war/val:Q10_CIVIL_STATUS_VS1:2: EN='Divorced' WAR='Divorced'  (v6.1.0 shipped 'Minyo')
+   OK   hil/val:Q10_CIVIL_STATUS_VS1:2: EN='Divorced' HIL='Divorced'  (v6.1.0 shipped 'Kasado')
+   OK   hil/val:Q10_CIVIL_STATUS_VS1:4: EN='Separated' HIL='Separated'  (v6.1.0 shipped 'Balo')
+   OK   bcl/val:Q98_PAY_SRC_VS1:15: EN='Quantified Free Service' BCL='Quantified Free Service'  (v6.1.0 shipped 'Iba pa (ispecify)')
+   OK   bcl/val:Q113_PAY_SRC_VS1:13: EN='Quantified Free Service' BCL='Quantified Free Service'  (v6.1.0 shipped 'Iba pa (ispecify)')
+   OK   fil/val:Q38_2_WHY_NOT_REG_VS1:02: EN="Don't see value in registering" FIL="Don't see value in registering"  (v6.1.0 shipped '[Mahirap magparehistro]')
+   OK   fil/val:Q38_2_WHY_NOT_REG_VS1:03: EN="Don't know how to register" FIL="Don't know how to register"  (v6.1.0 shipped '[Mahirap magparehistro]')
+   OK   ilo/val:Q38_2_WHY_NOT_REG_VS1:08: EN='No valid ID to register' ILO='No valid ID to register'  (v6.1.0 shipped 'Awan ti oras nga agparehistro')
+   OK   hil/val:Q34_WHO_DECIDES_VS1:08: EN="Patient's grandmother" HIL="Patient's grandmother"  (v6.1.0 shipped 'Tatay sang Pasyente')
+   OK   hil/val:Q34_WHO_DECIDES_VS1:09: EN="Patient's uncle" HIL="Patient's uncle"  (v6.1.0 shipped 'Tatay sang Pasyente')
+   OK   hil/val:Q34_WHO_DECIDES_VS1:10: EN="Patient's aunt" HIL="Patient's aunt"  (v6.1.0 shipped 'Tatay sang Pasyente')
+   OK   bcl/val:Q2_RELATIONSHIP_VS1:02: EN='Son' BCL='Son'  (v6.1.0 shipped 'Aki')
+   OK   bcl/val:Q2_RELATIONSHIP_VS1:03: EN='Daughter' BCL='Daughter'  (v6.1.0 shipped 'Aki')
+   OK   bcl/val:Q2_RELATIONSHIP_VS1:08: EN='Grandson' BCL='Grandson'  (v6.1.0 shipped 'Apo')
+   OK   bcl/val:Q2_RELATIONSHIP_VS1:09: EN='Granddaughter' BCL='Granddaughter'  (v6.1.0 shipped 'Apo')
+   OK   bcl/val:Q2_RELATIONSHIP_VS1:16: EN='Nephew' BCL='Nephew'  (v6.1.0 shipped 'Pamangkin')
+   OK   bcl/val:Q2_RELATIONSHIP_VS1:17: EN='Niece' BCL='Niece'  (v6.1.0 shipped 'Pamangkin')
+   OK   ceb/val:Q36_UHC_SOURCE_VS1:06: EN='LGU/ Barangay' CEB='LGU/ Barangay'  (v6.1.0 shipped 'Balaod')
+   OK   ceb/val:Q75_KON_SOURCE_VS1:06: EN='LGU/Barangay' CEB='LGU/Barangay'  (v6.1.0 shipped 'Balaod')
+   OK   ceb/val:Q100_BUCAS_SOURCE_VS1:06: EN='LGU/Barangay' CEB='LGU/Barangay'  (v6.1.0 shipped 'Balaod')
+   OK   ceb/val:Q117_NBB_SOURCE_VS1:06: EN='LGU/Barangay' CEB='LGU/Barangay'  (v6.1.0 shipped 'Balaod')
+   OK   ceb/val:Q120_ZBB_SOURCE_VS1:06: EN='LGU/Barangay' CEB='LGU/Barangay'  (v6.1.0 shipped 'Balaod')
+   OK   ceb/val:Q125_MAIFIP_SOURCE_VS1:06: EN='LGU/Barangay' CEB='LGU/Barangay'  (v6.1.0 shipped 'Balaod')
+   OK   ceb/val:Q153_GAMOT_SOURCE_VS1:06: EN='LGU/Barangay' CEB='LGU/Barangay'  (v6.1.0 shipped 'Balaod')
+
+2. kept siblings still carry their own translation
+   OK   bcl/val:Q10_CIVIL_STATUS_VS1:5: BCL='Live-in' (want 'Live-in')
+   OK   fil/val:Q38_2_WHY_NOT_REG_VS1:01: FIL='Mahirap magparehistro' (want 'Mahirap magparehistro')
+   OK   ilo/val:Q38_2_WHY_NOT_REG_VS1:07: ILO='Awan ti oras nga agparehistro' (want 'Awan ti oras nga agparehistro')
+   OK   hil/val:Q34_WHO_DECIDES_VS1:01: HIL='Tatay sang Pasyente' (want 'Tatay sang Pasyente')
+   OK   ceb/val:Q36_UHC_SOURCE_VS1:02: CEB='Balaod' (want 'Balaod')
+   OK   ceb/val:Q75_KON_SOURCE_VS1:02: CEB='Balaod' (want 'Balaod')
+   OK   ceb/val:Q100_BUCAS_SOURCE_VS1:02: CEB='Balaod' (want 'Balaod')
+   OK   ceb/val:Q117_NBB_SOURCE_VS1:02: CEB='Balaod' (want 'Balaod')
+   OK   ceb/val:Q120_ZBB_SOURCE_VS1:02: CEB='Balaod' (want 'Balaod')
+   OK   ceb/val:Q125_MAIFIP_SOURCE_VS1:02: CEB='Balaod' (want 'Balaod')
+   OK   ceb/val:Q153_GAMOT_SOURCE_VS1:02: CEB='Balaod' (want 'Balaod')
+
+3. no value set has two codes with the same label, in any of the eight languages
+   OK   213 value sets x 8 languages: no duplicate option label
+
+BUILT-DICTIONARY RESULT: ALL PASS
