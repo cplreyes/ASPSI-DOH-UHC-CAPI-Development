@@ -1,0 +1,8 @@
+6072c6072
+<                           "text": "sa primary care facilities>",
+---
+>                           "text": "Not applicable",
+7578c7578
+<                           "text": "sa primary care facilities>",
+---
+>                           "text": "Not applicable",

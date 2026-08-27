@@ -1,0 +1,5 @@
+served FacilityHeadSurvey.zip 4d2a72bb3860c8efe4ee46df38da4558 1634818 bytes, pulled 2026-08-27 14:17 MNL
+pff Description=Facility Head Survey (F1) - v4.1.3 (2026-08-27) [DEV]
+generated: apc md5 f548f8e81b4defd3897f559f419a31fe (UNCHANGED since 4.1.1)  dcf md5 67fdb10714ed8c5fdc1874d182a5e18e (2 labels vs 4.1.2: Q10_1 code 9 + Q12_2 code 9 CEB -> 'Not applicable')
+map: 24 CEB keys removed (5 UHC_ATTRIB code-9 + 19 base-question code-9); only Q10_1 and Q12_2 have a code 9 in the dictionary, the other 22 were stale keys
+F3/F4 untouched
