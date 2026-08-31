@@ -1,0 +1,81 @@
+--- F3 byte-verify C:/Users/analy/.claude/jobs/9f225161/tmp/w3/served/PatientSurvey.zip ---
+pen bytes: 7823822
+SKIP FIL item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+OK   FIL item:Q972_SOURCES: 'Nagbayad ka ba ng iba pang nagastos sa iyong OPD visit na hi'
+SKIP FIL val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+OK   FIL item:Q1142_HAS_OTHER: 'Nagbayad ka ba ng iba pang gastusin sa panahon ng iyong conf'
+OK   FIL item:Q66_SAME_AS_USUAL [dcf-rendered]: 'ang pasilidad na ito ba na karaniwang pinupuntahan mo ay par'
+SKIP FIL item:Q19_HH_SIZE (no map value - English fallback)
+SKIP FIL item:Q14_DISABILITY_TYPE (no map value - English fallback)
+SKIP FIL val:Q54_PCP_TYPE_VS1:2 (no map value - English fallback)
+SKIP FIL item:Q58_WAIT_DAYS (no map value - English fallback)
+OK   FIL item:Q4_NAME: 'Pangalan (Apelyido, Unang Pangalan, Gitnang Inisyal, Ext.)'
+SKIP FIL item:Q47_HOSPITAL_CONF (no map value - English fallback)
+SKIP BCL item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+OK   BCL item:Q972_SOURCES: 'Nagbayad ka din ba ki iba pang expenses hali sa OPD na dai n'
+OK   BCL val:Q972_SOURCES_VS1:90: 'Dai, dai kami nagbayad kan iba pang gastos'
+SKIP BCL item:Q1142_HAS_OTHER (no map value - English fallback)
+OK   BCL item:Q66_SAME_AS_USUAL [dcf-rendered]: 'an pasilidad na ini facility na pirmi mo na tigadumanan para'
+SKIP BCL item:Q19_HH_SIZE (no map value - English fallback)
+SKIP BCL item:Q14_DISABILITY_TYPE (no map value - English fallback)
+SKIP BCL val:Q54_PCP_TYPE_VS1:2 (no map value - English fallback)
+SKIP BCL item:Q58_WAIT_DAYS (no map value - English fallback)
+OK   BCL item:Q4_NAME: 'Pangaran (Apelyido, Pangaran, MI, Ext.)'
+SKIP BCL item:Q47_HOSPITAL_CONF (no map value - English fallback)
+SKIP BIS item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+OK   BIS item:Q972_SOURCES: 'Nagbayad ba ka og uban pang gasto panahon sa imong OPD visit'
+SKIP BIS val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+OK   BIS item:Q1142_HAS_OTHER: 'Nagbayad ba ka og uban pang gasto panahon sa imong confineme'
+OK   BIS item:Q66_SAME_AS_USUAL [dcf-rendered]: 'Ang kini nga pasilidad ba mao ang pasilidad nga imong kasaga'
+SKIP BIS item:Q19_HH_SIZE (no map value - English fallback)
+SKIP BIS item:Q14_DISABILITY_TYPE (no map value - English fallback)
+SKIP BIS val:Q54_PCP_TYPE_VS1:2 (no map value - English fallback)
+SKIP BIS item:Q58_WAIT_DAYS (no map value - English fallback)
+OK   BIS item:Q4_NAME: 'Ngalan sa Pasyente (Apelyido, Ngalan, Middle Initial, Extens'
+SKIP BIS item:Q47_HOSPITAL_CONF (no map value - English fallback)
+OK   CEB item:Q47_PHYSICIAN_CHECKUP: 'Nahibalo ba ka nga adunay mga PhilHealth package para sa mga'
+SKIP CEB item:Q972_SOURCES (no map value - English fallback)
+SKIP CEB val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+SKIP CEB item:Q1142_HAS_OTHER (no map value - English fallback)
+OK   CEB item:Q66_SAME_AS_USUAL [dcf-rendered]: 'Ang kini nga pasilidad ba ang pasilidad nga kasagaran nimong'
+OK   CEB item:Q19_HH_SIZE: 'Pila ka mga indibidwal (apil ang mga bata) ang nagpuyo karon'
+OK   CEB item:Q14_DISABILITY_TYPE: 'Base sa gipakita nga PWD Identification Card, unsa nga klase'
+OK   CEB val:Q54_PCP_TYPE_VS1:2: 'Specialty Care Provider/Espesyalista'
+SKIP CEB item:Q58_WAIT_DAYS (no map value - English fallback)
+OK   CEB item:Q4_NAME: 'Ngalan sa Pasyente (Apelyido, Pangalan, MI, Extension)'
+OK   CEB item:Q47_HOSPITAL_CONF: 'Nahibalo ba ka nga adunay mga PhilHealth package para sa mga'
+SKIP WAR item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+OK   WAR item:Q972_SOURCES: 'May iba pa ba kamo nga ginbaydan han iyo pagbisita ha OPD ng'
+SKIP WAR val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+OK   WAR item:Q1142_HAS_OTHER: 'Mayda ka ba ginbaydan nga iba pa nga gastos durante han imo '
+OK   WAR item:Q66_SAME_AS_USUAL [dcf-rendered]: 'An ini nga pasilidad ba an pasilidad nga kasagaran mo ginkak'
+SKIP WAR item:Q19_HH_SIZE (no map value - English fallback)
+SKIP WAR item:Q14_DISABILITY_TYPE (no map value - English fallback)
+SKIP WAR val:Q54_PCP_TYPE_VS1:2 (no map value - English fallback)
+SKIP WAR item:Q58_WAIT_DAYS (no map value - English fallback)
+OK   WAR item:Q4_NAME: 'Ngaran han Pasyente (Apelyido, Una nga Ngaran, MI, Pagpahila'
+SKIP WAR item:Q47_HOSPITAL_CONF (no map value - English fallback)
+SKIP HIL item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+SKIP HIL item:Q972_SOURCES (no map value - English fallback)
+SKIP HIL val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+SKIP HIL item:Q1142_HAS_OTHER (no map value - English fallback)
+OK   HIL item:Q66_SAME_AS_USUAL [dcf-rendered]: 'Ang ini nga pasilidad bala ang pasilidad nga ginakadtuan mo '
+SKIP HIL item:Q19_HH_SIZE (no map value - English fallback)
+SKIP HIL item:Q14_DISABILITY_TYPE (no map value - English fallback)
+SKIP HIL val:Q54_PCP_TYPE_VS1:2 (no map value - English fallback)
+SKIP HIL item:Q58_WAIT_DAYS (no map value - English fallback)
+SKIP HIL item:Q4_NAME (no map value - English fallback)
+SKIP HIL item:Q47_HOSPITAL_CONF (no map value - English fallback)
+OK   ILO item:Q47_PHYSICIAN_CHECKUP: 'Ammom kadi nga adda dagiti pakete ti PhilHealth para kadagit'
+OK   ILO item:Q972_SOURCES: 'Binayadam kadi ti aniaman a sabali pay a gastos bayat ti pan'
+SKIP ILO val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+OK   ILO item:Q1142_HAS_OTHER: 'Nabayadam kadi ti aniaman a sabali pay a gastos bayat ti pan'
+OK   ILO item:Q66_SAME_AS_USUAL [dcf-rendered]: 'Ti kadi daytoy a pasilidad ti pasilidad a gagangay a papanam'
+OK   ILO item:Q19_HH_SIZE: 'Mano a dagup nga indibidual (agraman dagiti ubbing) ti agnan'
+OK   ILO item:Q14_DISABILITY_TYPE: 'Maibatay iti naiparang a PWD Identification Card, ania a kit'
+OK   ILO val:Q54_PCP_TYPE_VS1:2: 'Espesial a Mangipaay ti Panagtaripato/Espesyalista'
+OK   ILO item:Q58_WAIT_DAYS: 'Ania ti oras ti panaguraymo, kadagiti aldaw ken/wenno minuto'
+OK   ILO item:Q4_NAME: 'Nagan ti Pasiente (Apeliedo, Umuna a Nagan, MI, Extension)'
+OK   ILO item:Q47_HOSPITAL_CONF: 'Ammom kadi nga adda dagiti pakete ti PhilHealth para kadagit'
+OK   footer version (non-truncation signal): 'v6.1.5'
+RESULT: ALL PASS

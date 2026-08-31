@@ -1,0 +1,9 @@
+Served package record - F1 Facility Head Survey v4.1.9 (deployed 2026-08-31 14:51 MNL to https://capi.asiansocial.org/csweb/api)
+
+server file : /opt/app/lamp/www/csweb/files/apps/FacilityHeadSurvey.zip (scp 2026-08-31 14:51 MNL)
+zip md5     : 331f600bb5b983c527f24d424637b46f   (1,636,726 bytes)
+pff          : Description=Facility Head Survey (F1) - v4.1.9 (2026-08-31) [DEV]
+apc md5     : f548f8e81b4defd3897f559f419a31fe   (byte-identical to v4.1.1-4.1.8 - logic unchanged)
+dcf          : 1 label changed vs v4.1.8 (CEB item:Q129_OOP_REASON) - see dcf-label-proof-1355.txt
+notes        : 1 note cell (def:142 CEB = the external-referrals preamble + READ-ALL directive) - rendered in the .qsf on the Q142 screen
+byte-verify  : byte-verify-4.1.9.txt - RESULT: ALL PASS (CEB Q129 present; the def:142 Cebuano sentence occurs 1x; footer v4.1.9)

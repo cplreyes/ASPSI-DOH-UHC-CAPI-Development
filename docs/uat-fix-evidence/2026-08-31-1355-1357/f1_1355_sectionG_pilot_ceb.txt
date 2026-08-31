@@ -1,0 +1,62 @@
+# #1355 #1357 proof (2026-08-31, F1 v4.1.9 maps): Cebuano Section G - Q129 stem (why OOP for basic accommodation) and the
+# Q142 enumerator note (external-referrals preamble + READ-ALL directive, note def:142). Via the dormant desk-test pilot
+# jump: F1_PILOT_JUMP=Q128_ALLOW_OOP_BASIC at generate_apc time -> PROC Q1_NAME postproc "skip to Q128". DESK ONLY - the
+# apc is regenerated WITHOUT the env and md5-checked (f548f8e8...) afterwards. Opening = f1_1348_sectionF_pilot_ceb.txt
+# verbatim to the Q1_NAME postproc. Q128 = Yes -> Q129 (free text); Q130 (2-digit) -> Q131 Check Box (typed code + ENTER);
+# Q132 = Yes -> Q133 Check Box -> Q135 (Q132=Yes gate skips Q134); Q135 = Yes -> Q136 Check Box -> Q137 = Yes -> Q139
+# (non-public-hospital case -> Q141); Q141 number -> Q142 Check Box screen carries the note. Focus click before ENTER
+# on popups (Slack desktop toasts steal the foreground).
+
+rmdata ../F1/desktest_ceb.csdb
+launch ../F1/FacilityHeadSurvey_desktest_CEB.pff
+
+casekey 04 03 400 02 001
+shot 010_icf
+type 1
+type 1
+shot 020_classification
+type 1
+shot 030_barangay
+click 1000 211
+shot 040_breakoff
+type 1
+shot 050_section_a
+type DR TEST HEAD
+key {ENTER}
+type CHIEF OF HOSPITAL
+key {ENTER}
+type test@aspsi.org
+key {ENTER}
+type 09171234567
+key {ENTER}
+note Q1_NAME postproc carries the pilot jump -> Q128
+type DR TEST HEAD
+key {ENTER}
+shot 060_expect_q128
+type 1
+shot 1355_q129_CEB
+type TEST REASON
+key {ENTER}
+shot 070_q130
+type 01
+shot 080_q131_checkbox
+type 01
+click 1700 200
+key {ENTER}
+shot 090_q132
+type 1
+shot 100_q133_checkbox
+type 01
+click 1700 200
+key {ENTER}
+shot 110_expect_q135
+type 1
+shot 120_q136_checkbox
+type 01
+click 1700 200
+key {ENTER}
+shot 130_q137
+type 1
+shot 140_expect_q141
+type 000010
+shot 1357_q142_note_CEB

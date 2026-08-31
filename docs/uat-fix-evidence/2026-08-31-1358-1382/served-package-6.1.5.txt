@@ -1,0 +1,9 @@
+Served package record - F3 Patient Survey v6.1.5 (deployed 2026-08-31 14:32 MNL to https://capi.asiansocial.org/csweb/api)
+
+server file : /opt/app/lamp/www/csweb/files/apps/PatientSurvey.zip (scp 2026-08-31 14:32 MNL)
+zip md5     : f15604ef21e9a537f7364bfceb3fff82   (1,722,909 bytes)
+pff          : Description=Patient Survey (F3) - v6.1.5 (2026-08-31) [DEV]
+apc md5     : a0fb214b7868753260bb71737b2da5df   (byte-identical to v6.1.2-6.1.4 - logic unchanged)
+dcf          : 67 labels changed vs v6.1.4 (CEB 26, ILO 37, Q4 name label in FIL/BCL/BIS/WAR) - see dcf-label-proof-1358-1382.txt
+notes        : 23 note cells (intro:4/35/53, def:4/17/19/33/34/35/53/Q18_INCOME_BRACKET, const:_READ_ONE/_DNR_ONE/_PWD_CARD (CEB), const:_PWD_CARD/_SELECT_ALL (ILO)) - rendered in the .qsf
+byte-verify  : byte-verify-6.1.5.txt - RESULT: ALL PASS

@@ -1,0 +1,60 @@
+# Sections D/E proof (2026-08-31, F3 v6.1.5 maps, CEB): DESK ONLY pilot-jump build F3_PILOT_JUMP=Q47_PHYSICIAN_CHECKUP
+# (Q4_NAME postproc skip). Regenerated clean + md5-checked (a0fb214b...) afterwards. ILO #1371 (Q47 battery), #1372 (Q50), #1374 (Q53 + intro:53/def:53), #1376 (Q54 options), #1378 (Q58), #1380 (Q59 + SELECT-ALL note); CEB proactive Q47/Q53/Q54. Check Box popups: typed 2-digit code, focus click, ENTER.
+
+rmdata ../F3/desktest_ceb.csdb
+launch ../F3/PatientSurvey_desktest_CEB.pff
+
+casekey 04 03 403 02 001
+type 1
+type 1
+type 1
+type 1
+type 1
+type 1
+type 0403403001
+type RHU BINAN
+key {ENTER}
+type TEST ST BINAN
+key {ENTER}
+click 1040 374
+click 985 464
+click 1000 254
+click 985 304
+note Q4_NAME postproc carries the pilot jump
+type JUAN DELA CRUZ
+key {ENTER}
+shot 1371_q47_physician_CEB
+type 1
+shot 1371_q47_diagnostic_CEB
+type 1
+shot 1371_q47_hospital_CEB
+type 1
+shot 1371_q47_outpatient_CEB
+type 1
+shot q48_CEB
+type 1
+shot q49_CEB
+type 1
+shot 1372_q50_CEB
+type 01
+click 1700 200
+key {ENTER}
+shot q51_CEB
+type 2
+shot 1374_introE_q53_CEB
+type 1
+shot 1376_q54_CEB
+type 1
+shot q55_CEB
+type 1
+shot q56_CEB
+type 1
+shot q57_CEB
+type 1
+shot 1378_q58_days_CEB
+type 1
+key {ENTER}
+shot 1378_q58_minutes_CEB
+type 30
+key {ENTER}
+shot 1380_q59_CEB

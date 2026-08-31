@@ -1,0 +1,272 @@
+F3 .dcf label diff: v6.1.4 (before) -> v6.1.5 (after)  [name or valueset:code / language]  was -> now
+Generated from the built .dcf files (item, value-set and option labels); .apc byte-identical (md5 a0fb214b7868753260bb71737b2da5df).
+
+[Q14_DISABILITY_TYPE / CEB]
+  was: '14. Based on the presented PWD Identification Card, what type of disability is indicated?'
+  now: 'Base sa gipakita nga PWD Identification Card, unsa nga klase sa kapansanan ang nakabutang?'
+
+[Q14_DISABILITY_TYPE / ILO]
+  was: '14. Based on the presented PWD Identification Card, what type of disability is indicated?'
+  now: 'Maibatay iti naiparang a PWD Identification Card, ania a kita ti baldado ti maipamatmat?'
+
+[Q14_DISABILITY_TYPE_VS1 / CEB]
+  was: '14. Based on the presented PWD Identification Card, what type of disability is indicated?'
+  now: 'Base sa gipakita nga PWD Identification Card, unsa nga klase sa kapansanan ang nakabutang?'
+
+[Q14_DISABILITY_TYPE_VS1 / ILO]
+  was: '14. Based on the presented PWD Identification Card, what type of disability is indicated?'
+  now: 'Maibatay iti naiparang a PWD Identification Card, ania a kita ti baldado ti maipamatmat?'
+
+[Q15_EDUCATION / CEB]
+  was: '15. What is the highest level of education the patient has attained?'
+  now: 'Unsa ang pinakataas nga ang-ang sa edukasyon nga nakab-ot sa pasyente?'
+
+[Q15_EDUCATION_VS1:02 / ILO]
+  was: '( Primary Education (Grade 1 agingga iti 6).'
+  now: 'Primary Education (Grade 1 agingga iti 6)'
+
+[Q15_EDUCATION_VS1:03 / ILO]
+  was: '(Lower Secondary Education (Grade 7 agingga iti 10)'
+  now: 'Lower Secondary Education (Grade 7 agingga iti 10)'
+
+[Q15_EDUCATION_VS1:05 / ILO]
+  was: 'Post-Secondary Non-Tertiary Education (including Technical and Vocational degrees with a certificate)'
+  now: 'Post-Secondary Saan a Tersiario nga Edukasion (agraman dagiti Technical ken Vocational degrees nga addaan iti sertipiko)'
+
+[Q15_EDUCATION_VS1:06 / ILO]
+  was: 'Short-Cycle Tertiary Education or Equivalent (including Technical and Vocational degrees with a diploma)'
+  now: 'Ababa ti Siklona a Tersiario nga Edukasion wenno Katupagna (agraman dagiti Technical ken Vocational degrees nga addaan iti diploma)'
+
+[Q16_EMPLOYMENT / CEB]
+  was: "16. What is the patient's employment status?"
+  now: 'Unsa ang kahimtang sa trabaho sa pasyente?'
+
+[Q16_EMPLOYMENT_VS1:2 / ILO]
+  was: 'Has a short-term, seasonal, casual job/business'
+  now: 'Adda ababa a panawen, panawen, kassual a trabaho/negosio'
+
+[Q17_INCOME_SOURCE / CEB]
+  was: "17. What is the patient's main source of income?"
+  now: 'Unsa ang nag-unang tinubdan sa kita sa pasyente?'
+
+[Q18_INCOME_AMOUNT / CEB]
+  was: "18. In the past 6 months, what is the patient's average monthly household income? Please specify in Philippine pesos. — Approximate amount (enter -98 if the patient doesn't know, or -99 if they refuse to answer — do not read these codes aloud)"
+  now: "Sa miaging 6 ka bulan, pila ang kasagarang binuwan nga kita sa panimalay sa pasyente? Palihug isulti sa Philippine pesos. — Gibana-banang kantidad (enter -98 if the patient doesn't know, or -99 if they refuse to answer — do not read these codes aloud)"
+
+[Q18_INCOME_AMOUNT / ILO]
+  was: "18. In the past 6 months, what is the patient's average monthly household income? Please specify in Philippine pesos. — Approximate amount (enter -98 if the patient doesn't know, or -99 if they refuse to answer — do not read these codes aloud)"
+  now: "Iti napalabas nga 6 a bulan, ania ti promedio a binulan a matgedan ti pasiente iti sangakabbalayan? Pangngaasiyo ta ibagayo iti pesos ti Filipinas. — Agarup a gatad (enter -98 if the patient doesn't know, or -99 if they refuse to answer — do not read..."
+
+[Q18_INCOME_BRACKET / ILO]
+  was: "18. Income category corresponding to the respondent's approximate household income"
+  now: 'Kategoria ti matgedan a katupag ti agarup a kita ti sangakabbalayan ti respondent'
+
+[Q18_INCOME_BRACKET_VS1 / ILO]
+  was: "18. Income category corresponding to the respondent's approximate household income"
+  now: 'Kategoria ti matgedan a katupag ti agarup a kita ti sangakabbalayan ti respondent'
+
+[Q18_INCOME_BRACKET_VS1:8 / ILO]
+  was: "I don't know [DO NOT READ OUT LOUD]"
+  now: 'Saan ko nga ammo [SAANYO NGA BASAEN TI NAIPAAY]'
+
+[Q18_INCOME_BRACKET_VS1:9 / ILO]
+  was: 'Refuse to answer [DO NOT READ OUT LOUD]'
+  now: 'Agkedked a sumungbat [SAANYO NGA BASAEN TI NAIPAAY]'
+
+[Q19_HH_SIZE / CEB]
+  was: "19. How many total individuals (including children) live in the patient's house now?"
+  now: 'Pila ka mga indibidwal (apil ang mga bata) ang nagpuyo karon sa balay sa pasyente?'
+
+[Q19_HH_SIZE / ILO]
+  was: "19. How many total individuals (including children) live in the patient's house now?"
+  now: 'Mano a dagup nga indibidual (agraman dagiti ubbing) ti agnanaed iti balay ti pasiente ita?'
+
+[Q33_DECISION_MAKER / ILO]
+  was: '33. Is the patient the main decision-maker on health care in your household?'
+  now: 'Ti kadi pasiente ti kangrunaan nga agdesision maipapan iti panangaywan iti salun-at iti sangakabbalayanyo?'
+
+[Q33_DECISION_MAKER_VS1 / ILO]
+  was: '33. Is the patient the main decision-maker on health care in your household?'
+  now: 'Ti kadi pasiente ti kangrunaan nga agdesision maipapan iti panangaywan iti salun-at iti sangakabbalayanyo?'
+
+[Q34_WHO_DECIDES / CEB]
+  was: "34. Who takes the most responsibility for making the decisions regarding healthcare in the patient's household?"
+  now: 'Kinsa ang nagdala sa kinadak-ang responsibilidad sa pagdumala sa mga desisyon bahin sa pag-atiman sa panglawas sa panimalay sa pasyente?'
+
+[Q47_DIAGNOSTIC_TESTS / CEB]
+  was: '47. Are you aware that there are PhilHealth packages for the following health services: — Diagnostic tests (e.g. laboratory tests and imaging)'
+  now: 'Nahibalo ba ka nga adunay mga PhilHealth package para sa mga nagsunod nga health services: — Diagnostic test (pananglitan, laboratory test ug imaging)'
+
+[Q47_DIAGNOSTIC_TESTS / ILO]
+  was: '47. Are you aware that there are PhilHealth packages for the following health services: — Diagnostic tests (e.g. laboratory tests and imaging)'
+  now: 'Ammom kadi nga adda dagiti pakete ti PhilHealth para kadagiti sumaganad a serbisio ti salun-at: — Dagiti panagsukimat ti panagdayagnos (e.g. dagiti panagsukimat ti laboratorio ken panagimahe)'
+
+[Q47_DIAGNOSTIC_TESTS_VS1 / CEB]
+  was: '47. Are you aware that there are PhilHealth packages for the following health services: — Diagnostic tests (e.g. laboratory tests and imaging)'
+  now: 'Nahibalo ba ka nga adunay mga PhilHealth package para sa mga nagsunod nga health services: — Diagnostic test (pananglitan, laboratory test ug imaging)'
+
+[Q47_DIAGNOSTIC_TESTS_VS1 / ILO]
+  was: '47. Are you aware that there are PhilHealth packages for the following health services: — Diagnostic tests (e.g. laboratory tests and imaging)'
+  now: 'Ammom kadi nga adda dagiti pakete ti PhilHealth para kadagiti sumaganad a serbisio ti salun-at: — Dagiti panagsukimat ti panagdayagnos (e.g. dagiti panagsukimat ti laboratorio ken panagimahe)'
+
+[Q47_HOSPITAL_CONF / CEB]
+  was: '47. Are you aware that there are PhilHealth packages for the following health services: — Hospital confinement'
+  now: 'Nahibalo ba ka nga adunay mga PhilHealth package para sa mga nagsunod nga health services: — Pagpa-admit sa ospital'
+
+[Q47_HOSPITAL_CONF / ILO]
+  was: '47. Are you aware that there are PhilHealth packages for the following health services: — Hospital confinement'
+  now: 'Ammom kadi nga adda dagiti pakete ti PhilHealth para kadagiti sumaganad a serbisio ti salun-at: — Pannakaibalud iti ospital'
+
+[Q47_HOSPITAL_CONF_VS1 / CEB]
+  was: '47. Are you aware that there are PhilHealth packages for the following health services: — Hospital confinement'
+  now: 'Nahibalo ba ka nga adunay mga PhilHealth package para sa mga nagsunod nga health services: — Pagpa-admit sa ospital'
+
+[Q47_HOSPITAL_CONF_VS1 / ILO]
+  was: '47. Are you aware that there are PhilHealth packages for the following health services: — Hospital confinement'
+  now: 'Ammom kadi nga adda dagiti pakete ti PhilHealth para kadagiti sumaganad a serbisio ti salun-at: — Pannakaibalud iti ospital'
+
+[Q47_OUTPATIENT_DRUGS / CEB]
+  was: '47. Are you aware that there are PhilHealth packages for the following health services: — Outpatient drugs'
+  now: 'Nahibalo ba ka nga adunay mga PhilHealth package para sa mga nagsunod nga health services: — Tambal para sa outpatient'
+
+[Q47_OUTPATIENT_DRUGS / ILO]
+  was: '47. Are you aware that there are PhilHealth packages for the following health services: — Outpatient drugs'
+  now: 'Ammom kadi nga adda dagiti pakete ti PhilHealth para kadagiti sumaganad a serbisio ti salun-at: — Outpatient drugs'
+
+[Q47_OUTPATIENT_DRUGS_VS1 / CEB]
+  was: '47. Are you aware that there are PhilHealth packages for the following health services: — Outpatient drugs'
+  now: 'Nahibalo ba ka nga adunay mga PhilHealth package para sa mga nagsunod nga health services: — Tambal para sa outpatient'
+
+[Q47_OUTPATIENT_DRUGS_VS1 / ILO]
+  was: '47. Are you aware that there are PhilHealth packages for the following health services: — Outpatient drugs'
+  now: 'Ammom kadi nga adda dagiti pakete ti PhilHealth para kadagiti sumaganad a serbisio ti salun-at: — Outpatient drugs'
+
+[Q47_PHYSICIAN_CHECKUP / CEB]
+  was: '47. Are you aware that there are PhilHealth packages for the following health services: — Physician check-up'
+  now: 'Nahibalo ba ka nga adunay mga PhilHealth package para sa mga nagsunod nga health services: — Check-up sa doktor'
+
+[Q47_PHYSICIAN_CHECKUP / ILO]
+  was: '47. Are you aware that there are PhilHealth packages for the following health services: — Physician check-up'
+  now: 'Ammom kadi nga adda dagiti pakete ti PhilHealth para kadagiti sumaganad a serbisio ti salun-at: — Panag-check-up ti mangngagas'
+
+[Q47_PHYSICIAN_CHECKUP_VS1 / CEB]
+  was: 'Nahibalo ba ka nga adunay mga PhilHealth package para sa mga nagsunod nga health services: Physician check-up Check-up sa doktor'
+  now: 'Nahibalo ba ka nga adunay mga PhilHealth package para sa mga nagsunod nga health services: — Check-up sa doktor'
+
+[Q47_PHYSICIAN_CHECKUP_VS1 / ILO]
+  was: 'Ammom kadi nga adda dagiti pakete ti PhilHealth para kadagiti sumaganad a serbisio ti salun-at:) Physician check-up (Panag-check-up ti mangngagas'
+  now: 'Ammom kadi nga adda dagiti pakete ti PhilHealth para kadagiti sumaganad a serbisio ti salun-at: — Panag-check-up ti mangngagas'
+
+[Q4_NAME / BCL]
+  was: "4. Patient's Name (Last Name, First Name, MI, Extension)"
+  now: 'Pangaran (Apelyido, Pangaran, MI, Ext.)'
+
+[Q4_NAME / BIS]
+  was: "4. Patient's Name (Last Name, First Name, MI, Extension)"
+  now: 'Ngalan sa Pasyente (Apelyido, Ngalan, Middle Initial, Extension)'
+
+[Q4_NAME / CEB]
+  was: "4. Patient's Name (Last Name, First Name, MI, Extension)"
+  now: 'Ngalan sa Pasyente (Apelyido, Pangalan, MI, Extension)'
+
+[Q4_NAME / FIL]
+  was: "4. Patient's Name (Last Name, First Name, MI, Extension)"
+  now: 'Pangalan (Apelyido, Unang Pangalan, Gitnang Inisyal, Ext.)'
+
+[Q4_NAME / ILO]
+  was: "4. Patient's Name (Last Name, First Name, MI, Extension)"
+  now: 'Nagan ti Pasiente (Apeliedo, Umuna a Nagan, MI, Extension)'
+
+[Q4_NAME / WAR]
+  was: "4. Patient's Name (Last Name, First Name, MI, Extension)"
+  now: 'Ngaran han Pasyente (Apelyido, Una nga Ngaran, MI, Pagpahilawig)'
+
+[Q50_DIFFICULTY_PAYING / ILO]
+  was: '50. Why did you find it difficult?'
+  now: 'Apay a narigatanka?'
+
+[Q50_DIFFICULTY_PAYING_VS1 / ILO]
+  was: 'Apay a narigatanka?)'
+  now: 'Apay a narigatanka?'
+
+[Q53_HAS_PCP / CEB]
+  was: '53. Do you have a primary care provider?'
+  now: 'Aduna ba kay primary care provider?'
+
+[Q53_HAS_PCP / ILO]
+  was: '53. Do you have a primary care provider?'
+  now: 'Adda kadi kangrunaan a mangipapaay iti panangaywanmo?'
+
+[Q53_HAS_PCP_VS1 / CEB]
+  was: 'A primary care provider is your first contact healthcare provider (i.e., general practitioner doctor) for an undiagnosed concern or continuing care of varied medical conditions'
+  now: 'Aduna ba kay primary care provider?'
+
+[Q53_HAS_PCP_VS1 / ILO]
+  was: '(Adda kadi kangrunaan a mangipapaay iti panangaywanmo?) A'
+  now: 'Adda kadi kangrunaan a mangipapaay iti panangaywanmo?'
+
+[Q54_PCP_TYPE_VS1:1 / ILO]
+  was: 'General practitioner (a doctor who is qualified for medical practice)'
+  now: 'Sapasap a doktor'
+
+[Q54_PCP_TYPE_VS1:2 / CEB]
+  was: 'Specialty Care Provider/ Specialist (a doctor with more expertise in specific areas of health)'
+  now: 'Specialty Care Provider/Espesyalista'
+
+[Q54_PCP_TYPE_VS1:2 / ILO]
+  was: 'Specialty Care Provider/ Specialist (a doctor with more expertise in specific areas of health)'
+  now: 'Espesial a Mangipaay ti Panagtaripato/Espesyalista'
+
+[Q58_WAIT_DAYS / ILO]
+  was: '58. What is your waiting time, in days and/or minutes to set an appointment with your main primary care provider (daytoy a pasilidad)? — Days'
+  now: 'Ania ti oras ti panaguraymo, kadagiti aldaw ken/wenno minuto tapno mangikeddeng iti appointment iti kangrunaan a kangrunaan a mangipapaay iti panangaywanmo? — Aldaw'
+
+[Q58_WAIT_MINUTES / ILO]
+  was: '58. Waiting time to set an appointment — Minutes'
+  now: 'Ania ti oras ti panaguraymo, kadagiti aldaw ken/wenno minuto tapno mangikeddeng iti appointment iti kangrunaan a kangrunaan a mangipapaay iti panangaywanmo? — Minutos'
+
+[Q59_SCHED_COMM / ILO]
+  was: '59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider?'
+  now: 'Ania dagiti wagas/dagiti wagas ti komunikasion a magun-od/adda kenka idi mangiskediul iti konsultasion iti kangrunaan a kangrunaan a mangipapaay iti panangaywanmo?'
+
+[Q59_SCHED_COMM_VS1 / ILO]
+  was: '59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider?'
+  now: 'Ania dagiti wagas/dagiti wagas ti komunikasion a magun-od/adda kenka idi mangiskediul iti konsultasion iti kangrunaan a kangrunaan a mangipapaay iti panangaywanmo?'
+
+[Q59_SCHED_COMM_VS1:04 / ILO]
+  was: 'Teleconsultation: Video Conference'
+  now: 'Kumperensia ti Video'
+
+[Q5_BIRTH_MONTH / CEB]
+  was: '5. In what month was the patient born?'
+  now: 'Unsa nga buwan ug tuig gipanganak ang pasyente? — Buwan'
+
+[Q5_BIRTH_MONTH / ILO]
+  was: '5. In what month was the patient born?'
+  now: 'Iti ania a bulan ken tawen a naipasngay ti pasiente? — Bulan'
+
+[Q5_BIRTH_YEAR / CEB]
+  was: '5. In what year was the patient born?'
+  now: 'Unsa nga buwan ug tuig gipanganak ang pasyente? — Tuig'
+
+[Q5_BIRTH_YEAR / ILO]
+  was: '5. In what year was the patient born?'
+  now: 'Iti ania a bulan ken tawen a naipasngay ti pasiente? — Tawen'
+
+[Q8_LGBTQIA / CEB]
+  was: 'READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. Miyembro ba ang pasyente sa LGBTQIA+ community? (pananglitan: bayot, tomboy'
+  now: 'Miyembro ba ang pasyente sa LGBTQIA+ community? (pananglitan: bayot, tomboy, bisexual, ug uban pa). Okay ra kung dili komportable motubag.'
+
+[Q8_LGBTQIA_VS1 / CEB]
+  was: 'READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. Miyembro ba ang pasyente sa LGBTQIA+ community? (pananglitan: bayot, tomboy'
+  now: 'Miyembro ba ang pasyente sa LGBTQIA+ community? (pananglitan: bayot, tomboy, bisexual, ug uban pa). Okay ra kung dili komportable motubag.'
+
+[Q9_GROUP / CEB]
+  was: '9. Which group does the patient identify with? It is fine if not comfortable answering.'
+  now: 'Unsang grupo ang pasyente? Okay ra kung dili komportable motubag.'
+
+[Q9_GROUP_VS1 / CEB]
+  was: 'Unsang grupo ang pasyente?'
+  now: 'Unsang grupo ang pasyente? Okay ra kung dili komportable motubag.'
+
+TOTAL changed labels: 67 (56 item/value-set stems, 11 option rows); per language: BCL 1, BIS 1, CEB 26, FIL 1, ILO 37, WAR 1

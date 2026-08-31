@@ -1,0 +1,8 @@
+F1 .dcf label diff: v4.1.8 (before) -> v4.1.9 (after)  [name or valueset:code / language]  was -> now
+Generated from the built .dcf files (item, value-set and option labels); .apc byte-identical (md5 f548f8e81b4defd3897f559f419a31fe).
+
+[Q129_OOP_REASON / CEB]
+  was: '129. Why does the facility allow OOP expenses for basic accommodation? Specify the reason.'
+  now: 'Ngano man nga gitugotan sa pasilidad ang OOP expenses para sa basic accommodation?'
+
+TOTAL changed labels: 1 (1 item/value-set stems, 0 option rows); per language: CEB 1

@@ -1,0 +1,72 @@
+# #1362 #1364 #1366 #1368 #1370 #1373 #1375 #1377 #1379 #1381 proof (2026-08-31, F3 v6.1.5 maps): Cebuano Section B -
+# intro + note-to-enumerator (intro:4 / def:4), Q5 month+year, Q8 stem (directive un-glued, READ-ONE note in Cebuano),
+# Q9 stem, Q14 stem + PWD-card instruction, Q15 stem + DNR-ONE note, Q16, Q17 (+ def:17 directive), Q18 amount, Q19 (+ def:19).
+# Opening walk = f3_aug21_bill_detail_war.txt verbatim (PATIENT_TYPE=1, Outpatient, respondent IS the patient) on the
+# CEB desk pff. Q8 = Yes so Q9 asks; Q11/Q12/Q13 = Yes so the PWD-card question Q14 asks. Every Section B question
+# is a numeric select-one or a typed number here (no Check Box popups in Section B).
+
+rmdata ../F3/desktest_ceb.csdb
+launch ../F3/PatientSurvey_desktest_CEB.pff
+
+casekey 04 03 403 02 001
+type 1
+type 1
+type 1
+type 1
+type 1
+type 1
+type 0403403001
+type RHU BINAN
+key {ENTER}
+type TEST ST BINAN
+key {ENTER}
+click 1040 374
+click 985 464
+click 1000 254
+click 985 304
+shot 1362_introB_q4_CEB
+type JUAN DELA CRUZ
+key {ENTER}
+shot 1364_q5_month_CEB
+type 6
+key {ENTER}
+shot 1364_q5_year_CEB
+type 1991
+key {ENTER}
+click 1172 565
+shot q6_age
+type 35
+key {ENTER}
+shot q7_sex
+type 1
+shot 1366_q8_CEB
+note Q8 = 1 Yes -> Q9 asks
+type 1
+shot 1368_q9_CEB
+type 2
+shot q10_civil
+type 1
+shot q11_pwd
+note Q11/Q12/Q13 = Yes -> Q14 (PWD card type) asks
+type 1
+shot q12_specify
+type 1
+shot q13_card
+type 1
+shot 1370_q14_CEB
+type 1
+shot 1373_q15_CEB
+type 01
+shot 1375_q16_CEB
+type 1
+shot 1377_q17_CEB
+type 01
+shot 1379_q18_amount_CEB
+type 15000
+key {ENTER}
+shot 1379_q18_bracket_CEB
+type 2
+shot 1381_q19_CEB
+type 4
+key {ENTER}
+shot after_q19
