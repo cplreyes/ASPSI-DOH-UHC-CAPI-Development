@@ -44,6 +44,24 @@ Detailed concept pages built from the 8.0 Users Guide:
 3. **Data sync** — completed interviews sent to [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSWeb|CSWeb]] server; program modifications received from it.
 4. **Data export** — native export to Stata and other statistical packages for analysis.
 
+## Translation import — name-scoped since Aug-21
+
+Translations reach the dictionary through a pipeline, not by hand. Until the Aug-21 pack the
+join was **text-keyed**: `apply_translations()` matched a translation to a question on the
+full English label text, so rewording an English question silently orphaned its translation
+and the build fell back to English with no error (#1182, #1213). The Aug-21 import replaced
+that with a **name-scoped** join — every map key is the dictionary name
+(`item:` / `vs:` / `val:`, "name-scoped-v2"), anchored to the printed paper by question
+number, so an English reword can no longer detach a translation. The chain is
+`aug21_english_delta.py` (build-vs-paper English delta, re-run before every extraction) ->
+`anchor_extract.py` (pull each translation from the PDF between two anchors, flag what it
+cannot trust) -> `apply_aug21.py` (Aug-21 wins on every key except the reasoned entries in
+`aug21-overrides.json`; dry run by default) -> `run_aug21_gates.ps1` (doubling, glued
+options, bridge B/C) -> `generate_dcf.py` per instrument. Everything lives under
+`deliverables/CSPro/data/translations-official/`; F2, being a PWA with a flat English-keyed
+store, has its own pair (`anchor_extract_f2.py`, `apply-paper-translations.py`). See
+[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Revised Deliverable 2 Translated Questionnaires (Aug 21)]].
+
 ## Development Workflow
 
 Paper questionnaire → pre-test → refine → **create data dictionary** → **build CAPI app** → bench test → pilot test (field) → refine → deploy to enumerator tablets.

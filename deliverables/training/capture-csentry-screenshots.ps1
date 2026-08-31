@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   CSEntry screenshot helper for the enumerator field guide. Boots the Android tablet
   emulator, ensures CSEntry is installed, and captures named screenshots via adb — so
@@ -44,7 +44,7 @@ if (-not (Test-Path $adb)) { throw "adb not found at $adb — set `$env:ANDROID_
 function Running { (& $adb devices) -match $serial }
 
 if ($Kill) {
-  if (Running) { & $adb -s $serial emu kill 2>$null; "Emulator $serial killed." } else { "No emulator running." }
+  if (Running) { & $adb -s $serial emu kill; "Emulator $serial killed." } else { "No emulator running." }
   return
 }
 
@@ -58,13 +58,13 @@ if ($Setup) {
   & $adb -s $serial wait-for-device
   $booted = $false
   for ($i=0; $i -lt 60; $i++) {
-    if ((& $adb -s $serial shell getprop sys.boot_completed 2>$null).Trim() -eq "1") { $booted=$true; break }
+    if ((& $adb -s $serial shell getprop sys.boot_completed).Trim() -eq "1") { $booted=$true; break }
     Start-Sleep 5
   }
   if (-not $booted) { throw "Emulator did not finish booting." }
   Write-Host "Boot complete."
 
-  if (-not ((& $adb -s $serial shell pm list packages 2>$null) -match $pkg)) {
+  if (-not ((& $adb -s $serial shell pm list packages) -match $pkg)) {
     if (-not $Apk) { throw "CSEntry not installed and no -Apk given. Get it from https://www.csprousers.org/apk/" }
     Write-Host "Installing CSEntry from $Apk ..."
     & $adb -s $serial install -r $Apk
@@ -73,9 +73,9 @@ if ($Setup) {
   # Pre-grant runtime perms so first-run dialogs don't block screenshots.
   foreach ($p in @("ACCESS_FINE_LOCATION","ACCESS_COARSE_LOCATION","CAMERA","RECORD_AUDIO",
                    "READ_EXTERNAL_STORAGE","WRITE_EXTERNAL_STORAGE","POST_NOTIFICATIONS")) {
-    & $adb -s $serial shell pm grant $pkg "android.permission.$p" 2>$null
+    & $adb -s $serial shell pm grant $pkg "android.permission.$p"
   }
-  & $adb -s $serial shell monkey -p $pkg -c android.intent.category.LAUNCHER 1 2>$null | Out-Null
+  & $adb -s $serial shell monkey -p $pkg -c android.intent.category.LAUNCHER 1 | Out-Null
   Write-Host ""
   Write-Host "CSEntry launched. Next: in the emulator, Sync to https://csweb.asiansocial.org/csweb,"
   Write-Host "download the survey, navigate, then run:  .\capture-csentry-screenshots.ps1 -Shot <name>"
@@ -88,8 +88,8 @@ if ($Shot) {
   $out = Join-Path $OutDir "$Shot.png"
   # Capture to the device then pull — binary-safe (PowerShell '>' would corrupt the PNG).
   & $adb -s $serial shell screencap -p /sdcard/_shot.png
-  & $adb -s $serial pull /sdcard/_shot.png "$out" 2>$null | Out-Null
-  & $adb -s $serial shell rm -f /sdcard/_shot.png 2>$null
+  & $adb -s $serial pull /sdcard/_shot.png "$out" | Out-Null
+  & $adb -s $serial shell rm -f /sdcard/_shot.png
   $sz = (Get-Item $out).Length
   if ($sz -lt 1000) { Write-Warning "Captured file is only $sz bytes — screen may not be ready." }
   Write-Host ("Saved {0} ({1:N0} KB)" -f $out, ($sz/1KB))

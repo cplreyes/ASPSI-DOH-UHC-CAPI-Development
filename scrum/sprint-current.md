@@ -35,7 +35,7 @@ locked: 2026-08-24 (Monday kickoff, post-meeting)
 
 | | Submitted to PSA (frozen, tag `capi-psa-2026-08-20`) | Current DEV |
 |---|---|---|
-| F1 Facility Head | v3.1.5 | v3.1.6 |
+| F1 Facility Head | v3.1.5 | **v4.0.0** |
 | F2 HCW (PWA) | v3.0.0 | — |
 | F3 Patient | v6.0.2 | v6.0.3 |
 | F4 Household | v3.1.3 | v3.1.4 |
@@ -48,7 +48,8 @@ Promotion gates, channels and rollback: the `capi-devops` skill.
 | Item | State | S015 disposition |
 |---|---|---|
 | **UAT Round 7** | open since 08-19; 23 findings closed 08-20; trackers #1282–#1285 open | **Goal A** — drive actionable to zero before training. |
-| **#1311 · #1312** | filed 08-24: F1 Q35.2 + F2 Q24.2, both "adopt DOH's final option list" | **Goal A** — same class; ship together. |
+| **#1311** | **CLOSED 08-24** — F1 Q35.2 now carries DOH's full 10-option list; shipped as **F1 v4.0.0** (MAJOR: option set replaced, so the stored shape changed). Patch note posted to #f1-uat. | done |
+| **#1312 · #1313** | filed 08-24, **both open, both F2 PWA** (`epic:f2-pwa`): Section B Q24.2 + F2_ICF. Per the triage loop these stay in the F2 hotfix queue, not the CSPro lane. | **Goal A** |
 | **Fleet propagation** | tablets still on pre-Aug-17 builds; 4 R7 tickets were stale apps, not defects | **Goal A, critical** — trainees must install the current build. |
 | **Automatic start/finish timestamp** | NEW, from the 08-24 meeting | **Goal A** — scope before building. |
 | **Manuals** | "should be tested" (08-24 meeting) | **Goal A**. |
@@ -61,7 +62,7 @@ Promotion gates, channels and rollback: the `capi-devops` skill.
 
 ### Goal A — make the week of Sept 07 trainable
 
-- [ ] **Close UAT Round 7 to zero actionable** — #1311 (F1 Q35.2) + #1312 (F2 Q24.2) adopt DOH's final option lists, plus anything new. Ship as versioned DEV builds through the `capi-devops` gates, never as quiet edits. `status::todo` `priority::critical`
+- [ ] **Close UAT Round 7 to zero actionable** — **F1/F3/F4 are already at zero**: `check_field_ready.py` reports `open_actionable: 0`, verdict **CLEAR-PENDING** (waiting out the 2-day quiet window, 1 day elapsed as of 08-25). #1311 shipped as F1 v4.0.0. **Remaining: #1312 + #1313, both F2 PWA.** Ship as versioned DEV builds through the `capi-devops` gates, never as quiet edits. `status::in-progress` `priority::critical`
 - [ ] **Fleet propagation — every tablet on the current build** — REMOVE + RE-ADD, not the Update menu, which misses redeploys. Name any holdout device. Highest-value item in the sprint: four R7 tickets were stale apps, and a training room installing a stale build repeats that at scale. `status::todo` `priority::critical` `estimate::0.5d`
 - [ ] **Scope the automatic start/finish timestamp BEFORE building it** — paradata already timestamps entry activity per case. If the ask is operational (duration per interview, supervisor visibility) this is a **report off existing data**; if it must be a visible questionnaire field it is a **build change with data-shape impact**. Settle which at the Performance Metrics meeting, then implement. `status::todo` `priority::high` `estimate::0.5d scope + TBD build`
 - [ ] **Re-measure translation coverage against the Aug-17 English** — the Aug-10 percentages are void; the English moved underneath them. Produce a defensible per-language, per-instrument number, with the error/validation-message gap (still 0%) stated separately. Training in Ilocano or Hiligaynon depends on this being known rather than guessed. `status::todo` `priority::high` `estimate::0.5d`
@@ -94,6 +95,13 @@ open; UAT R7 live with #1311/#1312 filed this morning; **training dated — week
 makes this T-2 and reframes the sprint as training runway. Carried from the ASPSI meeting: the new
 timestamp feature, manuals to be tested, and the Performance Metrics + Organizational meetings this
 week. Still blocked on ASPSI: the 147-account roster (fourth ask) and translation supply.
+
+**Tue 2026-08-25 — R7 effectively clear on the CSPro side.** #1311 closed and shipped (F1 **v4.0.0**, major
+bump: Q35.2's option set was replaced, not extended). `check_field_ready.py` = **CLEAR-PENDING**, 0 open
+actionable, 1 of 2 quiet days elapsed. The only two open findings (#1312, #1313) are **both F2 PWA** and sit
+in the F2 queue. Infra check: F2 prod, CSWeb and the CAPI portal all return 200 — this morning's standup line
+*"F2 prod canary: site unreachable"* and *"GitHub API unavailable"* were transient CI blips, not an outage.
+Repo hygiene closed out: 1 worktree, 2 remote branches, 0 stashes, 25 archive tags.
 
 ## Retrospective — Sprint 015
 

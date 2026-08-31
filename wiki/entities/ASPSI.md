@@ -34,6 +34,18 @@ Note: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Juvy Chavez-Ro
 
 Carl is contracted by ASPSI as **Data Programmer** under a signed Consultancy Services Agreement (Dec 15, 2025): 6.0 person-months × PHP 65,000 = **PHP 390,000** total, deliverable-based payment in 4 tranches. ASPSI President [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Juvy Chavez-Rocamora|Juvy C. Rocamora]] (also the engagement's Project Coordinator) is the counterparty signatory. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Signed CSA Dec 15 2025]] for full terms.
 
+## Revised Deliverable 2 (Aug 21, 2026)
+
+ASPSI re-issued the translated questionnaires on **August 21, 2026** — 28 PDFs
+(7 dialects × 4 instruments) plus 4 English masters, the first translated set to match the
+Aug-17 renumbering. Carl imported it into all four instruments on 2026-08-26/27 (F1 v4.1.0,
+F2 spec `2026-08-26-m4`, F4 v3.2.2, F3 v6.1.0, all DEV channel), lifting coverage in every
+one of the 28 instrument × locale cells. The pack, its per-instrument layout quirks and the
+paper-side defects that are ASPSI's to fix in the next issue are catalogued in
+[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Revised Deliverable 2 Translated Questionnaires (Aug 21)]]; the measured status page is
+`deliverables/CSPro/TRANSLATION-STATUS-2026-08-27.md` and the untranslated remainder is
+exported for ASPSI's translators as `deliverables/CSPro/translator-worklist-aug21.xlsx`.
+
 ## Sources
 
 - (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Revised Inception Report]])

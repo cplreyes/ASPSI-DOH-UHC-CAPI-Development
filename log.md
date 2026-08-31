@@ -2007,3 +2007,1784 @@ Carl: "download these files, place them to raw, and ingest them" + a Drive folde
 - **Detection — daily canary** added to the CAPI Scrum digest routine: resolves the admin chunk from prod's OWN chain (index.html → index bundle → lazy chunk) and posts either "F2 prod: admin portal healthy" or a :rotating_light: line naming the fix script. Worst case is now one day of drift.
 - Both checks proven in BOTH directions: healthy on the restored bundle, ALERT on the stale `admin-CeWF-uyC.js` still on disk from the 08-12 overwrite. An early version of the verifier guessed the bundle name from a local `dist/` and cried wolf; fixed to read only what production references.
 - **Still open (Carl's):** `git -C <main checkout> pull origin main` — until that lands, any local build re-reverts prod.
+
+### 2026-08-26 - Aug-21 translations wave 1: F1 v4.1.0
+
+- **Shipped** the ASPSI revised Deliverable 2 (Aug-21) translations into F1 and deployed
+  `Facility Head Survey (F1) - v4.1.0 (2026-08-26) [DEV]` to
+  `capi.asiansocial.org/csweb` (DEV channel; the PSA submission set stays frozen at
+  `capi-psa-2026-08-20`).
+- **Coverage** (dictionary labels translated, of 1363) - before (4.0.0) -> after (4.1.0):
+  FIL 913 (66%) -> 1109 (81%), BCL 921 (67%) -> 1114 (81%), BIS 915 (67%) -> 1093 (80%),
+  CEB 852 (62%) -> 1050 (77%), WAR 907 (66%) -> 1108 (81%), HIL 903 (66%) -> 1086 (79%),
+  ILO 845 (61%) -> 1082 (79%). Every language gained; labels cut at the 255-char cap 28 -> 19.
+- **Overrides**: 29 keys on `aug21-overrides.json["F1"]` (5 value-set offsets / admin-block
+  leaks, 2 extractor-English holds, 19 HIL paper-stutter rows scoped to `hil`, 3 ILO
+  SELF_ECHO rows scoped to `ilo`). Every entry carries a reason; none is a hand-copied span.
+- **Held this build**: HIL `sa masunod sa masunod` stutter (paper defect, ASPSI to correct -
+  byte-verified as occurring exactly once in the served package), Q62 option 2 (extractor
+  own-match), Q140 and Q75 (paper heading / condensed CAPI label), ~20 cosmetic stray
+  leading quotes/parens. All on the translator worklist.
+- **Verification**: `verify_questions.py F1` PASS (321/321 reachable), fresh-Designer
+  `Compile Successful`, served `.pen` byte-verify `RESULT: ALL PASS` (44 assertions: 41 OK,
+  3 SKIP, 0 MISS) with a `--baseline` gate proving >=1 wave-changed value per locale.
+- **Render evidence** (Tier-2, `capi_tablet` AVD, deployed zip sideloaded):
+  `docs/uat-fix-evidence/2026-08-26-aug21-translations/F1/` - app list at v4.1.0, Filipino
+  ICF screen 1 (Aug-21 consent paragraphs + `08/21/2026` stamp), Q20 (`item:Q20_EMR_USE`,
+  a key this wave added) in Filipino and in Ilocano, and Q11.1's option list in Filipino.
+  The Q75 shots the plan first asked for were **dropped**: Q75 is held this build, so it
+  renders English or the pre-wave text and would have proved nothing - the reworded English
+  Q75 stem is evidenced by the regenerated `.ent.qsf` instead. Patch note:
+  `deliverables/CSPro/patch-notes/2026-08-26-f1-v4.1.0-aug21-translations.md`
+  (Slack posting stays with Carl).
+
+### 2026-08-26 - Aug-21 translations wave 2: F2 m4
+
+- **Built, pushed and deployed** the ASPSI revised Deliverable 2 (Aug-21) translations into
+  the F2 PWA as spec `2026-08-26-m4` (commit `9ba7a33`, `origin/main`). DEV channel; the PSA
+  submission set stays frozen at `capi-psa-2026-08-20`. **LIVE** on
+  `https://uhc-hcw.asiansocial.org` since 2026-08-26 09:31 MNL: `deploy-f2-pwa.ps1` ran clean
+  through guards 1-3, live `build-info.json` reads sha
+  `9ba7a3369d4ce070153aa8cc06a07757716df333` (== HEAD),
+  `built_at 2026-08-26T01:31:13.8995239Z`, `matches_main true`; `-VerifyOnly` exit 0; rollback
+  point `/opt/app/f2-www.bak-20260826-093113`. An earlier attempt had died in the script's
+  unconditional `npm ci` with `EPERM ... unlink` on the `@rolldown` / `@rollup` native
+  bindings because **a vitest gate run was still executing** and held them mapped; the retry
+  after that run finished succeeded first try, with no process intervention. Lesson recorded:
+  never deploy while a test run is in flight, and never stop node processes by name - MCP
+  servers run under `node.exe` too.
+- **Anchors**: 393 (`spec/english-strings.json`, `npm run dump:english`) - the join is on
+  exact English text only, never on question numbers (the 2026-08-13 row-misalignment scar).
+- **Normalized-key collisions**: 2, both benign case variants -
+  `not applicable` <- ['Not Applicable', 'Not applicable'] and
+  `other specify` <- ['Other (specify)', 'Other (Specify)'].
+- **Applied** (`scripts/apply-paper-translations.py`, unmatched 0 in every locale):
+  writes/replaces/retires - fil 16/30/17, ceb 16/2/17, bis 12/3/17, ilo 17/5/17,
+  hil 17/4/17, war 15/56/17, bcl 13/3/17. The 17 retires per locale are the stale
+  ORPHAN keys the 08-17 renumber left behind; clearing them took
+  `audit-translations.py` from 119 suspects to 0.
+- **Overrides**: 40 entries on `aug21-overrides.json["F2"]` (fil 8, ilo 11, hil 7, war 6,
+  bcl 4, bis 2, ceb 2) - 27 PDF line-break whitespace holds, 5 strict-prefix holds where the
+  paper omits terminal punctuation, 4 Aug-21 paper defects (ILO option misprint + Q115 gloss,
+  HIL Q82 single-row Likert, BCL `YesIyo` run-on), 3 extract residuals, 1 whitespace hold on
+  a new BCL key. Every entry carries a reason; none is a hand-copied span.
+- **Coverage** (label objects carrying a dialect string, of 740 in `src/generated/items.ts`)
+  - before (m3) -> after (m4): fil 533 (72%) -> 594 (80%), ceb 550 (74%) -> 611 (83%),
+  bis 549 (74%) -> 570 (77%), ilo 554 (75%) -> 617 (83%), hil 530 (72%) -> 593 (80%),
+  war 565 (76%) -> 625 (84%), bcl 547 (74%) -> 587 (79%). Every language gained. The plan's
+  "707 label objects / 75%" baseline was wrong; 740 is `scripts/f2-coverage.py`'s own count.
+- **Consent screen**: the Part-I paragraphs (study / privacy / benefits / rights / contacts)
+  are now per locale, extracted from the same Aug-21 PDFs by `extract_icf_f2.py` into
+  `src/i18n/locales/consent.aug21.ts` and spread last into each locale bundle; a locale
+  missing a paragraph falls back to English. Headings, buttons and the raffle block stay
+  English by design.
+- **Held**: Tagalog Q2 (employment) stays English because ASPSI's cleared Aug-21 FIL paper
+  prints that question in English only - the extractor flagged it `empty` and wrote nothing
+  rather than invent a dialect string. The other six papers carry Q2 and all six shots render
+  it. Ballot-box option labels stay English in almost every locale for the same reason. All
+  on the worklist back to ASPSI's translators.
+- **Verification**: `tsc -b --force` exit 0, eslint clean, **vitest 81 files / 701 tests
+  passed at `--maxWorkers=2`, exit 0** (complete run, 221.54s; re-confirmed post-deploy in
+  173.45s), `audit-translations.py` 0 suspects, `npm run build` OK (secrets/budget/contrast),
+  `e2e/locale-shots.spec.ts` 1 passed (`Captured locales: en, fil, ceb, bis, ilo, hil, war, bcl`).
+  At **default** vitest concurrency this box reports `2 failed | 699 passed (701)` - two jsdom
+  `waitFor` timeouts in `MultiSectionForm.test.tsx` that fail identically on the unmodified
+  pre-change tree and pass standalone (13/13), i.e. pre-existing load flake, not a regression.
+  **Correction of record:** commit `9ba7a33`'s message asserted this gate from a run that had
+  crashed at 35/81 files with 46 pool errors (a concurrent `npm ci` tore its workers down).
+  The number is right, but the evidence for it only exists as of the two re-runs above.
+- **Render evidence**: `docs/uat-fix-evidence/2026-08-26-aug21-translations/F2/` - Section A
+  in all eight locales plus the consent gate in Filipino, every shot stamped
+  `spec 2026-08-26-m4`. Patch note:
+  `deliverables/CSPro/patch-notes/2026-08-26-f2-m4-aug21-translations.md`
+  (Slack posting stays with Carl).
+- **Parked**: the F2 store is still flat English-keyed, so the 51 known
+  same-English/different-translation conflicts plus the 2 collisions above remain
+  inexpressible; the id-scoped re-key stays parked for the wave close. Wave 2 complete;
+  wave 3 (F4) starts from the Day-0 tooling and is independent of this wave.
+
+### 2026-08-26 - Aug-21 translations wave 3: F4 (3.1.4 -> 3.2.0) - RUNNING LOG
+
+Wave 3 aligns F4 to ASPSI's revised Deliverable 2 (Aug-21) papers. Tasks 24-34; this
+entry grows as each task lands. Nothing here is deployed yet - the PSA submission set
+stays frozen at `capi-psa-2026-08-20` and everything in this wave is DEV channel.
+
+**Task 24 - English alignment of five F4 dictionary labels (`F4/generate_dcf.py`).**
+Names, codes and value sets are UNCHANGED; only the English label text moved:
+
+| Item | June-5 / Aug-17 label | Aug-21 label |
+|---|---|---|
+| `Q30_NAME` | `30. Name (LAST NAME, FIRST NAME & MIDDLE NAME, EXT)` | `30. Name (Write the complete name of HH member)` |
+| `Q35_HAS_DISABILITY` | `35. Do you identify as a person with a disability?` | `35. With disability?` |
+| `Q36_SPECIFY_DISABILITY` | `36. Would you like to specify the type of disability?` | `36. Would the patient like to specify the type of disability?` |
+| `Q40_EDUCATION` | `40. Highest level of education attended (the highest level the person reached, even if not completed - e.g. someone who reached Grade 2 is Primary)` | `40. Highest level of education completed` |
+| `Q67_TRAVEL_HH` | `67. How much time does it take to reach the nearest pharmacy from your home? - Hours` | `67. How much time does it take for you to reach the nearest pharmacy from your home? - Hours` (the paper's "for you to" correction only - the pharmacy definition stays in the qsf note, see below) |
+
+`Q67_TRAVEL_MM` keeps its short second-component prompt (#1073 pattern) - the full stem
+rides on Hours only.
+
+- **Q67: the pharmacy definition is NOT inlined into the dcf label.** The Aug-21 paper
+  prints "A Pharmacy is an ancillary primary care facility with a FDA LTO where
+  registered medicines can be bought." under the Q67 stem, but CAPI already renders
+  that sentence once, as the blue `INSTRUCTIONS[67]` line in `F4/generate_qsf.py`. One
+  dcf label feeds BOTH the .qsf question bar and the .fmf field text, so inlining it
+  printed the definition twice on the screen - the same defect removed from
+  `Q64_MEDICATIONS_LIST` (#1205) and from F3 (#1136/#1137). F3 Q150 is the standing
+  pattern: short stem in the dcf, definition in the qsf note. Verified in the
+  regenerated `HouseholdSurvey.ent.qsf`: the sentence occurs 16 times - 8 languages x
+  the two Q67 components - and every occurrence is the `<p class="instruction">`
+  line, none in a question stem.
+- **Q30: which of the paper's TWO Q30 captions we ship (adjudicated).** Page 5 of the
+  Aug-21 English F4 prints Q30 twice with different parentheticals: the numbered CODES
+  block reads `30. Name (Write the complete name of HH member)`, while the C1 roster
+  grid column header reads `Name (LAST NAME, FIRST NAME & MIDDLE NAME, EXT)`. We ship
+  the CODES caption. It is the paper's canonical numbered question text, and it is the
+  same rule this wave applies to Q35/Q36 - whose C2 grid headers still carry the OLD
+  June-5 strings while their CODES blocks carry the Aug-21 wording we adopted. Merging
+  the two by hand would also put English permanently out of step with the 7 dialects,
+  since the Aug-21 extract yields the CODES caption only. **Consequence, deliberate:
+  the roster grid's name-order format instruction (LAST NAME, FIRST NAME & MIDDLE
+  NAME, EXT) no longer appears anywhere in CAPI.** The v3.2.0 patch note must say so,
+  and enumerator training should cover the name order verbally.
+
+- **#608 is REVERSED by the Aug-21 paper.** Q40 carried "attended (the highest level the
+  person reached...)" on an ASPSI go/no-go relayed via Carl on 2026-06-21. The
+  DOH-submitted Aug-21 questionnaire reads "completed", and under this wave's conflicts
+  rule the paper wins. Called out again in the v3.2.0 patch note so the reversal is not
+  read as a regression.
+- **Regeneration**: `generate_dcf.py` / `generate_apc.py` / `generate_fmf.py` /
+  `generate_qsf.py` all re-run. Per-locale dcf coverage is unchanged at
+  **FIL 847/1403 (60%) - BCL 870 (62%) - BIS 858 (61%) - CEB 904 (64%) - WAR 922 (65%) -
+  HIL 703 (50%) - ILO 838 (59%)**, because `apply_translations` keys off the item NAME,
+  not the English text. The five keys therefore still hold their June-5 dialect values,
+  which are now stale-vs-English; Task 28 replaces them from the Aug-21 extract.
+  `HouseholdSurvey.ent.apc` and `HouseholdSurvey.fmf` regenerated byte-identical.
+- **Gate**: `verify_questions.py F4` -> `333 items - 185 coded - reachable 333/333 -
+  dead-conditions 0 - bad-skips 0 - PASS`.
+- **Test**: new `F4/test_aug21_f4.py` pins the five Aug-21 strings plus the unchanged
+  `Q67_TRAVEL_MM`, guards the value-set codes (`Q35`/`Q36` = 0/1, `Q40` = 01/02/03...) and
+  guards CSPro's 255-char label cap on the SHIPPED shape (after
+  `apply_dcf_short_labels()`, the order `generate_dcf.main()` uses). Two further
+  regression tests pin the #1205 rule: the Q67 definition must be in the qsf note and
+  NOT in the dcf label, and - swept over every F4 item - no dcf label may contain its
+  own `question_extras()` instruction note. 10 passed. `AUG21_F4_LABELS` in that file
+  is the shared expectation Tasks 26 and 31 reuse.
+
+**Task 25 - the four Aug-21 printed gates ride as qsf help notes (`F4/generate_qsf.py`).**
+The Aug-21 paper prints a bracketed routing gate INSIDE the question stem on four F4
+questions. CAPI already enforces the routing in logic (#816's Q117 preproc, Q118's
+Q112=Yes gate, the Q130/Q132 bypasses ahead of Q131/Q135), and #1101/#658 deliberately
+stripped the parentheticals from the dcf labels - the label is the translation key, so
+anything inlined there also prints twice (once in the .qsf question bar, once in the
+.fmf field text). The gates therefore come back as the blue `<p class="instruction">`
+line only:
+
+| Item | Gate note added |
+|---|---|
+| `Q117_SPECIALIST_FOLLOWUP` | `[Answer only "yes" in Q112]` |
+| `Q118_SAT_REFERRAL_PROCESS` | `[Answer only "yes" in Q112]` + the existing READ-ONE note |
+| `Q131_NBB_OOP` | `[Ask only if they went to a DOH-retained hospital]` |
+| `Q135_ZBB_OOP` | `[Ask only if they went to a DOH-retained hospital]` |
+
+- **The header comment's "paper-only navigation notes are omitted" rule is now
+  explicitly excepted** for these four. The reversal is recorded in the comment itself so
+  a future sweep does not "clean them up" again.
+- **`INSTRUCTIONS_BY_NAME` values may now be a `str` OR a `tuple[str, ...]`.** `note_html`
+  emits one instruction paragraph per tuple part and translates each part on its own.
+  That matters because a name key REPLACES the number-keyed note: `INSTRUCTIONS[118]` was
+  `_READ_ONE`, so Q118 re-attaches it as the tuple's second part. Gluing "gate +
+  READ-ONE" into one string would have produced a key `notes.json` never carries, and the
+  whole line would have fallen back to English in all seven dialects. (The existing Q18
+  entries look similar but are parenthesised implicit string concatenations, not tuples -
+  only a trailing comma makes a tuple; they are untouched.)
+- **Constant names carry no digits** - `_GATE_ANSWER_ONLY_IF_YES` / `_GATE_DOH_RETAINED`,
+  with the `Q112` inside the string. `extract_notes.py` scrapes module constants as
+  `const:<NAME>` anchors and Task 8 widened its regex to `_[A-Z0-9_]+`, so either shape
+  would scrape; the digit-free convention is kept and pinned by a test. Verified: the two
+  new constants appear as `const:_GATE_ANSWER_ONLY_IF_YES` / `const:_GATE_DOH_RETAINED`
+  in `english_notes("F4")` (11 const keys, up from 9).
+- **English in every locale, by design, until Task 29.** `translate_note` finds nothing
+  yet, so all eight languages show the bracketed English directive. The wording was
+  chosen to read acceptably that way - it is the paper's own bracketed directive, not a
+  composed sentence. `notes_lookup._canon` normalises curly quotes, so the curly-quoted
+  `"yes"` in the constant will still match the straight-quoted key Task 29 seeds.
+- **Regeneration**: `generate_qsf.py` re-run -> `331 questions x 8 languages`, unchanged
+  from Task 24. The qsf diff is exactly 32 changed lines: 4 items x 8 languages, each
+  gaining one `<p class="instruction">[...]` paragraph (Q118 keeps its READ-ONE as a
+  second paragraph). No other artefact changes - the gates never touch the .dcf.
+- **Gate**: new `automation/aug21_check_gates.py <INST> <ITEM...>` (re-used by Task 29 and
+  the close-out) counts bracketed instruction paragraphs per item, sizing the window by
+  the NEXT `- name:` item rather than a fixed byte count, and comparing against the
+  language count the qsf header declares. It matches `<p class="instruction">[` and not
+  the English words, so a translated gate still passes; matching the whole instruction
+  paragraph would have false-GREENed Q118, whose READ-ONE note would have covered for a
+  missing gate. Result: all four items `8 gate notes across 8 languages`, exit 0; a
+  control item without a gate (`Q119_PCF_REFERRAL`) prints 0 and exits 1.
+- **Gate**: `verify_questions.py F4` -> `333 items - 185 coded - reachable 333/333 -
+  dead-conditions 0 - bad-skips 0 - PASS`.
+- **Test**: `F4/test_aug21_f4.py` grows to 18 passing tests. The new eight pin the gate
+  as help text and NOT label text on all four items, Q118's `(gate, _READ_ONE)` tuple,
+  the digit-free constant names and their exact strings, and `note_html`'s one-paragraph-
+  per-part rendering. The pre-existing "no dcf label inlines its own qsf instruction
+  note" sweep was made tuple-aware (it now checks each part) - without that it raises
+  `TypeError` the moment any instruction is a tuple.
+
+**Task 26 - F4 English delta after alignment (`aug21_english_delta.py --only F4`).**
+Report only - nothing regenerated, no translation map or override touched. Re-ran the
+Aug-21 English-vs-build measurement on the F4 build as Tasks 24/25 left it; the raw
+capture is `data/translations-official/out-aug21/F4/english-delta.txt` (gitignored) and
+the machine copy is `out-delta/f4_english_delta.json`.
+
+```
+inst  match  total  diffs paper-only
+F4      131    166     35         27
+```
+
+Pre-wave (2026-08-25) was `126 / 166 / 40 / 27`. The five Task-24 targets - **Q30, Q35,
+Q36, Q40, Q67** - have dropped out of the diff list (match +5, diffs -5) and nothing else
+moved. **Every one of the 35 remaining rows is a known parser artefact or intentional CAPI
+wording; class (c) "real miss" = 0.** This is the "known parser-artefact rows" list the
+v3.2.0 patch note refers to.
+
+### (a) Parser artefact - bare-number table cell - 29 rows
+
+The Aug-21 F4 paper prints these questions in a TABLE whose question number sits in a cell
+of its own, so PyMuPDF emits a bare `42.` line and the stem arrives on later lines.
+`paper_numbered()` keys on `^N. <text>`, so the number never becomes a paper key at all and
+the row reports `paper: null` - the same roster-grid-header bleed the June-5 tooling already
+knows. Proven mechanically by `task-26/_classify.py`: the build stem is present verbatim in
+the page-ordered paper body for every row below except the three sub-total rows, whose paper
+cell prints the shorter `[DO NOT ASK] Total value of ...` (the `(health, N-month) -
+Auto-computed total (PHP, ...)` tail is CAPI's own disambiguator - see (b)).
+
+| Where in the paper | Rows |
+|---|---|
+| C4/C5 household-characteristics roster headers (p6-p8) | Q42, Q43, Q44, Q45, Q45.1, Q45.2, Q46, Q48, Q49 |
+| Section N `[DO NOT ASK]` sub-total cells (p21-p22) | Q177, Q182, Q185 |
+| Section O sources-of-funds two-column table (p22-p23) | Q186, Q187, Q188, Q189, Q190, Q191, Q192, Q193, Q194, Q195, Q196, Q197, Q198, Q199, Q200, Q201, Q202 |
+
+### (b) Intentional CAPI wording - 6 rows
+
+| Row | Why it differs from the paper |
+|---|---|
+| Q2 | The paper asks month AND year under one number with two blanks (`2. In what month and year were you born? Month ____ Year ____`); CAPI splits it into `Q2_BIRTH_MONTH` + `Q2_BIRTH_YEAR` and the tool compares only the first numbered label. Pre-dates this wave. |
+| Q117, Q131, Q135 | Differ ONLY by the paper's leading `[Answer only "yes" in Q112]` / `[Ask only if they went to a DOH-retained hospital]` gate. `textnorm.norm()` deliberately keeps a LEADING bracket (a real interviewer instruction) and folds only a mid-sentence fill placeholder, so the row stays visible. Task 25 renders exactly these gates as qsf help text, not label text (#1101/#658: the label is the translation key and would print twice). Accepted. |
+| Q118 | Same leading gate bracket, PLUS the #658 CAPI stem (`Overall, how satisfied were you with the referral process - from being referred to the specialist or other facility through your visit there?`) against the paper's `Overall, how would you rate your satisfaction with the referral process?`. The gate is now qsf help text (Task 25); the stem is the deliberate #658 wording that names WHICH referral. **This is the one row whose divergence exceeds the bracket** - see the flag below. |
+| Q157 | The paper cell prints only `Sub-total`; the build label is `157. Sub-total (food, last week) - Auto-computed total (PHP, [DO NOT ASK])` because Section N repeats an identically-worded `Sub-total` cell per block and CAPI labels must be unique. |
+
+### `paper-only` (27, informational, unchanged from pre-wave)
+
+`142`, `144`-`156`, `158`-`170`. These are the Section-N consumption rows, which the
+2026-07-03 Option-C rework turned into ROSTER OCCURRENCE labels
+(`FOOD_WEEKLY_ITEMS` / `NONFOOD_*_ITEMS` / `WEEKLY_OTHER_ITEMS` in `F4/generate_dcf.py`),
+not numbered dcf items - `numbered_labels_dcf()` walks `item:` keys only, so they cannot
+appear on the build side. `142` is likewise absent because its 16 sub-rows are labelled
+`142.1) ...` (a closing paren, not the `N.` / `N.m` shape the tool keys). Structural, not a
+gap.
+
+### Flag for the controller (no action taken here - this task is audit-only)
+
+**Q118's English stem still carries the pre-Aug-21 #658 wording.** The wave's conflicts rule
+gives the Aug-21 paper priority, and Task 24's scope named only five labels, so nothing in
+Wave 3 has re-litigated it. If it should move to the paper wording, that is a
+`generate_dcf.py` edit and it must happen BEFORE the F4 extraction (Task 27) - the dcf label
+is the anchor `anchor_extract.py` searches the dialect PDFs with, so a Q118 label that does
+not match the paper cannot anchor and Q118 stays English in all seven dialects. The same
+caveat applies to `Q2_BIRTH_MONTH` / `Q2_BIRTH_YEAR`, which by construction can never match
+the paper's single month-and-year line.
+
+### Gate
+
+`python automation/verify_questions.py F4` -> `333 items - 185 coded - reachable 333/333 -
+dead-conditions 0 - bad-skips 0 - PASS`.
+
+### Row-count gate (brief Step 3, amended)
+
+The brief's original Step-3 acceptance said "<= 12 non-MATCH rows". **That figure is
+unattainable and is superseded: the accepted number for Wave 3 is 35 non-MATCH rows, all
+classified, class (c) = 0.** The pre-wave delta was 40 and Task 24 aligned exactly five
+labels, so 35 is the arithmetic floor; the 29 rows that dominate it are Step 2's own
+*accepted* class (a) (bare-number table cells), i.e. lowering the count is an extractor
+change this audit-only task is barred from making. Amendment 1 of `task-26-brief.md`
+records it, attributed, for the controller to ratify.
+
+Measured (read-only probe `task-26/_probe_barenumber.py`, output
+`task-26/evidence/probe-barenumber.txt`) so the "open an extractor task" option is priced:
+keying a bare `N.` cell - except inside a run of >= 2 consecutive bare-number lines, which
+is a table's column-number strip - would take F1 1->1, F2 9->0, F3 30->22, F4 35->18, with
+34 rows resolved and ZERO newly-broken rows. Strictly better, still not <= 12: F4's 18
+survivors are Q2, the nine C4/C5 column-strip rows (Q42-Q49), Q117/Q118/Q131/Q135, Q157 and
+Q177/Q182/Q185. Reaching 12 needs bbox-aware column association as well. Note the tool is
+SHARED - adopting it moves F2 and F3, whose waves are closed with the current numbers.
+
+**The v3.2.0 patch note (Task 34) quotes 35, all classified, class (c) = 0 - never "<= 12".**
+
+## 2026-08-26 — Wave 3 / Task 27: extractor Step 0 (own-match gate + orphan-glyph strip) and the F4 Aug-21 extract
+
+### Step 0 — two extractor fixes in `anchor_extract.py` (TDD, 9 new tests)
+
+**(a) own-match gate.** Task 16c's box gate decides whether a short `val:` label may
+*bound* a span; it says nothing about the span that opens *behind* the box.
+`val:Q62_ENROLL_RESPONSIBILITY_VS1:02` (`Facility`) matched the F1 papers' ICF
+respondent-type row `☐ Facility Head` — which **is** boxed, so the box gate passed it —
+and shipped the English word `Head` into all seven F1 maps (Task 17 held it).
+Correction to the record: the bad occurrence is that boxed ICF row, **not** the un-boxed
+cover title `Facility Head Survey…` that Task 17 / the Task-27 brief named; extending the
+box gate to two-word labels alone would not have moved the row.
+
+The gate now added is the own-match half: for a `val:`-only anchor of at most
+`SHORT_OPTION_WORDS` (2) words, a candidate every word of which is a word of the
+dictionary's **own English labels** (`english_words()`) is flagged `english-own-match`
+instead of being emitted. Because the selection loop takes the first *unflagged*
+candidate, the anchor's other occurrences then get their turn — `Facility → Pasilidad` —
+and where the paper printed no translation at all the key reaches the worklist with the
+reason instead of shipping English.
+
+**(b) orphan-glyph strip.** `clean_span()`'s 16c bracket rules only fire when the string
+carries **no** partner bracket, so a nested pair (`(Ania ti naganmo? (Apellido, Ext)`)
+always kept the orphan. Task 21b's counting trim `trim_unbalanced_parens()` moved out of
+`anchor_extract_f2.py` into `anchor_extract.py` (one copy; F2 imports it), a matching
+`trim_unbalanced_quotes()` was added for the 12 rows that opened with a stray `"`, and the
+whole-group unwrap now loops with them — an orphan quote in front of a parenthesised
+Ilocano translation used to hide the unwrap from it.
+
+**F1 re-extract check** (`task-27/f1-check/`, F1 maps NOT touched):
+
+| locale | clean before → after | changed clean rows | own-match | orphan glyph |
+|---|---|---|---|---|
+| fil | 1039 → 1039 | 3 | 1 | 2 |
+| bcl | 1007 → 1007 | 3 | 1 | 2 |
+| bis | 1026 → 1026 | 5 | 1 | 4 |
+| ceb | 1005 → 1005 | 3 | 1 | 2 |
+| war | 1021 → 1021 | 2 | 1 | 1 |
+| hil | 1020 → 1019 | 2 | 1 | 1 |
+| ilo | 1037 → 1037 | 50 | 1 | 49 |
+
+68 clean rows in total, and **nothing else**: 7 × `val:Q62_ENROLL_RESPONSIBILITY_VS1:02`
+(6 recover the paper's `Pasilidad`/`Sa pasilidad`/`Dagiti pasilidad`; HIL has no second
+occurrence and correctly becomes a worklist row, which is the −1) plus 61 orphan-glyph
+rows. 12 already-flagged `echo-english` rows additionally carry the new
+`english-own-match` reason — informational, no import change. This is the class the
+controller predicted ("the Q62:02 class + glyph rows only"). **F1 v4.1.0 is live and is
+not being re-applied; these numbers are the worklist for the next F1 point release.**
+
+### F4 Aug-21 extract (`out-aug21/F4/`, gitignored — nothing applied)
+
+(numbers below are the FIX-ROUND-1 re-extract — the roster legend-code strip changed
+164 F4 values; the pre-fix table is in `task-27/fix1-before/`)
+
+| locale | anchored | clean | flagged | differ from live | same | new |
+|---|---|---|---|---|---|---|
+| FIL | 548 | 821 | 541 | 481 | 258 | 82 |
+| BCL | 548 | 893 | 469 | 159 | 640 | 94 |
+| BIS | 549 | 867 | 495 | 114 | 666 | 87 |
+| CEB | 553 | 859 | 503 | 131 | 631 | 97 |
+| WAR | 545 | 879 | 483 | 285 | 497 | 97 |
+| HIL | 544 | 820 | 542 | 104 | 561 | 155 |
+| ILO | 554 | 929 | 433 | 204 | 593 | 132 |
+
+Layout-flag histogram (per locale, `directive-only` / `grid-bleed` / `routing-note` /
+`label-condensed` / `not-in-paper` / `local-directive` / `english-own-match`):
+FIL 2/10/1/18/268/14/5 · BCL 1/7/1/18/268/6/27 · BIS 1/11/1/17/267/13/4 ·
+CEB 1/6/1/16/260/87/18 · WAR 1/10/1/21/270/11/0 · HIL 4/8/1/15/271/6/4 ·
+ILO 2/9/1/19/261/10/3 (unchanged by fix round 1). `directive-bleed` and `english-furniture` are **0** in every
+locale; `sub-min-emit` is 3 everywhere.
+
+Gate (brief Step 5): **`is-other-label` = 0 in all seven locales** — the class is absent
+from the digest entirely. `echo-english` = 44 rows across the seven: the papers'
+deliberately untranslated cells, left flagged and out of the clean map.
+
+Grid-item landing (brief Step 4 — reported, nothing hand-copied):
+
+| key | fil | bcl | bis | ceb | war | hil | ilo |
+|---|---|---|---|---|---|---|---|
+| `item:Q30_NAME` | flagged `empty` | clean | clean | clean | clean | clean | clean |
+| `item:Q35_HAS_DISABILITY` | flagged | flagged | flagged | flagged | flagged | flagged | flagged |
+| `item:Q36_SPECIFY_DISABILITY` | flagged | flagged | flagged | flagged | flagged | clean | flagged |
+| `item:Q40_EDUCATION` | flagged | flagged | clean | clean | clean | flagged | clean |
+| `item:Q67_TRAVEL_HH` | flagged | clean | flagged | flagged | clean | flagged | flagged |
+
+Every `flagged` row above is `table-bleed` / `length-ratio` from the roster's `CODES`
+legend, i.e. code furniture, not a complete sentence — **no span was accepted**, and per
+the pre-flight ruling any that later is must be an override entry, never a hand-copied
+value.
+
+The Task-27 brief listed `item:Q40_EDUCATION` and `item:Q36_SPECIFY_DISABILITY` as
+"aligned prose". The seven papers disagree: both are printed inside the household
+roster's `CODES` legend (`36. … 0-No 1-Yes`, `40. … 1- Early Childhood Education …`) and
+the Tagalog paper prints no local half for either. `test_aug21_f4_extract.py` therefore
+reports them with the other grid captions and hard-asserts two stems the papers really do
+print as sentences (`item:Q1_IS_HH_HEAD`, `item:Q115_HELPED_APPT`).
+
+### Worklist handed to Task 28 (not fixed here — Step 0 is only the two named fixes)
+
+1. ~~**Roster `CODES`-legend digit glue** — 4 clean rows end in a stray legend code.~~
+   **WRONG BY A FACTOR OF 40, and FIXED IN THE EXTRACTOR in fix round 1 — see the
+   fix-round-1 section below.** The real class was **166 clean rows** (fil 14 · bcl 27 ·
+   bis 16 · ceb 21 · war 32 · hil 28 · ilo 28), **48** of which would have overwritten a
+   DIFFERENT live value (`val:Q34_RELATIONSHIP_VS1:02` = `Agum 03` over the live `Agum`).
+   Acting on the "4 rows" figure would have regressed 45+ correct live values.
+2. **English definition block inside a clean value** — bcl and war `item:Q67_TRAVEL_HH`
+   carry `A Pharmacy is an ancillary primary care facility with a FDA LTO where
+   registered …`. `NOTE_PATTERNS` does not know this paper's pharmacy definition, so
+   `english-furniture` reads 0 while two clean rows carry it. Hold or override.
+3. **WAR leading question numbers** — 198 clean WAR values open `NN. ` because the Waray
+   paper prints the number on the local row too (the live map already holds 41 such rows
+   from earlier waves; fil holds 0). A wave decision, not a defect this task can rule on.
+4. **One own-match false positive** — fil `val:Q138_MOST_EXPENSIVE_VS1:1`, EN `Medicine`,
+   paper `☐ Medicine [Gamot]`. `gamot` is a word of the F4 English corpus (the GAMOT
+   programme), so the gate holds a real translation. 1 row of 5,900+; it falls to English
+   fallback rather than being corrupted, and the bracketed-translation convention is a
+   layout rule of its own, not a Step-0 fix. Across all seven locales only **6** rows have
+   `english-own-match` as their sole flag, and the other five are correct rejections
+   (`Laboratory Tests → X-ray`, `Cannot recall → Amount`).
+
+### Shared-helper blast radius on F2
+
+`clean_span()` is shared with `anchor_extract_f2.py`, whose wave is closed. Measured
+(`task-27/scratch/f2_impact.py`, evidence `task-27/evidence/f2-impact.txt`): re-running
+the F2 extract on all seven Aug-21 papers with the before/ and after modules gives
+**0 changed clean rows in every locale** - the trims are idempotent and F2 already
+applied its own copy of the paren trim right after `clean_span()`.
+
+### Fix round 1 (2026-08-26) — review findings 1-3
+
+**Finding 1 — the roster-CODES legend glue was under-reported and is now an extractor
+rule.** The household-roster pages print their option lists as a LEGEND
+(`01-Head 02-Spouse/Partner 03-Son/Daughter …`) with **no ballot boxes**, so
+`cut_at_box()` has nothing to cut at and every span runs to the next option's English,
+carrying that option's CODE: `Agum 03`, `02-Asawa 03`, `(Asawa/Kapareha) 03`,
+`Civil Status 1`, `2-Married 3`. Re-measured (`task-27/scratch/measure_glue.py`,
+evidence `task-27/evidence/f4-glue-class.json`): **166 clean rows**, per locale
+fil 14 · bcl 27 · bis 16 · ceb 21 · war 32 · hil 28 · ilo 28 — **48** over a different
+live value, 18 of which the strip restores to the live value exactly.
+
+New in `anchor_extract.py` (TDD, 5 tests): `value_set_codes()`, `_legend_codes_for()`,
+`strip_legend_code()`, called in `extract()` right after `clean_span()` and BEFORE the
+own-match gate and `qa_flags`. A tail is dropped only when the number is a code of a
+value set the anchor's own KEY names and is not the anchor's own code, and the English
+label does not itself end in that number — so `Level 3` under code 3 keeps its 3.
+
+Blast radius, measured before shipping (`scratch/measure_fix1.py`): **F4** 164 values
+changed, 3 rows correctly LEAVE the clean map (fil `item:/vs:Q34_RELATIONSHIP`
+`01-Head 02` → `01-Head`, now held `length-ratio`; bcl `Apo 07` → `Apo`, held) and 2
+JOIN it (war `val:Q45_1_PIN_REG_WHEN_VS1:2,3`, `digit-mismatch` cleared). **F1: 0 changed
+rows. F2: 0 changed rows** (F2 has its own `extract_text`; the shared helpers are
+untouched). Post-fix the class is **4 rows, 0 overwrites** — all
+`val:Q65_CONDITIONS_VS1:90`, where the paper's legend numbers an option `20` that the dcf
+does not define, so the rule refuses to guess; all four are byte-identical to the live
+value already, so they overwrite nothing.
+
+**Residual F4 clean-map defects handed to Task 28** — full key list in
+`task-27/evidence/f4-task28-hold-list.json` (`scratch/residual_scan.py`): 53 rows / 31
+distinct keys — `legend-code-head` 39 rows (26 would overwrite a different live value:
+the span opened INSIDE the legend row, `0-Away Wara 1-Present Yaun`), `english-value` 15
+rows (1 overwrite: `Civil Status`, `Live-in`, `Pre-school`), `legend-code-tail` 4 rows
+(0 overwrites, above). Hold with locale-scoped `keep:null` unless the wave decides
+otherwise.
+
+**Finding 2 — the Step-0(a) mechanism still needs a CONTROLLER RULING; it is NOT
+silently satisfied.** The ruling says "a `val:` anchor whose label is ≤ 2 words counts as
+its OWN match only behind a box glyph". What ships is `own_match_is_english()` (same
+scope, different test). The literal gate was built as a prototype (`scratch/ae_lit.py`)
+and MEASURED against the shipped extractor:
+
+| literal ≤2-word box gate | clean rows LOST | clean rows GAINED |
+|---|---|---|
+| F1 (7 locales) | **25** | 2 |
+| F4 (7 locales, on top of the legend strip) | **100** | 6 |
+
+The rows it deletes are real translations: bcl `val:Q34_RELATIONSHIP_VS1:02` `Agum`,
+`:03` `Aki`, `:04` `Tugang`, ceb `val:Q110_SPECIALIST_VS1:14`
+`Dalunggan, Ilong, ug Tutunlan`, fil `val:Q45_2_WHY_NOT_REG_VS1:06`
+`[Kasalukuyang walang trabaho]`. Cause: **the F4 roster legend has no box glyphs at all**,
+so box-gating two-word option labels deletes the whole roster's translations. Shipping
+the ruling literally is a net regression of 125 clean rows, so it was NOT shipped.
+Evidence: `task-27/evidence/fix1-lit-gate-F1.txt`,
+`fix1-lit-gate-on-top-F4.txt`. **Decision needed: ratify `own_match_is_english` as the
+Step-0(a) mechanism, or direct the literal gate knowing the cost.**
+
+**Finding 3 —** `test_aug21_f4_extract.py::test_aligned_grid_items_reported` was
+assertion-free (and took an unused `capsys`). It now still reports the clean/flagged
+split without judging it, but asserts each ALIGNED_GRID key is in the clean map or the
+worklist — `absent` means a silently dropped anchor. Mutation-checked: adding a bogus key
+fails the test. `capsys` removed.
+
+Gates re-run: `translations-official` **195 passed** (170 baseline + 9 Step-0 + 5 fix-1 +
+11 F4 smoke); `aug17-tools` **131 passed, 1 failed** (the documented pre-existing
+CRLF-fixture failure); F4 smoke **11 passed**.
+
+## 2026-08-26 — Wave 3 / Task 28: the Aug-21 F4 extract merged into the seven F4 maps
+
+`apply_aug21.py --only F4 --apply` after a by-category sweep, two override rounds and one
+RED gate that was rolled back rather than papered over. **No commit** (CSPro-side; Carl
+commits). No deploy. `raw/` untouched; no `.dcf`/`.apc`/`.fmf`/`.qsf` hand-edited — the
+`.dcf` is the generator's output.
+
+### Baselines taken BEFORE the merge
+
+| gate | pre |
+|---|---|
+| `scan_poisoned_keys.py --apply-report aug21_pre_findings.json` | **1482** suspect entries (STALE_KEY 1445 · DOUBLED 17 · WRONG_Q_CLEARED 12 · SELF_ECHO 4 · EN_FRAGMENT 2 · IS_OTHER_EN 2 · GLUED_CLEARED 0) |
+| `bridge_check.py --check --json out-aug21/aug21_pre_bridge.json` | total 19, all `A-mismatch`; **`bc` = 0** → `-PreBridge 0` |
+| F1/F3/F4 `.dcf` md5 after the scan | unchanged — the scan's regeneration is a no-op |
+
+### Dry run 1 (no F4 item:/vs:/val: overrides yet)
+
+`--only F4 --unmatched --seed aug21_pre_findings.json`: **2222** values would be written
+(fil 563 · bcl 253 · bis 201 · ceb 228 · war 382 · hil 259 · ilo 336), 0 overrides,
+`dcf-unanchored` 39 per locale (informational per the controller ruling, not a STOP).
+The seed resolved **0** candidate rows from `aug21_pre_findings.json` + FINDINGS.md §3/§4
+and printed **5 unresolved `recovery_exclusions` ids** (`F4|BIS|196|7`, `F4|CEB|202|2`,
+`F4|FIL|196|6`, `F4|HIL|202|2`, `F4|ILO|196|7`, all `en-mismatch`); none of the five keys
+appears in the F4 write set, so there was nothing to hold. The FINDINGS rows the brief
+names (`HIL Q25`, `WAR Q9`, `BIS Q6`, `CEB Q195`, `CEB Q78`) are F1/F3 rows or already
+`already_same` on F4 — none is re-introduced.
+
+### By-category sweep (`<ws>/task-28/_defect_sweep.py`, rebuilt from task-17's)
+
+Rebuilt for F4 and extended: task-27's residual classes (`legend-code-head`,
+`legend-code-tail`, `english-value`), the wave's whitespace rule
+(`whitespace-insert` = hold, `whitespace-remove` = write), `terminal-stop`, and — added
+after gate run 1 exposed them — `english-anchor-head` and `orphan-head`. `legend-code-head`
+and `legend-code-tail` were widened from ASCII-hyphen-only to en/em dash, which found 16
+further genuine roster-legend rows.
+
+| family | rows in the 2222-row write set | disposition |
+|---|---|---|
+| `truncated` | 93 | held, minus 5 heuristic false positives |
+| `legend-code-head` | 38 + 8 (dash form) | held |
+| `orphan-head` | 22 | held |
+| `english-anchor-head` | 12 | held |
+| `terminal-stop` | 8 | held |
+| `legend-code-tail` | 8 (dash form) | held, minus 1 |
+| `vs-offset` | 7 | held (all ceb `Social Media` → `Wala ko kahibalo`, code 90's text) |
+| `english-value` | 5 | held, minus 1 |
+| `english-furniture` | 4 | held |
+| `whitespace-remove` | 4 | **written** (wave rule 4) |
+| `whitespace-insert` | 4 | held, minus 2 |
+
+Nine rows carry a detector hit and were **written anyway** after reading them against the
+paper and the live map (each is listed with its reason in `_defect_sweep.py::CLEARED`):
+`bcl item:/vs:Q27_REFRIGERATOR` + `item:/vs:Q28_TELEVISION` (short but complete Bikol),
+`bcl val:Q61_BUCAS_SERVICES_VS1:03` and `ilo val:Q74_WHERE_REST_VS1:04` and
+`ilo val:Q46_MEMBER_CATEGORY_VS1:07` (the live value is the same span plus an orphan `(`),
+`hil val:Q17_DECISION_MAKER_VS1:12` + `val:Q23_WATER_SOURCE_VS1:4` (`Iban pa(specify)` →
+`Iban pa (specify)` restores the space the English itself prints — a fix, not the
+line-break artefact wave rule 4 describes).
+
+A general "the Aug-21 value is a proper PREFIX of the live value" detector was built and
+**removed**: it fires on 148 rows of which 146 are the wave's own improvements (the live
+June-5 values carry the next option glued on — `Motorsiklo Bike Bisikleta Boat Bangka` →
+`Motorsiklo`). Its two real rows are already caught by `truncated`. Measurement:
+`task-28/evidence/prefix-truncation-probe.txt`.
+
+### Gate run 1 was RED — rolled back, not papered over
+
+The first `--apply` (69 keys / 151 rows held) grew two scan reasons and the bridge B/C
+count:
+
+```
+GLUED_CLEARED  0 -> 16   DOUBLED 17 -> 19   bridge B/C 0 -> 13   GATES FAILED
+```
+
+The maps were **restored from `task-28/before/`** (verified: no `_meta.sources.aug21`), and
+three shapes the sweep had not modelled were added to it and to the hold set:
+
+* `english-anchor-head` — the span OPENS with a neighbouring key's English label
+  (`What is the name of the facility? Sa nakalipas na 12 buwan …` on
+  `item:/vs:Q89_HAS_USUAL_FACILITY`, 12 rows). `heading_corpus()` deliberately excludes
+  anchor labels, which is exactly why the sweep was blind to it; the label also had to be
+  matched with its `89.1. ` question number stripped.
+* `orphan-head` — the span OPENS with an orphan `?` / `"?` / `]` glyph (22 rows, all seven
+  locales' `item:/vs:Q54_YAKAP_HEARD` among them).
+* the ID-block admin leaks (`item:ENUMERATOR_S_NAME` = `Resulta`, `item:RESPONDENT_NAME` =
+  the whole Q2 block) and the Q21/Q22 glue, which only the GATE can see — those are taken
+  from the gate's own two JSON artefacts by `<ws>/task-28/_gate_holds.py` (new scan finding
+  = post minus pre; bridge row = `bc_marker` set) rather than re-derived by hand.
+
+### Overrides added — 80 keys, 217 locale-scoped rows, every one `keep: null`
+
+`aug21-overrides.json["F4"]` goes 37 → 117 entries; the 37 pre-existing `note:`/`icf:`
+entries (Tasks 25/26) and the F1/F3/F2 blocks are byte-identical. Every new entry is
+locale-scoped (`"locales": [...]`) so a defect in ONE paper never suppresses the correct
+writes the same key carries in the other six, and every one carries the detector tag and
+the paper-side cause in its `reason`. `keep: null` throughout: nothing is hand-copied, so
+`WARN override 'keep' != current map value` never appears.
+
+### Dry run 3 → apply → gates CLEAN
+
+```
+F4  locale  written replaced override  same flagged dcf-unanchored
+    fil          71      469       23   258     541             39
+    bcl          79      142       32   640     469             39
+    bis          75      105       21   666     495             39
+    ceb          73      106       49   631     503             39
+    war          88      261       33   497     483             39
+    hil         127       91       41   561     542             39
+    ilo         119      199       18   593     433             39
+```
+
+2005 values written (632 new keys + 1373 replacements, 0 keys removed — independently
+re-derived from `task-28/before/` in `evidence/applied-map-delta.json`). Residual sweep on
+that write set: **13 rows, all nine cleared-by-review plus the four `whitespace-remove`
+fixes**.
+
+```
+scan gate: OK (total 1482 -> 1482, no reason grew; GLUED_CLEARED back to 0)
+bridge: total 196, By rule {'A-mismatch': 196}, B/C markers = 0 vs pre 0
+GATES CLEAN - proceed to generate_dcf.py     (exit 0)
+```
+
+Rule A grew 19 → 196 as expected and documented (June-5 legacy mismatch after Aug-21
+replaces values); it is triage-only and not gated on.
+
+### Coverage after `F4/generate_dcf.py` (verbatim)
+
+```
+    FIL: 918/1403 labels translated (65%)
+    BCL: 949/1403 labels translated (67%)
+    BIS: 933/1403 labels translated (66%)
+    CEB: 977/1403 labels translated (69%)
+    WAR: 1010/1403 labels translated (71%)
+    HIL: 830/1403 labels translated (59%)
+    ILO: 957/1403 labels translated (68%)
+  -- 18 translated label(s) cut at 255 chars (BCL:1, BIS:2, CEB:2, FIL:5, HIL:4, ILO:2, WAR:2)
+```
+
+| | FIL | BCL | BIS | CEB | WAR | HIL | ILO |
+|---|---|---|---|---|---|---|---|
+| before | 60 | 62 | 61 | 64 | 66 | 50 | 60 |
+| after | 65 | 67 | 66 | 69 | 71 | 59 | 68 |
+| delta | +5 | +5 | +5 | +5 | +5 | +9 | +8 |
+
+**Below the ≥ +10 pt target** (recorded, not asserted, per the pre-flight ruling). The 217
+held rows are ~10 % of the candidate write set; the rest of the gap is that 433–542 keys
+per locale are still `flagged` in the extract worklist.
+
+### Replayability
+
+A post-apply dry run writes **0 rows** in all seven locales (0 written / 0 replaced /
+overrides unchanged / no WARN) — `evidence/dryrun-final-replay.txt`.
+
+### Open worklist handed forward
+
+1. **`item:Q21_HH_SENIORS` (war) and the WAR `NN. ` prefix class generally** — the Waray
+   paper prints the question number on the LOCAL row too, so 198 clean WAR values open with
+   `21. `/`89.1 `. The live WAR map already holds 41 such rows and the gates do not flag
+   them, so they were written; `item:Q89_1_FACILITY_NAME` (war) is the one member of the
+   class the scan DID flag and it is held. A wave-level decision on the whole class is
+   still open (carried over from Task 27 concern 3(c)).
+2. **Paper-side defects held, not fixed** — the GAMOT applicability note printed inline
+   after Q70/Q71/Q72/Q73, the Q17 English definition block, the Q18 income directive, the
+   Q66/Q74 local `select all that apply` repeats, and the HIL Q28/Q29 quoted-question
+   glyphs. All are extractor-side improvements available to a later extractor round
+   (`NOTE_PATTERNS` is the natural home for the first three); nothing was hand-copied.
+3. **18 labels still cut at 255 chars** in the dcf (display only).
+### Task 28 fix round 1 (2026-08-26) - note-layer English held for ILO Q72 and FIL Q38
+
+The task review found that `item:/vs:Q72_GAMOT_OBTAINED` had been written to the **ILO**
+map carrying the English enumerator note in front of the Ilocano question
+(`Applicable only to respondents in areas with GAMOT facility (Naala yo kadi ...)`), and
+had propagated into `HouseholdSurvey.dcf` (2 occurrences) and `HouseholdSurvey.ent.qsf`
+(1) - so the ILO Q72 prompt and value-set label opened in English. The Q72 override held
+only fil/bcl/bis/ceb/hil; the sibling Q70/Q71/Q73 holds covered all seven.
+
+**Root cause of the miss:** the by-category sweep's `english-furniture` family is built
+from labelled `.dcf` nodes (`heading_corpus()`), and the applicability note is not a
+labelled node - it is note-layer content, `note:const:_GAMOT_FAC` in `notes.json`.
+`anchor_extract.has_directive()` does not match it either. The family could therefore only
+see such a row when the span TRUNCATED at the note (`ends '... GAMOT facility'`), never
+when the note LEADS the span.
+
+**Fix:** `_defect_sweep.py` grew `note_corpus()` + `note_layer_english()` - every
+`notes.json[F4]["english"]` string (Enumerator-prefix stripped, `~~fill~~` entries skipped)
+matched on the `norm_for_match` projection, whole or in 40-char runs, so a dropped full
+stop or a glued paren cannot dodge it. Re-running the sweep on the full F4 write set found
+**4** note-layer rows, not 2: the ILO Q72 pair **and a second, previously unseen pair** -
+FIL `item:/vs:Q38_DISABILITY_TYPE`, whose Aug-21 span is the PWD-card enumerator
+instruction (`note:const:_PWD_CARD`) with the Tagalog question missing entirely.
+
+The wave was re-run from `task-28/before/` with the four rows held:
+
+| | before fix round 1 | after |
+|---|---|---|
+| F4 holds | 80 keys / 217 locale rows | **82 keys / 221 locale rows** |
+| values written | 2005 | **2001** |
+| residual sweep | 13 rows (9 cleared + 4 whitespace-remove) | **13 rows, 0 english-furniture** |
+| `run_aug21_gates.ps1 -Inst F4 -PreBridge 0` | GATES CLEAN | **GATES CLEAN, exit 0** |
+| bridge total (Rule A, triage-only) | 196 | 194 |
+| poisoned strings in the .dcf / .qsf | 2 / 1 | **0 / 0** |
+
+Only `fil.json` and `ilo.json` changed; bcl/bis/ceb/war/hil are byte-identical to the
+pre-fix maps. Coverage is unchanged to the percentage point (FIL 918->917 labels, ILO
+957->956 - both still 65 % / 68 %):
+
+```
+    FIL: 917/1403 labels translated (65%)
+    BCL: 949/1403 labels translated (67%)
+    BIS: 933/1403 labels translated (66%)
+    CEB: 977/1403 labels translated (69%)
+    WAR: 1010/1403 labels translated (71%)
+    HIL: 830/1403 labels translated (59%)
+    ILO: 956/1403 labels translated (68%)
+  -- 18 translated label(s) cut at 255 chars (BCL:1, BIS:2, CEB:2, FIL:5, HIL:4, ILO:2, WAR:2)
+```
+
+Two artefact-level regression tests were added to `test_aug21_f4_extract.py`
+(`test_f4_map_values_never_open_with_note_layer_english`,
+`test_f4_map_values_carry_no_enumerator_directive_note_text`): both FAIL on the pre-fix
+maps and pass now. A post-apply dry run still writes 0 rows.
+
+**Newly surfaced, NOT fixed here:** the same detector finds a *pre-existing* note-layer
+leak on `val:Q88_DIFF_PAYING_VS1:04` in all seven maps - the value trails off into
+`intro:89` (`... We will now ask questions about your access to a`). It is already in the
+pre-wave baseline, the Aug-21 extract offers no clean replacement, and repairing it would
+be a hand edit outside the apply path. Added to the worklist.
+
+## 2026-08-26 — Wave 3 / Task 29: the notes layer for the Aug-21 F4 printed gates
+
+Re-ran the Aug-21 notes import now that Task 25 has published the two F4 gate constants,
+and held every value the new layout would have shipped. **No commit** (CSPro-side; Carl
+commits). No deploy. `raw/` untouched; no `.dcf`/`.apc`/`.fmf`/`.qsf` hand-edited — the
+`.qsf` is `generate_qsf.py`'s own output and came back **byte-identical** to the pre-task
+file, which is the intended result (see "What actually renders" below).
+
+### Step 0 — is each Aug-21 F4 paper bilingual-inline or monolingual?
+
+The inline probe from the brief is now a committed script,
+`automation/aug21_classify_notes_source.py` (it reads the `text-aug21/` dumps — the exact
+bytes `find_translation()` searches — and reports, per locale, how many of the
+instrument's English note anchors the paper prints, plus a column per named key).
+
+| locale | English note anchors present | layout | English gate anchors present |
+|---|---|---|---|
+| FIL | 17 / 29 | bilingual-inline | both |
+| BCL | 18 / 29 | bilingual-inline | both |
+| BIS | 17 / 29 | bilingual-inline | both |
+| CEB | 18 / 29 | bilingual-inline | both |
+| WAR | 16 / 29 | bilingual-inline | both |
+| HIL | 19 / 29 | bilingual-inline | both |
+| ILO | 17 / 29 | bilingual-inline | both |
+
+**No locale is source-limited.** Every F4 paper prints both English gates, and six of the
+seven print a dialect gate too. What they do NOT do is print the dialect gate *after the
+English gate*: the Aug-21 reflow puts the ENGLISH QUESTION there and the dialect gate only
+after that question —
+
+```
+[Answer only "yes" in Q112] After you went to the specialist or special service, did they
+follow up with you about what happened at the visit? [Sagot lamang ng "oo" sa Q112] Pagka…
+```
+
+`find_translation()` takes the text that follows the anchor, so it recovers the English
+question, not the gate. That is the same wall Task 8 hit on the `const:` family and, per
+the controller ruling, the extractor is **not** being changed here.
+
+### What an unheld import would have shipped (measured, not predicted)
+
+Running the extract with no gate holds wrote `"After you went to the specialist or special
+service, did they"` into **all seven locales** of `const:_GATE_ANSWER_ONLY_IF_YES` —
+English prose on the blue instruction line where a routing gate belongs
+(`task-29/evidence/red-step3a-delta.txt`). `const:_GATE_DOH_RETAINED` recovered nothing in
+any locale (the English tail after it is rejected as English).
+
+### Overrides seeded — 15 rows, all `keep: ""` (render English)
+
+`aug21-overrides.json["F4"]` goes 119 → 134 entries. The F1/F3/F2 blocks and the 119
+pre-existing F4 entries are byte-identical.
+
+| rows | key | why |
+|---|---|---|
+| 7 | `note:const:_GATE_ANSWER_ONLY_IF_YES:{FIL,BCL,BIS,CEB,WAR,HIL,ILO}` | the bleed above |
+| 7 | `note:const:_GATE_DOH_RETAINED:{…}` | same layout; recovers nothing today, so the row is the standing hold if the capture window shifts |
+| 1 | `note:intro:144:BIS` | the Aug-21 English intro ends `… including take-aways.` and the reflow carries its last two words into the Bisaya capture (`take- aways. Naa na kita sa katapusang pipila ka seksyon …`); `polish()` strips a one-token English leftover, not a hyphen-split two-token one. This is the "accepted imperfection" Task 8 named and is now closed |
+
+Nothing was hand-copied: no override carries an invented translation.
+
+### Merge result
+
+```
+[F4] 29 English notes  |  FIL 24  BCL 19  BIS 22  CEB 12  WAR 23  HIL 22  ILO 19
+aug21 merge: written 0, replaced 0, overridden 119, kept_prior 7
+```
+
+`written 0` is the point — every value the Aug-21 paper offers for the new keys was looked
+at and held. `notes.json` keeps its CRLF; the only content changes are the two new English
+anchors, the seven `""` gate rows and `intro:144 BIS: junk -> ""`.
+
+`notes_lookup.coverage()`:
+
+| | FIL | BCL | CEB | WAR | HIL | ILO | BIS |
+|---|---|---|---|---|---|---|---|
+| June-5 (pre-wave) | 51 | 45 | 28 | 48 | 45 | 38 | 45 |
+| before Task 29 | 51 | 46 | 27 | 47 | 44 | 38 | 46 |
+| after Task 29 | 51 | 46 | 27 | 47 | 44 | 38 | **45** |
+
+The single `-1` is the deliberate `intro:144 BIS` hold. (`CEB/WAR/HIL -1` against June-5 is
+Task 8's pruning of F1's retired `const:_PROBE`, already reviewed.) The test
+`test_notes_coverage_did_not_regress` pins the "after" row as the new floor.
+
+### What actually renders
+
+`automation/aug21_check_gates.py F4 Q117… Q118… Q131… Q135…` → **8 gate notes across 8
+languages** on every one of the four items, exit 0. Per-language bodies
+(`task-29/evidence/step5-instruction-bodies.txt`): the gate is the English bracketed
+directive in all eight, as held; Q118 carries **two** instruction paragraphs per language
+and its second part translates independently (FIL `BASAHIN ANG PAGPIPILIAN…`, WAR `BASAHA
+HA MAKUSOG…`, ILO `(BASAEN TI OPTIONS…)`), which is what the Task 25 tuple design was for.
+ICF probe on `F4/HouseholdSurvey.ent.qsf`: `FIL differs from EN: True`.
+
+### Newly surfaced, NOT fixed here: an em-dash key mismatch hides `intro:144` entirely
+
+Verifying "no other F4 intro value is a bleed" turned up something else. `extract_notes.norm()`
+flattens `–`/`—` to `-` before storing a note's English key; `notes_lookup._canon()`
+normalises quotes and whitespace but **not** dashes. `F4 SECTION_INTROS[144]` contains two
+em-dashes, so the runtime key never matches the stored key and the note falls back to
+English in **all seven locales** — its five good June-5 values (FIL/BCL/CEB/WAR/HIL) and
+the Aug-21 ILO value have never reached a tablet. Swept F1/F3/F4: `intro:144` is the only
+dash-bearing note, so this is a one-note defect, not a class.
+
+Consequence for this task: the `intro:144 BIS` hold is correct but currently inert at
+render time, and the qsf is therefore byte-identical. Fix is one line in
+`notes_lookup._canon` (flatten `–`/`—`/NBSP the way `norm()` does), which would light up
+six locales on that intro — and the BIS junk is already held, so the fix is safe to take.
+It changes rendered text in a deploy wave, so it is left to the controller rather than
+slipped into a notes-layer task. Evidence: `task-29/evidence/dash-key-finding.txt`.
+
+
+### Task 29 fix round 1 (2026-08-26): em-dash mismatch fixed, `intro:144` held for all seven
+
+The finding above is closed. `notes_lookup._canon()` now folds `–`/`—`/NBSP the way
+`extract_notes.norm()` always did, and `extract_notes.canon_english()` folds them too so the
+three normalisers that decide "same note" cannot drift apart again. Blast-radius sweep over
+all 67 note anchors in F1/F3/F4: `F4 intro:144` is the only one the fold can reach, so F1
+(live) and F3 are untouched.
+
+Making it reachable showed the six stored values were **truncated captures**, not usable
+text: 36-78 characters against an 865-character English script (ratios 0.04-0.09, the six
+worst of 314 stored pairs; next worst 0.22). `SECTION_INTROS[144]` is two English paragraphs
+and the paper prints them as separate blocks, so `find_translation()` cuts the dialect text
+after its first clause and drops every instruction that follows ("exclude restaurant meals",
+"do not include items bought for business, resale"). Reading that fragment aloud is worse
+than reading the English the field sees today, so the `note:intro:144` hold was widened from
+BIS to all seven locales (`keep: ""`, F4 override rows 134 -> 140). Truncated extractor
+output is a defect, never an accepted `keep`; teaching `find_translation()` to span a
+multi-paragraph intro re-keys every note in F1/F3/F4 and is a wave-level change.
+
+Result: merge `written 0, replaced 0, overridden 125, kept_prior 7`, replays byte-identical;
+`F4/HouseholdSurvey.ent.qsf` regenerates byte-identical (`155d2cff…`) so there is nothing to
+deploy for this fix; `verify_questions.py F4` PASS; `aug21_check_gates.py` 8/8 on all four
+items. `coverage()` FIL 50 / BCL 45 / BIS 45 / CEB 26 / WAR 46 / HIL 43 / ILO 37 - six
+deliberate -1s, all the intro:144 hold. Still open for the controller: the extractor cannot
+capture a multi-paragraph intro, and today nothing warns when a capture is a fraction of its
+English.
+### Task 30 (2026-08-26): F4 static gates green, version stamped **3.2.0**
+
+Wave 3's static lane. Every F4 artefact regenerated from its generator - `.dcf`, `.ent.apc`
+(+ `.ent.mgf`), `.generated.fmf` all came back **byte-identical** to the Task-28/29 output,
+so the wave's English + translation work is fully baked and the generators are idempotent.
+Only the two version surfaces moved.
+
+`stamp_version.py bump F4 --minor --type changed --notes "..."`:
+
+- `versions.json` F4 `3.1.4 (2026-08-20)` -> **`3.2.0 (2026-08-26)`**, channel `dev`
+- `.pff` Description -> `Household Survey (F4) - v3.2.0 (2026-08-26) [DEV]` (one-line diff)
+- `.ent.qsf` regenerated: **8 differing lines**, one per language, all the cover build
+  footer `Build: F4 v3.1.4 (2026-08-20)` -> `Build: F4 v3.2.0 (2026-08-26)`. Nothing else
+  in 6,477 lines changed.
+- `RELEASE-NOTES.md` + `WHATS-NEW.md` + `whats-new.html` regenerated and the portal page
+  published. MINOR is the right kind: the Aug-21 alignment is changed functionality, not a
+  data-shape break.
+- `stamp_version.py show` exits 0 - no pff/qsf drift on any instrument.
+
+Gates: `verify_questions.py F4` **PASS** (333 items, reachable 333/333, dead-conditions 0,
+bad-skips 0) · `skip_boundary_check.py F4` **OK** (1 known waiver) · `aug21_check_gates.py
+F4` 8 gate notes across 8 languages on Q117/Q118/Q131/Q135 · `aug21_overrides.py` OK ·
+`apply_aug21.py --only F4` replay **written 0, replaced 0** (wave rule 3) · pytest: F4 23
+passed / 2 xfailed, translations-official 220 passed / 1 skipped, aug17-tools 131 passed +
+the documented pre-existing CRLF-fixture failure.
+
+**F4 label-translation counts, pre-wave (HEAD maps) -> shipped**, both sides counted against
+the same Aug-21 English key set (1,401 labelled nodes):
+
+| | FIL | BCL | BIS | CEB | WAR | HIL | ILO |
+|---|---|---|---|---|---|---|---|
+| pre-wave | 845 | 868 | 856 | 902 | 920 | 701 | 836 |
+| 3.2.0 | 915 | 947 | 931 | 975 | 1008 | 828 | 954 |
+| delta | +70 | +79 | +75 | +73 | +88 | **+127** | **+118** |
+
+**Per-language consent renders for the first time.** Task 11 wired `ICF_PART1`/`ICF_PART2`
+through `icf_content.screens_html_by_lang()`, but until the Aug-21 import there was nothing
+for the loop to return. Probed on the shipped artefact, not the generator: all seven locales
+carry their own script in both parts (PART1 3 of 7 paragraphs translated, PART2 5 of 12; the
+rest fall back to English per paragraph, by design). No defect in `generate_qsf.py`'s consent
+block.
+
+Carried forward, unchanged by this task: `F4 intro:144` is reachable (the Task-29 `_canon`
+dash fold) but renders **English in all seven locales** by the deliberate `keep: ""` holds -
+the captures are 4-9% fragments of an 865-character script. Re-verified here against the
+pre-hold values. The controller's ruling for this task asked for the translated intro to
+ship; it does not, and shipping the fragments would have been a field-quality regression.
+
+No commit (CSPro-side; Carl commits). No compile / publish / deploy - Task 31 owns the
+fresh-Designer compile and Task 32 the byte-verify.
+
+## 2026-08-26 - Wave 3 / Tasks 32b-34: F4 v3.2.2 shipped, patch note written, wave closed
+
+**F4 v3.2.2 is the shipped Wave-3 build** - three deploys in one afternoon, each a
+review finding on the Aug-21 extractor rather than on the CAPI. v3.2.0 (Task 30's stamp,
+deployed 14:34 MNL) was superseded within the hour: Task 32's review found the extractor had
+prefixed 154 WARAY values with the paper's own question number, 7 of them with a number that
+contradicts the CAPI's. Task 32b added `strip_question_number()`, rolled the seven F4 maps
+back to the pre-wave baseline, re-applied the whole wave on the fixed extract and re-published
+as v3.2.1 (16:17:57 +08). Task 33's review then found the same class of defect in Filipino:
+the Aug-21 **Tagalog** paper is bilingual (English line, Filipino gloss in `[ ... ]`) and 459
+of 948 `fil.json` values had shipped wholly bracketed. Task 33b taught `anchor_extract.py` to
+drop one whole-value bracket pair and ran the same rollback-reapply-republish loop.
+Live since 18:17:36 +08: `HouseholdSurvey.zip` md5 `cc7da0badd868e4f24505899104b3df0`,
+1,671,413 bytes, `.pff` Description `Household Survey (F4) - v3.2.2 (2026-08-26) [DEV]`,
+fresh-Designer compile Successful 18:14:57, byte-verify `RESULT: ALL PASS`.
+
+**Coverage, pre-wave (HEAD maps) -> shipped 3.2.2**, both sides counted against the same
+Aug-21 English key set (1,401 labelled nodes):
+
+| | FIL | BCL | BIS | CEB | WAR | HIL | ILO |
+|---|---|---|---|---|---|---|---|
+| pre-wave | 845 (60%) | 868 (61%) | 856 (61%) | 902 (64%) | 920 (65%) | 701 (50%) | 836 (59%) |
+| 3.2.2 | 915 (65%) | 947 (67%) | 931 (66%) | 975 (69%) | 1001 (71%) | 828 (59%) | 954 (68%) |
+| delta | +70 | +79 | +75 | +73 | +81 | +127 | +118 |
+
+WAR is +81 not v3.2.0's +88: the seven paper-number-mismatch rows are removed, so those
+screens fall back to English. Re-measured on the 3.2.2 maps the row is unchanged from 3.2.1:
+the bracket strip rewrote 459 FIL values in place, same 948 keys before and after, so it
+changes what a Filipino screen reads and not how many read in Filipino. Notes floor vs
+after: `notes_lookup.coverage()` reads FIL 50 / BCL 45 / BIS 45 / CEB 26 / WAR 46 / HIL 43 /
+ILO 37, exactly the `NOTES_FLOOR`
+pinned in `F4/test_aug21_f4.py` - the build loses no note.
+
+**Overrides.** `aug21-overrides.json["F4"]` now holds 82 translation-map keys / 224
+locale-scoped rows (all `keep: null`) plus 58 `note:`/`icf:` entries - re-counted after
+Task 33b and unchanged by it (an extractor rule, not an override, fixed the brackets). The
+row count moved 217 -> 221 (Task 28's fix round, when the note-layer detector was
+added) -> 224 (three entries widened to `war` for this patch). Held families, all
+worklist items and none a code defect: the GAMOT applicability note and the FIL Q38
+PWD-card note, the Q17 definition block, the Q18 income directive, the Q66/Q74 local
+select-all repeats, the HIL Q28/Q29 quote glyphs;
+the 7 Waray paper-number-mismatch rows; the pre-existing `val:Q88_DIFF_PAYING_VS1:04` bleed
+into `intro:89`; `intro:144` English in all seven locales at `keep: ""`; the four printed
+gates (Q117/Q118/Q131/Q135) English in all eight languages.
+
+**The FIL square brackets: fixed in 3.2.2, not held.** 459 of 948 FIL values shipped in
+v3.2.0/v3.2.1 wholly wrapped in `[ ... ]`, all 459 written by this wave (pre-wave map: 0; the
+other six locales: 0 each). Measured on the shipped maps, no F4 value in any of the seven
+locales is wholly bracketed now; 11 values still carry a bracket somewhere inside them
+(8 fil, 2 hil, 1 war) against 19 pre-wave - span-boundary residue, on the worklist, not
+hand-editable. **F3's Wave-4 import must run on this extractor** or it reproduces the defect:
+the Aug-21 Tagalog F3 paper has 503 bracketed lines.
+
+**Evidence.** `docs/uat-fix-evidence/2026-08-26-aug21-translations/F4/` -
+`byte-verify-3.2.2.txt` `RESULT: ALL PASS` (`[Lalaki]`, `[Babae]`, the bracketed Q3 stem
+and the literals `v3.2.1` / `v3.2.0` all occur 0x in the served package), the app-list
+shot carrying the
+`v3.2.2 (2026-08-26) [DEV]` stamp, and three Tier-2 AVD locale frames (Q2.1 + the Q3 option
+list, EN/FIL/CEB). SHA-pinned at commit `456720080340223b39828064931060c91a2de0d8`; all
+five evidence commits (fbb8d9c, e5dfc58, 8e408cd, 62cc290, 4567200) are pushed to
+origin/main. The three `00-deploy-result*.png` files are byte-identical and version-less
+- CSDeploy leaves `Description` empty - so the app-list shot plus the byte-verify are
+what prove the version.
+
+**Patch note:** `deliverables/CSPro/patch-notes/2026-08-26-f4-v3.2.2-aug21-translations.md`
+(Task 34). It carries the `#f4-uat` Slack block plus the build record; the `draft-` file Task
+32b left behind and the v3.2.1 note were folded into it, never duplicated - one note per
+build, named for the build that is actually served. Its Slack block illustrates the Waray fix
+with Q69 (GAMOT), a row the pack SHIPS, not one of the seven held rows that read in English;
+`F4/test_aug21_f4.py` pins that (and the Filipino examples) against the maps. Carl posts it -
+the task does not. `*Changed:*` replaces the skill template's `*Fixed:*`, per the controller
+ruling.
+
+**Wave 3 closes here.** No commit for the CSPro-side tree (generators, maps, tools, patch
+notes, versions.json) - Carl commits when ready. The PSA submission set stays frozen at tag
+`capi-psa-2026-08-20`; everything in this wave is DEV channel.
+
+## 2026-08-26 - Wave 4 / Task 35: F3 baselines taken, Aug-21 label tests written RED
+
+Wave 4 (F3, live 6.0.3 -> 6.1.0) opens the way Waves 1-3 did: capture what the build looks
+like BEFORE anything is touched, then write the failing tests that define the Aug-21 English
+alignment. No generator was edited in this task.
+
+**`deliverables/CSPro/F3/test_fixtures/aug21_vs_codes_before.json`** is the pre-edit
+value-set CODE baseline - 213 value sets, taken from `build_f3_dictionary()` on the untouched
+6.0.3 build (2026-08-25 pre-flight said 213; confirmed today). It records codes only, never
+wording, so the Aug-21 relabelling in Tasks 36-38 can be proved text-only:
+`test_value_set_codes_unchanged` compares the live build against this file and must stay
+green for the rest of the wave. A row that moves here means a code moved, which is a codebook
+break, not a translation.
+
+**`deliverables/CSPro/F3/test_fixtures/r25_baseline_f3.txt`** is the pre-wave R25 caption-gate
+output. The gate is ALREADY red on the untouched checkout: `[FAIL] fields with no qsf prompt:
+52`, `[PASS] same-screen caption collisions: 0`, `R25 caption gate: FAIL ['F3']`. Those 52 are
+pre-existing and not this wave's to fix - the control-form fields, the 14 roster
+`_PAY_LINE`/`_PAY_SRC` stubs, `FIELD_CONTROL_FORM_3`, the two case-verification photo fields,
+and the 12 GPS rows (`REC_FACILITY_CAPTURE_FORM.FACILITY_GPS_*` and
+`REC_PATIENT_HOME_CAPTURE_FORM.P_HOME_GPS_*`, which carry captions but no qsf questionText).
+Task 39's criterion is therefore **"no NEW rows against this file"**, never "exit 0". Fixing
+the GPS prompts is a separate pre-existing defect and stays out of Wave 4.
+
+**`deliverables/CSPro/F3/test_aug21_labels.py`** is the wave's executable spec: 14 tests, 10
+red on the untouched build (Q47 four-way single-stem, Q69 hours/minutes stem, Q94/Q96/Q98
+stems, Q97.2 paper text, the 115.1/115.2 flat matrix, and the two `_FACILITY_NEUTRAL` locale
+tests), 4 green from the start (Q66/Q88 placeholders still present, every label under 255
+chars, value-set codes match the fixture, the four checkbox value sets ascend). The two
+locale tests are the Task 38 gap in test form: `_FACILITY_NEUTRAL` covers EN/FIL/BCL/BIS/CEB/
+WAR only, so HIL and ILO silently fall back to the English "this facility" - the second test
+asserts the fallback is gone rather than merely that the token is.
+
+`vs_code_map()` and `en_labels()` live in that test module and are imported from there by
+Tasks 36-38; the snapshot script imported `vs_code_map` from it too, so the walker has exactly
+one definition in the wave.
+
+No commit (CSPro-side; Carl commits).
+
+## 2026-08-26 - Wave 4 / Task 36: F3 Q47 / Q69 / Q94 / Q96 / Q98 stems reworded to the Aug-21 paper
+
+English alignment only, in `F3/generate_dcf.py` (+ one `generate_qsf.py` note). No value set,
+no code, no `.dcf`/`.apc`/`.fmf`/`.qsf` was touched - `test_value_set_codes_unchanged` and
+`test_checkbox_value_sets_ascend` stayed green throughout, which is the proof this was text-only.
+Every string below was read out of
+`raw/Survey-Instruments-2026-08-21/English/F3-English_Patient Survey Questionnaire_UHC Year 2_Aug21.pdf`
+with PyMuPDF before it was written (Task 24 precedent), not copied from the brief on trust.
+
+**The five reworded stems**
+
+1. **Q47** (paper p.6-7) - the paper prints ONE stem, `47. Are you aware that there are
+   PhilHealth packages for the following health services:`, then four service rows
+   (Physician check-up / Diagnostic tests (e.g. laboratory tests and imaging) / Hospital
+   confinement / Outpatient drugs). The old labels were four separate "is/are PhilHealth
+   package/s for ..." questions. Each item now carries the whole stem + " - " + its row, so
+   the dcf label stays the translation anchor (#1059 rule) while reading as the paper does.
+2. **Q69** (p.8) - was "How long does it take you to travel to the health facility you usually
+   go to"; the paper reads `69. How long does it take you to travel from your house when going
+   to the health facility that you usually go to?`. The ` - Hours` / ` - Minutes` component
+   suffix is kept on the dcf label and is still stripped from the qsf question bar by
+   `_COMPONENT_SUFFIX_RE` (verified: the prompt renders the stem once, with no suffix).
+3. **Q94_LAB_AMT** (p.12) - was "the cost of this laboratory test"; now
+   `94. How much was the cost of [laboratory test]? (amount paid out-of-pocket, Pesos)`.
+   The paper prints the bracket as a fill-in blank, `[laboratory test:  ]`; the CAPI label
+   normalises it to `[laboratory test]` because the real test name is piped in above the box
+   by `INSTRUCTIONS[94]` (`Laboratory Test: ~~getvaluelabel(Q94_LAB_CODE)~~`, verified live).
+   `Q94_LAB_PAY` ("How was the cost ... paid?") was out of this task's scope and is unchanged.
+4. **Q96_SOURCES** (p.13) - was "Which of the following did you use to pay for the prescribed
+   medicines? (Select all that apply.)"; now the paper stem
+   `96. How much was spent for the prescribed medicines?`. The paper's "(NAME IN ___)'s" fill
+   is not modelled (no respondent-name pipe exists on this screen), so the possessive is
+   rendered as "the".
+5. **Q98_SOURCES** (p.13) - now the paper stem VERBATIM, including its parenthetical:
+   `98. Did you use any of the following to pay for medical costs? (select all that apply)`.
+
+**The Q96-vs-Q98 directive decision.** Both labels used to end in "(Select all that apply.)".
+The Aug-21 paper carries that directive *inside* the Q98 stem but *not* in the Q96 stem. So:
+Q98 keeps it in the label (dropping it would break the extractor's anchor on the paper's exact
+English) and gets NO qsf note, or the directive would print twice - `Q98_SOURCES` already holds
+the Quantified-Free-Service enumerator note and keeps only that. Q96 loses it from the label and
+regains it as a blue note via a new `INSTRUCTIONS_BY_NAME["Q96_SOURCES"] = _SELECT_ALL`. The
+entry is NAME-keyed, not number-keyed, so it does not spray onto `Q96_PAY_LINE/_PAY_SRC/_PAY_AMT`,
+which share the `Q96_` prefix - verified by calling `question_extras()` on all four names
+(`Q96_SOURCES` -> "SELECT ALL THAT APPLY.", the three roster fields -> None). There was no
+number-key `96` in `INSTRUCTIONS`, so nothing was displaced.
+
+**Option lists verified unchanged against the paper.** `Q96_MEDS_PAY` (generate_dcf.py) and the
+byte-identical copy inside `Q96_ROSTER_PROCS` (generate_apc.py) both read Out-of-pocket 01,
+Donation 02, Free/no cost 03, Free, charge to PhilHealth 04, Free, charge to Private Insurance 05,
+Free, charge to HMO 06, In kind 07, Don't know 08 - exactly the paper's p.13 order and its comma
+form ("Free, charge to X"), so neither list was edited. `Q98_SOURCES`' 16 options were re-read off
+the paper's numbered list too and match, including the paper's own duplicate "15)" typo that
+Task 0.4 already registered as a defect-fix (15 = Quantified Free Service, 16 = Other (specify)).
+
+Gates: `F3/test_aug21_labels.py -k "q47 or q69 or q94 or codes or ascend or 255"` 9 passed;
+`automation/verify_questions.py F3` PASS (375 items, reachable 375/375, dead-conditions 0,
+bad-skips 0); longest dcf label 243 chars (Q18_INCOME_AMOUNT), under the 255 ceiling. The four
+tests still red in the file are Tasks 37 (Q97.2, 115.1/115.2) and 38 (`_FACILITY_NEUTRAL`
+HIL/ILO), untouched here. Artefacts are NOT regenerated in this task.
+
+No commit (CSPro-side; Carl commits).
+
+## 2026-08-27
+
+- **Deploy (CAPI)**: **Patient Survey (F3) v6.1.0** — Aug-21 wording alignment + the 7-locale
+  Aug-21 translation import — published from a fresh Designer and deployed to
+  `capi.asiansocial.org/csweb/api` at 00:47 +08. DEV channel; the PSA submission set stays
+  frozen at tag `capi-psa-2026-08-20`. **MINOR**: labels and translations only, no answer
+  code, no question number and no record shape changed (`verify_questions.py F3` PASS — 375
+  items, reachable 375/375, dead-conditions 0, bad-skips 0; `.dcf` / `.ent.apc` / `.fmf` md5s
+  byte-identical to the Task-41 build, only the `.qsf` build footer moved). This closes wave 4
+  of the Aug-21 plan; wave 5 (Tasks 44-47) follows. Patch note:
+  `deliverables/CSPro/patch-notes/2026-08-27-f3-v6.1.0-aug21-translations.md` — posting it to
+  `#f3-uat` stays with Carl.
+- **Coverage (F3, of 1,749 translatable labels)**, `generate_dcf.py`'s own count, before → after:
+  FIL 1,064 (60%) → 1,307 (74%); BCL 942 (53%) → 1,163 (66%); BIS 963 (55%) → 1,195 (68%);
+  CEB 1,030 (58%) → 1,253 (71%); WAR 1,004 (57%) → 1,262 (72%); HIL 757 (43%) → 1,012 (57%);
+  ILO 925 (52%) → 1,212 (69%).
+- **Byte-verify**: `aug17-tools/byte_verify_aug21.py F3` against the package pulled back off the
+  box (`files/apps/PatientSurvey.zip`, 1,720,407 bytes, all 8 `psgc_*` members present) —
+  **`RESULT: ALL PASS`**, run with `--baseline` (the pre-wave task-40 maps) plus
+  `--probe item:Q98_SOURCES --probe val:Q107_SOURCES_VS1:05` (both wave-changed in all seven;
+  `PROBE_KEYS['F3']`'s `item:Q972_SOURCES` is absent in CEB/HIL after the fix-round-1 holds) and
+  `--count "kangrunaan a kangrunaan a" 0` on the held Ilocano stutter. Version proof is the
+  **served** `.pff` Description — `Patient Survey (F3) - v6.1.0 (2026-08-27) [DEV]` — since the
+  CSDeploy dialog's Description field is blank by design.
+- **English-delta residue (from Task 39 Step 3), unchanged by the deploy**: 26 of the Day-0 30
+  remain and are a strict subset of it — `1`-`9` (the paper re-uses those numbers for the
+  visit-record disposition list), `94` (`[laboratory test:  ]` vs `[laboratory test]`), `96`
+  (`(NAME IN ___)'s` vs `the`), `106`/`107`/`109`/`112`/`113` (bill-detail rows: the paper prints
+  the question once above the grid), `129` (paper typo `MAIFP`), `131`-`134` and `136`-`140`
+  (rating-scale rows). Wave 4 closed `47`, `69`, `98` and `115.1` and added no new row.
+- **r25 caption gate**: `Compare-Object` against `F3/test_fixtures/r25_baseline_f3.txt` prints
+  **nothing** — no new `NO-PROMPT` / `caption=` / `COLLISION` row from this wave.
+- **Overrides**: `data/translations-official/aug21-overrides.json` F3 block = 185 entries, all
+  written by the apply tasks; **Task 42 added none**. The 115.x holds stay `keep:null` (measured:
+  95 of the 101 gap cells have no candidate text at all, and the 6 that do carry the wrong
+  string), so v6.1.0 knowingly ships the 115.1/115.2 row labels in English in all seven locales.
+- **Two tool defects fixed on the way through, both TDD'd** (`automation/test_auto_deploy.py` +6,
+  `aug17-tools/test_aug21_f3.py` +5): (1) `auto_deploy.py`'s `deploy_one()` ignored
+  `add_files()`' early return and would click Deploy on a package missing its external dicts —
+  the silent 2026-06-17 defect; it now aborts and exits non-zero naming the missing files.
+  (2) `byte_verify_aug21.py` reported a false MISS on any probe whose map value holds the
+  source-side `[facility_name_input]` token (`item:Q66_SAME_AS_USUAL`, wave-changed in all
+  seven): `generate_dcf.py`'s #714 pass rewrites that token per language before the label reaches
+  the package, so the literal bytes are never in the `.pen`. The first run of this deploy printed
+  `RESULT: FAIL` over a package that was correct. The verifier now renders such probes through the
+  instrument's own pass (imported from the generator, so the two cannot drift).
+- **Evidence** (committed **and pushed**, the only sanctioned commit of this task):
+  `docs/uat-fix-evidence/2026-08-27-aug21-translations/F3/` at
+  `cfe1b09eed52312f506301f910af8fb0f8bc4530` — `00-deploy-result.png`, `byte-verify.txt`,
+  `README.md` and the nine desk frames renamed in from Task 41's `draft-aug21-translations/`.
+  Everything else stays uncommitted for Carl.
+- **Tablet proof from the deployed package (Task 43)**: the served `PatientSurvey.zip` (the same
+  1,720,407 bytes byte-verify probed) was expanded and `adb push`ed to the `capi_tablet` AVD's
+  `.../csentry/PatientSurvey/`; the on-device `.pen` md5 **matches the served one**
+  (`2bf5dfdec6f104229afabce2c57d390e`). A NEW case (`040340302001`, `RHU BINAN`, Outpatient) was
+  started after `am force-stop`, never saved and **never synced** — the emulator was killed with
+  it still open. Five frames committed **and pushed** at `d6a74f2` under the same evidence
+  folder: `00-app-list-f3-6.1.0.png` (shows `Patient Survey (F3) - v6.1.0 (2026-08-27) [DEV]`),
+  `f3_q8_hil_tablet.png`, `f3_q8_war_tablet.png`, `f3_icf_hil_tablet.png`, `f3_icf_war_tablet.png`.
+  **Substitution, stated**: Q47 (~50 fields in) and 97.2 (~110) were not reachable inside the
+  30-minute navigation cap — CSEntry on Android takes no keyboard input on coded fields and CSPro
+  refuses forward case-tree jumps (`WARNING: Out of range! ... Q10_CIVIL_STATUS`). The pair was
+  taken on `Q8_LGBTQIA`, wave-changed in both HIL and WAR in
+  `aug21_apply_diff_F3_applied.json`; the HIL frame even shows code 3 still English, exactly the
+  gap in that write set. **Deviation record** (open for controller ratification) is in the patch
+  note under `### Tablet pass (Task 43) — substitution deviation record`, with the ~60-90 min
+  cost of a re-shoot and the check that no saved deep case exists to short-cut it
+  (`desktest_hil.csdb` / `desktest_war.csdb` hold 0 cases).
+- **Map-content defect the tablet pass surfaced — `PATIENT_TYPE`, 6 of 7 locales (pre-existing)**:
+  the HIL frame showed `val:PATIENT_TYPE_VS1:1/2` rendering as `nga serbisyo` / `kag`; the
+  per-locale check that followed found the same class in five more locales — code 1 (`Outpatient`)
+  reads `mentioned facility)` in FIL/BCL/BIS/CEB/ILO, and code 2 (`Inpatient`) reads
+  `visit ng pasyente` (FIL), `visit sa pasyente` (BIS), `This section is for respondents in`
+  (ILO). **WAR is the only clean locale** (English fallback on both codes). `PATIENT_TYPE`
+  **routes the case** (Outpatient → Section G, Inpatient → Section H), so this is the most
+  user-visible string defect in the build; no data is affected (codes 1/2 unchanged, routing
+  logic untouched). Separately `item:Q7_SEX` in HIL keeps an English anchor head
+  (`your Ano ang sekswalidad ...`). **No wave-4 write touched either key** —
+  `aug21_apply_diff_F3_applied.json` has neither in any bucket of any locale, and both values are
+  byte-identical to the task-40 pre-wave maps. Not fixed in wave 4 (the apply is closed; wave
+  rule 2 forbids `remediate_scan --write` after an apply): the sanctioned fix is a locale-scoped
+  `keep:null` in `aug21-overrides.json` so the build falls back to the English labels, plus an
+  extractor rule. Disclosed in the patch note's Slack block **and** its findings list (item 8),
+  and tabled per locale in the evidence README — Task 45 owns the fix. The README amendment that
+  carries that table (plus the Q8 HIL English-fallback label and the controller-facing status of
+  the Q47 / 97.2 device-evidence item) is evidence commit `886e45d` (retitled in `4e37989`), pushed.
+- **Open items**: (1) the **115.x Shape-B conversion is deferred** (Carl, 2026-08-25) — the
+  matrix still ships as a flat set of rows; (2) the **r25 GPS `NO-PROMPT` residue pre-dates this
+  wave** (11 GPS captions, unchanged since the Task-35 baseline) and is a separate fix, not an
+  F3-translation defect; (3) `Q1141_OTHER_TXT` gates on `Q1141_1` instead of `Q1141_6` —
+  pre-existing, the `.apc` is byte-identical to live 6.0.3; (4) Q47 / 97.2 have no **tablet**
+  frame — the 30-min cap stopped the walk at Q10; their desk frames and the byte-verify probes
+  stand as the proof for those two keys, and the substitution is **open for controller
+  ratification** (deviation record in the patch note); (5) `PATIENT_TYPE`'s Outpatient /
+  Inpatient labels are fragments in 6 of 7 locales — pre-existing, user-visible on a routing
+  field, queued for Task 45.
+
+No commit for the CSPro-side changes (generators, maps, tools, versions, patch note) — Carl commits.
+
+- **Wave 5 / Task 44 — coverage measured, status page written.** New tool
+  `deliverables/CSPro/automation/translation_coverage.py` (+ `test_translation_coverage.py`,
+  `aug21_coverage_baseline.json`) rebuilds each F1/F3/F4 dictionary **in memory**, runs
+  `apply_translations()` and reads the generator's own `{CODE}: m/t labels translated (p%)`
+  line, and shells out to `deliverables/F2/PWA/app/scripts/f2-coverage.py` for F2 — the
+  single coverage source for the PWA. No `.dcf` / `.apc` / `.fmf` / `.qsf` is written;
+  `git status --short F1 F3 F4` is byte-identical before and after a run. Output:
+  **`deliverables/CSPro/TRANSLATION-STATUS-2026-08-27.md`** — the one-page close-out status
+  (what shipped, coverage before → after for all 28 instrument × locale cells, override
+  counts, the flagged-worklist totals, the ASPSI source-side defects and the recorded
+  follow-ups). The tool rewrites only the block between its two HTML markers, so the
+  hand-written sections survive a re-run. Measured today: F1 81/81/80/77/81/79/79 %,
+  F3 74/66/68/71/72/57/69 %, F4 65/67/66/69/71/59/68 %, F2 80/83/77/83/80/84/79 % —
+  every cell above its pre-import baseline, +3 to +18 points.
+- **Version pins relaxed** (controller ruling, post-Task 18): `aug17-tools/test_aug21_f1.py`
+  and `F4/test_aug21_f4.py` now assert `version >= (4,1,0)` / `>= (3,2,0)` plus
+  `channel == "dev"` instead of an equality, and F4's `.pff` Description check reads the
+  shipped version out of `versions.json` — the next UAT patch bump can no longer turn a
+  green suite red, while a rollback below the Aug-21 import still fails.
+- No commit for any of this — CSPro-side changes are Carl's to commit.
+- **Wave 5 / Task 45 - translator worklist exported.** New tool
+  `deliverables/CSPro/data/translations-official/export_worklist.py`
+  (+ `test_export_worklist.py`, 20 tests) collects six sections into one workbook and one
+  flat CSV: **`deliverables/CSPro/translator-worklist-aug21.xlsx`** / **`.csv`**,
+  13,194 rows. `worklist` 11,531 (every `out-aug21/<INST>/<loc>_flagged.json` row - F1 2,386
+  / F2 809 / F3 4,608 / F4 3,728, including the 679 `unmatched` anchors from an
+  `apply_aug21.py --unmatched` dry run); `held` 754 (every `keep: null` / `keep: ""`
+  override, expanded to one row per locale it governs - F1 48 / F2 4 / F3 443 / F4 259);
+  `accepted` 101 (the override rows that carry text, with the reason); `residual` 420
+  (F1 183 / F2 55 / F3 95 / F4 87 - CLEAN pairs that `qa_flags()` passed but that still read
+  with a stray glyph, an unbalanced bracket or a dangling tail, so they never reach
+  `_flagged.json`); `paper-defects` 382 (14 named defects in the printed questionnaires,
+  first the F1 Hiligaynon Q10.1-Q35.1 option-4 `sa masunod sa masunod` stutter - 20 rows,
+  20 occurrences on `F1_HIL.txt`); `follow-ups` 6 (F1 4.1.1, F4 3.2.3, the 115.x label
+  composition, the `Q1141_OTHER_TXT` gate and the `PATIENT_TYPE` fragments). Read-only: the
+  three `.dcf` files are md5-identical before and after, and the dry run writes 0 rows in
+  every locale. The two worklist files are Carl's to send to ASPSI and to commit.
+  **Fix round 1 (review finding):** the residual section resolved its English from `anchor_extract.dcf_anchors()` alone, which keeps only the `item:`/`vs:`/`val:` kinds it can hunt for on paper - so every `record:` key came through with an empty English cell and the two English-dependent checks (`no-terminal-punct`, the Task-40 dangling-tail) were skipped on it silently. `collect_residual()` now merges three indexes (paper anchors, then `dict_english()` = every labelled node of the written dcf, then the English the extractor recorded on the flagged rows) and reports the remainder out loud: `F1: 225 / F3: 27 / F4: 38 keys had no English label - punctuation/tail checks skipped`. Those keys are stale - 0 of them still exist in the live dictionaries - so the rows they produce now carry a `no-english-label` reason instead of a mute blank. 34 of the 80 blank-English residual rows now show their English (all 22 F3 ones), 46 are labelled. Row counts are unchanged (13,194; residual 420). Dictionaries md5-identical before and after; 25 tests in `test_export_worklist.py`.
+
+### 2026-08-27 — Aug-21 translations close-out (Wave 5 / Task 47)
+
+**The Aug-21 revised Deliverable 2 is imported and closed out.** All four instruments live on
+the DEV channel: **F1 v4.1.0** and **F4 v3.2.2** (2026-08-26), **F2** spec **2026-08-26-m4**
+(2026-08-26), **F3 v6.1.0** (2026-08-27 00:47). The PSA submission set is untouched and stays
+frozen at tag `capi-psa-2026-08-20` (F1 v3.1.5 / F2 v3.0.0 / F3 v6.0.2 / F4 v3.1.3).
+
+**Coverage, before → after** (measured 2026-08-27, all 28 instrument × locale cells gained,
++3 to +18 points): F1 61–67 % → **77–81 %** of 1,363 label nodes; F2 72–76 % → **77–84 %** of
+740 label objects; F3 43–60 % → **57–74 %** of 1,749; F4 50–65 % → **59–71 %** of 1,403.
+Hiligaynon is the weakest column in every instrument — a property of the papers, not the
+build. The ICF consent now renders per language (23/23 paragraphs everywhere except HIL
+21/23) and the enumerator notes carry 26–50 translated notes per dialect.
+
+**Worklist for ASPSI** — `deliverables/CSPro/translator-worklist-aug21.xlsx` / `.csv`,
+**13,194 rows**: `worklist` 11,531 · `held` 754 · `accepted` 101 · `residual` 420 ·
+`paper-defects` 382 · `follow-ups` 6.
+
+**Written this task:**
+
+- `wiki/sources/Source - Revised Deliverable 2 Translated Questionnaires (Aug 21).md` — the
+  source page (provenance, the 28+4 file list, the per-instrument layout quirks, the
+  name-scoped ingest chain, the paper-side defects, where it landed). Linked from `index.md`,
+  from `wiki/entities/ASPSI.md` (new *Revised Deliverable 2 (Aug 21, 2026)* paragraph) and
+  from `wiki/concepts/CSPro.md` (new *Translation import — name-scoped since Aug-21*
+  paragraph, which records that the text-keyed join is superseded). The June-5 source page
+  and its `index.md` line now carry a **superseded 2026-08-21** marker instead of claiming to
+  be the authoritative reference.
+- `deliverables/CSPro/patch-notes/2026-08-27-aug21-translations-status-for-aspsi.md` — the
+  plain-language status for Carl to send from the ASPSI address: what shipped, the coverage
+  table, the attached worklist, the seven paper-side defects (four of them worth fixing
+  first), a *not in this build* section, and the three asks.
+- `deliverables/CSPro/patch-notes/2026-08-27-memory-note-updates.md` — the proposed one-line
+  changes to the five memory notes + the two `MEMORY.md` index lines. Proposal only; the
+  memory files themselves are controller-owned and were not touched.
+- `docs/uat-fix-evidence/2026-08-27-aug21-translations/README.md` — the root evidence index
+  over all four instrument folders across both dated directories (F1/F2/F4 under
+  `2026-08-26-aug21-translations/`, F3 here), one row each: version, deploy date, key frames,
+  byte-verify result. **Committed and pushed** as `def9efb` — the only sanctioned commit.
+
+**Open items carried out of this plan:**
+
+1. **F3 115.1 / 115.2 Shape-B conversion — deferred** (Carl, 2026-08-25). The matrix still
+   ships as flat rows, and its row labels stay English in all seven locales because the
+   papers print them in the English column only; the fix is generator-side composition of
+   `<stem> — <option>` from translated parts.
+2. **The r25 GPS `NO-PROMPT` residue pre-dates this work** (11 GPS captions, unchanged since
+   the Task-35 baseline) — a separate fix, not a translation defect.
+3. **The F2 id-scoped store re-key stays parked**; this import worked on the flat
+   English-keyed store.
+4. **Runtime error messages stay English.** The ~590-string translator sheet is a separate
+   request — Task 46 was skipped as optional/deferred per the spec's Open items. The ASPSI
+   note says the sheet is available on request.
+5. **DOH's Aug-21 *Review of Deliverable 2* → the manuals lane.** Read; it raises **no**
+   instrument or translation item.
+6. **Follow-up releases already recorded:** F1 4.1.1 (68 rows the final extractor now
+   changes + 85 dangling-tail values), F4 3.2.3 (74 clearable holds), and two UAT tickets —
+   the `Q1141_OTHER_TXT` gate (row 1 instead of row 6) and the `PATIENT_TYPE` option-label
+   fragments in 6/7 F3 locales.
+
+No commit for the wiki pages, the patch notes, the status file, the worklist or the CSPro
+tooling — those stay in the working tree for Carl.
+
+
+## 2026-08-27 — F4 v3.2.3 deployed: option rows that had inherited a neighbour's translation
+
+**Type:** patch release (CSPro / F4 Household Survey) — post-review fix wave, Task 49.
+
+The final whole-branch review of the Aug-21 wave found a defect CLASS the per-task reviews
+could not see: an option row that silently carries the *neighbouring* row's translation. The
+value is well formed and in the right language, so no flag fires — but two codes of one value
+set then read identically on the tablet, and the two answers cannot be told apart afterwards.
+Task 48 fixed the extractor and added a permanent `duplicate-label` gate; this task
+re-published F4 with the corrections.
+
+**What shipped.** F4 **v3.2.3 (2026-08-27) [DEV]**, served
+`HouseholdSurvey.zip` md5 `a56f24ab7d797dc005b3322765bd5e23` (1,672,171 bytes, written
+2026-08-27 07:10:37 +08). The PSA submission set is untouched and stays frozen at tag
+`capi-psa-2026-08-20`.
+
+**The repair.** 13 option rows are now **removed from the maps**, so the English label renders:
+FIL `val:Q45_2_WHY_NOT_REG_VS1:02/:03`, ILO `:08`, WAR `val:Q128_NBB_UNDERSTAND_VS1:05`,
+`val:Q134_ZBB_UNDERSTAND_VS1:05`, `val:Q13_INCOME_SOURCE_VS1:02` and the seven WAR
+`val:Q{52,55,58,70,127,133,137}_*_SOURCE_VS1:06` rows. The code whose English the text actually
+translates keeps it (FIL `:01`, ILO `:07`, WAR `:03`, WAR `Q13:03`, WAR `*_SOURCE_VS1:02`),
+expressed as `keep` overrides on the flagged span — never as a hand edit of a map. The Aug-21
+papers carry no distinct translation for the removed rows, so an English option label a tester
+can tell apart beats a wrong one they cannot.
+
+**New tooling.** `aug21-overrides.json` gained a `remove: true` semantic (locale-scopable):
+`apply_aug21.py` deletes the key on `--apply`, counts it in the dry-run report and in
+`_meta.sources.aug21.n_removed`, and a replay removes nothing because the key is already gone.
+`keep: null` could only decline to write; nothing could delete.
+
+**Gates.** Strict duplicate-label gate (`--fail-on-pre`) **0 violations, 0 un-ruled
+pre-existing sets**, exit 0 — with `duplicate_label_accepted.json` still empty, i.e. nothing was
+ruled benign to get there. `_defect_sweep.py --inst F4 --fail-on-pre` exit 0.
+`run_aug21_gates.ps1 -Inst F4 -PreBridge 0` **GATES CLEAN** (scan 1482 → 1482, bridge B/C 0 vs
+pre 0). `verify_questions.py F4` PASS. Replay writes 0 / replaces 0 / removes 0. Fresh-Designer
+**Compile Successful at 07:07:52**. Byte-verify `RESULT: ALL PASS`, exit 0.
+
+**Coverage moved on purpose:** WAR 1001 → 990 and HIL 828 → 825, because coverage counts key
+presence and those rows are deliberately back in English; CEB +1 and ILO +1 from the current
+extractor. FIL unchanged in count.
+
+**Evidence** (committed and pushed, `507406e`):
+`docs/uat-fix-evidence/2026-08-26-aug21-translations/F4/` — `byte-verify-3.2.3.txt`,
+`dcf-removal-proof-3.2.3.txt`, `00-app-list-f4-3.2.3.png`, `00-deploy-result-3.2.3.png`, README.
+Patch note: `deliverables/CSPro/patch-notes/2026-08-27-f4-v3.2.3-aug21-translations.md`
+(the v3.2.2 note renamed and folded, never duplicated).
+
+No commit for the CSPro-side changes (maps, overrides, tooling, generated artefacts,
+versions.json, patch note, this log) — those stay in the working tree for Carl.
+## 2026-08-27 — F1 v4.1.1 deployed: option rows that had inherited a neighbour's translation
+
+Task 49b of the post-review fix wave, the F1 twin of the F4 v3.2.3 repair above. F1 v4.1.0
+shipped **two** option rows carrying a NEIGHBOURING row's translation, so two codes of one value
+set read identically on the tablet: BCL `val:Q83_NOT_RECEIVED_REASONS_VS1:03` (it held code 02's
+`Pagka-antala sa tracking kan patient enrollment`) and FIL `val:Q45_PERF_INDICATORS_VS1:04` (it
+held code 03's antibiotics sentence). The Aug-21 papers carry no distinct translation for either,
+so both map rows are **deleted** with a `remove: true` override and the tablet renders the English
+label — an English option a tester can tell apart beats a wrong one they cannot. BCL code 02 keeps
+its clean span through a `keep` override on the flagged row: without it the restore-from-baseline
+re-apply would have handed it back the June-5 value with the English tail
+`Difficulties in verifying patient enrollment (` glued on.
+
+**The whole wave was re-applied from the pre-wave baseline** (`git show HEAD:` restored into
+`F1/translations`, proved byte-identical first) with the Task-48 extractor and the current
+overrides. Live delta vs the v4.1.0 maps: **67 rows** — the 2 removals plus 65 rewrites, every one
+classified. The 65 are the Task-32b/33b extractor rounds reaching F1 for the first time (F1 v4.1.0
+was published before them): 15 leading-quote strips, 27 Ilocano whole-value bracket strips, 8
+leading-furniture strips, 14 trailing `") ("` trims, the paper's `59.` off WAR `Q46`, and two
+truncated `Q147:03` options completed. That closes the v4.1.0 note's "~20 stray quotes" item — the
+real count was 65, 50 of them Ilocano. Out of scope and untouched: the 68-row glyph/Q62
+improvement, the 85 dangling tails and the 225 stale F1 keys.
+
+**Gates.** Strict duplicate-label gate (`--fail-on-pre`) **0 violations, 0 un-ruled pre-existing
+sets**, exit 0, `duplicate_label_accepted.json` still empty. `_defect_sweep.py --inst F1
+--fail-on-pre` exit 0 (67 of 2,556 writes carry a residual defect — the band Tasks 28/32b/33b
+accepted, none of it a duplicate label). `run_aug21_gates.ps1 -Inst F1 -PreBridge 0` **GATES
+CLEAN** (scan 1482 → 1482, bridge B/C 0 vs pre 0). `verify_questions.py F1` PASS. Replay writes 0
+/ replaces 0 / removes 0 in all seven locales. Fresh-Designer **Compile Successful at 07:43:12**;
+new CSDeploy pid 15760 at 07:44:09 = the publish gate. Byte-verify `RESULT: ALL PASS`, exit 0.
+
+**Coverage moved on purpose:** FIL 1109 → 1108 and BCL 1114 → 1113, because coverage counts key
+presence and those two rows are deliberately back in English. The other five are unchanged.
+
+**Why the byte-verify does not count the removed strings to zero:** the `.pen`'s string table is
+pooled and the sibling code legitimately keeps each string, so both are 1× in the v4.1.0 pen and
+1× in the v4.1.1 pen. The nine `0×` counts are one string per locale that v4.1.0 shipped and this
+build does not; the per-CODE proof is `dcf-removal-proof-4.1.1.txt`, which asserts each removed
+row's locale label in the built dictionary IS the English label and that no value set in any of
+the seven languages has two codes with the same label.
+
+**Evidence** (committed and pushed, `31e1ac2`):
+`docs/uat-fix-evidence/2026-08-26-aug21-translations/F1/` — `byte-verify-4.1.1.txt`,
+`dcf-removal-proof-4.1.1.txt`, `01-app-list-v4.1.1.png`, `00-deploy-result-4.1.1.png`, README;
+the cross-instrument index `docs/uat-fix-evidence/2026-08-27-aug21-translations/README.md` folded
+to v4.1.1. Patch note:
+`deliverables/CSPro/patch-notes/2026-08-27-f1-v4.1.1-aug21-translations.md` (the v4.1.0 note
+renamed and folded, never duplicated). Served `FacilityHeadSurvey.zip` md5
+`6e87ebd897b79bee2a88cf458b153b08`; on-device `.pen` md5 `43ea2c5f6d51bb99479f325c406e93c7`,
+equal to the one inside that zip. No case was opened on the emulator, nothing was synced.
+
+No commit for the CSPro-side changes (maps, overrides, generated artefacts, versions.json, patch
+note, this log) — those stay in the working tree for Carl.
+
+### F3 v6.1.1 — the row-inheritance repair (Task 50, 2026-08-27 08:38 +08)
+
+The F3 leg of the fix wave Task 48 opened. Several Aug-21 papers lay an option grid out in two
+columns, so `pdf_text()` returns both boxed ENGLISH rows first and both translations after them
+as one block; the first row's span is box-to-box and therefore empty, and the whole block falls
+to the second row. In Cebuano the anchor `LGU/ Barangay` is a proper noun the paper leaves
+untranslated, so it matches its own echo, the span for code 06 is bounded to code 02's `Balaod`,
+and **v6.1.0 shipped `Balaod` ("Legislation") on the LGU/Barangay option of seven questions**
+(36, 75, 100, 117, 120, 125, 153).
+
+**29 rows repaired**, measured against the v6.1.0 maps and every one accounted for
+(`<ws>/task-50/evidence/map-delta.txt`): 28 deletions — CEB 8, BCL 9, HIL 5, WAR 2, FIL 2, BIS 1,
+ILO 1 — plus one correction, BCL `val:Q10_CIVIL_STATUS_VS1:5` `Diborsyado` → `Live-in`. A deleted
+key renders the ENGLISH option label, which beats an option repeating its neighbour's words.
+
+**Overrides**: F3 block 185 → 205. One hold RELEASED — `val:Q10_CIVIL_STATUS_VS1:5` was
+`keep: null` for `["bcl","hil"]`, and Task 48 §7.3 proved the BCL half wrong (`F3_BCL.txt:377`
+prints `Common law / Live-in Live-in`); narrowed to `["hil"]`, whose only span is the fragment
+`partner`. Two `keep: null` holds turned into removals, 20 removals added, all locale-scoped and
+all carrying the paper line they were measured from. `duplicate_label_accepted.json` stays EMPTY:
+the Bikol `Aki`/`Apo` pairs were NOT ruled benign — two indistinguishable options are a defect,
+so both rows go back to English and the disambiguation is a translator question.
+
+**Deviation, measured and recorded**: the brief asked for the seven CEB rows to be WRITTEN with
+the paper's `LGU/Barangay`. That string is the English label, so writing it grew the poisoned-key
+scan's `SELF_ECHO` by 6 and `IS_OTHER_EN` by 1 and `run_aug21_gates.ps1` gate 1 exited
+`GATES FAILED - do not regenerate` (`<ws>/task-50/evidence/gates-try1.txt`). The rows are deleted
+instead: the tablet renders the same text from the dictionary, the gate is clean, and the gap
+stays visible on the translator worklist.
+
+**Gates**: restore proven `RESTORED==HEAD` for all seven; strict duplicate-label gate **0
+violations / 0 un-ruled pre-existing** (10 RED + 5 pre before the overrides); strict replay
+0 writes / 0 replaces / 0 removes; `_defect_sweep.py --fail-on-pre` exit 0 (29 of 2 769 writes in
+the accepted residual band, none a duplicate label); `run_aug21_gates.ps1 -Inst F3 -PreBridge 0`
+**GATES CLEAN** (scan 1482 → 1482, B/C 0 vs pre 0); `verify_questions.py F3` PASS 375/375; r25
+caption diff vs the Task-35 baseline line-normalised **empty**; `stamp_version.py show` exit 0;
+fresh-Designer **Compile Successful at 08:35:36**; new CSDeploy pid 2944 at 08:36:46 = the publish
+gate; `Application Deployed Successfully`; `F3/test_aug21_labels.py` 74 passed.
+
+**Coverage moved on purpose**, exactly −28 translated labels in the built `.dcf` (FIL −2, BCL −9,
+BIS −1, CEB −8, WAR −2, HIL −5, ILO −1, total 8424 → 8396) — the 28 deleted rows and nothing else.
+
+**Why the byte-verify cannot count the removed strings to zero**: the `.pen` string table is
+pooled per language, so `Balaod` is 2× before AND after (14 map keys still carry it, all on code
+02, where it is correct). The per-CODE proof is `dcf-removal-proof-6.1.1.txt` — every removed
+row's locale label in the built dictionary IS the English label, every kept sibling still carries
+its own translation, and no value set in any of the eight languages has two codes with the same
+label (213 × 8). `--baseline` runs against the PRE-WAVE maps, not v6.1.0, because 28 of the 29
+rows are deletions and a deletion can never be "present in the pack".
+
+**Evidence** (committed and pushed, `b68ddd0`):
+`docs/uat-fix-evidence/2026-08-27-aug21-translations/F3/` — `byte-verify-6.1.1.txt`,
+`dcf-removal-proof-6.1.1.txt`, `01-app-list-v6.1.1.png`, `00-deploy-result-6.1.1.png`, README
+folded to v6.1.1; the cross-instrument index folded to F3 v6.1.1 and its stale F4 row corrected
+to v3.2.3. Patch note:
+`deliverables/CSPro/patch-notes/2026-08-27-f3-v6.1.1-aug21-translations.md` (the v6.1.0 note
+renamed and folded, never duplicated; its stale headline coverage table now carries a
+"superseded" banner). Served `PatientSurvey.zip` md5 `ea467e2bf1e14306c751745f52a0087a`;
+on-device `.pen` md5 `0b1826681b4a2f00dbe19fa48816abea`, equal to the one inside that zip and to
+`package.json`'s signature. No case was opened on the emulator, nothing was synced.
+
+**Open**: the Cebuano `Annulled / gipa-walay bisa ang kasal` span exists on the paper but cannot
+be taken — `val:Q10_CIVIL_STATUS_VS1:6` needs a removal in BCL/BIS/WAR and a keep in CEB, and
+`aug21-overrides.json` allows one entry per key. Translator-worklist item. `PATIENT_TYPE` and HIL
+`item:Q7_SEX` are a different class (dangling tails) and were explicitly out of scope.
+
+Also removed the scratch `deliverables/CSPro/F3/PatientSurvey_desktest_HIL.pff` from the
+instrument folder — it is a desk-test runner input, not a build artefact; it now lives at
+`deliverables/CSPro/automation/scenarios/PatientSurvey_desktest_HIL.pff` beside the scenario that
+drives it.
+
+No commit for the CSPro-side changes (maps, overrides, generated artefacts, versions.json, patch
+note, tests, this log) — those stay in the working tree for Carl.
+
+## 2026-08-27 - F3 v6.1.2: the seven Cebuano `LGU/Barangay` rows are WRITTEN (Task 50 fix round 1)
+
+Review finding on Task 50: controller ruling (b) said the seven CEB `*_SOURCE_VS1:06` rows must
+WRITE the paper's `LGU/Barangay`; v6.1.1 shipped them as `remove: true` (the English label
+rendered the same words) because writing them fails `run_aug21_gates.ps1` gate 1 - the value
+equals an English label, so `scan_poisoned_keys.py` counts it SELF_ECHO x6 / IS_OTHER_EN x1. The
+fix is the mechanism the review named: a reasoned, per-key, VALUE-PINNED waiver file for that
+scan, then a re-apply with `keep` and a re-publish.
+
+**Tool.** `data/translations-official/scan_waivers.json` + `validate_waivers()` /
+`load_waivers()` / `is_waived()` / `apply_waivers()` / `stale_waivers()` in
+`scan_poisoned_keys.py`. Waivable reasons are SELF_ECHO and IS_OTHER_EN ONLY - every other
+detector is a corruption class. Each entry names the exact map value it covers and cites the
+paper line (`text/F3_CEB.txt:1096-1099` etc., re-measured; the v6.1.1 override reasons cited
+1028-1035, which no longer matches the text dump, and were corrected). Waived rows print under
+`--- waived ---`; `run_aug21_gates.ps1` now echoes those lines and any `STALE WAIVER`. The scan's
+module-level stdout rewrap moved into `main()` - at import it closed pytest's capture buffer.
+Tests: `data/translations-official/test_scan_waivers.py` (21) + 7 in `F3/test_aug21_labels.py`
+tying each written row to its waiver. Suites: translations-official **419 passed / 1 skipped**
+(398 baseline + 21), F3 **81 passed** (74 + 7).
+
+**Build.** Maps restored from the pre-wave baseline (proven == `git show HEAD:`), whole F3 wave
+re-applied with the Task-48 check extract and the current overrides: gate 0 violations / 0
+un-ruled pre, strict replay 0/0/0, sweep exit 0, `GATES CLEAN` (scan 1482 -> 1482, 7 rows waived,
+0 stale; bridge B/C 0 vs pre 0). Delta vs the live v6.1.1 maps: **7 rows in ceb and nothing
+else**. `verify_questions.py F3` PASS, r25 diff empty, stamp **v6.1.2 (2026-08-27)**,
+`stamp_version.py show` exit 0, Designer `Compile Successful at 09:25:52` (CSPro pid 13248,
+CSDeploy pid 7468 - both mine, both stopped by PID afterwards).
+
+**Deploy.** `Application Deployed Successfully`; served `PatientSurvey.zip` md5
+`21fb4b31528c5dee09e76362926999d3`, 1 720 219 bytes, server mtime 2026-08-27 01:28:28 UTC =
+09:28:28 +08, served `.pff` `Patient Survey (F3) - v6.1.2 (2026-08-27) [DEV]`. byte-verify
+**ALL PASS** - the two CEB `*_SOURCE_VS1:06` probes now read `OK ... 'LGU/Barangay'` where
+v6.1.1 read `SKIP (no map value - English fallback)`. Per-code proof
+`dcf-label-proof-6.1.2.txt`: 21 removed rows still render English, the 7 written rows carry the
+paper's text, no duplicate option label in 213 value sets x 8 languages. Emulator app list reads
+`Patient Survey (F3) - v6.1.2 (2026-08-27) [DEV]`; on-device `.pen` md5
+`44c59760fcc86d6dbec815524ceed55e` == the one inside the served zip == `package.json`'s
+signature. No case opened, nothing synced.
+
+**Read carefully:** `LGU/Barangay` occurs 1x in the v6.1.2 pen and occurred 7x in v6.1.1's.
+Nothing was lost - the `.pen` pools its string table, so a `--count` is a pool fact, not a
+per-code one; the two pens hold the same 4 256 distinct strings apart from the version-stamped
+cover image. Per-code truth is the dictionary proof.
+
+Evidence committed and pushed under `docs/uat-fix-evidence/2026-08-27-aug21-translations/F3/`
+(`byte-verify-6.1.2.txt`, `dcf-label-proof-6.1.2.txt`, `00-deploy-result-6.1.2.png`,
+`01-app-list-v6.1.2.png`, `02-compile-successful-6.1.2.png`, both READMEs folded to v6.1.2).
+Patch note renamed to
+`deliverables/CSPro/patch-notes/2026-08-27-f3-v6.1.2-aug21-translations.md` with a `# v6.1.2`
+section appended. No commit for the CSPro-side changes - maps, overrides, waivers, generated
+artefacts, versions.json, tests, patch note and this log stay in the working tree for Carl.
+
+**Note for the plan record:** the wave's stated end state was F3 6.1.1. This re-publish carries
+different bytes with the same rendered text, so it took a patch bump to 6.1.2 rather than
+re-serving a used version number - CSEntry has no other way to tell two builds apart.
+## 2026-08-27 - F2 spec 2026-08-27-m5 deployed: the Waray Q57 option that had inherited its neighbour's translation
+
+**Operation:** Task 51 of the Aug-21 post-review fix wave - the F2 PWA leg of the
+row-inheritance repair (F4 3.2.3, F1 4.1.1 and F3 6.1.2 shipped the same class earlier today).
+
+**The defect.** The Aug-21 papers lay an option grid out in two columns, so `pdf_text()`
+returns both boxed ENGLISH rows first and both translations after them as one block; the first
+row's span is box-to-box (empty) and the whole block falls to the second row. F2 carried
+exactly one instance, live in m4: Waray Q57 `City / LGU standard referral form` read
+`Syudad / LGU surundon nga porma han pagrefer DOH nga surundon nga porma han pagrefer` - its
+own text plus the DOH row's. `DOH standard referral form` itself extracted `empty` (the paper's
+own gap) and so kept its correct pre-wave value in m4 and still does.
+
+**Repair, generator-first.** `anchor_extract_f2.f2_sibling_run()` (Task 48) now holds such a
+span instead of writing it. The seven maps were restored from the pre-wave baseline `af1fa569`
+- byte-identical, proven per file by hashing the LF-normalised working-tree bytes against the
+blob's own sha1 - and the WHOLE wave re-applied through `scripts/apply-paper-translations.py`
+against `<ws>/task-48/check/F2`, with the same 17 stale keys retired in the same run and the
+same 40 `aug21-overrides.json` F2 entries (byte-identical, not touched). 208 values written
+(m4 wrote 209; the difference is the held Q57 row). Second dry run: 0 write / 0 replace /
+0 retire, `saved no`.
+
+**Live delta m4 -> m5 is ONE value.** Six maps byte-identical, `items.ts` one line,
+`schema.ts` unchanged. Coverage therefore unchanged: 740 label objects, fil 594 (80 %)
+ceb 611 (83 %) bis 570 (77 %) ilo 617 (83 %) hil 593 (80 %) war 625 (84 %) bcl 587 (79 %).
+
+**Gates.** Pre-apply, against the restored baseline: `english-furniture` 0, `mis-anchored` 0,
+`local-directive` 0, `vs-offset` 0, `whitespace-delta` inserted 0 / removed 52, `truncated` 6
+(the same six verified new keys), strict-prefix 0, question-number furniture 0, and the new
+row-inheritance gate 0 RED / 0 pre. Build: `npm run generate`; `tsc -b --force` exit 0;
+`eslint` exit 0; `vitest run --maxWorkers=2` **81 files / 703 tests passed** (701 + 2);
+`audit-translations.py` exit 0 / 0 suspects; `npm run build` exit 0;
+`locale-shots.spec.ts` 1 passed.
+
+**The guard now sees the class.** `scripts/lib/apply-translations.aug21.test.ts` gained two
+invariants over an OPTION GROUP rather than a value - no two choices of one question share a
+translation, and no choice carries a sibling's whole translation. Both were RED on the m4 maps
+(the second listing exactly the Q57 row, no false positives) and are GREEN on m5. The
+sibling rule needs two measured bounds: the sibling's text must sit at one END of the value,
+and both halves must be sentence-sized - otherwise `More than once a week, but not everyday`
+and every antonym-based negation (`Bako pirmi` on `Pirmi`) match.
+
+**Deploy.** Commit `fb91241a` pushed to `origin/main`, `deploy-f2-pwa.ps1` clean end to end
+(guard 1 checkout, build, guard 2 artefact markers, upload, backup
+`/opt/app/f2-www.bak-20260827-102922`, guard 3 live checks) - `PROD IS HEALTHY`, exit 0.
+Live `build-info.json`: sha `fb91241a1e13ff1a5e897bb1c363033a863a9861` == HEAD at deploy time,
+`matches_main: true`, `built_at 2026-08-27T02:29:22Z` (10:29 MNL); `-VerifyOnly` exit 0. The
+served bundle `assets/admin-DebwnCUG.js` contains `2026-08-27-m5` and the corrected value and
+contains neither `2026-08-26-m4` nor the glued one. (The deploy log's
+`no build-info.json on prod` line is still the known BOM false negative in the script's own
+verify block, recorded in the m4 note - the file is served, HTTP 200.)
+
+**Disclosed, on the worklist.** `fil` `Agree but for clerical tasks only` and `Disagree for
+both medical and clerical tasks` both read `Sumasang-ayon, ngunit para lamang sa mga gawaing
+klerikal`. That is the paper's OWN repetition - one Tagalog string printed against both rows -
+and it is in the June-5 maps and in `af1fa569`, so restore + re-apply cannot clear it. It is
+frozen in the guard's `PRE_EXISTING_DUPLICATE_LABELS` (a NEW collision still fails) and goes
+back to ASPSI's translators. Deleting the key so English renders is the F1/F3/F4 remedy and
+would work here, but it is a per-row judgement outside this task's scope.
+
+**Committed and pushed** (F2 PWA + evidence are the sanctioned commits): `fb91241a` the app
+change, `92453bb` the locale re-shoot + `map-delta-m5.txt` + `served-content-m5.txt` + the
+evidence READMEs, `a155d87` one clarifying line. CSPro-side stays in the working tree for
+Carl: the patch note (renamed to
+`deliverables/CSPro/patch-notes/2026-08-27-f2-m5-aug21-translations.md` with an `## m5`
+section), `TRANSLATION-STATUS-2026-08-27.md`'s F2 row, the F2 line of
+`automation/aug21_coverage_baseline.json`'s provenance note, and this log.
+
+**Note for the wave close (Task 52):** `TRANSLATION-STATUS-2026-08-27.md` still lists F1 at
+v4.1.0, F4 at v3.2.2 and F3 at v6.1.0. Only the F2 row was corrected here, because this task
+renamed the file that row points at; the other three are stale from their own tasks.
+
+## 2026-08-27 - F2 spec 2026-08-27-m5 re-deployed: the Tagalog Q95 option that showed the WRONG answer (Task 51 fix round 1)
+
+A review of Task 51 found that the m5 wave DISCLOSED a duplicate option label instead of
+clearing it, and that the pair was not merely ambiguous but INVERTED and live in production.
+In Tagalog, both rows of Q95 (`I think it's okay that health workers share tasks across roles
+even if they are beyond their job description`) read
+`Sumasang-ayon, ngunit para lamang sa mga gawaing klerikal` - the AGREE wording - so a
+respondent choosing `Disagree for both medical and clerical tasks` was reading the opposite of
+their own answer. Pre-existing (`af1fa569`, m4, m5), not a regression of the Aug-21 wave, but
+shipped anyway. Confirmed in the bundle PROD was serving: the string appeared twice.
+
+**Repaired the way F1/F3/F4 repair that shape.** The Aug-21 Tagalog paper prints ONE string
+against both rows of that two-column grid, so there is no distinct candidate to import and an
+English option beats a wrong one (ledger rule 10; the call Task 49 made for F4).
+`deliverables/F2/PWA/app/scripts/apply-paper-translations.py` gained the `remove: true`
+override semantic Task 49 gave `apply_aug21.py`, and `aug21_overrides.py` now accepts the
+field in the F2 block - it used to reject it, correctly, because the F2 applier had no removal
+path. Because the F2 override block is locale-NESTED the entry is per-locale by construction:
+the key is deleted from `fil` ONLY. `--retire`, the only deletion F2 had before, would have
+taken the six correct translations with it. A removal is counted only when there is something
+to delete, so the wave stays replayable: the re-run writes 0, replaces 0 and removes 0.
+
+Live delta against what m5 deployed: ONE row, the `fil` key, gone. Six maps untouched, CRLF
+intact, `items.ts` loses exactly the `fil:` field of that one choice. Coverage fil 594 -> 593
+of 740; the other six unchanged. Gates: tsc 0, eslint 0, vitest 81 files / 705 passed,
+audit-translations 0 suspects, build 0, locale-shots 1 passed (the nine PNGs came back
+byte-identical - Q95 is in Section H and the stamp did not move), pytest translations-official
+422 passed / 1 skipped, the F2 applier's own suite 16 passed.
+
+**The stamp deliberately did NOT move.** `LOCAL_SPEC_VERSION` versions the spec - it is what
+invalidates a draft when items move - and no item, id, choice, code or schema changed. The
+build's identity is its commit sha in `build-info.json`: `ce05b931`, `matches_main: true`,
+`deploy-f2-pwa.ps1` and `-VerifyOnly` both exit 0, and the served bundle now carries the AGREE
+string once instead of twice plus the English `Disagree...` label.
+
+**The sibling-run guard got sharper.** Its 15-character floor carried a comment claiming no
+whole option translation is that short; 191 of the option values in these seven maps are
+(`ceb Agree -> Uyon`, `war Always -> Pirme`, every `Yes -> Oo`), so the rule was blind to a
+glue of two SHORT options - exactly the Agree/Disagree, Yes/No, Male/Female grid that caused
+the m4 defect. The floor is a false-positive bound (measured: 17 innocent rows below it, in
+two families) and now applies only to the case-folded comparison; a verbatim form - the
+sibling's value at one end with its own capitalisation - needs no floor and no allowlist and
+is what carries the short pairs. Three fixtures pin the coverage. The duplicate-label
+allowlist now ships EMPTY, like `duplicate_label_accepted.json` on the CSPro side.
+
+**Committed and pushed** (F2 PWA + evidence are the sanctioned commits): `ce05b931` the app
+change (applier, guard test, `fil.json`, `items.ts`), ``9ee7895`` the evidence
+(`map-delta-m5-fix1.txt`, `served-content-m5-fix1.txt`, the F2 folder README's *m5 fix round 1*
+section, the cross-instrument index). CSPro-side stays in the working tree for Carl:
+`aug21-overrides.json` (F2 block 40 -> 41 entries), `aug21_overrides.py` + its tests, the F2
+patch note, and this log.
+
+**Still on the translator worklist:** the fil Q95 Disagree row. Deleting the key makes the
+option honest, not translated - ASPSI's translators still owe the Tagalog wording, and anyone
+who already answered Q95 in Tagalog should be asked to re-check that answer.
+
+## 2026-08-27 - Aug-21 translation wave CLOSED: records re-measured, worklist re-exported, test collision fixed (Task 52)
+
+Close-out of the Aug-21 revised-Deliverable-2 translation wave. **What a tester should be
+running: F1 v4.1.1, F2 spec `2026-08-27-m5` at build `ce05b931`, F4 v3.2.3, F3 v6.1.2** - all
+DEV channel, PSA set still frozen at `capi-psa-2026-08-20`. Every first build (F1 v4.1.0,
+F2 `2026-08-26-m4`, F4 v3.2.2, F3 v6.1.0) and every intermediate (F4 v3.2.0/v3.2.1, F3 v6.1.1,
+F2 build `fb91241a`) is superseded.
+
+**The records were re-measured, not re-typed.** `data/translations-official/out-aug21/<INST>`
+was stale - the four extracts predated the Task-48 extractor rules - so all four extractors
+were re-run first (F1 and F4 `--dcf`, F3 `--generator F3`, F2 `anchor_extract_f2.py`), and only
+then `export_worklist.py` and `translation_coverage.py`. The dictionaries were untouched by
+either: `git status --short F1 F3 F4` and the three `.dcf` md5s are byte-identical before and
+after both runs, and a second `translation_coverage.py` run reproduced the generated block
+byte-for-byte. No generator was invoked to write.
+
+**`TRANSLATION-STATUS-2026-08-27.md`** now carries the shipped versions, a dated *fix wave*
+section (the row-inheritance class, the six corrected instances, the duplicate-label gate,
+`scan_waivers.json`'s 7 value-pinned F3/`ceb` entries), the re-measured coverage block - three
+cells one point lower (F3 `bcl` 66 -> 65, F4 `hil` 59 -> 58, F4 `war` 71 -> 70) because the
+deleted rows are no longer counted - and the re-exported worklist's counts.
+
+**Worklist: 13,276 rows, seven sheets** (13,194 / six before). The `worklist` sheet now carries
+the 76 `duplicate-label` + 4 `sibling-run` rows the extractor refuses to import (F1 8, F2 2+1,
+F3 27+2, F4 39+1). `export_worklist.py` gained one branch so a `remove: true` override reads
+`removed:` in the `held` sheet instead of `held:` - 35 rows (F1 2, F2 1, F3 19, F4 13), and the
+distinction matters to ASPSI: a `removed:` row is real translator work, a `held:` row usually
+is not. The ASPSI-facing note gained an *Update 27 Aug (afternoon)* section with the four
+versions and the six instances in plain terms, and the two Task-47 minors are fixed (the
+workbook has SEVEN sheets, not six; the echo-english line now states F1 10 / F2 77 / F3 99 /
+F4 44, measured, not F2/F3 only).
+
+**Test collision fixed (review minor).** `F3/test_aug21_labels.py` and `F4/test_aug21_f4.py`
+both did a bare `import generate_dcf`, which resolves to whichever instrument pytest collected
+first - so `python -m pytest F3 F4 automation -q` died at collection with
+`ImportError: cannot import name 'build_f4_dictionary' from 'generate_dcf'
+(...\F3\generate_dcf.py)`. Each test now loads its OWN directory's module by explicit path
+(`importlib.util.spec_from_file_location`) and re-registers it under the bare name before
+exec, so the transitive bare imports inside `generate_qsf.py` resolve to the same directory
+too. Combined run: **123 passed, 2 xfailed** (F3 81 + F4 29/2xf + automation 13).
+
+Wiki (`Source - Revised Deliverable 2 Translated Questionnaires (Aug 21)`) gained a
+*row-inheritance defect class* section and its version/coverage lines were corrected;
+`index.md`'s line for that source now names the shipped four. Evidence index
+`docs/uat-fix-evidence/2026-08-27-aug21-translations/README.md` is the only thing committed
+and pushed - CSPro-side stays in the working tree for Carl.
+
+**Open, recorded as extractor follow-ups - none is a row-inheritance row and none is a
+wrong-answer row.** Four rows where the extractor's *furniture* handling, not its anchoring, is
+what is left to fix: F4 war `item:Q73_GAMOT_MEDS_LIST` (extract opens `] 73 . Ano an mga
+medisina …`, `orphan-head`) and the F4 ilo `Q29_WASHING_MACHINE` `item:`/`vs:` pair (the next
+question's enumerator instruction glued on) are **held**, so English renders exactly as v3.2.2
+did; F4 ilo `item:`/`vs:Q61_BUCAS_SERVICES` **shipped** as `(No wen, ania kadagiti serbisio ti
+nausarmo?). .` - meaning and language intact, a wrapping paren and a trailing `. .`; and F1 ilo
+`val:Q147_EXTERNAL_SERVICES_GO_VS1:03` shipped complete in v4.1.1 (v4.1.0 cut it mid-sentence)
+but opens with a stray `(`. All four belong in the extractor, not in an override - masking
+poisoned extract output with a per-row override is the thing this wave ruled out.
+
+## 2026-08-27 — Aug-21 translations: UAT posts out
+
+- Posted the four Aug-21 translation patch notes (F1 v4.1.1, F2 spec 2026-08-27-m5, F4 v3.2.3, F3 v6.1.2) to #f1-uat, #f2-pwa-uat, #f4-uat, #f3-uat (F3 Known items as a broadcast thread reply). Links recorded at the top of each note under `deliverables/CSPro/patch-notes/2026-08-27-*-aug21-translations.md`. Tester rule stated in every post: an English label is reportable only if the paper for that language has local text for it.
+
+## 2026-08-27 — F3 pre-existing defects ticketed
+
+- Filed #1315 (115.1 `Q1141_OTHER_TXT` gated on row 1 instead of row 6) and #1316 (`PATIENT_TYPE` option fragments in 6/7 locales + HIL `Q7_SEX` anchor head), both labelled bug / epic:f3 / from-uat-round-7-2026-08 / severity:high, linked from tracking #1284; status-doc follow-ups table updated with the numbers.
+
+## 2026-08-27 — Aug-21 status note announced in #capi-scrum
+
+- Summary of `2026-08-27-aug21-translations-status-for-aspsi.md` + the worklist contents posted to #capi-scrum (main message + thread with defects 5-7, not-in-build, 27-Aug correction). Slack free plan: no canvas or file upload via MCP, so the full note and `translator-worklist-aug21.xlsx/.csv` still go by email from clreyes6@up.edu.ph (Carl).
+
+## 2026-08-27 — ASPSI email drafted (not sent)
+
+- `deliverables/CSPro/patch-notes/2026-08-27-aug21-translations-email-to-aspsi.md` (To/Cc = ASPSI-side addresses from the Deliverable 2 thread, DOH excluded; send from clreyes6@up.edu.ph) + `2026-08-27-aug21-translations-status-for-aspsi.docx` (pandoc from the status note, tables bordered). Attachments = the docx + translator-worklist-aug21.xlsx/.csv. DOH's 2026-08-26 reply on the Deliverable 2 thread checked: manuals/training alignment only, no instrument or translation item.
+
+## 2026-08-27 — /capi-uat-triage: F3 v6.1.4 (#1315, #1316)
+
+- #1315 (115.1 other-specify gated on row 1): one-line fix in `cspro_helpers.py::other_specify_procs()` — loose 'Other' fallback tests the option text, not the whole label; F3 apc diff = 2 lines, F1/F4 apc byte-identical. #1316 (PATIENT_TYPE / HIL Q7 fragments): 4 `remove` overrides → 12 keys deleted, replay 0/0/0. Gates green; 6.1.3 published 13:02 then superseded by 6.1.4 at 13:12 (byte-verify caught the HIL `vs:Q7_SEX_VS1` twin). Evidence pushed (ebff0e1d); both issues closed; #f3-uat patch note + #capi-scrum thread replies posted. New desk scenarios `f3_1315_row1_only.txt` / `f3_1315_row6_other.txt`. CSPro-side changes uncommitted for Carl.
+
+## 2026-08-27 — /capi-uat-triage (cont.): F1 v4.1.2 (#1317) + #1318–#1321 already-in-build
+
+- Five F1 Ilocano tickets filed by the tester 13:07–13:37. #1317 (Q5/Q6 stems held by the Aug-21 extractor): 4 `keep` overrides composed stem + row from `text/F1_ILO.txt` → 4 ILO keys written, replay 0, dcf +4 labels, apc unchanged; gates green; F1 4.1.2 published 13:52 (first Designer got a stray keystroke in the logic editor → save prompt answered No, rebuilt fresh). #1318–#1321: served 4.1.1 .pen probed — all 8 Section-C ILO strings present → stale tablet build; closed with remove + re-add. Evidence cc49c8d8; Slack: #f1-uat patch note + 5 thread replies. CSPro-side uncommitted for Carl.
+
+## 2026-08-27 — /capi-uat-triage (cont.): F1 v4.1.3 (#1322)
+
+- #1322 Cebuano Q10.1 'last option' = code 9 Not applicable rendering the June-era fragment `sa primary care facilities>` (also Q12.2; 24 CEB map keys carried it, 22 stale). Aug-21 `keep:null` had only blocked writes. 24 `remove` overrides -> apply 24 removed, replay 0, dcf 2 labels, apc unchanged; gates clean (scan 1482->1460); 4.1.3 published 14:16; served byte-verify 0x; desk-engine proof on a new CEB desk pff + scenario `f1_1322_q10_1_ceb.txt`. Evidence ca2fc7c0; #f1-uat patch note + #capi-scrum closeout. CSPro-side uncommitted for Carl.
+
+## 2026-08-27 — /capi-uat-triage run 2: F1 v4.1.4 (#1323) + #1324 already-in-build
+
+- #1323 Ilocano Q37 stem held (`local-directive`: paper glues 'DO NOT READ… WITHOUT PROMPTING.' onto the sentence) → 2 `keep` overrides (item + vs) from `text/F1_ILO.txt` 1839-1843; dcf +2, apc unchanged; gates clean; 4.1.4 published 14:44; byte-verify ALL PASS; desk proof on new ILO desk pff + `f1_1323_q37_ilo.txt` (Q35.2 tick-box sits at the Q36 anchor in ILO layout — scenario patched). #1324 = Q12.2 CEB fragment already fixed in 4.1.3 → closed as resolved. Evidence b229d17f. CSPro-side uncommitted for Carl.
+
+## 2026-08-27 — /capi-uat-triage run 2 (cont.): F1 v4.1.5 (#1325 #1326 #1327)
+
+- Ilocano Section D stems: Q39 month/year (garbled June-era Month value + not-in-paper holds), Q44 (English definition glued before the Ilocano), Q45 (definition glued after; vs: twin had a leading '('). Five `keep` overrides from `text/F1_ILO.txt` (paper questions 52/57/58); dcf +5, apc unchanged; gates clean; 4.1.5 published 14:59; byte-verify ALL PASS; desk proof via `f1_1325_sectionD_ilo.txt` (lessons: Month/Year auto-advance -> no ENTER; Q40 is a Check Box -> click (1047,211); Q44 len 6 -> type 001700). Evidence 3f42b1c3. Cross-locale gap recorded: Q44/Q45 stems English in all other six locales -> batch follow-up. CSPro-side uncommitted for Carl.
+
+## 2026-08-27 — /capi-uat-triage run 2 (hourly loop): F1 v4.1.6 (#1328–#1334, batched) + #1344 as-designed
+
+- Seven Ilocano tickets filed per question as the tester walked Section D/E → ONE batched build. Fixes: Q49/Q50 `_NUM` "No. of Days" companions (own label, stem never reached them), Q53 (June-era glued span), Q54–Q61 (shared stem on one line + per-item bracket on the next → not-in-paper; Q59 uses its own stem variant), Q62 options (02 held in ALL seven locales since the first extract emitted `Head` — corrected task-48 extract carries the row, hold released → five locales gained `Pasilidad`-class text, HIL scoped remove; 05 spill fragment removed in all seven; 90 `San a amo` → `Saan ko nga ammo`), Q65 (02 refused by the box gate over a stray ☐; 03 trailing ` .`), Q75 (448-char paragraph: the dcf label IS the qsf text and caps at 255 — English is itself a generator condensation → mirrored Ilocano condensation, 234 chars; verbatim would cut mid-sentence; `WRONG_Q_CLEARED` on the verbatim value was the numbering guard vs the condensed English), Q98 (paper typo `factoros` broke the anchor; 03 `b(` prefix). 31 overrides; apply ILO 28+2 written/1 replaced/1 removed, replay 0/0/0; dcf 42 labels (24 stems + 18 option rows), apc unchanged; gates clean; pytest 211; 4.1.6 published 16:12; byte-verify ALL PASS (92/0); desk proof = six runs of `f1_1328_sectionDE_ilo.txt` (Check Box popup geometry worked out — see memory `csentry-desk-checkbox-popups`) + pilot-jump run for Q98. Evidence 2e494fd2. #1344 (Q150 *I don't know*) closed not-planned: the Aug-17 English instrument dropped it (#1126 reversal, flagged then); translation papers carry the old list.
+- Tooling: `aug21-overrides.json` gains `"force": true` (keep text written on a key that is neither flagged nor absent — plain keep on such a key only holds current; +3 tests). CSPro-side uncommitted for Carl.
+
+## 2026-08-27 — /capi-uat-triage run 2 (cont.): F1 v4.1.7 (#1335–#1343, #1345–#1347, batched)
+
+- Twelve more tickets (Cebuano Section D/E + Ilocano Sections F–G) → second batched build. Labels: CEB Q44/Q45 stems (ILO #1326/#1327 class), CEB Q49/Q50 + ILO Q107 `_NUM` companions, ILO Q109–Q121 (the Q54–Q61 layout; Q112/115/117/120 had glued pre-wave spans; Q116/Q118 English on the paper; Q119 Ilocano only inside its routing bracket), ILO Q129/Q134/Q143, CEB Q101:1 (`Ubos sa 30 ka adlaw` — the CEB paper's own English says *Less than 30 days* vs CAPI *30 days and less*: flagged to ASPSI, English untouched). Notes: `const:_READ_ONE` CEB (empty since the inline-directive hold) → paper's Q47 line (#1340/#1346); the Q44/Q45/Q52 definitions/preambles are hand-held `INSTRUCTIONS` rows never registered as notes → now `def:<q>` notes (CEB supplied). apply CEB 4+2+1 / ILO 31, replay 0; notes.json rebuild diff = exactly 4 CEB cells (+ English def registrations F1/F3/F4); dcf 37 labels, apc unchanged; gates clean; pytest 553; 4.1.7 published 17:11 (auto_deploy lost the dialog handle during the CSWeb progress box AFTER the Deploy click — server had the package; success popup captured/dismissed by a follow-up driver); byte-verify ALL PASS (82/0). Desk proof: CEB Section D walk (typed-code ticks — Cebuano popups are wide/left-shifted, ILO click anchors do not transfer) + ILO Sections E–G on the pilot-jump apc (`F1_PILOT_JUMP=Q88_HEARD_BUCAS`, 7 runs; clean apc regenerated + md5-checked before the publish). Evidence 625df5594628cdcfb118d8d7f7762d2f4a8797ac.
+- Tooling: locale-keyed `keep` (`{"ilo": …, "ceb": …}` — one key, its own text per locale; +3 tests); `extract_notes.py` registers `def:<q>` rows (reviewer-only, never auto-extracted — the auto-extract grabbed question stems in four locales when tried) and honours keep TEXT with no extract candidate (+2 tests); `test_aug21_f4_extract` dict-aware. CSPro-side uncommitted for Carl.
+
+## 2026-08-27 — /capi-uat-triage run 2 (cont.): F1 v4.1.8 (#1348–#1354 + proactive Cebuano batteries)
+
+- Seven Cebuano Section F tickets (Q109–Q115) landed while 4.1.7 was building — the same compliance-battery layout as ILO #1337 ('Nganong lisud ang pagsunod sa mga mosunod?' + per-item Cebuano). Fixed the WHOLE battery (Q109–Q121), Q107 `_NUM`, and the Section D battery Q53–Q61 ('Nganong lisod tumanon:'; four glued English+Cebuano spans, five held) in one build: 45 keys, all on entries that already carried ILO text → locale-keyed keep; Section D forced. apply CEB 45, replay 0; dcf 45 labels, apc unchanged; gates clean; pytest 553; 4.1.8 published 17:29 (auto_deploy clean this time); byte-verify ALL PASS (72/0); desk proof = CEB pilot-jump walk (`f1_1348_sectionF_pilot_ceb.txt`, typed-code ticks) for Q107/Q109; clean apc regenerated + md5-checked. Evidence 4ee7556436afe6610f77ada98c20488048588769. NOTE: the gate reported 'open actionable 0' while these seven sat unlabelled — new unlabelled tickets are invisible to check_field_ready until labelled. CSPro-side uncommitted for Carl.
+
+## 2026-08-31 — /capi-uat-triage single pass (loop off): Aug-28 wave #1355–#1382 → F3 v6.1.5 + F1 v4.1.9
+
+- 28 tickets filed 2026-08-28 (3 F1 Section G, 14 F3 Ilocano B–E from the ops tester with PAPI screenshots, 11 F3 Cebuano Section B). Labelled epic:f1/f3 + type:i18n, 9 Critical → `urgent`. #1375/#1381 filed as F1 but are F3 Q16/Q19.
+- #1356 (F1 Q135 = No → Q141) closed as designed: Q139/Q140 gated to public hospitals (Q7 = Public, Q8 = Level 1/2/3) per the paper's *only for respondents from public hospitals*.
+- F3 v6.1.5 (14:32): 68 map keys + 24 note keys in aug21-overrides.json → CEB 26 / ILO 37 labels + Q4 name in FIL/BCL/BIS/WAR (67 dcf labels), 23 notes.json cells (intro:4/35/53, def:4/17/19/33/34/35/53/Q18_INCOME_BRACKET, const:_READ_ONE/_DNR_ONE/_PWD_CARD CEB, _PWD_CARD/_SELECT_ALL ILO). apc unchanged a0fb214b. F1 v4.1.9 (14:51): CEB Q129 + def:142; apc f548f8e8.
+- Tooling: extract_notes.english_notes now registers `_CONST + "…"` instruction rows (def:17/def:34) and INSTRUCTIONS_BY_NAME rows (def:Q18_INCOME_BRACKET); scan_poisoned_keys DOUBLED no longer raises a repeated run the locale paper prints verbatim (paper reduplication section) — gate went 1464 'DOUBLED grew' → 1445 clean. Locale-keyed keep with null = per-locale hold.
+- Proof: new F3 CEB/ILO desk pffs; Section B walks (f3_1362_sectionB_ceb / f3_1358_sectionB_ilo) + pilot jumps Q33 and Q47 (desk only, regenerated clean, md5-checked); F1 pilot Q128. Evidence 667a795a (docs/uat-fix-evidence/2026-08-31-1358-1382, -1355-1357). 27 closed; Slack: #f3-uat p1788159298205399, #f1-uat p1788159299377449 + 28 thread replies.
+- Flags: same classes remain in FIL/BCL/BIS/WAR/HIL; standup bot says 'GitHub API unavailable' + 'F2 canary unreachable' since 08-28 (its token/access, not the sites); CSPro-side working tree uncommitted for Carl (overrides, notes.json, maps, dcf/qsf/pff, extract_notes.py, scan_poisoned_keys.py, scenarios, desk pffs, patch notes).

@@ -7,6 +7,12 @@ tags: [translations, questionnaire, capi, cspro, sjreb, deliverable-2]
 
 # Source — DOH Deliverable 2 Translated Questionnaires (June 5)
 
+> [!info] Superseded 2026-08-21
+> ASPSI re-issued the translated questionnaires on **August 21, 2026**; that pack is
+> the current translation reference and is what F1 v4.1.0 / F2 m4 / F4 v3.2.2 /
+> F3 v6.1.0 carry. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Revised Deliverable 2 Translated Questionnaires (Aug 21)]].
+> This page remains the record of the June-5 SJREB-cleared set.
+
 The **authoritative translation reference** for the CAPI instruments: 32 PDFs covering
 **8 languages × 4 instruments**, all dated **June 5, 2026**. This is the set SJREB
 cleared and the one the CAPI build footer already cites as *Translated Questionnaire ver.

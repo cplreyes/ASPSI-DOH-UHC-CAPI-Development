@@ -809,7 +809,15 @@ awSearch.oninput=renderAwaiting;
 document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&awDim.style.display==='flex') closeAwaiting(); });
 
 // ---- coordinate intake: enter lat/lon inline, or download/import the CSV, -> coords.php ----
-const COORDS_EP='coords.php';
+// ABSOLUTE on purpose: the map is served from /projects/uhc-y2/monitoring/map/ (capi nginx, static)
+// since the 2026-08-09 console unification, but coords.php lives on the lamp Apache at /docs/.
+// A relative 'coords.php' resolved to a static 404 and surfaced as 'Network error' (#1314).
+const COORDS_EP='/docs/coords.php';
+function asJson(r){ const ct=r.headers.get('content-type')||'';
+  if(ct.indexOf('json')>=0) return r.json();   // coords.php always answers JSON, even on 400/500 (keeps its error text)
+  throw new Error(r.ok?'Unexpected reply — sign in again (reload the page)'
+    :'HTTP '+r.status+(r.status===401||r.status===403?' — sign in again (reload the page)':'')); }
+function netErr(e){ return (e&&/^HTTP /.test(e.message))?e.message:'Network error — is the site reachable?'; }
 function awStatus(msg,ok){ const s=document.getElementById('awStatus'); if(!s) return;
   s.textContent=msg||''; s.className='awstatus'+(ok===true?' ok':ok===false?' err':''); }
 function downloadTemplate(){
@@ -843,16 +851,16 @@ function saveRow(code,lat,lon,btn){
   awStatus('Saving…'); if(btn) btn.disabled=true;
   fetch(COORDS_EP,{method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({code9:code,lat:lat,lon:lon})})
-    .then(r=>r.json()).then(res=>{ if(btn) btn.disabled=false;
+    .then(asJson).then(res=>{ if(btn) btn.disabled=false;
       if(res.ok) afterSave(res); else awStatus(res.error||'Save failed',false); })
-    .catch(function(){ if(btn) btn.disabled=false; awStatus('Network error — is the site reachable?',false); });
+    .catch(function(e){ if(btn) btn.disabled=false; awStatus(netErr(e),false); });
 }
 function importCsv(file){
   awStatus('Importing '+file.name+'…');
   const fd=new FormData(); fd.append('csv',file,file.name);
-  fetch(COORDS_EP,{method:'POST',body:fd}).then(r=>r.json())
+  fetch(COORDS_EP,{method:'POST',body:fd}).then(asJson)
     .then(res=>{ if(res.ok) afterSave(res); else awStatus(res.error||'Import failed',false); })
-    .catch(function(){ awStatus('Network error — is the site reachable?',false); });
+    .catch(function(e){ awStatus(netErr(e),false); });
 }
 document.getElementById('awDl').onclick=downloadTemplate;
 document.getElementById('awUp').onchange=function(e){ const f=e.target.files[0]; if(f) importCsv(f); e.target.value=''; };
