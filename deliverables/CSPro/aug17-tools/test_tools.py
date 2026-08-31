@@ -2030,3 +2030,84 @@ def test_write_unresolved_report_lists_old_and_new_leftovers(tmp_path):
     text = out_path.read_text(encoding="utf-8")
     assert "Q30_OBSOLETE" in text
     assert "Brand-new fixture-only question" in text
+
+
+from bridge_check import summarise_defects, write_json_report
+
+
+def test_summarise_defects_counts_b_and_c_separately_from_triage_only_rules(tmp_path):
+    """The Aug-21 gate reads `bc` off the JSON: Rule A (June-5 legacy mismatch) is expected to
+    grow once Aug-21 replaces values, and Rule D is a separate known-corruption class, so
+    neither may leak into the number the gate compares against its pre-apply baseline."""
+    defects = [
+        {"instrument": "F1", "locale": "fil", "rule": "A-mismatch"},
+        {"instrument": "F1", "locale": "fil", "rule": "A-mismatch"},
+        {"instrument": "F1", "locale": "ceb", "rule": "B-admin-leak"},
+        {"instrument": "F4", "locale": "hil", "rule": "C-glued-fragments"},
+        {"instrument": "F3", "locale": "war", "rule": "D-orphaned-tag"},
+    ]
+    s = summarise_defects(defects)
+    assert s["total"] == 5
+    assert s["by_rule"] == {"A-mismatch": 2, "B-admin-leak": 1,
+                            "C-glued-fragments": 1, "D-orphaned-tag": 1}
+    assert s["bc"] == 2
+    assert s["defects"] == defects
+    assert summarise_defects([]) == {"total": 0, "by_rule": {}, "bc": 0, "defects": []}
+
+
+def test_write_json_report_round_trips_and_creates_the_parent_dir(tmp_path):
+    defects = [{"instrument": "F1", "locale": "fil", "rule": "B-admin-leak",
+                "current": "Resulta aCodes: 1"}]
+    out_path = tmp_path / "gate" / "aug21_pre_bridge.json"
+    returned = write_json_report(out_path, defects)
+    assert returned == summarise_defects(defects)
+    assert json.loads(out_path.read_text(encoding="utf-8")) == returned
+
+
+from bridge_check import bc_markers_match
+
+
+def test_bc_markers_match_is_independent_of_which_rule_fired():
+    """Gate 2's number must be derived from the VALUE, never from the dispatched tag.
+
+    main()'s dispatch is first-fired-wins and Rule A fires on any legacy mismatch, so on
+    the very rows an Aug-21 merge rewrites a B/C corruption would be tagged A-mismatch.
+    This predicate is what makes the gate see it; it must mirror the inline Rule-B/C
+    conditions exactly - FIELD_CONTROL scoping for the admin-leak substrings, Title-Case
+    sensitivity for the cover-sheet labels, and the len > 100 gate on the underscore run."""
+    # Rule B: admin leak, but ONLY on the FIELD_CONTROL record
+    assert bc_markers_match("Resulta aCodes: 1", "FIELD_CONTROL") is True
+    assert bc_markers_match("(Nagan ti Enumerator) Resulta", "FIELD_CONTROL") is True
+    assert bc_markers_match("Resulta aCodes: 1", "COVER") is False
+    # Rule C (a): raw English cover-sheet field labels, no length gate, case-SENSITIVE
+    assert bc_markers_match("Posisyon, Opisina Email address ___ Mobile Number", "COVER") is True
+    assert bc_markers_match("Ilan ang Questionnaire No", "IDS") is True
+    assert bc_markers_match("posisyon, opisina email address", "COVER") is False
+    # Rule C (b): underscore run keeps its len > 100 gate
+    assert bc_markers_match("x" * 101 + "______", "COVER") is True
+    assert bc_markers_match("x" * 10 + "______", "COVER") is False
+    # clean values and non-strings
+    assert bc_markers_match("Pangalan ng Tagapagsiyasat", "FIELD_CONTROL") is False
+    assert bc_markers_match(None, "FIELD_CONTROL") is False
+    assert bc_markers_match(123, "COVER") is False
+
+
+def test_summarise_defects_bc_sees_corruption_that_rule_a_masked():
+    """`bc` sums bc_marker, so a B/C defect the A-mismatch tag masked still trips the gate;
+    `by_rule` keeps the raw dispatched tags, so `bc` may exceed by_rule B + C."""
+    defects = [
+        # Aug-21 glued a cover-sheet fragment onto an item that HAS a legacy entry:
+        # first-fired-wins tagged it A-mismatch, but it is a Rule-C corruption.
+        {"instrument": "F1", "locale": "fil", "rule": "A-mismatch",
+         "current": "Posisyon, Opisina Email address", "bc_marker": True},
+        {"instrument": "F1", "locale": "fil", "rule": "A-mismatch",
+         "current": "a legitimate Aug-21 rewording", "bc_marker": False},
+        {"instrument": "F4", "locale": "ceb", "rule": "B-admin-leak",
+         "current": "Resulta", "bc_marker": True},
+        {"instrument": "F3", "locale": "war", "rule": "D-orphaned-tag",
+         "current": "_input)", "bc_marker": False},
+    ]
+    s = summarise_defects(defects)
+    assert s["by_rule"] == {"A-mismatch": 2, "B-admin-leak": 1, "D-orphaned-tag": 1}
+    assert s["bc"] == 2          # 1 masked-by-A + 1 tagged; D and the clean reword excluded
+    assert s["total"] == 4

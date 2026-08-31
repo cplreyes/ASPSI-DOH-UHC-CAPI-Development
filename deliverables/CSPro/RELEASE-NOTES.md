@@ -23,27 +23,34 @@ version SSOT, tracked since 2026-07-02 - earlier builds predate it).
 > [capi.asiansocial.org/projects/uhc-y2/whats-new](https://capi.asiansocial.org/projects/uhc-y2/whats-new/)
 > (`whatsnew` bullets in the same overlay; auto-published on every bump).
 >
-> F2 PWA (separate lane): **v2.1.0** - notes in `deliverables/F2/PWA/app/CHANGELOG.md`
+> F2 PWA (separate lane): **v3.0.0** - notes in `deliverables/F2/PWA/app/CHANGELOG.md`
 > (written by the milestone-close workflow `uat-release-notes.yml`).
 
 ## Current versions
 
 | Instrument | Version | Deployed |
 |---|---|---|
-| F1 - Facility Head Survey | **v4.0.0** | 2026-08-24 |
-| F3 - Patient Survey | **v6.0.3** | 2026-08-20 |
-| F4 - Household Survey | **v3.1.4** | 2026-08-20 |
+| F1 - Facility Head Survey | **v4.1.9** | 2026-08-31 |
+| F3 - Patient Survey | **v6.1.5** | 2026-08-31 |
+| F4 - Household Survey | **v3.2.3** | 2026-08-27 |
 | HUB - Supervisor Hub | **v1.1.5** | 2026-08-08 |
-| F2 - Healthcare Worker Survey (PWA) | **v2.1.0** | see F2 CHANGELOG |
+| F2 - Healthcare Worker Survey (PWA) | **v3.0.0** | see F2 CHANGELOG |
 
 ## Unreleased
 
-- **F1 v4.0.0** (2026-08-24) - bumped in the working tree, not yet committed · **BREAKING** (data shape)
-  - Changed: Q35.2 primary-care quality measures: replaced the 3-entry placeholder option list with DOH's printed 10-option list ([#1311](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/1311)). Checkbox field length 6 -> 20; stored codes re-map.
-- **F3 v6.0.3** (2026-08-20) - bumped in the working tree, not yet committed
-- **F4 v3.1.4** (2026-08-20) - bumped in the working tree, not yet committed
+- **F1 v4.1.9** (2026-08-31) - bumped in the working tree, not yet committed
+  - Fixed: UAT R7 [#1355](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/1355)/[#1357](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/1357): Cebuano Q129 label + Q142 enumerator note; logic unchanged
+- **F3 v6.1.5** (2026-08-31) - bumped in the working tree, not yet committed
+  - Fixed: UAT R7 [#1358](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/1358)-[#1382](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/1382): Ilocano Sections B-E + Cebuano Section B labels/intros/notes (63 dictionary labels, 23 note cells); Q4 name label in fil/bcl/bis/war; logic unchanged
+- **F4 v3.2.3** (2026-08-27) - bumped in the working tree, not yet committed
+  - Fixed: Filipino/Ilocano/Waray: option labels that had inherited a neighbouring row's translation restored (Q45.2, Q128, Q134)
 
 ## F1 - Facility Head Survey
+
+### [v4.0.0](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/compare/f64ca0f960f78c3f8fea0299f65e01c6322f1d6f...861158c0ac5b3a9a174cd23a5c42f6a5085c6a7d) - 2026-08-24 · MAJOR · **BREAKING** (data shape)
+#### Changed
+- Q35.2 primary-care quality measures: replaced the 3-entry placeholder option list with DOH's printed 10-option list ([#1311](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/1311)). Checkbox field length 6 -> 20; stored codes re-map.
+_Release commit [`861158c`](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/commit/861158c0ac5b3a9a174cd23a5c42f6a5085c6a7d): capture the deployed state: F1 v4.0.0, Aug-17 migration output, scrum + codebooks_
 
 ### [v3.0.1](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/compare/88249604fd4bdf378931ca788794956b807a38f3...f64ca0f960f78c3f8fea0299f65e01c6322f1d6f) - 2026-08-19 · PATCH
 #### Fixed
@@ -95,6 +102,9 @@ _Release commit [`b089212`](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Devel
 _Release commit [`451a560`](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/commit/451a5608255479822056382fddde990567d77bf2): feat(capi): CSEntry build versioning v1.0.1 + .csds deploy route; tabulation plan; R5 fix sweep_
 
 ## F3 - Patient Survey
+
+### [v6.0.3](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/compare/b1652436dc6165316888bf0ab473778c91bafa6a...861158c0ac5b3a9a174cd23a5c42f6a5085c6a7d) - 2026-08-20 · MAJOR
+- capture the deployed state: F1 v4.0.0, Aug-17 migration output, scrum + codebooks ([`861158c`](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/commit/861158c0ac5b3a9a174cd23a5c42f6a5085c6a7d))
 
 ### [v4.0.1](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/compare/af9f87f5c5c62463b9bf9025437c1db581e4c7fc...b1652436dc6165316888bf0ab473778c91bafa6a) - 2026-08-19 · PATCH
 #### Fixed
@@ -150,6 +160,9 @@ _Release commit [`b089212`](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Devel
 _Release commit [`451a560`](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/commit/451a5608255479822056382fddde990567d77bf2): feat(capi): CSEntry build versioning v1.0.1 + .csds deploy route; tabulation plan; R5 fix sweep_
 
 ## F4 - Household Survey
+
+### [v3.1.4](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/compare/b1652436dc6165316888bf0ab473778c91bafa6a...861158c0ac5b3a9a174cd23a5c42f6a5085c6a7d) - 2026-08-20 · MINOR
+- capture the deployed state: F1 v4.0.0, Aug-17 migration output, scrum + codebooks ([`861158c`](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/commit/861158c0ac5b3a9a174cd23a5c42f6a5085c6a7d))
 
 ### [v3.0.2](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/compare/1a2fb94f7b18f991229f9bd10ce76467b111123b...b1652436dc6165316888bf0ab473778c91bafa6a) - 2026-08-19 · PATCH
 #### Fixed

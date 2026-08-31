@@ -39,6 +39,19 @@ INSTRUMENTS = {
 }
 PSGC = [f"psgc_{lvl}.{ext}" for lvl in ("region", "province", "city", "barangay")
         for ext in ("dcf", "dat")]
+# Extra files each package must carry, in add order. PER-INSTRUMENT on purpose
+# (2026-08-27): the three questionnaires ship the PSGC external dicts, F4 also ships
+# review.html, and the Supervisor App / Supervisor Hub ship NEITHER -- SV/ holds no
+# psgc_* files and the HUB spec lives in supervisor-hub/, not HUB/. A blanket
+# "everything needs PSGC" list made the completeness guard abort every SV/HUB deploy
+# with a false 'incomplete package'. Anything unlisted defaults to no extra files.
+EXTRA_FILES = {
+    "F1": PSGC,
+    "F3": PSGC,
+    "F4": PSGC + ["review.html"],
+    "SV": [],
+    "HUB": [],
+}
 # 2026-08-08 migration: csweb.asiansocial.org is being retired; capi is the
 # canonical sync endpoint. Both hosts still answer, so old installs keep
 # working until every tablet has re-added the app.
@@ -179,16 +192,28 @@ def _picker_filename_edit(pk):
     return None
 
 
+def expected_files(base):
+    """Every extra file this instrument's package must carry, in add order.
+
+    Looked up per-instrument in EXTRA_FILES: F1/F3 = the 8 PSGC dicts, F4 = those plus
+    review.html (Section N recap htmldialog reads it from the app folder), SV/HUB = none.
+    An unknown folder name yields [] -- an unlisted app adds nothing and the completeness
+    guard in deploy_one() has nothing to be short of."""
+    return list(EXTRA_FILES.get(base.name, []))
+
+
 def add_files(dd, base):
-    """Add the PSGC external dicts to the package. MESSAGE-based throughout (BM_CLICK +
+    """Add this instrument's extra files (expected_files(base) -- the PSGC external dicts
+    for F1/F3/F4, plus review.html for F4; nothing for SV/HUB). MESSAGE-based throughout (BM_CLICK +
     WM_SETTEXT), so it works even when another app (e.g. a Zoom meeting toolbar/overlay)
     sits over the dialog and swallows physical clicks — the failure mode that silently
     produced a PSGC-less package on 2026-06-17. Falls back to a coord click only if the
-    button can't be resolved."""
+    button can't be resolved.
+
+    Returns the files actually added — SHORTER than expected_files(base) on every early
+    return. deploy_one() treats a short list as a hard abort; never ignore it."""
     added = []
-    # F4 ships review.html too (Section N recap htmldialog reads it from the app folder)
-    extra = ["review.html"] if base.name == "F4" else []
-    for fn in PSGC + extra:
+    for fn in expected_files(base):
         src = base / fn
         if not src.exists():
             print(f"   ! missing {src} -- skipped"); continue
@@ -336,6 +361,24 @@ def cleanup_after_deploy(dd):
     park(dd)
 
 
+def _deploy_result(dd, inst):
+    """One scan of the visible windows for a TERMINAL deploy state.
+    Returns 'success', 'failed', or None (still running -- keep polling)."""
+    for w in Desktop(backend="win32").windows():
+        if not w.is_visible():
+            continue
+        t = (w.window_text() or "")
+        kids = " ".join((c.window_text() or "") for c in w.children()) if w.class_name() == "#32770" else ""
+        blob = (t + " " + kids).lower()
+        if "successfully" in blob:
+            return "success"
+        if any(k in blob for k in ("error", "failed", "unable", "denied")):
+            shot(dd, f"auto_{inst}_deploy_ERR.png")
+            print(f"   result: deploy FAILED -- {kids.strip()[:90] or t.strip()[:90]}")
+            return "failed"
+    return None
+
+
 def deploy_one(inst, do_deploy, skip_add=False):
     dd, want = find_for(inst)
     if not dd:
@@ -355,8 +398,18 @@ def deploy_one(inst, do_deploy, skip_add=False):
     if skip_add:
         print(f"   skip-add: files already prepared in this dialog; clicking Deploy only")
     else:
-        add_files(dd, base)
+        added = add_files(dd, base)
         shot(dd, f"auto_{inst}_files.png")
+        # add_files() returns early on a missing button / picker / file-name field, and
+        # skips a file whose source is absent. Before this guard (2026-08-27) deploy_one()
+        # ignored that and clicked Deploy anyway, shipping a package short of its external
+        # dicts -- the silent 2026-06-17 defect. A short list is now a hard abort.
+        missing = [f for f in expected_files(base) if f not in added]
+        if missing:
+            print(f"[{inst}] ABORT: only {len(added)}/{len(expected_files(base))} files were added "
+                  f"to the package -- missing: {', '.join(missing)}. Deploy NOT clicked; "
+                  f"fix the dialog and re-run (see shots/deploy/auto_{inst}_files.png).")
+            return False
     if not do_deploy:
         print(f"[{inst}] files added; STOP (no --deploy). Review the shot, then re-run with --deploy.")
         return True
@@ -386,21 +439,14 @@ def deploy_one(inst, do_deploy, skip_add=False):
             deadline = time.time() + DEPLOY_WAIT_S   # upload starts now; restart the clock
             continue
 
-        for w in Desktop(backend="win32").windows():
-            if not w.is_visible():
-                continue
-            t = (w.window_text() or "")
-            kids = " ".join((c.window_text() or "") for c in w.children()) if w.class_name() == "#32770" else ""
-            blob = (t + " " + kids).lower()
-            if "successfully" in blob:
-                print("   result: deploy succeeded")
-                cleanup_after_deploy(dd)          # dismiss popup + re-minimize dialog
-                return True
-            if any(k in blob for k in ("error", "failed", "unable", "denied")):
-                shot(dd, f"auto_{inst}_deploy_ERR.png")
-                print(f"   result: deploy FAILED -- {kids.strip()[:90] or t.strip()[:90]}")
-                cleanup_after_deploy(dd)
-                return False
+        res = _deploy_result(dd, inst)
+        if res == "success":
+            print("   result: deploy succeeded")
+            cleanup_after_deploy(dd)              # dismiss popup + re-minimize dialog
+            return True
+        if res == "failed":
+            cleanup_after_deploy(dd)
+            return False
 
     print(f"[{inst}] deploy still running after {DEPLOY_WAIT_S}s -- NOT confirmed. "
           f"Do NOT re-click Deploy; poll for the popup. shots/deploy/auto_{inst}_deploy_*.png")

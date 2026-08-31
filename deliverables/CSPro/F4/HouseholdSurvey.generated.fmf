@@ -150,7 +150,7 @@ Item=Q34_RELATIONSHIP
   
 [Form]
 Name=FORM009
-Label=C. 35. Do you identify as a person with a disability? (REPEATING)
+Label=C. 35. With disability? (REPEATING)
 Level=1
 Repeat=C_HOUSEHOLD_ROSTER
 Size=806,300
@@ -161,7 +161,7 @@ Item=Q35_HAS_DISABILITY
   
 [Form]
 Name=FORM010
-Label=C. 36. Would you like to specify the type of disability? (REPEATING)
+Label=C. 36. Would the patient like to specify the type of disability (REPEATING)
 Level=1
 Repeat=C_HOUSEHOLD_ROSTER
 Size=806,300
@@ -216,7 +216,7 @@ Item=Q39_CIVIL_STATUS
   
 [Form]
 Name=FORM015
-Label=C. 40. Highest level of education attended (the highest level t (REPEATING)
+Label=C. 40. Highest level of education completed (REPEATING)
 Level=1
 Repeat=C_HOUSEHOLD_ROSTER
 Size=806,300
@@ -1695,7 +1695,7 @@ Form=6
   
 [Text]
 Position=50,60,330,76
-Text=30. Name (LAST NAME, FIRST NAME & MIDDLE NAME, EXT)
+Text=30. Name (Write the complete name of HH member)
  
   
 [Field]
@@ -1784,7 +1784,7 @@ Text=34. Relationship to Household Head
 [Group]
 Required=Yes
 Name=C_HOUSEHOLD_ROSTER_FORM_5
-Label=C. 35. Do you identify as a person with a disability? (REPEATING)
+Label=C. 35. With disability? (REPEATING)
 Form=10
 Type=Record
 TypeName=C_HOUSEHOLD_ROSTER
@@ -1799,7 +1799,7 @@ Form=10
   
 [Text]
 Position=50,30,330,46
-Text=35. Do you identify as a person with a disability?
+Text=35. With disability?
  
   
 [EndGroup]
@@ -1807,7 +1807,7 @@ Text=35. Do you identify as a person with a disability?
 [Group]
 Required=Yes
 Name=C_HOUSEHOLD_ROSTER_FORM_6
-Label=C. 36. Would you like to specify the type of disability? (REPEATING)
+Label=C. 36. Would the patient like to specify the type of disability (REPEATING)
 Form=11
 Type=Record
 TypeName=C_HOUSEHOLD_ROSTER
@@ -1822,7 +1822,7 @@ Form=11
   
 [Text]
 Position=50,30,330,46
-Text=36. Would you like to specify the type of disability?
+Text=36. Would the patient like to specify the type of disability?
  
   
 [EndGroup]
@@ -1923,7 +1923,7 @@ Text=39. Civil Status
 [Group]
 Required=Yes
 Name=C_HOUSEHOLD_ROSTER_FORM_11
-Label=C. 40. Highest level of education attended (the highest level t (REPEATING)
+Label=C. 40. Highest level of education completed (REPEATING)
 Form=16
 Type=Record
 TypeName=C_HOUSEHOLD_ROSTER
@@ -1938,7 +1938,7 @@ Form=16
   
 [Text]
 Position=50,30,330,46
-Text=40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)
+Text=40. Highest level of education completed
  
   
 [EndGroup]

@@ -1,0 +1,211 @@
+{
+ "F1": {
+  "BCL": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "override",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact"
+  },
+  "BIS": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact"
+  },
+  "CEB": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact"
+  },
+  "HIL": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact"
+  },
+  "ILO": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact"
+  },
+  "FIL": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "override",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact"
+  },
+  "WAR": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact"
+  }
+ },
+ "F3": {
+  "BCL": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact",
+   "icf:2:4": "exact"
+  },
+  "BIS": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "override",
+   "icf:2:4": "override"
+  },
+  "CEB": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact",
+   "icf:2:4": "exact"
+  },
+  "HIL": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "prefix",
+   "icf:2:1": "dropped-english",
+   "icf:2:2": "missing",
+   "icf:2:3": "exact",
+   "icf:2:4": "exact"
+  },
+  "ILO": {
+   "icf:1:0": "override",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact",
+   "icf:2:4": "exact"
+  },
+  "FIL": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact",
+   "icf:2:4": "exact"
+  },
+  "WAR": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact",
+   "icf:2:4": "exact"
+  }
+ },
+ "F4": {
+  "BCL": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "override",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact",
+   "icf:2:4": "exact"
+  },
+  "BIS": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact",
+   "icf:2:4": "exact"
+  },
+  "CEB": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact",
+   "icf:2:4": "exact"
+  },
+  "HIL": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact",
+   "icf:2:4": "exact"
+  },
+  "ILO": {
+   "icf:1:0": "override",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact",
+   "icf:2:4": "exact"
+  },
+  "FIL": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact",
+   "icf:2:4": "exact"
+  },
+  "WAR": {
+   "icf:1:0": "suffix",
+   "icf:1:1": "exact",
+   "icf:1:2": "exact",
+   "icf:2:0": "exact",
+   "icf:2:1": "exact",
+   "icf:2:2": "exact",
+   "icf:2:3": "exact",
+   "icf:2:4": "exact"
+  }
+ }
+}

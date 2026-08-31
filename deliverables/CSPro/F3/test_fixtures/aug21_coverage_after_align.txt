@@ -1,0 +1,13 @@
+  Languages: EN, FIL, BCL, BIS, CEB, WAR, HIL, ILO
+    FIL: 1064/1749 labels translated (60%)
+    BCL: 942/1749 labels translated (53%)
+    BIS: 963/1749 labels translated (55%)
+    CEB: 1030/1749 labels translated (58%)
+    WAR: 1004/1749 labels translated (57%)
+    HIL: 757/1749 labels translated (43%)
+    ILO: 925/1749 labels translated (52%)
+  #714: neutralised facility-name placeholder in 110 label(s)
+  -- 21 translated label(s) cut at 255 chars (BIS:2, CEB:2, FIL:2, HIL:7, ILO:4, WAR:4) - for the next translation pass, display only
+Wrote C:\Users\analy\Documents\analytiflow\1_Projects\ASPSI-DOH-CAPI-CSPro-Development\deliverables\CSPro\F3\PatientSurvey.dcf
+  Records: 37
+  Items:   374

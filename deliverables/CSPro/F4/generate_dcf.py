@@ -635,7 +635,24 @@ def build_section_c():
         numeric("MEMBER_LINE_NO", "Household Member Line Number", length=2, zero_fill=True),
         # C1. Household Roster (Q30-Q34)
         alpha("Q30_NAME",
-              "30. Name (LAST NAME, FIRST NAME & MIDDLE NAME, EXT)", length=120),
+              # aug21: raw/Survey-Instruments-2026-08-21/English/
+              # "F4-English_Household Survey Questionnaire_UHC Year 2_Aug21.pdf", p.5.
+              # ADJUDICATED (Wave-3 fix round 1): p.5 prints Q30 TWICE, and the two
+              # occurrences carry different parentheticals —
+              #   (a) CODES block:  "30. Name (Write the complete name of HH member)"
+              #   (b) C1 grid column header: "Name (LAST NAME, FIRST NAME & MIDDLE
+              #       NAME, EXT)"  [no number prefix]
+              # We take (a), the numbered CODES caption, because that is the paper's
+              # canonical numbered question text and it is the same rule this wave
+              # applies to Q35/Q36 — whose C2 grid headers still read the OLD June-5
+              # strings ("Do you identify as a person with a disability?" / "Would you
+              # like to specify…") while their CODES blocks carry the Aug-21 wording we
+              # ship. Taking the grid header for Q30 alone would be inconsistent, and
+              # hand-merging both into one string would put English permanently out of
+              # step with the 7 dialects (the Aug-21 extract yields the CODES caption
+              # only). Consequence, deliberate and recorded in the v3.2.0 patch note:
+              # the roster grid's NAME-ORDER format instruction is dropped from CAPI.
+              "30. Name (Write the complete name of HH member)", length=120),
         select_one("Q31_PRESENT",
                    "31. HH member present or away", Q31_PRESENT, length=1),
         numeric("Q32_AGE",
@@ -646,10 +663,10 @@ def build_section_c():
                    "34. Relationship to Household Head", Q34_RELATIONSHIP, length=2),
         # C2. Household Characteristics — disability (Q35-Q38)
         select_one("Q35_HAS_DISABILITY",
-                   "35. Do you identify as a person with a disability?",
+                   "35. With disability?",                                   # aug21 wording
                    YN_01, length=1),
         select_one("Q36_SPECIFY_DISABILITY",
-                   "36. Would you like to specify the type of disability?",
+                   "36. Would the patient like to specify the type of disability?",   # aug21
                    YN_01, length=1),
         select_one("Q37_PWD_CARD",
                    "37. May we view the patient's PWD Identification Card?",
@@ -663,7 +680,10 @@ def build_section_c():
         select_one("Q39_CIVIL_STATUS",
                    "39. Civil Status", Q39_CIVIL_STATUS, length=1),
         select_one("Q40_EDUCATION",
-                   "40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)",  # #608: 'attended/reached', not 'completed' (ASPSI go/no-go via Carl 2026-06-21)
+                   # aug21: the DOH-submitted paper reads "completed" — this REVERSES #608
+                   # ('attended/reached', ASPSI go/no-go via Carl 2026-06-21). The paper
+                   # wins; the 3.2.0 patch note says so explicitly.
+                   "40. Highest level of education completed",
                    Q40_EDUCATION, length=2),
         # #1204: 'Other (specify)' free text for Q40, mirroring Q11_EDUCATION_OTHER_TXT and
         # this roster's own Q38_DISABILITY_OTHER_TXT. No generate_apc edit needed — the gate
@@ -1049,7 +1069,16 @@ def build_section_g():
                     "66. Where do you usually buy or receive your medicines?",
                     _cb_codes(Q66_WHERE_BUY), with_other_txt=True),
         numeric("Q67_TRAVEL_HH",
-                "67. How much time does it take to reach the nearest pharmacy from your home? — Hours",
+                # aug21: the paper's "for you to" correction lands here; the stem stays
+                # SHORT. The paper's pharmacy definition is NOT inlined: it already renders
+                # once as the blue INSTRUCTIONS[67] line in generate_qsf.py, and this one
+                # dcf label feeds BOTH the .qsf question bar and the .fmf field text, so
+                # inlining it printed the definition twice (the #1205 trap, see
+                # Q64_MEDICATIONS_LIST above; same rule as F3 #1136/#1137 and the F3 Q150
+                # pattern, where the short stem lives in the dcf and the definition in the
+                # qsf note). #1073: the full stem rides on Hours only; Minutes stays short.
+                "67. How much time does it take for you to reach the nearest pharmacy "
+                "from your home? — Hours",
                 length=2),
         numeric("Q67_TRAVEL_MM",
                 # #1073: second component shows a short prompt — the full question reads

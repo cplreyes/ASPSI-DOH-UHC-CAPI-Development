@@ -147,10 +147,11 @@ _EMPH_PATTERNS = [
 # Bagong Urgent Care and Ambulatory Service (BUCAS)?" - it would have replaced
 # that question's text with the capitation paragraph, in English and in every
 # locale falling back to English. And it is no longer needed: Aug-17 condensed
-# the stem to 236 chars, so the dcf label now carries the full text itself and
-# the emphasis can be derived from it like every other rule here.
+# the stem so the dcf label carries the full text itself and the emphasis can
+# be derived from it like every other rule here (Aug-21 rewords the stem to
+# 'rate amount ... is at Php 1,700' - still comfortably under the 255 cap).
 _CAPITATION_RE = re.compile(
-    r"^(<p>\d+\. The maximum per capita rate for YAKAP/Konsulta is )"
+    r"^(<p>\d+\. The maximum per capita rate(?: amount)? for YAKAP/Konsulta is(?: at)? )"
     r"(Php 1,700)"
     r"(.*?)"
     r"(Based on your practice, is this enough\?)"
@@ -201,17 +202,16 @@ def _emphasize(html):
 # wanted for reference.
 # ------------------------------------------------------------------
 
-# Item-name → question-text HTML. Overrides win over the dcf-label default
-# and are emitted identically for every declared language (English fallback
-# until SJREB-approved ICF translations arrive).
+# Item-name → question-text HTML. Overrides win over the dcf-label default.
+# Per language since the Aug-21 import: icf_content.screens_for() falls back to English per paragraph.
 # CONSENT_GIVEN removed 2026-06-12 — no consent DECISION is captured on the CAPI, and
 # that has not changed. What DID change (2026-08-13): ASPSI sent "Suggested Layout
 # (CSEntry).docx", putting the consent SCRIPT back on the device as two read-aloud
 # screens with the clearance block. Text: ../icf_content.py. (The old, unemitted
 # CONSENT_HTML block that this superseded was removed 2026-08-20, ANA-322.)
 OVERRIDES = {
-    "ICF_PART1": _icf.build_screen_html("F1", 1, _LOGO_HTML),
-    "ICF_PART2": _icf.build_screen_html("F1", 2, _LOGO_HTML),
+    "ICF_PART1": _icf.screens_html_by_lang("F1", 1, _LOGO_HTML),   # {lang: html}
+    "ICF_PART2": _icf.screens_html_by_lang("F1", 2, _LOGO_HTML),
 }
 
 
@@ -448,7 +448,7 @@ def main():
                         txt = _emphasize(txt)
                     # resolved PER LANGUAGE - see note_html()
                     pre, post = note_html(intro_en, instr_en, lnm)
-                    body = ov or (pre + txt + post)
+                    body = ov[lnm] if ov else (pre + txt + post)
                     # #1306: unnumbered field -> its caption already prints this exact
                     # label, so the question pane would echo it. Keep any real intro or
                     # instruction, drop the echo.

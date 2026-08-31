@@ -1,0 +1,168 @@
+# aug21 Wave 4a — re-synced 97.1 / 97.2 labels rendered in WARAY (pre-import).
+# pff [Parameters] Language=WAR. Opening walk = f3_qfs_roster.txt (PATIENT_TYPE=1,
+# Outpatient) down to `shot at_q92_sources`, then on through Section G bill detail.
+# NOTE (task 39): 115.1 / 115.2 are NOT reachable from an Outpatient walk —
+# Q105_REASON's gate sends PATIENT_TYPE <> 2 past the whole of Section H
+# (generate_apc.py Q88_OUTPATIENT_GATE / BRANCHING). They get their own INPATIENT
+# scenario, f3_aug21_bill_detail_war_ip.txt.
+rmdata ../F3/desktest_war.csdb
+launch ../F3/PatientSurvey_WAR.pff
+casekey 04 03 403 02 001
+type 1
+type 1
+type 1
+type 1
+type 1
+type 1
+type 0403403001
+type RHU BINAN
+key {ENTER}
+type TEST ST BINAN
+key {ENTER}
+click 1040 374
+click 985 464
+click 1000 254
+click 985 304
+type JUAN DELA CRUZ
+key {ENTER}
+type 6
+key {ENTER}
+type 1991
+key {ENTER}
+click 1172 565
+type 35
+key {ENTER}
+type 1
+type 2
+type 1
+type 2
+type 01
+type 1
+type 01
+type 15000
+key {ENTER}
+type 2
+type 4
+key {ENTER}
+type 1
+key {ENTER}
+type 0
+key {ENTER}
+type 1
+type 1
+type 1
+type 3
+type 3
+type 1
+type 1
+type 1
+# --- B/C/D: minimal answers from Q30 to Q47 (derived from the dcf value sets)
+note Q30_IP = No (skips Q31 specify)
+type 2
+note Q32 4Ps = No; Q33 decision-maker = patient
+type 2
+type 1
+note Q35 UHC heard = No
+type 2
+note Q38 PhilHealth registered = Yes; Q38.1 = 1
+type 1
+type 1
+note Q39 / Q40 are 2-digit coded fields
+type 01
+type 01
+note Q41 difficulty = No -> Q42/Q43/Q44 are all skipped, next field is Q45
+type 2
+note Q45 category (2-char field: send both digits); Q46 benefits (multi -> code + ENTER)
+type 01
+type 01
+key {ENTER}
+note Q47 a)-d) awareness battery
+type 1
+type 1
+type 1
+type 1
+shot pilot_a_after_q47
+# --- D/E/F: Q48 -> Q92 (minimal path)
+note Q48 premium = No; Q49 still asked (= No); Q51 other insurance = No; Q53 has PCP = No
+type 2
+type 2
+type 2
+type 2
+note Q63 usual facility = Yes -> Q64 name, Q66 same-as-usual = Yes
+type 1
+type RHU BINAN
+key {ENTER}
+type 1
+note Q66 = Yes skips Q67 AND Q68; Q69 travel hh + mm are 2-char each; Q70 transport (multi)
+type 00
+type 30
+type 01
+key {ENTER}
+note Q71 nearest type; Q72 travel hh/mm; Q73 transport (multi)
+type 1
+type 00
+type 30
+type 01
+key {ENTER}
+note Q74 Konsulta heard = No
+type 2
+shot pilot_b_after_q74
+# --- F/G: Q83 -> Q92 (multi-selects are code + ENTER)
+note Q74 = No skips Q75-Q82 outright; Q83 visit reason; Q84 service type
+type 1
+type 1
+note Q85 conditions / Q86 visit events / Q87 other actions (multi)
+type 01
+key {ENTER}
+type 01
+key {ENTER}
+type 01
+key {ENTER}
+note Q88 why visit (Check Box, multi)
+type 01
+key {ENTER}
+note Q89 advised admission = No; Q90 reasons not confined (multi); Q91 usual outpatient = Yes
+type 2
+type 01
+key {ENTER}
+type 1
+shot at_q92_sources_war
+# --- Q92 -> 97.2: tick Out-of-pocket, amounts, labs, meds, then the 97.1 / 97.2 blocks
+note Q92 sources tick 01 (Out-of-pocket) + amount in the pay roster
+type 01
+key {ENTER}
+type 500
+key {ENTER}
+note Q93 labs tick 01 -> Q94 roster (mode of payment 01 + amount)
+type 01
+key {ENTER}
+type 01
+type 300
+key {ENTER}
+note Q95 prescribed = Yes -> Q96 sources tick 01 + amount
+type 1
+type 01
+key {ENTER}
+type 400
+key {ENTER}
+note Q97 final cash amount
+type 1200
+key {ENTER}
+# --- 97.1: TICK path (Doctor's Professional Fee) then the amount roster
+shot at_q971_sources
+type 01
+key {ENTER}
+type 300
+key {ENTER}
+shot at_q971_roster
+# --- 97.2: NO path (code 90 = "No, did not pay for any other expenses")
+shot at_q972_sources
+type 90
+key {ENTER}
+shot at_q972_no_option
+# --- Q98: tick 01 + amount, then the end of Section G
+type 01
+key {ENTER}
+type 500
+key {ENTER}
+shot after_q98

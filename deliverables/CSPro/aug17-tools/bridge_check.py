@@ -129,6 +129,11 @@ not as a completeness guarantee, when Task 0.4 or later tasks build on this.
 
 Usage:
     py bridge_check.py --check                  # report only, no writes
+    py bridge_check.py --check --json PATH       # + machine-readable per-rule report
+                                                  # {total, by_rule, bc, defects}; `bc` =
+                                                  # Rule B + Rule C, the number the Aug-21
+                                                  # post-merge gate compares pre vs post
+                                                  # (Rule A is expected to grow — see below)
     py bridge_check.py --apply --out DIR         # write fixed <loc>.json
                                                   # per instrument into DIR
                                                   # (mirrors F{n}/translations/
@@ -152,6 +157,7 @@ corrected after the fact (see `git log` on this file / Task 0.1 report).
 import argparse
 import json
 import re
+from collections import Counter
 from pathlib import Path
 
 MAIN = Path(r"C:\Users\analy\Documents\analytiflow\1_Projects\ASPSI-DOH-CAPI-CSPro-Development")
@@ -175,6 +181,74 @@ ORPHANED_TAG_START = re.compile(r"^_input[\)\]]", re.IGNORECASE)
 def load_json(path):
     with open(path, encoding="utf-8") as f:
         return json.load(f)
+
+
+def bc_markers_match(current, record_name):
+    """True iff `current` carries a Rule-B or Rule-C corruption marker, INDEPENDENT of
+    which rule main()'s first-fired-wins dispatch ended up assigning to the row.
+
+    Rule A fires on any value that merely differs from its legacy-archive entry, and the
+    legacy archives are large (F1/fil 842 keys, F3/fil 1144, F4/ceb 871). The Aug-21 merge
+    replaces 169-253 values per locale, so most replaced rows fire A first. Without this
+    predicate, an admin leak or a glued English fragment NEWLY introduced by an Aug-21
+    value on any item that happens to have a legacy entry would be filed as `A-mismatch`,
+    dropped from the gated `bc` number, and the wave would read `B/C=0` as proof of a clean
+    merge - exactly the corruption class gate 2 exists to catch, on exactly the rows the
+    merge rewrites. It is therefore evaluated for EVERY defect row, whatever fired.
+
+    The three tests mirror the Rule-B / Rule-C conditions in main() one for one, including
+    Rule B's FIELD_CONTROL scoping (the admin-leak substrings are only safe on that record)
+    and Rule C's len > 100 gate on the underscore run."""
+    if not isinstance(current, str):
+        return False
+    if record_name == "FIELD_CONTROL" and ADMIN_LEAK_MARKERS.search(current):
+        return True
+    if GLUED_FIELD_LABEL_MARKERS.search(current):
+        return True
+    return bool(len(current) > 100 and UNDERSCORE_RUN.search(current))
+
+
+def summarise_defects(defects):
+    """Machine-readable roll-up of the report the console prints.
+
+    The console report is per-instrument/locale COUNTS only — the rule that fired is
+    printed nowhere, so a caller grepping stdout for `B-admin-leak` always counts zero.
+    The Aug-21 post-merge gate (data/translations-official/run_aug21_gates.ps1) needs the
+    per-rule split because Rule A is EXPECTED to grow the moment Aug-21 replaces a value
+    that still has a June-5 legacy entry — the gate therefore compares `bc` (Rule B +
+    Rule C, the two auto-delete corruption classes) against its pre-apply baseline and
+    ignores `total`. Rule D is reported under `by_rule` but deliberately stays out of
+    `bc`: it is a separate known-corruption class with its own 7-row fleet-wide baseline,
+    not part of the B/C gate the waves were specified against.
+
+    `bc` counts rows whose VALUE carries a Rule-B/Rule-C marker (`bc_marker`, set by
+    bc_markers_match() for every defect row), NOT rows whose dispatched tag is B or C.
+    main()'s dispatch is first-fired-wins and Rule A fires on any legacy mismatch, so
+    counting dispatched tags would make the gate blind to a B/C corruption introduced on a
+    row that also has a legacy entry - i.e. blind on precisely the rows an Aug-21 merge
+    rewrites. `by_rule` keeps the raw dispatched tags unchanged, so `bc` can legitimately
+    exceed by_rule[B] + by_rule[C]. Rows with no `bc_marker` field (hand-built fixtures,
+    reports written before this field existed) fall back to the dispatched tag."""
+    by_rule = Counter(d.get("rule", "?") for d in defects)
+    bc = sum(1 for d in defects
+             if d.get("bc_marker",
+                      d.get("rule") in ("B-admin-leak", "C-glued-fragments")))
+    return {
+        "total": len(defects),
+        "by_rule": dict(sorted(by_rule.items())),
+        "bc": bc,
+        "defects": defects,
+    }
+
+
+def write_json_report(path, defects):
+    """Write summarise_defects() to `path` (parents created), LF + UTF-8. Returns the summary."""
+    summary = summarise_defects(defects)
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(summary, f, ensure_ascii=False, indent=1)
+    return summary
 
 
 def strip_item_keys(text, keys_to_remove):
@@ -222,6 +296,9 @@ def main():
     ap.add_argument("--check", action="store_true", help="report only (default)")
     ap.add_argument("--apply", action="store_true", help="write fixed files")
     ap.add_argument("--out", type=Path, help="output dir for --apply (mirrors F{n}/translations/<loc>.json)")
+    ap.add_argument("--json", type=Path, dest="json_out", metavar="PATH",
+                    help="also write the machine-readable per-rule report (see summarise_defects); "
+                         "run_aug21_gates.ps1 reads its B/C count from it")
     args = ap.parse_args()
     apply_mode = args.apply
     if apply_mode and not args.out:
@@ -331,6 +408,10 @@ def main():
                     defects.append({
                         "instrument": ins, "locale": loc, "item": name, "en_label": en,
                         "rule": fired, "current": current, "legacy": legacy_val,
+                        # Precedence-independent: Rule A wins the dispatch on any legacy
+                        # mismatch, so the gated B/C number must be derived from the value
+                        # itself, not from `fired`. See bc_markers_match().
+                        "bc_marker": bc_markers_match(current, rec),
                         "fix": ("auto-delete" if (auto_apply and fix_value is None)
                                 else "not-auto-applied" if fired == "A-mismatch"
                                 else "legacy-value"),
@@ -370,6 +451,13 @@ def main():
         by_ins_loc[(d["instrument"], d["locale"])] += 1
     for (ins, loc), n in sorted(by_ins_loc.items()):
         print(f"  {ins}/{loc}.json: {n} defect(s)")
+
+    if args.json_out:
+        summary = write_json_report(args.json_out, defects)
+        print(f"By rule: {summary['by_rule']}  (B/C markers = {summary['bc']})")
+        print("  (B/C is marker-based, not tag-based: Rule A wins the dispatch on any "
+              "legacy mismatch, so it can exceed by_rule B+C - see summarise_defects)")
+        print(f"Wrote JSON report to {args.json_out}")
 
     if apply_mode:
         for (ins, loc), new_text in fixed_files.items():

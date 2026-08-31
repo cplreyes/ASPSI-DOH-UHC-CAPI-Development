@@ -120,17 +120,16 @@ def _p(cls, text):
 # wanted for reference.
 # ------------------------------------------------------------------
 
-# Item-name → question-text HTML. Overrides win over the dcf-label default
-# and are emitted identically for every declared language (English fallback
-# until SJREB-approved ICF translations arrive).
+# Item-name → question-text HTML. Overrides win over the dcf-label default.
+# Per language since the Aug-21 import: icf_content.screens_for() falls back to English per paragraph.
 # CONSENT_GIVEN removed 2026-06-12 — no consent DECISION is captured on the CAPI, and
 # that has not changed. What DID change (2026-08-13): ASPSI sent "Suggested Layout
 # (CSEntry).docx", putting the consent SCRIPT back on the device as two read-aloud
 # screens with the clearance block. Text: ../icf_content.py. (The old, unemitted
 # CONSENT_HTML block that this superseded was removed 2026-08-20, ANA-322.)
 OVERRIDES = {
-    "ICF_PART1": _icf.build_screen_html("F4", 1, _LOGO_HTML),
-    "ICF_PART2": _icf.build_screen_html("F4", 2, _LOGO_HTML),
+    "ICF_PART1": _icf.screens_html_by_lang("F4", 1, _LOGO_HTML),   # {lang: html}
+    "ICF_PART2": _icf.screens_html_by_lang("F4", 2, _LOGO_HTML),
 }
 
 
@@ -140,7 +139,10 @@ OVERRIDES = {
 # number: the intro attaches once to the first Q<n>_* item; the instruction
 # (blue Instruction style) to every Q<n>_* item except other-specify *_TXT
 # fields. Paper-only navigation notes (<proceed to Qx>, skip-to rules) are
-# omitted — CAPI logic automates the routing. English-only, like consent.
+# omitted — CAPI logic automates the routing — EXCEPT the four Aug-21 printed
+# gates on Q117/Q118/Q131/Q135, which ASPSI kept in the question text; they
+# ride as name-keyed help notes so the dcf label (the translation key) stays
+# clean (#1101/#658 dropped them from the label; aug21 restores them as notes).
 # ------------------------------------------------------------------
 _READ_ONE = "READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY."
 _READ_ALL = "READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY."
@@ -284,9 +286,18 @@ INSTRUCTIONS = {
           "travel to the facility, or the time off work."),
 }
 
+# aug21: printed gates the Aug-21 paper carries inside the stem (curly quotes as printed).
+# Constant NAMES carry no digits by convention (data/translations-official/extract_notes.py
+# scrapes module constants as const:<NAME> anchors; the Q112 lives inside the string).
+_GATE_ANSWER_ONLY_IF_YES = "[Answer only “yes” in Q112]"
+_GATE_DOH_RETAINED = "[Ask only if they went to a DOH-retained hospital]"
+
 # Item-NAME-keyed instructions — for notes belonging to ONE component of a multi-field
 # question, where the paper-number key would spray the note across every Q<n>_* field.
 # Wins over the number-keyed map above. Mirrors F3's map (#1048).
+# Values are a str OR a tuple of str. A tuple renders one <p class="instruction"> per
+# part and each part is translated on its own (notes.json keys on the FULL English
+# string, so "gate + _READ_ONE" glued together would never find a translation).
 INSTRUCTIONS_BY_NAME = {
     # #1202: Q18 renders as the paper's two parts. The amount box gets the missing-value
     # note (the -98/-99 sentinels the apc already accepts); the dropdown gets the category
@@ -296,6 +307,13 @@ INSTRUCTIONS_BY_NAME = {
                           "for “I don’t know” and -99 for “Refuse to Answer”."),
     "Q18_INCOME_BRACKET": ("Enumerator note: Select the income category that corresponds to "
                            "the respondent’s approximate household income."),
+    # aug21 printed gates (routing is still enforced by the apc: #816 Q117 preproc, Q118
+    # gate on Q112=Yes, Q130/Q132 bypasses for Q131/Q135). A name key REPLACES the
+    # number-keyed note, so Q118 re-attaches its _READ_ONE as a second tuple part.
+    "Q117_SPECIALIST_FOLLOWUP": _GATE_ANSWER_ONLY_IF_YES,
+    "Q118_SAT_REFERRAL_PROCESS": (_GATE_ANSWER_ONLY_IF_YES, _READ_ONE),
+    "Q131_NBB_OOP": _GATE_DOH_RETAINED,
+    "Q135_ZBB_OOP": _GATE_DOH_RETAINED,
 }
 
 SECTION_INTROS = {
@@ -478,10 +496,13 @@ def question_extras(nm, intro_used):
 
 def note_html(intro_en, instr_en, lang):
     """Render the two notes in ONE language; missing translation keeps English, which is
-    what the tablet shows today, so a miss is never a regression."""
+    what the tablet shows today, so a miss is never a regression.
+    instr_en may be a str or a tuple of str (aug21): one instruction paragraph per part,
+    each translated independently so notes.json can carry the gate and the READ-ONE
+    note as two separate full-string keys."""
     pre = f"<p>{_esc(translate_note(intro_en, lang))}</p>" if intro_en else ""
-    post = (f'<p class="instruction">{_esc(translate_note(instr_en, lang))}</p>'
-            if instr_en else "")
+    parts = instr_en if isinstance(instr_en, tuple) else ((instr_en,) if instr_en else ())
+    post = "".join(f'<p class="instruction">{_esc(translate_note(p, lang))}</p>' for p in parts)
     return pre, post
 
 
@@ -555,7 +576,7 @@ def main():
                 cc = _ROSTER_CROSSCHECK.get(nm)   # #603/#606/#607/#609 line-1 cross-check note
                 for lnm, _ in langs:
                     pre, post = note_html(intro_en, instr_en, lnm)   # per LANGUAGE
-                    body = ov or (pre + _html(labmap.get(lnm) or en) + post)
+                    body = ov[lnm] if ov else (pre + _html(labmap.get(lnm) or en) + post)
                     # #1307: unnumbered field -> the caption already prints this label;
                     # keep intro/instruction, drop the echoed label.
                     if not ov and _cap_dup(nm, en, _SHORT.get(nm),

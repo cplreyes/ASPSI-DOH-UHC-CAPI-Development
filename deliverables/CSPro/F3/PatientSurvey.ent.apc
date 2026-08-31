@@ -3499,12 +3499,12 @@ postproc
 
 PROC Q1141_OTHER_TXT
 preproc
-  if Q1141_1 <> 1 then
+  if Q1141_6 <> 1 then
     Q1141_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
     noinput;
   endif;
 postproc
-  if Q1141_1 = 1 and length(strip(Q1141_OTHER_TXT)) = 0 then
+  if Q1141_6 = 1 and length(strip(Q1141_OTHER_TXT)) = 0 then
     errmsg(1177);
     reenter;
   endif;

@@ -123,5 +123,105 @@
       "Q35.2 primary-care quality measures: replaced the 3-entry placeholder option list with DOH's printed 10-option list (#1311). Checkbox field length 6 -> 20; stored codes re-map."
     ],
     "breaking": true
+  },
+  "F1 4.1.0": {
+    "Changed": [
+      "Aug-21 translations imported for all 7 languages; Q75 stem aligned to the Aug-21 paper; consent screens and section intros per language"
+    ]
+  },
+  "F4 3.2.0": {
+    "Changed": [
+      "Aug-21 questionnaire alignment: Q30/Q35/Q36/Q40/Q67 wording (Q40 'completed' reverses #608), printed gates on Q117/Q118/Q131/Q135 as on-screen notes, Aug-21 translations imported for all 7 languages, consent screens and section intros per language"
+    ]
+  },
+  "F4 3.2.1": {
+    "Fixed": [
+      "Waray: paper question numbers no longer prefixed to translated text (154 rows)"
+    ]
+  },
+  "F4 3.2.2": {
+    "Fixed": [
+      "Filipino: paper brackets no longer wrap translated text (459 rows)"
+    ]
+  },
+  "F3 6.1.0": {
+    "Changed": [
+      "Aug-21 paper alignment: Q47 single stem, Q69/Q94/Q96/Q98 stems, 97.2/115.1/115.2 labels and option text re-synced verbatim (codes unchanged); Hiligaynon/Ilocano facility-name dialect phrase; Aug-21 translations imported for all 7 languages; consent screens and section intros per language"
+    ]
+  },
+  "F4 3.2.3": {
+    "Fixed": [
+      "Filipino/Ilocano/Waray: option labels that had inherited a neighbouring row's translation restored (Q45.2, Q128, Q134)"
+    ]
+  },
+  "F1 4.1.1": {
+    "Fixed": [
+      "Bikol/Filipino: option labels that had inherited a neighbouring row's translation corrected (Q45, Q83)"
+    ]
+  },
+  "F3 6.1.1": {
+    "Fixed": [
+      "Cebuano: 'LGU/Barangay' source option restored on 7 questions (had inherited 'Legislation'); 21 further option labels that carried a neighbouring row's translation now render their English label (Q2, Q10, Q34, Q38.2, Q98, Q113)"
+    ]
+  },
+  "F3 6.1.2": {
+    "Fixed": [
+      "Cebuano: the seven 'LGU/Barangay' information-source options now carry the Aug-21 paper's own text instead of inheriting the English label (same words on the tablet as v6.1.1, written rather than inherited); no other label changed."
+    ]
+  },
+  "F3 6.1.3": {
+    "Fixed": [
+      "#1315 115.1 'Other expenses' specify box now gated on Q1141_6 (was row 1); #1316 Type of Patient / HIL Q7 fragment labels removed so English renders"
+    ]
+  },
+  "F3 6.1.4": {
+    "Fixed": [
+      "#1316 follow-through: the HIL Q7 value-set label twin of the removed item label is removed too (6.1.3 byte-verify found the residue)"
+    ]
+  },
+  "F1 4.1.2": {
+    "Fixed": [
+      "#1317 Ilocano question text for Q5 and Q6 (years/months at facility, years in health) — paper spans accepted via override"
+    ]
+  },
+  "F1 4.1.3": {
+    "Fixed": [
+      "#1322 Cebuano 'Not applicable' (code 9) fragment 'sa primary care facilities>' removed on Q10.1 and Q12.2 so English renders; 17 stale map keys retired"
+    ]
+  },
+  "F1 4.1.4": {
+    "Fixed": [
+      "#1323 Ilocano Q37 stem (major challenges to accessibility) — paper span accepted via override"
+    ]
+  },
+  "F1 4.1.5": {
+    "Fixed": [
+      "#1325 #1326 #1327 Ilocano Q39 (since when: month/year), Q44 (capitation amount) and Q45 (performance indicators) stems — paper spans accepted via override"
+    ]
+  },
+  "F1 4.1.6": {
+    "Fixed": [
+      "UAT R7 #1328-#1334: Ilocano Section D/E labels - Q49/Q50 No. of Days, Q53-Q61 stems, Q62/Q65 options, Q75 stem (condensed), Q98 stem; Q62 option 02/05 fragment cleanup in all locales. Logic unchanged."
+    ]
+  },
+  "F1 4.1.7": {
+    "Fixed": [
+      "UAT R7 #1335-#1347: Cebuano Section D (Q44/Q45 stems + definitions, Q47/Q90 read-one directive, Q49/Q50 No. of Days, Q52 preamble, Q101 option) and Ilocano Sections F-G (Q107 No. of Days, Q109-Q121 stems, Q129, Q134, Q143). Logic unchanged; #1344 answered without a build change."
+    ]
+  },
+  "F1 4.1.8": {
+    "Fixed": [
+      "UAT R7 #1348-#1354 (+ proactive same-battery keys): Cebuano compliance batteries - Section F Q109-Q121 stems + Q107 No. of Days, Section D Q53-Q61 stems. Logic unchanged."
+    ]
+  },
+  "F3 6.1.5": {
+    "Fixed": [
+      "UAT R7 #1358-#1382: Ilocano Sections B-E + Cebuano Section B labels/intros/notes (63 dictionary labels, 23 note cells); Q4 name label in fil/bcl/bis/war; logic unchanged"
+    ]
+  },
+  "F1 4.1.9": {
+    "Fixed": [
+      "UAT R7 #1355/#1357: Cebuano Q129 label + Q142 enumerator note; logic unchanged"
+    ]
   }
 }

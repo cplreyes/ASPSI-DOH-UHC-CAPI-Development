@@ -1,0 +1,16 @@
+﻿[Run Information]
+Version=CSPro 8.0
+AppType=Entry
+
+[Files]
+Application=..\..\F3\PatientSurvey.ent
+InputData=..\..\F3\desktest_hil.csdb
+
+[ExternalFiles]
+PSGC_REGION_DICT=..\..\F3\psgc_region.dat
+PSGC_PROVINCE_DICT=..\..\F3\psgc_province.dat
+PSGC_CITY_DICT=..\..\F3\psgc_city.dat
+PSGC_BARANGAY_DICT=..\..\F3\psgc_barangay.dat
+
+[Parameters]
+Language=HIL

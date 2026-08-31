@@ -1521,10 +1521,14 @@ def other_specify_procs(items):
         # amount-matrix 'Other expenses' rows) so those are unchanged.
         other_flag = next(
             (k for k in group_flags if re.search(r"specif", _opt_text(k), re.I)), None)
+        # #1315 (2026-08-27): the loose fallback must test the OPTION text too, never
+        # the whole label - a matrix whose STEM starts with 'Other than the expenses
+        # above...' (F3 115.1) made every row match and the first row sorted (Q1141_1,
+        # Doctor's Professional Fee) captured the gate instead of Q1141_6 'Other expenses:'.
         if other_flag is None:
             other_flag = next(
                 (k for k in group_flags
-                 if _OTHER_LABEL_RE.search(_label_text(items[k]))), None)
+                 if _OTHER_LABEL_RE.search(_opt_text(k))), None)
         if other_flag is not None:
             procs[n] = (
                 f"PROC {n}\npreproc\n"

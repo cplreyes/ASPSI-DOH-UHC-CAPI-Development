@@ -28,11 +28,21 @@ _BY_ENGLISH = None
 
 
 def _canon(s):
-    """Whitespace- AND quote-normalized key. generate_qsf authors curly quotes
+    """Whitespace-, quote- AND dash-normalized key. generate_qsf authors curly quotes
     (facility’s, “I don't know”) while the extracted notes store straight ones -
     an exact-string lookup missed on that alone and silently fell back to English
-    (#1235/#1256, the #1213 orphan class in the notes layer)."""
+    (#1235/#1256, the #1213 orphan class in the notes layer).
+
+    Dashes and NBSP fold for the same reason, and this line MUST stay in step with
+    data/translations-official/extract_notes.py norm(), which flattens en/em dashes and
+    NBSP BEFORE it keys a note. F4 SECTION_INTROS[144] (the household-consumption intro)
+    is authored with two em-dashes, so it was stored under a hyphen-keyed entry this
+    function never produced: six locales’ cleared text sat in notes.json unreachable and
+    the longest intro in F4 rendered English everywhere. Swept F1/F3/F4 - it is the only
+    dash-bearing note today, but the two normalizers diverging is the real defect.
+    """
     s = s.replace("’", "'").replace("‘", "'").replace("“", '"').replace("”", '"')
+    s = s.replace("–", "-").replace("—", "-").replace("\xa0", " ")
     return " ".join(s.split())
 
 

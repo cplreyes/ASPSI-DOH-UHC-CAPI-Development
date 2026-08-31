@@ -1,0 +1,21 @@
+{
+  "_readme": [
+    "Pre-import coverage % per instrument x locale - the 'before' column of TRANSLATION-STATUS-2026-08-27.md.",
+    "Every row is the number the wave's own patch note records for the build the Aug-21 import replaced,",
+    "not a plan estimate (the plan's F2 baseline of 707 label objects / fil 75% was wrong):",
+    "  F1 = generate_dcf.py after the Task 16 English alignment, before Task 17's import (v4.0.0 maps),",
+    "       patch-notes/2026-08-26-f1-v4.1.0-aug21-translations.md - 913/921/915/852/907/903/845 of 1363.",
+    "  F3 = generate_dcf.py at wave 4a (v6.0.3 maps), patch-notes/2026-08-27-f3-v6.1.0-aug21-translations.md",
+    "       - 1064/942/963/1030/1004/757/925 of 1749.",
+    "  F4 = pre-wave v3.1.4, counted against the SAME Aug-21 English key set as the shipped row,",
+    "       patch-notes/2026-08-26-f4-v3.2.2-aug21-translations.md - 845/868/856/902/920/701/836 of 1401.",
+    "  F2 = spec m3, scripts/f2-coverage.py, patch-notes/2026-08-27-f2-m5-aug21-translations.md",
+    "       - fil 533 / ceb 550 / bis 549 / ilo 554 / hil 530 / war 565 / bcl 547 of 740 label objects.",
+    "F1/F3/F4 percentages are truncated (cspro_helpers.py prints int division); F2's are rounded",
+    "(f2-coverage.py uses round()). Locale case follows each source: upper for CSPro, lower for the PWA."
+  ],
+  "F1": {"FIL": 66, "BCL": 67, "BIS": 67, "CEB": 62, "WAR": 66, "HIL": 66, "ILO": 61},
+  "F3": {"FIL": 60, "BCL": 53, "BIS": 55, "CEB": 58, "WAR": 57, "HIL": 43, "ILO": 52},
+  "F4": {"FIL": 60, "BCL": 61, "BIS": 61, "CEB": 64, "WAR": 65, "HIL": 50, "ILO": 59},
+  "F2": {"fil": 72, "ceb": 74, "bis": 74, "ilo": 75, "hil": 72, "war": 76, "bcl": 74}
+}

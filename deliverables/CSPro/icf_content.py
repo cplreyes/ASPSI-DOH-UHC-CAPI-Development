@@ -13,9 +13,18 @@ CONSENT_HTML (unused since 2026-06-12). The wording differs materially — Annex
 "Hello, my name is ___ (data collector's name). I work for ...", this opens "We work
 for ..." — and adds a per-instrument sentence listing what the questionnaire covers.
 
-English-only, matching every other read-aloud block in the instruments: ASPSI has not
-delivered SJREB-approved ICF translations, and authoring them here is out of bounds.
-When they arrive they attach the same way question-text translations do.
+Per-language text (Aug-21 pack, 2026-08-25): data/translations-official/icf.json holds the
+seven translations of each paragraph, keyed icf:<screen>:<index> with the English kept
+alongside; screens_for() returns a paragraph's translation only when its stored English
+matches the paragraph here (full-English-string rule, same as notes_lookup), else English.
+The match is via notes_lookup._canon() -- curly quotes folded to straight, whitespace
+collapsed -- NOT a raw byte comparison, for comparison purposes only; the RENDERED text is
+never altered. This reuses notes_lookup's own helper (rather than a local copy) so the two
+modules cannot drift apart: an exact-string compare here would silently fall back to English
+the moment an extractor normalizes so much as one quote or space in the stored EN, exactly
+the #1235/#1256 class notes_lookup._canon exists to prevent. An empty stored value
+("keep": "" in aug21-overrides.json) also renders English. Contact blocks (<b>...) are never
+translated.
 
 Verbatim from the layout except for one correction: the layout's clearance line reads
 "PSA SSRCS Clearnce No." (missing the 'a'). The deployed cover footer has always said
@@ -240,6 +249,80 @@ ITEM_LABELS = {
 CONTINUE_OPTIONS = [("Continue", "1")]
 
 
+import json as _json
+from pathlib import Path as _Path
+
+import notes_lookup
+
+ICF_LANGS = ["FIL", "BCL", "BIS", "CEB", "WAR", "HIL", "ILO"]
+_ICF_PATH = _Path(__file__).parent / "data" / "translations-official" / "icf.json"
+_ICF = None
+
+
+def paragraph_key(part, idx):
+    return f"icf:{part}:{idx}"
+
+
+def _load_icf():
+    global _ICF
+    if _ICF is None:
+        _ICF = (_json.loads(_ICF_PATH.read_text(encoding="utf-8"))
+                if _ICF_PATH.exists() else {})
+    return _ICF
+
+
+def screens_for(instrument, lang="EN"):
+    """(screen1_paras, screen2_paras) in `lang`; each paragraph falls back to English.
+
+    A translation is used only when the stored EN CANONICALIZES (notes_lookup._canon:
+    curly quotes -> straight, whitespace collapsed) to the same string as the live SCREENS
+    paragraph -- not a raw byte match. That keeps a harmless extractor normalization from
+    silently reverting a paragraph to English (#1235/#1256 class); see the module docstring.
+    """
+    en1, en2 = SCREENS[instrument]
+    if lang in (None, "", "EN"):
+        return list(en1), list(en2)
+    block = _load_icf().get(instrument, {}) or {}
+    out = []
+    for part, paras in ((1, en1), (2, en2)):
+        row = []
+        for i, en in enumerate(paras):
+            entry = block.get(paragraph_key(part, i)) or {}
+            tr = (entry.get(lang) or "").strip()
+            en_matches = notes_lookup._canon(entry.get("EN", "")) == notes_lookup._canon(en)
+            row.append(tr if (tr and en_matches) else en)
+        out.append(row)
+    return out[0], out[1]
+
+
+def coverage():
+    """-> {locale: {"differs": n, "stored": n}}.
+
+    `differs` counts paragraphs whose resolved text (screens_for's fallback logic)
+    actually differs from English. `stored` counts icf.json rows recorded for that
+    locale regardless of outcome, so a forced-English row ("keep": "" in
+    aug21-overrides.json) is still visible as reviewed even though it never differs.
+    """
+    data = _load_icf()
+    out = {}
+    for inst, (en1, en2) in SCREENS.items():
+        block = data.get(inst, {}) or {}
+        for lang in ICF_LANGS:
+            s1, s2 = screens_for(inst, lang)
+            differs = sum(1 for a, b in zip(s1 + s2, list(en1) + list(en2)) if a != b)
+            stored = 0
+            for part, paras in ((1, en1), (2, en2)):
+                for i in range(len(paras)):
+                    entry = block.get(paragraph_key(part, i))
+                    if isinstance(entry, dict) and lang in entry:
+                        stored += 1
+            if differs or stored:
+                prev = out.setdefault(lang, {"differs": 0, "stored": 0})
+                prev["differs"] += differs
+                prev["stored"] += stored
+    return out
+
+
 # 1190 (PSA comment): PSA Board Resolution No. 01 s. 2017-084 requires the reference
 # year in the title of a statistical survey. Rendered wherever the clearance block
 # renders -- the cover footer and both ICF screens, in all three instruments (3 screens
@@ -267,19 +350,34 @@ SURVEY_TITLE_HTML = ('<p class="instruction"><b>Universal Health Care (UHC) '
 
 
 def clearance_html(instrument):
-    """Survey title (reference year inside it, #1190/#1304) + PSA/SJREB clearance."""
+    """Survey title (reference year inside it, #1190/#1304) + PSA/SJREB clearance.
+    Translated Questionnaire ver. bumped 06/05 -> 08/21/2026 with the Aug-21 import: 20 of
+    the 21 translated PDFs carry 08/21/2026 in their header (their SJREB line still prints
+    06/05 — the header is the newer stamp). F3-Tagalog is the one outlier that still prints
+    06/05/2026 on both lines; it is the same Aug-21 pack, so 08/21/2026 stays for all three
+    instruments — do not 'correct' F3 back."""
     return (SURVEY_TITLE_HTML + '<p class="instruction">PSA SSRCS Clearance No. '
             f'{CLEARANCE_NO[instrument]} &middot; issued July 2026 &middot; valid until '
             '31 July 2027<br/>SJREB: ICF ver. 07/25/2026 &middot; Translated '
-            'Questionnaire ver. 06/05/2026</p>')
+            'Questionnaire ver. 08/21/2026</p>')
 
 
-def build_screen_html(instrument, part, logo_html=""):
-    """Full question-text HTML for one ICF screen (part = 1 or 2).
+def build_screen_html(instrument, part, logo_html="", lang="EN"):
+    """Full question-text HTML for one ICF screen (part = 1 or 2) in one language.
 
     Returned as a single line: the .qsf emits each language's body as one indented
     line under a `|` block scalar, so an embedded newline would corrupt the YAML.
+    SCREENS paragraphs contain no newlines and extract_icf stores single-line text, so
+    only a literal newline is removed — internal spacing (incl. the double space after
+    '(ASPSI).') is left as-is to keep the EN body byte-identical to the pre-Aug-21 build.
     """
-    paras = SCREENS[instrument][part - 1]
-    body = "".join(f'<p class="normal">{t}</p>' for t in paras)
+    paras = screens_for(instrument, lang)[part - 1]
+    body = "".join(f'<p class="normal">{t.replace(chr(10), " ").replace(chr(13), "")}</p>'
+                   for t in paras)
     return logo_html + body + clearance_html(instrument)
+
+
+def screens_html_by_lang(instrument, part, logo_html=""):
+    """{dcf language code: html} for EN + ICF_LANGS — what generate_qsf's OVERRIDES holds."""
+    return {code: build_screen_html(instrument, part, logo_html, code)
+            for code in ["EN"] + ICF_LANGS}

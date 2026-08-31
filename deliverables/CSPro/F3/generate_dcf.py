@@ -126,7 +126,7 @@ def _build_lab_payment_roster(record_name, label, record_type, lab_value_set,
                    "94. How was the cost of this laboratory test paid?",
                    payment_type, length=2),
         numeric("Q94_LAB_AMT",
-                "94. How much was the cost of this laboratory test? (amount paid out-of-pocket, Pesos)",   # #777: lead with 'How much was the cost' per paper + tester
+                "94. How much was the cost of [laboratory test]? (amount paid out-of-pocket, Pesos)",   # aug21: paper's bracket fill; the qsf pipes ~~getvaluelabel(Q94_LAB_CODE)~~ above it (INSTRUCTIONS[94])
                 length=amt_length),
     ]
     # required=False: if (defensively) only None is ticked the apc endgroups at occurrence
@@ -716,11 +716,15 @@ def build_section_d():
     # #1059 (pretest 2026-08-04): each battery row carries the FULL respondent-facing
     # question naming its category (paper-style), instead of an encoding-style stub under
     # a once-only stem. The qsf SECTION_INTROS[47] stem was dropped in the same change.
+    # aug21: paper prints ONE stem + four service rows. Each item keeps the whole stem
+    # (dcf labels are the translation anchors, #1059 rule) with the row appended.
+    _Q47_STEM = ("47. Are you aware that there are PhilHealth packages for the following "
+                 "health services: — ")
     Q47_PACKAGES = [
-        ("Q47_PHYSICIAN_CHECKUP", "47. Are you aware that there is/are PhilHealth package/s for physician check-up?"),
-        ("Q47_DIAGNOSTIC_TESTS",  "47. Are you aware that there is/are PhilHealth package/s for diagnostic tests (e.g. laboratory tests and imaging)?"),
-        ("Q47_HOSPITAL_CONF",     "47. Are you aware that there is/are PhilHealth package/s for hospital confinement?"),
-        ("Q47_OUTPATIENT_DRUGS",  "47. Are you aware that there is/are PhilHealth package/s for outpatient drugs?"),
+        ("Q47_PHYSICIAN_CHECKUP", _Q47_STEM + "Physician check-up"),
+        ("Q47_DIAGNOSTIC_TESTS",  _Q47_STEM + "Diagnostic tests (e.g. laboratory tests and imaging)"),
+        ("Q47_HOSPITAL_CONF",     _Q47_STEM + "Hospital confinement"),
+        ("Q47_OUTPATIENT_DRUGS",  _Q47_STEM + "Outpatient drugs"),
     ]
     items = [
         select_one("Q38_PHILHEALTH_REG",
@@ -980,10 +984,12 @@ def build_section_e():
         alpha("Q68_USUAL_FAC_TYPE_OTHER_TXT",
               "68. Usual facility type — Other (specify) text", length=120),
         numeric("Q69_USUAL_TRAVEL_HH",
-                "69. How long does it take you to travel to the health facility you usually go to — Hours",
+                "69. How long does it take you to travel from your house when going to the health "
+                "facility that you usually go to? — Hours",
                 length=2),
         numeric("Q69_USUAL_TRAVEL_MM",
-                "69. How long does it take you to travel to the health facility you usually go to — Minutes",
+                "69. How long does it take you to travel from your house when going to the health "
+                "facility that you usually go to? — Minutes",
                 length=2),
         *checkbox_multiselect("Q70_USUAL_TRANSPORT",   # #670: select_all -> Check Box (tick-all)
                     "70. What mode/s of transportation do you use when travelling to the health facility "
@@ -1393,8 +1399,7 @@ def build_section_g():
     Q96_AMT_CODES = {"01", "02"}
     items.extend(checkbox_multiselect(
         "Q96_SOURCES",
-        "96. Which of the following did you use to pay for the prescribed medicines? "
-        "(Select all that apply.)",
+        "96. How much was spent for the prescribed medicines?",   # aug21: paper stem; "(NAME)" fill not modelled, tick directive moved to qsf INSTRUCTIONS_BY_NAME
         Q96_MEDS_PAY, with_other_txt=False))
     items.append(numeric("Q97_FINAL_AMOUNT",
                          "97. What was the final amount you paid in cash for your outpatient care? "
@@ -1430,15 +1435,17 @@ def build_section_g():
     # aug17 {.mark}: paper's exact wording for this negative option (F3-extract.md L1553)
     # is "No, did not pay for any other expenses" -- relabeled from the earlier "g) None"
     # placeholder while keeping the established g)-lettering convention (#1208 follow-up).
+    # aug21: the Aug-21 paper prints this negative option WITHOUT a g) letter, so the
+    # lettering convention stops at f) and the option text is now bare.
     Q972_SOURCES = ([(label, f"{int(code):02d}") for label, code in Q972_EXPENSES]
-                    + [("g) No, did not pay for any other expenses", "90")])
+                    + [("No, did not pay for any other expenses", "90")])   # aug21: paper prints no g) on the negative option
     # #1208 follow-up (ASPSI 2026-08-13): final question wording, matching their screenshot.
     # The italic "If yes, indicate the amount spent." emits as the blue instruction note via
     # generate_qsf (_IF_YES_AMOUNT, keyed to 972), not as part of this label.
     items.extend(checkbox_multiselect(
         "Q972_SOURCES",
-        "97.2 Did you pay for any other expenses during your OPD visit that were not "
-        "included in the outpatient bill?",
+        "97.2 Did you pay for any other expenses during your OPD visit that were NOT "
+        "included in the outpatient bill?",   # aug21: paper capitalises NOT
         Q972_SOURCES, with_other_txt=False))
     items.append(alpha("Q972_OTHER_TXT",
                        "97.2 Other expenses — specify text", length=120))
@@ -1450,8 +1457,10 @@ def build_section_g():
     # to pos("06"/"15", Q98_SOURCES) in the apc).
     items.extend(checkbox_multiselect(
         "Q98_SOURCES",
-        "98. Which of the following did you use to pay for the medical costs? "
-        "(Select all that apply.)",
+        # aug21: paper stem kept VERBATIM incl. "(select all that apply)" so the Aug-21 extractor
+        # anchors on the paper's exact English (decision in the wave header; no qsf note added,
+        # or the directive would print twice).
+        "98. Did you use any of the following to pay for medical costs? (select all that apply)",
         Q98_SOURCES, with_other_txt=False))
     items.append(alpha("Q98_OTHER_DONATION_TXT",
                        "98. Other Donation/Charity/Assistance from Government Organization — specify text",
@@ -1629,10 +1638,10 @@ def build_section_h():
     Q1141_IN_BILL = [
         ("Doctor's Professional Fee",                                       "1"),
         ("Medical equipment or supplies",                                   "2"),
-        ("Non-medical expenses (e.g. Hygiene kit)",                         "3"),
+        ("Non-medical expenses: (e.g. Hygiene kit)",                        "3"),   # aug21: paper colon
         ("Diagnostic or laboratory procedure inside the facility",          "4"),
         ("Medicines or drugs inside the facility",                          "5"),
-        ("Other expenses",                                                  "6"),
+        ("Other expenses:",                                                 "6"),   # aug21: paper colon
     ]
     Q1142_NOT_IN_BILL = [
         ("Medical equipment or supplies bought outside the facility",       "1"),
@@ -1724,11 +1733,14 @@ def build_section_h():
                          "115. What was the final amount you paid in cash at the hospital cashier "
                          "upon discharge? (Amount in Pesos)", length=9))
     # Q115.1 other items included in bill — 6 items with amount
+    # aug21: labels carry the paper stem so the Aug-21 extractor anchors match; the flat
+    # Yes/No + _AMT shape is unchanged (Carl 2026-08-25 — no data-shape change this build).
+    _Q1141_STEM = ("115.1 Other than the expenses above (e.g. confinement, medicines, laboratory, "
+                   "etc.), which of the following were also included in the bill?")
     for label, code in Q1141_IN_BILL:
-        items.append(yes_no(f"Q1141_{code}",
-                            f"115.1 Other items included in the bill — {label}"))
+        items.append(yes_no(f"Q1141_{code}", f"{_Q1141_STEM} — {label}"))
         items.append(numeric(f"Q1141_{code}_AMT",
-                             f"115.1 Other items included in the bill — {label} (Amount in Pesos)",
+                             f"115.1 How much were you charged or billed? — {label} (Amount in Pesos)",
                              length=9))
     items.append(alpha("Q1141_OTHER_TXT",
                        "115.1 Other expenses — specify text", length=120))
@@ -1736,22 +1748,21 @@ def build_section_h():
     # (F3-extract.md L2173) — the inpatient twin of Q971's 'None' escape. The flat
     # yes_no-per-item matrix already lets every component be answered 'No' individually
     # (this item is informational, not a skip target), so it's captured plainly.
-    items.append(yes_no("Q1141_NONE",
-                        "115.1 Other items included in the bill — None"))
+    items.append(yes_no("Q1141_NONE", f"{_Q1141_STEM} — None"))
     # aug17 {.mark}: paper wraps the whole 115.2 block in an explicit Yes/No gate
     # (F3-extract.md L2180 'Yes <indicate the amount spent>' / L2231 'No') that the
     # earlier build lacked. Q1142_HAS_OTHER is the new gate; the skip that hides the
     # a)-g) breakdown on 'No' lives in generate_apc.py's SKIP_RULES (Task 1.2).
-    items.append(yes_no("Q1142_HAS_OTHER",
-                        "115.2 Did you pay for any other expenses during your confinement "
-                        "that were not included in the hospital bill?"))
+    _Q1142_STEM = ("115.2 Did you pay for any other expenses during your confinement "
+                   "that were not included in the hospital bill?")
+    items.append(yes_no("Q1142_HAS_OTHER", _Q1142_STEM))
     # Q115.2 other expenses NOT included in bill — 7 items with amount
+    # aug21: same paper-stem re-sync as 115.1; names, order and lengths unchanged.
     for label, code in Q1142_NOT_IN_BILL:
-        items.append(yes_no(f"Q1142_{code}",
-                            f"115.2 Other expenses during confinement not in bill — {label}"))
+        items.append(yes_no(f"Q1142_{code}", f"{_Q1142_STEM} — {label}"))
         items.append(numeric(f"Q1142_{code}_AMT",
-                             f"115.2 Other expenses during confinement not in bill — {label} "
-                             "(Amount in Pesos)", length=9))
+                             f"115.2 Indicate the amount spent — {label} (Amount in Pesos)",
+                             length=9))
     items.append(alpha("Q1142_OTHER_TXT",
                        "115.2 Other expenses — specify text", length=120))
     # Option B fan-out (#691/#692/#693, 2026-06-19): FOUR Section H cost matrices are now
@@ -2464,6 +2475,10 @@ _FACILITY_NEUTRAL = {
     "BIS": "kini nga pasilidad",
     "CEB": "kini nga pasilidad",
     "WAR": "ini nga pasilidad",
+    # aug21: from the Aug-21 F3 Hiligaynon / Ilocano PDFs' own Q67 wording
+    # ("sa sini nga pasilidad" / "iti daytoy a pasilidad"), nominative form.
+    "HIL": "ini nga pasilidad",
+    "ILO": "daytoy a pasilidad",
 }
 
 

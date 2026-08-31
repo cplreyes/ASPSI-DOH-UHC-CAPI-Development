@@ -1,0 +1,100 @@
+# #1322 proof (2026-08-27, F1 v4.1.3 maps): Cebuano Q10.1 probe option list — code 9 must read
+# 'Not applicable' (English), not the June-era fragment 'sa primary care facilities>'.
+# Opening walk = f1_aug17_casestart_and_battery.txt verbatim down to the Q10.1 probe, on a CEB desk pff.
+# aug17 Task 2.6 — F1 case-start reachability sweep + Section C two-step battery.
+#
+# WHAT THIS PROVES (permanent regression scenario, do not delete):
+#   1. Case-start form order and the ONE intended leapfrog. Current F1 form order
+#      (read from FacilityHeadSurvey.fmf, not assumed):
+#        FORM000 case key -> FORM001 ICF (ICF_PART1, ICF_PART2)
+#        -> FORM002 geo + BREAKOFF (CLASSIFICATION, REGION_NAME*, PROVINCE_NAME*,
+#           CITY_NAME*, BARANGAY, BREAKOFF)   * auto-derived from the case key and
+#           protect()ed, so entry skips them
+#        -> FORM003 Section A -> FORM004 Section B -> FORM005 Section C ...
+#        -> FORM010 Section H -> FORM011 Field Control -> FORM012 photo
+#        -> FORM013 Facility GPS (LAST — GPS deliberately moved after the photo)
+#      BREAKOFF (form 2) -> ENUM_RESULT_FINAL_VISIT (form 11) is the only leapfrog
+#      (#744/#515 break-off escape). This run takes BREAKOFF = 1 Continue, so the
+#      escape must NOT fire and Section A must follow immediately.
+#   2. The two-step battery, BOTH branches. A base answered No must advance PAST
+#      its Q<NN>_1_UHC_ATTRIB probe; a base answered Yes must ask it. This is the
+#      behaviour the whole own-screen design rests on (Task 2.3 carry 8 / 2.4 carry 4).
+#   3. Q13 = 9 "Not applicable" takes the same exit as No (the `in 2,9` condition —
+#      Q12 and Q13 are the only two bases with an NA code).
+#   4. Q20 = No lands on Q24, clearing the Q21-Q23 DOH-IS fan for free.
+#   5. Q35 = Yes reaches the .2 detail item (Q35_2_PCQM_MEASURES).
+#   6. The Section D intro screen (intro:51) renders on Q38_YK_ACCRED — the R24
+#      evidence requirement for the guarded translation-lane text in fe4f14c.
+#
+# ENTRY MECHANICS (verified against the dcf, not guessed):
+#   - every Section C base and probe is len=1 numeric -> a single typed digit fills
+#     the field and auto-advances; do NOT add a trailing {ENTER} (it would land on
+#     the NEXT field — the F4 task-1.9 failure #4 class).
+#   - alpha fields need an explicit {ENTER}.
+#   - Q36/Q37 are Check Box (tick-all) fields: they CANNOT be driven by typing the
+#     option code (F4 task-1.9 failure #6 established this is genuinely invalid
+#     input, not a scripting slip). They need a click on the tick-box glyph.
+#   - BARANGAY is a filtered picker -> click the first row.
+
+rmdata ../F1/desktest_ceb.csdb
+launch ../F1/FacilityHeadSurvey_desktest_CEB.pff
+
+# ---- FORM000 case key: RR PP MMM FF CCC (auto-advances at full width) ----
+casekey 04 03 400 02 001
+shot 010_after_casekey_expect_icf
+
+# ---- FORM001 ICF: ICF_PART1, ICF_PART2 (both len=1, "1 = Continue") ----
+note EXPECT consent screens render with the 4-paragraph certificate + contact block
+shot 020_icf_part1
+type 1
+shot 030_icf_part2
+type 1
+
+# ---- FORM002 geo + BREAKOFF. REGION/PROVINCE/CITY are protected (auto-derived). ----
+note EXPECT CLASSIFICATION first, then the cursor jumps straight to BARANGAY
+shot 040_expect_classification
+type 1
+shot 050_expect_barangay_picker
+click 1000 211
+shot 060_expect_breakoff
+note BREAKOFF = 1 Continue -> the form-2 to form-11 escape must NOT fire
+type 1
+shot 070_after_breakoff_expect_section_a
+
+# ---- FORM003 Section A ----
+type DR TEST HEAD
+key {ENTER}
+type CHIEF OF HOSPITAL
+key {ENTER}
+type test@aspsi.org
+key {ENTER}
+type 09171234567
+key {ENTER}
+type DR TEST HEAD
+key {ENTER}
+note Q2_FACILITY_ROLE is len=2 -> type the code zero-padded so it auto-advances
+type 01
+type 52
+type 1
+type 08
+type 00
+type 20
+type 00
+shot 080_end_of_section_a_expect_section_b
+
+# ---- FORM004 Section B: Q7 = 1 Public, Q8 = 3 (Level 2 hospital). ----
+note Q7=Public AND Q8 in 2,3,4 is what OPENS the Q139/Q140 PHO gate later (#386)
+type 1
+type 3
+shot 090_after_section_b_expect_q9
+
+# ---- FORM005 Section C: the two-step battery ----
+note Q9 heard of UHC = Yes
+type 1
+note Q10 = Yes -> its probe Q10_1_UHC_ATTRIB MUST be asked
+type 1
+shot 100_q10_yes_expect_probe_q10_1
+shot 1322_q10_1_probe_options_CEB
+note answer the probe with 1 and land on Q11 (Yes/No/Not applicable base) - Q11 code 9 must also read 'Not applicable'
+type 1
+shot 1322_q11_base_options_CEB

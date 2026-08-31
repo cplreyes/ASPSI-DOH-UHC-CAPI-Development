@@ -1,0 +1,59 @@
+# #1348-#1354 proof (2026-08-27, F1 v4.1.8 maps): Cebuano Section F - Q107 No. of Days and the Q109 stem (Q109-Q121 share
+# the shape). Via the dormant desk-test pilot jump: F1_PILOT_JUMP=Q88_HEARD_BUCAS at generate_apc time -> PROC Q1_NAME
+# postproc "skip to Q88". DESK ONLY - the apc is regenerated WITHOUT the env and md5-checked (f548f8e8...) afterwards.
+# Section A carries four respondent fields before Q1_NAME. Check Box popups are ticked by TYPING the 2-digit code
+# (Cebuano popups are wide/left-shifted; typed codes do not depend on geometry). Focus click before ENTER on popups
+# (Slack desktop toasts steal the foreground between steps).
+
+rmdata ../F1/desktest_ceb.csdb
+launch ../F1/FacilityHeadSurvey_desktest_CEB.pff
+
+casekey 04 03 400 02 001
+shot 010_icf
+type 1
+type 1
+shot 020_classification
+type 1
+shot 030_barangay
+click 1000 211
+shot 040_breakoff
+type 1
+shot 050_section_a
+type DR TEST HEAD
+key {ENTER}
+type CHIEF OF HOSPITAL
+key {ENTER}
+type test@aspsi.org
+key {ENTER}
+type 09171234567
+key {ENTER}
+note Q1_NAME postproc carries the pilot jump -> Q88
+type DR TEST HEAD
+key {ENTER}
+shot 060_expect_q88
+type 1
+type 2
+type 01
+shot 090_q95
+type 1
+type 1
+shot 100_q98_checkbox
+note Q98 Check Box: typed code 01 ticks option 01; ENTER
+type 01
+click 1700 200
+key {ENTER}
+shot fg_010_q99
+type 2
+shot fg_020_expect_q105
+type 01
+shot fg_030_q106
+type 01
+shot 1348_q107_num_CEB
+type 0030
+shot fg_040_q107_band
+type 01
+shot fg_050_q108_checkbox
+type 01
+click 1700 200
+key {ENTER}
+shot 1348_q109_stem_CEB

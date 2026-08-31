@@ -871,7 +871,7 @@ def build_section_d():
     # right one: label stays CONDENSED (<=255, and it is the translation key);
     # the FULL paper stem renders from generate_qsf's uncapped question area.
     items.append(yes_no_dk("Q75_IS_1700_ENOUGH",
-                           "75. The maximum per capita rate for YAKAP/Konsulta is Php 1,700 across private and public facilities (40% after first patient encounter, 60% based on registered catchment population by December). Based on your practice, is this enough?"))
+                           "75. The maximum per capita rate amount for YAKAP/Konsulta is at Php 1,700 across private and public facilities (40% after first patient encounter, 60% based on registered catchment population by December). Based on your practice, is this enough?"))  # aug21: 'rate amount ... is at Php 1,700' (DOH Aug-21 paper)
     items.append(yes_no_dk("Q76_COSTING_DONE",
                            "76. Did you go through a costing exercise to figure out if this was viable for your facility?"))
     items.append(yes_no_dk("Q77_COSTING_VIABLE",

@@ -1,0 +1,63 @@
+{
+  "_readme": "Reasoned per-key exemptions for scan_poisoned_keys.py, SELF_ECHO / IS_OTHER_EN ONLY (see that tool's docstring and validate_waivers()). An entry says: in THIS instrument, THIS locale, on THIS key, THIS exact value is not a defect, and here is the paper line that proves it. Anything else - a doubled run, a glued English fragment, another question's cleared text, a stale key - is a corruption class and can never be waived. Waived rows are printed under '--- waived ---' on every scan and are left out of the --apply-report JSON that feeds the per-reason delta gate; a waiver that covers nothing is printed as STALE WAIVER. Keep this file EMPTY of anything you cannot cite.",
+  "F3": {
+    "ceb": {
+      "val:Q36_UHC_SOURCE_VS1:06": {
+        "value": "LGU/Barangay",
+        "reasons": [
+          "SELF_ECHO",
+          "IS_OTHER_EN"
+        ],
+        "reason": "The Aug-21 Cebuano paper prints this option UNTRANSLATED: F3_CEB.txt:1096-1099 reads '☐ Legislation / Balaod / ☐ LGU/ Barangay / LGU/Barangay' - 'LGU/Barangay' is a proper noun the translator left in English, and it is the text the respondent sees on paper, so it is the text the tablet must show. Importing it necessarily makes the map value equal an English label: six of the seven land as SELF_ECHO (value == this node's own English) and Q36 as IS_OTHER_EN (its English carries a stray space, 'LGU/ Barangay', so the value matches its six twins instead). Both reasons are listed because the underlying fact is one fact. Controller ruling 2026-08-27 06:30 (b) requires this row to WRITE 'LGU/Barangay'; without the waiver run_aug21_gates.ps1 gate 1 reads the write as SELF_ECHO+6 / IS_OTHER_EN+1 and blocks the wave (measured: <ws>/task-50/evidence/gates-try1.txt). The waiver is pinned to the value, so if the map ever drifts off the paper text the row is flagged again."
+      },
+      "val:Q75_KON_SOURCE_VS1:06": {
+        "value": "LGU/Barangay",
+        "reasons": [
+          "SELF_ECHO",
+          "IS_OTHER_EN"
+        ],
+        "reason": "The Aug-21 Cebuano paper prints this option UNTRANSLATED: F3_CEB.txt:2321-2324 reads '☐ Legislation / Balaod / ☐ LGU/ Barangay / LGU/Barangay' - 'LGU/Barangay' is a proper noun the translator left in English, and it is the text the respondent sees on paper, so it is the text the tablet must show. Importing it necessarily makes the map value equal an English label: six of the seven land as SELF_ECHO (value == this node's own English) and Q36 as IS_OTHER_EN (its English carries a stray space, 'LGU/ Barangay', so the value matches its six twins instead). Both reasons are listed because the underlying fact is one fact. Controller ruling 2026-08-27 06:30 (b) requires this row to WRITE 'LGU/Barangay'; without the waiver run_aug21_gates.ps1 gate 1 reads the write as SELF_ECHO+6 / IS_OTHER_EN+1 and blocks the wave (measured: <ws>/task-50/evidence/gates-try1.txt). The waiver is pinned to the value, so if the map ever drifts off the paper text the row is flagged again."
+      },
+      "val:Q100_BUCAS_SOURCE_VS1:06": {
+        "value": "LGU/Barangay",
+        "reasons": [
+          "SELF_ECHO",
+          "IS_OTHER_EN"
+        ],
+        "reason": "The Aug-21 Cebuano paper prints this option UNTRANSLATED: F3_CEB.txt:3707-3710 reads '☐ Legislation / Balaod / ☐ LGU/Barangay / LGU/Barangay' - 'LGU/Barangay' is a proper noun the translator left in English, and it is the text the respondent sees on paper, so it is the text the tablet must show. Importing it necessarily makes the map value equal an English label: six of the seven land as SELF_ECHO (value == this node's own English) and Q36 as IS_OTHER_EN (its English carries a stray space, 'LGU/ Barangay', so the value matches its six twins instead). Both reasons are listed because the underlying fact is one fact. Controller ruling 2026-08-27 06:30 (b) requires this row to WRITE 'LGU/Barangay'; without the waiver run_aug21_gates.ps1 gate 1 reads the write as SELF_ECHO+6 / IS_OTHER_EN+1 and blocks the wave (measured: <ws>/task-50/evidence/gates-try1.txt). The waiver is pinned to the value, so if the map ever drifts off the paper text the row is flagged again."
+      },
+      "val:Q117_NBB_SOURCE_VS1:06": {
+        "value": "LGU/Barangay",
+        "reasons": [
+          "SELF_ECHO",
+          "IS_OTHER_EN"
+        ],
+        "reason": "The Aug-21 Cebuano paper prints this option UNTRANSLATED: F3_CEB.txt:4742-4745 reads '☐ Legislation / Balaod / ☐ LGU/Barangay / LGU/Barangay' - 'LGU/Barangay' is a proper noun the translator left in English, and it is the text the respondent sees on paper, so it is the text the tablet must show. Importing it necessarily makes the map value equal an English label: six of the seven land as SELF_ECHO (value == this node's own English) and Q36 as IS_OTHER_EN (its English carries a stray space, 'LGU/ Barangay', so the value matches its six twins instead). Both reasons are listed because the underlying fact is one fact. Controller ruling 2026-08-27 06:30 (b) requires this row to WRITE 'LGU/Barangay'; without the waiver run_aug21_gates.ps1 gate 1 reads the write as SELF_ECHO+6 / IS_OTHER_EN+1 and blocks the wave (measured: <ws>/task-50/evidence/gates-try1.txt). The waiver is pinned to the value, so if the map ever drifts off the paper text the row is flagged again."
+      },
+      "val:Q120_ZBB_SOURCE_VS1:06": {
+        "value": "LGU/Barangay",
+        "reasons": [
+          "SELF_ECHO",
+          "IS_OTHER_EN"
+        ],
+        "reason": "The Aug-21 Cebuano paper prints this option UNTRANSLATED: F3_CEB.txt:4842-4845 reads '☐ Legislation / Balaod / ☐ LGU/Barangay / LGU/Barangay' - 'LGU/Barangay' is a proper noun the translator left in English, and it is the text the respondent sees on paper, so it is the text the tablet must show. Importing it necessarily makes the map value equal an English label: six of the seven land as SELF_ECHO (value == this node's own English) and Q36 as IS_OTHER_EN (its English carries a stray space, 'LGU/ Barangay', so the value matches its six twins instead). Both reasons are listed because the underlying fact is one fact. Controller ruling 2026-08-27 06:30 (b) requires this row to WRITE 'LGU/Barangay'; without the waiver run_aug21_gates.ps1 gate 1 reads the write as SELF_ECHO+6 / IS_OTHER_EN+1 and blocks the wave (measured: <ws>/task-50/evidence/gates-try1.txt). The waiver is pinned to the value, so if the map ever drifts off the paper text the row is flagged again."
+      },
+      "val:Q125_MAIFIP_SOURCE_VS1:06": {
+        "value": "LGU/Barangay",
+        "reasons": [
+          "SELF_ECHO",
+          "IS_OTHER_EN"
+        ],
+        "reason": "The Aug-21 Cebuano paper prints this option UNTRANSLATED: F3_CEB.txt:4992-4995 reads '☐ Legislation / Balaod / ☐ LGU/Barangay / LGU/Barangay' - 'LGU/Barangay' is a proper noun the translator left in English, and it is the text the respondent sees on paper, so it is the text the tablet must show. Importing it necessarily makes the map value equal an English label: six of the seven land as SELF_ECHO (value == this node's own English) and Q36 as IS_OTHER_EN (its English carries a stray space, 'LGU/ Barangay', so the value matches its six twins instead). Both reasons are listed because the underlying fact is one fact. Controller ruling 2026-08-27 06:30 (b) requires this row to WRITE 'LGU/Barangay'; without the waiver run_aug21_gates.ps1 gate 1 reads the write as SELF_ECHO+6 / IS_OTHER_EN+1 and blocks the wave (measured: <ws>/task-50/evidence/gates-try1.txt). The waiver is pinned to the value, so if the map ever drifts off the paper text the row is flagged again."
+      },
+      "val:Q153_GAMOT_SOURCE_VS1:06": {
+        "value": "LGU/Barangay",
+        "reasons": [
+          "SELF_ECHO",
+          "IS_OTHER_EN"
+        ],
+        "reason": "The Aug-21 Cebuano paper prints this option UNTRANSLATED: F3_CEB.txt:5654-5657 reads '☐ Legislation / Balaod / ☐ LGU/Barangay / LGU/Barangay' - 'LGU/Barangay' is a proper noun the translator left in English, and it is the text the respondent sees on paper, so it is the text the tablet must show. Importing it necessarily makes the map value equal an English label: six of the seven land as SELF_ECHO (value == this node's own English) and Q36 as IS_OTHER_EN (its English carries a stray space, 'LGU/ Barangay', so the value matches its six twins instead). Both reasons are listed because the underlying fact is one fact. Controller ruling 2026-08-27 06:30 (b) requires this row to WRITE 'LGU/Barangay'; without the waiver run_aug21_gates.ps1 gate 1 reads the write as SELF_ECHO+6 / IS_OTHER_EN+1 and blocks the wave (measured: <ws>/task-50/evidence/gates-try1.txt). The waiver is pinned to the value, so if the map ever drifts off the paper text the row is flagged again."
+      }
+    }
+  }
+}

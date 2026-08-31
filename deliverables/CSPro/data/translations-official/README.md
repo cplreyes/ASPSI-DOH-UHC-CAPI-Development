@@ -195,3 +195,24 @@ That text is **not taken on faith**. `apply_1279.py` accepts a reviewer's replac
 if it is a pure **deletion** of the stored value — every word present, in the same order.
 A paraphrase, a spelling correction or an invented phrase cannot pass, which keeps the same
 guarantee the rest of the pipeline gives: nothing is composed, only removed.
+
+---
+
+## Aug-21 extractor (added 2026-08-25)
+
+- `python anchor_extract.py --source raw/Survey-Instruments-2026-08-21/Translations
+  --instrument F1 --dcf deliverables/CSPro/F1/FacilityHeadSurvey.dcf --out out-aug21/F1
+  [--locales FIL,BCL] [--live-maps deliverables/CSPro/F1/translations]` — for **F3** use
+  `--generator F3` instead of `--dcf` (the pre-apply generator dictionary, never the
+  written `PatientSurvey.dcf`, which is post-`#714` neutralisation).
+- Writes `out-aug21/<INST>/<loc>.json` (**name-scoped** `item:`/`vs:`/`val:` keys, flat, no
+  `_meta`), `<loc>_flagged.json` (translator worklist) and `QA-REPORT.md`. All gitignored.
+- Anchors on the **BUILD's English** — align the English first
+  (`aug21_english_delta.py`), or an anchor simply never matches the paper. Container
+  labels (`dict:`/`level:`/`record:`) are not anchored; `— Hours` / `— Minutes` component
+  suffixes are stripped so the split HH/MM items anchor on the bare stem.
+- Adds two flags to the June-5 set (which is otherwise untouched, calibrated against 28
+  papers): `glued-short-label` (a 4-9 char option label glued inside the span — the
+  2026-08-17 live spill class) and `ends-with-other-label` (grid furniture swept in).
+- The extractor is read-only against the build: only `apply_aug21.py` ever writes into
+  `F<n>/translations/`.

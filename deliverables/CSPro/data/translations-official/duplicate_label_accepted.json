@@ -1,0 +1,30 @@
+{
+ "_readme": [
+  "Pre-existing duplicate-label sets a HUMAN has ruled benign. Read by",
+  "apply_aug21.load_accepted_pre() and by _defect_sweep.py; consulted ONLY under",
+  "--fail-on-pre (the strict gate a publishing wave runs). A set listed here prints",
+  "'ok-pre' and never blocks; every other pre-existing set prints 'pre' (report) and",
+  "blocks under --fail-on-pre.",
+  "",
+  "Shape:  <inst> -> '<locale>/<value_set>' -> {'codes': [...], 'reason': '...'}",
+  "A row matches only when its colliding codes are a SUBSET of 'codes', so a set that",
+  "grows a third colliding code goes back to being a defect. 'reason' is mandatory and",
+  "must say why two codes reading the same text is CORRECT on the tablet - not why it is",
+  "inconvenient to fix. A defect the extractor causes is an extractor fix, never a ruling",
+  "here (the wave rule: poisoned extract output is an extractor defect, never an override).",
+  "",
+  "The gate already exempts, by construction and without a ruling:",
+  "  * two codes whose ENGLISH labels are identical (the zero-padded 01/1 pair, the",
+  "    legacy 8/99 'Other (specify)' pair) - they MUST read the same;",
+  "  * a map key the current .dcf no longer defines - it renders nothing.",
+  "",
+  "EMPTY on purpose (Task 48, 2026-08-27). Every pre-existing set still standing over a",
+  "live value set was hand-checked in <ws>/task-48-report.md section 5 and is a REAL",
+  "defect or an open translator question (F3 Q10_CIVIL_STATUS off-by-one, F3 hil",
+  "Q34_WHO_DECIDES, F4 war Q128/Q134 and the Balaud pairs, F3 bcl Q2_RELATIONSHIP where",
+  "Bikol has one word for son/daughter). None of them is benign, so none is ruled."
+ ],
+ "F1": {},
+ "F3": {},
+ "F4": {}
+}

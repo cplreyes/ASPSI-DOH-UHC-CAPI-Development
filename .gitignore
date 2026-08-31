@@ -208,3 +208,11 @@ deliverables/CSWeb/capi-portal/src/
 /deliverables/CSPro/data/translations-official/TICKET-COUNTER-CHECK.md
 # f2-api server compiled output — rebuildable from src via tsc; never commit.
 /deliverables/F2/PWA/server/dist/
+
+# Aug-21 translation import (2026-08-25)
+deliverables/CSPro/data/translations-official/out-delta/
+deliverables/CSPro/data/translations-official/out-aug21/
+deliverables/CSPro/data/translations-official/aug21_apply_diff.json
+deliverables/CSPro/data/translations-official/aug21_pre_findings.json
+deliverables/CSPro/data/translations-official/aug21_post_findings.json
+deliverables/CSPro/data/translations-official/text-aug21/

@@ -3617,7 +3617,7 @@ Form=13
   
 [Text]
 Position=50,120,330,136
-Text=94. How much was the cost of this laboratory test? (amount paid out-of-pocket, Pesos)
+Text=94. How much was the cost of [laboratory test]? (amount paid out-of-pocket, Pesos)
  
   
 [EndGroup]

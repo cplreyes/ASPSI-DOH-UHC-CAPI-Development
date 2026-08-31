@@ -49,7 +49,10 @@ def norm(s):
 
 
 def load_map(path):
-    raw = io.open(path, encoding="utf-8").read()
+    # newline="" — without it Python's universal-newline translation eats the "\r"
+    # and the crlf flag below is False for a CRLF map, so save_map would silently
+    # rewrite the whole file with LF endings (a 100%-lines diff on every write).
+    raw = io.open(path, encoding="utf-8", newline="").read()
     lines = raw.split("\n")
     indent = 1
     for ln in lines[1:]:

@@ -152,17 +152,16 @@ def _p(cls, text):
 # wanted for reference.
 # ------------------------------------------------------------------
 
-# Item-name → question-text HTML. Overrides win over the dcf-label default
-# and are emitted identically for every declared language (English fallback
-# until SJREB-approved ICF translations arrive).
+# Item-name → question-text HTML. Overrides win over the dcf-label default.
+# Per language since the Aug-21 import: icf_content.screens_for() falls back to English per paragraph.
 # CONSENT_GIVEN removed 2026-06-12 — no consent DECISION is captured on the CAPI, and
 # that has not changed. What DID change (2026-08-13): ASPSI sent "Suggested Layout
 # (CSEntry).docx", putting the consent SCRIPT back on the device as two read-aloud
 # screens with the clearance block. Text: ../icf_content.py. (The old, unemitted
 # CONSENT_HTML block that this superseded was removed 2026-08-20, ANA-322.)
 OVERRIDES = {
-    "ICF_PART1": _icf.build_screen_html("F3", 1, _LOGO_HTML),
-    "ICF_PART2": _icf.build_screen_html("F3", 2, _LOGO_HTML),
+    "ICF_PART1": _icf.screens_html_by_lang("F3", 1, _LOGO_HTML),   # {lang: html}
+    "ICF_PART2": _icf.screens_html_by_lang("F3", 2, _LOGO_HTML),
 }
 
 
@@ -278,6 +277,7 @@ INSTRUCTIONS_BY_NAME = {
                            "income."),   # #1048: bracket only + "tick" -> "Select"
     "Q150_TRAVEL_HH": ("A Pharmacy is an ancillary primary care facility with a "
                        "FDA LTO where registered medicines can be bought."),
+    "Q96_SOURCES": _SELECT_ALL,   # aug21: the label lost "(Select all that apply.)" to match the paper stem
     # aug17 {.mark}: the 'Quantified Free Service' source (new in both payment rosters)
     # carries its own enumerator note in the paper (F3-extract.md L1689/L2081), identical
     # wording both places. No per-option instruction slot exists, so it attaches to the
@@ -514,7 +514,7 @@ def main():
                 lines += [f"  - name: {dict_name}.{nm}", "    conditions:", "      - questionText:"]
                 for lnm, _ in langs:
                     if ov:
-                        body = ov
+                        body = ov[lnm]
                     else:
                         pre, post = build_extras(*extras, lnm)
                         body = pre + _html(_strip_component_suffix(

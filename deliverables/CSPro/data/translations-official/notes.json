@@ -4,16 +4,20 @@
    "intro:1": "We would like to ask some of your personal information relevant to the survey.",
    "intro:7": "Next, we will be asking questions about this health facility.",
    "intro:9": "We will now ask about your awareness of UHC, the changes that have been implemented in this facility since the UHC Act was passed in 2019 and if these changes were a result of the UHC Act.",
-   "intro:51": "The next questions we will ask relate to the YAKAP/Konsulta package. Please answer to the best of your knowledge. You may answer \"I don't know\" if you are unsure.",
-   "intro:101": "We will now ask questions related to BUCAS center and GAMOT package.",
-   "intro:118": "We will now ask you about your facility's experience with the licensing process.",
-   "intro:135": "The next set of questions covers the service delivery process. This section covers the implementation of NBB and ZBB, LGU support, and the Referral System.",
-   "intro:163": "We will now proceed to the last section of this survey, which focuses on human resources.",
+   "intro:38": "The next questions we will ask relate to the YAKAP/Konsulta package. Please answer to the best of your knowledge. You may answer \"I don't know\" if you are unsure.",
+   "intro:88": "We will now ask questions related to BUCAS center and GAMOT package.",
+   "intro:105": "We will now ask you about your facility's experience with the licensing process.",
+   "intro:122": "The next set of questions covers the service delivery process. This section covers the implementation of NBB and ZBB, LGU support, and the Referral System.",
+   "intro:150": "We will now proceed to the last section of this survey, which focuses on human resources.",
    "const:_READ_ONE": "READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.",
    "const:_READ_ALL": "READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
    "const:_DNR_ALL": "DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
    "const:_DNR_UNPROMPTED": "DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.",
-   "const:_PROBE": "DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO PROBE. Has this been implemented? / Do you have this? Was this implemented before or after 2019? Was this implemented because of UHC? Do you plan to implement it in the next 1-2 years?"
+   "const:_SELECT_ONE": "SELECT ONE ANSWER ONLY.",
+   "def:44": "Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.",
+   "def:45": "Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.",
+   "def:52": "These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+   "def:142": "Our focus is specifically on referrals external to the facility, excluding internal referrals. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY."
   },
   "translations": {
    "intro:1": {
@@ -42,7 +46,40 @@
     "HIL": "Subong, mamangkot kami sang imo nahibal-an tuhoy sa UHC, ang mga pagbag-o nga ginpatuman sa sini nga pasilidad matapos ginpasar ang UHC Act sang 2019, kag kon ang mga pagbag-o nga ini resulta sang UHC Act",
     "ILO": "(Saludsodenmi itan ti maipapan iti pannakaammoyo iti UHC, dagiti panagbalbaliw a naipatungpal iti daytoy a pasilidad sipud idi naipasa ti UHC Act idi 2019 ken no dagitoy a panagbalbaliw ket resulta ti UHC Act.) C"
    },
-   "intro:51": {
+   "const:_READ_ONE": {
+    "FIL": "BASAHIN ANG PAGPIPILIAN NANG MALAKAS. PUMILI NG ISANG SAGOT LAMANG",
+    "ILO": "(BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.)",
+    "BCL": "",
+    "BIS": "",
+    "CEB": "BASAHA UG KUSOG. PILI UG USDA KA TUBAG LAMANG",
+    "WAR": "",
+    "HIL": ""
+   },
+   "const:_READ_ALL": {
+    "FIL": "BASAHIN ANG MGA PAGPIPILIAN NANG MALAKAS. PILIIN LAHAT NG NAAANGKOP",
+    "WAR": "BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO",
+    "ILO": "(BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.)",
+    "CEB": "BASAHA UG KUSOG ANG MGA TUBAG. PILIA ANG TANAN NGA MO APPLY",
+    "BCL": "",
+    "BIS": "",
+    "HIL": ""
+   },
+   "const:_DNR_ALL": {
+    "WAR": "AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO",
+    "ILO": "(SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.)",
+    "CEB": "AYAW BASAHA UG KUSOG. PILIA ANG TANAN NGA MO APPLY",
+    "FIL": "",
+    "BCL": "",
+    "BIS": ""
+   },
+   "const:_DNR_UNPROMPTED": {
+    "FIL": "HUWAG BASAHIN NANG MALAKAS ANG MGA PAGPIPILIAN. PILIIN ANG LAHAT NG SAGOT NA IBIBIGAY NG RESPONDENTE NANG WALANG PAGHIHIKAYAT",
+    "CEB": "AYAW BASAHA UG KUSOG ANG MGA TUBAG. PILIA ANG TANANG TUBAG NGA IHATAG SA RESPONDENT NGA DILI I PROMPT/AGHATON",
+    "WAR": "AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA OPSYON HAN BATON NGA IGINHAHATAG HAN NAGBATON NGA WARAY PAG-AGHAT",
+    "HIL": "INDI PAGBASAHA ANG MGA OPSYON SANG MATUNOG. PILIA ANG TANAN NGA SABAT NGA GINAHATAG SANG RESPONDENT NGA WALA PAGPANGUNA",
+    "BCL": ""
+   },
+   "intro:38": {
     "FIL": "Ang mga susunod na tanong na aming itatanong ay may kaugnayan sa YAKAP/Konsulta package. Mangyaring sagutin ayon sa iyong kaalaman. Maaari kang sumagot ng “Hindi ko alam” kung ikaw ay hindi sigurado.",
     "BCL": "An sunod na hapot ay manungod sa YAKAP/Konsulta package. Pakisimbag an pinakatama. Pwede ka magsimbag ki “Dai ko aram” kun dai ka nakasiguro.",
     "BIS": "Ang mosunod nga mga pangutana may kalabotan sa YAKAP/Konsulta package. Palihog tubag base sa imong nahibaluan. Mahimo ka motubag og “Wala ko kabalo” kung dili ka sigurado.",
@@ -51,7 +88,7 @@
     "HIL": "Ang masunod nga mga pamangkot nga aton ipangutana nagahisgot sa YAKAP/Konsulta nga package. Palihog sabta ini sa pinakamaayo nga imo kahibalo. Pwede ka magbaton sang “Indi ko kabalo” kon indi ka sigurado.",
     "ILO": "Dagiti sumaruno a saludsod nga isaludsodtayo ket mainaig iti pakete ti YAKAP/Konsulta. Pangngaasiyo ta sumungbatkayo iti kasayaatan a pannakaammoyo. Mabalin a sungbatam a “Diak ammo” no dika masigurado."
    },
-   "intro:101": {
+   "intro:88": {
     "FIL": "Magtatanong na kami ngayon ng mga katanungan na may kaugnayan sa BUCAS center at GAMOT package",
     "BCL": "An masunod na kahapotan ay relates sa BUCAS center asin GAMOT package",
     "BIS": "Karon, ang akong mga ipangutana kabahin sa BUCAS center ug GAMOT package E",
@@ -60,7 +97,7 @@
     "HIL": "Mangayo kita subong sang mga pamangkot nga may kalabutan sa BUCAS center kag GAMOT package",
     "ILO": "(Agsaludsodkami itan kadagiti saludsod mainaig iti BUCAS center ken GAMOT package.) E"
    },
-   "intro:118": {
+   "intro:105": {
     "FIL": "Magtatanong kami ngayon tungkol sa karanasan ng inyong pasilidad sa proseso ng pagkuha ng lisensya",
     "BCL": "An sunod na mga kahapotan manungod sa naeksperyensya sa licensing process kan pasilidad na ini",
     "BIS": "Karon mangutana mi bahin sa kasinatian sa inyong pasilidad sa proseso sa licensing",
@@ -69,7 +106,7 @@
     "HIL": "Mamangkot kami subong sang impormasyon parte sa eksperyensya sang imo pasilidad sa proseso sang pagkuha lisensya",
     "ILO": "(Saludsodenmi itan kadakayo ti maipapan iti kapadasan ti pasilidadyo iti proseso ti panaglisensia.)"
    },
-   "intro:135": {
+   "intro:122": {
     "FIL": "Ang susunod na set ng mga tanong ay tumatalakay sa proseso ng paghahatid ng serbisyo",
     "BCL": "Ngonyan, magpadagos kita sa proseso kan service delivery",
     "BIS": "Ang mga musunod nga mga pangutana kabahin sa pagproseso sa pagdeliver/paghatag sa derbisyo",
@@ -78,7 +115,7 @@
     "HIL": "Ang mga masunod nga mga pamangkot nagasakop sang proseso sang paghatag sang serbisyo",
     "ILO": "(Saklawen ti sumaruno a grupo dagiti saludsod ti proseso ti panangipaay iti serbisio"
    },
-   "intro:163": {
+   "intro:150": {
     "FIL": "Magtutuloy na tayo sa huling bahagi ng survey na ito, na nakatuon sa mga yamang-tao (human resources)",
     "BCL": "An masunod ay last na section kan survey na naga focus sa human resources H",
     "BIS": "Mopadayon na kita sa katapusang bahin sa survey, nga magfocus sa human resources",
@@ -87,34 +124,26 @@
     "HIL": "Magapadayon kita subong sa katapusan nga bahin sang sini nga survey, nga nagatutok sa human resources",
     "ILO": "(Ituloytayo itan ti maudi a benneg daytoy a surbey, a naipamaysa kadagiti rekurso ti tao.) H"
    },
-   "const:_READ_ONE": {
-    "FIL": "BASAHIN ANG PAGPIPILIAN NANG MALAKAS. PUMILI NG ISANG SAGOT LAMANG",
-    "ILO": "(BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.)"
+   "const:_SELECT_ONE": {
+    "FIL": "",
+    "BCL": "",
+    "BIS": "",
+    "CEB": "",
+    "WAR": "",
+    "HIL": "",
+    "ILO": ""
    },
-   "const:_READ_ALL": {
-    "FIL": "BASAHIN ANG MGA PAGPIPILIAN NANG MALAKAS. PILIIN LAHAT NG NAAANGKOP",
-    "WAR": "BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO",
-    "ILO": "(BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.)",
-    "CEB": "BASAHA UG KUSOG ANG MGA TUBAG. PILIA ANG TANAN NGA MO APPLY"
+   "def:44": {
+    "CEB": "Capitation mao ang kantidad kada tuig kada pasyente alang sa paghatag sa mga serbisyo sa YAKAP/Konsulta package."
    },
-   "const:_DNR_ALL": {
-    "WAR": "AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO",
-    "ILO": "(SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.)",
-    "CEB": "AYAW BASAHA UG KUSOG. PILIA ANG TANAN NGA MO APPLY"
+   "def:45": {
+    "CEB": "Performance indicators mao ang tanan nga mga healthcare goods ug services nga ihatag alang sa matag pasyente aron makadawat sa full capitation payment. AYAW BASAHA UG KUSOG ANG MGA TUBAG. PILIA ANG TANAN TUBAG NGA IHATAG SA RESPONDENT NGA DILI I PROMPT. DILI PWEDE ANG RESPONDENT NGA MAGPANGITA OG REPERENSYA SA DI PA MOTUBAG NIINING PANGUTANA."
    },
-   "const:_DNR_UNPROMPTED": {
-    "FIL": "HUWAG BASAHIN NANG MALAKAS ANG MGA PAGPIPILIAN. PILIIN ANG LAHAT NG SAGOT NA IBIBIGAY NG RESPONDENTE NANG WALANG PAGHIHIKAYAT",
-    "CEB": "AYAW BASAHA UG KUSOG ANG MGA TUBAG. PILIA ANG TANANG TUBAG NGA IHATAG SA RESPONDENT NGA DILI I PROMPT/AGHATON",
-    "WAR": "AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA OPSYON HAN BATON NGA IGINHAHATAG HAN NAGBATON NGA WARAY PAG-AGHAT",
-    "HIL": "INDI PAGBASAHA ANG MGA OPSYON SANG MATUNOG. PILIA ANG TANAN NGA SABAT NGA GINAHATAG SANG RESPONDENT NGA WALA PAGPANGUNA"
+   "def:52": {
+    "CEB": "Mao kini ang mga requirements para sa YAKAP/Konsulta accreditation sa DOH. BASAHA UG KUSOG ANG MGA TUBAG. PILIA ANG TANAN NGA MO APPLY"
    },
-   "const:_PROBE": {
-    "FIL": "HUWAG BASAHIN NANG MALAKAS ANG MGA PAGPIPILIAN. GAMITIN ANG MGA SUMUSUNOD NA GABAY NA TANONG SA PAG-USISA. Naipatupad na ba ito? / Mayroon ba kayo nito?Ito ba ay ipinatupad bago o pagkatapos ng 2019? Ito ba ay ipinatupad dahil sa UHC? May plano ba kayong ipatupad ito sa loob ng susunod na 1–2 taon?",
-    "BIS": "AYAW BASAHA OG KUSOG. GAMITA ANG MGA MUSUNOD NGA MGA PANGUTANA APRA KINI MA-PROBE. Na-implementar ba kini? Naa mo ingon ani? Naimplementar ba kini sa wala pa o human an na ang 2019? na-implemetar ba kinin tungod sa UHC? Naa ba mo plano nga maimplementar kini sa musunod nga usa hangtod duha ka tuig?",
-    "CEB": "AYAW BASAHA UG KUSOG ANG MGA TUBAG. GAMITA ANG MGA GUIDE QUESTIONS PARA MAG PROBE. Napatuman na ba kini?/ Aduna ba mo niini? Napatuman ba kini sa wala pa o human sa 2019? Gipatuman ba kini tungod sa UHC? Aduna ba kamoy plano nga ipatuman kini sa sunod nga 1-2 ka tuig?",
-    "WAR": "AYAW PAGBASA HA MAKUSOG AN MGA OPSYON. GAMITA AN MASUNOD NGA MGA PAKIANA HA GIYA HA PAG-USA. Naipatuman na ba ini? / Mayda ka ba hini? Ginpatuman ba ini antes o katapos han 2019? Ginpatuman ba ini tungod han UHC? Plano ba niyo ipatuman ini ha masunod nga 1-2 ka tuig?",
-    "HIL": "INDI PAGBASAHON SANG MATUNOG ANG OPSYON. GAMITA ANG MASUNOD NGA MGA GIYA NGA PAMANGKOT PARA SA PROBING. Na- implementar na bala ini? / May ara kamo sini? Na-implementar bala ini antes ukon pagkatapos sang tuig 2019? Na-implementar bala ini bangud sa UHC? Plano mo bala ini i-implementar sa masunod nga 1-2 ka tuig?",
-    "ILO": "(SAAN A BASAEN TI OPTIONS ITI NAIPAAY. URASEN DAGITI SUMABARO A GIYA A SALUDSOD TAPNO AGSUKITA. Naipatungpal kadin daytoy? / Adda kadi daytoy? Naipatungpal kadi daytoy sakbay wenno kalpasan ti 2019? Naipatungpal kadi daytoy gapu iti UHC? Planom kadi nga implementaren dayta iti sumaruno a 1-2 a tawen?)"
+   "def:142": {
+    "CEB": "Ang atong focus kay sa mga referral nga gawas sa pasilidad, gawas sa mga internal nga referral. BASAHA UG KUSOG ANG MGA TUBAG. PILIA ANG TANAN NGA MO APPLY"
    }
   }
  },
@@ -144,7 +173,27 @@
    "const:_RECEIPT": "If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply.",
    "const:_IF_YES_AMOUNT": "If yes, indicate the amount spent.",
    "const:_GAMOT_AREA": "Enumerator: Applicable only to respondents in areas with GAMOT.",
-   "const:_SELECT_ALL": "SELECT ALL THAT APPLY."
+   "const:_SELECT_ALL": "SELECT ALL THAT APPLY.",
+   "def:4": "Note to enumerator [do not read]: This section is for the Patient Profile. Ask all questions in this section unless a skip rule applies.",
+   "def:19": "Please count the patient and all the people who usually live with the patient. Please include those who are not living here now but will be back within six months, BUT do not include OFWs.",
+   "def:33": "The decision-maker is the person that takes responsibility on decisions regarding health in the family: for example, yearly immunizations, hospital finances, etc.",
+   "def:35": "Note to enumerator [do not read]: This section is for the Patient's awareness on Universal Health Care. Ask all questions in this section unless a skip rule applies.",
+   "def:38": "Note to enumerator [do not read]: This section is for the Patient's PhilHealth Registration and Health Insurance. Ask all questions in this section unless a skip rule applies.",
+   "def:53": "Note to enumerator [do not read]: This section is about the Patient's Primary Care Utilization. Ask all questions in this section unless a skip rule applies. A primary care provider is your first contact healthcare provider (i.e., general practitioner doctor) for an undiagnosed concern or continuing care of varied medical conditions.",
+   "def:71": "An institution that primarily delivers primary care services or the initial-contact facility for coordinated care (e.g., RHU, health center, general practitioner clinic).",
+   "def:83": "Note to enumerator [do not read]: This section is for the Patient's Health-Seeking Behavior. Ask all questions in this section unless a skip rule applies. READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.",
+   "def:99": "Q99 to Q103 are applicable only to respondents in areas with BUCAS center. Otherwise, skip.",
+   "def:141": "For example, they did not disclose any of your private medical information to anyone not involved in your care.",
+   "def:142": "For example, your consultation was done in a private area, and no one could overhear your private medical information.",
+   "def:152": "Q152 to Q157, Q159 are applicable only to respondents in areas with GAMOT. Otherwise, skip.",
+   "def:17": "READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. IF MORE THAN ONE, ASK FOR THE MAIN SOURCE.",
+   "def:34": "READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. This is the person who makes decisions on health in the family: for example, yearly immunizations, manages hospital finances, etc.",
+   "def:Q38_1_PIN_WHEN": "SELECT ONE ANSWER ONLY.",
+   "def:Q38_2_WHY_NOT_REG": "READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+   "def:Q18_INCOME_BRACKET": "Enumerator note: Select the income category that corresponds to the respondent's approximate household income.",
+   "def:Q150_TRAVEL_HH": "A Pharmacy is an ancillary primary care facility with a FDA LTO where registered medicines can be bought.",
+   "def:Q98_SOURCES": "Enumerator Note: 'Quantified Free Service' fees are those directly charged to the hospital budget.",
+   "def:Q113_SOURCES": "Enumerator Note: 'Quantified Free Service' fees are those directly charged to the hospital budget."
   },
   "translations": {
    "intro:4": {
@@ -152,12 +201,15 @@
     "BCL": "information Bako magpuon sa survey, mahapot kami sa pasyente manungod sa saiyang persona na impormasyon",
     "BIS": "information Sa dili pa kita mopadayon sa aktuwal nga survey, gusto namo mangayo og impormasyon bahin sa personal nga datos sa pasyente",
     "WAR": "information Antes magpakadto ini nga surbey, karuyag namon pakianhan an pasyente mahitungod han ira personal nga impormasyon",
-    "ILO": "information (Sakbay nga agtultuloykami iti surbey proper, kayatmi a damagen iti pasiente ti maipapan iti personal nga impormasionda) Note to enumerator [do not read]: This section is for th"
+    "ILO": "Sakbay nga agtultuloykami iti surbey proper, kayatmi a damagen iti pasiente ti maipapan iti personal nga impormasionda",
+    "CEB": "Sa wala pa kita mopadayon sa aktuwal nga survey, mangutana una kami sa pasyente bahin sa iyang personal nga impormasyon"
    },
    "intro:35": {
     "FIL": "Magtatanong kami ngayon tungkol sa kaalaman ng pasyente sa Universal Health Care (UHC)",
     "BIS": "Mangutana na usab kami bahin sa kahibalo sa pasyente sa Universal Health Care (UHC)",
-    "WAR": "Magpapakiana kita yana mahitungod han kahibaro han pasyente mahitungod han Universal Health Care (UHC)"
+    "WAR": "Magpapakiana kita yana mahitungod han kahibaro han pasyente mahitungod han Universal Health Care (UHC)",
+    "CEB": "Mangutana na kami karon bahin sa kahibalo sa pasyente sa Universal Health Care (UHC)",
+    "ILO": "Saludsodentayo itan ti maipapan iti pannakaammo ti pasiente iti Universal Health Care (UHC)"
    },
    "intro:38": {
     "FIL": "Ang mga susunod na tanong ay tungkol sa karanasan ng pasyente sa pagpaparehistro sa PhilHealth",
@@ -172,7 +224,9 @@
     "BCL": "provider Mahapot naman kami manungod sa access kan pasyente sa primary care",
     "BIS": "provider Mangutana na usab kami bahin sa access sa pasyente sa usa ka primary care provider",
     "WAR": "provider Magpapakiana kami yana mahitungod han pag-access han pasyente ha usa nga panguna nga parag-ataman",
-    "HIL": "Karun mangayo kita sang mga pamangkot parte sa pag-access sang pasyente sa primary care provider"
+    "HIL": "Karun mangayo kita sang mga pamangkot parte sa pag-access sang pasyente sa primary care provider",
+    "CEB": "Karon mangutana na kami bahin sa pag-access sa pasyente sa usa ka primary care provider.",
+    "ILO": "Agsaludsodkami itan maipapan iti pannakagun-od ti pasiente iti kangrunaan a mangipapaay iti panangaywan"
    },
    "intro:74": {
     "FIL": "package Magtatanong kami ngayon tungkol sa kaalaman ng pasyente sa YAKAP/Konsulta package",
@@ -280,45 +334,105 @@
    },
    "const:_READ_ONE": {
     "FIL": "BASAHIN NANG MALAKAS ANG PAMIMILIAN. PUMILI LAMANG NG ISANG SAGOT",
-    "ILO": "(BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.)"
+    "ILO": "(BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.)",
+    "CEB": "BASAHA OG KUSOG ANG MGA KAPILIAN. PAGPILI OG USA RA KA TUBAG.",
+    "WAR": ""
    },
    "const:_READ_ALL": {
     "FIL": "BASAHIN NANG MALAKAS ANG MGA PAMIMILIAN. PILIIN ANG LAHAT NG NAAANGKOP",
     "BIS": "BASAHA ANG MGA OPSYON OG KUSOG. PILI ANG TANANG PWEDE",
     "WAR": "BASAHA HA DAKU NGA TINGOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO",
     "ILO": "(BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.)",
-    "BCL": "BASAHON AN MGA OPSYON. PILION AN DAPAT"
+    "BCL": "BASAHON AN MGA OPSYON. PILION AN DAPAT",
+    "CEB": ""
    },
    "const:_DNR_ONE": {
     "FIL": "HUWAG BASAHIN NANG MALAKAS ANG MGA PAMIMILIAN. PUMILI LAMANG NG ISANG SAGOT",
     "BIS": "AYAW BASAHA ANG MGA OPSYON OG KUSOG. PILI OG USA KA TUBAG LAMANG",
     "WAR": "AYAW BASAHA HA DAKU NGA TINGOG AN MGA OPSYON. PILI MAUSA LA NGA BATON",
-    "ILO": "(SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.)"
+    "ILO": "(SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.)",
+    "CEB": "AYAW BASAHA OG KUSOG ANG MGA KAPILIAN. PAGPILI OG USA RA KA TUBAG."
    },
    "const:_DNR_ALL": {
     "WAR": "AYAW BASAHA HA DAKU NGA TINGOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO",
     "ILO": "(SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.)",
-    "BCL": "DAE PAGBASAHON NIN MAKSUOG. PILION AN DAPAT NA KASIMBAGAN"
+    "BCL": "DAE PAGBASAHON NIN MAKSUOG. PILION AN DAPAT NA KASIMBAGAN",
+    "FIL": "",
+    "BIS": "",
+    "CEB": ""
    },
    "const:_RECEIPT": {
     "FIL": "Kung ang pasyente ay nagbigay ng resibo, piliin ang lahat na naaangkop. Kung walang resibo, basahin ang mga opsyon nang malakas. Piliin ang lahat na naaangkop",
     "BCL": "Kun an pasyente may resibo pilion an dapat. Kun wara man na maitao, basahon asin pilion an mga dapat na kasimbagan",
-    "WAR": "Kun an pasyente maghatag hin resibo, pilia an ngatanan nga aplikado. Kon waray iginhatag nga resibo, basaha ha daku nga tingog an mga opsyon. Pilia an ngatanan nga aplikado"
+    "WAR": "Kun an pasyente maghatag hin resibo, pilia an ngatanan nga aplikado. Kon waray iginhatag nga resibo, basaha ha daku nga tingog an mga opsyon. Pilia an ngatanan nga aplikado",
+    "BIS": "",
+    "CEB": "",
+    "HIL": "",
+    "ILO": ""
    },
    "const:_IF_YES_AMOUNT": {
     "FIL": "Kung oo, ilagay ang halagang ginastos",
     "BCL": "Kun iyo, pakikaag kan kantidad kun pira ini",
-    "BIS": "Kung oo, ispecify ang kantidad nga nagasto"
+    "BIS": "Kung oo, ispecify ang kantidad nga nagasto",
+    "WAR": "",
+    "HIL": "",
+    "ILO": ""
    },
    "const:_GAMOT_AREA": {
     "FIL": "Enumerator: Itatanong lamang sa mga respondent na nasa mga lugar na may GAMOT",
     "BIS": "Enumerator: Magamit lamang sa mga respondent nga naa sa lugar nga adunay GAMOT",
     "WAR": "Enumerator: Applicable la ha mga respondente ha mga lugar nga mayda GAMOT",
     "HIL": "Enumerator: Naga-angut lamang ini sa mga respondents sa mga lugar nga may GAMOT",
-    "ILO": "(Enumerator: Agaplikar laeng kadagiti respondents kadagiti lugar nga addaan iti GAMOT)"
+    "ILO": "(Enumerator: Agaplikar laeng kadagiti respondents kadagiti lugar nga addaan iti GAMOT)",
+    "BCL": "Enumerator: Aplikbale sana ini sa respondents na nasa area na may GAMOT facility",
+    "CEB": ""
    },
    "const:_SELECT_ALL": {
-    "BCL": "PILION AN DAPAT NA KASIMBAGAN"
+    "BCL": "PILION AN DAPAT NA KASIMBAGAN",
+    "FIL": "",
+    "BIS": "",
+    "CEB": "",
+    "WAR": "",
+    "ILO": "(PILIEN AMIN NGA AGaplikar.)"
+   },
+   "const:_PWD_CARD": {
+    "CEB": "Pagtudlo para sa Enumerator (AYAW BASAHA OG KUSOG): Kung gipakita ang PWD Identification Card, irekord ang klase sa kapansanan nga nakabutang sa card. Ayaw pangutan-on ang respondent direkta.",
+    "ILO": "Instruksion ti Enumerator (SAAN NGA BASAEN TI NAIPAAY): No maiparang ti PWD Identification Card, irekord ti kita ti baldado kas naibaga iti card. Saan a direkta a damagen iti respondent."
+   },
+   "def:4": {
+    "CEB": "Pahinumdom sa enumerator [ayaw basaha]: Kini nga bahin para sa Patient Profile. Pangutana sa tanang mga pangutana niini nga bahin gawas kung adunay lagda sa paglaktaw.",
+    "ILO": "Pakaammo iti enumerator [saan a basaen]: Daytoy a benneg ket para iti Patient Profile. Saludsodem amin a saludsod iti daytoy a benneg malaksid no agaplikar ti pagannurotan ti panaglaksid."
+   },
+   "def:19": {
+    "CEB": "Palihug ihapa ang pasyente ug tanang tawo nga kasagarang nagpuyo uban sa pasyente. Iapil ang mga wala nagpuyo dinhi karon apan mobalik sulod sa unom ka bulan, APAN ayaw iapil ang mga OFW.",
+    "ILO": "Pangngaasiyo ta bilangenyo ti pasiente ken amin a tattao a gagangay a makipagnanaed iti pasiente. Pangngaasiyo ta iramanyo dagiti saan nga agnanaed ditoy ita ngem agsublinto iti uneg ti innem a bulan, NGEM saan nga iraman dagiti OFW."
+   },
+   "def:33": {
+    "ILO": "Ti agdesision ket isu ti tao a mangala ti responsibilidad kadagiti pangngeddeng maipapan iti salun-at iti pamilia: kas pagarigan, tinawen nga imunisasion, pinansial ti ospital, kdpy."
+   },
+   "def:35": {
+    "CEB": "Pahinumdom sa enumerator [ayaw basaha]: Kini nga bahin alang sa kahibalo sa Pasyente bahin sa Universal Health Care. Ipangutana ang tanang pangutana niining bahina gawas kung adunay lagda sa paglaktaw.",
+    "ILO": "Pakaammo iti enumerator [saan a basaen]: Daytoy a benneg ket para iti pannakaammo ti Pasiente iti Universal Health Care. Saludsodem amin a saludsod iti daytoy a benneg malaksid no agaplikar ti pagannurotan ti panaglaksid."
+   },
+   "def:53": {
+    "CEB": "Pahinumdom sa enumerator [ayaw basaha]: Kini nga bahin mahitungod sa Patient's Primary Care Utilization. Ipangutana ang tanang pangutana niining bahina gawas kung adunay lagda sa paglaktaw. Ang primary care provider mao ang imong unang maduolan nga healthcare provider (pananglitan, general practitioner nga doktor) para sa wala pa madiagnose nga problema o padayon nga pag-atiman sa nagkalain-laing medikal nga kondisyon.",
+    "ILO": "Pakaammo iti enumerator [saan a basaen]: Daytoy a benneg ket maipapan iti Patient's Primary Care Utilization. Saludsodem amin a saludsod iti daytoy a benneg malaksid no agaplikar ti pagannurotan ti panaglaksid. Ti kangrunaan a mangipapaay ti panangtaripato ket isu ti umuna a kontakmo a mangipapaay ti panangtaripato ti salun-at (i.e., doktor ti sapasap a doktor) para iti saan a nadayagnos a pakaseknan wenno agtultuloy a panangaywan kadagiti nadumaduma a medikal a kasasaad."
+   },
+   "def:Q38_2_WHY_NOT_REG": {
+    "FIL": "BASAHIN NANG MALAKAS ANG MGA PAMIMILIAN. PILIIN ANG LAHAT NG NAAANGKOP",
+    "BIS": "BASAHA ANG MGA OPSYON OG KUSOG. PILI ANG TANANG PWEDE",
+    "WAR": "BASAHA HA DAKU NGA TINGOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO",
+    "ILO": "(BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.)",
+    "BCL": "BASAHON AN MGA OPSYON. PILION AN DAPAT"
+   },
+   "def:17": {
+    "CEB": "BASAHA OG KUSOG ANG MGA KAPILIAN. PAGPILI OG USA RA KA TUBAG. KUNG DAGHAN, PANGUTANA SA NAG-UNANG TINUBDAN."
+   },
+   "def:34": {
+    "CEB": "BASAHA OG KUSOG ANG MGA KAPILIAN. PAGPILI OG USA RA KA TUBAG. Kini ang tawo nga nagadesisyon bahin sa panglawas sa pamilya: pananglitan, tinuig nga mga bakuna, nagdumala sa panalapi sa ospital, ug uban pa."
+   },
+   "def:Q18_INCOME_BRACKET": {
+    "ILO": "Enumerator note: I-tick ti kategoria ti matgedan a katupag ti agarup a kita ti sangakabbalayan ti respondent."
    }
   }
  },
@@ -349,8 +463,38 @@
    "const:_PWD_CARD": "Enumerator Instruction (DO NOT READ ALOUD): If the PWD Identification Card is presented, record the type of disability as indicated on the card. Do not ask the respondent directly.",
    "const:_GAMOT_FAC": "Enumerator: Applicable only to respondents in areas with GAMOT facility.",
    "const:_SELECT_ALL": "SELECT ALL THAT APPLY.",
+   "const:_GATE_ANSWER_ONLY_IF_YES": "[Answer only \"yes\" in Q112]",
+   "const:_GATE_DOH_RETAINED": "[Ask only if they went to a DOH-retained hospital]",
    "const:_HH_NAME_FILL": "~~strip(Q30_NAME)~~",
-   "const:_PRIV_NAME_FILL": "~~strip(Q30_NAME(curocc()))~~"
+   "const:_PRIV_NAME_FILL": "~~strip(Q30_NAME(curocc()))~~",
+   "def:17": "This is the person who makes decisions on health in the family: for example, yearly immunizations, manages hospital finances, etc. READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.",
+   "def:1": "Note to enumerator [do not read]: This section is for the Respondent Profile. The respondent should be the main-decision maker of the household. Ask all questions in this section unless a skip rule applies.",
+   "def:12": "If the respondent is studying - please put \"No employment - not looking for work\". READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.",
+   "def:19": "Please count yourself and all the people who usually live with you. Please include those who are not living here now but will be back within six months, BUT do not include OFWs.",
+   "def:30": "Note to enumerator [do not read]: This section is for the characteristics of the Household. The respondent can answer on behalf of the household member. However, if the household member is present during the interview, they may provide their answers. Ask all questions in this section unless a skip rule applies. For the enumerator: please check that the total number is equal to the number answered in Q19.",
+   "def:51": "Note to enumerator [do not read]: This section is for awareness of the Universal Health Care (UHC). Ask all questions in this section unless a skip rule applies.",
+   "def:54": "Note to enumerator [do not read]: This section is for awareness of the YAKAP/Konsulta package. Ask all questions in this section unless a skip rule applies.",
+   "def:57": "Note to enumerator [do not read]: This section is for awareness of the BUCAS and the services you have accessed in a BUCAS Center. Ask all questions in this section unless a skip rule applies. Q57 to Q61 are applicable only to respondents in areas with BUCAS.",
+   "def:62": "Note to enumerator [do not read]: This section is for the Access to Medicines of the household. For this section, we will ask the respondent about how easy or difficult it is for them to purchase or receive medicines. Ask all questions in this section unless a skip rule applies.",
+   "def:67": "A Pharmacy is an ancillary primary care facility with a FDA LTO where registered medicines can be bought.",
+   "def:69": "Note to enumerator [do not read]: This section is for awareness of the GAMOT package and generic and branded medicines. Ask all questions in this section unless a skip rule applies. Q69 to Q74, Q76 are applicable only to respondents in areas with GAMOT.",
+   "def:79": "Note to enumerator [do not read]: This section is for PhilHealth registration experience and registration status and membership. Ask all questions in this section unless a skip rule applies. DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.",
+   "def:89": "Note to enumerator [do not read]: This section is for Access to a primary care provider. Ask all questions in this section unless a skip rule applies.",
+   "def:95": "Please note the response for one way only from the time the respondent left their place of residence and arrived at the facility.",
+   "def:96": "Please specify in Philippine pesos. Please confirm the ONE-WAY cost: from house to facility ONLY.",
+   "def:97": "Note to enumerator [do not read]: This section is for Access to a primary care facility. Ask all questions in this section unless a skip rule applies.",
+   "def:101": "Note to enumerator [do not read]: This section is for the Household members' health-seeking behavior and outcomes. Ask all questions in this section unless a skip rule applies.",
+   "def:108": "Note to enumerator [do not read]: This section is for the Experiences and Satisfaction with Referrals. Ask all questions in this section unless a skip rule applies.",
+   "def:126": "Note to enumerator [do not read]: This section is for No Balance Billing Awareness and Utilization. Ask all questions in this section unless a skip rule applies.",
+   "def:132": "Note to enumerator [do not read]: This section is for Zero Balance Billing Awareness and Utilization. Ask all questions in this section unless a skip rule applies.",
+   "def:140": "IF RESPONDENT PROVIDES A RECEIPT, SELECT ALL THAT APPLY. IF NO RECEIPT WAS PROVIDED, READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.",
+   "def:160": "For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.",
+   "def:168": "For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.",
+   "def:170": "For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.",
+   "def:197": "For example, you felt you needed to see a medical provider, but waited until the symptoms were more serious because you were worried about the cost of the consultation or treatment, the travel to the facility, or the time off work.",
+   "def:13": "READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. IF MORE THAN ONE, ASK FOR THE MAIN SOURCE.",
+   "def:Q18_INCOME_AMOUNT": "Enumerator note: Ensure that the respondent will provide a valid response. In case the respondent fails to provide one, input -98 for \"I don't know\" and -99 for \"Refuse to Answer\".",
+   "def:Q18_INCOME_BRACKET": "Enumerator note: Select the income category that corresponds to the respondent's approximate household income."
   },
   "translations": {
    "intro:1": {
@@ -400,7 +544,9 @@
     "BCL": "An masunod na kahapotan ay manungod sa GAMOT Package asin medisina na inavail mo sa GAMOT pharmacy",
     "WAR": "Magpapakiana kami yana mahitungod han iyo pagka-aram han GAMOT package, ngan han mga medisina nga iyo gin-avail ha usa nga botika han GAMOT",
     "HIL": "Subong, pamangkoton namon ikaw parte sa imo kahibalo sang GAMOT package kag ang mga bulong nga imo nakuha sa GAMOT nga botika",
-    "ILO": "(Saludsodenmi itan ti maipapan iti pannakaammoyo iti pakete ti GAMOT, ken dagiti agas nga in-avail-yo iti maysa a botika ti GAMOT"
+    "ILO": "(Saludsodenmi itan ti maipapan iti pannakaammoyo iti pakete ti GAMOT, ken dagiti agas nga in-avail-yo iti maysa a botika ti GAMOT",
+    "FIL": "Magtatanong kami ngayon tungkol sa inyong kaalaman sa GAMOT package, at sa mga gamot na inyong nakuha sa isang GAMOT pharmacy",
+    "BIS": "Mangutana kami karon bahin sa imong kahibalo sa GAMOT package, ug sa mga tambal nga imong nakuha sa GAMOT pharmacy"
    },
    "intro:79": {
     "FIL": "Ang mga susunod na tanong ay may kaugnayan sa iyong karanasan sa pagpaparehistro sa PhilHealth",
@@ -460,11 +606,13 @@
     "ILO": "(Saludsodenmi itan ti maipapan iti pannakaammoyo iti Zero Balance Billing (ZBB)"
    },
    "intro:144": {
-    "FIL": "Nasa huling bahagi na tayo ng survey",
-    "BCL": "Digdi na kita sa pinakhuring parte kan survey",
-    "CEB": "Anaa na kita sa katapusang mga bahin sa survey questionnaire",
-    "WAR": "Aada na kita yana ha urhi nga pipira nga seksyon han pakiana han surbey",
-    "HIL": "Subong yara na kita sa ulihi nga mga bahin sang survey questionnaire"
+    "FIL": "",
+    "BCL": "",
+    "CEB": "",
+    "WAR": "",
+    "HIL": "",
+    "BIS": "",
+    "ILO": ""
    },
    "intro:159": {
     "FIL": "Ang mga susunod na tanong ay nakatuon sa pagkonsumo ng inyong sambahayan sa mga gastusing hindi pagkain at hindi pangkalusugan",
@@ -485,17 +633,24 @@
    },
    "const:_READ_ONE": {
     "FIL": "BASAHIN ANG MGA OPSYON NG MALINAW. PUMILI NG ISA LAMANG",
-    "WAR": "BASAHA HA MAKUSOG AN MGA OPSYON. PILI MA USA LA NA BATON"
+    "WAR": "BASAHA HA MAKUSOG AN MGA OPSYON. PILI MA USA LA NA BATON",
+    "CEB": "",
+    "ILO": ""
    },
    "const:_READ_ALL": {
     "FIL": "BASAHIN ANG MGA OPSYON NG MALINAW. PUMILI NG LAHAT NG NAAANGKOP",
     "BIS": "BASAHA ANG MGA OPSYON. PILI-A ANG TANAN NGA PWEDE",
     "WAR": "BASAHA HA MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO",
-    "HIL": "BASAHA ANG MGA OPSYON. PILIA ANG TANAN NGA NAGA‑KABAGAY"
+    "HIL": "BASAHA ANG MGA OPSYON. PILIA ANG TANAN NGA NAGA‑KABAGAY",
+    "CEB": "",
+    "ILO": ""
    },
    "const:_DNR_ONE": {
     "FIL": "HUWAG BASAHIN NG MALAKAS ANG MGA OPSYON. PUMILI NG ISA LAMANG",
-    "ILO": "(SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.)"
+    "ILO": "(SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN TI MAYSA LAENG A SUNGBAT.)",
+    "BCL": "",
+    "CEB": "",
+    "WAR": ""
    },
    "const:_DNR_ALL": {
     "FIL": "HUWAG BASAHIN NG MALAKAS ANG MGA OPSYON. PUMILI NG LAHAT NG NAANGKOP",
@@ -503,7 +658,8 @@
     "WAR": "AYAW PAGBASAHA HIN MAKUSOG AN MGA OPSYON. PILIA AN TANAN NGA APLIKADO",
     "HIL": "INDI PAGBASAHA ANG MGA OPSYON. PILIA ANG TANAN NGA NAGA‑KABAGAY",
     "ILO": "(SAAN A BASAEN TI OPTIONS ITI NAIPAAY. PILIEN AMIN NGA AGaplikar.)",
-    "BCL": "DAE PAGBASAHON NIN MAKSUOG. PILION AN DAPAT NA KASIMBAGAN"
+    "BCL": "DAE PAGBASAHON NIN MAKSUOG. PILION AN DAPAT NA KASIMBAGAN",
+    "CEB": ""
    },
    "const:_GAMOT_FAC": {
     "FIL": "Enumerator: Naaangkop lamang sa mga respondent sa mga lugar na may GAMOT facility",
@@ -511,11 +667,59 @@
     "BIS": "Enumerator: Magamit lamang kini sa mga respondents sa mga lugar nga naay GAMOT facility",
     "WAR": "Enumerator: Aplikado la ha mga respondente nga aada ha mga lugar nga may pasilidad han GAMOT",
     "HIL": "Naga-aplikar lamang sa mga respondent nga yara sa lugar nga may GAMOT nga pasilidad",
-    "ILO": "(Enumerator: Agaplikar laeng kadagiti respondents kadagiti lugar nga addaan iti pasilidad ti GAMOT)"
+    "ILO": "(Enumerator: Agaplikar laeng kadagiti respondents kadagiti lugar nga addaan iti pasilidad ti GAMOT)",
+    "CEB": ""
    },
    "const:_SELECT_ALL": {
-    "FIL": "PILIIN ANG LAHAT NG NAAANGKOP"
+    "FIL": "PILIIN ANG LAHAT NG NAAANGKOP",
+    "BIS": "",
+    "CEB": "",
+    "WAR": "",
+    "HIL": "",
+    "ILO": ""
+   },
+   "const:_GATE_ANSWER_ONLY_IF_YES": {
+    "FIL": "",
+    "BCL": "",
+    "BIS": "",
+    "CEB": "",
+    "WAR": "",
+    "HIL": "",
+    "ILO": ""
    }
+  }
+ },
+ "_provenance": {
+  "aug21": {
+   "date": "2026-08-31",
+   "source": "C:/Users/analy/Documents/analytiflow/1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/Survey-Instruments-2026-08-21/Translations",
+   "files": {
+    "F1_BCL": "F1-Bicolano_Facility Head Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F1_BIS": "F1-Bisaya_Facility Head Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F1_CEB": "F1-Cebuano_Facility Head Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F1_HIL": "F1-Hiligaynon_Facility Head Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F1_ILO": "F1-Ilocano_Facility Head Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F1_FIL": "F1-Tagalog_Facility Head Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F1_WAR": "F1-Waray_Facility Head Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F3_BCL": "F3-Bicolano_Patient Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F3_BIS": "F3-Bisaya_Patient Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F3_CEB": "F3-Cebuano_Patient Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F3_HIL": "F3-Hiligaynon_Patient Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F3_ILO": "F3-Ilocano_Patient Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F3_FIL": "F3-Tagalog_Patient Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F3_WAR": "F3-Waray_Patient Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F4_BCL": "F4-Bicolano_Household Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F4_BIS": "F4-Bisaya_Household Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F4_CEB": "F4-Cebuano_Household Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F4_HIL": "F4-Hiligaynon_Household Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F4_ILO": "F4-Ilocano_Household Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F4_FIL": "F4-Tagalog_Household Survey Questionnaire_UHC Year 2_Aug21.pdf",
+    "F4_WAR": "F4-Waray_Household Survey Questionnaire_UHC Year 2_Aug21.pdf"
+   },
+   "n_written": 0,
+   "n_replaced": 0,
+   "n_overridden": 149,
+   "n_kept_prior": 12
   }
  }
 }
