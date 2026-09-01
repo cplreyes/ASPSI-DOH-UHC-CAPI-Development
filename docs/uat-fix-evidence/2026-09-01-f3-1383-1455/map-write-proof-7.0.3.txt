@@ -1,0 +1,12 @@
+# F3 v7.0.3 follow-up translation-map writes (2026-09-01; the two follow-up applies after v7.0.1, apply_aug21.py --apply records; one line per key)
+
+## v7.0.2 - the parked Ilocano keys
+### ilo writes (1)
+  val:Q149_WHERE_BUY_VS1:06  ->  'Estasion ti Salun-at ti Barangay'
+### ilo removed (1)
+  val:Q93_LABS_VS1:12
+
+## v7.0.3 - the per-locale force round (keep text that v7.0.1 reported WARN and never wrote)
+### ilo writes (1)
+  vs:Q142_PRIVACY_VS1  ->  'Iti kaudian a panagbisita, rinaem kadi dagiti empleado ti kinapribado bayat ti pisikal a konsultasion?'
+

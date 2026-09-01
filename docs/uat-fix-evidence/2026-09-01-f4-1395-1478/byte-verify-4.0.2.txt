@@ -1,0 +1,89 @@
+--- F4 byte-verify C:\Users\analy\.claude\jobs\9f225161\tmp\w4\served2\HouseholdSurvey.zip ---
+pen bytes: 7600543
+baseline (pre-wave) maps: C:\Users\analy\.claude\jobs\9f225161\tmp\w4\baseline\F4
+OK   FIL item:Q30_NAME [wave-changed]: 'PANGALAN (APELYIDO, PANGALAN, GITNANG PANGALAN, EXT)'
+OK   FIL item:Q35_HAS_DISABILITY [wave-changed]: 'Kinikilala mo ba ang iyong sarili bilang isang taong may kap'
+OK   FIL item:Q36_SPECIFY_DISABILITY [wave-changed]: 'Nais mo bang tukuyin ang uri ng kapansanan?'
+SKIP FIL item:Q40_EDUCATION (no map value - English fallback)
+OK   FIL item:Q67_TRAVEL_HH [wave-changed]: 'Gaano katagal ang iyong biyahe upang marating ang pinakamala'
+OK   FIL item:Q4_LGBTQIA [wave-changed]: 'Kayo po ba ay kabilang sa LGBTQIA+ na komunidad? (halimbawa:'
+OK   FIL vs:Q4_LGBTQIA_VS1 [wave-changed]: 'Kayo po ba ay kabilang sa LGBTQIA+ na komunidad? (halimbawa:'
+OK   FIL item:Q5_GROUP [wave-changed]: 'Aling grupo ang kinikilala mo? Ayos lang kung hindi ka kompo'
+OK   FIL vs:Q5_GROUP_VS1 [wave-changed]: 'Aling grupo ang kinikilala mo? Ayos lang kung hindi ka kompo'
+OK   FIL item:Q10_DISABILITY_TYPE [wave-changed]: 'Batay sa ipinakitang PWD Identification Card, anong uri ng k'
+OK   FIL item:Q18_INCOME_AMOUNT [wave-changed]: 'Sa nakalipas na 6 na buwan, ano ang iyong karaniwang buwanan'
+OK   BCL item:Q30_NAME [unchanged-since-baseline]: 'Ngaran (Pakisurat an completong ngaran kan miembro kan pamil'
+SKIP BCL item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP BCL item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+SKIP BCL item:Q40_EDUCATION (no map value - English fallback)
+SKIP BCL item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP BCL item:Q4_LGBTQIA (no map value - English fallback)
+OK   BCL vs:Q4_LGBTQIA_VS1 [unchanged-since-baseline]: 'Parte ka ba kan LGBTQIA+ na komunidad? (hal. bakla, tomboy, '
+SKIP BCL item:Q5_GROUP (no map value - English fallback)
+OK   BCL vs:Q5_GROUP_VS1 [unchanged-since-baseline]: 'Sain na grupo ika?'
+SKIP BCL item:Q10_DISABILITY_TYPE (no map value - English fallback)
+SKIP BCL item:Q18_INCOME_AMOUNT (no map value - English fallback)
+OK   BIS item:Q30_NAME [unchanged-since-baseline]: 'Ngalan (Isulat ang kompleto nga ngalan sa miyembro sa panima'
+SKIP BIS item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP BIS item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   BIS item:Q40_EDUCATION [unchanged-since-baseline]: 'Pinakataas nga Naabot sa Pag-eskwela'
+SKIP BIS item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP BIS item:Q4_LGBTQIA (no map value - English fallback)
+OK   BIS vs:Q4_LGBTQIA_VS1 [unchanged-since-baseline]: 'Kabahin ba ka sa LGBTQIA+ nga komunidad? (pananglitan: gay, '
+SKIP BIS item:Q5_GROUP (no map value - English fallback)
+OK   BIS vs:Q5_GROUP_VS1 [unchanged-since-baseline]: 'Sa unsang grupo nimo giila imong kaugalingon? Okay ra kung d'
+SKIP BIS item:Q10_DISABILITY_TYPE (no map value - English fallback)
+SKIP BIS item:Q18_INCOME_AMOUNT (no map value - English fallback)
+OK   CEB item:Q30_NAME [unchanged-since-baseline]: 'Ngalan (Isulat ang kumpletong ngalan sa miyembro sa panimala'
+SKIP CEB item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP CEB item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   CEB item:Q40_EDUCATION [unchanged-since-baseline]: 'Naabot nga edukasyon'
+SKIP CEB item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP CEB item:Q4_LGBTQIA (no map value - English fallback)
+OK   CEB vs:Q4_LGBTQIA_VS1 [unchanged-since-baseline]: 'Miyembro ba ka sa LGBTQIA+ community? (pananglitan: bayot, t'
+SKIP CEB item:Q5_GROUP (no map value - English fallback)
+OK   CEB vs:Q5_GROUP_VS1 [unchanged-since-baseline]: 'Unsang grupo ka kabahin? Okay ra kung dili ka komportable mo'
+SKIP CEB item:Q10_DISABILITY_TYPE (no map value - English fallback)
+SKIP CEB item:Q18_INCOME_AMOUNT (no map value - English fallback)
+OK   WAR item:Q30_NAME [unchanged-since-baseline]: 'Ngaran (Isurat an kompleto nga ngaran hit HH nga miyembro)'
+SKIP WAR item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP WAR item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   WAR item:Q40_EDUCATION [unchanged-since-baseline]: 'Pinakahitaas nga edukasyon nga natapos'
+SKIP WAR item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP WAR item:Q4_LGBTQIA (no map value - English fallback)
+OK   WAR vs:Q4_LGBTQIA_VS1 [unchanged-since-baseline]: 'Kaapi ka ba han komunidad han LGBTQIA+? (pananglitan, bayot,'
+SKIP WAR item:Q5_GROUP (no map value - English fallback)
+OK   WAR vs:Q5_GROUP_VS1 [unchanged-since-baseline]: 'Hain nga grupo an imo ginkikilala? Waray problema kun dire k'
+SKIP WAR item:Q10_DISABILITY_TYPE (no map value - English fallback)
+SKIP WAR item:Q18_INCOME_AMOUNT (no map value - English fallback)
+OK   HIL item:Q30_NAME [unchanged-since-baseline]: 'Ngalan (Isulat ang bug-os nga ngalan sang miembro sang panim'
+SKIP HIL item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP HIL item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+SKIP HIL item:Q40_EDUCATION (no map value - English fallback)
+SKIP HIL item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP HIL item:Q4_LGBTQIA (no map value - English fallback)
+OK   HIL vs:Q4_LGBTQIA_VS1 [unchanged-since-baseline]: 'Ang pasyente miembro bala sang LGBTQIA+ nga komunidad? (e.g.'
+SKIP HIL item:Q5_GROUP (no map value - English fallback)
+OK   HIL vs:Q5_GROUP_VS1 [unchanged-since-baseline]: 'Anong grupo ang gina-identify sang pasyente? Okay lang kung '
+SKIP HIL item:Q10_DISABILITY_TYPE (no map value - English fallback)
+SKIP HIL item:Q18_INCOME_AMOUNT (no map value - English fallback)
+OK   ILO item:Q30_NAME [unchanged-since-baseline]: 'Nagan (Isurat ti kompleto a nagan ti kameng ti HH)'
+OK   ILO item:Q35_HAS_DISABILITY [wave-changed]: 'Adda baldado?'
+OK   ILO item:Q36_SPECIFY_DISABILITY [wave-changed]: 'Kayat kadi nga ibaga ti pasiente ti kita ti baldado?'
+OK   ILO item:Q40_EDUCATION [wave-changed]: 'Nakompleto ti kangatuan a tukad ti edukasion'
+OK   ILO item:Q67_TRAVEL_HH [wave-changed]: 'Mano nga oras ti kasapulan tapno makadanonka iti kaasitgan a'
+OK   ILO item:Q4_LGBTQIA [wave-changed]: 'Paset ka kadi ti komunidad ti LGBTQIA+? (e.g., bakla, tomboy'
+OK   ILO vs:Q4_LGBTQIA_VS1 [wave-changed]: 'Paset ka kadi ti komunidad ti LGBTQIA+? (e.g., bakla, tomboy'
+OK   ILO item:Q5_GROUP [wave-changed]: 'Ania a grupo ti pakabigbigam? no saankayo a komportable a su'
+OK   ILO vs:Q5_GROUP_VS1 [wave-changed]: 'Ania a grupo ti pakabigbigam? no saankayo a komportable a su'
+OK   ILO item:Q10_DISABILITY_TYPE [wave-changed]: 'Maibatay iti naiparang a PWD Identification Card, ania a kit'
+OK   ILO item:Q18_INCOME_AMOUNT [wave-changed]: 'Iti napalabas nga 6 a bulan, ania ti promedio a binulan a ma'
+OK   footer version (non-truncation signal): 'v4.0.2'
+OK   FIL has >=1 wave-changed probe present in the served pack
+MISS BCL has >=1 wave-changed probe present in the served pack
+MISS BIS has >=1 wave-changed probe present in the served pack
+MISS CEB has >=1 wave-changed probe present in the served pack
+MISS WAR has >=1 wave-changed probe present in the served pack
+MISS HIL has >=1 wave-changed probe present in the served pack
+OK   ILO has >=1 wave-changed probe present in the served pack
+RESULT: FAIL

@@ -1,0 +1,55 @@
+# #1387 #1388 #1389 #1390 proof (2026-09-01, F3 v7.0.1 maps): Ilocano Section J battery Q131-Q144. DESK ONLY pilot-jump build F3_PILOT_JUMP=Q131_AMEN_WAITING; apc regenerated clean + md5-checked after. Same file on the FIL pff for #1450-#1452.
+rmdata ../F3/desktest_ilo.csdb
+launch ../F3/PatientSurvey_desktest_ILO.pff
+casekey 04 03 403 02 001
+type 1
+type 1
+type 1
+type 1
+type 1
+type 1
+type 0403403001
+type RHU BINAN
+key {ENTER}
+type TEST ST BINAN
+key {ENTER}
+click 1040 374
+click 985 464
+click 1000 254
+click 985 304
+note Q4_NAME postproc carries the pilot jump
+type JUAN DELA CRUZ
+key {ENTER}
+note Q4_NAME postproc carries the pilot jump -> Q131_AMEN_WAITING
+shot 1387_q131_ILO
+type 4
+shot 1387_q132_ILO
+type 4
+shot 1387_q133_ILO
+type 4
+shot 1387_q134_ILO
+type 4
+shot 210_q135
+type 4
+shot 1388_q136_ILO
+type 4
+shot 1388_q137_ILO
+type 4
+shot 1388_q138_ILO
+type 4
+shot 1388_q139_ILO
+type 4
+shot 1388_q140_ILO
+type 4
+shot 220_q141
+note Q141 is a 1-3 field
+type 1
+shot 1389_q142_ILO
+note Q142 is a 1-3 field
+type 1
+shot 230_q143
+note Q143 is a 1-3 field
+type 1
+shot 1390_q144_ILO
+type 4
+shot 240_after_q144

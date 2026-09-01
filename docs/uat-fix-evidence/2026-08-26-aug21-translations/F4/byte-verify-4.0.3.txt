@@ -1,0 +1,96 @@
+--- F4 byte-verify C:\Users\analy\.claude\jobs\9f225161\tmp\w4\served3\HouseholdSurvey.zip ---
+pen bytes: 7599405
+baseline (pre-wave) maps: C:\Users\analy\.claude\jobs\9f225161\tmp\w4\baseline\F4
+OK   FIL item:Q30_NAME [wave-changed]: 'PANGALAN (APELYIDO, PANGALAN, GITNANG PANGALAN, EXT)'
+OK   FIL item:Q35_HAS_DISABILITY [wave-changed]: 'Kinikilala mo ba ang iyong sarili bilang isang taong may kap'
+OK   FIL item:Q36_SPECIFY_DISABILITY [wave-changed]: 'Nais mo bang tukuyin ang uri ng kapansanan?'
+SKIP FIL item:Q40_EDUCATION (no map value - English fallback)
+OK   FIL item:Q67_TRAVEL_HH [wave-changed]: 'Gaano katagal ang iyong biyahe upang marating ang pinakamala'
+SKIP FIL item:Q31_PRESENT (no map value - English fallback)
+OK   FIL vs:Q89_HAS_USUAL_FACILITY_VS1 [unchanged-since-baseline]: 'Sa nakalipas na 12 buwan, mayroon ka bang klinika o health c'
+OK   FIL val:Q34_RELATIONSHIP_VS1:02 [unchanged-since-baseline]: 'Aking asawa'
+SKIP FIL item:Q39_CIVIL_STATUS (no map value - English fallback)
+OK   FIL item:Q4_LGBTQIA [wave-changed]: 'Kayo po ba ay kabilang sa LGBTQIA+ na komunidad? (halimbawa:'
+OK   FIL vs:Q17_DECISION_MAKER_VS1 [wave-changed]: 'Sino po ang may pinakamaraming responsibilidad sa paggawa ng'
+SKIP FIL item:Q29_SOCIOECONOMIC_CLASS (no map value - English fallback)
+OK   BCL item:Q30_NAME [unchanged-since-baseline]: 'Ngaran (Pakisurat an completong ngaran kan miembro kan pamil'
+SKIP BCL item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP BCL item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+SKIP BCL item:Q40_EDUCATION (no map value - English fallback)
+SKIP BCL item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP BCL item:Q31_PRESENT (no map value - English fallback)
+OK   BCL vs:Q89_HAS_USUAL_FACILITY_VS1 [unchanged-since-baseline]: 'Sa nakaaging 12 bulan, may aram ka na clinic, o health cente'
+OK   BCL val:Q34_RELATIONSHIP_VS1:02 [unchanged-since-baseline]: 'Agum'
+SKIP BCL item:Q39_CIVIL_STATUS (no map value - English fallback)
+SKIP BCL item:Q4_LGBTQIA (no map value - English fallback)
+OK   BCL vs:Q17_DECISION_MAKER_VS1 [unchanged-since-baseline]: 'Siisay an pinaka responsable sa desisyon kan healthcare sa h'
+SKIP BCL item:Q29_SOCIOECONOMIC_CLASS (no map value - English fallback)
+OK   BIS item:Q30_NAME [unchanged-since-baseline]: 'Ngalan (Isulat ang kompleto nga ngalan sa miyembro sa panima'
+SKIP BIS item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP BIS item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   BIS item:Q40_EDUCATION [unchanged-since-baseline]: 'Pinakataas nga Naabot sa Pag-eskwela'
+SKIP BIS item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   BIS item:Q31_PRESENT [unchanged-since-baseline]: 'Ang miyembro sa panimalay naa ba o wala? 0-Away Wala 1-Prese'
+OK   BIS vs:Q89_HAS_USUAL_FACILITY_VS1 [unchanged-since-baseline]: 'Sa milabay nga 12 ka bulan, aduna ba kay klinika o health ce'
+OK   BIS val:Q34_RELATIONSHIP_VS1:02 [unchanged-since-baseline]: 'Bana/Asawa/Kapikas'
+OK   BIS item:Q39_CIVIL_STATUS [unchanged-since-baseline]: 'Sibil nga Status'
+SKIP BIS item:Q4_LGBTQIA (no map value - English fallback)
+OK   BIS vs:Q17_DECISION_MAKER_VS1 [unchanged-since-baseline]: 'Kinsa ang adunay pinakadako nga responsibilidad sa paghimo o'
+SKIP BIS item:Q29_SOCIOECONOMIC_CLASS (no map value - English fallback)
+OK   CEB item:Q30_NAME [unchanged-since-baseline]: 'Ngalan (Isulat ang kumpletong ngalan sa miyembro sa panimala'
+SKIP CEB item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP CEB item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   CEB item:Q40_EDUCATION [unchanged-since-baseline]: 'Naabot nga edukasyon'
+SKIP CEB item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   CEB item:Q31_PRESENT [unchanged-since-baseline]: 'Miyembro sa panimalay naa o wala 0-Away 1-Present 0-Wala 1-N'
+OK   CEB vs:Q89_HAS_USUAL_FACILITY_VS1 [unchanged-since-baseline]: 'Sa miaging 12 ka bulan, aduna ba kang klinika o health cente'
+OK   CEB val:Q34_RELATIONSHIP_VS1:02 [unchanged-since-baseline]: 'Asawa/Bana/Partner'
+SKIP CEB item:Q39_CIVIL_STATUS (no map value - English fallback)
+SKIP CEB item:Q4_LGBTQIA (no map value - English fallback)
+OK   CEB vs:Q17_DECISION_MAKER_VS1 [unchanged-since-baseline]: 'Kinsa ang nagdala sa kinadak-ang responsibilidad sa pagdumal'
+SKIP CEB item:Q29_SOCIOECONOMIC_CLASS (no map value - English fallback)
+OK   WAR item:Q30_NAME [unchanged-since-baseline]: 'Ngaran (Isurat an kompleto nga ngaran hit HH nga miyembro)'
+SKIP WAR item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP WAR item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   WAR item:Q40_EDUCATION [unchanged-since-baseline]: 'Pinakahitaas nga edukasyon nga natapos'
+SKIP WAR item:Q67_TRAVEL_HH (no map value - English fallback)
+OK   WAR item:Q31_PRESENT [unchanged-since-baseline]: 'HH member nga aadi o waray didi 0-Away 1-Present 0 - Waray d'
+OK   WAR vs:Q89_HAS_USUAL_FACILITY_VS1 [unchanged-since-baseline]: 'Han naglabay nga 12 ka bulan, mayda ka ba klinika, o health '
+OK   WAR val:Q34_RELATIONSHIP_VS1:02 [unchanged-since-baseline]: 'Asawa'
+OK   WAR item:Q39_CIVIL_STATUS [unchanged-since-baseline]: 'Sibil nga kahimtang'
+SKIP WAR item:Q4_LGBTQIA (no map value - English fallback)
+OK   WAR vs:Q17_DECISION_MAKER_VS1 [unchanged-since-baseline]: 'Hin-o an may may pinakadako nga responsiblidad ha paghimo ha'
+SKIP WAR item:Q29_SOCIOECONOMIC_CLASS (no map value - English fallback)
+OK   HIL item:Q30_NAME [unchanged-since-baseline]: 'Ngalan (Isulat ang bug-os nga ngalan sang miembro sang panim'
+SKIP HIL item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP HIL item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+SKIP HIL item:Q40_EDUCATION (no map value - English fallback)
+SKIP HIL item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP HIL item:Q31_PRESENT (no map value - English fallback)
+OK   HIL vs:Q89_HAS_USUAL_FACILITY_VS1 [unchanged-since-baseline]: 'What is the name of the facility? Sa sulod sang nagligad nga'
+OK   HIL val:Q34_RELATIONSHIP_VS1:02 [unchanged-since-baseline]: 'Asawa/Bana/Partner'
+SKIP HIL item:Q39_CIVIL_STATUS (no map value - English fallback)
+SKIP HIL item:Q4_LGBTQIA (no map value - English fallback)
+OK   HIL vs:Q17_DECISION_MAKER_VS1 [unchanged-since-baseline]: 'Sino ang may pinakamadaku nga responsibilidad sa paghimo san'
+SKIP HIL item:Q29_SOCIOECONOMIC_CLASS (no map value - English fallback)
+OK   ILO item:Q30_NAME [unchanged-since-baseline]: 'Nagan (Isurat ti kompleto a nagan ti kameng ti HH)'
+OK   ILO item:Q35_HAS_DISABILITY [wave-changed]: 'Adda baldado?'
+OK   ILO item:Q36_SPECIFY_DISABILITY [wave-changed]: 'Kayat kadi nga ibaga ti pasiente ti kita ti baldado?'
+OK   ILO item:Q40_EDUCATION [wave-changed]: 'Nakompleto ti kangatuan a tukad ti edukasion'
+OK   ILO item:Q67_TRAVEL_HH [wave-changed]: 'Mano nga oras ti kasapulan tapno makadanonka iti kaasitgan a'
+OK   ILO item:Q31_PRESENT [wave-changed]: 'Miembro ti HH Presente man wenno adayo'
+OK   ILO vs:Q89_HAS_USUAL_FACILITY_VS1 [wave-changed]: 'Iti napalabas a 12 a bulan, adda kadi klinikam, wenno sentro'
+OK   ILO val:Q34_RELATIONSHIP_VS1:02 [wave-changed]: 'Asawa/Kapareha'
+OK   ILO item:Q39_CIVIL_STATUS [wave-changed]: 'Kasasaad ti Sibil'
+OK   ILO item:Q4_LGBTQIA [wave-changed]: 'Paset ka kadi ti komunidad ti LGBTQIA+? (e.g., bakla, tomboy'
+OK   ILO vs:Q17_DECISION_MAKER_VS1 [unchanged-since-baseline]: 'Siasino ti kaaduan a mangala iti responsabilidad iti pananga'
+OK   ILO item:Q29_SOCIOECONOMIC_CLASS [wave-changed]: 'Kasano koma a mailasin ti sosioekonomiko a klase ti sangakab'
+OK   footer version (non-truncation signal): 'v4.0.3'
+OK   FIL has >=1 wave-changed probe present in the served pack
+MISS BCL has >=1 wave-changed probe present in the served pack
+MISS BIS has >=1 wave-changed probe present in the served pack
+MISS CEB has >=1 wave-changed probe present in the served pack
+MISS WAR has >=1 wave-changed probe present in the served pack
+MISS HIL has >=1 wave-changed probe present in the served pack
+OK   ILO has >=1 wave-changed probe present in the served pack
+RESULT: FAIL

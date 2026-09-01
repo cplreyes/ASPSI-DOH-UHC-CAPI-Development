@@ -1,0 +1,89 @@
+--- F3 byte-verify C:/Users/analy/.claude/jobs/9f225161/tmp/w4/served/PatientSurvey.zip ---
+pen bytes: 7793464
+baseline (pre-wave) maps: C:/Users/analy/.claude/jobs/9f225161/tmp/w4/baseline/F3
+OK   FIL item:Q47_PHYSICIAN_CHECKUP [wave-changed]: 'Alam ba ninyo na may mga PhilHealth package para sa mga sumu'
+OK   FIL item:Q972_SOURCES [unchanged-since-baseline]: 'Nagbayad ka ba ng iba pang nagastos sa iyong OPD visit na hi'
+SKIP FIL val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+OK   FIL item:Q1142_HAS_OTHER [unchanged-since-baseline]: 'Nagbayad ka ba ng iba pang gastusin sa panahon ng iyong conf'
+OK   FIL item:Q66_SAME_AS_USUAL [unchanged-since-baseline] [dcf-rendered]: 'ang pasilidad na ito ba na karaniwang pinupuntahan mo ay par'
+SKIP FIL item:Q36_UHC_SOURCE (no map value - English fallback)
+OK   FIL item:Q92_SOURCES [wave-changed]: 'Magkano ang binayaran sa konsultasyon?'
+OK   FIL item:Q136_STAFF_COURTESY [wave-changed]: 'Sa pinakahuling pagbisita ng pasyente, gaano kadalas ang gin'
+OK   FIL item:Q150_TRAVEL_HH [wave-changed]: 'Gaano katagal ang biyahe mula sa inyong bahay papunta sa pin'
+OK   FIL val:Q40_WHO_ASSISTED_VS1:06 [unchanged-since-baseline]: 'Wala/Sarili ko lamang'
+OK   FIL item:Q131_AMEN_WAITING [wave-changed]: 'Gaano kalinis at kaginhawa ng mga sumusunod sa pasilidad na '
+SKIP BCL item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+OK   BCL item:Q972_SOURCES [unchanged-since-baseline]: 'Nagbayad ka din ba ki iba pang expenses hali sa OPD na dai n'
+OK   BCL val:Q972_SOURCES_VS1:90 [unchanged-since-baseline]: 'Dai, dai kami nagbayad kan iba pang gastos'
+SKIP BCL item:Q1142_HAS_OTHER (no map value - English fallback)
+OK   BCL item:Q66_SAME_AS_USUAL [unchanged-since-baseline] [dcf-rendered]: 'an pasilidad na ini facility na pirmi mo na tigadumanan para'
+OK   BCL item:Q36_UHC_SOURCE [unchanged-since-baseline]: 'Ano an pinanggalingan kan impormasyon mo manungod sa Univers'
+SKIP BCL item:Q92_SOURCES (no map value - English fallback)
+SKIP BCL item:Q136_STAFF_COURTESY (no map value - English fallback)
+SKIP BCL item:Q150_TRAVEL_HH (no map value - English fallback)
+OK   BCL val:Q40_WHO_ASSISTED_VS1:06 [unchanged-since-baseline]: 'Wara nin tabang / self-registered'
+SKIP BCL item:Q131_AMEN_WAITING (no map value - English fallback)
+SKIP BIS item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+OK   BIS item:Q972_SOURCES [unchanged-since-baseline]: 'Nagbayad ba ka og uban pang gasto panahon sa imong OPD visit'
+SKIP BIS val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+OK   BIS item:Q1142_HAS_OTHER [unchanged-since-baseline]: 'Nagbayad ba ka og uban pang gasto panahon sa imong confineme'
+OK   BIS item:Q66_SAME_AS_USUAL [unchanged-since-baseline] [dcf-rendered]: 'Ang kini nga pasilidad ba mao ang pasilidad nga imong kasaga'
+OK   BIS item:Q36_UHC_SOURCE [unchanged-since-baseline]: 'Asa nimo nakuha ang impormasyon bahin sa UHC?'
+SKIP BIS item:Q92_SOURCES (no map value - English fallback)
+SKIP BIS item:Q136_STAFF_COURTESY (no map value - English fallback)
+SKIP BIS item:Q150_TRAVEL_HH (no map value - English fallback)
+OK   BIS val:Q40_WHO_ASSISTED_VS1:06 [unchanged-since-baseline]: 'Walay nitabang / nagparehistro sa kaugalingon'
+SKIP BIS item:Q131_AMEN_WAITING (no map value - English fallback)
+OK   CEB item:Q47_PHYSICIAN_CHECKUP [unchanged-since-baseline]: 'Nahibalo ba ka nga adunay mga PhilHealth package para sa mga'
+SKIP CEB item:Q972_SOURCES (no map value - English fallback)
+SKIP CEB val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+SKIP CEB item:Q1142_HAS_OTHER (no map value - English fallback)
+OK   CEB item:Q66_SAME_AS_USUAL [unchanged-since-baseline] [dcf-rendered]: 'Ang kini nga pasilidad ba ang pasilidad nga kasagaran nimong'
+OK   CEB item:Q36_UHC_SOURCE [wave-changed]: 'Unsa ang imong tinubdan sa impormasyon bahin sa UHC?'
+SKIP CEB item:Q92_SOURCES (no map value - English fallback)
+SKIP CEB item:Q136_STAFF_COURTESY (no map value - English fallback)
+SKIP CEB item:Q150_TRAVEL_HH (no map value - English fallback)
+OK   CEB val:Q40_WHO_ASSISTED_VS1:06 [wave-changed]: 'Walay nagtabang/nagparehistro sa kaugalingon'
+SKIP CEB item:Q131_AMEN_WAITING (no map value - English fallback)
+SKIP WAR item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+OK   WAR item:Q972_SOURCES [unchanged-since-baseline]: 'May iba pa ba kamo nga ginbaydan han iyo pagbisita ha OPD ng'
+SKIP WAR val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+OK   WAR item:Q1142_HAS_OTHER [unchanged-since-baseline]: 'Mayda ka ba ginbaydan nga iba pa nga gastos durante han imo '
+OK   WAR item:Q66_SAME_AS_USUAL [unchanged-since-baseline] [dcf-rendered]: 'An ini nga pasilidad ba an pasilidad nga kasagaran mo ginkak'
+SKIP WAR item:Q36_UHC_SOURCE (no map value - English fallback)
+SKIP WAR item:Q92_SOURCES (no map value - English fallback)
+SKIP WAR item:Q136_STAFF_COURTESY (no map value - English fallback)
+SKIP WAR item:Q150_TRAVEL_HH (no map value - English fallback)
+OK   WAR val:Q40_WHO_ASSISTED_VS1:06 [unchanged-since-baseline]: 'Waray tawo/ nagparehistro ha kalugaringon'
+SKIP WAR item:Q131_AMEN_WAITING (no map value - English fallback)
+SKIP HIL item:Q47_PHYSICIAN_CHECKUP (no map value - English fallback)
+SKIP HIL item:Q972_SOURCES (no map value - English fallback)
+SKIP HIL val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+SKIP HIL item:Q1142_HAS_OTHER (no map value - English fallback)
+OK   HIL item:Q66_SAME_AS_USUAL [unchanged-since-baseline] [dcf-rendered]: 'Ang ini nga pasilidad bala ang pasilidad nga ginakadtuan mo '
+OK   HIL item:Q36_UHC_SOURCE [unchanged-since-baseline]: 'Diin mo nakuha ang imo impormasyon parte sa UHC?'
+SKIP HIL item:Q92_SOURCES (no map value - English fallback)
+SKIP HIL item:Q136_STAFF_COURTESY (no map value - English fallback)
+SKIP HIL item:Q150_TRAVEL_HH (no map value - English fallback)
+OK   HIL val:Q40_WHO_ASSISTED_VS1:06 [unchanged-since-baseline]: 'Wala / nagparehistro sang kaugalingon'
+SKIP HIL item:Q131_AMEN_WAITING (no map value - English fallback)
+OK   ILO item:Q47_PHYSICIAN_CHECKUP [unchanged-since-baseline]: 'Ammom kadi nga adda dagiti pakete ti PhilHealth para kadagit'
+OK   ILO item:Q972_SOURCES [unchanged-since-baseline]: 'Binayadam kadi ti aniaman a sabali pay a gastos bayat ti pan'
+SKIP ILO val:Q972_SOURCES_VS1:90 (no map value - English fallback)
+OK   ILO item:Q1142_HAS_OTHER [unchanged-since-baseline]: 'Nabayadam kadi ti aniaman a sabali pay a gastos bayat ti pan'
+OK   ILO item:Q66_SAME_AS_USUAL [unchanged-since-baseline] [dcf-rendered]: 'Ti kadi daytoy a pasilidad ti pasilidad a gagangay a papanam'
+OK   ILO item:Q36_UHC_SOURCE [unchanged-since-baseline]: 'Ania ti gubuayan ti impormasionyo maipapan iti UHC?'
+OK   ILO item:Q92_SOURCES [wave-changed]: 'Mano ti magastos iti konsultasion?'
+OK   ILO item:Q136_STAFF_COURTESY [wave-changed]: 'Iti kaudian a panagbisita ti pasiente, kasano kasansan nga i'
+OK   ILO item:Q150_TRAVEL_HH [wave-changed]: 'Mano nga oras ti kasapulan tapno makadanonka iti kaasitgan a'
+OK   ILO val:Q40_WHO_ASSISTED_VS1:06 [unchanged-since-baseline]: 'Awan ti asinoman / self-registered'
+OK   ILO item:Q131_AMEN_WAITING [wave-changed]: 'Kasano ti panangtingitingyo iti kinadalus ken liwliwa dagiti'
+OK   footer version (non-truncation signal): 'v7.0.1'
+OK   FIL has >=1 wave-changed probe present in the served pack
+MISS BCL has >=1 wave-changed probe present in the served pack
+MISS BIS has >=1 wave-changed probe present in the served pack
+OK   CEB has >=1 wave-changed probe present in the served pack
+MISS WAR has >=1 wave-changed probe present in the served pack
+MISS HIL has >=1 wave-changed probe present in the served pack
+OK   ILO has >=1 wave-changed probe present in the served pack
+RESULT: FAIL

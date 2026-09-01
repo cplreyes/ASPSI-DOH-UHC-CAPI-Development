@@ -1,0 +1,56 @@
+# #1391 #1392 #1393 proof (2026-09-01, F3 v7.0.1 maps): Ilocano Section K Q148/Q150/Q156. DESK ONLY pilot-jump build F3_PILOT_JUMP=Q148_CONDITIONS; apc regenerated clean + md5-checked after. Same file on the FIL pff for #1453-#1455.
+rmdata ../F3/desktest_ilo.csdb
+launch ../F3/PatientSurvey_desktest_ILO.pff
+casekey 04 03 403 02 001
+type 1
+type 1
+type 1
+type 1
+type 1
+type 1
+type 0403403001
+type RHU BINAN
+key {ENTER}
+type TEST ST BINAN
+key {ENTER}
+click 1040 374
+click 985 464
+click 1000 254
+click 985 304
+note Q4_NAME postproc carries the pilot jump
+type JUAN DELA CRUZ
+key {ENTER}
+note Q4_NAME postproc carries the pilot jump -> Q148_CONDITIONS
+shot 1391_q148_ILO
+type 01
+click 1700 200
+key {ENTER}
+shot 310_q149
+note Q149 is a Check Box popup
+type 01
+click 1700 200
+key {ENTER}
+shot 1392_q150_hh_ILO
+type 1
+key {ENTER}
+shot 1392_q150_mm_ILO
+type 30
+note the 2-digit minutes box auto-advances
+shot 320_q151
+type 1
+shot 330_q152
+type 1
+shot 340_q153
+note Q153/Q154 are Check Box popups
+type 01
+click 1700 200
+key {ENTER}
+shot 350_q154
+type 01
+click 1700 200
+key {ENTER}
+shot 360_q155
+type 1
+shot 1393_q156_ILO
+type 1
+shot 370_after_q156

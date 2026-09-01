@@ -1,0 +1,28 @@
+# F4 v4.0.3 follow-up translation-map writes (2026-09-01; the two follow-up applies after v4.0.1, apply_aug21.py --apply records; one line per key)
+
+## v4.0.2 - the parked Ilocano keys
+### ilo writes (4)
+  item:Q4_LGBTQIA  ->  'Paset ka kadi ti komunidad ti LGBTQIA+? (e.g., bakla, tomboy, biseksual, kdpy.). No saankayo a komportable a sumungbat nasayaat ladta'
+  vs:Q4_LGBTQIA_VS1  ->  'Paset ka kadi ti komunidad ti LGBTQIA+? (e.g., bakla, tomboy, biseksual, kdpy.). No saankayo a komportable a sumungbat nasayaat ladta'
+  vs:Q5_GROUP_VS1  ->  'Ania a grupo ti pakabigbigam? no saankayo a komportable a sumungbat, nasayaat ladta'
+  item:Q5_GROUP  ->  'Ania a grupo ti pakabigbigam? no saankayo a komportable a sumungbat, nasayaat ladta'
+
+## v4.0.3 - the per-locale force round (keep text that v4.0.1 reported WARN and never wrote)
+### fil writes (1)
+  vs:Q17_DECISION_MAKER_VS1  ->  'Sino po ang may pinakamaraming responsibilidad sa paggawa ng mga desisyon tungkol sa pangangalaga sa kalusugan sa inyong sambahayan?'
+### ilo writes (14)
+  item:Q29_SOCIOECONOMIC_CLASS  ->  'Kasano koma a mailasin ti sosioekonomiko a klase ti sangakabbalayam?'
+  vs:Q29_SOCIOECONOMIC_CLASS_VS1  ->  'Kasano koma a mailasin ti sosioekonomiko a klase ti sangakabbalayam?'
+  item:Q31_PRESENT  ->  'Miembro ti HH Presente man wenno adayo'
+  vs:Q31_PRESENT_VS1  ->  'HH member present wenno adayo'
+  val:Q34_RELATIONSHIP_VS1:02  ->  'Asawa/Kapareha'
+  val:Q34_RELATIONSHIP_VS1:03  ->  'Anak/Anak a Babai'
+  val:Q34_RELATIONSHIP_VS1:04  ->  'Kabsat/Kabsat a Babai'
+  val:Q34_RELATIONSHIP_VS1:05  ->  'Manugang-a-Manugangna/Manugangna'
+  val:Q34_RELATIONSHIP_VS1:06  ->  'Apo/Apoko a babai'
+  val:Q34_RELATIONSHIP_VS1:07  ->  'Ama/Ina'
+  val:Q34_RELATIONSHIP_VS1:11  ->  'Katulong'
+  item:Q39_CIVIL_STATUS  ->  'Kasasaad ti Sibil'
+  vs:Q39_CIVIL_STATUS_VS1  ->  'Kasasaad ti Sibil'
+  vs:Q89_HAS_USUAL_FACILITY_VS1  ->  'Iti napalabas a 12 a bulan, adda kadi klinikam, wenno sentro ti salun-at a gagangay a papanam?'
+

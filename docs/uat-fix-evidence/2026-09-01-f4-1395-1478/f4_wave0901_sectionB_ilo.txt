@@ -1,0 +1,64 @@
+# #1395 #1396 #1397 #1398 #1399 #1400 proof (2026-09-01, F4 v4.0.1 maps): Ilocano Section B. Key = pretest HH key 040341101001 (Los Banos / Mayondon).
+# Same file on the FIL pff (sed) for #1456-#1462.
+
+rmdata ../F4/desktest_ilo.csdb
+launch ../F4/HouseholdSurvey_desktest_ILO.pff
+
+casekey 040341101001
+wait 1
+note v4.0.1 desk order: ICF screen 1, ICF screen 2, Q1 (HH head), BREAKOFF (Continue), CLASSIFICATION, barangay PSGC, address, then Section B
+type 1
+type 1
+type 1
+type 1
+type 1
+type 0403411010
+type TESTADDRESS
+key {ENTER}
+shot 1395_name_ILO
+type JUAN DELA CRUZ
+key {ENTER}
+shot 1395_q2_month_ILO
+type 06
+shot 1395_q2_year_ILO
+type 1990
+type 036
+type 1
+shot 1396_q4_ILO
+type 1
+shot 1397_q5_ILO
+type 1
+type 1
+note Q7 PWD = Yes -> Q8/Q9/Q10 ask
+type 1
+shot 410_q8
+type 1
+shot 420_q9
+type 1
+shot 1398_q10_ILO
+type 1
+shot 430_q11
+type 01
+shot 1399_q12_ILO
+type 1
+shot 440_q13
+type 01
+shot 450_q14
+type 2
+note Q14=No skips Q15
+shot 460_q16
+type 2
+shot 470_q17
+type 01
+shot 1400_q18_amount_ILO
+type 5000
+key {ENTER}
+shot 1400_q18_bracket_ILO
+type 1
+shot 1400_q19_ILO
+type 4
+key {ENTER}
+shot 480_q20
+type 1
+key {ENTER}
+shot 490_q21

@@ -1,0 +1,89 @@
+--- F4 byte-verify C:/Users/analy/.claude/jobs/9f225161/tmp/w4/served/HouseholdSurvey.zip ---
+pen bytes: 7600281
+baseline (pre-wave) maps: C:/Users/analy/.claude/jobs/9f225161/tmp/w4/baseline/F4
+OK   FIL item:Q30_NAME [wave-changed]: 'PANGALAN (APELYIDO, PANGALAN, GITNANG PANGALAN, EXT)'
+OK   FIL item:Q35_HAS_DISABILITY [wave-changed]: 'Kinikilala mo ba ang iyong sarili bilang isang taong may kap'
+OK   FIL item:Q36_SPECIFY_DISABILITY [wave-changed]: 'Nais mo bang tukuyin ang uri ng kapansanan?'
+SKIP FIL item:Q40_EDUCATION (no map value - English fallback)
+OK   FIL item:Q67_TRAVEL_HH [wave-changed]: 'Gaano katagal ang iyong biyahe upang marating ang pinakamala'
+OK   FIL item:Q4_LGBTQIA [wave-changed]: 'Kayo po ba ay kabilang sa LGBTQIA+ na komunidad? (halimbawa:'
+OK   FIL item:N_FOOD_CONSUMED [wave-changed]: 'Sa nakalipas na LINGGO, ikaw ba o ang sinumang miyembro ng i'
+OK   FIL item:Q67_TRAVEL_HH [wave-changed]: 'Gaano katagal ang iyong biyahe upang marating ang pinakamala'
+OK   FIL item:Q142_SALARY_YN [wave-changed]: 'Paano nabayaran ang iyong hospital bill? — Salary/income'
+SKIP FIL item:Q31_PRESENT (no map value - English fallback)
+OK   FIL item:Q96_TRAVEL_COST_PHP [wave-changed]: 'Magkano ang karaniwang nagagastos mo sa pagbiyahe mula sa in'
+OK   BCL item:Q30_NAME [unchanged-since-baseline]: 'Ngaran (Pakisurat an completong ngaran kan miembro kan pamil'
+SKIP BCL item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP BCL item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+SKIP BCL item:Q40_EDUCATION (no map value - English fallback)
+SKIP BCL item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP BCL item:Q4_LGBTQIA (no map value - English fallback)
+SKIP BCL item:N_FOOD_CONSUMED (no map value - English fallback)
+SKIP BCL item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP BCL item:Q142_SALARY_YN (no map value - English fallback)
+SKIP BCL item:Q31_PRESENT (no map value - English fallback)
+SKIP BCL item:Q96_TRAVEL_COST_PHP (no map value - English fallback)
+OK   BIS item:Q30_NAME [unchanged-since-baseline]: 'Ngalan (Isulat ang kompleto nga ngalan sa miyembro sa panima'
+SKIP BIS item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP BIS item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   BIS item:Q40_EDUCATION [unchanged-since-baseline]: 'Pinakataas nga Naabot sa Pag-eskwela'
+SKIP BIS item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP BIS item:Q4_LGBTQIA (no map value - English fallback)
+SKIP BIS item:N_FOOD_CONSUMED (no map value - English fallback)
+SKIP BIS item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP BIS item:Q142_SALARY_YN (no map value - English fallback)
+OK   BIS item:Q31_PRESENT [unchanged-since-baseline]: 'Ang miyembro sa panimalay naa ba o wala? 0-Away Wala 1-Prese'
+SKIP BIS item:Q96_TRAVEL_COST_PHP (no map value - English fallback)
+OK   CEB item:Q30_NAME [unchanged-since-baseline]: 'Ngalan (Isulat ang kumpletong ngalan sa miyembro sa panimala'
+SKIP CEB item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP CEB item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   CEB item:Q40_EDUCATION [unchanged-since-baseline]: 'Naabot nga edukasyon'
+SKIP CEB item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP CEB item:Q4_LGBTQIA (no map value - English fallback)
+SKIP CEB item:N_FOOD_CONSUMED (no map value - English fallback)
+SKIP CEB item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP CEB item:Q142_SALARY_YN (no map value - English fallback)
+OK   CEB item:Q31_PRESENT [unchanged-since-baseline]: 'Miyembro sa panimalay naa o wala 0-Away 1-Present 0-Wala 1-N'
+SKIP CEB item:Q96_TRAVEL_COST_PHP (no map value - English fallback)
+OK   WAR item:Q30_NAME [unchanged-since-baseline]: 'Ngaran (Isurat an kompleto nga ngaran hit HH nga miyembro)'
+SKIP WAR item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP WAR item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+OK   WAR item:Q40_EDUCATION [unchanged-since-baseline]: 'Pinakahitaas nga edukasyon nga natapos'
+SKIP WAR item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP WAR item:Q4_LGBTQIA (no map value - English fallback)
+SKIP WAR item:N_FOOD_CONSUMED (no map value - English fallback)
+SKIP WAR item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP WAR item:Q142_SALARY_YN (no map value - English fallback)
+OK   WAR item:Q31_PRESENT [unchanged-since-baseline]: 'HH member nga aadi o waray didi 0-Away 1-Present 0 - Waray d'
+SKIP WAR item:Q96_TRAVEL_COST_PHP (no map value - English fallback)
+OK   HIL item:Q30_NAME [unchanged-since-baseline]: 'Ngalan (Isulat ang bug-os nga ngalan sang miembro sang panim'
+SKIP HIL item:Q35_HAS_DISABILITY (no map value - English fallback)
+SKIP HIL item:Q36_SPECIFY_DISABILITY (no map value - English fallback)
+SKIP HIL item:Q40_EDUCATION (no map value - English fallback)
+SKIP HIL item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP HIL item:Q4_LGBTQIA (no map value - English fallback)
+SKIP HIL item:N_FOOD_CONSUMED (no map value - English fallback)
+SKIP HIL item:Q67_TRAVEL_HH (no map value - English fallback)
+SKIP HIL item:Q142_SALARY_YN (no map value - English fallback)
+SKIP HIL item:Q31_PRESENT (no map value - English fallback)
+SKIP HIL item:Q96_TRAVEL_COST_PHP (no map value - English fallback)
+OK   ILO item:Q30_NAME [unchanged-since-baseline]: 'Nagan (Isurat ti kompleto a nagan ti kameng ti HH)'
+OK   ILO item:Q35_HAS_DISABILITY [wave-changed]: 'Adda baldado?'
+OK   ILO item:Q36_SPECIFY_DISABILITY [wave-changed]: 'Kayat kadi nga ibaga ti pasiente ti kita ti baldado?'
+OK   ILO item:Q40_EDUCATION [wave-changed]: 'Nakompleto ti kangatuan a tukad ti edukasion'
+OK   ILO item:Q67_TRAVEL_HH [wave-changed]: 'Mano nga oras ti kasapulan tapno makadanonka iti kaasitgan a'
+SKIP ILO item:Q4_LGBTQIA (no map value - English fallback)
+OK   ILO item:N_FOOD_CONSUMED [wave-changed]: 'Iti naudi a LASAW, sika kadi wenno ti asinoman a kameng ti s'
+OK   ILO item:Q67_TRAVEL_HH [wave-changed]: 'Mano nga oras ti kasapulan tapno makadanonka iti kaasitgan a'
+SKIP ILO item:Q142_SALARY_YN (no map value - English fallback)
+OK   ILO item:Q31_PRESENT [unchanged-since-baseline]: 'HH member present wenno adayo) 0-Away (Adayo) 1-Present (Agd'
+OK   ILO item:Q96_TRAVEL_COST_PHP [wave-changed]: 'Mano ti gagangay a magastos para iti panagbiahem nga agturon'
+OK   footer version (non-truncation signal): 'v4.0.1'
+OK   FIL has >=1 wave-changed probe present in the served pack
+MISS BCL has >=1 wave-changed probe present in the served pack
+MISS BIS has >=1 wave-changed probe present in the served pack
+MISS CEB has >=1 wave-changed probe present in the served pack
+MISS WAR has >=1 wave-changed probe present in the served pack
+MISS HIL has >=1 wave-changed probe present in the served pack
+OK   ILO has >=1 wave-changed probe present in the served pack
+RESULT: FAIL

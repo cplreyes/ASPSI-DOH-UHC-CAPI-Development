@@ -1,0 +1,58 @@
+# #1418 #1419 #1420 #1421 proof (2026-09-01, F1 v5.0.1 maps): Tagalog Section D Q43/Q44, Q45, Q49/Q50, Q53-Q61 battery.
+# DESK ONLY pilot-jump build F1_PILOT_JUMP=Q43_YK_REG_BOTH (Q1_NAME postproc skip) - regenerated clean + md5-checked after.
+# Opening = f1_1355_sectionG_pilot_ceb.txt verbatim to the Q1_NAME postproc, on the FIL desk pff.
+
+rmdata ../F1/desktest_fil.csdb
+launch ../F1/FacilityHeadSurvey_desktest_FIL.pff
+
+casekey 04 03 400 02 001
+type 1
+type 1
+type 1
+click 1000 211
+type 1
+type DR TEST HEAD
+key {ENTER}
+type CHIEF OF HOSPITAL
+key {ENTER}
+type test@aspsi.org
+key {ENTER}
+type 09171234567
+key {ENTER}
+note Q1_NAME postproc carries the pilot jump -> Q43
+type DR TEST HEAD
+key {ENTER}
+shot 1418_q43_FIL
+type 1
+shot 1418_q44_FIL
+type 1500
+key {ENTER}
+shot 1419_q45_FIL
+type 01
+click 1700 200
+key {ENTER}
+shot 510_q46
+type 1
+shot 520_q47
+type 1
+shot 530_q48
+type 1
+shot 1420_q49_FIL
+type 30
+key {ENTER}
+shot 1420_q50_FIL
+type 30
+key {ENTER}
+shot 540_q51
+type 1
+shot 550_q52
+type 1
+shot 1421_q53_FIL
+type 01
+click 1700 200
+key {ENTER}
+shot 1421_q54_FIL
+type 01
+click 1700 200
+key {ENTER}
+shot 560_after_q54
